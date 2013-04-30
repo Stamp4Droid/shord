@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Shord" default="jar">
+  <property name="jarname" value="shord.jar"/>
+
+  <target name="compile">
+    <mkdir dir="classes"/>
+    <javac debug="true" debuglevel="source,lines,vars" includeAntRuntime="false"
+           srcdir="src" destdir="classes">
+      <classpath>
+        <fileset dir="lib">
+          <include name="soot.jar"/>
+		  <include name="stamp.chord.jar"/>
+        </fileset>
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="jar" depends="compile">
+    <jar jarfile="${jarname}">
+      <fileset dir="classes">
+        <include name="**/*.class"/>
+      </fileset>
+	  <zipfileset src="lib/stamp.chord.jar">
+		<include name="**/*.class"/>
+		<exclude name="chord/analyses/**/*.class"/>
+		<exclude name="joeq/**/*.class"/>
+	  </zipfileset>
+    </jar>
+  </target>
+
+  <target name="clean">
+    <delete dir="classes"/>
+    <delete file="${jarname}"/>
+  </target>
+
+</project>
