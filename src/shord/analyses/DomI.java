@@ -1,11 +1,11 @@
-package shord.analyses.invk;
+package shord.analyses;
 
 import soot.SootClass;
 import soot.SootMethod;
 import soot.Unit;
 
 import shord.program.visitors.IInvokeInstVisitor;
-import shord.analyses.method.DomM;
+import shord.analyses.DomM;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramDom;
 

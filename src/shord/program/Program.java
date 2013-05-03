@@ -2,8 +2,8 @@ package shord.program;
 
 import soot.*;
 import soot.options.Options;
-import chord.util.IndexSet;
 import soot.util.Chain;
+import soot.util.ArrayNumberer;
 import soot.jimple.toolkits.pointer.DumbPointerAnalysis;
 import soot.jimple.toolkits.callgraph.CallGraphBuilder;
 import soot.jimple.toolkits.callgraph.ReachableMethods;
@@ -87,7 +87,17 @@ public class Program
 	{
 		return Scene.v().getReachableMethods();
 	}
+
+	public ArrayNumberer<Type> getTypes()
+	{
+		return (ArrayNumberer<Type>) Scene.v().getTypeNumberer();
+	}
 	
+	public ArrayNumberer<SootField> getFields()
+	{
+		return (ArrayNumberer<SootField>) Scene.v().getFieldNumberer();
+	}
+
 	public SootMethod getMainMethod()
 	{
 		return mainMethod;
