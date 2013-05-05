@@ -46,7 +46,34 @@ import java.util.*;
 				 "MgetStatFldInst", "MputStatFldInst", 
 				 "MmethArg", "MmethRet", 
 				 "IinvkRet", "IinvkArg", 
-				 "VT", "chaIM"})
+				 "VT", "chaIM"},
+       namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F",
+						"MobjValAsgnInst", "MobjVarAsgnInst", 
+						"MgetInstFldInst", "MputInstFldInst", 
+						"MgetStatFldInst", "MputStatFldInst", 
+						"MmethArg", "MmethRet", 
+						"IinvkRet", "IinvkArg", 
+						"VT", "chaIM" },
+       types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class,
+				 ProgramRel.class, ProgramRel.class,
+				 ProgramRel.class, ProgramRel.class,
+				 ProgramRel.class, ProgramRel.class,
+				 ProgramRel.class, ProgramRel.class,
+				 ProgramRel.class, ProgramRel.class,
+				 ProgramRel.class, ProgramRel.class },
+	   namesOfSigns = { "MobjValAsgnInst", "MobjVarAsgnInst", 
+						"MgetInstFldInst", "MputInstFldInst", 
+						"MgetStatFldInst", "MputStatFldInst", 
+						"MmethArg", "MmethRet", 
+						"IinvkRet", "IinvkArg", 
+						"VT", "chaIM" },
+	   signs = { "M0,V0,H0:M0_V0_H0", "M0,V0,V1:M0_V0xV1",
+				 "M0,V0,V1,F0:F0_M0_V0xV1", "M0,V0,F0,V1:F0_M0_V0xV1",
+				 "M0,V0,F0:F0_M0_V0", "M0,F0,V0:F0_M0_V0",
+				 "M0,Z0,V0:M0_V0_Z0", "M0,Z0,V1:M0_V1_Z0",
+				 "I0,Z0,V0:I0_V0_Z0", "I0,Z0,V1:I0_V1_Z0",
+				 "V0,T0:T0_V0", "I0,M0:I0_M0" }
+	   )
 public class PAGBuilder extends JavaAnalysis
 {
 	private ProgramRel relMobjValAsgnInst;//(m:M,l:V,h:H)
@@ -68,6 +95,44 @@ public class PAGBuilder extends JavaAnalysis
 	private DomZ domZ;
 
 	private int maxArgs = -1;
+
+	void openRels()
+	{
+		relMobjValAsgnInst = (ProgramRel) ClassicProject.g().getTrgt("MobjValAsgnInst");
+		relMobjValAsgnInst.zero();
+		relMobjVarAsgnInst = (ProgramRel) ClassicProject.g().getTrgt("MobjVarAsgnInst");
+		relMobjVarAsgnInst.zero();
+		relMgetInstFldInst = (ProgramRel) ClassicProject.g().getTrgt("MgetInstFldInst");
+		relMgetInstFldInst.zero();
+		relMputInstFldInst = (ProgramRel) ClassicProject.g().getTrgt("MputInstFldInst");
+		relMputInstFldInst.zero();
+		relMgetStatFldInst = (ProgramRel) ClassicProject.g().getTrgt("MgetStatFldInst");
+		relMgetStatFldInst.zero();
+		relMputStatFldInst = (ProgramRel) ClassicProject.g().getTrgt("MputStatFldInst");
+		relMputStatFldInst.zero();
+		relMmethArg = (ProgramRel) ClassicProject.g().getTrgt("MmethArg");
+		relMmethArg.zero();
+		relMmethRet = (ProgramRel) ClassicProject.g().getTrgt("MmethRet");
+		relMmethRet.zero();
+		relIinvkRet = (ProgramRel) ClassicProject.g().getTrgt("IinvkRet");
+		relIinvkRet.zero();
+		relIinvkArg = (ProgramRel) ClassicProject.g().getTrgt("IinvkArg");
+		relIinvkArg.zero();
+	}
+	
+	void saveRels()
+	{
+		relMobjValAsgnInst.save();
+		relMobjVarAsgnInst.save();
+		relMgetInstFldInst.save();
+		relMputInstFldInst.save();
+		relMgetStatFldInst.save();
+		relMputStatFldInst.save();
+		relMmethArg.save();
+		relMmethRet.save();
+		relIinvkRet.save();
+		relIinvkArg.save();
+	}
 
 	void MobjValAsgnInst(SootMethod m, LocalVarNode l, Stmt h)
 	{
@@ -311,9 +376,8 @@ public class PAGBuilder extends JavaAnalysis
 
 	void populateCallgraph()
 	{
-		ProgramRel relChaIM = (ProgramRel) ClassicProject.g().getTrgt("chaIM");
-        relChaIM.zero();
         DomI domI = (DomI) ClassicProject.g().getTrgt("I");
+        DomM domM = (DomM) ClassicProject.g().getTrgt("M");
 
 		CallGraph cg = Scene.v().getCallGraph();
 		Iterator<Edge> edgeIt = cg.listener();
@@ -322,11 +386,25 @@ public class PAGBuilder extends JavaAnalysis
 			if(!edge.isExplicit())
 				continue;
 			Stmt stmt = edge.srcStmt();
-			domI.add(stmt);
-			SootMethod tgt = (SootMethod) edge.tgt();
-			relChaIM.add(stmt, tgt);
+			int stmtIdx = domI.getOrAdd(stmt);
+			//SootMethod tgt = (SootMethod) edge.tgt();
+			//relChaIM.add(stmtIdx, domM.indexOf(tgt));
 		}
 		domI.save();
+
+		ProgramRel relChaIM = (ProgramRel) ClassicProject.g().getTrgt("chaIM");
+        relChaIM.zero();
+		edgeIt = cg.listener();
+		while(edgeIt.hasNext()){
+			Edge edge = edgeIt.next();
+			if(!edge.isExplicit())
+				continue;
+			Stmt stmt = edge.srcStmt();
+			//int stmtIdx = domI.getOrAdd(stmt);
+			SootMethod tgt = (SootMethod) edge.tgt();
+			System.out.println("stmt: "+stmt+" tgt: "+tgt);
+			relChaIM.add(stmt, tgt);
+		}
 		relChaIM.save();
 	}
 
@@ -366,6 +444,9 @@ public class PAGBuilder extends JavaAnalysis
 
 	public void run()
 	{
+		Program program = Program.g();
+		program.build();
+
 		populateMethods();
 		populateFields();
 		populateTypes();
@@ -377,7 +458,6 @@ public class PAGBuilder extends JavaAnalysis
 		relVT = (ProgramRel) ClassicProject.g().getTrgt("VT");
         relVT.zero();
 
-		Program program = Program.g();
 		Iterator mIt = program.getMethods().listener();
 		while(mIt.hasNext()){
 			SootMethod m = (SootMethod) mIt.next();
