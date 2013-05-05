@@ -46,33 +46,38 @@ import java.util.*;
 				 "MgetStatFldInst", "MputStatFldInst", 
 				 "MmethArg", "MmethRet", 
 				 "IinvkRet", "IinvkArg", 
-				 "VT", "chaIM"},
+				 "VT", "chaIM",
+				 "HT" },
        namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F",
 						"MobjValAsgnInst", "MobjVarAsgnInst", 
 						"MgetInstFldInst", "MputInstFldInst", 
 						"MgetStatFldInst", "MputStatFldInst", 
 						"MmethArg", "MmethRet", 
 						"IinvkRet", "IinvkArg", 
-						"VT", "chaIM" },
+						"VT", "chaIM",
+						"HT" },
        types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class,
 				 ProgramRel.class, ProgramRel.class,
 				 ProgramRel.class, ProgramRel.class,
 				 ProgramRel.class, ProgramRel.class,
 				 ProgramRel.class, ProgramRel.class,
 				 ProgramRel.class, ProgramRel.class,
-				 ProgramRel.class, ProgramRel.class },
+				 ProgramRel.class, ProgramRel.class,
+	             ProgramRel.class },
 	   namesOfSigns = { "MobjValAsgnInst", "MobjVarAsgnInst", 
 						"MgetInstFldInst", "MputInstFldInst", 
 						"MgetStatFldInst", "MputStatFldInst", 
 						"MmethArg", "MmethRet", 
 						"IinvkRet", "IinvkArg", 
-						"VT", "chaIM" },
+						"VT", "chaIM",
+						"HT" },
 	   signs = { "M0,V0,H0:M0_V0_H0", "M0,V0,V1:M0_V0xV1",
 				 "M0,V0,V1,F0:F0_M0_V0xV1", "M0,V0,F0,V1:F0_M0_V0xV1",
 				 "M0,V0,F0:F0_M0_V0", "M0,F0,V0:F0_M0_V0",
 				 "M0,Z0,V0:M0_V0_Z0", "M0,Z0,V1:M0_V1_Z0",
 				 "I0,Z0,V0:I0_V0_Z0", "I0,Z0,V1:I0_V1_Z0",
-				 "V0,T0:T0_V0", "I0,M0:I0_M0" }
+				 "V0,T0:T0_V0", "I0,M0:I0_M0",
+				 "H0,T0:H0_T0"}
 	   )
 public class PAGBuilder extends JavaAnalysis
 {
@@ -89,10 +94,12 @@ public class PAGBuilder extends JavaAnalysis
     private ProgramRel relIinvkArg;//(i:I,n:Z,v:V)
 
 	private ProgramRel relVT;
+	private ProgramRel relHT;
 
 	private DomV domV;
 	private DomH domH;
 	private DomZ domZ;
+	private DomI domI;
 
 	private int maxArgs = -1;
 
@@ -118,6 +125,10 @@ public class PAGBuilder extends JavaAnalysis
 		relIinvkRet.zero();
 		relIinvkArg = (ProgramRel) ClassicProject.g().getTrgt("IinvkArg");
 		relIinvkArg.zero();
+		relVT = (ProgramRel) ClassicProject.g().getTrgt("VT");
+        relVT.zero();
+		relHT = (ProgramRel) ClassicProject.g().getTrgt("HT");
+        relHT.zero();
 	}
 	
 	void saveRels()
@@ -132,6 +143,8 @@ public class PAGBuilder extends JavaAnalysis
 		relMmethRet.save();
 		relIinvkRet.save();
 		relIinvkArg.save();
+		relVT.save();
+		relHT.save();
 	}
 
 	void MobjValAsgnInst(SootMethod m, LocalVarNode l, Stmt h)
@@ -224,71 +237,110 @@ public class PAGBuilder extends JavaAnalysis
 		MethodPAGBuilder(SootMethod method)
 		{
 			this.method = method;
-
+		}
+		
+		void pass1()
+		{
 			growZIfNeeded(method.getParameterCount());
 			
-			int i = 0;
 			if(!method.isStatic()) {
 				thisVar = new ThisVarNode(method);
-				add(thisVar, method.getDeclaringClass().getType());
-				MmethArg(method, i++, thisVar);
+				domV.add(thisVar);
  			}
+
 			int count = method.getParameterCount();
-			paramVars = new ParamVarNode[count];
-			int j = 0;
-			for(Type pType : method.getParameterTypes()){
-				ParamVarNode node = null;
-				if(pType instanceof RefLikeType){
-					node = new ParamVarNode(method, j);
-					add(node, pType);
-					MmethArg(method, i, node);
+			if(count > 0){
+				paramVars = new ParamVarNode[count];
+				int j = 0;
+				for(Type pType : method.getParameterTypes()){
+					ParamVarNode node = null;
+					if(pType instanceof RefLikeType){
+						node = new ParamVarNode(method, j);
+						domV.add(node);
+					}
+					paramVars[j++] = node;
 				}
-				paramVars[j++] = node;
-				i++;
 			}
+			
 			Type retType = method.getReturnType();
 			if(retType instanceof RefLikeType) {
 				retVar = new RetVarNode(method);
-				add(retVar, retType);
-				MmethRet(method, retVar);
+				domV.add(retVar);
 			}
-		}
-		
-		void add(VarNode node, Type type)
-		{
-			domV.add(node);
-			relVT.add(node, type);
-		}
 
-		void visitBody()
-		{
+			if(!method.isConcrete())
+				return;
+
 			localToVarNode = new HashMap();
 			Body body = method.retrieveActiveBody();
 			for(Local l : body.getLocals()){
 				if(!(l.getType() instanceof RefLikeType)) 
 					continue;
 				LocalVarNode node = new LocalVarNode(l);
-				add(node, l.getType());
 				localToVarNode.put(l, node);
+				domV.add(node);
 			}
+
+			for(Unit unit : body.getUnits()){
+				Stmt s = (Stmt) unit;
+				if(s.containsInvokeExpr()){
+					int numArgs = s.getInvokeExpr().getArgCount();
+					growZIfNeeded(numArgs);
+					domI.add(s);
+				} else if(s instanceof AssignStmt && ((AssignStmt) s).getRightOp() instanceof AnyNewExpr){
+					domH.add(s);
+				}
+			}						
+		}
+
+		void pass2()
+		{
+			int i = 0;
+			if(thisVar != null){
+				MmethArg(method, i++, thisVar);
+				relVT.add(thisVar, method.getDeclaringClass().getType());
+			}
+			
+			if(paramVars != null){
+				for(int j = 0; j < paramVars.length; j++){
+					ParamVarNode node = paramVars[j];
+					if(node != null){
+						MmethArg(method, i, node);
+						relVT.add(node, method.getParameterType(j));
+					}
+					i++;
+				}
+			}
+			
+			if(retVar != null){
+				MmethRet(method, retVar);
+				relVT.add(retVar, method.getReturnType());
+			}
+
+			if(!method.isConcrete())
+				return;
+			for(Map.Entry<Local,LocalVarNode> e : localToVarNode.entrySet()){
+				relVT.add(e.getValue(), e.getKey().getType());
+			}
+
+			Body body = method.retrieveActiveBody();
 			for(Unit unit : body.getUnits()){
 				handleStmt((Stmt) unit);
-			}			
+			}						
 		}
-		
+
 		LocalVarNode nodeFor(Immediate i)
 		{
 			if(i instanceof Constant)
 				return null;
 			return localToVarNode.get((Local) i);
 		}
-
+		
 		void handleStmt(Stmt s)
 		{
 			if(s.containsInvokeExpr()){
 				InvokeExpr ie = s.getInvokeExpr();
 				int numArgs = ie.getArgCount();
-				growZIfNeeded(numArgs);
 
 				//handle receiver
 				int j = 0;
@@ -350,8 +402,8 @@ public class PAGBuilder extends JavaAnalysis
 				Value leftOp = as.getLeftOp();
 				Value rightOp = as.getRightOp();
 				if(rightOp instanceof AnyNewExpr){
-					domH.add(s);
 					MobjValAsgnInst(method, nodeFor((Local) leftOp), s);
+					relHT.add(s, rightOp.getType());
 				} else if(rightOp instanceof CastExpr){
 					Immediate op = (Immediate) ((CastExpr) rightOp).getOp();
 					MobjVarAsgnInst(method, nodeFor((Local) leftOp), nodeFor(op));
@@ -376,25 +428,10 @@ public class PAGBuilder extends JavaAnalysis
 
 	void populateCallgraph()
 	{
-        DomI domI = (DomI) ClassicProject.g().getTrgt("I");
-        DomM domM = (DomM) ClassicProject.g().getTrgt("M");
-
 		CallGraph cg = Scene.v().getCallGraph();
-		Iterator<Edge> edgeIt = cg.listener();
-		while(edgeIt.hasNext()){
-			Edge edge = edgeIt.next();
-			if(!edge.isExplicit())
-				continue;
-			Stmt stmt = edge.srcStmt();
-			int stmtIdx = domI.getOrAdd(stmt);
-			//SootMethod tgt = (SootMethod) edge.tgt();
-			//relChaIM.add(stmtIdx, domM.indexOf(tgt));
-		}
-		domI.save();
-
 		ProgramRel relChaIM = (ProgramRel) ClassicProject.g().getTrgt("chaIM");
         relChaIM.zero();
-		edgeIt = cg.listener();
+		Iterator<Edge> edgeIt = cg.listener();
 		while(edgeIt.hasNext()){
 			Edge edge = edgeIt.next();
 			if(!edge.isExplicit())
@@ -402,7 +439,7 @@ public class PAGBuilder extends JavaAnalysis
 			Stmt stmt = edge.srcStmt();
 			//int stmtIdx = domI.getOrAdd(stmt);
 			SootMethod tgt = (SootMethod) edge.tgt();
-			System.out.println("stmt: "+stmt+" tgt: "+tgt);
+			//System.out.println("stmt: "+stmt+" tgt: "+tgt);
 			relChaIM.add(stmt, tgt);
 		}
 		relChaIM.save();
@@ -450,25 +487,30 @@ public class PAGBuilder extends JavaAnalysis
 		populateMethods();
 		populateFields();
 		populateTypes();
-		populateCallgraph();
 
 		domH = (DomH) ClassicProject.g().getTrgt("H");
 		domV = (DomV) ClassicProject.g().getTrgt("V");
 		domZ = (DomZ) ClassicProject.g().getTrgt("Z");
-		relVT = (ProgramRel) ClassicProject.g().getTrgt("VT");
-        relVT.zero();
+		domI = (DomI) ClassicProject.g().getTrgt("I");
 
+		List<MethodPAGBuilder> mpagBuilders = new ArrayList();
 		Iterator mIt = program.getMethods().listener();
 		while(mIt.hasNext()){
 			SootMethod m = (SootMethod) mIt.next();
 			MethodPAGBuilder mpagBuilder = new MethodPAGBuilder(m);
-			if(m.isConcrete()){
-				mpagBuilder.visitBody();
-			}
+			mpagBuilder.pass1();
+			mpagBuilders.add(mpagBuilder);
 		}
 		domH.save();
 		domZ.save();
 		domV.save();
-		relVT.save();
+		domI.save();
+
+		openRels();
+		for(MethodPAGBuilder mpagBuilder : mpagBuilders)
+			mpagBuilder.pass2();
+		saveRels();
+
+		populateCallgraph();
 	}
 }
