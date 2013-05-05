@@ -47,7 +47,8 @@ import java.util.*;
 				 "MmethArg", "MmethRet", 
 				 "IinvkRet", "IinvkArg", 
 				 "VT", "chaIM",
-				 "HT" },
+				 "HT",
+				 "MI", "MH"},
        namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F",
 						"MobjValAsgnInst", "MobjVarAsgnInst", 
 						"MgetInstFldInst", "MputInstFldInst", 
@@ -55,7 +56,8 @@ import java.util.*;
 						"MmethArg", "MmethRet", 
 						"IinvkRet", "IinvkArg", 
 						"VT", "chaIM",
-						"HT" },
+						"HT",
+						"MI", "MH"},
        types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class,
 				 ProgramRel.class, ProgramRel.class,
 				 ProgramRel.class, ProgramRel.class,
@@ -63,21 +65,24 @@ import java.util.*;
 				 ProgramRel.class, ProgramRel.class,
 				 ProgramRel.class, ProgramRel.class,
 				 ProgramRel.class, ProgramRel.class,
-	             ProgramRel.class },
+	             ProgramRel.class,
+				 ProgramRel.class, ProgramRel.class,},
 	   namesOfSigns = { "MobjValAsgnInst", "MobjVarAsgnInst", 
 						"MgetInstFldInst", "MputInstFldInst", 
 						"MgetStatFldInst", "MputStatFldInst", 
 						"MmethArg", "MmethRet", 
 						"IinvkRet", "IinvkArg", 
 						"VT", "chaIM",
-						"HT" },
+						"HT",
+						"MI", "MH"},
 	   signs = { "M0,V0,H0:M0_V0_H0", "M0,V0,V1:M0_V0xV1",
 				 "M0,V0,V1,F0:F0_M0_V0xV1", "M0,V0,F0,V1:F0_M0_V0xV1",
 				 "M0,V0,F0:F0_M0_V0", "M0,F0,V0:F0_M0_V0",
 				 "M0,Z0,V0:M0_V0_Z0", "M0,Z0,V1:M0_V1_Z0",
 				 "I0,Z0,V0:I0_V0_Z0", "I0,Z0,V1:I0_V1_Z0",
 				 "V0,T0:T0_V0", "I0,M0:I0_M0",
-				 "H0,T0:H0_T0"}
+				 "H0,T0:H0_T0",
+				 "M0,I0:M0_I0", "M0,H0:M0_H0"}
 	   )
 public class PAGBuilder extends JavaAnalysis
 {
@@ -95,6 +100,8 @@ public class PAGBuilder extends JavaAnalysis
 
 	private ProgramRel relVT;
 	private ProgramRel relHT;
+	private ProgramRel relMI;
+	private ProgramRel relMH;
 
 	private DomV domV;
 	private DomH domH;
@@ -129,6 +136,10 @@ public class PAGBuilder extends JavaAnalysis
         relVT.zero();
 		relHT = (ProgramRel) ClassicProject.g().getTrgt("HT");
         relHT.zero();
+		relMI = (ProgramRel) ClassicProject.g().getTrgt("MI");
+        relMI.zero();
+		relMH = (ProgramRel) ClassicProject.g().getTrgt("MH");
+        relMH.zero();
 	}
 	
 	void saveRels()
@@ -145,6 +156,8 @@ public class PAGBuilder extends JavaAnalysis
 		relIinvkArg.save();
 		relVT.save();
 		relHT.save();
+		relMI.save();
+		relMH.save();
 	}
 
 	void MobjValAsgnInst(SootMethod m, LocalVarNode l, Stmt h)
@@ -341,6 +354,7 @@ public class PAGBuilder extends JavaAnalysis
 			if(s.containsInvokeExpr()){
 				InvokeExpr ie = s.getInvokeExpr();
 				int numArgs = ie.getArgCount();
+				relMI.add(method, s);
 
 				//handle receiver
 				int j = 0;
@@ -404,6 +418,7 @@ public class PAGBuilder extends JavaAnalysis
 				if(rightOp instanceof AnyNewExpr){
 					MobjValAsgnInst(method, nodeFor((Local) leftOp), s);
 					relHT.add(s, rightOp.getType());
+					relMH.add(method, s);
 				} else if(rightOp instanceof CastExpr){
 					Immediate op = (Immediate) ((CastExpr) rightOp).getOp();
 					MobjVarAsgnInst(method, nodeFor((Local) leftOp), nodeFor(op));
