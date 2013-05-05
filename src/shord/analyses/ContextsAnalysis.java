@@ -180,8 +180,19 @@ public class ContextsAnalysis extends JavaAnalysis
                 relCI.add(newCtxt, invk);
 			}
 		}
-
         relCI.save();
+
+		for(int hIdx = 0; hIdx < HtoM.length; hIdx++){
+			int mIdx = HtoM[hIdx];
+			Unit alloc = HtoQ[hIdx];
+            Set<Ctxt> ctxts = methToCtxts[mIdx];
+            for (Ctxt oldCtxt : ctxts) {
+                Unit[] oldElems = oldCtxt.getElems();
+                Unit[] newElems = combine(K, alloc, oldElems);
+                Ctxt newCtxt = domC.setCtxt(newElems);
+				relCC.add(oldCtxt, newCtxt);
+            }
+        }
 		relCC.save();
 	}
 

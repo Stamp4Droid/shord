@@ -1,0 +1,76 @@
+# name=contextify-dlog
+
+.include "M.dom"
+.include "I.dom"
+.include "V.dom"
+.include "C.dom"
+.include "F.dom"
+.include "H.dom"
+.include "Z.dom"
+
+.bddvarorder F0_I0xM0_V0xV1_H0_C0xC1_Z0_Z1
+
+## INPUT RELATIONS ============================================================
+
+# Assignment operations - reference-type variables
+MobjValAsgnInst(m:M,l:V,h:H) input
+MobjVarAsgnInst(m:M,l:V,r:V) input
+MgetInstFldInst(m:M,l:V,b:V,f:F) input
+MputInstFldInst(m:M,b:V,f:F,r:V) input
+MgetStatFldInst(m:M,l:V,f:F) input
+MputStatFldInst(m:M,f:F,r:V) input
+
+# Method call information - reference-type variables
+MmethArg(m:M0,z:Z0,v:V0) input
+MmethRet(m:M0,z:Z0,v:V1) input
+IinvkRet(i:I0,n:Z0,v:V0) input
+IinvkArg(i:I0,n:Z0,v:V1) input
+
+# Calling context information
+chaIM(i:I,m:M) input
+CtxtCtxt(c:C,d:C) input # d = [* c]
+CtxtInvki(c:C,i:I) input # c = [i ...]
+MethCtxt(c:C,m:M) input
+CtxtAbsObj(c:C,h:H) input
+
+## INTERMEDIATE RELATIONS =====================================================
+
+cfl_cs_retCopy(i:I,u:V,m:M,v:V)
+cfl_cs_argCopy(i:I,u:V,m:M,v:V)
+
+## OUTPUT RELATIONS ===========================================================
+
+# Call graph calculation
+cfl_cs_callEdges(c:C,i:I,d:C,m:M) output # in context c, call site i can call method m in context d
+
+# Program facts - reference-type variables
+cfl_cs_alloc(c:C,l:V,o:C) output
+cfl_cs_assign(c:C,l:V,r:V) output
+cfl_cs_loadInst(c:C,l:V,b:V,f:F) output
+cfl_cs_loadStat(c:C,l:V,f:F) output
+cfl_cs_storeInst(c:C,b:V,f:F,r:V) output
+cfl_cs_storeStat(c:C,f:F,r:V) output
+
+cfl_cs_assignInterproc(c:C0,u:V0,d:C1,v:V1) output
+
+## RULES ======================================================================
+
+# Call graph calculation
+# Don't need to add MethCtxt here, because it's already taken into
+# consideration when building the relations.
+cfl_cs_callEdges(c,i,d,m) :- chaIM(i,m), CtxtCtxt(c,d), CtxtInvki(d,i).
+
+# Program facts - reference-type variables
+cfl_cs_alloc(c,l,d)             :- MethCtxt(c,m), MobjValAsgnInst(m,l,h), CtxtCtxt(c,d), CtxtAbsObj(d,h).
+cfl_cs_assign(c,l,r)            :- MethCtxt(c,m), MobjVarAsgnInst(m,l,r).
+
+cfl_cs_loadInst(c,l,b,f)        :- MethCtxt(c,m), MgetInstFldInst(m,l,b,f).
+cfl_cs_loadStat(c,l,f)          :- MethCtxt(c,m), MgetStatFldInst(m,l,f).
+cfl_cs_storeInst(c,b,f,r)       :- MethCtxt(c,m), MputInstFldInst(m,b,f,r).
+cfl_cs_storeStat(c,f,r)         :- MethCtxt(c,m), MputStatFldInst(m,f,r).
+
+cfl_cs_argCopy(i,u,m,v)         :- chaIM(i,m), IinvkArg(i,z,u), MmethArg(m,z,v).
+cfl_cs_retCopy(i,u,m,v)         :- chaIM(i,m), IinvkRet(i,z,u), MmethRet(m,z,v).
+
+cfl_cs_assignInterproc(d,v,c,u) :- cfl_cs_argCopy(i,u,m,v), cfl_cs_callEdges(c,i,d,m).
+cfl_cs_assignInterproc(c,u,d,v) :- cfl_cs_retCopy(i,u,m,v), cfl_cs_callEdges(c,i,d,m).
