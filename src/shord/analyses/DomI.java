@@ -1,34 +1,12 @@
 package shord.analyses;
 
-import soot.SootClass;
-import soot.SootMethod;
 import soot.Unit;
-
-import shord.program.visitors.IInvokeInstVisitor;
-import shord.analyses.DomM;
-import shord.project.ClassicProject;
 import shord.project.analyses.ProgramDom;
-
-import chord.project.Chord;
-import chord.project.Config;
-
-
 /**
- * Domain of method invocation quads.
+ * Domain of method invocation stmts
  * 
- * @author Mayur Naik (mhn@cs.stanford.edu)
+ * @author Saswat Anand
  */
-@Chord(name = "I")
-public class DomI extends ProgramDom<Unit> implements IInvokeInstVisitor 
+public class DomI extends ProgramDom<Unit>
 {
-    @Override
-    public void visit(SootClass c) { }
-
-    @Override
-    public void visit(SootMethod m) { }
-
-    @Override
-    public void visitInvokeInst(Unit q) {
-        add(q);
-    }
 }
