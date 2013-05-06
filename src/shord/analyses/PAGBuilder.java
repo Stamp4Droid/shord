@@ -1,6 +1,6 @@
 package shord.analyses;
 
-import soot.RefLikeType;
+import soot.SootClass;
 import soot.SootMethod;
 import soot.Scene;
 import soot.SootField;
@@ -10,6 +10,9 @@ import soot.Value;
 import soot.Unit;
 import soot.Body;
 import soot.Type;
+import soot.RefLikeType;
+import soot.PrimType;
+import soot.VoidType;
 import soot.jimple.Constant;
 import soot.jimple.Stmt;
 import soot.jimple.AssignStmt;
@@ -24,6 +27,8 @@ import soot.jimple.InstanceFieldRef;
 import soot.jimple.ParameterRef;
 import soot.jimple.ThisRef;
 import soot.jimple.ArrayRef;
+import soot.jimple.BinopExpr;
+import soot.jimple.NegExpr;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 import soot.jimple.spark.pag.SparkField;
@@ -40,7 +45,7 @@ import chord.project.Chord;
 import java.util.*;
 
 @Chord(name="base-java", 
-	   produces={"M", "Z", "I", "H", "V", "T", "F", 
+	   produces={"M", "Z", "I", "H", "V", "T", "F", "U",
 				 "MobjValAsgnInst", "MobjVarAsgnInst", 
 				 "MgetInstFldInst", "MputInstFldInst", 
 				 "MgetStatFldInst", "MputStatFldInst", 
@@ -48,25 +53,14 @@ import java.util.*;
 				 "IinvkRet", "IinvkArg", 
 				 "VT", "chaIM",
 				 "HT",
-				 "MI", "MH"},
-       namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F",
-						"MobjValAsgnInst", "MobjVarAsgnInst", 
-						"MgetInstFldInst", "MputInstFldInst", 
-						"MgetStatFldInst", "MputStatFldInst", 
-						"MmethArg", "MmethRet", 
-						"IinvkRet", "IinvkArg", 
-						"VT", "chaIM",
-						"HT",
-						"MI", "MH"},
-       types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class,
-				 ProgramRel.class, ProgramRel.class,
-				 ProgramRel.class, ProgramRel.class,
-				 ProgramRel.class, ProgramRel.class,
-				 ProgramRel.class, ProgramRel.class,
-				 ProgramRel.class, ProgramRel.class,
-				 ProgramRel.class, ProgramRel.class,
-	             ProgramRel.class,
-				 ProgramRel.class, ProgramRel.class,},
+				 "MI", "MH",
+				 "MprimDataDep", 
+				 "MgetInstFldPrimInst", "MputInstFldPrimInst",
+				 "MgetStatFldPrimInst", "MputStatFldPrimInst",
+				 "MmethPrimArg", "MmethPrimRet", 
+				 "IinvkPrimRet", "IinvkPrimArg" },
+       namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U" },
+       types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class },
 	   namesOfSigns = { "MobjValAsgnInst", "MobjVarAsgnInst", 
 						"MgetInstFldInst", "MputInstFldInst", 
 						"MgetStatFldInst", "MputStatFldInst", 
@@ -74,7 +68,12 @@ import java.util.*;
 						"IinvkRet", "IinvkArg", 
 						"VT", "chaIM",
 						"HT",
-						"MI", "MH"},
+						"MI", "MH",
+						"MprimDataDep", 
+						"MgetInstFldPrimInst", "MputInstFldPrimInst",
+						"MgetStatFldPrimInst", "MputStatFldPrimInst",
+						"MmethPrimArg", "MmethPrimRet", 
+						"IinvkPrimRet", "IinvkPrimArg" },
 	   signs = { "M0,V0,H0:M0_V0_H0", "M0,V0,V1:M0_V0xV1",
 				 "M0,V0,V1,F0:F0_M0_V0xV1", "M0,V0,F0,V1:F0_M0_V0xV1",
 				 "M0,V0,F0:F0_M0_V0", "M0,F0,V0:F0_M0_V0",
@@ -82,7 +81,12 @@ import java.util.*;
 				 "I0,Z0,V0:I0_V0_Z0", "I0,Z0,V1:I0_V1_Z0",
 				 "V0,T0:T0_V0", "I0,M0:I0_M0",
 				 "H0,T0:H0_T0",
-				 "M0,I0:M0_I0", "M0,H0:M0_H0"}
+				 "M0,I0:M0_I0", "M0,H0:M0_H0",
+				 "M0,U0,U1:M0_U0xU1",
+				 "M0,U0,V0,F0:M0_U0_V0_F0", "M0,V0,F0,U0:M0_U0_V0_F0",
+				 "M0,U0,F0:M0_U0_F0", "M0,F0,U0:M0_U0_F0",
+				 "M0,Z0,U0:M0_U0_Z0", "M0,Z0,U1:M0_U1_Z0",
+				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U1:I0_U1_Z0" }
 	   )
 public class PAGBuilder extends JavaAnalysis
 {
@@ -98,12 +102,24 @@ public class PAGBuilder extends JavaAnalysis
     private ProgramRel relIinvkRet;//(i:I,n:Z,v:V)
     private ProgramRel relIinvkArg;//(i:I,n:Z,v:V)
 
+	private ProgramRel relMprimDataDep;//(m:M,l:U,r:U1)
+	private ProgramRel relMgetInstFldPrimInst;//(m:M,l:U,b:V,f:F)
+	private ProgramRel relMputInstFldPrimInst;//(m:M,b:V,f:F,r:U)
+	private ProgramRel relMgetStatFldPrimInst;//(m:M,l:U,f:F)
+	private ProgramRel relMputStatFldPrimInst;//(m:M,f:F,r:U)
+
+    private ProgramRel relMmethPrimArg;//(m:M,z:Z,u:U)
+    private ProgramRel relMmethPrimRet;//(m:M,z:Z,u:U)
+    private ProgramRel relIinvkPrimRet;//(i:I,n:Z,u:U)
+    private ProgramRel relIinvkPrimArg;//(i:I,n:Z,u:U)
+
 	private ProgramRel relVT;
 	private ProgramRel relHT;
 	private ProgramRel relMI;
 	private ProgramRel relMH;
 
 	private DomV domV;
+	private DomU domU;
 	private DomH domH;
 	private DomZ domZ;
 	private DomI domI;
@@ -140,6 +156,24 @@ public class PAGBuilder extends JavaAnalysis
         relMI.zero();
 		relMH = (ProgramRel) ClassicProject.g().getTrgt("MH");
         relMH.zero();
+		relMprimDataDep = (ProgramRel) ClassicProject.g().getTrgt("MprimDataDep");
+		relMprimDataDep.zero();
+		relMgetInstFldPrimInst = (ProgramRel) ClassicProject.g().getTrgt("MgetInstFldPrimInst");
+		relMgetInstFldPrimInst.zero();
+		relMputInstFldPrimInst = (ProgramRel) ClassicProject.g().getTrgt("MputInstFldPrimInst");
+		relMputInstFldPrimInst.zero();
+		relMgetStatFldPrimInst = (ProgramRel) ClassicProject.g().getTrgt("MgetStatFldPrimInst");
+		relMgetStatFldPrimInst.zero();
+		relMputStatFldPrimInst = (ProgramRel) ClassicProject.g().getTrgt("MputStatFldPrimInst");
+		relMputStatFldPrimInst.zero();
+		relMmethPrimArg = (ProgramRel) ClassicProject.g().getTrgt("MmethPrimArg");
+		relMmethPrimArg.zero();
+		relMmethPrimRet = (ProgramRel) ClassicProject.g().getTrgt("MmethPrimRet");
+		relMmethPrimRet.zero();
+		relIinvkPrimRet = (ProgramRel) ClassicProject.g().getTrgt("IinvkPrimRet");
+		relIinvkPrimRet.zero();
+		relIinvkPrimArg = (ProgramRel) ClassicProject.g().getTrgt("IinvkPrimArg");
+		relIinvkPrimArg.zero();
 	}
 	
 	void saveRels()
@@ -158,6 +192,15 @@ public class PAGBuilder extends JavaAnalysis
 		relHT.save();
 		relMI.save();
 		relMH.save();
+		relMprimDataDep.save();
+		relMgetInstFldPrimInst.save();
+		relMputInstFldPrimInst.save();
+		relMgetStatFldPrimInst.save();
+		relMputStatFldPrimInst.save();
+		relMmethPrimArg.save();
+		relMmethPrimRet.save();
+		relIinvkPrimRet.save();
+		relIinvkPrimArg.save();
 	}
 
 	void MobjValAsgnInst(SootMethod m, LocalVarNode l, Stmt h)
@@ -229,6 +272,69 @@ public class PAGBuilder extends JavaAnalysis
 		relIinvkRet.add(invkUnit, new Integer(0), v);
 	}
 
+	void MprimDataDep(SootMethod m, VarNode l, VarNode r)
+	{
+		if(l == null || r == null)
+			return;
+		relMprimDataDep.add(m, l, r);
+	}
+
+	void MgetInstFldPrimInst(SootMethod m, LocalVarNode l, LocalVarNode b, SparkField f)
+	{
+		if(b == null || l == null)
+			return;
+		relMgetInstFldPrimInst.add(m, l, b, f);
+	}
+
+	void MputInstFldPrimInst(SootMethod m, LocalVarNode b, SparkField f, LocalVarNode r)
+	{
+		if(b == null || r == null)
+			return;
+		relMputInstFldPrimInst.add(m, b, f, r);
+	}
+
+	void MgetStatFldPrimInst(SootMethod m, LocalVarNode l, SootField f)
+	{
+		if(l == null)
+			return;
+		relMgetStatFldPrimInst.add(m, l, f);
+	}
+
+	void MputStatFldPrimInst(SootMethod m, SootField f, LocalVarNode r)
+	{
+		if(r == null)
+			return;
+		relMputStatFldPrimInst.add(m, f, r);
+	}
+
+	void MmethPrimArg(SootMethod m, int index, VarNode v)
+	{
+		if(v == null)
+			return;
+		relMmethPrimArg.add(m, new Integer(index), v);
+	}
+
+	void MmethPrimRet(SootMethod m, RetVarNode v)
+	{
+		if(v == null)
+			return;
+		relMmethPrimRet.add(m, new Integer(0), v);
+	}
+	
+	void IinvkPrimArg(Unit invkUnit, int index, LocalVarNode v)
+	{
+		if(v == null)
+			return;
+		relIinvkPrimArg.add(invkUnit, new Integer(index), v);
+	}
+
+	void IinvkPrimRet(Unit invkUnit, LocalVarNode v)
+	{
+		if(v == null)
+			return;
+		relIinvkPrimRet.add(invkUnit, new Integer(0), v);
+	}
+
     public void growZIfNeeded(int newSize) 
 	{
         int oldSize = maxArgs;
@@ -266,20 +372,27 @@ public class PAGBuilder extends JavaAnalysis
 				paramVars = new ParamVarNode[count];
 				int j = 0;
 				for(Type pType : method.getParameterTypes()){
-					ParamVarNode node = null;
+					ParamVarNode node = new ParamVarNode(method, j);
 					if(pType instanceof RefLikeType){
-						node = new ParamVarNode(method, j);
 						domV.add(node);
-					}
+					} else if(pType instanceof PrimType){
+						domU.add(node);
+					} else
+						assert false;
 					paramVars[j++] = node;
 				}
 			}
 			
 			Type retType = method.getReturnType();
-			if(retType instanceof RefLikeType) {
+			if(!(retType instanceof VoidType)){
 				retVar = new RetVarNode(method);
-				domV.add(retVar);
-			}
+				if(retType instanceof RefLikeType) {
+					domV.add(retVar);
+				} else if(retType instanceof PrimType) {
+					domU.add(retVar);
+				} else
+					assert false;
+			} 
 
 			if(!method.isConcrete())
 				return;
@@ -287,11 +400,15 @@ public class PAGBuilder extends JavaAnalysis
 			localToVarNode = new HashMap();
 			Body body = method.retrieveActiveBody();
 			for(Local l : body.getLocals()){
-				if(!(l.getType() instanceof RefLikeType)) 
-					continue;
-				LocalVarNode node = new LocalVarNode(l);
-				localToVarNode.put(l, node);
-				domV.add(node);
+				Type lType = l.getType();
+				if(lType instanceof RefLikeType || lType instanceof PrimType){
+					LocalVarNode node = new LocalVarNode(l);
+					localToVarNode.put(l, node);
+					if(lType instanceof RefLikeType)
+						domV.add(node);
+					else
+						domU.add(node);
+				}
 			}
 
 			for(Unit unit : body.getUnits()){
@@ -316,24 +433,36 @@ public class PAGBuilder extends JavaAnalysis
 			
 			if(paramVars != null){
 				for(int j = 0; j < paramVars.length; j++){
+					Type paramType = method.getParameterType(j);
 					ParamVarNode node = paramVars[j];
-					if(node != null){
+					if(paramType instanceof RefLikeType){
 						MmethArg(method, i, node);
-						relVT.add(node, method.getParameterType(j));
-					}
+						relVT.add(node, paramType);
+					} else if(paramType instanceof PrimType){
+						MmethPrimArg(method, i, node);
+					} else
+						assert false;
 					i++;
 				}
 			}
 			
 			if(retVar != null){
-				MmethRet(method, retVar);
-				relVT.add(retVar, method.getReturnType());
+				Type retType = method.getReturnType();
+				if(retType instanceof RefLikeType){
+					MmethRet(method, retVar);
+					relVT.add(retVar, retType);
+				} else if(retType instanceof PrimType){
+					MmethPrimRet(method, retVar);
+				} else
+					assert false;
 			}
 
 			if(!method.isConcrete())
 				return;
 			for(Map.Entry<Local,LocalVarNode> e : localToVarNode.entrySet()){
-				relVT.add(e.getValue(), e.getKey().getType());
+				Type lType = e.getKey().getType();
+				if(lType instanceof RefLikeType)
+					relVT.add(e.getValue(), lType);
 			}
 
 			Body body = method.retrieveActiveBody();
@@ -367,33 +496,57 @@ public class PAGBuilder extends JavaAnalysis
 				//handle args
 				for(int i = 0; i < numArgs; i++,j++){
 					Immediate arg = (Immediate) ie.getArg(i);
-					IinvkArg(s, j, nodeFor(arg));
+					Type argType = arg.getType();
+					if(argType instanceof RefLikeType)
+						IinvkArg(s, j, nodeFor(arg));
+					else if(argType instanceof PrimType)
+						IinvkPrimArg(s, j, nodeFor(arg));
 				}
 				
 				//return value
 				if(s instanceof AssignStmt){
-					IinvkRet(s, nodeFor((Local) ((AssignStmt) s).getLeftOp()));
+					Local rhs = (Local) ((AssignStmt) s).getLeftOp();
+					Type rhsType = rhs.getType();
+					if(rhsType instanceof RefLikeType)
+						IinvkRet(s, nodeFor(rhs));
+					else if(rhsType instanceof PrimType)
+						IinvkPrimRet(s, nodeFor(rhs));
 				}
 			}else if(s.containsFieldRef()){
 				AssignStmt as = (AssignStmt) s;
 				Value leftOp = as.getLeftOp();
 				FieldRef fr = s.getFieldRef();
 				SootField field = fr.getField();
+				Type fieldType = field.getType();
 				if(leftOp instanceof Local){
 					//load
 					if(field.isStatic()){
-						MgetStatFldInst(method, nodeFor((Local) leftOp), field);
+						if(fieldType instanceof RefLikeType)
+							MgetStatFldInst(method, nodeFor((Local) leftOp), field);
+						else if(fieldType instanceof PrimType)
+							MgetStatFldPrimInst(method, nodeFor((Local) leftOp), field);
 					} else{
-						MgetInstFldInst(method, nodeFor((Local) leftOp), nodeFor((Immediate) ((InstanceFieldRef) fr).getBase()), field);
+						Immediate base = (Immediate) ((InstanceFieldRef) fr).getBase();
+						if(fieldType instanceof RefLikeType)
+							MgetInstFldInst(method, nodeFor((Local) leftOp), nodeFor(base), field);
+						else if(fieldType instanceof PrimType)
+							MgetInstFldPrimInst(method, nodeFor((Local) leftOp), nodeFor(base), field);
 					}
 				}else{
 					//store
 					assert leftOp == fr;
 					Immediate rightOp = (Immediate) as.getRightOp();
 					if(field.isStatic()){
-						MputStatFldInst(method, field, nodeFor(rightOp));
+						if(fieldType instanceof RefLikeType)
+							MputStatFldInst(method, field, nodeFor(rightOp));
+						else if(fieldType instanceof PrimType)
+							MputStatFldPrimInst(method, field, nodeFor(rightOp));
 					} else{
-						MputInstFldInst(method, nodeFor((Immediate) ((InstanceFieldRef) fr).getBase()), field, nodeFor(rightOp));
+						Immediate base = (Immediate) ((InstanceFieldRef) fr).getBase();
+						if(fieldType instanceof RefLikeType)
+							MputInstFldInst(method, nodeFor(base), field, nodeFor(rightOp));
+						else if(fieldType instanceof PrimType)
+							MputInstFldPrimInst(method, nodeFor(base), field, nodeFor(rightOp));		
 					}
 				}
 			}else if(s.containsArrayRef()){
@@ -404,29 +557,60 @@ public class PAGBuilder extends JavaAnalysis
 				SparkField field = ArrayElement.v();
 				if(leftOp instanceof Local){
 					//array read
-					MgetInstFldInst(method, nodeFor((Local) leftOp), nodeFor(base), field);
+					Type type = leftOp.getType();
+					if(type instanceof RefLikeType)
+						MgetInstFldInst(method, nodeFor((Local) leftOp), nodeFor(base), field);
+					else if(type instanceof PrimType)
+						MgetInstFldPrimInst(method, nodeFor((Local) leftOp), nodeFor(base), field);
 				}else{
 					//array write
 					assert leftOp == ar;
 					Immediate rightOp = (Immediate) as.getRightOp();
-					MputInstFldInst(method, nodeFor(base), field, nodeFor(rightOp));
+					Type type = rightOp.getType();
+					if(type instanceof RefLikeType)
+						MputInstFldInst(method, nodeFor(base), field, nodeFor(rightOp));
+					else if(type instanceof PrimType)
+						MputInstFldPrimInst(method, nodeFor(base), field, nodeFor(rightOp));
 				}
 			}else if(s instanceof AssignStmt){
 				AssignStmt as = (AssignStmt) s;
 				Value leftOp = as.getLeftOp();
 				Value rightOp = as.getRightOp();
+				Type type = leftOp.getType();
 				if(rightOp instanceof AnyNewExpr){
 					MobjValAsgnInst(method, nodeFor((Local) leftOp), s);
 					relHT.add(s, rightOp.getType());
 					relMH.add(method, s);
 				} else if(rightOp instanceof CastExpr){
 					Immediate op = (Immediate) ((CastExpr) rightOp).getOp();
-					MobjVarAsgnInst(method, nodeFor((Local) leftOp), nodeFor(op));
+					if(type instanceof RefLikeType)
+						MobjVarAsgnInst(method, nodeFor((Local) leftOp), nodeFor(op));
+					else if(type instanceof PrimType)
+						MprimDataDep(method, nodeFor((Local) leftOp), nodeFor(op));
 				} else if(leftOp instanceof Local && rightOp instanceof Immediate){
-					MobjVarAsgnInst(method, nodeFor((Local) leftOp), nodeFor((Immediate) rightOp));
+					if(type instanceof RefLikeType)
+						MobjVarAsgnInst(method, nodeFor((Local) leftOp), nodeFor((Immediate) rightOp));
+					else if(type instanceof PrimType)
+						MprimDataDep(method, nodeFor((Local) leftOp), nodeFor((Immediate) rightOp));
+				} if(rightOp instanceof NegExpr){
+					MprimDataDep(method, nodeFor((Local) leftOp), nodeFor((Immediate) ((NegExpr) rightOp).getOp()));
+				}else if(rightOp instanceof BinopExpr){
+					LocalVarNode leftNode = nodeFor((Local) leftOp);
+					BinopExpr binExpr = (BinopExpr) rightOp;
+					Immediate op1 = (Immediate) binExpr.getOp1();
+					if(op1.getType() instanceof PrimType)
+						MprimDataDep(method, leftNode, nodeFor(op1));	
+					Immediate op2 = (Immediate) binExpr.getOp2();
+					if(op2.getType() instanceof PrimType)
+						MprimDataDep(method, leftNode, nodeFor(op2));	
 				}
 			}else if(s instanceof ReturnStmt){
-				MobjVarAsgnInst(method, retVar, nodeFor((Immediate) ((ReturnStmt) s).getOp()));
+				Type retType = method.getReturnType();
+				Immediate retOp = (Immediate) ((ReturnStmt) s).getOp();
+				if(retType instanceof RefLikeType)
+					MobjVarAsgnInst(method, retVar, nodeFor(retOp));
+				else if(retType instanceof PrimType)
+					MprimDataDep(method, retVar, nodeFor(retOp));
 			}else if(s instanceof IdentityStmt){
 				IdentityStmt is = (IdentityStmt) s;
 				Local leftOp = (Local) is.getLeftOp();
@@ -435,7 +619,11 @@ public class PAGBuilder extends JavaAnalysis
 					MobjVarAsgnInst(method, nodeFor(leftOp), thisVar);
 				} else if(rightOp instanceof ParameterRef){
 					int index = ((ParameterRef) rightOp).getIndex();
-					MobjVarAsgnInst(method, nodeFor(leftOp), paramVars[index]);
+					Type type = leftOp.getType();
+					if(type instanceof RefLikeType)
+						MobjVarAsgnInst(method, nodeFor(leftOp), paramVars[index]);
+					else if(type instanceof PrimType)
+						MprimDataDep(method, nodeFor(leftOp), paramVars[index]);
 				}
 			}
 		}
@@ -476,9 +664,10 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		DomF domF = (DomF) ClassicProject.g().getTrgt("F");
 		Program program = Program.g();
-        Iterator<SootField> fieldsIt = program.getFields().iterator();
-		while(fieldsIt.hasNext()){
-            domF.add(fieldsIt.next());
+		for(SootClass klass : program.getClasses()){
+			for(SootField field : klass.getFields()){
+				domF.add(field);
+			}
 		}
 		domF.add(ArrayElement.v());
 		domF.save();
@@ -507,6 +696,7 @@ public class PAGBuilder extends JavaAnalysis
 		domV = (DomV) ClassicProject.g().getTrgt("V");
 		domZ = (DomZ) ClassicProject.g().getTrgt("Z");
 		domI = (DomI) ClassicProject.g().getTrgt("I");
+		domU = (DomU) ClassicProject.g().getTrgt("U");
 
 		List<MethodPAGBuilder> mpagBuilders = new ArrayList();
 		Iterator mIt = program.getMethods().listener();
@@ -520,6 +710,7 @@ public class PAGBuilder extends JavaAnalysis
 		domZ.save();
 		domV.save();
 		domI.save();
+		domU.save();
 
 		openRels();
 		for(MethodPAGBuilder mpagBuilder : mpagBuilders)

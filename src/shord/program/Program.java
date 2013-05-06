@@ -93,10 +93,11 @@ public class Program
 		return (ArrayNumberer<Type>) Scene.v().getTypeNumberer();
 	}
 	
+	/*
 	public ArrayNumberer<SootField> getFields()
 	{
 		return (ArrayNumberer<SootField>) Scene.v().getFieldNumberer();
-	}
+		}*/
 
 	public SootMethod getMainMethod()
 	{
