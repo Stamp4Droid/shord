@@ -18,6 +18,7 @@ cfl_cs_loadStat(c:C,l:V,f:F) input
 cfl_cs_storeInst(c:C,b:V,f:F,r:V) input
 cfl_cs_storeStat(c:C,f:F,r:V) input
 cfl_cs_assignInterproc(c:C,u:V,d:C,v:V) input
+TypeFilter(v:V,o:C) input
 
 ## INTERMEDIATE RELATIONS =====================================================
 
@@ -34,8 +35,10 @@ cs_instFldPt(base:C,f:F,obj:C) output
 # Points-to information
 
 cs_pt(ca,a,o)         :- cfl_cs_alloc(ca,a,o).
-cs_pt(cb,b,o)         :- cfl_cs_assign(cb,b,a), cs_pt(cb,a,o).
-cs_pt(cb,b,o)         :- cfl_cs_assignInterproc(cb,b,ca,a), cs_pt(ca,a,o).
+cs_pt(cb,b,o)         :- cfl_cs_assign(cb,b,a), cs_pt(cb,a,o), TypeFilter(b,o).
+cs_pt(cb,b,o)         :- cfl_cs_assignInterproc(cb,b,ca,a), cs_pt(ca,a,o), TypeFilter(b,o).
+#cs_pt(cb,b,o)         :- cfl_cs_assign(cb,b,a), cs_pt(cb,a,o).
+#cs_pt(cb,b,o)         :- cfl_cs_assignInterproc(cb,b,ca,a), cs_pt(ca,a,o).
 
 cs_instFldPt(o1,f,o2) :- cs_pt(ca,a,o2), cfl_cs_storeInst(ca,p,f,a), cs_pt(ca,p,o1).
 cs_pt(ca,a,o2)        :- cfl_cs_loadInst(ca,a,p,f), cs_pt(ca,p,o1), cs_instFldPt(o1,f,o2).

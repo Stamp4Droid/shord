@@ -13,6 +13,9 @@ import soot.Type;
 import soot.RefLikeType;
 import soot.PrimType;
 import soot.VoidType;
+import soot.NullType;
+import soot.AnySubType;
+import soot.FastHierarchy;
 import soot.jimple.Constant;
 import soot.jimple.Stmt;
 import soot.jimple.AssignStmt;
@@ -52,7 +55,7 @@ import java.util.*;
 				 "MmethArg", "MmethRet", 
 				 "IinvkRet", "IinvkArg", 
 				 "VT", "chaIM",
-				 "HT",
+				 "HT", "HTFilter",
 				 "MI", "MH",
 				 "MprimDataDep", 
 				 "MgetInstFldPrimInst", "MputInstFldPrimInst",
@@ -67,7 +70,7 @@ import java.util.*;
 						"MmethArg", "MmethRet", 
 						"IinvkRet", "IinvkArg", 
 						"VT", "chaIM",
-						"HT",
+						"HT", "HTFilter",
 						"MI", "MH",
 						"MprimDataDep", 
 						"MgetInstFldPrimInst", "MputInstFldPrimInst",
@@ -80,7 +83,7 @@ import java.util.*;
 				 "M0,Z0,V0:M0_V0_Z0", "M0,Z0,V1:M0_V1_Z0",
 				 "I0,Z0,V0:I0_V0_Z0", "I0,Z0,V1:I0_V1_Z0",
 				 "V0,T0:T0_V0", "I0,M0:I0_M0",
-				 "H0,T0:H0_T0",
+				 "H0,T0:H0_T0", "H0,T0:H0_T0",
 				 "M0,I0:M0_I0", "M0,H0:M0_H0",
 				 "M0,U0,U1:M0_U0xU1",
 				 "M0,U0,V0,F0:M0_U0_V0_F0", "M0,V0,F0,U0:M0_U0_V0_F0",
@@ -115,6 +118,7 @@ public class PAGBuilder extends JavaAnalysis
 
 	private ProgramRel relVT;
 	private ProgramRel relHT;
+	private ProgramRel relHTFilter;
 	private ProgramRel relMI;
 	private ProgramRel relMH;
 
@@ -125,6 +129,7 @@ public class PAGBuilder extends JavaAnalysis
 	private DomI domI;
 
 	private int maxArgs = -1;
+	private FastHierarchy fh;
 
 	void openRels()
 	{
@@ -152,6 +157,8 @@ public class PAGBuilder extends JavaAnalysis
         relVT.zero();
 		relHT = (ProgramRel) ClassicProject.g().getTrgt("HT");
         relHT.zero();
+		relHTFilter = (ProgramRel) ClassicProject.g().getTrgt("HTFilter");
+		relHTFilter.zero();
 		relMI = (ProgramRel) ClassicProject.g().getTrgt("MI");
         relMI.zero();
 		relMH = (ProgramRel) ClassicProject.g().getTrgt("MH");
@@ -190,6 +197,7 @@ public class PAGBuilder extends JavaAnalysis
 		relIinvkArg.save();
 		relVT.save();
 		relHT.save();
+		relHTFilter.save();
 		relMI.save();
 		relMH.save();
 		relMprimDataDep.save();
@@ -597,6 +605,14 @@ public class PAGBuilder extends JavaAnalysis
 					MobjValAsgnInst(method, nodeFor((Local) leftOp), s);
 					relHT.add(s, rightOp.getType());
 					relMH.add(method, s);
+					Iterator<Type> typesIt = Program.g().getTypes().iterator();
+					while(typesIt.hasNext()){
+						Type varType = typesIt.next();
+						if(!(varType instanceof RefLikeType))
+							continue;
+						if(canStore(rightOp.getType(), varType))
+							relHTFilter.add(s, varType);
+					}
 				} else if(rightOp instanceof CastExpr){
 					Immediate op = (Immediate) ((CastExpr) rightOp).getOp();
 					if(type instanceof RefLikeType)
@@ -698,12 +714,9 @@ public class PAGBuilder extends JavaAnalysis
             domT.add(typesIt.next());
 		domT.save();
 	}
-
-	public void run()
+		
+	void populateDomains(List<MethodPAGBuilder> mpagBuilders)
 	{
-		Program program = Program.g();
-		program.build();
-
 		populateMethods();
 		populateFields();
 		populateTypes();
@@ -714,25 +727,49 @@ public class PAGBuilder extends JavaAnalysis
 		domI = (DomI) ClassicProject.g().getTrgt("I");
 		domU = (DomU) ClassicProject.g().getTrgt("U");
 
-		List<MethodPAGBuilder> mpagBuilders = new ArrayList();
-		Iterator mIt = program.getMethods().listener();
+		Iterator mIt = Program.g().getMethods().listener();
 		while(mIt.hasNext()){
 			SootMethod m = (SootMethod) mIt.next();
 			MethodPAGBuilder mpagBuilder = new MethodPAGBuilder(m);
 			mpagBuilder.pass1();
 			mpagBuilders.add(mpagBuilder);
 		}
+
 		domH.save();
 		domZ.save();
 		domV.save();
 		domI.save();
 		domU.save();
-
+	}
+	
+	void populateRelations(List<MethodPAGBuilder> mpagBuilders)
+	{
 		openRels();
 		for(MethodPAGBuilder mpagBuilder : mpagBuilders)
 			mpagBuilder.pass2();
 		saveRels();
 
 		populateCallgraph();
+	}
+
+	final public boolean canStore(Type objType, Type varType) 
+	{
+        if(varType == objType) return true;
+        if(varType.equals(objType)) return true;
+        if(objType instanceof AnySubType) return true;
+        if(varType instanceof NullType) return false;
+        if(varType instanceof AnySubType) return false;
+        return fh.canStoreType(objType, varType);
+    }
+
+	public void run()
+	{
+		Program program = Program.g();
+		program.build();
+		fh = Scene.v().getOrMakeFastHierarchy();
+		List<MethodPAGBuilder> mpagBuilders = new ArrayList();
+		populateDomains(mpagBuilders);
+		populateRelations(mpagBuilders);
+		fh = null;
 	}
 }
