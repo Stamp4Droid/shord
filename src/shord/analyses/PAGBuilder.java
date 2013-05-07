@@ -220,6 +220,8 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		if(b == null || l == null)
 			return;
+		if(f instanceof SootField && (((SootField) f).getDeclaringClass().isPhantom()))
+		   return;
 		relMgetInstFldInst.add(m, l, b, f);
 	}
 
@@ -227,6 +229,8 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		if(b == null || r == null)
 			return;
+		if(f instanceof SootField && (((SootField) f).getDeclaringClass().isPhantom()))
+		   return;
 		relMputInstFldInst.add(m, b, f, r);
 	}
 
@@ -234,6 +238,8 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		if(l == null)
 			return;
+		if(f instanceof SootField && (((SootField) f).getDeclaringClass().isPhantom()))
+		   return;
 		relMgetStatFldInst.add(m, l, f);
 	}
 
@@ -241,6 +247,8 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		if(r == null)
 			return;
+		if(f instanceof SootField && (((SootField) f).getDeclaringClass().isPhantom()))
+		   return;
 		relMputStatFldInst.add(m, f, r);
 	}
 
@@ -283,6 +291,8 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		if(b == null || l == null)
 			return;
+		if(f instanceof SootField && (((SootField) f).getDeclaringClass().isPhantom()))
+		   return;
 		relMgetInstFldPrimInst.add(m, l, b, f);
 	}
 
@@ -290,6 +300,8 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		if(b == null || r == null)
 			return;
+		if(f instanceof SootField && (((SootField) f).getDeclaringClass().isPhantom()))
+		   return;
 		relMputInstFldPrimInst.add(m, b, f, r);
 	}
 
@@ -297,6 +309,8 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		if(l == null)
 			return;
+		if(f instanceof SootField && (((SootField) f).getDeclaringClass().isPhantom()))
+		   return;
 		relMgetStatFldPrimInst.add(m, l, f);
 	}
 
@@ -304,6 +318,8 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		if(r == null)
 			return;
+		if(f instanceof SootField && (((SootField) f).getDeclaringClass().isPhantom()))
+		   return;
 		relMputStatFldPrimInst.add(m, f, r);
 	}
 
