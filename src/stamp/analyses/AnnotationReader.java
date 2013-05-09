@@ -1,10 +1,7 @@
 package stamp.analyses;
 
-import java.util.Map;
-import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.LinkedList;
 import java.io.InputStream;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -33,107 +30,109 @@ import soot.SootMethod;
 	   )
 public class AnnotationReader extends JavaAnalysis
 {
-	private static Map<String,List<Flow>> flowMap;
+	private ProgramRel relDirectArgArgFlow;
+	private ProgramRel relDirectArgRetFlow;
+	private ProgramRel relDirectArgSinkFlow; 
+	private ProgramRel relDirectRetSinkFlow;
+	private ProgramRel relDirectSrcArgFlow;
+	private ProgramRel relDirectSrcRetFlow;
 
 	private static void readAnnotations() throws IOException
 	{
-		assert flowMap == null;
-		flowMap = new HashMap();
+		DomSRC domSRC = (DomSRC) ClassicProject.g().getTrgt("SRC");
+		DomSINK domSINK = (DomSINK) ClassicProject.g().getTrgt("SINK");
 
+		relDirectArgArgFlow = (ProgramRel) ClassicProject.g().getTrgt("DirectArgArgFlow");
+		relDirectArgRetFlow = (ProgramRel) ClassicProject.g().getTrgt("DirectArgRetFlow");
+		relDirectArgSinkFlow = (ProgramRel) ClassicProject.g().getTrgt("DirectArgSinkFlow");
+		relDirectRetSinkFlow = (ProgramRel) ClassicProject.g().getTrgt("DirectRetSinkFlow");
+		relDirectSrcArgFlow = (ProgramRel) ClassicProject.g().getTrgt("DirectSrcArgFlow");
+		relDirectSrcRetFlow = (ProgramRel) ClassicProject.g().getTrgt("DirectSrcRetFlow");
+
+		List worklist = new Linkedist();
 		BufferedReader reader = new BufferedReader(new FileReader(new File("stamp_annotations.txt")));
 		String line = reader.readLine();
 		while(line != null){
 			final String[] tokens = line.split(" ");
 			String chordMethodSig = tokens[0];
+			int atSymbolIndex = chordMethoSig.indexOf('@');
+			String className = chordMethodSig.substring(atSymbolIndex+1);
+			if(!Scene.v().containsClass(className))
+				continue;
+			SootClass klass = Scene.v().getSootClass(className);
+			String subsig = getSootSubsigFor(chordMethodSig.substring(atSymbolIndex));
+			SootMethod meth = klass.getMethod(subsig);
+			
 			String from = tokens[1];
 			String to = tokens[2];
 
-			List<Flow> flows = flowMap.get(chordMethodSig);
-			if(flows == null){
-				flows = new ArrayList();
-				flowMap.put(chordMethodSig, flows);
-			}
-
-			Flow f = null;
-			try{
-				f = determineFlow(from, to);
-				flows.add(f);
-				//System.out.println("flow: " +chordMethodSig + " " + f);
-			} catch(NumberFormatException e) {
-				System.out.println("Unsupported annotation type "+line);
-				//throw new Error(line, e);
+			boolean src = from.startsWith('$');
+			boolean sink = to.startsWith('!');
+			if(src || sink){
+				if(src)
+					domSRC.add(from);
+				if(sink)
+					domSINK.add(to);
+				if(src && sink){
+					System.out.println("Unsupported annotation type "+line);
+				} else {
+					worklist.add(meth);
+					worklist.add(from);
+					worklist.add(to);
+				} 
+			} else {
+				addFlow(meth, src, sink);
 			}
 			line = reader.readLine();
 		}
 		reader.close();
+		domSRC.save();
+		domSINK.save();
+
+		while(!worklist.isEmpty()){
+			SootMethod meth = (SootMethod) worklist.remove(0);
+			String from = (String) worklist.remove(0);
+			String to = (String) worklist.remove(0);
+			addFlow(meth, from, to);
+		}
+
+		relDirectArgArgFlow.save();	
+		relDirectArgRetFlow.save();
+		relDirectArgSinkFlow.save();
+		relDirectRetSinkFlow.save();
+		relDirectSrcArgFlow.save();
+		relDirectSrcRetFlow.save();
 	}
 
-	private static Flow determineFlow(String from, String to) throws NumberFormatException
+	private static void addFlow(SootMethod meth, String from, String to) //throws NumberFormatException
 	{
 		if(from.charAt(0) == '$') {
 			if(to.equals("-1"))
-				return new RelDirectSrcRetFlow.Tuple(from);
-			return new RelDirectSrcArgFlow.Tuple(from, Integer.parseInt(to));
+				relDirectSrcRetFlow.add(from, meth);
+			else
+				relDirectSrcArgFlow.add(from, meth, Integer.valueOf(to));
 		} else {
 			assert !(from.charAt(0) == '!');
-			Integer fromArgIndex = Integer.parseInt(from);
+			Integer fromArgIndex = Integer.valueOf(from);
 			if(to.charAt(0) == '!'){
 				if(from.equals("-1"))
-					return new RelDirectRetSinkFlow.Tuple(to);
+					relDirectRetSinkFlow.add(meth, to);
 				else
-					return new RelDirectArgSinkFlow.Tuple(fromArgIndex, to);
-			}
-			if(to.equals("-1"))
-				return new RelDirectArgRetFlow.Tuple(fromArgIndex);
-			Integer toArgIndex = Integer.parseInt(to);
-			return new RelDirectArgArgFlow.Tuple(fromArgIndex, toArgIndex);
-		}
-	}
-
-	static Iterable<Flow> flows(SootMethod meth)
-	{
-		if(flowMap == null) {
-			try{
-				readAnnotations();
-			} catch(IOException e) {
-				throw new Error(e);
+					relDirectArgSinkFlow.add(meth, fromArgIndex, to);
+			} else if(to.equals("-1")){
+				relDirectArgRetFlow.add(meth, fromArgIndex);
+			} else {
+				Integer toArgIndex = Integer.valueOf(to);
+				relDirectArgArgFlow.add(meth, fromArgIndex, toArgIndex);
 			}
 		}
-		List<Flow> ret = flowMap.get(meth.toString());
-		if(ret == null)
-			ret = Collections.EMPTY_LIST;
-		return ret;
 	}
-
-	static Iterable<String> srcs(SootMethod meth)
+	
+	String getSootSubsigFor(String chordSubsig)
 	{
-		Iterable<Flow> flows = flows(meth);
-		if(flows == null)
-			return Collections.EMPTY_LIST;
-
-		List<String> ret = new ArrayList();
-
-		for(Flow flow : flows(meth)){
-			String src = flow.src();
-			if(src != null)
-				ret.add(src);
-		}
-		return ret;
-	}
-
-	static Iterable<String> sinks(SootMethod meth)
-	{
-		Iterable<Flow> flows = flows(meth);
-		if(flows == null)
-			return Collections.EMPTY_LIST;
-
-		List<String> ret = new ArrayList();
-
-		for(Flow flow : flows(meth)){
-			String sink = flow.sink();
-			if(sink != null)
-				ret.add(sink);
-		}
-		return ret;
+		String name = chordSubsig.substring(chordSubsig.indexOf(':'));
+		String retType = chordSubsig.substring(chordSubsig.indexOf(')')+1);
+		String paramTypes = chordSubsig.substring(chordSubsig.indexOf('(')+1, chordSubsig.indexOf(')'));
+		
 	}
 }
