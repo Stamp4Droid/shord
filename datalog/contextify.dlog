@@ -7,8 +7,11 @@
 .include "F.dom"
 .include "H.dom"
 .include "Z.dom"
+.include "U.dom"
+.include "SRC.dom"
+.include "SINK.dom"
 
-.bddvarorder F0_I0xM0_V0xV1_H0_C0xC1_Z0_Z1
+.bddvarorder F0_I0xM0_V0xV1_H0_C0xC1_Z0_Z1_U0xU1_SRC0_SINK0
 
 ## INPUT RELATIONS ============================================================
 
@@ -26,6 +29,19 @@ MmethRet(m:M0,z:Z0,v:V1) input
 IinvkRet(i:I0,n:Z0,v:V0) input
 IinvkArg(i:I0,n:Z0,v:V1) input
 
+# Assignment operations - primitive-type variables
+MprimDataDep(m:M0,l:U0,r:U1) input
+MgetInstFldPrimInst(m:M0,l:U0,b:V0,f:F0) input
+MputInstFldPrimInst(m:M0,b:V0,f:F0,r:U0) input
+MgetStatFldPrimInst(m:M0,l:U0,f:F0) input
+MputStatFldPrimInst(m:M0,f:F0,r:U0) input
+
+# Method calls - primitive-type variables
+MmethPrimArg(m:M0,z:Z0,u:U0) input
+MmethPrimRet(m:M0,z:Z0,u:U0) input
+IinvkPrimRet(i:I0,n:Z0,u:U0) input
+IinvkPrimArg(i:I0,n:Z0,u:U0) input
+
 # Calling context information
 chaIM(i:I,m:M) input
 CtxtCtxt(c:C,d:C) input # d = [* c]
@@ -33,10 +49,20 @@ CtxtInvki(c:C,i:I) input # c = [i ...]
 MethCtxt(c:C,m:M) input
 CtxtAbsObj(c:C,h:H) input
 
+# Flow annotations
+#SrcRetFlow(src:SRC0,m:M0) input
+#SrcArgFlow(src:SRC0,m:M0,z:Z0) input
+#ArgSinkFlow(m:M0,z:Z0,sink:SINK0) input
+#ArgRetFlow(m:M0,z:Z0) input
+#ArgArgFlow(m:M0,z0:Z0,z1:Z1) input
+
 ## INTERMEDIATE RELATIONS =====================================================
 
 cfl_cs_retCopy(i:I,u:V,m:M,v:V)
 cfl_cs_argCopy(i:I,u:V,m:M,v:V)
+
+cfl_cs_primRetCopy(i:I,u:U,m:M,v:U)
+cfl_cs_primArgCopy(i:I,u:U,m:M,v:U)
 
 ## OUTPUT RELATIONS ===========================================================
 
@@ -53,6 +79,15 @@ cfl_cs_storeStat(c:C,f:F,r:V) output
 
 cfl_cs_assignInterproc(c:C0,u:V0,d:C1,v:V1) output
 
+# Program facts - primitive-type variables
+cfl_cs_primAssign(c:C,l:U,r:U) output
+cfl_cs_primLoadInst(c:C,l:U,b:V,f:F) output
+cfl_cs_primLoadStat(c:C,l:U,f:F) output
+cfl_cs_primStoreInst(c:C,b:V,f:F,r:U) output
+cfl_cs_primStoreStat(c:C,f:F,r:U) output
+
+cfl_cs_primAssignInterproc(cl:C0,l:U0,cr:C1,r:U1) output
+
 ## RULES ======================================================================
 
 # Call graph calculation
@@ -60,7 +95,10 @@ cfl_cs_assignInterproc(c:C0,u:V0,d:C1,v:V1) output
 # consideration when building the relations.
 cfl_cs_callEdges(c,i,d,m) :- chaIM(i,m), CtxtCtxt(c,d), CtxtInvki(d,i).
 
+#------------------------------------------
 # Program facts - reference-type variables
+#------------------------------------------
+
 cfl_cs_alloc(c,l,d)             :- MethCtxt(c,m), MobjValAsgnInst(m,l,h), CtxtCtxt(c,d), CtxtAbsObj(d,h).
 cfl_cs_assign(c,l,r)            :- MethCtxt(c,m), MobjVarAsgnInst(m,l,r).
 
@@ -74,3 +112,22 @@ cfl_cs_retCopy(i,u,m,v)         :- chaIM(i,m), IinvkRet(i,z,u), MmethRet(m,z,v).
 
 cfl_cs_assignInterproc(d,v,c,u) :- cfl_cs_argCopy(i,u,m,v), cfl_cs_callEdges(c,i,d,m).
 cfl_cs_assignInterproc(c,u,d,v) :- cfl_cs_retCopy(i,u,m,v), cfl_cs_callEdges(c,i,d,m).
+
+#-------------------------------------------------------
+# Program facts - primitive-type variables
+# This covers assignments, binary and unary operations:
+#-------------------------------------------------------
+
+cfl_cs_primAssign(c,l,r)            :- MethCtxt(c,m), MprimDataDep(m,l,r).
+# TODO: Should also include PrimRefDep, for primitive-reference dependencies, e.g. ArrayLength, CheckCast etc.?
+
+cfl_cs_primLoadInst(c,l,b,f)        :- MethCtxt(c,m), MgetInstFldPrimInst(m,l,b,f).
+cfl_cs_primLoadStat(c,l,f)          :- MethCtxt(c,m), MgetStatFldPrimInst(m,l,f).
+cfl_cs_primStoreInst(c,b,f,r)       :- MethCtxt(c,m), MputInstFldPrimInst(m,b,f,r).
+cfl_cs_primStoreStat(c,f,r)         :- MethCtxt(c,m), MputStatFldPrimInst(m,f,r).
+
+cfl_cs_primArgCopy(i,u,m,v)         :- chaIM(i,m), IinvkPrimArg(i,z,u), MmethPrimArg(m,z,v).
+cfl_cs_primRetCopy(i,u,m,v)         :- chaIM(i,m), IinvkPrimRet(i,z,u), MmethPrimRet(m,z,v).
+
+cfl_cs_primAssignInterproc(d,v,c,u) :- cfl_cs_primArgCopy(i,u,m,v), cfl_cs_callEdges(c,i,d,m).
+cfl_cs_primAssignInterproc(c,u,d,v) :- cfl_cs_primRetCopy(i,u,m,v), cfl_cs_callEdges(c,i,d,m).
