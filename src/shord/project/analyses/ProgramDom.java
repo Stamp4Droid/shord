@@ -8,10 +8,8 @@ import java.util.List;
 
 import CnCHJ.api.ItemCollection;
 
-import shord.program.visitors.IClassVisitor;
 import shord.project.ClassicProject;
 import shord.project.ModernProject;
-import shord.project.VisitorHandler;
 
 import chord.bddbddb.Dom;
 import chord.project.ICtrlCollection;
@@ -64,13 +62,7 @@ public class ProgramDom<T> extends Dom<T> implements ITask {
             ClassicProject.g().setTrgtDone(this);
     }
     public void fill() {
-        if (this instanceof IClassVisitor) {
-            VisitorHandler vh = new VisitorHandler(this);
-            vh.visitProgram();
-        } else {
-            throw new RuntimeException("Domain '" + getName() +
-                "' must override method fill().");
-        }
+		throw new RuntimeException("implement");
     }
     /**
      * Provides the XML attributes string of the specified value.

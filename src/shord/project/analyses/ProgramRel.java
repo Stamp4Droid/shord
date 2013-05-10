@@ -5,8 +5,6 @@ import java.io.File;
 
 import shord.project.ClassicProject;
 import shord.project.ModernProject;
-import shord.program.visitors.IClassVisitor;
-import shord.project.VisitorHandler;
 
 import chord.bddbddb.Rel;
 import chord.bddbddb.RelSign;
@@ -26,6 +24,7 @@ import CnCHJ.api.ItemCollection;
  * A program relation is a relation over one or more program domains.
  *
  * @author Mayur Naik (mhn@cs.stanford.edu)
+ * @author Saswat Anand
  */
 public class ProgramRel extends Rel implements ITask {
     private static final String SKIP_TUPLE =
@@ -83,15 +82,12 @@ public class ProgramRel extends Rel implements ITask {
     public void load() {
         super.load(Config.bddbddbWorkDirName);
     }
-    public void fill() {
-        if (this instanceof IClassVisitor) {
-            VisitorHandler vh = new VisitorHandler(this);
-            vh.visitProgram();
-        } else {
-            throw new RuntimeException("Relation '" + name +
-                "' must override method fill().");
-        }
-    }
+
+    public void fill()
+	{
+		throw new RuntimeException("implement");
+	}
+
     public void print() {
         super.print(Config.outDirName);
     }
