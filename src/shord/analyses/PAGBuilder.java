@@ -88,8 +88,8 @@ import java.util.*;
 				 "M0,U0,U1:M0_U0xU1",
 				 "M0,U0,V0,F0:M0_U0_V0_F0", "M0,V0,F0,U0:M0_U0_V0_F0",
 				 "M0,U0,F0:M0_U0_F0", "M0,F0,U0:M0_U0_F0",
-				 "M0,Z0,U0:M0_U0_Z0", "M0,Z0,U1:M0_U1_Z0",
-				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U1:I0_U1_Z0" }
+				 "M0,Z0,U0:M0_U0_Z0", "M0,Z0,U0:M0_U0_Z0",
+				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0" }
 	   )
 public class PAGBuilder extends JavaAnalysis
 {
@@ -684,9 +684,9 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		DomM domM = (DomM) ClassicProject.g().getTrgt("M");
 		Program program = Program.g();
-		Iterator mIt = program.getMethods().listener();
+		Iterator<SootMethod> mIt = program.getMethods();
 		while(mIt.hasNext()){
-			SootMethod m = (SootMethod) mIt.next();
+			SootMethod m = mIt.next();
 			domM.add(m);
 		}
 		domM.save();
@@ -727,7 +727,7 @@ public class PAGBuilder extends JavaAnalysis
 		domI = (DomI) ClassicProject.g().getTrgt("I");
 		domU = (DomU) ClassicProject.g().getTrgt("U");
 
-		Iterator mIt = Program.g().getMethods().listener();
+		Iterator mIt = Scene.v().getReachableMethods().listener();
 		while(mIt.hasNext()){
 			SootMethod m = (SootMethod) mIt.next();
 			MethodPAGBuilder mpagBuilder = new MethodPAGBuilder(m);

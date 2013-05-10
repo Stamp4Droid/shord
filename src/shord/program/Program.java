@@ -83,9 +83,9 @@ public class Program
 		return Scene.v().getClasses();
 	}
 	
-	public ReachableMethods getMethods()
+	public Iterator<SootMethod> getMethods()
 	{
-		return Scene.v().getReachableMethods();
+		return Scene.v().getMethodNumberer().iterator();
 	}
 
 	public ArrayNumberer<Type> getTypes()
