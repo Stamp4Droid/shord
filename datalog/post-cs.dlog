@@ -1,0 +1,77 @@
+## CONFIGURATION ==============================================================
+
+# name=post-cs-dlog
+
+.include "M.dom"
+.include "C.dom"
+.include "V.dom"
+.include "Z.dom"
+.include "SRC.dom"
+.include "SINK.dom"
+.include "U.dom"
+.include "I.dom"
+
+.bddvarorder I0_M0_C0_SRC0_SINK0_V0_V1_Z0_U0
+
+## INPUT RELATIONS ============================================================
+
+# Flow information
+cs_taintedVar(c:C0,src:SRC0,v:V0) input
+cs_taintedPrim(c:C0,src:SRC0,u:U0) input
+cs_srcSinkFlow(src:SRC0,sink:SINK0) input
+
+# Method invocations
+chaIM(i:I0,m:M0) input
+IinvkArg(i:I0,z:Z0,v:V1) input
+IinvkPrimArg(i:I0,z:Z0,u:U0) input
+MethCtxt(c:C,m:M) input
+
+## Stub facts
+#Stub(m:M0) input
+
+# Source/sink method annotations
+SrcRetFlow(src:SRC0,m:M0) input
+SrcArgFlow(src:SRC0,m:M0,z:Z0) input
+ArgSinkFlow(m:M0,z:Z0,sink:SINK0) input
+
+## OUTPUT RELATIONS ===========================================================
+
+# Call graph information
+out_callEdges(i:I,m:M) output
+out_reachableI(i:I) output
+out_reachableM(m:M) output
+
+# Taint flow information
+out_taintedRefVar(src:SRC0,v:V0) output
+out_taintedPrimVar(src:SRC0,u:U0) output
+out_srcSinkFlow(src:SRC0,sink:SINK) output
+
+# Annotations on reachable methods
+out_taintSrc(src:SRC0,m:M0) output
+out_taintSink(sink:SINK0,m:M0) output
+
+## Stub information
+#out_reachableStub(i:I0,m:M0) output
+#out_taintedStub(i:I0,m:M0,z:Z0) output
+
+## RULES ======================================================================
+
+# Call graph information
+out_callEdges(i,m) :- chaIM(i,m).
+out_reachableI(i) :- chaIM(i,_).
+out_reachableM(m) :- MethCtxt(_,m).
+
+# Taint flow information
+out_taintedRefVar(src,v)  :- cs_taintedVar(_,src,v).
+out_taintedPrimVar(src,u) :- cs_taintedPrim(_,src,u).
+out_srcSinkFlow(src,sink) :- cs_srcSinkFlow(src,sink).
+
+# Annotations on reachable methods
+out_taintSrc(src,m) :- chaIM(_,m), SrcRetFlow(src,m).
+out_taintSrc(src,m) :- chaIM(_,m), SrcArgFlow(src,m,_).
+out_taintSink(sink,m) :- chaIM(_,m), ArgSinkFlow(m,_,sink).
+
+## Stub information
+#out_reachableStub(i,m) :- Stub(m), chaIM(i,m).
+#out_taintedStub(i,m,z) :- out_reachableStub(i,m), IinvkArg(i,z,v), out_taintedRefVar(_,v).
+#out_taintedStub(i,m,z) :- out_reachableStub(i,m), IinvkPrimArg(i,z,u), out_taintedPrimVar(_,u).

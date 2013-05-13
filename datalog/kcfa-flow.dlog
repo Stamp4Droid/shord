@@ -1,0 +1,92 @@
+## CONFIGURATION ==============================================================
+
+# name=kcfa-flow-dlog
+
+.include "V.dom"
+.include "U.dom"
+.include "C.dom"
+.include "F.dom"
+.include "SRC.dom"
+.include "SINK.dom"
+
+.bddvarorder F0_V0xV1_C0xC1_U0xU1_SRC0_SINK0
+
+## INPUT RELATIONS ============================================================
+
+# Program facts - primitive-type variables
+cfl_cs_primAssign(c:C,l:U,r:U) input
+cfl_cs_primLoadInst(c:C,l:U,b:V,f:F) input
+cfl_cs_primLoadStat(c:C,l:U,f:F) input
+cfl_cs_primStoreInst(c:C,b:V,f:F,r:U) input
+cfl_cs_primStoreStat(c:C,f:F,r:U) input
+cfl_cs_primAssignInterproc(c:C,u:U,d:C,v:U) input
+
+# Points-to analysis facts
+cs_pt(varc:C,var:V,obj:C) input
+cs_instFldPt(base:C,f:F,obj:C) input
+
+# Taint flow facts - reference-type variables
+cfl_cs_srcFlow(c:C,src:SRC,v:V) input
+cfl_cs_sinkFlow(c:C,v:V,sink:SINK) input
+cfl_cs_passThrough(c:C,from:V,to:V) input
+
+# Taint flow facts - primitive-type variables
+#cfl_cs_primSrcFlow(c:C,src:SRC,u:U) input
+cfl_cs_primFullSrcFlow(c:C,src:SRC,u:U) input
+cfl_cs_primSinkFlow(c:C,u:U,sink:SINK) input
+#cfl_cs_primPassThrough(c:C,from:U,to:U) input
+cfl_cs_primFullPassThrough(c:C,from:U,to:U) input
+
+# Taint flow facts - cross-type passthroughs
+cfl_cs_primRefFlow(c:C,u:U,v:V) input
+#cfl_cs_refPrimFlow(c:C,v:V,u:U) input
+cfl_cs_refPrimFullFlow(c:C,v:V,u:U) input
+
+## INTERMEDIATE RELATIONS =====================================================
+
+# Taint flow facts
+TaintedObj(src:SRC,obj:C)       # heap elements tainted by source labels
+EscapingObj(sink:SINK,obj:C)    # heap elements escaping to sinks
+
+TaintedPrimStatFld(src:SRC,f:F)
+TaintedPrimInstFld(src:SRC,obj:C,f:F)
+
+## OUTPUT RELATIONS ===========================================================
+
+# Taint flow facts
+cs_taintedVar(c:C,src:SRC,v:V) output     # reference vars tainted by source labels
+cs_taintedPrim(c:C,src:SRC,u:U) output    # primitive vars tainted by source labels
+cs_srcSinkFlow(src:SRC,sink:SINK) output  # flow from source to sink
+
+## RULES ======================================================================
+
+# Taint flow information - reference-type variables
+
+TaintedObj(src,o)        :- cfl_cs_srcFlow(vc,src,v), cs_pt(vc,v,o).
+TaintedObj(src,o)        :- cs_pt(c,v2,o), cfl_cs_passThrough(c,v1,v2), cs_taintedVar(c,src,v1).
+TaintedObj(src,o)        :- cs_pt(c,v,o), cfl_cs_primRefFlow(c,u,v), cs_taintedPrim(c,src,u).
+TaintedObj(src,o2)       :- TaintedObj(src,o1), cs_instFldPt(o1,_,o2).
+
+cs_taintedVar(ca,src,a)  :- TaintedObj(src,o), cs_pt(ca,a,o).
+
+EscapingObj(sink,o)      :- cfl_cs_sinkFlow(vc,v,sink), cs_pt(vc,v,o).
+EscapingObj(sink,o2)     :- EscapingObj(sink,o1), cs_instFldPt(o1,_,o2).
+
+cs_srcSinkFlow(src,sink) :- TaintedObj(src,o), EscapingObj(sink,o).
+cs_srcSinkFlow(src,sink) :- TaintedPrimInstFld(src,o,_), EscapingObj(sink,o).
+
+# Taint flow information - primitive-type variables
+
+cs_taintedPrim(c,src,u)     :- cfl_cs_primFullSrcFlow(c,src,u).
+cs_taintedPrim(c,src,l)     :- cfl_cs_primAssign(c,l,r), cs_taintedPrim(c,src,r).
+cs_taintedPrim(cl,src,l)    :- cfl_cs_primAssignInterproc(cl,l,cr,r), cs_taintedPrim(cr,src,r).
+cs_taintedPrim(c,src,u2)    :- cfl_cs_primFullPassThrough(c,u1,u2), cs_taintedPrim(c,src,u1).
+cs_taintedPrim(c,src,u)     :- cfl_cs_refPrimFullFlow(c,v,u), cs_taintedVar(c,src,v).
+
+TaintedPrimStatFld(src,f)   :- cfl_cs_primStoreStat(c,f,r), cs_taintedPrim(c,src,r).
+cs_taintedPrim(c,src,l)     :- cfl_cs_primLoadStat(c,l,f), TaintedPrimStatFld(src,f).
+TaintedPrimInstFld(src,o,f) :- cs_pt(c,b,o), cfl_cs_primStoreInst(c,b,f,r), cs_taintedPrim(c,src,r).
+TaintedPrimInstFld(src,o,_) :- TaintedObj(src,o).
+cs_taintedPrim(c,src,l)     :- cfl_cs_primLoadInst(c,l,a,f), cs_pt(c,a,o), TaintedPrimInstFld(src,o,f).
+
+cs_srcSinkFlow(src,sink)    :- cs_taintedPrim(c,src,u), cfl_cs_primSinkFlow(c,u,sink).

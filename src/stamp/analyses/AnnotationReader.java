@@ -1,16 +1,22 @@
 package stamp.analyses;
 
+import soot.Scene;
+import soot.SootClass;
+import soot.SootMethod;
+import soot.FastHierarchy;
+import soot.util.NumberedString;
+
 import java.util.List;
 import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.io.InputStream;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.File;
-
-import soot.Scene;
-import soot.SootClass;
-import soot.SootMethod;
 
 import shord.project.analyses.ProgramRel;
 import shord.project.analyses.ProgramDom;
@@ -26,26 +32,28 @@ import chord.project.Chord;
 @Chord(name = "annot-java",
 	   consumes = { "M", "Z" },
 	   produces = { "SRC", "SINK", 
-					"DirectArgArgFlow", "DirectArgRetFlow", 
-					"DirectArgSinkFlow", "DirectRetSinkFlow",
-					"DirectSrcArgFlow", "DirectSrcRetFlow" },
+					"ArgArgFlow", "ArgRetFlow", 
+					"ArgSinkFlow", "RetSinkFlow",
+					"SrcArgFlow", "SrcRetFlow" },
 	   namesOfTypes = { "SRC", "SINK" },
 	   types = { DomSRC.class, DomSINK.class },
-	   namesOfSigns = { "DirectArgArgFlow", "DirectArgRetFlow", 
-						"DirectArgSinkFlow", "DirectRetSinkFlow",
-						"DirectSrcArgFlow", "DirectSrcRetFlow" },
+	   namesOfSigns = { "ArgArgFlow", "ArgRetFlow", 
+						"ArgSinkFlow", "RetSinkFlow",
+						"SrcArgFlow", "SrcRetFlow" },
 	   signs = { "M0,Z0,Z1:M0_Z0_Z1", "M0,Z0:M0_Z0", 
 				 "M0,Z0,SINK0:SINK0_M0_Z0", "M0,SINK0:SINK0_M0",
 				 "SRC0,M0,Z0:SRC0_M0_Z0", "SRC0,M0:SRC0_M0" }
 	   )
 public class AnnotationReader extends JavaAnalysis
 {
-	private ProgramRel relDirectArgArgFlow;
-	private ProgramRel relDirectArgRetFlow;
-	private ProgramRel relDirectArgSinkFlow; 
-	private ProgramRel relDirectRetSinkFlow;
-	private ProgramRel relDirectSrcArgFlow;
-	private ProgramRel relDirectSrcRetFlow;
+	private ProgramRel relArgArgFlow;
+	private ProgramRel relArgRetFlow;
+	private ProgramRel relArgSinkFlow; 
+	private ProgramRel relRetSinkFlow;
+	private ProgramRel relSrcArgFlow;
+	private ProgramRel relSrcRetFlow;
+
+	private HashMap<SootClass,List<SootClass>> classToSubtypes = new HashMap();
 
 	public void run()
 	{
@@ -53,11 +61,11 @@ public class AnnotationReader extends JavaAnalysis
 		DomSINK domSINK = (DomSINK) ClassicProject.g().getTrgt("SINK");
 		DomM domM = (DomM) ClassicProject.g().getTrgt("M");
 
-		relDirectArgArgFlow = (ProgramRel) ClassicProject.g().getTrgt("DirectArgArgFlow");
-		relDirectArgRetFlow = (ProgramRel) ClassicProject.g().getTrgt("DirectArgRetFlow");
+		relArgArgFlow = (ProgramRel) ClassicProject.g().getTrgt("ArgArgFlow");
+		relArgRetFlow = (ProgramRel) ClassicProject.g().getTrgt("ArgRetFlow");
 
-		relDirectArgArgFlow.zero();
-		relDirectArgRetFlow.zero();
+		relArgArgFlow.zero();
+		relArgRetFlow.zero();
 
 		List worklist = new LinkedList();
 		try{
@@ -104,18 +112,18 @@ public class AnnotationReader extends JavaAnalysis
 		domSRC.save();
 		domSINK.save();
 
-		relDirectArgArgFlow.save();	
-		relDirectArgRetFlow.save();
+		relArgArgFlow.save();	
+		relArgRetFlow.save();
 
-		relDirectArgSinkFlow = (ProgramRel) ClassicProject.g().getTrgt("DirectArgSinkFlow");
-		relDirectRetSinkFlow = (ProgramRel) ClassicProject.g().getTrgt("DirectRetSinkFlow");
-		relDirectSrcArgFlow = (ProgramRel) ClassicProject.g().getTrgt("DirectSrcArgFlow");
-		relDirectSrcRetFlow = (ProgramRel) ClassicProject.g().getTrgt("DirectSrcRetFlow");
+		relArgSinkFlow = (ProgramRel) ClassicProject.g().getTrgt("ArgSinkFlow");
+		relRetSinkFlow = (ProgramRel) ClassicProject.g().getTrgt("RetSinkFlow");
+		relSrcArgFlow = (ProgramRel) ClassicProject.g().getTrgt("SrcArgFlow");
+		relSrcRetFlow = (ProgramRel) ClassicProject.g().getTrgt("SrcRetFlow");
 
-		relDirectArgSinkFlow.zero();
-		relDirectRetSinkFlow.zero();
-		relDirectSrcArgFlow.zero();
-		relDirectSrcRetFlow.zero();
+		relArgSinkFlow.zero();
+		relRetSinkFlow.zero();
+		relSrcArgFlow.zero();
+		relSrcRetFlow.zero();
 		
 		while(!worklist.isEmpty()){
 			SootMethod meth = (SootMethod) worklist.remove(0);
@@ -124,35 +132,93 @@ public class AnnotationReader extends JavaAnalysis
 			addFlow(meth, from, to);
 		}
 
-		relDirectArgSinkFlow.save();
-		relDirectRetSinkFlow.save();
-		relDirectSrcArgFlow.save();
-		relDirectSrcRetFlow.save();
+		relArgSinkFlow.save();
+		relRetSinkFlow.save();
+		relSrcArgFlow.save();
+		relSrcRetFlow.save();
 	}
 
 	private void addFlow(SootMethod meth, String from, String to) //throws NumberFormatException
 	{
-		System.out.println("+++ " + meth + " " + from + " " + to);
+		//System.out.println("+++ " + meth + " " + from + " " + to);
+		List<SootMethod> meths = overridingMethodsFor(meth);
 		if(from.charAt(0) == '$') {
-			if(to.equals("-1"))
-				relDirectSrcRetFlow.add(from, meth);
-			else
-				relDirectSrcArgFlow.add(from, meth, Integer.valueOf(to));
+			if(to.equals("-1")){
+				for(SootMethod m : meths)
+					relSrcRetFlow.add(from, m);
+			}
+			else{
+				for(SootMethod m : meths)
+					relSrcArgFlow.add(from, m, Integer.valueOf(to));
+			}
 		} else {
 			assert !(from.charAt(0) == '!');
 			Integer fromArgIndex = Integer.valueOf(from);
 			if(to.charAt(0) == '!'){
-				if(from.equals("-1"))
-					relDirectRetSinkFlow.add(meth, to);
-				else
-					relDirectArgSinkFlow.add(meth, fromArgIndex, to);
+				if(from.equals("-1")){
+					for(SootMethod m : meths)
+						relRetSinkFlow.add(m, to);
+				} else{
+					for(SootMethod m : meths)
+						relArgSinkFlow.add(m, fromArgIndex, to);
+				}
 			} else if(to.equals("-1")){
-				relDirectArgRetFlow.add(meth, fromArgIndex);
+				for(SootMethod m : meths)
+					relArgRetFlow.add(m, fromArgIndex);
 			} else {
 				Integer toArgIndex = Integer.valueOf(to);
-				relDirectArgArgFlow.add(meth, fromArgIndex, toArgIndex);
+				for(SootMethod m : meths)
+					relArgArgFlow.add(m, fromArgIndex, toArgIndex);
 			}
 		}
+	}
+
+	List<SootMethod> overridingMethodsFor(SootMethod originalMethod)
+	{
+		List<SootClass> subTypes = subTypesOf(originalMethod.getDeclaringClass());
+		List<SootMethod> overridingMeths = new ArrayList();
+		NumberedString subsig = originalMethod.getNumberedSubSignature();
+		for(SootClass st : subTypes){
+			if(st.declaresMethod(subsig)){
+				overridingMeths.add(st.getMethod(subsig));
+			}
+		}
+		return overridingMeths;
+	}
+
+	List<SootClass> subTypesOf(SootClass cl)
+	{
+		List<SootClass> subTypes = classToSubtypes.get(cl);
+		if(subTypes != null) 
+			return subTypes;
+		
+		classToSubtypes.put(cl, subTypes = new ArrayList());
+
+		subTypes.add(cl);
+
+		LinkedList<SootClass> worklist = new LinkedList<SootClass>();
+		HashSet<SootClass> workset = new HashSet<SootClass>();
+		FastHierarchy fh = Scene.v().getOrMakeFastHierarchy();
+
+		if(workset.add(cl)) worklist.add(cl);
+		while(!worklist.isEmpty()) {
+			cl = worklist.removeFirst();
+			if(cl.isInterface()) {
+				for(Iterator cIt = fh.getAllImplementersOfInterface(cl).iterator(); cIt.hasNext();) {
+					final SootClass c = (SootClass) cIt.next();
+					if(workset.add(c)) worklist.add(c);
+				}
+			} else {
+				if(cl.isConcrete()) {
+					subTypes.add(cl);
+				}
+				for(Iterator cIt = fh.getSubclassesOf(cl).iterator(); cIt.hasNext();) {
+					final SootClass c = (SootClass) cIt.next();
+					if(workset.add(c)) worklist.add(c);
+				}
+			}
+		}
+		return subTypes;
 	}
 	
 	private String getSootSubsigFor(String chordSubsig)
@@ -178,7 +244,7 @@ public class AnnotationReader extends JavaAnalysis
 				param = "byte";
 			} else if (c =='C') {
 				param = "char";
-			} else if ( c == 'D') {
+			} else if (c == 'D') {
 				param = "double";
 			} else if (c == 'F') {
 				param = "float";

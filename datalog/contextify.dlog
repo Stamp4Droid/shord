@@ -50,11 +50,11 @@ MethCtxt(c:C,m:M) input
 CtxtAbsObj(c:C,h:H) input
 
 # Flow annotations
-#SrcRetFlow(src:SRC0,m:M0) input
-#SrcArgFlow(src:SRC0,m:M0,z:Z0) input
-#ArgSinkFlow(m:M0,z:Z0,sink:SINK0) input
-#ArgRetFlow(m:M0,z:Z0) input
-#ArgArgFlow(m:M0,z0:Z0,z1:Z1) input
+SrcRetFlow(src:SRC0,m:M0) input
+SrcArgFlow(src:SRC0,m:M0,z:Z0) input
+ArgSinkFlow(m:M0,z:Z0,sink:SINK0) input
+ArgRetFlow(m:M0,z:Z0) input
+ArgArgFlow(m:M0,z0:Z0,z1:Z1) input
 
 ## INTERMEDIATE RELATIONS =====================================================
 
@@ -79,6 +79,14 @@ cfl_cs_storeStat(c:C,f:F,r:V) output
 
 cfl_cs_assignInterproc(c:C0,u:V0,d:C1,v:V1) output
 
+# Taint flow facts - reference-type variables
+cfl_cs_srcFlow(c:C,src:SRC0,v:V0) output
+cfl_cs_fullSrcFlow(c:C,src:SRC0,v:V0) output
+cfl_cs_sinkFlow(c:C,v:V0,sink:SINK0) output
+cfl_cs_fullSinkFlow(c:C,v:V0,sink:SINK0) output
+cfl_cs_passThrough(c:C,v0:V0,v1:V1) output
+cfl_cs_fullPassThrough(c:C,v0:V0,v1:V1) output
+
 # Program facts - primitive-type variables
 cfl_cs_primAssign(c:C,l:U,r:U) output
 cfl_cs_primLoadInst(c:C,l:U,b:V,f:F) output
@@ -87,6 +95,20 @@ cfl_cs_primStoreInst(c:C,b:V,f:F,r:U) output
 cfl_cs_primStoreStat(c:C,f:F,r:U) output
 
 cfl_cs_primAssignInterproc(cl:C0,l:U0,cr:C1,r:U1) output
+
+# Taint flow facts - primitive-type variables
+cfl_cs_primSrcFlow(c:C,src:SRC,u:U) output
+cfl_cs_primFullSrcFlow(c:C,src:SRC,u:U) output
+cfl_cs_primSinkFlow(c:C,u:U,sink:SINK) output
+cfl_cs_primFullSinkFlow(c:C,u:U,sink:SINK) output
+cfl_cs_primPassThrough(c:C,u0:U0,u1:U1) output
+cfl_cs_primFullPassThrough(c:C,u0:U0,u1:U1) output
+
+# Taint flow facts - cross-type passthroughs
+cfl_cs_primRefFlow(c:C,u:U,v:V) output
+cfl_cs_primRefFullFlow(c:C,u:U,v:V) output
+cfl_cs_refPrimFlow(c:C,v:V,u:U) output
+cfl_cs_refPrimFullFlow(c:C,v:V,u:U) output
 
 ## RULES ======================================================================
 
@@ -113,6 +135,24 @@ cfl_cs_retCopy(i,u,m,v)         :- chaIM(i,m), IinvkRet(i,z,u), MmethRet(m,z,v).
 cfl_cs_assignInterproc(d,v,c,u) :- cfl_cs_argCopy(i,u,m,v), cfl_cs_callEdges(c,i,d,m).
 cfl_cs_assignInterproc(c,u,d,v) :- cfl_cs_retCopy(i,u,m,v), cfl_cs_callEdges(c,i,d,m).
 
+#----------------------------------------------
+# Taint flow facts - reference-type variables
+#----------------------------------------------
+
+cfl_cs_srcFlow(c,src,v)         :- SrcRetFlow(src,m), MmethRet(m,_,v), MethCtxt(c,m).
+cfl_cs_fullSrcFlow(c,src,v)     :- SrcRetFlow(src,m), cfl_cs_callEdges(c,i,_,m), IinvkRet(i,_,v).
+cfl_cs_srcFlow(c,src,v)         :- SrcArgFlow(src,m,z), MmethArg(m,z,v), MethCtxt(c,m).
+cfl_cs_fullSrcFlow(c,src,v)     :- SrcArgFlow(src,m,z), cfl_cs_callEdges(c,i,_,m), IinvkArg(i,z,v).
+
+cfl_cs_sinkFlow(c,v,sink)       :- ArgSinkFlow(m,z,sink), MmethArg(m,z,v), MethCtxt(c,m).
+cfl_cs_fullSinkFlow(c,v,sink)   :- ArgSinkFlow(m,z,sink), cfl_cs_callEdges(c,i,_,m), IinvkArg(i,z,v).
+
+cfl_cs_passThrough(c,v1,v2)     :- ArgRetFlow(m,z), MmethArg(m,z,v1), MmethRet(m,_,v2), MethCtxt(c,m).
+cfl_cs_fullPassThrough(c,v1,v2) :- ArgRetFlow(m,z), cfl_cs_callEdges(c,i,_,m), IinvkArg(i,z,v1), IinvkRet(i,_,v2).
+cfl_cs_passThrough(c,v1,v2)     :- ArgArgFlow(m,z1,z2), MmethArg(m,z1,v1), MmethArg(m,z2,v2), MethCtxt(c,m).
+cfl_cs_fullPassThrough(c,v1,v2) :- ArgArgFlow(m,z1,z2), cfl_cs_callEdges(c,i,_,m), IinvkArg(i,z1,v1), IinvkArg(i,z2,v2).
+
+
 #-------------------------------------------------------
 # Program facts - primitive-type variables
 # This covers assignments, binary and unary operations:
@@ -131,3 +171,35 @@ cfl_cs_primRetCopy(i,u,m,v)         :- chaIM(i,m), IinvkPrimRet(i,z,u), MmethPri
 
 cfl_cs_primAssignInterproc(d,v,c,u) :- cfl_cs_primArgCopy(i,u,m,v), cfl_cs_callEdges(c,i,d,m).
 cfl_cs_primAssignInterproc(c,u,d,v) :- cfl_cs_primRetCopy(i,u,m,v), cfl_cs_callEdges(c,i,d,m).
+
+#---------------------------------------------
+# Taint flow facts - primitive-type variables
+#---------------------------------------------
+
+cfl_cs_primSrcFlow(c,src,u)         :- SrcRetFlow(src,m), MmethPrimRet(m,_,u), MethCtxt(c,m).
+cfl_cs_primFullSrcFlow(c,src,u)     :- SrcRetFlow(src,m), cfl_cs_callEdges(c,i,_,m), IinvkPrimRet(i,_,u).
+# We don't consider src-to-arg flows. Primitive-type arguments are passed by
+# value, so taint can't flow out through them.
+
+cfl_cs_primSinkFlow(c,u,sink)       :- ArgSinkFlow(m,z,sink), MmethPrimArg(m,z,u), MethCtxt(c,m).
+cfl_cs_primFullSinkFlow(c,u,sink)   :- ArgSinkFlow(m,z,sink), cfl_cs_callEdges(c,i,_,m), IinvkPrimArg(i,z,u).
+
+cfl_cs_primPassThrough(c,u1,u2)     :- ArgRetFlow(m,z), MmethPrimArg(m,z,u1), MmethPrimRet(m,_,u2), MethCtxt(c,m).
+cfl_cs_primFullPassThrough(c,u1,u2) :- ArgRetFlow(m,z), cfl_cs_callEdges(c,i,_,m), IinvkPrimArg(i,z,u1), IinvkPrimRet(i,_,u2).
+# We don't consider arg-to-arg flows. Primitive-type arguments are passed by
+# value, so taint can't flow out through them.
+
+#--------------------------------------------
+# Taint flow facts - cross-type passthroughs
+#--------------------------------------------
+
+cfl_cs_primRefFlow(c,u,v)     :- ArgRetFlow(m,z), MmethPrimArg(m,z,u), MmethRet(m,_,v), MethCtxt(c,m).
+cfl_cs_primRefFullFlow(c,u,v) :- ArgRetFlow(m,z), cfl_cs_callEdges(c,i,_,m), IinvkPrimArg(i,z,u), IinvkRet(i,_,v).
+cfl_cs_primRefFlow(c,u,v)     :- ArgArgFlow(m,zu,zv), MmethPrimArg(m,zu,u), MmethArg(m,zv,v), MethCtxt(c,m).
+cfl_cs_primRefFullFlow(c,u,v) :- ArgArgFlow(m,zu,zv), cfl_cs_callEdges(c,i,_,m), IinvkPrimArg(i,zu,u), IinvkArg(i,zv,v).
+
+cfl_cs_refPrimFlow(c,v,u)     :- ArgRetFlow(m,z), MmethArg(m,z,v), MmethPrimRet(m,_,u), MethCtxt(c,m).
+cfl_cs_refPrimFullFlow(c,v,u) :- ArgRetFlow(m,z), cfl_cs_callEdges(c,i,_,m), IinvkArg(i,z,v), IinvkPrimRet(i,_,u).
+# We don't consider arg-to-arg flows. Primitive-type arguments are passed by
+# value, so taint can't flow out through them.
+
