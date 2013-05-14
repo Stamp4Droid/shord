@@ -93,6 +93,7 @@ public class Boot {
     static String mainDirName;
 
     public static void main(String[] args) throws Throwable {
+		/*
         String chordJarFile = getChordJarFile();
 
         // resolve Chord's main dir
@@ -101,14 +102,14 @@ public class Boot {
         if (mainDirName == null)
             Messages.fatal(CHORD_MAIN_DIR_UNDEFINED);
         System.setProperty("chord.main.dir", mainDirName);
-
+		
         if (SPELLCHECK_ON) {
             OptionSet optSet = new OptionSet(getChordSysProps());
             optSet.enableSubstitution();
             Checker.checkConf(new OptDictionary(Boot.class.getResourceAsStream("/options.dict") ),
                 optSet);
         }
-
+		*/
         // resolve Chord's work dir
 
         String workDirName = System.getProperty("chord.work.dir");
@@ -160,11 +161,11 @@ public class Boot {
         String maxStack = getOrSetProperty("chord.max.stack", "32m");
         String jvmargs = getOrSetProperty("chord.jvmargs", "-ea -Xmx" + maxHeap + " -Xss" + maxStack);
         boolean isClassic = getOrSetProperty("chord.classic", "true").equals("true");
-        String stdJavaAnalysisPath = getOrSetProperty("chord.std.java.analysis.path", chordJarFile);
+        String stdJavaAnalysisPath = getOrSetProperty("chord.std.java.analysis.path", "");
         String extJavaAnalysisPath = getOrSetProperty("chord.ext.java.analysis.path", "");
         String javaAnalysisPath = getOrSetProperty("chord.java.analysis.path",
             Utils.concat(stdJavaAnalysisPath, File.pathSeparator, extJavaAnalysisPath));
-        String stdDlogAnalysisPath = getOrSetProperty("chord.std.dlog.analysis.path", chordJarFile);
+        String stdDlogAnalysisPath = getOrSetProperty("chord.std.dlog.analysis.path", "");
         String extDlogAnalysisPath = getOrSetProperty("chord.ext.dlog.analysis.path", "");
         String dlogAnalysisPath = getOrSetProperty("chord.dlog.analysis.path",
             Utils.concat(stdDlogAnalysisPath, File.pathSeparator, extDlogAnalysisPath));
@@ -173,8 +174,13 @@ public class Boot {
         System.setProperty("user.dir", workDirName);
 
         List<String> cpList = new ArrayList<String>(10);
-        cpList.add(chordJarFile);
-		cpList.add(getSootJarFile());
+        //cpList.add(chordJarFile);
+		//cpList.add(getSootJarFile());
+		String[] b = System.getProperty("java.class.path").split(Utils.PATH_SEPARATOR);
+		for (String s : b) {
+			if (!cpList.contains(b))
+				cpList.add(s);
+		}
         if (!javaAnalysisPath.equals("")) {
             String[] a = javaAnalysisPath.split(Utils.PATH_SEPARATOR);
             for (String s : a) {
@@ -253,7 +259,7 @@ public class Boot {
         }
         return p;
     }
-
+	/*
     private static String getChordJarFile() {
         String cname = Boot.class.getName().replace('.', '/') + ".class";
         URL url = Boot.class.getClassLoader().getResource(cname);
@@ -270,7 +276,7 @@ public class Boot {
             Messages.fatal(SOOT_JAR_NOT_FOUND, url.toString());
         String file = url.getFile();
         return file.substring(file.indexOf(':') + 1, file.indexOf('!'));
-    }
+    }*/
 
     private static String getOrSetProperty(String key, String defVal) {
         String val = System.getProperty(key);

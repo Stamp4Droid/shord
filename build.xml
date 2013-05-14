@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Shord" default="jar">
-  <property name="jarname" value="shord.jar"/>
+  <property name="jarname" value="stamp.jar"/>
 
   <target name="compile">
     <mkdir dir="classes"/>
@@ -10,6 +10,7 @@
         <fileset dir="lib">
           <include name="soot.jar"/>
 		  <include name="stamp.chord.jar"/>
+		  <include name="commons-lang3-3.1.jar"/>
         </fileset>
       </classpath>
     </javac>
@@ -20,11 +21,14 @@
       <fileset dir="classes">
         <include name="**/*.class"/>
       </fileset>
-	  <zipfileset src="lib/stamp.chord.jar">
+	  <fileset dir="datalog">
+        <include name="**/*.dlog"/>
+      </fileset>
+	  <!--zipfileset src="lib/stamp.chord.jar">
 		<include name="**/*.class"/>
 		<exclude name="chord/analyses/**/*.class"/>
 		<exclude name="joeq/**/*.class"/>
-	  </zipfileset>
+	  </zipfileset-->
     </jar>
   </target>
 
