@@ -22,6 +22,7 @@ import shord.project.analyses.ProgramRel;
 import shord.project.analyses.ProgramDom;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.ClassicProject;
+import shord.program.Program;
 import shord.analyses.DomM;
 
 import chord.project.Chord;
@@ -66,7 +67,8 @@ public class AnnotationReader extends JavaAnalysis
 
 		relArgArgFlow.zero();
 		relArgRetFlow.zero();
-
+		
+		Scene scene = Program.g().scene();
 		List worklist = new LinkedList();
 		try{
 			BufferedReader reader = new BufferedReader(new FileReader(new File("stamp_annotations.txt")));
@@ -76,8 +78,8 @@ public class AnnotationReader extends JavaAnalysis
 				String chordMethodSig = tokens[0];
 				int atSymbolIndex = chordMethodSig.indexOf('@');
 				String className = chordMethodSig.substring(atSymbolIndex+1);
-				if(Scene.v().containsClass(className)){
-					SootClass klass = Scene.v().getSootClass(className);
+				if(scene.containsClass(className)){
+					SootClass klass = scene.getSootClass(className);
 					String subsig = getSootSubsigFor(chordMethodSig.substring(0,atSymbolIndex));
 					SootMethod meth = klass.getMethod(subsig);
 					
@@ -198,7 +200,7 @@ public class AnnotationReader extends JavaAnalysis
 
 		LinkedList<SootClass> worklist = new LinkedList<SootClass>();
 		HashSet<SootClass> workset = new HashSet<SootClass>();
-		FastHierarchy fh = Scene.v().getOrMakeFastHierarchy();
+		FastHierarchy fh = Program.g().scene().getOrMakeFastHierarchy();
 
 		if(workset.add(cl)) worklist.add(cl);
 		while(!worklist.isEmpty()) {

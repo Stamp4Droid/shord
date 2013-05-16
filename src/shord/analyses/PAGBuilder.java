@@ -2,7 +2,6 @@ package shord.analyses;
 
 import soot.SootClass;
 import soot.SootMethod;
-import soot.Scene;
 import soot.SootField;
 import soot.Local;
 import soot.Immediate;
@@ -32,10 +31,10 @@ import soot.jimple.ThisRef;
 import soot.jimple.ArrayRef;
 import soot.jimple.BinopExpr;
 import soot.jimple.NegExpr;
-import soot.jimple.toolkits.callgraph.CallGraph;
-import soot.jimple.toolkits.callgraph.Edge;
 import soot.jimple.spark.pag.SparkField;
 import soot.jimple.spark.pag.ArrayElement;
+import soot.jimple.toolkits.callgraph.CallGraph;
+import soot.jimple.toolkits.callgraph.Edge;
 
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
@@ -663,7 +662,7 @@ public class PAGBuilder extends JavaAnalysis
 
 	void populateCallgraph()
 	{
-		CallGraph cg = Scene.v().getCallGraph();
+		CallGraph cg = Program.g().scene().getCallGraph();
 		ProgramRel relChaIM = (ProgramRel) ClassicProject.g().getTrgt("chaIM");
         relChaIM.zero();
 		Iterator<Edge> edgeIt = cg.listener();
@@ -727,7 +726,7 @@ public class PAGBuilder extends JavaAnalysis
 		domI = (DomI) ClassicProject.g().getTrgt("I");
 		domU = (DomU) ClassicProject.g().getTrgt("U");
 
-		Iterator mIt = Scene.v().getReachableMethods().listener();
+		Iterator mIt = Program.g().scene().getReachableMethods().listener();
 		while(mIt.hasNext()){
 			SootMethod m = (SootMethod) mIt.next();
 			MethodPAGBuilder mpagBuilder = new MethodPAGBuilder(m);
@@ -764,9 +763,10 @@ public class PAGBuilder extends JavaAnalysis
 
 	public void run()
 	{
-		Program program = Program.g();
-		program.build();
-		fh = Scene.v().getOrMakeFastHierarchy();
+		Program program = Program.g();		
+		program.buildCallGraph();
+
+		fh = Program.g().scene().getOrMakeFastHierarchy();
 		List<MethodPAGBuilder> mpagBuilders = new ArrayList();
 		populateDomains(mpagBuilders);
 		populateRelations(mpagBuilders);

@@ -4,30 +4,39 @@ import soot.*;
 import soot.options.Options;
 import soot.util.Chain;
 import soot.util.ArrayNumberer;
+import soot.jimple.toolkits.callgraph.ReachableMethods;
 import soot.jimple.toolkits.pointer.DumbPointerAnalysis;
 import soot.jimple.toolkits.callgraph.CallGraphBuilder;
-import soot.jimple.toolkits.callgraph.ReachableMethods;
 import java.util.*;
 
 public class Program
 {
-	private static Program g = new Program();
+	private static Program g;
 	private SootMethod mainMethod;
 
 	public static Program g()
 	{
+		if(g == null){
+			g = new Program();
+			g.build();
+		}
 		return g;
 	}
-	
-	public void build()
+
+	private Program(){}
+
+	private void build()
 	{
         try {
 			StringBuilder options = new StringBuilder();
 			options.append("-full-resolver");
 			options.append(" -allow-phantom-refs");
+			options.append(" -src-prec apk");
 			//options.append(" -p cg implicit-entry:false");
+			options.append(" -force-android-jar "+System.getProperty("user.dir"));
 			options.append(" -soot-classpath "+System.getProperty("chord.class.path"));
-			
+			options.append(" -f none");
+
 			if (!Options.v().parse(options.toString().split(" ")))
 				throw new CompilationDeathException(
 													CompilationDeathException.COMPILATION_ABORTED,
@@ -46,14 +55,6 @@ public class Program
 			mainMethod = mainClass.getMethod(Scene.v().getSubSigNumberer().findOrAdd("void main(java.lang.String[])"));
 
 			Scene.v().setEntryPoints(Arrays.asList(new SootMethod[]{mainMethod}));
-			runCHA();
-
-			Iterator<MethodOrMethodContext> mit = Scene.v().getReachableMethods().listener();
-			while(mit.hasNext()){
-				SootMethod m = (SootMethod) mit.next();
-				System.out.println("reach: "+m.getSignature());
-			}
-
 			//for(SootClass klass : Scene.v().getClasses())
 			//	System.out.println(klass.getName());
         } catch (CompilationDeathException e) {
@@ -64,8 +65,9 @@ public class Program
         }
 	}
 
-	void runCHA()
+	public void buildCallGraph()
 	{
+		//run CHA
 		CallGraphBuilder cg = new CallGraphBuilder(DumbPointerAnalysis.v());
 		cg.build();
 	}
@@ -91,6 +93,11 @@ public class Program
 	public ArrayNumberer<Type> getTypes()
 	{
 		return (ArrayNumberer<Type>) Scene.v().getTypeNumberer();
+	}
+
+	public Scene scene()
+	{
+		return Scene.v();
 	}
 	
 	/*

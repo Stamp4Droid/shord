@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="STAMP-DroidRecord">
+
+  <target name="-check-droidrecord-present">
+    <available file="${stamp.dir}/droidrecord/build.xml" property="stamp.droidrecord.present" />
+  </target>
+
+  <target name="-safe-clean-droidrecord"
+        depends="-check-droidrecord-present"
+        if="${stamp.droidrecord.present}">
+    <ant antfile="${stamp.dir}/droidrecord/build.xml" target="clean"
+	 inheritAll="false" useNativeBasedir="true"/>
+  </target>
+
+  <target name="-safe-build-droidrecord"
+        depends="-check-droidrecord-present"
+        if="${stamp.droidrecord.present}">
+    <ant antfile="${stamp.dir}/droidrecord/build.xml"
+	 inheritAll="false" useNativeBasedir="true"/>
+  </target>
+
+  <target name="dynanalyze"
+          if="${stamp.droidrecord.present}"
+          depends="-check-droidrecord-present">
+    <property name="app.dir" location="${app}"/>
+    <if>
+      <available file="${app.dir}/sdcard/droidrecord.log"/>
+      <then>
+        <antcall target="-log-available-dynanalyze"/>
+      </then>
+      <else>
+        <input message="Missing DroidRecord trace information. Do you want to run the instrumented app now to generate a droidrecord.log file?"
+               validargs="y,n"
+               addproperty="stamp.droidrecord.dorun"/>
+        <if>
+          <equals arg1="${stamp.droidrecord.dorun}" arg2="n" />
+          <then>
+            <fail message="Dynamic analysis information is only available if a trace has been generated for the app and saved to [app_dir]/sdcard/droidrecord.log." />
+          </then>
+        </if>
+        <antcall target="droidrecord-run" />
+        <antcall target="-log-available-dynanalyze" />
+      </else>
+    </if>
+  </target>
+
+  <target name="-log-available-dynanalyze"
+        depends="analyze,
+                -safe-build-droidrecord,
+                -run-droidrecord-dyn-callback-analysis,
+                -run-droidrecord-dyn-api-calls-analysis" />
+  
+  <target name="-run-droidrecord-dyn-callback-analysis"
+        if="${stamp.droidrecord.present}">
+    <exec executable="python"
+	  spawn="false"
+	  failonerror="true">
+      <arg value="${stamp.dir}/droidrecord/analysis/callbacks.py"/>
+      <arg value="-r"/>
+      <arg line="-s ${stamp.out.dir}/results/PotentialCallbacks.xml"/>
+      <arg line="-o ${stamp.out.dir}/results/PotentialCallbacksDynamic.xml"/>
+      <arg value="${app.dir}/sdcard/droidrecord.log"/>
+    </exec>
+    <echo file="${stamp.out.dir}/reports.txt" append="true">Possibly-missing Callback Methods (Dynamic Information) ${stamp.out.dir}/results/PotentialCallbacksDynamic.xml
+    </echo>
+  </target>
+  
+  <target name="-run-droidrecord-dyn-api-calls-analysis"
+        if="${stamp.droidrecord.present}">
+    <exec executable="python"
+	  spawn="false"
+	  failonerror="true">
+      <arg value="${stamp.dir}/droidrecord/analysis/apicalls.py"/>
+      <arg line="-o ${stamp.out.dir}/results/ApiCallInformationDynamic.xml"/>
+      <arg value="${app.dir}/sdcard/droidrecord.log"/>
+    </exec>
+    <echo file="${stamp.out.dir}/reports.txt" append="true">Arguments to API Calls (Dynamic Information) ${stamp.out.dir}/results/ApiCallInformationDynamic.xml
+    </echo>
+  </target>
+
+  <property name="stamp.droidrecord.script.prepareapp"
+	    value="${stamp.dir}/droidrecord/extra/utils/scripts/prepare_app.py" />
+
+  <target name="droidrecord-run" depends="-build-app,-safe-build-droidrecord"
+          if="${stamp.droidrecord.present}">
+    <exec executable="python"
+	  spawn="false"
+	  failonerror="true">
+      <arg value="${stamp.droidrecord.script.prepareapp}"/>
+      <arg value="${app.dir}"/>
+    </exec>
+    <ant antfile="${app.dir}/build.droidrecord.xml" target="debug"
+	 inheritAll="false" useNativeBasedir="true"/>
+    <ant antfile="${app.dir}/build.xml" target="installd"
+	 inheritAll="false" useNativeBasedir="true"/>
+    <input message="Use the app inside the emulator to produce a DroidRecord trace log. Enter 'd' once you are done:"
+           validargs="D,d"/>
+    <mkdir dir="${app.dir}/sdcard"/>
+    <exec executable="adb"
+	  spawn="false"
+	  failonerror="true">
+      <arg value="pull"/>
+      <arg value="sdcard/droidrecord.log"/>
+      <arg value="${app.dir}/sdcard/"/>
+    </exec>
+    <exec executable="adb"
+	  spawn="false"
+	  failonerror="true">
+      <arg line="shell rm /sdcard/droidrecord.log"/>
+    </exec>
+  </target>
+
+</project>

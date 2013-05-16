@@ -65,9 +65,6 @@ public class Main {
             Config.print();
         Program program = Program.g();
         Project project = Project.g();
-        if (Config.buildScope) {
-            program.build();
-        }
         if (Config.printAllClasses)
             program.printAllClasses();
         String[] printClasses = Utils.toArray(Config.printClasses);

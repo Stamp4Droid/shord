@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="STAMP-Tool">
+
+  <target name="build"/> <!--depends="-build-comps,-deploy-webapp"/-->
+
+  <target name="-deploy-webapp"
+	  depends="-check-everythinguptodate"
+	  unless="${everythinguptodate}">
+    <ant antfile="${stamp.dir}/web/build.xml" target="deploy"
+		 inheritAll="false" useNativeBasedir="true"/>
+    <tstamp>
+      <format property="logtime" pattern="yyyy.MM.dd : HH:mm:ss z"/>
+    </tstamp>
+    <echo file="${stamp.dir}/timestamp.txt" message="${logtime}"/>
+  </target>
+
+  <target name="-build-comps"
+          depends="-safe-build-droidrecord">
+    <ant antfile="${stamp.dir}/chord/build.xml"
+	 inheritAll="false" useNativeBasedir="true"/>
+    <ant antfile="${stamp.dir}/annotations/build.xml" target="jar"
+	 inheritAll="false" useNativeBasedir="true"/>
+    <ant antfile="${stamp.dir}/main/build.xml" target="jar"
+	 inheritAll="false" useNativeBasedir="true"/>
+    <ant antfile="${stamp.dir}/android/build.xml" target="jar"
+	 inheritAll="false" useNativeBasedir="true"/>
+    <ant antfile="${stamp.dir}/scanner/build.xml" target="jar"
+	 inheritAll="false" useNativeBasedir="true"/>
+    <ant antfile="${stamp.dir}/web/build.xml" target="compile"
+	 inheritAll="false" useNativeBasedir="true"/>
+    <ant antfile="${stamp.dir}/cfl/jcflsolver/build.xml" target="jar"
+	 inheritAll="false" useNativeBasedir="true"/>
+  </target>
+
+  <target name="-check-everythinguptodate">
+    <uptodate property="everythinguptodate"
+	      targetfile="${stamp.dir}/timestamp.txt">
+      <srcfiles dir="${stamp.dir}/chord" includes="stamp.chord.jar"/>
+      <srcfiles dir="${stamp.dir}/annotations" includes="stamp.annotations.jar"/>
+      <srcfiles dir="${stamp.dir}/main" includes="stamp.main.jar"/>
+      <srcfiles dir="${stamp.dir}/scanner" includes="stamp.scanner.jar"/>
+      <srcfiles dir="${stamp.dir}/web" includes="classes/**/*.class"/>
+      <srcfiles dir="${stamp.dir}/web" includes="WebContent/**/*"/>
+      <srcfiles dir="${stamp.dir}/android" includes="stamp.android.jar"/>
+    </uptodate>
+    <echo>everythinguptodate ${everythinguptodate}</echo>
+  </target>
+
+  <target name="-clean-tool"
+          depends="-safe-clean-droidrecord">
+    <ant antfile="${stamp.dir}/main/build.xml" target="clean"
+	 inheritAll="false" useNativeBasedir="true"/>
+    <ant antfile="${stamp.dir}/scanner/build.xml" target="clean"
+	 inheritAll="false" useNativeBasedir="true"/>
+    <ant antfile="${stamp.dir}/android/build.xml" target="clean"
+	 inheritAll="false" useNativeBasedir="true"/>
+    <ant antfile="${stamp.dir}/annotations/build.xml" target="clean"
+	 inheritAll="false" useNativeBasedir="true"/>
+    <ant antfile="${stamp.dir}/chord/build.xml" target="clean"
+	 inheritAll="false" useNativeBasedir="true"/>
+    <ant antfile="${stamp.dir}/web/build.xml" target="clean"
+	 inheritAll="false" useNativeBasedir="true"/>
+  </target>
+
+</project>

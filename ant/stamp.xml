@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="STAMP" default="help">
+
+  <dirname property="stamp.ant.dir" file="${ant.file}"/>
+  <property name="stamp.dir" location="${stamp.ant.dir}/.."/>
+
+  <!-- Read configuration options. The local machine settings in local.config
+       take precedence over the project defaults in stamp.config. -->
+  <property file="${stamp.dir}/local.config"/>
+  <property file="${stamp.dir}/stamp.config"/>
+
+  <property name="web.dir" location="${stamp.dir}/web"/>
+  <property name="stamp.tomcat.bindir" value="${stamp.dir}/tomcat/bin"/>
+
+  <import file="macros.xml"/>
+  <import file="apptasks.xml"/>
+  <import file="tooltasks.xml"/>
+  <import file="droidrecord.xml"/>
+  <import file="solvergen.xml"/>
+  <import file="debug.xml"/>
+  <import file="apptasks_dex.xml"/>
+
+  <target name="clean" depends="-clean-tool"/>
+
+  <target name="help">
+    <!-- Start Tomcat server. -->
+    <exec executable="${stamp.tomcat.bindir}/startup.sh"
+	  spawn="true"/>
+
+    <!-- Wait for the page to become responsive. -->
+    <waitfor maxwait="3" maxwaitunit="minute" checkevery="500">
+      <http url="http://localhost:8080"/>
+    </waitfor>
+
+    <!-- Launch browser. -->
+    <exec executable="${stamp.browser}"
+	  spawn="true">
+      <arg value="localhost:8080/doc/stamp.html"/>
+    </exec>
+  </target>
+
+</project>
