@@ -137,7 +137,8 @@
 	  <sysproperty key="stamp.input.type" value="${stamp.input.type}"/>
       <classpath>
 		<pathelement location="${stamp.dir}/stamp.jar"/>
-		<pathelement location="${stamp.dir}/lib/soot.jar"/>
+		<!--pathelement location="${stamp.dir}/lib/soot.jar"/-->
+		<pathelement location="/local/mysoot/soot-github/lib/soot-develop.jar"/>
 		<pathelement location="${stamp.dir}/lib/commons-lang3-3.1.jar"/>
 		<pathelement location="${stamp.dir}/chord/stamp.chord.jar"/>
       </classpath>

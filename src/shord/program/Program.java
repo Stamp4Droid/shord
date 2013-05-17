@@ -55,6 +55,7 @@ public class Program
 			mainMethod = mainClass.getMethod(Scene.v().getSubSigNumberer().findOrAdd("void main(java.lang.String[])"));
 
 			Scene.v().setEntryPoints(Arrays.asList(new SootMethod[]{mainMethod}));
+			Scene.v().loadDynamicClasses();
 			//for(SootClass klass : Scene.v().getClasses())
 			//	System.out.println(klass.getName());
         } catch (CompilationDeathException e) {

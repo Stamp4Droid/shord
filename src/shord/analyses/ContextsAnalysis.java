@@ -264,8 +264,8 @@ public class ContextsAnalysis extends JavaAnalysis
             System.out.println("numSCCs: " + n);
         for (int i = 0; i < n; i++) { // For each SCC...
             Set<SootMethod> scc = sccList.get(i);
-            if (Config.verbose >= 2)
-                System.out.println("Processing SCC #" + i + " of size: " + scc.size());
+            //if (Config.verbose >= 2)
+            //    System.out.println("Processing SCC #" + i + " of size: " + scc.size());
             if (scc.size() == 1) { // Singleton
                 SootMethod cle = scc.iterator().next();
 				//System.out.println("contexting " +  cle);
