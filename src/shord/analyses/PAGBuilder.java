@@ -802,7 +802,7 @@ public class PAGBuilder extends JavaAnalysis
 	public void run()
 	{
 		Program program = Program.g();		
-		for(SootClass k : program.getClasses()) System.out.println("kk "+k + (k.hasSuperclass() ? k.getSuperclass() : ""));
+		//for(SootClass k : program.getClasses()) System.out.println("kk "+k + (k.hasSuperclass() ? k.getSuperclass() : ""));
 		program.buildCallGraph();
 
 		fh = Program.g().scene().getOrMakeFastHierarchy();
