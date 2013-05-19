@@ -10,4 +10,9 @@ public class ThisVarNode extends VarNode
 	{
 		this.method = m;
 	}
+
+	public String toString()
+	{
+		return "this@"+method;
+	}
 }

@@ -433,7 +433,7 @@ public class PAGBuilder extends JavaAnalysis
 				boolean isPrim = primLocals.contains(l);
 				boolean isNonPrim = nonPrimLocals.contains(l);
 				if(isPrim || isNonPrim){
-					LocalVarNode node = new LocalVarNode(l);
+					LocalVarNode node = new LocalVarNode(l, method);
 					localToVarNode.put(l, node);
 					if(isNonPrim)
 						domV.add(node);
@@ -551,14 +551,14 @@ public class PAGBuilder extends JavaAnalysis
 				
 				//return value
 				if(s instanceof AssignStmt){
-					Local rhs = (Local) ((AssignStmt) s).getLeftOp();
+					Local lhs = (Local) ((AssignStmt) s).getLeftOp();
 					Type retType = callee.getReturnType();
 					if(retType instanceof RefLikeType)
-						IinvkRet(s, nodeFor(rhs));
+						IinvkRet(s, nodeFor(lhs));
 					else if(retType instanceof PrimType)
-						IinvkPrimRet(s, nodeFor(rhs));
+						IinvkPrimRet(s, nodeFor(lhs));
 				}
-			}else if(s.containsFieldRef()){
+			} else if(s.containsFieldRef()){
 				AssignStmt as = (AssignStmt) s;
 				Value leftOp = as.getLeftOp();
 				FieldRef fr = s.getFieldRef();
@@ -802,6 +802,7 @@ public class PAGBuilder extends JavaAnalysis
 	public void run()
 	{
 		Program program = Program.g();		
+		for(SootClass k : program.getClasses()) System.out.println("kk "+k + (k.hasSuperclass() ? k.getSuperclass() : ""));
 		program.buildCallGraph();
 
 		fh = Program.g().scene().getOrMakeFastHierarchy();

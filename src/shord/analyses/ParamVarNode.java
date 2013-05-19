@@ -12,4 +12,9 @@ public class ParamVarNode extends VarNode
 		this.method = m;
 		this.index = i;
 	}
+
+	public String toString()
+	{
+		return "param$"+index+"@"+method;
+	}
 }

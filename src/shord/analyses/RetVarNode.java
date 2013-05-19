@@ -10,4 +10,9 @@ public class RetVarNode extends VarNode
 	{
 		this.method = m;
 	}
+
+	public String toString()
+	{
+		return "return@"+method;
+	}
 }
