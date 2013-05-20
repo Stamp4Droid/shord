@@ -1,5 +1,6 @@
 package shord.analyses;
 
+import soot.Scene;
 import soot.SootClass;
 import soot.SootMethod;
 import soot.SootField;
@@ -16,12 +17,14 @@ import soot.NullType;
 import soot.AnySubType;
 import soot.UnknownType;
 import soot.FastHierarchy;
+import soot.PatchingChain;
 import soot.jimple.Constant;
 import soot.jimple.Stmt;
 import soot.jimple.AssignStmt;
 import soot.jimple.IdentityStmt;
 import soot.jimple.ReturnStmt;
 import soot.jimple.AnyNewExpr;
+import soot.jimple.ThrowStmt;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InstanceInvokeExpr;
 import soot.jimple.CastExpr;
@@ -32,10 +35,12 @@ import soot.jimple.ThisRef;
 import soot.jimple.ArrayRef;
 import soot.jimple.BinopExpr;
 import soot.jimple.NegExpr;
+import soot.jimple.NewExpr;
 import soot.jimple.spark.pag.SparkField;
 import soot.jimple.spark.pag.ArrayElement;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
+import soot.util.NumberedSet;
 
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
@@ -130,6 +135,7 @@ public class PAGBuilder extends JavaAnalysis
 
 	private int maxArgs = -1;
 	private FastHierarchy fh;
+	private NumberedSet stubMethods;
 
 	void openRels()
 	{
@@ -709,8 +715,10 @@ public class PAGBuilder extends JavaAnalysis
 			Stmt stmt = edge.srcStmt();
 			//int stmtIdx = domI.getOrAdd(stmt);
 			SootMethod tgt = (SootMethod) edge.tgt();
+			SootMethod src = (SootMethod) edge.src();
 			//System.out.println("stmt: "+stmt+" tgt: "+tgt);
-			relChaIM.add(stmt, tgt);
+			if(!stubMethods.contains(tgt) && (src == null || !stubMethods.contains(src)))
+				relChaIM.add(stmt, tgt);
 		}
 		relChaIM.save();
 	}
@@ -719,9 +727,14 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		DomM domM = (DomM) ClassicProject.g().getTrgt("M");
 		Program program = Program.g();
+		stubMethods = new NumberedSet(Scene.v().getMethodNumberer());
 		Iterator<SootMethod> mIt = program.getMethods();
 		while(mIt.hasNext()){
 			SootMethod m = mIt.next();
+			if(isStub(m)){
+				//System.out.println("stub: "+ m);
+				stubMethods.add(m);
+			}
 			domM.add(m);
 		}
 		domM.save();
@@ -765,6 +778,8 @@ public class PAGBuilder extends JavaAnalysis
 		Iterator mIt = Program.g().scene().getReachableMethods().listener();
 		while(mIt.hasNext()){
 			SootMethod m = (SootMethod) mIt.next();
+			if(stubMethods.contains(m))
+				continue;
 			MethodPAGBuilder mpagBuilder = new MethodPAGBuilder(m);
 			mpagBuilder.pass1();
 			mpagBuilders.add(mpagBuilder);
@@ -775,6 +790,47 @@ public class PAGBuilder extends JavaAnalysis
 		domV.save();
 		domI.save();
 		domU.save();
+	}
+
+	boolean isStub(SootMethod method)
+	{
+		if(!method.isConcrete())
+			return false;
+		PatchingChain<Unit> units = method.retrieveActiveBody().getUnits();
+		Unit unit = units.getFirst();
+		while(unit instanceof IdentityStmt)
+			unit = units.getSuccOf(unit);
+
+		if(!(unit instanceof AssignStmt))
+			return false;
+		Value rightOp = ((AssignStmt) unit).getRightOp();
+		if(!(rightOp instanceof NewExpr))
+			return false;
+		//System.out.println(method.retrieveActiveBody().toString());
+		if(!((NewExpr) rightOp).getType().toString().equals("java.lang.RuntimeException"))
+			return false;
+		Local e = (Local) ((AssignStmt) unit).getLeftOp();
+		
+		//may be there is an assignment (if soot did not optimized it away)
+		Local f = null;
+		unit = units.getSuccOf(unit);
+		if(unit instanceof AssignStmt){
+			f = (Local) ((AssignStmt) unit).getLeftOp();
+			if(!((AssignStmt) unit).getRightOp().equals(e))
+				return false;
+			unit = units.getSuccOf(unit);
+		}
+		//it should be the call to the constructor
+		Stmt s = (Stmt) unit;
+		if(!s.containsInvokeExpr())
+			return false;
+		if(!s.getInvokeExpr().getMethod().getSignature().equals("<java.lang.RuntimeException: void <init>(java.lang.String)>"))
+			return false;
+		unit = units.getSuccOf(unit);
+		if(!(unit instanceof ThrowStmt))
+			return false;
+		Immediate i = (Immediate) ((ThrowStmt) unit).getOp();
+		return i.equals(e) || i.equals(f);
 	}
 	
 	void populateRelations(List<MethodPAGBuilder> mpagBuilders)
