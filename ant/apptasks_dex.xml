@@ -120,7 +120,7 @@
       <jvmarg value="-ea"/>
       <sysproperty key="chord.work.dir" file="${stamp.out.dir}"/>
       <sysproperty key="chord.main.class" value="edu.stanford.stamp.harness.Main"/>
-      <sysproperty key="chord.class.path" path="${stamp.dir}/android/stamp.android.jar:${app.jar}:${driver.dir}"/>
+      <sysproperty key="chord.class.path" path="${app.jar}:${driver.dir}"/>
       <sysproperty key="chord.std.java.analysis.path" path="${stamp.dir}/stamp.jar:${stamp.dir}/scanner/stamp.scanner.jar"/>
       <sysproperty key="chord.std.dlog.analysis.path" path="${stamp.dir}/stamp.jar"/>
       <sysproperty key="chord.run.analyses" value="${stamp.analyses}"/>
@@ -135,6 +135,7 @@
       <sysproperty key="stamp.dir" value="${stamp.dir}"/>
       <sysproperty key="stamp.out.dir" value="${stamp.out.dir}"/>
 	  <sysproperty key="stamp.input.type" value="${stamp.input.type}"/>
+	  <sysproperty key="stamp.android.jar" value="${stamp.dir}/android/stamp.android.jar"/>
       <classpath>
 		<pathelement location="${stamp.dir}/stamp.jar"/>
 		<!--pathelement location="${stamp.dir}/lib/soot.jar"/-->

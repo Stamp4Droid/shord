@@ -142,7 +142,7 @@ public class AnnotationReader extends JavaAnalysis
 
 	private void addFlow(SootMethod meth, String from, String to) //throws NumberFormatException
 	{
-		//System.out.println("+++ " + meth + " " + from + " " + to);
+		System.out.println("+++ " + meth + " " + from + " " + to);
 		List<SootMethod> meths = overridingMethodsFor(meth);
 		if(from.charAt(0) == '$') {
 			if(to.equals("-1")){

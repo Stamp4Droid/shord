@@ -7,7 +7,9 @@ import soot.util.ArrayNumberer;
 import soot.jimple.toolkits.callgraph.ReachableMethods;
 import soot.jimple.toolkits.pointer.DumbPointerAnalysis;
 import soot.jimple.toolkits.callgraph.CallGraphBuilder;
+
 import java.util.*;
+import java.io.*;
 
 public class Program
 {
@@ -32,9 +34,10 @@ public class Program
 			options.append("-full-resolver");
 			options.append(" -allow-phantom-refs");
 			options.append(" -src-prec apk");
+			options.append(" -p jb.tr use-older-type-assigner:true"); 
 			//options.append(" -p cg implicit-entry:false");
 			options.append(" -force-android-jar "+System.getProperty("user.dir"));
-			options.append(" -soot-classpath "+System.getProperty("chord.class.path"));
+			options.append(" -soot-classpath "+System.getProperty("stamp.android.jar")+File.pathSeparator+System.getProperty("chord.class.path"));
 			options.append(" -f none");
 
 			if (!Options.v().parse(options.toString().split(" ")))
