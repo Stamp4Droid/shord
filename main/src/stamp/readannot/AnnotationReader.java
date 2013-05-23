@@ -66,7 +66,7 @@ public class AnnotationReader extends ASTVisitor
 			else{
 				String fname = file.getName();
 				if(fname.endsWith(".java") && fname.indexOf('#') < 0) {
-					System.out.print("processing "+fname);
+					System.out.println("processing "+fname);
 					try{
 						processFile(file);
 					}catch(Exception e){

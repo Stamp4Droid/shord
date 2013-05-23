@@ -23,6 +23,7 @@
 	  <attribute name="apilevel"/>
 	  <sequential>
 		<delete dir="api-@{apilevel}"/>
+		<delete dir="${stamp.dir}/bin/api-@{apilevel}"/>
 	  </sequential>
     </macrodef>	  
 	  
@@ -138,7 +139,8 @@
 				<include name="**/*.class"/>
 			  </fileset>
 			  <fileset dir="api-@{apilevel}">
-				<filename name="stamp_stubs.txt"/>
+				<include name="stamp_stubs.txt"/>
+				<include name="stamp_annotations.txt"/>
 			  </fileset>
 			</jar>
 		  </then>
