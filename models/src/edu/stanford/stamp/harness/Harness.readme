@@ -1,0 +1,72 @@
+For maximum readability of this file, make sure your text editor can fit the follow onto one line:
+------------------------------------------------------------------------------------------------------------------
+
+The Harness has been redesigned with sanity in mind! I've done what I could to keep the same
+class files as before that way you don't need to worry too much about refactoring existing code
+that isn't directly attached to the harness. 
+
+There are THREE major features available through the harness. All of these features are exposed
+through the ApplicationDriver class, however you can still access some of the features the old way
+(going through the CallbackManager class or the ActivityDriver class). From a design standpoint it
+is better to go through the ApplicationDriver class. 
+
+==============================================
+
+FEATURE NUMBER ONE - Direct Control of the Activity Lifecycle
+
+Relevent Classes:
+   android.app.Activity
+   harness.drivers.ApplicationDriver
+  
+Existing Methods:
+   createActivity(Activity newActivity);
+   
+==============================================
+
+FEATURE NUMBER TWO - UI Events
+
+Relevant Classes:
+   harness.eventtriggers.UITrigger
+   harness.runnables.UIRunnable
+ 
+Relevant Methods:
+   ApplicationDriver.registerUIRunnable(UIRunnable r)
+   ApplicationDriver.unregisterUIRunnable(UIRunnable r)
+   ApplicationDriver.unregisterAllUIRunnables()
+
+   UITrigger(int viewId, String action)
+   UIRunnable(UITrigger t, Runnable r) 
+
+   ApplicationDriver.broadcastUITrigger(UITrigger t)
+
+==============================================
+
+FEATURE NUMBER THREE - System Callbacks
+
+Relevant Classes:
+   harness.runnables.Callback
+   harness.misc.CallbackData
+   harness.eventtriggers.CallbackTrigger
+   harness.filters.EventFilter
+
+Relevant Methods
+   ApplicationDriver.registerCallback(Callback callback)
+   ApplicationDriver.unregisterCallback(Callback callback)
+   ApplicationDriver.broadcastCallbackTrigger(CallbackTrigger t)
+
+   Callback.execute(CallbackTrigger t) -- This method MUST be provided when you create a Callback object. 
+
+   Callback(EventFilter filter, boolean unregister)
+   CallbackTrigger(String action, String category, Object data, int type)
+   EventFilter(ArrayList<String> actions, ArrayList<String> categories, CallbackData data, int type)
+
+==============================================
+
+
+
+
+
+
+
+
+

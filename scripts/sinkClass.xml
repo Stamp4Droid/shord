@@ -1,0 +1,15 @@
+<root>
+  <sink class="OffDevice">!socket</sink>
+  <sink class="OffDevice">!internet</sink>
+  <sink class="OffDevice">!senddatamessage</sink>
+  <sink class="OffDevice">!socketaddr</sink>
+  <sink class="OffDevice">!webview</sink>
+  <sink class="OffDevice">!sendmultiparttextmessage</sink>
+  <sink class="OffDevice">!sendtextmessage</sink>
+  <sink class="OnDevice">!browser_searches.modify</sink>
+  <sink class="OnDevice">!browser_history.modify</sink>
+  <sink class="OnDevice">!log</sink>
+  <sink class="OnDevice">!intent</sink>
+  <sink class="OnDevice">!file</sink>
+  <sink class="Cipher">!enc/dec</sink>
+</root>

@@ -73,11 +73,19 @@
 		  depends="build">
 	<property name="stamp.input.type" value="apk"/>
 	<property name="app.jar" value="${app.loc}"/>
-	<echo>${app.jar}</echo>
+	<property name="apilevel" value="15"/>
+
+	<!--echo>${app.jar}</echo-->
     <!-- copy stamp_annotations.txt-->
-	<concat destfile="${stamp.out.dir}/stamp_annotations.txt" append="true">
+	<!--concat destfile="${stamp.out.dir}/stamp_annotations.txt" append="true">
 	  <fileset file="${stamp.dir}/android/stamp_annotations.txt"/>
-	</concat>
+	</concat-->
+	<unjar src="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar" 
+		   dest="${stamp.out.dir}">
+	  <patternset> 
+		<include name="stamp_annotations.txt"/>
+	  </patternset>
+	</unjar>
 
     <!-- Generate harness. -->
     <java classname="stamp.harnessgen.Main"
@@ -86,14 +94,14 @@
 	  failonerror="true">
       <jvmarg value="-ea"/>
       <classpath>
-		<pathelement location="${stamp.dir}/stamp.jar"/>
+		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
 		<pathelement location="${stamp.dir}/lib/AXMLPrinter2.jar"/>
 		<pathelement location="${stamp.dir}/lib/soot.jar"/>
-		<pathelement location="${stamp.dir}/dexpler/baksmali-1.3.2.jar"/>
+		<pathelement location="${stamp.dir}/lib/baksmali-1.3.2.jar"/>
       </classpath>
       <arg value="${driver.dir}"/>
       <arg value="${app.jar}"/>
-	  <arg value="${stamp.dir}/android/stamp.android.jar"/>
+	  <arg value="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"/>
     </java>
   </target>
 
@@ -121,8 +129,8 @@
       <sysproperty key="chord.work.dir" file="${stamp.out.dir}"/>
       <sysproperty key="chord.main.class" value="edu.stanford.stamp.harness.Main"/>
       <sysproperty key="chord.class.path" path="${app.jar}:${driver.dir}"/>
-      <sysproperty key="chord.std.java.analysis.path" path="${stamp.dir}/stamp.jar:${stamp.dir}/scanner/stamp.scanner.jar"/>
-      <sysproperty key="chord.std.dlog.analysis.path" path="${stamp.dir}/stamp.jar"/>
+      <sysproperty key="chord.std.java.analysis.path" path="${stamp.dir}/bin/stamp.main.jar:${stamp.dir}/scanner/stamp.scanner.jar"/>
+      <sysproperty key="chord.std.dlog.analysis.path" path="${stamp.dir}/bin/stamp.main.jar"/>
       <sysproperty key="chord.run.analyses" value="${stamp.analyses}"/>
       <sysproperty key="chord.std.scope.exclude" value=""/>
       <sysproperty key="chord.ext.scope.exclude" value=""/>
@@ -135,13 +143,13 @@
       <sysproperty key="stamp.dir" value="${stamp.dir}"/>
       <sysproperty key="stamp.out.dir" value="${stamp.out.dir}"/>
 	  <sysproperty key="stamp.input.type" value="${stamp.input.type}"/>
-	  <sysproperty key="stamp.android.jar" value="${stamp.dir}/android/stamp.android.jar"/>
+	  <sysproperty key="stamp.android.jar" value="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"/>
       <classpath>
-		<pathelement location="${stamp.dir}/stamp.jar"/>
+		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
 		<!--pathelement location="${stamp.dir}/lib/soot.jar"/-->
 		<pathelement location="/local/mysoot/soot-github/lib/soot-develop.jar"/>
 		<pathelement location="${stamp.dir}/lib/commons-lang3-3.1.jar"/>
-		<pathelement location="${stamp.dir}/chord/stamp.chord.jar"/>
+		<pathelement location="${stamp.dir}/lib/stamp.chord.jar"/>
       </classpath>
     </java>
   </target>
