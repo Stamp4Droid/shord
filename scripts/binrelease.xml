@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  
+  <property name="stamp.dir" location=".."/>
+  
+  <tstamp>
+	<format property="TIME_STAMP1" pattern="MMdd-hhmm"/>
+    <format property="TIME_STAMP2" pattern="MM/dd/yyyy hh:mm aa"/>
+  </tstamp>
+  
+  <echo file="${stamp.dir}/releases/buildinfo.txt">Build Time: ${TIME_STAMP2}</echo>
+
+  <zip destfile="${stamp.dir}/releases/stamp-${TIME_STAMP1}.zip">
+	<zipfileset dir="${stamp.dir}/releases" includes="buildinfo.txt" prefix="stamp"/>
+	<zipfileset dir="${stamp.dir}/bin" includes="stamp" prefix="stamp"/>
+	<zipfileset dir="${stamp.dir}" includes="stamp.config" prefix="stamp"/>
+	<zipfileset dir="${stamp.dir}/bin" prefix="stamp/bin"/>
+	<zipfileset dir="${stamp.dir}/lib" prefix="stamp/lib"/>
+	<zipfileset dir="${stamp.dir}/ant" prefix="stamp/ant"/>
+	<zipfileset dir="${stamp.dir}/scripts" includes="testApkJar.py" prefix="stamp/scripts"/>
+	<zipfileset dir="${stamp.dir}/scripts" includes="sinkClass.xml" prefix="stamp/scripts"/>
+	<zipfileset dir="${stamp.dir}/scripts" includes="srcClass.xml" prefix="stamp/scripts"/>
+  </zip>
+  
+</project>

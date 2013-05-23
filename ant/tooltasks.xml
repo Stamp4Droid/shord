@@ -15,7 +15,7 @@
   </target>
 
   <target name="-build-comps"
-          depends="-safe-build-droidrecord">
+          depends="-safe-build-droidrecord" unless="release">
     <!--ant antfile="${stamp.dir}/chord/build.xml"
 	 inheritAll="false" useNativeBasedir="true"/-->
     <ant antfile="${stamp.dir}/annotations/build.xml" target="jar"
