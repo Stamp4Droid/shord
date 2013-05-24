@@ -12,7 +12,7 @@
 
   <zip destfile="${stamp.dir}/releases/stamp-${TIME_STAMP1}.zip">
 	<zipfileset dir="${stamp.dir}/releases" includes="buildinfo.txt" prefix="stamp"/>
-	<zipfileset dir="${stamp.dir}/bin" includes="stamp" prefix="stamp"/>
+	<zipfileset dir="${stamp.dir}/bin" filemode="755" includes="stamp" prefix="stamp"/>
 	<zipfileset dir="${stamp.dir}" includes="stamp.config" prefix="stamp"/>
 	<zipfileset dir="${stamp.dir}/bin" prefix="stamp/bin"/>
 	<zipfileset dir="${stamp.dir}/lib" prefix="stamp/lib"/>
