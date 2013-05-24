@@ -73,7 +73,7 @@
 		  depends="build">
 	<property name="stamp.input.type" value="apk"/>
 	<property name="app.jar" value="${app.loc}"/>
-	<property name="apilevel" value="15"/>
+	<property name="apilevel" value="16"/>
 
 	<!--echo>${app.jar}</echo-->
     <!-- copy stamp_annotations.txt-->
