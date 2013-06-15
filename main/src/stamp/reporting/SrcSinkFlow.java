@@ -15,7 +15,7 @@ public class SrcSinkFlow extends XMLReport {
     }
 
     public void generate() {
-	final ProgramRel relSrcSinkFlow = (ProgramRel)ClassicProject.g().getTrgt("out_srcSinkFlow");
+	final ProgramRel relSrcSinkFlow = (ProgramRel)ClassicProject.g().getTrgt("flow");
 	//final ProgramRel relSrcSinkFlow = (ProgramRel)ClassicProject.g().getTrgt("JSrcSinkFlow");
 
 	relSrcSinkFlow.load();

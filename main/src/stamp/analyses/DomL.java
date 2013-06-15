@@ -2,6 +2,6 @@ package stamp.analyses;
 
 import shord.project.analyses.ProgramDom;
 
-public class DomSINK extends ProgramDom<String>
+public class DomL extends ProgramDom<String>
 {
 }

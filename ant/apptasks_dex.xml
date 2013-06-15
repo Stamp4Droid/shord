@@ -121,7 +121,7 @@
   <target name="-run-analysis-apk">
     <!-- Configure remaining Chord settings. -->
     <property name="stamp.analyses"
-	      value="inject-annot,base-java,annot-java,contexts-java,contextify-dlog,kcfa-pta-dlog,kcfa-flow-dlog,post-cs-dlog,post-java"/>
+	      value="inject-annot,base-java,annot-java,contexts-java,pre-dlog,typefilter-dlog,pt-dlog,taint-dlog,post-java"/>
 
     <!-- Run Chord. -->
     <java classname="shord.project.Boot" fork="true" failonerror="true">

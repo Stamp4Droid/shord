@@ -131,19 +131,43 @@ public class AnnotationReader extends ASTVisitor
 					else if(name.equals("to"))
 						to = ((StringLiteral) mvp1.getValue()).getLiteralValue();
 				}
-				
-				Integer fromIndex = nameToIndex.get(from);
-				Integer toIndex = nameToIndex.get(to);
-				//i0, i1 can be null if v0, v1 are source/sink labels 
 				writer.println(chordSig + " " + 
-							   (fromIndex == null ? from : fromIndex.toString()) + " " + 
-							   (toIndex == null ? to : toIndex.toString()));
-				
+							   processEndPoint(from, nameToIndex) + " " + 
+							   processEndPoint(to, nameToIndex));
 			}
 		}		
 		return true;
     }
-	
+
+	private String processEndPoint(String endPoint, Map<String,Integer> nameToIndex)
+	{
+		char c = endPoint.charAt(0);
+		if(c == '$'){
+			return endPoint; //e.g., $getDeviceId
+		} else if(c == '!'){
+			String t = endPoint.substring(1);
+			checkSanity(t);
+			Integer paramIndex = nameToIndex.get(t);
+			if(paramIndex != null)
+				return '?'+paramIndex.toString(); //! followed by param name
+			else
+				return endPoint; // e.g., !Internet
+		} else {
+			Integer paramIndex = nameToIndex.get(endPoint); //endPoint must be a param name
+			return paramIndex.toString();
+		}
+	}
+
+	private void checkSanity(String s) 
+	{
+		try { 
+			Integer.parseInt(s); 
+		} catch(NumberFormatException e) { 
+			return; 
+		}
+		throw new Error("labels are expected to be non-integers: "+s);
+	}
+
 	private String process(MethodDeclaration node, Map<String,Integer> nameToIndex)
 	{
 		int offset;

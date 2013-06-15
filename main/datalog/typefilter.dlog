@@ -9,8 +9,8 @@
 
 VT(v:V,t:T) input
 HTFilter(h:H,t:T) input
-CtxtAbsObj(o:C,h:H) input
+CH(o:C,h:H) input
 
-TypeFilter(v:V,o:C) output
+typeFilter(v:V,o:C) output
 
-TypeFilter(v,o) :- VT(v,t), HTFilter(h,t), CtxtAbsObj(o,h).
+typeFilter(v,o) :- VT(v,t), HTFilter(h,t), CH(o,h).

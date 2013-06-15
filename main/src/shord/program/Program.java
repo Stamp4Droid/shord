@@ -38,7 +38,8 @@ public class Program
 			//options.append(" -p cg implicit-entry:false");
 			options.append(" -force-android-jar "+System.getProperty("user.dir"));
 			options.append(" -soot-classpath "+System.getProperty("stamp.android.jar")+File.pathSeparator+System.getProperty("chord.class.path"));
-			options.append(" -f none");
+			options.append(" -f jimple");
+			options.append(" -d "+ System.getProperty("stamp.out.dir")+File.separator+"jimple");
 
 			if (!Options.v().parse(options.toString().split(" ")))
 				throw new CompilationDeathException(
@@ -59,8 +60,10 @@ public class Program
 
 			Scene.v().setEntryPoints(Arrays.asList(new SootMethod[]{mainMethod}));
 			Scene.v().loadDynamicClasses();
-			//for(SootClass klass : Scene.v().getClasses())
-			//	System.out.println(klass.getName());
+			for(SootClass klass : Scene.v().getClasses()){
+                PackManager.v().writeClass(klass);
+				//System.out.println(klass.getName());
+			}
         } catch (CompilationDeathException e) {
             if(e.getStatus()!=CompilationDeathException.COMPILATION_SUCCEEDED)
                 throw e;

@@ -32,44 +32,90 @@ import chord.project.Chord;
 **/
 @Chord(name = "annot-java",
 	   consumes = { "M", "Z" },
-	   produces = { "SRC", "SINK", 
-					"ArgArgFlow", "ArgRetFlow", 
-					"ArgSinkFlow", "RetSinkFlow",
-					"SrcArgFlow", "SrcRetFlow" },
-	   namesOfTypes = { "SRC", "SINK" },
-	   types = { DomSRC.class, DomSINK.class },
-	   namesOfSigns = { "ArgArgFlow", "ArgRetFlow", 
-						"ArgSinkFlow", "RetSinkFlow",
-						"SrcArgFlow", "SrcRetFlow" },
+	   produces = { "L",
+					"ArgArgTransfer", "ArgRetTransfer", 
+					"ArgArgFlow",
+					"SrcLabel", "SinkLabel",
+					"LabelArg", "LabelRet" },
+	   namesOfTypes = { "L" },
+	   types = { DomL.class },
+	   namesOfSigns = { "ArgArgTransfer", "ArgRetTransfer", 
+						"ArgArgFlow",
+						"SrcLabel", "SinkLabel",
+						"LabelArg", "LabelRet" },
 	   signs = { "M0,Z0,Z1:M0_Z0_Z1", "M0,Z0:M0_Z0", 
-				 "M0,Z0,SINK0:SINK0_M0_Z0", "M0,SINK0:SINK0_M0",
-				 "SRC0,M0,Z0:SRC0_M0_Z0", "SRC0,M0:SRC0_M0" }
+				 "M0,Z0,Z1:M0_Z0_Z1",
+				 "L0:L0", "L0:L0",
+				 "L0,M0,Z0:L0_M0_Z0", "L0,M0:L0_M0" }
 	   )
 public class AnnotationReader extends JavaAnalysis
 {
+	private ProgramRel relArgArgTransfer;
+	private ProgramRel relArgRetTransfer;
 	private ProgramRel relArgArgFlow;
-	private ProgramRel relArgRetFlow;
-	private ProgramRel relArgSinkFlow; 
-	private ProgramRel relRetSinkFlow;
-	private ProgramRel relSrcArgFlow;
-	private ProgramRel relSrcRetFlow;
+
+	private ProgramRel relLabelArg; 
+	private ProgramRel relLabelRet;
 
 	private HashMap<SootClass,List<SootClass>> classToSubtypes = new HashMap();
 
 	public void run()
+	{		
+		List<String> srcLabels = new ArrayList();
+		List<String> sinkLabels = new ArrayList();
+		List worklist = new LinkedList();		
+		//fill ArgArgTransfer, ArgRetTransfer, ArgArgFlow
+		process(srcLabels, sinkLabels, worklist);
+
+		//fill DomL
+		DomL domL = (DomL) ClassicProject.g().getTrgt("L");
+		for(String l : srcLabels)
+			domL.add(l);
+		for(String l : sinkLabels)
+			domL.add(l);
+		domL.save();
+
+		//fille SrcLabel
+		ProgramRel relSrcLabel = (ProgramRel) ClassicProject.g().getTrgt("SrcLabel");
+		relSrcLabel.zero();
+		for(String l : srcLabels)
+			relSrcLabel.add(l);
+		relSrcLabel.save();
+
+		//fill SinkLabel
+		ProgramRel relSinkLabel = (ProgramRel) ClassicProject.g().getTrgt("SinkLabel");
+		relSinkLabel.zero();
+		for(String l : sinkLabels)
+			relSinkLabel.add(l);
+		relSinkLabel.save();
+
+		//fill LabelArg and LabelRet
+		relLabelArg = (ProgramRel) ClassicProject.g().getTrgt("LabelArg");
+		relLabelRet = (ProgramRel) ClassicProject.g().getTrgt("LabelRet");
+		relLabelArg.zero();
+		relLabelRet.zero();		
+		while(!worklist.isEmpty()){
+			SootMethod meth = (SootMethod) worklist.remove(0);
+			String from = (String) worklist.remove(0);
+			String to = (String) worklist.remove(0);
+			addFlow(meth, from, to);
+		}
+		relLabelArg.save();
+		relLabelRet.save();
+	}
+
+	private void process(List<String> srcLabels, List<String> sinkLabels, List worklist)
 	{
-		DomSRC domSRC = (DomSRC) ClassicProject.g().getTrgt("SRC");
-		DomSINK domSINK = (DomSINK) ClassicProject.g().getTrgt("SINK");
-		DomM domM = (DomM) ClassicProject.g().getTrgt("M");
-
+		relArgArgTransfer = (ProgramRel) ClassicProject.g().getTrgt("ArgArgTransfer");
+		relArgRetTransfer = (ProgramRel) ClassicProject.g().getTrgt("ArgRetTransfer");
 		relArgArgFlow = (ProgramRel) ClassicProject.g().getTrgt("ArgArgFlow");
-		relArgRetFlow = (ProgramRel) ClassicProject.g().getTrgt("ArgRetFlow");
 
+		relArgArgTransfer.zero();
+		relArgRetTransfer.zero();
 		relArgArgFlow.zero();
-		relArgRetFlow.zero();
-		
+
+		DomM domM = (DomM) ClassicProject.g().getTrgt("M");
 		Scene scene = Program.g().scene();
-		List worklist = new LinkedList();
 		try{
 			BufferedReader reader = new BufferedReader(new FileReader(new File("stamp_annotations.txt")));
 			String line = reader.readLine();
@@ -86,17 +132,16 @@ public class AnnotationReader extends JavaAnalysis
 					if(domM.indexOf(meth) >= 0){
 						String from = tokens[1];
 						String to = tokens[2];
-						
-						boolean src = from.charAt(0) == '$';
+			
+						boolean b1 = addLabel(from, srcLabels, sinkLabels);
+						boolean b2 = addLabel(to, srcLabels, sinkLabels);
+
+						char c = from.charAt(0);
+						boolean src = (c == '$' || c == '!');
 						boolean sink = to.charAt(0) == '!';
-						if(src && sink){
+						if(b1 && b2){
 							System.out.println("Unsupported annotation type "+line);
-						} else if(src || sink){
-							if(src)
-								domSRC.add(from);
-							if(sink)
-								domSINK.add(to);
-							
+						} else if(b1 || b2){							
 							worklist.add(meth);
 							worklist.add(from);
 							worklist.add(to);
@@ -111,66 +156,62 @@ public class AnnotationReader extends JavaAnalysis
 		}catch(IOException e){
 			throw new Error(e);
 		}
-		domSRC.save();
-		domSINK.save();
 
+		relArgArgTransfer.save();	
+		relArgRetTransfer.save();
 		relArgArgFlow.save();	
-		relArgRetFlow.save();
+	}
 
-		relArgSinkFlow = (ProgramRel) ClassicProject.g().getTrgt("ArgSinkFlow");
-		relRetSinkFlow = (ProgramRel) ClassicProject.g().getTrgt("RetSinkFlow");
-		relSrcArgFlow = (ProgramRel) ClassicProject.g().getTrgt("SrcArgFlow");
-		relSrcRetFlow = (ProgramRel) ClassicProject.g().getTrgt("SrcRetFlow");
-
-		relArgSinkFlow.zero();
-		relRetSinkFlow.zero();
-		relSrcArgFlow.zero();
-		relSrcRetFlow.zero();
-		
-		while(!worklist.isEmpty()){
-			SootMethod meth = (SootMethod) worklist.remove(0);
-			String from = (String) worklist.remove(0);
-			String to = (String) worklist.remove(0);
-			addFlow(meth, from, to);
+	private boolean addLabel(String label, List<String> srcLabels, List<String> sinkLabels)
+	{
+		char c = label.charAt(0);
+		if(c == '$'){
+			srcLabels.add(label);
+			return true;
+		} 
+		if(c == '!'){
+			sinkLabels.add(label);
+			return true;
 		}
-
-		relArgSinkFlow.save();
-		relRetSinkFlow.save();
-		relSrcArgFlow.save();
-		relSrcRetFlow.save();
+		return false;
 	}
 
 	private void addFlow(SootMethod meth, String from, String to) //throws NumberFormatException
 	{
 		System.out.println("+++ " + meth + " " + from + " " + to);
 		List<SootMethod> meths = overridingMethodsFor(meth);
-		if(from.charAt(0) == '$') {
+		char from0 = from.charAt(0);
+		if(from0 == '$' || from0 == '!') {
 			if(to.equals("-1")){
 				for(SootMethod m : meths)
-					relSrcRetFlow.add(from, m);
+					relLabelRet.add(from, m);
 			}
 			else{
 				for(SootMethod m : meths)
-					relSrcArgFlow.add(from, m, Integer.valueOf(to));
+					relLabelArg.add(from, m, Integer.valueOf(to));
 			}
 		} else {
-			assert !(from.charAt(0) == '!');
 			Integer fromArgIndex = Integer.valueOf(from);
-			if(to.charAt(0) == '!'){
+			char to0 = to.charAt(0);
+			if(to0 == '!'){
 				if(from.equals("-1")){
 					for(SootMethod m : meths)
-						relRetSinkFlow.add(m, to);
+						relLabelRet.add(to, m);
 				} else{
 					for(SootMethod m : meths)
-						relArgSinkFlow.add(m, fromArgIndex, to);
+						relLabelArg.add(to, m, fromArgIndex);
 				}
+			} else if(to0 == '?'){
+				Integer toArgIndex = Integer.valueOf(to.substring(1));
+				for(SootMethod m : meths)
+					relArgArgFlow.add(m, fromArgIndex, toArgIndex);
 			} else if(to.equals("-1")){
 				for(SootMethod m : meths)
-					relArgRetFlow.add(m, fromArgIndex);
+					relArgRetTransfer.add(m, fromArgIndex);
 			} else {
 				Integer toArgIndex = Integer.valueOf(to);
 				for(SootMethod m : meths)
-					relArgArgFlow.add(m, fromArgIndex, toArgIndex);
+					relArgArgTransfer.add(m, fromArgIndex, toArgIndex);
 			}
 		}
 	}

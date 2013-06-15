@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Iterator;
 
 import gnu.trove.list.array.TIntArrayList;
 
@@ -27,11 +28,11 @@ import chord.util.graph.MutableGraph;
 import chord.util.tuple.object.Pair;
 
 @Chord(name = "contexts-java",
-	   consumes = { "chaIM", "I", "M", "H", "MH", "MI" },
-	   produces = { "C", "CtxtCtxt", "CtxtInvki", "MethCtxt", "CtxtAbsObj" },
+	   consumes = { "chaIM", "I", "M", "H", "Stubs", "MH", "MI" },
+	   produces = { "C", "CC", "CI", "CM", "CH" },
 	   namesOfTypes = { "C" },
 	   types = { DomC.class },
-	   namesOfSigns = { "CtxtCtxt", "CtxtInvki", "MethCtxt", "CtxtAbsObj" },
+	   namesOfSigns = { "CC", "CI", "CM", "CH" },
 	   signs = { "C0,C1:C0xC1", "C0,I0:C0_I0", "C0,M0:C0_M0", "C0,H0:C0_H0"}
 	   )
 public class ContextsAnalysis extends JavaAnalysis
@@ -127,11 +128,15 @@ public class ContextsAnalysis extends JavaAnalysis
 
 	private void CM()
 	{
-		ProgramRel relCM = (ProgramRel) ClassicProject.g().getTrgt("MethCtxt");
+		ProgramRel relCM = (ProgramRel) ClassicProject.g().getTrgt("CM");
 		relCM.zero();
         for (int mIdx = 0; mIdx < methToCtxts.length; mIdx++) {
             SootMethod meth = (SootMethod) domM.get(mIdx);
 			Set<Ctxt> ctxts = methToCtxts[mIdx];
+			if(ctxts == null){
+				//either meth is unreachable or a reachable stub
+				continue;
+			}
 			for(Ctxt c : ctxts){
 				relCM.add(c, meth);
 				//System.out.println("meth: " + meth + " ctxt: "+c);
@@ -142,7 +147,7 @@ public class ContextsAnalysis extends JavaAnalysis
 
 	private void CH()
 	{
-		ProgramRel relCH = (ProgramRel) ClassicProject.g().getTrgt("CtxtAbsObj");
+		ProgramRel relCH = (ProgramRel) ClassicProject.g().getTrgt("CH");
 		relCH.zero();
 
 		for(int hIdx = 0; hIdx < HtoM.length; hIdx++){
@@ -163,8 +168,8 @@ public class ContextsAnalysis extends JavaAnalysis
 
 	private void CC_CI()
 	{
-        ProgramRel relCC = (ProgramRel) ClassicProject.g().getTrgt("CtxtCtxt");
-        ProgramRel relCI = (ProgramRel) ClassicProject.g().getTrgt("CtxtInvki");
+        ProgramRel relCC = (ProgramRel) ClassicProject.g().getTrgt("CC");
+        ProgramRel relCI = (ProgramRel) ClassicProject.g().getTrgt("CI");
 		relCC.zero();
         relCI.zero();
 
@@ -228,11 +233,18 @@ public class ContextsAnalysis extends JavaAnalysis
         SootMethod mainMeth = Program.g().getMainMethod();
         Set<SootMethod> roots = new HashSet<SootMethod>();
         Map<SootMethod, Set<SootMethod>> methToPredsMap = new HashMap<SootMethod, Set<SootMethod>>();
-		int numM = domM.size();
-        for (int mIdx = 0; mIdx < numM; mIdx++) { // For each method...
-            SootMethod meth = domM.get(mIdx);
-
-			if (meth == mainMeth || meth.getName().equals("<clinit>") || meth.isAbstract()){
+		
+		boolean ignoreStubs = PAGBuilder.ignoreStubs;
+        DomStubs domStubs = (DomStubs) ClassicProject.g().getTrgt("Stubs");
+		Iterator mIt = Program.g().scene().getReachableMethods().listener();
+		while(mIt.hasNext()){
+			SootMethod meth = (SootMethod) mIt.next();
+			if(ignoreStubs && domStubs.contains(meth)){
+				//System.out.println("reachstub "+meth);
+				continue;
+			}
+			int mIdx = domM.indexOf(meth);
+			if (meth == mainMeth || meth.getName().equals("<clinit>")){
                 roots.add(meth);
                 methToPredsMap.put(meth, emptyMethSet);
                 methToCtxts[mIdx] = epsilonCtxtSet;

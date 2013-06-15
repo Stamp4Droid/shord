@@ -53,68 +53,71 @@ import chord.project.Chord;
 import java.util.*;
 
 @Chord(name="base-java", 
-	   produces={"M", "Z", "I", "H", "V", "T", "F", "U",
-				 "MobjValAsgnInst", "MobjVarAsgnInst", 
-				 "MgetInstFldInst", "MputInstFldInst", 
-				 "MgetStatFldInst", "MputStatFldInst", 
+	   produces={"M", "Z", "I", "H", "V", "T", "F", "U", "Stubs",
+				 "Alloc", "Assign", 
+				 "Load", "Store", 
+				 "LoadStat", "StoreStat", 
 				 "MmethArg", "MmethRet", 
 				 "IinvkRet", "IinvkArg", 
 				 "VT", "chaIM",
 				 "HT", "HTFilter",
 				 "MI", "MH",
-				 "MprimDataDep", 
-				 "MgetInstFldPrimInst", "MputInstFldPrimInst",
-				 "MgetStatFldPrimInst", "MputStatFldPrimInst",
+				 "MV", "MU",
+				 "AssignPrim", 
+				 "LoadPrim", "StorePrim",
+				 "LoadStatPrim", "StoreStatPrim",
 				 "MmethPrimArg", "MmethPrimRet", 
 				 "IinvkPrimRet", "IinvkPrimArg" },
-       namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U" },
-       types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class },
-	   namesOfSigns = { "MobjValAsgnInst", "MobjVarAsgnInst", 
-						"MgetInstFldInst", "MputInstFldInst", 
-						"MgetStatFldInst", "MputStatFldInst", 
+       namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U", "Stubs" },
+       types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomStubs.class },
+	   namesOfSigns = { "Alloc", "Assign", 
+						"Load", "Store", 
+						"LoadStat", "StoreStat", 
 						"MmethArg", "MmethRet", 
 						"IinvkRet", "IinvkArg", 
 						"VT", "chaIM",
 						"HT", "HTFilter",
 						"MI", "MH",
-						"MprimDataDep", 
-						"MgetInstFldPrimInst", "MputInstFldPrimInst",
-						"MgetStatFldPrimInst", "MputStatFldPrimInst",
+						"MV", "MU",
+						"AssignPrim", 
+						"LoadPrim", "StorePrim",
+						"LoadStatPrim", "StoreStatPrim",
 						"MmethPrimArg", "MmethPrimRet", 
 						"IinvkPrimRet", "IinvkPrimArg" },
-	   signs = { "M0,V0,H0:M0_V0_H0", "M0,V0,V1:M0_V0xV1",
-				 "M0,V0,V1,F0:F0_M0_V0xV1", "M0,V0,F0,V1:F0_M0_V0xV1",
-				 "M0,V0,F0:F0_M0_V0", "M0,F0,V0:F0_M0_V0",
-				 "M0,Z0,V0:M0_V0_Z0", "M0,Z0,V1:M0_V1_Z0",
-				 "I0,Z0,V0:I0_V0_Z0", "I0,Z0,V1:I0_V1_Z0",
+	   signs = { "V0,H0:V0_H0", "V0,V1:V0xV1",
+				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
+				 "V0,F0:F0_V0", "F0,V0:F0_V0",
+				 "M0,Z0,V0:M0_V0_Z0", "M0,Z0,V0:M0_V0_Z0",
+				 "I0,Z0,V0:I0_V0_Z0", "I0,Z0,V0:I0_V0_Z0",
 				 "V0,T0:T0_V0", "I0,M0:I0_M0",
 				 "H0,T0:H0_T0", "H0,T0:H0_T0",
 				 "M0,I0:M0_I0", "M0,H0:M0_H0",
-				 "M0,U0,U1:M0_U0xU1",
-				 "M0,U0,V0,F0:M0_U0_V0_F0", "M0,V0,F0,U0:M0_U0_V0_F0",
-				 "M0,U0,F0:M0_U0_F0", "M0,F0,U0:M0_U0_F0",
+				 "M0,V0:M0_V0", "M0,U0:M0_U0",
+				 "U0,U1:U0xU1",
+				 "U0,V0,F0:U0_V0_F0", "V0,F0,U0:U0_V0_F0",
+				 "U0,F0:U0_F0", "F0,U0:U0_F0",
 				 "M0,Z0,U0:M0_U0_Z0", "M0,Z0,U0:M0_U0_Z0",
 				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0" }
 	   )
 public class PAGBuilder extends JavaAnalysis
 {
-	private ProgramRel relMobjValAsgnInst;//(m:M,l:V,h:H)
-	private ProgramRel relMobjVarAsgnInst;//(m:M,l:V,r:V)
-	private ProgramRel relMgetInstFldInst;//(m:M,l:V,b:V,f:F)
-	private ProgramRel relMputInstFldInst;//(m:M,b:V,f:F,r:V)
-	private ProgramRel relMgetStatFldInst;//(m:M,l:V,f:F)
-	private ProgramRel relMputStatFldInst;//(m:M,f:F,r:V)
+	private ProgramRel relAlloc;//(l:V,h:H)
+	private ProgramRel relAssign;//(l:V,r:V)
+	private ProgramRel relLoad;//(l:V,b:V,f:F)
+	private ProgramRel relStore;//(b:V,f:F,r:V)
+	private ProgramRel relLoadStat;//(l:V,f:F)
+	private ProgramRel relStoreStat;//(f:F,r:V)
 
     private ProgramRel relMmethArg;//(m:M,z:Z,v:V)
     private ProgramRel relMmethRet;//(m:M,z:Z,v:V)
     private ProgramRel relIinvkRet;//(i:I,n:Z,v:V)
     private ProgramRel relIinvkArg;//(i:I,n:Z,v:V)
-
-	private ProgramRel relMprimDataDep;//(m:M,l:U,r:U1)
-	private ProgramRel relMgetInstFldPrimInst;//(m:M,l:U,b:V,f:F)
-	private ProgramRel relMputInstFldPrimInst;//(m:M,b:V,f:F,r:U)
-	private ProgramRel relMgetStatFldPrimInst;//(m:M,l:U,f:F)
-	private ProgramRel relMputStatFldPrimInst;//(m:M,f:F,r:U)
+	
+	private ProgramRel relAssignPrim;//(l:U,r:U)
+	private ProgramRel relLoadPrim;//(l:U,b:V,f:F)
+	private ProgramRel relStorePrim;//(b:V,f:F,r:U)
+	private ProgramRel relLoadStatPrim;//(l:U,f:F)
+	private ProgramRel relStoreStatPrim;//(f:F,r:U)
 
     private ProgramRel relMmethPrimArg;//(m:M,z:Z,u:U)
     private ProgramRel relMmethPrimRet;//(m:M,z:Z,u:U)
@@ -126,6 +129,8 @@ public class PAGBuilder extends JavaAnalysis
 	private ProgramRel relHTFilter;
 	private ProgramRel relMI;
 	private ProgramRel relMH;
+	private ProgramRel relMV;
+	private ProgramRel relMU;
 
 	private DomV domV;
 	private DomU domU;
@@ -137,20 +142,23 @@ public class PAGBuilder extends JavaAnalysis
 	private FastHierarchy fh;
 	private NumberedSet stubMethods;
 
+	public static final boolean ignoreStubs = false;
+
 	void openRels()
 	{
-		relMobjValAsgnInst = (ProgramRel) ClassicProject.g().getTrgt("MobjValAsgnInst");
-		relMobjValAsgnInst.zero();
-		relMobjVarAsgnInst = (ProgramRel) ClassicProject.g().getTrgt("MobjVarAsgnInst");
-		relMobjVarAsgnInst.zero();
-		relMgetInstFldInst = (ProgramRel) ClassicProject.g().getTrgt("MgetInstFldInst");
-		relMgetInstFldInst.zero();
-		relMputInstFldInst = (ProgramRel) ClassicProject.g().getTrgt("MputInstFldInst");
-		relMputInstFldInst.zero();
-		relMgetStatFldInst = (ProgramRel) ClassicProject.g().getTrgt("MgetStatFldInst");
-		relMgetStatFldInst.zero();
-		relMputStatFldInst = (ProgramRel) ClassicProject.g().getTrgt("MputStatFldInst");
-		relMputStatFldInst.zero();
+		relAlloc = (ProgramRel) ClassicProject.g().getTrgt("Alloc");
+		relAlloc.zero();
+		relAssign = (ProgramRel) ClassicProject.g().getTrgt("Assign");
+		relAssign.zero();
+		relLoad = (ProgramRel) ClassicProject.g().getTrgt("Load");
+		relLoad.zero();
+		relStore = (ProgramRel) ClassicProject.g().getTrgt("Store");
+		relStore.zero();
+		relLoadStat = (ProgramRel) ClassicProject.g().getTrgt("LoadStat");
+		relLoadStat.zero();
+		relStoreStat = (ProgramRel) ClassicProject.g().getTrgt("StoreStat");
+		relStoreStat.zero();
+
 		relMmethArg = (ProgramRel) ClassicProject.g().getTrgt("MmethArg");
 		relMmethArg.zero();
 		relMmethRet = (ProgramRel) ClassicProject.g().getTrgt("MmethRet");
@@ -169,16 +177,22 @@ public class PAGBuilder extends JavaAnalysis
         relMI.zero();
 		relMH = (ProgramRel) ClassicProject.g().getTrgt("MH");
         relMH.zero();
-		relMprimDataDep = (ProgramRel) ClassicProject.g().getTrgt("MprimDataDep");
-		relMprimDataDep.zero();
-		relMgetInstFldPrimInst = (ProgramRel) ClassicProject.g().getTrgt("MgetInstFldPrimInst");
-		relMgetInstFldPrimInst.zero();
-		relMputInstFldPrimInst = (ProgramRel) ClassicProject.g().getTrgt("MputInstFldPrimInst");
-		relMputInstFldPrimInst.zero();
-		relMgetStatFldPrimInst = (ProgramRel) ClassicProject.g().getTrgt("MgetStatFldPrimInst");
-		relMgetStatFldPrimInst.zero();
-		relMputStatFldPrimInst = (ProgramRel) ClassicProject.g().getTrgt("MputStatFldPrimInst");
-		relMputStatFldPrimInst.zero();
+		relMV = (ProgramRel) ClassicProject.g().getTrgt("MV");
+        relMV.zero();
+		relMU = (ProgramRel) ClassicProject.g().getTrgt("MU");
+        relMU.zero();
+
+		relAssignPrim = (ProgramRel) ClassicProject.g().getTrgt("AssignPrim");
+		relAssignPrim.zero();
+		relLoadPrim = (ProgramRel) ClassicProject.g().getTrgt("LoadPrim");
+		relLoadPrim.zero();
+		relStorePrim = (ProgramRel) ClassicProject.g().getTrgt("StorePrim");
+		relStorePrim.zero();
+		relLoadStatPrim = (ProgramRel) ClassicProject.g().getTrgt("LoadStatPrim");
+		relLoadStatPrim.zero();
+		relStoreStatPrim = (ProgramRel) ClassicProject.g().getTrgt("StoreStatPrim");
+		relStoreStatPrim.zero();
+
 		relMmethPrimArg = (ProgramRel) ClassicProject.g().getTrgt("MmethPrimArg");
 		relMmethPrimArg.zero();
 		relMmethPrimRet = (ProgramRel) ClassicProject.g().getTrgt("MmethPrimRet");
@@ -191,12 +205,13 @@ public class PAGBuilder extends JavaAnalysis
 	
 	void saveRels()
 	{
-		relMobjValAsgnInst.save();
-		relMobjVarAsgnInst.save();
-		relMgetInstFldInst.save();
-		relMputInstFldInst.save();
-		relMgetStatFldInst.save();
-		relMputStatFldInst.save();
+		relAlloc.save();
+		relAssign.save();
+		relLoad.save();
+		relStore.save();
+		relLoadStat.save();
+		relStoreStat.save();
+
 		relMmethArg.save();
 		relMmethRet.save();
 		relIinvkRet.save();
@@ -206,64 +221,68 @@ public class PAGBuilder extends JavaAnalysis
 		relHTFilter.save();
 		relMI.save();
 		relMH.save();
-		relMprimDataDep.save();
-		relMgetInstFldPrimInst.save();
-		relMputInstFldPrimInst.save();
-		relMgetStatFldPrimInst.save();
-		relMputStatFldPrimInst.save();
+		relMV.save();
+		relMU.save();
+
+		relAssignPrim.save();
+		relLoadPrim.save();
+		relStorePrim.save();
+		relLoadStatPrim.save();
+		relStoreStatPrim.save();
+
 		relMmethPrimArg.save();
 		relMmethPrimRet.save();
 		relIinvkPrimRet.save();
 		relIinvkPrimArg.save();
 	}
 
-	void MobjValAsgnInst(SootMethod m, LocalVarNode l, Stmt h)
+	void Alloc(LocalVarNode l, Stmt h)
 	{
 		assert l != null;
-		relMobjValAsgnInst.add(m, l, h);
+		relAlloc.add(l, h);
 	}
 
-	void MobjVarAsgnInst(SootMethod m, VarNode l, VarNode r)
+	void Assign(VarNode l, VarNode r)
 	{
 		if(l == null || r == null)
 			return;
-		relMobjVarAsgnInst.add(m, l, r);
+		relAssign.add(l, r);
 	}
 
-	void MgetInstFldInst(SootMethod m, LocalVarNode l, LocalVarNode b, SparkField f)
+	void Load(LocalVarNode l, LocalVarNode b, SparkField f)
 	{
 		if(b == null || l == null)
 			return;
 		if(f instanceof SootField && (((SootField) f).getDeclaringClass().isPhantom()))
 		   return;
-		relMgetInstFldInst.add(m, l, b, f);
+		relLoad.add(l, b, f);
 	}
 
-	void MputInstFldInst(SootMethod m, LocalVarNode b, SparkField f, LocalVarNode r)
+	void Store(LocalVarNode b, SparkField f, LocalVarNode r)
 	{
 		if(b == null || r == null)
 			return;
 		if(f instanceof SootField && (((SootField) f).getDeclaringClass().isPhantom()))
 		   return;
-		relMputInstFldInst.add(m, b, f, r);
+		relStore.add(b, f, r);
 	}
 
-	void MgetStatFldInst(SootMethod m, LocalVarNode l, SootField f)
+	void LoadStat(LocalVarNode l, SootField f)
 	{
 		if(l == null)
 			return;
 		if(f instanceof SootField && (((SootField) f).getDeclaringClass().isPhantom()))
 		   return;
-		relMgetStatFldInst.add(m, l, f);
+		relLoadStat.add(l, f);
 	}
 
-	void MputStatFldInst(SootMethod m, SootField f, LocalVarNode r)
+	void StoreStat(SootField f, LocalVarNode r)
 	{
 		if(r == null)
 			return;
 		if(f instanceof SootField && (((SootField) f).getDeclaringClass().isPhantom()))
 		   return;
-		relMputStatFldInst.add(m, f, r);
+		relStoreStat.add(f, r);
 	}
 
 	void MmethArg(SootMethod m, int index, VarNode v)
@@ -294,47 +313,47 @@ public class PAGBuilder extends JavaAnalysis
 		relIinvkRet.add(invkUnit, new Integer(0), v);
 	}
 
-	void MprimDataDep(SootMethod m, VarNode l, VarNode r)
+	void AssignPrim(VarNode l, VarNode r)
 	{
 		if(l == null || r == null)
 			return;
-		relMprimDataDep.add(m, l, r);
+		relAssignPrim.add(l, r);
 	}
 
-	void MgetInstFldPrimInst(SootMethod m, LocalVarNode l, LocalVarNode b, SparkField f)
+	void LoadPrim(LocalVarNode l, LocalVarNode b, SparkField f)
 	{
 		if(b == null || l == null)
 			return;
 		if(f instanceof SootField && (((SootField) f).getDeclaringClass().isPhantom()))
 		   return;
-		relMgetInstFldPrimInst.add(m, l, b, f);
+		relLoadPrim.add(l, b, f);
 	}
 
-	void MputInstFldPrimInst(SootMethod m, LocalVarNode b, SparkField f, LocalVarNode r)
+	void StorePrim(LocalVarNode b, SparkField f, LocalVarNode r)
 	{
 		if(b == null || r == null)
 			return;
 		if(f instanceof SootField && (((SootField) f).getDeclaringClass().isPhantom()))
 		   return;
-		relMputInstFldPrimInst.add(m, b, f, r);
+		relStorePrim.add(b, f, r);
 	}
 
-	void MgetStatFldPrimInst(SootMethod m, LocalVarNode l, SootField f)
+	void LoadStatPrim(LocalVarNode l, SootField f)
 	{
 		if(l == null)
 			return;
 		if(f instanceof SootField && (((SootField) f).getDeclaringClass().isPhantom()))
 		   return;
-		relMgetStatFldPrimInst.add(m, l, f);
+		relLoadStatPrim.add(l, f);
 	}
 
-	void MputStatFldPrimInst(SootMethod m, SootField f, LocalVarNode r)
+	void StoreStatPrim(SootField f, LocalVarNode r)
 	{
 		if(r == null)
 			return;
 		if(f instanceof SootField && (((SootField) f).getDeclaringClass().isPhantom()))
 		   return;
-		relMputStatFldPrimInst.add(m, f, r);
+		relStoreStatPrim.add(f, r);
 	}
 
 	void MmethPrimArg(SootMethod m, int index, VarNode v)
@@ -477,6 +496,7 @@ public class PAGBuilder extends JavaAnalysis
 			if(thisVar != null){
 				MmethArg(method, i++, thisVar);
 				relVT.add(thisVar, method.getDeclaringClass().getType());
+				relMV.add(method, thisVar);
 			}
 			
 			if(paramVars != null){
@@ -486,8 +506,10 @@ public class PAGBuilder extends JavaAnalysis
 					if(paramType instanceof RefLikeType){
 						MmethArg(method, i, node);
 						relVT.add(node, paramType);
+						relMV.add(method, node);
 					} else if(paramType instanceof PrimType){
 						MmethPrimArg(method, i, node);
+						relMU.add(method, node);
 					} else
 						assert false;
 					i++;
@@ -499,8 +521,10 @@ public class PAGBuilder extends JavaAnalysis
 				if(retType instanceof RefLikeType){
 					MmethRet(method, retVar);
 					relVT.add(retVar, retType);
+					relMV.add(method, retVar);
 				} else if(retType instanceof PrimType){
 					MmethPrimRet(method, retVar);
+					relMU.add(method, retVar);
 				} else
 					assert false;
 			}
@@ -508,12 +532,19 @@ public class PAGBuilder extends JavaAnalysis
 			if(!method.isConcrete())
 				return;
 			for(Map.Entry<Local,LocalVarNode> e : localToVarNode.entrySet()){
-				if(nonPrimLocals.contains(e.getKey()))
-					relVT.add(e.getValue(), UnknownType.v());
+				LocalVarNode varNode = e.getValue();
+				if(nonPrimLocals.contains(e.getKey())){
+					relVT.add(varNode, UnknownType.v());
+					relMV.add(method, varNode);
+				}
+				if(primLocals.contains(e.getKey())){
+					relMU.add(method, varNode);
+				}
 			}
 			for(Map.Entry<Stmt,CastVarNode> e : stmtToCastNode.entrySet()){
 				Type castType = ((CastExpr) ((AssignStmt) e.getKey()).getRightOp()).getCastType();
 				relVT.add(e.getValue(), castType);
+				relMV.add(method, e.getValue());
 			}
 
 			Body body = method.retrieveActiveBody();
@@ -574,15 +605,15 @@ public class PAGBuilder extends JavaAnalysis
 					//load
 					if(field.isStatic()){
 						if(fieldType instanceof RefLikeType)
-							MgetStatFldInst(method, nodeFor((Local) leftOp), field);
+							LoadStat(nodeFor((Local) leftOp), field);
 						else if(fieldType instanceof PrimType)
-							MgetStatFldPrimInst(method, nodeFor((Local) leftOp), field);
+							LoadStatPrim(nodeFor((Local) leftOp), field);
 					} else{
 						Immediate base = (Immediate) ((InstanceFieldRef) fr).getBase();
 						if(fieldType instanceof RefLikeType)
-							MgetInstFldInst(method, nodeFor((Local) leftOp), nodeFor(base), field);
+							Load(nodeFor((Local) leftOp), nodeFor(base), field);
 						else if(fieldType instanceof PrimType)
-							MgetInstFldPrimInst(method, nodeFor((Local) leftOp), nodeFor(base), field);
+							LoadPrim(nodeFor((Local) leftOp), nodeFor(base), field);
 					}
 				}else{
 					//store
@@ -590,15 +621,15 @@ public class PAGBuilder extends JavaAnalysis
 					Immediate rightOp = (Immediate) as.getRightOp();
 					if(field.isStatic()){
 						if(fieldType instanceof RefLikeType)
-							MputStatFldInst(method, field, nodeFor(rightOp));
+							StoreStat(field, nodeFor(rightOp));
 						else if(fieldType instanceof PrimType)
-							MputStatFldPrimInst(method, field, nodeFor(rightOp));
+							StoreStatPrim(field, nodeFor(rightOp));
 					} else{
 						Immediate base = (Immediate) ((InstanceFieldRef) fr).getBase();
 						if(fieldType instanceof RefLikeType)
-							MputInstFldInst(method, nodeFor(base), field, nodeFor(rightOp));
+							Store(nodeFor(base), field, nodeFor(rightOp));
 						else if(fieldType instanceof PrimType)
-							MputInstFldPrimInst(method, nodeFor(base), field, nodeFor(rightOp));		
+							StorePrim(nodeFor(base), field, nodeFor(rightOp));		
 					}
 				}
 			} else if(s.containsArrayRef()) {
@@ -611,9 +642,9 @@ public class PAGBuilder extends JavaAnalysis
 					//array read
 					Local l = (Local) leftOp;
 					if(nonPrimLocals.contains(l))
-						MgetInstFldInst(method, nodeFor(l), nodeFor(base), field);
+						Load(nodeFor(l), nodeFor(base), field);
 					if(primLocals.contains(l))
-						MgetInstFldPrimInst(method, nodeFor(l), nodeFor(base), field);
+						LoadPrim(nodeFor(l), nodeFor(base), field);
 				}else{
 					//array write
 					assert leftOp == ar;
@@ -621,9 +652,9 @@ public class PAGBuilder extends JavaAnalysis
 					if(rightOp instanceof Local){
 						Local r = (Local) rightOp;
 						if(nonPrimLocals.contains(r))
-							MputInstFldInst(method, nodeFor(base), field, nodeFor(r));
+							Store(nodeFor(base), field, nodeFor(r));
 						if(primLocals.contains(r))
-							MputInstFldPrimInst(method, nodeFor(base), field, nodeFor(r));
+							StorePrim(nodeFor(base), field, nodeFor(r));
 					}
 				}
 			} else if(s instanceof AssignStmt) {
@@ -632,7 +663,7 @@ public class PAGBuilder extends JavaAnalysis
 				Value rightOp = as.getRightOp();
 
 				if(rightOp instanceof AnyNewExpr){
-					MobjValAsgnInst(method, nodeFor((Local) leftOp), s);
+					Alloc(nodeFor((Local) leftOp), s);
 					relHT.add(s, rightOp.getType());
 					relMH.add(method, s);
 					Iterator<Type> typesIt = Program.g().getTypes().iterator();
@@ -648,19 +679,19 @@ public class PAGBuilder extends JavaAnalysis
 					Immediate op = (Immediate) ((CastExpr) rightOp).getOp();
 					if(castType instanceof RefLikeType){
 						CastVarNode castNode = stmtToCastNode.get(s);
-						MobjVarAsgnInst(method, castNode, nodeFor(op));
-						MobjVarAsgnInst(method, nodeFor((Local) leftOp), castNode);
+						Assign(castNode, nodeFor(op));
+						Assign(nodeFor((Local) leftOp), castNode);
 					} else if(castType instanceof PrimType)
-						MprimDataDep(method, nodeFor((Local) leftOp), nodeFor(op));
+						AssignPrim(nodeFor((Local) leftOp), nodeFor(op));
 				} else if(leftOp instanceof Local && rightOp instanceof Immediate){
 					Local l = (Local) leftOp;
 					Immediate r = (Immediate) rightOp;
 					if(nonPrimLocals.contains(l))
-						MobjVarAsgnInst(method, nodeFor(l), nodeFor(r));
+						Assign(nodeFor(l), nodeFor(r));
 					if(primLocals.contains(l))
-						MprimDataDep(method, nodeFor(l), nodeFor(r));
+						AssignPrim(nodeFor(l), nodeFor(r));
 				} if(rightOp instanceof NegExpr){
-					MprimDataDep(method, nodeFor((Local) leftOp), nodeFor((Immediate) ((NegExpr) rightOp).getOp()));
+					AssignPrim(nodeFor((Local) leftOp), nodeFor((Immediate) ((NegExpr) rightOp).getOp()));
 				}else if(rightOp instanceof BinopExpr){
 					LocalVarNode leftNode = nodeFor((Local) leftOp);
 					BinopExpr binExpr = (BinopExpr) rightOp;
@@ -668,35 +699,35 @@ public class PAGBuilder extends JavaAnalysis
 					if(op1 instanceof Local){
 						Local l = (Local) op1;
 						if(primLocals.contains(l))
-							MprimDataDep(method, leftNode, nodeFor(l));	
+							AssignPrim(leftNode, nodeFor(l));	
 					}
 					Immediate op2 = (Immediate) binExpr.getOp2();
 					if(op2 instanceof Local){
 						Local l = (Local) op2;
 						if(primLocals.contains(l))
-							MprimDataDep(method, leftNode, nodeFor(l));
+							AssignPrim(leftNode, nodeFor(l));
 					}
 				}
 			}else if(s instanceof ReturnStmt){
 				Type retType = method.getReturnType();
 				Immediate retOp = (Immediate) ((ReturnStmt) s).getOp();
 				if(retType instanceof RefLikeType)
-					MobjVarAsgnInst(method, retVar, nodeFor(retOp));
+					Assign(retVar, nodeFor(retOp));
 				else if(retType instanceof PrimType)
-					MprimDataDep(method, retVar, nodeFor(retOp));
+					AssignPrim(retVar, nodeFor(retOp));
 			}else if(s instanceof IdentityStmt){
 				IdentityStmt is = (IdentityStmt) s;
 				Local leftOp = (Local) is.getLeftOp();
 				Value rightOp = is.getRightOp();
 				if(rightOp instanceof ThisRef){
-					MobjVarAsgnInst(method, nodeFor(leftOp), thisVar);
+					Assign(nodeFor(leftOp), thisVar);
 				} else if(rightOp instanceof ParameterRef){
 					int index = ((ParameterRef) rightOp).getIndex();
 					Type type = method.getParameterType(index);
 					if(type instanceof RefLikeType)
-						MobjVarAsgnInst(method, nodeFor(leftOp), paramVars[index]);
+						Assign(nodeFor(leftOp), paramVars[index]);
 					else if(type instanceof PrimType)
-						MprimDataDep(method, nodeFor(leftOp), paramVars[index]);
+						AssignPrim(nodeFor(leftOp), paramVars[index]);
 				}
 			}
 		}
@@ -710,15 +741,20 @@ public class PAGBuilder extends JavaAnalysis
 		Iterator<Edge> edgeIt = cg.listener();
 		while(edgeIt.hasNext()){
 			Edge edge = edgeIt.next();
-			if(!edge.isExplicit())
+			if(!edge.isExplicit() && !edge.isThreadRunCall())
 				continue;
 			Stmt stmt = edge.srcStmt();
 			//int stmtIdx = domI.getOrAdd(stmt);
 			SootMethod tgt = (SootMethod) edge.tgt();
 			SootMethod src = (SootMethod) edge.src();
-			//System.out.println("stmt: "+stmt+" tgt: "+tgt);
-			if(!stubMethods.contains(tgt) && (src == null || !stubMethods.contains(src)))
-				relChaIM.add(stmt, tgt);
+			if(tgt.isAbstract() || tgt.isPhantom())
+				assert false;//continue;
+			//System.out.println("stmt: "+stmt+" tgt: "+tgt+ "abstract: "+ tgt.isAbstract());
+			if(ignoreStubs){
+				if(stubMethods.contains(tgt) || (src != null && stubMethods.contains(src)))
+					continue;
+			}
+			relChaIM.add(stmt, tgt);
 		}
 		relChaIM.save();
 	}
@@ -726,6 +762,7 @@ public class PAGBuilder extends JavaAnalysis
 	void populateMethods()
 	{
 		DomM domM = (DomM) ClassicProject.g().getTrgt("M");
+		DomStubs domStubs = (DomStubs) ClassicProject.g().getTrgt("Stubs");
 		Program program = Program.g();
 		stubMethods = new NumberedSet(Scene.v().getMethodNumberer());
 		Iterator<SootMethod> mIt = program.getMethods();
@@ -734,10 +771,12 @@ public class PAGBuilder extends JavaAnalysis
 			if(isStub(m)){
 				//System.out.println("stub: "+ m);
 				stubMethods.add(m);
+				domStubs.add(m);
 			}
 			domM.add(m);
 		}
 		domM.save();
+		domStubs.save();
 	}
 	
 	void populateFields()
@@ -778,8 +817,10 @@ public class PAGBuilder extends JavaAnalysis
 		Iterator mIt = Program.g().scene().getReachableMethods().listener();
 		while(mIt.hasNext()){
 			SootMethod m = (SootMethod) mIt.next();
-			if(stubMethods.contains(m))
-				continue;
+			if(ignoreStubs){
+				if(stubMethods.contains(m))
+					continue;
+			}
 			MethodPAGBuilder mpagBuilder = new MethodPAGBuilder(m);
 			mpagBuilder.pass1();
 			mpagBuilders.add(mpagBuilder);
