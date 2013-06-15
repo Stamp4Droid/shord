@@ -45,6 +45,7 @@
 		  <not><isset property="patchuptodate-@{apilevel}"/></not>
 		  <then>
 			<!-- models have changed since recent build. so rebuild.-->
+			<clean-models apilevel="api-@{apilevel}"/>
 			
 			<!-- this is where (e.g., api-16) we will store all artifacts-->
 			<mkdir dir="api-@{apilevel}"/>
