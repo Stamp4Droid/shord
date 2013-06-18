@@ -142,7 +142,7 @@ public class PAGBuilder extends JavaAnalysis
 	private FastHierarchy fh;
 	private NumberedSet stubMethods;
 
-	public static final boolean ignoreStubs = false;
+	public static final boolean ignoreStubs = true;
 
 	void openRels()
 	{
