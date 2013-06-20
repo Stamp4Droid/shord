@@ -17,6 +17,7 @@ import soot.Local;
 import soot.jimple.Jimple;
 import soot.jimple.JasminClass;
 import soot.jimple.JimpleBody;
+import soot.jimple.NullConstant;
 import soot.util.Chain;
 import soot.util.JasminOutputStream;
 import soot.options.Options;
@@ -35,14 +36,14 @@ public class Main
 		String driverDirName = args[0];
 		String classPath = args[1];
 		String androidJar = args[2];
-
+		String outDir = args[3];
 		App app;
-		if(args.length > 3){
-			File androidManifestFile = new File(args[3]);
-			app = new App(androidManifestFile, classPath, androidJar);
-		} else {
-			app = new App(classPath, androidJar);
-		}
+		//if(args.length > 3){
+		//	File androidManifestFile = new File(args[3]);
+		//	app = new App(androidManifestFile, classPath, androidJar);
+		//} else {
+		app = new App(classPath, androidJar, outDir);
+			//}
 
 		
 		File driverDir = new File(driverDirName, "edu/stanford/stamp/harness");
@@ -60,6 +61,10 @@ public class Main
 			throw new RuntimeException("Option parse error");
 		Scene.v().loadNecessaryClasses();
 
+		SootClass viewClass = new SootClass("android.view.View", Modifier.PUBLIC);
+		viewClass.setSuperclass(Scene.v().getSootClass("java.lang.Object"));
+		Scene.v().addClass(viewClass);           
+
 		SootClass sClass = new SootClass("edu.stanford.stamp.harness.Main", Modifier.PUBLIC);
 		sClass.setSuperclass(Scene.v().getSootClass("java.lang.Object"));
 		Scene.v().addClass(sClass);
@@ -67,7 +72,7 @@ public class Main
 								Arrays.asList(new Type[] {ArrayType.v(RefType.v("java.lang.String"), 1)}),
 								VoidType.v(), Modifier.PUBLIC | Modifier.STATIC);
 		sClass.addMethod(method);
-           
+
 		JimpleBody body = Jimple.v().newBody(method);
 		method.setActiveBody(body);
 		Chain units = body.getUnits();
@@ -78,14 +83,24 @@ public class Main
 
 		//new each component
 		int count = 0;
-		for(String comp : app.components()){
+		for(Map.Entry<String,List<String>> entry : app.components.entrySet()){
+			String comp = entry.getKey();
+			List<String> callbacks = entry.getValue();
+
 			SootClass klass = Scene.v().getSootClass(comp);
 			SootMethod init = new SootMethod("<init>", Collections.EMPTY_LIST, VoidType.v(), Modifier.PUBLIC);
 			klass.addMethod(init);
 			Local c = Jimple.v().newLocal("c"+count++, klass.getType());
 			body.getLocals().add(c);
 			units.add(Jimple.v().newAssignStmt(c, Jimple.v().newNewExpr(klass.getType())));
-			units.add(Jimple.v().newInvokeStmt(Jimple.v().newSpecialInvokeExpr(c, init.makeRef())));
+			units.add(Jimple.v().newInvokeStmt(Jimple.v().newSpecialInvokeExpr(c, init.makeRef())));			
+			System.out.println("Klass: "+klass);
+			//call callbacks declared in xml layout files
+			for(String cbName : callbacks){
+				SootMethod cb = new SootMethod(cbName, Arrays.asList(new Type[]{viewClass.getType()}), VoidType.v(), Modifier.PUBLIC);
+				klass.addMethod(cb);
+				units.add(Jimple.v().newInvokeStmt(Jimple.v().newVirtualInvokeExpr(c, cb.makeRef(), NullConstant.v())));
+			}
 		}
         
 		//invoke callCallbacks method

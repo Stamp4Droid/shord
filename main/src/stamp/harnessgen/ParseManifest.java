@@ -16,7 +16,9 @@ import java.util.jar.JarFile;
 */
 public class ParseManifest
 {
-	static List<String> process(File manifestFile)
+	private String pkgName;
+
+	void process(File manifestFile, Set<String> activities, Set<String> others)
 	{
 		try{
 			File tmpFile = File.createTempFile("stamp_android_manifest", null, null);
@@ -34,11 +36,12 @@ public class ParseManifest
 			//find package name
 			Node node = (Node)
 				xpath.evaluate("/manifest", document, XPathConstants.NODE);
-			String pkgName = node.getAttributes().getNamedItem("package").getNodeValue();
+			pkgName = node.getAttributes().getNamedItem("package").getNodeValue();
 			
-			List<String> comps = new ArrayList();
-			for(String compType : new String[]{"activity", "service", "receiver"}){
-				findComponents(xpath, document, comps, compType);
+			findComponents(xpath, document, activities, "activity");
+
+			for(String compType : new String[]{"service", "receiver"}){
+				findComponents(xpath, document, others, compType);
 			}
 			
 			//backup agent
@@ -46,24 +49,23 @@ public class ParseManifest
 				xpath.evaluate("/manifest/application", document, XPathConstants.NODE);
 			Node backupAgent = node.getAttributes().getNamedItem("android:backupAgent");
 			if(backupAgent != null)
-				comps.add(backupAgent.getNodeValue());
-
-			List<String> ret = new ArrayList();
-			for(String comp : comps){
-				if(comp.startsWith("."))
-					comp = pkgName + comp;
-				else if(comp.indexOf('.') < 0)
-					comp = pkgName + "." + comp;
-				ret.add(comp);
-			}
-			
-			return ret;
+				others.add(fixName(backupAgent.getNodeValue()));
 		}catch(Exception e){
 			throw new Error(e);
 		}
 	}
 
-	private static void findComponents(XPath xpath, Document document, List<String> comps, String componentType) throws Exception
+	private String fixName(String comp)
+	{
+		if(comp.startsWith("."))
+			comp = pkgName + comp;
+		else if(comp.indexOf('.') < 0)
+			comp = pkgName + "." + comp;
+		return comp;
+	}
+
+
+	private void findComponents(XPath xpath, Document document, Set<String> comps, String componentType) throws Exception
 	{
 		NodeList nodes = (NodeList)
 			xpath.evaluate("/manifest/application/"+componentType, document, XPathConstants.NODESET);
@@ -80,10 +82,11 @@ public class ParseManifest
 				//System.out.println(n.getNodeName() + " " + );
 			}			
 			assert name != null : node.getNodeName();
-			comps.add(name);
+			comps.add(fixName(name));
 		}
 	}
 
+	/*
 	public static void main(String[] args) throws Exception
 	{
 		File androidManifestFile = new File(args[0]);
@@ -100,5 +103,5 @@ public class ParseManifest
 
 		App app = new App(androidManifestFile, classPath, androidJar);
 		System.out.println(app);
-	}
+		}*/
 }
