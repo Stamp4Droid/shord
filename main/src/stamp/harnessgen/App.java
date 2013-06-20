@@ -42,8 +42,10 @@ public class App
 				}
 			});
 		Set<String> xmlCallbacks = new HashSet();
-		for(File lf : layoutFiles){
-			ParseLayout.process(lf, xmlCallbacks);
+		if(layoutFiles != null){
+			for(File lf : layoutFiles){
+				ParseLayout.process(lf, xmlCallbacks);
+			}
 		}
 
 		Set<String> activities = new HashSet();
