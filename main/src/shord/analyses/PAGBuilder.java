@@ -747,8 +747,10 @@ public class PAGBuilder extends JavaAnalysis
 			//int stmtIdx = domI.getOrAdd(stmt);
 			SootMethod tgt = (SootMethod) edge.tgt();
 			SootMethod src = (SootMethod) edge.src();
-			if(tgt.isAbstract() || tgt.isPhantom())
-				assert false;//continue;
+			if(tgt.isAbstract())
+				assert false : "tgt = "+tgt +" "+tgt.isAbstract();
+			if(tgt.isPhantom())
+				continue;
 			//System.out.println("stmt: "+stmt+" tgt: "+tgt+ "abstract: "+ tgt.isAbstract());
 			if(ignoreStubs){
 				if(stubMethods.contains(tgt) || (src != null && stubMethods.contains(src)))
