@@ -162,8 +162,8 @@
 	  <sysproperty key="stamp.android.jar" value="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"/>
       <classpath>
 		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
-		<!--pathelement location="${stamp.dir}/lib/soot.jar"/-->
-		<pathelement location="/local/mysoot/soot-github/lib/soot-develop.jar"/>
+		<pathelement location="${stamp.dir}/lib/soot.jar"/>
+		<!--pathelement location="/local/mysoot/soot-github/lib/soot-develop.jar"/-->
 		<pathelement location="${stamp.dir}/lib/commons-lang3-3.1.jar"/>
 		<pathelement location="${stamp.dir}/lib/stamp.chord.jar"/>
       </classpath>
