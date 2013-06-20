@@ -87,6 +87,21 @@
 	  </patternset>
 	</unjar>
 
+	<!-- Run android-apktool to decompile the manifest and resource xml files -->
+	<java classname="brut.apktool.Main" 
+		  maxmemory="${stamp.maxheap}"
+		  fork="true"
+		  failonerror="true">
+	  <jvmarg value="-ea"/>
+	  <classpath>
+		<pathelement location="${stamp.dir}/lib/apktool-cli-1.5.3-SNAPSHOT.jar"/>
+      </classpath>
+	  <arg value="d"/>
+	  <arg value="-s"/>
+	  <arg value="${app.jar}"/>
+	  <arg value="${stamp.out.dir}/apktool-out"/>
+	</java>
+
     <!-- Generate harness. -->
     <java classname="stamp.harnessgen.Main"
 	  maxmemory="${stamp.maxheap}"
@@ -95,13 +110,14 @@
       <jvmarg value="-ea"/>
       <classpath>
 		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
-		<pathelement location="${stamp.dir}/lib/AXMLPrinter2.jar"/>
+		<!--pathelement location="${stamp.dir}/lib/AXMLPrinter2.jar"/-->
+		<pathelement location="${stamp.dir}/lib/apktool-cli-1.5.3-SNAPSHOT.jar"/>
 		<pathelement location="${stamp.dir}/lib/soot.jar"/>
-		<pathelement location="${stamp.dir}/lib/baksmali-1.3.2.jar"/>
       </classpath>
       <arg value="${driver.dir}"/>
       <arg value="${app.jar}"/>
 	  <arg value="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"/>
+	  <arg value="${stamp.out.dir}/apktool-out"/>
     </java>
   </target>
 
