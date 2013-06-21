@@ -10,7 +10,7 @@
 .include "U.dom"
 .include "I.dom"
 
-.bddvarorder V0xV1_Z0_M0_I0_U0xU1
+.bddvarorder I0xM0_V0xV1_Z0_U0xU1
 
 chaIM(i:I,m:M) input
 IinvkRet(i:I,n:Z,v:V) input

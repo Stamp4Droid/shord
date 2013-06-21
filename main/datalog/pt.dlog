@@ -11,7 +11,7 @@
 .include "F.dom"
 .include "I.dom"
 
-.bddvarorder M0_C0xC1xC2_V0xV1_H0xF0_I0
+.bddvarorder F0_I0xM0_V0xV1_H0_C0xC1xC2
 
 Assign(v:V,u:V)     input    # v = u
 Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
