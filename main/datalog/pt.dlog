@@ -11,9 +11,9 @@
 .include "F.dom"
 .include "I.dom"
 
-.bddvarorder F0_I0xM0_V0xV1_H0_C0xC1xC2
+.bddvarorder M0_C0xC1xC2_V0xV1_H0xF0_I0
 
-Assign(v:V,u:V)     input    # v = u
+Assign(v:V,u:V)     input   # v = u
 Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
 Load(y:V,x:V,f:F)   input   # y = x.f
 Store(u:V,f:F,v:V)  input   # u.f = v
