@@ -11,7 +11,7 @@
 .include "F.dom"
 .include "I.dom"
 
-.bddvarorder M0_C0xC1_V0xV1_H0xF0_I0
+.bddvarorder M0_C0xC1xC2_V0xV1_H0xF0_I0
 
 Assign(v:V,u:V)     input    # v = u
 Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
@@ -43,6 +43,6 @@ pt(c,v,o) :- pt(c,u,o), Assign(v,u), typeFilter(v,o).
 pt(d,u,o) :- pt(c,v,o), param(u,v,i), CC(c,d), CI(d,i), typeFilter(u,o).
 pt(c,u,o) :- pt(d,v,o), return(u,v,i), CI(d,i), CC(c,d), typeFilter(u,o).
 fpt(o1,f,o2) :- pt(c,v,o2), Store(u,f,v), pt(c,u,o1).
-pt(c,y,o2) :- fpt(o1,f,o2), Load(y,x,f), pt(c,x,o1).
+pt(c,y,o2) :- pt(c,x,o1), Load(y,x,f), fpt(o1,f,o2).
 fptStat(f,o) :- pt(_,v,o), StoreStat(f,v). 
 pt(c,y,o) :- LoadStat(y,f), fptStat(f,o), MV(m,y), CM(c,m).
