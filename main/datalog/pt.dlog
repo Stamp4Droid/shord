@@ -40,7 +40,7 @@ fptStat(f:F,o:C)
 
 pt(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CH(o,h).
 pt(c,v,o) :- pt(c,u,o), Assign(v,u), typeFilter(v,o).
-pt(d,u,o) :- pt(c,v,o), param(u,v,i), CC(c,d), CI(d,i), typeFilter(u,o).
+pt(d,u,o) :- pt(c,v,o), param(u,v,i), typeFilter(u,o), CC(c,d), CI(d,i).
 pt(c,u,o) :- pt(d,v,o), return(u,v,i), CI(d,i), CC(c,d), typeFilter(u,o).
 fpt(o1,f,o2) :- pt(c,v,o2), Store(u,f,v), pt(c,u,o1).
 pt(c,y,o2) :- pt(c,x,o1), Load(y,x,f), fpt(o1,f,o2).

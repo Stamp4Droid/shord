@@ -27,8 +27,8 @@ return(u:V,v:V,i:I)  output   # u is the lhs at callsite, v is the return var, i
 paramPrim(u:U,v:U,i:I) output   # u is the formal parameter, v is actual arg, i is invocation stmt
 returnPrim(u:U,v:U,i:I)  output   # u is the lhs at callsite, v is the return var, i is invocation stmt
 
-param(u,v,i) :- chaIM(i,m), IinvkArg(i,z,v), MmethArg(m,z,u).
-return(u,v,i) :- chaIM(i,m), IinvkRet(i,z,u), MmethRet(m,z,v).
+param(u,v,i) :- chaIM(i,m), MmethArg(m,z,u), IinvkArg(i,z,v).
+return(u,v,i) :- chaIM(i,m), MmethRet(m,z,v), IinvkRet(i,z,u).
 
-paramPrim(u,v,i) :- chaIM(i,m), IinvkPrimArg(i,z,v), MmethPrimArg(m,z,u).
-returnPrim(u,v,i) :- chaIM(i,m), IinvkPrimRet(i,z,u), MmethPrimRet(m,z,v).
+paramPrim(u,v,i) :- chaIM(i,m), MmethPrimArg(m,z,u), IinvkPrimArg(i,z,v).
+returnPrim(u,v,i) :- chaIM(i,m), MmethPrimRet(m,z,v), IinvkPrimRet(i,z,u).
