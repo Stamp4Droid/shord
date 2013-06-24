@@ -97,6 +97,8 @@
 		<pathelement location="${stamp.dir}/lib/apktool-cli-1.5.3-SNAPSHOT.jar"/>
       </classpath>
 	  <arg value="d"/>
+	  <arg value="--frame-path"/>
+	  <arg value="${stamp.dir}"/>
 	  <arg value="-s"/>
 	  <arg value="${app.jar}"/>
 	  <arg value="${stamp.out.dir}/apktool-out"/>
