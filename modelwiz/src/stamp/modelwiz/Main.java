@@ -14,66 +14,151 @@ import japa.parser.ast.type.*;
 public class Main
 {
 	private File stubsDir;
+	private File modelsDir;
 	private Scanner scanIn;
-	private String className;
-	private String methodName;
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
 		String stubsDirName = args[0];
-		Main main = new Main(stubsDirName);
+		String modelsDirName = args[1];
+		Main main = new Main(stubsDirName, modelsDirName);
 		
-		if(args.length > 1)
-			main.className = args[1];
+		String topLevelClass = args[2];
 		
-		if(args.length > 2)
-			main.methodName = args[2];
+		String methodName = null;
+		if(args.length > 3)
+			methodName = args[3];
 		
-		try{
-			main.perform();
-		}catch(Exception e){
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}
+		main.perform(topLevelClass, methodName);
 	}
 
-	Main(String stubsDirName)
+	Main(String stubsDirName, String modelsDirName)
 	{
 		this.stubsDir = new File(stubsDirName);
+		this.modelsDir = new File(modelsDirName);
 		this.scanIn = new Scanner(System.in);
 	}
 
-	void perform() throws Exception
+	void findAllTypes(TypeDeclaration type, Map<String,TypeDeclaration> allTypes, String outerClassName)
 	{
-		if(className == null){
-			System.out.println("\n*************************");
-			System.out.println("* Step 1. Choose class *");
-			System.out.println("*************************");
-			//System.out.print("\nClass name: ");
-			className = scanIn.nextLine();
-		}
-		//System.out.println(className);
+		List<BodyDeclaration> members = type.getMembers();
+		if(members == null)
+			return;
+		String name = outerClassName == null ? type.getName() : outerClassName+"."+type.getName();
+		allTypes.put(name, type);
 		
-		File stubFile = getStubFile(className);
+		for(BodyDeclaration mem : members){
+			if(!(mem instanceof TypeDeclaration))
+				continue;
+			findAllTypes((TypeDeclaration) mem, allTypes, name);
+		}
+	}
+
+	void perform(String topLevelClassName, String methodName) throws Exception
+	{
+		File stubFile = getStubFile(topLevelClassName);
 		if(!stubFile.exists()){
 			System.out.println("Class does not exist!");
 			scanIn.close();            
 			return;
 		}
-
 		CompilationUnit stubCU = getCU(stubFile);
-		List<TypeDeclaration> stubTypes = stubCU.getTypes();
+
+		Map<String,TypeDeclaration> stubTypes = new LinkedHashMap(); //preserves insertion order
+		for(TypeDeclaration stubType : stubCU.getTypes()){
+			findAllTypes(stubType, stubTypes, null);
+		}
+
+		if(stubTypes.isEmpty()){
+			System.out.println("No classes were found!");
+			return;
+		}
+
+		String[] allTypeNames = new String[stubTypes.size()];
+		int count = 0;
+		for(String name : stubTypes.keySet()){
+			//System.out.println(count+". "+name);
+			allTypeNames[count++] = name;
+		}
+
+		String chosenTypeName;
+		if(count > 1){
+			System.out.println("\n*****************");
+			System.out.println("* Choose class *");
+			System.out.println("****************");
+			System.out.println("\nFollowing "+ count + " classes were found.");
+			for(int i = 0; i < count; i++){
+				System.out.println(i+". "+allTypeNames[i]);
+			}
+			System.out.print("\nEnter the index to choose the class: ");
+			chosenTypeName = allTypeNames[getChoice(count-1)];
+		} else {
+			chosenTypeName = allTypeNames[0];
+		}
+
+		File modelFile = getModelFile(topLevelClassName);
+		CompilationUnit modelCU;
+		if(modelFile.exists())
+			modelCU = getCU(modelFile);
+		else{ 
+			modelCU = new CompilationUnit();
+			modelCU.setPackage(stubCU.getPackage());
+		}
 		
-        for(TypeDeclaration stubType : stubTypes){
-			handleType(stubType);
+		List<TypeDeclaration> modelTypes = modelCU.getTypes();
+		if(modelTypes == null){
+			modelTypes = new ArrayList();
+			modelCU.setTypes(modelTypes);
+		}
+		TypeDeclaration stubType = stubTypes.get(chosenTypeName);
+		TypeDeclaration modelType = findMatchingType(modelTypes, chosenTypeName);
+		handleType(stubType, modelType, methodName);
+	}
+
+	TypeDeclaration findMatchingType(List members, String typeName)
+	{
+		int i = typeName.indexOf('.');
+		String prefix;
+		if(i < 0){
+			prefix = typeName;
+			typeName = "";
+		} else {
+			prefix = typeName.substring(0, i);
+			typeName = typeName.substring(i+1);
+		}
+		TypeDeclaration matchingType = null;		
+		for(Iterator it = members.iterator(); it.hasNext();){
+			BodyDeclaration decl = (BodyDeclaration) it.next();
+			if(!(decl instanceof TypeDeclaration))
+				continue;
+			TypeDeclaration td = (TypeDeclaration) decl;
+			if(prefix.equals(td.getName())){
+				matchingType = td;
+				break;
+			}
+		}
+		if(matchingType == null){
+			matchingType = new ClassOrInterfaceDeclaration();
+			matchingType.setName(prefix);
+			members.add(matchingType);
+		}
+		if(typeName.equals(""))
+			return matchingType;
+		else{
+			members = matchingType.getMembers();
+			if(members == null){
+				members = new ArrayList();
+				matchingType.setMembers(members);
+			}
+			return findMatchingType(members, typeName);
 		}
 	}
 
-	void handleType(TypeDeclaration stubType)
+	void handleType(TypeDeclaration stubType, TypeDeclaration modelType, String methodName)
 	{
 		if(methodName == null) {
 			System.out.println("\n*************************");
-			System.out.println("* Step 2. Choose method *");
+			System.out.println("* Choose method *");
 			System.out.println("*************************");
 			System.out.print("\nMethod name: ");
 			methodName = scanIn.nextLine();
@@ -102,28 +187,52 @@ public class Main
 		BodyDeclaration chosenMethod;
 		if(matchedMethods.isEmpty()){
 			System.out.println("No methods with matching name found.\n");
-		} else{
-			if(matchedMethods.size() == 1)
-				chosenMethod = matchedMethods.get(0);
-			else{
-				int count = 0;
-				System.out.println("\nFollowing "+ matchedMethods.size() + " methods with matching names found.");
-				for(BodyDeclaration stubMember : matchedMethods){
-					String stubMethSig = signature(stubMember); 
-					System.out.println(count+++". "+stubMethSig);
-				}
-				System.out.print("\nEnter the index to choose the method: ");
-				chosenMethod = matchedMethods.get(getChoice(count-1));
+			return;
+		} 
+
+		if(matchedMethods.size() == 1)
+			chosenMethod = matchedMethods.get(0);
+		else{
+			int count = 0;
+			System.out.println("\nFollowing "+ matchedMethods.size() + " methods with matching names found.");
+			for(BodyDeclaration stubMember : matchedMethods){
+				String stubMethSig = signature(stubMember); 
+				System.out.println(count+++". "+stubMethSig);
 			}
-			System.out.println("Chosen method: "+signature(chosenMethod));
-			handleMethod(chosenMethod);
+			System.out.print("\nEnter the index to choose the method: ");
+			chosenMethod = matchedMethods.get(getChoice(count-1));
 		}
+		String sig = signature(chosenMethod);
+		System.out.println("Chosen method: "+sig);
+		
+		//check if it already exist in model type
+		List<BodyDeclaration> modelMembers = modelType.getMembers();
+		if(modelMembers != null){
+			for(BodyDeclaration modelMember : modelMembers){
+				if(modelMember instanceof MethodDeclaration || 
+				   modelMember instanceof ConstructorDeclaration){
+					if(sig.equals(signature(modelMember))){
+						System.out.println("Method already exist in the model class.");
+						return;
+					}
+				}
+			}
+		} else {
+			modelMembers = new ArrayList();
+			modelType.setMembers(modelMembers);
+		}
+
+		String newMethodBody = handleMethod(chosenMethod);
+		if(newMethodBody == null)
+			return;
+		MethodDeclaration meth = parseMethod(new ByteArrayInputStream(newMethodBody.getBytes()));
+		modelMembers.add(meth);
 	}
 
-	void handleMethod(BodyDeclaration method)
+	String handleMethod(BodyDeclaration method)
 	{
 		System.out.println("\n********************************");
-		System.out.println("* Step 3. Choose annotations   *");
+		System.out.println("* Choose annotations   *");
 		System.out.println("********************************");
 		
 		StringBuilder newBody = new StringBuilder();
@@ -155,26 +264,40 @@ public class Main
 				}
 				newBody.append("})\n");
 			}
-
-			System.out.println("\n*********************************************************");
-			System.out.println("* Step 4. Enter code. Type ^d at the end of your input. *");
-			System.out.println("*********************************************************");
-		
-			StringBuilder code = new StringBuilder();
-			boolean first = true;
-			System.out.print("\t");
-			while (scanIn.hasNext()) {
-				if(!first)
-					code.append("\n");
-				System.out.print("\t");
-				code.append(scanIn.nextLine());
-				first = false;
-			}
-			newBody.append(method.toString().replace("throw new RuntimeException(\"Stub!\");", 
-													 code.toString()));
-			System.out.println("\nFollowing code will be added to the model of "+className);
-			System.out.println(newBody);
 		}
+
+		System.out.println("\n*********************************************************");
+		System.out.println("* Enter code. Type ^d at the end of your input. *");
+		System.out.println("*********************************************************");
+		
+		StringBuilder code = new StringBuilder();
+		boolean first = true;
+		System.out.print("\t");
+		while (scanIn.hasNext()) {
+			if(!first)
+				code.append("\n");
+			System.out.print("\t");
+			code.append(scanIn.nextLine());
+			first = false;
+		}
+		newBody.append(method.toString().replace("throw new RuntimeException(\"Stub!\");", 
+												 code.toString()));
+		
+		System.out.println("\n*******************");
+		System.out.println("* Confirm *");
+		System.out.println("*******************");
+		
+		System.out.println("Following code will be added to the model class.\n");
+		System.out.println(newBody);
+		System.out.print("\nEnter your choice (y/n): ");
+		this.scanIn = new Scanner(System.in);
+		String input = scanIn.nextLine();
+		if(!input.equals("y")){
+			System.out.println("No model was added.");
+			return null;
+		} else {
+			return newBody.toString();
+		}	
 	}
 	
 	int[] getChoices(int maxChoice)
@@ -228,6 +351,13 @@ public class Main
 	{
 		String filePath = className.replace('.', '/')+".java";
 		File stubFile = new File(stubsDir, filePath);
+		return stubFile;
+	}
+
+	File getModelFile(String className)
+	{
+		String filePath = className.replace('.', '/')+".java";
+		File stubFile = new File(modelsDir, filePath);
 		return stubFile;
 	}
 
@@ -339,4 +469,9 @@ public class Main
 		return builder.toString();
 	}
 
+	public static MethodDeclaration parseMethod(InputStream methodInputStream) throws ParseException { 
+		ASTParser tParser = new ASTParser(methodInputStream); 
+		tParser.pushJavadoc(); 
+		return tParser.MethodDeclaration(tParser.Modifiers()); 
+	} 
 }
