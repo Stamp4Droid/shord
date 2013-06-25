@@ -534,7 +534,7 @@ public class PAGBuilder extends JavaAnalysis
 			for(Map.Entry<Local,LocalVarNode> e : localToVarNode.entrySet()){
 				LocalVarNode varNode = e.getValue();
 				if(nonPrimLocals.contains(e.getKey())){
-					relVT.add(varNode, UnknownType.v());
+					relVT.add(varNode, e.getKey().getType()/*UnknownType.v()*/);
 					relMV.add(method, varNode);
 				}
 				if(primLocals.contains(e.getKey())){
