@@ -101,6 +101,7 @@ public class Main
 		if(modelFile.exists())
 			modelCU = getCU(modelFile);
 		else{ 
+			System.out.println("Model file not found.");
 			modelCU = new CompilationUnit();
 			modelCU.setPackage(stubCU.getPackage());
 		}
@@ -112,7 +113,9 @@ public class Main
 		}
 		TypeDeclaration stubType = stubTypes.get(chosenTypeName);
 		TypeDeclaration modelType = findMatchingType(modelTypes, chosenTypeName);
-		handleType(stubType, modelType, methodName);
+		boolean flag = handleType(stubType, modelType, methodName);
+		if(flag)
+			dump(modelFile, modelCU);
 	}
 
 	TypeDeclaration findMatchingType(List members, String typeName)
@@ -154,7 +157,7 @@ public class Main
 		}
 	}
 
-	void handleType(TypeDeclaration stubType, TypeDeclaration modelType, String methodName)
+	boolean handleType(TypeDeclaration stubType, TypeDeclaration modelType, String methodName) throws Exception
 	{
 		if(methodName == null) {
 			System.out.println("\n*************************");
@@ -187,7 +190,7 @@ public class Main
 		BodyDeclaration chosenMethod;
 		if(matchedMethods.isEmpty()){
 			System.out.println("No methods with matching name found.\n");
-			return;
+			return false;
 		} 
 
 		if(matchedMethods.size() == 1)
@@ -213,7 +216,7 @@ public class Main
 				   modelMember instanceof ConstructorDeclaration){
 					if(sig.equals(signature(modelMember))){
 						System.out.println("Method already exist in the model class.");
-						return;
+						return false;
 					}
 				}
 			}
@@ -224,12 +227,13 @@ public class Main
 
 		String newMethodBody = handleMethod(chosenMethod);
 		if(newMethodBody == null)
-			return;
-		MethodDeclaration meth = parseMethod(new ByteArrayInputStream(newMethodBody.getBytes()));
+			return false;
+		BodyDeclaration meth = parseMethod(newMethodBody);
 		modelMembers.add(meth);
+		return true;
 	}
 
-	String handleMethod(BodyDeclaration method)
+	String handleMethod(BodyDeclaration method) throws Exception
 	{
 		System.out.println("\n********************************");
 		System.out.println("* Choose annotations   *");
@@ -358,6 +362,7 @@ public class Main
 	{
 		String filePath = className.replace('.', '/')+".java";
 		File stubFile = new File(modelsDir, filePath);
+		System.out.println(stubFile);
 		return stubFile;
 	}
 
@@ -421,7 +426,7 @@ public class Main
 			if(!isStatic)
 				annots.add(params.get(i).getId().getName() + " => this");
 			if(!isVoidReturnType)
-				annots.add(params.get(i).getId().getName() + " => return");
+				annots.add(params.get(i).getId().getName() + " => @return");
 		}
 		if(!isStatic){
 			for(int i = 0; i < paramCount; i++){
@@ -469,9 +474,20 @@ public class Main
 		return builder.toString();
 	}
 
-	public static MethodDeclaration parseMethod(InputStream methodInputStream) throws ParseException { 
-		ASTParser tParser = new ASTParser(methodInputStream); 
-		tParser.pushJavadoc(); 
-		return tParser.MethodDeclaration(tParser.Modifiers()); 
+	public static BodyDeclaration parseMethod(String newMethodBody) throws ParseException 
+	{ 
+		String dummyClassDecl = "class Dummy { " + newMethodBody + " }";
+		InputStream stream = new ByteArrayInputStream(dummyClassDecl.getBytes());
+		CompilationUnit cu = JavaParser.parse(stream);
+		return (BodyDeclaration) cu.getTypes().get(0).getMembers().get(0);
 	} 
+
+    private void dump(File outFile, CompilationUnit cu) throws Exception
+    {
+        File parent = outFile.getParentFile();
+		parent.mkdirs();
+        PrintWriter writer = new PrintWriter(new FileWriter(outFile));
+        writer.println(cu.toString());
+        writer.close();
+    }
 }
