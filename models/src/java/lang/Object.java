@@ -8,5 +8,5 @@ class Object
 		return new String(); 
 	}
 	
-	public Object(){  }
+	//public Object(){  }
 }

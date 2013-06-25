@@ -1,6 +1,6 @@
 class String
 {
-    public String() { }
+    //public String() { }
 
 	@STAMP(flows = {@Flow(from="data",to="this")})
     public  String(byte[] data) { }
