@@ -72,7 +72,21 @@ public class ChordAdapter extends ASTVisitor
 			topLevelClassSig = chordSig;
 		return true;
 	}
-	
+
+	public boolean visit(EnumConstantDeclaration node)
+	{
+		AnonymousClassDeclaration anonymDecl = node.getAnonymousClassDeclaration();
+		if(anonymDecl != null){
+			assert topLevelClassSig != null : node.toString();
+			ITypeBinding anonymType = anonymDecl.resolveBinding();
+			int lineNum = cu.getLineNumber(node.getStartPosition());
+			String name = topLevelClassSig+"#"+chordClassName(anonymType.getSuperclass())+"#"+lineNum;
+			ITypeBinding anonymTypeBinding = anonymType.getErasure();
+			ChordSigFactory.newAnonymousClass(anonymTypeBinding, name);
+		}		
+		return true;
+	}
+
 	public void endVisit(EnumDeclaration node)
 	{
 		ITypeBinding classType = node.resolveBinding().getErasure();
@@ -81,7 +95,6 @@ public class ChordAdapter extends ASTVisitor
 		writer.println("</class>");
 	}
 	
-
 	public boolean visit(AnonymousClassDeclaration node)
 	{
 		ITypeBinding classType = node.resolveBinding();

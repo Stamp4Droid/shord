@@ -12,7 +12,7 @@ public class ChordSigFactory
 
 	public static void newAnonymousClass(ITypeBinding anonymTypeBinding, String syntheticName)
 	{
-		System.out.println("naming anonymous class " + anonymTypeBinding);
+		//System.out.println("naming anonymous class " + anonymTypeBinding);
 		anonymousClasses.put(anonymTypeBinding, syntheticName);
 	}
 	
@@ -58,6 +58,7 @@ public class ChordSigFactory
 			else
 				cname = type.getName();
 			return toChordRefType(declKlass).concat("$").concat(cname);
+			
 		}
 		return type.getBinaryName().replace('.', '/');
 	}
