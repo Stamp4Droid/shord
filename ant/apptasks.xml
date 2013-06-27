@@ -4,97 +4,42 @@
     <format property="currenttime" pattern="yyyy.MM.dd_HH.mm.ss_z"/>
   </tstamp>
 
+  <property name="apilevel" value="16"/>
   <property name="app" location="."/>
 
   <property name="app.loc" location="${app}"/>
   <propertyregex property="app.loc.1" input="${app.loc}" regexp="/" replace="_" global="true" />
 
-  <if>
-	<isset property="stamp.out.dir"/>
-	<then/>
-	<else>
-	  <property name="stamp.out.dir" value="${stamp.dir}/stamp_output/${app.loc.1}"/>
-	  <delete dir="${stamp.out.dir}"/>
-	  <mkdir dir="${stamp.out.dir}"/>
-	</else>
-  </if>
 
   <property name="driver.dir" location="${stamp.out.dir}/stamp-driver"/>
 
-  <!-- TODO: This property no longer works correctly (app.dir hasn't been
-       defined at this point. -->
-  <condition property="is.android.app">
-    <available file="${app.dir}/AndroidManifest.xml"/>
-  </condition>
-
-  <target name="-run-analysis">
-    <!-- Read required properties. -->
-    <prop-default property="stamp.backend" default="chord"
-		  description="backend to use for analyzing the app [chord,solvergen]"/>
-    <require-prop property="stamp.analyses.pre"
-		  description="Chord analyses that will set up the initial facts for later stages"/>
-    <require-prop property="stamp.analyses.post"
-		  description="Chord analyses that will prepare the output relations"/>
-    <prop-default property="stamp.printrels" default=""
-		  description="relations to print out after the analysis finishes"/>
-
-    <!-- Prepare the selected analysis backend. -->
-    <runtarget target="-prepare-backend-${stamp.backend}"/>
-    <require-prop property="stamp.analyses.main"
-		  description="backend-specific analyses to run -- should be declared in -prepare-backend-[backend]"/>
-    <require-ref refid="stamp.analyses.main.sysprops"
-		 description="backend-specific system properties to pass to Chord -- should be declared in -prepare-backend-[backend]"/>
-
-    <!-- Configure remaining Chord settings. -->
-    <property name="stamp.analyses"
-	      value="${stamp.analyses.pre},${stamp.analyses.main},${stamp.analyses.post}"/>
-
-    <!-- Run Chord. -->
-    <java classname="chord.project.Boot" fork="true" failonerror="true">
-      <jvmarg value="-ea"/>
-      <sysproperty key="chord.scope.kind" value="cha"/>
-      <sysproperty key="chord.work.dir" file="${stamp.out.dir}"/>
-      <sysproperty key="chord.main.class" value="edu.stanford.stamp.harness.Main"/>
-      <sysproperty key="chord.src.path" path="${stamp.src.path}:${stamp.gen.path}:${driver.dir}"/>
-      <sysproperty key="chord.class.path" path="${stamp.dir}/android/stamp.android.jar:${app.jar}:${stamp.lib.jars}:${driver.dir}"/>
-      <sysproperty key="chord.ext.java.analysis.path" path="${stamp.dir}/main/stamp.main.jar:${stamp.dir}/scanner/stamp.scanner.jar:${stamp.dir}/lib/commons-lang3-3.1.jar"/>
-      <sysproperty key="chord.ext.dlog.analysis.path" path="${stamp.dir}/datalog"/>
-      <sysproperty key="chord.run.analyses" value="${stamp.analyses}"/>
-      <sysproperty key="chord.std.scope.exclude" value=""/>
-      <sysproperty key="chord.ext.scope.exclude" value=""/>
-      <sysproperty key="chord.std.check.exclude" value=""/>
-      <sysproperty key="chord.ext.check.exclude" value=""/>
-      <sysproperty key="chord.verbose" value="${chord.verbose}"/>
-      <sysproperty key="chord.print.rels" value="${stamp.printrels}"/>
-      <sysproperty key="chord.max.heap" value="${chord.max.heap}"/>
-      <sysproperty key="chord.bddbddb.max.heap" value="${chord.bddbddb.max.heap}"/>
-      <sysproperty key="stamp.dir" value="${stamp.dir}"/>
-      <sysproperty key="stamp.out.dir" value="${stamp.out.dir}"/>
-	  <sysproperty key="stamp.input.type" value="${stamp.input.type}"/>
-      <syspropertyset refid="stamp.analyses.main.sysprops"/>
-      <classpath>
-	<pathelement location="${stamp.dir}/chord/stamp.chord.jar"/>
-      </classpath>
-    </java>
-  </target>
-
   <target name="analyze">
-	<echo>Analyze target running</echo>
+	<if>
+	  <isset property="stamp.out.dir"/>
+	  <then/>
+	  <else>
+		<property name="stamp.out.dir" value="${stamp.dir}/stamp_output/${app.loc.1}"/>
+		<delete dir="${stamp.out.dir}"/>
+		<mkdir dir="${stamp.out.dir}"/>
+	  </else>
+	</if>
+	<!--echo>Analyze target running</echo-->
 	<if>
 	  <matches string="${app}" pattern="^.*\.apk$"/>
       <then>
-		<property name="app.jar" value="${app.loc}"/>
+		<property name="stamp.input.type" value="apk"/>
+		<property name="apk" value="${app.loc}"/>
 		<antcall target="-analyze-apk"/>
       </then>
 	  <else>
-		<property name="app.jar" value="${stamp.out.dir}/stamp.app.jar"/>
-		<antcall target="-analyze-src"/>
+		<property name="stamp.input.type" value="src"/>
+		<antcall target="-build-app"/>
 	  </else>
     </if>
   </target>
 
   <target name="-analyze-src"
-		  depends="-build-app,-run-analysis">
+		  depends="-build-app">
     <!-- Start Tomcat server. -->
     <exec executable="${stamp.tomcat.bindir}/startup.sh"
 		  spawn="false"
@@ -121,35 +66,29 @@ libPath=${stamp.lib.jars}
     </exec>
   </target>
 
-  <target name="-prepare-backend-chord">
-    <!-- Register backend-specific analyses. -->
-    <property name="stamp.analyses.main"
-	      value="kcfa-pta-dlog,kcfa-flow-dlog"/>
-    <!-- Register backend-specific system properties (none required for this
-         backend). -->
-    <propertyset id="stamp.analyses.main.sysprops"/>
-  </target>
-
   <target name="-build-app"
-	  depends="build">
-	<property name="stamp.input.type" value="src"/>
+		  depends="build">
 	<!--property name="app.dir" location="${app}"/-->
     <!-- Calculate app paths. -->
     <taskdef name="StampSetup"
-	     classname="edu.stanford.stamp.build.StampBuildTask"
-	     classpath="${stamp.dir}/main/stamp.main.jar"/>
+			 classname="stamp.StampBuildTask"
+			 classpath="${stamp.dir}/bin/stamp.main.jar"/>
     <StampSetup absoluteAppPath="${app.loc}"
 				stampOutDir="${stamp.out.dir}"
-				annotJar="${stamp.dir}/annotations/stamp.annotations.jar"
+				annotJar="${stamp.dir}/bin/stamp.annotations.jar"
 				appDirPropName="app.dir"
 				srcPathPropName="stamp.src.path"
 				genPathPropName="stamp.gen.path"
 				classesPathPropName="stamp.classes.path"
-				libJarsPathPropName="stamp.lib.jars"/>
+				libJarsPathPropName="stamp.lib.jars"
+				apkPathPropName="stamp.apk.path"/>
     <echo>stamp.src.path=${stamp.src.path}</echo>
     <echo>stamp.gen.path=${stamp.gen.path}</echo>
     <echo>stamp.classes.path=${stamp.classes.path}</echo>
     <echo>stamp.lib.jars=${stamp.lib.jars}</echo>
+	<echo>stamp.apk.path=${stamp.apk.path}</echo>
+
+	<property name="app.jar" value="${stamp.apk.path}"/>
 
     <!-- Preprocess. -->
     <java classname="stamp.srcmap.Preprocess"
@@ -159,7 +98,7 @@ libPath=${stamp.lib.jars}
 	  failonerror="true">
       <jvmarg value="-ea"/>
       <classpath>
-        <pathelement location="${stamp.dir}/main/stamp.main.jar"/>
+        <pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
       </classpath>
       <arg file="${stamp.src.path}"/>
     </java>
@@ -172,45 +111,15 @@ libPath=${stamp.lib.jars}
 	  failonerror="true">
       <jvmarg value="-ea"/>
       <classpath>
-		<pathelement location="${stamp.dir}/main/stamp.main.jar"/>
+		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
 		<fileset dir="${stamp.dir}/lib">
 		  <include name="**/*.jar"/>
 		</fileset>
       </classpath>
       <arg value="${stamp.src.path}"/>
-      <arg value="${stamp.lib.jars}:${stamp.dir}/android/stamp.android.jar"/>
-      <arg value="${stamp.dir}/android"/>
+      <arg value="${stamp.lib.jars}:${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"/>
+      <arg value="${stamp.dir}/models/api-${apilevel}"/>
     </java>
-
-    <!-- Put classes in a jar file. -->
-    <jar jarfile="${app.jar}">
-      <fileset dir="${stamp.classes.path}">
-        <include name="**/*.class"/>
-      </fileset>
-    </jar>
-
-    <!-- Generate harness. -->
-    <java classname="edu.stanford.stamp.harnessgen.Main"
-	  maxmemory="${stamp.maxheap}"
-	  fork="true"
-	  failonerror="true">
-      <jvmarg value="-ea"/>
-      <classpath>
-		<pathelement location="${stamp.dir}/main/stamp.main.jar"/>
-		<pathelement location="${stamp.dir}/lib/soot.jar"/>
-		<pathelement location="${stamp.dir}/lib/AXMLPrinter2.jar"/>
-      </classpath>
-      <arg value="${driver.dir}"/>
-      <arg value="${app.jar}:${stamp.lib.jars}"/>
-	  <arg value="${stamp.dir}/android/stamp.android.jar"/>
-      <arg value="${app.dir}/AndroidManifest.xml"/>
-    </java>
-
-    <!-- Build harness. -->
-    <javac srcdir="${driver.dir}/edu/stanford/stamp/harness"
-	   classpath="${app.jar}:${stamp.lib.jars}:${stamp.dir}/android/stamp.android.jar"
-	   debug="true" includeAntRuntime="false"
-	   debuglevel="source,lines,vars"/>
 
     <!-- Construct source map. -->
     <java classname="stamp.srcmap.Main"
@@ -220,104 +129,18 @@ libPath=${stamp.lib.jars}
 	  failonerror="true">
       <jvmarg value="-ea"/>
       <classpath>
-        <pathelement location="${stamp.dir}/main/stamp.main.jar"/>
+        <pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
         <fileset dir="${stamp.dir}/lib">
           <include name="**/*.jar"/>
         </fileset>
       </classpath>
-      <arg value="${stamp.src.path}:${stamp.gen.path}:${driver.dir}"/>
-      <arg value="${stamp.lib.jars}:${stamp.dir}/android/stamp.android.jar"/>
+      <arg value="${stamp.src.path}:${stamp.gen.path}"/>
+      <arg value="${stamp.lib.jars}:${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"/>
       <arg value="${stamp.out.dir}/srcmap"/>
     </java>
+	
+	<property name="apk" value="${stamp.apk.path}"/>
+	<antcall target="-analyze-apk"/>
   </target>
 
-  <!-- TODO: Non-Android Java applications are currently unsupported. -->
-  <target name="-build-java-app"
-	  depends="build">
-    <mkdir dir="${app.dir}/bin"/>
-    <mkdir dir="${app.dir}/libs"/>
-
-    <!-- Copy over the annotation definition classes. -->
-    <copy file="${stamp.dir}/annotations/stamp.annotations.jar"
-	  tofile="${app.dir}/libs/stamp.annotations.jar"
-	  overwrite="true"/>
-
-    <!-- Build the app library path. -->
-    <fileset dir="${app.dir}/libs" id="stamp.lib.jars">
-      <include name="**/*.jar"/>
-    </fileset>
-    <pathconvert pathsep=":" property="stamp.lib.jars" refid="stamp.lib.jars"/>
-
-    <!-- Run the Java compiler. -->
-    <javac srcdir="${app.dir}/src" destdir="${app.dir}/bin"
-	   classpath="${stamp.lib.jars}"
-	   includeAntRuntime="false" fork="true"
-	   debug="true" debuglevel="source,lines,vars"/>
-
-    <!-- Read annotations from the source code. -->
-    <java classname="stamp.readannot.AnnotationReader" dir="${app.dir}"
-	  maxmemory="${stamp.maxheap}" fork="true" failonerror="true">
-      <jvmarg value="-ea"/>
-      <classpath>
-	<pathelement location="${stamp.dir}/main/stamp.main.jar"/>
-	<fileset dir="${stamp.dir}/lib">
-	  <include name="**/*.jar"/>
-	</fileset>
-      </classpath>
-      <arg value="${app.dir}/src"/>
-      <arg value="${stamp.lib.jars}:${stamp.dir}/android/stamp.android.jar"/>
-      <arg value="${stamp.dir}/android"/>
-    </java>
-
-    <!-- Put classes and stamp_annotations.txt in a jar file. -->
-    <jar jarfile="${app.jar}">
-      <fileset dir="${app.dir}/bin">
-        <include name="**/*.class"/>
-      </fileset>
-      <fileset dir="${app.dir}">
-		<!--TODO: put the stamp_annotations.txt in the right dir -->
-		<filename name="stamp_annotations.txt"/>
-      </fileset>
-    </jar>
-  </target>
-
-  <target name="-clean-app"
-	  if="app">
-    <antcall target="-sanity-check"/>
-    <!--delete file="${app.jar}"/-->
-    <delete file="${stamp.out.dir}/stamp_annotations.txt"/>
-    <delete file="${app.dir}/stamp.app.properties"/>
-    <delete file="${app.dir}/libs/stamp.annotations.jar"/>
-    <delete file="${app.dir}/build.xml"/>
-    <!-- We don't delete the STAMP work directory for the app, so that we can
-         reuse artifacts from previous runs on the same app. -->
-    <if>
-      <isset property="build.xml.exists"/>
-      <then>
-	<ant antfile="${app.dir}/build.xml" target="clean"
-	     inheritAll="false" useNativeBasedir="true"/>
-      </then>
-    </if>
-  </target>
-
-  <!-- TODO: Non-Android Java applications are currently unsupported. -->
-  <target name="-clean-java-app"
-	  if="app">
-    <delete file="${app.dir}/stamp_annotations.txt"/>
-    <delete file="${app.dir}/libs/stamp.annotations.jar"/>
-    <delete dir="${app.dir}/chord_output"/>
-    <delete dir="${stamp.out.dir}"/>
-    <delete dir="${app.dir}/bin"/>
-  </target>
-
-  <target name="-sanity-check">
-    <fail message="** ERROR: Please set the app directory using -Dapp="
-	  unless="app"/>
-    <fail message="** ERROR: ${app.dir} does not exist. Please set the app directory correctly using -Dapp=">
-      <condition><not><available file="${app.dir}"/></not></condition>
-    </fail>
-    <fail message="** ERROR: Cannot find AndroidManifest.xml in ${app.dir}. Please set the app directory correctly using -Dapp=">
-      <condition><not><available file="${app.dir}/AndroidManifest.xml"/></not></condition>
-    </fail>
-  </target>
 </project>

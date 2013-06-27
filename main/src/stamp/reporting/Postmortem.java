@@ -22,7 +22,7 @@ public class Postmortem extends JavaAnalysis
 		Class[] srcReports = new Class[]{
 			//SrcFlow.class
 			//,ArgSinkFlow.class
-			//,SrcSinkFlow.class
+			SrcSinkFlow.class
 			////,ReachableStub.class,
 			////,TaintedStub.class,
 			////,InvkNone.class,
