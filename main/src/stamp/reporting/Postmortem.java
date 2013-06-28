@@ -26,7 +26,7 @@ public class Postmortem extends JavaAnalysis
 			////,ReachableStub.class,
 			////,TaintedStub.class,
 			////,InvkNone.class,
-			//,TaintedVar.class
+			,TaintedVar.class
 			//,IM.class
 			//,PotentialCallbacks.class
 			//,AllReachable.class
