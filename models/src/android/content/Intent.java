@@ -114,7 +114,7 @@ class Intent
 	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
 	public  android.content.Intent putExtra(java.lang.String name, boolean value) 
 	{ 
-		throw new RuntimeException("Stub!"); 
+		return this;
 	}
 
 	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
