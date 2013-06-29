@@ -48,12 +48,18 @@ MmethRet(m:M,z:Z,v:V)        input
 MmethPrimArg(m:M,z:Z,u:U)     input
 MmethPrimRet(m:M,z:Z,u:U)     input
 
+chaIM(i:I,m:M) input
+
 ### output relations ###
 
 flow(src:L,sink:L) output
 out_reachableM(m:M) output
 out_taintedRefVar(l:L,v:V) output
 out_taintedPrimVar(l:L,v:U) output
+
+# Annotations on reachable methods
+out_taintSrc(src:SRC0,m:M0) output
+out_taintSink(sink:SINK0,m:M0) output
 
 ### intermediate relations ###
 varLabel(v:V,l:L)          
@@ -137,3 +143,8 @@ labelPrim(c,u,l) :- labelPrim(d,v,l), returnPrim(u,v,i), CI(d,i), CC(c,d).
 out_reachableM(m) :- CM(_,m).
 out_taintedPrimVar(l,v) :- labelPrim(_,v,l).
 out_taintedRefVar(l,v) :- label(o,l), pt(_,v,o).
+
+# Annotations on reachable methods
+out_taintSrc(l,m) :- chaIM(_,m), LabelRet(l,m), SrcLabel(l).
+out_taintSrc(l,m) :- chaIM(_,m), LabelArg(l,m,_), SrcLabel(l).
+out_taintSink(l,m) :- chaIM(_,m), LabelArg(l,m,_), SinkLabel(l).
