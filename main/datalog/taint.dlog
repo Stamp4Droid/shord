@@ -58,8 +58,8 @@ out_taintedRefVar(l:L,v:V) output
 out_taintedPrimVar(l:L,v:U) output
 
 # Annotations on reachable methods
-out_taintSrc(src:SRC0,m:M0) output
-out_taintSink(sink:SINK0,m:M0) output
+out_taintSrc(src:L,m:M) output
+out_taintSink(sink:L,m:M) output
 
 ### intermediate relations ###
 varLabel(v:V,l:L)          
