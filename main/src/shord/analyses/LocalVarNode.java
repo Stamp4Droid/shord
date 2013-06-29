@@ -16,6 +16,6 @@ public class LocalVarNode extends VarNode
 	
 	public String toString()
 	{
-		return local.getName()+"@"+meth;
+		return local.getName()+"!"+local.getType()+"@"+meth;
 	}
 }
