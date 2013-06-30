@@ -42,6 +42,10 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 	private String bundleClass = "android.os.Bundle";
 
     private SootClass rootClass;
+	
+	//cache the temporary result from new ComponentName.
+	private Map<Object, String> arg2CompnentName = new HashMap();
+	
 
     public InterComponentInstrument()
     {
@@ -224,17 +228,70 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 				// 5. intent.setComponent(ComponentName)
 				/* e.g, $r4.<android.content.Intent: android.content.Intent 
 				 *	setComponent(android.content.ComponentName)>($r3); 
+				 *  right now I can not capture inter-procedure call, so I have to combine 
+				 *  both of them, ask for the following call:
+				 *  <android.content.ComponentName: void <init>(java.lang.String,java.lang.String)>($r6, $r7)
+				 *  Notice that it's still not precise.
 				 */
+				if (methodRefStr.contains("android.content.ComponentName: void <init>(java.lang.String,java.lang.String)")) {
+                    String tgtComptName = "";
+					StringConstant strCont;
+					if (ie.getArg(1) instanceof StringConstant) {
+						strCont = (StringConstant) ie.getArg(1);
+						tgtComptName = strCont.value;
+					}else {// FIXME: too ugly to grab result in this way
+						//otherwise we have to ask for reaching def.
+						for (Tag tagEntity : stmt.getTags()) {
+							if(!(tagEntity instanceof LinkTag)) continue; 
+							LinkTag ttg = (LinkTag) tagEntity;
+							if ( !(ttg.getLink() instanceof JAssignStmt)) continue;
+							JAssignStmt asst = (JAssignStmt) ttg.getLink();
+							if (asst.getLeftOp().equals(ie.getArg(1))) {
+								// assert (asst.getRightOp() instanceof ClassConstant);
+                                if (asst.getRightOp() instanceof StringConstant) {
+									strCont = (StringConstant) asst.getRightOp();
+									tgtComptName = strCont.value;
+								}
+
+							}
+						}
+
+					}
+					JimpleLocalBox newBox = (JimpleLocalBox)ie.getUseBoxes().get(0);
+					this.arg2CompnentName.put(newBox.getValue(), tgtComptName);
+				}
+				
 				if (methodRefStr.contains(intentClass + ": " + intentClass
 						+ " setComponent(android.content.ComponentName)")) {
-					System.out.println("setComponent*************" + stmt + "|||| tags:" + stmt.getTags());
-					System.out.println("ERROR:Can not locate the class from current reachingDef for setComponent: " + stmt.getTags() );
 					//FIXME need more information on setComponent, improve current reachingDef.
-					//this.lookforTgtArgToInject(units, stmt, ie.getArg(1));							
+					String tgtComptName = this.arg2CompnentName.get(ie.getArg(0));
+					
+					if (tgtComptName != null) 
+						tgtComptName = tgtComptName.replace(File.separatorChar, '.');
+					///Check whether exist such class.
+					if ( !Program.g().scene().containsClass(tgtComptName)) {
+						System.out.println("ERROR:Can not find class for Class name: " + tgtComptName );
+						return;
+					}
+				
+					this.instruTgtCompt(tgtComptName);
+		
+					//begin to instument current invoke method of src.		
+					JimpleLocalBox localBox = (JimpleLocalBox) ie
+						.getUseBoxes().get(0);
+					SootMethod toCall = Scene.v().getMethod(
+						"<" + tgtComptName + ": void set_Intent("
+							+ intentClass + ")>");
+					Stmt invokeSetter = Jimple.v().newInvokeStmt(
+						Jimple.v().newStaticInvokeExpr(
+							toCall.makeRef(), localBox.getValue()));
+					units.insertAfter(invokeSetter, stmt);
 				}
+				
 			}
 		}
     }
+	
 	
 	/* Search for the target component based on reachingDef stored in tag. */	
 	private void lookforTgtArgToInject(Chain<Unit> units, Stmt stmt, Value arg) {
