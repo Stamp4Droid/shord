@@ -26,9 +26,6 @@ import soot.jimple.ParameterRef;
 import soot.jimple.ArrayRef;
 import soot.jimple.BinopExpr;
 import soot.jimple.NegExpr;
-import soot.tagkit.Tag;
-import soot.tagkit.LineNumberTag;
-import soot.tagkit.SourceLineNumberTag;
 
 import java.io.*;
 import java.util.*;
@@ -142,7 +139,7 @@ public class RegisterMap
 	
 		void handleStmt(Stmt s)
 		{
-			int lineNum = lineNumber(s);
+			int lineNum = SourceInfo.stmtLineNum(s);
 
 			if(s.containsInvokeExpr()){
 				InvokeExpr ie = s.getInvokeExpr();
@@ -227,16 +224,5 @@ public class RegisterMap
 			}
 		}
 
-		int lineNumber(Stmt s)
-		{
-			for(Tag tag : s.getTags()){
-				if(tag instanceof SourceLineNumberTag){
-					return ((SourceLineNumberTag) tag).getLineNumber();
-				} else if(tag instanceof LineNumberTag){
-					return ((LineNumberTag) tag).getLineNumber();
-				}
-			}
-			return 0;
-		}
 	}
 }

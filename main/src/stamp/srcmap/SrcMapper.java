@@ -57,7 +57,7 @@ public class SrcMapper
 
 	public static MethodInfo methodInfo(String srcFileName, String methSig)
 	{
-		String classSig = methSig.substring(methSig.indexOf("@")+1);
+		String classSig = methSig.substring(1, methSig.indexOf(':'));
 		ClassInfo ci = classInfo(classSig, srcFileName);
 		//System.out.println("methodInfo " + classSig + " " + srcFileName);
 		return ci == null ? null : ci.methodInfo(methSig);
