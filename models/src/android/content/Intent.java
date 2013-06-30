@@ -2,6 +2,9 @@ package android.content;
 
 class Intent
 {
+	//add by yu.
+	private android.os.Bundle extras = new android.os.Bundle();
+	
 	public  Intent(java.lang.String action, android.net.Uri uri) 
 	{ 
 		setData(uri);
@@ -10,7 +13,7 @@ class Intent
 	@STAMP(flows={@Flow(from="$getExtras",to="@return")})
 	public  android.os.Bundle getExtras() 
 	{ 
-		return new android.os.Bundle();
+		return this.extras;
 	}
 	
 	@STAMP(flows = {@Flow(from="data",to="!INTENT")})
