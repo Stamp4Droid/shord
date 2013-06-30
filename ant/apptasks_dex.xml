@@ -47,7 +47,7 @@
 
     <!-- Configure remaining Chord settings. -->
     <property name="stamp.analyses"
-	      value="inject-annot,base-java,annot-java,contexts-java,pre-dlog,typefilter-dlog,pt-dlog,taint-dlog,post-java"/>
+	      value="inject-annot,base-java,annot-java,contexts-java,pre-dlog,typefilter-dlog,pt-dlog,taint-dlog,post-java,jcflsolver"/>
 
     <!-- Run Chord. -->
     <java classname="shord.project.Boot" fork="true" failonerror="true">
