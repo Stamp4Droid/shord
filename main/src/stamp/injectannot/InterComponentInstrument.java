@@ -117,6 +117,68 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 				InvokeExpr ie = stmt.getInvokeExpr();
 				
 				String methodRefStr = ie.getMethodRef().toString();
+				//intent.putExtra(), include string, int, boolean, byte, etc.
+				if (methodRefStr
+				    .contains(this.intentClass+": "+this.intentClass+" putExtra(java.lang.String,")) {
+					
+					ImmediateBox bundleLoc = (ImmediateBox) ie.getUseBoxes().get(1);
+					Value putStringArg = bundleLoc.getValue();
+					StringConstant strVal = StringConstant.v("dummy");
+					
+					if (putStringArg instanceof StringConstant){
+						strVal = (StringConstant) putStringArg;
+					} else {
+						// otherwise we have to ask for reaching def.
+						for (Tag tagEntity : stmt.getTags()) {
+							LinkTag ttg = (LinkTag) tagEntity;
+							if ( !(ttg.getLink() instanceof JAssignStmt)) continue;
+							JAssignStmt asst = (JAssignStmt) ttg.getLink();
+							
+							// FIXME:can not deal with inter-proc now!
+							if (asst.getLeftOp().equals(putStringArg)) {
+								assert (asst.getRightOp() instanceof StringConstant);
+								strVal = (StringConstant) asst
+										.getRightOp();
+							}
+						}
+					}
+					//should triggle bundle instrument
+					String bundleKey = strVal.value;
+
+                    //need to add getter/setter of bundlekey to Bundle.class!
+					instrumentBundle(bundleKey);
+								
+					JimpleLocalBox intentObj = (JimpleLocalBox) ie.getUseBoxes().get(0);
+				    
+					SootMethod getExtrasCall = Scene.v().getMethod(
+						"<" + this.intentClass + ": "+this.bundleClass+" getExtras()>");
+					
+					//invoke intent.getExtras()
+					VirtualInvokeExpr getExtrasExpr = 
+						Jimple.v().newVirtualInvokeExpr(
+							(Local) intentObj.getValue(),
+								getExtrasCall.makeRef(), Arrays.asList(new Value[] {}));
+					
+					Local extrasLocal = Jimple.v().newLocal("r_Extras", RefType.v(this.bundleClass)); 
+					body.getLocals().add(extrasLocal);
+					AssignStmt assign2Extras = Jimple.v().newAssignStmt(extrasLocal, getExtrasExpr);
+					units.insertBefore(assign2Extras, stmt);
+					
+					//invoke extra.put_deviceId()
+					SootMethod putExtrasCall = Scene.v().getMethod(
+						"<" + this.bundleClass + ": void put_"
+							+ bundleKey + "(java.lang.Object)>");
+					
+					InvokeStmt putExtraStmt = Jimple.v().newInvokeStmt(
+						Jimple.v().newVirtualInvokeExpr(extrasLocal,
+							putExtrasCall.makeRef(), ie.getArg(1)));
+					units.insertAfter(putExtraStmt, stmt);
+					// System.out.println("putExtras body....." + body);
+					//Remove this will reduce the false alarm like deviceId=>intent, but potentially buggy,
+					//e.g, what if I assign current expr to an new intent object?
+					units.remove(stmt);				
+				}
+				
 				// Src putString -> put_id && getString -> 
 				//$r9 = virtualinvoke $r8.<android.os.Bundle: 
 				//java.lang.String getString(java.lang.String)>($r4)
