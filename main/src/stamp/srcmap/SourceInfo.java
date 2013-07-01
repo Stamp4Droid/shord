@@ -57,6 +57,23 @@ public class SourceInfo
 		}
 		return null;
 	}
+
+	public static String javaLocStr(Stmt stmt)
+	{		
+		SootMethod method = containerMethod(stmt);
+		SootClass klass = method.getDeclaringClass();
+		for(Tag tag : klass.getTags()){
+			if(tag instanceof SourceFileTag){
+				String fileName = ((SourceFileTag) tag).getSourceFile();
+				int lineNum = stmtLineNum(stmt);
+				if(lineNum > 0)
+					return fileName+":"+lineNum;
+				else
+					return fileName;
+			}
+		}
+		return null;
+	}
 	
 	static boolean isFrameworkClass(SootClass klass)
 	{
