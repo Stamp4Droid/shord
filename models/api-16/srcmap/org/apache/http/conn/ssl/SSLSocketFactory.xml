@@ -1,0 +1,359 @@
+<root>
+<class chordsig="org.apache.http.conn.ssl.SSLSocketFactory" line="2">
+	<type  start="77" length="48" line="3" chordsig="org.apache.http.conn.scheme.LayeredSocketFactory"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/security/KeyStore;Ljava/lang/String;Ljava/security/KeyStore;Ljava/security/SecureRandom;Lorg/apache/http/conn/scheme/HostNameResolver;)V@org.apache.http.conn.ssl.SSLSocketFactory"
+ sig="SSLSocketFactory(String,KeyStore,String,KeyStore,SecureRandom,HostNameResolver)"
+ line="5"
+ startpos="136"
+ endpos="152"
+>
+	<marker line="-1" type="param">
+		<operand  start="170" length="9" line="5">
+			<expr><![CDATA[algorithm]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="204" length="8" line="5">
+			<expr><![CDATA[keystore]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="231" length="16" line="5">
+			<expr><![CDATA[keystorePassword]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="272" length="10" line="5">
+			<expr><![CDATA[truststore]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="311" length="6" line="5">
+			<expr><![CDATA[random]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="364" length="12" line="5">
+			<expr><![CDATA[nameResolver]]></expr>
+		</operand>
+	</marker>
+	<type  start="153" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="181" length="22" line="5" chordsig="java.security.KeyStore"/>
+	<type  start="214" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="249" length="22" line="5" chordsig="java.security.KeyStore"/>
+	<type  start="284" length="26" line="5" chordsig="java.security.SecureRandom"/>
+	<type  start="319" length="44" line="5" chordsig="org.apache.http.conn.scheme.HostNameResolver"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="548" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="544" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="565" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="548" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/security/KeyStore;Ljava/lang/String;Ljava/security/KeyStore;)V@org.apache.http.conn.ssl.SSLSocketFactory"
+ sig="SSLSocketFactory(KeyStore,String,KeyStore)"
+ line="6"
+ startpos="585"
+ endpos="601"
+>
+	<marker line="-1" type="param">
+		<operand  start="625" length="8" line="6">
+			<expr><![CDATA[keystore]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="652" length="16" line="6">
+			<expr><![CDATA[keystorePassword]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="693" length="10" line="6">
+			<expr><![CDATA[truststore]]></expr>
+		</operand>
+	</marker>
+	<type  start="602" length="22" line="6" chordsig="java.security.KeyStore"/>
+	<type  start="635" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="670" length="22" line="6" chordsig="java.security.KeyStore"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="875" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="871" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="892" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="875" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/security/KeyStore;Ljava/lang/String;)V@org.apache.http.conn.ssl.SSLSocketFactory"
+ sig="SSLSocketFactory(KeyStore,String)"
+ line="7"
+ startpos="912"
+ endpos="928"
+>
+	<marker line="-1" type="param">
+		<operand  start="952" length="8" line="7">
+			<expr><![CDATA[keystore]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="979" length="16" line="7">
+			<expr><![CDATA[keystorePassword]]></expr>
+		</operand>
+	</marker>
+	<type  start="929" length="22" line="7" chordsig="java.security.KeyStore"/>
+	<type  start="962" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1167" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1163" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1184" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1167" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/security/KeyStore;)V@org.apache.http.conn.ssl.SSLSocketFactory"
+ sig="SSLSocketFactory(KeyStore)"
+ line="8"
+ startpos="1204"
+ endpos="1220"
+>
+	<marker line="-1" type="param">
+		<operand  start="1244" length="10" line="8">
+			<expr><![CDATA[truststore]]></expr>
+		</operand>
+	</marker>
+	<type  start="1221" length="22" line="8" chordsig="java.security.KeyStore"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1426" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1422" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1443" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1426" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSocketFactory:()Lorg/apache/http/conn/ssl/SSLSocketFactory;@org.apache.http.conn.ssl.SSLSocketFactory"
+ sig="SSLSocketFactory getSocketFactory()"
+ line="9"
+ startpos="1512"
+ endpos="1528"
+>
+	<type  start="1470" length="41" line="9" chordsig="org.apache.http.conn.ssl.SSLSocketFactory"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1543" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1539" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1560" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1543" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createSocket:()Ljava/net/Socket;@org.apache.http.conn.ssl.SSLSocketFactory"
+ sig="Socket createSocket()"
+ line="10"
+ startpos="1596"
+ endpos="1608"
+>
+	<type  start="1580" length="15" line="10" chordsig="java.net.Socket"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1650" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1646" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1667" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1650" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="connectSocket:(Ljava/net/Socket;Ljava/lang/String;ILjava/net/InetAddress;ILorg/apache/http/params/HttpParams;)Ljava/net/Socket;@org.apache.http.conn.ssl.SSLSocketFactory"
+ sig="Socket connectSocket(Socket,String,int,InetAddress,int,HttpParams)"
+ line="11"
+ startpos="1703"
+ endpos="1716"
+>
+	<marker line="-1" type="param">
+		<operand  start="1733" length="4" line="11">
+			<expr><![CDATA[sock]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1756" length="4" line="11">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1766" length="4" line="11">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1793" length="12" line="11">
+			<expr><![CDATA[localAddress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1811" length="9" line="11">
+			<expr><![CDATA[localPort]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1856" length="6" line="11">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="1687" length="15" line="11" chordsig="java.net.Socket"/>
+	<type  start="1717" length="15" line="11" chordsig="java.net.Socket"/>
+	<type  start="1739" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="1772" length="20" line="11" chordsig="java.net.InetAddress"/>
+	<type  start="1822" length="33" line="11" chordsig="org.apache.http.params.HttpParams"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1903" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1899" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1920" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1903" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isSecure:(Ljava/net/Socket;)Z@org.apache.http.conn.ssl.SSLSocketFactory"
+ sig="boolean isSecure(Socket)"
+ line="12"
+ startpos="1948"
+ endpos="1956"
+>
+	<marker line="-1" type="param">
+		<operand  start="1973" length="4" line="12">
+			<expr><![CDATA[sock]]></expr>
+		</operand>
+	</marker>
+	<type  start="1957" length="15" line="12" chordsig="java.net.Socket"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2033" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2029" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2050" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2033" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createSocket:(Ljava/net/Socket;Ljava/lang/String;IZ)Ljava/net/Socket;@org.apache.http.conn.ssl.SSLSocketFactory"
+ sig="Socket createSocket(Socket,String,int,boolean)"
+ line="13"
+ startpos="2086"
+ endpos="2098"
+>
+	<marker line="-1" type="param">
+		<operand  start="2115" length="6" line="13">
+			<expr><![CDATA[socket]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2140" length="4" line="13">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2150" length="4" line="13">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2164" length="9" line="13">
+			<expr><![CDATA[autoClose]]></expr>
+		</operand>
+	</marker>
+	<type  start="2070" length="15" line="13" chordsig="java.net.Socket"/>
+	<type  start="2099" length="15" line="13" chordsig="java.net.Socket"/>
+	<type  start="2123" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2245" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2241" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2262" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2245" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setHostnameVerifier:(Lorg/apache/http/conn/ssl/X509HostnameVerifier;)V@org.apache.http.conn.ssl.SSLSocketFactory"
+ sig="void setHostnameVerifier(X509HostnameVerifier)"
+ line="14"
+ startpos="2287"
+ endpos="2306"
+>
+	<marker line="-1" type="param">
+		<operand  start="2353" length="16" line="14">
+			<expr><![CDATA[hostnameVerifier]]></expr>
+		</operand>
+	</marker>
+	<type  start="2307" length="45" line="14" chordsig="org.apache.http.conn.ssl.X509HostnameVerifier"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2383" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2379" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2400" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2383" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getHostnameVerifier:()Lorg/apache/http/conn/ssl/X509HostnameVerifier;@org.apache.http.conn.ssl.SSLSocketFactory"
+ sig="X509HostnameVerifier getHostnameVerifier()"
+ line="15"
+ startpos="2466"
+ endpos="2485"
+>
+	<type  start="2420" length="45" line="15" chordsig="org.apache.http.conn.ssl.X509HostnameVerifier"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2500" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2496" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2517" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2500" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="2549" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="2599" length="16" line="17" chordsig="java.lang.String"/>
+	<type  start="2649" length="16" line="18" chordsig="java.lang.String"/>
+	<type  start="2703" length="45" line="19" chordsig="org.apache.http.conn.ssl.X509HostnameVerifier"/>
+	<type  start="2798" length="45" line="20" chordsig="org.apache.http.conn.ssl.X509HostnameVerifier"/>
+	<type  start="2902" length="45" line="21" chordsig="org.apache.http.conn.ssl.X509HostnameVerifier"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@org.apache.http.conn.ssl.SSLSocketFactory"
+ line="22"
+>
+</method>
+</class>
+</root>

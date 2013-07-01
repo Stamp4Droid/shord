@@ -1,0 +1,73 @@
+<root>
+<class chordsig="android.animation.TimeAnimator" line="2">
+	<type  start="63" length="31" line="3" chordsig="android.animation.ValueAnimator"/>
+<class chordsig="android.animation.TimeAnimator$TimeListener" line="5">
+<method
+ chordsig="onTimeUpdate:(Landroid/animation/TimeAnimator;JJ)V@android.animation.TimeAnimator$TimeListener"
+ sig="void onTimeUpdate(TimeAnimator,long,long)"
+ line="7"
+ startpos="158"
+ endpos="170"
+>
+	<marker line="-1" type="param">
+		<operand  start="202" length="9" line="7">
+			<expr><![CDATA[animation]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="218" length="9" line="7">
+			<expr><![CDATA[totalTime]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="234" length="9" line="7">
+			<expr><![CDATA[deltaTime]]></expr>
+		</operand>
+	</marker>
+	<type  start="171" length="30" line="7" chordsig="android.animation.TimeAnimator"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.animation.TimeAnimator"
+ sig="TimeAnimator()"
+ line="9"
+ startpos="256"
+ endpos="268"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="283" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="279" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="300" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="283" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTimeListener:(Landroid/animation/TimeAnimator$TimeListener;)V@android.animation.TimeAnimator"
+ sig="void setTimeListener(TimeListener)"
+ line="10"
+ startpos="325"
+ endpos="340"
+>
+	<marker line="-1" type="param">
+		<operand  start="385" length="8" line="10">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="341" length="43" line="10" chordsig="android.animation.TimeAnimator$TimeListener"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="407" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="403" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="424" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="407" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

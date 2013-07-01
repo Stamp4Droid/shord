@@ -1,0 +1,51 @@
+<root>
+<class chordsig="org.w3c.dom.ls.DOMImplementationLS" line="2">
+<method
+ chordsig="createLSParser:(SLjava/lang/String;)Lorg/w3c/dom/ls/LSParser;@org.w3c.dom.ls.DOMImplementationLS"
+ sig="LSParser createLSParser(short,String)"
+ line="4"
+ startpos="104"
+ endpos="118"
+>
+	<marker line="-1" type="param">
+		<operand  start="125" length="4" line="4">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="148" length="10" line="4">
+			<expr><![CDATA[schemaType]]></expr>
+		</operand>
+	</marker>
+	<type  start="80" length="23" line="4" chordsig="org.w3c.dom.ls.LSParser"/>
+	<type  start="131" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="createLSSerializer:()Lorg/w3c/dom/ls/LSSerializer;@org.w3c.dom.ls.DOMImplementationLS"
+ sig="LSSerializer createLSSerializer()"
+ line="5"
+ startpos="238"
+ endpos="256"
+>
+	<type  start="210" length="27" line="5" chordsig="org.w3c.dom.ls.LSSerializer"/>
+</method>
+<method
+ chordsig="createLSInput:()Lorg/w3c/dom/ls/LSInput;@org.w3c.dom.ls.DOMImplementationLS"
+ sig="LSInput createLSInput()"
+ line="6"
+ startpos="300"
+ endpos="313"
+>
+	<type  start="277" length="22" line="6" chordsig="org.w3c.dom.ls.LSInput"/>
+</method>
+<method
+ chordsig="createLSOutput:()Lorg/w3c/dom/ls/LSOutput;@org.w3c.dom.ls.DOMImplementationLS"
+ sig="LSOutput createLSOutput()"
+ line="7"
+ startpos="358"
+ endpos="372"
+>
+	<type  start="334" length="23" line="7" chordsig="org.w3c.dom.ls.LSOutput"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,62 @@
+<root>
+<class chordsig="java.util.concurrent.Future" line="2">
+<method
+ chordsig="cancel:(Z)Z@java.util.concurrent.Future"
+ sig="boolean cancel(boolean)"
+ line="4"
+ startpos="84"
+ endpos="90"
+>
+	<marker line="-1" type="param">
+		<operand  start="99" length="21" line="4">
+			<expr><![CDATA[mayInterruptIfRunning]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="isCancelled:()Z@java.util.concurrent.Future"
+ sig="boolean isCancelled()"
+ line="5"
+ startpos="148"
+ endpos="159"
+>
+</method>
+<method
+ chordsig="isDone:()Z@java.util.concurrent.Future"
+ sig="boolean isDone()"
+ line="6"
+ startpos="188"
+ endpos="194"
+>
+</method>
+<method
+ chordsig="get:()Ljava/lang/Object;@java.util.concurrent.Future"
+ sig="V get()"
+ line="7"
+ startpos="217"
+ endpos="220"
+>
+	<type  start="215" length="1" line="7" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="get:(JLjava/util/concurrent/TimeUnit;)Ljava/lang/Object;@java.util.concurrent.Future"
+ sig="V get(long,TimeUnit)"
+ line="8"
+ startpos="322"
+ endpos="325"
+>
+	<marker line="-1" type="param">
+		<operand  start="331" length="7" line="8">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="370" length="4" line="8">
+			<expr><![CDATA[unit]]></expr>
+		</operand>
+	</marker>
+	<type  start="320" length="1" line="8" chordsig="java.lang.Object"/>
+	<type  start="340" length="29" line="8" chordsig="java.util.concurrent.TimeUnit"/>
+</method>
+</class>
+</root>

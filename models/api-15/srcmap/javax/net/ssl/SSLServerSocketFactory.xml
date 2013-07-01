@@ -1,0 +1,60 @@
+<root>
+<class chordsig="javax.net.ssl.SSLServerSocketFactory" line="2">
+	<type  start="78" length="29" line="3" chordsig="javax.net.ServerSocketFactory"/>
+<method
+ chordsig="&lt;init&gt;:()V@javax.net.ssl.SSLServerSocketFactory"
+ sig="SSLServerSocketFactory()"
+ line="5"
+ startpos="121"
+ endpos="143"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="158" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="154" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="175" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="158" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDefault:()Ljavax/net/ServerSocketFactory;@javax.net.ssl.SSLServerSocketFactory"
+ sig="ServerSocketFactory getDefault()"
+ line="6"
+ startpos="245"
+ endpos="255"
+>
+	<type  start="215" length="29" line="6" chordsig="javax.net.ServerSocketFactory"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="270" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="266" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="287" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="270" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDefaultCipherSuites:()[Ljava/lang/String;@javax.net.ssl.SSLServerSocketFactory"
+ sig="String[] getDefaultCipherSuites()"
+ line="7"
+ startpos="335"
+ endpos="357"
+>
+	<type  start="316" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getSupportedCipherSuites:()[Ljava/lang/String;@javax.net.ssl.SSLServerSocketFactory"
+ sig="String[] getSupportedCipherSuites()"
+ line="8"
+ startpos="397"
+ endpos="421"
+>
+	<type  start="378" length="16" line="8" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,47 @@
+<root>
+<class chordsig="java.net.BindException" line="2">
+	<type  start="55" length="24" line="3" chordsig="java.net.SocketException"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.net.BindException"
+ sig="BindException()"
+ line="5"
+ startpos="90"
+ endpos="103"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="118" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="114" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="135" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="118" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.net.BindException"
+ sig="BindException(String)"
+ line="6"
+ startpos="155"
+ endpos="168"
+>
+	<marker line="-1" type="param">
+		<operand  start="186" length="13" line="6">
+			<expr><![CDATA[detailMessage]]></expr>
+		</operand>
+	</marker>
+	<type  start="169" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="213" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="209" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="230" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="213" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

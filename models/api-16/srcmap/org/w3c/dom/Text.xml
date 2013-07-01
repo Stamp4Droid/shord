@@ -1,0 +1,51 @@
+<root>
+<class chordsig="org.w3c.dom.Text" line="2">
+	<type  start="53" length="25" line="3" chordsig="org.w3c.dom.CharacterData"/>
+<method
+ chordsig="splitText:(I)Lorg/w3c/dom/Text;@org.w3c.dom.Text"
+ sig="Text splitText(int)"
+ line="5"
+ startpos="115"
+ endpos="124"
+>
+	<marker line="-1" type="param">
+		<operand  start="129" length="6" line="5">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<type  start="98" length="16" line="5" chordsig="org.w3c.dom.Text"/>
+</method>
+<method
+ chordsig="isElementContentWhitespace:()Z@org.w3c.dom.Text"
+ sig="boolean isElementContentWhitespace()"
+ line="6"
+ startpos="195"
+ endpos="221"
+>
+</method>
+<method
+ chordsig="getWholeText:()Ljava/lang/String;@org.w3c.dom.Text"
+ sig="String getWholeText()"
+ line="7"
+ startpos="259"
+ endpos="271"
+>
+	<type  start="242" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="replaceWholeText:(Ljava/lang/String;)Lorg/w3c/dom/Text;@org.w3c.dom.Text"
+ sig="Text replaceWholeText(String)"
+ line="8"
+ startpos="309"
+ endpos="325"
+>
+	<marker line="-1" type="param">
+		<operand  start="343" length="7" line="8">
+			<expr><![CDATA[content]]></expr>
+		</operand>
+	</marker>
+	<type  start="292" length="16" line="8" chordsig="org.w3c.dom.Text"/>
+	<type  start="326" length="16" line="8" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

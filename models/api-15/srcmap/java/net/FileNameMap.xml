@@ -1,0 +1,19 @@
+<root>
+<class chordsig="java.net.FileNameMap" line="2">
+<method
+ chordsig="getContentTypeFor:(Ljava/lang/String;)Ljava/lang/String;@java.net.FileNameMap"
+ sig="String getContentTypeFor(String)"
+ line="4"
+ startpos="83"
+ endpos="100"
+>
+	<marker line="-1" type="param">
+		<operand  start="118" length="8" line="4">
+			<expr><![CDATA[filename]]></expr>
+		</operand>
+	</marker>
+	<type  start="66" length="16" line="4" chordsig="java.lang.String"/>
+	<type  start="101" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,35 @@
+<root>
+<class chordsig="android.graphics.SumPathEffect" line="2">
+	<type  start="63" length="27" line="3" chordsig="android.graphics.PathEffect"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/graphics/PathEffect;Landroid/graphics/PathEffect;)V@android.graphics.SumPathEffect"
+ sig="SumPathEffect(PathEffect,PathEffect)"
+ line="5"
+ startpos="101"
+ endpos="114"
+>
+	<marker line="-1" type="param">
+		<operand  start="143" length="5" line="5">
+			<expr><![CDATA[first]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="178" length="6" line="5">
+			<expr><![CDATA[second]]></expr>
+		</operand>
+	</marker>
+	<type  start="115" length="27" line="5" chordsig="android.graphics.PathEffect"/>
+	<type  start="150" length="27" line="5" chordsig="android.graphics.PathEffect"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="198" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="194" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="215" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="198" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

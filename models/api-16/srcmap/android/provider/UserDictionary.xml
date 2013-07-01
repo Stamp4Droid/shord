@@ -1,0 +1,152 @@
+<root>
+<class chordsig="android.provider.UserDictionary" line="2">
+<class chordsig="android.provider.UserDictionary$Words" line="4">
+	<type  start="95" length="28" line="5" chordsig="android.provider.BaseColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.UserDictionary$Words"
+ sig="Words()"
+ line="7"
+ startpos="134"
+ endpos="139"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="154" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="150" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="171" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="154" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addWord:(Landroid/content/Context;Ljava/lang/String;II)V@android.provider.UserDictionary$Words"
+ sig="void addWord(Context,String,int,int)"
+ line="9"
+ startpos="227"
+ endpos="234"
+>
+	<marker line="-1" type="param">
+		<operand  start="259" length="7" line="9">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="285" length="4" line="9">
+			<expr><![CDATA[word]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="295" length="9" line="9">
+			<expr><![CDATA[frequency]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="310" length="10" line="9">
+			<expr><![CDATA[localeType]]></expr>
+		</operand>
+	</marker>
+	<type  start="235" length="23" line="9" chordsig="android.content.Context"/>
+	<type  start="268" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="334" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="330" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="351" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="334" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addWord:(Landroid/content/Context;Ljava/lang/String;ILjava/lang/String;Ljava/util/Locale;)V@android.provider.UserDictionary$Words"
+ sig="void addWord(Context,String,int,String,Locale)"
+ line="10"
+ startpos="383"
+ endpos="390"
+>
+	<marker line="-1" type="param">
+		<operand  start="415" length="7" line="10">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="441" length="4" line="10">
+			<expr><![CDATA[word]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="451" length="9" line="10">
+			<expr><![CDATA[frequency]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="479" length="8" line="10">
+			<expr><![CDATA[shortcut]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="506" length="6" line="10">
+			<expr><![CDATA[locale]]></expr>
+		</operand>
+	</marker>
+	<type  start="391" length="23" line="10" chordsig="android.content.Context"/>
+	<type  start="424" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="462" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="489" length="16" line="10" chordsig="java.util.Locale"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="526" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="522" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="543" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="526" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="575" length="15" line="11" chordsig="android.net.Uri"/>
+	<type  start="624" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="722" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="826" length="16" line="14" chordsig="java.lang.String"/>
+	<type  start="876" length="16" line="15" chordsig="java.lang.String"/>
+	<type  start="928" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="990" length="16" line="17" chordsig="java.lang.String"/>
+	<type  start="1046" length="16" line="18" chordsig="java.lang.String"/>
+	<type  start="1101" length="16" line="19" chordsig="java.lang.String"/>
+	<type  start="1303" length="16" line="24" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.UserDictionary$Words"
+ line="25"
+>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.UserDictionary"
+ sig="UserDictionary()"
+ line="27"
+ startpos="1400"
+ endpos="1414"
+>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1429" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1425" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1446" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1429" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1478" length="16" line="28" chordsig="java.lang.String"/>
+	<type  start="1546" length="15" line="29" chordsig="android.net.Uri"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.UserDictionary"
+ line="30"
+>
+</method>
+</class>
+</root>

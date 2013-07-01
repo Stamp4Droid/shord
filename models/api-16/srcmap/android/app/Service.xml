@@ -1,0 +1,967 @@
+<root>
+<class chordsig="android.app.Service" line="6">
+	<type  start="158" length="30" line="6" chordsig="android.content.ContextWrapper"/>
+	<type  start="200" length="35" line="6" chordsig="android.content.ComponentCallbacks2"/>
+<method
+ chordsig="getApplication:()Landroid/app/Application;@android.app.Service"
+ sig="Application getApplication()"
+ line="8"
+ startpos="280"
+ endpos="294"
+>
+	<type  start="256" length="23" line="8" chordsig="android.app.Application"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="317" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="313" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="334" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="317" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onCreate:()V@android.app.Service"
+ sig="void onCreate()"
+ line="12"
+ startpos="367"
+ endpos="375"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="398" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="394" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="415" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="398" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onStart:(Landroid/content/Intent;I)V@android.app.Service"
+ sig="void onStart(Intent,int)"
+ line="17"
+ startpos="476"
+ endpos="483"
+>
+	<marker line="-1" type="param">
+		<operand  start="507" length="6" line="17">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="519" length="7" line="17">
+			<expr><![CDATA[startId]]></expr>
+		</operand>
+	</marker>
+	<type  start="484" length="22" line="17" chordsig="android.content.Intent"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="548" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="544" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="565" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="548" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onStartCommand:(Landroid/content/Intent;II)I@android.app.Service"
+ sig="int onStartCommand(Intent,int,int)"
+ line="21"
+ startpos="597"
+ endpos="611"
+>
+	<marker line="-1" type="param">
+		<operand  start="635" length="6" line="21">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="647" length="5" line="21">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="658" length="7" line="21">
+			<expr><![CDATA[startId]]></expr>
+		</operand>
+	</marker>
+	<type  start="612" length="22" line="21" chordsig="android.content.Intent"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="687" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="683" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="704" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="687" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onDestroy:()V@android.app.Service"
+ sig="void onDestroy()"
+ line="25"
+ startpos="737"
+ endpos="746"
+>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="769" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="765" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="786" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="769" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onConfigurationChanged:(Landroid/content/res/Configuration;)V@android.app.Service"
+ sig="void onConfigurationChanged(Configuration)"
+ line="29"
+ startpos="819"
+ endpos="841"
+>
+	<marker line="-1" type="param">
+		<operand  start="876" length="9" line="29">
+			<expr><![CDATA[newConfig]]></expr>
+		</operand>
+	</marker>
+	<type  start="842" length="33" line="29" chordsig="android.content.res.Configuration"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="907" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="903" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="924" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="907" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onLowMemory:()V@android.app.Service"
+ sig="void onLowMemory()"
+ line="33"
+ startpos="957"
+ endpos="968"
+>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="991" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="987" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1008" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="991" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onTrimMemory:(I)V@android.app.Service"
+ sig="void onTrimMemory(int)"
+ line="37"
+ startpos="1041"
+ endpos="1053"
+>
+	<marker line="-1" type="param">
+		<operand  start="1058" length="5" line="37">
+			<expr><![CDATA[level]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1085" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1081" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1102" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1085" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onBind:(Landroid/content/Intent;)Landroid/os/IBinder;@android.app.Service"
+ sig="IBinder onBind(Intent)"
+ line="41"
+ startpos="1158"
+ endpos="1164"
+>
+	<marker line="-1" type="param">
+		<operand  start="1188" length="6" line="41">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="1139" length="18" line="41" chordsig="android.os.IBinder"/>
+	<type  start="1165" length="22" line="41" chordsig="android.content.Intent"/>
+</method>
+<method
+ chordsig="onUnbind:(Landroid/content/Intent;)Z@android.app.Service"
+ sig="boolean onUnbind(Intent)"
+ line="43"
+ startpos="1217"
+ endpos="1225"
+>
+	<marker line="-1" type="param">
+		<operand  start="1249" length="6" line="43">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="1226" length="22" line="43" chordsig="android.content.Intent"/>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1277" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1273" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1294" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1277" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onRebind:(Landroid/content/Intent;)V@android.app.Service"
+ sig="void onRebind(Intent)"
+ line="47"
+ startpos="1327"
+ endpos="1335"
+>
+	<marker line="-1" type="param">
+		<operand  start="1359" length="6" line="47">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="1336" length="22" line="47" chordsig="android.content.Intent"/>
+	<newexpr line="48" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1387" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1383" length="29" line="48">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1404" length="7" line="48">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1387" length="16" line="48" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onTaskRemoved:(Landroid/content/Intent;)V@android.app.Service"
+ sig="void onTaskRemoved(Intent)"
+ line="51"
+ startpos="1437"
+ endpos="1450"
+>
+	<marker line="-1" type="param">
+		<operand  start="1474" length="10" line="51">
+			<expr><![CDATA[rootIntent]]></expr>
+		</operand>
+	</marker>
+	<type  start="1451" length="22" line="51" chordsig="android.content.Intent"/>
+	<newexpr line="52" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1506" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1502" length="29" line="52">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1523" length="7" line="52">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1506" length="16" line="52" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="stopSelf:()V@android.app.Service"
+ sig="void stopSelf()"
+ line="55"
+ startpos="1562"
+ endpos="1570"
+>
+	<newexpr line="56" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1593" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1589" length="29" line="56">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1610" length="7" line="56">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1593" length="16" line="56" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="stopSelf:(I)V@android.app.Service"
+ sig="void stopSelf(int)"
+ line="59"
+ startpos="1649"
+ endpos="1657"
+>
+	<marker line="-1" type="param">
+		<operand  start="1662" length="7" line="59">
+			<expr><![CDATA[startId]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="60" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1691" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1687" length="29" line="60">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1708" length="7" line="60">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1691" length="16" line="60" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="stopSelfResult:(I)Z@android.app.Service"
+ sig="boolean stopSelfResult(int)"
+ line="63"
+ startpos="1750"
+ endpos="1764"
+>
+	<marker line="-1" type="param">
+		<operand  start="1769" length="7" line="63">
+			<expr><![CDATA[startId]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="64" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1798" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1794" length="29" line="64">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1815" length="7" line="64">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1798" length="16" line="64" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="startForeground:(ILandroid/app/Notification;)V@android.app.Service"
+ sig="void startForeground(int,Notification)"
+ line="67"
+ startpos="1854"
+ endpos="1869"
+>
+	<marker line="-1" type="param">
+		<operand  start="1874" length="2" line="67">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1903" length="12" line="67">
+			<expr><![CDATA[notification]]></expr>
+		</operand>
+	</marker>
+	<type  start="1878" length="24" line="67" chordsig="android.app.Notification"/>
+	<newexpr line="68" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1937" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1933" length="29" line="68">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1954" length="7" line="68">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1937" length="16" line="68" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="stopForeground:(Z)V@android.app.Service"
+ sig="void stopForeground(boolean)"
+ line="71"
+ startpos="1993"
+ endpos="2007"
+>
+	<marker line="-1" type="param">
+		<operand  start="2016" length="18" line="71">
+			<expr><![CDATA[removeNotification]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="72" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2056" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2052" length="29" line="72">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2073" length="7" line="72">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2056" length="16" line="72" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dump:(Ljava/io/FileDescriptor;Ljava/io/PrintWriter;[Ljava/lang/String;)V@android.app.Service"
+ sig="void dump(FileDescriptor,PrintWriter,String[])"
+ line="75"
+ startpos="2109"
+ endpos="2113"
+>
+	<marker line="-1" type="param">
+		<operand  start="2137" length="2" line="75">
+			<expr><![CDATA[fd]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2161" length="6" line="75">
+			<expr><![CDATA[writer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2188" length="4" line="75">
+			<expr><![CDATA[args]]></expr>
+		</operand>
+	</marker>
+	<type  start="2114" length="22" line="75" chordsig="java.io.FileDescriptor"/>
+	<type  start="2141" length="19" line="75" chordsig="java.io.PrintWriter"/>
+	<type  start="2169" length="16" line="75" chordsig="java.lang.String"/>
+	<newexpr line="76" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2214" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2210" length="29" line="76">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2231" length="7" line="76">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2214" length="16" line="76" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:()V@android.app.Service"
+ sig="Service()"
+ line="93"
+ startpos="2641"
+ endpos="2648"
+>
+	<type  start="2668" length="23" line="94" chordsig="android.content.Context"/>
+	<invkexpr line="95" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="2740" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    Service.this.onCreate();
+  }
+}
+)]]></expr>
+		<param  start="2757" length="114" line="95">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onCreate();
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="95" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="2726" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="95" chordsig="&lt;init&gt;:()V@android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#95" start="2761" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onCreate();
+  }
+}
+]]></expr>
+		<param  start="2757" length="114" line="95">
+			<expr type="android.app.Service#edu.stanford.stamp.harness.Callback#95"><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onCreate();
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2761" length="8" line="95" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#95" line="95">
+<method
+ chordsig="run:()V@android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#95"
+ sig="void run()"
+ line="97"
+ startpos="2799"
+ endpos="2802"
+>
+	<invkexpr line="98" chordsig="onCreate:()V@android.app.Service" start="2836" length="8" type="invoke">
+			<expr><![CDATA[Service.this.onCreate()]]></expr>
+		<param  start="2823" length="12" line="98">
+			<expr><![CDATA[Service.this]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<invkexpr line="101" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="2914" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    Service.this.onStart(new android.content.Intent(),0);
+  }
+}
+)]]></expr>
+		<param  start="2931" length="144" line="101">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onStart(new android.content.Intent(),0);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="101" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="2900" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="101" chordsig="&lt;init&gt;:()V@android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#101" start="2935" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onStart(new android.content.Intent(),0);
+  }
+}
+]]></expr>
+		<param  start="2931" length="144" line="101">
+			<expr type="android.app.Service#edu.stanford.stamp.harness.Callback#101"><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onStart(new android.content.Intent(),0);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2935" length="8" line="101" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#101" line="101">
+<method
+ chordsig="run:()V@android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#101"
+ sig="void run()"
+ line="103"
+ startpos="2973"
+ endpos="2976"
+>
+	<invkexpr line="104" chordsig="onStart:(Landroid/content/Intent;I)V@android.app.Service" start="3010" length="7" type="invoke">
+			<expr><![CDATA[Service.this.onStart(new android.content.Intent(),0)]]></expr>
+		<param  start="2997" length="12" line="104">
+			<expr><![CDATA[Service.this]]></expr>
+		</param>
+		<param  start="3018" length="28" line="104">
+			<expr><![CDATA[new android.content.Intent()]]></expr>
+		</param>
+		<param  start="3048" length="1" line="104">
+			<expr><![CDATA[0]]></expr>
+		</param>
+	</invkexpr>
+	<newexpr line="104" chordsig="&lt;init&gt;:()V@android.content.Intent" start="3022" length="22" type="invoke">
+			<expr><![CDATA[new android.content.Intent()]]></expr>
+		<param  start="3018" length="28" line="104">
+			<expr><![CDATA[new android.content.Intent()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3022" length="22" line="104" chordsig="android.content.Intent"/>
+</method>
+</class>
+	<invkexpr line="107" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="3118" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    Service.this.onStartCommand(new android.content.Intent(),0,0);
+  }
+}
+)]]></expr>
+		<param  start="3135" length="154" line="107">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onStartCommand(new android.content.Intent(),0,0);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="107" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="3104" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="107" chordsig="&lt;init&gt;:()V@android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#107" start="3139" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onStartCommand(new android.content.Intent(),0,0);
+  }
+}
+]]></expr>
+		<param  start="3135" length="154" line="107">
+			<expr type="android.app.Service#edu.stanford.stamp.harness.Callback#107"><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onStartCommand(new android.content.Intent(),0,0);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3139" length="8" line="107" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#107" line="107">
+<method
+ chordsig="run:()V@android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#107"
+ sig="void run()"
+ line="109"
+ startpos="3177"
+ endpos="3180"
+>
+	<invkexpr line="110" chordsig="onStartCommand:(Landroid/content/Intent;II)I@android.app.Service" start="3214" length="14" type="invoke">
+			<expr><![CDATA[Service.this.onStartCommand(new android.content.Intent(),0,0)]]></expr>
+		<param  start="3201" length="12" line="110">
+			<expr><![CDATA[Service.this]]></expr>
+		</param>
+		<param  start="3229" length="28" line="110">
+			<expr><![CDATA[new android.content.Intent()]]></expr>
+		</param>
+		<param  start="3259" length="1" line="110">
+			<expr><![CDATA[0]]></expr>
+		</param>
+		<param  start="3262" length="1" line="110">
+			<expr><![CDATA[0]]></expr>
+		</param>
+	</invkexpr>
+	<newexpr line="110" chordsig="&lt;init&gt;:()V@android.content.Intent" start="3233" length="22" type="invoke">
+			<expr><![CDATA[new android.content.Intent()]]></expr>
+		<param  start="3229" length="28" line="110">
+			<expr><![CDATA[new android.content.Intent()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3233" length="22" line="110" chordsig="android.content.Intent"/>
+</method>
+</class>
+	<invkexpr line="113" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="3332" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    Service.this.onDestroy();
+  }
+}
+)]]></expr>
+		<param  start="3349" length="115" line="113">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onDestroy();
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="113" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="3318" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="113" chordsig="&lt;init&gt;:()V@android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#113" start="3353" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onDestroy();
+  }
+}
+]]></expr>
+		<param  start="3349" length="115" line="113">
+			<expr type="android.app.Service#edu.stanford.stamp.harness.Callback#113"><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onDestroy();
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3353" length="8" line="113" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#113" line="113">
+<method
+ chordsig="run:()V@android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#113"
+ sig="void run()"
+ line="115"
+ startpos="3391"
+ endpos="3394"
+>
+	<invkexpr line="116" chordsig="onDestroy:()V@android.app.Service" start="3428" length="9" type="invoke">
+			<expr><![CDATA[Service.this.onDestroy()]]></expr>
+		<param  start="3415" length="12" line="116">
+			<expr><![CDATA[Service.this]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<invkexpr line="119" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="3507" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    Service.this.onConfigurationChanged(null);
+  }
+}
+)]]></expr>
+		<param  start="3524" length="132" line="119">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onConfigurationChanged(null);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="119" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="3493" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="119" chordsig="&lt;init&gt;:()V@android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#119" start="3528" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onConfigurationChanged(null);
+  }
+}
+]]></expr>
+		<param  start="3524" length="132" line="119">
+			<expr type="android.app.Service#edu.stanford.stamp.harness.Callback#119"><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onConfigurationChanged(null);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3528" length="8" line="119" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#119" line="119">
+<method
+ chordsig="run:()V@android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#119"
+ sig="void run()"
+ line="121"
+ startpos="3566"
+ endpos="3569"
+>
+	<invkexpr line="122" chordsig="onConfigurationChanged:(Landroid/content/res/Configuration;)V@android.app.Service" start="3603" length="22" type="invoke">
+			<expr><![CDATA[Service.this.onConfigurationChanged(null)]]></expr>
+		<param  start="3590" length="12" line="122">
+			<expr><![CDATA[Service.this]]></expr>
+		</param>
+		<param  start="3626" length="4" line="122">
+			<expr><![CDATA[null]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<invkexpr line="125" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="3699" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    Service.this.onLowMemory();
+  }
+}
+)]]></expr>
+		<param  start="3716" length="117" line="125">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onLowMemory();
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="125" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="3685" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="125" chordsig="&lt;init&gt;:()V@android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#125" start="3720" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onLowMemory();
+  }
+}
+]]></expr>
+		<param  start="3716" length="117" line="125">
+			<expr type="android.app.Service#edu.stanford.stamp.harness.Callback#125"><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onLowMemory();
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3720" length="8" line="125" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#125" line="125">
+<method
+ chordsig="run:()V@android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#125"
+ sig="void run()"
+ line="127"
+ startpos="3758"
+ endpos="3761"
+>
+	<invkexpr line="128" chordsig="onLowMemory:()V@android.app.Service" start="3795" length="11" type="invoke">
+			<expr><![CDATA[Service.this.onLowMemory()]]></expr>
+		<param  start="3782" length="12" line="128">
+			<expr><![CDATA[Service.this]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<invkexpr line="131" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="3876" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    Service.this.onUnbind(new android.content.Intent());
+  }
+}
+)]]></expr>
+		<param  start="3893" length="142" line="131">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onUnbind(new android.content.Intent());
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="131" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="3862" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="131" chordsig="&lt;init&gt;:()V@android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#131" start="3897" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onUnbind(new android.content.Intent());
+  }
+}
+]]></expr>
+		<param  start="3893" length="142" line="131">
+			<expr type="android.app.Service#edu.stanford.stamp.harness.Callback#131"><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onUnbind(new android.content.Intent());
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3897" length="8" line="131" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#131" line="131">
+<method
+ chordsig="run:()V@android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#131"
+ sig="void run()"
+ line="133"
+ startpos="3935"
+ endpos="3938"
+>
+	<invkexpr line="134" chordsig="onUnbind:(Landroid/content/Intent;)Z@android.app.Service" start="3972" length="8" type="invoke">
+			<expr><![CDATA[Service.this.onUnbind(new android.content.Intent())]]></expr>
+		<param  start="3959" length="12" line="134">
+			<expr><![CDATA[Service.this]]></expr>
+		</param>
+		<param  start="3981" length="28" line="134">
+			<expr><![CDATA[new android.content.Intent()]]></expr>
+		</param>
+	</invkexpr>
+	<newexpr line="134" chordsig="&lt;init&gt;:()V@android.content.Intent" start="3985" length="22" type="invoke">
+			<expr><![CDATA[new android.content.Intent()]]></expr>
+		<param  start="3981" length="28" line="134">
+			<expr><![CDATA[new android.content.Intent()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3985" length="22" line="134" chordsig="android.content.Intent"/>
+</method>
+</class>
+	<invkexpr line="137" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="4078" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    Service.this.onRebind(new android.content.Intent());
+  }
+}
+)]]></expr>
+		<param  start="4095" length="142" line="137">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onRebind(new android.content.Intent());
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="137" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="4064" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="137" chordsig="&lt;init&gt;:()V@android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#137" start="4099" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onRebind(new android.content.Intent());
+  }
+}
+]]></expr>
+		<param  start="4095" length="142" line="137">
+			<expr type="android.app.Service#edu.stanford.stamp.harness.Callback#137"><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onRebind(new android.content.Intent());
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4099" length="8" line="137" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#137" line="137">
+<method
+ chordsig="run:()V@android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#137"
+ sig="void run()"
+ line="139"
+ startpos="4137"
+ endpos="4140"
+>
+	<invkexpr line="140" chordsig="onRebind:(Landroid/content/Intent;)V@android.app.Service" start="4174" length="8" type="invoke">
+			<expr><![CDATA[Service.this.onRebind(new android.content.Intent())]]></expr>
+		<param  start="4161" length="12" line="140">
+			<expr><![CDATA[Service.this]]></expr>
+		</param>
+		<param  start="4183" length="28" line="140">
+			<expr><![CDATA[new android.content.Intent()]]></expr>
+		</param>
+	</invkexpr>
+	<newexpr line="140" chordsig="&lt;init&gt;:()V@android.content.Intent" start="4187" length="22" type="invoke">
+			<expr><![CDATA[new android.content.Intent()]]></expr>
+		<param  start="4183" length="28" line="140">
+			<expr><![CDATA[new android.content.Intent()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4187" length="22" line="140" chordsig="android.content.Intent"/>
+</method>
+</class>
+	<invkexpr line="143" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="4280" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    Service.this.onBind(new android.content.Intent());
+  }
+}
+)]]></expr>
+		<param  start="4297" length="140" line="143">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onBind(new android.content.Intent());
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="143" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="4266" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="143" chordsig="&lt;init&gt;:()V@android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#143" start="4301" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onBind(new android.content.Intent());
+  }
+}
+]]></expr>
+		<param  start="4297" length="140" line="143">
+			<expr type="android.app.Service#edu.stanford.stamp.harness.Callback#143"><![CDATA[new Callback(){
+  public void run(){
+    Service.this.onBind(new android.content.Intent());
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4301" length="8" line="143" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#143" line="143">
+<method
+ chordsig="run:()V@android.app.Service$android.app.Service#edu.stanford.stamp.harness.Callback#143"
+ sig="void run()"
+ line="145"
+ startpos="4339"
+ endpos="4342"
+>
+	<invkexpr line="146" chordsig="onBind:(Landroid/content/Intent;)Landroid/os/IBinder;@android.app.Service" start="4376" length="6" type="invoke">
+			<expr><![CDATA[Service.this.onBind(new android.content.Intent())]]></expr>
+		<param  start="4363" length="12" line="146">
+			<expr><![CDATA[Service.this]]></expr>
+		</param>
+		<param  start="4383" length="28" line="146">
+			<expr><![CDATA[new android.content.Intent()]]></expr>
+		</param>
+	</invkexpr>
+	<newexpr line="146" chordsig="&lt;init&gt;:()V@android.content.Intent" start="4387" length="22" type="invoke">
+			<expr><![CDATA[new android.content.Intent()]]></expr>
+		<param  start="4383" length="28" line="146">
+			<expr><![CDATA[new android.content.Intent()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4387" length="22" line="146" chordsig="android.content.Intent"/>
+</method>
+</class>
+</method>
+</class>
+</root>

@@ -1,0 +1,59 @@
+<root>
+<class chordsig="org.apache.http.HttpConnectionMetrics" line="2">
+<method
+ chordsig="getRequestCount:()J@org.apache.http.HttpConnectionMetrics"
+ sig="long getRequestCount()"
+ line="4"
+ startpos="88"
+ endpos="103"
+>
+</method>
+<method
+ chordsig="getResponseCount:()J@org.apache.http.HttpConnectionMetrics"
+ sig="long getResponseCount()"
+ line="5"
+ startpos="129"
+ endpos="145"
+>
+</method>
+<method
+ chordsig="getSentBytesCount:()J@org.apache.http.HttpConnectionMetrics"
+ sig="long getSentBytesCount()"
+ line="6"
+ startpos="171"
+ endpos="188"
+>
+</method>
+<method
+ chordsig="getReceivedBytesCount:()J@org.apache.http.HttpConnectionMetrics"
+ sig="long getReceivedBytesCount()"
+ line="7"
+ startpos="214"
+ endpos="235"
+>
+</method>
+<method
+ chordsig="getMetric:(Ljava/lang/String;)Ljava/lang/Object;@org.apache.http.HttpConnectionMetrics"
+ sig="Object getMetric(String)"
+ line="8"
+ startpos="273"
+ endpos="282"
+>
+	<marker line="-1" type="param">
+		<operand  start="300" length="10" line="8">
+			<expr><![CDATA[metricName]]></expr>
+		</operand>
+	</marker>
+	<type  start="256" length="16" line="8" chordsig="java.lang.Object"/>
+	<type  start="283" length="16" line="8" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="reset:()V@org.apache.http.HttpConnectionMetrics"
+ sig="void reset()"
+ line="9"
+ startpos="335"
+ endpos="340"
+>
+</method>
+</class>
+</root>

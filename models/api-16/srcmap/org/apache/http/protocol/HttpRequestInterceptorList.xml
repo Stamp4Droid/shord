@@ -1,0 +1,95 @@
+<root>
+<class chordsig="org.apache.http.protocol.HttpRequestInterceptorList" line="2">
+<method
+ chordsig="addRequestInterceptor:(Lorg/apache/http/HttpRequestInterceptor;)V@org.apache.http.protocol.HttpRequestInterceptorList"
+ sig="void addRequestInterceptor(HttpRequestInterceptor)"
+ line="4"
+ startpos="102"
+ endpos="123"
+>
+	<marker line="-1" type="param">
+		<operand  start="163" length="4" line="4">
+			<expr><![CDATA[itcp]]></expr>
+		</operand>
+	</marker>
+	<type  start="124" length="38" line="4" chordsig="org.apache.http.HttpRequestInterceptor"/>
+</method>
+<method
+ chordsig="addRequestInterceptor:(Lorg/apache/http/HttpRequestInterceptor;I)V@org.apache.http.protocol.HttpRequestInterceptorList"
+ sig="void addRequestInterceptor(HttpRequestInterceptor,int)"
+ line="5"
+ startpos="192"
+ endpos="213"
+>
+	<marker line="-1" type="param">
+		<operand  start="253" length="4" line="5">
+			<expr><![CDATA[itcp]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="263" length="5" line="5">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="214" length="38" line="5" chordsig="org.apache.http.HttpRequestInterceptor"/>
+</method>
+<method
+ chordsig="getRequestInterceptorCount:()I@org.apache.http.protocol.HttpRequestInterceptorList"
+ sig="int getRequestInterceptorCount()"
+ line="6"
+ startpos="292"
+ endpos="318"
+>
+</method>
+<method
+ chordsig="getRequestInterceptor:(I)Lorg/apache/http/HttpRequestInterceptor;@org.apache.http.protocol.HttpRequestInterceptorList"
+ sig="HttpRequestInterceptor getRequestInterceptor(int)"
+ line="7"
+ startpos="378"
+ endpos="399"
+>
+	<marker line="-1" type="param">
+		<operand  start="404" length="5" line="7">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="339" length="38" line="7" chordsig="org.apache.http.HttpRequestInterceptor"/>
+</method>
+<method
+ chordsig="clearRequestInterceptors:()V@org.apache.http.protocol.HttpRequestInterceptorList"
+ sig="void clearRequestInterceptors()"
+ line="8"
+ startpos="434"
+ endpos="458"
+>
+</method>
+<method
+ chordsig="removeRequestInterceptorByClass:(Ljava/lang/Class;)V@org.apache.http.protocol.HttpRequestInterceptorList"
+ sig="void removeRequestInterceptorByClass(Class)"
+ line="9"
+ startpos="484"
+ endpos="515"
+>
+	<marker line="-1" type="param">
+		<operand  start="532" length="5" line="9">
+			<expr><![CDATA[clazz]]></expr>
+		</operand>
+	</marker>
+	<type  start="516" length="15" line="9" chordsig="java.lang.Class"/>
+</method>
+<method
+ chordsig="setInterceptors:(Ljava/util/List;)V@org.apache.http.protocol.HttpRequestInterceptorList"
+ sig="void setInterceptors(List)"
+ line="10"
+ startpos="562"
+ endpos="577"
+>
+	<marker line="-1" type="param">
+		<operand  start="593" length="5" line="10">
+			<expr><![CDATA[itcps]]></expr>
+		</operand>
+	</marker>
+	<type  start="578" length="14" line="10" chordsig="java.util.List"/>
+</method>
+</class>
+</root>

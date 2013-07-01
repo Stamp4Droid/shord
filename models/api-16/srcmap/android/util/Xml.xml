@@ -1,0 +1,209 @@
+<root>
+<class chordsig="android.util.Xml" line="2">
+<class chordsig="android.util.Xml$Encoding" line="4">
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.util.Xml"
+ sig="Xml()"
+ line="11"
+ startpos="118"
+ endpos="121"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="136" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="132" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="153" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="136" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parse:(Ljava/lang/String;Lorg/xml/sax/ContentHandler;)V@android.util.Xml"
+ sig="void parse(String,ContentHandler)"
+ line="12"
+ startpos="185"
+ endpos="190"
+>
+	<marker line="-1" type="param">
+		<operand  start="208" length="3" line="12">
+			<expr><![CDATA[xml]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="240" length="14" line="12">
+			<expr><![CDATA[contentHandler]]></expr>
+		</operand>
+	</marker>
+	<type  start="191" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="213" length="26" line="12" chordsig="org.xml.sax.ContentHandler"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="300" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="296" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="317" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="300" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parse:(Ljava/io/Reader;Lorg/xml/sax/ContentHandler;)V@android.util.Xml"
+ sig="void parse(Reader,ContentHandler)"
+ line="13"
+ startpos="349"
+ endpos="354"
+>
+	<marker line="-1" type="param">
+		<operand  start="370" length="2" line="13">
+			<expr><![CDATA[in]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="401" length="14" line="13">
+			<expr><![CDATA[contentHandler]]></expr>
+		</operand>
+	</marker>
+	<type  start="355" length="14" line="13" chordsig="java.io.Reader"/>
+	<type  start="374" length="26" line="13" chordsig="org.xml.sax.ContentHandler"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="482" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="478" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="499" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="482" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parse:(Ljava/io/InputStream;Landroid/util/Xml$Encoding;Lorg/xml/sax/ContentHandler;)V@android.util.Xml"
+ sig="void parse(InputStream,Encoding,ContentHandler)"
+ line="14"
+ startpos="531"
+ endpos="536"
+>
+	<marker line="-1" type="param">
+		<operand  start="557" length="2" line="14">
+			<expr><![CDATA[in]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="587" length="8" line="14">
+			<expr><![CDATA[encoding]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="624" length="14" line="14">
+			<expr><![CDATA[contentHandler]]></expr>
+		</operand>
+	</marker>
+	<type  start="537" length="19" line="14" chordsig="java.io.InputStream"/>
+	<type  start="561" length="25" line="14" chordsig="android.util.Xml$Encoding"/>
+	<type  start="597" length="26" line="14" chordsig="org.xml.sax.ContentHandler"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="705" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="701" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="722" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="705" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newPullParser:()Lorg/xmlpull/v1/XmlPullParser;@android.util.Xml"
+ sig="XmlPullParser newPullParser()"
+ line="15"
+ startpos="778"
+ endpos="791"
+>
+	<type  start="749" length="28" line="15" chordsig="org.xmlpull.v1.XmlPullParser"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="806" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="802" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="823" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="806" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newSerializer:()Lorg/xmlpull/v1/XmlSerializer;@android.util.Xml"
+ sig="XmlSerializer newSerializer()"
+ line="16"
+ startpos="879"
+ endpos="892"
+>
+	<type  start="850" length="28" line="16" chordsig="org.xmlpull.v1.XmlSerializer"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="907" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="903" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="924" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="907" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="findEncodingByName:(Ljava/lang/String;)Landroid/util/Xml$Encoding;@android.util.Xml"
+ sig="Encoding findEncodingByName(String)"
+ line="17"
+ startpos="977"
+ endpos="995"
+>
+	<marker line="-1" type="param">
+		<operand  start="1013" length="12" line="17">
+			<expr><![CDATA[encodingName]]></expr>
+		</operand>
+	</marker>
+	<type  start="951" length="25" line="17" chordsig="android.util.Xml$Encoding"/>
+	<type  start="996" length="16" line="17" chordsig="java.lang.String"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1083" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1079" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1100" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1083" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="asAttributeSet:(Lorg/xmlpull/v1/XmlPullParser;)Landroid/util/AttributeSet;@android.util.Xml"
+ sig="AttributeSet asAttributeSet(XmlPullParser)"
+ line="18"
+ startpos="1153"
+ endpos="1167"
+>
+	<marker line="-1" type="param">
+		<operand  start="1197" length="6" line="18">
+			<expr><![CDATA[parser]]></expr>
+		</operand>
+	</marker>
+	<type  start="1127" length="25" line="18" chordsig="android.util.AttributeSet"/>
+	<type  start="1168" length="28" line="18" chordsig="org.xmlpull.v1.XmlPullParser"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1217" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1213" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1234" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1217" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1260" length="16" line="19" chordsig="java.lang.String"/>
+</class>
+</root>

@@ -1,0 +1,565 @@
+<root>
+<class chordsig="javax.xml.datatype.XMLGregorianCalendar" line="2">
+	<type  start="84" length="19" line="3" chordsig="java.lang.Cloneable"/>
+<method
+ chordsig="&lt;init&gt;:()V@javax.xml.datatype.XMLGregorianCalendar"
+ sig="XMLGregorianCalendar()"
+ line="5"
+ startpos="114"
+ endpos="134"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="149" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="145" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="166" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="149" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clear:()V@javax.xml.datatype.XMLGregorianCalendar"
+ sig="void clear()"
+ line="6"
+ startpos="200"
+ endpos="205"
+>
+</method>
+<method
+ chordsig="reset:()V@javax.xml.datatype.XMLGregorianCalendar"
+ sig="void reset()"
+ line="7"
+ startpos="231"
+ endpos="236"
+>
+</method>
+<method
+ chordsig="setYear:(Ljava/math/BigInteger;)V@javax.xml.datatype.XMLGregorianCalendar"
+ sig="void setYear(BigInteger)"
+ line="8"
+ startpos="262"
+ endpos="269"
+>
+	<marker line="-1" type="param">
+		<operand  start="291" length="4" line="8">
+			<expr><![CDATA[year]]></expr>
+		</operand>
+	</marker>
+	<type  start="270" length="20" line="8" chordsig="java.math.BigInteger"/>
+</method>
+<method
+ chordsig="setYear:(I)V@javax.xml.datatype.XMLGregorianCalendar"
+ sig="void setYear(int)"
+ line="9"
+ startpos="320"
+ endpos="327"
+>
+	<marker line="-1" type="param">
+		<operand  start="332" length="4" line="9">
+			<expr><![CDATA[year]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setMonth:(I)V@javax.xml.datatype.XMLGregorianCalendar"
+ sig="void setMonth(int)"
+ line="10"
+ startpos="361"
+ endpos="369"
+>
+	<marker line="-1" type="param">
+		<operand  start="374" length="5" line="10">
+			<expr><![CDATA[month]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setDay:(I)V@javax.xml.datatype.XMLGregorianCalendar"
+ sig="void setDay(int)"
+ line="11"
+ startpos="404"
+ endpos="410"
+>
+	<marker line="-1" type="param">
+		<operand  start="415" length="3" line="11">
+			<expr><![CDATA[day]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setTimezone:(I)V@javax.xml.datatype.XMLGregorianCalendar"
+ sig="void setTimezone(int)"
+ line="12"
+ startpos="443"
+ endpos="454"
+>
+	<marker line="-1" type="param">
+		<operand  start="459" length="6" line="12">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setTime:(III)V@javax.xml.datatype.XMLGregorianCalendar"
+ sig="void setTime(int,int,int)"
+ line="13"
+ startpos="481"
+ endpos="488"
+>
+	<marker line="-1" type="param">
+		<operand  start="493" length="4" line="13">
+			<expr><![CDATA[hour]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="503" length="6" line="13">
+			<expr><![CDATA[minute]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="515" length="6" line="13">
+			<expr><![CDATA[second]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="535" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="531" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="552" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="535" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setHour:(I)V@javax.xml.datatype.XMLGregorianCalendar"
+ sig="void setHour(int)"
+ line="14"
+ startpos="586"
+ endpos="593"
+>
+	<marker line="-1" type="param">
+		<operand  start="598" length="4" line="14">
+			<expr><![CDATA[hour]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setMinute:(I)V@javax.xml.datatype.XMLGregorianCalendar"
+ sig="void setMinute(int)"
+ line="15"
+ startpos="627"
+ endpos="636"
+>
+	<marker line="-1" type="param">
+		<operand  start="641" length="6" line="15">
+			<expr><![CDATA[minute]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setSecond:(I)V@javax.xml.datatype.XMLGregorianCalendar"
+ sig="void setSecond(int)"
+ line="16"
+ startpos="672"
+ endpos="681"
+>
+	<marker line="-1" type="param">
+		<operand  start="686" length="6" line="16">
+			<expr><![CDATA[second]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setMillisecond:(I)V@javax.xml.datatype.XMLGregorianCalendar"
+ sig="void setMillisecond(int)"
+ line="17"
+ startpos="717"
+ endpos="731"
+>
+	<marker line="-1" type="param">
+		<operand  start="736" length="11" line="17">
+			<expr><![CDATA[millisecond]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setFractionalSecond:(Ljava/math/BigDecimal;)V@javax.xml.datatype.XMLGregorianCalendar"
+ sig="void setFractionalSecond(BigDecimal)"
+ line="18"
+ startpos="772"
+ endpos="791"
+>
+	<marker line="-1" type="param">
+		<operand  start="813" length="10" line="18">
+			<expr><![CDATA[fractional]]></expr>
+		</operand>
+	</marker>
+	<type  start="792" length="20" line="18" chordsig="java.math.BigDecimal"/>
+</method>
+<method
+ chordsig="setTime:(IIILjava/math/BigDecimal;)V@javax.xml.datatype.XMLGregorianCalendar"
+ sig="void setTime(int,int,int,BigDecimal)"
+ line="19"
+ startpos="839"
+ endpos="846"
+>
+	<marker line="-1" type="param">
+		<operand  start="851" length="4" line="19">
+			<expr><![CDATA[hour]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="861" length="6" line="19">
+			<expr><![CDATA[minute]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="873" length="6" line="19">
+			<expr><![CDATA[second]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="902" length="10" line="19">
+			<expr><![CDATA[fractional]]></expr>
+		</operand>
+	</marker>
+	<type  start="881" length="20" line="19" chordsig="java.math.BigDecimal"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="926" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="922" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="943" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="926" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTime:(IIII)V@javax.xml.datatype.XMLGregorianCalendar"
+ sig="void setTime(int,int,int,int)"
+ line="20"
+ startpos="968"
+ endpos="975"
+>
+	<marker line="-1" type="param">
+		<operand  start="980" length="4" line="20">
+			<expr><![CDATA[hour]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="990" length="6" line="20">
+			<expr><![CDATA[minute]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1002" length="6" line="20">
+			<expr><![CDATA[second]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1014" length="11" line="20">
+			<expr><![CDATA[millisecond]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1039" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1035" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1056" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1039" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getEon:()Ljava/math/BigInteger;@javax.xml.datatype.XMLGregorianCalendar"
+ sig="BigInteger getEon()"
+ line="21"
+ startpos="1106"
+ endpos="1112"
+>
+	<type  start="1085" length="20" line="21" chordsig="java.math.BigInteger"/>
+</method>
+<method
+ chordsig="getYear:()I@javax.xml.datatype.XMLGregorianCalendar"
+ sig="int getYear()"
+ line="22"
+ startpos="1137"
+ endpos="1144"
+>
+</method>
+<method
+ chordsig="getEonAndYear:()Ljava/math/BigInteger;@javax.xml.datatype.XMLGregorianCalendar"
+ sig="BigInteger getEonAndYear()"
+ line="23"
+ startpos="1186"
+ endpos="1199"
+>
+	<type  start="1165" length="20" line="23" chordsig="java.math.BigInteger"/>
+</method>
+<method
+ chordsig="getMonth:()I@javax.xml.datatype.XMLGregorianCalendar"
+ sig="int getMonth()"
+ line="24"
+ startpos="1224"
+ endpos="1232"
+>
+</method>
+<method
+ chordsig="getDay:()I@javax.xml.datatype.XMLGregorianCalendar"
+ sig="int getDay()"
+ line="25"
+ startpos="1257"
+ endpos="1263"
+>
+</method>
+<method
+ chordsig="getTimezone:()I@javax.xml.datatype.XMLGregorianCalendar"
+ sig="int getTimezone()"
+ line="26"
+ startpos="1288"
+ endpos="1299"
+>
+</method>
+<method
+ chordsig="getHour:()I@javax.xml.datatype.XMLGregorianCalendar"
+ sig="int getHour()"
+ line="27"
+ startpos="1324"
+ endpos="1331"
+>
+</method>
+<method
+ chordsig="getMinute:()I@javax.xml.datatype.XMLGregorianCalendar"
+ sig="int getMinute()"
+ line="28"
+ startpos="1356"
+ endpos="1365"
+>
+</method>
+<method
+ chordsig="getSecond:()I@javax.xml.datatype.XMLGregorianCalendar"
+ sig="int getSecond()"
+ line="29"
+ startpos="1390"
+ endpos="1399"
+>
+</method>
+<method
+ chordsig="getMillisecond:()I@javax.xml.datatype.XMLGregorianCalendar"
+ sig="int getMillisecond()"
+ line="30"
+ startpos="1415"
+ endpos="1429"
+>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1444" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1440" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1461" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1444" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFractionalSecond:()Ljava/math/BigDecimal;@javax.xml.datatype.XMLGregorianCalendar"
+ sig="BigDecimal getFractionalSecond()"
+ line="31"
+ startpos="1511"
+ endpos="1530"
+>
+	<type  start="1490" length="20" line="31" chordsig="java.math.BigDecimal"/>
+</method>
+<method
+ chordsig="compare:(Ljavax/xml/datatype/XMLGregorianCalendar;)I@javax.xml.datatype.XMLGregorianCalendar"
+ sig="int compare(XMLGregorianCalendar)"
+ line="32"
+ startpos="1555"
+ endpos="1562"
+>
+	<marker line="-1" type="param">
+		<operand  start="1603" length="20" line="32">
+			<expr><![CDATA[xmlGregorianCalendar]]></expr>
+		</operand>
+	</marker>
+	<type  start="1563" length="39" line="32" chordsig="javax.xml.datatype.XMLGregorianCalendar"/>
+</method>
+<method
+ chordsig="normalize:()Ljavax/xml/datatype/XMLGregorianCalendar;@javax.xml.datatype.XMLGregorianCalendar"
+ sig="XMLGregorianCalendar normalize()"
+ line="33"
+ startpos="1683"
+ endpos="1692"
+>
+	<type  start="1643" length="39" line="33" chordsig="javax.xml.datatype.XMLGregorianCalendar"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@javax.xml.datatype.XMLGregorianCalendar"
+ sig="boolean equals(Object)"
+ line="34"
+ startpos="1712"
+ endpos="1718"
+>
+	<marker line="-1" type="param">
+		<operand  start="1736" length="3" line="34">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="1719" length="16" line="34" chordsig="java.lang.Object"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1753" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1749" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1770" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1753" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@javax.xml.datatype.XMLGregorianCalendar"
+ sig="int hashCode()"
+ line="35"
+ startpos="1794"
+ endpos="1802"
+>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1817" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1813" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1834" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1817" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toXMLFormat:()Ljava/lang/String;@javax.xml.datatype.XMLGregorianCalendar"
+ sig="String toXMLFormat()"
+ line="36"
+ startpos="1880"
+ endpos="1891"
+>
+	<type  start="1863" length="16" line="36" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getXMLSchemaType:()Ljavax/xml/namespace/QName;@javax.xml.datatype.XMLGregorianCalendar"
+ sig="QName getXMLSchemaType()"
+ line="37"
+ startpos="1938"
+ endpos="1954"
+>
+	<type  start="1912" length="25" line="37" chordsig="javax.xml.namespace.QName"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@javax.xml.datatype.XMLGregorianCalendar"
+ sig="String toString()"
+ line="38"
+ startpos="1983"
+ endpos="1991"
+>
+	<type  start="1966" length="16" line="38" chordsig="java.lang.String"/>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2006" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2002" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2023" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2006" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isValid:()Z@javax.xml.datatype.XMLGregorianCalendar"
+ sig="boolean isValid()"
+ line="39"
+ startpos="2060"
+ endpos="2067"
+>
+</method>
+<method
+ chordsig="add:(Ljavax/xml/datatype/Duration;)V@javax.xml.datatype.XMLGregorianCalendar"
+ sig="void add(Duration)"
+ line="40"
+ startpos="2093"
+ endpos="2096"
+>
+	<marker line="-1" type="param">
+		<operand  start="2125" length="8" line="40">
+			<expr><![CDATA[duration]]></expr>
+		</operand>
+	</marker>
+	<type  start="2097" length="27" line="40" chordsig="javax.xml.datatype.Duration"/>
+</method>
+<method
+ chordsig="toGregorianCalendar:()Ljava/util/GregorianCalendar;@javax.xml.datatype.XMLGregorianCalendar"
+ sig="GregorianCalendar toGregorianCalendar()"
+ line="41"
+ startpos="2181"
+ endpos="2200"
+>
+	<type  start="2153" length="27" line="41" chordsig="java.util.GregorianCalendar"/>
+</method>
+<method
+ chordsig="toGregorianCalendar:(Ljava/util/TimeZone;Ljava/util/Locale;Ljavax/xml/datatype/XMLGregorianCalendar;)Ljava/util/GregorianCalendar;@javax.xml.datatype.XMLGregorianCalendar"
+ sig="GregorianCalendar toGregorianCalendar(TimeZone,Locale,XMLGregorianCalendar)"
+ line="42"
+ startpos="2249"
+ endpos="2268"
+>
+	<marker line="-1" type="param">
+		<operand  start="2288" length="8" line="42">
+			<expr><![CDATA[timezone]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2315" length="7" line="42">
+			<expr><![CDATA[aLocale]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2364" length="8" line="42">
+			<expr><![CDATA[defaults]]></expr>
+		</operand>
+	</marker>
+	<type  start="2221" length="27" line="42" chordsig="java.util.GregorianCalendar"/>
+	<type  start="2269" length="18" line="42" chordsig="java.util.TimeZone"/>
+	<type  start="2298" length="16" line="42" chordsig="java.util.Locale"/>
+	<type  start="2324" length="39" line="42" chordsig="javax.xml.datatype.XMLGregorianCalendar"/>
+</method>
+<method
+ chordsig="getTimeZone:(I)Ljava/util/TimeZone;@javax.xml.datatype.XMLGregorianCalendar"
+ sig="TimeZone getTimeZone(int)"
+ line="43"
+ startpos="2411"
+ endpos="2422"
+>
+	<marker line="-1" type="param">
+		<operand  start="2427" length="17" line="43">
+			<expr><![CDATA[defaultZoneoffset]]></expr>
+		</operand>
+	</marker>
+	<type  start="2392" length="18" line="43" chordsig="java.util.TimeZone"/>
+</method>
+<method
+ chordsig="clone:()Ljava/lang/Object;@javax.xml.datatype.XMLGregorianCalendar"
+ sig="Object clone()"
+ line="44"
+ startpos="2481"
+ endpos="2486"
+>
+	<type  start="2464" length="16" line="44" chordsig="java.lang.Object"/>
+</method>
+</class>
+</root>

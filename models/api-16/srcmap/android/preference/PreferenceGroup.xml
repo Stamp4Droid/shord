@@ -1,0 +1,419 @@
+<root>
+<class chordsig="android.preference.PreferenceGroup" line="2">
+	<type  start="76" length="29" line="3" chordsig="android.preference.Preference"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;I)V@android.preference.PreferenceGroup"
+ sig="PreferenceGroup(Context,AttributeSet,int)"
+ line="5"
+ startpos="116"
+ endpos="131"
+>
+	<marker line="-1" type="param">
+		<operand  start="156" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="191" length="5" line="5">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="202" length="8" line="5">
+			<expr><![CDATA[defStyle]]></expr>
+		</operand>
+	</marker>
+	<type  start="132" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="165" length="25" line="5" chordsig="android.util.AttributeSet"/>
+	<type  start="221" length="23" line="5" chordsig="android.content.Context"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="262" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="258" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="279" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="262" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.preference.PreferenceGroup"
+ sig="PreferenceGroup(Context,AttributeSet)"
+ line="6"
+ startpos="299"
+ endpos="314"
+>
+	<marker line="-1" type="param">
+		<operand  start="339" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="374" length="5" line="6">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="315" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="348" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<type  start="390" length="23" line="6" chordsig="android.content.Context"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="431" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="427" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="448" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="431" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOrderingAsAdded:(Z)V@android.preference.PreferenceGroup"
+ sig="void setOrderingAsAdded(boolean)"
+ line="7"
+ startpos="473"
+ endpos="491"
+>
+	<marker line="-1" type="param">
+		<operand  start="500" length="15" line="7">
+			<expr><![CDATA[orderingAsAdded]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="529" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="525" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="546" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="529" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isOrderingAsAdded:()Z@android.preference.PreferenceGroup"
+ sig="boolean isOrderingAsAdded()"
+ line="8"
+ startpos="574"
+ endpos="591"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="606" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="602" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="623" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="606" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addItemFromInflater:(Landroid/preference/Preference;)V@android.preference.PreferenceGroup"
+ sig="void addItemFromInflater(Preference)"
+ line="9"
+ startpos="648"
+ endpos="667"
+>
+	<marker line="-1" type="param">
+		<operand  start="698" length="10" line="9">
+			<expr><![CDATA[preference]]></expr>
+		</operand>
+	</marker>
+	<type  start="668" length="29" line="9" chordsig="android.preference.Preference"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="722" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="718" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="739" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="722" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPreferenceCount:()I@android.preference.PreferenceGroup"
+ sig="int getPreferenceCount()"
+ line="10"
+ startpos="763"
+ endpos="781"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="796" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="792" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="813" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="796" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPreference:(I)Landroid/preference/Preference;@android.preference.PreferenceGroup"
+ sig="Preference getPreference(int)"
+ line="11"
+ startpos="863"
+ endpos="876"
+>
+	<marker line="-1" type="param">
+		<operand  start="881" length="5" line="11">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="833" length="29" line="11" chordsig="android.preference.Preference"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="900" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="896" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="917" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="900" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addPreference:(Landroid/preference/Preference;)Z@android.preference.PreferenceGroup"
+ sig="boolean addPreference(Preference)"
+ line="12"
+ startpos="945"
+ endpos="958"
+>
+	<marker line="-1" type="param">
+		<operand  start="989" length="10" line="12">
+			<expr><![CDATA[preference]]></expr>
+		</operand>
+	</marker>
+	<type  start="959" length="29" line="12" chordsig="android.preference.Preference"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1013" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1009" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1030" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1013" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removePreference:(Landroid/preference/Preference;)Z@android.preference.PreferenceGroup"
+ sig="boolean removePreference(Preference)"
+ line="13"
+ startpos="1058"
+ endpos="1074"
+>
+	<marker line="-1" type="param">
+		<operand  start="1105" length="10" line="13">
+			<expr><![CDATA[preference]]></expr>
+		</operand>
+	</marker>
+	<type  start="1075" length="29" line="13" chordsig="android.preference.Preference"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1129" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1125" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1146" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1129" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeAll:()V@android.preference.PreferenceGroup"
+ sig="void removeAll()"
+ line="14"
+ startpos="1171"
+ endpos="1180"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1195" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1191" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1212" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1195" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onPrepareAddPreference:(Landroid/preference/Preference;)Z@android.preference.PreferenceGroup"
+ sig="boolean onPrepareAddPreference(Preference)"
+ line="15"
+ startpos="1243"
+ endpos="1265"
+>
+	<marker line="-1" type="param">
+		<operand  start="1296" length="10" line="15">
+			<expr><![CDATA[preference]]></expr>
+		</operand>
+	</marker>
+	<type  start="1266" length="29" line="15" chordsig="android.preference.Preference"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1320" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1316" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1337" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1320" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="findPreference:(Ljava/lang/CharSequence;)Landroid/preference/Preference;@android.preference.PreferenceGroup"
+ sig="Preference findPreference(CharSequence)"
+ line="16"
+ startpos="1387"
+ endpos="1401"
+>
+	<marker line="-1" type="param">
+		<operand  start="1425" length="3" line="16">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="1357" length="29" line="16" chordsig="android.preference.Preference"/>
+	<type  start="1402" length="22" line="16" chordsig="java.lang.CharSequence"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1442" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1438" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1459" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1442" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isOnSameScreenAsChildren:()Z@android.preference.PreferenceGroup"
+ sig="boolean isOnSameScreenAsChildren()"
+ line="17"
+ startpos="1490"
+ endpos="1514"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1529" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1525" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1546" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1529" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onAttachedToActivity:()V@android.preference.PreferenceGroup"
+ sig="void onAttachedToActivity()"
+ line="18"
+ startpos="1574"
+ endpos="1594"
+>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1609" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1605" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1626" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1609" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onPrepareForRemoval:()V@android.preference.PreferenceGroup"
+ sig="void onPrepareForRemoval()"
+ line="19"
+ startpos="1654"
+ endpos="1673"
+>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1688" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1684" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1705" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1688" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setEnabled:(Z)V@android.preference.PreferenceGroup"
+ sig="void setEnabled(boolean)"
+ line="20"
+ startpos="1730"
+ endpos="1740"
+>
+	<marker line="-1" type="param">
+		<operand  start="1749" length="7" line="20">
+			<expr><![CDATA[enabled]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1770" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1766" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1787" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1770" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dispatchSaveInstanceState:(Landroid/os/Bundle;)V@android.preference.PreferenceGroup"
+ sig="void dispatchSaveInstanceState(Bundle)"
+ line="21"
+ startpos="1815"
+ endpos="1840"
+>
+	<marker line="-1" type="param">
+		<operand  start="1859" length="9" line="21">
+			<expr><![CDATA[container]]></expr>
+		</operand>
+	</marker>
+	<type  start="1841" length="17" line="21" chordsig="android.os.Bundle"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1882" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1878" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1899" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1882" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dispatchRestoreInstanceState:(Landroid/os/Bundle;)V@android.preference.PreferenceGroup"
+ sig="void dispatchRestoreInstanceState(Bundle)"
+ line="22"
+ startpos="1927"
+ endpos="1955"
+>
+	<marker line="-1" type="param">
+		<operand  start="1974" length="9" line="22">
+			<expr><![CDATA[container]]></expr>
+		</operand>
+	</marker>
+	<type  start="1956" length="17" line="22" chordsig="android.os.Bundle"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1997" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1993" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2014" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1997" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

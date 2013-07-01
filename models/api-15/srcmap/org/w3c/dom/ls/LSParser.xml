@@ -1,0 +1,116 @@
+<root>
+<class chordsig="org.w3c.dom.ls.LSParser" line="2">
+<method
+ chordsig="getDomConfig:()Lorg/w3c/dom/DOMConfiguration;@org.w3c.dom.ls.LSParser"
+ sig="DOMConfiguration getDomConfig()"
+ line="4"
+ startpos="98"
+ endpos="110"
+>
+	<type  start="69" length="28" line="4" chordsig="org.w3c.dom.DOMConfiguration"/>
+</method>
+<method
+ chordsig="getFilter:()Lorg/w3c/dom/ls/LSParserFilter;@org.w3c.dom.ls.LSParser"
+ sig="LSParserFilter getFilter()"
+ line="5"
+ startpos="161"
+ endpos="170"
+>
+	<type  start="131" length="29" line="5" chordsig="org.w3c.dom.ls.LSParserFilter"/>
+</method>
+<method
+ chordsig="setFilter:(Lorg/w3c/dom/ls/LSParserFilter;)V@org.w3c.dom.ls.LSParser"
+ sig="void setFilter(LSParserFilter)"
+ line="6"
+ startpos="196"
+ endpos="205"
+>
+	<marker line="-1" type="param">
+		<operand  start="236" length="6" line="6">
+			<expr><![CDATA[filter]]></expr>
+		</operand>
+	</marker>
+	<type  start="206" length="29" line="6" chordsig="org.w3c.dom.ls.LSParserFilter"/>
+</method>
+<method
+ chordsig="getAsync:()Z@org.w3c.dom.ls.LSParser"
+ sig="boolean getAsync()"
+ line="7"
+ startpos="270"
+ endpos="278"
+>
+</method>
+<method
+ chordsig="getBusy:()Z@org.w3c.dom.ls.LSParser"
+ sig="boolean getBusy()"
+ line="8"
+ startpos="307"
+ endpos="314"
+>
+</method>
+<method
+ chordsig="parse:(Lorg/w3c/dom/ls/LSInput;)Lorg/w3c/dom/Document;@org.w3c.dom.ls.LSParser"
+ sig="Document parse(LSInput)"
+ line="9"
+ startpos="356"
+ endpos="361"
+>
+	<marker line="-1" type="param">
+		<operand  start="385" length="5" line="9">
+			<expr><![CDATA[input]]></expr>
+		</operand>
+	</marker>
+	<type  start="335" length="20" line="9" chordsig="org.w3c.dom.Document"/>
+	<type  start="362" length="22" line="9" chordsig="org.w3c.dom.ls.LSInput"/>
+</method>
+<method
+ chordsig="parseURI:(Ljava/lang/String;)Lorg/w3c/dom/Document;@org.w3c.dom.ls.LSParser"
+ sig="Document parseURI(String)"
+ line="10"
+ startpos="491"
+ endpos="499"
+>
+	<marker line="-1" type="param">
+		<operand  start="517" length="3" line="10">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<type  start="470" length="20" line="10" chordsig="org.w3c.dom.Document"/>
+	<type  start="500" length="16" line="10" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="parseWithContext:(Lorg/w3c/dom/ls/LSInput;Lorg/w3c/dom/Node;S)Lorg/w3c/dom/Node;@org.w3c.dom.ls.LSParser"
+ sig="Node parseWithContext(LSInput,Node,short)"
+ line="11"
+ startpos="617"
+ endpos="633"
+>
+	<marker line="-1" type="param">
+		<operand  start="657" length="5" line="11">
+			<expr><![CDATA[input]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="681" length="10" line="11">
+			<expr><![CDATA[contextArg]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="699" length="6" line="11">
+			<expr><![CDATA[action]]></expr>
+		</operand>
+	</marker>
+	<type  start="600" length="16" line="11" chordsig="org.w3c.dom.Node"/>
+	<type  start="634" length="22" line="11" chordsig="org.w3c.dom.ls.LSInput"/>
+	<type  start="664" length="16" line="11" chordsig="org.w3c.dom.Node"/>
+</method>
+<method
+ chordsig="abort:()V@org.w3c.dom.ls.LSParser"
+ sig="void abort()"
+ line="12"
+ startpos="790"
+ endpos="795"
+>
+</method>
+</class>
+</root>

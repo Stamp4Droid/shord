@@ -1,0 +1,226 @@
+<root>
+<class chordsig="android.widget.SeekBar" line="2">
+	<type  start="55" length="25" line="3" chordsig="android.widget.AbsSeekBar"/>
+<class chordsig="android.widget.SeekBar$OnSeekBarChangeListener" line="5">
+<method
+ chordsig="onProgressChanged:(Landroid/widget/SeekBar;IZ)V@android.widget.SeekBar$OnSeekBarChangeListener"
+ sig="void onProgressChanged(SeekBar,int,boolean)"
+ line="7"
+ startpos="155"
+ endpos="172"
+>
+	<marker line="-1" type="param">
+		<operand  start="196" length="7" line="7">
+			<expr><![CDATA[seekBar]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="209" length="8" line="7">
+			<expr><![CDATA[progress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="227" length="8" line="7">
+			<expr><![CDATA[fromUser]]></expr>
+		</operand>
+	</marker>
+	<type  start="173" length="22" line="7" chordsig="android.widget.SeekBar"/>
+</method>
+<method
+ chordsig="onStartTrackingTouch:(Landroid/widget/SeekBar;)V@android.widget.SeekBar$OnSeekBarChangeListener"
+ sig="void onStartTrackingTouch(SeekBar)"
+ line="8"
+ startpos="260"
+ endpos="280"
+>
+	<marker line="-1" type="param">
+		<operand  start="304" length="7" line="8">
+			<expr><![CDATA[seekBar]]></expr>
+		</operand>
+	</marker>
+	<type  start="281" length="22" line="8" chordsig="android.widget.SeekBar"/>
+</method>
+<method
+ chordsig="onStopTrackingTouch:(Landroid/widget/SeekBar;)V@android.widget.SeekBar$OnSeekBarChangeListener"
+ sig="void onStopTrackingTouch(SeekBar)"
+ line="9"
+ startpos="336"
+ endpos="355"
+>
+	<marker line="-1" type="param">
+		<operand  start="379" length="7" line="9">
+			<expr><![CDATA[seekBar]]></expr>
+		</operand>
+	</marker>
+	<type  start="356" length="22" line="9" chordsig="android.widget.SeekBar"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.widget.SeekBar"
+ sig="SeekBar(Context)"
+ line="11"
+ startpos="399"
+ endpos="406"
+>
+	<marker line="-1" type="param">
+		<operand  start="431" length="7" line="11">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="407" length="23" line="11" chordsig="android.content.Context"/>
+	<type  start="449" length="23" line="11" chordsig="android.content.Context"/>
+	<type  start="479" length="25" line="11" chordsig="android.util.AttributeSet"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="524" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="520" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="541" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="524" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.widget.SeekBar"
+ sig="SeekBar(Context,AttributeSet)"
+ line="12"
+ startpos="561"
+ endpos="568"
+>
+	<marker line="-1" type="param">
+		<operand  start="593" length="7" line="12">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="628" length="5" line="12">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="569" length="23" line="12" chordsig="android.content.Context"/>
+	<type  start="602" length="25" line="12" chordsig="android.util.AttributeSet"/>
+	<type  start="644" length="23" line="12" chordsig="android.content.Context"/>
+	<type  start="674" length="25" line="12" chordsig="android.util.AttributeSet"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="719" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="715" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="736" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="719" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;I)V@android.widget.SeekBar"
+ sig="SeekBar(Context,AttributeSet,int)"
+ line="13"
+ startpos="756"
+ endpos="763"
+>
+	<marker line="-1" type="param">
+		<operand  start="788" length="7" line="13">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="823" length="5" line="13">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="834" length="8" line="13">
+			<expr><![CDATA[defStyle]]></expr>
+		</operand>
+	</marker>
+	<type  start="764" length="23" line="13" chordsig="android.content.Context"/>
+	<type  start="797" length="25" line="13" chordsig="android.util.AttributeSet"/>
+	<type  start="853" length="23" line="13" chordsig="android.content.Context"/>
+	<type  start="883" length="25" line="13" chordsig="android.util.AttributeSet"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="928" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="924" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="945" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="928" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnSeekBarChangeListener:(Landroid/widget/SeekBar$OnSeekBarChangeListener;)V@android.widget.SeekBar"
+ sig="void setOnSeekBarChangeListener(OnSeekBarChangeListener)"
+ line="14"
+ startpos="970"
+ endpos="996"
+>
+	<marker line="-1" type="param">
+		<operand  start="1044" length="1" line="14">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<type  start="997" length="46" line="14" chordsig="android.widget.SeekBar$OnSeekBarChangeListener"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1059" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1055" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1076" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1059" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityEvent:(Landroid/view/accessibility/AccessibilityEvent;)V@android.widget.SeekBar"
+ sig="void onInitializeAccessibilityEvent(AccessibilityEvent)"
+ line="15"
+ startpos="1101"
+ endpos="1131"
+>
+	<marker line="-1" type="param">
+		<operand  start="1178" length="5" line="15">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="1132" length="45" line="15" chordsig="android.view.accessibility.AccessibilityEvent"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1197" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1193" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1214" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1197" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityNodeInfo:(Landroid/view/accessibility/AccessibilityNodeInfo;)V@android.widget.SeekBar"
+ sig="void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo)"
+ line="16"
+ startpos="1239"
+ endpos="1272"
+>
+	<marker line="-1" type="param">
+		<operand  start="1322" length="4" line="16">
+			<expr><![CDATA[info]]></expr>
+		</operand>
+	</marker>
+	<type  start="1273" length="48" line="16" chordsig="android.view.accessibility.AccessibilityNodeInfo"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1340" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1336" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1357" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1340" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

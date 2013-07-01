@@ -1,0 +1,485 @@
+<root>
+<class chordsig="android.os.ParcelFileDescriptor" line="2">
+	<type  start="67" length="21" line="3" chordsig="android.os.Parcelable"/>
+	<type  start="90" length="17" line="3" chordsig="java.io.Closeable"/>
+<class chordsig="android.os.ParcelFileDescriptor$AutoCloseInputStream" line="5">
+	<type  start="161" length="23" line="6" chordsig="java.io.FileInputStream"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/os/ParcelFileDescriptor;)V@android.os.ParcelFileDescriptor$AutoCloseInputStream"
+ sig="AutoCloseInputStream(ParcelFileDescriptor)"
+ line="8"
+ startpos="195"
+ endpos="215"
+>
+	<marker line="-1" type="param">
+		<operand  start="248" length="2" line="8">
+			<expr><![CDATA[fd]]></expr>
+		</operand>
+	</marker>
+	<type  start="216" length="31" line="8" chordsig="android.os.ParcelFileDescriptor"/>
+	<type  start="261" length="22" line="8" chordsig="java.io.FileDescriptor"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="301" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="297" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="318" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="301" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:()V@android.os.ParcelFileDescriptor$AutoCloseInputStream"
+ sig="void close()"
+ line="9"
+ startpos="343"
+ endpos="348"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="390" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="386" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="407" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="390" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.os.ParcelFileDescriptor$AutoCloseOutputStream" line="11">
+	<type  start="473" length="24" line="12" chordsig="java.io.FileOutputStream"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/os/ParcelFileDescriptor;)V@android.os.ParcelFileDescriptor$AutoCloseOutputStream"
+ sig="AutoCloseOutputStream(ParcelFileDescriptor)"
+ line="14"
+ startpos="508"
+ endpos="529"
+>
+	<marker line="-1" type="param">
+		<operand  start="562" length="2" line="14">
+			<expr><![CDATA[fd]]></expr>
+		</operand>
+	</marker>
+	<type  start="530" length="31" line="14" chordsig="android.os.ParcelFileDescriptor"/>
+	<type  start="575" length="22" line="14" chordsig="java.io.FileDescriptor"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="615" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="611" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="632" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="615" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:()V@android.os.ParcelFileDescriptor$AutoCloseOutputStream"
+ sig="void close()"
+ line="15"
+ startpos="657"
+ endpos="662"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="704" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="700" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="721" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="704" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(Landroid/os/ParcelFileDescriptor;)V@android.os.ParcelFileDescriptor"
+ sig="ParcelFileDescriptor(ParcelFileDescriptor)"
+ line="17"
+ startpos="743"
+ endpos="763"
+>
+	<marker line="-1" type="param">
+		<operand  start="796" length="10" line="17">
+			<expr><![CDATA[descriptor]]></expr>
+		</operand>
+	</marker>
+	<type  start="764" length="31" line="17" chordsig="android.os.ParcelFileDescriptor"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="820" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="816" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="837" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="820" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="open:(Ljava/io/File;I)Landroid/os/ParcelFileDescriptor;@android.os.ParcelFileDescriptor"
+ sig="ParcelFileDescriptor open(File,int)"
+ line="18"
+ startpos="896"
+ endpos="900"
+>
+	<marker line="-1" type="param">
+		<operand  start="914" length="4" line="18">
+			<expr><![CDATA[file]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="924" length="4" line="18">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+	<type  start="864" length="31" line="18" chordsig="android.os.ParcelFileDescriptor"/>
+	<type  start="901" length="12" line="18" chordsig="java.io.File"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="979" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="975" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="996" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="979" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dup:(Ljava/io/FileDescriptor;)Landroid/os/ParcelFileDescriptor;@android.os.ParcelFileDescriptor"
+ sig="ParcelFileDescriptor dup(FileDescriptor)"
+ line="19"
+ startpos="1055"
+ endpos="1058"
+>
+	<marker line="-1" type="param">
+		<operand  start="1082" length="4" line="19">
+			<expr><![CDATA[orig]]></expr>
+		</operand>
+	</marker>
+	<type  start="1023" length="31" line="19" chordsig="android.os.ParcelFileDescriptor"/>
+	<type  start="1059" length="22" line="19" chordsig="java.io.FileDescriptor"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1127" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1123" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1144" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1127" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dup:()Landroid/os/ParcelFileDescriptor;@android.os.ParcelFileDescriptor"
+ sig="ParcelFileDescriptor dup()"
+ line="20"
+ startpos="1196"
+ endpos="1199"
+>
+	<type  start="1164" length="31" line="20" chordsig="android.os.ParcelFileDescriptor"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1241" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1237" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1258" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1241" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="fromFd:(I)Landroid/os/ParcelFileDescriptor;@android.os.ParcelFileDescriptor"
+ sig="ParcelFileDescriptor fromFd(int)"
+ line="21"
+ startpos="1317"
+ endpos="1323"
+>
+	<marker line="-1" type="param">
+		<operand  start="1328" length="2" line="21">
+			<expr><![CDATA[fd]]></expr>
+		</operand>
+	</marker>
+	<type  start="1285" length="31" line="21" chordsig="android.os.ParcelFileDescriptor"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1371" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1367" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1388" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1371" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="adoptFd:(I)Landroid/os/ParcelFileDescriptor;@android.os.ParcelFileDescriptor"
+ sig="ParcelFileDescriptor adoptFd(int)"
+ line="22"
+ startpos="1447"
+ endpos="1454"
+>
+	<marker line="-1" type="param">
+		<operand  start="1459" length="2" line="22">
+			<expr><![CDATA[fd]]></expr>
+		</operand>
+	</marker>
+	<type  start="1415" length="31" line="22" chordsig="android.os.ParcelFileDescriptor"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1475" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1471" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1492" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1475" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="fromSocket:(Ljava/net/Socket;)Landroid/os/ParcelFileDescriptor;@android.os.ParcelFileDescriptor"
+ sig="ParcelFileDescriptor fromSocket(Socket)"
+ line="23"
+ startpos="1551"
+ endpos="1561"
+>
+	<marker line="-1" type="param">
+		<operand  start="1578" length="6" line="23">
+			<expr><![CDATA[socket]]></expr>
+		</operand>
+	</marker>
+	<type  start="1519" length="31" line="23" chordsig="android.os.ParcelFileDescriptor"/>
+	<type  start="1562" length="15" line="23" chordsig="java.net.Socket"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1598" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1594" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1615" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1598" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="fromDatagramSocket:(Ljava/net/DatagramSocket;)Landroid/os/ParcelFileDescriptor;@android.os.ParcelFileDescriptor"
+ sig="ParcelFileDescriptor fromDatagramSocket(DatagramSocket)"
+ line="24"
+ startpos="1674"
+ endpos="1692"
+>
+	<marker line="-1" type="param">
+		<operand  start="1717" length="14" line="24">
+			<expr><![CDATA[datagramSocket]]></expr>
+		</operand>
+	</marker>
+	<type  start="1642" length="31" line="24" chordsig="android.os.ParcelFileDescriptor"/>
+	<type  start="1693" length="23" line="24" chordsig="java.net.DatagramSocket"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1745" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1741" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1762" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1745" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createPipe:()[Landroid/os/ParcelFileDescriptor;@android.os.ParcelFileDescriptor"
+ sig="ParcelFileDescriptor[] createPipe()"
+ line="25"
+ startpos="1823"
+ endpos="1833"
+>
+	<type  start="1789" length="31" line="25" chordsig="android.os.ParcelFileDescriptor"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1875" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1871" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1892" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1875" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFileDescriptor:()Ljava/io/FileDescriptor;@android.os.ParcelFileDescriptor"
+ sig="FileDescriptor getFileDescriptor()"
+ line="26"
+ startpos="1935"
+ endpos="1952"
+>
+	<type  start="1912" length="22" line="26" chordsig="java.io.FileDescriptor"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1967" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1963" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1984" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1967" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getStatSize:()J@android.os.ParcelFileDescriptor"
+ sig="long getStatSize()"
+ line="27"
+ startpos="2016"
+ endpos="2027"
+>
+</method>
+<method
+ chordsig="getFd:()I@android.os.ParcelFileDescriptor"
+ sig="int getFd()"
+ line="28"
+ startpos="2043"
+ endpos="2048"
+>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2063" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2059" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2080" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2063" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="detachFd:()I@android.os.ParcelFileDescriptor"
+ sig="int detachFd()"
+ line="29"
+ startpos="2104"
+ endpos="2112"
+>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2127" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2123" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2144" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2127" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:()V@android.os.ParcelFileDescriptor"
+ sig="void close()"
+ line="30"
+ startpos="2169"
+ endpos="2174"
+>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2216" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2212" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2233" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2216" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.os.ParcelFileDescriptor"
+ sig="String toString()"
+ line="31"
+ startpos="2270"
+ endpos="2278"
+>
+	<type  start="2253" length="16" line="31" chordsig="java.lang.String"/>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2293" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2289" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2310" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2293" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="finalize:()V@android.os.ParcelFileDescriptor"
+ sig="void finalize()"
+ line="32"
+ startpos="2338"
+ endpos="2346"
+>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2388" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2384" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2405" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2388" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.os.ParcelFileDescriptor"
+ sig="int describeContents()"
+ line="33"
+ startpos="2429"
+ endpos="2445"
+>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2460" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2456" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2477" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2460" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.os.ParcelFileDescriptor"
+ sig="void writeToParcel(Parcel,int)"
+ line="34"
+ startpos="2502"
+ endpos="2515"
+>
+	<marker line="-1" type="param">
+		<operand  start="2534" length="3" line="34">
+			<expr><![CDATA[out]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2543" length="5" line="34">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="2516" length="17" line="34" chordsig="android.os.Parcel"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2562" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2558" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2579" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2562" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="3015" length="29" line="43" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="3045" length="31" line="43" chordsig="android.os.ParcelFileDescriptor"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.os.ParcelFileDescriptor"
+ line="44"
+>
+</method>
+</class>
+</root>

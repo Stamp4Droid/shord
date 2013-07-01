@@ -1,0 +1,29 @@
+<root>
+<class chordsig="android.media.MediaCryptoException" line="2">
+	<type  start="73" length="19" line="3" chordsig="java.lang.Exception"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.media.MediaCryptoException"
+ sig="MediaCryptoException(String)"
+ line="5"
+ startpos="103"
+ endpos="123"
+>
+	<marker line="-1" type="param">
+		<operand  start="141" length="13" line="5">
+			<expr><![CDATA[detailMessage]]></expr>
+		</operand>
+	</marker>
+	<type  start="124" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="168" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="164" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="185" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="168" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

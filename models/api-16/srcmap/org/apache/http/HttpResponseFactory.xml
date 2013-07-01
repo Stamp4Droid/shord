@@ -1,0 +1,51 @@
+<root>
+<class chordsig="org.apache.http.HttpResponseFactory" line="2">
+<method
+ chordsig="newHttpResponse:(Lorg/apache/http/ProtocolVersion;ILorg/apache/http/protocol/HttpContext;)Lorg/apache/http/HttpResponse;@org.apache.http.HttpResponseFactory"
+ sig="HttpResponse newHttpResponse(ProtocolVersion,int,HttpContext)"
+ line="4"
+ startpos="110"
+ endpos="125"
+>
+	<marker line="-1" type="param">
+		<operand  start="158" length="3" line="4">
+			<expr><![CDATA[ver]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="167" length="6" line="4">
+			<expr><![CDATA[status]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="212" length="7" line="4">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="81" length="28" line="4" chordsig="org.apache.http.HttpResponse"/>
+	<type  start="126" length="31" line="4" chordsig="org.apache.http.ProtocolVersion"/>
+	<type  start="175" length="36" line="4" chordsig="org.apache.http.protocol.HttpContext"/>
+</method>
+<method
+ chordsig="newHttpResponse:(Lorg/apache/http/StatusLine;Lorg/apache/http/protocol/HttpContext;)Lorg/apache/http/HttpResponse;@org.apache.http.HttpResponseFactory"
+ sig="HttpResponse newHttpResponse(StatusLine,HttpContext)"
+ line="5"
+ startpos="268"
+ endpos="283"
+>
+	<marker line="-1" type="param">
+		<operand  start="311" length="10" line="5">
+			<expr><![CDATA[statusline]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="360" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="239" length="28" line="5" chordsig="org.apache.http.HttpResponse"/>
+	<type  start="284" length="26" line="5" chordsig="org.apache.http.StatusLine"/>
+	<type  start="323" length="36" line="5" chordsig="org.apache.http.protocol.HttpContext"/>
+</method>
+</class>
+</root>

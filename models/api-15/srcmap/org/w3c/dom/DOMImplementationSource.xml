@@ -1,0 +1,34 @@
+<root>
+<class chordsig="org.w3c.dom.DOMImplementationSource" line="2">
+<method
+ chordsig="getDOMImplementation:(Ljava/lang/String;)Lorg/w3c/dom/DOMImplementation;@org.w3c.dom.DOMImplementationSource"
+ sig="DOMImplementation getDOMImplementation(String)"
+ line="4"
+ startpos="111"
+ endpos="131"
+>
+	<marker line="-1" type="param">
+		<operand  start="149" length="8" line="4">
+			<expr><![CDATA[features]]></expr>
+		</operand>
+	</marker>
+	<type  start="81" length="29" line="4" chordsig="org.w3c.dom.DOMImplementation"/>
+	<type  start="132" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getDOMImplementationList:(Ljava/lang/String;)Lorg/w3c/dom/DOMImplementationList;@org.w3c.dom.DOMImplementationSource"
+ sig="DOMImplementationList getDOMImplementationList(String)"
+ line="5"
+ startpos="211"
+ endpos="235"
+>
+	<marker line="-1" type="param">
+		<operand  start="253" length="8" line="5">
+			<expr><![CDATA[features]]></expr>
+		</operand>
+	</marker>
+	<type  start="177" length="33" line="5" chordsig="org.w3c.dom.DOMImplementationList"/>
+	<type  start="236" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

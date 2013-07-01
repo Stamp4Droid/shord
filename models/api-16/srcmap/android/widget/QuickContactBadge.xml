@@ -1,0 +1,363 @@
+<root>
+<class chordsig="android.widget.QuickContactBadge" line="2">
+	<type  start="65" length="24" line="3" chordsig="android.widget.ImageView"/>
+	<type  start="103" length="33" line="4" chordsig="android.view.View$OnClickListener"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.widget.QuickContactBadge"
+ sig="QuickContactBadge(Context)"
+ line="6"
+ startpos="147"
+ endpos="164"
+>
+	<marker line="-1" type="param">
+		<operand  start="189" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="165" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="207" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="237" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="282" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="278" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="299" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="282" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.widget.QuickContactBadge"
+ sig="QuickContactBadge(Context,AttributeSet)"
+ line="7"
+ startpos="319"
+ endpos="336"
+>
+	<marker line="-1" type="param">
+		<operand  start="361" length="7" line="7">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="396" length="5" line="7">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="337" length="23" line="7" chordsig="android.content.Context"/>
+	<type  start="370" length="25" line="7" chordsig="android.util.AttributeSet"/>
+	<type  start="412" length="23" line="7" chordsig="android.content.Context"/>
+	<type  start="442" length="25" line="7" chordsig="android.util.AttributeSet"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="487" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="483" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="504" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="487" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;I)V@android.widget.QuickContactBadge"
+ sig="QuickContactBadge(Context,AttributeSet,int)"
+ line="8"
+ startpos="524"
+ endpos="541"
+>
+	<marker line="-1" type="param">
+		<operand  start="566" length="7" line="8">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="601" length="5" line="8">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="612" length="8" line="8">
+			<expr><![CDATA[defStyle]]></expr>
+		</operand>
+	</marker>
+	<type  start="542" length="23" line="8" chordsig="android.content.Context"/>
+	<type  start="575" length="25" line="8" chordsig="android.util.AttributeSet"/>
+	<type  start="631" length="23" line="8" chordsig="android.content.Context"/>
+	<type  start="661" length="25" line="8" chordsig="android.util.AttributeSet"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="706" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="702" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="723" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="706" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="drawableStateChanged:()V@android.widget.QuickContactBadge"
+ sig="void drawableStateChanged()"
+ line="9"
+ startpos="751"
+ endpos="771"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="786" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="782" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="803" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="786" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMode:(I)V@android.widget.QuickContactBadge"
+ sig="void setMode(int)"
+ line="11"
+ startpos="874"
+ endpos="881"
+>
+	<marker line="-1" type="param">
+		<operand  start="886" length="4" line="11">
+			<expr><![CDATA[size]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="904" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="900" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="921" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="904" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onDraw:(Landroid/graphics/Canvas;)V@android.widget.QuickContactBadge"
+ sig="void onDraw(Canvas)"
+ line="12"
+ startpos="949"
+ endpos="955"
+>
+	<marker line="-1" type="param">
+		<operand  start="980" length="6" line="12">
+			<expr><![CDATA[canvas]]></expr>
+		</operand>
+	</marker>
+	<type  start="956" length="23" line="12" chordsig="android.graphics.Canvas"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1000" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="996" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1017" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1000" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setImageToDefault:()V@android.widget.QuickContactBadge"
+ sig="void setImageToDefault()"
+ line="13"
+ startpos="1042"
+ endpos="1059"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1074" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1070" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1091" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1074" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assignContactUri:(Landroid/net/Uri;)V@android.widget.QuickContactBadge"
+ sig="void assignContactUri(Uri)"
+ line="14"
+ startpos="1116"
+ endpos="1132"
+>
+	<marker line="-1" type="param">
+		<operand  start="1149" length="10" line="14">
+			<expr><![CDATA[contactUri]]></expr>
+		</operand>
+	</marker>
+	<type  start="1133" length="15" line="14" chordsig="android.net.Uri"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1173" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1169" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1190" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1173" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assignContactFromEmail:(Ljava/lang/String;Z)V@android.widget.QuickContactBadge"
+ sig="void assignContactFromEmail(String,boolean)"
+ line="15"
+ startpos="1215"
+ endpos="1237"
+>
+	<marker line="-1" type="param">
+		<operand  start="1255" length="12" line="15">
+			<expr><![CDATA[emailAddress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1277" length="10" line="15">
+			<expr><![CDATA[lazyLookup]]></expr>
+		</operand>
+	</marker>
+	<type  start="1238" length="16" line="15" chordsig="java.lang.String"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1301" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1297" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1318" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1301" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assignContactFromPhone:(Ljava/lang/String;Z)V@android.widget.QuickContactBadge"
+ sig="void assignContactFromPhone(String,boolean)"
+ line="16"
+ startpos="1343"
+ endpos="1365"
+>
+	<marker line="-1" type="param">
+		<operand  start="1383" length="11" line="16">
+			<expr><![CDATA[phoneNumber]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1404" length="10" line="16">
+			<expr><![CDATA[lazyLookup]]></expr>
+		</operand>
+	</marker>
+	<type  start="1366" length="16" line="16" chordsig="java.lang.String"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1428" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1424" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1445" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1428" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onClick:(Landroid/view/View;)V@android.widget.QuickContactBadge"
+ sig="void onClick(View)"
+ line="17"
+ startpos="1470"
+ endpos="1477"
+>
+	<marker line="-1" type="param">
+		<operand  start="1496" length="1" line="17">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="1478" length="17" line="17" chordsig="android.view.View"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1511" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1507" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1528" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1511" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityEvent:(Landroid/view/accessibility/AccessibilityEvent;)V@android.widget.QuickContactBadge"
+ sig="void onInitializeAccessibilityEvent(AccessibilityEvent)"
+ line="18"
+ startpos="1553"
+ endpos="1583"
+>
+	<marker line="-1" type="param">
+		<operand  start="1630" length="5" line="18">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="1584" length="45" line="18" chordsig="android.view.accessibility.AccessibilityEvent"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1649" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1645" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1666" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1649" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityNodeInfo:(Landroid/view/accessibility/AccessibilityNodeInfo;)V@android.widget.QuickContactBadge"
+ sig="void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo)"
+ line="19"
+ startpos="1691"
+ endpos="1724"
+>
+	<marker line="-1" type="param">
+		<operand  start="1774" length="4" line="19">
+			<expr><![CDATA[info]]></expr>
+		</operand>
+	</marker>
+	<type  start="1725" length="48" line="19" chordsig="android.view.accessibility.AccessibilityNodeInfo"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1792" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1788" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1809" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1792" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setExcludeMimes:([Ljava/lang/String;)V@android.widget.QuickContactBadge"
+ sig="void setExcludeMimes(String[])"
+ line="20"
+ startpos="1834"
+ endpos="1849"
+>
+	<marker line="-1" type="param">
+		<operand  start="1869" length="12" line="20">
+			<expr><![CDATA[excludeMimes]]></expr>
+		</operand>
+	</marker>
+	<type  start="1850" length="16" line="20" chordsig="java.lang.String"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1895" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1891" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1912" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1895" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1934" length="16" line="21" chordsig="java.lang.String"/>
+</class>
+</root>

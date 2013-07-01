@@ -1,0 +1,41 @@
+<root>
+<class chordsig="android.graphics.BitmapShader" line="2">
+	<type  start="62" length="23" line="3" chordsig="android.graphics.Shader"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/graphics/Bitmap;Landroid/graphics/Shader$TileMode;Landroid/graphics/Shader$TileMode;)V@android.graphics.BitmapShader"
+ sig="BitmapShader(Bitmap,TileMode,TileMode)"
+ line="5"
+ startpos="96"
+ endpos="108"
+>
+	<marker line="-1" type="param">
+		<operand  start="133" length="6" line="5">
+			<expr><![CDATA[bitmap]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="174" length="5" line="5">
+			<expr><![CDATA[tileX]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="214" length="5" line="5">
+			<expr><![CDATA[tileY]]></expr>
+		</operand>
+	</marker>
+	<type  start="109" length="23" line="5" chordsig="android.graphics.Bitmap"/>
+	<type  start="141" length="32" line="5" chordsig="android.graphics.Shader$TileMode"/>
+	<type  start="181" length="32" line="5" chordsig="android.graphics.Shader$TileMode"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="233" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="229" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="250" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="233" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,48 @@
+<root>
+<class chordsig="java.util.EventListenerProxy" line="2">
+	<type  start="73" length="23" line="3" chordsig="java.util.EventListener"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/util/EventListener;)V@java.util.EventListenerProxy"
+ sig="EventListenerProxy(EventListener)"
+ line="5"
+ startpos="107"
+ endpos="125"
+>
+	<marker line="-1" type="param">
+		<operand  start="150" length="8" line="5">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="126" length="23" line="5" chordsig="java.util.EventListener"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="172" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="168" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="189" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="172" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getListener:()Ljava/util/EventListener;@java.util.EventListenerProxy"
+ sig="EventListener getListener()"
+ line="6"
+ startpos="233"
+ endpos="244"
+>
+	<type  start="209" length="23" line="6" chordsig="java.util.EventListener"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="259" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="255" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="276" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="259" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

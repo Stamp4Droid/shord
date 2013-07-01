@@ -1,0 +1,47 @@
+<root>
+<class chordsig="java.lang.StackOverflowError" line="2">
+	<type  start="61" length="29" line="3" chordsig="java.lang.VirtualMachineError"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.lang.StackOverflowError"
+ sig="StackOverflowError()"
+ line="5"
+ startpos="101"
+ endpos="119"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="134" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="130" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="151" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="134" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.StackOverflowError"
+ sig="StackOverflowError(String)"
+ line="6"
+ startpos="171"
+ endpos="189"
+>
+	<marker line="-1" type="param">
+		<operand  start="207" length="13" line="6">
+			<expr><![CDATA[detailMessage]]></expr>
+		</operand>
+	</marker>
+	<type  start="190" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="234" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="230" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="251" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="234" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

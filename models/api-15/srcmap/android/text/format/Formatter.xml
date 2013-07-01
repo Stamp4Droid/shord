@@ -1,0 +1,106 @@
+<root>
+<class chordsig="android.text.format.Formatter" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.text.format.Formatter"
+ sig="Formatter()"
+ line="4"
+ startpos="68"
+ endpos="77"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="92" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="88" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="109" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="92" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="formatFileSize:(Landroid/content/Context;J)Ljava/lang/String;@android.text.format.Formatter"
+ sig="String formatFileSize(Context,long)"
+ line="5"
+ startpos="153"
+ endpos="167"
+>
+	<marker line="-1" type="param">
+		<operand  start="192" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="206" length="6" line="5">
+			<expr><![CDATA[number]]></expr>
+		</operand>
+	</marker>
+	<type  start="136" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="168" length="23" line="5" chordsig="android.content.Context"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="226" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="222" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="243" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="226" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="formatShortFileSize:(Landroid/content/Context;J)Ljava/lang/String;@android.text.format.Formatter"
+ sig="String formatShortFileSize(Context,long)"
+ line="6"
+ startpos="287"
+ endpos="306"
+>
+	<marker line="-1" type="param">
+		<operand  start="331" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="345" length="6" line="6">
+			<expr><![CDATA[number]]></expr>
+		</operand>
+	</marker>
+	<type  start="270" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="307" length="23" line="6" chordsig="android.content.Context"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="365" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="361" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="382" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="365" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="formatIpAddress:(I)Ljava/lang/String;@android.text.format.Formatter"
+ sig="String formatIpAddress(int)"
+ line="7"
+ startpos="426"
+ endpos="441"
+>
+	<marker line="-1" type="param">
+		<operand  start="446" length="11" line="7">
+			<expr><![CDATA[ipv4Address]]></expr>
+		</operand>
+	</marker>
+	<type  start="409" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="471" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="467" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="488" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="471" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

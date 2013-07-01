@@ -1,0 +1,48 @@
+<root>
+<class chordsig="org.apache.http.impl.auth.BasicSchemeFactory" line="2">
+	<type  start="80" length="38" line="3" chordsig="org.apache.http.auth.AuthSchemeFactory"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.impl.auth.BasicSchemeFactory"
+ sig="BasicSchemeFactory()"
+ line="5"
+ startpos="129"
+ endpos="147"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="162" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="158" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="179" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="162" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newInstance:(Lorg/apache/http/params/HttpParams;)Lorg/apache/http/auth/AuthScheme;@org.apache.http.impl.auth.BasicSchemeFactory"
+ sig="AuthScheme newInstance(HttpParams)"
+ line="6"
+ startpos="231"
+ endpos="242"
+>
+	<marker line="-1" type="param">
+		<operand  start="277" length="6" line="6">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="199" length="31" line="6" chordsig="org.apache.http.auth.AuthScheme"/>
+	<type  start="243" length="33" line="6" chordsig="org.apache.http.params.HttpParams"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="297" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="293" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="314" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="297" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

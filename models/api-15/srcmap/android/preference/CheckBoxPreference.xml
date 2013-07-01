@@ -1,0 +1,121 @@
+<root>
+<class chordsig="android.preference.CheckBoxPreference" line="2">
+	<type  start="70" length="37" line="3" chordsig="android.preference.TwoStatePreference"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;I)V@android.preference.CheckBoxPreference"
+ sig="CheckBoxPreference(Context,AttributeSet,int)"
+ line="5"
+ startpos="118"
+ endpos="136"
+>
+	<marker line="-1" type="param">
+		<operand  start="161" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="196" length="5" line="5">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="207" length="8" line="5">
+			<expr><![CDATA[defStyle]]></expr>
+		</operand>
+	</marker>
+	<type  start="137" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="170" length="25" line="5" chordsig="android.util.AttributeSet"/>
+	<type  start="226" length="23" line="5" chordsig="android.content.Context"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="267" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="263" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="284" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="267" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.preference.CheckBoxPreference"
+ sig="CheckBoxPreference(Context,AttributeSet)"
+ line="6"
+ startpos="304"
+ endpos="322"
+>
+	<marker line="-1" type="param">
+		<operand  start="347" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="382" length="5" line="6">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="323" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="356" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<type  start="398" length="23" line="6" chordsig="android.content.Context"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="439" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="435" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="456" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="439" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.preference.CheckBoxPreference"
+ sig="CheckBoxPreference(Context)"
+ line="7"
+ startpos="476"
+ endpos="494"
+>
+	<marker line="-1" type="param">
+		<operand  start="519" length="7" line="7">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="495" length="23" line="7" chordsig="android.content.Context"/>
+	<type  start="537" length="23" line="7" chordsig="android.content.Context"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="578" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="574" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="595" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="578" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onBindView:(Landroid/view/View;)V@android.preference.CheckBoxPreference"
+ sig="void onBindView(View)"
+ line="8"
+ startpos="623"
+ endpos="633"
+>
+	<marker line="-1" type="param">
+		<operand  start="652" length="4" line="8">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<type  start="634" length="17" line="8" chordsig="android.view.View"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="670" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="666" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="687" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="670" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,145 @@
+<root>
+<class chordsig="javax.crypto.MacSpi" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@javax.crypto.MacSpi"
+ sig="MacSpi()"
+ line="4"
+ startpos="61"
+ endpos="67"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="82" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="78" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="99" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="82" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="engineGetMacLength:()I@javax.crypto.MacSpi"
+ sig="int engineGetMacLength()"
+ line="5"
+ startpos="135"
+ endpos="153"
+>
+</method>
+<method
+ chordsig="engineInit:(Ljava/security/Key;Ljava/security/spec/AlgorithmParameterSpec;)V@javax.crypto.MacSpi"
+ sig="void engineInit(Key,AlgorithmParameterSpec)"
+ line="6"
+ startpos="182"
+ endpos="192"
+>
+	<marker line="-1" type="param">
+		<operand  start="211" length="3" line="6">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="258" length="6" line="6">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="193" length="17" line="6" chordsig="java.security.Key"/>
+	<type  start="216" length="41" line="6" chordsig="java.security.spec.AlgorithmParameterSpec"/>
+</method>
+<method
+ chordsig="engineUpdate:(B)V@javax.crypto.MacSpi"
+ sig="void engineUpdate(byte)"
+ line="7"
+ startpos="383"
+ endpos="395"
+>
+	<marker line="-1" type="param">
+		<operand  start="401" length="5" line="7">
+			<expr><![CDATA[input]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="engineUpdate:([BII)V@javax.crypto.MacSpi"
+ sig="void engineUpdate(byte[],int,int)"
+ line="8"
+ startpos="434"
+ endpos="446"
+>
+	<marker line="-1" type="param">
+		<operand  start="454" length="5" line="8">
+			<expr><![CDATA[input]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="465" length="6" line="8">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="477" length="3" line="8">
+			<expr><![CDATA[len]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="engineUpdate:(Ljava/nio/ByteBuffer;)V@javax.crypto.MacSpi"
+ sig="void engineUpdate(ByteBuffer)"
+ line="9"
+ startpos="499"
+ endpos="511"
+>
+	<marker line="-1" type="param">
+		<operand  start="532" length="5" line="9">
+			<expr><![CDATA[input]]></expr>
+		</operand>
+	</marker>
+	<type  start="512" length="19" line="9" chordsig="java.nio.ByteBuffer"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="551" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="547" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="568" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="551" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="engineDoFinal:()[B@javax.crypto.MacSpi"
+ sig="byte[] engineDoFinal()"
+ line="10"
+ startpos="607"
+ endpos="620"
+>
+</method>
+<method
+ chordsig="engineReset:()V@javax.crypto.MacSpi"
+ sig="void engineReset()"
+ line="11"
+ startpos="649"
+ endpos="660"
+>
+</method>
+<method
+ chordsig="clone:()Ljava/lang/Object;@javax.crypto.MacSpi"
+ sig="Object clone()"
+ line="12"
+ startpos="689"
+ endpos="694"
+>
+	<type  start="672" length="16" line="12" chordsig="java.lang.Object"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="753" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="749" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="770" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="753" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

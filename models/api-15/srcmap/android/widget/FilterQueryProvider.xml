@@ -1,0 +1,19 @@
+<root>
+<class chordsig="android.widget.FilterQueryProvider" line="2">
+<method
+ chordsig="runQuery:(Ljava/lang/CharSequence;)Landroid/database/Cursor;@android.widget.FilterQueryProvider"
+ sig="Cursor runQuery(CharSequence)"
+ line="4"
+ startpos="104"
+ endpos="112"
+>
+	<marker line="-1" type="param">
+		<operand  start="136" length="10" line="4">
+			<expr><![CDATA[constraint]]></expr>
+		</operand>
+	</marker>
+	<type  start="80" length="23" line="4" chordsig="android.database.Cursor"/>
+	<type  start="113" length="22" line="4" chordsig="java.lang.CharSequence"/>
+</method>
+</class>
+</root>

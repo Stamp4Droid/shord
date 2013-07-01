@@ -1,0 +1,630 @@
+<root>
+<class chordsig="java.net.HttpCookie" line="2">
+	<type  start="61" length="19" line="3" chordsig="java.lang.Cloneable"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;)V@java.net.HttpCookie"
+ sig="HttpCookie(String,String)"
+ line="5"
+ startpos="91"
+ endpos="101"
+>
+	<marker line="-1" type="param">
+		<operand  start="119" length="4" line="5">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="142" length="5" line="5">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="102" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="125" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="161" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="157" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="178" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="161" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="domainMatches:(Ljava/lang/String;Ljava/lang/String;)Z@java.net.HttpCookie"
+ sig="boolean domainMatches(String,String)"
+ line="6"
+ startpos="213"
+ endpos="226"
+>
+	<marker line="-1" type="param">
+		<operand  start="244" length="13" line="6">
+			<expr><![CDATA[domainPattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="276" length="4" line="6">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<type  start="227" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="259" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="294" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="290" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="311" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="294" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parse:(Ljava/lang/String;)Ljava/util/List;@java.net.HttpCookie"
+ sig="List&lt;HttpCookie&gt; parse(String)"
+ line="7"
+ startpos="374"
+ endpos="379"
+>
+	<marker line="-1" type="param">
+		<operand  start="397" length="6" line="7">
+			<expr><![CDATA[header]]></expr>
+		</operand>
+	</marker>
+	<type  start="338" length="14" line="7" chordsig="java.util.List"/>
+	<type  start="353" length="19" line="7" chordsig="java.net.HttpCookie"/>
+	<type  start="380" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="417" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="413" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="434" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="417" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getComment:()Ljava/lang/String;@java.net.HttpCookie"
+ sig="String getComment()"
+ line="8"
+ startpos="471"
+ endpos="481"
+>
+	<type  start="454" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="496" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="492" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="513" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="496" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCommentURL:()Ljava/lang/String;@java.net.HttpCookie"
+ sig="String getCommentURL()"
+ line="9"
+ startpos="550"
+ endpos="563"
+>
+	<type  start="533" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="578" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="574" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="595" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="578" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDiscard:()Z@java.net.HttpCookie"
+ sig="boolean getDiscard()"
+ line="10"
+ startpos="623"
+ endpos="633"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="648" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="644" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="665" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="648" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDomain:()Ljava/lang/String;@java.net.HttpCookie"
+ sig="String getDomain()"
+ line="11"
+ startpos="702"
+ endpos="711"
+>
+	<type  start="685" length="16" line="11" chordsig="java.lang.String"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="726" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="722" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="743" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="726" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMaxAge:()J@java.net.HttpCookie"
+ sig="long getMaxAge()"
+ line="12"
+ startpos="768"
+ endpos="777"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="792" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="788" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="809" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="792" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getName:()Ljava/lang/String;@java.net.HttpCookie"
+ sig="String getName()"
+ line="13"
+ startpos="846"
+ endpos="853"
+>
+	<type  start="829" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="868" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="864" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="885" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="868" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPath:()Ljava/lang/String;@java.net.HttpCookie"
+ sig="String getPath()"
+ line="14"
+ startpos="922"
+ endpos="929"
+>
+	<type  start="905" length="16" line="14" chordsig="java.lang.String"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="944" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="940" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="961" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="944" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPortlist:()Ljava/lang/String;@java.net.HttpCookie"
+ sig="String getPortlist()"
+ line="15"
+ startpos="998"
+ endpos="1009"
+>
+	<type  start="981" length="16" line="15" chordsig="java.lang.String"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1024" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1020" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1041" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1024" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSecure:()Z@java.net.HttpCookie"
+ sig="boolean getSecure()"
+ line="16"
+ startpos="1069"
+ endpos="1078"
+>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1093" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1089" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1110" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1093" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getValue:()Ljava/lang/String;@java.net.HttpCookie"
+ sig="String getValue()"
+ line="17"
+ startpos="1147"
+ endpos="1155"
+>
+	<type  start="1130" length="16" line="17" chordsig="java.lang.String"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1170" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1166" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1187" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1170" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getVersion:()I@java.net.HttpCookie"
+ sig="int getVersion()"
+ line="18"
+ startpos="1211"
+ endpos="1221"
+>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1236" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1232" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1253" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1236" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hasExpired:()Z@java.net.HttpCookie"
+ sig="boolean hasExpired()"
+ line="19"
+ startpos="1281"
+ endpos="1291"
+>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1306" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1302" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1323" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1306" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setComment:(Ljava/lang/String;)V@java.net.HttpCookie"
+ sig="void setComment(String)"
+ line="20"
+ startpos="1348"
+ endpos="1358"
+>
+	<marker line="-1" type="param">
+		<operand  start="1376" length="7" line="20">
+			<expr><![CDATA[comment]]></expr>
+		</operand>
+	</marker>
+	<type  start="1359" length="16" line="20" chordsig="java.lang.String"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1397" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1393" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1414" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1397" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setCommentURL:(Ljava/lang/String;)V@java.net.HttpCookie"
+ sig="void setCommentURL(String)"
+ line="21"
+ startpos="1439"
+ endpos="1452"
+>
+	<marker line="-1" type="param">
+		<operand  start="1470" length="10" line="21">
+			<expr><![CDATA[commentURL]]></expr>
+		</operand>
+	</marker>
+	<type  start="1453" length="16" line="21" chordsig="java.lang.String"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1494" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1490" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1511" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1494" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDiscard:(Z)V@java.net.HttpCookie"
+ sig="void setDiscard(boolean)"
+ line="22"
+ startpos="1536"
+ endpos="1546"
+>
+	<marker line="-1" type="param">
+		<operand  start="1555" length="7" line="22">
+			<expr><![CDATA[discard]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1576" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1572" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1593" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1576" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDomain:(Ljava/lang/String;)V@java.net.HttpCookie"
+ sig="void setDomain(String)"
+ line="23"
+ startpos="1618"
+ endpos="1627"
+>
+	<marker line="-1" type="param">
+		<operand  start="1645" length="7" line="23">
+			<expr><![CDATA[pattern]]></expr>
+		</operand>
+	</marker>
+	<type  start="1628" length="16" line="23" chordsig="java.lang.String"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1666" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1662" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1683" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1666" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMaxAge:(J)V@java.net.HttpCookie"
+ sig="void setMaxAge(long)"
+ line="24"
+ startpos="1708"
+ endpos="1717"
+>
+	<marker line="-1" type="param">
+		<operand  start="1723" length="12" line="24">
+			<expr><![CDATA[deltaSeconds]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1749" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1745" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1766" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1749" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPath:(Ljava/lang/String;)V@java.net.HttpCookie"
+ sig="void setPath(String)"
+ line="25"
+ startpos="1791"
+ endpos="1798"
+>
+	<marker line="-1" type="param">
+		<operand  start="1816" length="4" line="25">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<type  start="1799" length="16" line="25" chordsig="java.lang.String"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1834" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1830" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1851" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1834" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPortlist:(Ljava/lang/String;)V@java.net.HttpCookie"
+ sig="void setPortlist(String)"
+ line="26"
+ startpos="1876"
+ endpos="1887"
+>
+	<marker line="-1" type="param">
+		<operand  start="1905" length="8" line="26">
+			<expr><![CDATA[portList]]></expr>
+		</operand>
+	</marker>
+	<type  start="1888" length="16" line="26" chordsig="java.lang.String"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1927" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1923" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1944" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1927" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSecure:(Z)V@java.net.HttpCookie"
+ sig="void setSecure(boolean)"
+ line="27"
+ startpos="1969"
+ endpos="1978"
+>
+	<marker line="-1" type="param">
+		<operand  start="1987" length="6" line="27">
+			<expr><![CDATA[secure]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2007" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2003" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2024" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2007" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setValue:(Ljava/lang/String;)V@java.net.HttpCookie"
+ sig="void setValue(String)"
+ line="28"
+ startpos="2049"
+ endpos="2057"
+>
+	<marker line="-1" type="param">
+		<operand  start="2075" length="5" line="28">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="2058" length="16" line="28" chordsig="java.lang.String"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2094" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2090" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2111" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2094" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setVersion:(I)V@java.net.HttpCookie"
+ sig="void setVersion(int)"
+ line="29"
+ startpos="2136"
+ endpos="2146"
+>
+	<marker line="-1" type="param">
+		<operand  start="2151" length="1" line="29">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2166" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2162" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2183" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2166" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clone:()Ljava/lang/Object;@java.net.HttpCookie"
+ sig="Object clone()"
+ line="30"
+ startpos="2220"
+ endpos="2225"
+>
+	<type  start="2203" length="16" line="30" chordsig="java.lang.Object"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2240" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2236" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2257" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2240" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.net.HttpCookie"
+ sig="boolean equals(Object)"
+ line="31"
+ startpos="2285"
+ endpos="2291"
+>
+	<marker line="-1" type="param">
+		<operand  start="2309" length="6" line="31">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="2292" length="16" line="31" chordsig="java.lang.Object"/>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2329" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2325" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2346" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2329" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@java.net.HttpCookie"
+ sig="int hashCode()"
+ line="32"
+ startpos="2370"
+ endpos="2378"
+>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2393" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2389" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2410" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2393" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.net.HttpCookie"
+ sig="String toString()"
+ line="33"
+ startpos="2447"
+ endpos="2455"
+>
+	<type  start="2430" length="16" line="33" chordsig="java.lang.String"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2470" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2466" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2487" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2470" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

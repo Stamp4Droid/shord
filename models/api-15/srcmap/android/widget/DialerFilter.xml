@@ -1,0 +1,455 @@
+<root>
+<class chordsig="android.widget.DialerFilter" line="2">
+	<type  start="60" length="29" line="3" chordsig="android.widget.RelativeLayout"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.widget.DialerFilter"
+ sig="DialerFilter(Context)"
+ line="5"
+ startpos="100"
+ endpos="112"
+>
+	<marker line="-1" type="param">
+		<operand  start="137" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="113" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="155" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="185" length="25" line="5" chordsig="android.util.AttributeSet"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="230" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="226" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="247" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="230" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.widget.DialerFilter"
+ sig="DialerFilter(Context,AttributeSet)"
+ line="6"
+ startpos="267"
+ endpos="279"
+>
+	<marker line="-1" type="param">
+		<operand  start="304" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="339" length="5" line="6">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="280" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="313" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<type  start="355" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="385" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="430" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="426" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="447" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="430" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onFinishInflate:()V@android.widget.DialerFilter"
+ sig="void onFinishInflate()"
+ line="7"
+ startpos="475"
+ endpos="490"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="505" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="501" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="522" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="505" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onFocusChanged:(ZILandroid/graphics/Rect;)V@android.widget.DialerFilter"
+ sig="void onFocusChanged(boolean,int,Rect)"
+ line="8"
+ startpos="550"
+ endpos="564"
+>
+	<marker line="-1" type="param">
+		<operand  start="573" length="7" line="8">
+			<expr><![CDATA[focused]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="586" length="9" line="8">
+			<expr><![CDATA[direction]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="619" length="21" line="8">
+			<expr><![CDATA[previouslyFocusedRect]]></expr>
+		</operand>
+	</marker>
+	<type  start="597" length="21" line="8" chordsig="android.graphics.Rect"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="654" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="650" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="671" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="654" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isQwertyKeyboard:()Z@android.widget.DialerFilter"
+ sig="boolean isQwertyKeyboard()"
+ line="9"
+ startpos="699"
+ endpos="715"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="730" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="726" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="747" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="730" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onKeyDown:(ILandroid/view/KeyEvent;)Z@android.widget.DialerFilter"
+ sig="boolean onKeyDown(int,KeyEvent)"
+ line="10"
+ startpos="775"
+ endpos="784"
+>
+	<marker line="-1" type="param">
+		<operand  start="789" length="7" line="10">
+			<expr><![CDATA[keyCode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="820" length="5" line="10">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="798" length="21" line="10" chordsig="android.view.KeyEvent"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="839" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="835" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="856" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="839" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onKeyUp:(ILandroid/view/KeyEvent;)Z@android.widget.DialerFilter"
+ sig="boolean onKeyUp(int,KeyEvent)"
+ line="11"
+ startpos="884"
+ endpos="891"
+>
+	<marker line="-1" type="param">
+		<operand  start="896" length="7" line="11">
+			<expr><![CDATA[keyCode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="927" length="5" line="11">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="905" length="21" line="11" chordsig="android.view.KeyEvent"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="946" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="942" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="963" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="946" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMode:()I@android.widget.DialerFilter"
+ sig="int getMode()"
+ line="12"
+ startpos="987"
+ endpos="994"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1009" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1005" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1026" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1009" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMode:(I)V@android.widget.DialerFilter"
+ sig="void setMode(int)"
+ line="13"
+ startpos="1051"
+ endpos="1058"
+>
+	<marker line="-1" type="param">
+		<operand  start="1063" length="7" line="13">
+			<expr><![CDATA[newMode]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1084" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1080" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1101" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1084" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLetters:()Ljava/lang/CharSequence;@android.widget.DialerFilter"
+ sig="CharSequence getLetters()"
+ line="14"
+ startpos="1144"
+ endpos="1154"
+>
+	<type  start="1121" length="22" line="14" chordsig="java.lang.CharSequence"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1169" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1165" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1186" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1169" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDigits:()Ljava/lang/CharSequence;@android.widget.DialerFilter"
+ sig="CharSequence getDigits()"
+ line="15"
+ startpos="1229"
+ endpos="1238"
+>
+	<type  start="1206" length="22" line="15" chordsig="java.lang.CharSequence"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1253" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1249" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1270" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1253" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFilterText:()Ljava/lang/CharSequence;@android.widget.DialerFilter"
+ sig="CharSequence getFilterText()"
+ line="16"
+ startpos="1313"
+ endpos="1326"
+>
+	<type  start="1290" length="22" line="16" chordsig="java.lang.CharSequence"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1341" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1337" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1358" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1341" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="append:(Ljava/lang/String;)V@android.widget.DialerFilter"
+ sig="void append(String)"
+ line="17"
+ startpos="1383"
+ endpos="1389"
+>
+	<marker line="-1" type="param">
+		<operand  start="1407" length="4" line="17">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="1390" length="16" line="17" chordsig="java.lang.String"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1425" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1421" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1442" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1425" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clearText:()V@android.widget.DialerFilter"
+ sig="void clearText()"
+ line="18"
+ startpos="1467"
+ endpos="1476"
+>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1491" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1487" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1508" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1491" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setLettersWatcher:(Landroid/text/TextWatcher;)V@android.widget.DialerFilter"
+ sig="void setLettersWatcher(TextWatcher)"
+ line="19"
+ startpos="1533"
+ endpos="1550"
+>
+	<marker line="-1" type="param">
+		<operand  start="1576" length="7" line="19">
+			<expr><![CDATA[watcher]]></expr>
+		</operand>
+	</marker>
+	<type  start="1551" length="24" line="19" chordsig="android.text.TextWatcher"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1597" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1593" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1614" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1597" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDigitsWatcher:(Landroid/text/TextWatcher;)V@android.widget.DialerFilter"
+ sig="void setDigitsWatcher(TextWatcher)"
+ line="20"
+ startpos="1639"
+ endpos="1655"
+>
+	<marker line="-1" type="param">
+		<operand  start="1681" length="7" line="20">
+			<expr><![CDATA[watcher]]></expr>
+		</operand>
+	</marker>
+	<type  start="1656" length="24" line="20" chordsig="android.text.TextWatcher"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1702" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1698" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1719" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1702" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setFilterWatcher:(Landroid/text/TextWatcher;)V@android.widget.DialerFilter"
+ sig="void setFilterWatcher(TextWatcher)"
+ line="21"
+ startpos="1744"
+ endpos="1760"
+>
+	<marker line="-1" type="param">
+		<operand  start="1786" length="7" line="21">
+			<expr><![CDATA[watcher]]></expr>
+		</operand>
+	</marker>
+	<type  start="1761" length="24" line="21" chordsig="android.text.TextWatcher"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1807" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1803" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1824" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1807" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeFilterWatcher:(Landroid/text/TextWatcher;)V@android.widget.DialerFilter"
+ sig="void removeFilterWatcher(TextWatcher)"
+ line="22"
+ startpos="1849"
+ endpos="1868"
+>
+	<marker line="-1" type="param">
+		<operand  start="1894" length="7" line="22">
+			<expr><![CDATA[watcher]]></expr>
+		</operand>
+	</marker>
+	<type  start="1869" length="24" line="22" chordsig="android.text.TextWatcher"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1915" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1911" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1932" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1915" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onModeChange:(II)V@android.widget.DialerFilter"
+ sig="void onModeChange(int,int)"
+ line="23"
+ startpos="1960"
+ endpos="1972"
+>
+	<marker line="-1" type="param">
+		<operand  start="1977" length="7" line="23">
+			<expr><![CDATA[oldMode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1990" length="7" line="23">
+			<expr><![CDATA[newMode]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2011" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2007" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2028" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2011" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

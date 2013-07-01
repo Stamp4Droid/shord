@@ -1,0 +1,305 @@
+<root>
+<class chordsig="android.text.util.Linkify" line="2">
+<class chordsig="android.text.util.Linkify$MatchFilter" line="4">
+<method
+ chordsig="acceptMatch:(Ljava/lang/CharSequence;II)Z@android.text.util.Linkify$MatchFilter"
+ sig="boolean acceptMatch(CharSequence,int,int)"
+ line="6"
+ startpos="113"
+ endpos="124"
+>
+	<marker line="-1" type="param">
+		<operand  start="148" length="1" line="6">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="155" length="5" line="6">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="166" length="3" line="6">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="125" length="22" line="6" chordsig="java.lang.CharSequence"/>
+</method>
+</class>
+<class chordsig="android.text.util.Linkify$TransformFilter" line="8">
+<method
+ chordsig="transformUrl:(Ljava/util/regex/Matcher;Ljava/lang/String;)Ljava/lang/String;@android.text.util.Linkify$TransformFilter"
+ sig="String transformUrl(Matcher,String)"
+ line="10"
+ startpos="250"
+ endpos="262"
+>
+	<marker line="-1" type="param">
+		<operand  start="287" length="5" line="10">
+			<expr><![CDATA[match]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="311" length="3" line="10">
+			<expr><![CDATA[url]]></expr>
+		</operand>
+	</marker>
+	<type  start="233" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="263" length="23" line="10" chordsig="java.util.regex.Matcher"/>
+	<type  start="294" length="16" line="10" chordsig="java.lang.String"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.text.util.Linkify"
+ sig="Linkify()"
+ line="12"
+ startpos="327"
+ endpos="334"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="349" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="345" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="366" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="349" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addLinks:(Landroid/text/Spannable;I)Z@android.text.util.Linkify"
+ sig="boolean addLinks(Spannable,int)"
+ line="13"
+ startpos="407"
+ endpos="415"
+>
+	<marker line="-1" type="param">
+		<operand  start="439" length="4" line="13">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="449" length="4" line="13">
+			<expr><![CDATA[mask]]></expr>
+		</operand>
+	</marker>
+	<type  start="416" length="22" line="13" chordsig="android.text.Spannable"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="467" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="463" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="484" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="467" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addLinks:(Landroid/widget/TextView;I)Z@android.text.util.Linkify"
+ sig="boolean addLinks(TextView,int)"
+ line="14"
+ startpos="525"
+ endpos="533"
+>
+	<marker line="-1" type="param">
+		<operand  start="558" length="4" line="14">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="568" length="4" line="14">
+			<expr><![CDATA[mask]]></expr>
+		</operand>
+	</marker>
+	<type  start="534" length="23" line="14" chordsig="android.widget.TextView"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="586" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="582" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="603" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="586" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addLinks:(Landroid/widget/TextView;Ljava/util/regex/Pattern;Ljava/lang/String;)V@android.text.util.Linkify"
+ sig="void addLinks(TextView,Pattern,String)"
+ line="15"
+ startpos="641"
+ endpos="649"
+>
+	<marker line="-1" type="param">
+		<operand  start="674" length="4" line="15">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="704" length="7" line="15">
+			<expr><![CDATA[pattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="730" length="6" line="15">
+			<expr><![CDATA[scheme]]></expr>
+		</operand>
+	</marker>
+	<type  start="650" length="23" line="15" chordsig="android.widget.TextView"/>
+	<type  start="680" length="23" line="15" chordsig="java.util.regex.Pattern"/>
+	<type  start="713" length="16" line="15" chordsig="java.lang.String"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="750" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="746" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="767" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="750" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addLinks:(Landroid/widget/TextView;Ljava/util/regex/Pattern;Ljava/lang/String;Landroid/text/util/Linkify$MatchFilter;Landroid/text/util/Linkify$TransformFilter;)V@android.text.util.Linkify"
+ sig="void addLinks(TextView,Pattern,String,MatchFilter,TransformFilter)"
+ line="16"
+ startpos="805"
+ endpos="813"
+>
+	<marker line="-1" type="param">
+		<operand  start="838" length="4" line="16">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="868" length="1" line="16">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="888" length="6" line="16">
+			<expr><![CDATA[scheme]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="934" length="11" line="16">
+			<expr><![CDATA[matchFilter]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="989" length="15" line="16">
+			<expr><![CDATA[transformFilter]]></expr>
+		</operand>
+	</marker>
+	<type  start="814" length="23" line="16" chordsig="android.widget.TextView"/>
+	<type  start="844" length="23" line="16" chordsig="java.util.regex.Pattern"/>
+	<type  start="871" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="896" length="37" line="16" chordsig="android.text.util.Linkify$MatchFilter"/>
+	<type  start="947" length="41" line="16" chordsig="android.text.util.Linkify$TransformFilter"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1018" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1014" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1035" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1018" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addLinks:(Landroid/text/Spannable;Ljava/util/regex/Pattern;Ljava/lang/String;)Z@android.text.util.Linkify"
+ sig="boolean addLinks(Spannable,Pattern,String)"
+ line="17"
+ startpos="1076"
+ endpos="1084"
+>
+	<marker line="-1" type="param">
+		<operand  start="1108" length="4" line="17">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1138" length="7" line="17">
+			<expr><![CDATA[pattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1164" length="6" line="17">
+			<expr><![CDATA[scheme]]></expr>
+		</operand>
+	</marker>
+	<type  start="1085" length="22" line="17" chordsig="android.text.Spannable"/>
+	<type  start="1114" length="23" line="17" chordsig="java.util.regex.Pattern"/>
+	<type  start="1147" length="16" line="17" chordsig="java.lang.String"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1184" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1180" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1201" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1184" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addLinks:(Landroid/text/Spannable;Ljava/util/regex/Pattern;Ljava/lang/String;Landroid/text/util/Linkify$MatchFilter;Landroid/text/util/Linkify$TransformFilter;)Z@android.text.util.Linkify"
+ sig="boolean addLinks(Spannable,Pattern,String,MatchFilter,TransformFilter)"
+ line="18"
+ startpos="1242"
+ endpos="1250"
+>
+	<marker line="-1" type="param">
+		<operand  start="1274" length="1" line="18">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1301" length="1" line="18">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1321" length="6" line="18">
+			<expr><![CDATA[scheme]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1367" length="11" line="18">
+			<expr><![CDATA[matchFilter]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1422" length="15" line="18">
+			<expr><![CDATA[transformFilter]]></expr>
+		</operand>
+	</marker>
+	<type  start="1251" length="22" line="18" chordsig="android.text.Spannable"/>
+	<type  start="1277" length="23" line="18" chordsig="java.util.regex.Pattern"/>
+	<type  start="1304" length="16" line="18" chordsig="java.lang.String"/>
+	<type  start="1329" length="37" line="18" chordsig="android.text.util.Linkify$MatchFilter"/>
+	<type  start="1380" length="41" line="18" chordsig="android.text.util.Linkify$TransformFilter"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1451" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1447" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1468" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1451" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1703" length="37" line="24" chordsig="android.text.util.Linkify$MatchFilter"/>
+	<type  start="1778" length="37" line="25" chordsig="android.text.util.Linkify$MatchFilter"/>
+	<type  start="1861" length="41" line="26" chordsig="android.text.util.Linkify$TransformFilter"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.text.util.Linkify"
+ line="27"
+>
+</method>
+</class>
+</root>

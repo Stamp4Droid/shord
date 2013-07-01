@@ -1,0 +1,53 @@
+<root>
+<class chordsig="java.lang.CharSequence" line="2">
+<method
+ chordsig="length:()I@java.lang.CharSequence"
+ sig="int length()"
+ line="4"
+ startpos="72"
+ endpos="78"
+>
+</method>
+<method
+ chordsig="charAt:(I)C@java.lang.CharSequence"
+ sig="char charAt(int)"
+ line="5"
+ startpos="104"
+ endpos="110"
+>
+	<marker line="-1" type="param">
+		<operand  start="115" length="5" line="5">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="subSequence:(II)Ljava/lang/CharSequence;@java.lang.CharSequence"
+ sig="CharSequence subSequence(int,int)"
+ line="6"
+ startpos="163"
+ endpos="174"
+>
+	<marker line="-1" type="param">
+		<operand  start="179" length="5" line="6">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="190" length="3" line="6">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="140" length="22" line="6" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.lang.CharSequence"
+ sig="String toString()"
+ line="7"
+ startpos="230"
+ endpos="238"
+>
+	<type  start="213" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

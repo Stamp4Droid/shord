@@ -1,0 +1,54 @@
+<root>
+<class chordsig="android.media.MediaCodecList" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.media.MediaCodecList"
+ sig="MediaCodecList()"
+ line="4"
+ startpos="59"
+ endpos="73"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="88" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="84" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="105" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="88" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCodecCount:()I@android.media.MediaCodecList"
+ sig="int getCodecCount()"
+ line="5"
+ startpos="149"
+ endpos="162"
+>
+</method>
+<method
+ chordsig="getCodecInfoAt:(I)Landroid/media/MediaCodecInfo;@android.media.MediaCodecList"
+ sig="MediaCodecInfo getCodecInfoAt(int)"
+ line="6"
+ startpos="216"
+ endpos="230"
+>
+	<marker line="-1" type="param">
+		<operand  start="235" length="5" line="6">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="187" length="28" line="6" chordsig="android.media.MediaCodecInfo"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="254" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="250" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="271" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="254" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

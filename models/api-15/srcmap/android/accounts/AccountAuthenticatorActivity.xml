@@ -1,0 +1,89 @@
+<root>
+<class chordsig="android.accounts.AccountAuthenticatorActivity" line="2">
+	<type  start="78" length="20" line="3" chordsig="android.app.Activity"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.accounts.AccountAuthenticatorActivity"
+ sig="AccountAuthenticatorActivity()"
+ line="5"
+ startpos="109"
+ endpos="137"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="152" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="148" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="169" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="152" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setAccountAuthenticatorResult:(Landroid/os/Bundle;)V@android.accounts.AccountAuthenticatorActivity"
+ sig="void setAccountAuthenticatorResult(Bundle)"
+ line="6"
+ startpos="200"
+ endpos="229"
+>
+	<marker line="-1" type="param">
+		<operand  start="248" length="6" line="6">
+			<expr><![CDATA[result]]></expr>
+		</operand>
+	</marker>
+	<type  start="230" length="17" line="6" chordsig="android.os.Bundle"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="268" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="264" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="285" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="268" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onCreate:(Landroid/os/Bundle;)V@android.accounts.AccountAuthenticatorActivity"
+ sig="void onCreate(Bundle)"
+ line="7"
+ startpos="313"
+ endpos="321"
+>
+	<marker line="-1" type="param">
+		<operand  start="340" length="6" line="7">
+			<expr><![CDATA[icicle]]></expr>
+		</operand>
+	</marker>
+	<type  start="322" length="17" line="7" chordsig="android.os.Bundle"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="360" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="356" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="377" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="360" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="finish:()V@android.accounts.AccountAuthenticatorActivity"
+ sig="void finish()"
+ line="8"
+ startpos="402"
+ endpos="408"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="423" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="419" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="440" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="423" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,124 @@
+<root>
+<class chordsig="android.database.ContentObservable" line="2">
+	<type  start="67" length="27" line="3" chordsig="android.database.Observable"/>
+	<type  start="95" length="32" line="3" chordsig="android.database.ContentObserver"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.database.ContentObservable"
+ sig="ContentObservable()"
+ line="5"
+ startpos="139"
+ endpos="156"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="171" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="167" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="188" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="171" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="registerObserver:(Landroid/database/ContentObserver;)V@android.database.ContentObservable"
+ sig="void registerObserver(ContentObserver)"
+ line="6"
+ startpos="213"
+ endpos="229"
+>
+	<alias>(Ljava/lang/Object;)V</alias>
+	<marker line="-1" type="param">
+		<operand  start="263" length="8" line="6">
+			<expr><![CDATA[observer]]></expr>
+		</operand>
+	</marker>
+	<type  start="230" length="32" line="6" chordsig="android.database.ContentObserver"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="285" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="281" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="302" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="285" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dispatchChange:(Z)V@android.database.ContentObservable"
+ sig="void dispatchChange(boolean)"
+ line="8"
+ startpos="351"
+ endpos="365"
+>
+	<marker line="-1" type="param">
+		<operand  start="374" length="10" line="8">
+			<expr><![CDATA[selfChange]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="398" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="394" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="415" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="398" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dispatchChange:(ZLandroid/net/Uri;)V@android.database.ContentObservable"
+ sig="void dispatchChange(boolean,Uri)"
+ line="9"
+ startpos="440"
+ endpos="454"
+>
+	<marker line="-1" type="param">
+		<operand  start="463" length="10" line="9">
+			<expr><![CDATA[selfChange]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="491" length="3" line="9">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<type  start="475" length="15" line="9" chordsig="android.net.Uri"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="508" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="504" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="525" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="508" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="notifyChange:(Z)V@android.database.ContentObservable"
+ sig="void notifyChange(boolean)"
+ line="11"
+ startpos="574"
+ endpos="586"
+>
+	<marker line="-1" type="param">
+		<operand  start="595" length="10" line="11">
+			<expr><![CDATA[selfChange]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="619" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="615" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="636" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="619" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

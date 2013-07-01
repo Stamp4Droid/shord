@@ -1,0 +1,33 @@
+<root>
+<class chordsig="android.graphics.LightingColorFilter" line="2">
+	<type  start="69" length="28" line="3" chordsig="android.graphics.ColorFilter"/>
+<method
+ chordsig="&lt;init&gt;:(II)V@android.graphics.LightingColorFilter"
+ sig="LightingColorFilter(int,int)"
+ line="5"
+ startpos="108"
+ endpos="127"
+>
+	<marker line="-1" type="param">
+		<operand  start="132" length="3" line="5">
+			<expr><![CDATA[mul]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="141" length="3" line="5">
+			<expr><![CDATA[add]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="158" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="154" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="175" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="158" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

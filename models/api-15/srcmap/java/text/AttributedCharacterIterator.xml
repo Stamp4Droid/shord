@@ -1,0 +1,249 @@
+<root>
+<class chordsig="java.text.AttributedCharacterIterator" line="2">
+	<type  start="74" length="27" line="3" chordsig="java.text.CharacterIterator"/>
+<class chordsig="java.text.AttributedCharacterIterator$Attribute" line="5">
+	<type  start="147" length="20" line="6" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.text.AttributedCharacterIterator$Attribute"
+ sig="Attribute(String)"
+ line="8"
+ startpos="181"
+ endpos="190"
+>
+	<marker line="-1" type="param">
+		<operand  start="208" length="4" line="8">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="191" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="226" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="222" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="243" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="226" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.text.AttributedCharacterIterator$Attribute"
+ sig="boolean equals(Object)"
+ line="9"
+ startpos="277"
+ endpos="283"
+>
+	<marker line="-1" type="param">
+		<operand  start="301" length="6" line="9">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="284" length="16" line="9" chordsig="java.lang.Object"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="321" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="317" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="338" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="321" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getName:()Ljava/lang/String;@java.text.AttributedCharacterIterator$Attribute"
+ sig="String getName()"
+ line="10"
+ startpos="378"
+ endpos="385"
+>
+	<type  start="361" length="16" line="10" chordsig="java.lang.String"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="400" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="396" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="417" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="400" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@java.text.AttributedCharacterIterator$Attribute"
+ sig="int hashCode()"
+ line="11"
+ startpos="447"
+ endpos="455"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="470" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="466" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="487" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="470" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="readResolve:()Ljava/lang/Object;@java.text.AttributedCharacterIterator$Attribute"
+ sig="Object readResolve()"
+ line="12"
+ startpos="527"
+ endpos="538"
+>
+	<type  start="510" length="16" line="12" chordsig="java.lang.Object"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="591" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="587" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="608" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="591" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.text.AttributedCharacterIterator$Attribute"
+ sig="String toString()"
+ line="13"
+ startpos="645"
+ endpos="653"
+>
+	<type  start="628" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="668" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="664" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="685" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="668" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="717" length="47" line="14" chordsig="java.text.AttributedCharacterIterator$Attribute"/>
+	<type  start="807" length="47" line="15" chordsig="java.text.AttributedCharacterIterator$Attribute"/>
+	<type  start="885" length="47" line="16" chordsig="java.text.AttributedCharacterIterator$Attribute"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@java.text.AttributedCharacterIterator$Attribute"
+ line="17"
+>
+</method>
+</class>
+<method
+ chordsig="getAllAttributeKeys:()Ljava/util/Set;@java.text.AttributedCharacterIterator"
+ sig="Set&lt;Attribute&gt; getAllAttributeKeys()"
+ line="19"
+ startpos="1097"
+ endpos="1116"
+>
+	<type  start="1034" length="13" line="19" chordsig="java.util.Set"/>
+	<type  start="1048" length="47" line="19" chordsig="java.text.AttributedCharacterIterator$Attribute"/>
+</method>
+<method
+ chordsig="getAttribute:(Ljava/text/AttributedCharacterIterator$Attribute;)Ljava/lang/Object;@java.text.AttributedCharacterIterator"
+ sig="Object getAttribute(Attribute)"
+ line="20"
+ startpos="1154"
+ endpos="1166"
+>
+	<marker line="-1" type="param">
+		<operand  start="1215" length="9" line="20">
+			<expr><![CDATA[attribute]]></expr>
+		</operand>
+	</marker>
+	<type  start="1137" length="16" line="20" chordsig="java.lang.Object"/>
+	<type  start="1167" length="47" line="20" chordsig="java.text.AttributedCharacterIterator$Attribute"/>
+</method>
+<method
+ chordsig="getAttributes:()Ljava/util/Map;@java.text.AttributedCharacterIterator"
+ sig="Map&lt;Attribute,Object&gt; getAttributes()"
+ line="21"
+ startpos="1325"
+ endpos="1338"
+>
+	<type  start="1244" length="13" line="21" chordsig="java.util.Map"/>
+	<type  start="1258" length="47" line="21" chordsig="java.text.AttributedCharacterIterator$Attribute"/>
+	<type  start="1307" length="16" line="21" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="getRunLimit:()I@java.text.AttributedCharacterIterator"
+ sig="int getRunLimit()"
+ line="22"
+ startpos="1363"
+ endpos="1374"
+>
+</method>
+<method
+ chordsig="getRunLimit:(Ljava/text/AttributedCharacterIterator$Attribute;)I@java.text.AttributedCharacterIterator"
+ sig="int getRunLimit(Attribute)"
+ line="23"
+ startpos="1399"
+ endpos="1410"
+>
+	<marker line="-1" type="param">
+		<operand  start="1459" length="9" line="23">
+			<expr><![CDATA[attribute]]></expr>
+		</operand>
+	</marker>
+	<type  start="1411" length="47" line="23" chordsig="java.text.AttributedCharacterIterator$Attribute"/>
+</method>
+<method
+ chordsig="getRunLimit:(Ljava/util/Set;)I@java.text.AttributedCharacterIterator"
+ sig="int getRunLimit(Set&lt;? extends Attribute&gt;)"
+ line="24"
+ startpos="1492"
+ endpos="1503"
+>
+	<marker line="-1" type="param">
+		<operand  start="1577" length="10" line="24">
+			<expr><![CDATA[attributes]]></expr>
+		</operand>
+	</marker>
+	<type  start="1504" length="13" line="24" chordsig="java.util.Set"/>
+	<type  start="1528" length="47" line="24" chordsig="java.text.AttributedCharacterIterator$Attribute"/>
+</method>
+<method
+ chordsig="getRunStart:()I@java.text.AttributedCharacterIterator"
+ sig="int getRunStart()"
+ line="25"
+ startpos="1611"
+ endpos="1622"
+>
+</method>
+<method
+ chordsig="getRunStart:(Ljava/text/AttributedCharacterIterator$Attribute;)I@java.text.AttributedCharacterIterator"
+ sig="int getRunStart(Attribute)"
+ line="26"
+ startpos="1647"
+ endpos="1658"
+>
+	<marker line="-1" type="param">
+		<operand  start="1707" length="9" line="26">
+			<expr><![CDATA[attribute]]></expr>
+		</operand>
+	</marker>
+	<type  start="1659" length="47" line="26" chordsig="java.text.AttributedCharacterIterator$Attribute"/>
+</method>
+<method
+ chordsig="getRunStart:(Ljava/util/Set;)I@java.text.AttributedCharacterIterator"
+ sig="int getRunStart(Set&lt;? extends Attribute&gt;)"
+ line="27"
+ startpos="1740"
+ endpos="1751"
+>
+	<marker line="-1" type="param">
+		<operand  start="1825" length="10" line="27">
+			<expr><![CDATA[attributes]]></expr>
+		</operand>
+	</marker>
+	<type  start="1752" length="13" line="27" chordsig="java.util.Set"/>
+	<type  start="1776" length="47" line="27" chordsig="java.text.AttributedCharacterIterator$Attribute"/>
+</method>
+</class>
+</root>

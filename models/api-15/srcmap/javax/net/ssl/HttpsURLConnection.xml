@@ -1,0 +1,268 @@
+<root>
+<class chordsig="javax.net.ssl.HttpsURLConnection" line="2">
+	<type  start="74" length="26" line="3" chordsig="java.net.HttpURLConnection"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/net/URL;)V@javax.net.ssl.HttpsURLConnection"
+ sig="HttpsURLConnection(URL)"
+ line="5"
+ startpos="114"
+ endpos="132"
+>
+	<marker line="-1" type="param">
+		<operand  start="146" length="3" line="5">
+			<expr><![CDATA[url]]></expr>
+		</operand>
+	</marker>
+	<type  start="133" length="12" line="5" chordsig="java.net.URL"/>
+	<type  start="160" length="12" line="5" chordsig="java.net.URL"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="190" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="186" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="207" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="190" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDefaultHostnameVerifier:(Ljavax/net/ssl/HostnameVerifier;)V@javax.net.ssl.HttpsURLConnection"
+ sig="void setDefaultHostnameVerifier(HostnameVerifier)"
+ line="6"
+ startpos="239"
+ endpos="265"
+>
+	<marker line="-1" type="param">
+		<operand  start="297" length="1" line="6">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="266" length="30" line="6" chordsig="javax.net.ssl.HostnameVerifier"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="312" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="308" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="329" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="312" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDefaultHostnameVerifier:()Ljavax/net/ssl/HostnameVerifier;@javax.net.ssl.HttpsURLConnection"
+ sig="HostnameVerifier getDefaultHostnameVerifier()"
+ line="7"
+ startpos="387"
+ endpos="413"
+>
+	<type  start="356" length="30" line="7" chordsig="javax.net.ssl.HostnameVerifier"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="428" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="424" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="445" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="428" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDefaultSSLSocketFactory:(Ljavax/net/ssl/SSLSocketFactory;)V@javax.net.ssl.HttpsURLConnection"
+ sig="void setDefaultSSLSocketFactory(SSLSocketFactory)"
+ line="8"
+ startpos="477"
+ endpos="503"
+>
+	<marker line="-1" type="param">
+		<operand  start="535" length="2" line="8">
+			<expr><![CDATA[sf]]></expr>
+		</operand>
+	</marker>
+	<type  start="504" length="30" line="8" chordsig="javax.net.ssl.SSLSocketFactory"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="551" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="547" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="568" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="551" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDefaultSSLSocketFactory:()Ljavax/net/ssl/SSLSocketFactory;@javax.net.ssl.HttpsURLConnection"
+ sig="SSLSocketFactory getDefaultSSLSocketFactory()"
+ line="9"
+ startpos="626"
+ endpos="652"
+>
+	<type  start="595" length="30" line="9" chordsig="javax.net.ssl.SSLSocketFactory"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="667" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="663" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="684" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="667" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCipherSuite:()Ljava/lang/String;@javax.net.ssl.HttpsURLConnection"
+ sig="String getCipherSuite()"
+ line="10"
+ startpos="730"
+ endpos="744"
+>
+	<type  start="713" length="16" line="10" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getLocalCertificates:()[Ljava/security/cert/Certificate;@javax.net.ssl.HttpsURLConnection"
+ sig="Certificate[] getLocalCertificates()"
+ line="11"
+ startpos="798"
+ endpos="818"
+>
+	<type  start="765" length="30" line="11" chordsig="java.security.cert.Certificate"/>
+</method>
+<method
+ chordsig="getServerCertificates:()[Ljava/security/cert/Certificate;@javax.net.ssl.HttpsURLConnection"
+ sig="Certificate[] getServerCertificates()"
+ line="12"
+ startpos="872"
+ endpos="893"
+>
+	<type  start="839" length="30" line="12" chordsig="java.security.cert.Certificate"/>
+</method>
+<method
+ chordsig="getPeerPrincipal:()Ljava/security/Principal;@javax.net.ssl.HttpsURLConnection"
+ sig="Principal getPeerPrincipal()"
+ line="13"
+ startpos="977"
+ endpos="993"
+>
+	<type  start="953" length="23" line="13" chordsig="java.security.Principal"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1056" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1052" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1073" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1056" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLocalPrincipal:()Ljava/security/Principal;@javax.net.ssl.HttpsURLConnection"
+ sig="Principal getLocalPrincipal()"
+ line="14"
+ startpos="1117"
+ endpos="1134"
+>
+	<type  start="1093" length="23" line="14" chordsig="java.security.Principal"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1149" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1145" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1166" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1149" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setHostnameVerifier:(Ljavax/net/ssl/HostnameVerifier;)V@javax.net.ssl.HttpsURLConnection"
+ sig="void setHostnameVerifier(HostnameVerifier)"
+ line="15"
+ startpos="1191"
+ endpos="1210"
+>
+	<marker line="-1" type="param">
+		<operand  start="1242" length="1" line="15">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="1211" length="30" line="15" chordsig="javax.net.ssl.HostnameVerifier"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1257" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1253" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1274" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1257" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getHostnameVerifier:()Ljavax/net/ssl/HostnameVerifier;@javax.net.ssl.HttpsURLConnection"
+ sig="HostnameVerifier getHostnameVerifier()"
+ line="16"
+ startpos="1325"
+ endpos="1344"
+>
+	<type  start="1294" length="30" line="16" chordsig="javax.net.ssl.HostnameVerifier"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1359" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1355" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1376" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1359" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSSLSocketFactory:(Ljavax/net/ssl/SSLSocketFactory;)V@javax.net.ssl.HttpsURLConnection"
+ sig="void setSSLSocketFactory(SSLSocketFactory)"
+ line="17"
+ startpos="1401"
+ endpos="1420"
+>
+	<marker line="-1" type="param">
+		<operand  start="1452" length="2" line="17">
+			<expr><![CDATA[sf]]></expr>
+		</operand>
+	</marker>
+	<type  start="1421" length="30" line="17" chordsig="javax.net.ssl.SSLSocketFactory"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1468" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1464" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1485" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1468" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSSLSocketFactory:()Ljavax/net/ssl/SSLSocketFactory;@javax.net.ssl.HttpsURLConnection"
+ sig="SSLSocketFactory getSSLSocketFactory()"
+ line="18"
+ startpos="1536"
+ endpos="1555"
+>
+	<type  start="1505" length="30" line="18" chordsig="javax.net.ssl.SSLSocketFactory"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1570" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1566" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1587" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1570" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1609" length="30" line="19" chordsig="javax.net.ssl.HostnameVerifier"/>
+</class>
+</root>

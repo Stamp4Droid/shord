@@ -1,0 +1,99 @@
+<root>
+<class chordsig="org.w3c.dom.DOMImplementation" line="2">
+<method
+ chordsig="hasFeature:(Ljava/lang/String;Ljava/lang/String;)Z@org.w3c.dom.DOMImplementation"
+ sig="boolean hasFeature(String,String)"
+ line="4"
+ startpos="83"
+ endpos="93"
+>
+	<marker line="-1" type="param">
+		<operand  start="111" length="7" line="4">
+			<expr><![CDATA[feature]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="137" length="7" line="4">
+			<expr><![CDATA[version]]></expr>
+		</operand>
+	</marker>
+	<type  start="94" length="16" line="4" chordsig="java.lang.String"/>
+	<type  start="120" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="createDocumentType:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/w3c/dom/DocumentType;@org.w3c.dom.DOMImplementation"
+ sig="DocumentType createDocumentType(String,String,String)"
+ line="5"
+ startpos="189"
+ endpos="207"
+>
+	<marker line="-1" type="param">
+		<operand  start="225" length="13" line="5">
+			<expr><![CDATA[qualifiedName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="257" length="8" line="5">
+			<expr><![CDATA[publicId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="284" length="8" line="5">
+			<expr><![CDATA[systemId]]></expr>
+		</operand>
+	</marker>
+	<type  start="164" length="24" line="5" chordsig="org.w3c.dom.DocumentType"/>
+	<type  start="208" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="240" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="267" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="createDocument:(Ljava/lang/String;Ljava/lang/String;Lorg/w3c/dom/DocumentType;)Lorg/w3c/dom/Document;@org.w3c.dom.DOMImplementation"
+ sig="Document createDocument(String,String,DocumentType)"
+ line="6"
+ startpos="365"
+ endpos="379"
+>
+	<marker line="-1" type="param">
+		<operand  start="397" length="12" line="6">
+			<expr><![CDATA[namespaceURI]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="428" length="13" line="6">
+			<expr><![CDATA[qualifiedName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="468" length="7" line="6">
+			<expr><![CDATA[doctype]]></expr>
+		</operand>
+	</marker>
+	<type  start="344" length="20" line="6" chordsig="org.w3c.dom.Document"/>
+	<type  start="380" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="411" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="443" length="24" line="6" chordsig="org.w3c.dom.DocumentType"/>
+</method>
+<method
+ chordsig="getFeature:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Object;@org.w3c.dom.DOMImplementation"
+ sig="Object getFeature(String,String)"
+ line="7"
+ startpos="544"
+ endpos="554"
+>
+	<marker line="-1" type="param">
+		<operand  start="572" length="7" line="7">
+			<expr><![CDATA[feature]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="598" length="7" line="7">
+			<expr><![CDATA[version]]></expr>
+		</operand>
+	</marker>
+	<type  start="527" length="16" line="7" chordsig="java.lang.Object"/>
+	<type  start="555" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="581" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

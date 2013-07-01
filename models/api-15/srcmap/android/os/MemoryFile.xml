@@ -1,0 +1,242 @@
+<root>
+<class chordsig="android.os.MemoryFile" line="2">
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;I)V@android.os.MemoryFile"
+ sig="MemoryFile(String,int)"
+ line="4"
+ startpos="54"
+ endpos="64"
+>
+	<marker line="-1" type="param">
+		<operand  start="82" length="4" line="4">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="92" length="6" line="4">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<type  start="65" length="16" line="4" chordsig="java.lang.String"/>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="139" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="135" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="156" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="139" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:()V@android.os.MemoryFile"
+ sig="void close()"
+ line="5"
+ startpos="181"
+ endpos="186"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="201" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="197" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="218" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="201" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="finalize:()V@android.os.MemoryFile"
+ sig="void finalize()"
+ line="6"
+ startpos="246"
+ endpos="254"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="269" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="265" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="286" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="269" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="length:()I@android.os.MemoryFile"
+ sig="int length()"
+ line="7"
+ startpos="310"
+ endpos="316"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="331" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="327" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="348" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="331" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isPurgingAllowed:()Z@android.os.MemoryFile"
+ sig="boolean isPurgingAllowed()"
+ line="8"
+ startpos="376"
+ endpos="392"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="407" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="403" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="424" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="407" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="allowPurging:(Z)Z@android.os.MemoryFile"
+ sig="boolean allowPurging(boolean)"
+ line="9"
+ startpos="465"
+ endpos="477"
+>
+	<marker line="-1" type="param">
+		<operand  start="486" length="12" line="9">
+			<expr><![CDATA[allowPurging]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="539" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="535" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="556" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="539" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInputStream:()Ljava/io/InputStream;@android.os.MemoryFile"
+ sig="InputStream getInputStream()"
+ line="10"
+ startpos="596"
+ endpos="610"
+>
+	<type  start="576" length="19" line="10" chordsig="java.io.InputStream"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="625" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="621" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="642" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="625" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getOutputStream:()Ljava/io/OutputStream;@android.os.MemoryFile"
+ sig="OutputStream getOutputStream()"
+ line="11"
+ startpos="683"
+ endpos="698"
+>
+	<type  start="662" length="20" line="11" chordsig="java.io.OutputStream"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="713" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="709" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="730" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="713" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="readBytes:([BIII)I@android.os.MemoryFile"
+ sig="int readBytes(byte[],int,int,int)"
+ line="12"
+ startpos="754"
+ endpos="763"
+>
+	<marker line="-1" type="param">
+		<operand  start="771" length="6" line="12">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="783" length="9" line="12">
+			<expr><![CDATA[srcOffset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="798" length="10" line="12">
+			<expr><![CDATA[destOffset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="814" length="5" line="12">
+			<expr><![CDATA[count]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="860" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="856" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="877" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="860" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeBytes:([BIII)V@android.os.MemoryFile"
+ sig="void writeBytes(byte[],int,int,int)"
+ line="13"
+ startpos="902"
+ endpos="912"
+>
+	<marker line="-1" type="param">
+		<operand  start="920" length="6" line="13">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="932" length="9" line="13">
+			<expr><![CDATA[srcOffset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="947" length="10" line="13">
+			<expr><![CDATA[destOffset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="963" length="5" line="13">
+			<expr><![CDATA[count]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1009" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1005" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1026" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1009" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

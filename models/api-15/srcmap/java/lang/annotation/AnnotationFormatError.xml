@@ -1,0 +1,83 @@
+<root>
+<class chordsig="java.lang.annotation.AnnotationFormatError" line="2">
+	<type  start="75" length="15" line="3" chordsig="java.lang.Error"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.annotation.AnnotationFormatError"
+ sig="AnnotationFormatError(String)"
+ line="5"
+ startpos="101"
+ endpos="122"
+>
+	<marker line="-1" type="param">
+		<operand  start="140" length="7" line="5">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="123" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="161" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="157" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="178" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="161" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/Throwable;)V@java.lang.annotation.AnnotationFormatError"
+ sig="AnnotationFormatError(String,Throwable)"
+ line="6"
+ startpos="198"
+ endpos="219"
+>
+	<marker line="-1" type="param">
+		<operand  start="237" length="7" line="6">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="266" length="5" line="6">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="220" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="246" length="19" line="6" chordsig="java.lang.Throwable"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="285" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="281" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="302" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="285" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Throwable;)V@java.lang.annotation.AnnotationFormatError"
+ sig="AnnotationFormatError(Throwable)"
+ line="7"
+ startpos="322"
+ endpos="343"
+>
+	<marker line="-1" type="param">
+		<operand  start="364" length="5" line="7">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="344" length="19" line="7" chordsig="java.lang.Throwable"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="383" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="379" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="400" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="383" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

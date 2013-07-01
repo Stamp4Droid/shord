@@ -1,0 +1,87 @@
+<root>
+<class chordsig="android.webkit.CookieSyncManager" line="2">
+	<type  start="71" length="29" line="3" chordsig="android.webkit.WebSyncManager"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.webkit.CookieSyncManager"
+ sig="CookieSyncManager()"
+ line="5"
+ startpos="103"
+ endpos="120"
+>
+	<type  start="132" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="162" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="196" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="192" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="213" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="196" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInstance:()Landroid/webkit/CookieSyncManager;@android.webkit.CookieSyncManager"
+ sig="CookieSyncManager getInstance()"
+ line="6"
+ startpos="286"
+ endpos="297"
+>
+	<type  start="253" length="32" line="6" chordsig="android.webkit.CookieSyncManager"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="312" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="308" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="329" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="312" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createInstance:(Landroid/content/Context;)Landroid/webkit/CookieSyncManager;@android.webkit.CookieSyncManager"
+ sig="CookieSyncManager createInstance(Context)"
+ line="7"
+ startpos="402"
+ endpos="416"
+>
+	<marker line="-1" type="param">
+		<operand  start="441" length="7" line="7">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="369" length="32" line="7" chordsig="android.webkit.CookieSyncManager"/>
+	<type  start="417" length="23" line="7" chordsig="android.content.Context"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="462" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="458" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="479" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="462" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="syncFromRamToFlash:()V@android.webkit.CookieSyncManager"
+ sig="void syncFromRamToFlash()"
+ line="8"
+ startpos="507"
+ endpos="525"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="540" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="536" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="557" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="540" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

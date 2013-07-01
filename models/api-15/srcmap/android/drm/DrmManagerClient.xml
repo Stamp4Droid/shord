@@ -1,0 +1,841 @@
+<root>
+<class chordsig="android.drm.DrmManagerClient" line="2">
+<class chordsig="android.drm.DrmManagerClient$OnInfoListener" line="4">
+<method
+ chordsig="onInfo:(Landroid/drm/DrmManagerClient;Landroid/drm/DrmInfoEvent;)V@android.drm.DrmManagerClient$OnInfoListener"
+ sig="void onInfo(DrmManagerClient,DrmInfoEvent)"
+ line="6"
+ startpos="116"
+ endpos="122"
+>
+	<marker line="-1" type="param">
+		<operand  start="152" length="6" line="6">
+			<expr><![CDATA[client]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="185" length="5" line="6">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="123" length="28" line="6" chordsig="android.drm.DrmManagerClient"/>
+	<type  start="160" length="24" line="6" chordsig="android.drm.DrmInfoEvent"/>
+</method>
+</class>
+<class chordsig="android.drm.DrmManagerClient$OnEventListener" line="8">
+<method
+ chordsig="onEvent:(Landroid/drm/DrmManagerClient;Landroid/drm/DrmEvent;)V@android.drm.DrmManagerClient$OnEventListener"
+ sig="void onEvent(DrmManagerClient,DrmEvent)"
+ line="10"
+ startpos="259"
+ endpos="266"
+>
+	<marker line="-1" type="param">
+		<operand  start="296" length="6" line="10">
+			<expr><![CDATA[client]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="325" length="5" line="10">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="267" length="28" line="10" chordsig="android.drm.DrmManagerClient"/>
+	<type  start="304" length="20" line="10" chordsig="android.drm.DrmEvent"/>
+</method>
+</class>
+<class chordsig="android.drm.DrmManagerClient$OnErrorListener" line="12">
+<method
+ chordsig="onError:(Landroid/drm/DrmManagerClient;Landroid/drm/DrmErrorEvent;)V@android.drm.DrmManagerClient$OnErrorListener"
+ sig="void onError(DrmManagerClient,DrmErrorEvent)"
+ line="14"
+ startpos="399"
+ endpos="406"
+>
+	<marker line="-1" type="param">
+		<operand  start="436" length="6" line="14">
+			<expr><![CDATA[client]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="470" length="5" line="14">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="407" length="28" line="14" chordsig="android.drm.DrmManagerClient"/>
+	<type  start="444" length="25" line="14" chordsig="android.drm.DrmErrorEvent"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.drm.DrmManagerClient"
+ sig="DrmManagerClient(Context)"
+ line="16"
+ startpos="488"
+ endpos="504"
+>
+	<marker line="-1" type="param">
+		<operand  start="529" length="7" line="16">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="505" length="23" line="16" chordsig="android.content.Context"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="550" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="546" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="567" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="550" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="finalize:()V@android.drm.DrmManagerClient"
+ sig="void finalize()"
+ line="17"
+ startpos="595"
+ endpos="603"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="618" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="614" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="635" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="618" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnInfoListener:(Landroid/drm/DrmManagerClient$OnInfoListener;)V@android.drm.DrmManagerClient"
+ sig="void setOnInfoListener(OnInfoListener)"
+ line="18"
+ startpos="673"
+ endpos="690"
+>
+	<marker line="-1" type="param">
+		<operand  start="735" length="12" line="18">
+			<expr><![CDATA[infoListener]]></expr>
+		</operand>
+	</marker>
+	<type  start="691" length="43" line="18" chordsig="android.drm.DrmManagerClient$OnInfoListener"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="761" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="757" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="778" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="761" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnEventListener:(Landroid/drm/DrmManagerClient$OnEventListener;)V@android.drm.DrmManagerClient"
+ sig="void setOnEventListener(OnEventListener)"
+ line="19"
+ startpos="816"
+ endpos="834"
+>
+	<marker line="-1" type="param">
+		<operand  start="880" length="13" line="19">
+			<expr><![CDATA[eventListener]]></expr>
+		</operand>
+	</marker>
+	<type  start="835" length="44" line="19" chordsig="android.drm.DrmManagerClient$OnEventListener"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="907" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="903" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="924" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="907" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnErrorListener:(Landroid/drm/DrmManagerClient$OnErrorListener;)V@android.drm.DrmManagerClient"
+ sig="void setOnErrorListener(OnErrorListener)"
+ line="20"
+ startpos="962"
+ endpos="980"
+>
+	<marker line="-1" type="param">
+		<operand  start="1026" length="13" line="20">
+			<expr><![CDATA[errorListener]]></expr>
+		</operand>
+	</marker>
+	<type  start="981" length="44" line="20" chordsig="android.drm.DrmManagerClient$OnErrorListener"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1053" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1049" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1070" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1053" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAvailableDrmEngines:()[Ljava/lang/String;@android.drm.DrmManagerClient"
+ sig="String[] getAvailableDrmEngines()"
+ line="21"
+ startpos="1109"
+ endpos="1131"
+>
+	<type  start="1090" length="16" line="21" chordsig="java.lang.String"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1146" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1142" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1163" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1146" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getConstraints:(Ljava/lang/String;I)Landroid/content/ContentValues;@android.drm.DrmManagerClient"
+ sig="ContentValues getConstraints(String,int)"
+ line="22"
+ startpos="1213"
+ endpos="1227"
+>
+	<marker line="-1" type="param">
+		<operand  start="1245" length="4" line="22">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1255" length="6" line="22">
+			<expr><![CDATA[action]]></expr>
+		</operand>
+	</marker>
+	<type  start="1183" length="29" line="22" chordsig="android.content.ContentValues"/>
+	<type  start="1228" length="16" line="22" chordsig="java.lang.String"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1275" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1271" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1292" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1275" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMetadata:(Ljava/lang/String;)Landroid/content/ContentValues;@android.drm.DrmManagerClient"
+ sig="ContentValues getMetadata(String)"
+ line="23"
+ startpos="1342"
+ endpos="1353"
+>
+	<marker line="-1" type="param">
+		<operand  start="1371" length="4" line="23">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<type  start="1312" length="29" line="23" chordsig="android.content.ContentValues"/>
+	<type  start="1354" length="16" line="23" chordsig="java.lang.String"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1389" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1385" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1406" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1389" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getConstraints:(Landroid/net/Uri;I)Landroid/content/ContentValues;@android.drm.DrmManagerClient"
+ sig="ContentValues getConstraints(Uri,int)"
+ line="24"
+ startpos="1456"
+ endpos="1470"
+>
+	<marker line="-1" type="param">
+		<operand  start="1487" length="3" line="24">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1496" length="6" line="24">
+			<expr><![CDATA[action]]></expr>
+		</operand>
+	</marker>
+	<type  start="1426" length="29" line="24" chordsig="android.content.ContentValues"/>
+	<type  start="1471" length="15" line="24" chordsig="android.net.Uri"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1516" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1512" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1533" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1516" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMetadata:(Landroid/net/Uri;)Landroid/content/ContentValues;@android.drm.DrmManagerClient"
+ sig="ContentValues getMetadata(Uri)"
+ line="25"
+ startpos="1583"
+ endpos="1594"
+>
+	<marker line="-1" type="param">
+		<operand  start="1611" length="3" line="25">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<type  start="1553" length="29" line="25" chordsig="android.content.ContentValues"/>
+	<type  start="1595" length="15" line="25" chordsig="android.net.Uri"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1628" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1624" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1645" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1628" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="saveRights:(Landroid/drm/DrmRights;Ljava/lang/String;Ljava/lang/String;)I@android.drm.DrmManagerClient"
+ sig="int saveRights(DrmRights,String,String)"
+ line="26"
+ startpos="1669"
+ endpos="1679"
+>
+	<marker line="-1" type="param">
+		<operand  start="1702" length="9" line="26">
+			<expr><![CDATA[drmRights]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1730" length="10" line="26">
+			<expr><![CDATA[rightsPath]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1759" length="11" line="26">
+			<expr><![CDATA[contentPath]]></expr>
+		</operand>
+	</marker>
+	<type  start="1680" length="21" line="26" chordsig="android.drm.DrmRights"/>
+	<type  start="1713" length="16" line="26" chordsig="java.lang.String"/>
+	<type  start="1742" length="16" line="26" chordsig="java.lang.String"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1811" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1807" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1828" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1811" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="canHandle:(Ljava/lang/String;Ljava/lang/String;)Z@android.drm.DrmManagerClient"
+ sig="boolean canHandle(String,String)"
+ line="27"
+ startpos="1856"
+ endpos="1865"
+>
+	<marker line="-1" type="param">
+		<operand  start="1883" length="4" line="27">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1906" length="8" line="27">
+			<expr><![CDATA[mimeType]]></expr>
+		</operand>
+	</marker>
+	<type  start="1866" length="16" line="27" chordsig="java.lang.String"/>
+	<type  start="1889" length="16" line="27" chordsig="java.lang.String"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1928" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1924" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1945" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1928" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="canHandle:(Landroid/net/Uri;Ljava/lang/String;)Z@android.drm.DrmManagerClient"
+ sig="boolean canHandle(Uri,String)"
+ line="28"
+ startpos="1973"
+ endpos="1982"
+>
+	<marker line="-1" type="param">
+		<operand  start="1999" length="3" line="28">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2021" length="8" line="28">
+			<expr><![CDATA[mimeType]]></expr>
+		</operand>
+	</marker>
+	<type  start="1983" length="15" line="28" chordsig="android.net.Uri"/>
+	<type  start="2004" length="16" line="28" chordsig="java.lang.String"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2043" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2039" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2060" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2043" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="processDrmInfo:(Landroid/drm/DrmInfo;)I@android.drm.DrmManagerClient"
+ sig="int processDrmInfo(DrmInfo)"
+ line="29"
+ startpos="2084"
+ endpos="2098"
+>
+	<marker line="-1" type="param">
+		<operand  start="2119" length="7" line="29">
+			<expr><![CDATA[drmInfo]]></expr>
+		</operand>
+	</marker>
+	<type  start="2099" length="19" line="29" chordsig="android.drm.DrmInfo"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2140" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2136" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2157" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2140" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="acquireDrmInfo:(Landroid/drm/DrmInfoRequest;)Landroid/drm/DrmInfo;@android.drm.DrmManagerClient"
+ sig="DrmInfo acquireDrmInfo(DrmInfoRequest)"
+ line="30"
+ startpos="2197"
+ endpos="2211"
+>
+	<marker line="-1" type="param">
+		<operand  start="2239" length="14" line="30">
+			<expr><![CDATA[drmInfoRequest]]></expr>
+		</operand>
+	</marker>
+	<type  start="2177" length="19" line="30" chordsig="android.drm.DrmInfo"/>
+	<type  start="2212" length="26" line="30" chordsig="android.drm.DrmInfoRequest"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2267" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2263" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2284" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2267" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="acquireRights:(Landroid/drm/DrmInfoRequest;)I@android.drm.DrmManagerClient"
+ sig="int acquireRights(DrmInfoRequest)"
+ line="31"
+ startpos="2308"
+ endpos="2321"
+>
+	<marker line="-1" type="param">
+		<operand  start="2349" length="14" line="31">
+			<expr><![CDATA[drmInfoRequest]]></expr>
+		</operand>
+	</marker>
+	<type  start="2322" length="26" line="31" chordsig="android.drm.DrmInfoRequest"/>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2377" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2373" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2394" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2377" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDrmObjectType:(Ljava/lang/String;Ljava/lang/String;)I@android.drm.DrmManagerClient"
+ sig="int getDrmObjectType(String,String)"
+ line="32"
+ startpos="2418"
+ endpos="2434"
+>
+	<marker line="-1" type="param">
+		<operand  start="2452" length="4" line="32">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2475" length="8" line="32">
+			<expr><![CDATA[mimeType]]></expr>
+		</operand>
+	</marker>
+	<type  start="2435" length="16" line="32" chordsig="java.lang.String"/>
+	<type  start="2458" length="16" line="32" chordsig="java.lang.String"/>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2497" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2493" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2514" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2497" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDrmObjectType:(Landroid/net/Uri;Ljava/lang/String;)I@android.drm.DrmManagerClient"
+ sig="int getDrmObjectType(Uri,String)"
+ line="33"
+ startpos="2538"
+ endpos="2554"
+>
+	<marker line="-1" type="param">
+		<operand  start="2571" length="3" line="33">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2593" length="8" line="33">
+			<expr><![CDATA[mimeType]]></expr>
+		</operand>
+	</marker>
+	<type  start="2555" length="15" line="33" chordsig="android.net.Uri"/>
+	<type  start="2576" length="16" line="33" chordsig="java.lang.String"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2615" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2611" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2632" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2615" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getOriginalMimeType:(Ljava/lang/String;)Ljava/lang/String;@android.drm.DrmManagerClient"
+ sig="String getOriginalMimeType(String)"
+ line="34"
+ startpos="2669"
+ endpos="2688"
+>
+	<marker line="-1" type="param">
+		<operand  start="2706" length="4" line="34">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<type  start="2652" length="16" line="34" chordsig="java.lang.String"/>
+	<type  start="2689" length="16" line="34" chordsig="java.lang.String"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2724" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2720" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2741" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2724" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getOriginalMimeType:(Landroid/net/Uri;)Ljava/lang/String;@android.drm.DrmManagerClient"
+ sig="String getOriginalMimeType(Uri)"
+ line="35"
+ startpos="2778"
+ endpos="2797"
+>
+	<marker line="-1" type="param">
+		<operand  start="2814" length="3" line="35">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<type  start="2761" length="16" line="35" chordsig="java.lang.String"/>
+	<type  start="2798" length="15" line="35" chordsig="android.net.Uri"/>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2831" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2827" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2848" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2831" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="checkRightsStatus:(Ljava/lang/String;)I@android.drm.DrmManagerClient"
+ sig="int checkRightsStatus(String)"
+ line="36"
+ startpos="2872"
+ endpos="2889"
+>
+	<marker line="-1" type="param">
+		<operand  start="2907" length="4" line="36">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<type  start="2890" length="16" line="36" chordsig="java.lang.String"/>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2925" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2921" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2942" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2925" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="checkRightsStatus:(Landroid/net/Uri;)I@android.drm.DrmManagerClient"
+ sig="int checkRightsStatus(Uri)"
+ line="37"
+ startpos="2966"
+ endpos="2983"
+>
+	<marker line="-1" type="param">
+		<operand  start="3000" length="3" line="37">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<type  start="2984" length="15" line="37" chordsig="android.net.Uri"/>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3017" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3013" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3034" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3017" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="checkRightsStatus:(Ljava/lang/String;I)I@android.drm.DrmManagerClient"
+ sig="int checkRightsStatus(String,int)"
+ line="38"
+ startpos="3058"
+ endpos="3075"
+>
+	<marker line="-1" type="param">
+		<operand  start="3093" length="4" line="38">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3103" length="6" line="38">
+			<expr><![CDATA[action]]></expr>
+		</operand>
+	</marker>
+	<type  start="3076" length="16" line="38" chordsig="java.lang.String"/>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3123" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3119" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3140" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3123" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="checkRightsStatus:(Landroid/net/Uri;I)I@android.drm.DrmManagerClient"
+ sig="int checkRightsStatus(Uri,int)"
+ line="39"
+ startpos="3164"
+ endpos="3181"
+>
+	<marker line="-1" type="param">
+		<operand  start="3198" length="3" line="39">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3207" length="6" line="39">
+			<expr><![CDATA[action]]></expr>
+		</operand>
+	</marker>
+	<type  start="3182" length="15" line="39" chordsig="android.net.Uri"/>
+	<newexpr line="39" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3227" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3223" length="29" line="39">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3244" length="7" line="39">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3227" length="16" line="39" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeRights:(Ljava/lang/String;)I@android.drm.DrmManagerClient"
+ sig="int removeRights(String)"
+ line="40"
+ startpos="3268"
+ endpos="3280"
+>
+	<marker line="-1" type="param">
+		<operand  start="3298" length="4" line="40">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<type  start="3281" length="16" line="40" chordsig="java.lang.String"/>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3316" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3312" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3333" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3316" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeRights:(Landroid/net/Uri;)I@android.drm.DrmManagerClient"
+ sig="int removeRights(Uri)"
+ line="41"
+ startpos="3357"
+ endpos="3369"
+>
+	<marker line="-1" type="param">
+		<operand  start="3386" length="3" line="41">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<type  start="3370" length="15" line="41" chordsig="android.net.Uri"/>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3403" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3399" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3420" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3403" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeAllRights:()I@android.drm.DrmManagerClient"
+ sig="int removeAllRights()"
+ line="42"
+ startpos="3444"
+ endpos="3459"
+>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3474" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3470" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3491" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3474" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="openConvertSession:(Ljava/lang/String;)I@android.drm.DrmManagerClient"
+ sig="int openConvertSession(String)"
+ line="43"
+ startpos="3515"
+ endpos="3533"
+>
+	<marker line="-1" type="param">
+		<operand  start="3551" length="8" line="43">
+			<expr><![CDATA[mimeType]]></expr>
+		</operand>
+	</marker>
+	<type  start="3534" length="16" line="43" chordsig="java.lang.String"/>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3573" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3569" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3590" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3573" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="convertData:(I[B)Landroid/drm/DrmConvertedStatus;@android.drm.DrmManagerClient"
+ sig="DrmConvertedStatus convertData(int,byte[])"
+ line="44"
+ startpos="3641"
+ endpos="3652"
+>
+	<marker line="-1" type="param">
+		<operand  start="3657" length="9" line="44">
+			<expr><![CDATA[convertId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3675" length="9" line="44">
+			<expr><![CDATA[inputData]]></expr>
+		</operand>
+	</marker>
+	<type  start="3610" length="30" line="44" chordsig="android.drm.DrmConvertedStatus"/>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3698" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3694" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3715" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3698" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="closeConvertSession:(I)Landroid/drm/DrmConvertedStatus;@android.drm.DrmManagerClient"
+ sig="DrmConvertedStatus closeConvertSession(int)"
+ line="45"
+ startpos="3766"
+ endpos="3785"
+>
+	<marker line="-1" type="param">
+		<operand  start="3790" length="9" line="45">
+			<expr><![CDATA[convertId]]></expr>
+		</operand>
+	</marker>
+	<type  start="3735" length="30" line="45" chordsig="android.drm.DrmConvertedStatus"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3813" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3809" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3830" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3813" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

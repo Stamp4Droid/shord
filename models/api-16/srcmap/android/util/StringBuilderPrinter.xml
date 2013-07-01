@@ -1,0 +1,53 @@
+<root>
+<class chordsig="android.util.StringBuilderPrinter" line="2">
+	<type  start="69" length="20" line="3" chordsig="android.util.Printer"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/StringBuilder;)V@android.util.StringBuilderPrinter"
+ sig="StringBuilderPrinter(StringBuilder)"
+ line="5"
+ startpos="100"
+ endpos="120"
+>
+	<marker line="-1" type="param">
+		<operand  start="145" length="7" line="5">
+			<expr><![CDATA[builder]]></expr>
+		</operand>
+	</marker>
+	<type  start="121" length="23" line="5" chordsig="java.lang.StringBuilder"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="166" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="162" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="183" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="166" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="println:(Ljava/lang/String;)V@android.util.StringBuilderPrinter"
+ sig="void println(String)"
+ line="6"
+ startpos="208"
+ endpos="215"
+>
+	<marker line="-1" type="param">
+		<operand  start="233" length="1" line="6">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<type  start="216" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="248" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="244" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="265" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="248" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

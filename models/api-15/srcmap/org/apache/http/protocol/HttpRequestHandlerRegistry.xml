@@ -1,0 +1,156 @@
+<root>
+<class chordsig="org.apache.http.protocol.HttpRequestHandlerRegistry" line="2">
+	<type  start="87" length="51" line="3" chordsig="org.apache.http.protocol.HttpRequestHandlerResolver"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.protocol.HttpRequestHandlerRegistry"
+ sig="HttpRequestHandlerRegistry()"
+ line="5"
+ startpos="149"
+ endpos="175"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="190" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="186" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="207" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="190" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="register:(Ljava/lang/String;Lorg/apache/http/protocol/HttpRequestHandler;)V@org.apache.http.protocol.HttpRequestHandlerRegistry"
+ sig="void register(String,HttpRequestHandler)"
+ line="6"
+ startpos="232"
+ endpos="240"
+>
+	<marker line="-1" type="param">
+		<operand  start="258" length="7" line="6">
+			<expr><![CDATA[pattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="311" length="7" line="6">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="241" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="267" length="43" line="6" chordsig="org.apache.http.protocol.HttpRequestHandler"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="332" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="328" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="349" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="332" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unregister:(Ljava/lang/String;)V@org.apache.http.protocol.HttpRequestHandlerRegistry"
+ sig="void unregister(String)"
+ line="7"
+ startpos="374"
+ endpos="384"
+>
+	<marker line="-1" type="param">
+		<operand  start="402" length="7" line="7">
+			<expr><![CDATA[pattern]]></expr>
+		</operand>
+	</marker>
+	<type  start="385" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="423" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="419" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="440" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="423" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setHandlers:(Ljava/util/Map;)V@org.apache.http.protocol.HttpRequestHandlerRegistry"
+ sig="void setHandlers(Map)"
+ line="8"
+ startpos="465"
+ endpos="476"
+>
+	<marker line="-1" type="param">
+		<operand  start="491" length="3" line="8">
+			<expr><![CDATA[map]]></expr>
+		</operand>
+	</marker>
+	<type  start="477" length="13" line="8" chordsig="java.util.Map"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="508" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="504" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="525" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="508" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="lookup:(Ljava/lang/String;)Lorg/apache/http/protocol/HttpRequestHandler;@org.apache.http.protocol.HttpRequestHandlerRegistry"
+ sig="HttpRequestHandler lookup(String)"
+ line="9"
+ startpos="589"
+ endpos="595"
+>
+	<marker line="-1" type="param">
+		<operand  start="613" length="10" line="9">
+			<expr><![CDATA[requestURI]]></expr>
+		</operand>
+	</marker>
+	<type  start="545" length="43" line="9" chordsig="org.apache.http.protocol.HttpRequestHandler"/>
+	<type  start="596" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="637" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="633" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="654" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="637" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="matchUriRequestPattern:(Ljava/lang/String;Ljava/lang/String;)Z@org.apache.http.protocol.HttpRequestHandlerRegistry"
+ sig="boolean matchUriRequestPattern(String,String)"
+ line="10"
+ startpos="685"
+ endpos="707"
+>
+	<marker line="-1" type="param">
+		<operand  start="725" length="7" line="10">
+			<expr><![CDATA[pattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="751" length="10" line="10">
+			<expr><![CDATA[requestUri]]></expr>
+		</operand>
+	</marker>
+	<type  start="708" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="734" length="16" line="10" chordsig="java.lang.String"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="775" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="771" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="792" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="775" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

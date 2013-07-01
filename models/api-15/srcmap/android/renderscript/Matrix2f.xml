@@ -1,0 +1,340 @@
+<root>
+<class chordsig="android.renderscript.Matrix2f" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.renderscript.Matrix2f"
+ sig="Matrix2f()"
+ line="4"
+ startpos="62"
+ endpos="70"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="85" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="81" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="102" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="85" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:([F)V@android.renderscript.Matrix2f"
+ sig="Matrix2f(float[])"
+ line="5"
+ startpos="122"
+ endpos="130"
+>
+	<marker line="-1" type="param">
+		<operand  start="139" length="9" line="5">
+			<expr><![CDATA[dataArray]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="162" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="158" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="179" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="162" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getArray:()[F@android.renderscript.Matrix2f"
+ sig="float[] getArray()"
+ line="6"
+ startpos="207"
+ endpos="215"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="230" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="226" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="247" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="230" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="get:(II)F@android.renderscript.Matrix2f"
+ sig="float get(int,int)"
+ line="7"
+ startpos="273"
+ endpos="276"
+>
+	<marker line="-1" type="param">
+		<operand  start="281" length="1" line="7">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="288" length="1" line="7">
+			<expr><![CDATA[j]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="303" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="299" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="320" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="303" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="set:(IIF)V@android.renderscript.Matrix2f"
+ sig="void set(int,int,float)"
+ line="8"
+ startpos="345"
+ endpos="348"
+>
+	<marker line="-1" type="param">
+		<operand  start="353" length="1" line="8">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="360" length="1" line="8">
+			<expr><![CDATA[j]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="369" length="1" line="8">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="384" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="380" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="401" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="384" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="loadIdentity:()V@android.renderscript.Matrix2f"
+ sig="void loadIdentity()"
+ line="9"
+ startpos="426"
+ endpos="438"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="453" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="449" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="470" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="453" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="load:(Landroid/renderscript/Matrix2f;)V@android.renderscript.Matrix2f"
+ sig="void load(Matrix2f)"
+ line="10"
+ startpos="495"
+ endpos="499"
+>
+	<marker line="-1" type="param">
+		<operand  start="530" length="3" line="10">
+			<expr><![CDATA[src]]></expr>
+		</operand>
+	</marker>
+	<type  start="500" length="29" line="10" chordsig="android.renderscript.Matrix2f"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="547" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="543" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="564" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="547" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="loadRotate:(F)V@android.renderscript.Matrix2f"
+ sig="void loadRotate(float)"
+ line="11"
+ startpos="589"
+ endpos="599"
+>
+	<marker line="-1" type="param">
+		<operand  start="606" length="3" line="11">
+			<expr><![CDATA[rot]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="623" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="619" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="640" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="623" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="loadScale:(FF)V@android.renderscript.Matrix2f"
+ sig="void loadScale(float,float)"
+ line="12"
+ startpos="665"
+ endpos="674"
+>
+	<marker line="-1" type="param">
+		<operand  start="681" length="1" line="12">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="690" length="1" line="12">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="705" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="701" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="722" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="705" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="loadMultiply:(Landroid/renderscript/Matrix2f;Landroid/renderscript/Matrix2f;)V@android.renderscript.Matrix2f"
+ sig="void loadMultiply(Matrix2f,Matrix2f)"
+ line="13"
+ startpos="747"
+ endpos="759"
+>
+	<marker line="-1" type="param">
+		<operand  start="790" length="3" line="13">
+			<expr><![CDATA[lhs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="825" length="3" line="13">
+			<expr><![CDATA[rhs]]></expr>
+		</operand>
+	</marker>
+	<type  start="760" length="29" line="13" chordsig="android.renderscript.Matrix2f"/>
+	<type  start="795" length="29" line="13" chordsig="android.renderscript.Matrix2f"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="842" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="838" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="859" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="842" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="multiply:(Landroid/renderscript/Matrix2f;)V@android.renderscript.Matrix2f"
+ sig="void multiply(Matrix2f)"
+ line="14"
+ startpos="884"
+ endpos="892"
+>
+	<marker line="-1" type="param">
+		<operand  start="923" length="3" line="14">
+			<expr><![CDATA[rhs]]></expr>
+		</operand>
+	</marker>
+	<type  start="893" length="29" line="14" chordsig="android.renderscript.Matrix2f"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="940" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="936" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="957" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="940" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="rotate:(F)V@android.renderscript.Matrix2f"
+ sig="void rotate(float)"
+ line="15"
+ startpos="982"
+ endpos="988"
+>
+	<marker line="-1" type="param">
+		<operand  start="995" length="3" line="15">
+			<expr><![CDATA[rot]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1012" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1008" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1029" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1012" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="scale:(FF)V@android.renderscript.Matrix2f"
+ sig="void scale(float,float)"
+ line="16"
+ startpos="1054"
+ endpos="1059"
+>
+	<marker line="-1" type="param">
+		<operand  start="1066" length="1" line="16">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1075" length="1" line="16">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1090" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1086" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1107" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1090" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="transpose:()V@android.renderscript.Matrix2f"
+ sig="void transpose()"
+ line="17"
+ startpos="1132"
+ endpos="1141"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1156" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1152" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1173" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1156" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

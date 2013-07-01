@@ -1,0 +1,32 @@
+<root>
+<class chordsig="android.os.BatteryManager" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.os.BatteryManager"
+ sig="BatteryManager()"
+ line="4"
+ startpos="58"
+ endpos="72"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="87" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="83" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="104" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="87" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="136" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="198" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="260" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="324" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="384" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="444" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="514" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="578" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="642" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="714" length="16" line="14" chordsig="java.lang.String"/>
+</class>
+</root>

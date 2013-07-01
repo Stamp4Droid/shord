@@ -1,0 +1,247 @@
+<root>
+<class chordsig="org.apache.http.params.HttpParams" line="2">
+<method
+ chordsig="getParameter:(Ljava/lang/String;)Ljava/lang/Object;@org.apache.http.params.HttpParams"
+ sig="Object getParameter(String)"
+ line="4"
+ startpos="96"
+ endpos="108"
+>
+	<marker line="-1" type="param">
+		<operand  start="126" length="4" line="4">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="79" length="16" line="4" chordsig="java.lang.Object"/>
+	<type  start="109" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setParameter:(Ljava/lang/String;Ljava/lang/Object;)Lorg/apache/http/params/HttpParams;@org.apache.http.params.HttpParams"
+ sig="HttpParams setParameter(String,Object)"
+ line="5"
+ startpos="184"
+ endpos="196"
+>
+	<marker line="-1" type="param">
+		<operand  start="214" length="4" line="5">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="237" length="5" line="5">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="150" length="33" line="5" chordsig="org.apache.http.params.HttpParams"/>
+	<type  start="197" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="220" length="16" line="5" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="copy:()Lorg/apache/http/params/HttpParams;@org.apache.http.params.HttpParams"
+ sig="HttpParams copy()"
+ line="6"
+ startpos="296"
+ endpos="300"
+>
+	<type  start="262" length="33" line="6" chordsig="org.apache.http.params.HttpParams"/>
+</method>
+<method
+ chordsig="removeParameter:(Ljava/lang/String;)Z@org.apache.http.params.HttpParams"
+ sig="boolean removeParameter(String)"
+ line="7"
+ startpos="329"
+ endpos="344"
+>
+	<marker line="-1" type="param">
+		<operand  start="362" length="4" line="7">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="345" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getLongParameter:(Ljava/lang/String;J)J@org.apache.http.params.HttpParams"
+ sig="long getLongParameter(String,long)"
+ line="8"
+ startpos="391"
+ endpos="407"
+>
+	<marker line="-1" type="param">
+		<operand  start="425" length="4" line="8">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="436" length="12" line="8">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="408" length="16" line="8" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setLongParameter:(Ljava/lang/String;J)Lorg/apache/http/params/HttpParams;@org.apache.http.params.HttpParams"
+ sig="HttpParams setLongParameter(String,long)"
+ line="9"
+ startpos="502"
+ endpos="518"
+>
+	<marker line="-1" type="param">
+		<operand  start="536" length="4" line="9">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="547" length="5" line="9">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="468" length="33" line="9" chordsig="org.apache.http.params.HttpParams"/>
+	<type  start="519" length="16" line="9" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getIntParameter:(Ljava/lang/String;I)I@org.apache.http.params.HttpParams"
+ sig="int getIntParameter(String,int)"
+ line="10"
+ startpos="576"
+ endpos="591"
+>
+	<marker line="-1" type="param">
+		<operand  start="609" length="4" line="10">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="619" length="12" line="10">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="592" length="16" line="10" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setIntParameter:(Ljava/lang/String;I)Lorg/apache/http/params/HttpParams;@org.apache.http.params.HttpParams"
+ sig="HttpParams setIntParameter(String,int)"
+ line="11"
+ startpos="685"
+ endpos="700"
+>
+	<marker line="-1" type="param">
+		<operand  start="718" length="4" line="11">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="728" length="5" line="11">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="651" length="33" line="11" chordsig="org.apache.http.params.HttpParams"/>
+	<type  start="701" length="16" line="11" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getDoubleParameter:(Ljava/lang/String;D)D@org.apache.http.params.HttpParams"
+ sig="double getDoubleParameter(String,double)"
+ line="12"
+ startpos="760"
+ endpos="778"
+>
+	<marker line="-1" type="param">
+		<operand  start="796" length="4" line="12">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="809" length="12" line="12">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="779" length="16" line="12" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setDoubleParameter:(Ljava/lang/String;D)Lorg/apache/http/params/HttpParams;@org.apache.http.params.HttpParams"
+ sig="HttpParams setDoubleParameter(String,double)"
+ line="13"
+ startpos="875"
+ endpos="893"
+>
+	<marker line="-1" type="param">
+		<operand  start="911" length="4" line="13">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="924" length="5" line="13">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="841" length="33" line="13" chordsig="org.apache.http.params.HttpParams"/>
+	<type  start="894" length="16" line="13" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getBooleanParameter:(Ljava/lang/String;Z)Z@org.apache.http.params.HttpParams"
+ sig="boolean getBooleanParameter(String,boolean)"
+ line="14"
+ startpos="957"
+ endpos="976"
+>
+	<marker line="-1" type="param">
+		<operand  start="994" length="4" line="14">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1008" length="12" line="14">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="977" length="16" line="14" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setBooleanParameter:(Ljava/lang/String;Z)Lorg/apache/http/params/HttpParams;@org.apache.http.params.HttpParams"
+ sig="HttpParams setBooleanParameter(String,boolean)"
+ line="15"
+ startpos="1074"
+ endpos="1093"
+>
+	<marker line="-1" type="param">
+		<operand  start="1111" length="4" line="15">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1125" length="5" line="15">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="1040" length="33" line="15" chordsig="org.apache.http.params.HttpParams"/>
+	<type  start="1094" length="16" line="15" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="isParameterTrue:(Ljava/lang/String;)Z@org.apache.http.params.HttpParams"
+ sig="boolean isParameterTrue(String)"
+ line="16"
+ startpos="1158"
+ endpos="1173"
+>
+	<marker line="-1" type="param">
+		<operand  start="1191" length="4" line="16">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="1174" length="16" line="16" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="isParameterFalse:(Ljava/lang/String;)Z@org.apache.http.params.HttpParams"
+ sig="boolean isParameterFalse(String)"
+ line="17"
+ startpos="1223"
+ endpos="1239"
+>
+	<marker line="-1" type="param">
+		<operand  start="1257" length="4" line="17">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="1240" length="16" line="17" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

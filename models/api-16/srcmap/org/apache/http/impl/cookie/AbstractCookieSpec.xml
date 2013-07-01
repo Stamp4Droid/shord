@@ -1,0 +1,123 @@
+<root>
+<class chordsig="org.apache.http.impl.cookie.AbstractCookieSpec" line="2">
+	<type  start="91" length="33" line="3" chordsig="org.apache.http.cookie.CookieSpec"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.impl.cookie.AbstractCookieSpec"
+ sig="AbstractCookieSpec()"
+ line="5"
+ startpos="135"
+ endpos="153"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="168" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="164" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="185" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="168" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="registerAttribHandler:(Ljava/lang/String;Lorg/apache/http/cookie/CookieAttributeHandler;)V@org.apache.http.impl.cookie.AbstractCookieSpec"
+ sig="void registerAttribHandler(String,CookieAttributeHandler)"
+ line="6"
+ startpos="210"
+ endpos="231"
+>
+	<marker line="-1" type="param">
+		<operand  start="249" length="4" line="6">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="301" length="7" line="6">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="232" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="255" length="45" line="6" chordsig="org.apache.http.cookie.CookieAttributeHandler"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="322" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="318" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="339" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="322" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="findAttribHandler:(Ljava/lang/String;)Lorg/apache/http/cookie/CookieAttributeHandler;@org.apache.http.impl.cookie.AbstractCookieSpec"
+ sig="CookieAttributeHandler findAttribHandler(String)"
+ line="7"
+ startpos="408"
+ endpos="425"
+>
+	<marker line="-1" type="param">
+		<operand  start="443" length="4" line="7">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="362" length="45" line="7" chordsig="org.apache.http.cookie.CookieAttributeHandler"/>
+	<type  start="426" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="461" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="457" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="478" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="461" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAttribHandler:(Ljava/lang/String;)Lorg/apache/http/cookie/CookieAttributeHandler;@org.apache.http.impl.cookie.AbstractCookieSpec"
+ sig="CookieAttributeHandler getAttribHandler(String)"
+ line="8"
+ startpos="547"
+ endpos="563"
+>
+	<marker line="-1" type="param">
+		<operand  start="581" length="4" line="8">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="501" length="45" line="8" chordsig="org.apache.http.cookie.CookieAttributeHandler"/>
+	<type  start="564" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="599" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="595" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="616" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="599" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAttribHandlers:()Ljava/util/Collection;@org.apache.http.impl.cookie.AbstractCookieSpec"
+ sig="Collection&lt;CookieAttributeHandler&gt; getAttribHandlers()"
+ line="9"
+ startpos="707"
+ endpos="724"
+>
+	<type  start="639" length="20" line="9" chordsig="java.util.Collection"/>
+	<type  start="660" length="45" line="9" chordsig="org.apache.http.cookie.CookieAttributeHandler"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="739" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="735" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="756" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="739" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

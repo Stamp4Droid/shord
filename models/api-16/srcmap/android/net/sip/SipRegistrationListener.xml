@@ -1,0 +1,62 @@
+<root>
+<class chordsig="android.net.sip.SipRegistrationListener" line="2">
+<method
+ chordsig="onRegistering:(Ljava/lang/String;)V@android.net.sip.SipRegistrationListener"
+ sig="void onRegistering(String)"
+ line="4"
+ startpos="90"
+ endpos="103"
+>
+	<marker line="-1" type="param">
+		<operand  start="121" length="15" line="4">
+			<expr><![CDATA[localProfileUri]]></expr>
+		</operand>
+	</marker>
+	<type  start="104" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="onRegistrationDone:(Ljava/lang/String;J)V@android.net.sip.SipRegistrationListener"
+ sig="void onRegistrationDone(String,long)"
+ line="5"
+ startpos="161"
+ endpos="179"
+>
+	<marker line="-1" type="param">
+		<operand  start="197" length="15" line="5">
+			<expr><![CDATA[localProfileUri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="219" length="10" line="5">
+			<expr><![CDATA[expiryTime]]></expr>
+		</operand>
+	</marker>
+	<type  start="180" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="onRegistrationFailed:(Ljava/lang/String;ILjava/lang/String;)V@android.net.sip.SipRegistrationListener"
+ sig="void onRegistrationFailed(String,int,String)"
+ line="6"
+ startpos="254"
+ endpos="274"
+>
+	<marker line="-1" type="param">
+		<operand  start="292" length="15" line="6">
+			<expr><![CDATA[localProfileUri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="313" length="9" line="6">
+			<expr><![CDATA[errorCode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="341" length="12" line="6">
+			<expr><![CDATA[errorMessage]]></expr>
+		</operand>
+	</marker>
+	<type  start="275" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="324" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

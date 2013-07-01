@@ -1,0 +1,319 @@
+<root>
+<class chordsig="android.view.inputmethod.InputConnection" line="2">
+<method
+ chordsig="getTextBeforeCursor:(II)Ljava/lang/CharSequence;@android.view.inputmethod.InputConnection"
+ sig="CharSequence getTextBeforeCursor(int,int)"
+ line="4"
+ startpos="109"
+ endpos="128"
+>
+	<marker line="-1" type="param">
+		<operand  start="133" length="1" line="4">
+			<expr><![CDATA[n]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="140" length="5" line="4">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="86" length="22" line="4" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="getTextAfterCursor:(II)Ljava/lang/CharSequence;@android.view.inputmethod.InputConnection"
+ sig="CharSequence getTextAfterCursor(int,int)"
+ line="5"
+ startpos="188"
+ endpos="206"
+>
+	<marker line="-1" type="param">
+		<operand  start="211" length="1" line="5">
+			<expr><![CDATA[n]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="218" length="5" line="5">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="165" length="22" line="5" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="getSelectedText:(I)Ljava/lang/CharSequence;@android.view.inputmethod.InputConnection"
+ sig="CharSequence getSelectedText(int)"
+ line="6"
+ startpos="266"
+ endpos="281"
+>
+	<marker line="-1" type="param">
+		<operand  start="286" length="5" line="6">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="243" length="22" line="6" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="getCursorCapsMode:(I)I@android.view.inputmethod.InputConnection"
+ sig="int getCursorCapsMode(int)"
+ line="7"
+ startpos="315"
+ endpos="332"
+>
+	<marker line="-1" type="param">
+		<operand  start="337" length="8" line="7">
+			<expr><![CDATA[reqModes]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getExtractedText:(Landroid/view/inputmethod/ExtractedTextRequest;I)Landroid/view/inputmethod/ExtractedText;@android.view.inputmethod.InputConnection"
+ sig="ExtractedText getExtractedText(ExtractedTextRequest,int)"
+ line="8"
+ startpos="404"
+ endpos="420"
+>
+	<marker line="-1" type="param">
+		<operand  start="467" length="7" line="8">
+			<expr><![CDATA[request]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="480" length="5" line="8">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="365" length="38" line="8" chordsig="android.view.inputmethod.ExtractedText"/>
+	<type  start="421" length="45" line="8" chordsig="android.view.inputmethod.ExtractedTextRequest"/>
+</method>
+<method
+ chordsig="deleteSurroundingText:(II)Z@android.view.inputmethod.InputConnection"
+ sig="boolean deleteSurroundingText(int,int)"
+ line="9"
+ startpos="513"
+ endpos="534"
+>
+	<marker line="-1" type="param">
+		<operand  start="539" length="10" line="9">
+			<expr><![CDATA[leftLength]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="555" length="11" line="9">
+			<expr><![CDATA[rightLength]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setComposingText:(Ljava/lang/CharSequence;I)Z@android.view.inputmethod.InputConnection"
+ sig="boolean setComposingText(CharSequence,int)"
+ line="10"
+ startpos="594"
+ endpos="610"
+>
+	<marker line="-1" type="param">
+		<operand  start="634" length="4" line="10">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="644" length="17" line="10">
+			<expr><![CDATA[newCursorPosition]]></expr>
+		</operand>
+	</marker>
+	<type  start="611" length="22" line="10" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="setComposingRegion:(II)Z@android.view.inputmethod.InputConnection"
+ sig="boolean setComposingRegion(int,int)"
+ line="11"
+ startpos="689"
+ endpos="707"
+>
+	<marker line="-1" type="param">
+		<operand  start="712" length="5" line="11">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="723" length="3" line="11">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="finishComposingText:()Z@android.view.inputmethod.InputConnection"
+ sig="boolean finishComposingText()"
+ line="12"
+ startpos="754"
+ endpos="773"
+>
+</method>
+<method
+ chordsig="commitText:(Ljava/lang/CharSequence;I)Z@android.view.inputmethod.InputConnection"
+ sig="boolean commitText(CharSequence,int)"
+ line="13"
+ startpos="802"
+ endpos="812"
+>
+	<marker line="-1" type="param">
+		<operand  start="836" length="4" line="13">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="846" length="17" line="13">
+			<expr><![CDATA[newCursorPosition]]></expr>
+		</operand>
+	</marker>
+	<type  start="813" length="22" line="13" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="commitCompletion:(Landroid/view/inputmethod/CompletionInfo;)Z@android.view.inputmethod.InputConnection"
+ sig="boolean commitCompletion(CompletionInfo)"
+ line="14"
+ startpos="891"
+ endpos="907"
+>
+	<marker line="-1" type="param">
+		<operand  start="948" length="4" line="14">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="908" length="39" line="14" chordsig="android.view.inputmethod.CompletionInfo"/>
+</method>
+<method
+ chordsig="commitCorrection:(Landroid/view/inputmethod/CorrectionInfo;)Z@android.view.inputmethod.InputConnection"
+ sig="boolean commitCorrection(CorrectionInfo)"
+ line="15"
+ startpos="980"
+ endpos="996"
+>
+	<marker line="-1" type="param">
+		<operand  start="1037" length="14" line="15">
+			<expr><![CDATA[correctionInfo]]></expr>
+		</operand>
+	</marker>
+	<type  start="997" length="39" line="15" chordsig="android.view.inputmethod.CorrectionInfo"/>
+</method>
+<method
+ chordsig="setSelection:(II)Z@android.view.inputmethod.InputConnection"
+ sig="boolean setSelection(int,int)"
+ line="16"
+ startpos="1079"
+ endpos="1091"
+>
+	<marker line="-1" type="param">
+		<operand  start="1096" length="5" line="16">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1107" length="3" line="16">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="performEditorAction:(I)Z@android.view.inputmethod.InputConnection"
+ sig="boolean performEditorAction(int)"
+ line="17"
+ startpos="1138"
+ endpos="1157"
+>
+	<marker line="-1" type="param">
+		<operand  start="1162" length="12" line="17">
+			<expr><![CDATA[editorAction]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="performContextMenuAction:(I)Z@android.view.inputmethod.InputConnection"
+ sig="boolean performContextMenuAction(int)"
+ line="18"
+ startpos="1202"
+ endpos="1226"
+>
+	<marker line="-1" type="param">
+		<operand  start="1231" length="2" line="18">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="beginBatchEdit:()Z@android.view.inputmethod.InputConnection"
+ sig="boolean beginBatchEdit()"
+ line="19"
+ startpos="1261"
+ endpos="1275"
+>
+</method>
+<method
+ chordsig="endBatchEdit:()Z@android.view.inputmethod.InputConnection"
+ sig="boolean endBatchEdit()"
+ line="20"
+ startpos="1304"
+ endpos="1316"
+>
+</method>
+<method
+ chordsig="sendKeyEvent:(Landroid/view/KeyEvent;)Z@android.view.inputmethod.InputConnection"
+ sig="boolean sendKeyEvent(KeyEvent)"
+ line="21"
+ startpos="1345"
+ endpos="1357"
+>
+	<marker line="-1" type="param">
+		<operand  start="1380" length="5" line="21">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="1358" length="21" line="21" chordsig="android.view.KeyEvent"/>
+</method>
+<method
+ chordsig="clearMetaKeyStates:(I)Z@android.view.inputmethod.InputConnection"
+ sig="boolean clearMetaKeyStates(int)"
+ line="22"
+ startpos="1413"
+ endpos="1431"
+>
+	<marker line="-1" type="param">
+		<operand  start="1436" length="6" line="22">
+			<expr><![CDATA[states]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="reportFullscreenMode:(Z)Z@android.view.inputmethod.InputConnection"
+ sig="boolean reportFullscreenMode(boolean)"
+ line="23"
+ startpos="1470"
+ endpos="1490"
+>
+	<marker line="-1" type="param">
+		<operand  start="1499" length="7" line="23">
+			<expr><![CDATA[enabled]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="performPrivateCommand:(Ljava/lang/String;Landroid/os/Bundle;)Z@android.view.inputmethod.InputConnection"
+ sig="boolean performPrivateCommand(String,Bundle)"
+ line="24"
+ startpos="1534"
+ endpos="1555"
+>
+	<marker line="-1" type="param">
+		<operand  start="1573" length="6" line="24">
+			<expr><![CDATA[action]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1599" length="4" line="24">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<type  start="1556" length="16" line="24" chordsig="java.lang.String"/>
+	<type  start="1581" length="17" line="24" chordsig="android.os.Bundle"/>
+</method>
+</class>
+</root>

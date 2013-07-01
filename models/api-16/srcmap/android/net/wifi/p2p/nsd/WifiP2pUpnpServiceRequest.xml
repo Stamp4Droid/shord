@@ -1,0 +1,67 @@
+<root>
+<class chordsig="android.net.wifi.p2p.nsd.WifiP2pUpnpServiceRequest" line="2">
+	<type  start="83" length="46" line="3" chordsig="android.net.wifi.p2p.nsd.WifiP2pServiceRequest"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.net.wifi.p2p.nsd.WifiP2pUpnpServiceRequest"
+ sig="WifiP2pUpnpServiceRequest()"
+ line="5"
+ startpos="132"
+ endpos="157"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="172" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="168" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="189" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="172" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newInstance:()Landroid/net/wifi/p2p/nsd/WifiP2pUpnpServiceRequest;@android.net.wifi.p2p.nsd.WifiP2pUpnpServiceRequest"
+ sig="WifiP2pUpnpServiceRequest newInstance()"
+ line="6"
+ startpos="267"
+ endpos="278"
+>
+	<type  start="216" length="50" line="6" chordsig="android.net.wifi.p2p.nsd.WifiP2pUpnpServiceRequest"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="293" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="289" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="310" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="293" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newInstance:(Ljava/lang/String;)Landroid/net/wifi/p2p/nsd/WifiP2pUpnpServiceRequest;@android.net.wifi.p2p.nsd.WifiP2pUpnpServiceRequest"
+ sig="WifiP2pUpnpServiceRequest newInstance(String)"
+ line="7"
+ startpos="388"
+ endpos="399"
+>
+	<marker line="-1" type="param">
+		<operand  start="417" length="2" line="7">
+			<expr><![CDATA[st]]></expr>
+		</operand>
+	</marker>
+	<type  start="337" length="50" line="7" chordsig="android.net.wifi.p2p.nsd.WifiP2pUpnpServiceRequest"/>
+	<type  start="400" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="433" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="429" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="450" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="433" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

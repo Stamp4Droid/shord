@@ -1,0 +1,6 @@
+<root>
+<class chordsig="org.apache.http.protocol.HttpProcessor" line="2">
+	<type  start="75" length="38" line="3" chordsig="org.apache.http.HttpRequestInterceptor"/>
+	<type  start="115" length="39" line="3" chordsig="org.apache.http.HttpResponseInterceptor"/>
+</class>
+</root>

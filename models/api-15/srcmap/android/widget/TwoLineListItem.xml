@@ -1,0 +1,156 @@
+<root>
+<class chordsig="android.widget.TwoLineListItem" line="2">
+	<type  start="63" length="29" line="3" chordsig="android.widget.RelativeLayout"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.widget.TwoLineListItem"
+ sig="TwoLineListItem(Context)"
+ line="5"
+ startpos="103"
+ endpos="118"
+>
+	<marker line="-1" type="param">
+		<operand  start="143" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="119" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="161" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="191" length="25" line="5" chordsig="android.util.AttributeSet"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="236" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="232" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="253" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="236" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.widget.TwoLineListItem"
+ sig="TwoLineListItem(Context,AttributeSet)"
+ line="6"
+ startpos="273"
+ endpos="288"
+>
+	<marker line="-1" type="param">
+		<operand  start="313" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="348" length="5" line="6">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="289" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="322" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<type  start="364" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="394" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="439" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="435" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="456" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="439" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;I)V@android.widget.TwoLineListItem"
+ sig="TwoLineListItem(Context,AttributeSet,int)"
+ line="7"
+ startpos="476"
+ endpos="491"
+>
+	<marker line="-1" type="param">
+		<operand  start="516" length="7" line="7">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="551" length="5" line="7">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="562" length="8" line="7">
+			<expr><![CDATA[defStyle]]></expr>
+		</operand>
+	</marker>
+	<type  start="492" length="23" line="7" chordsig="android.content.Context"/>
+	<type  start="525" length="25" line="7" chordsig="android.util.AttributeSet"/>
+	<type  start="581" length="23" line="7" chordsig="android.content.Context"/>
+	<type  start="611" length="25" line="7" chordsig="android.util.AttributeSet"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="656" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="652" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="673" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="656" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onFinishInflate:()V@android.widget.TwoLineListItem"
+ sig="void onFinishInflate()"
+ line="8"
+ startpos="701"
+ endpos="716"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="731" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="727" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="748" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="731" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getText1:()Landroid/widget/TextView;@android.widget.TwoLineListItem"
+ sig="TextView getText1()"
+ line="9"
+ startpos="792"
+ endpos="800"
+>
+	<type  start="768" length="23" line="9" chordsig="android.widget.TextView"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="815" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="811" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="832" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="815" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getText2:()Landroid/widget/TextView;@android.widget.TwoLineListItem"
+ sig="TextView getText2()"
+ line="10"
+ startpos="876"
+ endpos="884"
+>
+	<type  start="852" length="23" line="10" chordsig="android.widget.TextView"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="899" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="895" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="916" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="899" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

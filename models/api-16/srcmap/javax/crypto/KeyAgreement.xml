@@ -1,0 +1,386 @@
+<root>
+<class chordsig="javax.crypto.KeyAgreement" line="2">
+<method
+ chordsig="&lt;init&gt;:(Ljavax/crypto/KeyAgreementSpi;Ljava/security/Provider;Ljava/lang/String;)V@javax.crypto.KeyAgreement"
+ sig="KeyAgreement(KeyAgreementSpi,Provider,String)"
+ line="4"
+ startpos="61"
+ endpos="73"
+>
+	<marker line="-1" type="param">
+		<operand  start="103" length="11" line="4">
+			<expr><![CDATA[keyAgreeSpi]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="139" length="8" line="4">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="166" length="9" line="4">
+			<expr><![CDATA[algorithm]]></expr>
+		</operand>
+	</marker>
+	<type  start="74" length="28" line="4" chordsig="javax.crypto.KeyAgreementSpi"/>
+	<type  start="116" length="22" line="4" chordsig="java.security.Provider"/>
+	<type  start="149" length="16" line="4" chordsig="java.lang.String"/>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="189" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="185" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="206" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="189" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAlgorithm:()Ljava/lang/String;@javax.crypto.KeyAgreement"
+ sig="String getAlgorithm()"
+ line="5"
+ startpos="249"
+ endpos="261"
+>
+	<type  start="232" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="276" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="272" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="293" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="276" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getProvider:()Ljava/security/Provider;@javax.crypto.KeyAgreement"
+ sig="Provider getProvider()"
+ line="6"
+ startpos="342"
+ endpos="353"
+>
+	<type  start="319" length="22" line="6" chordsig="java.security.Provider"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="368" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="364" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="385" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="368" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInstance:(Ljava/lang/String;)Ljavax/crypto/KeyAgreement;@javax.crypto.KeyAgreement"
+ sig="KeyAgreement getInstance(String)"
+ line="7"
+ startpos="444"
+ endpos="455"
+>
+	<marker line="-1" type="param">
+		<operand  start="473" length="9" line="7">
+			<expr><![CDATA[algorithm]]></expr>
+		</operand>
+	</marker>
+	<type  start="418" length="25" line="7" chordsig="javax.crypto.KeyAgreement"/>
+	<type  start="456" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="542" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="538" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="559" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="542" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInstance:(Ljava/lang/String;Ljava/lang/String;)Ljavax/crypto/KeyAgreement;@javax.crypto.KeyAgreement"
+ sig="KeyAgreement getInstance(String,String)"
+ line="8"
+ startpos="618"
+ endpos="629"
+>
+	<marker line="-1" type="param">
+		<operand  start="647" length="9" line="8">
+			<expr><![CDATA[algorithm]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="675" length="8" line="8">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<type  start="592" length="25" line="8" chordsig="javax.crypto.KeyAgreement"/>
+	<type  start="630" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="658" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="782" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="778" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="799" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="782" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInstance:(Ljava/lang/String;Ljava/security/Provider;)Ljavax/crypto/KeyAgreement;@javax.crypto.KeyAgreement"
+ sig="KeyAgreement getInstance(String,Provider)"
+ line="9"
+ startpos="858"
+ endpos="869"
+>
+	<marker line="-1" type="param">
+		<operand  start="887" length="9" line="9">
+			<expr><![CDATA[algorithm]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="921" length="8" line="9">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<type  start="832" length="25" line="9" chordsig="javax.crypto.KeyAgreement"/>
+	<type  start="870" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="898" length="22" line="9" chordsig="java.security.Provider"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="989" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="985" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1006" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="989" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="init:(Ljava/security/Key;)V@javax.crypto.KeyAgreement"
+ sig="void init(Key)"
+ line="10"
+ startpos="1037"
+ endpos="1041"
+>
+	<marker line="-1" type="param">
+		<operand  start="1060" length="3" line="10">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="1042" length="17" line="10" chordsig="java.security.Key"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1118" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1114" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1135" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1118" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="init:(Ljava/security/Key;Ljava/security/SecureRandom;)V@javax.crypto.KeyAgreement"
+ sig="void init(Key,SecureRandom)"
+ line="11"
+ startpos="1166"
+ endpos="1170"
+>
+	<marker line="-1" type="param">
+		<operand  start="1189" length="3" line="11">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1221" length="6" line="11">
+			<expr><![CDATA[random]]></expr>
+		</operand>
+	</marker>
+	<type  start="1171" length="17" line="11" chordsig="java.security.Key"/>
+	<type  start="1194" length="26" line="11" chordsig="java.security.SecureRandom"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1282" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1278" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1299" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1282" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="init:(Ljava/security/Key;Ljava/security/spec/AlgorithmParameterSpec;)V@javax.crypto.KeyAgreement"
+ sig="void init(Key,AlgorithmParameterSpec)"
+ line="12"
+ startpos="1330"
+ endpos="1334"
+>
+	<marker line="-1" type="param">
+		<operand  start="1353" length="3" line="12">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1400" length="6" line="12">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="1335" length="17" line="12" chordsig="java.security.Key"/>
+	<type  start="1358" length="41" line="12" chordsig="java.security.spec.AlgorithmParameterSpec"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1511" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1507" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1528" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1511" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="init:(Ljava/security/Key;Ljava/security/spec/AlgorithmParameterSpec;Ljava/security/SecureRandom;)V@javax.crypto.KeyAgreement"
+ sig="void init(Key,AlgorithmParameterSpec,SecureRandom)"
+ line="13"
+ startpos="1559"
+ endpos="1563"
+>
+	<marker line="-1" type="param">
+		<operand  start="1582" length="3" line="13">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1629" length="6" line="13">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1664" length="6" line="13">
+			<expr><![CDATA[random]]></expr>
+		</operand>
+	</marker>
+	<type  start="1564" length="17" line="13" chordsig="java.security.Key"/>
+	<type  start="1587" length="41" line="13" chordsig="java.security.spec.AlgorithmParameterSpec"/>
+	<type  start="1637" length="26" line="13" chordsig="java.security.SecureRandom"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1775" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1771" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1792" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1775" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="doPhase:(Ljava/security/Key;Z)Ljava/security/Key;@javax.crypto.KeyAgreement"
+ sig="Key doPhase(Key,boolean)"
+ line="14"
+ startpos="1836"
+ endpos="1843"
+>
+	<marker line="-1" type="param">
+		<operand  start="1862" length="3" line="14">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1875" length="9" line="14">
+			<expr><![CDATA[lastPhase]]></expr>
+		</operand>
+	</marker>
+	<type  start="1818" length="17" line="14" chordsig="java.security.Key"/>
+	<type  start="1844" length="17" line="14" chordsig="java.security.Key"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1972" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1968" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1989" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1972" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="generateSecret:()[B@javax.crypto.KeyAgreement"
+ sig="byte[] generateSecret()"
+ line="15"
+ startpos="2022"
+ endpos="2036"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2090" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2086" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2107" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2090" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="generateSecret:([BI)I@javax.crypto.KeyAgreement"
+ sig="int generateSecret(byte[],int)"
+ line="16"
+ startpos="2137"
+ endpos="2151"
+>
+	<marker line="-1" type="param">
+		<operand  start="2159" length="12" line="16">
+			<expr><![CDATA[sharedSecret]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2177" length="6" line="16">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2271" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2267" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2288" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2271" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="generateSecret:(Ljava/lang/String;)Ljavax/crypto/SecretKey;@javax.crypto.KeyAgreement"
+ sig="SecretKey generateSecret(String)"
+ line="17"
+ startpos="2337"
+ endpos="2351"
+>
+	<marker line="-1" type="param">
+		<operand  start="2369" length="9" line="17">
+			<expr><![CDATA[algorithm]]></expr>
+		</operand>
+	</marker>
+	<type  start="2314" length="22" line="17" chordsig="javax.crypto.SecretKey"/>
+	<type  start="2352" length="16" line="17" chordsig="java.lang.String"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2506" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2502" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2523" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2506" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

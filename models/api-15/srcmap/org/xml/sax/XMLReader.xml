@@ -1,0 +1,192 @@
+<root>
+<class chordsig="org.xml.sax.XMLReader" line="2">
+<method
+ chordsig="getFeature:(Ljava/lang/String;)Z@org.xml.sax.XMLReader"
+ sig="boolean getFeature(String)"
+ line="4"
+ startpos="75"
+ endpos="85"
+>
+	<marker line="-1" type="param">
+		<operand  start="103" length="4" line="4">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="86" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setFeature:(Ljava/lang/String;Z)V@org.xml.sax.XMLReader"
+ sig="void setFeature(String,boolean)"
+ line="5"
+ startpos="215"
+ endpos="225"
+>
+	<marker line="-1" type="param">
+		<operand  start="243" length="4" line="5">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="257" length="5" line="5">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="226" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getProperty:(Ljava/lang/String;)Ljava/lang/Object;@org.xml.sax.XMLReader"
+ sig="Object getProperty(String)"
+ line="6"
+ startpos="382"
+ endpos="393"
+>
+	<marker line="-1" type="param">
+		<operand  start="411" length="4" line="6">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="365" length="16" line="6" chordsig="java.lang.Object"/>
+	<type  start="394" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setProperty:(Ljava/lang/String;Ljava/lang/Object;)V@org.xml.sax.XMLReader"
+ sig="void setProperty(String,Object)"
+ line="7"
+ startpos="523"
+ endpos="534"
+>
+	<marker line="-1" type="param">
+		<operand  start="552" length="4" line="7">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="575" length="5" line="7">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="535" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="558" length="16" line="7" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="setEntityResolver:(Lorg/xml/sax/EntityResolver;)V@org.xml.sax.XMLReader"
+ sig="void setEntityResolver(EntityResolver)"
+ line="8"
+ startpos="688"
+ endpos="705"
+>
+	<marker line="-1" type="param">
+		<operand  start="733" length="8" line="8">
+			<expr><![CDATA[resolver]]></expr>
+		</operand>
+	</marker>
+	<type  start="706" length="26" line="8" chordsig="org.xml.sax.EntityResolver"/>
+</method>
+<method
+ chordsig="getEntityResolver:()Lorg/xml/sax/EntityResolver;@org.xml.sax.XMLReader"
+ sig="EntityResolver getEntityResolver()"
+ line="9"
+ startpos="788"
+ endpos="805"
+>
+	<type  start="761" length="26" line="9" chordsig="org.xml.sax.EntityResolver"/>
+</method>
+<method
+ chordsig="setDTDHandler:(Lorg/xml/sax/DTDHandler;)V@org.xml.sax.XMLReader"
+ sig="void setDTDHandler(DTDHandler)"
+ line="10"
+ startpos="831"
+ endpos="844"
+>
+	<marker line="-1" type="param">
+		<operand  start="868" length="7" line="10">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="845" length="22" line="10" chordsig="org.xml.sax.DTDHandler"/>
+</method>
+<method
+ chordsig="getDTDHandler:()Lorg/xml/sax/DTDHandler;@org.xml.sax.XMLReader"
+ sig="DTDHandler getDTDHandler()"
+ line="11"
+ startpos="918"
+ endpos="931"
+>
+	<type  start="895" length="22" line="11" chordsig="org.xml.sax.DTDHandler"/>
+</method>
+<method
+ chordsig="setContentHandler:(Lorg/xml/sax/ContentHandler;)V@org.xml.sax.XMLReader"
+ sig="void setContentHandler(ContentHandler)"
+ line="12"
+ startpos="957"
+ endpos="974"
+>
+	<marker line="-1" type="param">
+		<operand  start="1002" length="7" line="12">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="975" length="26" line="12" chordsig="org.xml.sax.ContentHandler"/>
+</method>
+<method
+ chordsig="getContentHandler:()Lorg/xml/sax/ContentHandler;@org.xml.sax.XMLReader"
+ sig="ContentHandler getContentHandler()"
+ line="13"
+ startpos="1056"
+ endpos="1073"
+>
+	<type  start="1029" length="26" line="13" chordsig="org.xml.sax.ContentHandler"/>
+</method>
+<method
+ chordsig="setErrorHandler:(Lorg/xml/sax/ErrorHandler;)V@org.xml.sax.XMLReader"
+ sig="void setErrorHandler(ErrorHandler)"
+ line="14"
+ startpos="1099"
+ endpos="1114"
+>
+	<marker line="-1" type="param">
+		<operand  start="1140" length="7" line="14">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="1115" length="24" line="14" chordsig="org.xml.sax.ErrorHandler"/>
+</method>
+<method
+ chordsig="getErrorHandler:()Lorg/xml/sax/ErrorHandler;@org.xml.sax.XMLReader"
+ sig="ErrorHandler getErrorHandler()"
+ line="15"
+ startpos="1192"
+ endpos="1207"
+>
+	<type  start="1167" length="24" line="15" chordsig="org.xml.sax.ErrorHandler"/>
+</method>
+<method
+ chordsig="parse:(Lorg/xml/sax/InputSource;)V@org.xml.sax.XMLReader"
+ sig="void parse(InputSource)"
+ line="16"
+ startpos="1233"
+ endpos="1238"
+>
+	<marker line="-1" type="param">
+		<operand  start="1263" length="5" line="16">
+			<expr><![CDATA[input]]></expr>
+		</operand>
+	</marker>
+	<type  start="1239" length="23" line="16" chordsig="org.xml.sax.InputSource"/>
+</method>
+<method
+ chordsig="parse:(Ljava/lang/String;)V@org.xml.sax.XMLReader"
+ sig="void parse(String)"
+ line="17"
+ startpos="1346"
+ endpos="1351"
+>
+	<marker line="-1" type="param">
+		<operand  start="1369" length="8" line="17">
+			<expr><![CDATA[systemId]]></expr>
+		</operand>
+	</marker>
+	<type  start="1352" length="16" line="17" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

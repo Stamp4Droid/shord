@@ -1,0 +1,338 @@
+<root>
+<class chordsig="java.util.concurrent.atomic.AtomicIntegerFieldUpdater" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@java.util.concurrent.atomic.AtomicIntegerFieldUpdater"
+ sig="AtomicIntegerFieldUpdater()"
+ line="4"
+ startpos="101"
+ endpos="126"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="141" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="137" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="158" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="141" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newUpdater:(Ljava/lang/Class;Ljava/lang/String;)Ljava/util/concurrent/atomic/AtomicIntegerFieldUpdater;@java.util.concurrent.atomic.AtomicIntegerFieldUpdater"
+ sig="AtomicIntegerFieldUpdater&lt;U&gt; newUpdater(Class&lt;U&gt;,String)"
+ line="5"
+ startpos="245"
+ endpos="255"
+>
+	<marker line="-1" type="param">
+		<operand  start="275" length="6" line="5">
+			<expr><![CDATA[tclass]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="300" length="9" line="5">
+			<expr><![CDATA[fieldName]]></expr>
+		</operand>
+	</marker>
+	<type  start="188" length="53" line="5" chordsig="java.util.concurrent.atomic.AtomicIntegerFieldUpdater"/>
+	<type  start="242" length="1" line="5" chordsig="java.lang.Object"/>
+	<type  start="256" length="15" line="5" chordsig="java.lang.Class"/>
+	<type  start="272" length="1" line="5" chordsig="java.lang.Object"/>
+	<type  start="283" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="323" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="319" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="340" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="323" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="compareAndSet:(Ljava/lang/Object;II)Z@java.util.concurrent.atomic.AtomicIntegerFieldUpdater"
+ sig="boolean compareAndSet(T,int,int)"
+ line="6"
+ startpos="377"
+ endpos="390"
+>
+	<marker line="-1" type="param">
+		<operand  start="393" length="3" line="6">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="402" length="6" line="6">
+			<expr><![CDATA[expect]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="414" length="6" line="6">
+			<expr><![CDATA[update]]></expr>
+		</operand>
+	</marker>
+	<type  start="391" length="1" line="6" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="weakCompareAndSet:(Ljava/lang/Object;II)Z@java.util.concurrent.atomic.AtomicIntegerFieldUpdater"
+ sig="boolean weakCompareAndSet(T,int,int)"
+ line="7"
+ startpos="448"
+ endpos="465"
+>
+	<marker line="-1" type="param">
+		<operand  start="468" length="3" line="7">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="477" length="6" line="7">
+			<expr><![CDATA[expect]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="489" length="6" line="7">
+			<expr><![CDATA[update]]></expr>
+		</operand>
+	</marker>
+	<type  start="466" length="1" line="7" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="set:(Ljava/lang/Object;I)V@java.util.concurrent.atomic.AtomicIntegerFieldUpdater"
+ sig="void set(T,int)"
+ line="8"
+ startpos="520"
+ endpos="523"
+>
+	<marker line="-1" type="param">
+		<operand  start="526" length="3" line="8">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="535" length="8" line="8">
+			<expr><![CDATA[newValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="524" length="1" line="8" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="lazySet:(Ljava/lang/Object;I)V@java.util.concurrent.atomic.AtomicIntegerFieldUpdater"
+ sig="void lazySet(T,int)"
+ line="9"
+ startpos="568"
+ endpos="575"
+>
+	<marker line="-1" type="param">
+		<operand  start="578" length="3" line="9">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="587" length="8" line="9">
+			<expr><![CDATA[newValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="576" length="1" line="9" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="get:(Ljava/lang/Object;)I@java.util.concurrent.atomic.AtomicIntegerFieldUpdater"
+ sig="int get(T)"
+ line="10"
+ startpos="619"
+ endpos="622"
+>
+	<marker line="-1" type="param">
+		<operand  start="625" length="3" line="10">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="623" length="1" line="10" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="getAndSet:(Ljava/lang/Object;I)I@java.util.concurrent.atomic.AtomicIntegerFieldUpdater"
+ sig="int getAndSet(T,int)"
+ line="11"
+ startpos="643"
+ endpos="652"
+>
+	<marker line="-1" type="param">
+		<operand  start="655" length="3" line="11">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="664" length="8" line="11">
+			<expr><![CDATA[newValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="653" length="1" line="11" chordsig="java.lang.Object"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="686" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="682" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="703" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="686" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAndIncrement:(Ljava/lang/Object;)I@java.util.concurrent.atomic.AtomicIntegerFieldUpdater"
+ sig="int getAndIncrement(T)"
+ line="12"
+ startpos="727"
+ endpos="742"
+>
+	<marker line="-1" type="param">
+		<operand  start="745" length="3" line="12">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="743" length="1" line="12" chordsig="java.lang.Object"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="762" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="758" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="779" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="762" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAndDecrement:(Ljava/lang/Object;)I@java.util.concurrent.atomic.AtomicIntegerFieldUpdater"
+ sig="int getAndDecrement(T)"
+ line="13"
+ startpos="803"
+ endpos="818"
+>
+	<marker line="-1" type="param">
+		<operand  start="821" length="3" line="13">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="819" length="1" line="13" chordsig="java.lang.Object"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="838" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="834" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="855" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="838" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAndAdd:(Ljava/lang/Object;I)I@java.util.concurrent.atomic.AtomicIntegerFieldUpdater"
+ sig="int getAndAdd(T,int)"
+ line="14"
+ startpos="879"
+ endpos="888"
+>
+	<marker line="-1" type="param">
+		<operand  start="891" length="3" line="14">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="900" length="5" line="14">
+			<expr><![CDATA[delta]]></expr>
+		</operand>
+	</marker>
+	<type  start="889" length="1" line="14" chordsig="java.lang.Object"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="919" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="915" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="936" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="919" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="incrementAndGet:(Ljava/lang/Object;)I@java.util.concurrent.atomic.AtomicIntegerFieldUpdater"
+ sig="int incrementAndGet(T)"
+ line="15"
+ startpos="960"
+ endpos="975"
+>
+	<marker line="-1" type="param">
+		<operand  start="978" length="3" line="15">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="976" length="1" line="15" chordsig="java.lang.Object"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="995" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="991" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1012" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="995" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="decrementAndGet:(Ljava/lang/Object;)I@java.util.concurrent.atomic.AtomicIntegerFieldUpdater"
+ sig="int decrementAndGet(T)"
+ line="16"
+ startpos="1036"
+ endpos="1051"
+>
+	<marker line="-1" type="param">
+		<operand  start="1054" length="3" line="16">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="1052" length="1" line="16" chordsig="java.lang.Object"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1071" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1067" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1088" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1071" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addAndGet:(Ljava/lang/Object;I)I@java.util.concurrent.atomic.AtomicIntegerFieldUpdater"
+ sig="int addAndGet(T,int)"
+ line="17"
+ startpos="1112"
+ endpos="1121"
+>
+	<marker line="-1" type="param">
+		<operand  start="1124" length="3" line="17">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1133" length="5" line="17">
+			<expr><![CDATA[delta]]></expr>
+		</operand>
+	</marker>
+	<type  start="1122" length="1" line="17" chordsig="java.lang.Object"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1152" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1148" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1169" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1152" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

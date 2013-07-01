@@ -1,0 +1,34 @@
+<root>
+<class chordsig="android.provider.LiveFolders" line="3">
+	<type  start="94" length="28" line="4" chordsig="android.provider.BaseColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.LiveFolders"
+ sig="LiveFolders()"
+ line="6"
+ startpos="125"
+ endpos="136"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="151" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="147" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="168" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="151" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="200" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="252" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="318" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="374" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="440" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="508" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="672" length="16" line="15" chordsig="java.lang.String"/>
+	<type  start="774" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="876" length="16" line="17" chordsig="java.lang.String"/>
+	<type  start="994" length="16" line="18" chordsig="java.lang.String"/>
+	<type  start="1110" length="16" line="19" chordsig="java.lang.String"/>
+</class>
+</root>

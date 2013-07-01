@@ -1,0 +1,1381 @@
+<root>
+<class chordsig="android.widget.AdapterView" line="6">
+	<type  start="167" length="22" line="6" chordsig="android.widget.Adapter"/>
+	<type  start="199" length="22" line="6" chordsig="android.view.ViewGroup"/>
+<class chordsig="android.widget.AdapterView$OnItemClickListener" line="8">
+<method
+ chordsig="onItemClick:(Landroid/widget/AdapterView;Landroid/view/View;IJ)V@android.widget.AdapterView$OnItemClickListener"
+ sig="void onItemClick(AdapterView&lt;?&gt;,View,int,long)"
+ line="10"
+ startpos="305"
+ endpos="316"
+>
+	<marker line="-1" type="param">
+		<operand  start="347" length="6" line="10">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="373" length="4" line="10">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="383" length="8" line="10">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="398" length="2" line="10">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<type  start="317" length="26" line="10" chordsig="android.widget.AdapterView"/>
+	<type  start="355" length="17" line="10" chordsig="android.view.View"/>
+</method>
+</class>
+<class chordsig="android.widget.AdapterView$OnItemLongClickListener" line="13">
+<method
+ chordsig="onItemLongClick:(Landroid/widget/AdapterView;Landroid/view/View;IJ)Z@android.widget.AdapterView$OnItemLongClickListener"
+ sig="boolean onItemLongClick(AdapterView&lt;?&gt;,View,int,long)"
+ line="15"
+ startpos="497"
+ endpos="512"
+>
+	<marker line="-1" type="param">
+		<operand  start="543" length="6" line="15">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="569" length="4" line="15">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="579" length="8" line="15">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="594" length="2" line="15">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<type  start="513" length="26" line="15" chordsig="android.widget.AdapterView"/>
+	<type  start="551" length="17" line="15" chordsig="android.view.View"/>
+</method>
+</class>
+<class chordsig="android.widget.AdapterView$OnItemSelectedListener" line="18">
+<method
+ chordsig="onItemSelected:(Landroid/widget/AdapterView;Landroid/view/View;IJ)V@android.widget.AdapterView$OnItemSelectedListener"
+ sig="void onItemSelected(AdapterView&lt;?&gt;,View,int,long)"
+ line="20"
+ startpos="689"
+ endpos="703"
+>
+	<marker line="-1" type="param">
+		<operand  start="734" length="6" line="20">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="760" length="4" line="20">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="770" length="8" line="20">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="785" length="2" line="20">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<type  start="704" length="26" line="20" chordsig="android.widget.AdapterView"/>
+	<type  start="742" length="17" line="20" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="onNothingSelected:(Landroid/widget/AdapterView;)V@android.widget.AdapterView$OnItemSelectedListener"
+ sig="void onNothingSelected(AdapterView&lt;?&gt;)"
+ line="22"
+ startpos="820"
+ endpos="837"
+>
+	<marker line="-1" type="param">
+		<operand  start="868" length="6" line="22">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<type  start="838" length="26" line="22" chordsig="android.widget.AdapterView"/>
+</method>
+</class>
+<class chordsig="android.widget.AdapterView$AdapterContextMenuInfo" line="25">
+	<type  start="942" length="40" line="25" chordsig="android.view.ContextMenu$ContextMenuInfo"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/view/View;IJ)V@android.widget.AdapterView$AdapterContextMenuInfo"
+ sig="AdapterContextMenuInfo(View,int,long)"
+ line="27"
+ startpos="1001"
+ endpos="1023"
+>
+	<marker line="-1" type="param">
+		<operand  start="1042" length="10" line="27">
+			<expr><![CDATA[targetView]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1058" length="8" line="27">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1073" length="2" line="27">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<type  start="1024" length="17" line="27" chordsig="android.view.View"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1101" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1097" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1118" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1101" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1154" length="17" line="31" chordsig="android.view.View"/>
+</class>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.widget.AdapterView"
+ sig="AdapterView(Context)"
+ line="38"
+ startpos="1257"
+ endpos="1268"
+>
+	<marker line="-1" type="param">
+		<operand  start="1293" length="7" line="38">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="1269" length="23" line="38" chordsig="android.content.Context"/>
+	<type  start="1319" length="23" line="39" chordsig="android.content.Context"/>
+	<type  start="1351" length="25" line="39" chordsig="android.util.AttributeSet"/>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1406" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1402" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1423" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1406" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.widget.AdapterView"
+ sig="AdapterView(Context,AttributeSet)"
+ line="43"
+ startpos="1451"
+ endpos="1462"
+>
+	<marker line="-1" type="param">
+		<operand  start="1487" length="7" line="43">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1522" length="5" line="43">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="1463" length="23" line="43" chordsig="android.content.Context"/>
+	<type  start="1496" length="25" line="43" chordsig="android.util.AttributeSet"/>
+	<type  start="1546" length="23" line="44" chordsig="android.content.Context"/>
+	<type  start="1578" length="25" line="44" chordsig="android.util.AttributeSet"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1633" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1629" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1650" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1633" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;I)V@android.widget.AdapterView"
+ sig="AdapterView(Context,AttributeSet,int)"
+ line="48"
+ startpos="1678"
+ endpos="1689"
+>
+	<marker line="-1" type="param">
+		<operand  start="1714" length="7" line="48">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1749" length="5" line="48">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1760" length="8" line="48">
+			<expr><![CDATA[defStyle]]></expr>
+		</operand>
+	</marker>
+	<type  start="1690" length="23" line="48" chordsig="android.content.Context"/>
+	<type  start="1723" length="25" line="48" chordsig="android.util.AttributeSet"/>
+	<type  start="1787" length="23" line="49" chordsig="android.content.Context"/>
+	<type  start="1819" length="25" line="49" chordsig="android.util.AttributeSet"/>
+	<newexpr line="50" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1874" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1870" length="29" line="50">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1891" length="7" line="50">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1874" length="16" line="50" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getOnItemClickListener:()Landroid/widget/AdapterView$OnItemClickListener;@android.widget.AdapterView"
+ sig="OnItemClickListener getOnItemClickListener()"
+ line="53"
+ startpos="1972"
+ endpos="1994"
+>
+	<type  start="1925" length="46" line="53" chordsig="android.widget.AdapterView$OnItemClickListener"/>
+	<newexpr line="54" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2017" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2013" length="29" line="54">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2034" length="7" line="54">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2017" length="16" line="54" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="performItemClick:(Landroid/view/View;IJ)Z@android.widget.AdapterView"
+ sig="boolean performItemClick(View,int,long)"
+ line="57"
+ startpos="2070"
+ endpos="2086"
+>
+	<marker line="-1" type="param">
+		<operand  start="2105" length="4" line="57">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2115" length="8" line="57">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2130" length="2" line="57">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<type  start="2087" length="17" line="57" chordsig="android.view.View"/>
+	<newexpr line="58" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2154" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2150" length="29" line="58">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2171" length="7" line="58">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2154" length="16" line="58" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getOnItemLongClickListener:()Landroid/widget/AdapterView$OnItemLongClickListener;@android.widget.AdapterView"
+ sig="OnItemLongClickListener getOnItemLongClickListener()"
+ line="61"
+ startpos="2256"
+ endpos="2282"
+>
+	<type  start="2205" length="50" line="61" chordsig="android.widget.AdapterView$OnItemLongClickListener"/>
+	<newexpr line="62" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2305" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2301" length="29" line="62">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2322" length="7" line="62">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2305" length="16" line="62" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getOnItemSelectedListener:()Landroid/widget/AdapterView$OnItemSelectedListener;@android.widget.AdapterView"
+ sig="OnItemSelectedListener getOnItemSelectedListener()"
+ line="65"
+ startpos="2406"
+ endpos="2431"
+>
+	<type  start="2356" length="49" line="65" chordsig="android.widget.AdapterView$OnItemSelectedListener"/>
+	<newexpr line="66" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2454" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2450" length="29" line="66">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2471" length="7" line="66">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2454" length="16" line="66" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAdapter:()Landroid/widget/Adapter;@android.widget.AdapterView"
+ sig="T getAdapter()"
+ line="69"
+ startpos="2510"
+ endpos="2520"
+>
+	<type  start="2508" length="1" line="69" chordsig="android.widget.Adapter"/>
+</method>
+<method
+ chordsig="setAdapter:(Landroid/widget/Adapter;)V@android.widget.AdapterView"
+ sig="void setAdapter(T)"
+ line="71"
+ startpos="2550"
+ endpos="2560"
+>
+	<marker line="-1" type="param">
+		<operand  start="2563" length="7" line="71">
+			<expr><![CDATA[adapter]]></expr>
+		</operand>
+	</marker>
+	<type  start="2561" length="1" line="71" chordsig="android.widget.Adapter"/>
+</method>
+<method
+ chordsig="addView:(Landroid/view/View;)V@android.widget.AdapterView"
+ sig="void addView(View)"
+ line="73"
+ startpos="2590"
+ endpos="2597"
+>
+	<marker line="-1" type="param">
+		<operand  start="2616" length="5" line="73">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<type  start="2598" length="17" line="73" chordsig="android.view.View"/>
+	<newexpr line="74" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2643" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2639" length="29" line="74">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2660" length="7" line="74">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2643" length="16" line="74" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addView:(Landroid/view/View;I)V@android.widget.AdapterView"
+ sig="void addView(View,int)"
+ line="77"
+ startpos="2693"
+ endpos="2700"
+>
+	<marker line="-1" type="param">
+		<operand  start="2719" length="5" line="77">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2730" length="5" line="77">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="2701" length="17" line="77" chordsig="android.view.View"/>
+	<newexpr line="78" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2757" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2753" length="29" line="78">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2774" length="7" line="78">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2757" length="16" line="78" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addView:(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V@android.widget.AdapterView"
+ sig="void addView(View,LayoutParams)"
+ line="81"
+ startpos="2807"
+ endpos="2814"
+>
+	<marker line="-1" type="param">
+		<operand  start="2833" length="5" line="81">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2876" length="6" line="81">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="2815" length="17" line="81" chordsig="android.view.View"/>
+	<type  start="2840" length="35" line="81" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<newexpr line="82" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2904" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2900" length="29" line="82">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2921" length="7" line="82">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2904" length="16" line="82" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addView:(Landroid/view/View;ILandroid/view/ViewGroup$LayoutParams;)V@android.widget.AdapterView"
+ sig="void addView(View,int,LayoutParams)"
+ line="85"
+ startpos="2954"
+ endpos="2961"
+>
+	<marker line="-1" type="param">
+		<operand  start="2980" length="5" line="85">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2991" length="5" line="85">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3034" length="6" line="85">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="2962" length="17" line="85" chordsig="android.view.View"/>
+	<type  start="2998" length="35" line="85" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<newexpr line="86" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3062" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3058" length="29" line="86">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3079" length="7" line="86">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3062" length="16" line="86" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeView:(Landroid/view/View;)V@android.widget.AdapterView"
+ sig="void removeView(View)"
+ line="89"
+ startpos="3112"
+ endpos="3122"
+>
+	<marker line="-1" type="param">
+		<operand  start="3141" length="5" line="89">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<type  start="3123" length="17" line="89" chordsig="android.view.View"/>
+	<newexpr line="90" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3168" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3164" length="29" line="90">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3185" length="7" line="90">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3168" length="16" line="90" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeViewAt:(I)V@android.widget.AdapterView"
+ sig="void removeViewAt(int)"
+ line="93"
+ startpos="3218"
+ endpos="3230"
+>
+	<marker line="-1" type="param">
+		<operand  start="3235" length="5" line="93">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="94" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3262" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3258" length="29" line="94">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3279" length="7" line="94">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3262" length="16" line="94" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeAllViews:()V@android.widget.AdapterView"
+ sig="void removeAllViews()"
+ line="97"
+ startpos="3312"
+ endpos="3326"
+>
+	<newexpr line="98" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3349" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3345" length="29" line="98">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3366" length="7" line="98">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3349" length="16" line="98" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onLayout:(ZIIII)V@android.widget.AdapterView"
+ sig="void onLayout(boolean,int,int,int,int)"
+ line="101"
+ startpos="3402"
+ endpos="3410"
+>
+	<marker line="-1" type="param">
+		<operand  start="3419" length="7" line="101">
+			<expr><![CDATA[changed]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3432" length="4" line="101">
+			<expr><![CDATA[left]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3442" length="3" line="101">
+			<expr><![CDATA[top]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3451" length="5" line="101">
+			<expr><![CDATA[right]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3462" length="6" line="101">
+			<expr><![CDATA[bottom]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="102" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3490" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3486" length="29" line="102">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3507" length="7" line="102">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3490" length="16" line="102" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSelectedItemPosition:()I@android.widget.AdapterView"
+ sig="int getSelectedItemPosition()"
+ line="105"
+ startpos="3539"
+ endpos="3562"
+>
+	<newexpr line="106" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3585" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3581" length="29" line="106">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3602" length="7" line="106">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3585" length="16" line="106" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSelectedItemId:()J@android.widget.AdapterView"
+ sig="long getSelectedItemId()"
+ line="109"
+ startpos="3635"
+ endpos="3652"
+>
+	<newexpr line="110" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3675" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3671" length="29" line="110">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3692" length="7" line="110">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3675" length="16" line="110" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSelectedView:()Landroid/view/View;@android.widget.AdapterView"
+ sig="View getSelectedView()"
+ line="113"
+ startpos="3747"
+ endpos="3762"
+>
+	<type  start="3729" length="17" line="113" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="getSelectedItem:()Ljava/lang/Object;@android.widget.AdapterView"
+ sig="Object getSelectedItem()"
+ line="115"
+ startpos="3795"
+ endpos="3810"
+>
+	<type  start="3778" length="16" line="115" chordsig="java.lang.Object"/>
+	<newexpr line="116" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3833" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3829" length="29" line="116">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3850" length="7" line="116">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3833" length="16" line="116" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCount:()I@android.widget.AdapterView"
+ sig="int getCount()"
+ line="119"
+ startpos="3882"
+ endpos="3890"
+>
+	<newexpr line="120" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3913" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3909" length="29" line="120">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3930" length="7" line="120">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3913" length="16" line="120" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPositionForView:(Landroid/view/View;)I@android.widget.AdapterView"
+ sig="int getPositionForView(View)"
+ line="123"
+ startpos="3962"
+ endpos="3980"
+>
+	<marker line="-1" type="param">
+		<operand  start="3999" length="4" line="123">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<type  start="3981" length="17" line="123" chordsig="android.view.View"/>
+	<newexpr line="124" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4025" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4021" length="29" line="124">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4042" length="7" line="124">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4025" length="16" line="124" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFirstVisiblePosition:()I@android.widget.AdapterView"
+ sig="int getFirstVisiblePosition()"
+ line="127"
+ startpos="4074"
+ endpos="4097"
+>
+	<newexpr line="128" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4120" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4116" length="29" line="128">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4137" length="7" line="128">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4120" length="16" line="128" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLastVisiblePosition:()I@android.widget.AdapterView"
+ sig="int getLastVisiblePosition()"
+ line="131"
+ startpos="4169"
+ endpos="4191"
+>
+	<newexpr line="132" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4214" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4210" length="29" line="132">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4231" length="7" line="132">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4214" length="16" line="132" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSelection:(I)V@android.widget.AdapterView"
+ sig="void setSelection(int)"
+ line="135"
+ startpos="4273"
+ endpos="4285"
+>
+	<marker line="-1" type="param">
+		<operand  start="4290" length="8" line="135">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setEmptyView:(Landroid/view/View;)V@android.widget.AdapterView"
+ sig="void setEmptyView(View)"
+ line="137"
+ startpos="4318"
+ endpos="4330"
+>
+	<marker line="-1" type="param">
+		<operand  start="4349" length="9" line="137">
+			<expr><![CDATA[emptyView]]></expr>
+		</operand>
+	</marker>
+	<type  start="4331" length="17" line="137" chordsig="android.view.View"/>
+	<newexpr line="138" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4380" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4376" length="29" line="138">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4397" length="7" line="138">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4380" length="16" line="138" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getEmptyView:()Landroid/view/View;@android.widget.AdapterView"
+ sig="View getEmptyView()"
+ line="141"
+ startpos="4443"
+ endpos="4455"
+>
+	<type  start="4425" length="17" line="141" chordsig="android.view.View"/>
+	<newexpr line="142" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4478" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4474" length="29" line="142">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4495" length="7" line="142">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4478" length="16" line="142" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setFocusable:(Z)V@android.widget.AdapterView"
+ sig="void setFocusable(boolean)"
+ line="145"
+ startpos="4528"
+ endpos="4540"
+>
+	<marker line="-1" type="param">
+		<operand  start="4549" length="9" line="145">
+			<expr><![CDATA[focusable]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="146" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4580" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4576" length="29" line="146">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4597" length="7" line="146">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4580" length="16" line="146" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setFocusableInTouchMode:(Z)V@android.widget.AdapterView"
+ sig="void setFocusableInTouchMode(boolean)"
+ line="149"
+ startpos="4630"
+ endpos="4653"
+>
+	<marker line="-1" type="param">
+		<operand  start="4662" length="9" line="149">
+			<expr><![CDATA[focusable]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="150" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4693" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4689" length="29" line="150">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4710" length="7" line="150">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4693" length="16" line="150" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getItemAtPosition:(I)Ljava/lang/Object;@android.widget.AdapterView"
+ sig="Object getItemAtPosition(int)"
+ line="153"
+ startpos="4755"
+ endpos="4772"
+>
+	<marker line="-1" type="param">
+		<operand  start="4777" length="8" line="153">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+	<type  start="4738" length="16" line="153" chordsig="java.lang.Object"/>
+	<newexpr line="154" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4807" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4803" length="29" line="154">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4824" length="7" line="154">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4807" length="16" line="154" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getItemIdAtPosition:(I)J@android.widget.AdapterView"
+ sig="long getItemIdAtPosition(int)"
+ line="157"
+ startpos="4857"
+ endpos="4876"
+>
+	<marker line="-1" type="param">
+		<operand  start="4881" length="8" line="157">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="158" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4911" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4907" length="29" line="158">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4928" length="7" line="158">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4911" length="16" line="158" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnClickListener:(Landroid/view/View$OnClickListener;)V@android.widget.AdapterView"
+ sig="void setOnClickListener(OnClickListener)"
+ line="161"
+ startpos="4961"
+ endpos="4979"
+>
+	<marker line="-1" type="param">
+		<operand  start="5014" length="1" line="161">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<type  start="4980" length="33" line="161" chordsig="android.view.View$OnClickListener"/>
+	<newexpr line="162" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5037" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5033" length="29" line="162">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5054" length="7" line="162">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5037" length="16" line="162" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dispatchSaveInstanceState:(Landroid/util/SparseArray;)V@android.widget.AdapterView"
+ sig="void dispatchSaveInstanceState(SparseArray&lt;Parcelable&gt;)"
+ line="165"
+ startpos="5090"
+ endpos="5115"
+>
+	<marker line="-1" type="param">
+		<operand  start="5164" length="9" line="165">
+			<expr><![CDATA[container]]></expr>
+		</operand>
+	</marker>
+	<type  start="5116" length="24" line="165" chordsig="android.util.SparseArray"/>
+	<type  start="5141" length="21" line="165" chordsig="android.os.Parcelable"/>
+	<newexpr line="166" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5195" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5191" length="29" line="166">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5212" length="7" line="166">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5195" length="16" line="166" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dispatchRestoreInstanceState:(Landroid/util/SparseArray;)V@android.widget.AdapterView"
+ sig="void dispatchRestoreInstanceState(SparseArray&lt;Parcelable&gt;)"
+ line="169"
+ startpos="5248"
+ endpos="5276"
+>
+	<marker line="-1" type="param">
+		<operand  start="5325" length="9" line="169">
+			<expr><![CDATA[container]]></expr>
+		</operand>
+	</marker>
+	<type  start="5277" length="24" line="169" chordsig="android.util.SparseArray"/>
+	<type  start="5302" length="21" line="169" chordsig="android.os.Parcelable"/>
+	<newexpr line="170" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5356" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5352" length="29" line="170">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5373" length="7" line="170">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5356" length="16" line="170" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onDetachedFromWindow:()V@android.widget.AdapterView"
+ sig="void onDetachedFromWindow()"
+ line="173"
+ startpos="5409"
+ endpos="5429"
+>
+	<newexpr line="174" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5452" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5448" length="29" line="174">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5469" length="7" line="174">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5452" length="16" line="174" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dispatchPopulateAccessibilityEvent:(Landroid/view/accessibility/AccessibilityEvent;)Z@android.widget.AdapterView"
+ sig="boolean dispatchPopulateAccessibilityEvent(AccessibilityEvent)"
+ line="177"
+ startpos="5505"
+ endpos="5539"
+>
+	<marker line="-1" type="param">
+		<operand  start="5586" length="5" line="177">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="5540" length="45" line="177" chordsig="android.view.accessibility.AccessibilityEvent"/>
+	<newexpr line="178" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5613" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5609" length="29" line="178">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5630" length="7" line="178">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5613" length="16" line="178" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onRequestSendAccessibilityEvent:(Landroid/view/View;Landroid/view/accessibility/AccessibilityEvent;)Z@android.widget.AdapterView"
+ sig="boolean onRequestSendAccessibilityEvent(View,AccessibilityEvent)"
+ line="181"
+ startpos="5666"
+ endpos="5697"
+>
+	<marker line="-1" type="param">
+		<operand  start="5716" length="5" line="181">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5769" length="5" line="181">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="5698" length="17" line="181" chordsig="android.view.View"/>
+	<type  start="5723" length="45" line="181" chordsig="android.view.accessibility.AccessibilityEvent"/>
+	<newexpr line="182" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5796" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5792" length="29" line="182">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5813" length="7" line="182">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5796" length="16" line="182" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityNodeInfo:(Landroid/view/accessibility/AccessibilityNodeInfo;)V@android.widget.AdapterView"
+ sig="void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo)"
+ line="185"
+ startpos="5846"
+ endpos="5879"
+>
+	<marker line="-1" type="param">
+		<operand  start="5929" length="4" line="185">
+			<expr><![CDATA[info]]></expr>
+		</operand>
+	</marker>
+	<type  start="5880" length="48" line="185" chordsig="android.view.accessibility.AccessibilityNodeInfo"/>
+	<newexpr line="186" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5955" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5951" length="29" line="186">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5972" length="7" line="186">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5955" length="16" line="186" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityEvent:(Landroid/view/accessibility/AccessibilityEvent;)V@android.widget.AdapterView"
+ sig="void onInitializeAccessibilityEvent(AccessibilityEvent)"
+ line="189"
+ startpos="6005"
+ endpos="6035"
+>
+	<marker line="-1" type="param">
+		<operand  start="6082" length="5" line="189">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="6036" length="45" line="189" chordsig="android.view.accessibility.AccessibilityEvent"/>
+	<newexpr line="190" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6109" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6105" length="29" line="190">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6126" length="7" line="190">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6109" length="16" line="190" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="canAnimate:()Z@android.widget.AdapterView"
+ sig="boolean canAnimate()"
+ line="193"
+ startpos="6165"
+ endpos="6175"
+>
+	<newexpr line="194" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6198" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6194" length="29" line="194">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6215" length="7" line="194">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6198" length="16" line="194" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnItemClickListener:(Landroid/widget/AdapterView$OnItemClickListener;)V@android.widget.AdapterView"
+ sig="void setOnItemClickListener(OnItemClickListener)"
+ line="205"
+ startpos="6494"
+ endpos="6516"
+>
+	<marker line="-1" type="param">
+		<operand  start="6570" length="8" line="205">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="6523" length="46" line="205" chordsig="android.widget.AdapterView$OnItemClickListener"/>
+	<invkexpr line="206" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="6622" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    listener.onItemClick(AdapterView.this,null,0,0L);
+  }
+}
+)]]></expr>
+		<param  start="6639" length="142" line="206">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    listener.onItemClick(AdapterView.this,null,0,0L);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="206" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="6608" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="206" chordsig="&lt;init&gt;:()V@android.widget.AdapterView$android.widget.AdapterView#edu.stanford.stamp.harness.Callback#206" start="6643" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    listener.onItemClick(AdapterView.this,null,0,0L);
+  }
+}
+]]></expr>
+		<param  start="6639" length="142" line="206">
+			<expr type="android.widget.AdapterView#edu.stanford.stamp.harness.Callback#206"><![CDATA[new Callback(){
+  public void run(){
+    listener.onItemClick(AdapterView.this,null,0,0L);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6643" length="8" line="206" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.widget.AdapterView$android.widget.AdapterView#edu.stanford.stamp.harness.Callback#206" line="206">
+<method
+ chordsig="run:()V@android.widget.AdapterView$android.widget.AdapterView#edu.stanford.stamp.harness.Callback#206"
+ sig="void run()"
+ line="208"
+ startpos="6681"
+ endpos="6684"
+>
+	<invkexpr line="209" chordsig="onItemClick:(Landroid/widget/AdapterView;Landroid/view/View;IJ)V@android.widget.AdapterView$OnItemClickListener" start="6714" length="11" type="invoke">
+			<expr><![CDATA[listener.onItemClick(AdapterView.this,null,0,0L)]]></expr>
+		<param  start="6705" length="8" line="209">
+			<expr><![CDATA[listener]]></expr>
+		</param>
+		<param  start="6726" length="16" line="209">
+			<expr><![CDATA[AdapterView.this]]></expr>
+		</param>
+		<param  start="6744" length="4" line="209">
+			<expr><![CDATA[null]]></expr>
+		</param>
+		<param  start="6750" length="1" line="209">
+			<expr><![CDATA[0]]></expr>
+		</param>
+		<param  start="6753" length="2" line="209">
+			<expr><![CDATA[0L]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+</method>
+<method
+ chordsig="setOnItemLongClickListener:(Landroid/widget/AdapterView$OnItemLongClickListener;)V@android.widget.AdapterView"
+ sig="void setOnItemLongClickListener(OnItemLongClickListener)"
+ line="214"
+ startpos="6807"
+ endpos="6833"
+>
+	<marker line="-1" type="param">
+		<operand  start="6891" length="8" line="214">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="6840" length="50" line="214" chordsig="android.widget.AdapterView$OnItemLongClickListener"/>
+	<invkexpr line="215" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="6943" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    listener.onItemLongClick(AdapterView.this,null,0,0L);
+  }
+}
+)]]></expr>
+		<param  start="6960" length="146" line="215">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    listener.onItemLongClick(AdapterView.this,null,0,0L);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="215" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="6929" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="215" chordsig="&lt;init&gt;:()V@android.widget.AdapterView$android.widget.AdapterView#edu.stanford.stamp.harness.Callback#215" start="6964" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    listener.onItemLongClick(AdapterView.this,null,0,0L);
+  }
+}
+]]></expr>
+		<param  start="6960" length="146" line="215">
+			<expr type="android.widget.AdapterView#edu.stanford.stamp.harness.Callback#215"><![CDATA[new Callback(){
+  public void run(){
+    listener.onItemLongClick(AdapterView.this,null,0,0L);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6964" length="8" line="215" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.widget.AdapterView$android.widget.AdapterView#edu.stanford.stamp.harness.Callback#215" line="215">
+<method
+ chordsig="run:()V@android.widget.AdapterView$android.widget.AdapterView#edu.stanford.stamp.harness.Callback#215"
+ sig="void run()"
+ line="217"
+ startpos="7002"
+ endpos="7005"
+>
+	<invkexpr line="218" chordsig="onItemLongClick:(Landroid/widget/AdapterView;Landroid/view/View;IJ)Z@android.widget.AdapterView$OnItemLongClickListener" start="7035" length="15" type="invoke">
+			<expr><![CDATA[listener.onItemLongClick(AdapterView.this,null,0,0L)]]></expr>
+		<param  start="7026" length="8" line="218">
+			<expr><![CDATA[listener]]></expr>
+		</param>
+		<param  start="7051" length="16" line="218">
+			<expr><![CDATA[AdapterView.this]]></expr>
+		</param>
+		<param  start="7069" length="4" line="218">
+			<expr><![CDATA[null]]></expr>
+		</param>
+		<param  start="7075" length="1" line="218">
+			<expr><![CDATA[0]]></expr>
+		</param>
+		<param  start="7078" length="2" line="218">
+			<expr><![CDATA[0L]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+</method>
+<method
+ chordsig="setOnItemSelectedListener:(Landroid/widget/AdapterView$OnItemSelectedListener;)V@android.widget.AdapterView"
+ sig="void setOnItemSelectedListener(OnItemSelectedListener)"
+ line="223"
+ startpos="7132"
+ endpos="7157"
+>
+	<marker line="-1" type="param">
+		<operand  start="7214" length="8" line="223">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="7164" length="49" line="223" chordsig="android.widget.AdapterView$OnItemSelectedListener"/>
+	<invkexpr line="224" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="7266" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    listener.onItemSelected(AdapterView.this,null,0,0L);
+  }
+}
+)]]></expr>
+		<param  start="7283" length="145" line="224">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    listener.onItemSelected(AdapterView.this,null,0,0L);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="224" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="7252" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="224" chordsig="&lt;init&gt;:()V@android.widget.AdapterView$android.widget.AdapterView#edu.stanford.stamp.harness.Callback#224" start="7287" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    listener.onItemSelected(AdapterView.this,null,0,0L);
+  }
+}
+]]></expr>
+		<param  start="7283" length="145" line="224">
+			<expr type="android.widget.AdapterView#edu.stanford.stamp.harness.Callback#224"><![CDATA[new Callback(){
+  public void run(){
+    listener.onItemSelected(AdapterView.this,null,0,0L);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7287" length="8" line="224" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.widget.AdapterView$android.widget.AdapterView#edu.stanford.stamp.harness.Callback#224" line="224">
+<method
+ chordsig="run:()V@android.widget.AdapterView$android.widget.AdapterView#edu.stanford.stamp.harness.Callback#224"
+ sig="void run()"
+ line="226"
+ startpos="7325"
+ endpos="7328"
+>
+	<invkexpr line="227" chordsig="onItemSelected:(Landroid/widget/AdapterView;Landroid/view/View;IJ)V@android.widget.AdapterView$OnItemSelectedListener" start="7358" length="14" type="invoke">
+			<expr><![CDATA[listener.onItemSelected(AdapterView.this,null,0,0L)]]></expr>
+		<param  start="7349" length="8" line="227">
+			<expr><![CDATA[listener]]></expr>
+		</param>
+		<param  start="7373" length="16" line="227">
+			<expr><![CDATA[AdapterView.this]]></expr>
+		</param>
+		<param  start="7391" length="4" line="227">
+			<expr><![CDATA[null]]></expr>
+		</param>
+		<param  start="7397" length="1" line="227">
+			<expr><![CDATA[0]]></expr>
+		</param>
+		<param  start="7400" length="2" line="227">
+			<expr><![CDATA[0L]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<invkexpr line="230" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="7471" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    listener.onNothingSelected(AdapterView.this);
+  }
+}
+)]]></expr>
+		<param  start="7488" length="135" line="230">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    listener.onNothingSelected(AdapterView.this);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="230" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="7457" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="230" chordsig="&lt;init&gt;:()V@android.widget.AdapterView$android.widget.AdapterView#edu.stanford.stamp.harness.Callback#230" start="7492" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    listener.onNothingSelected(AdapterView.this);
+  }
+}
+]]></expr>
+		<param  start="7488" length="135" line="230">
+			<expr type="android.widget.AdapterView#edu.stanford.stamp.harness.Callback#230"><![CDATA[new Callback(){
+  public void run(){
+    listener.onNothingSelected(AdapterView.this);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7492" length="8" line="230" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.widget.AdapterView$android.widget.AdapterView#edu.stanford.stamp.harness.Callback#230" line="230">
+<method
+ chordsig="run:()V@android.widget.AdapterView$android.widget.AdapterView#edu.stanford.stamp.harness.Callback#230"
+ sig="void run()"
+ line="232"
+ startpos="7530"
+ endpos="7533"
+>
+	<invkexpr line="233" chordsig="onNothingSelected:(Landroid/widget/AdapterView;)V@android.widget.AdapterView$OnItemSelectedListener" start="7563" length="17" type="invoke">
+			<expr><![CDATA[listener.onNothingSelected(AdapterView.this)]]></expr>
+		<param  start="7554" length="8" line="233">
+			<expr><![CDATA[listener]]></expr>
+		</param>
+		<param  start="7581" length="16" line="233">
+			<expr><![CDATA[AdapterView.this]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+</method>
+</class>
+</root>

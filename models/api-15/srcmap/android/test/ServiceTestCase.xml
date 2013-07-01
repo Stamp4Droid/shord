@@ -1,0 +1,251 @@
+<root>
+<class chordsig="android.test.ServiceTestCase" line="2">
+	<type  start="70" length="19" line="2" chordsig="android.app.Service"/>
+	<type  start="101" length="28" line="3" chordsig="android.test.AndroidTestCase"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Class;)V@android.test.ServiceTestCase"
+ sig="ServiceTestCase(Class&lt;T&gt;)"
+ line="5"
+ startpos="140"
+ endpos="155"
+>
+	<marker line="-1" type="param">
+		<operand  start="175" length="12" line="5">
+			<expr><![CDATA[serviceClass]]></expr>
+		</operand>
+	</marker>
+	<type  start="156" length="15" line="5" chordsig="java.lang.Class"/>
+	<type  start="172" length="1" line="5" chordsig="android.app.Service"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="201" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="197" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="218" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="201" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getService:()Landroid/app/Service;@android.test.ServiceTestCase"
+ sig="T getService()"
+ line="6"
+ startpos="240"
+ endpos="250"
+>
+	<type  start="238" length="1" line="6" chordsig="android.app.Service"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="265" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="261" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="282" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="265" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setUp:()V@android.test.ServiceTestCase"
+ sig="void setUp()"
+ line="7"
+ startpos="310"
+ endpos="315"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="357" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="353" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="374" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="357" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setupService:()V@android.test.ServiceTestCase"
+ sig="void setupService()"
+ line="8"
+ startpos="402"
+ endpos="414"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="429" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="425" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="446" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="429" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="startService:(Landroid/content/Intent;)V@android.test.ServiceTestCase"
+ sig="void startService(Intent)"
+ line="9"
+ startpos="474"
+ endpos="486"
+>
+	<marker line="-1" type="param">
+		<operand  start="510" length="6" line="9">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="487" length="22" line="9" chordsig="android.content.Intent"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="530" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="526" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="547" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="530" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="bindService:(Landroid/content/Intent;)Landroid/os/IBinder;@android.test.ServiceTestCase"
+ sig="IBinder bindService(Intent)"
+ line="10"
+ startpos="589"
+ endpos="600"
+>
+	<marker line="-1" type="param">
+		<operand  start="624" length="6" line="10">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="570" length="18" line="10" chordsig="android.os.IBinder"/>
+	<type  start="601" length="22" line="10" chordsig="android.content.Intent"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="644" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="640" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="661" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="644" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="shutdownService:()V@android.test.ServiceTestCase"
+ sig="void shutdownService()"
+ line="11"
+ startpos="689"
+ endpos="704"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="719" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="715" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="736" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="719" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="tearDown:()V@android.test.ServiceTestCase"
+ sig="void tearDown()"
+ line="12"
+ startpos="764"
+ endpos="772"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="814" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="810" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="831" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="814" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setApplication:(Landroid/app/Application;)V@android.test.ServiceTestCase"
+ sig="void setApplication(Application)"
+ line="13"
+ startpos="856"
+ endpos="870"
+>
+	<marker line="-1" type="param">
+		<operand  start="895" length="11" line="13">
+			<expr><![CDATA[application]]></expr>
+		</operand>
+	</marker>
+	<type  start="871" length="23" line="13" chordsig="android.app.Application"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="920" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="916" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="937" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="920" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getApplication:()Landroid/app/Application;@android.test.ServiceTestCase"
+ sig="Application getApplication()"
+ line="14"
+ startpos="981"
+ endpos="995"
+>
+	<type  start="957" length="23" line="14" chordsig="android.app.Application"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1010" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1006" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1027" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1010" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSystemContext:()Landroid/content/Context;@android.test.ServiceTestCase"
+ sig="Context getSystemContext()"
+ line="15"
+ startpos="1071"
+ endpos="1087"
+>
+	<type  start="1047" length="23" line="15" chordsig="android.content.Context"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1102" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1098" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1119" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1102" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="testServiceTestCaseSetUpProperly:()V@android.test.ServiceTestCase"
+ sig="void testServiceTestCaseSetUpProperly()"
+ line="16"
+ startpos="1144"
+ endpos="1176"
+>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1218" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1214" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1235" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1218" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

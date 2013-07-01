@@ -1,0 +1,396 @@
+<root>
+<class chordsig="java.text.BreakIterator" line="2">
+	<type  start="68" length="19" line="3" chordsig="java.lang.Cloneable"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.text.BreakIterator"
+ sig="BreakIterator()"
+ line="5"
+ startpos="101"
+ endpos="114"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="129" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="125" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="146" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="129" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAvailableLocales:()[Ljava/util/Locale;@java.text.BreakIterator"
+ sig="Locale[] getAvailableLocales()"
+ line="6"
+ startpos="192"
+ endpos="211"
+>
+	<type  start="173" length="16" line="6" chordsig="java.util.Locale"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="226" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="222" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="243" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="226" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCharacterInstance:()Ljava/text/BreakIterator;@java.text.BreakIterator"
+ sig="BreakIterator getCharacterInstance()"
+ line="7"
+ startpos="294"
+ endpos="314"
+>
+	<type  start="270" length="23" line="7" chordsig="java.text.BreakIterator"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="329" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="325" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="346" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="329" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCharacterInstance:(Ljava/util/Locale;)Ljava/text/BreakIterator;@java.text.BreakIterator"
+ sig="BreakIterator getCharacterInstance(Locale)"
+ line="8"
+ startpos="397"
+ endpos="417"
+>
+	<marker line="-1" type="param">
+		<operand  start="435" length="5" line="8">
+			<expr><![CDATA[where]]></expr>
+		</operand>
+	</marker>
+	<type  start="373" length="23" line="8" chordsig="java.text.BreakIterator"/>
+	<type  start="418" length="16" line="8" chordsig="java.util.Locale"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="454" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="450" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="471" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="454" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLineInstance:()Ljava/text/BreakIterator;@java.text.BreakIterator"
+ sig="BreakIterator getLineInstance()"
+ line="9"
+ startpos="522"
+ endpos="537"
+>
+	<type  start="498" length="23" line="9" chordsig="java.text.BreakIterator"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="552" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="548" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="569" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="552" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLineInstance:(Ljava/util/Locale;)Ljava/text/BreakIterator;@java.text.BreakIterator"
+ sig="BreakIterator getLineInstance(Locale)"
+ line="10"
+ startpos="620"
+ endpos="635"
+>
+	<marker line="-1" type="param">
+		<operand  start="653" length="5" line="10">
+			<expr><![CDATA[where]]></expr>
+		</operand>
+	</marker>
+	<type  start="596" length="23" line="10" chordsig="java.text.BreakIterator"/>
+	<type  start="636" length="16" line="10" chordsig="java.util.Locale"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="672" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="668" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="689" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="672" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSentenceInstance:()Ljava/text/BreakIterator;@java.text.BreakIterator"
+ sig="BreakIterator getSentenceInstance()"
+ line="11"
+ startpos="740"
+ endpos="759"
+>
+	<type  start="716" length="23" line="11" chordsig="java.text.BreakIterator"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="774" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="770" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="791" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="774" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSentenceInstance:(Ljava/util/Locale;)Ljava/text/BreakIterator;@java.text.BreakIterator"
+ sig="BreakIterator getSentenceInstance(Locale)"
+ line="12"
+ startpos="842"
+ endpos="861"
+>
+	<marker line="-1" type="param">
+		<operand  start="879" length="5" line="12">
+			<expr><![CDATA[where]]></expr>
+		</operand>
+	</marker>
+	<type  start="818" length="23" line="12" chordsig="java.text.BreakIterator"/>
+	<type  start="862" length="16" line="12" chordsig="java.util.Locale"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="898" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="894" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="915" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="898" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getWordInstance:()Ljava/text/BreakIterator;@java.text.BreakIterator"
+ sig="BreakIterator getWordInstance()"
+ line="13"
+ startpos="966"
+ endpos="981"
+>
+	<type  start="942" length="23" line="13" chordsig="java.text.BreakIterator"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="996" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="992" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1013" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="996" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getWordInstance:(Ljava/util/Locale;)Ljava/text/BreakIterator;@java.text.BreakIterator"
+ sig="BreakIterator getWordInstance(Locale)"
+ line="14"
+ startpos="1064"
+ endpos="1079"
+>
+	<marker line="-1" type="param">
+		<operand  start="1097" length="5" line="14">
+			<expr><![CDATA[where]]></expr>
+		</operand>
+	</marker>
+	<type  start="1040" length="23" line="14" chordsig="java.text.BreakIterator"/>
+	<type  start="1080" length="16" line="14" chordsig="java.util.Locale"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1116" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1112" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1133" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1116" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isBoundary:(I)Z@java.text.BreakIterator"
+ sig="boolean isBoundary(int)"
+ line="15"
+ startpos="1161"
+ endpos="1171"
+>
+	<marker line="-1" type="param">
+		<operand  start="1176" length="6" line="15">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1196" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1192" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1213" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1196" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="preceding:(I)I@java.text.BreakIterator"
+ sig="int preceding(int)"
+ line="16"
+ startpos="1237"
+ endpos="1246"
+>
+	<marker line="-1" type="param">
+		<operand  start="1251" length="6" line="16">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1271" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1267" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1288" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1271" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setText:(Ljava/lang/String;)V@java.text.BreakIterator"
+ sig="void setText(String)"
+ line="17"
+ startpos="1313"
+ endpos="1320"
+>
+	<marker line="-1" type="param">
+		<operand  start="1338" length="7" line="17">
+			<expr><![CDATA[newText]]></expr>
+		</operand>
+	</marker>
+	<type  start="1321" length="16" line="17" chordsig="java.lang.String"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1359" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1355" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1376" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1359" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="current:()I@java.text.BreakIterator"
+ sig="int current()"
+ line="18"
+ startpos="1409"
+ endpos="1416"
+>
+</method>
+<method
+ chordsig="first:()I@java.text.BreakIterator"
+ sig="int first()"
+ line="19"
+ startpos="1441"
+ endpos="1446"
+>
+</method>
+<method
+ chordsig="following:(I)I@java.text.BreakIterator"
+ sig="int following(int)"
+ line="20"
+ startpos="1471"
+ endpos="1480"
+>
+	<marker line="-1" type="param">
+		<operand  start="1485" length="6" line="20">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getText:()Ljava/text/CharacterIterator;@java.text.BreakIterator"
+ sig="CharacterIterator getText()"
+ line="21"
+ startpos="1539"
+ endpos="1546"
+>
+	<type  start="1511" length="27" line="21" chordsig="java.text.CharacterIterator"/>
+</method>
+<method
+ chordsig="last:()I@java.text.BreakIterator"
+ sig="int last()"
+ line="22"
+ startpos="1571"
+ endpos="1575"
+>
+</method>
+<method
+ chordsig="next:()I@java.text.BreakIterator"
+ sig="int next()"
+ line="23"
+ startpos="1600"
+ endpos="1604"
+>
+</method>
+<method
+ chordsig="next:(I)I@java.text.BreakIterator"
+ sig="int next(int)"
+ line="24"
+ startpos="1629"
+ endpos="1633"
+>
+	<marker line="-1" type="param">
+		<operand  start="1638" length="1" line="24">
+			<expr><![CDATA[n]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="previous:()I@java.text.BreakIterator"
+ sig="int previous()"
+ line="25"
+ startpos="1663"
+ endpos="1671"
+>
+</method>
+<method
+ chordsig="setText:(Ljava/text/CharacterIterator;)V@java.text.BreakIterator"
+ sig="void setText(CharacterIterator)"
+ line="26"
+ startpos="1697"
+ endpos="1704"
+>
+	<marker line="-1" type="param">
+		<operand  start="1733" length="7" line="26">
+			<expr><![CDATA[newText]]></expr>
+		</operand>
+	</marker>
+	<type  start="1705" length="27" line="26" chordsig="java.text.CharacterIterator"/>
+</method>
+<method
+ chordsig="clone:()Ljava/lang/Object;@java.text.BreakIterator"
+ sig="Object clone()"
+ line="27"
+ startpos="1768"
+ endpos="1773"
+>
+	<type  start="1751" length="16" line="27" chordsig="java.lang.Object"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1788" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1784" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1805" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1788" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

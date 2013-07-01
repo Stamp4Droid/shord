@@ -1,0 +1,880 @@
+<root>
+<class chordsig="android.database.CursorWrapper" line="2">
+	<type  start="66" length="23" line="3" chordsig="android.database.Cursor"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/database/Cursor;)V@android.database.CursorWrapper"
+ sig="CursorWrapper(Cursor)"
+ line="5"
+ startpos="100"
+ endpos="113"
+>
+	<marker line="-1" type="param">
+		<operand  start="138" length="6" line="5">
+			<expr><![CDATA[cursor]]></expr>
+		</operand>
+	</marker>
+	<type  start="114" length="23" line="5" chordsig="android.database.Cursor"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="158" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="154" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="175" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="158" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getWrappedCursor:()Landroid/database/Cursor;@android.database.CursorWrapper"
+ sig="Cursor getWrappedCursor()"
+ line="6"
+ startpos="219"
+ endpos="235"
+>
+	<type  start="195" length="23" line="6" chordsig="android.database.Cursor"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="250" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="246" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="267" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="250" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:()V@android.database.CursorWrapper"
+ sig="void close()"
+ line="7"
+ startpos="292"
+ endpos="297"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="312" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="308" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="329" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="312" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isClosed:()Z@android.database.CursorWrapper"
+ sig="boolean isClosed()"
+ line="8"
+ startpos="357"
+ endpos="365"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="380" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="376" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="397" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="380" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCount:()I@android.database.CursorWrapper"
+ sig="int getCount()"
+ line="9"
+ startpos="421"
+ endpos="429"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="444" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="440" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="461" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="444" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="deactivate:()V@android.database.CursorWrapper"
+ sig="void deactivate()"
+ line="10"
+ startpos="486"
+ endpos="496"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="511" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="507" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="528" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="511" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="moveToFirst:()Z@android.database.CursorWrapper"
+ sig="boolean moveToFirst()"
+ line="11"
+ startpos="556"
+ endpos="567"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="582" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="578" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="599" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="582" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getColumnCount:()I@android.database.CursorWrapper"
+ sig="int getColumnCount()"
+ line="12"
+ startpos="623"
+ endpos="637"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="652" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="648" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="669" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="652" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getColumnIndex:(Ljava/lang/String;)I@android.database.CursorWrapper"
+ sig="int getColumnIndex(String)"
+ line="13"
+ startpos="693"
+ endpos="707"
+>
+	<marker line="-1" type="param">
+		<operand  start="725" length="10" line="13">
+			<expr><![CDATA[columnName]]></expr>
+		</operand>
+	</marker>
+	<type  start="708" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="749" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="745" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="766" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="749" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getColumnIndexOrThrow:(Ljava/lang/String;)I@android.database.CursorWrapper"
+ sig="int getColumnIndexOrThrow(String)"
+ line="14"
+ startpos="790"
+ endpos="811"
+>
+	<marker line="-1" type="param">
+		<operand  start="829" length="10" line="14">
+			<expr><![CDATA[columnName]]></expr>
+		</operand>
+	</marker>
+	<type  start="812" length="16" line="14" chordsig="java.lang.String"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="895" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="891" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="912" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="895" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getColumnName:(I)Ljava/lang/String;@android.database.CursorWrapper"
+ sig="String getColumnName(int)"
+ line="15"
+ startpos="949"
+ endpos="962"
+>
+	<marker line="-1" type="param">
+		<operand  start="967" length="11" line="15">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<type  start="932" length="16" line="15" chordsig="java.lang.String"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="992" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="988" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1009" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="992" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getColumnNames:()[Ljava/lang/String;@android.database.CursorWrapper"
+ sig="String[] getColumnNames()"
+ line="16"
+ startpos="1048"
+ endpos="1062"
+>
+	<type  start="1029" length="16" line="16" chordsig="java.lang.String"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1077" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1073" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1094" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1077" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDouble:(I)D@android.database.CursorWrapper"
+ sig="double getDouble(int)"
+ line="17"
+ startpos="1121"
+ endpos="1130"
+>
+	<marker line="-1" type="param">
+		<operand  start="1135" length="11" line="17">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1160" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1156" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1177" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1160" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getExtras:()Landroid/os/Bundle;@android.database.CursorWrapper"
+ sig="Bundle getExtras()"
+ line="18"
+ startpos="1215"
+ endpos="1224"
+>
+	<type  start="1197" length="17" line="18" chordsig="android.os.Bundle"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1239" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1235" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1256" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1239" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFloat:(I)F@android.database.CursorWrapper"
+ sig="float getFloat(int)"
+ line="19"
+ startpos="1282"
+ endpos="1290"
+>
+	<marker line="-1" type="param">
+		<operand  start="1295" length="11" line="19">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1320" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1316" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1337" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1320" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInt:(I)I@android.database.CursorWrapper"
+ sig="int getInt(int)"
+ line="20"
+ startpos="1361"
+ endpos="1367"
+>
+	<marker line="-1" type="param">
+		<operand  start="1372" length="11" line="20">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1397" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1393" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1414" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1397" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLong:(I)J@android.database.CursorWrapper"
+ sig="long getLong(int)"
+ line="21"
+ startpos="1439"
+ endpos="1446"
+>
+	<marker line="-1" type="param">
+		<operand  start="1451" length="11" line="21">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1476" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1472" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1493" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1476" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getShort:(I)S@android.database.CursorWrapper"
+ sig="short getShort(int)"
+ line="22"
+ startpos="1519"
+ endpos="1527"
+>
+	<marker line="-1" type="param">
+		<operand  start="1532" length="11" line="22">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1557" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1553" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1574" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1557" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getString:(I)Ljava/lang/String;@android.database.CursorWrapper"
+ sig="String getString(int)"
+ line="23"
+ startpos="1611"
+ endpos="1620"
+>
+	<marker line="-1" type="param">
+		<operand  start="1625" length="11" line="23">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<type  start="1594" length="16" line="23" chordsig="java.lang.String"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1650" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1646" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1667" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1650" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="copyStringToBuffer:(ILandroid/database/CharArrayBuffer;)V@android.database.CursorWrapper"
+ sig="void copyStringToBuffer(int,CharArrayBuffer)"
+ line="24"
+ startpos="1692"
+ endpos="1710"
+>
+	<marker line="-1" type="param">
+		<operand  start="1715" length="11" line="24">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1761" length="6" line="24">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<type  start="1728" length="32" line="24" chordsig="android.database.CharArrayBuffer"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1781" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1777" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1798" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1781" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getBlob:(I)[B@android.database.CursorWrapper"
+ sig="byte[] getBlob(int)"
+ line="25"
+ startpos="1825"
+ endpos="1832"
+>
+	<marker line="-1" type="param">
+		<operand  start="1837" length="11" line="25">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1862" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1858" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1879" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1862" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getWantsAllOnMoveCalls:()Z@android.database.CursorWrapper"
+ sig="boolean getWantsAllOnMoveCalls()"
+ line="26"
+ startpos="1907"
+ endpos="1929"
+>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1944" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1940" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1961" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1944" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isAfterLast:()Z@android.database.CursorWrapper"
+ sig="boolean isAfterLast()"
+ line="27"
+ startpos="1989"
+ endpos="2000"
+>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2015" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2011" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2032" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2015" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isBeforeFirst:()Z@android.database.CursorWrapper"
+ sig="boolean isBeforeFirst()"
+ line="28"
+ startpos="2060"
+ endpos="2073"
+>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2088" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2084" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2105" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2088" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isFirst:()Z@android.database.CursorWrapper"
+ sig="boolean isFirst()"
+ line="29"
+ startpos="2133"
+ endpos="2140"
+>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2155" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2151" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2172" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2155" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isLast:()Z@android.database.CursorWrapper"
+ sig="boolean isLast()"
+ line="30"
+ startpos="2200"
+ endpos="2206"
+>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2221" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2217" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2238" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2221" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getType:(I)I@android.database.CursorWrapper"
+ sig="int getType(int)"
+ line="31"
+ startpos="2262"
+ endpos="2269"
+>
+	<marker line="-1" type="param">
+		<operand  start="2274" length="11" line="31">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2299" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2295" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2316" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2299" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isNull:(I)Z@android.database.CursorWrapper"
+ sig="boolean isNull(int)"
+ line="32"
+ startpos="2344"
+ endpos="2350"
+>
+	<marker line="-1" type="param">
+		<operand  start="2355" length="11" line="32">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2380" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2376" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2397" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2380" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="moveToLast:()Z@android.database.CursorWrapper"
+ sig="boolean moveToLast()"
+ line="33"
+ startpos="2425"
+ endpos="2435"
+>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2450" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2446" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2467" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2450" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="move:(I)Z@android.database.CursorWrapper"
+ sig="boolean move(int)"
+ line="34"
+ startpos="2495"
+ endpos="2499"
+>
+	<marker line="-1" type="param">
+		<operand  start="2504" length="6" line="34">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2524" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2520" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2541" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2524" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="moveToPosition:(I)Z@android.database.CursorWrapper"
+ sig="boolean moveToPosition(int)"
+ line="35"
+ startpos="2569"
+ endpos="2583"
+>
+	<marker line="-1" type="param">
+		<operand  start="2588" length="8" line="35">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2610" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2606" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2627" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2610" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="moveToNext:()Z@android.database.CursorWrapper"
+ sig="boolean moveToNext()"
+ line="36"
+ startpos="2655"
+ endpos="2665"
+>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2680" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2676" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2697" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2680" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPosition:()I@android.database.CursorWrapper"
+ sig="int getPosition()"
+ line="37"
+ startpos="2721"
+ endpos="2732"
+>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2747" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2743" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2764" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2747" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="moveToPrevious:()Z@android.database.CursorWrapper"
+ sig="boolean moveToPrevious()"
+ line="38"
+ startpos="2792"
+ endpos="2806"
+>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2821" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2817" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2838" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2821" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="registerContentObserver:(Landroid/database/ContentObserver;)V@android.database.CursorWrapper"
+ sig="void registerContentObserver(ContentObserver)"
+ line="39"
+ startpos="2863"
+ endpos="2886"
+>
+	<marker line="-1" type="param">
+		<operand  start="2920" length="8" line="39">
+			<expr><![CDATA[observer]]></expr>
+		</operand>
+	</marker>
+	<type  start="2887" length="32" line="39" chordsig="android.database.ContentObserver"/>
+	<newexpr line="39" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2942" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2938" length="29" line="39">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2959" length="7" line="39">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2942" length="16" line="39" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="registerDataSetObserver:(Landroid/database/DataSetObserver;)V@android.database.CursorWrapper"
+ sig="void registerDataSetObserver(DataSetObserver)"
+ line="40"
+ startpos="2984"
+ endpos="3007"
+>
+	<marker line="-1" type="param">
+		<operand  start="3041" length="8" line="40">
+			<expr><![CDATA[observer]]></expr>
+		</operand>
+	</marker>
+	<type  start="3008" length="32" line="40" chordsig="android.database.DataSetObserver"/>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3063" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3059" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3080" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3063" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="requery:()Z@android.database.CursorWrapper"
+ sig="boolean requery()"
+ line="41"
+ startpos="3108"
+ endpos="3115"
+>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3130" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3126" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3147" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3130" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="respond:(Landroid/os/Bundle;)Landroid/os/Bundle;@android.database.CursorWrapper"
+ sig="Bundle respond(Bundle)"
+ line="42"
+ startpos="3185"
+ endpos="3192"
+>
+	<marker line="-1" type="param">
+		<operand  start="3211" length="6" line="42">
+			<expr><![CDATA[extras]]></expr>
+		</operand>
+	</marker>
+	<type  start="3167" length="17" line="42" chordsig="android.os.Bundle"/>
+	<type  start="3193" length="17" line="42" chordsig="android.os.Bundle"/>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3231" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3227" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3248" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3231" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setNotificationUri:(Landroid/content/ContentResolver;Landroid/net/Uri;)V@android.database.CursorWrapper"
+ sig="void setNotificationUri(ContentResolver,Uri)"
+ line="43"
+ startpos="3273"
+ endpos="3291"
+>
+	<marker line="-1" type="param">
+		<operand  start="3324" length="2" line="43">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3344" length="3" line="43">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<type  start="3292" length="31" line="43" chordsig="android.content.ContentResolver"/>
+	<type  start="3328" length="15" line="43" chordsig="android.net.Uri"/>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3361" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3357" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3378" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3361" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unregisterContentObserver:(Landroid/database/ContentObserver;)V@android.database.CursorWrapper"
+ sig="void unregisterContentObserver(ContentObserver)"
+ line="44"
+ startpos="3403"
+ endpos="3428"
+>
+	<marker line="-1" type="param">
+		<operand  start="3462" length="8" line="44">
+			<expr><![CDATA[observer]]></expr>
+		</operand>
+	</marker>
+	<type  start="3429" length="32" line="44" chordsig="android.database.ContentObserver"/>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3484" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3480" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3501" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3484" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unregisterDataSetObserver:(Landroid/database/DataSetObserver;)V@android.database.CursorWrapper"
+ sig="void unregisterDataSetObserver(DataSetObserver)"
+ line="45"
+ startpos="3526"
+ endpos="3551"
+>
+	<marker line="-1" type="param">
+		<operand  start="3585" length="8" line="45">
+			<expr><![CDATA[observer]]></expr>
+		</operand>
+	</marker>
+	<type  start="3552" length="32" line="45" chordsig="android.database.DataSetObserver"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3607" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3603" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3624" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3607" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

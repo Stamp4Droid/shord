@@ -1,0 +1,87 @@
+<root>
+<class chordsig="java.io.ObjectInput" line="2">
+	<type  start="56" length="17" line="3" chordsig="java.io.DataInput"/>
+<method
+ chordsig="available:()I@java.io.ObjectInput"
+ sig="int available()"
+ line="5"
+ startpos="97"
+ endpos="106"
+>
+</method>
+<method
+ chordsig="close:()V@java.io.ObjectInput"
+ sig="void close()"
+ line="6"
+ startpos="159"
+ endpos="164"
+>
+</method>
+<method
+ chordsig="read:()I@java.io.ObjectInput"
+ sig="int read()"
+ line="7"
+ startpos="216"
+ endpos="220"
+>
+</method>
+<method
+ chordsig="read:([B)I@java.io.ObjectInput"
+ sig="int read(byte[])"
+ line="8"
+ startpos="272"
+ endpos="276"
+>
+	<marker line="-1" type="param">
+		<operand  start="284" length="6" line="8">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="read:([BII)I@java.io.ObjectInput"
+ sig="int read(byte[],int,int)"
+ line="9"
+ startpos="341"
+ endpos="345"
+>
+	<marker line="-1" type="param">
+		<operand  start="353" length="6" line="9">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="365" length="6" line="9">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="377" length="5" line="9">
+			<expr><![CDATA[count]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="readObject:()Ljava/lang/Object;@java.io.ObjectInput"
+ sig="Object readObject()"
+ line="10"
+ startpos="446"
+ endpos="456"
+>
+	<type  start="429" length="16" line="10" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="skip:(J)J@java.io.ObjectInput"
+ sig="long skip(long)"
+ line="11"
+ startpos="543"
+ endpos="547"
+>
+	<marker line="-1" type="param">
+		<operand  start="553" length="9" line="11">
+			<expr><![CDATA[byteCount]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

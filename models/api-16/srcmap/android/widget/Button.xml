@@ -1,0 +1,148 @@
+<root>
+<class chordsig="android.widget.Button" line="3">
+	<type  start="95" length="23" line="4" chordsig="android.widget.TextView"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.widget.Button"
+ sig="Button(Context)"
+ line="6"
+ startpos="129"
+ endpos="135"
+>
+	<marker line="-1" type="param">
+		<operand  start="160" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="136" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="178" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="208" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="253" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="249" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="270" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="253" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.widget.Button"
+ sig="Button(Context,AttributeSet)"
+ line="7"
+ startpos="290"
+ endpos="296"
+>
+	<marker line="-1" type="param">
+		<operand  start="321" length="7" line="7">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="356" length="5" line="7">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="297" length="23" line="7" chordsig="android.content.Context"/>
+	<type  start="330" length="25" line="7" chordsig="android.util.AttributeSet"/>
+	<type  start="372" length="23" line="7" chordsig="android.content.Context"/>
+	<type  start="402" length="25" line="7" chordsig="android.util.AttributeSet"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="447" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="443" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="464" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="447" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;I)V@android.widget.Button"
+ sig="Button(Context,AttributeSet,int)"
+ line="8"
+ startpos="484"
+ endpos="490"
+>
+	<marker line="-1" type="param">
+		<operand  start="515" length="7" line="8">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="550" length="5" line="8">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="561" length="8" line="8">
+			<expr><![CDATA[defStyle]]></expr>
+		</operand>
+	</marker>
+	<type  start="491" length="23" line="8" chordsig="android.content.Context"/>
+	<type  start="524" length="25" line="8" chordsig="android.util.AttributeSet"/>
+	<type  start="580" length="23" line="8" chordsig="android.content.Context"/>
+	<type  start="610" length="25" line="8" chordsig="android.util.AttributeSet"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="655" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="651" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="672" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="655" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityEvent:(Landroid/view/accessibility/AccessibilityEvent;)V@android.widget.Button"
+ sig="void onInitializeAccessibilityEvent(AccessibilityEvent)"
+ line="9"
+ startpos="697"
+ endpos="727"
+>
+	<marker line="-1" type="param">
+		<operand  start="774" length="5" line="9">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="728" length="45" line="9" chordsig="android.view.accessibility.AccessibilityEvent"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="793" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="789" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="810" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="793" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityNodeInfo:(Landroid/view/accessibility/AccessibilityNodeInfo;)V@android.widget.Button"
+ sig="void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo)"
+ line="10"
+ startpos="835"
+ endpos="868"
+>
+	<marker line="-1" type="param">
+		<operand  start="918" length="4" line="10">
+			<expr><![CDATA[info]]></expr>
+		</operand>
+	</marker>
+	<type  start="869" length="48" line="10" chordsig="android.view.accessibility.AccessibilityNodeInfo"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="936" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="932" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="953" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="936" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

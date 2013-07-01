@@ -1,0 +1,897 @@
+<root>
+<class chordsig="android.provider.CalendarContract" line="8">
+<class chordsig="android.provider.CalendarContract$CalendarSyncColumns" line="10">
+	<type  start="323" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="394" length="16" line="14" chordsig="java.lang.String"/>
+	<type  start="465" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="536" length="16" line="18" chordsig="java.lang.String"/>
+	<type  start="607" length="16" line="20" chordsig="java.lang.String"/>
+	<type  start="678" length="16" line="22" chordsig="java.lang.String"/>
+	<type  start="749" length="16" line="24" chordsig="java.lang.String"/>
+	<type  start="820" length="16" line="26" chordsig="java.lang.String"/>
+	<type  start="891" length="16" line="28" chordsig="java.lang.String"/>
+	<type  start="962" length="16" line="30" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.CalendarContract$SyncColumns" line="33">
+	<type  start="1064" length="53" line="33" chordsig="android.provider.CalendarContract$CalendarSyncColumns"/>
+	<type  start="1149" length="16" line="35" chordsig="java.lang.String"/>
+	<type  start="1226" length="16" line="37" chordsig="java.lang.String"/>
+	<type  start="1303" length="16" line="39" chordsig="java.lang.String"/>
+	<type  start="1372" length="16" line="41" chordsig="java.lang.String"/>
+	<type  start="1435" length="16" line="43" chordsig="java.lang.String"/>
+	<type  start="1502" length="16" line="45" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.CalendarContract$CalendarColumns" line="48">
+	<type  start="1649" length="16" line="50" chordsig="java.lang.String"/>
+	<type  start="1730" length="16" line="52" chordsig="java.lang.String"/>
+	<type  start="1821" length="16" line="54" chordsig="java.lang.String"/>
+	<type  start="1915" length="16" line="56" chordsig="java.lang.String"/>
+	<type  start="2533" length="16" line="76" chordsig="java.lang.String"/>
+	<type  start="2600" length="16" line="78" chordsig="java.lang.String"/>
+	<type  start="2688" length="16" line="80" chordsig="java.lang.String"/>
+	<type  start="2763" length="16" line="82" chordsig="java.lang.String"/>
+	<type  start="2841" length="16" line="84" chordsig="java.lang.String"/>
+	<type  start="2934" length="16" line="86" chordsig="java.lang.String"/>
+	<type  start="3024" length="16" line="88" chordsig="java.lang.String"/>
+	<type  start="3102" length="16" line="90" chordsig="java.lang.String"/>
+	<type  start="3188" length="16" line="92" chordsig="java.lang.String"/>
+	<type  start="3280" length="16" line="94" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.CalendarContract$CalendarEntity" line="97">
+	<type  start="3409" length="28" line="97" chordsig="android.provider.BaseColumns"/>
+	<type  start="3439" length="45" line="97" chordsig="android.provider.CalendarContract$SyncColumns"/>
+	<type  start="3486" length="49" line="97" chordsig="android.provider.CalendarContract$CalendarColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.CalendarContract$CalendarEntity"
+ sig="CalendarEntity()"
+ line="99"
+ startpos="3547"
+ endpos="3561"
+>
+	<newexpr line="100" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3588" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3584" length="29" line="100">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3605" length="7" line="100">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3588" length="16" line="100" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newEntityIterator:(Landroid/database/Cursor;)Landroid/content/EntityIterator;@android.provider.CalendarContract$CalendarEntity"
+ sig="EntityIterator newEntityIterator(Cursor)"
+ line="103"
+ startpos="3679"
+ endpos="3696"
+>
+	<marker line="-1" type="param">
+		<operand  start="3721" length="6" line="103">
+			<expr><![CDATA[cursor]]></expr>
+		</operand>
+	</marker>
+	<type  start="3648" length="30" line="103" chordsig="android.content.EntityIterator"/>
+	<type  start="3697" length="23" line="103" chordsig="android.database.Cursor"/>
+	<newexpr line="104" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3753" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3749" length="29" line="104">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3770" length="7" line="104">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3753" length="16" line="104" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="3819" length="15" line="107" chordsig="android.net.Uri"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.CalendarContract$CalendarEntity"
+ line="109"
+>
+</method>
+</class>
+<class chordsig="android.provider.CalendarContract$Calendars" line="114">
+	<type  start="3966" length="28" line="114" chordsig="android.provider.BaseColumns"/>
+	<type  start="3996" length="45" line="114" chordsig="android.provider.CalendarContract$SyncColumns"/>
+	<type  start="4043" length="49" line="114" chordsig="android.provider.CalendarContract$CalendarColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.CalendarContract$Calendars"
+ sig="Calendars()"
+ line="116"
+ startpos="4104"
+ endpos="4113"
+>
+	<newexpr line="117" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4140" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4136" length="29" line="117">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4157" length="7" line="117">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4140" length="16" line="117" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="4206" length="15" line="120" chordsig="android.net.Uri"/>
+	<type  start="4264" length="16" line="122" chordsig="java.lang.String"/>
+	<type  start="4355" length="16" line="124" chordsig="java.lang.String"/>
+	<type  start="4416" length="16" line="126" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.CalendarContract$Calendars"
+ line="128"
+>
+	<invkexpr line="129" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.CalendarContract" start="4518" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+</class>
+<class chordsig="android.provider.CalendarContract$AttendeesColumns" line="133">
+	<type  start="4628" length="16" line="135" chordsig="java.lang.String"/>
+	<type  start="4697" length="16" line="137" chordsig="java.lang.String"/>
+	<type  start="4775" length="16" line="139" chordsig="java.lang.String"/>
+	<type  start="4855" length="16" line="141" chordsig="java.lang.String"/>
+	<type  start="5246" length="16" line="153" chordsig="java.lang.String"/>
+	<type  start="5528" length="16" line="163" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.CalendarContract$Attendees" line="176">
+	<type  start="5950" length="28" line="176" chordsig="android.provider.BaseColumns"/>
+	<type  start="5980" length="50" line="176" chordsig="android.provider.CalendarContract$AttendeesColumns"/>
+	<type  start="6032" length="47" line="176" chordsig="android.provider.CalendarContract$EventsColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.CalendarContract$Attendees"
+ sig="Attendees()"
+ line="178"
+ startpos="6091"
+ endpos="6100"
+>
+	<newexpr line="179" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6127" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6123" length="29" line="179">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6144" length="7" line="179">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6127" length="16" line="179" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="6193" length="15" line="182" chordsig="android.net.Uri"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.CalendarContract$Attendees"
+ line="184"
+>
+	<invkexpr line="185" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.CalendarContract" start="6266" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+<method
+ chordsig="query:(Landroid/content/ContentResolver;J[Ljava/lang/String;)Landroid/database/Cursor;@android.provider.CalendarContract$Attendees"
+ sig="Cursor query(ContentResolver,long,String[])"
+ line="189"
+ startpos="6423"
+ endpos="6428"
+>
+	<marker line="-1" type="param">
+		<operand  start="6461" length="2" line="189">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6470" length="7" line="189">
+			<expr><![CDATA[eventId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6498" length="10" line="189">
+			<expr><![CDATA[projection]]></expr>
+		</operand>
+	</marker>
+	<type  start="6399" length="23" line="189" chordsig="android.database.Cursor"/>
+	<type  start="6429" length="31" line="189" chordsig="android.content.ContentResolver"/>
+	<type  start="6479" length="16" line="189" chordsig="java.lang.String"/>
+	<marker line="190" type="return">
+		<operand  start="6531" length="34" line="190">
+			<expr><![CDATA[new android.test.mock.MockCursor()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="190" chordsig="&lt;init&gt;:()V@android.test.mock.MockCursor" start="6535" length="28" type="invoke">
+			<expr><![CDATA[new android.test.mock.MockCursor()]]></expr>
+		<param  start="6531" length="34" line="190">
+			<expr><![CDATA[new android.test.mock.MockCursor()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6535" length="28" line="190" chordsig="android.test.mock.MockCursor"/>
+</method>
+</class>
+<class chordsig="android.provider.CalendarContract$EventsColumns" line="194">
+	<type  start="6660" length="16" line="196" chordsig="java.lang.String"/>
+	<type  start="6735" length="16" line="198" chordsig="java.lang.String"/>
+	<type  start="6798" length="16" line="200" chordsig="java.lang.String"/>
+	<type  start="6873" length="16" line="202" chordsig="java.lang.String"/>
+	<type  start="6953" length="16" line="204" chordsig="java.lang.String"/>
+	<type  start="7027" length="16" line="206" chordsig="java.lang.String"/>
+	<type  start="7111" length="16" line="208" chordsig="java.lang.String"/>
+	<type  start="7345" length="16" line="216" chordsig="java.lang.String"/>
+	<type  start="7436" length="16" line="218" chordsig="java.lang.String"/>
+	<type  start="7509" length="16" line="220" chordsig="java.lang.String"/>
+	<type  start="7582" length="16" line="222" chordsig="java.lang.String"/>
+	<type  start="7655" length="16" line="224" chordsig="java.lang.String"/>
+	<type  start="7728" length="16" line="226" chordsig="java.lang.String"/>
+	<type  start="7801" length="16" line="228" chordsig="java.lang.String"/>
+	<type  start="7874" length="16" line="230" chordsig="java.lang.String"/>
+	<type  start="7947" length="16" line="232" chordsig="java.lang.String"/>
+	<type  start="8020" length="16" line="234" chordsig="java.lang.String"/>
+	<type  start="8093" length="16" line="236" chordsig="java.lang.String"/>
+	<type  start="8168" length="16" line="238" chordsig="java.lang.String"/>
+	<type  start="8242" length="16" line="240" chordsig="java.lang.String"/>
+	<type  start="8309" length="16" line="242" chordsig="java.lang.String"/>
+	<type  start="8372" length="16" line="244" chordsig="java.lang.String"/>
+	<type  start="8441" length="16" line="246" chordsig="java.lang.String"/>
+	<type  start="8521" length="16" line="248" chordsig="java.lang.String"/>
+	<type  start="8608" length="16" line="250" chordsig="java.lang.String"/>
+	<type  start="8674" length="16" line="252" chordsig="java.lang.String"/>
+	<type  start="8966" length="16" line="262" chordsig="java.lang.String"/>
+	<type  start="9216" length="16" line="270" chordsig="java.lang.String"/>
+	<type  start="9286" length="16" line="272" chordsig="java.lang.String"/>
+	<type  start="9383" length="16" line="274" chordsig="java.lang.String"/>
+	<type  start="9446" length="16" line="276" chordsig="java.lang.String"/>
+	<type  start="9509" length="16" line="278" chordsig="java.lang.String"/>
+	<type  start="9574" length="16" line="280" chordsig="java.lang.String"/>
+	<type  start="9639" length="16" line="282" chordsig="java.lang.String"/>
+	<type  start="9714" length="16" line="284" chordsig="java.lang.String"/>
+	<type  start="9799" length="16" line="286" chordsig="java.lang.String"/>
+	<type  start="9894" length="16" line="288" chordsig="java.lang.String"/>
+	<type  start="9977" length="16" line="290" chordsig="java.lang.String"/>
+	<type  start="10047" length="16" line="292" chordsig="java.lang.String"/>
+	<type  start="10132" length="16" line="294" chordsig="java.lang.String"/>
+	<type  start="10217" length="16" line="296" chordsig="java.lang.String"/>
+	<type  start="10315" length="16" line="298" chordsig="java.lang.String"/>
+	<type  start="10407" length="16" line="300" chordsig="java.lang.String"/>
+	<type  start="10478" length="16" line="302" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.CalendarContract$EventsEntity" line="305">
+	<type  start="10595" length="28" line="305" chordsig="android.provider.BaseColumns"/>
+	<type  start="10625" length="45" line="305" chordsig="android.provider.CalendarContract$SyncColumns"/>
+	<type  start="10672" length="47" line="305" chordsig="android.provider.CalendarContract$EventsColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.CalendarContract$EventsEntity"
+ sig="EventsEntity()"
+ line="307"
+ startpos="10731"
+ endpos="10743"
+>
+	<newexpr line="308" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10770" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10766" length="29" line="308">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10787" length="7" line="308">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10770" length="16" line="308" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newEntityIterator:(Landroid/database/Cursor;Landroid/content/ContentResolver;)Landroid/content/EntityIterator;@android.provider.CalendarContract$EventsEntity"
+ sig="EntityIterator newEntityIterator(Cursor,ContentResolver)"
+ line="311"
+ startpos="10861"
+ endpos="10878"
+>
+	<marker line="-1" type="param">
+		<operand  start="10903" length="6" line="311">
+			<expr><![CDATA[cursor]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="10943" length="8" line="311">
+			<expr><![CDATA[resolver]]></expr>
+		</operand>
+	</marker>
+	<type  start="10830" length="30" line="311" chordsig="android.content.EntityIterator"/>
+	<type  start="10879" length="23" line="311" chordsig="android.database.Cursor"/>
+	<type  start="10911" length="31" line="311" chordsig="android.content.ContentResolver"/>
+	<newexpr line="312" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10977" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10973" length="29" line="312">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10994" length="7" line="312">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10977" length="16" line="312" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newEntityIterator:(Landroid/database/Cursor;Landroid/content/ContentProviderClient;)Landroid/content/EntityIterator;@android.provider.CalendarContract$EventsEntity"
+ sig="EntityIterator newEntityIterator(Cursor,ContentProviderClient)"
+ line="315"
+ startpos="11068"
+ endpos="11085"
+>
+	<marker line="-1" type="param">
+		<operand  start="11110" length="6" line="315">
+			<expr><![CDATA[cursor]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="11156" length="8" line="315">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<type  start="11037" length="30" line="315" chordsig="android.content.EntityIterator"/>
+	<type  start="11086" length="23" line="315" chordsig="android.database.Cursor"/>
+	<type  start="11118" length="37" line="315" chordsig="android.content.ContentProviderClient"/>
+	<newexpr line="316" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11190" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11186" length="29" line="316">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11207" length="7" line="316">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11190" length="16" line="316" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="11256" length="15" line="319" chordsig="android.net.Uri"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.CalendarContract$EventsEntity"
+ line="321"
+>
+</method>
+</class>
+<class chordsig="android.provider.CalendarContract$Events" line="326">
+	<type  start="11400" length="28" line="326" chordsig="android.provider.BaseColumns"/>
+	<type  start="11430" length="45" line="326" chordsig="android.provider.CalendarContract$SyncColumns"/>
+	<type  start="11477" length="47" line="326" chordsig="android.provider.CalendarContract$EventsColumns"/>
+	<type  start="11526" length="49" line="326" chordsig="android.provider.CalendarContract$CalendarColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.CalendarContract$Events"
+ sig="Events()"
+ line="328"
+ startpos="11587"
+ endpos="11593"
+>
+	<newexpr line="329" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11620" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11616" length="29" line="329">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11637" length="7" line="329">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11620" length="16" line="329" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="11686" length="15" line="332" chordsig="android.net.Uri"/>
+	<type  start="11744" length="15" line="334" chordsig="android.net.Uri"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.CalendarContract$Events"
+ line="336"
+>
+</method>
+</class>
+<class chordsig="android.provider.CalendarContract$Instances" line="342">
+	<type  start="11943" length="28" line="342" chordsig="android.provider.BaseColumns"/>
+	<type  start="11973" length="47" line="342" chordsig="android.provider.CalendarContract$EventsColumns"/>
+	<type  start="12022" length="49" line="342" chordsig="android.provider.CalendarContract$CalendarColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.CalendarContract$Instances"
+ sig="Instances()"
+ line="344"
+ startpos="12083"
+ endpos="12092"
+>
+	<newexpr line="345" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12119" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="12115" length="29" line="345">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="12136" length="7" line="345">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12119" length="16" line="345" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="12185" length="15" line="348" chordsig="android.net.Uri"/>
+	<type  start="12243" length="15" line="350" chordsig="android.net.Uri"/>
+	<type  start="12308" length="15" line="352" chordsig="android.net.Uri"/>
+	<type  start="12373" length="15" line="354" chordsig="android.net.Uri"/>
+	<type  start="12445" length="16" line="356" chordsig="java.lang.String"/>
+	<type  start="12508" length="16" line="358" chordsig="java.lang.String"/>
+	<type  start="12567" length="16" line="360" chordsig="java.lang.String"/>
+	<type  start="12636" length="16" line="362" chordsig="java.lang.String"/>
+	<type  start="12706" length="16" line="364" chordsig="java.lang.String"/>
+	<type  start="12772" length="16" line="366" chordsig="java.lang.String"/>
+	<type  start="12848" length="16" line="368" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.CalendarContract$Instances"
+ line="370"
+>
+	<invkexpr line="371" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.CalendarContract" start="12935" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="372" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.CalendarContract" start="12982" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="373" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.CalendarContract" start="13029" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="374" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.CalendarContract" start="13083" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+<method
+ chordsig="query:(Landroid/content/ContentResolver;[Ljava/lang/String;JJ)Landroid/database/Cursor;@android.provider.CalendarContract$Instances"
+ sig="Cursor query(ContentResolver,String[],long,long)"
+ line="378"
+ startpos="13230"
+ endpos="13235"
+>
+	<marker line="-1" type="param">
+		<operand  start="13268" length="2" line="378">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="13291" length="10" line="378">
+			<expr><![CDATA[projection]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="13308" length="5" line="378">
+			<expr><![CDATA[begin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="13320" length="3" line="378">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="13206" length="23" line="378" chordsig="android.database.Cursor"/>
+	<type  start="13236" length="31" line="378" chordsig="android.content.ContentResolver"/>
+	<type  start="13272" length="16" line="378" chordsig="java.lang.String"/>
+	<marker line="379" type="return">
+		<operand  start="13346" length="34" line="379">
+			<expr><![CDATA[new android.test.mock.MockCursor()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="379" chordsig="&lt;init&gt;:()V@android.test.mock.MockCursor" start="13350" length="28" type="invoke">
+			<expr><![CDATA[new android.test.mock.MockCursor()]]></expr>
+		<param  start="13346" length="34" line="379">
+			<expr><![CDATA[new android.test.mock.MockCursor()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="13350" length="28" line="379" chordsig="android.test.mock.MockCursor"/>
+</method>
+<method
+ chordsig="query:(Landroid/content/ContentResolver;[Ljava/lang/String;JJLjava/lang/String;)Landroid/database/Cursor;@android.provider.CalendarContract$Instances"
+ sig="Cursor query(ContentResolver,String[],long,long,String)"
+ line="383"
+ startpos="13515"
+ endpos="13520"
+>
+	<marker line="-1" type="param">
+		<operand  start="13553" length="2" line="383">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="13576" length="10" line="383">
+			<expr><![CDATA[projection]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="13593" length="5" line="383">
+			<expr><![CDATA[begin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="13605" length="3" line="383">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="13627" length="11" line="383">
+			<expr><![CDATA[searchQuery]]></expr>
+		</operand>
+	</marker>
+	<type  start="13491" length="23" line="383" chordsig="android.database.Cursor"/>
+	<type  start="13521" length="31" line="383" chordsig="android.content.ContentResolver"/>
+	<type  start="13557" length="16" line="383" chordsig="java.lang.String"/>
+	<type  start="13610" length="16" line="383" chordsig="java.lang.String"/>
+	<marker line="384" type="return">
+		<operand  start="13661" length="34" line="384">
+			<expr><![CDATA[new android.test.mock.MockCursor()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="384" chordsig="&lt;init&gt;:()V@android.test.mock.MockCursor" start="13665" length="28" type="invoke">
+			<expr><![CDATA[new android.test.mock.MockCursor()]]></expr>
+		<param  start="13661" length="34" line="384">
+			<expr><![CDATA[new android.test.mock.MockCursor()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="13665" length="28" line="384" chordsig="android.test.mock.MockCursor"/>
+</method>
+</class>
+<class chordsig="android.provider.CalendarContract$CalendarCacheColumns" line="388">
+	<type  start="13797" length="16" line="390" chordsig="java.lang.String"/>
+	<type  start="13856" length="16" line="392" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.CalendarContract$CalendarCache" line="395">
+	<type  start="13952" length="54" line="395" chordsig="android.provider.CalendarContract$CalendarCacheColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.CalendarContract$CalendarCache"
+ sig="CalendarCache()"
+ line="397"
+ startpos="14018"
+ endpos="14031"
+>
+	<newexpr line="398" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="14058" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="14054" length="29" line="398">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="14075" length="7" line="398">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="14058" length="16" line="398" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="14124" length="15" line="401" chordsig="android.net.Uri"/>
+	<type  start="14174" length="16" line="403" chordsig="java.lang.String"/>
+	<type  start="14256" length="16" line="405" chordsig="java.lang.String"/>
+	<type  start="14348" length="16" line="407" chordsig="java.lang.String"/>
+	<type  start="14457" length="16" line="409" chordsig="java.lang.String"/>
+	<type  start="14532" length="16" line="411" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.CalendarContract$CalendarCache"
+ line="413"
+>
+</method>
+</class>
+<class chordsig="android.provider.CalendarContract$EventDaysColumns" line="418">
+	<type  start="14716" length="16" line="420" chordsig="java.lang.String"/>
+	<type  start="14785" length="16" line="422" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.CalendarContract$EventDays" line="425">
+	<type  start="14879" length="50" line="425" chordsig="android.provider.CalendarContract$EventDaysColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.CalendarContract$EventDays"
+ sig="EventDays()"
+ line="427"
+ startpos="14941"
+ endpos="14950"
+>
+	<newexpr line="428" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="14977" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="14973" length="29" line="428">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="14994" length="7" line="428">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="14977" length="16" line="428" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="query:(Landroid/content/ContentResolver;II[Ljava/lang/String;)Landroid/database/Cursor;@android.provider.CalendarContract$EventDays"
+ sig="Cursor query(ContentResolver,int,int,String[])"
+ line="431"
+ startpos="15067"
+ endpos="15072"
+>
+	<marker line="-1" type="param">
+		<operand  start="15105" length="2" line="431">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="15113" length="8" line="431">
+			<expr><![CDATA[startDay]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="15127" length="7" line="431">
+			<expr><![CDATA[numDays]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="15155" length="10" line="431">
+			<expr><![CDATA[projection]]></expr>
+		</operand>
+	</marker>
+	<type  start="15043" length="23" line="431" chordsig="android.database.Cursor"/>
+	<type  start="15073" length="31" line="431" chordsig="android.content.ContentResolver"/>
+	<type  start="15136" length="16" line="431" chordsig="java.lang.String"/>
+	<newexpr line="432" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="15191" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="15187" length="29" line="432">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="15208" length="7" line="432">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="15191" length="16" line="432" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="15257" length="15" line="435" chordsig="android.net.Uri"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.CalendarContract$EventDays"
+ line="437"
+>
+</method>
+</class>
+<class chordsig="android.provider.CalendarContract$RemindersColumns" line="442">
+	<type  start="15432" length="16" line="444" chordsig="java.lang.String"/>
+	<type  start="15501" length="16" line="446" chordsig="java.lang.String"/>
+	<type  start="15623" length="16" line="450" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.CalendarContract$Reminders" line="461">
+	<type  start="15921" length="28" line="461" chordsig="android.provider.BaseColumns"/>
+	<type  start="15951" length="50" line="461" chordsig="android.provider.CalendarContract$RemindersColumns"/>
+	<type  start="16003" length="47" line="461" chordsig="android.provider.CalendarContract$EventsColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.CalendarContract$Reminders"
+ sig="Reminders()"
+ line="463"
+ startpos="16062"
+ endpos="16071"
+>
+	<newexpr line="464" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="16098" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="16094" length="29" line="464">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="16115" length="7" line="464">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="16098" length="16" line="464" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="16164" length="15" line="467" chordsig="android.net.Uri"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.CalendarContract$Reminders"
+ line="469"
+>
+	<invkexpr line="470" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.CalendarContract" start="16237" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+<method
+ chordsig="query:(Landroid/content/ContentResolver;J[Ljava/lang/String;)Landroid/database/Cursor;@android.provider.CalendarContract$Reminders"
+ sig="Cursor query(ContentResolver,long,String[])"
+ line="474"
+ startpos="16393"
+ endpos="16398"
+>
+	<marker line="-1" type="param">
+		<operand  start="16431" length="2" line="474">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="16440" length="7" line="474">
+			<expr><![CDATA[eventId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="16468" length="10" line="474">
+			<expr><![CDATA[projection]]></expr>
+		</operand>
+	</marker>
+	<type  start="16369" length="23" line="474" chordsig="android.database.Cursor"/>
+	<type  start="16399" length="31" line="474" chordsig="android.content.ContentResolver"/>
+	<type  start="16449" length="16" line="474" chordsig="java.lang.String"/>
+	<marker line="475" type="return">
+		<operand  start="16501" length="34" line="475">
+			<expr><![CDATA[new android.test.mock.MockCursor()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="475" chordsig="&lt;init&gt;:()V@android.test.mock.MockCursor" start="16505" length="28" type="invoke">
+			<expr><![CDATA[new android.test.mock.MockCursor()]]></expr>
+		<param  start="16501" length="34" line="475">
+			<expr><![CDATA[new android.test.mock.MockCursor()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="16505" length="28" line="475" chordsig="android.test.mock.MockCursor"/>
+</method>
+</class>
+<class chordsig="android.provider.CalendarContract$CalendarAlertsColumns" line="479">
+	<type  start="16638" length="16" line="481" chordsig="java.lang.String"/>
+	<type  start="16707" length="16" line="483" chordsig="java.lang.String"/>
+	<type  start="16770" length="16" line="485" chordsig="java.lang.String"/>
+	<type  start="16829" length="16" line="487" chordsig="java.lang.String"/>
+	<type  start="16901" length="16" line="489" chordsig="java.lang.String"/>
+	<type  start="16979" length="16" line="491" chordsig="java.lang.String"/>
+	<type  start="17057" length="16" line="493" chordsig="java.lang.String"/>
+	<type  start="17131" length="16" line="495" chordsig="java.lang.String"/>
+	<type  start="17352" length="16" line="503" chordsig="java.lang.String"/>
+	<type  start="17419" length="16" line="505" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.CalendarContract$CalendarAlerts" line="508">
+	<type  start="17543" length="28" line="508" chordsig="android.provider.BaseColumns"/>
+	<type  start="17573" length="55" line="508" chordsig="android.provider.CalendarContract$CalendarAlertsColumns"/>
+	<type  start="17630" length="47" line="508" chordsig="android.provider.CalendarContract$EventsColumns"/>
+	<type  start="17679" length="49" line="508" chordsig="android.provider.CalendarContract$CalendarColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.CalendarContract$CalendarAlerts"
+ sig="CalendarAlerts()"
+ line="510"
+ startpos="17740"
+ endpos="17754"
+>
+	<newexpr line="511" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="17781" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="17777" length="29" line="511">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="17798" length="7" line="511">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="17781" length="16" line="511" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="17847" length="15" line="514" chordsig="android.net.Uri"/>
+	<type  start="17905" length="15" line="516" chordsig="android.net.Uri"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.CalendarContract$CalendarAlerts"
+ line="518"
+>
+</method>
+</class>
+<class chordsig="android.provider.CalendarContract$ColorsColumns" line="524">
+	<type  start="18110" length="42" line="524" chordsig="android.provider.SyncStateContract$Columns"/>
+	<type  start="18184" length="16" line="526" chordsig="java.lang.String"/>
+	<type  start="18358" length="16" line="532" chordsig="java.lang.String"/>
+	<type  start="18431" length="16" line="534" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.CalendarContract$Colors" line="537">
+	<type  start="18520" length="47" line="537" chordsig="android.provider.CalendarContract$ColorsColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.CalendarContract$Colors"
+ sig="Colors()"
+ line="539"
+ startpos="18579"
+ endpos="18585"
+>
+	<newexpr line="540" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="18612" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="18608" length="29" line="540">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="18629" length="7" line="540">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="18612" length="16" line="540" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="18678" length="15" line="543" chordsig="android.net.Uri"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.CalendarContract$Colors"
+ line="545"
+>
+</method>
+</class>
+<class chordsig="android.provider.CalendarContract$ExtendedPropertiesColumns" line="550">
+	<type  start="18862" length="16" line="552" chordsig="java.lang.String"/>
+	<type  start="18931" length="16" line="554" chordsig="java.lang.String"/>
+	<type  start="18992" length="16" line="556" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.CalendarContract$ExtendedProperties" line="559">
+	<type  start="19093" length="28" line="559" chordsig="android.provider.BaseColumns"/>
+	<type  start="19123" length="59" line="559" chordsig="android.provider.CalendarContract$ExtendedPropertiesColumns"/>
+	<type  start="19184" length="47" line="559" chordsig="android.provider.CalendarContract$EventsColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.CalendarContract$ExtendedProperties"
+ sig="ExtendedProperties()"
+ line="561"
+ startpos="19243"
+ endpos="19261"
+>
+	<newexpr line="562" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="19288" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="19284" length="29" line="562">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="19305" length="7" line="562">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="19288" length="16" line="562" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="19354" length="15" line="565" chordsig="android.net.Uri"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.CalendarContract$ExtendedProperties"
+ line="567"
+>
+</method>
+</class>
+<class chordsig="android.provider.CalendarContract$SyncState" line="572">
+	<type  start="19501" length="42" line="572" chordsig="android.provider.SyncStateContract$Columns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.CalendarContract$SyncState"
+ sig="SyncState()"
+ line="574"
+ startpos="19555"
+ endpos="19564"
+>
+	<newexpr line="575" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="19591" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="19587" length="29" line="575">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="19608" length="7" line="575">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="19591" length="16" line="575" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="19657" length="15" line="578" chordsig="android.net.Uri"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.CalendarContract$SyncState"
+ line="580"
+>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.CalendarContract"
+ sig="CalendarContract()"
+ line="585"
+ startpos="19757"
+ endpos="19773"
+>
+	<newexpr line="586" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="19796" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="19792" length="29" line="586">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="19813" length="7" line="586">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="19796" length="16" line="586" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="19854" length="16" line="589" chordsig="java.lang.String"/>
+	<type  start="19960" length="16" line="591" chordsig="java.lang.String"/>
+	<type  start="20040" length="16" line="593" chordsig="java.lang.String"/>
+	<type  start="20116" length="16" line="595" chordsig="java.lang.String"/>
+	<type  start="20190" length="16" line="597" chordsig="java.lang.String"/>
+	<type  start="20268" length="15" line="599" chordsig="android.net.Uri"/>
+	<type  start="20322" length="16" line="601" chordsig="java.lang.String"/>
+	<type  start="20413" length="16" line="603" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.CalendarContract"
+ line="605"
+>
+	<invkexpr line="606" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.CalendarContract" start="20496" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+<method
+ chordsig="taintedUri:()Landroid/net/Uri;@android.provider.CalendarContract"
+ sig="Uri taintedUri()"
+ line="610"
+ startpos="20618"
+ endpos="20628"
+>
+	<type  start="20602" length="15" line="610" chordsig="android.net.Uri"/>
+	<marker line="611" type="return">
+		<operand  start="20648" length="28" line="611">
+			<expr><![CDATA[new android.net.StampUri("")]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="611" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.net.StampUri" start="20652" length="20" type="invoke">
+			<expr><![CDATA[new android.net.StampUri("")]]></expr>
+		<param  start="20648" length="28" line="611">
+			<expr><![CDATA[new android.net.StampUri("")]]></expr>
+		</param>
+		<param  start="20673" length="2" line="611">
+			<expr><![CDATA[""]]></expr>
+		</param>
+	</newexpr>
+	<type  start="20652" length="20" line="611" chordsig="android.net.StampUri"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,47 @@
+<root>
+<class chordsig="java.nio.charset.spi.CharsetProvider" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@java.nio.charset.spi.CharsetProvider"
+ sig="CharsetProvider()"
+ line="4"
+ startpos="81"
+ endpos="96"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="111" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="107" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="128" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="111" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="charsets:()Ljava/util/Iterator;@java.nio.charset.spi.CharsetProvider"
+ sig="Iterator&lt;Charset&gt; charsets()"
+ line="5"
+ startpos="202"
+ endpos="210"
+>
+	<type  start="157" length="18" line="5" chordsig="java.util.Iterator"/>
+	<type  start="176" length="24" line="5" chordsig="java.nio.charset.Charset"/>
+</method>
+<method
+ chordsig="charsetForName:(Ljava/lang/String;)Ljava/nio/charset/Charset;@java.nio.charset.spi.CharsetProvider"
+ sig="Charset charsetForName(String)"
+ line="6"
+ startpos="256"
+ endpos="270"
+>
+	<marker line="-1" type="param">
+		<operand  start="288" length="11" line="6">
+			<expr><![CDATA[charsetName]]></expr>
+		</operand>
+	</marker>
+	<type  start="231" length="24" line="6" chordsig="java.nio.charset.Charset"/>
+	<type  start="271" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,71 @@
+<root>
+<class chordsig="android.location.LocationListener" line="2">
+<method
+ chordsig="onLocationChanged:(Landroid/location/Location;)V@android.location.LocationListener"
+ sig="void onLocationChanged(Location)"
+ line="4"
+ startpos="84"
+ endpos="101"
+>
+	<marker line="-1" type="param">
+		<operand  start="128" length="8" line="4">
+			<expr><![CDATA[location]]></expr>
+		</operand>
+	</marker>
+	<type  start="102" length="25" line="4" chordsig="android.location.Location"/>
+</method>
+<method
+ chordsig="onStatusChanged:(Ljava/lang/String;ILandroid/os/Bundle;)V@android.location.LocationListener"
+ sig="void onStatusChanged(String,int,Bundle)"
+ line="5"
+ startpos="161"
+ endpos="176"
+>
+	<marker line="-1" type="param">
+		<operand  start="194" length="8" line="5">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="208" length="6" line="5">
+			<expr><![CDATA[status]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="234" length="6" line="5">
+			<expr><![CDATA[extras]]></expr>
+		</operand>
+	</marker>
+	<type  start="177" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="216" length="17" line="5" chordsig="android.os.Bundle"/>
+</method>
+<method
+ chordsig="onProviderEnabled:(Ljava/lang/String;)V@android.location.LocationListener"
+ sig="void onProviderEnabled(String)"
+ line="6"
+ startpos="265"
+ endpos="282"
+>
+	<marker line="-1" type="param">
+		<operand  start="300" length="8" line="6">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<type  start="283" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="onProviderDisabled:(Ljava/lang/String;)V@android.location.LocationListener"
+ sig="void onProviderDisabled(String)"
+ line="7"
+ startpos="333"
+ endpos="351"
+>
+	<marker line="-1" type="param">
+		<operand  start="369" length="8" line="7">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<type  start="352" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

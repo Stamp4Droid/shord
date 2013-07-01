@@ -1,0 +1,477 @@
+<root>
+<class chordsig="java.nio.IntBuffer" line="2">
+	<type  start="60" length="15" line="3" chordsig="java.nio.Buffer"/>
+	<type  start="89" length="20" line="4" chordsig="java.lang.Comparable"/>
+	<type  start="110" length="18" line="4" chordsig="java.nio.IntBuffer"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.nio.IntBuffer"
+ sig="IntBuffer()"
+ line="6"
+ startpos="132"
+ endpos="141"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="156" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="152" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="173" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="156" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="allocate:(I)Ljava/nio/IntBuffer;@java.nio.IntBuffer"
+ sig="IntBuffer allocate(int)"
+ line="7"
+ startpos="219"
+ endpos="227"
+>
+	<marker line="-1" type="param">
+		<operand  start="232" length="8" line="7">
+			<expr><![CDATA[capacity]]></expr>
+		</operand>
+	</marker>
+	<type  start="200" length="18" line="7" chordsig="java.nio.IntBuffer"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="254" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="250" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="271" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="254" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="wrap:([I)Ljava/nio/IntBuffer;@java.nio.IntBuffer"
+ sig="IntBuffer wrap(int[])"
+ line="8"
+ startpos="317"
+ endpos="321"
+>
+	<marker line="-1" type="param">
+		<operand  start="328" length="5" line="8">
+			<expr><![CDATA[array]]></expr>
+		</operand>
+	</marker>
+	<type  start="298" length="18" line="8" chordsig="java.nio.IntBuffer"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="347" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="343" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="364" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="347" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="wrap:([III)Ljava/nio/IntBuffer;@java.nio.IntBuffer"
+ sig="IntBuffer wrap(int[],int,int)"
+ line="9"
+ startpos="410"
+ endpos="414"
+>
+	<marker line="-1" type="param">
+		<operand  start="421" length="5" line="9">
+			<expr><![CDATA[array]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="432" length="5" line="9">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="443" length="8" line="9">
+			<expr><![CDATA[intCount]]></expr>
+		</operand>
+	</marker>
+	<type  start="391" length="18" line="9" chordsig="java.nio.IntBuffer"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="465" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="461" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="482" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="465" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="array:()[I@java.nio.IntBuffer"
+ sig="int[] array()"
+ line="10"
+ startpos="514"
+ endpos="519"
+>
+	<alias>()Ljava/lang/Object;</alias>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="534" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="530" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="551" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="534" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="arrayOffset:()I@java.nio.IntBuffer"
+ sig="int arrayOffset()"
+ line="11"
+ startpos="581"
+ endpos="592"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="607" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="603" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="624" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="607" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="asReadOnlyBuffer:()Ljava/nio/IntBuffer;@java.nio.IntBuffer"
+ sig="IntBuffer asReadOnlyBuffer()"
+ line="12"
+ startpos="672"
+ endpos="688"
+>
+	<type  start="653" length="18" line="12" chordsig="java.nio.IntBuffer"/>
+</method>
+<method
+ chordsig="compact:()Ljava/nio/IntBuffer;@java.nio.IntBuffer"
+ sig="IntBuffer compact()"
+ line="13"
+ startpos="728"
+ endpos="735"
+>
+	<type  start="709" length="18" line="13" chordsig="java.nio.IntBuffer"/>
+</method>
+<method
+ chordsig="compareTo:(Ljava/nio/IntBuffer;)I@java.nio.IntBuffer"
+ sig="int compareTo(IntBuffer)"
+ line="14"
+ startpos="751"
+ endpos="760"
+>
+	<alias>(Ljava/lang/Object;)I</alias>
+	<marker line="-1" type="param">
+		<operand  start="780" length="11" line="14">
+			<expr><![CDATA[otherBuffer]]></expr>
+		</operand>
+	</marker>
+	<type  start="761" length="18" line="14" chordsig="java.nio.IntBuffer"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="805" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="801" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="822" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="805" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="duplicate:()Ljava/nio/IntBuffer;@java.nio.IntBuffer"
+ sig="IntBuffer duplicate()"
+ line="15"
+ startpos="870"
+ endpos="879"
+>
+	<type  start="851" length="18" line="15" chordsig="java.nio.IntBuffer"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.nio.IntBuffer"
+ sig="boolean equals(Object)"
+ line="16"
+ startpos="899"
+ endpos="905"
+>
+	<marker line="-1" type="param">
+		<operand  start="923" length="5" line="16">
+			<expr><![CDATA[other]]></expr>
+		</operand>
+	</marker>
+	<type  start="906" length="16" line="16" chordsig="java.lang.Object"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="942" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="938" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="959" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="942" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="get:()I@java.nio.IntBuffer"
+ sig="int get()"
+ line="17"
+ startpos="992"
+ endpos="995"
+>
+</method>
+<method
+ chordsig="get:([I)Ljava/nio/IntBuffer;@java.nio.IntBuffer"
+ sig="IntBuffer get(int[])"
+ line="18"
+ startpos="1026"
+ endpos="1029"
+>
+	<marker line="-1" type="param">
+		<operand  start="1036" length="3" line="18">
+			<expr><![CDATA[dst]]></expr>
+		</operand>
+	</marker>
+	<type  start="1007" length="18" line="18" chordsig="java.nio.IntBuffer"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1053" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1049" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1070" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1053" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="get:([III)Ljava/nio/IntBuffer;@java.nio.IntBuffer"
+ sig="IntBuffer get(int[],int,int)"
+ line="19"
+ startpos="1109"
+ endpos="1112"
+>
+	<marker line="-1" type="param">
+		<operand  start="1119" length="3" line="19">
+			<expr><![CDATA[dst]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1128" length="9" line="19">
+			<expr><![CDATA[dstOffset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1143" length="8" line="19">
+			<expr><![CDATA[intCount]]></expr>
+		</operand>
+	</marker>
+	<type  start="1090" length="18" line="19" chordsig="java.nio.IntBuffer"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1165" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1161" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1182" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1165" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="get:(I)I@java.nio.IntBuffer"
+ sig="int get(int)"
+ line="20"
+ startpos="1215"
+ endpos="1218"
+>
+	<marker line="-1" type="param">
+		<operand  start="1223" length="5" line="20">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="hasArray:()Z@java.nio.IntBuffer"
+ sig="boolean hasArray()"
+ line="21"
+ startpos="1253"
+ endpos="1261"
+>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1276" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1272" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1293" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1276" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@java.nio.IntBuffer"
+ sig="int hashCode()"
+ line="22"
+ startpos="1317"
+ endpos="1325"
+>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1340" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1336" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1357" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1340" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isDirect:()Z@java.nio.IntBuffer"
+ sig="boolean isDirect()"
+ line="23"
+ startpos="1394"
+ endpos="1402"
+>
+</method>
+<method
+ chordsig="order:()Ljava/nio/ByteOrder;@java.nio.IntBuffer"
+ sig="ByteOrder order()"
+ line="24"
+ startpos="1442"
+ endpos="1447"
+>
+	<type  start="1423" length="18" line="24" chordsig="java.nio.ByteOrder"/>
+</method>
+<method
+ chordsig="put:(I)Ljava/nio/IntBuffer;@java.nio.IntBuffer"
+ sig="IntBuffer put(int)"
+ line="25"
+ startpos="1487"
+ endpos="1490"
+>
+	<marker line="-1" type="param">
+		<operand  start="1495" length="1" line="25">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<type  start="1468" length="18" line="25" chordsig="java.nio.IntBuffer"/>
+</method>
+<method
+ chordsig="put:([I)Ljava/nio/IntBuffer;@java.nio.IntBuffer"
+ sig="IntBuffer put(int[])"
+ line="26"
+ startpos="1532"
+ endpos="1535"
+>
+	<marker line="-1" type="param">
+		<operand  start="1542" length="3" line="26">
+			<expr><![CDATA[src]]></expr>
+		</operand>
+	</marker>
+	<type  start="1513" length="18" line="26" chordsig="java.nio.IntBuffer"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1559" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1555" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1576" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1559" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="put:([III)Ljava/nio/IntBuffer;@java.nio.IntBuffer"
+ sig="IntBuffer put(int[],int,int)"
+ line="27"
+ startpos="1615"
+ endpos="1618"
+>
+	<marker line="-1" type="param">
+		<operand  start="1625" length="3" line="27">
+			<expr><![CDATA[src]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1634" length="9" line="27">
+			<expr><![CDATA[srcOffset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1649" length="8" line="27">
+			<expr><![CDATA[intCount]]></expr>
+		</operand>
+	</marker>
+	<type  start="1596" length="18" line="27" chordsig="java.nio.IntBuffer"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1671" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1667" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1688" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1671" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="put:(Ljava/nio/IntBuffer;)Ljava/nio/IntBuffer;@java.nio.IntBuffer"
+ sig="IntBuffer put(IntBuffer)"
+ line="28"
+ startpos="1727"
+ endpos="1730"
+>
+	<marker line="-1" type="param">
+		<operand  start="1750" length="3" line="28">
+			<expr><![CDATA[src]]></expr>
+		</operand>
+	</marker>
+	<type  start="1708" length="18" line="28" chordsig="java.nio.IntBuffer"/>
+	<type  start="1731" length="18" line="28" chordsig="java.nio.IntBuffer"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1767" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1763" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1784" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1767" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="put:(II)Ljava/nio/IntBuffer;@java.nio.IntBuffer"
+ sig="IntBuffer put(int,int)"
+ line="29"
+ startpos="1832"
+ endpos="1835"
+>
+	<marker line="-1" type="param">
+		<operand  start="1840" length="5" line="29">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1851" length="1" line="29">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<type  start="1813" length="18" line="29" chordsig="java.nio.IntBuffer"/>
+</method>
+<method
+ chordsig="slice:()Ljava/nio/IntBuffer;@java.nio.IntBuffer"
+ sig="IntBuffer slice()"
+ line="30"
+ startpos="1891"
+ endpos="1896"
+>
+	<type  start="1872" length="18" line="30" chordsig="java.nio.IntBuffer"/>
+</method>
+</class>
+</root>

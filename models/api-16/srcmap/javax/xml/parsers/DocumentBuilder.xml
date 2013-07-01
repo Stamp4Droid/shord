@@ -1,0 +1,260 @@
+<root>
+<class chordsig="javax.xml.parsers.DocumentBuilder" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@javax.xml.parsers.DocumentBuilder"
+ sig="DocumentBuilder()"
+ line="4"
+ startpos="78"
+ endpos="93"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="108" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="104" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="125" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="108" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="reset:()V@javax.xml.parsers.DocumentBuilder"
+ sig="void reset()"
+ line="5"
+ startpos="150"
+ endpos="155"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="170" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="166" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="187" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="170" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parse:(Ljava/io/InputStream;)Lorg/w3c/dom/Document;@javax.xml.parsers.DocumentBuilder"
+ sig="Document parse(InputStream)"
+ line="6"
+ startpos="228"
+ endpos="233"
+>
+	<marker line="-1" type="param">
+		<operand  start="254" length="2" line="6">
+			<expr><![CDATA[is]]></expr>
+		</operand>
+	</marker>
+	<type  start="207" length="20" line="6" chordsig="org.w3c.dom.Document"/>
+	<type  start="234" length="19" line="6" chordsig="java.io.InputStream"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="323" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="319" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="340" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="323" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parse:(Ljava/io/InputStream;Ljava/lang/String;)Lorg/w3c/dom/Document;@javax.xml.parsers.DocumentBuilder"
+ sig="Document parse(InputStream,String)"
+ line="7"
+ startpos="381"
+ endpos="386"
+>
+	<marker line="-1" type="param">
+		<operand  start="407" length="2" line="7">
+			<expr><![CDATA[is]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="428" length="8" line="7">
+			<expr><![CDATA[systemId]]></expr>
+		</operand>
+	</marker>
+	<type  start="360" length="20" line="7" chordsig="org.w3c.dom.Document"/>
+	<type  start="387" length="19" line="7" chordsig="java.io.InputStream"/>
+	<type  start="411" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="503" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="499" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="520" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="503" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parse:(Ljava/lang/String;)Lorg/w3c/dom/Document;@javax.xml.parsers.DocumentBuilder"
+ sig="Document parse(String)"
+ line="8"
+ startpos="561"
+ endpos="566"
+>
+	<marker line="-1" type="param">
+		<operand  start="584" length="3" line="8">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<type  start="540" length="20" line="8" chordsig="org.w3c.dom.Document"/>
+	<type  start="567" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="654" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="650" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="671" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="654" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parse:(Ljava/io/File;)Lorg/w3c/dom/Document;@javax.xml.parsers.DocumentBuilder"
+ sig="Document parse(File)"
+ line="9"
+ startpos="712"
+ endpos="717"
+>
+	<marker line="-1" type="param">
+		<operand  start="731" length="1" line="9">
+			<expr><![CDATA[f]]></expr>
+		</operand>
+	</marker>
+	<type  start="691" length="20" line="9" chordsig="org.w3c.dom.Document"/>
+	<type  start="718" length="12" line="9" chordsig="java.io.File"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="799" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="795" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="816" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="799" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parse:(Lorg/xml/sax/InputSource;)Lorg/w3c/dom/Document;@javax.xml.parsers.DocumentBuilder"
+ sig="Document parse(InputSource)"
+ line="10"
+ startpos="866"
+ endpos="871"
+>
+	<marker line="-1" type="param">
+		<operand  start="896" length="2" line="10">
+			<expr><![CDATA[is]]></expr>
+		</operand>
+	</marker>
+	<type  start="845" length="20" line="10" chordsig="org.w3c.dom.Document"/>
+	<type  start="872" length="23" line="10" chordsig="org.xml.sax.InputSource"/>
+</method>
+<method
+ chordsig="isNamespaceAware:()Z@javax.xml.parsers.DocumentBuilder"
+ sig="boolean isNamespaceAware()"
+ line="11"
+ startpos="979"
+ endpos="995"
+>
+</method>
+<method
+ chordsig="isValidating:()Z@javax.xml.parsers.DocumentBuilder"
+ sig="boolean isValidating()"
+ line="12"
+ startpos="1024"
+ endpos="1036"
+>
+</method>
+<method
+ chordsig="setEntityResolver:(Lorg/xml/sax/EntityResolver;)V@javax.xml.parsers.DocumentBuilder"
+ sig="void setEntityResolver(EntityResolver)"
+ line="13"
+ startpos="1062"
+ endpos="1079"
+>
+	<marker line="-1" type="param">
+		<operand  start="1107" length="2" line="13">
+			<expr><![CDATA[er]]></expr>
+		</operand>
+	</marker>
+	<type  start="1080" length="26" line="13" chordsig="org.xml.sax.EntityResolver"/>
+</method>
+<method
+ chordsig="setErrorHandler:(Lorg/xml/sax/ErrorHandler;)V@javax.xml.parsers.DocumentBuilder"
+ sig="void setErrorHandler(ErrorHandler)"
+ line="14"
+ startpos="1134"
+ endpos="1149"
+>
+	<marker line="-1" type="param">
+		<operand  start="1175" length="2" line="14">
+			<expr><![CDATA[eh]]></expr>
+		</operand>
+	</marker>
+	<type  start="1150" length="24" line="14" chordsig="org.xml.sax.ErrorHandler"/>
+</method>
+<method
+ chordsig="newDocument:()Lorg/w3c/dom/Document;@javax.xml.parsers.DocumentBuilder"
+ sig="Document newDocument()"
+ line="15"
+ startpos="1218"
+ endpos="1229"
+>
+	<type  start="1197" length="20" line="15" chordsig="org.w3c.dom.Document"/>
+</method>
+<method
+ chordsig="getDOMImplementation:()Lorg/w3c/dom/DOMImplementation;@javax.xml.parsers.DocumentBuilder"
+ sig="DOMImplementation getDOMImplementation()"
+ line="16"
+ startpos="1280"
+ endpos="1300"
+>
+	<type  start="1250" length="29" line="16" chordsig="org.w3c.dom.DOMImplementation"/>
+</method>
+<method
+ chordsig="getSchema:()Ljavax/xml/validation/Schema;@javax.xml.parsers.DocumentBuilder"
+ sig="Schema getSchema()"
+ line="17"
+ startpos="1340"
+ endpos="1349"
+>
+	<type  start="1312" length="27" line="17" chordsig="javax.xml.validation.Schema"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1364" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1360" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1381" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1364" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isXIncludeAware:()Z@javax.xml.parsers.DocumentBuilder"
+ sig="boolean isXIncludeAware()"
+ line="18"
+ startpos="1409"
+ endpos="1424"
+>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1439" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1435" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1456" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1439" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

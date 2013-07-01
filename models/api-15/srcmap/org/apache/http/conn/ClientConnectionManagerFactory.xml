@@ -1,0 +1,25 @@
+<root>
+<class chordsig="org.apache.http.conn.ClientConnectionManagerFactory" line="2">
+<method
+ chordsig="newInstance:(Lorg/apache/http/params/HttpParams;Lorg/apache/http/conn/scheme/SchemeRegistry;)Lorg/apache/http/conn/ClientConnectionManager;@org.apache.http.conn.ClientConnectionManagerFactory"
+ sig="ClientConnectionManager newInstance(HttpParams,SchemeRegistry)"
+ line="4"
+ startpos="142"
+ endpos="153"
+>
+	<marker line="-1" type="param">
+		<operand  start="188" length="6" line="4">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="239" length="14" line="4">
+			<expr><![CDATA[schemeRegistry]]></expr>
+		</operand>
+	</marker>
+	<type  start="97" length="44" line="4" chordsig="org.apache.http.conn.ClientConnectionManager"/>
+	<type  start="154" length="33" line="4" chordsig="org.apache.http.params.HttpParams"/>
+	<type  start="196" length="42" line="4" chordsig="org.apache.http.conn.scheme.SchemeRegistry"/>
+</method>
+</class>
+</root>

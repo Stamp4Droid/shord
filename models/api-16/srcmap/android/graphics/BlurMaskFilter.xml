@@ -1,0 +1,36 @@
+<root>
+<class chordsig="android.graphics.BlurMaskFilter" line="2">
+	<type  start="64" length="27" line="3" chordsig="android.graphics.MaskFilter"/>
+<class chordsig="android.graphics.BlurMaskFilter$Blur" line="5">
+</class>
+<method
+ chordsig="&lt;init&gt;:(FLandroid/graphics/BlurMaskFilter$Blur;)V@android.graphics.BlurMaskFilter"
+ sig="BlurMaskFilter(float,Blur)"
+ line="12"
+ startpos="167"
+ endpos="181"
+>
+	<marker line="-1" type="param">
+		<operand  start="188" length="6" line="12">
+			<expr><![CDATA[radius]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="233" length="5" line="12">
+			<expr><![CDATA[style]]></expr>
+		</operand>
+	</marker>
+	<type  start="196" length="36" line="12" chordsig="android.graphics.BlurMaskFilter$Blur"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="252" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="248" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="269" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="252" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

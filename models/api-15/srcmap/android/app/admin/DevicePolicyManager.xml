@@ -1,0 +1,1037 @@
+<root>
+<class chordsig="android.app.admin.DevicePolicyManager" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.app.admin.DevicePolicyManager"
+ sig="DevicePolicyManager()"
+ line="4"
+ startpos="62"
+ endpos="81"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="96" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="92" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="113" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="96" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isAdminActive:(Landroid/content/ComponentName;)Z@android.app.admin.DevicePolicyManager"
+ sig="boolean isAdminActive(ComponentName)"
+ line="5"
+ startpos="141"
+ endpos="154"
+>
+	<marker line="-1" type="param">
+		<operand  start="185" length="3" line="5">
+			<expr><![CDATA[who]]></expr>
+		</operand>
+	</marker>
+	<type  start="155" length="29" line="5" chordsig="android.content.ComponentName"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="202" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="198" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="219" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="202" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getActiveAdmins:()Ljava/util/List;@android.app.admin.DevicePolicyManager"
+ sig="List&lt;ComponentName&gt; getActiveAdmins()"
+ line="6"
+ startpos="285"
+ endpos="300"
+>
+	<type  start="239" length="14" line="6" chordsig="java.util.List"/>
+	<type  start="254" length="29" line="6" chordsig="android.content.ComponentName"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="315" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="311" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="332" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="315" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeActiveAdmin:(Landroid/content/ComponentName;)V@android.app.admin.DevicePolicyManager"
+ sig="void removeActiveAdmin(ComponentName)"
+ line="7"
+ startpos="357"
+ endpos="374"
+>
+	<marker line="-1" type="param">
+		<operand  start="405" length="3" line="7">
+			<expr><![CDATA[who]]></expr>
+		</operand>
+	</marker>
+	<type  start="375" length="29" line="7" chordsig="android.content.ComponentName"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="422" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="418" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="439" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="422" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hasGrantedPolicy:(Landroid/content/ComponentName;I)Z@android.app.admin.DevicePolicyManager"
+ sig="boolean hasGrantedPolicy(ComponentName,int)"
+ line="8"
+ startpos="467"
+ endpos="483"
+>
+	<marker line="-1" type="param">
+		<operand  start="514" length="5" line="8">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="525" length="10" line="8">
+			<expr><![CDATA[usesPolicy]]></expr>
+		</operand>
+	</marker>
+	<type  start="484" length="29" line="8" chordsig="android.content.ComponentName"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="549" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="545" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="566" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="549" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPasswordQuality:(Landroid/content/ComponentName;I)V@android.app.admin.DevicePolicyManager"
+ sig="void setPasswordQuality(ComponentName,int)"
+ line="9"
+ startpos="591"
+ endpos="609"
+>
+	<marker line="-1" type="param">
+		<operand  start="640" length="5" line="9">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="651" length="7" line="9">
+			<expr><![CDATA[quality]]></expr>
+		</operand>
+	</marker>
+	<type  start="610" length="29" line="9" chordsig="android.content.ComponentName"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="672" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="668" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="689" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="672" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPasswordQuality:(Landroid/content/ComponentName;)I@android.app.admin.DevicePolicyManager"
+ sig="int getPasswordQuality(ComponentName)"
+ line="10"
+ startpos="713"
+ endpos="731"
+>
+	<marker line="-1" type="param">
+		<operand  start="762" length="5" line="10">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<type  start="732" length="29" line="10" chordsig="android.content.ComponentName"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="781" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="777" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="798" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="781" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPasswordMinimumLength:(Landroid/content/ComponentName;I)V@android.app.admin.DevicePolicyManager"
+ sig="void setPasswordMinimumLength(ComponentName,int)"
+ line="11"
+ startpos="823"
+ endpos="847"
+>
+	<marker line="-1" type="param">
+		<operand  start="878" length="5" line="11">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="889" length="6" line="11">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<type  start="848" length="29" line="11" chordsig="android.content.ComponentName"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="909" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="905" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="926" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="909" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPasswordMinimumLength:(Landroid/content/ComponentName;)I@android.app.admin.DevicePolicyManager"
+ sig="int getPasswordMinimumLength(ComponentName)"
+ line="12"
+ startpos="950"
+ endpos="974"
+>
+	<marker line="-1" type="param">
+		<operand  start="1005" length="5" line="12">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<type  start="975" length="29" line="12" chordsig="android.content.ComponentName"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1024" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1020" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1041" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1024" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPasswordMinimumUpperCase:(Landroid/content/ComponentName;I)V@android.app.admin.DevicePolicyManager"
+ sig="void setPasswordMinimumUpperCase(ComponentName,int)"
+ line="13"
+ startpos="1066"
+ endpos="1093"
+>
+	<marker line="-1" type="param">
+		<operand  start="1124" length="5" line="13">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1135" length="6" line="13">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<type  start="1094" length="29" line="13" chordsig="android.content.ComponentName"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1155" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1151" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1172" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1155" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPasswordMinimumUpperCase:(Landroid/content/ComponentName;)I@android.app.admin.DevicePolicyManager"
+ sig="int getPasswordMinimumUpperCase(ComponentName)"
+ line="14"
+ startpos="1196"
+ endpos="1223"
+>
+	<marker line="-1" type="param">
+		<operand  start="1254" length="5" line="14">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<type  start="1224" length="29" line="14" chordsig="android.content.ComponentName"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1273" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1269" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1290" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1273" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPasswordMinimumLowerCase:(Landroid/content/ComponentName;I)V@android.app.admin.DevicePolicyManager"
+ sig="void setPasswordMinimumLowerCase(ComponentName,int)"
+ line="15"
+ startpos="1315"
+ endpos="1342"
+>
+	<marker line="-1" type="param">
+		<operand  start="1373" length="5" line="15">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1384" length="6" line="15">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<type  start="1343" length="29" line="15" chordsig="android.content.ComponentName"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1404" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1400" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1421" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1404" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPasswordMinimumLowerCase:(Landroid/content/ComponentName;)I@android.app.admin.DevicePolicyManager"
+ sig="int getPasswordMinimumLowerCase(ComponentName)"
+ line="16"
+ startpos="1445"
+ endpos="1472"
+>
+	<marker line="-1" type="param">
+		<operand  start="1503" length="5" line="16">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<type  start="1473" length="29" line="16" chordsig="android.content.ComponentName"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1522" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1518" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1539" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1522" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPasswordMinimumLetters:(Landroid/content/ComponentName;I)V@android.app.admin.DevicePolicyManager"
+ sig="void setPasswordMinimumLetters(ComponentName,int)"
+ line="17"
+ startpos="1564"
+ endpos="1589"
+>
+	<marker line="-1" type="param">
+		<operand  start="1620" length="5" line="17">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1631" length="6" line="17">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<type  start="1590" length="29" line="17" chordsig="android.content.ComponentName"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1651" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1647" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1668" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1651" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPasswordMinimumLetters:(Landroid/content/ComponentName;)I@android.app.admin.DevicePolicyManager"
+ sig="int getPasswordMinimumLetters(ComponentName)"
+ line="18"
+ startpos="1692"
+ endpos="1717"
+>
+	<marker line="-1" type="param">
+		<operand  start="1748" length="5" line="18">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<type  start="1718" length="29" line="18" chordsig="android.content.ComponentName"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1767" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1763" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1784" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1767" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPasswordMinimumNumeric:(Landroid/content/ComponentName;I)V@android.app.admin.DevicePolicyManager"
+ sig="void setPasswordMinimumNumeric(ComponentName,int)"
+ line="19"
+ startpos="1809"
+ endpos="1834"
+>
+	<marker line="-1" type="param">
+		<operand  start="1865" length="5" line="19">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1876" length="6" line="19">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<type  start="1835" length="29" line="19" chordsig="android.content.ComponentName"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1896" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1892" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1913" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1896" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPasswordMinimumNumeric:(Landroid/content/ComponentName;)I@android.app.admin.DevicePolicyManager"
+ sig="int getPasswordMinimumNumeric(ComponentName)"
+ line="20"
+ startpos="1937"
+ endpos="1962"
+>
+	<marker line="-1" type="param">
+		<operand  start="1993" length="5" line="20">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<type  start="1963" length="29" line="20" chordsig="android.content.ComponentName"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2012" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2008" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2029" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2012" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPasswordMinimumSymbols:(Landroid/content/ComponentName;I)V@android.app.admin.DevicePolicyManager"
+ sig="void setPasswordMinimumSymbols(ComponentName,int)"
+ line="21"
+ startpos="2054"
+ endpos="2079"
+>
+	<marker line="-1" type="param">
+		<operand  start="2110" length="5" line="21">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2121" length="6" line="21">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<type  start="2080" length="29" line="21" chordsig="android.content.ComponentName"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2141" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2137" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2158" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2141" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPasswordMinimumSymbols:(Landroid/content/ComponentName;)I@android.app.admin.DevicePolicyManager"
+ sig="int getPasswordMinimumSymbols(ComponentName)"
+ line="22"
+ startpos="2182"
+ endpos="2207"
+>
+	<marker line="-1" type="param">
+		<operand  start="2238" length="5" line="22">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<type  start="2208" length="29" line="22" chordsig="android.content.ComponentName"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2257" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2253" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2274" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2257" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPasswordMinimumNonLetter:(Landroid/content/ComponentName;I)V@android.app.admin.DevicePolicyManager"
+ sig="void setPasswordMinimumNonLetter(ComponentName,int)"
+ line="23"
+ startpos="2299"
+ endpos="2326"
+>
+	<marker line="-1" type="param">
+		<operand  start="2357" length="5" line="23">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2368" length="6" line="23">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<type  start="2327" length="29" line="23" chordsig="android.content.ComponentName"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2388" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2384" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2405" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2388" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPasswordMinimumNonLetter:(Landroid/content/ComponentName;)I@android.app.admin.DevicePolicyManager"
+ sig="int getPasswordMinimumNonLetter(ComponentName)"
+ line="24"
+ startpos="2429"
+ endpos="2456"
+>
+	<marker line="-1" type="param">
+		<operand  start="2487" length="5" line="24">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<type  start="2457" length="29" line="24" chordsig="android.content.ComponentName"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2506" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2502" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2523" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2506" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPasswordHistoryLength:(Landroid/content/ComponentName;I)V@android.app.admin.DevicePolicyManager"
+ sig="void setPasswordHistoryLength(ComponentName,int)"
+ line="25"
+ startpos="2548"
+ endpos="2572"
+>
+	<marker line="-1" type="param">
+		<operand  start="2603" length="5" line="25">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2614" length="6" line="25">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<type  start="2573" length="29" line="25" chordsig="android.content.ComponentName"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2634" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2630" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2651" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2634" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPasswordExpirationTimeout:(Landroid/content/ComponentName;J)V@android.app.admin.DevicePolicyManager"
+ sig="void setPasswordExpirationTimeout(ComponentName,long)"
+ line="26"
+ startpos="2676"
+ endpos="2704"
+>
+	<marker line="-1" type="param">
+		<operand  start="2735" length="5" line="26">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2747" length="7" line="26">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<type  start="2705" length="29" line="26" chordsig="android.content.ComponentName"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2768" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2764" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2785" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2768" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPasswordExpirationTimeout:(Landroid/content/ComponentName;)J@android.app.admin.DevicePolicyManager"
+ sig="long getPasswordExpirationTimeout(ComponentName)"
+ line="27"
+ startpos="2810"
+ endpos="2838"
+>
+	<marker line="-1" type="param">
+		<operand  start="2869" length="5" line="27">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<type  start="2839" length="29" line="27" chordsig="android.content.ComponentName"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2888" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2884" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2905" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2888" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPasswordExpiration:(Landroid/content/ComponentName;)J@android.app.admin.DevicePolicyManager"
+ sig="long getPasswordExpiration(ComponentName)"
+ line="28"
+ startpos="2930"
+ endpos="2951"
+>
+	<marker line="-1" type="param">
+		<operand  start="2982" length="5" line="28">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<type  start="2952" length="29" line="28" chordsig="android.content.ComponentName"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3001" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2997" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3018" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3001" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPasswordHistoryLength:(Landroid/content/ComponentName;)I@android.app.admin.DevicePolicyManager"
+ sig="int getPasswordHistoryLength(ComponentName)"
+ line="29"
+ startpos="3042"
+ endpos="3066"
+>
+	<marker line="-1" type="param">
+		<operand  start="3097" length="5" line="29">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<type  start="3067" length="29" line="29" chordsig="android.content.ComponentName"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3116" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3112" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3133" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3116" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPasswordMaximumLength:(I)I@android.app.admin.DevicePolicyManager"
+ sig="int getPasswordMaximumLength(int)"
+ line="30"
+ startpos="3157"
+ endpos="3181"
+>
+	<marker line="-1" type="param">
+		<operand  start="3186" length="7" line="30">
+			<expr><![CDATA[quality]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3207" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3203" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3224" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3207" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isActivePasswordSufficient:()Z@android.app.admin.DevicePolicyManager"
+ sig="boolean isActivePasswordSufficient()"
+ line="31"
+ startpos="3252"
+ endpos="3278"
+>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3293" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3289" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3310" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3293" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCurrentFailedPasswordAttempts:()I@android.app.admin.DevicePolicyManager"
+ sig="int getCurrentFailedPasswordAttempts()"
+ line="32"
+ startpos="3334"
+ endpos="3366"
+>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3381" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3377" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3398" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3381" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMaximumFailedPasswordsForWipe:(Landroid/content/ComponentName;I)V@android.app.admin.DevicePolicyManager"
+ sig="void setMaximumFailedPasswordsForWipe(ComponentName,int)"
+ line="33"
+ startpos="3423"
+ endpos="3455"
+>
+	<marker line="-1" type="param">
+		<operand  start="3486" length="5" line="33">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3497" length="3" line="33">
+			<expr><![CDATA[num]]></expr>
+		</operand>
+	</marker>
+	<type  start="3456" length="29" line="33" chordsig="android.content.ComponentName"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3514" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3510" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3531" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3514" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMaximumFailedPasswordsForWipe:(Landroid/content/ComponentName;)I@android.app.admin.DevicePolicyManager"
+ sig="int getMaximumFailedPasswordsForWipe(ComponentName)"
+ line="34"
+ startpos="3555"
+ endpos="3587"
+>
+	<marker line="-1" type="param">
+		<operand  start="3618" length="5" line="34">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<type  start="3588" length="29" line="34" chordsig="android.content.ComponentName"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3637" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3633" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3654" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3637" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="resetPassword:(Ljava/lang/String;I)Z@android.app.admin.DevicePolicyManager"
+ sig="boolean resetPassword(String,int)"
+ line="35"
+ startpos="3682"
+ endpos="3695"
+>
+	<marker line="-1" type="param">
+		<operand  start="3713" length="8" line="35">
+			<expr><![CDATA[password]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3727" length="5" line="35">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="3696" length="16" line="35" chordsig="java.lang.String"/>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3746" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3742" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3763" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3746" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMaximumTimeToLock:(Landroid/content/ComponentName;J)V@android.app.admin.DevicePolicyManager"
+ sig="void setMaximumTimeToLock(ComponentName,long)"
+ line="36"
+ startpos="3788"
+ endpos="3808"
+>
+	<marker line="-1" type="param">
+		<operand  start="3839" length="5" line="36">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3851" length="6" line="36">
+			<expr><![CDATA[timeMs]]></expr>
+		</operand>
+	</marker>
+	<type  start="3809" length="29" line="36" chordsig="android.content.ComponentName"/>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3871" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3867" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3888" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3871" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMaximumTimeToLock:(Landroid/content/ComponentName;)J@android.app.admin.DevicePolicyManager"
+ sig="long getMaximumTimeToLock(ComponentName)"
+ line="37"
+ startpos="3913"
+ endpos="3933"
+>
+	<marker line="-1" type="param">
+		<operand  start="3964" length="5" line="37">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<type  start="3934" length="29" line="37" chordsig="android.content.ComponentName"/>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3983" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3979" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4000" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3983" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="lockNow:()V@android.app.admin.DevicePolicyManager"
+ sig="void lockNow()"
+ line="38"
+ startpos="4025"
+ endpos="4032"
+>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4047" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4043" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4064" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4047" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="wipeData:(I)V@android.app.admin.DevicePolicyManager"
+ sig="void wipeData(int)"
+ line="39"
+ startpos="4089"
+ endpos="4097"
+>
+	<marker line="-1" type="param">
+		<operand  start="4102" length="5" line="39">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="39" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4121" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4117" length="29" line="39">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4138" length="7" line="39">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4121" length="16" line="39" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setStorageEncryption:(Landroid/content/ComponentName;Z)I@android.app.admin.DevicePolicyManager"
+ sig="int setStorageEncryption(ComponentName,boolean)"
+ line="40"
+ startpos="4162"
+ endpos="4182"
+>
+	<marker line="-1" type="param">
+		<operand  start="4213" length="5" line="40">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4228" length="7" line="40">
+			<expr><![CDATA[encrypt]]></expr>
+		</operand>
+	</marker>
+	<type  start="4183" length="29" line="40" chordsig="android.content.ComponentName"/>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4249" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4245" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4266" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4249" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getStorageEncryption:(Landroid/content/ComponentName;)Z@android.app.admin.DevicePolicyManager"
+ sig="boolean getStorageEncryption(ComponentName)"
+ line="41"
+ startpos="4294"
+ endpos="4314"
+>
+	<marker line="-1" type="param">
+		<operand  start="4345" length="5" line="41">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<type  start="4315" length="29" line="41" chordsig="android.content.ComponentName"/>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4364" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4360" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4381" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4364" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getStorageEncryptionStatus:()I@android.app.admin.DevicePolicyManager"
+ sig="int getStorageEncryptionStatus()"
+ line="42"
+ startpos="4405"
+ endpos="4431"
+>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4446" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4442" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4463" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4446" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setCameraDisabled:(Landroid/content/ComponentName;Z)V@android.app.admin.DevicePolicyManager"
+ sig="void setCameraDisabled(ComponentName,boolean)"
+ line="43"
+ startpos="4488"
+ endpos="4505"
+>
+	<marker line="-1" type="param">
+		<operand  start="4536" length="5" line="43">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4551" length="8" line="43">
+			<expr><![CDATA[disabled]]></expr>
+		</operand>
+	</marker>
+	<type  start="4506" length="29" line="43" chordsig="android.content.ComponentName"/>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4573" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4569" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4590" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4573" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCameraDisabled:(Landroid/content/ComponentName;)Z@android.app.admin.DevicePolicyManager"
+ sig="boolean getCameraDisabled(ComponentName)"
+ line="44"
+ startpos="4618"
+ endpos="4635"
+>
+	<marker line="-1" type="param">
+		<operand  start="4666" length="5" line="44">
+			<expr><![CDATA[admin]]></expr>
+		</operand>
+	</marker>
+	<type  start="4636" length="29" line="44" chordsig="android.content.ComponentName"/>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4685" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4681" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4702" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4685" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="4734" length="16" line="45" chordsig="java.lang.String"/>
+	<type  start="4836" length="16" line="46" chordsig="java.lang.String"/>
+	<type  start="4928" length="16" line="47" chordsig="java.lang.String"/>
+	<type  start="5026" length="16" line="48" chordsig="java.lang.String"/>
+	<type  start="5891" length="16" line="62" chordsig="java.lang.String"/>
+</class>
+</root>

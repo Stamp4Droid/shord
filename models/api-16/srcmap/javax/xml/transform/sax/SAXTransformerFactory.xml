@@ -1,0 +1,103 @@
+<root>
+<class chordsig="javax.xml.transform.sax.SAXTransformerFactory" line="2">
+	<type  start="87" length="38" line="3" chordsig="javax.xml.transform.TransformerFactory"/>
+<method
+ chordsig="&lt;init&gt;:()V@javax.xml.transform.sax.SAXTransformerFactory"
+ sig="SAXTransformerFactory()"
+ line="5"
+ startpos="139"
+ endpos="160"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="175" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="171" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="192" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="175" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newTransformerHandler:(Ljavax/xml/transform/Source;)Ljavax/xml/transform/sax/TransformerHandler;@javax.xml.transform.sax.SAXTransformerFactory"
+ sig="TransformerHandler newTransformerHandler(Source)"
+ line="6"
+ startpos="264"
+ endpos="285"
+>
+	<marker line="-1" type="param">
+		<operand  start="313" length="3" line="6">
+			<expr><![CDATA[src]]></expr>
+		</operand>
+	</marker>
+	<type  start="221" length="42" line="6" chordsig="javax.xml.transform.sax.TransformerHandler"/>
+	<type  start="286" length="26" line="6" chordsig="javax.xml.transform.Source"/>
+</method>
+<method
+ chordsig="newTransformerHandler:(Ljavax/xml/transform/Templates;)Ljavax/xml/transform/sax/TransformerHandler;@javax.xml.transform.sax.SAXTransformerFactory"
+ sig="TransformerHandler newTransformerHandler(Templates)"
+ line="7"
+ startpos="440"
+ endpos="461"
+>
+	<marker line="-1" type="param">
+		<operand  start="492" length="9" line="7">
+			<expr><![CDATA[templates]]></expr>
+		</operand>
+	</marker>
+	<type  start="397" length="42" line="7" chordsig="javax.xml.transform.sax.TransformerHandler"/>
+	<type  start="462" length="29" line="7" chordsig="javax.xml.transform.Templates"/>
+</method>
+<method
+ chordsig="newTransformerHandler:()Ljavax/xml/transform/sax/TransformerHandler;@javax.xml.transform.sax.SAXTransformerFactory"
+ sig="TransformerHandler newTransformerHandler()"
+ line="8"
+ startpos="625"
+ endpos="646"
+>
+	<type  start="582" length="42" line="8" chordsig="javax.xml.transform.sax.TransformerHandler"/>
+</method>
+<method
+ chordsig="newTemplatesHandler:()Ljavax/xml/transform/sax/TemplatesHandler;@javax.xml.transform.sax.SAXTransformerFactory"
+ sig="TemplatesHandler newTemplatesHandler()"
+ line="9"
+ startpos="769"
+ endpos="788"
+>
+	<type  start="728" length="40" line="9" chordsig="javax.xml.transform.sax.TemplatesHandler"/>
+</method>
+<method
+ chordsig="newXMLFilter:(Ljavax/xml/transform/Source;)Lorg/xml/sax/XMLFilter;@javax.xml.transform.sax.SAXTransformerFactory"
+ sig="XMLFilter newXMLFilter(Source)"
+ line="10"
+ startpos="892"
+ endpos="904"
+>
+	<marker line="-1" type="param">
+		<operand  start="932" length="3" line="10">
+			<expr><![CDATA[src]]></expr>
+		</operand>
+	</marker>
+	<type  start="870" length="21" line="10" chordsig="org.xml.sax.XMLFilter"/>
+	<type  start="905" length="26" line="10" chordsig="javax.xml.transform.Source"/>
+</method>
+<method
+ chordsig="newXMLFilter:(Ljavax/xml/transform/Templates;)Lorg/xml/sax/XMLFilter;@javax.xml.transform.sax.SAXTransformerFactory"
+ sig="XMLFilter newXMLFilter(Templates)"
+ line="11"
+ startpos="1038"
+ endpos="1050"
+>
+	<marker line="-1" type="param">
+		<operand  start="1081" length="9" line="11">
+			<expr><![CDATA[templates]]></expr>
+		</operand>
+	</marker>
+	<type  start="1016" length="21" line="11" chordsig="org.xml.sax.XMLFilter"/>
+	<type  start="1051" length="29" line="11" chordsig="javax.xml.transform.Templates"/>
+</method>
+	<type  start="1174" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="1285" length="16" line="13" chordsig="java.lang.String"/>
+</class>
+</root>

@@ -1,0 +1,149 @@
+<root>
+<class chordsig="org.apache.http.params.HttpProtocolParamBean" line="2">
+	<type  start="77" length="44" line="3" chordsig="org.apache.http.params.HttpAbstractParamBean"/>
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/params/HttpParams;)V@org.apache.http.params.HttpProtocolParamBean"
+ sig="HttpProtocolParamBean(HttpParams)"
+ line="5"
+ startpos="132"
+ endpos="153"
+>
+	<marker line="-1" type="param">
+		<operand  start="188" length="6" line="5">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="154" length="33" line="5" chordsig="org.apache.http.params.HttpParams"/>
+	<type  start="205" length="33" line="5" chordsig="org.apache.http.params.HttpParams"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="256" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="252" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="273" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="256" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setHttpElementCharset:(Ljava/lang/String;)V@org.apache.http.params.HttpProtocolParamBean"
+ sig="void setHttpElementCharset(String)"
+ line="6"
+ startpos="298"
+ endpos="319"
+>
+	<marker line="-1" type="param">
+		<operand  start="337" length="18" line="6">
+			<expr><![CDATA[httpElementCharset]]></expr>
+		</operand>
+	</marker>
+	<type  start="320" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="369" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="365" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="386" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="369" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setContentCharset:(Ljava/lang/String;)V@org.apache.http.params.HttpProtocolParamBean"
+ sig="void setContentCharset(String)"
+ line="7"
+ startpos="411"
+ endpos="428"
+>
+	<marker line="-1" type="param">
+		<operand  start="446" length="14" line="7">
+			<expr><![CDATA[contentCharset]]></expr>
+		</operand>
+	</marker>
+	<type  start="429" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="474" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="470" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="491" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="474" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setVersion:(Lorg/apache/http/HttpVersion;)V@org.apache.http.params.HttpProtocolParamBean"
+ sig="void setVersion(HttpVersion)"
+ line="8"
+ startpos="516"
+ endpos="526"
+>
+	<marker line="-1" type="param">
+		<operand  start="555" length="7" line="8">
+			<expr><![CDATA[version]]></expr>
+		</operand>
+	</marker>
+	<type  start="527" length="27" line="8" chordsig="org.apache.http.HttpVersion"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="576" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="572" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="593" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="576" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setUserAgent:(Ljava/lang/String;)V@org.apache.http.params.HttpProtocolParamBean"
+ sig="void setUserAgent(String)"
+ line="9"
+ startpos="618"
+ endpos="630"
+>
+	<marker line="-1" type="param">
+		<operand  start="648" length="9" line="9">
+			<expr><![CDATA[userAgent]]></expr>
+		</operand>
+	</marker>
+	<type  start="631" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="671" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="667" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="688" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="671" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setUseExpectContinue:(Z)V@org.apache.http.params.HttpProtocolParamBean"
+ sig="void setUseExpectContinue(boolean)"
+ line="10"
+ startpos="713"
+ endpos="733"
+>
+	<marker line="-1" type="param">
+		<operand  start="742" length="17" line="10">
+			<expr><![CDATA[useExpectContinue]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="773" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="769" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="790" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="773" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

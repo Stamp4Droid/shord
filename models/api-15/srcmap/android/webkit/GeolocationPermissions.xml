@@ -1,0 +1,190 @@
+<root>
+<class chordsig="android.webkit.GeolocationPermissions" line="2">
+<class chordsig="android.webkit.GeolocationPermissions$Callback" line="4">
+<method
+ chordsig="invoke:(Ljava/lang/String;ZZ)V@android.webkit.GeolocationPermissions$Callback"
+ sig="void invoke(String,boolean,boolean)"
+ line="6"
+ startpos="125"
+ endpos="131"
+>
+	<marker line="-1" type="param">
+		<operand  start="149" length="6" line="6">
+			<expr><![CDATA[origin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="165" length="5" line="6">
+			<expr><![CDATA[allow]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="180" length="8" line="6">
+			<expr><![CDATA[remember]]></expr>
+		</operand>
+	</marker>
+	<type  start="132" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.webkit.GeolocationPermissions"
+ sig="GeolocationPermissions()"
+ line="8"
+ startpos="201"
+ endpos="223"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="238" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="234" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="255" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="238" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInstance:()Landroid/webkit/GeolocationPermissions;@android.webkit.GeolocationPermissions"
+ sig="GeolocationPermissions getInstance()"
+ line="9"
+ startpos="320"
+ endpos="331"
+>
+	<type  start="282" length="37" line="9" chordsig="android.webkit.GeolocationPermissions"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="346" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="342" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="363" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="346" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getOrigins:(Landroid/webkit/ValueCallback;)V@android.webkit.GeolocationPermissions"
+ sig="void getOrigins(ValueCallback&lt;Set&lt;String&gt;&gt;)"
+ line="10"
+ startpos="388"
+ endpos="398"
+>
+	<marker line="-1" type="param">
+		<operand  start="461" length="8" line="10">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<type  start="399" length="28" line="10" chordsig="android.webkit.ValueCallback"/>
+	<type  start="428" length="13" line="10" chordsig="java.util.Set"/>
+	<type  start="442" length="16" line="10" chordsig="java.lang.String"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="483" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="479" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="500" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="483" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAllowed:(Ljava/lang/String;Landroid/webkit/ValueCallback;)V@android.webkit.GeolocationPermissions"
+ sig="void getAllowed(String,ValueCallback&lt;Boolean&gt;)"
+ line="11"
+ startpos="525"
+ endpos="535"
+>
+	<marker line="-1" type="param">
+		<operand  start="553" length="6" line="11">
+			<expr><![CDATA[origin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="609" length="8" line="11">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<type  start="536" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="561" length="28" line="11" chordsig="android.webkit.ValueCallback"/>
+	<type  start="590" length="17" line="11" chordsig="java.lang.Boolean"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="631" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="627" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="648" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="631" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clear:(Ljava/lang/String;)V@android.webkit.GeolocationPermissions"
+ sig="void clear(String)"
+ line="12"
+ startpos="673"
+ endpos="678"
+>
+	<marker line="-1" type="param">
+		<operand  start="696" length="6" line="12">
+			<expr><![CDATA[origin]]></expr>
+		</operand>
+	</marker>
+	<type  start="679" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="716" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="712" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="733" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="716" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="allow:(Ljava/lang/String;)V@android.webkit.GeolocationPermissions"
+ sig="void allow(String)"
+ line="13"
+ startpos="758"
+ endpos="763"
+>
+	<marker line="-1" type="param">
+		<operand  start="781" length="6" line="13">
+			<expr><![CDATA[origin]]></expr>
+		</operand>
+	</marker>
+	<type  start="764" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="801" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="797" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="818" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="801" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clearAll:()V@android.webkit.GeolocationPermissions"
+ sig="void clearAll()"
+ line="14"
+ startpos="843"
+ endpos="851"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="866" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="862" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="883" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="866" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

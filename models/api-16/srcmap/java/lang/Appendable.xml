@@ -1,0 +1,58 @@
+<root>
+<class chordsig="java.lang.Appendable" line="2">
+<method
+ chordsig="append:(C)Ljava/lang/Appendable;@java.lang.Appendable"
+ sig="Appendable append(char)"
+ line="4"
+ startpos="87"
+ endpos="93"
+>
+	<marker line="-1" type="param">
+		<operand  start="99" length="1" line="4">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<type  start="66" length="20" line="4" chordsig="java.lang.Appendable"/>
+</method>
+<method
+ chordsig="append:(Ljava/lang/CharSequence;)Ljava/lang/Appendable;@java.lang.Appendable"
+ sig="Appendable append(CharSequence)"
+ line="5"
+ startpos="168"
+ endpos="174"
+>
+	<marker line="-1" type="param">
+		<operand  start="198" length="3" line="5">
+			<expr><![CDATA[csq]]></expr>
+		</operand>
+	</marker>
+	<type  start="147" length="20" line="5" chordsig="java.lang.Appendable"/>
+	<type  start="175" length="22" line="5" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="append:(Ljava/lang/CharSequence;II)Ljava/lang/Appendable;@java.lang.Appendable"
+ sig="Appendable append(CharSequence,int,int)"
+ line="6"
+ startpos="269"
+ endpos="275"
+>
+	<marker line="-1" type="param">
+		<operand  start="299" length="3" line="6">
+			<expr><![CDATA[csq]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="308" length="5" line="6">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="319" length="3" line="6">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="248" length="20" line="6" chordsig="java.lang.Appendable"/>
+	<type  start="276" length="22" line="6" chordsig="java.lang.CharSequence"/>
+</method>
+</class>
+</root>

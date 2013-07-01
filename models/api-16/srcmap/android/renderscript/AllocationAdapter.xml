@@ -1,0 +1,201 @@
+<root>
+<class chordsig="android.renderscript.AllocationAdapter" line="2">
+	<type  start="71" length="31" line="3" chordsig="android.renderscript.Allocation"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.renderscript.AllocationAdapter"
+ sig="AllocationAdapter()"
+ line="5"
+ startpos="105"
+ endpos="122"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="137" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="133" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="154" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="137" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setLOD:(I)V@android.renderscript.AllocationAdapter"
+ sig="void setLOD(int)"
+ line="6"
+ startpos="179"
+ endpos="185"
+>
+	<marker line="-1" type="param">
+		<operand  start="190" length="3" line="6">
+			<expr><![CDATA[lod]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="207" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="203" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="224" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="207" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setFace:(Landroid/renderscript/Type$CubemapFace;)V@android.renderscript.AllocationAdapter"
+ sig="void setFace(CubemapFace)"
+ line="7"
+ startpos="249"
+ endpos="256"
+>
+	<marker line="-1" type="param">
+		<operand  start="295" length="2" line="7">
+			<expr><![CDATA[cf]]></expr>
+		</operand>
+	</marker>
+	<type  start="257" length="37" line="7" chordsig="android.renderscript.Type$CubemapFace"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="311" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="307" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="328" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="311" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setY:(I)V@android.renderscript.AllocationAdapter"
+ sig="void setY(int)"
+ line="8"
+ startpos="353"
+ endpos="357"
+>
+	<marker line="-1" type="param">
+		<operand  start="362" length="1" line="8">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="377" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="373" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="394" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="377" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setZ:(I)V@android.renderscript.AllocationAdapter"
+ sig="void setZ(int)"
+ line="9"
+ startpos="419"
+ endpos="423"
+>
+	<marker line="-1" type="param">
+		<operand  start="428" length="1" line="9">
+			<expr><![CDATA[z]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="443" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="439" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="460" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="443" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="create1D:(Landroid/renderscript/RenderScript;Landroid/renderscript/Allocation;)Landroid/renderscript/AllocationAdapter;@android.renderscript.AllocationAdapter"
+ sig="AllocationAdapter create1D(RenderScript,Allocation)"
+ line="10"
+ startpos="526"
+ endpos="534"
+>
+	<marker line="-1" type="param">
+		<operand  start="569" length="2" line="10">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="605" length="1" line="10">
+			<expr><![CDATA[a]]></expr>
+		</operand>
+	</marker>
+	<type  start="487" length="38" line="10" chordsig="android.renderscript.AllocationAdapter"/>
+	<type  start="535" length="33" line="10" chordsig="android.renderscript.RenderScript"/>
+	<type  start="573" length="31" line="10" chordsig="android.renderscript.Allocation"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="620" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="616" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="637" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="620" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="create2D:(Landroid/renderscript/RenderScript;Landroid/renderscript/Allocation;)Landroid/renderscript/AllocationAdapter;@android.renderscript.AllocationAdapter"
+ sig="AllocationAdapter create2D(RenderScript,Allocation)"
+ line="11"
+ startpos="703"
+ endpos="711"
+>
+	<marker line="-1" type="param">
+		<operand  start="746" length="2" line="11">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="782" length="1" line="11">
+			<expr><![CDATA[a]]></expr>
+		</operand>
+	</marker>
+	<type  start="664" length="38" line="11" chordsig="android.renderscript.AllocationAdapter"/>
+	<type  start="712" length="33" line="11" chordsig="android.renderscript.RenderScript"/>
+	<type  start="750" length="31" line="11" chordsig="android.renderscript.Allocation"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="797" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="793" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="814" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="797" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="resize:(I)V@android.renderscript.AllocationAdapter"
+ sig="void resize(int)"
+ line="12"
+ startpos="852"
+ endpos="858"
+>
+	<marker line="-1" type="param">
+		<operand  start="863" length="4" line="12">
+			<expr><![CDATA[dimX]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="881" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="877" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="898" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="881" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

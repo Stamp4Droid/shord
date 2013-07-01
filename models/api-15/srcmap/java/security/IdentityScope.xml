@@ -1,0 +1,240 @@
+<root>
+<class chordsig="java.security.IdentityScope" line="3">
+	<type  start="93" length="22" line="4" chordsig="java.security.Identity"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.security.IdentityScope"
+ sig="IdentityScope()"
+ line="6"
+ startpos="129"
+ endpos="142"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="157" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="153" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="174" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="157" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.security.IdentityScope"
+ sig="IdentityScope(String)"
+ line="7"
+ startpos="194"
+ endpos="207"
+>
+	<marker line="-1" type="param">
+		<operand  start="225" length="4" line="7">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="208" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="243" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="239" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="260" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="243" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/security/IdentityScope;)V@java.security.IdentityScope"
+ sig="IdentityScope(String,IdentityScope)"
+ line="8"
+ startpos="280"
+ endpos="293"
+>
+	<marker line="-1" type="param">
+		<operand  start="311" length="4" line="8">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="345" length="5" line="8">
+			<expr><![CDATA[scope]]></expr>
+		</operand>
+	</marker>
+	<type  start="294" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="317" length="27" line="8" chordsig="java.security.IdentityScope"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="408" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="404" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="425" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="408" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSystemScope:()Ljava/security/IdentityScope;@java.security.IdentityScope"
+ sig="IdentityScope getSystemScope()"
+ line="9"
+ startpos="480"
+ endpos="494"
+>
+	<type  start="452" length="27" line="9" chordsig="java.security.IdentityScope"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="509" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="505" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="526" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="509" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSystemScope:(Ljava/security/IdentityScope;)V@java.security.IdentityScope"
+ sig="void setSystemScope(IdentityScope)"
+ line="10"
+ startpos="561"
+ endpos="575"
+>
+	<marker line="-1" type="param">
+		<operand  start="604" length="5" line="10">
+			<expr><![CDATA[scope]]></expr>
+		</operand>
+	</marker>
+	<type  start="576" length="27" line="10" chordsig="java.security.IdentityScope"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="623" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="619" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="640" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="623" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="size:()I@java.security.IdentityScope"
+ sig="int size()"
+ line="11"
+ startpos="673"
+ endpos="677"
+>
+</method>
+<method
+ chordsig="getIdentity:(Ljava/lang/String;)Ljava/security/Identity;@java.security.IdentityScope"
+ sig="Identity getIdentity(String)"
+ line="12"
+ startpos="721"
+ endpos="732"
+>
+	<marker line="-1" type="param">
+		<operand  start="750" length="4" line="12">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="698" length="22" line="12" chordsig="java.security.Identity"/>
+	<type  start="733" length="16" line="12" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getIdentity:(Ljava/security/Principal;)Ljava/security/Identity;@java.security.IdentityScope"
+ sig="Identity getIdentity(Principal)"
+ line="13"
+ startpos="788"
+ endpos="799"
+>
+	<marker line="-1" type="param">
+		<operand  start="824" length="9" line="13">
+			<expr><![CDATA[principal]]></expr>
+		</operand>
+	</marker>
+	<type  start="765" length="22" line="13" chordsig="java.security.Identity"/>
+	<type  start="800" length="23" line="13" chordsig="java.security.Principal"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="847" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="843" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="864" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="847" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getIdentity:(Ljava/security/PublicKey;)Ljava/security/Identity;@java.security.IdentityScope"
+ sig="Identity getIdentity(PublicKey)"
+ line="14"
+ startpos="916"
+ endpos="927"
+>
+	<marker line="-1" type="param">
+		<operand  start="952" length="3" line="14">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="893" length="22" line="14" chordsig="java.security.Identity"/>
+	<type  start="928" length="23" line="14" chordsig="java.security.PublicKey"/>
+</method>
+<method
+ chordsig="addIdentity:(Ljava/security/Identity;)V@java.security.IdentityScope"
+ sig="void addIdentity(Identity)"
+ line="15"
+ startpos="980"
+ endpos="991"
+>
+	<marker line="-1" type="param">
+		<operand  start="1015" length="8" line="15">
+			<expr><![CDATA[identity]]></expr>
+		</operand>
+	</marker>
+	<type  start="992" length="22" line="15" chordsig="java.security.Identity"/>
+</method>
+<method
+ chordsig="removeIdentity:(Ljava/security/Identity;)V@java.security.IdentityScope"
+ sig="void removeIdentity(Identity)"
+ line="16"
+ startpos="1092"
+ endpos="1106"
+>
+	<marker line="-1" type="param">
+		<operand  start="1130" length="8" line="16">
+			<expr><![CDATA[identity]]></expr>
+		</operand>
+	</marker>
+	<type  start="1107" length="22" line="16" chordsig="java.security.Identity"/>
+</method>
+<method
+ chordsig="identities:()Ljava/util/Enumeration;@java.security.IdentityScope"
+ sig="Enumeration&lt;Identity&gt; identities()"
+ line="17"
+ startpos="1248"
+ endpos="1258"
+>
+	<type  start="1202" length="21" line="17" chordsig="java.util.Enumeration"/>
+	<type  start="1224" length="22" line="17" chordsig="java.security.Identity"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.security.IdentityScope"
+ sig="String toString()"
+ line="18"
+ startpos="1287"
+ endpos="1295"
+>
+	<type  start="1270" length="16" line="18" chordsig="java.lang.String"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1310" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1306" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1327" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1310" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

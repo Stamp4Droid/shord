@@ -1,0 +1,77 @@
+<root>
+<class chordsig="javax.sql.PooledConnection" line="2">
+<method
+ chordsig="addConnectionEventListener:(Ljavax/sql/ConnectionEventListener;)V@javax.sql.PooledConnection"
+ sig="void addConnectionEventListener(ConnectionEventListener)"
+ line="4"
+ startpos="77"
+ endpos="103"
+>
+	<marker line="-1" type="param">
+		<operand  start="138" length="11" line="4">
+			<expr><![CDATA[theListener]]></expr>
+		</operand>
+	</marker>
+	<type  start="104" length="33" line="4" chordsig="javax.sql.ConnectionEventListener"/>
+</method>
+<method
+ chordsig="close:()V@javax.sql.PooledConnection"
+ sig="void close()"
+ line="5"
+ startpos="174"
+ endpos="179"
+>
+</method>
+<method
+ chordsig="getConnection:()Ljava/sql/Connection;@javax.sql.PooledConnection"
+ sig="Connection getConnection()"
+ line="6"
+ startpos="249"
+ endpos="262"
+>
+	<type  start="229" length="19" line="6" chordsig="java.sql.Connection"/>
+</method>
+<method
+ chordsig="removeConnectionEventListener:(Ljavax/sql/ConnectionEventListener;)V@javax.sql.PooledConnection"
+ sig="void removeConnectionEventListener(ConnectionEventListener)"
+ line="7"
+ startpos="317"
+ endpos="346"
+>
+	<marker line="-1" type="param">
+		<operand  start="381" length="11" line="7">
+			<expr><![CDATA[theListener]]></expr>
+		</operand>
+	</marker>
+	<type  start="347" length="33" line="7" chordsig="javax.sql.ConnectionEventListener"/>
+</method>
+<method
+ chordsig="addStatementEventListener:(Ljavax/sql/StatementEventListener;)V@javax.sql.PooledConnection"
+ sig="void addStatementEventListener(StatementEventListener)"
+ line="8"
+ startpos="417"
+ endpos="442"
+>
+	<marker line="-1" type="param">
+		<operand  start="476" length="8" line="8">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="443" length="32" line="8" chordsig="javax.sql.StatementEventListener"/>
+</method>
+<method
+ chordsig="removeStatementEventListener:(Ljavax/sql/StatementEventListener;)V@javax.sql.PooledConnection"
+ sig="void removeStatementEventListener(StatementEventListener)"
+ line="9"
+ startpos="509"
+ endpos="537"
+>
+	<marker line="-1" type="param">
+		<operand  start="571" length="8" line="9">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="538" length="32" line="9" chordsig="javax.sql.StatementEventListener"/>
+</method>
+</class>
+</root>

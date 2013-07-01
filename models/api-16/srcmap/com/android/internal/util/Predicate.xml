@@ -1,0 +1,18 @@
+<root>
+<class chordsig="com.android.internal.util.Predicate" line="2">
+<method
+ chordsig="apply:(Ljava/lang/Object;)Z@com.android.internal.util.Predicate"
+ sig="boolean apply(T)"
+ line="4"
+ startpos="92"
+ endpos="97"
+>
+	<marker line="-1" type="param">
+		<operand  start="100" length="4" line="4">
+			<expr><![CDATA[arg0]]></expr>
+		</operand>
+	</marker>
+	<type  start="98" length="1" line="4" chordsig="java.lang.Object"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,229 @@
+<root>
+<class chordsig="java.io.BufferedInputStream" line="2">
+	<type  start="60" length="25" line="3" chordsig="java.io.FilterInputStream"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/InputStream;)V@java.io.BufferedInputStream"
+ sig="BufferedInputStream(InputStream)"
+ line="5"
+ startpos="96"
+ endpos="115"
+>
+	<marker line="-1" type="param">
+		<operand  start="136" length="2" line="5">
+			<expr><![CDATA[in]]></expr>
+		</operand>
+	</marker>
+	<type  start="116" length="19" line="5" chordsig="java.io.InputStream"/>
+	<type  start="149" length="19" line="5" chordsig="java.io.InputStream"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="186" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="182" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="203" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="186" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/InputStream;I)V@java.io.BufferedInputStream"
+ sig="BufferedInputStream(InputStream,int)"
+ line="6"
+ startpos="223"
+ endpos="242"
+>
+	<marker line="-1" type="param">
+		<operand  start="263" length="2" line="6">
+			<expr><![CDATA[in]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="271" length="4" line="6">
+			<expr><![CDATA[size]]></expr>
+		</operand>
+	</marker>
+	<type  start="243" length="19" line="6" chordsig="java.io.InputStream"/>
+	<type  start="286" length="19" line="6" chordsig="java.io.InputStream"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="323" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="319" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="340" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="323" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="available:()I@java.io.BufferedInputStream"
+ sig="int available()"
+ line="7"
+ startpos="377"
+ endpos="386"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="428" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="424" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="445" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="428" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:()V@java.io.BufferedInputStream"
+ sig="void close()"
+ line="8"
+ startpos="470"
+ endpos="475"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="517" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="513" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="534" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="517" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="mark:(I)V@java.io.BufferedInputStream"
+ sig="void mark(int)"
+ line="9"
+ startpos="572"
+ endpos="576"
+>
+	<marker line="-1" type="param">
+		<operand  start="581" length="9" line="9">
+			<expr><![CDATA[readlimit]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="604" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="600" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="621" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="604" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="markSupported:()Z@java.io.BufferedInputStream"
+ sig="boolean markSupported()"
+ line="10"
+ startpos="649"
+ endpos="662"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="677" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="673" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="694" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="677" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="read:()I@java.io.BufferedInputStream"
+ sig="int read()"
+ line="11"
+ startpos="731"
+ endpos="735"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="777" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="773" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="794" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="777" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="read:([BII)I@java.io.BufferedInputStream"
+ sig="int read(byte[],int,int)"
+ line="12"
+ startpos="831"
+ endpos="835"
+>
+	<marker line="-1" type="param">
+		<operand  start="843" length="6" line="12">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="855" length="6" line="12">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="867" length="9" line="12">
+			<expr><![CDATA[byteCount]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="917" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="913" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="934" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="917" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="reset:()V@java.io.BufferedInputStream"
+ sig="void reset()"
+ line="13"
+ startpos="972"
+ endpos="977"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1019" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1015" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1036" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1019" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="skip:(J)J@java.io.BufferedInputStream"
+ sig="long skip(long)"
+ line="14"
+ startpos="1074"
+ endpos="1078"
+>
+	<marker line="-1" type="param">
+		<operand  start="1084" length="9" line="14">
+			<expr><![CDATA[byteCount]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1134" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1130" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1151" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1134" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

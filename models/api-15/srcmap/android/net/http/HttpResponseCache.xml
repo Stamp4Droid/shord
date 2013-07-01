@@ -1,0 +1,288 @@
+<root>
+<class chordsig="android.net.http.HttpResponseCache" line="2">
+	<type  start="73" length="22" line="3" chordsig="java.net.ResponseCache"/>
+	<type  start="109" length="17" line="4" chordsig="java.io.Closeable"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.net.http.HttpResponseCache"
+ sig="HttpResponseCache()"
+ line="6"
+ startpos="129"
+ endpos="146"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="161" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="157" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="178" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="161" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInstalled:()Landroid/net/http/HttpResponseCache;@android.net.http.HttpResponseCache"
+ sig="HttpResponseCache getInstalled()"
+ line="7"
+ startpos="240"
+ endpos="252"
+>
+	<type  start="205" length="34" line="7" chordsig="android.net.http.HttpResponseCache"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="267" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="263" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="284" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="267" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="install:(Ljava/io/File;J)Landroid/net/http/HttpResponseCache;@android.net.http.HttpResponseCache"
+ sig="HttpResponseCache install(File,long)"
+ line="8"
+ startpos="346"
+ endpos="353"
+>
+	<marker line="-1" type="param">
+		<operand  start="367" length="9" line="8">
+			<expr><![CDATA[directory]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="383" length="7" line="8">
+			<expr><![CDATA[maxSize]]></expr>
+		</operand>
+	</marker>
+	<type  start="311" length="34" line="8" chordsig="android.net.http.HttpResponseCache"/>
+	<type  start="354" length="12" line="8" chordsig="java.io.File"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="431" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="427" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="448" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="431" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="get:(Ljava/net/URI;Ljava/lang/String;Ljava/util/Map;)Ljava/net/CacheResponse;@android.net.http.HttpResponseCache"
+ sig="CacheResponse get(URI,String,Map&lt;String,List&lt;String&gt;&gt;)"
+ line="9"
+ startpos="491"
+ endpos="494"
+>
+	<marker line="-1" type="param">
+		<operand  start="508" length="3" line="9">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="530" length="13" line="9">
+			<expr><![CDATA[requestMethod]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="611" length="14" line="9">
+			<expr><![CDATA[requestHeaders]]></expr>
+		</operand>
+	</marker>
+	<type  start="468" length="22" line="9" chordsig="java.net.CacheResponse"/>
+	<type  start="495" length="12" line="9" chordsig="java.net.URI"/>
+	<type  start="513" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="545" length="13" line="9" chordsig="java.util.Map"/>
+	<type  start="559" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="577" length="14" line="9" chordsig="java.util.List"/>
+	<type  start="592" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="666" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="662" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="683" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="666" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="put:(Ljava/net/URI;Ljava/net/URLConnection;)Ljava/net/CacheRequest;@android.net.http.HttpResponseCache"
+ sig="CacheRequest put(URI,URLConnection)"
+ line="10"
+ startpos="725"
+ endpos="728"
+>
+	<marker line="-1" type="param">
+		<operand  start="742" length="3" line="10">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="770" length="13" line="10">
+			<expr><![CDATA[urlConnection]]></expr>
+		</operand>
+	</marker>
+	<type  start="703" length="21" line="10" chordsig="java.net.CacheRequest"/>
+	<type  start="729" length="12" line="10" chordsig="java.net.URI"/>
+	<type  start="747" length="22" line="10" chordsig="java.net.URLConnection"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="824" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="820" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="841" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="824" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="size:()J@android.net.http.HttpResponseCache"
+ sig="long size()"
+ line="11"
+ startpos="866"
+ endpos="870"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="885" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="881" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="902" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="885" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="maxSize:()J@android.net.http.HttpResponseCache"
+ sig="long maxSize()"
+ line="12"
+ startpos="927"
+ endpos="934"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="949" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="945" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="966" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="949" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="flush:()V@android.net.http.HttpResponseCache"
+ sig="void flush()"
+ line="13"
+ startpos="991"
+ endpos="996"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1011" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1007" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1028" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1011" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getNetworkCount:()I@android.net.http.HttpResponseCache"
+ sig="int getNetworkCount()"
+ line="14"
+ startpos="1052"
+ endpos="1067"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1082" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1078" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1099" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1082" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getHitCount:()I@android.net.http.HttpResponseCache"
+ sig="int getHitCount()"
+ line="15"
+ startpos="1123"
+ endpos="1134"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1149" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1145" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1166" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1149" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRequestCount:()I@android.net.http.HttpResponseCache"
+ sig="int getRequestCount()"
+ line="16"
+ startpos="1190"
+ endpos="1205"
+>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1220" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1216" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1237" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1220" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:()V@android.net.http.HttpResponseCache"
+ sig="void close()"
+ line="17"
+ startpos="1262"
+ endpos="1267"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1309" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1305" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1326" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1309" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="delete:()V@android.net.http.HttpResponseCache"
+ sig="void delete()"
+ line="18"
+ startpos="1351"
+ endpos="1357"
+>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1399" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1395" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1416" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1399" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

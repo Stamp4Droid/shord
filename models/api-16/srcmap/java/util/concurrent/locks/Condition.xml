@@ -1,0 +1,82 @@
+<root>
+<class chordsig="java.util.concurrent.locks.Condition" line="2">
+<method
+ chordsig="await:()V@java.util.concurrent.locks.Condition"
+ sig="void await()"
+ line="4"
+ startpos="87"
+ endpos="92"
+>
+</method>
+<method
+ chordsig="awaitUninterruptibly:()V@java.util.concurrent.locks.Condition"
+ sig="void awaitUninterruptibly()"
+ line="5"
+ startpos="156"
+ endpos="176"
+>
+</method>
+<method
+ chordsig="awaitNanos:(J)J@java.util.concurrent.locks.Condition"
+ sig="long awaitNanos(long)"
+ line="6"
+ startpos="202"
+ endpos="212"
+>
+	<marker line="-1" type="param">
+		<operand  start="218" length="12" line="6">
+			<expr><![CDATA[nanosTimeout]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="await:(JLjava/util/concurrent/TimeUnit;)Z@java.util.concurrent.locks.Condition"
+ sig="boolean await(long,TimeUnit)"
+ line="7"
+ startpos="296"
+ endpos="301"
+>
+	<marker line="-1" type="param">
+		<operand  start="307" length="4" line="7">
+			<expr><![CDATA[time]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="343" length="4" line="7">
+			<expr><![CDATA[unit]]></expr>
+		</operand>
+	</marker>
+	<type  start="313" length="29" line="7" chordsig="java.util.concurrent.TimeUnit"/>
+</method>
+<method
+ chordsig="awaitUntil:(Ljava/util/Date;)Z@java.util.concurrent.locks.Condition"
+ sig="boolean awaitUntil(Date)"
+ line="8"
+ startpos="413"
+ endpos="423"
+>
+	<marker line="-1" type="param">
+		<operand  start="439" length="8" line="8">
+			<expr><![CDATA[deadline]]></expr>
+		</operand>
+	</marker>
+	<type  start="424" length="14" line="8" chordsig="java.util.Date"/>
+</method>
+<method
+ chordsig="signal:()V@java.util.concurrent.locks.Condition"
+ sig="void signal()"
+ line="9"
+ startpos="510"
+ endpos="516"
+>
+</method>
+<method
+ chordsig="signalAll:()V@java.util.concurrent.locks.Condition"
+ sig="void signalAll()"
+ line="10"
+ startpos="542"
+ endpos="551"
+>
+</method>
+</class>
+</root>

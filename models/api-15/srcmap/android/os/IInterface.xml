@@ -1,0 +1,13 @@
+<root>
+<class chordsig="android.os.IInterface" line="2">
+<method
+ chordsig="asBinder:()Landroid/os/IBinder;@android.os.IInterface"
+ sig="IBinder asBinder()"
+ line="4"
+ startpos="86"
+ endpos="94"
+>
+	<type  start="67" length="18" line="4" chordsig="android.os.IBinder"/>
+</method>
+</class>
+</root>

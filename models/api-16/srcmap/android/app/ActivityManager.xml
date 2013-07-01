@@ -1,0 +1,1123 @@
+<root>
+<class chordsig="android.app.ActivityManager" line="2">
+<class chordsig="android.app.ActivityManager$RecentTaskInfo" line="4">
+	<type  start="100" length="21" line="5" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.app.ActivityManager$RecentTaskInfo"
+ sig="RecentTaskInfo()"
+ line="7"
+ startpos="132"
+ endpos="146"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="161" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="157" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="178" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="161" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.app.ActivityManager$RecentTaskInfo"
+ sig="int describeContents()"
+ line="8"
+ startpos="202"
+ endpos="218"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="233" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="229" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="250" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="233" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.app.ActivityManager$RecentTaskInfo"
+ sig="void writeToParcel(Parcel,int)"
+ line="9"
+ startpos="275"
+ endpos="288"
+>
+	<marker line="-1" type="param">
+		<operand  start="307" length="4" line="9">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="317" length="5" line="9">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="289" length="17" line="9" chordsig="android.os.Parcel"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="336" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="332" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="353" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="336" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="readFromParcel:(Landroid/os/Parcel;)V@android.app.ActivityManager$RecentTaskInfo"
+ sig="void readFromParcel(Parcel)"
+ line="10"
+ startpos="378"
+ endpos="392"
+>
+	<marker line="-1" type="param">
+		<operand  start="411" length="6" line="10">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="393" length="17" line="10" chordsig="android.os.Parcel"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="431" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="427" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="448" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="431" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="507" length="22" line="13" chordsig="android.content.Intent"/>
+	<type  start="549" length="29" line="14" chordsig="android.content.ComponentName"/>
+	<type  start="600" length="22" line="15" chordsig="java.lang.CharSequence"/>
+	<type  start="656" length="29" line="16" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="686" length="42" line="16" chordsig="android.app.ActivityManager$RecentTaskInfo"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.app.ActivityManager$RecentTaskInfo"
+ line="17"
+>
+</method>
+</class>
+<class chordsig="android.app.ActivityManager$RunningTaskInfo" line="19">
+	<type  start="817" length="21" line="20" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.app.ActivityManager$RunningTaskInfo"
+ sig="RunningTaskInfo()"
+ line="22"
+ startpos="849"
+ endpos="864"
+>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="879" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="875" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="896" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="879" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.app.ActivityManager$RunningTaskInfo"
+ sig="int describeContents()"
+ line="23"
+ startpos="920"
+ endpos="936"
+>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="951" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="947" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="968" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="951" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.app.ActivityManager$RunningTaskInfo"
+ sig="void writeToParcel(Parcel,int)"
+ line="24"
+ startpos="993"
+ endpos="1006"
+>
+	<marker line="-1" type="param">
+		<operand  start="1025" length="4" line="24">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1035" length="5" line="24">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="1007" length="17" line="24" chordsig="android.os.Parcel"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1054" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1050" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1071" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1054" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="readFromParcel:(Landroid/os/Parcel;)V@android.app.ActivityManager$RunningTaskInfo"
+ sig="void readFromParcel(Parcel)"
+ line="25"
+ startpos="1096"
+ endpos="1110"
+>
+	<marker line="-1" type="param">
+		<operand  start="1129" length="6" line="25">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="1111" length="17" line="25" chordsig="android.os.Parcel"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1149" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1145" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1166" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1149" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1200" length="29" line="27" chordsig="android.content.ComponentName"/>
+	<type  start="1251" length="29" line="28" chordsig="android.content.ComponentName"/>
+	<type  start="1301" length="23" line="29" chordsig="android.graphics.Bitmap"/>
+	<type  start="1343" length="22" line="30" chordsig="java.lang.CharSequence"/>
+	<type  start="1448" length="29" line="33" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="1478" length="43" line="33" chordsig="android.app.ActivityManager$RunningTaskInfo"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.app.ActivityManager$RunningTaskInfo"
+ line="34"
+>
+</method>
+</class>
+<class chordsig="android.app.ActivityManager$RunningServiceInfo" line="36">
+	<type  start="1613" length="21" line="37" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.app.ActivityManager$RunningServiceInfo"
+ sig="RunningServiceInfo()"
+ line="39"
+ startpos="1645"
+ endpos="1663"
+>
+	<newexpr line="39" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1678" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1674" length="29" line="39">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1695" length="7" line="39">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1678" length="16" line="39" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.app.ActivityManager$RunningServiceInfo"
+ sig="int describeContents()"
+ line="40"
+ startpos="1719"
+ endpos="1735"
+>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1750" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1746" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1767" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1750" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.app.ActivityManager$RunningServiceInfo"
+ sig="void writeToParcel(Parcel,int)"
+ line="41"
+ startpos="1792"
+ endpos="1805"
+>
+	<marker line="-1" type="param">
+		<operand  start="1824" length="4" line="41">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1834" length="5" line="41">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="1806" length="17" line="41" chordsig="android.os.Parcel"/>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1853" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1849" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1870" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1853" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="readFromParcel:(Landroid/os/Parcel;)V@android.app.ActivityManager$RunningServiceInfo"
+ sig="void readFromParcel(Parcel)"
+ line="42"
+ startpos="1895"
+ endpos="1909"
+>
+	<marker line="-1" type="param">
+		<operand  start="1928" length="6" line="42">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="1910" length="17" line="42" chordsig="android.os.Parcel"/>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1948" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1944" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1965" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1948" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1984" length="29" line="43" chordsig="android.content.ComponentName"/>
+	<type  start="2062" length="16" line="46" chordsig="java.lang.String"/>
+	<type  start="2479" length="16" line="59" chordsig="java.lang.String"/>
+	<type  start="2555" length="29" line="61" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="2585" length="46" line="61" chordsig="android.app.ActivityManager$RunningServiceInfo"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.app.ActivityManager$RunningServiceInfo"
+ line="62"
+>
+</method>
+</class>
+<class chordsig="android.app.ActivityManager$MemoryInfo" line="64">
+	<type  start="2715" length="21" line="65" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.app.ActivityManager$MemoryInfo"
+ sig="MemoryInfo()"
+ line="67"
+ startpos="2747"
+ endpos="2757"
+>
+	<newexpr line="67" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2772" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2768" length="29" line="67">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2789" length="7" line="67">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2772" length="16" line="67" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.app.ActivityManager$MemoryInfo"
+ sig="int describeContents()"
+ line="68"
+ startpos="2813"
+ endpos="2829"
+>
+	<newexpr line="68" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2844" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2840" length="29" line="68">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2861" length="7" line="68">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2844" length="16" line="68" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.app.ActivityManager$MemoryInfo"
+ sig="void writeToParcel(Parcel,int)"
+ line="69"
+ startpos="2886"
+ endpos="2899"
+>
+	<marker line="-1" type="param">
+		<operand  start="2918" length="4" line="69">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2928" length="5" line="69">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="2900" length="17" line="69" chordsig="android.os.Parcel"/>
+	<newexpr line="69" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2947" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2943" length="29" line="69">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2964" length="7" line="69">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2947" length="16" line="69" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="readFromParcel:(Landroid/os/Parcel;)V@android.app.ActivityManager$MemoryInfo"
+ sig="void readFromParcel(Parcel)"
+ line="70"
+ startpos="2989"
+ endpos="3003"
+>
+	<marker line="-1" type="param">
+		<operand  start="3022" length="6" line="70">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="3004" length="17" line="70" chordsig="android.os.Parcel"/>
+	<newexpr line="70" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3042" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3038" length="29" line="70">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3059" length="7" line="70">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3042" length="16" line="70" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="3184" length="29" line="75" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="3214" length="38" line="75" chordsig="android.app.ActivityManager$MemoryInfo"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.app.ActivityManager$MemoryInfo"
+ line="76"
+>
+</method>
+</class>
+<class chordsig="android.app.ActivityManager$ProcessErrorStateInfo" line="78">
+	<type  start="3347" length="21" line="79" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.app.ActivityManager$ProcessErrorStateInfo"
+ sig="ProcessErrorStateInfo()"
+ line="81"
+ startpos="3379"
+ endpos="3400"
+>
+	<newexpr line="81" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3415" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3411" length="29" line="81">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3432" length="7" line="81">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3415" length="16" line="81" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.app.ActivityManager$ProcessErrorStateInfo"
+ sig="int describeContents()"
+ line="82"
+ startpos="3456"
+ endpos="3472"
+>
+	<newexpr line="82" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3487" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3483" length="29" line="82">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3504" length="7" line="82">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3487" length="16" line="82" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.app.ActivityManager$ProcessErrorStateInfo"
+ sig="void writeToParcel(Parcel,int)"
+ line="83"
+ startpos="3529"
+ endpos="3542"
+>
+	<marker line="-1" type="param">
+		<operand  start="3561" length="4" line="83">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3571" length="5" line="83">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="3543" length="17" line="83" chordsig="android.os.Parcel"/>
+	<newexpr line="83" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3590" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3586" length="29" line="83">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3607" length="7" line="83">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3590" length="16" line="83" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="readFromParcel:(Landroid/os/Parcel;)V@android.app.ActivityManager$ProcessErrorStateInfo"
+ sig="void readFromParcel(Parcel)"
+ line="84"
+ startpos="3632"
+ endpos="3646"
+>
+	<marker line="-1" type="param">
+		<operand  start="3665" length="6" line="84">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="3647" length="17" line="84" chordsig="android.os.Parcel"/>
+	<newexpr line="84" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3685" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3681" length="29" line="84">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3702" length="7" line="84">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3685" length="16" line="84" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="3862" length="16" line="89" chordsig="java.lang.String"/>
+	<type  start="3931" length="16" line="92" chordsig="java.lang.String"/>
+	<type  start="3960" length="16" line="93" chordsig="java.lang.String"/>
+	<type  start="3994" length="16" line="94" chordsig="java.lang.String"/>
+	<type  start="4027" length="16" line="95" chordsig="java.lang.String"/>
+	<type  start="4108" length="29" line="97" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="4138" length="49" line="97" chordsig="android.app.ActivityManager$ProcessErrorStateInfo"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.app.ActivityManager$ProcessErrorStateInfo"
+ line="98"
+>
+</method>
+</class>
+<class chordsig="android.app.ActivityManager$RunningAppProcessInfo" line="100">
+	<type  start="4282" length="21" line="101" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.app.ActivityManager$RunningAppProcessInfo"
+ sig="RunningAppProcessInfo()"
+ line="103"
+ startpos="4314"
+ endpos="4335"
+>
+	<newexpr line="103" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4350" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4346" length="29" line="103">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4367" length="7" line="103">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4350" length="16" line="103" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;I[Ljava/lang/String;)V@android.app.ActivityManager$RunningAppProcessInfo"
+ sig="RunningAppProcessInfo(String,int,String[])"
+ line="104"
+ startpos="4387"
+ endpos="4408"
+>
+	<marker line="-1" type="param">
+		<operand  start="4426" length="12" line="104">
+			<expr><![CDATA[pProcessName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4444" length="4" line="104">
+			<expr><![CDATA[pPid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4469" length="4" line="104">
+			<expr><![CDATA[pArr]]></expr>
+		</operand>
+	</marker>
+	<type  start="4409" length="16" line="104" chordsig="java.lang.String"/>
+	<type  start="4450" length="16" line="104" chordsig="java.lang.String"/>
+	<newexpr line="104" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4487" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4483" length="29" line="104">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4504" length="7" line="104">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4487" length="16" line="104" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.app.ActivityManager$RunningAppProcessInfo"
+ sig="int describeContents()"
+ line="105"
+ startpos="4528"
+ endpos="4544"
+>
+	<newexpr line="105" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4559" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4555" length="29" line="105">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4576" length="7" line="105">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4559" length="16" line="105" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.app.ActivityManager$RunningAppProcessInfo"
+ sig="void writeToParcel(Parcel,int)"
+ line="106"
+ startpos="4601"
+ endpos="4614"
+>
+	<marker line="-1" type="param">
+		<operand  start="4633" length="4" line="106">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4643" length="5" line="106">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="4615" length="17" line="106" chordsig="android.os.Parcel"/>
+	<newexpr line="106" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4662" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4658" length="29" line="106">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4679" length="7" line="106">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4662" length="16" line="106" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="readFromParcel:(Landroid/os/Parcel;)V@android.app.ActivityManager$RunningAppProcessInfo"
+ sig="void readFromParcel(Parcel)"
+ line="107"
+ startpos="4704"
+ endpos="4718"
+>
+	<marker line="-1" type="param">
+		<operand  start="4737" length="6" line="107">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="4719" length="17" line="107" chordsig="android.os.Parcel"/>
+	<newexpr line="107" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4757" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4753" length="29" line="107">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4774" length="7" line="107">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4757" length="16" line="107" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="4793" length="16" line="108" chordsig="java.lang.String"/>
+	<type  start="4862" length="16" line="111" chordsig="java.lang.String"/>
+	<type  start="5489" length="29" line="126" chordsig="android.content.ComponentName"/>
+	<type  start="5566" length="29" line="127" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="5596" length="49" line="127" chordsig="android.app.ActivityManager$RunningAppProcessInfo"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.app.ActivityManager$RunningAppProcessInfo"
+ line="128"
+>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.app.ActivityManager"
+ sig="ActivityManager()"
+ line="130"
+ startpos="5685"
+ endpos="5700"
+>
+	<newexpr line="130" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5715" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5711" length="29" line="130">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5732" length="7" line="130">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5715" length="16" line="130" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMemoryClass:()I@android.app.ActivityManager"
+ sig="int getMemoryClass()"
+ line="131"
+ startpos="5756"
+ endpos="5770"
+>
+	<newexpr line="131" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5785" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5781" length="29" line="131">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5802" length="7" line="131">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5785" length="16" line="131" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLargeMemoryClass:()I@android.app.ActivityManager"
+ sig="int getLargeMemoryClass()"
+ line="132"
+ startpos="5826"
+ endpos="5845"
+>
+	<newexpr line="132" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5860" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5856" length="29" line="132">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5877" length="7" line="132">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5860" length="16" line="132" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRecentTasks:(II)Ljava/util/List;@android.app.ActivityManager"
+ sig="List&lt;RecentTaskInfo&gt; getRecentTasks(int,int)"
+ line="133"
+ startpos="5956"
+ endpos="5970"
+>
+	<marker line="-1" type="param">
+		<operand  start="5975" length="6" line="133">
+			<expr><![CDATA[maxNum]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5987" length="5" line="133">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="5897" length="14" line="133" chordsig="java.util.List"/>
+	<type  start="5912" length="42" line="133" chordsig="android.app.ActivityManager$RecentTaskInfo"/>
+	<newexpr line="133" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6041" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6037" length="29" line="133">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6058" length="7" line="133">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6041" length="16" line="133" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRunningTasks:(I)Ljava/util/List;@android.app.ActivityManager"
+ sig="List&lt;RunningTaskInfo&gt; getRunningTasks(int)"
+ line="134"
+ startpos="6138"
+ endpos="6153"
+>
+	<marker line="-1" type="param">
+		<operand  start="6158" length="6" line="134">
+			<expr><![CDATA[maxNum]]></expr>
+		</operand>
+	</marker>
+	<type  start="6078" length="14" line="134" chordsig="java.util.List"/>
+	<type  start="6093" length="43" line="134" chordsig="android.app.ActivityManager$RunningTaskInfo"/>
+	<newexpr line="134" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6213" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6209" length="29" line="134">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6230" length="7" line="134">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6213" length="16" line="134" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="moveTaskToFront:(II)V@android.app.ActivityManager"
+ sig="void moveTaskToFront(int,int)"
+ line="135"
+ startpos="6255"
+ endpos="6270"
+>
+	<marker line="-1" type="param">
+		<operand  start="6275" length="6" line="135">
+			<expr><![CDATA[taskId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6287" length="5" line="135">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="135" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6306" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6302" length="29" line="135">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6323" length="7" line="135">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6306" length="16" line="135" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="moveTaskToFront:(IILandroid/os/Bundle;)V@android.app.ActivityManager"
+ sig="void moveTaskToFront(int,int,Bundle)"
+ line="136"
+ startpos="6348"
+ endpos="6363"
+>
+	<marker line="-1" type="param">
+		<operand  start="6368" length="6" line="136">
+			<expr><![CDATA[taskId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6380" length="5" line="136">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6405" length="7" line="136">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<type  start="6387" length="17" line="136" chordsig="android.os.Bundle"/>
+	<newexpr line="136" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6426" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6422" length="29" line="136">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6443" length="7" line="136">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6426" length="16" line="136" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRunningServices:(I)Ljava/util/List;@android.app.ActivityManager"
+ sig="List&lt;RunningServiceInfo&gt; getRunningServices(int)"
+ line="137"
+ startpos="6526"
+ endpos="6544"
+>
+	<marker line="-1" type="param">
+		<operand  start="6549" length="6" line="137">
+			<expr><![CDATA[maxNum]]></expr>
+		</operand>
+	</marker>
+	<type  start="6463" length="14" line="137" chordsig="java.util.List"/>
+	<type  start="6478" length="46" line="137" chordsig="android.app.ActivityManager$RunningServiceInfo"/>
+	<newexpr line="137" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6604" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6600" length="29" line="137">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6621" length="7" line="137">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6604" length="16" line="137" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRunningServiceControlPanel:(Landroid/content/ComponentName;)Landroid/app/PendingIntent;@android.app.ActivityManager"
+ sig="PendingIntent getRunningServiceControlPanel(ComponentName)"
+ line="138"
+ startpos="6667"
+ endpos="6696"
+>
+	<marker line="-1" type="param">
+		<operand  start="6727" length="7" line="138">
+			<expr><![CDATA[service]]></expr>
+		</operand>
+	</marker>
+	<type  start="6641" length="25" line="138" chordsig="android.app.PendingIntent"/>
+	<type  start="6697" length="29" line="138" chordsig="android.content.ComponentName"/>
+	<newexpr line="138" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6783" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6779" length="29" line="138">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6800" length="7" line="138">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6783" length="16" line="138" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMemoryInfo:(Landroid/app/ActivityManager$MemoryInfo;)V@android.app.ActivityManager"
+ sig="void getMemoryInfo(MemoryInfo)"
+ line="139"
+ startpos="6825"
+ endpos="6838"
+>
+	<marker line="-1" type="param">
+		<operand  start="6878" length="7" line="139">
+			<expr><![CDATA[outInfo]]></expr>
+		</operand>
+	</marker>
+	<type  start="6839" length="38" line="139" chordsig="android.app.ActivityManager$MemoryInfo"/>
+	<newexpr line="139" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6899" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6895" length="29" line="139">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6916" length="7" line="139">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6899" length="16" line="139" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getProcessesInErrorState:()Ljava/util/List;@android.app.ActivityManager"
+ sig="List&lt;ProcessErrorStateInfo&gt; getProcessesInErrorState()"
+ line="140"
+ startpos="7002"
+ endpos="7026"
+>
+	<type  start="6936" length="14" line="140" chordsig="java.util.List"/>
+	<type  start="6951" length="49" line="140" chordsig="android.app.ActivityManager$ProcessErrorStateInfo"/>
+	<newexpr line="140" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7041" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7037" length="29" line="140">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7058" length="7" line="140">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7041" length="16" line="140" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRunningAppProcesses:()Ljava/util/List;@android.app.ActivityManager"
+ sig="List&lt;RunningAppProcessInfo&gt; getRunningAppProcesses()"
+ line="141"
+ startpos="7144"
+ endpos="7166"
+>
+	<type  start="7078" length="14" line="141" chordsig="java.util.List"/>
+	<type  start="7093" length="49" line="141" chordsig="android.app.ActivityManager$RunningAppProcessInfo"/>
+	<newexpr line="141" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7181" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7177" length="29" line="141">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7198" length="7" line="141">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7181" length="16" line="141" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMyMemoryState:(Landroid/app/ActivityManager$RunningAppProcessInfo;)V@android.app.ActivityManager"
+ sig="void getMyMemoryState(RunningAppProcessInfo)"
+ line="142"
+ startpos="7230"
+ endpos="7246"
+>
+	<marker line="-1" type="param">
+		<operand  start="7297" length="8" line="142">
+			<expr><![CDATA[outState]]></expr>
+		</operand>
+	</marker>
+	<type  start="7247" length="49" line="142" chordsig="android.app.ActivityManager$RunningAppProcessInfo"/>
+	<newexpr line="142" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7319" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7315" length="29" line="142">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7336" length="7" line="142">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7319" length="16" line="142" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getProcessMemoryInfo:([I)[Landroid/os/Debug$MemoryInfo;@android.app.ActivityManager"
+ sig="MemoryInfo[] getProcessMemoryInfo(int[])"
+ line="143"
+ startpos="7386"
+ endpos="7406"
+>
+	<marker line="-1" type="param">
+		<operand  start="7413" length="4" line="143">
+			<expr><![CDATA[pids]]></expr>
+		</operand>
+	</marker>
+	<type  start="7356" length="27" line="143" chordsig="android.os.Debug$MemoryInfo"/>
+	<newexpr line="143" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7431" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7427" length="29" line="143">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7448" length="7" line="143">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7431" length="16" line="143" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="restartPackage:(Ljava/lang/String;)V@android.app.ActivityManager"
+ sig="void restartPackage(String)"
+ line="145"
+ startpos="7497"
+ endpos="7511"
+>
+	<marker line="-1" type="param">
+		<operand  start="7529" length="11" line="145">
+			<expr><![CDATA[packageName]]></expr>
+		</operand>
+	</marker>
+	<type  start="7512" length="16" line="145" chordsig="java.lang.String"/>
+	<newexpr line="145" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7554" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7550" length="29" line="145">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7571" length="7" line="145">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7554" length="16" line="145" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="killBackgroundProcesses:(Ljava/lang/String;)V@android.app.ActivityManager"
+ sig="void killBackgroundProcesses(String)"
+ line="146"
+ startpos="7596"
+ endpos="7619"
+>
+	<marker line="-1" type="param">
+		<operand  start="7637" length="11" line="146">
+			<expr><![CDATA[packageName]]></expr>
+		</operand>
+	</marker>
+	<type  start="7620" length="16" line="146" chordsig="java.lang.String"/>
+	<newexpr line="146" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7662" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7658" length="29" line="146">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7679" length="7" line="146">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7662" length="16" line="146" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDeviceConfigurationInfo:()Landroid/content/pm/ConfigurationInfo;@android.app.ActivityManager"
+ sig="ConfigurationInfo getDeviceConfigurationInfo()"
+ line="147"
+ startpos="7736"
+ endpos="7762"
+>
+	<type  start="7699" length="36" line="147" chordsig="android.content.pm.ConfigurationInfo"/>
+	<newexpr line="147" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7777" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7773" length="29" line="147">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7794" length="7" line="147">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7777" length="16" line="147" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLauncherLargeIconDensity:()I@android.app.ActivityManager"
+ sig="int getLauncherLargeIconDensity()"
+ line="148"
+ startpos="7818"
+ endpos="7845"
+>
+	<newexpr line="148" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7860" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7856" length="29" line="148">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7877" length="7" line="148">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7860" length="16" line="148" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLauncherLargeIconSize:()I@android.app.ActivityManager"
+ sig="int getLauncherLargeIconSize()"
+ line="149"
+ startpos="7901"
+ endpos="7925"
+>
+	<newexpr line="149" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7940" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7936" length="29" line="149">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7957" length="7" line="149">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7940" length="16" line="149" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isUserAMonkey:()Z@android.app.ActivityManager"
+ sig="boolean isUserAMonkey()"
+ line="150"
+ startpos="7992"
+ endpos="8005"
+>
+	<newexpr line="150" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="8020" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="8016" length="29" line="150">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="8037" length="7" line="150">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="8020" length="16" line="150" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isRunningInTestHarness:()Z@android.app.ActivityManager"
+ sig="boolean isRunningInTestHarness()"
+ line="151"
+ startpos="8072"
+ endpos="8094"
+>
+	<newexpr line="151" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="8109" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="8105" length="29" line="151">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="8126" length="7" line="151">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="8109" length="16" line="151" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

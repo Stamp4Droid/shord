@@ -1,0 +1,31 @@
+<root>
+<class chordsig="android.view.accessibility.AccessibilityEventSource" line="2">
+<method
+ chordsig="sendAccessibilityEvent:(I)V@android.view.accessibility.AccessibilityEventSource"
+ sig="void sendAccessibilityEvent(int)"
+ line="4"
+ startpos="102"
+ endpos="124"
+>
+	<marker line="-1" type="param">
+		<operand  start="129" length="9" line="4">
+			<expr><![CDATA[eventType]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="sendAccessibilityEventUnchecked:(Landroid/view/accessibility/AccessibilityEvent;)V@android.view.accessibility.AccessibilityEventSource"
+ sig="void sendAccessibilityEventUnchecked(AccessibilityEvent)"
+ line="5"
+ startpos="163"
+ endpos="194"
+>
+	<marker line="-1" type="param">
+		<operand  start="241" length="5" line="5">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="195" length="45" line="5" chordsig="android.view.accessibility.AccessibilityEvent"/>
+</method>
+</class>
+</root>

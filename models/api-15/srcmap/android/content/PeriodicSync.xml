@@ -1,0 +1,127 @@
+<root>
+<class chordsig="android.content.PeriodicSync" line="2">
+	<type  start="64" length="21" line="3" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/accounts/Account;Ljava/lang/String;Landroid/os/Bundle;J)V@android.content.PeriodicSync"
+ sig="PeriodicSync(Account,String,Bundle,long)"
+ line="5"
+ startpos="96"
+ endpos="108"
+>
+	<marker line="-1" type="param">
+		<operand  start="134" length="7" line="5">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="160" length="9" line="5">
+			<expr><![CDATA[authority]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="189" length="6" line="5">
+			<expr><![CDATA[extras]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="202" length="6" line="5">
+			<expr><![CDATA[period]]></expr>
+		</operand>
+	</marker>
+	<type  start="109" length="24" line="5" chordsig="android.accounts.Account"/>
+	<type  start="143" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="171" length="17" line="5" chordsig="android.os.Bundle"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="222" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="218" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="239" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="222" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.content.PeriodicSync"
+ sig="int describeContents()"
+ line="6"
+ startpos="263"
+ endpos="279"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="294" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="290" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="311" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="294" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.content.PeriodicSync"
+ sig="void writeToParcel(Parcel,int)"
+ line="7"
+ startpos="336"
+ endpos="349"
+>
+	<marker line="-1" type="param">
+		<operand  start="368" length="4" line="7">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="378" length="5" line="7">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="350" length="17" line="7" chordsig="android.os.Parcel"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="397" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="393" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="414" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="397" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@android.content.PeriodicSync"
+ sig="boolean equals(Object)"
+ line="8"
+ startpos="442"
+ endpos="448"
+>
+	<marker line="-1" type="param">
+		<operand  start="466" length="1" line="8">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="449" length="16" line="8" chordsig="java.lang.Object"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="481" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="477" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="498" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="481" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="523" length="24" line="9" chordsig="android.accounts.Account"/>
+	<type  start="570" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="611" length="17" line="11" chordsig="android.os.Bundle"/>
+	<type  start="683" length="29" line="13" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="713" length="28" line="13" chordsig="android.content.PeriodicSync"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.content.PeriodicSync"
+ line="14"
+>
+</method>
+</class>
+</root>

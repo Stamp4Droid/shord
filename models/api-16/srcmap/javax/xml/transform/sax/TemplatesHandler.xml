@@ -1,0 +1,37 @@
+<root>
+<class chordsig="javax.xml.transform.sax.TemplatesHandler" line="2">
+	<type  start="77" length="26" line="3" chordsig="org.xml.sax.ContentHandler"/>
+<method
+ chordsig="getTemplates:()Ljavax/xml/transform/Templates;@javax.xml.transform.sax.TemplatesHandler"
+ sig="Templates getTemplates()"
+ line="5"
+ startpos="153"
+ endpos="165"
+>
+	<type  start="123" length="29" line="5" chordsig="javax.xml.transform.Templates"/>
+</method>
+<method
+ chordsig="setSystemId:(Ljava/lang/String;)V@javax.xml.transform.sax.TemplatesHandler"
+ sig="void setSystemId(String)"
+ line="6"
+ startpos="191"
+ endpos="202"
+>
+	<marker line="-1" type="param">
+		<operand  start="220" length="8" line="6">
+			<expr><![CDATA[systemID]]></expr>
+		</operand>
+	</marker>
+	<type  start="203" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getSystemId:()Ljava/lang/String;@javax.xml.transform.sax.TemplatesHandler"
+ sig="String getSystemId()"
+ line="7"
+ startpos="265"
+ endpos="276"
+>
+	<type  start="248" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

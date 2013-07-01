@@ -1,0 +1,220 @@
+<root>
+<class chordsig="org.apache.http.impl.HttpConnectionMetricsImpl" line="2">
+	<type  start="82" length="37" line="3" chordsig="org.apache.http.HttpConnectionMetrics"/>
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/io/HttpTransportMetrics;Lorg/apache/http/io/HttpTransportMetrics;)V@org.apache.http.impl.HttpConnectionMetricsImpl"
+ sig="HttpConnectionMetricsImpl(HttpTransportMetrics,HttpTransportMetrics)"
+ line="5"
+ startpos="130"
+ endpos="155"
+>
+	<marker line="-1" type="param">
+		<operand  start="196" length="17" line="5">
+			<expr><![CDATA[inTransportMetric]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="255" length="18" line="5">
+			<expr><![CDATA[outTransportMetric]]></expr>
+		</operand>
+	</marker>
+	<type  start="156" length="39" line="5" chordsig="org.apache.http.io.HttpTransportMetrics"/>
+	<type  start="215" length="39" line="5" chordsig="org.apache.http.io.HttpTransportMetrics"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="287" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="283" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="304" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="287" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getReceivedBytesCount:()J@org.apache.http.impl.HttpConnectionMetricsImpl"
+ sig="long getReceivedBytesCount()"
+ line="6"
+ startpos="329"
+ endpos="350"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="365" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="361" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="382" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="365" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSentBytesCount:()J@org.apache.http.impl.HttpConnectionMetricsImpl"
+ sig="long getSentBytesCount()"
+ line="7"
+ startpos="407"
+ endpos="424"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="439" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="435" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="456" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="439" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRequestCount:()J@org.apache.http.impl.HttpConnectionMetricsImpl"
+ sig="long getRequestCount()"
+ line="8"
+ startpos="481"
+ endpos="496"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="511" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="507" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="528" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="511" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="incrementRequestCount:()V@org.apache.http.impl.HttpConnectionMetricsImpl"
+ sig="void incrementRequestCount()"
+ line="9"
+ startpos="553"
+ endpos="574"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="589" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="585" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="606" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="589" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getResponseCount:()J@org.apache.http.impl.HttpConnectionMetricsImpl"
+ sig="long getResponseCount()"
+ line="10"
+ startpos="631"
+ endpos="647"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="662" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="658" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="679" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="662" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="incrementResponseCount:()V@org.apache.http.impl.HttpConnectionMetricsImpl"
+ sig="void incrementResponseCount()"
+ line="11"
+ startpos="704"
+ endpos="726"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="741" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="737" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="758" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="741" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMetric:(Ljava/lang/String;)Ljava/lang/Object;@org.apache.http.impl.HttpConnectionMetricsImpl"
+ sig="Object getMetric(String)"
+ line="12"
+ startpos="795"
+ endpos="804"
+>
+	<marker line="-1" type="param">
+		<operand  start="822" length="10" line="12">
+			<expr><![CDATA[metricName]]></expr>
+		</operand>
+	</marker>
+	<type  start="778" length="16" line="12" chordsig="java.lang.Object"/>
+	<type  start="805" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="846" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="842" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="863" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="846" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMetric:(Ljava/lang/String;Ljava/lang/Object;)V@org.apache.http.impl.HttpConnectionMetricsImpl"
+ sig="void setMetric(String,Object)"
+ line="13"
+ startpos="888"
+ endpos="897"
+>
+	<marker line="-1" type="param">
+		<operand  start="915" length="10" line="13">
+			<expr><![CDATA[metricName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="944" length="3" line="13">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="898" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="927" length="16" line="13" chordsig="java.lang.Object"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="961" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="957" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="978" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="961" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="reset:()V@org.apache.http.impl.HttpConnectionMetricsImpl"
+ sig="void reset()"
+ line="14"
+ startpos="1003"
+ endpos="1008"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1023" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1019" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1040" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1023" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1072" length="16" line="15" chordsig="java.lang.String"/>
+	<type  start="1147" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="1224" length="16" line="17" chordsig="java.lang.String"/>
+	<type  start="1305" length="16" line="18" chordsig="java.lang.String"/>
+</class>
+</root>

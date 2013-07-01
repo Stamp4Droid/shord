@@ -1,0 +1,36 @@
+<root>
+<class chordsig="org.apache.http.conn.scheme.LayeredSocketFactory" line="2">
+	<type  start="85" length="41" line="3" chordsig="org.apache.http.conn.scheme.SocketFactory"/>
+<method
+ chordsig="createSocket:(Ljava/net/Socket;Ljava/lang/String;IZ)Ljava/net/Socket;@org.apache.http.conn.scheme.LayeredSocketFactory"
+ sig="Socket createSocket(Socket,String,int,boolean)"
+ line="5"
+ startpos="162"
+ endpos="174"
+>
+	<marker line="-1" type="param">
+		<operand  start="191" length="6" line="5">
+			<expr><![CDATA[socket]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="216" length="4" line="5">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="226" length="4" line="5">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="240" length="9" line="5">
+			<expr><![CDATA[autoClose]]></expr>
+		</operand>
+	</marker>
+	<type  start="146" length="15" line="5" chordsig="java.net.Socket"/>
+	<type  start="175" length="15" line="5" chordsig="java.net.Socket"/>
+	<type  start="199" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,102 @@
+<root>
+<class chordsig="org.xml.sax.Parser" line="3">
+<method
+ chordsig="setLocale:(Ljava/util/Locale;)V@org.xml.sax.Parser"
+ sig="void setLocale(Locale)"
+ line="5"
+ startpos="93"
+ endpos="102"
+>
+	<marker line="-1" type="param">
+		<operand  start="120" length="6" line="5">
+			<expr><![CDATA[locale]]></expr>
+		</operand>
+	</marker>
+	<type  start="103" length="16" line="5" chordsig="java.util.Locale"/>
+</method>
+<method
+ chordsig="setEntityResolver:(Lorg/xml/sax/EntityResolver;)V@org.xml.sax.Parser"
+ sig="void setEntityResolver(EntityResolver)"
+ line="6"
+ startpos="183"
+ endpos="200"
+>
+	<marker line="-1" type="param">
+		<operand  start="228" length="8" line="6">
+			<expr><![CDATA[resolver]]></expr>
+		</operand>
+	</marker>
+	<type  start="201" length="26" line="6" chordsig="org.xml.sax.EntityResolver"/>
+</method>
+<method
+ chordsig="setDTDHandler:(Lorg/xml/sax/DTDHandler;)V@org.xml.sax.Parser"
+ sig="void setDTDHandler(DTDHandler)"
+ line="7"
+ startpos="261"
+ endpos="274"
+>
+	<marker line="-1" type="param">
+		<operand  start="298" length="7" line="7">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="275" length="22" line="7" chordsig="org.xml.sax.DTDHandler"/>
+</method>
+<method
+ chordsig="setDocumentHandler:(Lorg/xml/sax/DocumentHandler;)V@org.xml.sax.Parser"
+ sig="void setDocumentHandler(DocumentHandler)"
+ line="8"
+ startpos="330"
+ endpos="348"
+>
+	<marker line="-1" type="param">
+		<operand  start="377" length="7" line="8">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="349" length="27" line="8" chordsig="org.xml.sax.DocumentHandler"/>
+</method>
+<method
+ chordsig="setErrorHandler:(Lorg/xml/sax/ErrorHandler;)V@org.xml.sax.Parser"
+ sig="void setErrorHandler(ErrorHandler)"
+ line="9"
+ startpos="409"
+ endpos="424"
+>
+	<marker line="-1" type="param">
+		<operand  start="450" length="7" line="9">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="425" length="24" line="9" chordsig="org.xml.sax.ErrorHandler"/>
+</method>
+<method
+ chordsig="parse:(Lorg/xml/sax/InputSource;)V@org.xml.sax.Parser"
+ sig="void parse(InputSource)"
+ line="10"
+ startpos="482"
+ endpos="487"
+>
+	<marker line="-1" type="param">
+		<operand  start="512" length="6" line="10">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="488" length="23" line="10" chordsig="org.xml.sax.InputSource"/>
+</method>
+<method
+ chordsig="parse:(Ljava/lang/String;)V@org.xml.sax.Parser"
+ sig="void parse(String)"
+ line="11"
+ startpos="596"
+ endpos="601"
+>
+	<marker line="-1" type="param">
+		<operand  start="619" length="8" line="11">
+			<expr><![CDATA[systemId]]></expr>
+		</operand>
+	</marker>
+	<type  start="602" length="16" line="11" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

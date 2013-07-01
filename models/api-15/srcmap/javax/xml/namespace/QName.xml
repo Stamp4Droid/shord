@@ -1,0 +1,238 @@
+<root>
+<class chordsig="javax.xml.namespace.QName" line="2">
+	<type  start="61" length="20" line="3" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;)V@javax.xml.namespace.QName"
+ sig="QName(String,String)"
+ line="5"
+ startpos="92"
+ endpos="97"
+>
+	<marker line="-1" type="param">
+		<operand  start="115" length="12" line="5">
+			<expr><![CDATA[namespaceURI]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="146" length="9" line="5">
+			<expr><![CDATA[localPart]]></expr>
+		</operand>
+	</marker>
+	<type  start="98" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="129" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="169" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="165" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="186" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="169" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V@javax.xml.namespace.QName"
+ sig="QName(String,String,String)"
+ line="6"
+ startpos="206"
+ endpos="211"
+>
+	<marker line="-1" type="param">
+		<operand  start="229" length="12" line="6">
+			<expr><![CDATA[namespaceURI]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="260" length="9" line="6">
+			<expr><![CDATA[localPart]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="288" length="6" line="6">
+			<expr><![CDATA[prefix]]></expr>
+		</operand>
+	</marker>
+	<type  start="212" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="243" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="271" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="308" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="304" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="325" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="308" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@javax.xml.namespace.QName"
+ sig="QName(String)"
+ line="7"
+ startpos="345"
+ endpos="350"
+>
+	<marker line="-1" type="param">
+		<operand  start="368" length="9" line="7">
+			<expr><![CDATA[localPart]]></expr>
+		</operand>
+	</marker>
+	<type  start="351" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="391" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="387" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="408" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="391" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getNamespaceURI:()Ljava/lang/String;@javax.xml.namespace.QName"
+ sig="String getNamespaceURI()"
+ line="8"
+ startpos="445"
+ endpos="460"
+>
+	<type  start="428" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="475" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="471" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="492" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="475" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLocalPart:()Ljava/lang/String;@javax.xml.namespace.QName"
+ sig="String getLocalPart()"
+ line="9"
+ startpos="529"
+ endpos="541"
+>
+	<type  start="512" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="556" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="552" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="573" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="556" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPrefix:()Ljava/lang/String;@javax.xml.namespace.QName"
+ sig="String getPrefix()"
+ line="10"
+ startpos="610"
+ endpos="619"
+>
+	<type  start="593" length="16" line="10" chordsig="java.lang.String"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="634" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="630" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="651" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="634" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@javax.xml.namespace.QName"
+ sig="boolean equals(Object)"
+ line="11"
+ startpos="685"
+ endpos="691"
+>
+	<marker line="-1" type="param">
+		<operand  start="709" length="12" line="11">
+			<expr><![CDATA[objectToTest]]></expr>
+		</operand>
+	</marker>
+	<type  start="692" length="16" line="11" chordsig="java.lang.Object"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="735" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="731" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="752" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="735" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@javax.xml.namespace.QName"
+ sig="int hashCode()"
+ line="12"
+ startpos="782"
+ endpos="790"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="805" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="801" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="822" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="805" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@javax.xml.namespace.QName"
+ sig="String toString()"
+ line="13"
+ startpos="859"
+ endpos="867"
+>
+	<type  start="842" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="882" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="878" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="899" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="882" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="valueOf:(Ljava/lang/String;)Ljavax/xml/namespace/QName;@javax.xml.namespace.QName"
+ sig="QName valueOf(String)"
+ line="14"
+ startpos="952"
+ endpos="959"
+>
+	<marker line="-1" type="param">
+		<operand  start="977" length="13" line="14">
+			<expr><![CDATA[qNameAsString]]></expr>
+		</operand>
+	</marker>
+	<type  start="926" length="25" line="14" chordsig="javax.xml.namespace.QName"/>
+	<type  start="960" length="16" line="14" chordsig="java.lang.String"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1004" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1000" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1021" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1004" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

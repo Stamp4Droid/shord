@@ -1,0 +1,20 @@
+<root>
+<class chordsig="android.widget.Advanceable" line="2">
+<method
+ chordsig="advance:()V@android.widget.Advanceable"
+ sig="void advance()"
+ line="4"
+ startpos="77"
+ endpos="84"
+>
+</method>
+<method
+ chordsig="fyiWillBeAdvancedByHostKThx:()V@android.widget.Advanceable"
+ sig="void fyiWillBeAdvancedByHostKThx()"
+ line="5"
+ startpos="110"
+ endpos="137"
+>
+</method>
+</class>
+</root>

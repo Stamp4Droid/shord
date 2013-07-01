@@ -1,0 +1,119 @@
+<root>
+<class chordsig="java.sql.ParameterMetaData" line="2">
+	<type  start="63" length="16" line="3" chordsig="java.sql.Wrapper"/>
+<method
+ chordsig="getParameterClassName:(I)Ljava/lang/String;@java.sql.ParameterMetaData"
+ sig="String getParameterClassName(int)"
+ line="5"
+ startpos="116"
+ endpos="137"
+>
+	<marker line="-1" type="param">
+		<operand  start="142" length="10" line="5">
+			<expr><![CDATA[paramIndex]]></expr>
+		</operand>
+	</marker>
+	<type  start="99" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getParameterCount:()I@java.sql.ParameterMetaData"
+ sig="int getParameterCount()"
+ line="6"
+ startpos="205"
+ endpos="222"
+>
+</method>
+<method
+ chordsig="getParameterMode:(I)I@java.sql.ParameterMetaData"
+ sig="int getParameterMode(int)"
+ line="7"
+ startpos="276"
+ endpos="292"
+>
+	<marker line="-1" type="param">
+		<operand  start="297" length="10" line="7">
+			<expr><![CDATA[paramIndex]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getParameterType:(I)I@java.sql.ParameterMetaData"
+ sig="int getParameterType(int)"
+ line="8"
+ startpos="360"
+ endpos="376"
+>
+	<marker line="-1" type="param">
+		<operand  start="381" length="10" line="8">
+			<expr><![CDATA[paramIndex]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getParameterTypeName:(I)Ljava/lang/String;@java.sql.ParameterMetaData"
+ sig="String getParameterTypeName(int)"
+ line="9"
+ startpos="457"
+ endpos="477"
+>
+	<marker line="-1" type="param">
+		<operand  start="482" length="10" line="9">
+			<expr><![CDATA[paramIndex]]></expr>
+		</operand>
+	</marker>
+	<type  start="440" length="16" line="9" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getPrecision:(I)I@java.sql.ParameterMetaData"
+ sig="int getPrecision(int)"
+ line="10"
+ startpos="545"
+ endpos="557"
+>
+	<marker line="-1" type="param">
+		<operand  start="562" length="10" line="10">
+			<expr><![CDATA[paramIndex]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getScale:(I)I@java.sql.ParameterMetaData"
+ sig="int getScale(int)"
+ line="11"
+ startpos="625"
+ endpos="633"
+>
+	<marker line="-1" type="param">
+		<operand  start="638" length="10" line="11">
+			<expr><![CDATA[paramIndex]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="isNullable:(I)I@java.sql.ParameterMetaData"
+ sig="int isNullable(int)"
+ line="12"
+ startpos="701"
+ endpos="711"
+>
+	<marker line="-1" type="param">
+		<operand  start="716" length="10" line="12">
+			<expr><![CDATA[paramIndex]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="isSigned:(I)Z@java.sql.ParameterMetaData"
+ sig="boolean isSigned(int)"
+ line="13"
+ startpos="783"
+ endpos="791"
+>
+	<marker line="-1" type="param">
+		<operand  start="796" length="10" line="13">
+			<expr><![CDATA[paramIndex]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

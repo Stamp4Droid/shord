@@ -1,0 +1,23 @@
+<root>
+<class chordsig="java.nio.channels.AsynchronousCloseException" line="2">
+	<type  start="77" length="40" line="3" chordsig="java.nio.channels.ClosedChannelException"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.nio.channels.AsynchronousCloseException"
+ sig="AsynchronousCloseException()"
+ line="5"
+ startpos="128"
+ endpos="154"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="169" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="165" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="186" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="169" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

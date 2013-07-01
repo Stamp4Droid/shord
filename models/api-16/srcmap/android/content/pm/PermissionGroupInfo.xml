@@ -1,0 +1,147 @@
+<root>
+<class chordsig="android.content.pm.PermissionGroupInfo" line="2">
+	<type  start="71" length="34" line="3" chordsig="android.content.pm.PackageItemInfo"/>
+	<type  start="119" length="21" line="4" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.content.pm.PermissionGroupInfo"
+ sig="PermissionGroupInfo()"
+ line="6"
+ startpos="151"
+ endpos="170"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="185" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="181" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="202" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="185" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/pm/PermissionGroupInfo;)V@android.content.pm.PermissionGroupInfo"
+ sig="PermissionGroupInfo(PermissionGroupInfo)"
+ line="7"
+ startpos="222"
+ endpos="241"
+>
+	<marker line="-1" type="param">
+		<operand  start="281" length="4" line="7">
+			<expr><![CDATA[orig]]></expr>
+		</operand>
+	</marker>
+	<type  start="242" length="38" line="7" chordsig="android.content.pm.PermissionGroupInfo"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="299" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="295" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="316" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="299" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="loadDescription:(Landroid/content/pm/PackageManager;)Ljava/lang/CharSequence;@android.content.pm.PermissionGroupInfo"
+ sig="CharSequence loadDescription(PackageManager)"
+ line="8"
+ startpos="359"
+ endpos="374"
+>
+	<marker line="-1" type="param">
+		<operand  start="409" length="2" line="8">
+			<expr><![CDATA[pm]]></expr>
+		</operand>
+	</marker>
+	<type  start="336" length="22" line="8" chordsig="java.lang.CharSequence"/>
+	<type  start="375" length="33" line="8" chordsig="android.content.pm.PackageManager"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="425" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="421" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="442" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="425" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.content.pm.PermissionGroupInfo"
+ sig="String toString()"
+ line="9"
+ startpos="479"
+ endpos="487"
+>
+	<type  start="462" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="502" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="498" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="519" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="502" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.content.pm.PermissionGroupInfo"
+ sig="int describeContents()"
+ line="10"
+ startpos="543"
+ endpos="559"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="574" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="570" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="591" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="574" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.content.pm.PermissionGroupInfo"
+ sig="void writeToParcel(Parcel,int)"
+ line="11"
+ startpos="616"
+ endpos="629"
+>
+	<marker line="-1" type="param">
+		<operand  start="648" length="4" line="11">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="658" length="15" line="11">
+			<expr><![CDATA[parcelableFlags]]></expr>
+		</operand>
+	</marker>
+	<type  start="630" length="17" line="11" chordsig="android.os.Parcel"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="687" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="683" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="704" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="687" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="750" length="22" line="13" chordsig="java.lang.CharSequence"/>
+	<type  start="818" length="29" line="14" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="848" length="38" line="14" chordsig="android.content.pm.PermissionGroupInfo"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.content.pm.PermissionGroupInfo"
+ line="15"
+>
+</method>
+</class>
+</root>

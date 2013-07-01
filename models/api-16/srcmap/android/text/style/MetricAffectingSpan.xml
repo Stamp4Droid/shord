@@ -1,0 +1,58 @@
+<root>
+<class chordsig="android.text.style.MetricAffectingSpan" line="2">
+	<type  start="80" length="33" line="3" chordsig="android.text.style.CharacterStyle"/>
+	<type  start="127" length="31" line="4" chordsig="android.text.style.UpdateLayout"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.text.style.MetricAffectingSpan"
+ sig="MetricAffectingSpan()"
+ line="6"
+ startpos="169"
+ endpos="188"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="203" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="199" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="220" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="203" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="updateMeasureState:(Landroid/text/TextPaint;)V@android.text.style.MetricAffectingSpan"
+ sig="void updateMeasureState(TextPaint)"
+ line="7"
+ startpos="254"
+ endpos="272"
+>
+	<marker line="-1" type="param">
+		<operand  start="296" length="1" line="7">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<type  start="273" length="22" line="7" chordsig="android.text.TextPaint"/>
+</method>
+<method
+ chordsig="getUnderlying:()Landroid/text/style/MetricAffectingSpan;@android.text.style.MetricAffectingSpan"
+ sig="MetricAffectingSpan getUnderlying()"
+ line="8"
+ startpos="347"
+ endpos="360"
+>
+	<alias>()Landroid/text/style/CharacterStyle;</alias>
+	<type  start="308" length="38" line="8" chordsig="android.text.style.MetricAffectingSpan"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="375" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="371" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="392" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="375" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

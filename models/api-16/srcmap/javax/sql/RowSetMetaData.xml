@@ -1,0 +1,312 @@
+<root>
+<class chordsig="javax.sql.RowSetMetaData" line="2">
+	<type  start="61" length="26" line="3" chordsig="java.sql.ResultSetMetaData"/>
+<method
+ chordsig="setAutoIncrement:(IZ)V@javax.sql.RowSetMetaData"
+ sig="void setAutoIncrement(int,boolean)"
+ line="5"
+ startpos="112"
+ endpos="128"
+>
+	<marker line="-1" type="param">
+		<operand  start="133" length="11" line="5">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="154" length="13" line="5">
+			<expr><![CDATA[autoIncrement]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setCaseSensitive:(IZ)V@javax.sql.RowSetMetaData"
+ sig="void setCaseSensitive(int,boolean)"
+ line="6"
+ startpos="221"
+ endpos="237"
+>
+	<marker line="-1" type="param">
+		<operand  start="242" length="11" line="6">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="263" length="13" line="6">
+			<expr><![CDATA[caseSensitive]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setCatalogName:(ILjava/lang/String;)V@javax.sql.RowSetMetaData"
+ sig="void setCatalogName(int,String)"
+ line="7"
+ startpos="330"
+ endpos="344"
+>
+	<marker line="-1" type="param">
+		<operand  start="349" length="11" line="7">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="379" length="11" line="7">
+			<expr><![CDATA[catalogName]]></expr>
+		</operand>
+	</marker>
+	<type  start="362" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setColumnCount:(I)V@javax.sql.RowSetMetaData"
+ sig="void setColumnCount(int)"
+ line="8"
+ startpos="444"
+ endpos="458"
+>
+	<marker line="-1" type="param">
+		<operand  start="463" length="11" line="8">
+			<expr><![CDATA[columnCount]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setColumnDisplaySize:(II)V@javax.sql.RowSetMetaData"
+ sig="void setColumnDisplaySize(int,int)"
+ line="9"
+ startpos="528"
+ endpos="548"
+>
+	<marker line="-1" type="param">
+		<operand  start="553" length="11" line="9">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="570" length="11" line="9">
+			<expr><![CDATA[displaySize]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setColumnLabel:(ILjava/lang/String;)V@javax.sql.RowSetMetaData"
+ sig="void setColumnLabel(int,String)"
+ line="10"
+ startpos="635"
+ endpos="649"
+>
+	<marker line="-1" type="param">
+		<operand  start="654" length="11" line="10">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="684" length="8" line="10">
+			<expr><![CDATA[theLabel]]></expr>
+		</operand>
+	</marker>
+	<type  start="667" length="16" line="10" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setColumnName:(ILjava/lang/String;)V@javax.sql.RowSetMetaData"
+ sig="void setColumnName(int,String)"
+ line="11"
+ startpos="746"
+ endpos="759"
+>
+	<marker line="-1" type="param">
+		<operand  start="764" length="11" line="11">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="794" length="13" line="11">
+			<expr><![CDATA[theColumnName]]></expr>
+		</operand>
+	</marker>
+	<type  start="777" length="16" line="11" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setColumnType:(II)V@javax.sql.RowSetMetaData"
+ sig="void setColumnType(int,int)"
+ line="12"
+ startpos="861"
+ endpos="874"
+>
+	<marker line="-1" type="param">
+		<operand  start="879" length="11" line="12">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="896" length="10" line="12">
+			<expr><![CDATA[theSQLType]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setColumnTypeName:(ILjava/lang/String;)V@javax.sql.RowSetMetaData"
+ sig="void setColumnTypeName(int,String)"
+ line="13"
+ startpos="960"
+ endpos="977"
+>
+	<marker line="-1" type="param">
+		<operand  start="982" length="11" line="13">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1012" length="11" line="13">
+			<expr><![CDATA[theTypeName]]></expr>
+		</operand>
+	</marker>
+	<type  start="995" length="16" line="13" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setCurrency:(IZ)V@javax.sql.RowSetMetaData"
+ sig="void setCurrency(int,boolean)"
+ line="14"
+ startpos="1077"
+ endpos="1088"
+>
+	<marker line="-1" type="param">
+		<operand  start="1093" length="11" line="14">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1114" length="10" line="14">
+			<expr><![CDATA[isCurrency]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setNullable:(II)V@javax.sql.RowSetMetaData"
+ sig="void setNullable(int,int)"
+ line="15"
+ startpos="1178"
+ endpos="1189"
+>
+	<marker line="-1" type="param">
+		<operand  start="1194" length="11" line="15">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1211" length="11" line="15">
+			<expr><![CDATA[nullability]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setPrecision:(II)V@javax.sql.RowSetMetaData"
+ sig="void setPrecision(int,int)"
+ line="16"
+ startpos="1276"
+ endpos="1288"
+>
+	<marker line="-1" type="param">
+		<operand  start="1293" length="11" line="16">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1310" length="12" line="16">
+			<expr><![CDATA[thePrecision]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setScale:(II)V@javax.sql.RowSetMetaData"
+ sig="void setScale(int,int)"
+ line="17"
+ startpos="1376"
+ endpos="1384"
+>
+	<marker line="-1" type="param">
+		<operand  start="1389" length="11" line="17">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1406" length="8" line="17">
+			<expr><![CDATA[theScale]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setSchemaName:(ILjava/lang/String;)V@javax.sql.RowSetMetaData"
+ sig="void setSchemaName(int,String)"
+ line="18"
+ startpos="1468"
+ endpos="1481"
+>
+	<marker line="-1" type="param">
+		<operand  start="1486" length="11" line="18">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1516" length="13" line="18">
+			<expr><![CDATA[theSchemaName]]></expr>
+		</operand>
+	</marker>
+	<type  start="1499" length="16" line="18" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setSearchable:(IZ)V@javax.sql.RowSetMetaData"
+ sig="void setSearchable(int,boolean)"
+ line="19"
+ startpos="1583"
+ endpos="1596"
+>
+	<marker line="-1" type="param">
+		<operand  start="1601" length="11" line="19">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1622" length="12" line="19">
+			<expr><![CDATA[isSearchable]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setSigned:(IZ)V@javax.sql.RowSetMetaData"
+ sig="void setSigned(int,boolean)"
+ line="20"
+ startpos="1688"
+ endpos="1697"
+>
+	<marker line="-1" type="param">
+		<operand  start="1702" length="11" line="20">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1723" length="8" line="20">
+			<expr><![CDATA[isSigned]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setTableName:(ILjava/lang/String;)V@javax.sql.RowSetMetaData"
+ sig="void setTableName(int,String)"
+ line="21"
+ startpos="1785"
+ endpos="1797"
+>
+	<marker line="-1" type="param">
+		<operand  start="1802" length="11" line="21">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1832" length="12" line="21">
+			<expr><![CDATA[theTableName]]></expr>
+		</operand>
+	</marker>
+	<type  start="1815" length="16" line="21" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

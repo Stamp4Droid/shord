@@ -1,0 +1,106 @@
+<root>
+<class chordsig="java.lang.reflect.ReflectPermission" line="2">
+	<type  start="74" length="29" line="3" chordsig="java.security.BasicPermission"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.reflect.ReflectPermission"
+ sig="ReflectPermission(String)"
+ line="5"
+ startpos="114"
+ endpos="131"
+>
+	<marker line="-1" type="param">
+		<operand  start="149" length="4" line="5">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="132" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="164" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="187" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="221" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="217" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="238" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="221" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;)V@java.lang.reflect.ReflectPermission"
+ sig="ReflectPermission(String,String)"
+ line="6"
+ startpos="258"
+ endpos="275"
+>
+	<marker line="-1" type="param">
+		<operand  start="293" length="4" line="6">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="316" length="7" line="6">
+			<expr><![CDATA[actions]]></expr>
+		</operand>
+	</marker>
+	<type  start="276" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="299" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="334" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="357" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="391" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="387" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="408" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="391" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getActions:()Ljava/lang/String;@java.lang.reflect.ReflectPermission"
+ sig="String getActions()"
+ line="7"
+ startpos="445"
+ endpos="455"
+>
+	<type  start="428" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="470" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="466" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="487" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="470" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="implies:(Ljava/security/Permission;)Z@java.lang.reflect.ReflectPermission"
+ sig="boolean implies(Permission)"
+ line="8"
+ startpos="515"
+ endpos="522"
+>
+	<marker line="-1" type="param">
+		<operand  start="548" length="10" line="8">
+			<expr><![CDATA[permission]]></expr>
+		</operand>
+	</marker>
+	<type  start="523" length="24" line="8" chordsig="java.security.Permission"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="572" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="568" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="589" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="572" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

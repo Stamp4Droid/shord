@@ -1,0 +1,19 @@
+<root>
+<class chordsig="org.apache.http.conn.scheme.HostNameResolver" line="2">
+<method
+ chordsig="resolve:(Ljava/lang/String;)Ljava/net/InetAddress;@org.apache.http.conn.scheme.HostNameResolver"
+ sig="InetAddress resolve(String)"
+ line="4"
+ startpos="111"
+ endpos="118"
+>
+	<marker line="-1" type="param">
+		<operand  start="136" length="8" line="4">
+			<expr><![CDATA[hostname]]></expr>
+		</operand>
+	</marker>
+	<type  start="90" length="20" line="4" chordsig="java.net.InetAddress"/>
+	<type  start="119" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

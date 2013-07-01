@@ -1,0 +1,260 @@
+<root>
+<class chordsig="org.apache.http.conn.EofSensorInputStream" line="2">
+	<type  start="74" length="19" line="3" chordsig="java.io.InputStream"/>
+	<type  start="107" length="45" line="4" chordsig="org.apache.http.conn.ConnectionReleaseTrigger"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/InputStream;Lorg/apache/http/conn/EofSensorWatcher;)V@org.apache.http.conn.EofSensorInputStream"
+ sig="EofSensorInputStream(InputStream,EofSensorWatcher)"
+ line="6"
+ startpos="163"
+ endpos="183"
+>
+	<marker line="-1" type="param">
+		<operand  start="204" length="2" line="6">
+			<expr><![CDATA[in]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="246" length="7" line="6">
+			<expr><![CDATA[watcher]]></expr>
+		</operand>
+	</marker>
+	<type  start="184" length="19" line="6" chordsig="java.io.InputStream"/>
+	<type  start="208" length="37" line="6" chordsig="org.apache.http.conn.EofSensorWatcher"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="267" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="263" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="284" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="267" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isReadAllowed:()Z@org.apache.http.conn.EofSensorInputStream"
+ sig="boolean isReadAllowed()"
+ line="7"
+ startpos="315"
+ endpos="328"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="370" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="366" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="387" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="370" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="read:()I@org.apache.http.conn.EofSensorInputStream"
+ sig="int read()"
+ line="8"
+ startpos="411"
+ endpos="415"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="457" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="453" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="474" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="457" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="read:([BII)I@org.apache.http.conn.EofSensorInputStream"
+ sig="int read(byte[],int,int)"
+ line="9"
+ startpos="498"
+ endpos="502"
+>
+	<marker line="-1" type="param">
+		<operand  start="510" length="1" line="9">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="517" length="3" line="9">
+			<expr><![CDATA[off]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="526" length="3" line="9">
+			<expr><![CDATA[len]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="570" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="566" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="587" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="570" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="read:([B)I@org.apache.http.conn.EofSensorInputStream"
+ sig="int read(byte[])"
+ line="10"
+ startpos="611"
+ endpos="615"
+>
+	<marker line="-1" type="param">
+		<operand  start="623" length="1" line="10">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="665" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="661" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="682" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="665" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="available:()I@org.apache.http.conn.EofSensorInputStream"
+ sig="int available()"
+ line="11"
+ startpos="706"
+ endpos="715"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="757" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="753" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="774" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="757" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:()V@org.apache.http.conn.EofSensorInputStream"
+ sig="void close()"
+ line="12"
+ startpos="799"
+ endpos="804"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="846" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="842" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="863" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="846" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="checkEOF:(I)V@org.apache.http.conn.EofSensorInputStream"
+ sig="void checkEOF(int)"
+ line="13"
+ startpos="891"
+ endpos="899"
+>
+	<marker line="-1" type="param">
+		<operand  start="904" length="3" line="13">
+			<expr><![CDATA[eof]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="948" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="944" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="965" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="948" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="checkClose:()V@org.apache.http.conn.EofSensorInputStream"
+ sig="void checkClose()"
+ line="14"
+ startpos="993"
+ endpos="1003"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1045" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1041" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1062" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1045" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="checkAbort:()V@org.apache.http.conn.EofSensorInputStream"
+ sig="void checkAbort()"
+ line="15"
+ startpos="1090"
+ endpos="1100"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1142" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1138" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1159" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1142" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="releaseConnection:()V@org.apache.http.conn.EofSensorInputStream"
+ sig="void releaseConnection()"
+ line="16"
+ startpos="1184"
+ endpos="1201"
+>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1243" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1239" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1260" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1243" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="abortConnection:()V@org.apache.http.conn.EofSensorInputStream"
+ sig="void abortConnection()"
+ line="17"
+ startpos="1285"
+ endpos="1300"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1342" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1338" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1359" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1342" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1381" length="19" line="18" chordsig="java.io.InputStream"/>
+</class>
+</root>

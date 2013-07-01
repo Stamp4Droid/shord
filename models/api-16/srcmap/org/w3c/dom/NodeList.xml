@@ -1,0 +1,26 @@
+<root>
+<class chordsig="org.w3c.dom.NodeList" line="2">
+<method
+ chordsig="item:(I)Lorg/w3c/dom/Node;@org.w3c.dom.NodeList"
+ sig="Node item(int)"
+ line="4"
+ startpos="83"
+ endpos="87"
+>
+	<marker line="-1" type="param">
+		<operand  start="92" length="5" line="4">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="66" length="16" line="4" chordsig="org.w3c.dom.Node"/>
+</method>
+<method
+ chordsig="getLength:()I@org.w3c.dom.NodeList"
+ sig="int getLength()"
+ line="5"
+ startpos="121"
+ endpos="130"
+>
+</method>
+</class>
+</root>

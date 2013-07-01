@@ -1,0 +1,351 @@
+<root>
+<class chordsig="android.nfc.NfcAdapter" line="2">
+<class chordsig="android.nfc.NfcAdapter$OnNdefPushCompleteCallback" line="4">
+<method
+ chordsig="onNdefPushComplete:(Landroid/nfc/NfcEvent;)V@android.nfc.NfcAdapter$OnNdefPushCompleteCallback"
+ sig="void onNdefPushComplete(NfcEvent)"
+ line="6"
+ startpos="128"
+ endpos="146"
+>
+	<marker line="-1" type="param">
+		<operand  start="168" length="5" line="6">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="147" length="20" line="6" chordsig="android.nfc.NfcEvent"/>
+</method>
+</class>
+<class chordsig="android.nfc.NfcAdapter$CreateNdefMessageCallback" line="8">
+<method
+ chordsig="createNdefMessage:(Landroid/nfc/NfcEvent;)Landroid/nfc/NdefMessage;@android.nfc.NfcAdapter$CreateNdefMessageCallback"
+ sig="NdefMessage createNdefMessage(NfcEvent)"
+ line="10"
+ startpos="271"
+ endpos="288"
+>
+	<marker line="-1" type="param">
+		<operand  start="310" length="5" line="10">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="247" length="23" line="10" chordsig="android.nfc.NdefMessage"/>
+	<type  start="289" length="20" line="10" chordsig="android.nfc.NfcEvent"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.nfc.NfcAdapter"
+ sig="NfcAdapter()"
+ line="12"
+ startpos="320"
+ endpos="330"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="345" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="341" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="362" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="345" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDefaultAdapter:(Landroid/content/Context;)Landroid/nfc/NfcAdapter;@android.nfc.NfcAdapter"
+ sig="NfcAdapter getDefaultAdapter(Context)"
+ line="13"
+ startpos="412"
+ endpos="429"
+>
+	<marker line="-1" type="param">
+		<operand  start="454" length="7" line="13">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="389" length="22" line="13" chordsig="android.nfc.NfcAdapter"/>
+	<type  start="430" length="23" line="13" chordsig="android.content.Context"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="475" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="471" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="492" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="475" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDefaultAdapter:()Landroid/nfc/NfcAdapter;@android.nfc.NfcAdapter"
+ sig="NfcAdapter getDefaultAdapter()"
+ line="14"
+ startpos="542"
+ endpos="559"
+>
+	<type  start="519" length="22" line="14" chordsig="android.nfc.NfcAdapter"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="574" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="570" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="591" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="574" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isEnabled:()Z@android.nfc.NfcAdapter"
+ sig="boolean isEnabled()"
+ line="15"
+ startpos="619"
+ endpos="628"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="643" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="639" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="660" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="643" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setNdefPushMessage:(Landroid/nfc/NdefMessage;Landroid/app/Activity;[Landroid/app/Activity;)V@android.nfc.NfcAdapter"
+ sig="void setNdefPushMessage(NdefMessage,Activity,Activity)"
+ line="16"
+ startpos="685"
+ endpos="703"
+>
+	<marker line="-1" type="param">
+		<operand  start="728" length="7" line="16">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="758" length="8" line="16">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="792" length="10" line="16">
+			<expr><![CDATA[activities]]></expr>
+		</operand>
+	</marker>
+	<type  start="704" length="23" line="16" chordsig="android.nfc.NdefMessage"/>
+	<type  start="737" length="20" line="16" chordsig="android.app.Activity"/>
+	<type  start="768" length="20" line="16" chordsig="android.app.Activity"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="816" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="812" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="833" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="816" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setNdefPushMessageCallback:(Landroid/nfc/NfcAdapter$CreateNdefMessageCallback;Landroid/app/Activity;[Landroid/app/Activity;)V@android.nfc.NfcAdapter"
+ sig="void setNdefPushMessageCallback(CreateNdefMessageCallback,Activity,Activity)"
+ line="17"
+ startpos="858"
+ endpos="884"
+>
+	<marker line="-1" type="param">
+		<operand  start="934" length="8" line="17">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="965" length="8" line="17">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="999" length="10" line="17">
+			<expr><![CDATA[activities]]></expr>
+		</operand>
+	</marker>
+	<type  start="885" length="48" line="17" chordsig="android.nfc.NfcAdapter$CreateNdefMessageCallback"/>
+	<type  start="944" length="20" line="17" chordsig="android.app.Activity"/>
+	<type  start="975" length="20" line="17" chordsig="android.app.Activity"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1023" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1019" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1040" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1023" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnNdefPushCompleteCallback:(Landroid/nfc/NfcAdapter$OnNdefPushCompleteCallback;Landroid/app/Activity;[Landroid/app/Activity;)V@android.nfc.NfcAdapter"
+ sig="void setOnNdefPushCompleteCallback(OnNdefPushCompleteCallback,Activity,Activity)"
+ line="18"
+ startpos="1065"
+ endpos="1094"
+>
+	<marker line="-1" type="param">
+		<operand  start="1145" length="8" line="18">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1176" length="8" line="18">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1210" length="10" line="18">
+			<expr><![CDATA[activities]]></expr>
+		</operand>
+	</marker>
+	<type  start="1095" length="49" line="18" chordsig="android.nfc.NfcAdapter$OnNdefPushCompleteCallback"/>
+	<type  start="1155" length="20" line="18" chordsig="android.app.Activity"/>
+	<type  start="1186" length="20" line="18" chordsig="android.app.Activity"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1234" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1230" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1251" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1234" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="enableForegroundDispatch:(Landroid/app/Activity;Landroid/app/PendingIntent;[Landroid/content/IntentFilter;[[Ljava/lang/String;)V@android.nfc.NfcAdapter"
+ sig="void enableForegroundDispatch(Activity,PendingIntent,IntentFilter[],String[][])"
+ line="19"
+ startpos="1276"
+ endpos="1300"
+>
+	<marker line="-1" type="param">
+		<operand  start="1322" length="8" line="19">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1358" length="6" line="19">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1397" length="7" line="19">
+			<expr><![CDATA[filters]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1427" length="9" line="19">
+			<expr><![CDATA[techLists]]></expr>
+		</operand>
+	</marker>
+	<type  start="1301" length="20" line="19" chordsig="android.app.Activity"/>
+	<type  start="1332" length="25" line="19" chordsig="android.app.PendingIntent"/>
+	<type  start="1366" length="28" line="19" chordsig="android.content.IntentFilter"/>
+	<type  start="1406" length="16" line="19" chordsig="java.lang.String"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1450" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1446" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1467" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1450" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="disableForegroundDispatch:(Landroid/app/Activity;)V@android.nfc.NfcAdapter"
+ sig="void disableForegroundDispatch(Activity)"
+ line="20"
+ startpos="1492"
+ endpos="1517"
+>
+	<marker line="-1" type="param">
+		<operand  start="1539" length="8" line="20">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<type  start="1518" length="20" line="20" chordsig="android.app.Activity"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1561" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1557" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1578" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1561" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="enableForegroundNdefPush:(Landroid/app/Activity;Landroid/nfc/NdefMessage;)V@android.nfc.NfcAdapter"
+ sig="void enableForegroundNdefPush(Activity,NdefMessage)"
+ line="21"
+ startpos="1603"
+ endpos="1627"
+>
+	<marker line="-1" type="param">
+		<operand  start="1649" length="8" line="21">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1683" length="7" line="21">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="1628" length="20" line="21" chordsig="android.app.Activity"/>
+	<type  start="1659" length="23" line="21" chordsig="android.nfc.NdefMessage"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1704" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1700" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1721" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1704" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="disableForegroundNdefPush:(Landroid/app/Activity;)V@android.nfc.NfcAdapter"
+ sig="void disableForegroundNdefPush(Activity)"
+ line="22"
+ startpos="1746"
+ endpos="1771"
+>
+	<marker line="-1" type="param">
+		<operand  start="1793" length="8" line="22">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<type  start="1772" length="20" line="22" chordsig="android.app.Activity"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1815" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1811" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1832" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1815" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1864" length="16" line="23" chordsig="java.lang.String"/>
+	<type  start="1964" length="16" line="24" chordsig="java.lang.String"/>
+	<type  start="2064" length="16" line="25" chordsig="java.lang.String"/>
+	<type  start="2162" length="16" line="26" chordsig="java.lang.String"/>
+	<type  start="2236" length="16" line="27" chordsig="java.lang.String"/>
+	<type  start="2330" length="16" line="28" chordsig="java.lang.String"/>
+</class>
+</root>

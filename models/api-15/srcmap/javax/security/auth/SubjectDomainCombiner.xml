@@ -1,0 +1,79 @@
+<root>
+<class chordsig="javax.security.auth.SubjectDomainCombiner" line="2">
+	<type  start="77" length="28" line="3" chordsig="java.security.DomainCombiner"/>
+<method
+ chordsig="&lt;init&gt;:(Ljavax/security/auth/Subject;)V@javax.security.auth.SubjectDomainCombiner"
+ sig="SubjectDomainCombiner(Subject)"
+ line="5"
+ startpos="116"
+ endpos="137"
+>
+	<marker line="-1" type="param">
+		<operand  start="166" length="7" line="5">
+			<expr><![CDATA[subject]]></expr>
+		</operand>
+	</marker>
+	<type  start="138" length="27" line="5" chordsig="javax.security.auth.Subject"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="187" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="183" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="204" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="187" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSubject:()Ljavax/security/auth/Subject;@javax.security.auth.SubjectDomainCombiner"
+ sig="Subject getSubject()"
+ line="6"
+ startpos="252"
+ endpos="262"
+>
+	<type  start="224" length="27" line="6" chordsig="javax.security.auth.Subject"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="277" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="273" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="294" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="277" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="combine:([Ljava/security/ProtectionDomain;[Ljava/security/ProtectionDomain;)[Ljava/security/ProtectionDomain;@javax.security.auth.SubjectDomainCombiner"
+ sig="ProtectionDomain[] combine(ProtectionDomain[],ProtectionDomain[])"
+ line="7"
+ startpos="347"
+ endpos="354"
+>
+	<marker line="-1" type="param">
+		<operand  start="388" length="14" line="7">
+			<expr><![CDATA[currentDomains]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="437" length="15" line="7">
+			<expr><![CDATA[assignedDomains]]></expr>
+		</operand>
+	</marker>
+	<type  start="314" length="30" line="7" chordsig="java.security.ProtectionDomain"/>
+	<type  start="355" length="30" line="7" chordsig="java.security.ProtectionDomain"/>
+	<type  start="404" length="30" line="7" chordsig="java.security.ProtectionDomain"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="466" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="462" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="483" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="466" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

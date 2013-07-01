@@ -1,0 +1,874 @@
+<root>
+<class chordsig="java.nio.ByteBuffer" line="6">
+	<type  start="148" length="15" line="6" chordsig="java.nio.Buffer"/>
+	<type  start="175" length="20" line="6" chordsig="java.lang.Comparable"/>
+	<type  start="196" length="19" line="6" chordsig="java.nio.ByteBuffer"/>
+<method
+ chordsig="allocate:(I)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer allocate(int)"
+ line="8"
+ startpos="258"
+ endpos="266"
+>
+	<marker line="-1" type="param">
+		<operand  start="271" length="8" line="8">
+			<expr><![CDATA[capacity]]></expr>
+		</operand>
+	</marker>
+	<type  start="238" length="19" line="8" chordsig="java.nio.ByteBuffer"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="301" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="297" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="318" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="301" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="allocateDirect:(I)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer allocateDirect(int)"
+ line="12"
+ startpos="373"
+ endpos="387"
+>
+	<marker line="-1" type="param">
+		<operand  start="392" length="8" line="12">
+			<expr><![CDATA[capacity]]></expr>
+		</operand>
+	</marker>
+	<type  start="353" length="19" line="12" chordsig="java.nio.ByteBuffer"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="422" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="418" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="439" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="422" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="wrap:([B)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer wrap(byte[])"
+ line="16"
+ startpos="494"
+ endpos="498"
+>
+	<marker line="-1" type="param">
+		<operand  start="506" length="5" line="16">
+			<expr><![CDATA[array]]></expr>
+		</operand>
+	</marker>
+	<type  start="474" length="19" line="16" chordsig="java.nio.ByteBuffer"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="533" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="529" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="550" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="533" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="wrap:([BII)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer wrap(byte[],int,int)"
+ line="20"
+ startpos="605"
+ endpos="609"
+>
+	<marker line="-1" type="param">
+		<operand  start="617" length="5" line="20">
+			<expr><![CDATA[array]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="628" length="5" line="20">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="639" length="9" line="20">
+			<expr><![CDATA[byteCount]]></expr>
+		</operand>
+	</marker>
+	<type  start="585" length="19" line="20" chordsig="java.nio.ByteBuffer"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="670" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="666" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="687" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="670" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="arrayOffset:()I@java.nio.ByteBuffer"
+ sig="int arrayOffset()"
+ line="24"
+ startpos="725"
+ endpos="736"
+>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="759" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="755" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="776" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="759" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="asCharBuffer:()Ljava/nio/CharBuffer;@java.nio.ByteBuffer"
+ sig="CharBuffer asCharBuffer()"
+ line="28"
+ startpos="833"
+ endpos="845"
+>
+	<type  start="813" length="19" line="28" chordsig="java.nio.CharBuffer"/>
+</method>
+<method
+ chordsig="asDoubleBuffer:()Ljava/nio/DoubleBuffer;@java.nio.ByteBuffer"
+ sig="DoubleBuffer asDoubleBuffer()"
+ line="30"
+ startpos="892"
+ endpos="906"
+>
+	<type  start="870" length="21" line="30" chordsig="java.nio.DoubleBuffer"/>
+</method>
+<method
+ chordsig="asFloatBuffer:()Ljava/nio/FloatBuffer;@java.nio.ByteBuffer"
+ sig="FloatBuffer asFloatBuffer()"
+ line="32"
+ startpos="952"
+ endpos="965"
+>
+	<type  start="931" length="20" line="32" chordsig="java.nio.FloatBuffer"/>
+</method>
+<method
+ chordsig="asIntBuffer:()Ljava/nio/IntBuffer;@java.nio.ByteBuffer"
+ sig="IntBuffer asIntBuffer()"
+ line="34"
+ startpos="1009"
+ endpos="1020"
+>
+	<type  start="990" length="18" line="34" chordsig="java.nio.IntBuffer"/>
+</method>
+<method
+ chordsig="asLongBuffer:()Ljava/nio/LongBuffer;@java.nio.ByteBuffer"
+ sig="LongBuffer asLongBuffer()"
+ line="36"
+ startpos="1065"
+ endpos="1077"
+>
+	<type  start="1045" length="19" line="36" chordsig="java.nio.LongBuffer"/>
+</method>
+<method
+ chordsig="asReadOnlyBuffer:()Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer asReadOnlyBuffer()"
+ line="38"
+ startpos="1122"
+ endpos="1138"
+>
+	<type  start="1102" length="19" line="38" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="asShortBuffer:()Ljava/nio/ShortBuffer;@java.nio.ByteBuffer"
+ sig="ShortBuffer asShortBuffer()"
+ line="40"
+ startpos="1184"
+ endpos="1197"
+>
+	<type  start="1163" length="20" line="40" chordsig="java.nio.ShortBuffer"/>
+</method>
+<method
+ chordsig="compact:()Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer compact()"
+ line="42"
+ startpos="1242"
+ endpos="1249"
+>
+	<type  start="1222" length="19" line="42" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="compareTo:(Ljava/nio/ByteBuffer;)I@java.nio.ByteBuffer"
+ sig="int compareTo(ByteBuffer)"
+ line="44"
+ startpos="1269"
+ endpos="1278"
+>
+	<alias>(Ljava/lang/Object;)I</alias>
+	<marker line="-1" type="param">
+		<operand  start="1299" length="11" line="44">
+			<expr><![CDATA[otherBuffer]]></expr>
+		</operand>
+	</marker>
+	<type  start="1279" length="19" line="44" chordsig="java.nio.ByteBuffer"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1332" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1328" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1349" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1332" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="duplicate:()Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer duplicate()"
+ line="48"
+ startpos="1406"
+ endpos="1415"
+>
+	<type  start="1386" length="19" line="48" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.nio.ByteBuffer"
+ sig="boolean equals(Object)"
+ line="50"
+ startpos="1439"
+ endpos="1445"
+>
+	<marker line="-1" type="param">
+		<operand  start="1463" length="5" line="50">
+			<expr><![CDATA[other]]></expr>
+		</operand>
+	</marker>
+	<type  start="1446" length="16" line="50" chordsig="java.lang.Object"/>
+	<newexpr line="51" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1490" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1486" length="29" line="51">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1507" length="7" line="51">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1490" length="16" line="51" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="get:()B@java.nio.ByteBuffer"
+ sig="byte get()"
+ line="54"
+ startpos="1549"
+ endpos="1552"
+>
+</method>
+<method
+ chordsig="get:(I)B@java.nio.ByteBuffer"
+ sig="byte get(int)"
+ line="56"
+ startpos="1582"
+ endpos="1585"
+>
+	<marker line="-1" type="param">
+		<operand  start="1590" length="5" line="56">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getChar:()C@java.nio.ByteBuffer"
+ sig="char getChar()"
+ line="58"
+ startpos="1624"
+ endpos="1631"
+>
+</method>
+<method
+ chordsig="getChar:(I)C@java.nio.ByteBuffer"
+ sig="char getChar(int)"
+ line="60"
+ startpos="1661"
+ endpos="1668"
+>
+	<marker line="-1" type="param">
+		<operand  start="1673" length="5" line="60">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getDouble:()D@java.nio.ByteBuffer"
+ sig="double getDouble()"
+ line="62"
+ startpos="1709"
+ endpos="1718"
+>
+</method>
+<method
+ chordsig="getDouble:(I)D@java.nio.ByteBuffer"
+ sig="double getDouble(int)"
+ line="64"
+ startpos="1750"
+ endpos="1759"
+>
+	<marker line="-1" type="param">
+		<operand  start="1764" length="5" line="64">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getFloat:()F@java.nio.ByteBuffer"
+ sig="float getFloat()"
+ line="66"
+ startpos="1799"
+ endpos="1807"
+>
+</method>
+<method
+ chordsig="getFloat:(I)F@java.nio.ByteBuffer"
+ sig="float getFloat(int)"
+ line="68"
+ startpos="1838"
+ endpos="1846"
+>
+	<marker line="-1" type="param">
+		<operand  start="1851" length="5" line="68">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getInt:()I@java.nio.ByteBuffer"
+ sig="int getInt()"
+ line="70"
+ startpos="1884"
+ endpos="1890"
+>
+</method>
+<method
+ chordsig="getInt:(I)I@java.nio.ByteBuffer"
+ sig="int getInt(int)"
+ line="72"
+ startpos="1919"
+ endpos="1925"
+>
+	<marker line="-1" type="param">
+		<operand  start="1930" length="5" line="72">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getLong:()J@java.nio.ByteBuffer"
+ sig="long getLong()"
+ line="74"
+ startpos="1964"
+ endpos="1971"
+>
+</method>
+<method
+ chordsig="getLong:(I)J@java.nio.ByteBuffer"
+ sig="long getLong(int)"
+ line="76"
+ startpos="2001"
+ endpos="2008"
+>
+	<marker line="-1" type="param">
+		<operand  start="2013" length="5" line="76">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getShort:()S@java.nio.ByteBuffer"
+ sig="short getShort()"
+ line="78"
+ startpos="2048"
+ endpos="2056"
+>
+</method>
+<method
+ chordsig="getShort:(I)S@java.nio.ByteBuffer"
+ sig="short getShort(int)"
+ line="80"
+ startpos="2087"
+ endpos="2095"
+>
+	<marker line="-1" type="param">
+		<operand  start="2100" length="5" line="80">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="hasArray:()Z@java.nio.ByteBuffer"
+ sig="boolean hasArray()"
+ line="82"
+ startpos="2134"
+ endpos="2142"
+>
+	<newexpr line="83" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2165" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2161" length="29" line="83">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2182" length="7" line="83">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2165" length="16" line="83" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@java.nio.ByteBuffer"
+ sig="int hashCode()"
+ line="86"
+ startpos="2214"
+ endpos="2222"
+>
+	<newexpr line="87" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2245" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2241" length="29" line="87">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2262" length="7" line="87">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2245" length="16" line="87" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isDirect:()Z@java.nio.ByteBuffer"
+ sig="boolean isDirect()"
+ line="90"
+ startpos="2307"
+ endpos="2315"
+>
+</method>
+<method
+ chordsig="order:()Ljava/nio/ByteOrder;@java.nio.ByteBuffer"
+ sig="ByteOrder order()"
+ line="92"
+ startpos="2356"
+ endpos="2361"
+>
+	<type  start="2337" length="18" line="92" chordsig="java.nio.ByteOrder"/>
+	<newexpr line="93" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2384" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2380" length="29" line="93">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2401" length="7" line="93">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2384" length="16" line="93" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="order:(Ljava/nio/ByteOrder;)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer order(ByteOrder)"
+ line="96"
+ startpos="2455"
+ endpos="2460"
+>
+	<marker line="-1" type="param">
+		<operand  start="2480" length="9" line="96">
+			<expr><![CDATA[byteOrder]]></expr>
+		</operand>
+	</marker>
+	<type  start="2435" length="19" line="96" chordsig="java.nio.ByteBuffer"/>
+	<type  start="2461" length="18" line="96" chordsig="java.nio.ByteOrder"/>
+	<newexpr line="97" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2511" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2507" length="29" line="97">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2528" length="7" line="97">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2511" length="16" line="97" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="put:(B)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer put(byte)"
+ line="100"
+ startpos="2585"
+ endpos="2588"
+>
+	<marker line="-1" type="param">
+		<operand  start="2594" length="1" line="100">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<type  start="2565" length="19" line="100" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="put:(IB)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer put(int,byte)"
+ line="102"
+ startpos="2639"
+ endpos="2642"
+>
+	<marker line="-1" type="param">
+		<operand  start="2647" length="5" line="102">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2659" length="1" line="102">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<type  start="2619" length="19" line="102" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="putChar:(C)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer putChar(char)"
+ line="104"
+ startpos="2704"
+ endpos="2711"
+>
+	<marker line="-1" type="param">
+		<operand  start="2717" length="5" line="104">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="2684" length="19" line="104" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="putChar:(IC)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer putChar(int,char)"
+ line="106"
+ startpos="2766"
+ endpos="2773"
+>
+	<marker line="-1" type="param">
+		<operand  start="2778" length="5" line="106">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2790" length="5" line="106">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="2746" length="19" line="106" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="putDouble:(D)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer putDouble(double)"
+ line="108"
+ startpos="2839"
+ endpos="2848"
+>
+	<marker line="-1" type="param">
+		<operand  start="2856" length="5" line="108">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="2819" length="19" line="108" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="putDouble:(ID)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer putDouble(int,double)"
+ line="110"
+ startpos="2905"
+ endpos="2914"
+>
+	<marker line="-1" type="param">
+		<operand  start="2919" length="5" line="110">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2933" length="5" line="110">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="2885" length="19" line="110" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="putFloat:(F)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer putFloat(float)"
+ line="112"
+ startpos="2982"
+ endpos="2990"
+>
+	<marker line="-1" type="param">
+		<operand  start="2997" length="5" line="112">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="2962" length="19" line="112" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="putFloat:(IF)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer putFloat(int,float)"
+ line="114"
+ startpos="3046"
+ endpos="3054"
+>
+	<marker line="-1" type="param">
+		<operand  start="3059" length="5" line="114">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3072" length="5" line="114">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="3026" length="19" line="114" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="putInt:(I)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer putInt(int)"
+ line="116"
+ startpos="3121"
+ endpos="3127"
+>
+	<marker line="-1" type="param">
+		<operand  start="3132" length="5" line="116">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="3101" length="19" line="116" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="putInt:(II)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer putInt(int,int)"
+ line="118"
+ startpos="3181"
+ endpos="3187"
+>
+	<marker line="-1" type="param">
+		<operand  start="3192" length="5" line="118">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3203" length="5" line="118">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="3161" length="19" line="118" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="putLong:(J)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer putLong(long)"
+ line="120"
+ startpos="3252"
+ endpos="3259"
+>
+	<marker line="-1" type="param">
+		<operand  start="3265" length="5" line="120">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="3232" length="19" line="120" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="putLong:(IJ)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer putLong(int,long)"
+ line="122"
+ startpos="3314"
+ endpos="3321"
+>
+	<marker line="-1" type="param">
+		<operand  start="3326" length="5" line="122">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3338" length="5" line="122">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="3294" length="19" line="122" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="putShort:(S)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer putShort(short)"
+ line="124"
+ startpos="3387"
+ endpos="3395"
+>
+	<marker line="-1" type="param">
+		<operand  start="3402" length="5" line="124">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="3367" length="19" line="124" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="putShort:(IS)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer putShort(int,short)"
+ line="126"
+ startpos="3451"
+ endpos="3459"
+>
+	<marker line="-1" type="param">
+		<operand  start="3464" length="5" line="126">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3477" length="5" line="126">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="3431" length="19" line="126" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="slice:()Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer slice()"
+ line="128"
+ startpos="3526"
+ endpos="3531"
+>
+	<type  start="3506" length="19" line="128" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:()V@java.nio.ByteBuffer"
+ sig="ByteBuffer()"
+ line="130"
+ startpos="3547"
+ endpos="3557"
+>
+</method>
+<method
+ chordsig="array:()[B@java.nio.ByteBuffer"
+ sig="byte[] array()"
+ line="134"
+ startpos="3654"
+ endpos="3659"
+>
+	<alias>()Ljava/lang/Object;</alias>
+	<marker line="135" type="return">
+		<operand  start="3679" length="11" line="135">
+			<expr><![CDATA[new byte[0]]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="get:([B)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer get(byte[])"
+ line="139"
+ startpos="3787"
+ endpos="3790"
+>
+	<marker line="-1" type="param">
+		<operand  start="3798" length="3" line="139">
+			<expr><![CDATA[dst]]></expr>
+		</operand>
+	</marker>
+	<type  start="3767" length="19" line="139" chordsig="java.nio.ByteBuffer"/>
+	<marker line="140" type="return">
+		<operand  start="3820" length="4" line="140">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="get:([BII)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer get(byte[],int,int)"
+ line="144"
+ startpos="3921"
+ endpos="3924"
+>
+	<marker line="-1" type="param">
+		<operand  start="3932" length="3" line="144">
+			<expr><![CDATA[dst]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3941" length="9" line="144">
+			<expr><![CDATA[dstOffset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3956" length="9" line="144">
+			<expr><![CDATA[byteCount]]></expr>
+		</operand>
+	</marker>
+	<type  start="3901" length="19" line="144" chordsig="java.nio.ByteBuffer"/>
+	<marker line="145" type="return">
+		<operand  start="3984" length="4" line="145">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="put:([B)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer put(byte[])"
+ line="149"
+ startpos="4091"
+ endpos="4094"
+>
+	<marker line="-1" type="param">
+		<operand  start="4102" length="3" line="149">
+			<expr><![CDATA[src]]></expr>
+		</operand>
+	</marker>
+	<type  start="4071" length="19" line="149" chordsig="java.nio.ByteBuffer"/>
+	<marker line="150" type="return">
+		<operand  start="4124" length="4" line="150">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="put:([BII)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer put(byte[],int,int)"
+ line="154"
+ startpos="4225"
+ endpos="4228"
+>
+	<marker line="-1" type="param">
+		<operand  start="4236" length="3" line="154">
+			<expr><![CDATA[src]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4245" length="9" line="154">
+			<expr><![CDATA[srcOffset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4260" length="9" line="154">
+			<expr><![CDATA[byteCount]]></expr>
+		</operand>
+	</marker>
+	<type  start="4205" length="19" line="154" chordsig="java.nio.ByteBuffer"/>
+	<marker line="155" type="return">
+		<operand  start="4288" length="4" line="155">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="put:(Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;@java.nio.ByteBuffer"
+ sig="ByteBuffer put(ByteBuffer)"
+ line="159"
+ startpos="4389"
+ endpos="4392"
+>
+	<marker line="-1" type="param">
+		<operand  start="4413" length="3" line="159">
+			<expr><![CDATA[src]]></expr>
+		</operand>
+	</marker>
+	<type  start="4369" length="19" line="159" chordsig="java.nio.ByteBuffer"/>
+	<type  start="4393" length="19" line="159" chordsig="java.nio.ByteBuffer"/>
+	<marker line="160" type="return">
+		<operand  start="4435" length="4" line="160">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

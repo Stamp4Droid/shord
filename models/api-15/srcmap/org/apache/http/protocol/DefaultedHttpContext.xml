@@ -1,0 +1,134 @@
+<root>
+<class chordsig="org.apache.http.protocol.DefaultedHttpContext" line="2">
+	<type  start="87" length="36" line="3" chordsig="org.apache.http.protocol.HttpContext"/>
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/protocol/HttpContext;Lorg/apache/http/protocol/HttpContext;)V@org.apache.http.protocol.DefaultedHttpContext"
+ sig="DefaultedHttpContext(HttpContext,HttpContext)"
+ line="5"
+ startpos="134"
+ endpos="154"
+>
+	<marker line="-1" type="param">
+		<operand  start="192" length="5" line="5">
+			<expr><![CDATA[local]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="236" length="8" line="5">
+			<expr><![CDATA[defaults]]></expr>
+		</operand>
+	</marker>
+	<type  start="155" length="36" line="5" chordsig="org.apache.http.protocol.HttpContext"/>
+	<type  start="199" length="36" line="5" chordsig="org.apache.http.protocol.HttpContext"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="258" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="254" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="275" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="258" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAttribute:(Ljava/lang/String;)Ljava/lang/Object;@org.apache.http.protocol.DefaultedHttpContext"
+ sig="Object getAttribute(String)"
+ line="6"
+ startpos="312"
+ endpos="324"
+>
+	<marker line="-1" type="param">
+		<operand  start="342" length="2" line="6">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<type  start="295" length="16" line="6" chordsig="java.lang.Object"/>
+	<type  start="325" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="358" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="354" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="375" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="358" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeAttribute:(Ljava/lang/String;)Ljava/lang/Object;@org.apache.http.protocol.DefaultedHttpContext"
+ sig="Object removeAttribute(String)"
+ line="7"
+ startpos="412"
+ endpos="427"
+>
+	<marker line="-1" type="param">
+		<operand  start="445" length="2" line="7">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<type  start="395" length="16" line="7" chordsig="java.lang.Object"/>
+	<type  start="428" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="461" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="457" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="478" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="461" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setAttribute:(Ljava/lang/String;Ljava/lang/Object;)V@org.apache.http.protocol.DefaultedHttpContext"
+ sig="void setAttribute(String,Object)"
+ line="8"
+ startpos="503"
+ endpos="515"
+>
+	<marker line="-1" type="param">
+		<operand  start="533" length="2" line="8">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="554" length="3" line="8">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="516" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="537" length="16" line="8" chordsig="java.lang.Object"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="571" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="567" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="588" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="571" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDefaults:()Lorg/apache/http/protocol/HttpContext;@org.apache.http.protocol.DefaultedHttpContext"
+ sig="HttpContext getDefaults()"
+ line="9"
+ startpos="645"
+ endpos="656"
+>
+	<type  start="608" length="36" line="9" chordsig="org.apache.http.protocol.HttpContext"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="671" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="667" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="688" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="671" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

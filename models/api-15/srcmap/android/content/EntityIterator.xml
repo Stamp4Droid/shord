@@ -1,0 +1,22 @@
+<root>
+<class chordsig="android.content.EntityIterator" line="2">
+	<type  start="67" length="18" line="3" chordsig="java.util.Iterator"/>
+	<type  start="86" length="22" line="3" chordsig="android.content.Entity"/>
+<method
+ chordsig="reset:()V@android.content.EntityIterator"
+ sig="void reset()"
+ line="5"
+ startpos="134"
+ endpos="139"
+>
+</method>
+<method
+ chordsig="close:()V@android.content.EntityIterator"
+ sig="void close()"
+ line="6"
+ startpos="165"
+ endpos="170"
+>
+</method>
+</class>
+</root>

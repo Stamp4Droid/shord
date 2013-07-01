@@ -1,0 +1,24 @@
+<root>
+<class chordsig="org.apache.http.ConnectionReuseStrategy" line="2">
+<method
+ chordsig="keepAlive:(Lorg/apache/http/HttpResponse;Lorg/apache/http/protocol/HttpContext;)Z@org.apache.http.ConnectionReuseStrategy"
+ sig="boolean keepAlive(HttpResponse,HttpContext)"
+ line="4"
+ startpos="93"
+ endpos="102"
+>
+	<marker line="-1" type="param">
+		<operand  start="132" length="8" line="4">
+			<expr><![CDATA[response]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="179" length="7" line="4">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="103" length="28" line="4" chordsig="org.apache.http.HttpResponse"/>
+	<type  start="142" length="36" line="4" chordsig="org.apache.http.protocol.HttpContext"/>
+</method>
+</class>
+</root>

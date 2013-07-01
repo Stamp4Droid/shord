@@ -1,0 +1,2904 @@
+<root>
+<class chordsig="android.provider.ContactsContract" line="9">
+<class chordsig="android.provider.ContactsContract$Directory" line="11">
+	<type  start="342" length="28" line="11" chordsig="android.provider.BaseColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$Directory"
+ sig="Directory()"
+ line="13"
+ startpos="382"
+ endpos="391"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="418" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="414" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="435" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="418" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="notifyDirectoryChange:(Landroid/content/ContentResolver;)V@android.provider.ContactsContract$Directory"
+ sig="void notifyDirectoryChange(ContentResolver)"
+ line="17"
+ startpos="483"
+ endpos="504"
+>
+	<marker line="-1" type="param">
+		<operand  start="537" length="8" line="17">
+			<expr><![CDATA[resolver]]></expr>
+		</operand>
+	</marker>
+	<type  start="505" length="31" line="17" chordsig="android.content.ContentResolver"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="571" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="567" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="588" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="571" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="637" length="15" line="21" chordsig="android.net.Uri"/>
+	<type  start="695" length="16" line="23" chordsig="java.lang.String"/>
+	<type  start="802" length="16" line="25" chordsig="java.lang.String"/>
+	<type  start="1017" length="16" line="31" chordsig="java.lang.String"/>
+	<type  start="1093" length="16" line="33" chordsig="java.lang.String"/>
+	<type  start="1176" length="16" line="35" chordsig="java.lang.String"/>
+	<type  start="1252" length="16" line="37" chordsig="java.lang.String"/>
+	<type  start="1333" length="16" line="39" chordsig="java.lang.String"/>
+	<type  start="1409" length="16" line="41" chordsig="java.lang.String"/>
+	<type  start="1485" length="16" line="43" chordsig="java.lang.String"/>
+	<type  start="1759" length="16" line="51" chordsig="java.lang.String"/>
+	<type  start="2034" length="16" line="59" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract$Directory"
+ line="69"
+>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$SyncState" line="74">
+	<type  start="2449" length="42" line="74" chordsig="android.provider.SyncStateContract$Columns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$SyncState"
+ sig="SyncState()"
+ line="76"
+ startpos="2503"
+ endpos="2512"
+>
+	<newexpr line="77" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2539" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2535" length="29" line="77">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2556" length="7" line="77">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2539" length="16" line="77" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="get:(Landroid/content/ContentProviderClient;Landroid/accounts/Account;)[B@android.provider.ContactsContract$SyncState"
+ sig="byte[] get(ContentProviderClient,Account)"
+ line="80"
+ startpos="2606"
+ endpos="2609"
+>
+	<marker line="-1" type="param">
+		<operand  start="2648" length="8" line="80">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2683" length="7" line="80">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<type  start="2610" length="37" line="80" chordsig="android.content.ContentProviderClient"/>
+	<type  start="2658" length="24" line="80" chordsig="android.accounts.Account"/>
+	<newexpr line="81" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2750" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2746" length="29" line="81">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2767" length="7" line="81">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2750" length="16" line="81" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getWithUri:(Landroid/content/ContentProviderClient;Landroid/accounts/Account;)Landroid/util/Pair;@android.provider.ContactsContract$SyncState"
+ sig="Pair&lt;Uri,byte[]&gt; getWithUri(ContentProviderClient,Account)"
+ line="84"
+ startpos="2853"
+ endpos="2863"
+>
+	<marker line="-1" type="param">
+		<operand  start="2902" length="8" line="84">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2937" length="7" line="84">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<type  start="2810" length="17" line="84" chordsig="android.util.Pair"/>
+	<type  start="2828" length="15" line="84" chordsig="android.net.Uri"/>
+	<type  start="2864" length="37" line="84" chordsig="android.content.ContentProviderClient"/>
+	<type  start="2912" length="24" line="84" chordsig="android.accounts.Account"/>
+	<newexpr line="85" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3004" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3000" length="29" line="85">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3021" length="7" line="85">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3004" length="16" line="85" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="set:(Landroid/content/ContentProviderClient;Landroid/accounts/Account;[B)V@android.provider.ContactsContract$SyncState"
+ sig="void set(ContentProviderClient,Account,byte[])"
+ line="88"
+ startpos="3069"
+ endpos="3072"
+>
+	<marker line="-1" type="param">
+		<operand  start="3111" length="8" line="88">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3146" length="7" line="88">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3162" length="4" line="88">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<type  start="3073" length="37" line="88" chordsig="android.content.ContentProviderClient"/>
+	<type  start="3121" length="24" line="88" chordsig="android.accounts.Account"/>
+	<newexpr line="89" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3226" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3222" length="29" line="89">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3243" length="7" line="89">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3226" length="16" line="89" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newSetOperation:(Landroid/accounts/Account;[B)Landroid/content/ContentProviderOperation;@android.provider.ContactsContract$SyncState"
+ sig="ContentProviderOperation newSetOperation(Account,byte[])"
+ line="92"
+ startpos="3327"
+ endpos="3342"
+>
+	<marker line="-1" type="param">
+		<operand  start="3368" length="7" line="92">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3384" length="4" line="92">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<type  start="3286" length="40" line="92" chordsig="android.content.ContentProviderOperation"/>
+	<type  start="3343" length="24" line="92" chordsig="android.accounts.Account"/>
+	<newexpr line="93" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3414" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3410" length="29" line="93">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3431" length="7" line="93">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3414" length="16" line="93" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="3480" length="16" line="96" chordsig="java.lang.String"/>
+	<type  start="3559" length="15" line="98" chordsig="android.net.Uri"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract$SyncState"
+ line="100"
+>
+	<invkexpr line="101" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="3632" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$ProfileSyncState" line="105">
+	<type  start="3721" length="42" line="105" chordsig="android.provider.SyncStateContract$Columns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$ProfileSyncState"
+ sig="ProfileSyncState()"
+ line="107"
+ startpos="3775"
+ endpos="3791"
+>
+	<newexpr line="108" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3818" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3814" length="29" line="108">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3835" length="7" line="108">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3818" length="16" line="108" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="get:(Landroid/content/ContentProviderClient;Landroid/accounts/Account;)[B@android.provider.ContactsContract$ProfileSyncState"
+ sig="byte[] get(ContentProviderClient,Account)"
+ line="111"
+ startpos="3885"
+ endpos="3888"
+>
+	<marker line="-1" type="param">
+		<operand  start="3927" length="8" line="111">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3962" length="7" line="111">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<type  start="3889" length="37" line="111" chordsig="android.content.ContentProviderClient"/>
+	<type  start="3937" length="24" line="111" chordsig="android.accounts.Account"/>
+	<newexpr line="112" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4029" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4025" length="29" line="112">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4046" length="7" line="112">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4029" length="16" line="112" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getWithUri:(Landroid/content/ContentProviderClient;Landroid/accounts/Account;)Landroid/util/Pair;@android.provider.ContactsContract$ProfileSyncState"
+ sig="Pair&lt;Uri,byte[]&gt; getWithUri(ContentProviderClient,Account)"
+ line="115"
+ startpos="4132"
+ endpos="4142"
+>
+	<marker line="-1" type="param">
+		<operand  start="4181" length="8" line="115">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4216" length="7" line="115">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<type  start="4089" length="17" line="115" chordsig="android.util.Pair"/>
+	<type  start="4107" length="15" line="115" chordsig="android.net.Uri"/>
+	<type  start="4143" length="37" line="115" chordsig="android.content.ContentProviderClient"/>
+	<type  start="4191" length="24" line="115" chordsig="android.accounts.Account"/>
+	<newexpr line="116" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4283" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4279" length="29" line="116">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4300" length="7" line="116">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4283" length="16" line="116" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="set:(Landroid/content/ContentProviderClient;Landroid/accounts/Account;[B)V@android.provider.ContactsContract$ProfileSyncState"
+ sig="void set(ContentProviderClient,Account,byte[])"
+ line="119"
+ startpos="4348"
+ endpos="4351"
+>
+	<marker line="-1" type="param">
+		<operand  start="4390" length="8" line="119">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4425" length="7" line="119">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4441" length="4" line="119">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<type  start="4352" length="37" line="119" chordsig="android.content.ContentProviderClient"/>
+	<type  start="4400" length="24" line="119" chordsig="android.accounts.Account"/>
+	<newexpr line="120" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4505" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4501" length="29" line="120">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4522" length="7" line="120">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4505" length="16" line="120" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newSetOperation:(Landroid/accounts/Account;[B)Landroid/content/ContentProviderOperation;@android.provider.ContactsContract$ProfileSyncState"
+ sig="ContentProviderOperation newSetOperation(Account,byte[])"
+ line="123"
+ startpos="4606"
+ endpos="4621"
+>
+	<marker line="-1" type="param">
+		<operand  start="4647" length="7" line="123">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4663" length="4" line="123">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<type  start="4565" length="40" line="123" chordsig="android.content.ContentProviderOperation"/>
+	<type  start="4622" length="24" line="123" chordsig="android.accounts.Account"/>
+	<newexpr line="124" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4693" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4689" length="29" line="124">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4710" length="7" line="124">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4693" length="16" line="124" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="4759" length="16" line="127" chordsig="java.lang.String"/>
+	<type  start="4838" length="15" line="129" chordsig="android.net.Uri"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract$ProfileSyncState"
+ line="131"
+>
+	<invkexpr line="132" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="4911" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$BaseSyncColumns" line="136">
+	<type  start="5020" length="16" line="138" chordsig="java.lang.String"/>
+	<type  start="5083" length="16" line="140" chordsig="java.lang.String"/>
+	<type  start="5146" length="16" line="142" chordsig="java.lang.String"/>
+	<type  start="5209" length="16" line="144" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$SyncColumns" line="147">
+	<type  start="5301" length="49" line="147" chordsig="android.provider.ContactsContract$BaseSyncColumns"/>
+	<type  start="5382" length="16" line="149" chordsig="java.lang.String"/>
+	<type  start="5459" length="16" line="151" chordsig="java.lang.String"/>
+	<type  start="5536" length="16" line="153" chordsig="java.lang.String"/>
+	<type  start="5606" length="16" line="155" chordsig="java.lang.String"/>
+	<type  start="5673" length="16" line="157" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$ContactOptionsColumns" line="160">
+	<type  start="5798" length="16" line="162" chordsig="java.lang.String"/>
+	<type  start="5881" length="16" line="164" chordsig="java.lang.String"/>
+	<type  start="5972" length="16" line="166" chordsig="java.lang.String"/>
+	<type  start="6039" length="16" line="168" chordsig="java.lang.String"/>
+	<type  start="6122" length="16" line="170" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$ContactsColumns" line="173">
+	<type  start="6265" length="16" line="175" chordsig="java.lang.String"/>
+	<type  start="6342" length="16" line="177" chordsig="java.lang.String"/>
+	<type  start="6411" length="16" line="179" chordsig="java.lang.String"/>
+	<type  start="6490" length="16" line="181" chordsig="java.lang.String"/>
+	<type  start="6561" length="16" line="183" chordsig="java.lang.String"/>
+	<type  start="6648" length="16" line="185" chordsig="java.lang.String"/>
+	<type  start="6733" length="16" line="187" chordsig="java.lang.String"/>
+	<type  start="6816" length="16" line="189" chordsig="java.lang.String"/>
+	<type  start="6901" length="16" line="191" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$ContactStatusColumns" line="194">
+	<type  start="7031" length="16" line="196" chordsig="java.lang.String"/>
+	<type  start="7116" length="16" line="198" chordsig="java.lang.String"/>
+	<type  start="7215" length="16" line="200" chordsig="java.lang.String"/>
+	<type  start="7296" length="16" line="202" chordsig="java.lang.String"/>
+	<type  start="7390" length="16" line="204" chordsig="java.lang.String"/>
+	<type  start="7495" length="16" line="206" chordsig="java.lang.String"/>
+	<type  start="7588" length="16" line="208" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$FullNameStyle" line="211">
+</class>
+<class chordsig="android.provider.ContactsContract$PhoneticNameStyle" line="226">
+</class>
+<class chordsig="android.provider.ContactsContract$DisplayNameSources" line="237">
+</class>
+<class chordsig="android.provider.ContactsContract$ContactNameColumns" line="252">
+	<type  start="8652" length="16" line="254" chordsig="java.lang.String"/>
+	<type  start="8743" length="16" line="256" chordsig="java.lang.String"/>
+	<type  start="8828" length="16" line="258" chordsig="java.lang.String"/>
+	<type  start="8921" length="16" line="260" chordsig="java.lang.String"/>
+	<type  start="9012" length="16" line="262" chordsig="java.lang.String"/>
+	<type  start="9091" length="16" line="264" chordsig="java.lang.String"/>
+	<type  start="9168" length="16" line="266" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$Contacts" line="269">
+	<type  start="9275" length="28" line="269" chordsig="android.provider.BaseColumns"/>
+	<type  start="9305" length="49" line="269" chordsig="android.provider.ContactsContract$ContactsColumns"/>
+	<type  start="9356" length="55" line="269" chordsig="android.provider.ContactsContract$ContactOptionsColumns"/>
+	<type  start="9413" length="52" line="269" chordsig="android.provider.ContactsContract$ContactNameColumns"/>
+	<type  start="9467" length="54" line="269" chordsig="android.provider.ContactsContract$ContactStatusColumns"/>
+<class chordsig="android.provider.ContactsContract$Contacts$Data" line="271">
+	<type  start="9575" length="28" line="271" chordsig="android.provider.BaseColumns"/>
+	<type  start="9605" length="45" line="271" chordsig="android.provider.ContactsContract$DataColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$Contacts$Data"
+ sig="Data()"
+ line="273"
+ startpos="9666"
+ endpos="9670"
+>
+	<newexpr line="274" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9701" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9697" length="29" line="274">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9718" length="7" line="274">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9701" length="16" line="274" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="9775" length="16" line="277" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$Contacts$Entity" line="280">
+	<type  start="9883" length="28" line="280" chordsig="android.provider.BaseColumns"/>
+	<type  start="9913" length="49" line="280" chordsig="android.provider.ContactsContract$ContactsColumns"/>
+	<type  start="9964" length="52" line="280" chordsig="android.provider.ContactsContract$ContactNameColumns"/>
+	<type  start="10018" length="52" line="280" chordsig="android.provider.ContactsContract$RawContactsColumns"/>
+	<type  start="10072" length="49" line="280" chordsig="android.provider.ContactsContract$BaseSyncColumns"/>
+	<type  start="10123" length="45" line="280" chordsig="android.provider.ContactsContract$SyncColumns"/>
+	<type  start="10170" length="45" line="280" chordsig="android.provider.ContactsContract$DataColumns"/>
+	<type  start="10217" length="47" line="280" chordsig="android.provider.ContactsContract$StatusColumns"/>
+	<type  start="10266" length="55" line="280" chordsig="android.provider.ContactsContract$ContactOptionsColumns"/>
+	<type  start="10323" length="54" line="280" chordsig="android.provider.ContactsContract$ContactStatusColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$Contacts$Entity"
+ sig="Entity()"
+ line="282"
+ startpos="10393"
+ endpos="10399"
+>
+	<newexpr line="283" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10430" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10426" length="29" line="283">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10447" length="7" line="283">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10430" length="16" line="283" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="10504" length="16" line="286" chordsig="java.lang.String"/>
+	<type  start="10586" length="16" line="288" chordsig="java.lang.String"/>
+	<type  start="10671" length="16" line="290" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$Contacts$StreamItems" line="293">
+	<type  start="10777" length="52" line="293" chordsig="android.provider.ContactsContract$StreamItemsColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$Contacts$StreamItems"
+ sig="StreamItems()"
+ line="295"
+ startpos="10845"
+ endpos="10856"
+>
+	<newexpr line="296" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10887" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10883" length="29" line="296">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10904" length="7" line="296">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10887" length="16" line="296" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="10961" length="16" line="299" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$Contacts$AggregationSuggestions" line="302">
+	<type  start="11093" length="28" line="302" chordsig="android.provider.BaseColumns"/>
+	<type  start="11123" length="49" line="302" chordsig="android.provider.ContactsContract$ContactsColumns"/>
+	<type  start="11174" length="55" line="302" chordsig="android.provider.ContactsContract$ContactOptionsColumns"/>
+	<type  start="11231" length="54" line="302" chordsig="android.provider.ContactsContract$ContactStatusColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$Contacts$AggregationSuggestions"
+ sig="AggregationSuggestions()"
+ line="304"
+ startpos="11301"
+ endpos="11323"
+>
+	<newexpr line="305" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11354" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11350" length="29" line="305">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11371" length="7" line="305">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11354" length="16" line="305" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="11428" length="16" line="308" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$Contacts$Photo" line="311">
+	<type  start="11542" length="28" line="311" chordsig="android.provider.BaseColumns"/>
+	<type  start="11572" length="54" line="311" chordsig="android.provider.ContactsContract$DataColumnsWithJoins"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$Contacts$Photo"
+ sig="Photo()"
+ line="313"
+ startpos="11642"
+ endpos="11647"
+>
+	<newexpr line="314" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11678" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11674" length="29" line="314">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11695" length="7" line="314">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11678" length="16" line="314" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="11752" length="16" line="317" chordsig="java.lang.String"/>
+	<type  start="11831" length="16" line="319" chordsig="java.lang.String"/>
+	<type  start="11914" length="16" line="321" chordsig="java.lang.String"/>
+	<type  start="11990" length="16" line="323" chordsig="java.lang.String"/>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$Contacts"
+ sig="Contacts()"
+ line="326"
+ startpos="12044"
+ endpos="12052"
+>
+	<newexpr line="327" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12079" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="12075" length="29" line="327">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="12096" length="7" line="327">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12079" length="16" line="327" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLookupUri:(Landroid/content/ContentResolver;Landroid/net/Uri;)Landroid/net/Uri;@android.provider.ContactsContract$Contacts"
+ sig="Uri getLookupUri(ContentResolver,Uri)"
+ line="330"
+ startpos="12155"
+ endpos="12167"
+>
+	<marker line="-1" type="param">
+		<operand  start="12200" length="8" line="330">
+			<expr><![CDATA[resolver]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="12226" length="10" line="330">
+			<expr><![CDATA[contactUri]]></expr>
+		</operand>
+	</marker>
+	<type  start="12139" length="15" line="330" chordsig="android.net.Uri"/>
+	<type  start="12168" length="31" line="330" chordsig="android.content.ContentResolver"/>
+	<type  start="12210" length="15" line="330" chordsig="android.net.Uri"/>
+	<newexpr line="331" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12262" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="12258" length="29" line="331">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="12279" length="7" line="331">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12262" length="16" line="331" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLookupUri:(JLjava/lang/String;)Landroid/net/Uri;@android.provider.ContactsContract$Contacts"
+ sig="Uri getLookupUri(long,String)"
+ line="334"
+ startpos="12338"
+ endpos="12350"
+>
+	<marker line="-1" type="param">
+		<operand  start="12356" length="9" line="334">
+			<expr><![CDATA[contactId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="12384" length="9" line="334">
+			<expr><![CDATA[lookupKey]]></expr>
+		</operand>
+	</marker>
+	<type  start="12322" length="15" line="334" chordsig="android.net.Uri"/>
+	<type  start="12367" length="16" line="334" chordsig="java.lang.String"/>
+	<newexpr line="335" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12419" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="12415" length="29" line="335">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="12436" length="7" line="335">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12419" length="16" line="335" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="lookupContact:(Landroid/content/ContentResolver;Landroid/net/Uri;)Landroid/net/Uri;@android.provider.ContactsContract$Contacts"
+ sig="Uri lookupContact(ContentResolver,Uri)"
+ line="338"
+ startpos="12495"
+ endpos="12508"
+>
+	<marker line="-1" type="param">
+		<operand  start="12541" length="8" line="338">
+			<expr><![CDATA[resolver]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="12567" length="9" line="338">
+			<expr><![CDATA[lookupUri]]></expr>
+		</operand>
+	</marker>
+	<type  start="12479" length="15" line="338" chordsig="android.net.Uri"/>
+	<type  start="12509" length="31" line="338" chordsig="android.content.ContentResolver"/>
+	<type  start="12551" length="15" line="338" chordsig="android.net.Uri"/>
+	<newexpr line="339" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12602" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="12598" length="29" line="339">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="12619" length="7" line="339">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12602" length="16" line="339" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="markAsContacted:(Landroid/content/ContentResolver;J)V@android.provider.ContactsContract$Contacts"
+ sig="void markAsContacted(ContentResolver,long)"
+ line="342"
+ startpos="12667"
+ endpos="12682"
+>
+	<marker line="-1" type="param">
+		<operand  start="12715" length="8" line="342">
+			<expr><![CDATA[resolver]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="12730" length="9" line="342">
+			<expr><![CDATA[contactId]]></expr>
+		</operand>
+	</marker>
+	<type  start="12683" length="31" line="342" chordsig="android.content.ContentResolver"/>
+	<newexpr line="343" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12765" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="12761" length="29" line="343">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="12782" length="7" line="343">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12765" length="16" line="343" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="openContactPhotoInputStream:(Landroid/content/ContentResolver;Landroid/net/Uri;Z)Ljava/io/InputStream;@android.provider.ContactsContract$Contacts"
+ sig="InputStream openContactPhotoInputStream(ContentResolver,Uri,boolean)"
+ line="346"
+ startpos="12845"
+ endpos="12872"
+>
+	<marker line="-1" type="param">
+		<operand  start="12905" length="2" line="346">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="12925" length="10" line="346">
+			<expr><![CDATA[contactUri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="12945" length="13" line="346">
+			<expr><![CDATA[preferHighres]]></expr>
+		</operand>
+	</marker>
+	<type  start="12825" length="19" line="346" chordsig="java.io.InputStream"/>
+	<type  start="12873" length="31" line="346" chordsig="android.content.ContentResolver"/>
+	<type  start="12909" length="15" line="346" chordsig="android.net.Uri"/>
+	<newexpr line="347" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12984" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="12980" length="29" line="347">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="13001" length="7" line="347">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12984" length="16" line="347" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="openContactPhotoInputStream:(Landroid/content/ContentResolver;Landroid/net/Uri;)Ljava/io/InputStream;@android.provider.ContactsContract$Contacts"
+ sig="InputStream openContactPhotoInputStream(ContentResolver,Uri)"
+ line="350"
+ startpos="13064"
+ endpos="13091"
+>
+	<marker line="-1" type="param">
+		<operand  start="13124" length="2" line="350">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="13144" length="10" line="350">
+			<expr><![CDATA[contactUri]]></expr>
+		</operand>
+	</marker>
+	<type  start="13044" length="19" line="350" chordsig="java.io.InputStream"/>
+	<type  start="13092" length="31" line="350" chordsig="android.content.ContentResolver"/>
+	<type  start="13128" length="15" line="350" chordsig="android.net.Uri"/>
+	<newexpr line="351" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="13180" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="13176" length="29" line="351">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="13197" length="7" line="351">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="13180" length="16" line="351" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="13246" length="15" line="354" chordsig="android.net.Uri"/>
+	<type  start="13304" length="15" line="356" chordsig="android.net.Uri"/>
+	<type  start="13369" length="15" line="358" chordsig="android.net.Uri"/>
+	<type  start="13433" length="15" line="360" chordsig="android.net.Uri"/>
+	<type  start="13498" length="15" line="362" chordsig="android.net.Uri"/>
+	<type  start="13566" length="15" line="364" chordsig="android.net.Uri"/>
+	<type  start="13641" length="15" line="366" chordsig="android.net.Uri"/>
+	<type  start="13705" length="16" line="368" chordsig="java.lang.String"/>
+	<type  start="13800" length="16" line="370" chordsig="java.lang.String"/>
+	<type  start="13901" length="16" line="372" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract$Contacts"
+ line="374"
+>
+	<invkexpr line="375" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="13999" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="376" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="14046" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="377" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="14092" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="378" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="14139" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="379" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="14189" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="380" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="14246" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="381" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="14292" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$Profile" line="385">
+	<type  start="14372" length="28" line="385" chordsig="android.provider.BaseColumns"/>
+	<type  start="14402" length="49" line="385" chordsig="android.provider.ContactsContract$ContactsColumns"/>
+	<type  start="14453" length="55" line="385" chordsig="android.provider.ContactsContract$ContactOptionsColumns"/>
+	<type  start="14510" length="52" line="385" chordsig="android.provider.ContactsContract$ContactNameColumns"/>
+	<type  start="14564" length="54" line="385" chordsig="android.provider.ContactsContract$ContactStatusColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$Profile"
+ sig="Profile()"
+ line="387"
+ startpos="14630"
+ endpos="14637"
+>
+	<newexpr line="388" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="14664" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="14660" length="29" line="388">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="14681" length="7" line="388">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="14664" length="16" line="388" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="14730" length="15" line="391" chordsig="android.net.Uri"/>
+	<type  start="14788" length="15" line="393" chordsig="android.net.Uri"/>
+	<type  start="14852" length="15" line="395" chordsig="android.net.Uri"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract$Profile"
+ line="399"
+>
+	<invkexpr line="400" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="15003" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="401" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="15049" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="402" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="15102" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$RawContactsColumns" line="406">
+	<type  start="15214" length="16" line="408" chordsig="java.lang.String"/>
+	<type  start="15287" length="16" line="410" chordsig="java.lang.String"/>
+	<type  start="15356" length="16" line="412" chordsig="java.lang.String"/>
+	<type  start="15441" length="16" line="414" chordsig="java.lang.String"/>
+	<type  start="15508" length="16" line="416" chordsig="java.lang.String"/>
+	<type  start="15609" length="16" line="418" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$RawContacts" line="421">
+	<type  start="15747" length="28" line="421" chordsig="android.provider.BaseColumns"/>
+	<type  start="15777" length="52" line="421" chordsig="android.provider.ContactsContract$RawContactsColumns"/>
+	<type  start="15831" length="55" line="421" chordsig="android.provider.ContactsContract$ContactOptionsColumns"/>
+	<type  start="15888" length="52" line="421" chordsig="android.provider.ContactsContract$ContactNameColumns"/>
+	<type  start="15942" length="45" line="421" chordsig="android.provider.ContactsContract$SyncColumns"/>
+<class chordsig="android.provider.ContactsContract$RawContacts$Data" line="423">
+	<type  start="16041" length="28" line="423" chordsig="android.provider.BaseColumns"/>
+	<type  start="16071" length="45" line="423" chordsig="android.provider.ContactsContract$DataColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$RawContacts$Data"
+ sig="Data()"
+ line="425"
+ startpos="16132"
+ endpos="16136"
+>
+	<newexpr line="426" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="16167" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="16163" length="29" line="426">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="16184" length="7" line="426">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="16167" length="16" line="426" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="16241" length="16" line="429" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$RawContacts$Entity" line="432">
+	<type  start="16349" length="28" line="432" chordsig="android.provider.BaseColumns"/>
+	<type  start="16379" length="45" line="432" chordsig="android.provider.ContactsContract$DataColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$RawContacts$Entity"
+ sig="Entity()"
+ line="434"
+ startpos="16440"
+ endpos="16446"
+>
+	<newexpr line="435" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="16477" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="16473" length="29" line="435">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="16494" length="7" line="435">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="16477" length="16" line="435" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="16551" length="16" line="438" chordsig="java.lang.String"/>
+	<type  start="16631" length="16" line="440" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$RawContacts$StreamItems" line="443">
+	<type  start="16737" length="28" line="443" chordsig="android.provider.BaseColumns"/>
+	<type  start="16767" length="52" line="443" chordsig="android.provider.ContactsContract$StreamItemsColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$RawContacts$StreamItems"
+ sig="StreamItems()"
+ line="445"
+ startpos="16835"
+ endpos="16846"
+>
+	<newexpr line="446" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="16877" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="16873" length="29" line="446">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="16894" length="7" line="446">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="16877" length="16" line="446" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="16951" length="16" line="449" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$RawContacts$DisplayPhoto" line="452">
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$RawContacts$DisplayPhoto"
+ sig="DisplayPhoto()"
+ line="454"
+ startpos="17077"
+ endpos="17089"
+>
+	<newexpr line="455" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="17120" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="17116" length="29" line="455">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="17137" length="7" line="455">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="17120" length="16" line="455" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="17194" length="16" line="458" chordsig="java.lang.String"/>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$RawContacts"
+ sig="RawContacts()"
+ line="461"
+ startpos="17267"
+ endpos="17278"
+>
+	<newexpr line="462" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="17305" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="17301" length="29" line="462">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="17322" length="7" line="462">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="17305" length="16" line="462" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContactLookupUri:(Landroid/content/ContentResolver;Landroid/net/Uri;)Landroid/net/Uri;@android.provider.ContactsContract$RawContacts"
+ sig="Uri getContactLookupUri(ContentResolver,Uri)"
+ line="465"
+ startpos="17381"
+ endpos="17400"
+>
+	<marker line="-1" type="param">
+		<operand  start="17433" length="8" line="465">
+			<expr><![CDATA[resolver]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="17459" length="13" line="465">
+			<expr><![CDATA[rawContactUri]]></expr>
+		</operand>
+	</marker>
+	<type  start="17365" length="15" line="465" chordsig="android.net.Uri"/>
+	<type  start="17401" length="31" line="465" chordsig="android.content.ContentResolver"/>
+	<type  start="17443" length="15" line="465" chordsig="android.net.Uri"/>
+	<newexpr line="466" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="17498" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="17494" length="29" line="466">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="17515" length="7" line="466">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="17498" length="16" line="466" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newEntityIterator:(Landroid/database/Cursor;)Landroid/content/EntityIterator;@android.provider.ContactsContract$RawContacts"
+ sig="EntityIterator newEntityIterator(Cursor)"
+ line="469"
+ startpos="17589"
+ endpos="17606"
+>
+	<marker line="-1" type="param">
+		<operand  start="17631" length="6" line="469">
+			<expr><![CDATA[cursor]]></expr>
+		</operand>
+	</marker>
+	<type  start="17558" length="30" line="469" chordsig="android.content.EntityIterator"/>
+	<type  start="17607" length="23" line="469" chordsig="android.database.Cursor"/>
+	<newexpr line="470" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="17663" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="17659" length="29" line="470">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="17680" length="7" line="470">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="17663" length="16" line="470" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="17729" length="15" line="473" chordsig="android.net.Uri"/>
+	<type  start="17787" length="16" line="475" chordsig="java.lang.String"/>
+	<type  start="17886" length="16" line="477" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract$RawContacts"
+ line="487"
+>
+	<invkexpr line="488" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="18263" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$StatusColumns" line="492">
+	<type  start="18370" length="16" line="494" chordsig="java.lang.String"/>
+	<type  start="18435" length="16" line="496" chordsig="java.lang.String"/>
+	<type  start="18788" length="16" line="510" chordsig="java.lang.String"/>
+	<type  start="18853" length="16" line="512" chordsig="java.lang.String"/>
+	<type  start="18934" length="16" line="514" chordsig="java.lang.String"/>
+	<type  start="19012" length="16" line="516" chordsig="java.lang.String"/>
+	<type  start="19101" length="16" line="518" chordsig="java.lang.String"/>
+	<type  start="19178" length="16" line="520" chordsig="java.lang.String"/>
+	<type  start="19253" length="16" line="522" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$StreamItems" line="531">
+	<type  start="19545" length="28" line="531" chordsig="android.provider.BaseColumns"/>
+	<type  start="19575" length="52" line="531" chordsig="android.provider.ContactsContract$StreamItemsColumns"/>
+<class chordsig="android.provider.ContactsContract$StreamItems$StreamItemPhotos" line="533">
+	<type  start="19693" length="28" line="533" chordsig="android.provider.BaseColumns"/>
+	<type  start="19723" length="57" line="533" chordsig="android.provider.ContactsContract$StreamItemPhotosColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$StreamItems$StreamItemPhotos"
+ sig="StreamItemPhotos()"
+ line="535"
+ startpos="19796"
+ endpos="19812"
+>
+	<newexpr line="536" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="19843" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="19839" length="29" line="536">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="19860" length="7" line="536">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="19843" length="16" line="536" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="19917" length="16" line="539" chordsig="java.lang.String"/>
+	<type  start="19996" length="16" line="541" chordsig="java.lang.String"/>
+	<type  start="20105" length="16" line="543" chordsig="java.lang.String"/>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$StreamItems"
+ sig="StreamItems()"
+ line="546"
+ startpos="20206"
+ endpos="20217"
+>
+	<newexpr line="547" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="20244" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="20240" length="29" line="547">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="20261" length="7" line="547">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="20244" length="16" line="547" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="20310" length="15" line="550" chordsig="android.net.Uri"/>
+	<type  start="20368" length="15" line="552" chordsig="android.net.Uri"/>
+	<type  start="20432" length="15" line="554" chordsig="android.net.Uri"/>
+	<type  start="20496" length="16" line="556" chordsig="java.lang.String"/>
+	<type  start="20595" length="16" line="558" chordsig="java.lang.String"/>
+	<type  start="20700" length="16" line="560" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract$StreamItems"
+ line="562"
+>
+	<invkexpr line="563" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="20786" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="564" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="20832" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="565" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="20878" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$StreamItemsColumns" line="569">
+	<type  start="20990" length="16" line="571" chordsig="java.lang.String"/>
+	<type  start="21063" length="16" line="573" chordsig="java.lang.String"/>
+	<type  start="21148" length="16" line="575" chordsig="java.lang.String"/>
+	<type  start="21229" length="16" line="577" chordsig="java.lang.String"/>
+	<type  start="21304" length="16" line="579" chordsig="java.lang.String"/>
+	<type  start="21381" length="16" line="581" chordsig="java.lang.String"/>
+	<type  start="21458" length="16" line="583" chordsig="java.lang.String"/>
+	<type  start="21527" length="16" line="585" chordsig="java.lang.String"/>
+	<type  start="21622" length="16" line="587" chordsig="java.lang.String"/>
+	<type  start="21687" length="16" line="589" chordsig="java.lang.String"/>
+	<type  start="21754" length="16" line="591" chordsig="java.lang.String"/>
+	<type  start="21815" length="16" line="593" chordsig="java.lang.String"/>
+	<type  start="21886" length="16" line="595" chordsig="java.lang.String"/>
+	<type  start="21955" length="16" line="597" chordsig="java.lang.String"/>
+	<type  start="22030" length="16" line="599" chordsig="java.lang.String"/>
+	<type  start="22105" length="16" line="601" chordsig="java.lang.String"/>
+	<type  start="22180" length="16" line="603" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$StreamItemPhotos" line="606">
+	<type  start="22291" length="28" line="606" chordsig="android.provider.BaseColumns"/>
+	<type  start="22321" length="57" line="606" chordsig="android.provider.ContactsContract$StreamItemPhotosColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$StreamItemPhotos"
+ sig="StreamItemPhotos()"
+ line="608"
+ startpos="22390"
+ endpos="22406"
+>
+	<newexpr line="609" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="22433" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="22429" length="29" line="609">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="22450" length="7" line="609">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="22433" length="16" line="609" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="22499" length="16" line="612" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$StreamItemPhotosColumns" line="615">
+	<type  start="22626" length="16" line="617" chordsig="java.lang.String"/>
+	<type  start="22707" length="16" line="619" chordsig="java.lang.String"/>
+	<type  start="22780" length="16" line="621" chordsig="java.lang.String"/>
+	<type  start="22859" length="16" line="623" chordsig="java.lang.String"/>
+	<type  start="22930" length="16" line="625" chordsig="java.lang.String"/>
+	<type  start="23011" length="16" line="627" chordsig="java.lang.String"/>
+	<type  start="23092" length="16" line="629" chordsig="java.lang.String"/>
+	<type  start="23173" length="16" line="631" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$DataColumns" line="634">
+	<type  start="23306" length="16" line="636" chordsig="java.lang.String"/>
+	<type  start="23375" length="16" line="638" chordsig="java.lang.String"/>
+	<type  start="23456" length="16" line="640" chordsig="java.lang.String"/>
+	<type  start="23529" length="16" line="642" chordsig="java.lang.String"/>
+	<type  start="23614" length="16" line="644" chordsig="java.lang.String"/>
+	<type  start="23691" length="16" line="646" chordsig="java.lang.String"/>
+	<type  start="23768" length="16" line="648" chordsig="java.lang.String"/>
+	<type  start="23831" length="16" line="650" chordsig="java.lang.String"/>
+	<type  start="23894" length="16" line="652" chordsig="java.lang.String"/>
+	<type  start="23957" length="16" line="654" chordsig="java.lang.String"/>
+	<type  start="24020" length="16" line="656" chordsig="java.lang.String"/>
+	<type  start="24083" length="16" line="658" chordsig="java.lang.String"/>
+	<type  start="24146" length="16" line="660" chordsig="java.lang.String"/>
+	<type  start="24209" length="16" line="662" chordsig="java.lang.String"/>
+	<type  start="24272" length="16" line="664" chordsig="java.lang.String"/>
+	<type  start="24335" length="16" line="666" chordsig="java.lang.String"/>
+	<type  start="24400" length="16" line="668" chordsig="java.lang.String"/>
+	<type  start="24465" length="16" line="670" chordsig="java.lang.String"/>
+	<type  start="24530" length="16" line="672" chordsig="java.lang.String"/>
+	<type  start="24595" length="16" line="674" chordsig="java.lang.String"/>
+	<type  start="24660" length="16" line="676" chordsig="java.lang.String"/>
+	<type  start="24725" length="16" line="678" chordsig="java.lang.String"/>
+	<type  start="24793" length="16" line="680" chordsig="java.lang.String"/>
+	<type  start="24861" length="16" line="682" chordsig="java.lang.String"/>
+	<type  start="24929" length="16" line="684" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$DataColumnsWithJoins" line="687">
+	<type  start="25035" length="28" line="687" chordsig="android.provider.BaseColumns"/>
+	<type  start="25065" length="45" line="687" chordsig="android.provider.ContactsContract$DataColumns"/>
+	<type  start="25112" length="47" line="687" chordsig="android.provider.ContactsContract$StatusColumns"/>
+	<type  start="25161" length="52" line="687" chordsig="android.provider.ContactsContract$RawContactsColumns"/>
+	<type  start="25215" length="49" line="687" chordsig="android.provider.ContactsContract$ContactsColumns"/>
+	<type  start="25266" length="52" line="687" chordsig="android.provider.ContactsContract$ContactNameColumns"/>
+	<type  start="25320" length="55" line="687" chordsig="android.provider.ContactsContract$ContactOptionsColumns"/>
+	<type  start="25377" length="54" line="687" chordsig="android.provider.ContactsContract$ContactStatusColumns"/>
+</class>
+<class chordsig="android.provider.ContactsContract$Data" line="690">
+	<type  start="25487" length="54" line="690" chordsig="android.provider.ContactsContract$DataColumnsWithJoins"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$Data"
+ sig="Data()"
+ line="692"
+ startpos="25553"
+ endpos="25557"
+>
+	<newexpr line="693" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="25584" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="25580" length="29" line="693">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="25601" length="7" line="693">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="25584" length="16" line="693" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContactLookupUri:(Landroid/content/ContentResolver;Landroid/net/Uri;)Landroid/net/Uri;@android.provider.ContactsContract$Data"
+ sig="Uri getContactLookupUri(ContentResolver,Uri)"
+ line="696"
+ startpos="25660"
+ endpos="25679"
+>
+	<marker line="-1" type="param">
+		<operand  start="25712" length="8" line="696">
+			<expr><![CDATA[resolver]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="25738" length="7" line="696">
+			<expr><![CDATA[dataUri]]></expr>
+		</operand>
+	</marker>
+	<type  start="25644" length="15" line="696" chordsig="android.net.Uri"/>
+	<type  start="25680" length="31" line="696" chordsig="android.content.ContentResolver"/>
+	<type  start="25722" length="15" line="696" chordsig="android.net.Uri"/>
+	<newexpr line="697" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="25771" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="25767" length="29" line="697">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="25788" length="7" line="697">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="25771" length="16" line="697" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="25837" length="15" line="700" chordsig="android.net.Uri"/>
+	<type  start="25895" length="16" line="702" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract$Data"
+ line="704"
+>
+	<invkexpr line="705" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="26002" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$RawContactsEntity" line="709">
+	<type  start="26092" length="28" line="709" chordsig="android.provider.BaseColumns"/>
+	<type  start="26122" length="45" line="709" chordsig="android.provider.ContactsContract$DataColumns"/>
+	<type  start="26169" length="52" line="709" chordsig="android.provider.ContactsContract$RawContactsColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$RawContactsEntity"
+ sig="RawContactsEntity()"
+ line="711"
+ startpos="26233"
+ endpos="26250"
+>
+	<newexpr line="712" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="26277" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="26273" length="29" line="712">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="26294" length="7" line="712">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="26277" length="16" line="712" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="26343" length="15" line="715" chordsig="android.net.Uri"/>
+	<type  start="26401" length="15" line="717" chordsig="android.net.Uri"/>
+	<type  start="26467" length="16" line="719" chordsig="java.lang.String"/>
+	<type  start="26573" length="16" line="721" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract$RawContactsEntity"
+ line="723"
+>
+	<invkexpr line="724" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="26655" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="725" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="26703" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$PhoneLookupColumns" line="729">
+	<type  start="26815" length="16" line="731" chordsig="java.lang.String"/>
+	<type  start="26880" length="16" line="733" chordsig="java.lang.String"/>
+	<type  start="26941" length="16" line="735" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$PhoneLookup" line="738">
+	<type  start="27035" length="28" line="738" chordsig="android.provider.BaseColumns"/>
+	<type  start="27065" length="52" line="738" chordsig="android.provider.ContactsContract$PhoneLookupColumns"/>
+	<type  start="27119" length="49" line="738" chordsig="android.provider.ContactsContract$ContactsColumns"/>
+	<type  start="27170" length="55" line="738" chordsig="android.provider.ContactsContract$ContactOptionsColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$PhoneLookup"
+ sig="PhoneLookup()"
+ line="740"
+ startpos="27237"
+ endpos="27248"
+>
+	<newexpr line="741" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="27275" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="27271" length="29" line="741">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="27292" length="7" line="741">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="27275" length="16" line="741" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="27341" length="15" line="744" chordsig="android.net.Uri"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract$PhoneLookup"
+ line="746"
+>
+	<invkexpr line="747" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="27428" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$PresenceColumns" line="751">
+	<type  start="27537" length="16" line="753" chordsig="java.lang.String"/>
+	<type  start="27613" length="16" line="755" chordsig="java.lang.String"/>
+	<type  start="27682" length="16" line="757" chordsig="java.lang.String"/>
+	<type  start="27765" length="16" line="759" chordsig="java.lang.String"/>
+	<type  start="27836" length="16" line="761" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$StatusUpdates" line="764">
+	<type  start="27936" length="47" line="764" chordsig="android.provider.ContactsContract$StatusColumns"/>
+	<type  start="27985" length="49" line="764" chordsig="android.provider.ContactsContract$PresenceColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$StatusUpdates"
+ sig="StatusUpdates()"
+ line="766"
+ startpos="28046"
+ endpos="28059"
+>
+	<newexpr line="767" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="28086" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="28082" length="29" line="767">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="28103" length="7" line="767">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="28086" length="16" line="767" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPresenceIconResourceId:(I)I@android.provider.ContactsContract$StatusUpdates"
+ sig="int getPresenceIconResourceId(int)"
+ line="770"
+ startpos="28156"
+ endpos="28181"
+>
+	<marker line="-1" type="param">
+		<operand  start="28186" length="6" line="770">
+			<expr><![CDATA[status]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="771" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="28218" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="28214" length="29" line="771">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="28235" length="7" line="771">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="28218" length="16" line="771" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPresencePrecedence:(I)I@android.provider.ContactsContract$StatusUpdates"
+ sig="int getPresencePrecedence(int)"
+ line="774"
+ startpos="28288"
+ endpos="28309"
+>
+	<marker line="-1" type="param">
+		<operand  start="28314" length="6" line="774">
+			<expr><![CDATA[status]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="775" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="28346" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="28342" length="29" line="775">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="28363" length="7" line="775">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="28346" length="16" line="775" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="28412" length="15" line="778" chordsig="android.net.Uri"/>
+	<type  start="28470" length="15" line="780" chordsig="android.net.Uri"/>
+	<type  start="28536" length="16" line="782" chordsig="java.lang.String"/>
+	<type  start="28637" length="16" line="784" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract$StatusUpdates"
+ line="786"
+>
+	<invkexpr line="787" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="28759" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="788" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="28807" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$Presence" line="793">
+	<type  start="28913" length="47" line="793" chordsig="android.provider.ContactsContract$StatusUpdates"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$Presence"
+ sig="Presence()"
+ line="795"
+ startpos="28979"
+ endpos="28987"
+>
+	<newexpr line="796" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="29014" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="29010" length="29" line="796">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="29031" length="7" line="796">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="29014" length="16" line="796" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$CommonDataKinds" line="800">
+<class chordsig="android.provider.ContactsContract$CommonDataKinds$BaseTypes" line="802">
+</class>
+<class chordsig="android.provider.ContactsContract$CommonDataKinds$CommonColumns" line="807">
+	<type  start="29273" length="59" line="807" chordsig="android.provider.ContactsContract$CommonDataKinds$BaseTypes"/>
+	<type  start="29368" length="16" line="809" chordsig="java.lang.String"/>
+	<type  start="29434" length="16" line="811" chordsig="java.lang.String"/>
+	<type  start="29500" length="16" line="813" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$CommonDataKinds$StructuredName" line="816">
+	<type  start="29605" length="54" line="816" chordsig="android.provider.ContactsContract$DataColumnsWithJoins"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$CommonDataKinds$StructuredName"
+ sig="StructuredName()"
+ line="818"
+ startpos="29675"
+ endpos="29689"
+>
+	<newexpr line="819" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="29720" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="29716" length="29" line="819">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="29737" length="7" line="819">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="29720" length="16" line="819" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="29794" length="16" line="822" chordsig="java.lang.String"/>
+	<type  start="29896" length="16" line="824" chordsig="java.lang.String"/>
+	<type  start="29970" length="16" line="826" chordsig="java.lang.String"/>
+	<type  start="30042" length="16" line="828" chordsig="java.lang.String"/>
+	<type  start="30115" length="16" line="830" chordsig="java.lang.String"/>
+	<type  start="30183" length="16" line="832" chordsig="java.lang.String"/>
+	<type  start="30256" length="16" line="834" chordsig="java.lang.String"/>
+	<type  start="30324" length="16" line="836" chordsig="java.lang.String"/>
+	<type  start="30405" length="16" line="838" chordsig="java.lang.String"/>
+	<type  start="30487" length="16" line="840" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$CommonDataKinds$Nickname" line="843">
+	<type  start="30601" length="54" line="843" chordsig="android.provider.ContactsContract$DataColumnsWithJoins"/>
+	<type  start="30657" length="63" line="843" chordsig="android.provider.ContactsContract$CommonDataKinds$CommonColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$CommonDataKinds$Nickname"
+ sig="Nickname()"
+ line="845"
+ startpos="30736"
+ endpos="30744"
+>
+	<newexpr line="846" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="30775" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="30771" length="29" line="846">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="30792" length="7" line="846">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="30775" length="16" line="846" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="30849" length="16" line="849" chordsig="java.lang.String"/>
+	<type  start="31301" length="16" line="863" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$CommonDataKinds$Phone" line="866">
+	<type  start="31396" length="54" line="866" chordsig="android.provider.ContactsContract$DataColumnsWithJoins"/>
+	<type  start="31452" length="63" line="866" chordsig="android.provider.ContactsContract$CommonDataKinds$CommonColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$CommonDataKinds$Phone"
+ sig="Phone()"
+ line="868"
+ startpos="31531"
+ endpos="31536"
+>
+	<newexpr line="869" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="31567" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="31563" length="29" line="869">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="31584" length="7" line="869">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="31567" length="16" line="869" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTypeLabelResource:(I)I@android.provider.ContactsContract$CommonDataKinds$Phone"
+ sig="int getTypeLabelResource(int)"
+ line="872"
+ startpos="31645"
+ endpos="31665"
+>
+	<marker line="-1" type="param">
+		<operand  start="31670" length="4" line="872">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="873" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="31704" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="31700" length="29" line="873">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="31721" length="7" line="873">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="31704" length="16" line="873" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTypeLabel:(Landroid/content/res/Resources;ILjava/lang/CharSequence;)Ljava/lang/CharSequence;@android.provider.ContactsContract$CommonDataKinds$Phone"
+ sig="CharSequence getTypeLabel(Resources,int,CharSequence)"
+ line="876"
+ startpos="31801"
+ endpos="31813"
+>
+	<marker line="-1" type="param">
+		<operand  start="31844" length="3" line="876">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="31853" length="4" line="876">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="31882" length="5" line="876">
+			<expr><![CDATA[label]]></expr>
+		</operand>
+	</marker>
+	<type  start="31778" length="22" line="876" chordsig="java.lang.CharSequence"/>
+	<type  start="31814" length="29" line="876" chordsig="android.content.res.Resources"/>
+	<type  start="31859" length="22" line="876" chordsig="java.lang.CharSequence"/>
+	<newexpr line="877" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="31917" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="31913" length="29" line="877">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="31934" length="7" line="877">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="31917" length="16" line="877" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="31991" length="16" line="880" chordsig="java.lang.String"/>
+	<type  start="32097" length="16" line="882" chordsig="java.lang.String"/>
+	<type  start="32197" length="15" line="884" chordsig="android.net.Uri"/>
+	<type  start="32259" length="15" line="886" chordsig="android.net.Uri"/>
+	<type  start="33429" length="16" line="928" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract$CommonDataKinds$Phone"
+ line="930"
+>
+	<invkexpr line="931" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="33516" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="932" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="33567" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$CommonDataKinds$Email" line="936">
+	<type  start="33657" length="54" line="936" chordsig="android.provider.ContactsContract$DataColumnsWithJoins"/>
+	<type  start="33713" length="63" line="936" chordsig="android.provider.ContactsContract$CommonDataKinds$CommonColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$CommonDataKinds$Email"
+ sig="Email()"
+ line="938"
+ startpos="33792"
+ endpos="33797"
+>
+	<newexpr line="939" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="33828" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="33824" length="29" line="939">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="33845" length="7" line="939">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="33828" length="16" line="939" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTypeLabelResource:(I)I@android.provider.ContactsContract$CommonDataKinds$Email"
+ sig="int getTypeLabelResource(int)"
+ line="942"
+ startpos="33906"
+ endpos="33926"
+>
+	<marker line="-1" type="param">
+		<operand  start="33931" length="4" line="942">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="943" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="33965" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="33961" length="29" line="943">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="33982" length="7" line="943">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="33965" length="16" line="943" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTypeLabel:(Landroid/content/res/Resources;ILjava/lang/CharSequence;)Ljava/lang/CharSequence;@android.provider.ContactsContract$CommonDataKinds$Email"
+ sig="CharSequence getTypeLabel(Resources,int,CharSequence)"
+ line="946"
+ startpos="34062"
+ endpos="34074"
+>
+	<marker line="-1" type="param">
+		<operand  start="34105" length="3" line="946">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="34114" length="4" line="946">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="34143" length="5" line="946">
+			<expr><![CDATA[label]]></expr>
+		</operand>
+	</marker>
+	<type  start="34039" length="22" line="946" chordsig="java.lang.CharSequence"/>
+	<type  start="34075" length="29" line="946" chordsig="android.content.res.Resources"/>
+	<type  start="34120" length="22" line="946" chordsig="java.lang.CharSequence"/>
+	<newexpr line="947" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="34178" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="34174" length="29" line="947">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="34195" length="7" line="947">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="34178" length="16" line="947" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="34252" length="16" line="950" chordsig="java.lang.String"/>
+	<type  start="34358" length="16" line="952" chordsig="java.lang.String"/>
+	<type  start="34458" length="15" line="954" chordsig="android.net.Uri"/>
+	<type  start="34520" length="15" line="956" chordsig="android.net.Uri"/>
+	<type  start="34589" length="15" line="958" chordsig="android.net.Uri"/>
+	<type  start="34658" length="16" line="960" chordsig="java.lang.String"/>
+	<type  start="34938" length="16" line="970" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract$CommonDataKinds$Email"
+ line="972"
+>
+	<invkexpr line="973" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="35031" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="974" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="35082" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="975" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="35133" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$CommonDataKinds$StructuredPostal" line="979">
+	<type  start="35234" length="54" line="979" chordsig="android.provider.ContactsContract$DataColumnsWithJoins"/>
+	<type  start="35290" length="63" line="979" chordsig="android.provider.ContactsContract$CommonDataKinds$CommonColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$CommonDataKinds$StructuredPostal"
+ sig="StructuredPostal()"
+ line="981"
+ startpos="35369"
+ endpos="35385"
+>
+	<newexpr line="982" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="35416" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="35412" length="29" line="982">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="35433" length="7" line="982">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="35416" length="16" line="982" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTypeLabelResource:(I)I@android.provider.ContactsContract$CommonDataKinds$StructuredPostal"
+ sig="int getTypeLabelResource(int)"
+ line="985"
+ startpos="35494"
+ endpos="35514"
+>
+	<marker line="-1" type="param">
+		<operand  start="35519" length="4" line="985">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="986" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="35553" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="35549" length="29" line="986">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="35570" length="7" line="986">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="35553" length="16" line="986" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTypeLabel:(Landroid/content/res/Resources;ILjava/lang/CharSequence;)Ljava/lang/CharSequence;@android.provider.ContactsContract$CommonDataKinds$StructuredPostal"
+ sig="CharSequence getTypeLabel(Resources,int,CharSequence)"
+ line="989"
+ startpos="35650"
+ endpos="35662"
+>
+	<marker line="-1" type="param">
+		<operand  start="35693" length="3" line="989">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="35702" length="4" line="989">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="35731" length="5" line="989">
+			<expr><![CDATA[label]]></expr>
+		</operand>
+	</marker>
+	<type  start="35627" length="22" line="989" chordsig="java.lang.CharSequence"/>
+	<type  start="35663" length="29" line="989" chordsig="android.content.res.Resources"/>
+	<type  start="35708" length="22" line="989" chordsig="java.lang.CharSequence"/>
+	<newexpr line="990" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="35766" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="35762" length="29" line="990">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="35783" length="7" line="990">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="35766" length="16" line="990" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="35840" length="16" line="993" chordsig="java.lang.String"/>
+	<type  start="35955" length="16" line="995" chordsig="java.lang.String"/>
+	<type  start="36064" length="15" line="997" chordsig="android.net.Uri"/>
+	<type  start="36283" length="16" line="1005" chordsig="java.lang.String"/>
+	<type  start="36362" length="16" line="1007" chordsig="java.lang.String"/>
+	<type  start="36430" length="16" line="1009" chordsig="java.lang.String"/>
+	<type  start="36497" length="16" line="1011" chordsig="java.lang.String"/>
+	<type  start="36571" length="16" line="1013" chordsig="java.lang.String"/>
+	<type  start="36637" length="16" line="1015" chordsig="java.lang.String"/>
+	<type  start="36705" length="16" line="1017" chordsig="java.lang.String"/>
+	<type  start="36775" length="16" line="1019" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract$CommonDataKinds$StructuredPostal"
+ line="1021"
+>
+	<invkexpr line="1022" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="36864" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$CommonDataKinds$Im" line="1026">
+	<type  start="36951" length="54" line="1026" chordsig="android.provider.ContactsContract$DataColumnsWithJoins"/>
+	<type  start="37007" length="63" line="1026" chordsig="android.provider.ContactsContract$CommonDataKinds$CommonColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$CommonDataKinds$Im"
+ sig="Im()"
+ line="1028"
+ startpos="37086"
+ endpos="37088"
+>
+	<newexpr line="1029" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="37119" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="37115" length="29" line="1029">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="37136" length="7" line="1029">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="37119" length="16" line="1029" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTypeLabelResource:(I)I@android.provider.ContactsContract$CommonDataKinds$Im"
+ sig="int getTypeLabelResource(int)"
+ line="1032"
+ startpos="37197"
+ endpos="37217"
+>
+	<marker line="-1" type="param">
+		<operand  start="37222" length="4" line="1032">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="1033" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="37256" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="37252" length="29" line="1033">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="37273" length="7" line="1033">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="37256" length="16" line="1033" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTypeLabel:(Landroid/content/res/Resources;ILjava/lang/CharSequence;)Ljava/lang/CharSequence;@android.provider.ContactsContract$CommonDataKinds$Im"
+ sig="CharSequence getTypeLabel(Resources,int,CharSequence)"
+ line="1036"
+ startpos="37353"
+ endpos="37365"
+>
+	<marker line="-1" type="param">
+		<operand  start="37396" length="3" line="1036">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="37405" length="4" line="1036">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="37434" length="5" line="1036">
+			<expr><![CDATA[label]]></expr>
+		</operand>
+	</marker>
+	<type  start="37330" length="22" line="1036" chordsig="java.lang.CharSequence"/>
+	<type  start="37366" length="29" line="1036" chordsig="android.content.res.Resources"/>
+	<type  start="37411" length="22" line="1036" chordsig="java.lang.CharSequence"/>
+	<newexpr line="1037" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="37469" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="37465" length="29" line="1037">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="37486" length="7" line="1037">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="37469" length="16" line="1037" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getProtocolLabelResource:(I)I@android.provider.ContactsContract$CommonDataKinds$Im"
+ sig="int getProtocolLabelResource(int)"
+ line="1040"
+ startpos="37547"
+ endpos="37571"
+>
+	<marker line="-1" type="param">
+		<operand  start="37576" length="4" line="1040">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="1041" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="37610" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="37606" length="29" line="1041">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="37627" length="7" line="1041">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="37610" length="16" line="1041" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getProtocolLabel:(Landroid/content/res/Resources;ILjava/lang/CharSequence;)Ljava/lang/CharSequence;@android.provider.ContactsContract$CommonDataKinds$Im"
+ sig="CharSequence getProtocolLabel(Resources,int,CharSequence)"
+ line="1044"
+ startpos="37707"
+ endpos="37723"
+>
+	<marker line="-1" type="param">
+		<operand  start="37754" length="3" line="1044">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="37763" length="4" line="1044">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="37792" length="5" line="1044">
+			<expr><![CDATA[label]]></expr>
+		</operand>
+	</marker>
+	<type  start="37684" length="22" line="1044" chordsig="java.lang.CharSequence"/>
+	<type  start="37724" length="29" line="1044" chordsig="android.content.res.Resources"/>
+	<type  start="37769" length="22" line="1044" chordsig="java.lang.CharSequence"/>
+	<newexpr line="1045" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="37827" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="37823" length="29" line="1045">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="37844" length="7" line="1045">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="37827" length="16" line="1045" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="37901" length="16" line="1048" chordsig="java.lang.String"/>
+	<type  start="38158" length="16" line="1056" chordsig="java.lang.String"/>
+	<type  start="38228" length="16" line="1058" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$CommonDataKinds$Organization" line="1081">
+	<type  start="38916" length="54" line="1081" chordsig="android.provider.ContactsContract$DataColumnsWithJoins"/>
+	<type  start="38972" length="63" line="1081" chordsig="android.provider.ContactsContract$CommonDataKinds$CommonColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$CommonDataKinds$Organization"
+ sig="Organization()"
+ line="1083"
+ startpos="39051"
+ endpos="39063"
+>
+	<newexpr line="1084" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="39094" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="39090" length="29" line="1084">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="39111" length="7" line="1084">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="39094" length="16" line="1084" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTypeLabelResource:(I)I@android.provider.ContactsContract$CommonDataKinds$Organization"
+ sig="int getTypeLabelResource(int)"
+ line="1087"
+ startpos="39172"
+ endpos="39192"
+>
+	<marker line="-1" type="param">
+		<operand  start="39197" length="4" line="1087">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="1088" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="39231" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="39227" length="29" line="1088">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="39248" length="7" line="1088">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="39231" length="16" line="1088" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTypeLabel:(Landroid/content/res/Resources;ILjava/lang/CharSequence;)Ljava/lang/CharSequence;@android.provider.ContactsContract$CommonDataKinds$Organization"
+ sig="CharSequence getTypeLabel(Resources,int,CharSequence)"
+ line="1091"
+ startpos="39328"
+ endpos="39340"
+>
+	<marker line="-1" type="param">
+		<operand  start="39371" length="3" line="1091">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="39380" length="4" line="1091">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="39409" length="5" line="1091">
+			<expr><![CDATA[label]]></expr>
+		</operand>
+	</marker>
+	<type  start="39305" length="22" line="1091" chordsig="java.lang.CharSequence"/>
+	<type  start="39341" length="29" line="1091" chordsig="android.content.res.Resources"/>
+	<type  start="39386" length="22" line="1091" chordsig="java.lang.CharSequence"/>
+	<newexpr line="1092" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="39444" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="39440" length="29" line="1092">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="39461" length="7" line="1092">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="39444" length="16" line="1092" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="39518" length="16" line="1095" chordsig="java.lang.String"/>
+	<type  start="39733" length="16" line="1101" chordsig="java.lang.String"/>
+	<type  start="39802" length="16" line="1103" chordsig="java.lang.String"/>
+	<type  start="39869" length="16" line="1105" chordsig="java.lang.String"/>
+	<type  start="39941" length="16" line="1107" chordsig="java.lang.String"/>
+	<type  start="40018" length="16" line="1109" chordsig="java.lang.String"/>
+	<type  start="40086" length="16" line="1111" chordsig="java.lang.String"/>
+	<type  start="40161" length="16" line="1113" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$CommonDataKinds$Relation" line="1116">
+	<type  start="40270" length="54" line="1116" chordsig="android.provider.ContactsContract$DataColumnsWithJoins"/>
+	<type  start="40326" length="63" line="1116" chordsig="android.provider.ContactsContract$CommonDataKinds$CommonColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$CommonDataKinds$Relation"
+ sig="Relation()"
+ line="1118"
+ startpos="40405"
+ endpos="40413"
+>
+	<newexpr line="1119" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="40444" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="40440" length="29" line="1119">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="40461" length="7" line="1119">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="40444" length="16" line="1119" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTypeLabelResource:(I)I@android.provider.ContactsContract$CommonDataKinds$Relation"
+ sig="int getTypeLabelResource(int)"
+ line="1122"
+ startpos="40522"
+ endpos="40542"
+>
+	<marker line="-1" type="param">
+		<operand  start="40547" length="4" line="1122">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="1123" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="40581" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="40577" length="29" line="1123">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="40598" length="7" line="1123">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="40581" length="16" line="1123" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTypeLabel:(Landroid/content/res/Resources;ILjava/lang/CharSequence;)Ljava/lang/CharSequence;@android.provider.ContactsContract$CommonDataKinds$Relation"
+ sig="CharSequence getTypeLabel(Resources,int,CharSequence)"
+ line="1126"
+ startpos="40678"
+ endpos="40690"
+>
+	<marker line="-1" type="param">
+		<operand  start="40721" length="3" line="1126">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="40730" length="4" line="1126">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="40759" length="5" line="1126">
+			<expr><![CDATA[label]]></expr>
+		</operand>
+	</marker>
+	<type  start="40655" length="22" line="1126" chordsig="java.lang.CharSequence"/>
+	<type  start="40691" length="29" line="1126" chordsig="android.content.res.Resources"/>
+	<type  start="40736" length="22" line="1126" chordsig="java.lang.CharSequence"/>
+	<newexpr line="1127" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="40794" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="40790" length="29" line="1127">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="40811" length="7" line="1127">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="40794" length="16" line="1127" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="40868" length="16" line="1130" chordsig="java.lang.String"/>
+	<type  start="41757" length="16" line="1160" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$CommonDataKinds$Event" line="1163">
+	<type  start="41852" length="54" line="1163" chordsig="android.provider.ContactsContract$DataColumnsWithJoins"/>
+	<type  start="41908" length="63" line="1163" chordsig="android.provider.ContactsContract$CommonDataKinds$CommonColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$CommonDataKinds$Event"
+ sig="Event()"
+ line="1165"
+ startpos="41987"
+ endpos="41992"
+>
+	<newexpr line="1166" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="42023" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="42019" length="29" line="1166">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="42040" length="7" line="1166">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="42023" length="16" line="1166" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTypeResource:(Ljava/lang/Integer;)I@android.provider.ContactsContract$CommonDataKinds$Event"
+ sig="int getTypeResource(Integer)"
+ line="1169"
+ startpos="42095"
+ endpos="42110"
+>
+	<marker line="-1" type="param">
+		<operand  start="42129" length="4" line="1169">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<type  start="42111" length="17" line="1169" chordsig="java.lang.Integer"/>
+	<newexpr line="1170" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="42163" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="42159" length="29" line="1170">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="42180" length="7" line="1170">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="42163" length="16" line="1170" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="42237" length="16" line="1173" chordsig="java.lang.String"/>
+	<type  start="42516" length="16" line="1181" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$CommonDataKinds$Photo" line="1184">
+	<type  start="42617" length="54" line="1184" chordsig="android.provider.ContactsContract$DataColumnsWithJoins"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$CommonDataKinds$Photo"
+ sig="Photo()"
+ line="1186"
+ startpos="42687"
+ endpos="42692"
+>
+	<newexpr line="1187" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="42723" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="42719" length="29" line="1187">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="42740" length="7" line="1187">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="42723" length="16" line="1187" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="42797" length="16" line="1190" chordsig="java.lang.String"/>
+	<type  start="42900" length="16" line="1192" chordsig="java.lang.String"/>
+	<type  start="42976" length="16" line="1194" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$CommonDataKinds$Note" line="1197">
+	<type  start="43072" length="54" line="1197" chordsig="android.provider.ContactsContract$DataColumnsWithJoins"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$CommonDataKinds$Note"
+ sig="Note()"
+ line="1199"
+ startpos="43142"
+ endpos="43146"
+>
+	<newexpr line="1200" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="43177" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="43173" length="29" line="1200">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="43194" length="7" line="1200">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="43177" length="16" line="1200" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="43251" length="16" line="1203" chordsig="java.lang.String"/>
+	<type  start="43353" length="16" line="1205" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$CommonDataKinds$GroupMembership" line="1208">
+	<type  start="43458" length="54" line="1208" chordsig="android.provider.ContactsContract$DataColumnsWithJoins"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$CommonDataKinds$GroupMembership"
+ sig="GroupMembership()"
+ line="1210"
+ startpos="43528"
+ endpos="43543"
+>
+	<newexpr line="1211" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="43574" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="43570" length="29" line="1211">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="43591" length="7" line="1211">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="43574" length="16" line="1211" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="43648" length="16" line="1214" chordsig="java.lang.String"/>
+	<type  start="43762" length="16" line="1216" chordsig="java.lang.String"/>
+	<type  start="43836" length="16" line="1218" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$CommonDataKinds$Website" line="1221">
+	<type  start="43953" length="54" line="1221" chordsig="android.provider.ContactsContract$DataColumnsWithJoins"/>
+	<type  start="44009" length="63" line="1221" chordsig="android.provider.ContactsContract$CommonDataKinds$CommonColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$CommonDataKinds$Website"
+ sig="Website()"
+ line="1223"
+ startpos="44088"
+ endpos="44095"
+>
+	<newexpr line="1224" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="44126" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="44122" length="29" line="1224">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="44143" length="7" line="1224">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="44126" length="16" line="1224" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="44200" length="16" line="1227" chordsig="java.lang.String"/>
+	<type  start="44676" length="16" line="1243" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$CommonDataKinds$SipAddress" line="1246">
+	<type  start="44775" length="54" line="1246" chordsig="android.provider.ContactsContract$DataColumnsWithJoins"/>
+	<type  start="44831" length="63" line="1246" chordsig="android.provider.ContactsContract$CommonDataKinds$CommonColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$CommonDataKinds$SipAddress"
+ sig="SipAddress()"
+ line="1248"
+ startpos="44910"
+ endpos="44920"
+>
+	<newexpr line="1249" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="44951" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="44947" length="29" line="1249">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="44968" length="7" line="1249">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="44951" length="16" line="1249" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTypeLabelResource:(I)I@android.provider.ContactsContract$CommonDataKinds$SipAddress"
+ sig="int getTypeLabelResource(int)"
+ line="1252"
+ startpos="45029"
+ endpos="45049"
+>
+	<marker line="-1" type="param">
+		<operand  start="45054" length="4" line="1252">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="1253" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="45088" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="45084" length="29" line="1253">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="45105" length="7" line="1253">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="45088" length="16" line="1253" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTypeLabel:(Landroid/content/res/Resources;ILjava/lang/CharSequence;)Ljava/lang/CharSequence;@android.provider.ContactsContract$CommonDataKinds$SipAddress"
+ sig="CharSequence getTypeLabel(Resources,int,CharSequence)"
+ line="1256"
+ startpos="45185"
+ endpos="45197"
+>
+	<marker line="-1" type="param">
+		<operand  start="45228" length="3" line="1256">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="45237" length="4" line="1256">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="45266" length="5" line="1256">
+			<expr><![CDATA[label]]></expr>
+		</operand>
+	</marker>
+	<type  start="45162" length="22" line="1256" chordsig="java.lang.CharSequence"/>
+	<type  start="45198" length="29" line="1256" chordsig="android.content.res.Resources"/>
+	<type  start="45243" length="22" line="1256" chordsig="java.lang.CharSequence"/>
+	<newexpr line="1257" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="45301" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="45297" length="29" line="1257">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="45318" length="7" line="1257">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="45301" length="16" line="1257" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="45375" length="16" line="1260" chordsig="java.lang.String"/>
+	<type  start="45641" length="16" line="1268" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$CommonDataKinds$Identity" line="1271">
+	<type  start="45746" length="54" line="1271" chordsig="android.provider.ContactsContract$DataColumnsWithJoins"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$CommonDataKinds$Identity"
+ sig="Identity()"
+ line="1273"
+ startpos="45816"
+ endpos="45824"
+>
+	<newexpr line="1274" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="45855" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="45851" length="29" line="1274">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="45872" length="7" line="1274">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="45855" length="16" line="1274" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="45929" length="16" line="1277" chordsig="java.lang.String"/>
+	<type  start="46035" length="16" line="1279" chordsig="java.lang.String"/>
+	<type  start="46105" length="16" line="1281" chordsig="java.lang.String"/>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$CommonDataKinds"
+ sig="CommonDataKinds()"
+ line="1284"
+ startpos="46162"
+ endpos="46177"
+>
+	<newexpr line="1285" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="46204" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="46200" length="29" line="1285">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="46221" length="7" line="1285">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="46204" length="16" line="1285" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$GroupsColumns" line="1289">
+	<type  start="46324" length="16" line="1291" chordsig="java.lang.String"/>
+	<type  start="46393" length="16" line="1293" chordsig="java.lang.String"/>
+	<type  start="46456" length="16" line="1295" chordsig="java.lang.String"/>
+	<type  start="46519" length="16" line="1297" chordsig="java.lang.String"/>
+	<type  start="46590" length="16" line="1299" chordsig="java.lang.String"/>
+	<type  start="46666" length="16" line="1301" chordsig="java.lang.String"/>
+	<type  start="46749" length="16" line="1303" chordsig="java.lang.String"/>
+	<type  start="46828" length="16" line="1305" chordsig="java.lang.String"/>
+	<type  start="46895" length="16" line="1307" chordsig="java.lang.String"/>
+	<type  start="46970" length="16" line="1309" chordsig="java.lang.String"/>
+	<type  start="47039" length="16" line="1311" chordsig="java.lang.String"/>
+	<type  start="47110" length="16" line="1313" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$Groups" line="1316">
+	<type  start="47225" length="28" line="1316" chordsig="android.provider.BaseColumns"/>
+	<type  start="47255" length="47" line="1316" chordsig="android.provider.ContactsContract$GroupsColumns"/>
+	<type  start="47304" length="45" line="1316" chordsig="android.provider.ContactsContract$SyncColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$Groups"
+ sig="Groups()"
+ line="1318"
+ startpos="47361"
+ endpos="47367"
+>
+	<newexpr line="1319" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="47394" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="47390" length="29" line="1319">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="47411" length="7" line="1319">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="47394" length="16" line="1319" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newEntityIterator:(Landroid/database/Cursor;)Landroid/content/EntityIterator;@android.provider.ContactsContract$Groups"
+ sig="EntityIterator newEntityIterator(Cursor)"
+ line="1322"
+ startpos="47485"
+ endpos="47502"
+>
+	<marker line="-1" type="param">
+		<operand  start="47527" length="6" line="1322">
+			<expr><![CDATA[cursor]]></expr>
+		</operand>
+	</marker>
+	<type  start="47454" length="30" line="1322" chordsig="android.content.EntityIterator"/>
+	<type  start="47503" length="23" line="1322" chordsig="android.database.Cursor"/>
+	<newexpr line="1323" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="47559" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="47555" length="29" line="1323">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="47576" length="7" line="1323">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="47559" length="16" line="1323" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="47625" length="15" line="1326" chordsig="android.net.Uri"/>
+	<type  start="47683" length="15" line="1328" chordsig="android.net.Uri"/>
+	<type  start="47749" length="16" line="1330" chordsig="java.lang.String"/>
+	<type  start="47842" length="16" line="1332" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract$Groups"
+ line="1334"
+>
+	<invkexpr line="1335" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="47956" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="1336" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="48004" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$AggregationExceptions" line="1340">
+	<type  start="48098" length="28" line="1340" chordsig="android.provider.BaseColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$AggregationExceptions"
+ sig="AggregationExceptions()"
+ line="1342"
+ startpos="48138"
+ endpos="48159"
+>
+	<newexpr line="1343" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="48186" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="48182" length="29" line="1343">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="48203" length="7" line="1343">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="48186" length="16" line="1343" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="48252" length="15" line="1346" chordsig="android.net.Uri"/>
+	<type  start="48310" length="16" line="1348" chordsig="java.lang.String"/>
+	<type  start="48419" length="16" line="1350" chordsig="java.lang.String"/>
+	<type  start="48534" length="16" line="1352" chordsig="java.lang.String"/>
+	<type  start="48762" length="16" line="1360" chordsig="java.lang.String"/>
+	<type  start="48845" length="16" line="1362" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract$AggregationExceptions"
+ line="1364"
+>
+	<invkexpr line="1365" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="48943" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$SettingsColumns" line="1369">
+	<type  start="49052" length="16" line="1371" chordsig="java.lang.String"/>
+	<type  start="49129" length="16" line="1373" chordsig="java.lang.String"/>
+	<type  start="49206" length="16" line="1375" chordsig="java.lang.String"/>
+	<type  start="49275" length="16" line="1377" chordsig="java.lang.String"/>
+	<type  start="49350" length="16" line="1379" chordsig="java.lang.String"/>
+	<type  start="49437" length="16" line="1381" chordsig="java.lang.String"/>
+	<type  start="49514" length="16" line="1383" chordsig="java.lang.String"/>
+	<type  start="49592" length="16" line="1385" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.ContactsContract$Settings" line="1388">
+	<type  start="49705" length="49" line="1388" chordsig="android.provider.ContactsContract$SettingsColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$Settings"
+ sig="Settings()"
+ line="1390"
+ startpos="49766"
+ endpos="49774"
+>
+	<newexpr line="1391" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="49801" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="49797" length="29" line="1391">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="49818" length="7" line="1391">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="49801" length="16" line="1391" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="49867" length="15" line="1394" chordsig="android.net.Uri"/>
+	<type  start="49925" length="16" line="1396" chordsig="java.lang.String"/>
+	<type  start="50020" length="16" line="1398" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract$Settings"
+ line="1400"
+>
+	<invkexpr line="1401" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="50136" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$DataUsageFeedback" line="1405">
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$DataUsageFeedback"
+ sig="DataUsageFeedback()"
+ line="1407"
+ startpos="50233"
+ endpos="50250"
+>
+	<newexpr line="1408" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="50277" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="50273" length="29" line="1408">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="50294" length="7" line="1408">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="50277" length="16" line="1408" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="50343" length="15" line="1411" chordsig="android.net.Uri"/>
+	<type  start="50402" length="16" line="1413" chordsig="java.lang.String"/>
+	<type  start="50469" length="16" line="1415" chordsig="java.lang.String"/>
+	<type  start="50541" length="16" line="1417" chordsig="java.lang.String"/>
+	<type  start="50623" length="16" line="1419" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract$DataUsageFeedback"
+ line="1421"
+>
+	<invkexpr line="1422" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="50723" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$QuickContact" line="1426">
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$QuickContact"
+ sig="QuickContact()"
+ line="1428"
+ startpos="50815"
+ endpos="50827"
+>
+	<newexpr line="1429" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="50854" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="50850" length="29" line="1429">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="50871" length="7" line="1429">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="50854" length="16" line="1429" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="showQuickContact:(Landroid/content/Context;Landroid/view/View;Landroid/net/Uri;I[Ljava/lang/String;)V@android.provider.ContactsContract$QuickContact"
+ sig="void showQuickContact(Context,View,Uri,int,String[])"
+ line="1432"
+ startpos="50919"
+ endpos="50935"
+>
+	<marker line="-1" type="param">
+		<operand  start="50960" length="7" line="1432">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="50987" length="6" line="1432">
+			<expr><![CDATA[target]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="51011" length="9" line="1432">
+			<expr><![CDATA[lookupUri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="51026" length="4" line="1432">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="51051" length="12" line="1432">
+			<expr><![CDATA[excludeMimes]]></expr>
+		</operand>
+	</marker>
+	<type  start="50936" length="23" line="1432" chordsig="android.content.Context"/>
+	<type  start="50969" length="17" line="1432" chordsig="android.view.View"/>
+	<type  start="50995" length="15" line="1432" chordsig="android.net.Uri"/>
+	<type  start="51032" length="16" line="1432" chordsig="java.lang.String"/>
+	<newexpr line="1433" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="51089" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="51085" length="29" line="1433">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="51106" length="7" line="1433">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="51089" length="16" line="1433" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="showQuickContact:(Landroid/content/Context;Landroid/graphics/Rect;Landroid/net/Uri;I[Ljava/lang/String;)V@android.provider.ContactsContract$QuickContact"
+ sig="void showQuickContact(Context,Rect,Uri,int,String[])"
+ line="1436"
+ startpos="51154"
+ endpos="51170"
+>
+	<marker line="-1" type="param">
+		<operand  start="51195" length="7" line="1436">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="51226" length="6" line="1436">
+			<expr><![CDATA[target]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="51250" length="9" line="1436">
+			<expr><![CDATA[lookupUri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="51265" length="4" line="1436">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="51290" length="12" line="1436">
+			<expr><![CDATA[excludeMimes]]></expr>
+		</operand>
+	</marker>
+	<type  start="51171" length="23" line="1436" chordsig="android.content.Context"/>
+	<type  start="51204" length="21" line="1436" chordsig="android.graphics.Rect"/>
+	<type  start="51234" length="15" line="1436" chordsig="android.net.Uri"/>
+	<type  start="51271" length="16" line="1436" chordsig="java.lang.String"/>
+	<newexpr line="1437" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="51328" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="51324" length="29" line="1437">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="51345" length="7" line="1437">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="51328" length="16" line="1437" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$DisplayPhoto" line="1447">
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$DisplayPhoto"
+ sig="DisplayPhoto()"
+ line="1449"
+ startpos="51574"
+ endpos="51586"
+>
+	<newexpr line="1450" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="51613" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="51609" length="29" line="1450">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="51630" length="7" line="1450">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="51613" length="16" line="1450" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="51679" length="15" line="1453" chordsig="android.net.Uri"/>
+	<type  start="51737" length="15" line="1455" chordsig="android.net.Uri"/>
+	<type  start="51810" length="16" line="1457" chordsig="java.lang.String"/>
+	<type  start="51893" length="16" line="1459" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract$DisplayPhoto"
+ line="1461"
+>
+	<invkexpr line="1462" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="51995" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+	<invkexpr line="1463" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="52050" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+</class>
+<class chordsig="android.provider.ContactsContract$Intents" line="1467">
+<class chordsig="android.provider.ContactsContract$Intents$Insert" line="1469">
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$Intents$Insert"
+ sig="Insert()"
+ line="1471"
+ startpos="52185"
+ endpos="52191"
+>
+	<newexpr line="1472" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="52222" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="52218" length="29" line="1472">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="52239" length="7" line="1472">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="52222" length="16" line="1472" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="52296" length="16" line="1475" chordsig="java.lang.String"/>
+	<type  start="52387" length="16" line="1477" chordsig="java.lang.String"/>
+	<type  start="52462" length="16" line="1479" chordsig="java.lang.String"/>
+	<type  start="52527" length="16" line="1481" chordsig="java.lang.String"/>
+	<type  start="52610" length="16" line="1483" chordsig="java.lang.String"/>
+	<type  start="52681" length="16" line="1485" chordsig="java.lang.String"/>
+	<type  start="52756" length="16" line="1487" chordsig="java.lang.String"/>
+	<type  start="52823" length="16" line="1489" chordsig="java.lang.String"/>
+	<type  start="52890" length="16" line="1491" chordsig="java.lang.String"/>
+	<type  start="52967" length="16" line="1493" chordsig="java.lang.String"/>
+	<type  start="53054" length="16" line="1495" chordsig="java.lang.String"/>
+	<type  start="53141" length="16" line="1497" chordsig="java.lang.String"/>
+	<type  start="53238" length="16" line="1499" chordsig="java.lang.String"/>
+	<type  start="53323" length="16" line="1501" chordsig="java.lang.String"/>
+	<type  start="53418" length="16" line="1503" chordsig="java.lang.String"/>
+	<type  start="53485" length="16" line="1505" chordsig="java.lang.String"/>
+	<type  start="53562" length="16" line="1507" chordsig="java.lang.String"/>
+	<type  start="53649" length="16" line="1509" chordsig="java.lang.String"/>
+	<type  start="53736" length="16" line="1511" chordsig="java.lang.String"/>
+	<type  start="53833" length="16" line="1513" chordsig="java.lang.String"/>
+	<type  start="53918" length="16" line="1515" chordsig="java.lang.String"/>
+	<type  start="54013" length="16" line="1517" chordsig="java.lang.String"/>
+	<type  start="54082" length="16" line="1519" chordsig="java.lang.String"/>
+	<type  start="54161" length="16" line="1521" chordsig="java.lang.String"/>
+	<type  start="54250" length="16" line="1523" chordsig="java.lang.String"/>
+	<type  start="54325" length="16" line="1525" chordsig="java.lang.String"/>
+	<type  start="54404" length="16" line="1527" chordsig="java.lang.String"/>
+	<type  start="54485" length="16" line="1529" chordsig="java.lang.String"/>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract$Intents"
+ sig="Intents()"
+ line="1532"
+ startpos="54543"
+ endpos="54550"
+>
+	<newexpr line="1533" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="54577" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="54573" length="29" line="1533">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="54594" length="7" line="1533">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="54577" length="16" line="1533" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="54643" length="16" line="1536" chordsig="java.lang.String"/>
+	<type  start="54772" length="16" line="1538" chordsig="java.lang.String"/>
+	<type  start="54925" length="16" line="1540" chordsig="java.lang.String"/>
+	<type  start="55084" length="16" line="1542" chordsig="java.lang.String"/>
+	<type  start="55189" length="16" line="1544" chordsig="java.lang.String"/>
+	<type  start="55298" length="16" line="1546" chordsig="java.lang.String"/>
+	<type  start="55423" length="16" line="1548" chordsig="java.lang.String"/>
+	<type  start="55534" length="16" line="1550" chordsig="java.lang.String"/>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.ContactsContract"
+ sig="ContactsContract()"
+ line="1553"
+ startpos="55646"
+ endpos="55662"
+>
+	<newexpr line="1554" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="55685" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="55681" length="29" line="1554">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="55702" length="7" line="1554">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="55685" length="16" line="1554" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isProfileId:(J)Z@android.provider.ContactsContract"
+ sig="boolean isProfileId(long)"
+ line="1557"
+ startpos="55745"
+ endpos="55756"
+>
+	<marker line="-1" type="param">
+		<operand  start="55762" length="2" line="1557">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="1558" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="55786" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="55782" length="29" line="1558">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="55803" length="7" line="1558">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="55786" length="16" line="1558" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="55844" length="16" line="1561" chordsig="java.lang.String"/>
+	<type  start="55922" length="15" line="1563" chordsig="android.net.Uri"/>
+	<type  start="55978" length="16" line="1565" chordsig="java.lang.String"/>
+	<type  start="56069" length="16" line="1567" chordsig="java.lang.String"/>
+	<type  start="56146" length="16" line="1569" chordsig="java.lang.String"/>
+	<type  start="56215" length="16" line="1571" chordsig="java.lang.String"/>
+	<type  start="56308" length="16" line="1573" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.ContactsContract"
+ line="1575"
+>
+	<invkexpr line="1576" chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract" start="56414" length="10" type="invoke">
+			<expr><![CDATA[taintedUri()]]></expr>
+	</invkexpr>
+</method>
+<method
+ chordsig="taintedUri:()Landroid/net/Uri;@android.provider.ContactsContract"
+ sig="Uri taintedUri()"
+ line="1580"
+ startpos="56536"
+ endpos="56546"
+>
+	<type  start="56520" length="15" line="1580" chordsig="android.net.Uri"/>
+	<marker line="1581" type="return">
+		<operand  start="56566" length="28" line="1581">
+			<expr><![CDATA[new android.net.StampUri("")]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="1581" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.net.StampUri" start="56570" length="20" type="invoke">
+			<expr><![CDATA[new android.net.StampUri("")]]></expr>
+		<param  start="56566" length="28" line="1581">
+			<expr><![CDATA[new android.net.StampUri("")]]></expr>
+		</param>
+		<param  start="56591" length="2" line="1581">
+			<expr><![CDATA[""]]></expr>
+		</param>
+	</newexpr>
+	<type  start="56570" length="20" line="1581" chordsig="android.net.StampUri"/>
+</method>
+</class>
+</root>

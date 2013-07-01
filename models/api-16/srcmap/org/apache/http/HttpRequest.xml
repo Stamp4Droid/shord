@@ -1,0 +1,14 @@
+<root>
+<class chordsig="org.apache.http.HttpRequest" line="2">
+	<type  start="64" length="27" line="3" chordsig="org.apache.http.HttpMessage"/>
+<method
+ chordsig="getRequestLine:()Lorg/apache/http/RequestLine;@org.apache.http.HttpRequest"
+ sig="RequestLine getRequestLine()"
+ line="5"
+ startpos="139"
+ endpos="153"
+>
+	<type  start="111" length="27" line="5" chordsig="org.apache.http.RequestLine"/>
+</method>
+</class>
+</root>

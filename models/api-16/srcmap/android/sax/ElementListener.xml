@@ -1,0 +1,6 @@
+<root>
+<class chordsig="android.sax.ElementListener" line="2">
+	<type  start="64" length="32" line="3" chordsig="android.sax.StartElementListener"/>
+	<type  start="98" length="30" line="3" chordsig="android.sax.EndElementListener"/>
+</class>
+</root>

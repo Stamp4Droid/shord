@@ -1,0 +1,1425 @@
+<root>
+<class chordsig="android.widget.RemoteViews" line="2">
+	<type  start="62" length="21" line="3" chordsig="android.os.Parcelable"/>
+	<type  start="85" length="34" line="3" chordsig="android.view.LayoutInflater$Filter"/>
+<class chordsig="android.widget.RemoteViews$ActionException" line="10">
+	<type  start="368" length="26" line="11" chordsig="java.lang.RuntimeException"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Exception;)V@android.widget.RemoteViews$ActionException"
+ sig="ActionException(Exception)"
+ line="13"
+ startpos="405"
+ endpos="420"
+>
+	<marker line="-1" type="param">
+		<operand  start="441" length="2" line="13">
+			<expr><![CDATA[ex]]></expr>
+		</operand>
+	</marker>
+	<type  start="421" length="19" line="13" chordsig="java.lang.Exception"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="457" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="453" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="474" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="457" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.widget.RemoteViews$ActionException"
+ sig="ActionException(String)"
+ line="14"
+ startpos="494"
+ endpos="509"
+>
+	<marker line="-1" type="param">
+		<operand  start="527" length="7" line="14">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="510" length="16" line="14" chordsig="java.lang.String"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="548" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="544" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="565" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="548" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;I)V@android.widget.RemoteViews"
+ sig="RemoteViews(String,int)"
+ line="16"
+ startpos="587"
+ endpos="598"
+>
+	<marker line="-1" type="param">
+		<operand  start="616" length="11" line="16">
+			<expr><![CDATA[packageName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="633" length="8" line="16">
+			<expr><![CDATA[layoutId]]></expr>
+		</operand>
+	</marker>
+	<type  start="599" length="16" line="16" chordsig="java.lang.String"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="655" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="651" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="672" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="655" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/os/Parcel;)V@android.widget.RemoteViews"
+ sig="RemoteViews(Parcel)"
+ line="17"
+ startpos="692"
+ endpos="703"
+>
+	<marker line="-1" type="param">
+		<operand  start="722" length="6" line="17">
+			<expr><![CDATA[parcel]]></expr>
+		</operand>
+	</marker>
+	<type  start="704" length="17" line="17" chordsig="android.os.Parcel"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="742" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="738" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="759" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="742" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clone:()Landroid/widget/RemoteViews;@android.widget.RemoteViews"
+ sig="RemoteViews clone()"
+ line="18"
+ startpos="806"
+ endpos="811"
+>
+	<alias>()Ljava/lang/Object;</alias>
+	<type  start="779" length="26" line="18" chordsig="android.widget.RemoteViews"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="826" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="822" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="843" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="826" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPackage:()Ljava/lang/String;@android.widget.RemoteViews"
+ sig="String getPackage()"
+ line="19"
+ startpos="880"
+ endpos="890"
+>
+	<type  start="863" length="16" line="19" chordsig="java.lang.String"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="905" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="901" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="922" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="905" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLayoutId:()I@android.widget.RemoteViews"
+ sig="int getLayoutId()"
+ line="20"
+ startpos="946"
+ endpos="957"
+>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="972" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="968" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="989" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="972" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addView:(ILandroid/widget/RemoteViews;)V@android.widget.RemoteViews"
+ sig="void addView(int,RemoteViews)"
+ line="21"
+ startpos="1014"
+ endpos="1021"
+>
+	<marker line="-1" type="param">
+		<operand  start="1026" length="6" line="21">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1061" length="10" line="21">
+			<expr><![CDATA[nestedView]]></expr>
+		</operand>
+	</marker>
+	<type  start="1034" length="26" line="21" chordsig="android.widget.RemoteViews"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1085" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1081" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1102" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1085" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeAllViews:(I)V@android.widget.RemoteViews"
+ sig="void removeAllViews(int)"
+ line="22"
+ startpos="1127"
+ endpos="1141"
+>
+	<marker line="-1" type="param">
+		<operand  start="1146" length="6" line="22">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1166" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1162" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1183" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1166" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="showNext:(I)V@android.widget.RemoteViews"
+ sig="void showNext(int)"
+ line="23"
+ startpos="1208"
+ endpos="1216"
+>
+	<marker line="-1" type="param">
+		<operand  start="1221" length="6" line="23">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1241" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1237" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1258" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1241" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="showPrevious:(I)V@android.widget.RemoteViews"
+ sig="void showPrevious(int)"
+ line="24"
+ startpos="1283"
+ endpos="1295"
+>
+	<marker line="-1" type="param">
+		<operand  start="1300" length="6" line="24">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1320" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1316" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1337" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1320" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDisplayedChild:(II)V@android.widget.RemoteViews"
+ sig="void setDisplayedChild(int,int)"
+ line="25"
+ startpos="1362"
+ endpos="1379"
+>
+	<marker line="-1" type="param">
+		<operand  start="1384" length="6" line="25">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1396" length="10" line="25">
+			<expr><![CDATA[childIndex]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1420" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1416" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1437" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1420" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setViewVisibility:(II)V@android.widget.RemoteViews"
+ sig="void setViewVisibility(int,int)"
+ line="26"
+ startpos="1462"
+ endpos="1479"
+>
+	<marker line="-1" type="param">
+		<operand  start="1484" length="6" line="26">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1496" length="10" line="26">
+			<expr><![CDATA[visibility]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1520" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1516" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1537" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1520" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTextViewText:(ILjava/lang/CharSequence;)V@android.widget.RemoteViews"
+ sig="void setTextViewText(int,CharSequence)"
+ line="27"
+ startpos="1562"
+ endpos="1577"
+>
+	<marker line="-1" type="param">
+		<operand  start="1582" length="6" line="27">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1613" length="4" line="27">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="1590" length="22" line="27" chordsig="java.lang.CharSequence"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1631" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1627" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1648" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1631" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setImageViewResource:(II)V@android.widget.RemoteViews"
+ sig="void setImageViewResource(int,int)"
+ line="28"
+ startpos="1673"
+ endpos="1693"
+>
+	<marker line="-1" type="param">
+		<operand  start="1698" length="6" line="28">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1710" length="5" line="28">
+			<expr><![CDATA[srcId]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1729" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1725" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1746" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1729" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setImageViewUri:(ILandroid/net/Uri;)V@android.widget.RemoteViews"
+ sig="void setImageViewUri(int,Uri)"
+ line="29"
+ startpos="1771"
+ endpos="1786"
+>
+	<marker line="-1" type="param">
+		<operand  start="1791" length="6" line="29">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1815" length="3" line="29">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<type  start="1799" length="15" line="29" chordsig="android.net.Uri"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1832" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1828" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1849" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1832" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setImageViewBitmap:(ILandroid/graphics/Bitmap;)V@android.widget.RemoteViews"
+ sig="void setImageViewBitmap(int,Bitmap)"
+ line="30"
+ startpos="1874"
+ endpos="1892"
+>
+	<marker line="-1" type="param">
+		<operand  start="1897" length="6" line="30">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1929" length="6" line="30">
+			<expr><![CDATA[bitmap]]></expr>
+		</operand>
+	</marker>
+	<type  start="1905" length="23" line="30" chordsig="android.graphics.Bitmap"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1949" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1945" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1966" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1949" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setEmptyView:(II)V@android.widget.RemoteViews"
+ sig="void setEmptyView(int,int)"
+ line="31"
+ startpos="1991"
+ endpos="2003"
+>
+	<marker line="-1" type="param">
+		<operand  start="2008" length="6" line="31">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2020" length="11" line="31">
+			<expr><![CDATA[emptyViewId]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2045" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2041" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2062" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2045" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setChronometer:(IJLjava/lang/String;Z)V@android.widget.RemoteViews"
+ sig="void setChronometer(int,long,String,boolean)"
+ line="32"
+ startpos="2087"
+ endpos="2101"
+>
+	<marker line="-1" type="param">
+		<operand  start="2106" length="6" line="32">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2119" length="4" line="32">
+			<expr><![CDATA[base]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2142" length="6" line="32">
+			<expr><![CDATA[format]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2158" length="7" line="32">
+			<expr><![CDATA[started]]></expr>
+		</operand>
+	</marker>
+	<type  start="2125" length="16" line="32" chordsig="java.lang.String"/>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2179" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2175" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2196" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2179" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setProgressBar:(IIIZ)V@android.widget.RemoteViews"
+ sig="void setProgressBar(int,int,int,boolean)"
+ line="33"
+ startpos="2221"
+ endpos="2235"
+>
+	<marker line="-1" type="param">
+		<operand  start="2240" length="6" line="33">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2252" length="3" line="33">
+			<expr><![CDATA[max]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2261" length="8" line="33">
+			<expr><![CDATA[progress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2279" length="13" line="33">
+			<expr><![CDATA[indeterminate]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2306" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2302" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2323" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2306" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnClickPendingIntent:(ILandroid/app/PendingIntent;)V@android.widget.RemoteViews"
+ sig="void setOnClickPendingIntent(int,PendingIntent)"
+ line="34"
+ startpos="2348"
+ endpos="2371"
+>
+	<marker line="-1" type="param">
+		<operand  start="2376" length="6" line="34">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2410" length="13" line="34">
+			<expr><![CDATA[pendingIntent]]></expr>
+		</operand>
+	</marker>
+	<type  start="2384" length="25" line="34" chordsig="android.app.PendingIntent"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2437" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2433" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2454" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2437" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPendingIntentTemplate:(ILandroid/app/PendingIntent;)V@android.widget.RemoteViews"
+ sig="void setPendingIntentTemplate(int,PendingIntent)"
+ line="35"
+ startpos="2479"
+ endpos="2503"
+>
+	<marker line="-1" type="param">
+		<operand  start="2508" length="6" line="35">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2542" length="21" line="35">
+			<expr><![CDATA[pendingIntentTemplate]]></expr>
+		</operand>
+	</marker>
+	<type  start="2516" length="25" line="35" chordsig="android.app.PendingIntent"/>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2577" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2573" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2594" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2577" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnClickFillInIntent:(ILandroid/content/Intent;)V@android.widget.RemoteViews"
+ sig="void setOnClickFillInIntent(int,Intent)"
+ line="36"
+ startpos="2619"
+ endpos="2641"
+>
+	<marker line="-1" type="param">
+		<operand  start="2646" length="6" line="36">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2677" length="12" line="36">
+			<expr><![CDATA[fillInIntent]]></expr>
+		</operand>
+	</marker>
+	<type  start="2654" length="22" line="36" chordsig="android.content.Intent"/>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2703" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2699" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2720" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2703" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTextColor:(II)V@android.widget.RemoteViews"
+ sig="void setTextColor(int,int)"
+ line="37"
+ startpos="2745"
+ endpos="2757"
+>
+	<marker line="-1" type="param">
+		<operand  start="2762" length="6" line="37">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2774" length="5" line="37">
+			<expr><![CDATA[color]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2793" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2789" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2810" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2793" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setRemoteAdapter:(IILandroid/content/Intent;)V@android.widget.RemoteViews"
+ sig="void setRemoteAdapter(int,int,Intent)"
+ line="38"
+ startpos="2835"
+ endpos="2851"
+>
+	<marker line="-1" type="param">
+		<operand  start="2856" length="11" line="38">
+			<expr><![CDATA[appWidgetId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2873" length="6" line="38">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2904" length="6" line="38">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="2881" length="22" line="38" chordsig="android.content.Intent"/>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2924" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2920" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2941" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2924" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setRemoteAdapter:(ILandroid/content/Intent;)V@android.widget.RemoteViews"
+ sig="void setRemoteAdapter(int,Intent)"
+ line="39"
+ startpos="2966"
+ endpos="2982"
+>
+	<marker line="-1" type="param">
+		<operand  start="2987" length="6" line="39">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3018" length="6" line="39">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="2995" length="22" line="39" chordsig="android.content.Intent"/>
+	<newexpr line="39" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3038" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3034" length="29" line="39">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3055" length="7" line="39">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3038" length="16" line="39" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setScrollPosition:(II)V@android.widget.RemoteViews"
+ sig="void setScrollPosition(int,int)"
+ line="40"
+ startpos="3080"
+ endpos="3097"
+>
+	<marker line="-1" type="param">
+		<operand  start="3102" length="6" line="40">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3114" length="8" line="40">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3136" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3132" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3153" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3136" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setRelativeScrollPosition:(II)V@android.widget.RemoteViews"
+ sig="void setRelativeScrollPosition(int,int)"
+ line="41"
+ startpos="3178"
+ endpos="3203"
+>
+	<marker line="-1" type="param">
+		<operand  start="3208" length="6" line="41">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3220" length="6" line="41">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3240" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3236" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3257" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3240" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setBoolean:(ILjava/lang/String;Z)V@android.widget.RemoteViews"
+ sig="void setBoolean(int,String,boolean)"
+ line="42"
+ startpos="3282"
+ endpos="3292"
+>
+	<marker line="-1" type="param">
+		<operand  start="3297" length="6" line="42">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3322" length="10" line="42">
+			<expr><![CDATA[methodName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3342" length="5" line="42">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="3305" length="16" line="42" chordsig="java.lang.String"/>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3361" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3357" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3378" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3361" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setByte:(ILjava/lang/String;B)V@android.widget.RemoteViews"
+ sig="void setByte(int,String,byte)"
+ line="43"
+ startpos="3403"
+ endpos="3410"
+>
+	<marker line="-1" type="param">
+		<operand  start="3415" length="6" line="43">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3440" length="10" line="43">
+			<expr><![CDATA[methodName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3457" length="5" line="43">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="3423" length="16" line="43" chordsig="java.lang.String"/>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3476" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3472" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3493" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3476" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setShort:(ILjava/lang/String;S)V@android.widget.RemoteViews"
+ sig="void setShort(int,String,short)"
+ line="44"
+ startpos="3518"
+ endpos="3526"
+>
+	<marker line="-1" type="param">
+		<operand  start="3531" length="6" line="44">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3556" length="10" line="44">
+			<expr><![CDATA[methodName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3574" length="5" line="44">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="3539" length="16" line="44" chordsig="java.lang.String"/>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3593" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3589" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3610" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3593" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setInt:(ILjava/lang/String;I)V@android.widget.RemoteViews"
+ sig="void setInt(int,String,int)"
+ line="45"
+ startpos="3635"
+ endpos="3641"
+>
+	<marker line="-1" type="param">
+		<operand  start="3646" length="6" line="45">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3671" length="10" line="45">
+			<expr><![CDATA[methodName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3687" length="5" line="45">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="3654" length="16" line="45" chordsig="java.lang.String"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3706" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3702" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3723" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3706" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setLong:(ILjava/lang/String;J)V@android.widget.RemoteViews"
+ sig="void setLong(int,String,long)"
+ line="46"
+ startpos="3748"
+ endpos="3755"
+>
+	<marker line="-1" type="param">
+		<operand  start="3760" length="6" line="46">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3785" length="10" line="46">
+			<expr><![CDATA[methodName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3802" length="5" line="46">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="3768" length="16" line="46" chordsig="java.lang.String"/>
+	<newexpr line="46" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3821" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3817" length="29" line="46">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3838" length="7" line="46">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3821" length="16" line="46" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setFloat:(ILjava/lang/String;F)V@android.widget.RemoteViews"
+ sig="void setFloat(int,String,float)"
+ line="47"
+ startpos="3863"
+ endpos="3871"
+>
+	<marker line="-1" type="param">
+		<operand  start="3876" length="6" line="47">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3901" length="10" line="47">
+			<expr><![CDATA[methodName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3919" length="5" line="47">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="3884" length="16" line="47" chordsig="java.lang.String"/>
+	<newexpr line="47" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3938" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3934" length="29" line="47">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3955" length="7" line="47">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3938" length="16" line="47" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDouble:(ILjava/lang/String;D)V@android.widget.RemoteViews"
+ sig="void setDouble(int,String,double)"
+ line="48"
+ startpos="3980"
+ endpos="3989"
+>
+	<marker line="-1" type="param">
+		<operand  start="3994" length="6" line="48">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4019" length="10" line="48">
+			<expr><![CDATA[methodName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4038" length="5" line="48">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="4002" length="16" line="48" chordsig="java.lang.String"/>
+	<newexpr line="48" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4057" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4053" length="29" line="48">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4074" length="7" line="48">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4057" length="16" line="48" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setChar:(ILjava/lang/String;C)V@android.widget.RemoteViews"
+ sig="void setChar(int,String,char)"
+ line="49"
+ startpos="4099"
+ endpos="4106"
+>
+	<marker line="-1" type="param">
+		<operand  start="4111" length="6" line="49">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4136" length="10" line="49">
+			<expr><![CDATA[methodName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4153" length="5" line="49">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="4119" length="16" line="49" chordsig="java.lang.String"/>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4172" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4168" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4189" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4172" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setString:(ILjava/lang/String;Ljava/lang/String;)V@android.widget.RemoteViews"
+ sig="void setString(int,String,String)"
+ line="50"
+ startpos="4214"
+ endpos="4223"
+>
+	<marker line="-1" type="param">
+		<operand  start="4228" length="6" line="50">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4253" length="10" line="50">
+			<expr><![CDATA[methodName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4282" length="5" line="50">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="4236" length="16" line="50" chordsig="java.lang.String"/>
+	<type  start="4265" length="16" line="50" chordsig="java.lang.String"/>
+	<newexpr line="50" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4301" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4297" length="29" line="50">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4318" length="7" line="50">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4301" length="16" line="50" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setCharSequence:(ILjava/lang/String;Ljava/lang/CharSequence;)V@android.widget.RemoteViews"
+ sig="void setCharSequence(int,String,CharSequence)"
+ line="51"
+ startpos="4343"
+ endpos="4358"
+>
+	<marker line="-1" type="param">
+		<operand  start="4363" length="6" line="51">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4388" length="10" line="51">
+			<expr><![CDATA[methodName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4423" length="5" line="51">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="4371" length="16" line="51" chordsig="java.lang.String"/>
+	<type  start="4400" length="22" line="51" chordsig="java.lang.CharSequence"/>
+	<newexpr line="51" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4442" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4438" length="29" line="51">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4459" length="7" line="51">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4442" length="16" line="51" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setUri:(ILjava/lang/String;Landroid/net/Uri;)V@android.widget.RemoteViews"
+ sig="void setUri(int,String,Uri)"
+ line="52"
+ startpos="4484"
+ endpos="4490"
+>
+	<marker line="-1" type="param">
+		<operand  start="4495" length="6" line="52">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4520" length="10" line="52">
+			<expr><![CDATA[methodName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4548" length="5" line="52">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="4503" length="16" line="52" chordsig="java.lang.String"/>
+	<type  start="4532" length="15" line="52" chordsig="android.net.Uri"/>
+	<newexpr line="52" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4567" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4563" length="29" line="52">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4584" length="7" line="52">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4567" length="16" line="52" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setBitmap:(ILjava/lang/String;Landroid/graphics/Bitmap;)V@android.widget.RemoteViews"
+ sig="void setBitmap(int,String,Bitmap)"
+ line="53"
+ startpos="4609"
+ endpos="4618"
+>
+	<marker line="-1" type="param">
+		<operand  start="4623" length="6" line="53">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4648" length="10" line="53">
+			<expr><![CDATA[methodName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4684" length="5" line="53">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="4631" length="16" line="53" chordsig="java.lang.String"/>
+	<type  start="4660" length="23" line="53" chordsig="android.graphics.Bitmap"/>
+	<newexpr line="53" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4703" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4699" length="29" line="53">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4720" length="7" line="53">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4703" length="16" line="53" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setBundle:(ILjava/lang/String;Landroid/os/Bundle;)V@android.widget.RemoteViews"
+ sig="void setBundle(int,String,Bundle)"
+ line="54"
+ startpos="4745"
+ endpos="4754"
+>
+	<marker line="-1" type="param">
+		<operand  start="4759" length="6" line="54">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4784" length="10" line="54">
+			<expr><![CDATA[methodName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4814" length="5" line="54">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="4767" length="16" line="54" chordsig="java.lang.String"/>
+	<type  start="4796" length="17" line="54" chordsig="android.os.Bundle"/>
+	<newexpr line="54" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4833" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4829" length="29" line="54">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4850" length="7" line="54">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4833" length="16" line="54" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setIntent:(ILjava/lang/String;Landroid/content/Intent;)V@android.widget.RemoteViews"
+ sig="void setIntent(int,String,Intent)"
+ line="55"
+ startpos="4875"
+ endpos="4884"
+>
+	<marker line="-1" type="param">
+		<operand  start="4889" length="6" line="55">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4914" length="10" line="55">
+			<expr><![CDATA[methodName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4949" length="5" line="55">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="4897" length="16" line="55" chordsig="java.lang.String"/>
+	<type  start="4926" length="22" line="55" chordsig="android.content.Intent"/>
+	<newexpr line="55" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4968" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4964" length="29" line="55">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4985" length="7" line="55">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4968" length="16" line="55" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setContentDescription:(ILjava/lang/CharSequence;)V@android.widget.RemoteViews"
+ sig="void setContentDescription(int,CharSequence)"
+ line="56"
+ startpos="5010"
+ endpos="5031"
+>
+	<marker line="-1" type="param">
+		<operand  start="5036" length="6" line="56">
+			<expr><![CDATA[viewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5067" length="18" line="56">
+			<expr><![CDATA[contentDescription]]></expr>
+		</operand>
+	</marker>
+	<type  start="5044" length="22" line="56" chordsig="java.lang.CharSequence"/>
+	<newexpr line="56" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5099" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5095" length="29" line="56">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5116" length="7" line="56">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5099" length="16" line="56" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="apply:(Landroid/content/Context;Landroid/view/ViewGroup;)Landroid/view/View;@android.widget.RemoteViews"
+ sig="View apply(Context,ViewGroup)"
+ line="57"
+ startpos="5154"
+ endpos="5159"
+>
+	<marker line="-1" type="param">
+		<operand  start="5184" length="7" line="57">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5216" length="6" line="57">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<type  start="5136" length="17" line="57" chordsig="android.view.View"/>
+	<type  start="5160" length="23" line="57" chordsig="android.content.Context"/>
+	<type  start="5193" length="22" line="57" chordsig="android.view.ViewGroup"/>
+	<newexpr line="57" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5236" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5232" length="29" line="57">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5253" length="7" line="57">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5236" length="16" line="57" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="reapply:(Landroid/content/Context;Landroid/view/View;)V@android.widget.RemoteViews"
+ sig="void reapply(Context,View)"
+ line="58"
+ startpos="5278"
+ endpos="5285"
+>
+	<marker line="-1" type="param">
+		<operand  start="5310" length="7" line="58">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5337" length="1" line="58">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="5286" length="23" line="58" chordsig="android.content.Context"/>
+	<type  start="5319" length="17" line="58" chordsig="android.view.View"/>
+	<newexpr line="58" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5352" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5348" length="29" line="58">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5369" length="7" line="58">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5352" length="16" line="58" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onLoadClass:(Ljava/lang/Class;)Z@android.widget.RemoteViews"
+ sig="boolean onLoadClass(Class)"
+ line="59"
+ startpos="5397"
+ endpos="5408"
+>
+	<marker line="-1" type="param">
+		<operand  start="5425" length="5" line="59">
+			<expr><![CDATA[clazz]]></expr>
+		</operand>
+	</marker>
+	<type  start="5409" length="15" line="59" chordsig="java.lang.Class"/>
+	<newexpr line="59" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5444" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5440" length="29" line="59">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5461" length="7" line="59">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5444" length="16" line="59" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.widget.RemoteViews"
+ sig="int describeContents()"
+ line="60"
+ startpos="5485"
+ endpos="5501"
+>
+	<newexpr line="60" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5516" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5512" length="29" line="60">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5533" length="7" line="60">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5516" length="16" line="60" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.widget.RemoteViews"
+ sig="void writeToParcel(Parcel,int)"
+ line="61"
+ startpos="5558"
+ endpos="5571"
+>
+	<marker line="-1" type="param">
+		<operand  start="5590" length="4" line="61">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5600" length="5" line="61">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="5572" length="17" line="61" chordsig="android.os.Parcel"/>
+	<newexpr line="61" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5619" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5615" length="29" line="61">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5636" length="7" line="61">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5619" length="16" line="61" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="5668" length="29" line="62" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="5698" length="26" line="62" chordsig="android.widget.RemoteViews"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.widget.RemoteViews"
+ line="63"
+>
+</method>
+</class>
+</root>

@@ -1,0 +1,41 @@
+<root>
+<class chordsig="android.graphics.AvoidXfermode" line="3">
+	<type  start="87" length="25" line="4" chordsig="android.graphics.Xfermode"/>
+<class chordsig="android.graphics.AvoidXfermode$Mode" line="6">
+</class>
+<method
+ chordsig="&lt;init&gt;:(IILandroid/graphics/AvoidXfermode$Mode;)V@android.graphics.AvoidXfermode"
+ sig="AvoidXfermode(int,int,Mode)"
+ line="11"
+ startpos="170"
+ endpos="183"
+>
+	<marker line="-1" type="param">
+		<operand  start="188" length="7" line="11">
+			<expr><![CDATA[opColor]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="201" length="9" line="11">
+			<expr><![CDATA[tolerance]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="248" length="4" line="11">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+	<type  start="212" length="35" line="11" chordsig="android.graphics.AvoidXfermode$Mode"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="266" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="262" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="283" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="266" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

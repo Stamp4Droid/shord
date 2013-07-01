@@ -1,0 +1,713 @@
+<root>
+<class chordsig="java.net.URL" line="6">
+	<type  start="141" length="20" line="6" chordsig="java.io.Serializable"/>
+<method
+ chordsig="setURLStreamHandlerFactory:(Ljava/net/URLStreamHandlerFactory;)V@java.net.URL"
+ sig="void setURLStreamHandlerFactory(URLStreamHandlerFactory)"
+ line="8"
+ startpos="201"
+ endpos="227"
+>
+	<marker line="-1" type="param">
+		<operand  start="261" length="7" line="8">
+			<expr><![CDATA[factory]]></expr>
+		</operand>
+	</marker>
+	<type  start="228" length="32" line="8" chordsig="java.net.URLStreamHandlerFactory"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="290" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="286" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="307" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="290" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="set:(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;)V@java.net.URL"
+ sig="void set(String,String,int,String,String)"
+ line="12"
+ startpos="343"
+ endpos="346"
+>
+	<marker line="-1" type="param">
+		<operand  start="364" length="8" line="12">
+			<expr><![CDATA[protocol]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="391" length="4" line="12">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="401" length="4" line="12">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="424" length="4" line="12">
+			<expr><![CDATA[file]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="447" length="3" line="12">
+			<expr><![CDATA[ref]]></expr>
+		</operand>
+	</marker>
+	<type  start="347" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="374" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="407" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="430" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="472" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="468" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="489" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="472" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.net.URL"
+ sig="boolean equals(Object)"
+ line="16"
+ startpos="525"
+ endpos="531"
+>
+	<marker line="-1" type="param">
+		<operand  start="549" length="1" line="16">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="532" length="16" line="16" chordsig="java.lang.Object"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="572" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="568" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="589" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="572" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="sameFile:(Ljava/net/URL;)Z@java.net.URL"
+ sig="boolean sameFile(URL)"
+ line="20"
+ startpos="625"
+ endpos="633"
+>
+	<marker line="-1" type="param">
+		<operand  start="647" length="8" line="20">
+			<expr><![CDATA[otherURL]]></expr>
+		</operand>
+	</marker>
+	<type  start="634" length="12" line="20" chordsig="java.net.URL"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="677" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="673" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="694" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="677" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@java.net.URL"
+ sig="int hashCode()"
+ line="24"
+ startpos="726"
+ endpos="734"
+>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="757" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="753" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="774" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="757" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="openStream:()Ljava/io/InputStream;@java.net.URL"
+ sig="InputStream openStream()"
+ line="28"
+ startpos="828"
+ endpos="838"
+>
+	<type  start="808" length="19" line="28" chordsig="java.io.InputStream"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="888" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="884" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="905" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="888" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toURI:()Ljava/net/URI;@java.net.URL"
+ sig="URI toURI()"
+ line="32"
+ startpos="946"
+ endpos="951"
+>
+	<type  start="933" length="12" line="32" chordsig="java.net.URI"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1009" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1005" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1026" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1009" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.net.URL"
+ sig="String toString()"
+ line="36"
+ startpos="1071"
+ endpos="1079"
+>
+	<type  start="1054" length="16" line="36" chordsig="java.lang.String"/>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1102" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1098" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1119" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1102" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toExternalForm:()Ljava/lang/String;@java.net.URL"
+ sig="String toExternalForm()"
+ line="40"
+ startpos="1164"
+ endpos="1178"
+>
+	<type  start="1147" length="16" line="40" chordsig="java.lang.String"/>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1201" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1197" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1218" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1201" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getProtocol:()Ljava/lang/String;@java.net.URL"
+ sig="String getProtocol()"
+ line="44"
+ startpos="1263"
+ endpos="1274"
+>
+	<type  start="1246" length="16" line="44" chordsig="java.lang.String"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1297" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1293" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1314" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1297" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAuthority:()Ljava/lang/String;@java.net.URL"
+ sig="String getAuthority()"
+ line="48"
+ startpos="1359"
+ endpos="1371"
+>
+	<type  start="1342" length="16" line="48" chordsig="java.lang.String"/>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1394" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1390" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1411" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1394" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getUserInfo:()Ljava/lang/String;@java.net.URL"
+ sig="String getUserInfo()"
+ line="52"
+ startpos="1456"
+ endpos="1467"
+>
+	<type  start="1439" length="16" line="52" chordsig="java.lang.String"/>
+	<newexpr line="53" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1490" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1486" length="29" line="53">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1507" length="7" line="53">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1490" length="16" line="53" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getHost:()Ljava/lang/String;@java.net.URL"
+ sig="String getHost()"
+ line="56"
+ startpos="1552"
+ endpos="1559"
+>
+	<type  start="1535" length="16" line="56" chordsig="java.lang.String"/>
+	<newexpr line="57" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1582" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1578" length="29" line="57">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1599" length="7" line="57">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1582" length="16" line="57" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPort:()I@java.net.URL"
+ sig="int getPort()"
+ line="60"
+ startpos="1631"
+ endpos="1638"
+>
+	<newexpr line="61" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1661" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1657" length="29" line="61">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1678" length="7" line="61">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1661" length="16" line="61" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDefaultPort:()I@java.net.URL"
+ sig="int getDefaultPort()"
+ line="64"
+ startpos="1710"
+ endpos="1724"
+>
+	<newexpr line="65" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1747" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1743" length="29" line="65">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1764" length="7" line="65">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1747" length="16" line="65" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFile:()Ljava/lang/String;@java.net.URL"
+ sig="String getFile()"
+ line="68"
+ startpos="1809"
+ endpos="1816"
+>
+	<type  start="1792" length="16" line="68" chordsig="java.lang.String"/>
+	<newexpr line="69" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1839" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1835" length="29" line="69">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1856" length="7" line="69">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1839" length="16" line="69" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPath:()Ljava/lang/String;@java.net.URL"
+ sig="String getPath()"
+ line="72"
+ startpos="1901"
+ endpos="1908"
+>
+	<type  start="1884" length="16" line="72" chordsig="java.lang.String"/>
+	<newexpr line="73" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1931" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1927" length="29" line="73">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1948" length="7" line="73">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1931" length="16" line="73" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getQuery:()Ljava/lang/String;@java.net.URL"
+ sig="String getQuery()"
+ line="76"
+ startpos="1993"
+ endpos="2001"
+>
+	<type  start="1976" length="16" line="76" chordsig="java.lang.String"/>
+	<newexpr line="77" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2024" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2020" length="29" line="77">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2041" length="7" line="77">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2024" length="16" line="77" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRef:()Ljava/lang/String;@java.net.URL"
+ sig="String getRef()"
+ line="80"
+ startpos="2086"
+ endpos="2092"
+>
+	<type  start="2069" length="16" line="80" chordsig="java.lang.String"/>
+	<newexpr line="81" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2115" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2111" length="29" line="81">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2132" length="7" line="81">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2115" length="16" line="81" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="set:(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V@java.net.URL"
+ sig="void set(String,String,int,String,String,String,String,String)"
+ line="84"
+ startpos="2168"
+ endpos="2171"
+>
+	<marker line="-1" type="param">
+		<operand  start="2189" length="8" line="84">
+			<expr><![CDATA[protocol]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2216" length="4" line="84">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2226" length="4" line="84">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2249" length="9" line="84">
+			<expr><![CDATA[authority]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2277" length="8" line="84">
+			<expr><![CDATA[userInfo]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2304" length="4" line="84">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2327" length="5" line="84">
+			<expr><![CDATA[query]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2351" length="3" line="84">
+			<expr><![CDATA[ref]]></expr>
+		</operand>
+	</marker>
+	<type  start="2172" length="16" line="84" chordsig="java.lang.String"/>
+	<type  start="2199" length="16" line="84" chordsig="java.lang.String"/>
+	<type  start="2232" length="16" line="84" chordsig="java.lang.String"/>
+	<type  start="2260" length="16" line="84" chordsig="java.lang.String"/>
+	<type  start="2287" length="16" line="84" chordsig="java.lang.String"/>
+	<type  start="2310" length="16" line="84" chordsig="java.lang.String"/>
+	<type  start="2334" length="16" line="84" chordsig="java.lang.String"/>
+	<newexpr line="85" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2376" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2372" length="29" line="85">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2393" length="7" line="85">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2376" length="16" line="85" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.net.URL"
+ sig="URL(String)"
+ line="89"
+ startpos="2479"
+ endpos="2482"
+>
+	<marker line="-1" type="param">
+		<operand  start="2500" length="4" line="89">
+			<expr><![CDATA[spec]]></expr>
+		</operand>
+	</marker>
+	<type  start="2483" length="16" line="89" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/net/URL;Ljava/lang/String;)V@java.net.URL"
+ sig="URL(URL,String)"
+ line="93"
+ startpos="2622"
+ endpos="2625"
+>
+	<marker line="-1" type="param">
+		<operand  start="2639" length="7" line="93">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2665" length="4" line="93">
+			<expr><![CDATA[spec]]></expr>
+		</operand>
+	</marker>
+	<type  start="2626" length="12" line="93" chordsig="java.net.URL"/>
+	<type  start="2648" length="16" line="93" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/net/URL;Ljava/lang/String;Ljava/net/URLStreamHandler;)V@java.net.URL"
+ sig="URL(URL,String,URLStreamHandler)"
+ line="97"
+ startpos="2787"
+ endpos="2790"
+>
+	<marker line="-1" type="param">
+		<operand  start="2804" length="7" line="97">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2830" length="4" line="97">
+			<expr><![CDATA[spec]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2862" length="7" line="97">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="2791" length="12" line="97" chordsig="java.net.URL"/>
+	<type  start="2813" length="16" line="97" chordsig="java.lang.String"/>
+	<type  start="2836" length="25" line="97" chordsig="java.net.URLStreamHandler"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V@java.net.URL"
+ sig="URL(String,String,String)"
+ line="101"
+ startpos="2987"
+ endpos="2990"
+>
+	<marker line="-1" type="param">
+		<operand  start="3008" length="8" line="101">
+			<expr><![CDATA[protocol]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3035" length="4" line="101">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3058" length="4" line="101">
+			<expr><![CDATA[file]]></expr>
+		</operand>
+	</marker>
+	<type  start="2991" length="16" line="101" chordsig="java.lang.String"/>
+	<type  start="3018" length="16" line="101" chordsig="java.lang.String"/>
+	<type  start="3041" length="16" line="101" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)V@java.net.URL"
+ sig="URL(String,String,int,String)"
+ line="105"
+ startpos="3180"
+ endpos="3183"
+>
+	<marker line="-1" type="param">
+		<operand  start="3201" length="8" line="105">
+			<expr><![CDATA[protocol]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3228" length="4" line="105">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3238" length="4" line="105">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3261" length="4" line="105">
+			<expr><![CDATA[file]]></expr>
+		</operand>
+	</marker>
+	<type  start="3184" length="16" line="105" chordsig="java.lang.String"/>
+	<type  start="3211" length="16" line="105" chordsig="java.lang.String"/>
+	<type  start="3244" length="16" line="105" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/net/URLStreamHandler;)V@java.net.URL"
+ sig="URL(String,String,int,String,URLStreamHandler)"
+ line="109"
+ startpos="3383"
+ endpos="3386"
+>
+	<marker line="-1" type="param">
+		<operand  start="3404" length="8" line="109">
+			<expr><![CDATA[protocol]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3431" length="4" line="109">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3441" length="4" line="109">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3464" length="4" line="109">
+			<expr><![CDATA[file]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3496" length="7" line="109">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="3387" length="16" line="109" chordsig="java.lang.String"/>
+	<type  start="3414" length="16" line="109" chordsig="java.lang.String"/>
+	<type  start="3447" length="16" line="109" chordsig="java.lang.String"/>
+	<type  start="3470" length="25" line="109" chordsig="java.net.URLStreamHandler"/>
+</method>
+<method
+ chordsig="openConnection:()Ljava/net/URLConnection;@java.net.URL"
+ sig="URLConnection openConnection()"
+ line="113"
+ startpos="3685"
+ endpos="3699"
+>
+	<type  start="3662" length="22" line="113" chordsig="java.net.URLConnection"/>
+	<marker line="114" type="return">
+		<operand  start="3746" length="28" line="114">
+			<expr><![CDATA[new StampURLConnection(this)]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="114" chordsig="&lt;init&gt;:(Ljava/net/URL;)V@java.net.StampURLConnection" start="3750" length="18" type="invoke">
+			<expr><![CDATA[new StampURLConnection(this)]]></expr>
+		<param  start="3746" length="28" line="114">
+			<expr><![CDATA[new StampURLConnection(this)]]></expr>
+		</param>
+		<param  start="3769" length="4" line="114">
+			<expr><![CDATA[this]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3750" length="18" line="114" chordsig="java.net.StampURLConnection"/>
+</method>
+<method
+ chordsig="openConnection:(Ljava/net/Proxy;)Ljava/net/URLConnection;@java.net.URL"
+ sig="URLConnection openConnection(Proxy)"
+ line="118"
+ startpos="3916"
+ endpos="3930"
+>
+	<marker line="-1" type="param">
+		<operand  start="3946" length="5" line="118">
+			<expr><![CDATA[proxy]]></expr>
+		</operand>
+	</marker>
+	<type  start="3893" length="22" line="118" chordsig="java.net.URLConnection"/>
+	<type  start="3931" length="14" line="118" chordsig="java.net.Proxy"/>
+	<marker line="119" type="return">
+		<operand  start="3997" length="28" line="119">
+			<expr><![CDATA[new StampURLConnection(this)]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="119" chordsig="&lt;init&gt;:(Ljava/net/URL;)V@java.net.StampURLConnection" start="4001" length="18" type="invoke">
+			<expr><![CDATA[new StampURLConnection(this)]]></expr>
+		<param  start="3997" length="28" line="119">
+			<expr><![CDATA[new StampURLConnection(this)]]></expr>
+		</param>
+		<param  start="4020" length="4" line="119">
+			<expr><![CDATA[this]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4001" length="18" line="119" chordsig="java.net.StampURLConnection"/>
+</method>
+<method
+ chordsig="getContent:()Ljava/lang/Object;@java.net.URL"
+ sig="Object getContent()"
+ line="123"
+ startpos="4167"
+ endpos="4177"
+>
+	<type  start="4150" length="16" line="123" chordsig="java.lang.Object"/>
+	<marker line="124" type="return">
+		<operand  start="4224" length="4" line="124">
+			<expr><![CDATA[null]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getContent:([Ljava/lang/Class;)Ljava/lang/Object;@java.net.URL"
+ sig="Object getContent(Class[])"
+ line="128"
+ startpos="4370"
+ endpos="4380"
+>
+	<marker line="-1" type="param">
+		<operand  start="4399" length="5" line="128">
+			<expr><![CDATA[types]]></expr>
+		</operand>
+	</marker>
+	<type  start="4353" length="16" line="128" chordsig="java.lang.Object"/>
+	<type  start="4381" length="15" line="128" chordsig="java.lang.Class"/>
+	<marker line="129" type="return">
+		<operand  start="4450" length="4" line="129">
+			<expr><![CDATA[null]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

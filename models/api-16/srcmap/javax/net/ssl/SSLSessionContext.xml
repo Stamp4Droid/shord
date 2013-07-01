@@ -1,0 +1,69 @@
+<root>
+<class chordsig="javax.net.ssl.SSLSessionContext" line="2">
+<method
+ chordsig="getIds:()Ljava/util/Enumeration;@javax.net.ssl.SSLSessionContext"
+ sig="Enumeration&lt;byte[]&gt; getIds()"
+ line="4"
+ startpos="107"
+ endpos="113"
+>
+	<type  start="77" length="21" line="4" chordsig="java.util.Enumeration"/>
+</method>
+<method
+ chordsig="getSession:([B)Ljavax/net/ssl/SSLSession;@javax.net.ssl.SSLSessionContext"
+ sig="SSLSession getSession(byte[])"
+ line="5"
+ startpos="159"
+ endpos="169"
+>
+	<marker line="-1" type="param">
+		<operand  start="177" length="9" line="5">
+			<expr><![CDATA[sessionId]]></expr>
+		</operand>
+	</marker>
+	<type  start="134" length="24" line="5" chordsig="javax.net.ssl.SSLSession"/>
+</method>
+<method
+ chordsig="getSessionCacheSize:()I@javax.net.ssl.SSLSessionContext"
+ sig="int getSessionCacheSize()"
+ line="6"
+ startpos="210"
+ endpos="229"
+>
+</method>
+<method
+ chordsig="getSessionTimeout:()I@javax.net.ssl.SSLSessionContext"
+ sig="int getSessionTimeout()"
+ line="7"
+ startpos="254"
+ endpos="271"
+>
+</method>
+<method
+ chordsig="setSessionCacheSize:(I)V@javax.net.ssl.SSLSessionContext"
+ sig="void setSessionCacheSize(int)"
+ line="8"
+ startpos="297"
+ endpos="316"
+>
+	<marker line="-1" type="param">
+		<operand  start="321" length="4" line="8">
+			<expr><![CDATA[size]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setSessionTimeout:(I)V@javax.net.ssl.SSLSessionContext"
+ sig="void setSessionTimeout(int)"
+ line="9"
+ startpos="392"
+ endpos="409"
+>
+	<marker line="-1" type="param">
+		<operand  start="414" length="7" line="9">
+			<expr><![CDATA[seconds]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

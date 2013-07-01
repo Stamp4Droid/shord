@@ -1,0 +1,47 @@
+<root>
+<class chordsig="java.lang.NoSuchFieldException" line="2">
+	<type  start="63" length="19" line="3" chordsig="java.lang.Exception"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.lang.NoSuchFieldException"
+ sig="NoSuchFieldException()"
+ line="5"
+ startpos="93"
+ endpos="113"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="128" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="124" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="145" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="128" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.NoSuchFieldException"
+ sig="NoSuchFieldException(String)"
+ line="6"
+ startpos="165"
+ endpos="185"
+>
+	<marker line="-1" type="param">
+		<operand  start="203" length="13" line="6">
+			<expr><![CDATA[detailMessage]]></expr>
+		</operand>
+	</marker>
+	<type  start="186" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="230" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="226" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="247" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="230" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

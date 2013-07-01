@@ -1,0 +1,144 @@
+<root>
+<class chordsig="android.text.method.CharacterPickerDialog" line="2">
+	<type  start="74" length="18" line="3" chordsig="android.app.Dialog"/>
+	<type  start="106" length="46" line="4" chordsig="android.widget.AdapterView$OnItemClickListener"/>
+	<type  start="154" length="33" line="4" chordsig="android.view.View$OnClickListener"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/view/View;Landroid/text/Editable;Ljava/lang/String;Z)V@android.text.method.CharacterPickerDialog"
+ sig="CharacterPickerDialog(Context,View,Editable,String,boolean)"
+ line="6"
+ startpos="198"
+ endpos="219"
+>
+	<marker line="-1" type="param">
+		<operand  start="244" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="271" length="4" line="6">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="299" length="4" line="6">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="322" length="7" line="6">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="339" length="6" line="6">
+			<expr><![CDATA[insert]]></expr>
+		</operand>
+	</marker>
+	<type  start="220" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="253" length="17" line="6" chordsig="android.view.View"/>
+	<type  start="277" length="21" line="6" chordsig="android.text.Editable"/>
+	<type  start="305" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="356" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="392" length="48" line="6" chordsig="android.content.DialogInterface$OnCancelListener"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="458" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="454" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="475" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="458" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onCreate:(Landroid/os/Bundle;)V@android.text.method.CharacterPickerDialog"
+ sig="void onCreate(Bundle)"
+ line="7"
+ startpos="503"
+ endpos="511"
+>
+	<marker line="-1" type="param">
+		<operand  start="530" length="18" line="7">
+			<expr><![CDATA[savedInstanceState]]></expr>
+		</operand>
+	</marker>
+	<type  start="512" length="17" line="7" chordsig="android.os.Bundle"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="562" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="558" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="579" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="562" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onItemClick:(Landroid/widget/AdapterView;Landroid/view/View;IJ)V@android.text.method.CharacterPickerDialog"
+ sig="void onItemClick(AdapterView,View,int,long)"
+ line="8"
+ startpos="604"
+ endpos="615"
+>
+	<marker line="-1" type="param">
+		<operand  start="643" length="6" line="8">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="669" length="4" line="8">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="679" length="8" line="8">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="694" length="2" line="8">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<type  start="616" length="26" line="8" chordsig="android.widget.AdapterView"/>
+	<type  start="651" length="17" line="8" chordsig="android.view.View"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="710" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="706" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="727" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="710" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onClick:(Landroid/view/View;)V@android.text.method.CharacterPickerDialog"
+ sig="void onClick(View)"
+ line="9"
+ startpos="752"
+ endpos="759"
+>
+	<marker line="-1" type="param">
+		<operand  start="778" length="1" line="9">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="760" length="17" line="9" chordsig="android.view.View"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="793" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="789" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="810" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="793" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,287 @@
+<root>
+<class chordsig="java.sql.SQLWarning" line="2">
+	<type  start="52" length="21" line="3" chordsig="java.sql.SQLException"/>
+	<type  start="87" length="20" line="4" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.sql.SQLWarning"
+ sig="SQLWarning()"
+ line="6"
+ startpos="118"
+ endpos="128"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="143" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="139" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="160" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="143" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.sql.SQLWarning"
+ sig="SQLWarning(String)"
+ line="7"
+ startpos="180"
+ endpos="190"
+>
+	<marker line="-1" type="param">
+		<operand  start="208" length="9" line="7">
+			<expr><![CDATA[theReason]]></expr>
+		</operand>
+	</marker>
+	<type  start="191" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="231" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="227" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="248" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="231" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;)V@java.sql.SQLWarning"
+ sig="SQLWarning(String,String)"
+ line="8"
+ startpos="268"
+ endpos="278"
+>
+	<marker line="-1" type="param">
+		<operand  start="296" length="9" line="8">
+			<expr><![CDATA[theReason]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="324" length="11" line="8">
+			<expr><![CDATA[theSQLState]]></expr>
+		</operand>
+	</marker>
+	<type  start="279" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="307" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="349" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="345" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="366" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="349" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;I)V@java.sql.SQLWarning"
+ sig="SQLWarning(String,String,int)"
+ line="9"
+ startpos="386"
+ endpos="396"
+>
+	<marker line="-1" type="param">
+		<operand  start="414" length="9" line="9">
+			<expr><![CDATA[theReason]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="442" length="11" line="9">
+			<expr><![CDATA[theSQLState]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="459" length="12" line="9">
+			<expr><![CDATA[theErrorCode]]></expr>
+		</operand>
+	</marker>
+	<type  start="397" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="425" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="485" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="481" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="502" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="485" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Throwable;)V@java.sql.SQLWarning"
+ sig="SQLWarning(Throwable)"
+ line="10"
+ startpos="522"
+ endpos="532"
+>
+	<marker line="-1" type="param">
+		<operand  start="553" length="5" line="10">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="533" length="19" line="10" chordsig="java.lang.Throwable"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="572" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="568" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="589" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="572" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/Throwable;)V@java.sql.SQLWarning"
+ sig="SQLWarning(String,Throwable)"
+ line="11"
+ startpos="609"
+ endpos="619"
+>
+	<marker line="-1" type="param">
+		<operand  start="637" length="6" line="11">
+			<expr><![CDATA[reason]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="665" length="5" line="11">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="620" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="645" length="19" line="11" chordsig="java.lang.Throwable"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="684" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="680" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="701" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="684" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V@java.sql.SQLWarning"
+ sig="SQLWarning(String,String,Throwable)"
+ line="12"
+ startpos="721"
+ endpos="731"
+>
+	<marker line="-1" type="param">
+		<operand  start="749" length="6" line="12">
+			<expr><![CDATA[reason]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="774" length="8" line="12">
+			<expr><![CDATA[SQLState]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="804" length="5" line="12">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="732" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="757" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="784" length="19" line="12" chordsig="java.lang.Throwable"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="823" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="819" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="840" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="823" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;ILjava/lang/Throwable;)V@java.sql.SQLWarning"
+ sig="SQLWarning(String,String,int,Throwable)"
+ line="13"
+ startpos="860"
+ endpos="870"
+>
+	<marker line="-1" type="param">
+		<operand  start="888" length="6" line="13">
+			<expr><![CDATA[reason]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="913" length="8" line="13">
+			<expr><![CDATA[SQLState]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="927" length="10" line="13">
+			<expr><![CDATA[vendorCode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="959" length="5" line="13">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="871" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="896" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="939" length="19" line="13" chordsig="java.lang.Throwable"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="978" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="974" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="995" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="978" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getNextWarning:()Ljava/sql/SQLWarning;@java.sql.SQLWarning"
+ sig="SQLWarning getNextWarning()"
+ line="14"
+ startpos="1035"
+ endpos="1049"
+>
+	<type  start="1015" length="19" line="14" chordsig="java.sql.SQLWarning"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1064" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1060" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1081" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1064" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setNextWarning:(Ljava/sql/SQLWarning;)V@java.sql.SQLWarning"
+ sig="void setNextWarning(SQLWarning)"
+ line="15"
+ startpos="1106"
+ endpos="1120"
+>
+	<marker line="-1" type="param">
+		<operand  start="1141" length="1" line="15">
+			<expr><![CDATA[w]]></expr>
+		</operand>
+	</marker>
+	<type  start="1121" length="19" line="15" chordsig="java.sql.SQLWarning"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1156" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1152" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1173" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1156" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

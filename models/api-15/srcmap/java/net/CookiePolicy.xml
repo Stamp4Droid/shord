@@ -1,0 +1,27 @@
+<root>
+<class chordsig="java.net.CookiePolicy" line="2">
+<method
+ chordsig="shouldAccept:(Ljava/net/URI;Ljava/net/HttpCookie;)Z@java.net.CookiePolicy"
+ sig="boolean shouldAccept(URI,HttpCookie)"
+ line="4"
+ startpos="75"
+ endpos="87"
+>
+	<marker line="-1" type="param">
+		<operand  start="101" length="3" line="4">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="126" length="6" line="4">
+			<expr><![CDATA[cookie]]></expr>
+		</operand>
+	</marker>
+	<type  start="88" length="12" line="4" chordsig="java.net.URI"/>
+	<type  start="106" length="19" line="4" chordsig="java.net.HttpCookie"/>
+</method>
+	<type  start="155" length="21" line="5" chordsig="java.net.CookiePolicy"/>
+	<type  start="216" length="21" line="6" chordsig="java.net.CookiePolicy"/>
+	<type  start="278" length="21" line="7" chordsig="java.net.CookiePolicy"/>
+</class>
+</root>

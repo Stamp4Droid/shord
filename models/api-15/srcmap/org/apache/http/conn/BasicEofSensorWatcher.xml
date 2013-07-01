@@ -1,0 +1,107 @@
+<root>
+<class chordsig="org.apache.http.conn.BasicEofSensorWatcher" line="2">
+	<type  start="78" length="37" line="3" chordsig="org.apache.http.conn.EofSensorWatcher"/>
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/conn/ManagedClientConnection;Z)V@org.apache.http.conn.BasicEofSensorWatcher"
+ sig="BasicEofSensorWatcher(ManagedClientConnection,boolean)"
+ line="5"
+ startpos="126"
+ endpos="147"
+>
+	<marker line="-1" type="param">
+		<operand  start="193" length="4" line="5">
+			<expr><![CDATA[conn]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="207" length="5" line="5">
+			<expr><![CDATA[reuse]]></expr>
+		</operand>
+	</marker>
+	<type  start="148" length="44" line="5" chordsig="org.apache.http.conn.ManagedClientConnection"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="226" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="222" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="243" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="226" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="eofDetected:(Ljava/io/InputStream;)Z@org.apache.http.conn.BasicEofSensorWatcher"
+ sig="boolean eofDetected(InputStream)"
+ line="6"
+ startpos="271"
+ endpos="282"
+>
+	<marker line="-1" type="param">
+		<operand  start="303" length="7" line="6">
+			<expr><![CDATA[wrapped]]></expr>
+		</operand>
+	</marker>
+	<type  start="283" length="19" line="6" chordsig="java.io.InputStream"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="351" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="347" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="368" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="351" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="streamClosed:(Ljava/io/InputStream;)Z@org.apache.http.conn.BasicEofSensorWatcher"
+ sig="boolean streamClosed(InputStream)"
+ line="7"
+ startpos="396"
+ endpos="408"
+>
+	<marker line="-1" type="param">
+		<operand  start="429" length="7" line="7">
+			<expr><![CDATA[wrapped]]></expr>
+		</operand>
+	</marker>
+	<type  start="409" length="19" line="7" chordsig="java.io.InputStream"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="477" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="473" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="494" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="477" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="streamAbort:(Ljava/io/InputStream;)Z@org.apache.http.conn.BasicEofSensorWatcher"
+ sig="boolean streamAbort(InputStream)"
+ line="8"
+ startpos="522"
+ endpos="533"
+>
+	<marker line="-1" type="param">
+		<operand  start="554" length="7" line="8">
+			<expr><![CDATA[wrapped]]></expr>
+		</operand>
+	</marker>
+	<type  start="534" length="19" line="8" chordsig="java.io.InputStream"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="602" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="598" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="619" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="602" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="641" length="44" line="9" chordsig="org.apache.http.conn.ManagedClientConnection"/>
+</class>
+</root>

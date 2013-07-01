@@ -1,0 +1,76 @@
+<root>
+<class chordsig="android.view.animation.BounceInterpolator" line="2">
+	<type  start="77" length="35" line="3" chordsig="android.view.animation.Interpolator"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.view.animation.BounceInterpolator"
+ sig="BounceInterpolator()"
+ line="5"
+ startpos="123"
+ endpos="141"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="156" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="152" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="173" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="156" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.view.animation.BounceInterpolator"
+ sig="BounceInterpolator(Context,AttributeSet)"
+ line="7"
+ startpos="250"
+ endpos="268"
+>
+	<marker line="-1" type="param">
+		<operand  start="293" length="7" line="7">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="328" length="5" line="7">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="269" length="23" line="7" chordsig="android.content.Context"/>
+	<type  start="302" length="25" line="7" chordsig="android.util.AttributeSet"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="347" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="343" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="364" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="347" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInterpolation:(F)F@android.view.animation.BounceInterpolator"
+ sig="float getInterpolation(float)"
+ line="8"
+ startpos="390"
+ endpos="406"
+>
+	<marker line="-1" type="param">
+		<operand  start="413" length="1" line="8">
+			<expr><![CDATA[t]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="428" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="424" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="445" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="428" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

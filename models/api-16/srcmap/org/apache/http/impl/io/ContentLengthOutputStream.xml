@@ -1,0 +1,149 @@
+<root>
+<class chordsig="org.apache.http.impl.io.ContentLengthOutputStream" line="2">
+	<type  start="82" length="20" line="3" chordsig="java.io.OutputStream"/>
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/io/SessionOutputBuffer;J)V@org.apache.http.impl.io.ContentLengthOutputStream"
+ sig="ContentLengthOutputStream(SessionOutputBuffer,long)"
+ line="5"
+ startpos="113"
+ endpos="138"
+>
+	<marker line="-1" type="param">
+		<operand  start="178" length="3" line="5">
+			<expr><![CDATA[out]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="188" length="13" line="5">
+			<expr><![CDATA[contentLength]]></expr>
+		</operand>
+	</marker>
+	<type  start="139" length="38" line="5" chordsig="org.apache.http.io.SessionOutputBuffer"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="215" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="211" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="232" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="215" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:()V@org.apache.http.impl.io.ContentLengthOutputStream"
+ sig="void close()"
+ line="6"
+ startpos="257"
+ endpos="262"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="304" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="300" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="321" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="304" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="flush:()V@org.apache.http.impl.io.ContentLengthOutputStream"
+ sig="void flush()"
+ line="7"
+ startpos="346"
+ endpos="351"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="393" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="389" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="410" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="393" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="write:([BII)V@org.apache.http.impl.io.ContentLengthOutputStream"
+ sig="void write(byte[],int,int)"
+ line="8"
+ startpos="435"
+ endpos="440"
+>
+	<marker line="-1" type="param">
+		<operand  start="448" length="1" line="8">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="455" length="3" line="8">
+			<expr><![CDATA[off]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="464" length="3" line="8">
+			<expr><![CDATA[len]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="508" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="504" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="525" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="508" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="write:([B)V@org.apache.http.impl.io.ContentLengthOutputStream"
+ sig="void write(byte[])"
+ line="9"
+ startpos="550"
+ endpos="555"
+>
+	<marker line="-1" type="param">
+		<operand  start="563" length="1" line="9">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="605" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="601" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="622" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="605" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="write:(I)V@org.apache.http.impl.io.ContentLengthOutputStream"
+ sig="void write(int)"
+ line="10"
+ startpos="647"
+ endpos="652"
+>
+	<marker line="-1" type="param">
+		<operand  start="657" length="1" line="10">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="699" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="695" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="716" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="699" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

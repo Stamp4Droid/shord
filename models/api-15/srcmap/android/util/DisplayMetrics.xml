@@ -1,0 +1,83 @@
+<root>
+<class chordsig="android.util.DisplayMetrics" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.util.DisplayMetrics"
+ sig="DisplayMetrics()"
+ line="4"
+ startpos="60"
+ endpos="74"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="89" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="85" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="106" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="89" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTo:(Landroid/util/DisplayMetrics;)V@android.util.DisplayMetrics"
+ sig="void setTo(DisplayMetrics)"
+ line="5"
+ startpos="131"
+ endpos="136"
+>
+	<marker line="-1" type="param">
+		<operand  start="165" length="1" line="5">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="137" length="27" line="5" chordsig="android.util.DisplayMetrics"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="180" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="176" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="197" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="180" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setToDefaults:()V@android.util.DisplayMetrics"
+ sig="void setToDefaults()"
+ line="6"
+ startpos="222"
+ endpos="235"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="250" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="246" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="267" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="250" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.util.DisplayMetrics"
+ sig="String toString()"
+ line="7"
+ startpos="304"
+ endpos="312"
+>
+	<type  start="287" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="327" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="323" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="344" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="327" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

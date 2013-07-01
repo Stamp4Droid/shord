@@ -1,0 +1,147 @@
+<root>
+<class chordsig="java.lang.reflect.Proxy" line="2">
+	<type  start="59" length="20" line="3" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/reflect/InvocationHandler;)V@java.lang.reflect.Proxy"
+ sig="Proxy(InvocationHandler)"
+ line="5"
+ startpos="93"
+ endpos="98"
+>
+	<marker line="-1" type="param">
+		<operand  start="135" length="1" line="5">
+			<expr><![CDATA[h]]></expr>
+		</operand>
+	</marker>
+	<type  start="99" length="35" line="5" chordsig="java.lang.reflect.InvocationHandler"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="150" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="146" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="167" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="150" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getProxyClass:(Ljava/lang/ClassLoader;[Ljava/lang/Class;)Ljava/lang/Class;@java.lang.reflect.Proxy"
+ sig="Class&lt;?&gt; getProxyClass(ClassLoader,Class&lt;?&gt;)"
+ line="6"
+ startpos="213"
+ endpos="226"
+>
+	<marker line="-1" type="param">
+		<operand  start="249" length="6" line="6">
+			<expr><![CDATA[loader]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="279" length="10" line="6">
+			<expr><![CDATA[interfaces]]></expr>
+		</operand>
+	</marker>
+	<type  start="194" length="15" line="6" chordsig="java.lang.Class"/>
+	<type  start="227" length="21" line="6" chordsig="java.lang.ClassLoader"/>
+	<type  start="257" length="15" line="6" chordsig="java.lang.Class"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="345" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="341" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="362" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="345" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newProxyInstance:(Ljava/lang/ClassLoader;[Ljava/lang/Class;Ljava/lang/reflect/InvocationHandler;)Ljava/lang/Object;@java.lang.reflect.Proxy"
+ sig="Object newProxyInstance(ClassLoader,Class&lt;?&gt;[],InvocationHandler)"
+ line="7"
+ startpos="406"
+ endpos="422"
+>
+	<marker line="-1" type="param">
+		<operand  start="445" length="6" line="7">
+			<expr><![CDATA[loader]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="474" length="10" line="7">
+			<expr><![CDATA[interfaces]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="522" length="1" line="7">
+			<expr><![CDATA[h]]></expr>
+		</operand>
+	</marker>
+	<type  start="389" length="16" line="7" chordsig="java.lang.Object"/>
+	<type  start="423" length="21" line="7" chordsig="java.lang.ClassLoader"/>
+	<type  start="453" length="15" line="7" chordsig="java.lang.Class"/>
+	<type  start="486" length="35" line="7" chordsig="java.lang.reflect.InvocationHandler"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="579" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="575" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="596" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="579" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isProxyClass:(Ljava/lang/Class;)Z@java.lang.reflect.Proxy"
+ sig="boolean isProxyClass(Class&lt;?&gt;)"
+ line="8"
+ startpos="631"
+ endpos="643"
+>
+	<marker line="-1" type="param">
+		<operand  start="663" length="2" line="8">
+			<expr><![CDATA[cl]]></expr>
+		</operand>
+	</marker>
+	<type  start="644" length="15" line="8" chordsig="java.lang.Class"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="679" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="675" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="696" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="679" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInvocationHandler:(Ljava/lang/Object;)Ljava/lang/reflect/InvocationHandler;@java.lang.reflect.Proxy"
+ sig="InvocationHandler getInvocationHandler(Object)"
+ line="9"
+ startpos="759"
+ endpos="779"
+>
+	<marker line="-1" type="param">
+		<operand  start="797" length="5" line="9">
+			<expr><![CDATA[proxy]]></expr>
+		</operand>
+	</marker>
+	<type  start="723" length="35" line="9" chordsig="java.lang.reflect.InvocationHandler"/>
+	<type  start="780" length="16" line="9" chordsig="java.lang.Object"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="858" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="854" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="875" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="858" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="897" length="35" line="10" chordsig="java.lang.reflect.InvocationHandler"/>
+</class>
+</root>

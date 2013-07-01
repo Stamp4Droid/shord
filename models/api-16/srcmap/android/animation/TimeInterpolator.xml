@@ -1,0 +1,17 @@
+<root>
+<class chordsig="android.animation.TimeInterpolator" line="2">
+<method
+ chordsig="getInterpolation:(F)F@android.animation.TimeInterpolator"
+ sig="float getInterpolation(float)"
+ line="4"
+ startpos="86"
+ endpos="102"
+>
+	<marker line="-1" type="param">
+		<operand  start="109" length="5" line="4">
+			<expr><![CDATA[input]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

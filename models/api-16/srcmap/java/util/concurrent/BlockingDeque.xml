@@ -1,0 +1,420 @@
+<root>
+<class chordsig="java.util.concurrent.BlockingDeque" line="2">
+	<type  start="74" length="34" line="3" chordsig="java.util.concurrent.BlockingQueue"/>
+	<type  start="109" length="1" line="3" chordsig="java.lang.Object"/>
+	<type  start="113" length="15" line="3" chordsig="java.util.Deque"/>
+	<type  start="129" length="1" line="3" chordsig="java.lang.Object"/>
+<method
+ chordsig="addFirst:(Ljava/lang/Object;)V@java.util.concurrent.BlockingDeque"
+ sig="void addFirst(E)"
+ line="5"
+ startpos="156"
+ endpos="164"
+>
+	<marker line="-1" type="param">
+		<operand  start="167" length="1" line="5">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="165" length="1" line="5" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="addLast:(Ljava/lang/Object;)V@java.util.concurrent.BlockingDeque"
+ sig="void addLast(E)"
+ line="6"
+ startpos="193"
+ endpos="200"
+>
+	<marker line="-1" type="param">
+		<operand  start="203" length="1" line="6">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="201" length="1" line="6" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="offerFirst:(Ljava/lang/Object;)Z@java.util.concurrent.BlockingDeque"
+ sig="boolean offerFirst(E)"
+ line="7"
+ startpos="232"
+ endpos="242"
+>
+	<marker line="-1" type="param">
+		<operand  start="245" length="1" line="7">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="243" length="1" line="7" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="offerLast:(Ljava/lang/Object;)Z@java.util.concurrent.BlockingDeque"
+ sig="boolean offerLast(E)"
+ line="8"
+ startpos="274"
+ endpos="283"
+>
+	<marker line="-1" type="param">
+		<operand  start="286" length="1" line="8">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="284" length="1" line="8" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="putFirst:(Ljava/lang/Object;)V@java.util.concurrent.BlockingDeque"
+ sig="void putFirst(E)"
+ line="9"
+ startpos="312"
+ endpos="320"
+>
+	<marker line="-1" type="param">
+		<operand  start="323" length="1" line="9">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="321" length="1" line="9" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="putLast:(Ljava/lang/Object;)V@java.util.concurrent.BlockingDeque"
+ sig="void putLast(E)"
+ line="10"
+ startpos="387"
+ endpos="394"
+>
+	<marker line="-1" type="param">
+		<operand  start="397" length="1" line="10">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="395" length="1" line="10" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="offerFirst:(Ljava/lang/Object;JLjava/util/concurrent/TimeUnit;)Z@java.util.concurrent.BlockingDeque"
+ sig="boolean offerFirst(E,long,TimeUnit)"
+ line="11"
+ startpos="464"
+ endpos="474"
+>
+	<marker line="-1" type="param">
+		<operand  start="477" length="1" line="11">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="485" length="7" line="11">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="524" length="4" line="11">
+			<expr><![CDATA[unit]]></expr>
+		</operand>
+	</marker>
+	<type  start="475" length="1" line="11" chordsig="java.lang.Object"/>
+	<type  start="494" length="29" line="11" chordsig="java.util.concurrent.TimeUnit"/>
+</method>
+<method
+ chordsig="offerLast:(Ljava/lang/Object;JLjava/util/concurrent/TimeUnit;)Z@java.util.concurrent.BlockingDeque"
+ sig="boolean offerLast(E,long,TimeUnit)"
+ line="12"
+ startpos="594"
+ endpos="603"
+>
+	<marker line="-1" type="param">
+		<operand  start="606" length="1" line="12">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="614" length="7" line="12">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="653" length="4" line="12">
+			<expr><![CDATA[unit]]></expr>
+		</operand>
+	</marker>
+	<type  start="604" length="1" line="12" chordsig="java.lang.Object"/>
+	<type  start="623" length="29" line="12" chordsig="java.util.concurrent.TimeUnit"/>
+</method>
+<method
+ chordsig="takeFirst:()Ljava/lang/Object;@java.util.concurrent.BlockingDeque"
+ sig="E takeFirst()"
+ line="13"
+ startpos="717"
+ endpos="726"
+>
+	<type  start="715" length="1" line="13" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="takeLast:()Ljava/lang/Object;@java.util.concurrent.BlockingDeque"
+ sig="E takeLast()"
+ line="14"
+ startpos="787"
+ endpos="795"
+>
+	<type  start="785" length="1" line="14" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="pollFirst:(JLjava/util/concurrent/TimeUnit;)Ljava/lang/Object;@java.util.concurrent.BlockingDeque"
+ sig="E pollFirst(long,TimeUnit)"
+ line="15"
+ startpos="856"
+ endpos="865"
+>
+	<marker line="-1" type="param">
+		<operand  start="871" length="7" line="15">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="910" length="4" line="15">
+			<expr><![CDATA[unit]]></expr>
+		</operand>
+	</marker>
+	<type  start="854" length="1" line="15" chordsig="java.lang.Object"/>
+	<type  start="880" length="29" line="15" chordsig="java.util.concurrent.TimeUnit"/>
+</method>
+<method
+ chordsig="pollLast:(JLjava/util/concurrent/TimeUnit;)Ljava/lang/Object;@java.util.concurrent.BlockingDeque"
+ sig="E pollLast(long,TimeUnit)"
+ line="16"
+ startpos="974"
+ endpos="982"
+>
+	<marker line="-1" type="param">
+		<operand  start="988" length="7" line="16">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1027" length="4" line="16">
+			<expr><![CDATA[unit]]></expr>
+		</operand>
+	</marker>
+	<type  start="972" length="1" line="16" chordsig="java.lang.Object"/>
+	<type  start="997" length="29" line="16" chordsig="java.util.concurrent.TimeUnit"/>
+</method>
+<method
+ chordsig="removeFirstOccurrence:(Ljava/lang/Object;)Z@java.util.concurrent.BlockingDeque"
+ sig="boolean removeFirstOccurrence(Object)"
+ line="17"
+ startpos="1097"
+ endpos="1118"
+>
+	<marker line="-1" type="param">
+		<operand  start="1136" length="1" line="17">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="1119" length="16" line="17" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="removeLastOccurrence:(Ljava/lang/Object;)Z@java.util.concurrent.BlockingDeque"
+ sig="boolean removeLastOccurrence(Object)"
+ line="18"
+ startpos="1165"
+ endpos="1185"
+>
+	<marker line="-1" type="param">
+		<operand  start="1203" length="1" line="18">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="1186" length="16" line="18" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="add:(Ljava/lang/Object;)Z@java.util.concurrent.BlockingDeque"
+ sig="boolean add(E)"
+ line="19"
+ startpos="1232"
+ endpos="1235"
+>
+	<marker line="-1" type="param">
+		<operand  start="1238" length="1" line="19">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="1236" length="1" line="19" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="offer:(Ljava/lang/Object;)Z@java.util.concurrent.BlockingDeque"
+ sig="boolean offer(E)"
+ line="20"
+ startpos="1267"
+ endpos="1272"
+>
+	<marker line="-1" type="param">
+		<operand  start="1275" length="1" line="20">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="1273" length="1" line="20" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="put:(Ljava/lang/Object;)V@java.util.concurrent.BlockingDeque"
+ sig="void put(E)"
+ line="21"
+ startpos="1301"
+ endpos="1304"
+>
+	<marker line="-1" type="param">
+		<operand  start="1307" length="1" line="21">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="1305" length="1" line="21" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="offer:(Ljava/lang/Object;JLjava/util/concurrent/TimeUnit;)Z@java.util.concurrent.BlockingDeque"
+ sig="boolean offer(E,long,TimeUnit)"
+ line="22"
+ startpos="1374"
+ endpos="1379"
+>
+	<marker line="-1" type="param">
+		<operand  start="1382" length="1" line="22">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1390" length="7" line="22">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1429" length="4" line="22">
+			<expr><![CDATA[unit]]></expr>
+		</operand>
+	</marker>
+	<type  start="1380" length="1" line="22" chordsig="java.lang.Object"/>
+	<type  start="1399" length="29" line="22" chordsig="java.util.concurrent.TimeUnit"/>
+</method>
+<method
+ chordsig="remove:()Ljava/lang/Object;@java.util.concurrent.BlockingDeque"
+ sig="E remove()"
+ line="23"
+ startpos="1493"
+ endpos="1499"
+>
+	<type  start="1491" length="1" line="23" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="poll:()Ljava/lang/Object;@java.util.concurrent.BlockingDeque"
+ sig="E poll()"
+ line="24"
+ startpos="1522"
+ endpos="1526"
+>
+	<type  start="1520" length="1" line="24" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="take:()Ljava/lang/Object;@java.util.concurrent.BlockingDeque"
+ sig="E take()"
+ line="25"
+ startpos="1549"
+ endpos="1553"
+>
+	<type  start="1547" length="1" line="25" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="poll:(JLjava/util/concurrent/TimeUnit;)Ljava/lang/Object;@java.util.concurrent.BlockingDeque"
+ sig="E poll(long,TimeUnit)"
+ line="26"
+ startpos="1614"
+ endpos="1618"
+>
+	<marker line="-1" type="param">
+		<operand  start="1624" length="7" line="26">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1663" length="4" line="26">
+			<expr><![CDATA[unit]]></expr>
+		</operand>
+	</marker>
+	<type  start="1612" length="1" line="26" chordsig="java.lang.Object"/>
+	<type  start="1633" length="29" line="26" chordsig="java.util.concurrent.TimeUnit"/>
+</method>
+<method
+ chordsig="element:()Ljava/lang/Object;@java.util.concurrent.BlockingDeque"
+ sig="E element()"
+ line="27"
+ startpos="1727"
+ endpos="1734"
+>
+	<type  start="1725" length="1" line="27" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="peek:()Ljava/lang/Object;@java.util.concurrent.BlockingDeque"
+ sig="E peek()"
+ line="28"
+ startpos="1757"
+ endpos="1761"
+>
+	<type  start="1755" length="1" line="28" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="remove:(Ljava/lang/Object;)Z@java.util.concurrent.BlockingDeque"
+ sig="boolean remove(Object)"
+ line="29"
+ startpos="1790"
+ endpos="1796"
+>
+	<marker line="-1" type="param">
+		<operand  start="1814" length="1" line="29">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="1797" length="16" line="29" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="contains:(Ljava/lang/Object;)Z@java.util.concurrent.BlockingDeque"
+ sig="boolean contains(Object)"
+ line="30"
+ startpos="1843"
+ endpos="1851"
+>
+	<marker line="-1" type="param">
+		<operand  start="1869" length="1" line="30">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="1852" length="16" line="30" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="size:()I@java.util.concurrent.BlockingDeque"
+ sig="int size()"
+ line="31"
+ startpos="1894"
+ endpos="1898"
+>
+</method>
+<method
+ chordsig="iterator:()Ljava/util/Iterator;@java.util.concurrent.BlockingDeque"
+ sig="Iterator&lt;E&gt; iterator()"
+ line="32"
+ startpos="1941"
+ endpos="1949"
+>
+	<type  start="1919" length="18" line="32" chordsig="java.util.Iterator"/>
+	<type  start="1938" length="1" line="32" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="push:(Ljava/lang/Object;)V@java.util.concurrent.BlockingDeque"
+ sig="void push(E)"
+ line="33"
+ startpos="1975"
+ endpos="1979"
+>
+	<marker line="-1" type="param">
+		<operand  start="1982" length="1" line="33">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="1980" length="1" line="33" chordsig="java.lang.Object"/>
+</method>
+</class>
+</root>

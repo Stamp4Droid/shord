@@ -1,0 +1,238 @@
+<root>
+<class chordsig="android.net.wifi.p2p.WifiP2pDevice" line="2">
+	<type  start="70" length="21" line="3" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.net.wifi.p2p.WifiP2pDevice"
+ sig="WifiP2pDevice()"
+ line="5"
+ startpos="102"
+ endpos="115"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="130" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="126" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="147" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="130" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/net/wifi/p2p/WifiP2pDevice;)V@android.net.wifi.p2p.WifiP2pDevice"
+ sig="WifiP2pDevice(WifiP2pDevice)"
+ line="6"
+ startpos="167"
+ endpos="180"
+>
+	<marker line="-1" type="param">
+		<operand  start="216" length="6" line="6">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="181" length="34" line="6" chordsig="android.net.wifi.p2p.WifiP2pDevice"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="236" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="232" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="253" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="236" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="wpsPbcSupported:()Z@android.net.wifi.p2p.WifiP2pDevice"
+ sig="boolean wpsPbcSupported()"
+ line="7"
+ startpos="281"
+ endpos="296"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="311" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="307" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="328" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="311" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="wpsKeypadSupported:()Z@android.net.wifi.p2p.WifiP2pDevice"
+ sig="boolean wpsKeypadSupported()"
+ line="8"
+ startpos="356"
+ endpos="374"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="389" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="385" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="406" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="389" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="wpsDisplaySupported:()Z@android.net.wifi.p2p.WifiP2pDevice"
+ sig="boolean wpsDisplaySupported()"
+ line="9"
+ startpos="434"
+ endpos="453"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="468" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="464" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="485" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="468" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isServiceDiscoveryCapable:()Z@android.net.wifi.p2p.WifiP2pDevice"
+ sig="boolean isServiceDiscoveryCapable()"
+ line="10"
+ startpos="513"
+ endpos="538"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="553" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="549" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="570" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="553" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isGroupOwner:()Z@android.net.wifi.p2p.WifiP2pDevice"
+ sig="boolean isGroupOwner()"
+ line="11"
+ startpos="598"
+ endpos="610"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="625" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="621" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="642" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="625" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@android.net.wifi.p2p.WifiP2pDevice"
+ sig="boolean equals(Object)"
+ line="12"
+ startpos="670"
+ endpos="676"
+>
+	<marker line="-1" type="param">
+		<operand  start="694" length="3" line="12">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="677" length="16" line="12" chordsig="java.lang.Object"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="711" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="707" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="728" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="711" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.net.wifi.p2p.WifiP2pDevice"
+ sig="String toString()"
+ line="13"
+ startpos="765"
+ endpos="773"
+>
+	<type  start="748" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="788" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="784" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="805" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="788" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.net.wifi.p2p.WifiP2pDevice"
+ sig="int describeContents()"
+ line="14"
+ startpos="829"
+ endpos="845"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="860" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="856" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="877" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="860" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.net.wifi.p2p.WifiP2pDevice"
+ sig="void writeToParcel(Parcel,int)"
+ line="15"
+ startpos="902"
+ endpos="915"
+>
+	<marker line="-1" type="param">
+		<operand  start="934" length="4" line="15">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="944" length="5" line="15">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="916" length="17" line="15" chordsig="android.os.Parcel"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="963" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="959" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="980" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="963" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="999" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="1035" length="16" line="17" chordsig="java.lang.String"/>
+	<type  start="1074" length="16" line="18" chordsig="java.lang.String"/>
+	<type  start="1117" length="16" line="19" chordsig="java.lang.String"/>
+	<type  start="1386" length="29" line="26" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="1416" length="34" line="26" chordsig="android.net.wifi.p2p.WifiP2pDevice"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.net.wifi.p2p.WifiP2pDevice"
+ line="27"
+>
+</method>
+</class>
+</root>

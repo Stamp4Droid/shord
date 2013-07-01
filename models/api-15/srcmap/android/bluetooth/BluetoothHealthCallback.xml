@@ -1,0 +1,102 @@
+<root>
+<class chordsig="android.bluetooth.BluetoothHealthCallback" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.bluetooth.BluetoothHealthCallback"
+ sig="BluetoothHealthCallback()"
+ line="4"
+ startpos="83"
+ endpos="106"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="121" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="117" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="138" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="121" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onHealthAppConfigurationStatusChange:(Landroid/bluetooth/BluetoothHealthAppConfiguration;I)V@android.bluetooth.BluetoothHealthCallback"
+ sig="void onHealthAppConfigurationStatusChange(BluetoothHealthAppConfiguration,int)"
+ line="5"
+ startpos="163"
+ endpos="199"
+>
+	<marker line="-1" type="param">
+		<operand  start="250" length="6" line="5">
+			<expr><![CDATA[config]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="262" length="6" line="5">
+			<expr><![CDATA[status]]></expr>
+		</operand>
+	</marker>
+	<type  start="200" length="49" line="5" chordsig="android.bluetooth.BluetoothHealthAppConfiguration"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="282" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="278" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="299" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="282" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onHealthChannelStateChange:(Landroid/bluetooth/BluetoothHealthAppConfiguration;Landroid/bluetooth/BluetoothDevice;IILandroid/os/ParcelFileDescriptor;I)V@android.bluetooth.BluetoothHealthCallback"
+ sig="void onHealthChannelStateChange(BluetoothHealthAppConfiguration,BluetoothDevice,int,int,ParcelFileDescriptor,int)"
+ line="6"
+ startpos="324"
+ endpos="350"
+>
+	<marker line="-1" type="param">
+		<operand  start="401" length="6" line="6">
+			<expr><![CDATA[config]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="443" length="6" line="6">
+			<expr><![CDATA[device]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="455" length="9" line="6">
+			<expr><![CDATA[prevState]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="470" length="8" line="6">
+			<expr><![CDATA[newState]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="512" length="2" line="6">
+			<expr><![CDATA[fd]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="520" length="9" line="6">
+			<expr><![CDATA[channelId]]></expr>
+		</operand>
+	</marker>
+	<type  start="351" length="49" line="6" chordsig="android.bluetooth.BluetoothHealthAppConfiguration"/>
+	<type  start="409" length="33" line="6" chordsig="android.bluetooth.BluetoothDevice"/>
+	<type  start="480" length="31" line="6" chordsig="android.os.ParcelFileDescriptor"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="543" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="539" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="560" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="543" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

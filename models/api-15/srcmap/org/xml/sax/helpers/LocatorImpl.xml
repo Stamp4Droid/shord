@@ -1,0 +1,215 @@
+<root>
+<class chordsig="org.xml.sax.helpers.LocatorImpl" line="2">
+	<type  start="67" length="19" line="3" chordsig="org.xml.sax.Locator"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.xml.sax.helpers.LocatorImpl"
+ sig="LocatorImpl()"
+ line="5"
+ startpos="97"
+ endpos="108"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="123" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="119" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="140" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="123" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Lorg/xml/sax/Locator;)V@org.xml.sax.helpers.LocatorImpl"
+ sig="LocatorImpl(Locator)"
+ line="6"
+ startpos="160"
+ endpos="171"
+>
+	<marker line="-1" type="param">
+		<operand  start="192" length="7" line="6">
+			<expr><![CDATA[locator]]></expr>
+		</operand>
+	</marker>
+	<type  start="172" length="19" line="6" chordsig="org.xml.sax.Locator"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="213" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="209" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="230" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="213" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPublicId:()Ljava/lang/String;@org.xml.sax.helpers.LocatorImpl"
+ sig="String getPublicId()"
+ line="7"
+ startpos="267"
+ endpos="278"
+>
+	<type  start="250" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="293" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="289" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="310" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="293" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSystemId:()Ljava/lang/String;@org.xml.sax.helpers.LocatorImpl"
+ sig="String getSystemId()"
+ line="8"
+ startpos="347"
+ endpos="358"
+>
+	<type  start="330" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="373" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="369" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="390" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="373" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLineNumber:()I@org.xml.sax.helpers.LocatorImpl"
+ sig="int getLineNumber()"
+ line="9"
+ startpos="414"
+ endpos="427"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="442" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="438" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="459" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="442" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getColumnNumber:()I@org.xml.sax.helpers.LocatorImpl"
+ sig="int getColumnNumber()"
+ line="10"
+ startpos="483"
+ endpos="498"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="513" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="509" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="530" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="513" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPublicId:(Ljava/lang/String;)V@org.xml.sax.helpers.LocatorImpl"
+ sig="void setPublicId(String)"
+ line="11"
+ startpos="555"
+ endpos="566"
+>
+	<marker line="-1" type="param">
+		<operand  start="584" length="8" line="11">
+			<expr><![CDATA[publicId]]></expr>
+		</operand>
+	</marker>
+	<type  start="567" length="16" line="11" chordsig="java.lang.String"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="606" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="602" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="623" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="606" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSystemId:(Ljava/lang/String;)V@org.xml.sax.helpers.LocatorImpl"
+ sig="void setSystemId(String)"
+ line="12"
+ startpos="648"
+ endpos="659"
+>
+	<marker line="-1" type="param">
+		<operand  start="677" length="8" line="12">
+			<expr><![CDATA[systemId]]></expr>
+		</operand>
+	</marker>
+	<type  start="660" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="699" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="695" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="716" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="699" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setLineNumber:(I)V@org.xml.sax.helpers.LocatorImpl"
+ sig="void setLineNumber(int)"
+ line="13"
+ startpos="741"
+ endpos="754"
+>
+	<marker line="-1" type="param">
+		<operand  start="759" length="10" line="13">
+			<expr><![CDATA[lineNumber]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="783" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="779" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="800" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="783" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setColumnNumber:(I)V@org.xml.sax.helpers.LocatorImpl"
+ sig="void setColumnNumber(int)"
+ line="14"
+ startpos="825"
+ endpos="840"
+>
+	<marker line="-1" type="param">
+		<operand  start="845" length="12" line="14">
+			<expr><![CDATA[columnNumber]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="871" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="867" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="888" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="871" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

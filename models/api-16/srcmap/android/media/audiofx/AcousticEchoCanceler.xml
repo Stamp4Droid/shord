@@ -1,0 +1,65 @@
+<root>
+<class chordsig="android.media.audiofx.AcousticEchoCanceler" line="2">
+	<type  start="75" length="33" line="3" chordsig="android.media.audiofx.AudioEffect"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.media.audiofx.AcousticEchoCanceler"
+ sig="AcousticEchoCanceler()"
+ line="5"
+ startpos="111"
+ endpos="131"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="146" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="142" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="163" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="146" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isAvailable:()Z@android.media.audiofx.AcousticEchoCanceler"
+ sig="boolean isAvailable()"
+ line="6"
+ startpos="198"
+ endpos="209"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="224" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="220" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="241" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="224" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="create:(I)Landroid/media/audiofx/AcousticEchoCanceler;@android.media.audiofx.AcousticEchoCanceler"
+ sig="AcousticEchoCanceler create(int)"
+ line="7"
+ startpos="311"
+ endpos="317"
+>
+	<marker line="-1" type="param">
+		<operand  start="322" length="12" line="7">
+			<expr><![CDATA[audioSession]]></expr>
+		</operand>
+	</marker>
+	<type  start="268" length="42" line="7" chordsig="android.media.audiofx.AcousticEchoCanceler"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="348" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="344" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="365" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="348" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

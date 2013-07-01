@@ -1,0 +1,322 @@
+<root>
+<class chordsig="java.lang.reflect.Modifier" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@java.lang.reflect.Modifier"
+ sig="Modifier()"
+ line="4"
+ startpos="59"
+ endpos="67"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="82" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="78" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="99" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="82" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isAbstract:(I)Z@java.lang.reflect.Modifier"
+ sig="boolean isAbstract(int)"
+ line="5"
+ startpos="134"
+ endpos="144"
+>
+	<marker line="-1" type="param">
+		<operand  start="149" length="9" line="5">
+			<expr><![CDATA[modifiers]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="172" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="168" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="189" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="172" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isFinal:(I)Z@java.lang.reflect.Modifier"
+ sig="boolean isFinal(int)"
+ line="6"
+ startpos="224"
+ endpos="231"
+>
+	<marker line="-1" type="param">
+		<operand  start="236" length="9" line="6">
+			<expr><![CDATA[modifiers]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="259" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="255" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="276" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="259" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isInterface:(I)Z@java.lang.reflect.Modifier"
+ sig="boolean isInterface(int)"
+ line="7"
+ startpos="311"
+ endpos="322"
+>
+	<marker line="-1" type="param">
+		<operand  start="327" length="9" line="7">
+			<expr><![CDATA[modifiers]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="350" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="346" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="367" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="350" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isNative:(I)Z@java.lang.reflect.Modifier"
+ sig="boolean isNative(int)"
+ line="8"
+ startpos="402"
+ endpos="410"
+>
+	<marker line="-1" type="param">
+		<operand  start="415" length="9" line="8">
+			<expr><![CDATA[modifiers]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="438" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="434" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="455" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="438" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isPrivate:(I)Z@java.lang.reflect.Modifier"
+ sig="boolean isPrivate(int)"
+ line="9"
+ startpos="490"
+ endpos="499"
+>
+	<marker line="-1" type="param">
+		<operand  start="504" length="9" line="9">
+			<expr><![CDATA[modifiers]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="527" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="523" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="544" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="527" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isProtected:(I)Z@java.lang.reflect.Modifier"
+ sig="boolean isProtected(int)"
+ line="10"
+ startpos="579"
+ endpos="590"
+>
+	<marker line="-1" type="param">
+		<operand  start="595" length="9" line="10">
+			<expr><![CDATA[modifiers]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="618" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="614" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="635" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="618" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isPublic:(I)Z@java.lang.reflect.Modifier"
+ sig="boolean isPublic(int)"
+ line="11"
+ startpos="670"
+ endpos="678"
+>
+	<marker line="-1" type="param">
+		<operand  start="683" length="9" line="11">
+			<expr><![CDATA[modifiers]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="706" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="702" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="723" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="706" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isStatic:(I)Z@java.lang.reflect.Modifier"
+ sig="boolean isStatic(int)"
+ line="12"
+ startpos="758"
+ endpos="766"
+>
+	<marker line="-1" type="param">
+		<operand  start="771" length="9" line="12">
+			<expr><![CDATA[modifiers]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="794" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="790" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="811" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="794" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isStrict:(I)Z@java.lang.reflect.Modifier"
+ sig="boolean isStrict(int)"
+ line="13"
+ startpos="846"
+ endpos="854"
+>
+	<marker line="-1" type="param">
+		<operand  start="859" length="9" line="13">
+			<expr><![CDATA[modifiers]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="882" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="878" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="899" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="882" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isSynchronized:(I)Z@java.lang.reflect.Modifier"
+ sig="boolean isSynchronized(int)"
+ line="14"
+ startpos="934"
+ endpos="948"
+>
+	<marker line="-1" type="param">
+		<operand  start="953" length="9" line="14">
+			<expr><![CDATA[modifiers]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="976" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="972" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="993" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="976" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isTransient:(I)Z@java.lang.reflect.Modifier"
+ sig="boolean isTransient(int)"
+ line="15"
+ startpos="1028"
+ endpos="1039"
+>
+	<marker line="-1" type="param">
+		<operand  start="1044" length="9" line="15">
+			<expr><![CDATA[modifiers]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1067" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1063" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1084" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1067" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isVolatile:(I)Z@java.lang.reflect.Modifier"
+ sig="boolean isVolatile(int)"
+ line="16"
+ startpos="1119"
+ endpos="1129"
+>
+	<marker line="-1" type="param">
+		<operand  start="1134" length="9" line="16">
+			<expr><![CDATA[modifiers]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1157" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1153" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1174" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1157" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:(I)Ljava/lang/String;@java.lang.reflect.Modifier"
+ sig="String toString(int)"
+ line="17"
+ startpos="1218"
+ endpos="1226"
+>
+	<marker line="-1" type="param">
+		<operand  start="1231" length="9" line="17">
+			<expr><![CDATA[modifiers]]></expr>
+		</operand>
+	</marker>
+	<type  start="1201" length="16" line="17" chordsig="java.lang.String"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1254" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1250" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1271" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1254" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

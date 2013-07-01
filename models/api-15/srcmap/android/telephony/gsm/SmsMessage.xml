@@ -1,0 +1,698 @@
+<root>
+<class chordsig="android.telephony.gsm.SmsMessage" line="3">
+<class chordsig="android.telephony.gsm.SmsMessage$MessageClass" line="6">
+</class>
+<class chordsig="android.telephony.gsm.SmsMessage$SubmitPdu" line="15">
+<method
+ chordsig="&lt;init&gt;:()V@android.telephony.gsm.SmsMessage$SubmitPdu"
+ sig="SubmitPdu()"
+ line="17"
+ startpos="260"
+ endpos="269"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="284" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="280" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="301" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="284" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.telephony.gsm.SmsMessage$SubmitPdu"
+ sig="String toString()"
+ line="18"
+ startpos="338"
+ endpos="346"
+>
+	<type  start="321" length="16" line="18" chordsig="java.lang.String"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="361" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="357" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="378" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="361" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.telephony.gsm.SmsMessage"
+ sig="SmsMessage()"
+ line="22"
+ startpos="476"
+ endpos="486"
+>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="501" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="497" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="518" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="501" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createFromPdu:([B)Landroid/telephony/gsm/SmsMessage;@android.telephony.gsm.SmsMessage"
+ sig="SmsMessage createFromPdu(byte[])"
+ line="23"
+ startpos="578"
+ endpos="591"
+>
+	<marker line="-1" type="param">
+		<operand  start="599" length="3" line="23">
+			<expr><![CDATA[pdu]]></expr>
+		</operand>
+	</marker>
+	<type  start="545" length="32" line="23" chordsig="android.telephony.gsm.SmsMessage"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="616" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="612" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="633" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="616" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTPLayerLengthForPDU:(Ljava/lang/String;)I@android.telephony.gsm.SmsMessage"
+ sig="int getTPLayerLengthForPDU(String)"
+ line="24"
+ startpos="664"
+ endpos="686"
+>
+	<marker line="-1" type="param">
+		<operand  start="704" length="3" line="24">
+			<expr><![CDATA[pdu]]></expr>
+		</operand>
+	</marker>
+	<type  start="687" length="16" line="24" chordsig="java.lang.String"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="721" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="717" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="738" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="721" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="calculateLength:(Ljava/lang/CharSequence;Z)[I@android.telephony.gsm.SmsMessage"
+ sig="int[] calculateLength(CharSequence,boolean)"
+ line="25"
+ startpos="771"
+ endpos="786"
+>
+	<marker line="-1" type="param">
+		<operand  start="810" length="11" line="25">
+			<expr><![CDATA[messageBody]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="831" length="11" line="25">
+			<expr><![CDATA[use7bitOnly]]></expr>
+		</operand>
+	</marker>
+	<type  start="787" length="22" line="25" chordsig="java.lang.CharSequence"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="856" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="852" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="873" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="856" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="calculateLength:(Ljava/lang/String;Z)[I@android.telephony.gsm.SmsMessage"
+ sig="int[] calculateLength(String,boolean)"
+ line="26"
+ startpos="906"
+ endpos="921"
+>
+	<marker line="-1" type="param">
+		<operand  start="939" length="11" line="26">
+			<expr><![CDATA[messageBody]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="960" length="11" line="26">
+			<expr><![CDATA[use7bitOnly]]></expr>
+		</operand>
+	</marker>
+	<type  start="922" length="16" line="26" chordsig="java.lang.String"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="985" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="981" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1002" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="985" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSubmitPdu:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Landroid/telephony/gsm/SmsMessage$SubmitPdu;@android.telephony.gsm.SmsMessage"
+ sig="SubmitPdu getSubmitPdu(String,String,String,boolean)"
+ line="27"
+ startpos="1072"
+ endpos="1084"
+>
+	<marker line="-1" type="param">
+		<operand  start="1102" length="9" line="27">
+			<expr><![CDATA[scAddress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1130" length="18" line="27">
+			<expr><![CDATA[destinationAddress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1167" length="7" line="27">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1184" length="21" line="27">
+			<expr><![CDATA[statusReportRequested]]></expr>
+		</operand>
+	</marker>
+	<type  start="1029" length="42" line="27" chordsig="android.telephony.gsm.SmsMessage$SubmitPdu"/>
+	<type  start="1085" length="16" line="27" chordsig="java.lang.String"/>
+	<type  start="1113" length="16" line="27" chordsig="java.lang.String"/>
+	<type  start="1150" length="16" line="27" chordsig="java.lang.String"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1219" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1215" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1236" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1219" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSubmitPdu:(Ljava/lang/String;Ljava/lang/String;S[BZ)Landroid/telephony/gsm/SmsMessage$SubmitPdu;@android.telephony.gsm.SmsMessage"
+ sig="SubmitPdu getSubmitPdu(String,String,short,byte[],boolean)"
+ line="28"
+ startpos="1306"
+ endpos="1318"
+>
+	<marker line="-1" type="param">
+		<operand  start="1336" length="9" line="28">
+			<expr><![CDATA[scAddress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1364" length="18" line="28">
+			<expr><![CDATA[destinationAddress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1390" length="15" line="28">
+			<expr><![CDATA[destinationPort]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1414" length="4" line="28">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1428" length="21" line="28">
+			<expr><![CDATA[statusReportRequested]]></expr>
+		</operand>
+	</marker>
+	<type  start="1263" length="42" line="28" chordsig="android.telephony.gsm.SmsMessage$SubmitPdu"/>
+	<type  start="1319" length="16" line="28" chordsig="java.lang.String"/>
+	<type  start="1347" length="16" line="28" chordsig="java.lang.String"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1463" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1459" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1480" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1463" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getServiceCenterAddress:()Ljava/lang/String;@android.telephony.gsm.SmsMessage"
+ sig="String getServiceCenterAddress()"
+ line="29"
+ startpos="1517"
+ endpos="1540"
+>
+	<type  start="1500" length="16" line="29" chordsig="java.lang.String"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1555" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1551" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1572" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1555" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getOriginatingAddress:()Ljava/lang/String;@android.telephony.gsm.SmsMessage"
+ sig="String getOriginatingAddress()"
+ line="30"
+ startpos="1609"
+ endpos="1630"
+>
+	<type  start="1592" length="16" line="30" chordsig="java.lang.String"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1645" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1641" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1662" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1645" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDisplayOriginatingAddress:()Ljava/lang/String;@android.telephony.gsm.SmsMessage"
+ sig="String getDisplayOriginatingAddress()"
+ line="31"
+ startpos="1699"
+ endpos="1727"
+>
+	<type  start="1682" length="16" line="31" chordsig="java.lang.String"/>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1742" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1738" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1759" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1742" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMessageBody:()Ljava/lang/String;@android.telephony.gsm.SmsMessage"
+ sig="String getMessageBody()"
+ line="32"
+ startpos="1796"
+ endpos="1810"
+>
+	<type  start="1779" length="16" line="32" chordsig="java.lang.String"/>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1825" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1821" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1842" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1825" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMessageClass:()Landroid/telephony/gsm/SmsMessage$MessageClass;@android.telephony.gsm.SmsMessage"
+ sig="MessageClass getMessageClass()"
+ line="33"
+ startpos="1908"
+ endpos="1923"
+>
+	<type  start="1862" length="45" line="33" chordsig="android.telephony.gsm.SmsMessage$MessageClass"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1938" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1934" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1955" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1938" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDisplayMessageBody:()Ljava/lang/String;@android.telephony.gsm.SmsMessage"
+ sig="String getDisplayMessageBody()"
+ line="34"
+ startpos="1992"
+ endpos="2013"
+>
+	<type  start="1975" length="16" line="34" chordsig="java.lang.String"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2028" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2024" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2045" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2028" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPseudoSubject:()Ljava/lang/String;@android.telephony.gsm.SmsMessage"
+ sig="String getPseudoSubject()"
+ line="35"
+ startpos="2082"
+ endpos="2098"
+>
+	<type  start="2065" length="16" line="35" chordsig="java.lang.String"/>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2113" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2109" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2130" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2113" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTimestampMillis:()J@android.telephony.gsm.SmsMessage"
+ sig="long getTimestampMillis()"
+ line="36"
+ startpos="2155"
+ endpos="2173"
+>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2188" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2184" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2205" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2188" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isEmail:()Z@android.telephony.gsm.SmsMessage"
+ sig="boolean isEmail()"
+ line="37"
+ startpos="2233"
+ endpos="2240"
+>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2255" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2251" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2272" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2255" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getEmailBody:()Ljava/lang/String;@android.telephony.gsm.SmsMessage"
+ sig="String getEmailBody()"
+ line="38"
+ startpos="2309"
+ endpos="2321"
+>
+	<type  start="2292" length="16" line="38" chordsig="java.lang.String"/>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2336" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2332" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2353" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2336" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getEmailFrom:()Ljava/lang/String;@android.telephony.gsm.SmsMessage"
+ sig="String getEmailFrom()"
+ line="39"
+ startpos="2390"
+ endpos="2402"
+>
+	<type  start="2373" length="16" line="39" chordsig="java.lang.String"/>
+	<newexpr line="39" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2417" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2413" length="29" line="39">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2434" length="7" line="39">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2417" length="16" line="39" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getProtocolIdentifier:()I@android.telephony.gsm.SmsMessage"
+ sig="int getProtocolIdentifier()"
+ line="40"
+ startpos="2458"
+ endpos="2479"
+>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2494" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2490" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2511" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2494" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isReplace:()Z@android.telephony.gsm.SmsMessage"
+ sig="boolean isReplace()"
+ line="41"
+ startpos="2539"
+ endpos="2548"
+>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2563" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2559" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2580" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2563" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isCphsMwiMessage:()Z@android.telephony.gsm.SmsMessage"
+ sig="boolean isCphsMwiMessage()"
+ line="42"
+ startpos="2608"
+ endpos="2624"
+>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2639" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2635" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2656" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2639" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isMWIClearMessage:()Z@android.telephony.gsm.SmsMessage"
+ sig="boolean isMWIClearMessage()"
+ line="43"
+ startpos="2684"
+ endpos="2701"
+>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2716" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2712" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2733" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2716" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isMWISetMessage:()Z@android.telephony.gsm.SmsMessage"
+ sig="boolean isMWISetMessage()"
+ line="44"
+ startpos="2761"
+ endpos="2776"
+>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2791" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2787" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2808" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2791" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isMwiDontStore:()Z@android.telephony.gsm.SmsMessage"
+ sig="boolean isMwiDontStore()"
+ line="45"
+ startpos="2836"
+ endpos="2850"
+>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2865" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2861" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2882" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2865" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getUserData:()[B@android.telephony.gsm.SmsMessage"
+ sig="byte[] getUserData()"
+ line="46"
+ startpos="2909"
+ endpos="2920"
+>
+	<newexpr line="46" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2935" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2931" length="29" line="46">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2952" length="7" line="46">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2935" length="16" line="46" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPdu:()[B@android.telephony.gsm.SmsMessage"
+ sig="byte[] getPdu()"
+ line="47"
+ startpos="2979"
+ endpos="2985"
+>
+	<newexpr line="47" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3000" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2996" length="29" line="47">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3017" length="7" line="47">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3000" length="16" line="47" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getStatusOnSim:()I@android.telephony.gsm.SmsMessage"
+ sig="int getStatusOnSim()"
+ line="48"
+ startpos="3041"
+ endpos="3055"
+>
+	<newexpr line="48" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3070" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3066" length="29" line="48">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3087" length="7" line="48">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3070" length="16" line="48" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getIndexOnSim:()I@android.telephony.gsm.SmsMessage"
+ sig="int getIndexOnSim()"
+ line="49"
+ startpos="3111"
+ endpos="3124"
+>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3139" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3135" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3156" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3139" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getStatus:()I@android.telephony.gsm.SmsMessage"
+ sig="int getStatus()"
+ line="50"
+ startpos="3180"
+ endpos="3189"
+>
+	<newexpr line="50" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3204" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3200" length="29" line="50">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3221" length="7" line="50">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3204" length="16" line="50" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isStatusReportMessage:()Z@android.telephony.gsm.SmsMessage"
+ sig="boolean isStatusReportMessage()"
+ line="51"
+ startpos="3249"
+ endpos="3270"
+>
+	<newexpr line="51" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3285" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3281" length="29" line="51">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3302" length="7" line="51">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3285" length="16" line="51" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isReplyPathPresent:()Z@android.telephony.gsm.SmsMessage"
+ sig="boolean isReplyPathPresent()"
+ line="52"
+ startpos="3330"
+ endpos="3348"
+>
+	<newexpr line="52" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3363" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3359" length="29" line="52">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3380" length="7" line="52">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3363" length="16" line="52" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

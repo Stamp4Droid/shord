@@ -1,0 +1,89 @@
+<root>
+<class chordsig="android.net.rtp.AudioCodec" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.net.rtp.AudioCodec"
+ sig="AudioCodec()"
+ line="4"
+ startpos="51"
+ endpos="61"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="76" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="72" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="93" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="76" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCodecs:()[Landroid/net/rtp/AudioCodec;@android.net.rtp.AudioCodec"
+ sig="AudioCodec[] getCodecs()"
+ line="5"
+ startpos="149"
+ endpos="158"
+>
+	<type  start="120" length="26" line="5" chordsig="android.net.rtp.AudioCodec"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="173" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="169" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="190" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="173" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCodec:(ILjava/lang/String;Ljava/lang/String;)Landroid/net/rtp/AudioCodec;@android.net.rtp.AudioCodec"
+ sig="AudioCodec getCodec(int,String,String)"
+ line="6"
+ startpos="244"
+ endpos="252"
+>
+	<marker line="-1" type="param">
+		<operand  start="257" length="4" line="6">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="280" length="6" line="6">
+			<expr><![CDATA[rtpmap]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="305" length="4" line="6">
+			<expr><![CDATA[fmtp]]></expr>
+		</operand>
+	</marker>
+	<type  start="217" length="26" line="6" chordsig="android.net.rtp.AudioCodec"/>
+	<type  start="263" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="288" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="323" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="319" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="340" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="323" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="388" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="426" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="469" length="26" line="10" chordsig="android.net.rtp.AudioCodec"/>
+	<type  start="522" length="26" line="11" chordsig="android.net.rtp.AudioCodec"/>
+	<type  start="575" length="26" line="12" chordsig="android.net.rtp.AudioCodec"/>
+	<type  start="627" length="26" line="13" chordsig="android.net.rtp.AudioCodec"/>
+	<type  start="683" length="26" line="14" chordsig="android.net.rtp.AudioCodec"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.net.rtp.AudioCodec"
+ line="15"
+>
+</method>
+</class>
+</root>

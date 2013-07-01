@@ -1,0 +1,73 @@
+<root>
+<class chordsig="android.text.style.MaskFilterSpan" line="2">
+	<type  start="66" length="33" line="3" chordsig="android.text.style.CharacterStyle"/>
+	<type  start="113" length="35" line="4" chordsig="android.text.style.UpdateAppearance"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/graphics/MaskFilter;)V@android.text.style.MaskFilterSpan"
+ sig="MaskFilterSpan(MaskFilter)"
+ line="6"
+ startpos="159"
+ endpos="173"
+>
+	<marker line="-1" type="param">
+		<operand  start="202" length="6" line="6">
+			<expr><![CDATA[filter]]></expr>
+		</operand>
+	</marker>
+	<type  start="174" length="27" line="6" chordsig="android.graphics.MaskFilter"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="222" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="218" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="239" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="222" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMaskFilter:()Landroid/graphics/MaskFilter;@android.text.style.MaskFilterSpan"
+ sig="MaskFilter getMaskFilter()"
+ line="7"
+ startpos="287"
+ endpos="300"
+>
+	<type  start="259" length="27" line="7" chordsig="android.graphics.MaskFilter"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="315" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="311" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="332" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="315" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="updateDrawState:(Landroid/text/TextPaint;)V@android.text.style.MaskFilterSpan"
+ sig="void updateDrawState(TextPaint)"
+ line="8"
+ startpos="357"
+ endpos="372"
+>
+	<marker line="-1" type="param">
+		<operand  start="396" length="2" line="8">
+			<expr><![CDATA[ds]]></expr>
+		</operand>
+	</marker>
+	<type  start="373" length="22" line="8" chordsig="android.text.TextPaint"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="412" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="408" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="429" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="412" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,103 @@
+<root>
+<class chordsig="android.graphics.RadialGradient" line="2">
+	<type  start="64" length="23" line="3" chordsig="android.graphics.Shader"/>
+<method
+ chordsig="&lt;init&gt;:(FFF[I[FLandroid/graphics/Shader$TileMode;)V@android.graphics.RadialGradient"
+ sig="RadialGradient(float,float,float,int[],float[],TileMode)"
+ line="5"
+ startpos="98"
+ endpos="112"
+>
+	<marker line="-1" type="param">
+		<operand  start="119" length="1" line="5">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="128" length="1" line="5">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="137" length="6" line="5">
+			<expr><![CDATA[radius]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="151" length="6" line="5">
+			<expr><![CDATA[colors]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="167" length="9" line="5">
+			<expr><![CDATA[positions]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="211" length="4" line="5">
+			<expr><![CDATA[tile]]></expr>
+		</operand>
+	</marker>
+	<type  start="178" length="32" line="5" chordsig="android.graphics.Shader$TileMode"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="229" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="225" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="246" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="229" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(FFFIILandroid/graphics/Shader$TileMode;)V@android.graphics.RadialGradient"
+ sig="RadialGradient(float,float,float,int,int,TileMode)"
+ line="6"
+ startpos="266"
+ endpos="280"
+>
+	<marker line="-1" type="param">
+		<operand  start="287" length="1" line="6">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="296" length="1" line="6">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="305" length="6" line="6">
+			<expr><![CDATA[radius]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="317" length="6" line="6">
+			<expr><![CDATA[color0]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="329" length="6" line="6">
+			<expr><![CDATA[color1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="370" length="4" line="6">
+			<expr><![CDATA[tile]]></expr>
+		</operand>
+	</marker>
+	<type  start="337" length="32" line="6" chordsig="android.graphics.Shader$TileMode"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="388" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="384" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="405" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="388" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

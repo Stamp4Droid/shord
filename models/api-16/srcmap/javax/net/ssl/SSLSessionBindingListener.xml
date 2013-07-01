@@ -1,0 +1,33 @@
+<root>
+<class chordsig="javax.net.ssl.SSLSessionBindingListener" line="2">
+	<type  start="76" length="23" line="3" chordsig="java.util.EventListener"/>
+<method
+ chordsig="valueBound:(Ljavax/net/ssl/SSLSessionBindingEvent;)V@javax.net.ssl.SSLSessionBindingListener"
+ sig="void valueBound(SSLSessionBindingEvent)"
+ line="5"
+ startpos="124"
+ endpos="134"
+>
+	<marker line="-1" type="param">
+		<operand  start="172" length="5" line="5">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="135" length="36" line="5" chordsig="javax.net.ssl.SSLSessionBindingEvent"/>
+</method>
+<method
+ chordsig="valueUnbound:(Ljavax/net/ssl/SSLSessionBindingEvent;)V@javax.net.ssl.SSLSessionBindingListener"
+ sig="void valueUnbound(SSLSessionBindingEvent)"
+ line="6"
+ startpos="202"
+ endpos="214"
+>
+	<marker line="-1" type="param">
+		<operand  start="252" length="5" line="6">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="215" length="36" line="6" chordsig="javax.net.ssl.SSLSessionBindingEvent"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,33 @@
+<root>
+<class chordsig="java.io.Externalizable" line="2">
+	<type  start="59" length="20" line="3" chordsig="java.io.Serializable"/>
+<method
+ chordsig="readExternal:(Ljava/io/ObjectInput;)V@java.io.Externalizable"
+ sig="void readExternal(ObjectInput)"
+ line="5"
+ startpos="104"
+ endpos="116"
+>
+	<marker line="-1" type="param">
+		<operand  start="137" length="5" line="5">
+			<expr><![CDATA[input]]></expr>
+		</operand>
+	</marker>
+	<type  start="117" length="19" line="5" chordsig="java.io.ObjectInput"/>
+</method>
+<method
+ chordsig="writeExternal:(Ljava/io/ObjectOutput;)V@java.io.Externalizable"
+ sig="void writeExternal(ObjectOutput)"
+ line="6"
+ startpos="228"
+ endpos="241"
+>
+	<marker line="-1" type="param">
+		<operand  start="263" length="6" line="6">
+			<expr><![CDATA[output]]></expr>
+		</operand>
+	</marker>
+	<type  start="242" length="20" line="6" chordsig="java.io.ObjectOutput"/>
+</method>
+</class>
+</root>

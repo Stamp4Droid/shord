@@ -1,0 +1,193 @@
+<root>
+<class chordsig="org.apache.http.impl.auth.NTLMScheme" line="2">
+	<type  start="69" length="40" line="3" chordsig="org.apache.http.impl.auth.AuthSchemeBase"/>
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/impl/auth/NTLMEngine;)V@org.apache.http.impl.auth.NTLMScheme"
+ sig="NTLMScheme(NTLMEngine)"
+ line="5"
+ startpos="120"
+ endpos="130"
+>
+	<marker line="-1" type="param">
+		<operand  start="168" length="6" line="5">
+			<expr><![CDATA[engine]]></expr>
+		</operand>
+	</marker>
+	<type  start="131" length="36" line="5" chordsig="org.apache.http.impl.auth.NTLMEngine"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="188" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="184" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="205" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="188" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSchemeName:()Ljava/lang/String;@org.apache.http.impl.auth.NTLMScheme"
+ sig="String getSchemeName()"
+ line="6"
+ startpos="242"
+ endpos="255"
+>
+	<type  start="225" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="270" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="266" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="287" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="270" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getParameter:(Ljava/lang/String;)Ljava/lang/String;@org.apache.http.impl.auth.NTLMScheme"
+ sig="String getParameter(String)"
+ line="7"
+ startpos="324"
+ endpos="336"
+>
+	<marker line="-1" type="param">
+		<operand  start="354" length="4" line="7">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="307" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="337" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="372" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="368" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="389" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="372" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRealm:()Ljava/lang/String;@org.apache.http.impl.auth.NTLMScheme"
+ sig="String getRealm()"
+ line="8"
+ startpos="426"
+ endpos="434"
+>
+	<type  start="409" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="449" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="445" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="466" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="449" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isConnectionBased:()Z@org.apache.http.impl.auth.NTLMScheme"
+ sig="boolean isConnectionBased()"
+ line="9"
+ startpos="494"
+ endpos="511"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="526" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="522" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="543" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="526" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parseChallenge:(Lorg/apache/http/util/CharArrayBuffer;II)V@org.apache.http.impl.auth.NTLMScheme"
+ sig="void parseChallenge(CharArrayBuffer,int,int)"
+ line="10"
+ startpos="571"
+ endpos="585"
+>
+	<marker line="-1" type="param">
+		<operand  start="623" length="6" line="10">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="635" length="3" line="10">
+			<expr><![CDATA[pos]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="644" length="3" line="10">
+			<expr><![CDATA[len]]></expr>
+		</operand>
+	</marker>
+	<type  start="586" length="36" line="10" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="717" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="713" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="734" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="717" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="authenticate:(Lorg/apache/http/auth/Credentials;Lorg/apache/http/HttpRequest;)Lorg/apache/http/Header;@org.apache.http.impl.auth.NTLMScheme"
+ sig="Header authenticate(Credentials,HttpRequest)"
+ line="11"
+ startpos="777"
+ endpos="789"
+>
+	<marker line="-1" type="param">
+		<operand  start="823" length="11" line="11">
+			<expr><![CDATA[credentials]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="864" length="7" line="11">
+			<expr><![CDATA[request]]></expr>
+		</operand>
+	</marker>
+	<type  start="754" length="22" line="11" chordsig="org.apache.http.Header"/>
+	<type  start="790" length="32" line="11" chordsig="org.apache.http.auth.Credentials"/>
+	<type  start="836" length="27" line="11" chordsig="org.apache.http.HttpRequest"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="937" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="933" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="954" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="937" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isComplete:()Z@org.apache.http.impl.auth.NTLMScheme"
+ sig="boolean isComplete()"
+ line="12"
+ startpos="982"
+ endpos="992"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1007" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1003" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1024" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1007" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

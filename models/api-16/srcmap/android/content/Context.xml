@@ -1,0 +1,1699 @@
+<root>
+<class chordsig="android.content.Context" line="6">
+<method
+ chordsig="&lt;init&gt;:()V@android.content.Context"
+ sig="Context()"
+ line="8"
+ startpos="158"
+ endpos="165"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="188" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="184" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="205" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="188" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAssets:()Landroid/content/res/AssetManager;@android.content.Context"
+ sig="AssetManager getAssets()"
+ line="12"
+ startpos="275"
+ endpos="284"
+>
+	<type  start="242" length="32" line="12" chordsig="android.content.res.AssetManager"/>
+</method>
+<method
+ chordsig="getResources:()Landroid/content/res/Resources;@android.content.Context"
+ sig="Resources getResources()"
+ line="14"
+ startpos="339"
+ endpos="351"
+>
+	<type  start="309" length="29" line="14" chordsig="android.content.res.Resources"/>
+</method>
+<method
+ chordsig="getPackageManager:()Landroid/content/pm/PackageManager;@android.content.Context"
+ sig="PackageManager getPackageManager()"
+ line="16"
+ startpos="410"
+ endpos="427"
+>
+	<type  start="376" length="33" line="16" chordsig="android.content.pm.PackageManager"/>
+</method>
+<method
+ chordsig="getContentResolver:()Landroid/content/ContentResolver;@android.content.Context"
+ sig="ContentResolver getContentResolver()"
+ line="18"
+ startpos="484"
+ endpos="502"
+>
+	<type  start="452" length="31" line="18" chordsig="android.content.ContentResolver"/>
+</method>
+<method
+ chordsig="getMainLooper:()Landroid/os/Looper;@android.content.Context"
+ sig="Looper getMainLooper()"
+ line="20"
+ startpos="545"
+ endpos="558"
+>
+	<type  start="527" length="17" line="20" chordsig="android.os.Looper"/>
+</method>
+<method
+ chordsig="getApplicationContext:()Landroid/content/Context;@android.content.Context"
+ sig="Context getApplicationContext()"
+ line="22"
+ startpos="607"
+ endpos="628"
+>
+	<type  start="583" length="23" line="22" chordsig="android.content.Context"/>
+</method>
+<method
+ chordsig="registerComponentCallbacks:(Landroid/content/ComponentCallbacks;)V@android.content.Context"
+ sig="void registerComponentCallbacks(ComponentCallbacks)"
+ line="24"
+ startpos="649"
+ endpos="675"
+>
+	<marker line="-1" type="param">
+		<operand  start="711" length="8" line="24">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<type  start="676" length="34" line="24" chordsig="android.content.ComponentCallbacks"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="741" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="737" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="758" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="741" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unregisterComponentCallbacks:(Landroid/content/ComponentCallbacks;)V@android.content.Context"
+ sig="void unregisterComponentCallbacks(ComponentCallbacks)"
+ line="28"
+ startpos="791"
+ endpos="819"
+>
+	<marker line="-1" type="param">
+		<operand  start="855" length="8" line="28">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<type  start="820" length="34" line="28" chordsig="android.content.ComponentCallbacks"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="885" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="881" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="902" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="885" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTheme:(I)V@android.content.Context"
+ sig="void setTheme(int)"
+ line="32"
+ startpos="944"
+ endpos="952"
+>
+	<marker line="-1" type="param">
+		<operand  start="957" length="5" line="32">
+			<expr><![CDATA[resid]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getTheme:()Landroid/content/res/Resources$Theme;@android.content.Context"
+ sig="Theme getTheme()"
+ line="34"
+ startpos="1022"
+ endpos="1030"
+>
+	<type  start="986" length="35" line="34" chordsig="android.content.res.Resources$Theme"/>
+</method>
+<method
+ chordsig="obtainStyledAttributes:([I)Landroid/content/res/TypedArray;@android.content.Context"
+ sig="TypedArray obtainStyledAttributes(int[])"
+ line="36"
+ startpos="1083"
+ endpos="1105"
+>
+	<marker line="-1" type="param">
+		<operand  start="1112" length="5" line="36">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="1052" length="30" line="36" chordsig="android.content.res.TypedArray"/>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1139" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1135" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1156" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1139" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="obtainStyledAttributes:(I[I)Landroid/content/res/TypedArray;@android.content.Context"
+ sig="TypedArray obtainStyledAttributes(int,int[])"
+ line="40"
+ startpos="1221"
+ endpos="1243"
+>
+	<marker line="-1" type="param">
+		<operand  start="1248" length="5" line="40">
+			<expr><![CDATA[resid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1261" length="5" line="40">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="1190" length="30" line="40" chordsig="android.content.res.TypedArray"/>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1343" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1339" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1360" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1343" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="obtainStyledAttributes:(Landroid/util/AttributeSet;[I)Landroid/content/res/TypedArray;@android.content.Context"
+ sig="TypedArray obtainStyledAttributes(AttributeSet,int[])"
+ line="44"
+ startpos="1425"
+ endpos="1447"
+>
+	<marker line="-1" type="param">
+		<operand  start="1474" length="3" line="44">
+			<expr><![CDATA[set]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1485" length="5" line="44">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="1394" length="30" line="44" chordsig="android.content.res.TypedArray"/>
+	<type  start="1448" length="25" line="44" chordsig="android.util.AttributeSet"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1512" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1508" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1529" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1512" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="obtainStyledAttributes:(Landroid/util/AttributeSet;[III)Landroid/content/res/TypedArray;@android.content.Context"
+ sig="TypedArray obtainStyledAttributes(AttributeSet,int[],int,int)"
+ line="48"
+ startpos="1594"
+ endpos="1616"
+>
+	<marker line="-1" type="param">
+		<operand  start="1643" length="3" line="48">
+			<expr><![CDATA[set]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1654" length="5" line="48">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1665" length="12" line="48">
+			<expr><![CDATA[defStyleAttr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1683" length="11" line="48">
+			<expr><![CDATA[defStyleRes]]></expr>
+		</operand>
+	</marker>
+	<type  start="1563" length="30" line="48" chordsig="android.content.res.TypedArray"/>
+	<type  start="1617" length="25" line="48" chordsig="android.util.AttributeSet"/>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1716" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1712" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1733" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1716" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getClassLoader:()Ljava/lang/ClassLoader;@android.content.Context"
+ sig="ClassLoader getClassLoader()"
+ line="52"
+ startpos="1792"
+ endpos="1806"
+>
+	<type  start="1770" length="21" line="52" chordsig="java.lang.ClassLoader"/>
+</method>
+<method
+ chordsig="getPackageName:()Ljava/lang/String;@android.content.Context"
+ sig="String getPackageName()"
+ line="54"
+ startpos="1848"
+ endpos="1862"
+>
+	<type  start="1831" length="16" line="54" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getApplicationInfo:()Landroid/content/pm/ApplicationInfo;@android.content.Context"
+ sig="ApplicationInfo getApplicationInfo()"
+ line="56"
+ startpos="1922"
+ endpos="1940"
+>
+	<type  start="1887" length="34" line="56" chordsig="android.content.pm.ApplicationInfo"/>
+</method>
+<method
+ chordsig="getPackageResourcePath:()Ljava/lang/String;@android.content.Context"
+ sig="String getPackageResourcePath()"
+ line="58"
+ startpos="1982"
+ endpos="2004"
+>
+	<type  start="1965" length="16" line="58" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getPackageCodePath:()Ljava/lang/String;@android.content.Context"
+ sig="String getPackageCodePath()"
+ line="60"
+ startpos="2046"
+ endpos="2064"
+>
+	<type  start="2029" length="16" line="60" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getSharedPreferences:(Ljava/lang/String;I)Landroid/content/SharedPreferences;@android.content.Context"
+ sig="SharedPreferences getSharedPreferences(String,int)"
+ line="62"
+ startpos="2123"
+ endpos="2143"
+>
+	<marker line="-1" type="param">
+		<operand  start="2161" length="4" line="62">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2171" length="4" line="62">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+	<type  start="2089" length="33" line="62" chordsig="android.content.SharedPreferences"/>
+	<type  start="2144" length="16" line="62" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="openFileInput:(Ljava/lang/String;)Ljava/io/FileInputStream;@android.content.Context"
+ sig="FileInputStream openFileInput(String)"
+ line="64"
+ startpos="2223"
+ endpos="2236"
+>
+	<marker line="-1" type="param">
+		<operand  start="2254" length="4" line="64">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="2199" length="23" line="64" chordsig="java.io.FileInputStream"/>
+	<type  start="2237" length="16" line="64" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="openFileOutput:(Ljava/lang/String;I)Ljava/io/FileOutputStream;@android.content.Context"
+ sig="FileOutputStream openFileOutput(String,int)"
+ line="66"
+ startpos="2344"
+ endpos="2358"
+>
+	<marker line="-1" type="param">
+		<operand  start="2376" length="4" line="66">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2386" length="4" line="66">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+	<type  start="2319" length="24" line="66" chordsig="java.io.FileOutputStream"/>
+	<type  start="2359" length="16" line="66" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="deleteFile:(Ljava/lang/String;)Z@android.content.Context"
+ sig="boolean deleteFile(String)"
+ line="68"
+ startpos="2459"
+ endpos="2469"
+>
+	<marker line="-1" type="param">
+		<operand  start="2487" length="4" line="68">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="2470" length="16" line="68" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getFileStreamPath:(Ljava/lang/String;)Ljava/io/File;@android.content.Context"
+ sig="File getFileStreamPath(String)"
+ line="70"
+ startpos="2528"
+ endpos="2545"
+>
+	<marker line="-1" type="param">
+		<operand  start="2563" length="4" line="70">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="2515" length="12" line="70" chordsig="java.io.File"/>
+	<type  start="2546" length="16" line="70" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getFilesDir:()Ljava/io/File;@android.content.Context"
+ sig="File getFilesDir()"
+ line="72"
+ startpos="2604"
+ endpos="2615"
+>
+	<type  start="2591" length="12" line="72" chordsig="java.io.File"/>
+</method>
+<method
+ chordsig="getExternalFilesDir:(Ljava/lang/String;)Ljava/io/File;@android.content.Context"
+ sig="File getExternalFilesDir(String)"
+ line="74"
+ startpos="2653"
+ endpos="2672"
+>
+	<marker line="-1" type="param">
+		<operand  start="2690" length="4" line="74">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<type  start="2640" length="12" line="74" chordsig="java.io.File"/>
+	<type  start="2673" length="16" line="74" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getObbDir:()Ljava/io/File;@android.content.Context"
+ sig="File getObbDir()"
+ line="76"
+ startpos="2731"
+ endpos="2740"
+>
+	<type  start="2718" length="12" line="76" chordsig="java.io.File"/>
+</method>
+<method
+ chordsig="getCacheDir:()Ljava/io/File;@android.content.Context"
+ sig="File getCacheDir()"
+ line="78"
+ startpos="2778"
+ endpos="2789"
+>
+	<type  start="2765" length="12" line="78" chordsig="java.io.File"/>
+</method>
+<method
+ chordsig="getExternalCacheDir:()Ljava/io/File;@android.content.Context"
+ sig="File getExternalCacheDir()"
+ line="80"
+ startpos="2827"
+ endpos="2846"
+>
+	<type  start="2814" length="12" line="80" chordsig="java.io.File"/>
+</method>
+<method
+ chordsig="fileList:()[Ljava/lang/String;@android.content.Context"
+ sig="String[] fileList()"
+ line="82"
+ startpos="2890"
+ endpos="2898"
+>
+	<type  start="2871" length="16" line="82" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getDir:(Ljava/lang/String;I)Ljava/io/File;@android.content.Context"
+ sig="File getDir(String,int)"
+ line="84"
+ startpos="2936"
+ endpos="2942"
+>
+	<marker line="-1" type="param">
+		<operand  start="2960" length="4" line="84">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2970" length="4" line="84">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+	<type  start="2923" length="12" line="84" chordsig="java.io.File"/>
+	<type  start="2943" length="16" line="84" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="openOrCreateDatabase:(Ljava/lang/String;ILandroid/database/sqlite/SQLiteDatabase$CursorFactory;)Landroid/database/sqlite/SQLiteDatabase;@android.content.Context"
+ sig="SQLiteDatabase openOrCreateDatabase(String,int,CursorFactory)"
+ line="86"
+ startpos="3037"
+ endpos="3057"
+>
+	<marker line="-1" type="param">
+		<operand  start="3075" length="4" line="86">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3085" length="4" line="86">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3144" length="7" line="86">
+			<expr><![CDATA[factory]]></expr>
+		</operand>
+	</marker>
+	<type  start="2998" length="38" line="86" chordsig="android.database.sqlite.SQLiteDatabase"/>
+	<type  start="3058" length="16" line="86" chordsig="java.lang.String"/>
+	<type  start="3091" length="52" line="86" chordsig="android.database.sqlite.SQLiteDatabase$CursorFactory"/>
+</method>
+<method
+ chordsig="openOrCreateDatabase:(Ljava/lang/String;ILandroid/database/sqlite/SQLiteDatabase$CursorFactory;Landroid/database/DatabaseErrorHandler;)Landroid/database/sqlite/SQLiteDatabase;@android.content.Context"
+ sig="SQLiteDatabase openOrCreateDatabase(String,int,CursorFactory,DatabaseErrorHandler)"
+ line="88"
+ startpos="3214"
+ endpos="3234"
+>
+	<marker line="-1" type="param">
+		<operand  start="3252" length="4" line="88">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3262" length="4" line="88">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3321" length="7" line="88">
+			<expr><![CDATA[factory]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3368" length="12" line="88">
+			<expr><![CDATA[errorHandler]]></expr>
+		</operand>
+	</marker>
+	<type  start="3175" length="38" line="88" chordsig="android.database.sqlite.SQLiteDatabase"/>
+	<type  start="3235" length="16" line="88" chordsig="java.lang.String"/>
+	<type  start="3268" length="52" line="88" chordsig="android.database.sqlite.SQLiteDatabase$CursorFactory"/>
+	<type  start="3330" length="37" line="88" chordsig="android.database.DatabaseErrorHandler"/>
+</method>
+<method
+ chordsig="deleteDatabase:(Ljava/lang/String;)Z@android.content.Context"
+ sig="boolean deleteDatabase(String)"
+ line="90"
+ startpos="3412"
+ endpos="3426"
+>
+	<marker line="-1" type="param">
+		<operand  start="3444" length="4" line="90">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="3427" length="16" line="90" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getDatabasePath:(Ljava/lang/String;)Ljava/io/File;@android.content.Context"
+ sig="File getDatabasePath(String)"
+ line="92"
+ startpos="3485"
+ endpos="3500"
+>
+	<marker line="-1" type="param">
+		<operand  start="3518" length="4" line="92">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="3472" length="12" line="92" chordsig="java.io.File"/>
+	<type  start="3501" length="16" line="92" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="databaseList:()[Ljava/lang/String;@android.content.Context"
+ sig="String[] databaseList()"
+ line="94"
+ startpos="3565"
+ endpos="3577"
+>
+	<type  start="3546" length="16" line="94" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getWallpaper:()Landroid/graphics/drawable/Drawable;@android.content.Context"
+ sig="Drawable getWallpaper()"
+ line="97"
+ startpos="3665"
+ endpos="3677"
+>
+	<type  start="3630" length="34" line="97" chordsig="android.graphics.drawable.Drawable"/>
+</method>
+<method
+ chordsig="peekWallpaper:()Landroid/graphics/drawable/Drawable;@android.content.Context"
+ sig="Drawable peekWallpaper()"
+ line="100"
+ startpos="3765"
+ endpos="3778"
+>
+	<type  start="3730" length="34" line="100" chordsig="android.graphics.drawable.Drawable"/>
+</method>
+<method
+ chordsig="getWallpaperDesiredMinimumWidth:()I@android.content.Context"
+ sig="int getWallpaperDesiredMinimumWidth()"
+ line="103"
+ startpos="3835"
+ endpos="3866"
+>
+</method>
+<method
+ chordsig="getWallpaperDesiredMinimumHeight:()I@android.content.Context"
+ sig="int getWallpaperDesiredMinimumHeight()"
+ line="106"
+ startpos="3923"
+ endpos="3955"
+>
+</method>
+<method
+ chordsig="setWallpaper:(Landroid/graphics/Bitmap;)V@android.content.Context"
+ sig="void setWallpaper(Bitmap)"
+ line="109"
+ startpos="4013"
+ endpos="4025"
+>
+	<marker line="-1" type="param">
+		<operand  start="4050" length="6" line="109">
+			<expr><![CDATA[bitmap]]></expr>
+		</operand>
+	</marker>
+	<type  start="4026" length="23" line="109" chordsig="android.graphics.Bitmap"/>
+</method>
+<method
+ chordsig="setWallpaper:(Ljava/io/InputStream;)V@android.content.Context"
+ sig="void setWallpaper(InputStream)"
+ line="112"
+ startpos="4140"
+ endpos="4152"
+>
+	<marker line="-1" type="param">
+		<operand  start="4173" length="4" line="112">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<type  start="4153" length="19" line="112" chordsig="java.io.InputStream"/>
+</method>
+<method
+ chordsig="clearWallpaper:()V@android.content.Context"
+ sig="void clearWallpaper()"
+ line="115"
+ startpos="4261"
+ endpos="4275"
+>
+</method>
+<method
+ chordsig="startActivity:(Landroid/content/Intent;)V@android.content.Context"
+ sig="void startActivity(Intent)"
+ line="117"
+ startpos="4332"
+ endpos="4345"
+>
+	<marker line="-1" type="param">
+		<operand  start="4369" length="6" line="117">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="4346" length="22" line="117" chordsig="android.content.Intent"/>
+</method>
+<method
+ chordsig="startActivity:(Landroid/content/Intent;Landroid/os/Bundle;)V@android.content.Context"
+ sig="void startActivity(Intent,Bundle)"
+ line="119"
+ startpos="4404"
+ endpos="4417"
+>
+	<marker line="-1" type="param">
+		<operand  start="4441" length="6" line="119">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4467" length="7" line="119">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<type  start="4418" length="22" line="119" chordsig="android.content.Intent"/>
+	<type  start="4449" length="17" line="119" chordsig="android.os.Bundle"/>
+</method>
+<method
+ chordsig="startActivities:([Landroid/content/Intent;)V@android.content.Context"
+ sig="void startActivities(Intent[])"
+ line="121"
+ startpos="4503"
+ endpos="4518"
+>
+	<marker line="-1" type="param">
+		<operand  start="4544" length="7" line="121">
+			<expr><![CDATA[intents]]></expr>
+		</operand>
+	</marker>
+	<type  start="4519" length="22" line="121" chordsig="android.content.Intent"/>
+</method>
+<method
+ chordsig="startActivities:([Landroid/content/Intent;Landroid/os/Bundle;)V@android.content.Context"
+ sig="void startActivities(Intent[],Bundle)"
+ line="123"
+ startpos="4580"
+ endpos="4595"
+>
+	<marker line="-1" type="param">
+		<operand  start="4621" length="7" line="123">
+			<expr><![CDATA[intents]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4648" length="7" line="123">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<type  start="4596" length="22" line="123" chordsig="android.content.Intent"/>
+	<type  start="4630" length="17" line="123" chordsig="android.os.Bundle"/>
+</method>
+<method
+ chordsig="startIntentSender:(Landroid/content/IntentSender;Landroid/content/Intent;III)V@android.content.Context"
+ sig="void startIntentSender(IntentSender,Intent,int,int,int)"
+ line="125"
+ startpos="4684"
+ endpos="4701"
+>
+	<marker line="-1" type="param">
+		<operand  start="4731" length="6" line="125">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4762" length="12" line="125">
+			<expr><![CDATA[fillInIntent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4780" length="9" line="125">
+			<expr><![CDATA[flagsMask]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4795" length="11" line="125">
+			<expr><![CDATA[flagsValues]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4812" length="10" line="125">
+			<expr><![CDATA[extraFlags]]></expr>
+		</operand>
+	</marker>
+	<type  start="4702" length="28" line="125" chordsig="android.content.IntentSender"/>
+	<type  start="4739" length="22" line="125" chordsig="android.content.Intent"/>
+</method>
+<method
+ chordsig="startIntentSender:(Landroid/content/IntentSender;Landroid/content/Intent;IIILandroid/os/Bundle;)V@android.content.Context"
+ sig="void startIntentSender(IntentSender,Intent,int,int,int,Bundle)"
+ line="127"
+ startpos="4907"
+ endpos="4924"
+>
+	<marker line="-1" type="param">
+		<operand  start="4954" length="6" line="127">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4985" length="12" line="127">
+			<expr><![CDATA[fillInIntent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5003" length="9" line="127">
+			<expr><![CDATA[flagsMask]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5018" length="11" line="127">
+			<expr><![CDATA[flagsValues]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5035" length="10" line="127">
+			<expr><![CDATA[extraFlags]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5065" length="7" line="127">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<type  start="4925" length="28" line="127" chordsig="android.content.IntentSender"/>
+	<type  start="4962" length="22" line="127" chordsig="android.content.Intent"/>
+	<type  start="5047" length="17" line="127" chordsig="android.os.Bundle"/>
+</method>
+<method
+ chordsig="sendBroadcast:(Landroid/content/Intent;)V@android.content.Context"
+ sig="void sendBroadcast(Intent)"
+ line="129"
+ startpos="5157"
+ endpos="5170"
+>
+	<marker line="-1" type="param">
+		<operand  start="5194" length="6" line="129">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="5171" length="22" line="129" chordsig="android.content.Intent"/>
+</method>
+<method
+ chordsig="sendBroadcast:(Landroid/content/Intent;Ljava/lang/String;)V@android.content.Context"
+ sig="void sendBroadcast(Intent,String)"
+ line="131"
+ startpos="5229"
+ endpos="5242"
+>
+	<marker line="-1" type="param">
+		<operand  start="5266" length="6" line="131">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5291" length="18" line="131">
+			<expr><![CDATA[receiverPermission]]></expr>
+		</operand>
+	</marker>
+	<type  start="5243" length="22" line="131" chordsig="android.content.Intent"/>
+	<type  start="5274" length="16" line="131" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="sendOrderedBroadcast:(Landroid/content/Intent;Ljava/lang/String;)V@android.content.Context"
+ sig="void sendOrderedBroadcast(Intent,String)"
+ line="133"
+ startpos="5338"
+ endpos="5358"
+>
+	<marker line="-1" type="param">
+		<operand  start="5382" length="6" line="133">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5407" length="18" line="133">
+			<expr><![CDATA[receiverPermission]]></expr>
+		</operand>
+	</marker>
+	<type  start="5359" length="22" line="133" chordsig="android.content.Intent"/>
+	<type  start="5390" length="16" line="133" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="sendOrderedBroadcast:(Landroid/content/Intent;Ljava/lang/String;Landroid/content/BroadcastReceiver;Landroid/os/Handler;ILjava/lang/String;Landroid/os/Bundle;)V@android.content.Context"
+ sig="void sendOrderedBroadcast(Intent,String,BroadcastReceiver,Handler,int,String,Bundle)"
+ line="135"
+ startpos="5454"
+ endpos="5474"
+>
+	<marker line="-1" type="param">
+		<operand  start="5498" length="6" line="135">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5523" length="18" line="135">
+			<expr><![CDATA[receiverPermission]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5577" length="14" line="135">
+			<expr><![CDATA[resultReceiver]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5612" length="9" line="135">
+			<expr><![CDATA[scheduler]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5627" length="11" line="135">
+			<expr><![CDATA[initialCode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5657" length="11" line="135">
+			<expr><![CDATA[initialData]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5688" length="13" line="135">
+			<expr><![CDATA[initialExtras]]></expr>
+		</operand>
+	</marker>
+	<type  start="5475" length="22" line="135" chordsig="android.content.Intent"/>
+	<type  start="5506" length="16" line="135" chordsig="java.lang.String"/>
+	<type  start="5543" length="33" line="135" chordsig="android.content.BroadcastReceiver"/>
+	<type  start="5593" length="18" line="135" chordsig="android.os.Handler"/>
+	<type  start="5640" length="16" line="135" chordsig="java.lang.String"/>
+	<type  start="5670" length="17" line="135" chordsig="android.os.Bundle"/>
+</method>
+<method
+ chordsig="sendStickyBroadcast:(Landroid/content/Intent;)V@android.content.Context"
+ sig="void sendStickyBroadcast(Intent)"
+ line="137"
+ startpos="5730"
+ endpos="5749"
+>
+	<marker line="-1" type="param">
+		<operand  start="5773" length="6" line="137">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="5750" length="22" line="137" chordsig="android.content.Intent"/>
+</method>
+<method
+ chordsig="sendStickyOrderedBroadcast:(Landroid/content/Intent;Landroid/content/BroadcastReceiver;Landroid/os/Handler;ILjava/lang/String;Landroid/os/Bundle;)V@android.content.Context"
+ sig="void sendStickyOrderedBroadcast(Intent,BroadcastReceiver,Handler,int,String,Bundle)"
+ line="139"
+ startpos="5808"
+ endpos="5834"
+>
+	<marker line="-1" type="param">
+		<operand  start="5858" length="6" line="139">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5900" length="14" line="139">
+			<expr><![CDATA[resultReceiver]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5935" length="9" line="139">
+			<expr><![CDATA[scheduler]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5950" length="11" line="139">
+			<expr><![CDATA[initialCode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5980" length="11" line="139">
+			<expr><![CDATA[initialData]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6011" length="13" line="139">
+			<expr><![CDATA[initialExtras]]></expr>
+		</operand>
+	</marker>
+	<type  start="5835" length="22" line="139" chordsig="android.content.Intent"/>
+	<type  start="5866" length="33" line="139" chordsig="android.content.BroadcastReceiver"/>
+	<type  start="5916" length="18" line="139" chordsig="android.os.Handler"/>
+	<type  start="5963" length="16" line="139" chordsig="java.lang.String"/>
+	<type  start="5993" length="17" line="139" chordsig="android.os.Bundle"/>
+</method>
+<method
+ chordsig="removeStickyBroadcast:(Landroid/content/Intent;)V@android.content.Context"
+ sig="void removeStickyBroadcast(Intent)"
+ line="141"
+ startpos="6053"
+ endpos="6074"
+>
+	<marker line="-1" type="param">
+		<operand  start="6098" length="6" line="141">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="6075" length="22" line="141" chordsig="android.content.Intent"/>
+</method>
+<method
+ chordsig="registerReceiver:(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;@android.content.Context"
+ sig="Intent registerReceiver(BroadcastReceiver,IntentFilter)"
+ line="143"
+ startpos="6151"
+ endpos="6167"
+>
+	<marker line="-1" type="param">
+		<operand  start="6202" length="8" line="143">
+			<expr><![CDATA[receiver]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6241" length="6" line="143">
+			<expr><![CDATA[filter]]></expr>
+		</operand>
+	</marker>
+	<type  start="6128" length="22" line="143" chordsig="android.content.Intent"/>
+	<type  start="6168" length="33" line="143" chordsig="android.content.BroadcastReceiver"/>
+	<type  start="6212" length="28" line="143" chordsig="android.content.IntentFilter"/>
+</method>
+<method
+ chordsig="registerReceiver:(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;Ljava/lang/String;Landroid/os/Handler;)Landroid/content/Intent;@android.content.Context"
+ sig="Intent registerReceiver(BroadcastReceiver,IntentFilter,String,Handler)"
+ line="145"
+ startpos="6294"
+ endpos="6310"
+>
+	<marker line="-1" type="param">
+		<operand  start="6345" length="8" line="145">
+			<expr><![CDATA[receiver]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6384" length="6" line="145">
+			<expr><![CDATA[filter]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6409" length="19" line="145">
+			<expr><![CDATA[broadcastPermission]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6449" length="9" line="145">
+			<expr><![CDATA[scheduler]]></expr>
+		</operand>
+	</marker>
+	<type  start="6271" length="22" line="145" chordsig="android.content.Intent"/>
+	<type  start="6311" length="33" line="145" chordsig="android.content.BroadcastReceiver"/>
+	<type  start="6355" length="28" line="145" chordsig="android.content.IntentFilter"/>
+	<type  start="6392" length="16" line="145" chordsig="java.lang.String"/>
+	<type  start="6430" length="18" line="145" chordsig="android.os.Handler"/>
+</method>
+<method
+ chordsig="unregisterReceiver:(Landroid/content/BroadcastReceiver;)V@android.content.Context"
+ sig="void unregisterReceiver(BroadcastReceiver)"
+ line="147"
+ startpos="6487"
+ endpos="6505"
+>
+	<marker line="-1" type="param">
+		<operand  start="6540" length="8" line="147">
+			<expr><![CDATA[receiver]]></expr>
+		</operand>
+	</marker>
+	<type  start="6506" length="33" line="147" chordsig="android.content.BroadcastReceiver"/>
+</method>
+<method
+ chordsig="startService:(Landroid/content/Intent;)Landroid/content/ComponentName;@android.content.Context"
+ sig="ComponentName startService(Intent)"
+ line="149"
+ startpos="6602"
+ endpos="6614"
+>
+	<marker line="-1" type="param">
+		<operand  start="6638" length="7" line="149">
+			<expr><![CDATA[service]]></expr>
+		</operand>
+	</marker>
+	<type  start="6572" length="29" line="149" chordsig="android.content.ComponentName"/>
+	<type  start="6615" length="22" line="149" chordsig="android.content.Intent"/>
+</method>
+<method
+ chordsig="stopService:(Landroid/content/Intent;)Z@android.content.Context"
+ sig="boolean stopService(Intent)"
+ line="151"
+ startpos="6677"
+ endpos="6688"
+>
+	<marker line="-1" type="param">
+		<operand  start="6712" length="7" line="151">
+			<expr><![CDATA[service]]></expr>
+		</operand>
+	</marker>
+	<type  start="6689" length="22" line="151" chordsig="android.content.Intent"/>
+</method>
+<method
+ chordsig="bindService:(Landroid/content/Intent;Landroid/content/ServiceConnection;I)Z@android.content.Context"
+ sig="boolean bindService(Intent,ServiceConnection,int)"
+ line="153"
+ startpos="6751"
+ endpos="6762"
+>
+	<marker line="-1" type="param">
+		<operand  start="6786" length="7" line="153">
+			<expr><![CDATA[service]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6829" length="4" line="153">
+			<expr><![CDATA[conn]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6839" length="5" line="153">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="6763" length="22" line="153" chordsig="android.content.Intent"/>
+	<type  start="6795" length="33" line="153" chordsig="android.content.ServiceConnection"/>
+</method>
+<method
+ chordsig="unbindService:(Landroid/content/ServiceConnection;)V@android.content.Context"
+ sig="void unbindService(ServiceConnection)"
+ line="155"
+ startpos="6873"
+ endpos="6886"
+>
+	<marker line="-1" type="param">
+		<operand  start="6921" length="4" line="155">
+			<expr><![CDATA[conn]]></expr>
+		</operand>
+	</marker>
+	<type  start="6887" length="33" line="155" chordsig="android.content.ServiceConnection"/>
+</method>
+<method
+ chordsig="startInstrumentation:(Landroid/content/ComponentName;Ljava/lang/String;Landroid/os/Bundle;)Z@android.content.Context"
+ sig="boolean startInstrumentation(ComponentName,String,Bundle)"
+ line="157"
+ startpos="6957"
+ endpos="6977"
+>
+	<marker line="-1" type="param">
+		<operand  start="7008" length="9" line="157">
+			<expr><![CDATA[className]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7036" length="11" line="157">
+			<expr><![CDATA[profileFile]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7067" length="9" line="157">
+			<expr><![CDATA[arguments]]></expr>
+		</operand>
+	</marker>
+	<type  start="6978" length="29" line="157" chordsig="android.content.ComponentName"/>
+	<type  start="7019" length="16" line="157" chordsig="java.lang.String"/>
+	<type  start="7049" length="17" line="157" chordsig="android.os.Bundle"/>
+</method>
+<method
+ chordsig="getSystemService:(Ljava/lang/String;)Ljava/lang/Object;@android.content.Context"
+ sig="Object getSystemService(String)"
+ line="159"
+ startpos="7117"
+ endpos="7133"
+>
+	<marker line="-1" type="param">
+		<operand  start="7151" length="4" line="159">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="7100" length="16" line="159" chordsig="java.lang.Object"/>
+	<type  start="7134" length="16" line="159" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="checkPermission:(Ljava/lang/String;II)I@android.content.Context"
+ sig="int checkPermission(String,int,int)"
+ line="161"
+ startpos="7183"
+ endpos="7198"
+>
+	<marker line="-1" type="param">
+		<operand  start="7216" length="10" line="161">
+			<expr><![CDATA[permission]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7232" length="3" line="161">
+			<expr><![CDATA[pid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7241" length="3" line="161">
+			<expr><![CDATA[uid]]></expr>
+		</operand>
+	</marker>
+	<type  start="7199" length="16" line="161" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="checkCallingPermission:(Ljava/lang/String;)I@android.content.Context"
+ sig="int checkCallingPermission(String)"
+ line="163"
+ startpos="7272"
+ endpos="7294"
+>
+	<marker line="-1" type="param">
+		<operand  start="7312" length="10" line="163">
+			<expr><![CDATA[permission]]></expr>
+		</operand>
+	</marker>
+	<type  start="7295" length="16" line="163" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="checkCallingOrSelfPermission:(Ljava/lang/String;)I@android.content.Context"
+ sig="int checkCallingOrSelfPermission(String)"
+ line="165"
+ startpos="7350"
+ endpos="7378"
+>
+	<marker line="-1" type="param">
+		<operand  start="7396" length="10" line="165">
+			<expr><![CDATA[permission]]></expr>
+		</operand>
+	</marker>
+	<type  start="7379" length="16" line="165" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="enforcePermission:(Ljava/lang/String;IILjava/lang/String;)V@android.content.Context"
+ sig="void enforcePermission(String,int,int,String)"
+ line="167"
+ startpos="7435"
+ endpos="7452"
+>
+	<marker line="-1" type="param">
+		<operand  start="7470" length="10" line="167">
+			<expr><![CDATA[permission]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7486" length="3" line="167">
+			<expr><![CDATA[pid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7495" length="3" line="167">
+			<expr><![CDATA[uid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7517" length="7" line="167">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="7453" length="16" line="167" chordsig="java.lang.String"/>
+	<type  start="7500" length="16" line="167" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="enforceCallingPermission:(Ljava/lang/String;Ljava/lang/String;)V@android.content.Context"
+ sig="void enforceCallingPermission(String,String)"
+ line="169"
+ startpos="7553"
+ endpos="7577"
+>
+	<marker line="-1" type="param">
+		<operand  start="7595" length="10" line="169">
+			<expr><![CDATA[permission]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7624" length="7" line="169">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="7578" length="16" line="169" chordsig="java.lang.String"/>
+	<type  start="7607" length="16" line="169" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="enforceCallingOrSelfPermission:(Ljava/lang/String;Ljava/lang/String;)V@android.content.Context"
+ sig="void enforceCallingOrSelfPermission(String,String)"
+ line="171"
+ startpos="7660"
+ endpos="7690"
+>
+	<marker line="-1" type="param">
+		<operand  start="7708" length="10" line="171">
+			<expr><![CDATA[permission]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7737" length="7" line="171">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="7691" length="16" line="171" chordsig="java.lang.String"/>
+	<type  start="7720" length="16" line="171" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="grantUriPermission:(Ljava/lang/String;Landroid/net/Uri;I)V@android.content.Context"
+ sig="void grantUriPermission(String,Uri,int)"
+ line="173"
+ startpos="7773"
+ endpos="7791"
+>
+	<marker line="-1" type="param">
+		<operand  start="7809" length="9" line="173">
+			<expr><![CDATA[toPackage]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7836" length="3" line="173">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7845" length="9" line="173">
+			<expr><![CDATA[modeFlags]]></expr>
+		</operand>
+	</marker>
+	<type  start="7792" length="16" line="173" chordsig="java.lang.String"/>
+	<type  start="7820" length="15" line="173" chordsig="android.net.Uri"/>
+</method>
+<method
+ chordsig="revokeUriPermission:(Landroid/net/Uri;I)V@android.content.Context"
+ sig="void revokeUriPermission(Uri,int)"
+ line="175"
+ startpos="7883"
+ endpos="7902"
+>
+	<marker line="-1" type="param">
+		<operand  start="7919" length="3" line="175">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7928" length="9" line="175">
+			<expr><![CDATA[modeFlags]]></expr>
+		</operand>
+	</marker>
+	<type  start="7903" length="15" line="175" chordsig="android.net.Uri"/>
+</method>
+<method
+ chordsig="checkUriPermission:(Landroid/net/Uri;III)I@android.content.Context"
+ sig="int checkUriPermission(Uri,int,int,int)"
+ line="177"
+ startpos="7965"
+ endpos="7983"
+>
+	<marker line="-1" type="param">
+		<operand  start="8000" length="3" line="177">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8009" length="3" line="177">
+			<expr><![CDATA[pid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8018" length="3" line="177">
+			<expr><![CDATA[uid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8027" length="9" line="177">
+			<expr><![CDATA[modeFlags]]></expr>
+		</operand>
+	</marker>
+	<type  start="7984" length="15" line="177" chordsig="android.net.Uri"/>
+</method>
+<method
+ chordsig="checkCallingUriPermission:(Landroid/net/Uri;I)I@android.content.Context"
+ sig="int checkCallingUriPermission(Uri,int)"
+ line="179"
+ startpos="8064"
+ endpos="8089"
+>
+	<marker line="-1" type="param">
+		<operand  start="8106" length="3" line="179">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8115" length="9" line="179">
+			<expr><![CDATA[modeFlags]]></expr>
+		</operand>
+	</marker>
+	<type  start="8090" length="15" line="179" chordsig="android.net.Uri"/>
+</method>
+<method
+ chordsig="checkCallingOrSelfUriPermission:(Landroid/net/Uri;I)I@android.content.Context"
+ sig="int checkCallingOrSelfUriPermission(Uri,int)"
+ line="181"
+ startpos="8152"
+ endpos="8183"
+>
+	<marker line="-1" type="param">
+		<operand  start="8200" length="3" line="181">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8209" length="9" line="181">
+			<expr><![CDATA[modeFlags]]></expr>
+		</operand>
+	</marker>
+	<type  start="8184" length="15" line="181" chordsig="android.net.Uri"/>
+</method>
+<method
+ chordsig="checkUriPermission:(Landroid/net/Uri;Ljava/lang/String;Ljava/lang/String;III)I@android.content.Context"
+ sig="int checkUriPermission(Uri,String,String,int,int,int)"
+ line="183"
+ startpos="8246"
+ endpos="8264"
+>
+	<marker line="-1" type="param">
+		<operand  start="8281" length="3" line="183">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8303" length="14" line="183">
+			<expr><![CDATA[readPermission]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8336" length="15" line="183">
+			<expr><![CDATA[writePermission]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8357" length="3" line="183">
+			<expr><![CDATA[pid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8366" length="3" line="183">
+			<expr><![CDATA[uid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8375" length="9" line="183">
+			<expr><![CDATA[modeFlags]]></expr>
+		</operand>
+	</marker>
+	<type  start="8265" length="15" line="183" chordsig="android.net.Uri"/>
+	<type  start="8286" length="16" line="183" chordsig="java.lang.String"/>
+	<type  start="8319" length="16" line="183" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="enforceUriPermission:(Landroid/net/Uri;IIILjava/lang/String;)V@android.content.Context"
+ sig="void enforceUriPermission(Uri,int,int,int,String)"
+ line="185"
+ startpos="8413"
+ endpos="8433"
+>
+	<marker line="-1" type="param">
+		<operand  start="8450" length="3" line="185">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8459" length="3" line="185">
+			<expr><![CDATA[pid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8468" length="3" line="185">
+			<expr><![CDATA[uid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8477" length="9" line="185">
+			<expr><![CDATA[modeFlags]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8505" length="7" line="185">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="8434" length="15" line="185" chordsig="android.net.Uri"/>
+	<type  start="8488" length="16" line="185" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="enforceCallingUriPermission:(Landroid/net/Uri;ILjava/lang/String;)V@android.content.Context"
+ sig="void enforceCallingUriPermission(Uri,int,String)"
+ line="187"
+ startpos="8541"
+ endpos="8568"
+>
+	<marker line="-1" type="param">
+		<operand  start="8585" length="3" line="187">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8594" length="9" line="187">
+			<expr><![CDATA[modeFlags]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8622" length="7" line="187">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="8569" length="15" line="187" chordsig="android.net.Uri"/>
+	<type  start="8605" length="16" line="187" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="enforceCallingOrSelfUriPermission:(Landroid/net/Uri;ILjava/lang/String;)V@android.content.Context"
+ sig="void enforceCallingOrSelfUriPermission(Uri,int,String)"
+ line="189"
+ startpos="8658"
+ endpos="8691"
+>
+	<marker line="-1" type="param">
+		<operand  start="8708" length="3" line="189">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8717" length="9" line="189">
+			<expr><![CDATA[modeFlags]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8745" length="7" line="189">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="8692" length="15" line="189" chordsig="android.net.Uri"/>
+	<type  start="8728" length="16" line="189" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="enforceUriPermission:(Landroid/net/Uri;Ljava/lang/String;Ljava/lang/String;IIILjava/lang/String;)V@android.content.Context"
+ sig="void enforceUriPermission(Uri,String,String,int,int,int,String)"
+ line="191"
+ startpos="8781"
+ endpos="8801"
+>
+	<marker line="-1" type="param">
+		<operand  start="8818" length="3" line="191">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8840" length="14" line="191">
+			<expr><![CDATA[readPermission]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8873" length="15" line="191">
+			<expr><![CDATA[writePermission]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8894" length="3" line="191">
+			<expr><![CDATA[pid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8903" length="3" line="191">
+			<expr><![CDATA[uid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8912" length="9" line="191">
+			<expr><![CDATA[modeFlags]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8940" length="7" line="191">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="8802" length="15" line="191" chordsig="android.net.Uri"/>
+	<type  start="8823" length="16" line="191" chordsig="java.lang.String"/>
+	<type  start="8856" length="16" line="191" chordsig="java.lang.String"/>
+	<type  start="8923" length="16" line="191" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="createPackageContext:(Ljava/lang/String;I)Landroid/content/Context;@android.content.Context"
+ sig="Context createPackageContext(String,int)"
+ line="193"
+ startpos="8995"
+ endpos="9015"
+>
+	<marker line="-1" type="param">
+		<operand  start="9033" length="11" line="193">
+			<expr><![CDATA[packageName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9050" length="5" line="193">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="8971" length="23" line="193" chordsig="android.content.Context"/>
+	<type  start="9016" length="16" line="193" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="isRestricted:()Z@android.content.Context"
+ sig="boolean isRestricted()"
+ line="195"
+ startpos="9141"
+ endpos="9153"
+>
+	<newexpr line="196" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9176" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9172" length="29" line="196">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9193" length="7" line="196">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9176" length="16" line="196" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="9996" length="16" line="227" chordsig="java.lang.String"/>
+	<type  start="10063" length="16" line="229" chordsig="java.lang.String"/>
+	<type  start="10132" length="16" line="231" chordsig="java.lang.String"/>
+	<type  start="10219" length="16" line="233" chordsig="java.lang.String"/>
+	<type  start="10290" length="16" line="235" chordsig="java.lang.String"/>
+	<type  start="10363" length="16" line="237" chordsig="java.lang.String"/>
+	<type  start="10430" length="16" line="239" chordsig="java.lang.String"/>
+	<type  start="10511" length="16" line="241" chordsig="java.lang.String"/>
+	<type  start="10594" length="16" line="243" chordsig="java.lang.String"/>
+	<type  start="10667" length="16" line="245" chordsig="java.lang.String"/>
+	<type  start="10740" length="16" line="247" chordsig="java.lang.String"/>
+	<type  start="10809" length="16" line="249" chordsig="java.lang.String"/>
+	<type  start="10878" length="16" line="251" chordsig="java.lang.String"/>
+	<type  start="10949" length="16" line="253" chordsig="java.lang.String"/>
+	<type  start="11024" length="16" line="255" chordsig="java.lang.String"/>
+	<type  start="11097" length="16" line="257" chordsig="java.lang.String"/>
+	<type  start="11178" length="16" line="259" chordsig="java.lang.String"/>
+	<type  start="11243" length="16" line="261" chordsig="java.lang.String"/>
+	<type  start="11315" length="16" line="263" chordsig="java.lang.String"/>
+	<type  start="11391" length="16" line="265" chordsig="java.lang.String"/>
+	<type  start="11458" length="16" line="267" chordsig="java.lang.String"/>
+	<type  start="11539" length="16" line="269" chordsig="java.lang.String"/>
+	<type  start="11610" length="16" line="271" chordsig="java.lang.String"/>
+	<type  start="11685" length="16" line="273" chordsig="java.lang.String"/>
+	<type  start="11766" length="16" line="275" chordsig="java.lang.String"/>
+	<type  start="11856" length="16" line="277" chordsig="java.lang.String"/>
+	<type  start="11927" length="16" line="279" chordsig="java.lang.String"/>
+	<type  start="12010" length="16" line="281" chordsig="java.lang.String"/>
+	<type  start="12080" length="16" line="283" chordsig="java.lang.String"/>
+	<type  start="12153" length="16" line="285" chordsig="java.lang.String"/>
+	<type  start="12216" length="16" line="287" chordsig="java.lang.String"/>
+	<type  start="12279" length="16" line="289" chordsig="java.lang.String"/>
+<method
+ chordsig="getString:(I)Ljava/lang/String;@android.content.Context"
+ sig="String getString(int)"
+ line="298"
+ startpos="12597"
+ endpos="12606"
+>
+	<marker line="-1" type="param">
+		<operand  start="12611" length="5" line="298">
+			<expr><![CDATA[resId]]></expr>
+		</operand>
+	</marker>
+	<type  start="12580" length="16" line="298" chordsig="java.lang.String"/>
+	<marker line="299" type="return">
+		<operand  start="12635" length="12" line="299">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="299" chordsig="&lt;init&gt;:()V@java.lang.String" start="12639" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="12635" length="12" line="299">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12639" length="6" line="299" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getString:(I[Ljava/lang/Object;)Ljava/lang/String;@android.content.Context"
+ sig="String getString(int,Object)"
+ line="303"
+ startpos="12765"
+ endpos="12774"
+>
+	<marker line="-1" type="param">
+		<operand  start="12779" length="5" line="303">
+			<expr><![CDATA[resId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="12806" length="10" line="303">
+			<expr><![CDATA[formatArgs]]></expr>
+		</operand>
+	</marker>
+	<type  start="12748" length="16" line="303" chordsig="java.lang.String"/>
+	<type  start="12786" length="16" line="303" chordsig="java.lang.Object"/>
+	<marker line="304" type="return">
+		<operand  start="12835" length="12" line="304">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="304" chordsig="&lt;init&gt;:()V@java.lang.String" start="12839" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="12835" length="12" line="304">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12839" length="6" line="304" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getText:(I)Ljava/lang/CharSequence;@android.content.Context"
+ sig="CharSequence getText(int)"
+ line="308"
+ startpos="12969"
+ endpos="12976"
+>
+	<marker line="-1" type="param">
+		<operand  start="12981" length="5" line="308">
+			<expr><![CDATA[resId]]></expr>
+		</operand>
+	</marker>
+	<type  start="12946" length="22" line="308" chordsig="java.lang.CharSequence"/>
+	<marker line="309" type="return">
+		<operand  start="13005" length="12" line="309">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="309" chordsig="&lt;init&gt;:()V@java.lang.String" start="13009" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="13005" length="12" line="309">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="13009" length="6" line="309" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

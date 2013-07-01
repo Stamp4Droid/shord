@@ -1,0 +1,239 @@
+<root>
+<class chordsig="java.net.InetSocketAddress" line="6">
+	<type  start="146" length="22" line="6" chordsig="java.net.SocketAddress"/>
+<method
+ chordsig="&lt;init&gt;:(I)V@java.net.InetSocketAddress"
+ sig="InetSocketAddress(int)"
+ line="8"
+ startpos="183"
+ endpos="200"
+>
+	<marker line="-1" type="param">
+		<operand  start="205" length="4" line="8">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="231" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="227" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="248" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="231" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPort:()I@java.net.InetSocketAddress"
+ sig="int getPort()"
+ line="12"
+ startpos="286"
+ endpos="293"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="316" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="312" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="333" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="316" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAddress:()Ljava/net/InetAddress;@java.net.InetSocketAddress"
+ sig="InetAddress getAddress()"
+ line="16"
+ startpos="388"
+ endpos="398"
+>
+	<type  start="367" length="20" line="16" chordsig="java.net.InetAddress"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="421" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="417" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="438" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="421" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getHostName:()Ljava/lang/String;@java.net.InetSocketAddress"
+ sig="String getHostName()"
+ line="20"
+ startpos="489"
+ endpos="500"
+>
+	<type  start="472" length="16" line="20" chordsig="java.lang.String"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="523" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="519" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="540" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="523" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isUnresolved:()Z@java.net.InetSocketAddress"
+ sig="boolean isUnresolved()"
+ line="24"
+ startpos="582"
+ endpos="594"
+>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="617" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="613" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="634" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="617" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.net.InetSocketAddress"
+ sig="String toString()"
+ line="28"
+ startpos="679"
+ endpos="687"
+>
+	<type  start="662" length="16" line="28" chordsig="java.lang.String"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="710" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="706" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="727" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="710" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.net.InetSocketAddress"
+ sig="boolean equals(Object)"
+ line="32"
+ startpos="769"
+ endpos="775"
+>
+	<marker line="-1" type="param">
+		<operand  start="793" length="10" line="32">
+			<expr><![CDATA[socketAddr]]></expr>
+		</operand>
+	</marker>
+	<type  start="776" length="16" line="32" chordsig="java.lang.Object"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="825" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="821" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="842" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="825" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@java.net.InetSocketAddress"
+ sig="int hashCode()"
+ line="36"
+ startpos="880"
+ endpos="888"
+>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="911" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="907" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="928" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="911" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/net/InetAddress;I)V@java.net.InetSocketAddress"
+ sig="InetSocketAddress(InetAddress,int)"
+ line="41"
+ startpos="1017"
+ endpos="1034"
+>
+	<marker line="-1" type="param">
+		<operand  start="1056" length="7" line="41">
+			<expr><![CDATA[address]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1069" length="4" line="41">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<type  start="1035" length="20" line="41" chordsig="java.net.InetAddress"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;I)V@java.net.InetSocketAddress"
+ sig="InetSocketAddress(String,int)"
+ line="45"
+ startpos="1153"
+ endpos="1170"
+>
+	<marker line="-1" type="param">
+		<operand  start="1188" length="4" line="45">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1198" length="4" line="45">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<type  start="1171" length="16" line="45" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="createUnresolved:(Ljava/lang/String;I)Ljava/net/InetSocketAddress;@java.net.InetSocketAddress"
+ sig="InetSocketAddress createUnresolved(String,int)"
+ line="48"
+ startpos="1258"
+ endpos="1274"
+>
+	<marker line="-1" type="param">
+		<operand  start="1292" length="4" line="48">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1302" length="4" line="48">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<type  start="1231" length="26" line="48" chordsig="java.net.InetSocketAddress"/>
+	<type  start="1275" length="16" line="48" chordsig="java.lang.String"/>
+	<marker line="49" type="return">
+		<operand  start="1325" length="33" line="49">
+			<expr><![CDATA[new InetSocketAddress(host,port)]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;I)V@java.net.InetSocketAddress" start="1329" length="17" type="invoke">
+			<expr><![CDATA[new InetSocketAddress(host,port)]]></expr>
+		<param  start="1325" length="33" line="49">
+			<expr><![CDATA[new InetSocketAddress(host,port)]]></expr>
+		</param>
+		<param  start="1347" length="4" line="49">
+			<expr><![CDATA[host]]></expr>
+		</param>
+		<param  start="1353" length="4" line="49">
+			<expr><![CDATA[port]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1329" length="17" line="49" chordsig="java.net.InetSocketAddress"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,28 @@
+<root>
+<class chordsig="java.math.RoundingMode" line="2">
+<method
+ chordsig="valueOf:(I)Ljava/math/RoundingMode;@java.math.RoundingMode"
+ sig="RoundingMode valueOf(int)"
+ line="12"
+ startpos="170"
+ endpos="177"
+>
+	<marker line="-1" type="param">
+		<operand  start="182" length="4" line="12">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+	<type  start="147" length="22" line="12" chordsig="java.math.RoundingMode"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="200" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="196" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="217" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="200" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

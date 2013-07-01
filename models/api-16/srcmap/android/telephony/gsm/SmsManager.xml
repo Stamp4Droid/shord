@@ -1,0 +1,218 @@
+<root>
+<class chordsig="android.telephony.gsm.SmsManager" line="3">
+<method
+ chordsig="&lt;init&gt;:()V@android.telephony.gsm.SmsManager"
+ sig="SmsManager()"
+ line="5"
+ startpos="87"
+ endpos="97"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="112" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="108" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="129" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="112" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDefault:()Landroid/telephony/gsm/SmsManager;@android.telephony.gsm.SmsManager"
+ sig="SmsManager getDefault()"
+ line="7"
+ startpos="219"
+ endpos="229"
+>
+	<type  start="186" length="32" line="7" chordsig="android.telephony.gsm.SmsManager"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="244" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="240" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="261" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="244" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="sendTextMessage:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroid/app/PendingIntent;Landroid/app/PendingIntent;)V@android.telephony.gsm.SmsManager"
+ sig="void sendTextMessage(String,String,String,PendingIntent,PendingIntent)"
+ line="9"
+ startpos="316"
+ endpos="331"
+>
+	<marker line="-1" type="param">
+		<operand  start="349" length="18" line="9">
+			<expr><![CDATA[destinationAddress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="386" length="9" line="9">
+			<expr><![CDATA[scAddress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="414" length="4" line="9">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="446" length="10" line="9">
+			<expr><![CDATA[sentIntent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="484" length="14" line="9">
+			<expr><![CDATA[deliveryIntent]]></expr>
+		</operand>
+	</marker>
+	<type  start="332" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="369" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="397" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="420" length="25" line="9" chordsig="android.app.PendingIntent"/>
+	<type  start="458" length="25" line="9" chordsig="android.app.PendingIntent"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="512" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="508" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="529" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="512" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="divideMessage:(Ljava/lang/String;)Ljava/util/ArrayList;@android.telephony.gsm.SmsManager"
+ sig="ArrayList&lt;String&gt; divideMessage(String)"
+ line="11"
+ startpos="617"
+ endpos="630"
+>
+	<marker line="-1" type="param">
+		<operand  start="648" length="4" line="11">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="579" length="19" line="11" chordsig="java.util.ArrayList"/>
+	<type  start="599" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="631" length="16" line="11" chordsig="java.lang.String"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="666" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="662" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="683" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="666" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="sendMultipartTextMessage:(Ljava/lang/String;Ljava/lang/String;Ljava/util/ArrayList;Ljava/util/ArrayList;Ljava/util/ArrayList;)V@android.telephony.gsm.SmsManager"
+ sig="void sendMultipartTextMessage(String,String,ArrayList&lt;String&gt;,ArrayList&lt;PendingIntent&gt;,ArrayList&lt;PendingIntent&gt;)"
+ line="13"
+ startpos="738"
+ endpos="762"
+>
+	<marker line="-1" type="param">
+		<operand  start="780" length="18" line="13">
+			<expr><![CDATA[destinationAddress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="817" length="9" line="13">
+			<expr><![CDATA[scAddress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="866" length="5" line="13">
+			<expr><![CDATA[parts]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="920" length="11" line="13">
+			<expr><![CDATA[sentIntents]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="980" length="15" line="13">
+			<expr><![CDATA[deliveryIntents]]></expr>
+		</operand>
+	</marker>
+	<type  start="763" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="800" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="828" length="19" line="13" chordsig="java.util.ArrayList"/>
+	<type  start="848" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="873" length="19" line="13" chordsig="java.util.ArrayList"/>
+	<type  start="893" length="25" line="13" chordsig="android.app.PendingIntent"/>
+	<type  start="933" length="19" line="13" chordsig="java.util.ArrayList"/>
+	<type  start="953" length="25" line="13" chordsig="android.app.PendingIntent"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1009" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1005" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1026" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1009" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="sendDataMessage:(Ljava/lang/String;Ljava/lang/String;S[BLandroid/app/PendingIntent;Landroid/app/PendingIntent;)V@android.telephony.gsm.SmsManager"
+ sig="void sendDataMessage(String,String,short,byte[],PendingIntent,PendingIntent)"
+ line="15"
+ startpos="1081"
+ endpos="1096"
+>
+	<marker line="-1" type="param">
+		<operand  start="1114" length="18" line="15">
+			<expr><![CDATA[destinationAddress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1151" length="9" line="15">
+			<expr><![CDATA[scAddress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1168" length="15" line="15">
+			<expr><![CDATA[destinationPort]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1192" length="4" line="15">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1224" length="10" line="15">
+			<expr><![CDATA[sentIntent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1262" length="14" line="15">
+			<expr><![CDATA[deliveryIntent]]></expr>
+		</operand>
+	</marker>
+	<type  start="1097" length="16" line="15" chordsig="java.lang.String"/>
+	<type  start="1134" length="16" line="15" chordsig="java.lang.String"/>
+	<type  start="1198" length="25" line="15" chordsig="android.app.PendingIntent"/>
+	<type  start="1236" length="25" line="15" chordsig="android.app.PendingIntent"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1290" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1286" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1307" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1290" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

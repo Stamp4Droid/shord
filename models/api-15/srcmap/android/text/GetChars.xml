@@ -1,0 +1,33 @@
+<root>
+<class chordsig="android.text.GetChars" line="2">
+	<type  start="58" length="22" line="3" chordsig="java.lang.CharSequence"/>
+<method
+ chordsig="getChars:(II[CI)V@android.text.GetChars"
+ sig="void getChars(int,int,char[],int)"
+ line="5"
+ startpos="105"
+ endpos="113"
+>
+	<marker line="-1" type="param">
+		<operand  start="118" length="5" line="5">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="129" length="3" line="5">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="141" length="4" line="5">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="151" length="7" line="5">
+			<expr><![CDATA[destoff]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

@@ -1,0 +1,407 @@
+<root>
+<class chordsig="android.util.LongSparseArray" line="2">
+	<type  start="67" length="19" line="3" chordsig="java.lang.Cloneable"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.util.LongSparseArray"
+ sig="LongSparseArray()"
+ line="5"
+ startpos="97"
+ endpos="112"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="127" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="123" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="144" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="127" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(I)V@android.util.LongSparseArray"
+ sig="LongSparseArray(int)"
+ line="6"
+ startpos="164"
+ endpos="179"
+>
+	<marker line="-1" type="param">
+		<operand  start="184" length="15" line="6">
+			<expr><![CDATA[initialCapacity]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="213" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="209" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="230" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="213" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clone:()Landroid/util/LongSparseArray;@android.util.LongSparseArray"
+ sig="LongSparseArray&lt;E&gt; clone()"
+ line="8"
+ startpos="331"
+ endpos="336"
+>
+	<alias>()Ljava/lang/Object;</alias>
+	<type  start="299" length="28" line="8" chordsig="android.util.LongSparseArray"/>
+	<type  start="328" length="1" line="8" chordsig="java.lang.Object"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="351" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="347" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="368" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="351" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="get:(J)Ljava/lang/Object;@android.util.LongSparseArray"
+ sig="E get(long)"
+ line="9"
+ startpos="390"
+ endpos="393"
+>
+	<marker line="-1" type="param">
+		<operand  start="399" length="3" line="9">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="388" length="1" line="9" chordsig="java.lang.Object"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="416" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="412" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="433" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="416" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="get:(JLjava/lang/Object;)Ljava/lang/Object;@android.util.LongSparseArray"
+ sig="E get(long,E)"
+ line="11"
+ startpos="504"
+ endpos="507"
+>
+	<marker line="-1" type="param">
+		<operand  start="513" length="3" line="11">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="520" length="18" line="11">
+			<expr><![CDATA[valueIfKeyNotFound]]></expr>
+		</operand>
+	</marker>
+	<type  start="502" length="1" line="11" chordsig="java.lang.Object"/>
+	<type  start="518" length="1" line="11" chordsig="java.lang.Object"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="552" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="548" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="569" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="552" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="delete:(J)V@android.util.LongSparseArray"
+ sig="void delete(long)"
+ line="12"
+ startpos="594"
+ endpos="600"
+>
+	<marker line="-1" type="param">
+		<operand  start="606" length="3" line="12">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="623" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="619" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="640" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="623" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="remove:(J)V@android.util.LongSparseArray"
+ sig="void remove(long)"
+ line="13"
+ startpos="665"
+ endpos="671"
+>
+	<marker line="-1" type="param">
+		<operand  start="677" length="3" line="13">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="694" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="690" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="711" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="694" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeAt:(I)V@android.util.LongSparseArray"
+ sig="void removeAt(int)"
+ line="14"
+ startpos="736"
+ endpos="744"
+>
+	<marker line="-1" type="param">
+		<operand  start="749" length="5" line="14">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="768" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="764" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="785" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="768" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="put:(JLjava/lang/Object;)V@android.util.LongSparseArray"
+ sig="void put(long,E)"
+ line="15"
+ startpos="810"
+ endpos="813"
+>
+	<marker line="-1" type="param">
+		<operand  start="819" length="3" line="15">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="826" length="5" line="15">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="824" length="1" line="15" chordsig="java.lang.Object"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="845" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="841" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="862" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="845" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="size:()I@android.util.LongSparseArray"
+ sig="int size()"
+ line="16"
+ startpos="886"
+ endpos="890"
+>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="905" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="901" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="922" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="905" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="keyAt:(I)J@android.util.LongSparseArray"
+ sig="long keyAt(int)"
+ line="17"
+ startpos="947"
+ endpos="952"
+>
+	<marker line="-1" type="param">
+		<operand  start="957" length="5" line="17">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="976" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="972" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="993" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="976" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="valueAt:(I)Ljava/lang/Object;@android.util.LongSparseArray"
+ sig="E valueAt(int)"
+ line="19"
+ startpos="1064"
+ endpos="1071"
+>
+	<marker line="-1" type="param">
+		<operand  start="1076" length="5" line="19">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="1062" length="1" line="19" chordsig="java.lang.Object"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1095" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1091" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1112" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1095" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setValueAt:(ILjava/lang/Object;)V@android.util.LongSparseArray"
+ sig="void setValueAt(int,E)"
+ line="20"
+ startpos="1137"
+ endpos="1147"
+>
+	<marker line="-1" type="param">
+		<operand  start="1152" length="5" line="20">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1161" length="5" line="20">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="1159" length="1" line="20" chordsig="java.lang.Object"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1180" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1176" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1197" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1180" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="indexOfKey:(J)I@android.util.LongSparseArray"
+ sig="int indexOfKey(long)"
+ line="21"
+ startpos="1221"
+ endpos="1231"
+>
+	<marker line="-1" type="param">
+		<operand  start="1237" length="3" line="21">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1254" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1250" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1271" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1254" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="indexOfValue:(Ljava/lang/Object;)I@android.util.LongSparseArray"
+ sig="int indexOfValue(E)"
+ line="22"
+ startpos="1295"
+ endpos="1307"
+>
+	<marker line="-1" type="param">
+		<operand  start="1310" length="5" line="22">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="1308" length="1" line="22" chordsig="java.lang.Object"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1329" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1325" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1346" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1329" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clear:()V@android.util.LongSparseArray"
+ sig="void clear()"
+ line="23"
+ startpos="1371"
+ endpos="1376"
+>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1391" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1387" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1408" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1391" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="append:(JLjava/lang/Object;)V@android.util.LongSparseArray"
+ sig="void append(long,E)"
+ line="24"
+ startpos="1433"
+ endpos="1439"
+>
+	<marker line="-1" type="param">
+		<operand  start="1445" length="3" line="24">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1452" length="5" line="24">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="1450" length="1" line="24" chordsig="java.lang.Object"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1471" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1467" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1488" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1471" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

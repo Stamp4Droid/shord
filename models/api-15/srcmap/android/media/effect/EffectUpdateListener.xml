@@ -1,0 +1,24 @@
+<root>
+<class chordsig="android.media.effect.EffectUpdateListener" line="2">
+<method
+ chordsig="onEffectUpdated:(Landroid/media/effect/Effect;Ljava/lang/Object;)V@android.media.effect.EffectUpdateListener"
+ sig="void onEffectUpdated(Effect,Object)"
+ line="4"
+ startpos="92"
+ endpos="107"
+>
+	<marker line="-1" type="param">
+		<operand  start="136" length="6" line="4">
+			<expr><![CDATA[effect]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="161" length="4" line="4">
+			<expr><![CDATA[info]]></expr>
+		</operand>
+	</marker>
+	<type  start="108" length="27" line="4" chordsig="android.media.effect.Effect"/>
+	<type  start="144" length="16" line="4" chordsig="java.lang.Object"/>
+</method>
+</class>
+</root>

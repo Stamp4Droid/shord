@@ -1,0 +1,419 @@
+<root>
+<class chordsig="java.net.MulticastSocket" line="2">
+	<type  start="57" length="23" line="3" chordsig="java.net.DatagramSocket"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.net.MulticastSocket"
+ sig="MulticastSocket()"
+ line="5"
+ startpos="91"
+ endpos="106"
+>
+	<type  start="145" length="27" line="5" chordsig="java.net.DatagramSocketImpl"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="190" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="186" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="207" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="190" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(I)V@java.net.MulticastSocket"
+ sig="MulticastSocket(int)"
+ line="6"
+ startpos="227"
+ endpos="242"
+>
+	<marker line="-1" type="param">
+		<operand  start="247" length="4" line="6">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<type  start="289" length="27" line="6" chordsig="java.net.DatagramSocketImpl"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="334" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="330" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="351" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="334" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/net/SocketAddress;)V@java.net.MulticastSocket"
+ sig="MulticastSocket(SocketAddress)"
+ line="7"
+ startpos="371"
+ endpos="386"
+>
+	<marker line="-1" type="param">
+		<operand  start="410" length="12" line="7">
+			<expr><![CDATA[localAddress]]></expr>
+		</operand>
+	</marker>
+	<type  start="387" length="22" line="7" chordsig="java.net.SocketAddress"/>
+	<type  start="460" length="27" line="7" chordsig="java.net.DatagramSocketImpl"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="505" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="501" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="522" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="505" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInterface:()Ljava/net/InetAddress;@java.net.MulticastSocket"
+ sig="InetAddress getInterface()"
+ line="8"
+ startpos="563"
+ endpos="575"
+>
+	<type  start="542" length="20" line="8" chordsig="java.net.InetAddress"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="622" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="618" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="639" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="622" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getNetworkInterface:()Ljava/net/NetworkInterface;@java.net.MulticastSocket"
+ sig="NetworkInterface getNetworkInterface()"
+ line="9"
+ startpos="685"
+ endpos="704"
+>
+	<type  start="659" length="25" line="9" chordsig="java.net.NetworkInterface"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="751" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="747" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="768" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="751" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTimeToLive:()I@java.net.MulticastSocket"
+ sig="int getTimeToLive()"
+ line="10"
+ startpos="792"
+ endpos="805"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="847" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="843" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="864" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="847" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTTL:()B@java.net.MulticastSocket"
+ sig="byte getTTL()"
+ line="11"
+ startpos="889"
+ endpos="895"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="937" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="933" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="954" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="937" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="joinGroup:(Ljava/net/InetAddress;)V@java.net.MulticastSocket"
+ sig="void joinGroup(InetAddress)"
+ line="12"
+ startpos="979"
+ endpos="988"
+>
+	<marker line="-1" type="param">
+		<operand  start="1010" length="9" line="12">
+			<expr><![CDATA[groupAddr]]></expr>
+		</operand>
+	</marker>
+	<type  start="989" length="20" line="12" chordsig="java.net.InetAddress"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1060" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1056" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1077" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1060" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="joinGroup:(Ljava/net/SocketAddress;Ljava/net/NetworkInterface;)V@java.net.MulticastSocket"
+ sig="void joinGroup(SocketAddress,NetworkInterface)"
+ line="13"
+ startpos="1102"
+ endpos="1111"
+>
+	<marker line="-1" type="param">
+		<operand  start="1135" length="12" line="13">
+			<expr><![CDATA[groupAddress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1175" length="12" line="13">
+			<expr><![CDATA[netInterface]]></expr>
+		</operand>
+	</marker>
+	<type  start="1112" length="22" line="13" chordsig="java.net.SocketAddress"/>
+	<type  start="1149" length="25" line="13" chordsig="java.net.NetworkInterface"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1228" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1224" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1245" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1228" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="leaveGroup:(Ljava/net/InetAddress;)V@java.net.MulticastSocket"
+ sig="void leaveGroup(InetAddress)"
+ line="14"
+ startpos="1270"
+ endpos="1280"
+>
+	<marker line="-1" type="param">
+		<operand  start="1302" length="9" line="14">
+			<expr><![CDATA[groupAddr]]></expr>
+		</operand>
+	</marker>
+	<type  start="1281" length="20" line="14" chordsig="java.net.InetAddress"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1352" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1348" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1369" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1352" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="leaveGroup:(Ljava/net/SocketAddress;Ljava/net/NetworkInterface;)V@java.net.MulticastSocket"
+ sig="void leaveGroup(SocketAddress,NetworkInterface)"
+ line="15"
+ startpos="1394"
+ endpos="1404"
+>
+	<marker line="-1" type="param">
+		<operand  start="1428" length="12" line="15">
+			<expr><![CDATA[groupAddress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1468" length="12" line="15">
+			<expr><![CDATA[netInterface]]></expr>
+		</operand>
+	</marker>
+	<type  start="1405" length="22" line="15" chordsig="java.net.SocketAddress"/>
+	<type  start="1442" length="25" line="15" chordsig="java.net.NetworkInterface"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1521" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1517" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1538" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1521" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="send:(Ljava/net/DatagramPacket;B)V@java.net.MulticastSocket"
+ sig="void send(DatagramPacket,byte)"
+ line="16"
+ startpos="1563"
+ endpos="1567"
+>
+	<marker line="-1" type="param">
+		<operand  start="1592" length="6" line="16">
+			<expr><![CDATA[packet]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1605" length="3" line="16">
+			<expr><![CDATA[ttl]]></expr>
+		</operand>
+	</marker>
+	<type  start="1568" length="23" line="16" chordsig="java.net.DatagramPacket"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1649" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1645" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1666" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1649" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setInterface:(Ljava/net/InetAddress;)V@java.net.MulticastSocket"
+ sig="void setInterface(InetAddress)"
+ line="17"
+ startpos="1691"
+ endpos="1703"
+>
+	<marker line="-1" type="param">
+		<operand  start="1725" length="7" line="17">
+			<expr><![CDATA[address]]></expr>
+		</operand>
+	</marker>
+	<type  start="1704" length="20" line="17" chordsig="java.net.InetAddress"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1778" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1774" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1795" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1778" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setNetworkInterface:(Ljava/net/NetworkInterface;)V@java.net.MulticastSocket"
+ sig="void setNetworkInterface(NetworkInterface)"
+ line="18"
+ startpos="1820"
+ endpos="1839"
+>
+	<marker line="-1" type="param">
+		<operand  start="1866" length="16" line="18">
+			<expr><![CDATA[networkInterface]]></expr>
+		</operand>
+	</marker>
+	<type  start="1840" length="25" line="18" chordsig="java.net.NetworkInterface"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1928" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1924" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1945" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1928" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTimeToLive:(I)V@java.net.MulticastSocket"
+ sig="void setTimeToLive(int)"
+ line="19"
+ startpos="1970"
+ endpos="1983"
+>
+	<marker line="-1" type="param">
+		<operand  start="1988" length="3" line="19">
+			<expr><![CDATA[ttl]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2032" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2028" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2049" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2032" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTTL:(B)V@java.net.MulticastSocket"
+ sig="void setTTL(byte)"
+ line="20"
+ startpos="2074"
+ endpos="2080"
+>
+	<marker line="-1" type="param">
+		<operand  start="2086" length="3" line="20">
+			<expr><![CDATA[ttl]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2130" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2126" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2147" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2130" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLoopbackMode:()Z@java.net.MulticastSocket"
+ sig="boolean getLoopbackMode()"
+ line="21"
+ startpos="2175"
+ endpos="2190"
+>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2237" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2233" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2254" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2237" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setLoopbackMode:(Z)V@java.net.MulticastSocket"
+ sig="void setLoopbackMode(boolean)"
+ line="22"
+ startpos="2279"
+ endpos="2294"
+>
+	<marker line="-1" type="param">
+		<operand  start="2303" length="7" line="22">
+			<expr><![CDATA[disable]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2356" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2352" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2373" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2356" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

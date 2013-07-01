@@ -1,0 +1,73 @@
+<root>
+<class chordsig="java.security.spec.RSAPrivateKeySpec" line="2">
+	<type  start="72" length="26" line="3" chordsig="java.security.spec.KeySpec"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/math/BigInteger;Ljava/math/BigInteger;)V@java.security.spec.RSAPrivateKeySpec"
+ sig="RSAPrivateKeySpec(BigInteger,BigInteger)"
+ line="5"
+ startpos="109"
+ endpos="126"
+>
+	<marker line="-1" type="param">
+		<operand  start="148" length="7" line="5">
+			<expr><![CDATA[modulus]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="178" length="15" line="5">
+			<expr><![CDATA[privateExponent]]></expr>
+		</operand>
+	</marker>
+	<type  start="127" length="20" line="5" chordsig="java.math.BigInteger"/>
+	<type  start="157" length="20" line="5" chordsig="java.math.BigInteger"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="207" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="203" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="224" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="207" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getModulus:()Ljava/math/BigInteger;@java.security.spec.RSAPrivateKeySpec"
+ sig="BigInteger getModulus()"
+ line="6"
+ startpos="265"
+ endpos="275"
+>
+	<type  start="244" length="20" line="6" chordsig="java.math.BigInteger"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="290" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="286" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="307" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="290" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPrivateExponent:()Ljava/math/BigInteger;@java.security.spec.RSAPrivateKeySpec"
+ sig="BigInteger getPrivateExponent()"
+ line="7"
+ startpos="348"
+ endpos="366"
+>
+	<type  start="327" length="20" line="7" chordsig="java.math.BigInteger"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="381" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="377" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="398" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="381" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

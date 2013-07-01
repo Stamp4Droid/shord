@@ -1,0 +1,328 @@
+<root>
+<class chordsig="android.widget.BaseExpandableListAdapter" line="2">
+	<type  start="85" length="36" line="3" chordsig="android.widget.ExpandableListAdapter"/>
+	<type  start="123" length="42" line="3" chordsig="android.widget.HeterogeneousExpandableList"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.widget.BaseExpandableListAdapter"
+ sig="BaseExpandableListAdapter()"
+ line="5"
+ startpos="176"
+ endpos="201"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="216" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="212" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="233" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="216" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="registerDataSetObserver:(Landroid/database/DataSetObserver;)V@android.widget.BaseExpandableListAdapter"
+ sig="void registerDataSetObserver(DataSetObserver)"
+ line="6"
+ startpos="258"
+ endpos="281"
+>
+	<marker line="-1" type="param">
+		<operand  start="315" length="8" line="6">
+			<expr><![CDATA[observer]]></expr>
+		</operand>
+	</marker>
+	<type  start="282" length="32" line="6" chordsig="android.database.DataSetObserver"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="337" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="333" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="354" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="337" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unregisterDataSetObserver:(Landroid/database/DataSetObserver;)V@android.widget.BaseExpandableListAdapter"
+ sig="void unregisterDataSetObserver(DataSetObserver)"
+ line="7"
+ startpos="379"
+ endpos="404"
+>
+	<marker line="-1" type="param">
+		<operand  start="438" length="8" line="7">
+			<expr><![CDATA[observer]]></expr>
+		</operand>
+	</marker>
+	<type  start="405" length="32" line="7" chordsig="android.database.DataSetObserver"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="460" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="456" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="477" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="460" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="notifyDataSetInvalidated:()V@android.widget.BaseExpandableListAdapter"
+ sig="void notifyDataSetInvalidated()"
+ line="8"
+ startpos="502"
+ endpos="526"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="541" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="537" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="558" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="541" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="notifyDataSetChanged:()V@android.widget.BaseExpandableListAdapter"
+ sig="void notifyDataSetChanged()"
+ line="9"
+ startpos="583"
+ endpos="603"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="618" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="614" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="635" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="618" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="areAllItemsEnabled:()Z@android.widget.BaseExpandableListAdapter"
+ sig="boolean areAllItemsEnabled()"
+ line="10"
+ startpos="663"
+ endpos="681"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="696" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="692" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="713" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="696" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onGroupCollapsed:(I)V@android.widget.BaseExpandableListAdapter"
+ sig="void onGroupCollapsed(int)"
+ line="11"
+ startpos="738"
+ endpos="754"
+>
+	<marker line="-1" type="param">
+		<operand  start="759" length="13" line="11">
+			<expr><![CDATA[groupPosition]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="786" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="782" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="803" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="786" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onGroupExpanded:(I)V@android.widget.BaseExpandableListAdapter"
+ sig="void onGroupExpanded(int)"
+ line="12"
+ startpos="828"
+ endpos="843"
+>
+	<marker line="-1" type="param">
+		<operand  start="848" length="13" line="12">
+			<expr><![CDATA[groupPosition]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="875" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="871" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="892" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="875" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCombinedChildId:(JJ)J@android.widget.BaseExpandableListAdapter"
+ sig="long getCombinedChildId(long,long)"
+ line="13"
+ startpos="917"
+ endpos="935"
+>
+	<marker line="-1" type="param">
+		<operand  start="941" length="7" line="13">
+			<expr><![CDATA[groupId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="955" length="7" line="13">
+			<expr><![CDATA[childId]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="976" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="972" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="993" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="976" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCombinedGroupId:(J)J@android.widget.BaseExpandableListAdapter"
+ sig="long getCombinedGroupId(long)"
+ line="14"
+ startpos="1018"
+ endpos="1036"
+>
+	<marker line="-1" type="param">
+		<operand  start="1042" length="7" line="14">
+			<expr><![CDATA[groupId]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1063" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1059" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1080" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1063" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isEmpty:()Z@android.widget.BaseExpandableListAdapter"
+ sig="boolean isEmpty()"
+ line="15"
+ startpos="1108"
+ endpos="1115"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1130" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1126" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1147" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1130" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getChildType:(II)I@android.widget.BaseExpandableListAdapter"
+ sig="int getChildType(int,int)"
+ line="16"
+ startpos="1171"
+ endpos="1183"
+>
+	<marker line="-1" type="param">
+		<operand  start="1188" length="13" line="16">
+			<expr><![CDATA[groupPosition]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1207" length="13" line="16">
+			<expr><![CDATA[childPosition]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1234" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1230" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1251" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1234" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getChildTypeCount:()I@android.widget.BaseExpandableListAdapter"
+ sig="int getChildTypeCount()"
+ line="17"
+ startpos="1275"
+ endpos="1292"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1307" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1303" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1324" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1307" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getGroupType:(I)I@android.widget.BaseExpandableListAdapter"
+ sig="int getGroupType(int)"
+ line="18"
+ startpos="1348"
+ endpos="1360"
+>
+	<marker line="-1" type="param">
+		<operand  start="1365" length="13" line="18">
+			<expr><![CDATA[groupPosition]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1392" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1388" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1409" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1392" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getGroupTypeCount:()I@android.widget.BaseExpandableListAdapter"
+ sig="int getGroupTypeCount()"
+ line="19"
+ startpos="1433"
+ endpos="1450"
+>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1465" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1461" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1482" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1465" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

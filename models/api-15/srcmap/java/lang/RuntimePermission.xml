@@ -1,0 +1,106 @@
+<root>
+<class chordsig="java.lang.RuntimePermission" line="2">
+	<type  start="66" length="29" line="3" chordsig="java.security.BasicPermission"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimePermission"
+ sig="RuntimePermission(String)"
+ line="5"
+ startpos="106"
+ endpos="123"
+>
+	<marker line="-1" type="param">
+		<operand  start="141" length="14" line="5">
+			<expr><![CDATA[permissionName]]></expr>
+		</operand>
+	</marker>
+	<type  start="124" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="166" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="189" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="223" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="219" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="240" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="223" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;)V@java.lang.RuntimePermission"
+ sig="RuntimePermission(String,String)"
+ line="6"
+ startpos="260"
+ endpos="277"
+>
+	<marker line="-1" type="param">
+		<operand  start="295" length="4" line="6">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="318" length="7" line="6">
+			<expr><![CDATA[actions]]></expr>
+		</operand>
+	</marker>
+	<type  start="278" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="301" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="336" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="359" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="393" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="389" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="410" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="393" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getActions:()Ljava/lang/String;@java.lang.RuntimePermission"
+ sig="String getActions()"
+ line="7"
+ startpos="447"
+ endpos="457"
+>
+	<type  start="430" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="472" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="468" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="489" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="472" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="implies:(Ljava/security/Permission;)Z@java.lang.RuntimePermission"
+ sig="boolean implies(Permission)"
+ line="8"
+ startpos="517"
+ endpos="524"
+>
+	<marker line="-1" type="param">
+		<operand  start="550" length="10" line="8">
+			<expr><![CDATA[permission]]></expr>
+		</operand>
+	</marker>
+	<type  start="525" length="24" line="8" chordsig="java.security.Permission"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="574" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="570" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="591" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="574" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,827 @@
+<root>
+<class chordsig="java.io.ObjectInputStream" line="6">
+	<type  start="145" length="19" line="6" chordsig="java.io.InputStream"/>
+	<type  start="176" length="19" line="6" chordsig="java.io.ObjectInput"/>
+	<type  start="197" length="29" line="6" chordsig="java.io.ObjectStreamConstants"/>
+<class chordsig="java.io.ObjectInputStream$GetField" line="8">
+<method
+ chordsig="&lt;init&gt;:()V@java.io.ObjectInputStream$GetField"
+ sig="GetField()"
+ line="10"
+ startpos="290"
+ endpos="298"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="325" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="321" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="342" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="325" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getObjectStreamClass:()Ljava/io/ObjectStreamClass;@java.io.ObjectInputStream$GetField"
+ sig="ObjectStreamClass getObjectStreamClass()"
+ line="14"
+ startpos="413"
+ endpos="433"
+>
+	<type  start="387" length="25" line="14" chordsig="java.io.ObjectStreamClass"/>
+</method>
+<method
+ chordsig="defaulted:(Ljava/lang/String;)Z@java.io.ObjectInputStream$GetField"
+ sig="boolean defaulted(String)"
+ line="16"
+ startpos="470"
+ endpos="479"
+>
+	<marker line="-1" type="param">
+		<operand  start="497" length="4" line="16">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="480" length="16" line="16" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="get:(Ljava/lang/String;Z)Z@java.io.ObjectInputStream$GetField"
+ sig="boolean get(String,boolean)"
+ line="18"
+ startpos="600"
+ endpos="603"
+>
+	<marker line="-1" type="param">
+		<operand  start="621" length="4" line="18">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="635" length="12" line="18">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="604" length="16" line="18" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="get:(Ljava/lang/String;C)C@java.io.ObjectInputStream$GetField"
+ sig="char get(String,char)"
+ line="20"
+ startpos="743"
+ endpos="746"
+>
+	<marker line="-1" type="param">
+		<operand  start="764" length="4" line="20">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="775" length="12" line="20">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="747" length="16" line="20" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="get:(Ljava/lang/String;B)B@java.io.ObjectInputStream$GetField"
+ sig="byte get(String,byte)"
+ line="22"
+ startpos="883"
+ endpos="886"
+>
+	<marker line="-1" type="param">
+		<operand  start="904" length="4" line="22">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="915" length="12" line="22">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="887" length="16" line="22" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="get:(Ljava/lang/String;S)S@java.io.ObjectInputStream$GetField"
+ sig="short get(String,short)"
+ line="24"
+ startpos="1024"
+ endpos="1027"
+>
+	<marker line="-1" type="param">
+		<operand  start="1045" length="4" line="24">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1057" length="12" line="24">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="1028" length="16" line="24" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="get:(Ljava/lang/String;I)I@java.io.ObjectInputStream$GetField"
+ sig="int get(String,int)"
+ line="26"
+ startpos="1164"
+ endpos="1167"
+>
+	<marker line="-1" type="param">
+		<operand  start="1185" length="4" line="26">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1195" length="12" line="26">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="1168" length="16" line="26" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="get:(Ljava/lang/String;J)J@java.io.ObjectInputStream$GetField"
+ sig="long get(String,long)"
+ line="28"
+ startpos="1303"
+ endpos="1306"
+>
+	<marker line="-1" type="param">
+		<operand  start="1324" length="4" line="28">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1335" length="12" line="28">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="1307" length="16" line="28" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="get:(Ljava/lang/String;F)F@java.io.ObjectInputStream$GetField"
+ sig="float get(String,float)"
+ line="30"
+ startpos="1444"
+ endpos="1447"
+>
+	<marker line="-1" type="param">
+		<operand  start="1465" length="4" line="30">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1477" length="12" line="30">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="1448" length="16" line="30" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="get:(Ljava/lang/String;D)D@java.io.ObjectInputStream$GetField"
+ sig="double get(String,double)"
+ line="32"
+ startpos="1587"
+ endpos="1590"
+>
+	<marker line="-1" type="param">
+		<operand  start="1608" length="4" line="32">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1621" length="12" line="32">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="1591" length="16" line="32" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="get:(Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;@java.io.ObjectInputStream$GetField"
+ sig="Object get(String,Object)"
+ line="34"
+ startpos="1741"
+ endpos="1744"
+>
+	<marker line="-1" type="param">
+		<operand  start="1762" length="4" line="34">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1785" length="12" line="34">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="1724" length="16" line="34" chordsig="java.lang.Object"/>
+	<type  start="1745" length="16" line="34" chordsig="java.lang.String"/>
+	<type  start="1768" length="16" line="34" chordsig="java.lang.Object"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@java.io.ObjectInputStream"
+ sig="ObjectInputStream()"
+ line="37"
+ startpos="1884"
+ endpos="1901"
+>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1951" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1947" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1968" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1951" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="available:()I@java.io.ObjectInputStream"
+ sig="int available()"
+ line="41"
+ startpos="2000"
+ endpos="2009"
+>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2059" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2055" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2076" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2059" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:()V@java.io.ObjectInputStream"
+ sig="void close()"
+ line="45"
+ startpos="2109"
+ endpos="2114"
+>
+	<newexpr line="46" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2164" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2160" length="29" line="46">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2181" length="7" line="46">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2164" length="16" line="46" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="defaultReadObject:()V@java.io.ObjectInputStream"
+ sig="void defaultReadObject()"
+ line="49"
+ startpos="2214"
+ endpos="2231"
+>
+	<newexpr line="50" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2343" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2339" length="29" line="50">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2360" length="7" line="50">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2343" length="16" line="50" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="enableResolveObject:(Z)Z@java.io.ObjectInputStream"
+ sig="boolean enableResolveObject(boolean)"
+ line="53"
+ startpos="2399"
+ endpos="2418"
+>
+	<marker line="-1" type="param">
+		<operand  start="2427" length="6" line="53">
+			<expr><![CDATA[enable]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="54" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2455" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2451" length="29" line="54">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2472" length="7" line="54">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2455" length="16" line="54" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="readFields:()Ljava/io/ObjectInputStream$GetField;@java.io.ObjectInputStream"
+ sig="GetField readFields()"
+ line="57"
+ startpos="2535"
+ endpos="2545"
+>
+	<type  start="2500" length="34" line="57" chordsig="java.io.ObjectInputStream$GetField"/>
+	<newexpr line="58" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2657" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2653" length="29" line="58">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2674" length="7" line="58">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2657" length="16" line="58" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="readClassDescriptor:()Ljava/io/ObjectStreamClass;@java.io.ObjectInputStream"
+ sig="ObjectStreamClass readClassDescriptor()"
+ line="61"
+ startpos="2731"
+ endpos="2750"
+>
+	<type  start="2705" length="25" line="61" chordsig="java.io.ObjectStreamClass"/>
+	<newexpr line="62" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2834" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2830" length="29" line="62">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2851" length="7" line="62">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2834" length="16" line="62" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="resolveProxyClass:([Ljava/lang/String;)Ljava/lang/Class;@java.io.ObjectInputStream"
+ sig="Class&lt;?&gt; resolveProxyClass(String[])"
+ line="65"
+ startpos="2901"
+ endpos="2918"
+>
+	<marker line="-1" type="param">
+		<operand  start="2938" length="14" line="65">
+			<expr><![CDATA[interfaceNames]]></expr>
+		</operand>
+	</marker>
+	<type  start="2882" length="15" line="65" chordsig="java.lang.Class"/>
+	<type  start="2919" length="16" line="65" chordsig="java.lang.String"/>
+	<newexpr line="66" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3035" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3031" length="29" line="66">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3052" length="7" line="66">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3035" length="16" line="66" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="readStreamHeader:()V@java.io.ObjectInputStream"
+ sig="void readStreamHeader()"
+ line="69"
+ startpos="3088"
+ endpos="3104"
+>
+	<newexpr line="70" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3188" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3184" length="29" line="70">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3205" length="7" line="70">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3188" length="16" line="70" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="registerValidation:(Ljava/io/ObjectInputValidation;I)V@java.io.ObjectInputStream"
+ sig="void registerValidation(ObjectInputValidation,int)"
+ line="73"
+ startpos="3251"
+ endpos="3269"
+>
+	<marker line="-1" type="param">
+		<operand  start="3300" length="6" line="73">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3312" length="8" line="73">
+			<expr><![CDATA[priority]]></expr>
+		</operand>
+	</marker>
+	<type  start="3270" length="29" line="73" chordsig="java.io.ObjectInputValidation"/>
+	<newexpr line="74" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3408" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3404" length="29" line="74">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3425" length="7" line="74">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3408" length="16" line="74" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="resolveClass:(Ljava/io/ObjectStreamClass;)Ljava/lang/Class;@java.io.ObjectInputStream"
+ sig="Class&lt;?&gt; resolveClass(ObjectStreamClass)"
+ line="77"
+ startpos="3475"
+ endpos="3487"
+>
+	<marker line="-1" type="param">
+		<operand  start="3514" length="7" line="77">
+			<expr><![CDATA[osClass]]></expr>
+		</operand>
+	</marker>
+	<type  start="3456" length="15" line="77" chordsig="java.lang.Class"/>
+	<type  start="3488" length="25" line="77" chordsig="java.io.ObjectStreamClass"/>
+	<newexpr line="78" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3604" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3600" length="29" line="78">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3621" length="7" line="78">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3604" length="16" line="78" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="resolveObject:(Ljava/lang/Object;)Ljava/lang/Object;@java.io.ObjectInputStream"
+ sig="Object resolveObject(Object)"
+ line="81"
+ startpos="3669"
+ endpos="3682"
+>
+	<marker line="-1" type="param">
+		<operand  start="3700" length="6" line="81">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="3652" length="16" line="81" chordsig="java.lang.Object"/>
+	<type  start="3683" length="16" line="81" chordsig="java.lang.Object"/>
+	<newexpr line="82" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3755" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3751" length="29" line="82">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3772" length="7" line="82">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3755" length="16" line="82" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="skipBytes:(I)I@java.io.ObjectInputStream"
+ sig="int skipBytes(int)"
+ line="85"
+ startpos="3804"
+ endpos="3813"
+>
+	<marker line="-1" type="param">
+		<operand  start="3818" length="6" line="85">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="86" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3873" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3869" length="29" line="86">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3890" length="7" line="86">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3873" length="16" line="86" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/InputStream;)V@java.io.ObjectInputStream"
+ sig="ObjectInputStream(InputStream)"
+ line="90"
+ startpos="3977"
+ endpos="3994"
+>
+	<marker line="-1" type="param">
+		<operand  start="4015" length="5" line="90">
+			<expr><![CDATA[input]]></expr>
+		</operand>
+	</marker>
+	<type  start="3995" length="19" line="90" chordsig="java.io.InputStream"/>
+</method>
+<method
+ chordsig="read:()I@java.io.ObjectInputStream"
+ sig="int read()"
+ line="94"
+ startpos="4168"
+ endpos="4172"
+>
+	<marker line="95" type="return">
+		<operand  start="4219" length="1" line="95">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="read:([BII)I@java.io.ObjectInputStream"
+ sig="int read(byte[],int,int)"
+ line="99"
+ startpos="4304"
+ endpos="4308"
+>
+	<marker line="-1" type="param">
+		<operand  start="4316" length="6" line="99">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4328" length="6" line="99">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4340" length="6" line="99">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<marker line="100" type="return">
+		<operand  start="4392" length="1" line="100">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="readBoolean:()Z@java.io.ObjectInputStream"
+ sig="boolean readBoolean()"
+ line="104"
+ startpos="4482"
+ endpos="4493"
+>
+	<marker line="105" type="return">
+		<operand  start="4540" length="5" line="105">
+			<expr><![CDATA[false]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="readByte:()B@java.io.ObjectInputStream"
+ sig="byte readByte()"
+ line="109"
+ startpos="4631"
+ endpos="4639"
+>
+	<marker line="110" type="return">
+		<operand  start="4686" length="1" line="110">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="readChar:()C@java.io.ObjectInputStream"
+ sig="char readChar()"
+ line="114"
+ startpos="4773"
+ endpos="4781"
+>
+	<marker line="115" type="return">
+		<operand  start="4828" length="4" line="115">
+			<expr><![CDATA['\0']]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="readDouble:()D@java.io.ObjectInputStream"
+ sig="double readDouble()"
+ line="119"
+ startpos="4920"
+ endpos="4930"
+>
+	<marker line="120" type="return">
+		<operand  start="4977" length="3" line="120">
+			<expr><![CDATA[0.0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="readFloat:()F@java.io.ObjectInputStream"
+ sig="float readFloat()"
+ line="124"
+ startpos="5067"
+ endpos="5076"
+>
+	<marker line="125" type="return">
+		<operand  start="5123" length="4" line="125">
+			<expr><![CDATA[0.0f]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="readFully:([B)V@java.io.ObjectInputStream"
+ sig="void readFully(byte[])"
+ line="129"
+ startpos="5209"
+ endpos="5218"
+>
+	<marker line="-1" type="param">
+		<operand  start="5226" length="3" line="129">
+			<expr><![CDATA[dst]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="readFully:([BII)V@java.io.ObjectInputStream"
+ sig="void readFully(byte[],int,int)"
+ line="133"
+ startpos="5340"
+ endpos="5349"
+>
+	<marker line="-1" type="param">
+		<operand  start="5357" length="3" line="133">
+			<expr><![CDATA[dst]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5366" length="6" line="133">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5378" length="9" line="133">
+			<expr><![CDATA[byteCount]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="readInt:()I@java.io.ObjectInputStream"
+ sig="int readInt()"
+ line="137"
+ startpos="5501"
+ endpos="5508"
+>
+	<marker line="138" type="return">
+		<operand  start="5555" length="1" line="138">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="readLine:()Ljava/lang/String;@java.io.ObjectInputStream"
+ sig="String readLine()"
+ line="142"
+ startpos="5654"
+ endpos="5662"
+>
+	<type  start="5637" length="16" line="142" chordsig="java.lang.String"/>
+	<marker line="143" type="return">
+		<operand  start="5709" length="12" line="143">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="143" chordsig="&lt;init&gt;:()V@java.lang.String" start="5713" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="5709" length="12" line="143">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5713" length="6" line="143" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="readLong:()J@java.io.ObjectInputStream"
+ sig="long readLong()"
+ line="147"
+ startpos="5807"
+ endpos="5815"
+>
+	<marker line="148" type="return">
+		<operand  start="5862" length="2" line="148">
+			<expr><![CDATA[0L]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="readObject:()Ljava/lang/Object;@java.io.ObjectInputStream"
+ sig="Object readObject()"
+ line="152"
+ startpos="5968"
+ endpos="5978"
+>
+	<type  start="5951" length="16" line="152" chordsig="java.lang.Object"/>
+	<marker line="153" type="return">
+		<operand  start="6090" length="12" line="153">
+			<expr><![CDATA[new Object()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="153" chordsig="&lt;init&gt;:()V@java.lang.Object" start="6094" length="6" type="invoke">
+			<expr><![CDATA[new Object()]]></expr>
+		<param  start="6090" length="12" line="153">
+			<expr><![CDATA[new Object()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6094" length="6" line="153" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="readUnshared:()Ljava/lang/Object;@java.io.ObjectInputStream"
+ sig="Object readUnshared()"
+ line="157"
+ startpos="6200"
+ endpos="6212"
+>
+	<type  start="6183" length="16" line="157" chordsig="java.lang.Object"/>
+	<marker line="158" type="return">
+		<operand  start="6293" length="12" line="158">
+			<expr><![CDATA[new Object()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="158" chordsig="&lt;init&gt;:()V@java.lang.Object" start="6297" length="6" type="invoke">
+			<expr><![CDATA[new Object()]]></expr>
+		<param  start="6293" length="12" line="158">
+			<expr><![CDATA[new Object()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6297" length="6" line="158" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="readObjectOverride:()Ljava/lang/Object;@java.io.ObjectInputStream"
+ sig="Object readObjectOverride()"
+ line="162"
+ startpos="6406"
+ endpos="6424"
+>
+	<type  start="6389" length="16" line="162" chordsig="java.lang.Object"/>
+	<marker line="163" type="return">
+		<operand  start="6536" length="12" line="163">
+			<expr><![CDATA[new Object()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="163" chordsig="&lt;init&gt;:()V@java.lang.Object" start="6540" length="6" type="invoke">
+			<expr><![CDATA[new Object()]]></expr>
+		<param  start="6536" length="12" line="163">
+			<expr><![CDATA[new Object()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6540" length="6" line="163" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="readShort:()S@java.io.ObjectInputStream"
+ sig="short readShort()"
+ line="167"
+ startpos="6635"
+ endpos="6644"
+>
+	<marker line="168" type="return">
+		<operand  start="6691" length="1" line="168">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="readUnsignedByte:()I@java.io.ObjectInputStream"
+ sig="int readUnsignedByte()"
+ line="172"
+ startpos="6777"
+ endpos="6793"
+>
+	<marker line="173" type="return">
+		<operand  start="6840" length="1" line="173">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="readUnsignedShort:()I@java.io.ObjectInputStream"
+ sig="int readUnsignedShort()"
+ line="177"
+ startpos="6926"
+ endpos="6943"
+>
+	<marker line="178" type="return">
+		<operand  start="6990" length="1" line="178">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="readUTF:()Ljava/lang/String;@java.io.ObjectInputStream"
+ sig="String readUTF()"
+ line="182"
+ startpos="7089"
+ endpos="7096"
+>
+	<type  start="7072" length="16" line="182" chordsig="java.lang.String"/>
+	<marker line="183" type="return">
+		<operand  start="7143" length="12" line="183">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="183" chordsig="&lt;init&gt;:()V@java.lang.String" start="7147" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="7143" length="12" line="183">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7147" length="6" line="183" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

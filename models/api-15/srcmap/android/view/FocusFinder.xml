@@ -1,0 +1,158 @@
+<root>
+<class chordsig="android.view.FocusFinder" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.view.FocusFinder"
+ sig="FocusFinder()"
+ line="4"
+ startpos="49"
+ endpos="60"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="75" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="71" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="92" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="75" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInstance:()Landroid/view/FocusFinder;@android.view.FocusFinder"
+ sig="FocusFinder getInstance()"
+ line="5"
+ startpos="144"
+ endpos="155"
+>
+	<type  start="119" length="24" line="5" chordsig="android.view.FocusFinder"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="170" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="166" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="187" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="170" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="findNextFocus:(Landroid/view/ViewGroup;Landroid/view/View;I)Landroid/view/View;@android.view.FocusFinder"
+ sig="View findNextFocus(ViewGroup,View,int)"
+ line="6"
+ startpos="231"
+ endpos="244"
+>
+	<marker line="-1" type="param">
+		<operand  start="268" length="4" line="6">
+			<expr><![CDATA[root]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="292" length="7" line="6">
+			<expr><![CDATA[focused]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="305" length="9" line="6">
+			<expr><![CDATA[direction]]></expr>
+		</operand>
+	</marker>
+	<type  start="213" length="17" line="6" chordsig="android.view.View"/>
+	<type  start="245" length="22" line="6" chordsig="android.view.ViewGroup"/>
+	<type  start="274" length="17" line="6" chordsig="android.view.View"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="328" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="324" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="345" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="328" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="findNextFocusFromRect:(Landroid/view/ViewGroup;Landroid/graphics/Rect;I)Landroid/view/View;@android.view.FocusFinder"
+ sig="View findNextFocusFromRect(ViewGroup,Rect,int)"
+ line="7"
+ startpos="383"
+ endpos="404"
+>
+	<marker line="-1" type="param">
+		<operand  start="428" length="4" line="7">
+			<expr><![CDATA[root]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="456" length="11" line="7">
+			<expr><![CDATA[focusedRect]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="473" length="9" line="7">
+			<expr><![CDATA[direction]]></expr>
+		</operand>
+	</marker>
+	<type  start="365" length="17" line="7" chordsig="android.view.View"/>
+	<type  start="405" length="22" line="7" chordsig="android.view.ViewGroup"/>
+	<type  start="434" length="21" line="7" chordsig="android.graphics.Rect"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="496" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="492" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="513" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="496" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="findNearestTouchable:(Landroid/view/ViewGroup;III[I)Landroid/view/View;@android.view.FocusFinder"
+ sig="View findNearestTouchable(ViewGroup,int,int,int,int[])"
+ line="8"
+ startpos="551"
+ endpos="571"
+>
+	<marker line="-1" type="param">
+		<operand  start="595" length="4" line="8">
+			<expr><![CDATA[root]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="605" length="1" line="8">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="612" length="1" line="8">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="619" length="9" line="8">
+			<expr><![CDATA[direction]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="636" length="6" line="8">
+			<expr><![CDATA[deltas]]></expr>
+		</operand>
+	</marker>
+	<type  start="533" length="17" line="8" chordsig="android.view.View"/>
+	<type  start="572" length="22" line="8" chordsig="android.view.ViewGroup"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="656" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="652" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="673" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="656" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

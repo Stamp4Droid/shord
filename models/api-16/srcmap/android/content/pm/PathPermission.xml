@@ -1,0 +1,146 @@
+<root>
+<class chordsig="android.content.pm.PathPermission" line="2">
+	<type  start="66" length="25" line="3" chordsig="android.os.PatternMatcher"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;)V@android.content.pm.PathPermission"
+ sig="PathPermission(String,int,String,String)"
+ line="5"
+ startpos="102"
+ endpos="116"
+>
+	<marker line="-1" type="param">
+		<operand  start="134" length="7" line="5">
+			<expr><![CDATA[pattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="147" length="4" line="5">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="170" length="14" line="5">
+			<expr><![CDATA[readPermission]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="203" length="15" line="5">
+			<expr><![CDATA[writePermission]]></expr>
+		</operand>
+	</marker>
+	<type  start="117" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="153" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="186" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="229" length="17" line="5" chordsig="android.os.Parcel"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="264" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="260" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="281" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="264" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/os/Parcel;)V@android.content.pm.PathPermission"
+ sig="PathPermission(Parcel)"
+ line="6"
+ startpos="301"
+ endpos="315"
+>
+	<marker line="-1" type="param">
+		<operand  start="334" length="3" line="6">
+			<expr><![CDATA[src]]></expr>
+		</operand>
+	</marker>
+	<type  start="316" length="17" line="6" chordsig="android.os.Parcel"/>
+	<type  start="348" length="17" line="6" chordsig="android.os.Parcel"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="383" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="379" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="400" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="383" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getReadPermission:()Ljava/lang/String;@android.content.pm.PathPermission"
+ sig="String getReadPermission()"
+ line="7"
+ startpos="437"
+ endpos="454"
+>
+	<type  start="420" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="469" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="465" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="486" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="469" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getWritePermission:()Ljava/lang/String;@android.content.pm.PathPermission"
+ sig="String getWritePermission()"
+ line="8"
+ startpos="523"
+ endpos="541"
+>
+	<type  start="506" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="556" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="552" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="573" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="556" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.content.pm.PathPermission"
+ sig="void writeToParcel(Parcel,int)"
+ line="9"
+ startpos="598"
+ endpos="611"
+>
+	<marker line="-1" type="param">
+		<operand  start="630" length="4" line="9">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="640" length="5" line="9">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="612" length="17" line="9" chordsig="android.os.Parcel"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="659" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="655" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="676" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="659" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="708" length="29" line="10" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="738" length="33" line="10" chordsig="android.content.pm.PathPermission"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.content.pm.PathPermission"
+ line="11"
+>
+</method>
+</class>
+</root>

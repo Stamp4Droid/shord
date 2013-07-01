@@ -1,0 +1,125 @@
+<root>
+<class chordsig="android.telephony.PhoneNumberFormattingTextWatcher" line="2">
+	<type  start="86" length="24" line="3" chordsig="android.text.TextWatcher"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.telephony.PhoneNumberFormattingTextWatcher"
+ sig="PhoneNumberFormattingTextWatcher()"
+ line="5"
+ startpos="121"
+ endpos="153"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="168" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="164" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="185" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="168" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="beforeTextChanged:(Ljava/lang/CharSequence;III)V@android.telephony.PhoneNumberFormattingTextWatcher"
+ sig="void beforeTextChanged(CharSequence,int,int,int)"
+ line="6"
+ startpos="210"
+ endpos="227"
+>
+	<marker line="-1" type="param">
+		<operand  start="251" length="1" line="6">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="258" length="5" line="6">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="269" length="5" line="6">
+			<expr><![CDATA[count]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="280" length="5" line="6">
+			<expr><![CDATA[after]]></expr>
+		</operand>
+	</marker>
+	<type  start="228" length="22" line="6" chordsig="java.lang.CharSequence"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="299" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="295" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="316" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="299" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onTextChanged:(Ljava/lang/CharSequence;III)V@android.telephony.PhoneNumberFormattingTextWatcher"
+ sig="void onTextChanged(CharSequence,int,int,int)"
+ line="7"
+ startpos="341"
+ endpos="354"
+>
+	<marker line="-1" type="param">
+		<operand  start="378" length="1" line="7">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="385" length="5" line="7">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="396" length="6" line="7">
+			<expr><![CDATA[before]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="408" length="5" line="7">
+			<expr><![CDATA[count]]></expr>
+		</operand>
+	</marker>
+	<type  start="355" length="22" line="7" chordsig="java.lang.CharSequence"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="427" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="423" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="444" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="427" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="afterTextChanged:(Landroid/text/Editable;)V@android.telephony.PhoneNumberFormattingTextWatcher"
+ sig="void afterTextChanged(Editable)"
+ line="8"
+ startpos="482"
+ endpos="498"
+>
+	<marker line="-1" type="param">
+		<operand  start="521" length="1" line="8">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<type  start="499" length="21" line="8" chordsig="android.text.Editable"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="536" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="532" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="553" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="536" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,48 @@
+<root>
+<class chordsig="java.nio.charset.UnsupportedCharsetException" line="2">
+	<type  start="77" length="34" line="3" chordsig="java.lang.IllegalArgumentException"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.nio.charset.UnsupportedCharsetException"
+ sig="UnsupportedCharsetException(String)"
+ line="5"
+ startpos="122"
+ endpos="149"
+>
+	<marker line="-1" type="param">
+		<operand  start="167" length="11" line="5">
+			<expr><![CDATA[charsetName]]></expr>
+		</operand>
+	</marker>
+	<type  start="150" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="192" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="188" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="209" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="192" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCharsetName:()Ljava/lang/String;@java.nio.charset.UnsupportedCharsetException"
+ sig="String getCharsetName()"
+ line="6"
+ startpos="246"
+ endpos="260"
+>
+	<type  start="229" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="275" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="271" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="292" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="275" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,50 @@
+<root>
+<class chordsig="org.apache.http.impl.client.BasicResponseHandler" line="2">
+	<type  start="84" length="38" line="3" chordsig="org.apache.http.client.ResponseHandler"/>
+	<type  start="123" length="16" line="3" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.impl.client.BasicResponseHandler"
+ sig="BasicResponseHandler()"
+ line="5"
+ startpos="151"
+ endpos="171"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="186" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="182" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="203" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="186" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="handleResponse:(Lorg/apache/http/HttpResponse;)Ljava/lang/String;@org.apache.http.impl.client.BasicResponseHandler"
+ sig="String handleResponse(HttpResponse)"
+ line="6"
+ startpos="240"
+ endpos="254"
+>
+	<alias>(Lorg/apache/http/HttpResponse;)Ljava/lang/Object;</alias>
+	<marker line="-1" type="param">
+		<operand  start="284" length="8" line="6">
+			<expr><![CDATA[response]]></expr>
+		</operand>
+	</marker>
+	<type  start="223" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="255" length="28" line="6" chordsig="org.apache.http.HttpResponse"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="379" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="375" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="396" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="379" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,523 @@
+<root>
+<class chordsig="android.provider.Browser" line="6">
+<class chordsig="android.provider.Browser$BookmarkColumns" line="8">
+	<type  start="190" length="28" line="8" chordsig="android.provider.BaseColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.Browser$BookmarkColumns"
+ sig="BookmarkColumns()"
+ line="10"
+ startpos="237"
+ endpos="252"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="279" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="275" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="296" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="279" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="345" length="16" line="14" chordsig="java.lang.String"/>
+	<type  start="404" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="469" length="16" line="18" chordsig="java.lang.String"/>
+	<type  start="530" length="16" line="20" chordsig="java.lang.String"/>
+	<type  start="599" length="16" line="22" chordsig="java.lang.String"/>
+	<type  start="662" length="16" line="24" chordsig="java.lang.String"/>
+	<type  start="729" length="16" line="26" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.Browser$SearchColumns" line="29">
+	<type  start="823" length="28" line="29" chordsig="android.provider.BaseColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.Browser$SearchColumns"
+ sig="SearchColumns()"
+ line="31"
+ startpos="870"
+ endpos="883"
+>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="910" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="906" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="927" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="910" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="976" length="16" line="35" chordsig="java.lang.String"/>
+	<type  start="1035" length="16" line="37" chordsig="java.lang.String"/>
+	<type  start="1100" length="16" line="39" chordsig="java.lang.String"/>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.Browser"
+ sig="Browser()"
+ line="42"
+ startpos="1150"
+ endpos="1157"
+>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1180" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1176" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1197" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1180" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="saveBookmark:(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V@android.provider.Browser"
+ sig="void saveBookmark(Context,String,String)"
+ line="46"
+ startpos="1243"
+ endpos="1255"
+>
+	<marker line="-1" type="param">
+		<operand  start="1280" length="1" line="46">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1300" length="5" line="46">
+			<expr><![CDATA[title]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1324" length="3" line="46">
+			<expr><![CDATA[url]]></expr>
+		</operand>
+	</marker>
+	<type  start="1256" length="23" line="46" chordsig="android.content.Context"/>
+	<type  start="1283" length="16" line="46" chordsig="java.lang.String"/>
+	<type  start="1307" length="16" line="46" chordsig="java.lang.String"/>
+	<newexpr line="47" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1349" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1345" length="29" line="47">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1366" length="7" line="47">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1349" length="16" line="47" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="sendString:(Landroid/content/Context;Ljava/lang/String;)V@android.provider.Browser"
+ sig="void sendString(Context,String)"
+ line="50"
+ startpos="1412"
+ endpos="1422"
+>
+	<marker line="-1" type="param">
+		<operand  start="1447" length="7" line="50">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1473" length="6" line="50">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<type  start="1423" length="23" line="50" chordsig="android.content.Context"/>
+	<type  start="1456" length="16" line="50" chordsig="java.lang.String"/>
+	<newexpr line="51" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1501" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1497" length="29" line="51">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1518" length="7" line="51">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1501" length="16" line="51" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="canClearHistory:(Landroid/content/ContentResolver;)Z@android.provider.Browser"
+ sig="boolean canClearHistory(ContentResolver)"
+ line="54"
+ startpos="1567"
+ endpos="1582"
+>
+	<marker line="-1" type="param">
+		<operand  start="1615" length="2" line="54">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<type  start="1583" length="31" line="54" chordsig="android.content.ContentResolver"/>
+	<newexpr line="55" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1639" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1635" length="29" line="55">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1656" length="7" line="55">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1639" length="16" line="55" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addSearchUrl:(Landroid/content/ContentResolver;Ljava/lang/String;)V@android.provider.Browser"
+ sig="void addSearchUrl(ContentResolver,String)"
+ line="58"
+ startpos="1702"
+ endpos="1714"
+>
+	<marker line="-1" type="param">
+		<operand  start="1747" length="2" line="58">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1768" length="6" line="58">
+			<expr><![CDATA[search]]></expr>
+		</operand>
+	</marker>
+	<type  start="1715" length="31" line="58" chordsig="android.content.ContentResolver"/>
+	<type  start="1751" length="16" line="58" chordsig="java.lang.String"/>
+	<newexpr line="59" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1796" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1792" length="29" line="59">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1813" length="7" line="59">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1796" length="16" line="59" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="requestAllIcons:(Landroid/content/ContentResolver;Ljava/lang/String;Landroid/webkit/WebIconDatabase$IconListener;)V@android.provider.Browser"
+ sig="void requestAllIcons(ContentResolver,String,IconListener)"
+ line="62"
+ startpos="1859"
+ endpos="1874"
+>
+	<marker line="-1" type="param">
+		<operand  start="1907" length="2" line="62">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1928" length="5" line="62">
+			<expr><![CDATA[where]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1979" length="8" line="62">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1875" length="31" line="62" chordsig="android.content.ContentResolver"/>
+	<type  start="1911" length="16" line="62" chordsig="java.lang.String"/>
+	<type  start="1935" length="43" line="62" chordsig="android.webkit.WebIconDatabase$IconListener"/>
+	<newexpr line="63" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2009" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2005" length="29" line="63">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2026" length="7" line="63">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2009" length="16" line="63" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="2067" length="15" line="66" chordsig="android.net.Uri"/>
+	<type  start="2123" length="16" line="68" chordsig="java.lang.String"/>
+	<type  start="2214" length="16" line="70" chordsig="java.lang.String"/>
+	<type  start="2317" length="16" line="72" chordsig="java.lang.String"/>
+	<type  start="2406" length="16" line="74" chordsig="java.lang.String"/>
+	<type  start="2932" length="16" line="90" chordsig="java.lang.String"/>
+	<type  start="3135" length="15" line="96" chordsig="android.net.Uri"/>
+	<type  start="3190" length="16" line="98" chordsig="java.lang.String"/>
+	<type  start="3394" length="16" line="104" chordsig="java.lang.String"/>
+<method
+ chordsig="deleteFromHistory:(Landroid/content/ContentResolver;Ljava/lang/String;)V@android.provider.Browser"
+ sig="void deleteFromHistory(ContentResolver,String)"
+ line="107"
+ startpos="3563"
+ endpos="3580"
+>
+	<marker line="-1" type="param">
+		<operand  start="3613" length="2" line="107">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3634" length="3" line="107">
+			<expr><![CDATA[url]]></expr>
+		</operand>
+	</marker>
+	<type  start="3581" length="31" line="107" chordsig="android.content.ContentResolver"/>
+	<type  start="3617" length="16" line="107" chordsig="java.lang.String"/>
+	<newexpr line="108" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3659" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3655" length="29" line="108">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3676" length="7" line="108">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3659" length="16" line="108" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clearSearches:(Landroid/content/ContentResolver;)V@android.provider.Browser"
+ sig="void clearSearches(ContentResolver)"
+ line="112"
+ startpos="3804"
+ endpos="3817"
+>
+	<marker line="-1" type="param">
+		<operand  start="3850" length="2" line="112">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<type  start="3818" length="31" line="112" chordsig="android.content.ContentResolver"/>
+	<newexpr line="113" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3874" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3870" length="29" line="113">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3891" length="7" line="113">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3874" length="16" line="113" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="deleteHistoryTimeFrame:(Landroid/content/ContentResolver;JJ)V@android.provider.Browser"
+ sig="void deleteHistoryTimeFrame(ContentResolver,long,long)"
+ line="117"
+ startpos="4018"
+ endpos="4040"
+>
+	<marker line="-1" type="param">
+		<operand  start="4073" length="2" line="117">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4082" length="5" line="117">
+			<expr><![CDATA[begin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4094" length="3" line="117">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="4041" length="31" line="117" chordsig="android.content.ContentResolver"/>
+	<newexpr line="118" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4119" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4115" length="29" line="118">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4136" length="7" line="118">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4119" length="16" line="118" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="truncateHistory:(Landroid/content/ContentResolver;)V@android.provider.Browser"
+ sig="void truncateHistory(ContentResolver)"
+ line="122"
+ startpos="4263"
+ endpos="4278"
+>
+	<marker line="-1" type="param">
+		<operand  start="4311" length="2" line="122">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<type  start="4279" length="31" line="122" chordsig="android.content.ContentResolver"/>
+	<newexpr line="123" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4335" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4331" length="29" line="123">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4352" length="7" line="123">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4335" length="16" line="123" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clearHistory:(Landroid/content/ContentResolver;)V@android.provider.Browser"
+ sig="void clearHistory(ContentResolver)"
+ line="127"
+ startpos="4479"
+ endpos="4491"
+>
+	<marker line="-1" type="param">
+		<operand  start="4524" length="2" line="127">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<type  start="4492" length="31" line="127" chordsig="android.content.ContentResolver"/>
+	<newexpr line="128" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4548" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4544" length="29" line="128">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4565" length="7" line="128">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4548" length="16" line="128" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="updateVisitedHistory:(Landroid/content/ContentResolver;Ljava/lang/String;Z)V@android.provider.Browser"
+ sig="void updateVisitedHistory(ContentResolver,String,boolean)"
+ line="132"
+ startpos="4692"
+ endpos="4712"
+>
+	<marker line="-1" type="param">
+		<operand  start="4745" length="2" line="132">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4766" length="3" line="132">
+			<expr><![CDATA[url]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4779" length="4" line="132">
+			<expr><![CDATA[real]]></expr>
+		</operand>
+	</marker>
+	<type  start="4713" length="31" line="132" chordsig="android.content.ContentResolver"/>
+	<type  start="4749" length="16" line="132" chordsig="java.lang.String"/>
+	<newexpr line="133" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4805" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4801" length="29" line="133">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4822" length="7" line="133">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4805" length="16" line="133" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.Browser"
+ line="136"
+>
+	<invkexpr line="137" chordsig="taintedBookmarks:()Landroid/net/Uri;@android.provider.Browser" start="4876" length="16" type="invoke">
+			<expr><![CDATA[taintedBookmarks()]]></expr>
+	</invkexpr>
+	<invkexpr line="138" chordsig="taintedSearches:()Landroid/net/Uri;@android.provider.Browser" start="4919" length="15" type="invoke">
+			<expr><![CDATA[taintedSearches()]]></expr>
+	</invkexpr>
+</method>
+<method
+ chordsig="taintedBookmarks:()Landroid/net/Uri;@android.provider.Browser"
+ sig="Uri taintedBookmarks()"
+ line="142"
+ startpos="5055"
+ endpos="5071"
+>
+	<type  start="5039" length="15" line="142" chordsig="android.net.Uri"/>
+	<marker line="143" type="return">
+		<operand  start="5091" length="28" line="143">
+			<expr><![CDATA[new android.net.StampUri("")]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="143" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.net.StampUri" start="5095" length="20" type="invoke">
+			<expr><![CDATA[new android.net.StampUri("")]]></expr>
+		<param  start="5091" length="28" line="143">
+			<expr><![CDATA[new android.net.StampUri("")]]></expr>
+		</param>
+		<param  start="5116" length="2" line="143">
+			<expr><![CDATA[""]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5095" length="20" line="143" chordsig="android.net.StampUri"/>
+</method>
+<method
+ chordsig="taintedSearches:()Landroid/net/Uri;@android.provider.Browser"
+ sig="Uri taintedSearches()"
+ line="147"
+ startpos="5237"
+ endpos="5252"
+>
+	<type  start="5221" length="15" line="147" chordsig="android.net.Uri"/>
+	<marker line="148" type="return">
+		<operand  start="5272" length="28" line="148">
+			<expr><![CDATA[new android.net.StampUri("")]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="148" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.net.StampUri" start="5276" length="20" type="invoke">
+			<expr><![CDATA[new android.net.StampUri("")]]></expr>
+		<param  start="5272" length="28" line="148">
+			<expr><![CDATA[new android.net.StampUri("")]]></expr>
+		</param>
+		<param  start="5297" length="2" line="148">
+			<expr><![CDATA[""]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5276" length="20" line="148" chordsig="android.net.StampUri"/>
+</method>
+<method
+ chordsig="getAllBookmarks:(Landroid/content/ContentResolver;)Landroid/database/Cursor;@android.provider.Browser"
+ sig="Cursor getAllBookmarks(ContentResolver)"
+ line="152"
+ startpos="5432"
+ endpos="5447"
+>
+	<marker line="-1" type="param">
+		<operand  start="5480" length="2" line="152">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<type  start="5408" length="23" line="152" chordsig="android.database.Cursor"/>
+	<type  start="5448" length="31" line="152" chordsig="android.content.ContentResolver"/>
+	<marker line="153" type="return">
+		<operand  start="5540" length="34" line="153">
+			<expr><![CDATA[new android.test.mock.MockCursor()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="153" chordsig="&lt;init&gt;:()V@android.test.mock.MockCursor" start="5544" length="28" type="invoke">
+			<expr><![CDATA[new android.test.mock.MockCursor()]]></expr>
+		<param  start="5540" length="34" line="153">
+			<expr><![CDATA[new android.test.mock.MockCursor()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5544" length="28" line="153" chordsig="android.test.mock.MockCursor"/>
+</method>
+<method
+ chordsig="getAllVisitedUrls:(Landroid/content/ContentResolver;)Landroid/database/Cursor;@android.provider.Browser"
+ sig="Cursor getAllVisitedUrls(ContentResolver)"
+ line="157"
+ startpos="5708"
+ endpos="5725"
+>
+	<marker line="-1" type="param">
+		<operand  start="5758" length="2" line="157">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<type  start="5684" length="23" line="157" chordsig="android.database.Cursor"/>
+	<type  start="5726" length="31" line="157" chordsig="android.content.ContentResolver"/>
+	<marker line="158" type="return">
+		<operand  start="5818" length="34" line="158">
+			<expr><![CDATA[new android.test.mock.MockCursor()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="158" chordsig="&lt;init&gt;:()V@android.test.mock.MockCursor" start="5822" length="28" type="invoke">
+			<expr><![CDATA[new android.test.mock.MockCursor()]]></expr>
+		<param  start="5818" length="34" line="158">
+			<expr><![CDATA[new android.test.mock.MockCursor()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5822" length="28" line="158" chordsig="android.test.mock.MockCursor"/>
+</method>
+</class>
+</root>

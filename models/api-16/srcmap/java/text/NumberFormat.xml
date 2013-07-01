@@ -1,0 +1,913 @@
+<root>
+<class chordsig="java.text.NumberFormat" line="2">
+	<type  start="64" length="16" line="3" chordsig="java.text.Format"/>
+<class chordsig="java.text.NumberFormat$Field" line="5">
+	<type  start="119" length="22" line="6" chordsig="java.text.Format$Field"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.text.NumberFormat$Field"
+ sig="Field(String)"
+ line="8"
+ startpos="155"
+ endpos="160"
+>
+	<marker line="-1" type="param">
+		<operand  start="178" length="9" line="8">
+			<expr><![CDATA[fieldName]]></expr>
+		</operand>
+	</marker>
+	<type  start="161" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="198" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="232" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="228" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="249" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="232" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="281" length="28" line="9" chordsig="java.text.NumberFormat$Field"/>
+	<type  start="336" length="28" line="10" chordsig="java.text.NumberFormat$Field"/>
+	<type  start="394" length="28" line="11" chordsig="java.text.NumberFormat$Field"/>
+	<type  start="453" length="28" line="12" chordsig="java.text.NumberFormat$Field"/>
+	<type  start="512" length="28" line="13" chordsig="java.text.NumberFormat$Field"/>
+	<type  start="576" length="28" line="14" chordsig="java.text.NumberFormat$Field"/>
+	<type  start="642" length="28" line="15" chordsig="java.text.NumberFormat$Field"/>
+	<type  start="710" length="28" line="16" chordsig="java.text.NumberFormat$Field"/>
+	<type  start="779" length="28" line="17" chordsig="java.text.NumberFormat$Field"/>
+	<type  start="837" length="28" line="18" chordsig="java.text.NumberFormat$Field"/>
+	<type  start="896" length="28" line="19" chordsig="java.text.NumberFormat$Field"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@java.text.NumberFormat$Field"
+ line="20"
+>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@java.text.NumberFormat"
+ sig="NumberFormat()"
+ line="22"
+ startpos="1171"
+ endpos="1183"
+>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1198" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1194" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1215" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1198" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clone:()Ljava/lang/Object;@java.text.NumberFormat"
+ sig="Object clone()"
+ line="23"
+ startpos="1252"
+ endpos="1257"
+>
+	<type  start="1235" length="16" line="23" chordsig="java.lang.Object"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1272" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1268" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1289" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1272" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.text.NumberFormat"
+ sig="boolean equals(Object)"
+ line="24"
+ startpos="1317"
+ endpos="1323"
+>
+	<marker line="-1" type="param">
+		<operand  start="1341" length="6" line="24">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="1324" length="16" line="24" chordsig="java.lang.Object"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1361" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1357" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1378" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1361" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="format:(D)Ljava/lang/String;@java.text.NumberFormat"
+ sig="String format(double)"
+ line="25"
+ startpos="1421"
+ endpos="1427"
+>
+	<marker line="-1" type="param">
+		<operand  start="1435" length="5" line="25">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="1404" length="16" line="25" chordsig="java.lang.String"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1454" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1450" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1471" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1454" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="format:(DLjava/lang/StringBuffer;Ljava/text/FieldPosition;)Ljava/lang/StringBuffer;@java.text.NumberFormat"
+ sig="StringBuffer format(double,StringBuffer,FieldPosition)"
+ line="26"
+ startpos="1523"
+ endpos="1529"
+>
+	<marker line="-1" type="param">
+		<operand  start="1537" length="5" line="26">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1567" length="6" line="26">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1599" length="5" line="26">
+			<expr><![CDATA[field]]></expr>
+		</operand>
+	</marker>
+	<type  start="1500" length="22" line="26" chordsig="java.lang.StringBuffer"/>
+	<type  start="1544" length="22" line="26" chordsig="java.lang.StringBuffer"/>
+	<type  start="1575" length="23" line="26" chordsig="java.text.FieldPosition"/>
+</method>
+<method
+ chordsig="format:(J)Ljava/lang/String;@java.text.NumberFormat"
+ sig="String format(long)"
+ line="27"
+ startpos="1638"
+ endpos="1644"
+>
+	<marker line="-1" type="param">
+		<operand  start="1650" length="5" line="27">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="1621" length="16" line="27" chordsig="java.lang.String"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1669" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1665" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1686" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1669" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="format:(JLjava/lang/StringBuffer;Ljava/text/FieldPosition;)Ljava/lang/StringBuffer;@java.text.NumberFormat"
+ sig="StringBuffer format(long,StringBuffer,FieldPosition)"
+ line="28"
+ startpos="1738"
+ endpos="1744"
+>
+	<marker line="-1" type="param">
+		<operand  start="1750" length="5" line="28">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1780" length="6" line="28">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1812" length="5" line="28">
+			<expr><![CDATA[field]]></expr>
+		</operand>
+	</marker>
+	<type  start="1715" length="22" line="28" chordsig="java.lang.StringBuffer"/>
+	<type  start="1757" length="22" line="28" chordsig="java.lang.StringBuffer"/>
+	<type  start="1788" length="23" line="28" chordsig="java.text.FieldPosition"/>
+</method>
+<method
+ chordsig="format:(Ljava/lang/Object;Ljava/lang/StringBuffer;Ljava/text/FieldPosition;)Ljava/lang/StringBuffer;@java.text.NumberFormat"
+ sig="StringBuffer format(Object,StringBuffer,FieldPosition)"
+ line="29"
+ startpos="1851"
+ endpos="1857"
+>
+	<marker line="-1" type="param">
+		<operand  start="1875" length="6" line="29">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1906" length="6" line="29">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1938" length="5" line="29">
+			<expr><![CDATA[field]]></expr>
+		</operand>
+	</marker>
+	<type  start="1828" length="22" line="29" chordsig="java.lang.StringBuffer"/>
+	<type  start="1858" length="16" line="29" chordsig="java.lang.Object"/>
+	<type  start="1883" length="22" line="29" chordsig="java.lang.StringBuffer"/>
+	<type  start="1914" length="23" line="29" chordsig="java.text.FieldPosition"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1957" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1953" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1974" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1957" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAvailableLocales:()[Ljava/util/Locale;@java.text.NumberFormat"
+ sig="Locale[] getAvailableLocales()"
+ line="30"
+ startpos="2020"
+ endpos="2039"
+>
+	<type  start="2001" length="16" line="30" chordsig="java.util.Locale"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2054" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2050" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2071" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2054" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCurrency:()Ljava/util/Currency;@java.text.NumberFormat"
+ sig="Currency getCurrency()"
+ line="31"
+ startpos="2110"
+ endpos="2121"
+>
+	<type  start="2091" length="18" line="31" chordsig="java.util.Currency"/>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2136" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2132" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2153" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2136" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCurrencyInstance:()Ljava/text/NumberFormat;@java.text.NumberFormat"
+ sig="NumberFormat getCurrencyInstance()"
+ line="32"
+ startpos="2209"
+ endpos="2228"
+>
+	<type  start="2186" length="22" line="32" chordsig="java.text.NumberFormat"/>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2243" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2239" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2260" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2243" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCurrencyInstance:(Ljava/util/Locale;)Ljava/text/NumberFormat;@java.text.NumberFormat"
+ sig="NumberFormat getCurrencyInstance(Locale)"
+ line="33"
+ startpos="2310"
+ endpos="2329"
+>
+	<marker line="-1" type="param">
+		<operand  start="2347" length="6" line="33">
+			<expr><![CDATA[locale]]></expr>
+		</operand>
+	</marker>
+	<type  start="2287" length="22" line="33" chordsig="java.text.NumberFormat"/>
+	<type  start="2330" length="16" line="33" chordsig="java.util.Locale"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2367" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2363" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2384" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2367" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getIntegerInstance:()Ljava/text/NumberFormat;@java.text.NumberFormat"
+ sig="NumberFormat getIntegerInstance()"
+ line="34"
+ startpos="2440"
+ endpos="2458"
+>
+	<type  start="2417" length="22" line="34" chordsig="java.text.NumberFormat"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2473" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2469" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2490" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2473" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getIntegerInstance:(Ljava/util/Locale;)Ljava/text/NumberFormat;@java.text.NumberFormat"
+ sig="NumberFormat getIntegerInstance(Locale)"
+ line="35"
+ startpos="2540"
+ endpos="2558"
+>
+	<marker line="-1" type="param">
+		<operand  start="2576" length="6" line="35">
+			<expr><![CDATA[locale]]></expr>
+		</operand>
+	</marker>
+	<type  start="2517" length="22" line="35" chordsig="java.text.NumberFormat"/>
+	<type  start="2559" length="16" line="35" chordsig="java.util.Locale"/>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2596" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2592" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2613" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2596" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInstance:()Ljava/text/NumberFormat;@java.text.NumberFormat"
+ sig="NumberFormat getInstance()"
+ line="36"
+ startpos="2669"
+ endpos="2680"
+>
+	<type  start="2646" length="22" line="36" chordsig="java.text.NumberFormat"/>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2695" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2691" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2712" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2695" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInstance:(Ljava/util/Locale;)Ljava/text/NumberFormat;@java.text.NumberFormat"
+ sig="NumberFormat getInstance(Locale)"
+ line="37"
+ startpos="2762"
+ endpos="2773"
+>
+	<marker line="-1" type="param">
+		<operand  start="2791" length="6" line="37">
+			<expr><![CDATA[locale]]></expr>
+		</operand>
+	</marker>
+	<type  start="2739" length="22" line="37" chordsig="java.text.NumberFormat"/>
+	<type  start="2774" length="16" line="37" chordsig="java.util.Locale"/>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2811" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2807" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2828" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2811" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMaximumFractionDigits:()I@java.text.NumberFormat"
+ sig="int getMaximumFractionDigits()"
+ line="38"
+ startpos="2852"
+ endpos="2876"
+>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2891" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2887" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2908" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2891" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMaximumIntegerDigits:()I@java.text.NumberFormat"
+ sig="int getMaximumIntegerDigits()"
+ line="39"
+ startpos="2932"
+ endpos="2955"
+>
+	<newexpr line="39" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2970" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2966" length="29" line="39">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2987" length="7" line="39">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2970" length="16" line="39" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMinimumFractionDigits:()I@java.text.NumberFormat"
+ sig="int getMinimumFractionDigits()"
+ line="40"
+ startpos="3011"
+ endpos="3035"
+>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3050" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3046" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3067" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3050" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMinimumIntegerDigits:()I@java.text.NumberFormat"
+ sig="int getMinimumIntegerDigits()"
+ line="41"
+ startpos="3091"
+ endpos="3114"
+>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3129" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3125" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3146" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3129" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getNumberInstance:()Ljava/text/NumberFormat;@java.text.NumberFormat"
+ sig="NumberFormat getNumberInstance()"
+ line="42"
+ startpos="3202"
+ endpos="3219"
+>
+	<type  start="3179" length="22" line="42" chordsig="java.text.NumberFormat"/>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3234" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3230" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3251" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3234" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getNumberInstance:(Ljava/util/Locale;)Ljava/text/NumberFormat;@java.text.NumberFormat"
+ sig="NumberFormat getNumberInstance(Locale)"
+ line="43"
+ startpos="3301"
+ endpos="3318"
+>
+	<marker line="-1" type="param">
+		<operand  start="3336" length="6" line="43">
+			<expr><![CDATA[locale]]></expr>
+		</operand>
+	</marker>
+	<type  start="3278" length="22" line="43" chordsig="java.text.NumberFormat"/>
+	<type  start="3319" length="16" line="43" chordsig="java.util.Locale"/>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3356" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3352" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3373" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3356" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPercentInstance:()Ljava/text/NumberFormat;@java.text.NumberFormat"
+ sig="NumberFormat getPercentInstance()"
+ line="44"
+ startpos="3429"
+ endpos="3447"
+>
+	<type  start="3406" length="22" line="44" chordsig="java.text.NumberFormat"/>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3462" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3458" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3479" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3462" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPercentInstance:(Ljava/util/Locale;)Ljava/text/NumberFormat;@java.text.NumberFormat"
+ sig="NumberFormat getPercentInstance(Locale)"
+ line="45"
+ startpos="3529"
+ endpos="3547"
+>
+	<marker line="-1" type="param">
+		<operand  start="3565" length="6" line="45">
+			<expr><![CDATA[locale]]></expr>
+		</operand>
+	</marker>
+	<type  start="3506" length="22" line="45" chordsig="java.text.NumberFormat"/>
+	<type  start="3548" length="16" line="45" chordsig="java.util.Locale"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3585" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3581" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3602" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3585" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@java.text.NumberFormat"
+ sig="int hashCode()"
+ line="46"
+ startpos="3626"
+ endpos="3634"
+>
+	<newexpr line="46" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3649" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3645" length="29" line="46">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3666" length="7" line="46">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3649" length="16" line="46" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isGroupingUsed:()Z@java.text.NumberFormat"
+ sig="boolean isGroupingUsed()"
+ line="47"
+ startpos="3694"
+ endpos="3708"
+>
+	<newexpr line="47" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3723" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3719" length="29" line="47">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3740" length="7" line="47">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3723" length="16" line="47" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isParseIntegerOnly:()Z@java.text.NumberFormat"
+ sig="boolean isParseIntegerOnly()"
+ line="48"
+ startpos="3768"
+ endpos="3786"
+>
+	<newexpr line="48" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3801" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3797" length="29" line="48">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3818" length="7" line="48">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3801" length="16" line="48" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parse:(Ljava/lang/String;)Ljava/lang/Number;@java.text.NumberFormat"
+ sig="Number parse(String)"
+ line="49"
+ startpos="3855"
+ endpos="3860"
+>
+	<marker line="-1" type="param">
+		<operand  start="3878" length="6" line="49">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<type  start="3838" length="16" line="49" chordsig="java.lang.Number"/>
+	<type  start="3861" length="16" line="49" chordsig="java.lang.String"/>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3930" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3926" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3947" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3930" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parse:(Ljava/lang/String;Ljava/text/ParsePosition;)Ljava/lang/Number;@java.text.NumberFormat"
+ sig="Number parse(String,ParsePosition)"
+ line="50"
+ startpos="3993"
+ endpos="3998"
+>
+	<marker line="-1" type="param">
+		<operand  start="4016" length="6" line="50">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4048" length="8" line="50">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+	<type  start="3976" length="16" line="50" chordsig="java.lang.Number"/>
+	<type  start="3999" length="16" line="50" chordsig="java.lang.String"/>
+	<type  start="4024" length="23" line="50" chordsig="java.text.ParsePosition"/>
+</method>
+<method
+ chordsig="parseObject:(Ljava/lang/String;Ljava/text/ParsePosition;)Ljava/lang/Object;@java.text.NumberFormat"
+ sig="Object parseObject(String,ParsePosition)"
+ line="51"
+ startpos="4090"
+ endpos="4101"
+>
+	<marker line="-1" type="param">
+		<operand  start="4119" length="6" line="51">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4151" length="8" line="51">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+	<type  start="4073" length="16" line="51" chordsig="java.lang.Object"/>
+	<type  start="4102" length="16" line="51" chordsig="java.lang.String"/>
+	<type  start="4127" length="23" line="51" chordsig="java.text.ParsePosition"/>
+	<newexpr line="51" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4173" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4169" length="29" line="51">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4190" length="7" line="51">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4173" length="16" line="51" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setCurrency:(Ljava/util/Currency;)V@java.text.NumberFormat"
+ sig="void setCurrency(Currency)"
+ line="52"
+ startpos="4215"
+ endpos="4226"
+>
+	<marker line="-1" type="param">
+		<operand  start="4246" length="8" line="52">
+			<expr><![CDATA[currency]]></expr>
+		</operand>
+	</marker>
+	<type  start="4227" length="18" line="52" chordsig="java.util.Currency"/>
+	<newexpr line="52" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4268" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4264" length="29" line="52">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4285" length="7" line="52">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4268" length="16" line="52" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setGroupingUsed:(Z)V@java.text.NumberFormat"
+ sig="void setGroupingUsed(boolean)"
+ line="53"
+ startpos="4310"
+ endpos="4325"
+>
+	<marker line="-1" type="param">
+		<operand  start="4334" length="5" line="53">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="53" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4353" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4349" length="29" line="53">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4370" length="7" line="53">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4353" length="16" line="53" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMaximumFractionDigits:(I)V@java.text.NumberFormat"
+ sig="void setMaximumFractionDigits(int)"
+ line="54"
+ startpos="4395"
+ endpos="4419"
+>
+	<marker line="-1" type="param">
+		<operand  start="4424" length="5" line="54">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="54" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4443" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4439" length="29" line="54">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4460" length="7" line="54">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4443" length="16" line="54" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMaximumIntegerDigits:(I)V@java.text.NumberFormat"
+ sig="void setMaximumIntegerDigits(int)"
+ line="55"
+ startpos="4485"
+ endpos="4508"
+>
+	<marker line="-1" type="param">
+		<operand  start="4513" length="5" line="55">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="55" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4532" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4528" length="29" line="55">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4549" length="7" line="55">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4532" length="16" line="55" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMinimumFractionDigits:(I)V@java.text.NumberFormat"
+ sig="void setMinimumFractionDigits(int)"
+ line="56"
+ startpos="4574"
+ endpos="4598"
+>
+	<marker line="-1" type="param">
+		<operand  start="4603" length="5" line="56">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="56" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4622" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4618" length="29" line="56">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4639" length="7" line="56">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4622" length="16" line="56" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMinimumIntegerDigits:(I)V@java.text.NumberFormat"
+ sig="void setMinimumIntegerDigits(int)"
+ line="57"
+ startpos="4664"
+ endpos="4687"
+>
+	<marker line="-1" type="param">
+		<operand  start="4692" length="5" line="57">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="57" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4711" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4707" length="29" line="57">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4728" length="7" line="57">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4711" length="16" line="57" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setParseIntegerOnly:(Z)V@java.text.NumberFormat"
+ sig="void setParseIntegerOnly(boolean)"
+ line="58"
+ startpos="4753"
+ endpos="4772"
+>
+	<marker line="-1" type="param">
+		<operand  start="4781" length="5" line="58">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="58" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4800" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4796" length="29" line="58">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4817" length="7" line="58">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4800" length="16" line="58" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRoundingMode:()Ljava/math/RoundingMode;@java.text.NumberFormat"
+ sig="RoundingMode getRoundingMode()"
+ line="59"
+ startpos="4860"
+ endpos="4875"
+>
+	<type  start="4837" length="22" line="59" chordsig="java.math.RoundingMode"/>
+	<newexpr line="59" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4890" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4886" length="29" line="59">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4907" length="7" line="59">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4890" length="16" line="59" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setRoundingMode:(Ljava/math/RoundingMode;)V@java.text.NumberFormat"
+ sig="void setRoundingMode(RoundingMode)"
+ line="60"
+ startpos="4932"
+ endpos="4947"
+>
+	<marker line="-1" type="param">
+		<operand  start="4971" length="12" line="60">
+			<expr><![CDATA[roundingMode]]></expr>
+		</operand>
+	</marker>
+	<type  start="4948" length="22" line="60" chordsig="java.math.RoundingMode"/>
+	<newexpr line="60" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4997" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4993" length="29" line="60">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5014" length="7" line="60">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4997" length="16" line="60" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

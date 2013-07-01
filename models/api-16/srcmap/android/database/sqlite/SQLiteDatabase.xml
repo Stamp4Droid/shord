@@ -1,0 +1,2079 @@
+<root>
+<class chordsig="android.database.sqlite.SQLiteDatabase" line="3">
+	<type  start="76" length="38" line="3" chordsig="android.database.sqlite.SQLiteClosable"/>
+<class chordsig="android.database.sqlite.SQLiteDatabase$CursorFactory" line="5">
+<method
+ chordsig="newCursor:(Landroid/database/sqlite/SQLiteDatabase;Landroid/database/sqlite/SQLiteCursorDriver;Ljava/lang/String;Landroid/database/sqlite/SQLiteQuery;)Landroid/database/Cursor;@android.database.sqlite.SQLiteDatabase$CursorFactory"
+ sig="Cursor newCursor(SQLiteDatabase,SQLiteCursorDriver,String,SQLiteQuery)"
+ line="7"
+ startpos="211"
+ endpos="220"
+>
+	<marker line="-1" type="param">
+		<operand  start="260" length="2" line="7">
+			<expr><![CDATA[db]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="307" length="11" line="7">
+			<expr><![CDATA[masterQuery]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="337" length="9" line="7">
+			<expr><![CDATA[editTable]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="384" length="5" line="7">
+			<expr><![CDATA[query]]></expr>
+		</operand>
+	</marker>
+	<type  start="187" length="23" line="7" chordsig="android.database.Cursor"/>
+	<type  start="221" length="38" line="7" chordsig="android.database.sqlite.SQLiteDatabase"/>
+	<type  start="264" length="42" line="7" chordsig="android.database.sqlite.SQLiteCursorDriver"/>
+	<type  start="320" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="348" length="35" line="7" chordsig="android.database.sqlite.SQLiteQuery"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.database.sqlite.SQLiteDatabase"
+ sig="SQLiteDatabase()"
+ line="10"
+ startpos="403"
+ endpos="417"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="440" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="436" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="457" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="440" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="finalize:()V@android.database.sqlite.SQLiteDatabase"
+ sig="void finalize()"
+ line="14"
+ startpos="493"
+ endpos="501"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="551" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="547" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="568" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="551" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onAllReferencesReleased:()V@android.database.sqlite.SQLiteDatabase"
+ sig="void onAllReferencesReleased()"
+ line="18"
+ startpos="604"
+ endpos="627"
+>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="650" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="646" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="667" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="650" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="releaseMemory:()I@android.database.sqlite.SQLiteDatabase"
+ sig="int releaseMemory()"
+ line="22"
+ startpos="706"
+ endpos="719"
+>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="742" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="738" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="759" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="742" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setLockingEnabled:(Z)V@android.database.sqlite.SQLiteDatabase"
+ sig="void setLockingEnabled(boolean)"
+ line="27"
+ startpos="820"
+ endpos="837"
+>
+	<marker line="-1" type="param">
+		<operand  start="846" length="14" line="27">
+			<expr><![CDATA[lockingEnabled]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="882" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="878" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="899" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="882" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="beginTransaction:()V@android.database.sqlite.SQLiteDatabase"
+ sig="void beginTransaction()"
+ line="31"
+ startpos="932"
+ endpos="948"
+>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="971" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="967" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="988" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="971" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="beginTransactionNonExclusive:()V@android.database.sqlite.SQLiteDatabase"
+ sig="void beginTransactionNonExclusive()"
+ line="35"
+ startpos="1021"
+ endpos="1049"
+>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1072" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1068" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1089" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1072" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="beginTransactionWithListener:(Landroid/database/sqlite/SQLiteTransactionListener;)V@android.database.sqlite.SQLiteDatabase"
+ sig="void beginTransactionWithListener(SQLiteTransactionListener)"
+ line="39"
+ startpos="1122"
+ endpos="1150"
+>
+	<marker line="-1" type="param">
+		<operand  start="1201" length="19" line="39">
+			<expr><![CDATA[transactionListener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1151" length="49" line="39" chordsig="android.database.sqlite.SQLiteTransactionListener"/>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1242" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1238" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1259" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1242" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="beginTransactionWithListenerNonExclusive:(Landroid/database/sqlite/SQLiteTransactionListener;)V@android.database.sqlite.SQLiteDatabase"
+ sig="void beginTransactionWithListenerNonExclusive(SQLiteTransactionListener)"
+ line="43"
+ startpos="1292"
+ endpos="1332"
+>
+	<marker line="-1" type="param">
+		<operand  start="1383" length="19" line="43">
+			<expr><![CDATA[transactionListener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1333" length="49" line="43" chordsig="android.database.sqlite.SQLiteTransactionListener"/>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1424" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1420" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1441" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1424" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="endTransaction:()V@android.database.sqlite.SQLiteDatabase"
+ sig="void endTransaction()"
+ line="47"
+ startpos="1474"
+ endpos="1488"
+>
+	<newexpr line="48" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1511" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1507" length="29" line="48">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1528" length="7" line="48">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1511" length="16" line="48" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTransactionSuccessful:()V@android.database.sqlite.SQLiteDatabase"
+ sig="void setTransactionSuccessful()"
+ line="51"
+ startpos="1561"
+ endpos="1585"
+>
+	<newexpr line="52" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1608" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1604" length="29" line="52">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1625" length="7" line="52">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1608" length="16" line="52" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="inTransaction:()Z@android.database.sqlite.SQLiteDatabase"
+ sig="boolean inTransaction()"
+ line="55"
+ startpos="1661"
+ endpos="1674"
+>
+	<newexpr line="56" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1697" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1693" length="29" line="56">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1714" length="7" line="56">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1697" length="16" line="56" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isDbLockedByCurrentThread:()Z@android.database.sqlite.SQLiteDatabase"
+ sig="boolean isDbLockedByCurrentThread()"
+ line="59"
+ startpos="1750"
+ endpos="1775"
+>
+	<newexpr line="60" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1798" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1794" length="29" line="60">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1815" length="7" line="60">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1798" length="16" line="60" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isDbLockedByOtherThreads:()Z@android.database.sqlite.SQLiteDatabase"
+ sig="boolean isDbLockedByOtherThreads()"
+ line="64"
+ startpos="1879"
+ endpos="1903"
+>
+	<newexpr line="65" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1926" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1922" length="29" line="65">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1943" length="7" line="65">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1926" length="16" line="65" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="yieldIfContended:()Z@android.database.sqlite.SQLiteDatabase"
+ sig="boolean yieldIfContended()"
+ line="69"
+ startpos="2007"
+ endpos="2023"
+>
+	<newexpr line="70" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2046" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2042" length="29" line="70">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2063" length="7" line="70">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2046" length="16" line="70" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="yieldIfContendedSafely:()Z@android.database.sqlite.SQLiteDatabase"
+ sig="boolean yieldIfContendedSafely()"
+ line="73"
+ startpos="2099"
+ endpos="2121"
+>
+	<newexpr line="74" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2144" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2140" length="29" line="74">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2161" length="7" line="74">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2144" length="16" line="74" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="yieldIfContendedSafely:(J)Z@android.database.sqlite.SQLiteDatabase"
+ sig="boolean yieldIfContendedSafely(long)"
+ line="77"
+ startpos="2197"
+ endpos="2219"
+>
+	<marker line="-1" type="param">
+		<operand  start="2225" length="20" line="77">
+			<expr><![CDATA[sleepAfterYieldDelay]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="78" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2267" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2263" length="29" line="78">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2284" length="7" line="78">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2267" length="16" line="78" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSyncedTables:()Ljava/util/Map;@android.database.sqlite.SQLiteDatabase"
+ sig="Map&lt;String,String&gt; getSyncedTables()"
+ line="82"
+ startpos="2390"
+ endpos="2405"
+>
+	<type  start="2340" length="13" line="82" chordsig="java.util.Map"/>
+	<type  start="2354" length="16" line="82" chordsig="java.lang.String"/>
+	<type  start="2372" length="16" line="82" chordsig="java.lang.String"/>
+	<newexpr line="83" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2428" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2424" length="29" line="83">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2445" length="7" line="83">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2428" length="16" line="83" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="openDatabase:(Ljava/lang/String;Landroid/database/sqlite/SQLiteDatabase$CursorFactory;I)Landroid/database/sqlite/SQLiteDatabase;@android.database.sqlite.SQLiteDatabase"
+ sig="SQLiteDatabase openDatabase(String,CursorFactory,int)"
+ line="86"
+ startpos="2519"
+ endpos="2531"
+>
+	<marker line="-1" type="param">
+		<operand  start="2549" length="4" line="86">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2608" length="7" line="86">
+			<expr><![CDATA[factory]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2621" length="5" line="86">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="2480" length="38" line="86" chordsig="android.database.sqlite.SQLiteDatabase"/>
+	<type  start="2532" length="16" line="86" chordsig="java.lang.String"/>
+	<type  start="2555" length="52" line="86" chordsig="android.database.sqlite.SQLiteDatabase$CursorFactory"/>
+	<newexpr line="87" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2648" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2644" length="29" line="87">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2665" length="7" line="87">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2648" length="16" line="87" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="openDatabase:(Ljava/lang/String;Landroid/database/sqlite/SQLiteDatabase$CursorFactory;ILandroid/database/DatabaseErrorHandler;)Landroid/database/sqlite/SQLiteDatabase;@android.database.sqlite.SQLiteDatabase"
+ sig="SQLiteDatabase openDatabase(String,CursorFactory,int,DatabaseErrorHandler)"
+ line="90"
+ startpos="2739"
+ endpos="2751"
+>
+	<marker line="-1" type="param">
+		<operand  start="2769" length="4" line="90">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2828" length="7" line="90">
+			<expr><![CDATA[factory]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2841" length="5" line="90">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2886" length="12" line="90">
+			<expr><![CDATA[errorHandler]]></expr>
+		</operand>
+	</marker>
+	<type  start="2700" length="38" line="90" chordsig="android.database.sqlite.SQLiteDatabase"/>
+	<type  start="2752" length="16" line="90" chordsig="java.lang.String"/>
+	<type  start="2775" length="52" line="90" chordsig="android.database.sqlite.SQLiteDatabase$CursorFactory"/>
+	<type  start="2848" length="37" line="90" chordsig="android.database.DatabaseErrorHandler"/>
+	<newexpr line="91" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2920" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2916" length="29" line="91">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2937" length="7" line="91">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2920" length="16" line="91" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="openOrCreateDatabase:(Ljava/io/File;Landroid/database/sqlite/SQLiteDatabase$CursorFactory;)Landroid/database/sqlite/SQLiteDatabase;@android.database.sqlite.SQLiteDatabase"
+ sig="SQLiteDatabase openOrCreateDatabase(File,CursorFactory)"
+ line="94"
+ startpos="3011"
+ endpos="3031"
+>
+	<marker line="-1" type="param">
+		<operand  start="3045" length="4" line="94">
+			<expr><![CDATA[file]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3104" length="7" line="94">
+			<expr><![CDATA[factory]]></expr>
+		</operand>
+	</marker>
+	<type  start="2972" length="38" line="94" chordsig="android.database.sqlite.SQLiteDatabase"/>
+	<type  start="3032" length="12" line="94" chordsig="java.io.File"/>
+	<type  start="3051" length="52" line="94" chordsig="android.database.sqlite.SQLiteDatabase$CursorFactory"/>
+	<newexpr line="95" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3133" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3129" length="29" line="95">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3150" length="7" line="95">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3133" length="16" line="95" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="openOrCreateDatabase:(Ljava/lang/String;Landroid/database/sqlite/SQLiteDatabase$CursorFactory;)Landroid/database/sqlite/SQLiteDatabase;@android.database.sqlite.SQLiteDatabase"
+ sig="SQLiteDatabase openOrCreateDatabase(String,CursorFactory)"
+ line="98"
+ startpos="3224"
+ endpos="3244"
+>
+	<marker line="-1" type="param">
+		<operand  start="3262" length="4" line="98">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3321" length="7" line="98">
+			<expr><![CDATA[factory]]></expr>
+		</operand>
+	</marker>
+	<type  start="3185" length="38" line="98" chordsig="android.database.sqlite.SQLiteDatabase"/>
+	<type  start="3245" length="16" line="98" chordsig="java.lang.String"/>
+	<type  start="3268" length="52" line="98" chordsig="android.database.sqlite.SQLiteDatabase$CursorFactory"/>
+	<newexpr line="99" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3350" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3346" length="29" line="99">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3367" length="7" line="99">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3350" length="16" line="99" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="openOrCreateDatabase:(Ljava/lang/String;Landroid/database/sqlite/SQLiteDatabase$CursorFactory;Landroid/database/DatabaseErrorHandler;)Landroid/database/sqlite/SQLiteDatabase;@android.database.sqlite.SQLiteDatabase"
+ sig="SQLiteDatabase openOrCreateDatabase(String,CursorFactory,DatabaseErrorHandler)"
+ line="102"
+ startpos="3441"
+ endpos="3461"
+>
+	<marker line="-1" type="param">
+		<operand  start="3479" length="4" line="102">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3538" length="7" line="102">
+			<expr><![CDATA[factory]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3585" length="12" line="102">
+			<expr><![CDATA[errorHandler]]></expr>
+		</operand>
+	</marker>
+	<type  start="3402" length="38" line="102" chordsig="android.database.sqlite.SQLiteDatabase"/>
+	<type  start="3462" length="16" line="102" chordsig="java.lang.String"/>
+	<type  start="3485" length="52" line="102" chordsig="android.database.sqlite.SQLiteDatabase$CursorFactory"/>
+	<type  start="3547" length="37" line="102" chordsig="android.database.DatabaseErrorHandler"/>
+	<newexpr line="103" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3619" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3615" length="29" line="103">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3636" length="7" line="103">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3619" length="16" line="103" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="deleteDatabase:(Ljava/io/File;)Z@android.database.sqlite.SQLiteDatabase"
+ sig="boolean deleteDatabase(File)"
+ line="106"
+ startpos="3679"
+ endpos="3693"
+>
+	<marker line="-1" type="param">
+		<operand  start="3707" length="4" line="106">
+			<expr><![CDATA[file]]></expr>
+		</operand>
+	</marker>
+	<type  start="3694" length="12" line="106" chordsig="java.io.File"/>
+	<newexpr line="107" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3733" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3729" length="29" line="107">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3750" length="7" line="107">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3733" length="16" line="107" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="create:(Landroid/database/sqlite/SQLiteDatabase$CursorFactory;)Landroid/database/sqlite/SQLiteDatabase;@android.database.sqlite.SQLiteDatabase"
+ sig="SQLiteDatabase create(CursorFactory)"
+ line="110"
+ startpos="3824"
+ endpos="3830"
+>
+	<marker line="-1" type="param">
+		<operand  start="3884" length="7" line="110">
+			<expr><![CDATA[factory]]></expr>
+		</operand>
+	</marker>
+	<type  start="3785" length="38" line="110" chordsig="android.database.sqlite.SQLiteDatabase"/>
+	<type  start="3831" length="52" line="110" chordsig="android.database.sqlite.SQLiteDatabase$CursorFactory"/>
+	<newexpr line="111" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3913" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3909" length="29" line="111">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3930" length="7" line="111">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3913" length="16" line="111" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getVersion:()I@android.database.sqlite.SQLiteDatabase"
+ sig="int getVersion()"
+ line="114"
+ startpos="3962"
+ endpos="3972"
+>
+	<newexpr line="115" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3995" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3991" length="29" line="115">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4012" length="7" line="115">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3995" length="16" line="115" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setVersion:(I)V@android.database.sqlite.SQLiteDatabase"
+ sig="void setVersion(int)"
+ line="118"
+ startpos="4045"
+ endpos="4055"
+>
+	<marker line="-1" type="param">
+		<operand  start="4060" length="7" line="118">
+			<expr><![CDATA[version]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="119" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4089" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4085" length="29" line="119">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4106" length="7" line="119">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4089" length="16" line="119" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMaximumSize:()J@android.database.sqlite.SQLiteDatabase"
+ sig="long getMaximumSize()"
+ line="122"
+ startpos="4139"
+ endpos="4153"
+>
+	<newexpr line="123" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4176" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4172" length="29" line="123">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4193" length="7" line="123">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4176" length="16" line="123" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMaximumSize:(J)J@android.database.sqlite.SQLiteDatabase"
+ sig="long setMaximumSize(long)"
+ line="126"
+ startpos="4226"
+ endpos="4240"
+>
+	<marker line="-1" type="param">
+		<operand  start="4246" length="8" line="126">
+			<expr><![CDATA[numBytes]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="127" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4276" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4272" length="29" line="127">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4293" length="7" line="127">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4276" length="16" line="127" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPageSize:()J@android.database.sqlite.SQLiteDatabase"
+ sig="long getPageSize()"
+ line="130"
+ startpos="4326"
+ endpos="4337"
+>
+	<newexpr line="131" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4360" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4356" length="29" line="131">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4377" length="7" line="131">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4360" length="16" line="131" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPageSize:(J)V@android.database.sqlite.SQLiteDatabase"
+ sig="void setPageSize(long)"
+ line="134"
+ startpos="4410"
+ endpos="4421"
+>
+	<marker line="-1" type="param">
+		<operand  start="4427" length="8" line="134">
+			<expr><![CDATA[numBytes]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="135" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4457" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4453" length="29" line="135">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4474" length="7" line="135">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4457" length="16" line="135" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="markTableSyncable:(Ljava/lang/String;Ljava/lang/String;)V@android.database.sqlite.SQLiteDatabase"
+ sig="void markTableSyncable(String,String)"
+ line="139"
+ startpos="4535"
+ endpos="4552"
+>
+	<marker line="-1" type="param">
+		<operand  start="4570" length="5" line="139">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4594" length="12" line="139">
+			<expr><![CDATA[deletedTable]]></expr>
+		</operand>
+	</marker>
+	<type  start="4553" length="16" line="139" chordsig="java.lang.String"/>
+	<type  start="4577" length="16" line="139" chordsig="java.lang.String"/>
+	<newexpr line="140" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4628" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4624" length="29" line="140">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4645" length="7" line="140">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4628" length="16" line="140" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="markTableSyncable:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V@android.database.sqlite.SQLiteDatabase"
+ sig="void markTableSyncable(String,String,String)"
+ line="144"
+ startpos="4706"
+ endpos="4723"
+>
+	<marker line="-1" type="param">
+		<operand  start="4741" length="5" line="144">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4765" length="10" line="144">
+			<expr><![CDATA[foreignKey]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4794" length="11" line="144">
+			<expr><![CDATA[updateTable]]></expr>
+		</operand>
+	</marker>
+	<type  start="4724" length="16" line="144" chordsig="java.lang.String"/>
+	<type  start="4748" length="16" line="144" chordsig="java.lang.String"/>
+	<type  start="4777" length="16" line="144" chordsig="java.lang.String"/>
+	<newexpr line="145" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4827" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4823" length="29" line="145">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4844" length="7" line="145">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4827" length="16" line="145" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="findEditTable:(Ljava/lang/String;)Ljava/lang/String;@android.database.sqlite.SQLiteDatabase"
+ sig="String findEditTable(String)"
+ line="148"
+ startpos="4896"
+ endpos="4909"
+>
+	<marker line="-1" type="param">
+		<operand  start="4927" length="6" line="148">
+			<expr><![CDATA[tables]]></expr>
+		</operand>
+	</marker>
+	<type  start="4879" length="16" line="148" chordsig="java.lang.String"/>
+	<type  start="4910" length="16" line="148" chordsig="java.lang.String"/>
+	<newexpr line="149" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4955" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4951" length="29" line="149">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4972" length="7" line="149">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4955" length="16" line="149" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="compileStatement:(Ljava/lang/String;)Landroid/database/sqlite/SQLiteStatement;@android.database.sqlite.SQLiteDatabase"
+ sig="SQLiteStatement compileStatement(String)"
+ line="152"
+ startpos="5040"
+ endpos="5056"
+>
+	<marker line="-1" type="param">
+		<operand  start="5074" length="3" line="152">
+			<expr><![CDATA[sql]]></expr>
+		</operand>
+	</marker>
+	<type  start="5000" length="39" line="152" chordsig="android.database.sqlite.SQLiteStatement"/>
+	<type  start="5057" length="16" line="152" chordsig="java.lang.String"/>
+	<newexpr line="153" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5136" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5132" length="29" line="153">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5153" length="7" line="153">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5136" length="16" line="153" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="query:(ZLjava/lang/String;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;@android.database.sqlite.SQLiteDatabase"
+ sig="Cursor query(boolean,String,String[],String,String[],String,String,String,String)"
+ line="156"
+ startpos="5205"
+ endpos="5210"
+>
+	<marker line="-1" type="param">
+		<operand  start="5219" length="8" line="156">
+			<expr><![CDATA[distinct]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5246" length="5" line="156">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5272" length="7" line="156">
+			<expr><![CDATA[columns]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5298" length="9" line="156">
+			<expr><![CDATA[selection]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5328" length="13" line="156">
+			<expr><![CDATA[selectionArgs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5360" length="7" line="156">
+			<expr><![CDATA[groupBy]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5386" length="6" line="156">
+			<expr><![CDATA[having]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5411" length="7" line="156">
+			<expr><![CDATA[orderBy]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5437" length="5" line="156">
+			<expr><![CDATA[limit]]></expr>
+		</operand>
+	</marker>
+	<type  start="5181" length="23" line="156" chordsig="android.database.Cursor"/>
+	<type  start="5229" length="16" line="156" chordsig="java.lang.String"/>
+	<type  start="5253" length="16" line="156" chordsig="java.lang.String"/>
+	<type  start="5281" length="16" line="156" chordsig="java.lang.String"/>
+	<type  start="5309" length="16" line="156" chordsig="java.lang.String"/>
+	<type  start="5343" length="16" line="156" chordsig="java.lang.String"/>
+	<type  start="5369" length="16" line="156" chordsig="java.lang.String"/>
+	<type  start="5394" length="16" line="156" chordsig="java.lang.String"/>
+	<type  start="5420" length="16" line="156" chordsig="java.lang.String"/>
+	<newexpr line="157" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5464" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5460" length="29" line="157">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5481" length="7" line="157">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5464" length="16" line="157" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="query:(ZLjava/lang/String;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroid/os/CancellationSignal;)Landroid/database/Cursor;@android.database.sqlite.SQLiteDatabase"
+ sig="Cursor query(boolean,String,String[],String,String[],String,String,String,String,CancellationSignal)"
+ line="160"
+ startpos="5533"
+ endpos="5538"
+>
+	<marker line="-1" type="param">
+		<operand  start="5547" length="8" line="160">
+			<expr><![CDATA[distinct]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5574" length="5" line="160">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5600" length="7" line="160">
+			<expr><![CDATA[columns]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5626" length="9" line="160">
+			<expr><![CDATA[selection]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5656" length="13" line="160">
+			<expr><![CDATA[selectionArgs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5688" length="7" line="160">
+			<expr><![CDATA[groupBy]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5714" length="6" line="160">
+			<expr><![CDATA[having]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5739" length="7" line="160">
+			<expr><![CDATA[orderBy]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5765" length="5" line="160">
+			<expr><![CDATA[limit]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5802" length="18" line="160">
+			<expr><![CDATA[cancellationSignal]]></expr>
+		</operand>
+	</marker>
+	<type  start="5509" length="23" line="160" chordsig="android.database.Cursor"/>
+	<type  start="5557" length="16" line="160" chordsig="java.lang.String"/>
+	<type  start="5581" length="16" line="160" chordsig="java.lang.String"/>
+	<type  start="5609" length="16" line="160" chordsig="java.lang.String"/>
+	<type  start="5637" length="16" line="160" chordsig="java.lang.String"/>
+	<type  start="5671" length="16" line="160" chordsig="java.lang.String"/>
+	<type  start="5697" length="16" line="160" chordsig="java.lang.String"/>
+	<type  start="5722" length="16" line="160" chordsig="java.lang.String"/>
+	<type  start="5748" length="16" line="160" chordsig="java.lang.String"/>
+	<type  start="5772" length="29" line="160" chordsig="android.os.CancellationSignal"/>
+	<newexpr line="161" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5842" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5838" length="29" line="161">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5859" length="7" line="161">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5842" length="16" line="161" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="queryWithFactory:(Landroid/database/sqlite/SQLiteDatabase$CursorFactory;ZLjava/lang/String;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;@android.database.sqlite.SQLiteDatabase"
+ sig="Cursor queryWithFactory(CursorFactory,boolean,String,String[],String,String[],String,String,String,String)"
+ line="164"
+ startpos="5911"
+ endpos="5927"
+>
+	<marker line="-1" type="param">
+		<operand  start="5981" length="13" line="164">
+			<expr><![CDATA[cursorFactory]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6004" length="8" line="164">
+			<expr><![CDATA[distinct]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6031" length="5" line="164">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6057" length="7" line="164">
+			<expr><![CDATA[columns]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6083" length="9" line="164">
+			<expr><![CDATA[selection]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6113" length="13" line="164">
+			<expr><![CDATA[selectionArgs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6145" length="7" line="164">
+			<expr><![CDATA[groupBy]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6171" length="6" line="164">
+			<expr><![CDATA[having]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6196" length="7" line="164">
+			<expr><![CDATA[orderBy]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6222" length="5" line="164">
+			<expr><![CDATA[limit]]></expr>
+		</operand>
+	</marker>
+	<type  start="5887" length="23" line="164" chordsig="android.database.Cursor"/>
+	<type  start="5928" length="52" line="164" chordsig="android.database.sqlite.SQLiteDatabase$CursorFactory"/>
+	<type  start="6014" length="16" line="164" chordsig="java.lang.String"/>
+	<type  start="6038" length="16" line="164" chordsig="java.lang.String"/>
+	<type  start="6066" length="16" line="164" chordsig="java.lang.String"/>
+	<type  start="6094" length="16" line="164" chordsig="java.lang.String"/>
+	<type  start="6128" length="16" line="164" chordsig="java.lang.String"/>
+	<type  start="6154" length="16" line="164" chordsig="java.lang.String"/>
+	<type  start="6179" length="16" line="164" chordsig="java.lang.String"/>
+	<type  start="6205" length="16" line="164" chordsig="java.lang.String"/>
+	<newexpr line="165" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6249" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6245" length="29" line="165">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6266" length="7" line="165">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6249" length="16" line="165" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="queryWithFactory:(Landroid/database/sqlite/SQLiteDatabase$CursorFactory;ZLjava/lang/String;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Landroid/os/CancellationSignal;)Landroid/database/Cursor;@android.database.sqlite.SQLiteDatabase"
+ sig="Cursor queryWithFactory(CursorFactory,boolean,String,String[],String,String[],String,String,String,String,CancellationSignal)"
+ line="168"
+ startpos="6318"
+ endpos="6334"
+>
+	<marker line="-1" type="param">
+		<operand  start="6388" length="13" line="168">
+			<expr><![CDATA[cursorFactory]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6411" length="8" line="168">
+			<expr><![CDATA[distinct]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6438" length="5" line="168">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6464" length="7" line="168">
+			<expr><![CDATA[columns]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6490" length="9" line="168">
+			<expr><![CDATA[selection]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6520" length="13" line="168">
+			<expr><![CDATA[selectionArgs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6552" length="7" line="168">
+			<expr><![CDATA[groupBy]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6578" length="6" line="168">
+			<expr><![CDATA[having]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6603" length="7" line="168">
+			<expr><![CDATA[orderBy]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6629" length="5" line="168">
+			<expr><![CDATA[limit]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6666" length="18" line="168">
+			<expr><![CDATA[cancellationSignal]]></expr>
+		</operand>
+	</marker>
+	<type  start="6294" length="23" line="168" chordsig="android.database.Cursor"/>
+	<type  start="6335" length="52" line="168" chordsig="android.database.sqlite.SQLiteDatabase$CursorFactory"/>
+	<type  start="6421" length="16" line="168" chordsig="java.lang.String"/>
+	<type  start="6445" length="16" line="168" chordsig="java.lang.String"/>
+	<type  start="6473" length="16" line="168" chordsig="java.lang.String"/>
+	<type  start="6501" length="16" line="168" chordsig="java.lang.String"/>
+	<type  start="6535" length="16" line="168" chordsig="java.lang.String"/>
+	<type  start="6561" length="16" line="168" chordsig="java.lang.String"/>
+	<type  start="6586" length="16" line="168" chordsig="java.lang.String"/>
+	<type  start="6612" length="16" line="168" chordsig="java.lang.String"/>
+	<type  start="6636" length="29" line="168" chordsig="android.os.CancellationSignal"/>
+	<newexpr line="169" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6706" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6702" length="29" line="169">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6723" length="7" line="169">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6706" length="16" line="169" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="query:(Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;@android.database.sqlite.SQLiteDatabase"
+ sig="Cursor query(String,String[],String,String[],String,String,String)"
+ line="172"
+ startpos="6775"
+ endpos="6780"
+>
+	<marker line="-1" type="param">
+		<operand  start="6798" length="5" line="172">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6824" length="7" line="172">
+			<expr><![CDATA[columns]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6850" length="9" line="172">
+			<expr><![CDATA[selection]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6880" length="13" line="172">
+			<expr><![CDATA[selectionArgs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6912" length="7" line="172">
+			<expr><![CDATA[groupBy]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6938" length="6" line="172">
+			<expr><![CDATA[having]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6963" length="7" line="172">
+			<expr><![CDATA[orderBy]]></expr>
+		</operand>
+	</marker>
+	<type  start="6751" length="23" line="172" chordsig="android.database.Cursor"/>
+	<type  start="6781" length="16" line="172" chordsig="java.lang.String"/>
+	<type  start="6805" length="16" line="172" chordsig="java.lang.String"/>
+	<type  start="6833" length="16" line="172" chordsig="java.lang.String"/>
+	<type  start="6861" length="16" line="172" chordsig="java.lang.String"/>
+	<type  start="6895" length="16" line="172" chordsig="java.lang.String"/>
+	<type  start="6921" length="16" line="172" chordsig="java.lang.String"/>
+	<type  start="6946" length="16" line="172" chordsig="java.lang.String"/>
+	<newexpr line="173" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6992" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6988" length="29" line="173">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7009" length="7" line="173">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6992" length="16" line="173" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="query:(Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;@android.database.sqlite.SQLiteDatabase"
+ sig="Cursor query(String,String[],String,String[],String,String,String,String)"
+ line="176"
+ startpos="7061"
+ endpos="7066"
+>
+	<marker line="-1" type="param">
+		<operand  start="7084" length="5" line="176">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7110" length="7" line="176">
+			<expr><![CDATA[columns]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7136" length="9" line="176">
+			<expr><![CDATA[selection]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7166" length="13" line="176">
+			<expr><![CDATA[selectionArgs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7198" length="7" line="176">
+			<expr><![CDATA[groupBy]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7224" length="6" line="176">
+			<expr><![CDATA[having]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7249" length="7" line="176">
+			<expr><![CDATA[orderBy]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7275" length="5" line="176">
+			<expr><![CDATA[limit]]></expr>
+		</operand>
+	</marker>
+	<type  start="7037" length="23" line="176" chordsig="android.database.Cursor"/>
+	<type  start="7067" length="16" line="176" chordsig="java.lang.String"/>
+	<type  start="7091" length="16" line="176" chordsig="java.lang.String"/>
+	<type  start="7119" length="16" line="176" chordsig="java.lang.String"/>
+	<type  start="7147" length="16" line="176" chordsig="java.lang.String"/>
+	<type  start="7181" length="16" line="176" chordsig="java.lang.String"/>
+	<type  start="7207" length="16" line="176" chordsig="java.lang.String"/>
+	<type  start="7232" length="16" line="176" chordsig="java.lang.String"/>
+	<type  start="7258" length="16" line="176" chordsig="java.lang.String"/>
+	<newexpr line="177" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7302" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7298" length="29" line="177">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7319" length="7" line="177">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7302" length="16" line="177" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="rawQuery:(Ljava/lang/String;[Ljava/lang/String;)Landroid/database/Cursor;@android.database.sqlite.SQLiteDatabase"
+ sig="Cursor rawQuery(String,String[])"
+ line="180"
+ startpos="7371"
+ endpos="7379"
+>
+	<marker line="-1" type="param">
+		<operand  start="7397" length="3" line="180">
+			<expr><![CDATA[sql]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7421" length="13" line="180">
+			<expr><![CDATA[selectionArgs]]></expr>
+		</operand>
+	</marker>
+	<type  start="7347" length="23" line="180" chordsig="android.database.Cursor"/>
+	<type  start="7380" length="16" line="180" chordsig="java.lang.String"/>
+	<type  start="7402" length="16" line="180" chordsig="java.lang.String"/>
+	<newexpr line="181" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7456" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7452" length="29" line="181">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7473" length="7" line="181">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7456" length="16" line="181" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="rawQuery:(Ljava/lang/String;[Ljava/lang/String;Landroid/os/CancellationSignal;)Landroid/database/Cursor;@android.database.sqlite.SQLiteDatabase"
+ sig="Cursor rawQuery(String,String[],CancellationSignal)"
+ line="184"
+ startpos="7525"
+ endpos="7533"
+>
+	<marker line="-1" type="param">
+		<operand  start="7551" length="3" line="184">
+			<expr><![CDATA[sql]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7575" length="13" line="184">
+			<expr><![CDATA[selectionArgs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7620" length="18" line="184">
+			<expr><![CDATA[cancellationSignal]]></expr>
+		</operand>
+	</marker>
+	<type  start="7501" length="23" line="184" chordsig="android.database.Cursor"/>
+	<type  start="7534" length="16" line="184" chordsig="java.lang.String"/>
+	<type  start="7556" length="16" line="184" chordsig="java.lang.String"/>
+	<type  start="7590" length="29" line="184" chordsig="android.os.CancellationSignal"/>
+	<newexpr line="185" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7660" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7656" length="29" line="185">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7677" length="7" line="185">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7660" length="16" line="185" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="rawQueryWithFactory:(Landroid/database/sqlite/SQLiteDatabase$CursorFactory;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;@android.database.sqlite.SQLiteDatabase"
+ sig="Cursor rawQueryWithFactory(CursorFactory,String,String[],String)"
+ line="188"
+ startpos="7729"
+ endpos="7748"
+>
+	<marker line="-1" type="param">
+		<operand  start="7802" length="13" line="188">
+			<expr><![CDATA[cursorFactory]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7834" length="3" line="188">
+			<expr><![CDATA[sql]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7858" length="13" line="188">
+			<expr><![CDATA[selectionArgs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7890" length="9" line="188">
+			<expr><![CDATA[editTable]]></expr>
+		</operand>
+	</marker>
+	<type  start="7705" length="23" line="188" chordsig="android.database.Cursor"/>
+	<type  start="7749" length="52" line="188" chordsig="android.database.sqlite.SQLiteDatabase$CursorFactory"/>
+	<type  start="7817" length="16" line="188" chordsig="java.lang.String"/>
+	<type  start="7839" length="16" line="188" chordsig="java.lang.String"/>
+	<type  start="7873" length="16" line="188" chordsig="java.lang.String"/>
+	<newexpr line="189" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7921" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7917" length="29" line="189">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7938" length="7" line="189">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7921" length="16" line="189" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="rawQueryWithFactory:(Landroid/database/sqlite/SQLiteDatabase$CursorFactory;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Landroid/os/CancellationSignal;)Landroid/database/Cursor;@android.database.sqlite.SQLiteDatabase"
+ sig="Cursor rawQueryWithFactory(CursorFactory,String,String[],String,CancellationSignal)"
+ line="192"
+ startpos="7990"
+ endpos="8009"
+>
+	<marker line="-1" type="param">
+		<operand  start="8063" length="13" line="192">
+			<expr><![CDATA[cursorFactory]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8095" length="3" line="192">
+			<expr><![CDATA[sql]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8119" length="13" line="192">
+			<expr><![CDATA[selectionArgs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8151" length="9" line="192">
+			<expr><![CDATA[editTable]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8192" length="18" line="192">
+			<expr><![CDATA[cancellationSignal]]></expr>
+		</operand>
+	</marker>
+	<type  start="7966" length="23" line="192" chordsig="android.database.Cursor"/>
+	<type  start="8010" length="52" line="192" chordsig="android.database.sqlite.SQLiteDatabase$CursorFactory"/>
+	<type  start="8078" length="16" line="192" chordsig="java.lang.String"/>
+	<type  start="8100" length="16" line="192" chordsig="java.lang.String"/>
+	<type  start="8134" length="16" line="192" chordsig="java.lang.String"/>
+	<type  start="8162" length="29" line="192" chordsig="android.os.CancellationSignal"/>
+	<newexpr line="193" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="8232" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="8228" length="29" line="193">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="8249" length="7" line="193">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="8232" length="16" line="193" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="insert:(Ljava/lang/String;Ljava/lang/String;Landroid/content/ContentValues;)J@android.database.sqlite.SQLiteDatabase"
+ sig="long insert(String,String,ContentValues)"
+ line="196"
+ startpos="8282"
+ endpos="8288"
+>
+	<marker line="-1" type="param">
+		<operand  start="8306" length="5" line="196">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8330" length="14" line="196">
+			<expr><![CDATA[nullColumnHack]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8376" length="6" line="196">
+			<expr><![CDATA[values]]></expr>
+		</operand>
+	</marker>
+	<type  start="8289" length="16" line="196" chordsig="java.lang.String"/>
+	<type  start="8313" length="16" line="196" chordsig="java.lang.String"/>
+	<type  start="8346" length="29" line="196" chordsig="android.content.ContentValues"/>
+	<newexpr line="197" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="8404" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="8400" length="29" line="197">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="8421" length="7" line="197">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="8404" length="16" line="197" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="insertOrThrow:(Ljava/lang/String;Ljava/lang/String;Landroid/content/ContentValues;)J@android.database.sqlite.SQLiteDatabase"
+ sig="long insertOrThrow(String,String,ContentValues)"
+ line="200"
+ startpos="8454"
+ endpos="8467"
+>
+	<marker line="-1" type="param">
+		<operand  start="8485" length="5" line="200">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8509" length="14" line="200">
+			<expr><![CDATA[nullColumnHack]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8555" length="6" line="200">
+			<expr><![CDATA[values]]></expr>
+		</operand>
+	</marker>
+	<type  start="8468" length="16" line="200" chordsig="java.lang.String"/>
+	<type  start="8492" length="16" line="200" chordsig="java.lang.String"/>
+	<type  start="8525" length="29" line="200" chordsig="android.content.ContentValues"/>
+	<newexpr line="201" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="8620" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="8616" length="29" line="201">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="8637" length="7" line="201">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="8620" length="16" line="201" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="replace:(Ljava/lang/String;Ljava/lang/String;Landroid/content/ContentValues;)J@android.database.sqlite.SQLiteDatabase"
+ sig="long replace(String,String,ContentValues)"
+ line="204"
+ startpos="8670"
+ endpos="8677"
+>
+	<marker line="-1" type="param">
+		<operand  start="8695" length="5" line="204">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8719" length="14" line="204">
+			<expr><![CDATA[nullColumnHack]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8765" length="13" line="204">
+			<expr><![CDATA[initialValues]]></expr>
+		</operand>
+	</marker>
+	<type  start="8678" length="16" line="204" chordsig="java.lang.String"/>
+	<type  start="8702" length="16" line="204" chordsig="java.lang.String"/>
+	<type  start="8735" length="29" line="204" chordsig="android.content.ContentValues"/>
+	<newexpr line="205" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="8800" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="8796" length="29" line="205">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="8817" length="7" line="205">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="8800" length="16" line="205" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="replaceOrThrow:(Ljava/lang/String;Ljava/lang/String;Landroid/content/ContentValues;)J@android.database.sqlite.SQLiteDatabase"
+ sig="long replaceOrThrow(String,String,ContentValues)"
+ line="208"
+ startpos="8850"
+ endpos="8864"
+>
+	<marker line="-1" type="param">
+		<operand  start="8882" length="5" line="208">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8906" length="14" line="208">
+			<expr><![CDATA[nullColumnHack]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8952" length="13" line="208">
+			<expr><![CDATA[initialValues]]></expr>
+		</operand>
+	</marker>
+	<type  start="8865" length="16" line="208" chordsig="java.lang.String"/>
+	<type  start="8889" length="16" line="208" chordsig="java.lang.String"/>
+	<type  start="8922" length="29" line="208" chordsig="android.content.ContentValues"/>
+	<newexpr line="209" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9024" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9020" length="29" line="209">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9041" length="7" line="209">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9024" length="16" line="209" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="insertWithOnConflict:(Ljava/lang/String;Ljava/lang/String;Landroid/content/ContentValues;I)J@android.database.sqlite.SQLiteDatabase"
+ sig="long insertWithOnConflict(String,String,ContentValues,int)"
+ line="212"
+ startpos="9074"
+ endpos="9094"
+>
+	<marker line="-1" type="param">
+		<operand  start="9112" length="5" line="212">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9136" length="14" line="212">
+			<expr><![CDATA[nullColumnHack]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9182" length="13" line="212">
+			<expr><![CDATA[initialValues]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9201" length="17" line="212">
+			<expr><![CDATA[conflictAlgorithm]]></expr>
+		</operand>
+	</marker>
+	<type  start="9095" length="16" line="212" chordsig="java.lang.String"/>
+	<type  start="9119" length="16" line="212" chordsig="java.lang.String"/>
+	<type  start="9152" length="29" line="212" chordsig="android.content.ContentValues"/>
+	<newexpr line="213" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9240" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9236" length="29" line="213">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9257" length="7" line="213">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9240" length="16" line="213" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="delete:(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)I@android.database.sqlite.SQLiteDatabase"
+ sig="int delete(String,String,String[])"
+ line="216"
+ startpos="9289"
+ endpos="9295"
+>
+	<marker line="-1" type="param">
+		<operand  start="9313" length="5" line="216">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9337" length="11" line="216">
+			<expr><![CDATA[whereClause]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9369" length="9" line="216">
+			<expr><![CDATA[whereArgs]]></expr>
+		</operand>
+	</marker>
+	<type  start="9296" length="16" line="216" chordsig="java.lang.String"/>
+	<type  start="9320" length="16" line="216" chordsig="java.lang.String"/>
+	<type  start="9350" length="16" line="216" chordsig="java.lang.String"/>
+	<newexpr line="217" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9400" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9396" length="29" line="217">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9417" length="7" line="217">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9400" length="16" line="217" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="update:(Ljava/lang/String;Landroid/content/ContentValues;Ljava/lang/String;[Ljava/lang/String;)I@android.database.sqlite.SQLiteDatabase"
+ sig="int update(String,ContentValues,String,String[])"
+ line="220"
+ startpos="9449"
+ endpos="9455"
+>
+	<marker line="-1" type="param">
+		<operand  start="9473" length="5" line="220">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9510" length="6" line="220">
+			<expr><![CDATA[values]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9535" length="11" line="220">
+			<expr><![CDATA[whereClause]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9567" length="9" line="220">
+			<expr><![CDATA[whereArgs]]></expr>
+		</operand>
+	</marker>
+	<type  start="9456" length="16" line="220" chordsig="java.lang.String"/>
+	<type  start="9480" length="29" line="220" chordsig="android.content.ContentValues"/>
+	<type  start="9518" length="16" line="220" chordsig="java.lang.String"/>
+	<type  start="9548" length="16" line="220" chordsig="java.lang.String"/>
+	<newexpr line="221" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9598" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9594" length="29" line="221">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9615" length="7" line="221">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9598" length="16" line="221" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="updateWithOnConflict:(Ljava/lang/String;Landroid/content/ContentValues;Ljava/lang/String;[Ljava/lang/String;I)I@android.database.sqlite.SQLiteDatabase"
+ sig="int updateWithOnConflict(String,ContentValues,String,String[],int)"
+ line="224"
+ startpos="9647"
+ endpos="9667"
+>
+	<marker line="-1" type="param">
+		<operand  start="9685" length="5" line="224">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9722" length="6" line="224">
+			<expr><![CDATA[values]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9747" length="11" line="224">
+			<expr><![CDATA[whereClause]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9779" length="9" line="224">
+			<expr><![CDATA[whereArgs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9794" length="17" line="224">
+			<expr><![CDATA[conflictAlgorithm]]></expr>
+		</operand>
+	</marker>
+	<type  start="9668" length="16" line="224" chordsig="java.lang.String"/>
+	<type  start="9692" length="29" line="224" chordsig="android.content.ContentValues"/>
+	<type  start="9730" length="16" line="224" chordsig="java.lang.String"/>
+	<type  start="9760" length="16" line="224" chordsig="java.lang.String"/>
+	<newexpr line="225" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9833" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9829" length="29" line="225">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9850" length="7" line="225">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9833" length="16" line="225" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="execSQL:(Ljava/lang/String;)V@android.database.sqlite.SQLiteDatabase"
+ sig="void execSQL(String)"
+ line="228"
+ startpos="9883"
+ endpos="9890"
+>
+	<marker line="-1" type="param">
+		<operand  start="9908" length="3" line="228">
+			<expr><![CDATA[sql]]></expr>
+		</operand>
+	</marker>
+	<type  start="9891" length="16" line="228" chordsig="java.lang.String"/>
+	<newexpr line="229" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9970" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9966" length="29" line="229">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9987" length="7" line="229">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9970" length="16" line="229" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="execSQL:(Ljava/lang/String;[Ljava/lang/Object;)V@android.database.sqlite.SQLiteDatabase"
+ sig="void execSQL(String,Object[])"
+ line="232"
+ startpos="10020"
+ endpos="10027"
+>
+	<marker line="-1" type="param">
+		<operand  start="10045" length="3" line="232">
+			<expr><![CDATA[sql]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="10069" length="8" line="232">
+			<expr><![CDATA[bindArgs]]></expr>
+		</operand>
+	</marker>
+	<type  start="10028" length="16" line="232" chordsig="java.lang.String"/>
+	<type  start="10050" length="16" line="232" chordsig="java.lang.Object"/>
+	<newexpr line="233" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10136" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10132" length="29" line="233">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10153" length="7" line="233">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10136" length="16" line="233" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isReadOnly:()Z@android.database.sqlite.SQLiteDatabase"
+ sig="boolean isReadOnly()"
+ line="236"
+ startpos="10189"
+ endpos="10199"
+>
+	<newexpr line="237" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10222" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10218" length="29" line="237">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10239" length="7" line="237">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10222" length="16" line="237" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isOpen:()Z@android.database.sqlite.SQLiteDatabase"
+ sig="boolean isOpen()"
+ line="240"
+ startpos="10275"
+ endpos="10281"
+>
+	<newexpr line="241" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10304" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10300" length="29" line="241">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10321" length="7" line="241">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10304" length="16" line="241" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="needUpgrade:(I)Z@android.database.sqlite.SQLiteDatabase"
+ sig="boolean needUpgrade(int)"
+ line="244"
+ startpos="10357"
+ endpos="10368"
+>
+	<marker line="-1" type="param">
+		<operand  start="10373" length="10" line="244">
+			<expr><![CDATA[newVersion]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="245" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10405" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10401" length="29" line="245">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10422" length="7" line="245">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10405" length="16" line="245" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPath:()Ljava/lang/String;@android.database.sqlite.SQLiteDatabase"
+ sig="String getPath()"
+ line="248"
+ startpos="10473"
+ endpos="10480"
+>
+	<type  start="10456" length="16" line="248" chordsig="java.lang.String"/>
+	<newexpr line="249" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10503" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10499" length="29" line="249">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10520" length="7" line="249">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10503" length="16" line="249" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setLocale:(Ljava/util/Locale;)V@android.database.sqlite.SQLiteDatabase"
+ sig="void setLocale(Locale)"
+ line="252"
+ startpos="10553"
+ endpos="10562"
+>
+	<marker line="-1" type="param">
+		<operand  start="10580" length="6" line="252">
+			<expr><![CDATA[locale]]></expr>
+		</operand>
+	</marker>
+	<type  start="10563" length="16" line="252" chordsig="java.util.Locale"/>
+	<newexpr line="253" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10608" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10604" length="29" line="253">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10625" length="7" line="253">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10608" length="16" line="253" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMaxSqlCacheSize:(I)V@android.database.sqlite.SQLiteDatabase"
+ sig="void setMaxSqlCacheSize(int)"
+ line="256"
+ startpos="10658"
+ endpos="10676"
+>
+	<marker line="-1" type="param">
+		<operand  start="10681" length="9" line="256">
+			<expr><![CDATA[cacheSize]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="257" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10712" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10708" length="29" line="257">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10729" length="7" line="257">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10712" length="16" line="257" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setForeignKeyConstraintsEnabled:(Z)V@android.database.sqlite.SQLiteDatabase"
+ sig="void setForeignKeyConstraintsEnabled(boolean)"
+ line="260"
+ startpos="10762"
+ endpos="10793"
+>
+	<marker line="-1" type="param">
+		<operand  start="10802" length="6" line="260">
+			<expr><![CDATA[enable]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="261" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10830" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10826" length="29" line="261">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10847" length="7" line="261">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10830" length="16" line="261" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="enableWriteAheadLogging:()Z@android.database.sqlite.SQLiteDatabase"
+ sig="boolean enableWriteAheadLogging()"
+ line="264"
+ startpos="10883"
+ endpos="10906"
+>
+	<newexpr line="265" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10929" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10925" length="29" line="265">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10946" length="7" line="265">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10929" length="16" line="265" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="disableWriteAheadLogging:()V@android.database.sqlite.SQLiteDatabase"
+ sig="void disableWriteAheadLogging()"
+ line="268"
+ startpos="10979"
+ endpos="11003"
+>
+	<newexpr line="269" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11026" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11022" length="29" line="269">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11043" length="7" line="269">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11026" length="16" line="269" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isWriteAheadLoggingEnabled:()Z@android.database.sqlite.SQLiteDatabase"
+ sig="boolean isWriteAheadLoggingEnabled()"
+ line="272"
+ startpos="11079"
+ endpos="11105"
+>
+	<newexpr line="273" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11128" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11124" length="29" line="273">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11145" length="7" line="273">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11128" length="16" line="273" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAttachedDbs:()Ljava/util/List;@android.database.sqlite.SQLiteDatabase"
+ sig="List&lt;Pair&lt;String,String&gt;&gt; getAttachedDbs()"
+ line="276"
+ startpos="11243"
+ endpos="11257"
+>
+	<type  start="11173" length="14" line="276" chordsig="java.util.List"/>
+	<type  start="11188" length="17" line="276" chordsig="android.util.Pair"/>
+	<type  start="11206" length="16" line="276" chordsig="java.lang.String"/>
+	<type  start="11224" length="16" line="276" chordsig="java.lang.String"/>
+	<newexpr line="277" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11280" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11276" length="29" line="277">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11297" length="7" line="277">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11280" length="16" line="277" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isDatabaseIntegrityOk:()Z@android.database.sqlite.SQLiteDatabase"
+ sig="boolean isDatabaseIntegrityOk()"
+ line="280"
+ startpos="11333"
+ endpos="11354"
+>
+	<newexpr line="281" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11377" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11373" length="29" line="281">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11394" length="7" line="281">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11377" length="16" line="281" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.database.sqlite.SQLiteDatabase"
+ sig="String toString()"
+ line="284"
+ startpos="11439"
+ endpos="11447"
+>
+	<type  start="11422" length="16" line="284" chordsig="java.lang.String"/>
+	<newexpr line="285" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11470" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11466" length="29" line="285">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11487" length="7" line="285">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11470" length="16" line="285" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,788 @@
+<root>
+<class chordsig="javax.xml.datatype.DatatypeFactory" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@javax.xml.datatype.DatatypeFactory"
+ sig="DatatypeFactory()"
+ line="4"
+ startpos="79"
+ endpos="94"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="109" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="105" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="126" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="109" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newInstance:()Ljavax/xml/datatype/DatatypeFactory;@javax.xml.datatype.DatatypeFactory"
+ sig="DatatypeFactory newInstance()"
+ line="5"
+ startpos="188"
+ endpos="199"
+>
+	<type  start="153" length="34" line="5" chordsig="javax.xml.datatype.DatatypeFactory"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="271" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="267" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="288" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="271" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newInstance:(Ljava/lang/String;Ljava/lang/ClassLoader;)Ljavax/xml/datatype/DatatypeFactory;@javax.xml.datatype.DatatypeFactory"
+ sig="DatatypeFactory newInstance(String,ClassLoader)"
+ line="6"
+ startpos="350"
+ endpos="361"
+>
+	<marker line="-1" type="param">
+		<operand  start="379" length="16" line="6">
+			<expr><![CDATA[factoryClassName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="419" length="11" line="6">
+			<expr><![CDATA[classLoader]]></expr>
+		</operand>
+	</marker>
+	<type  start="315" length="34" line="6" chordsig="javax.xml.datatype.DatatypeFactory"/>
+	<type  start="362" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="397" length="21" line="6" chordsig="java.lang.ClassLoader"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="501" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="497" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="518" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="501" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newDuration:(Ljava/lang/String;)Ljavax/xml/datatype/Duration;@javax.xml.datatype.DatatypeFactory"
+ sig="Duration newDuration(String)"
+ line="7"
+ startpos="575"
+ endpos="586"
+>
+	<marker line="-1" type="param">
+		<operand  start="604" length="21" line="7">
+			<expr><![CDATA[lexicalRepresentation]]></expr>
+		</operand>
+	</marker>
+	<type  start="547" length="27" line="7" chordsig="javax.xml.datatype.Duration"/>
+	<type  start="587" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="newDuration:(J)Ljavax/xml/datatype/Duration;@javax.xml.datatype.DatatypeFactory"
+ sig="Duration newDuration(long)"
+ line="8"
+ startpos="673"
+ endpos="684"
+>
+	<marker line="-1" type="param">
+		<operand  start="690" length="22" line="8">
+			<expr><![CDATA[durationInMilliSeconds]]></expr>
+		</operand>
+	</marker>
+	<type  start="645" length="27" line="8" chordsig="javax.xml.datatype.Duration"/>
+</method>
+<method
+ chordsig="newDuration:(ZLjava/math/BigInteger;Ljava/math/BigInteger;Ljava/math/BigInteger;Ljava/math/BigInteger;Ljava/math/BigInteger;Ljava/math/BigDecimal;)Ljavax/xml/datatype/Duration;@javax.xml.datatype.DatatypeFactory"
+ sig="Duration newDuration(boolean,BigInteger,BigInteger,BigInteger,BigInteger,BigInteger,BigDecimal)"
+ line="9"
+ startpos="760"
+ endpos="771"
+>
+	<marker line="-1" type="param">
+		<operand  start="780" length="10" line="9">
+			<expr><![CDATA[isPositive]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="813" length="5" line="9">
+			<expr><![CDATA[years]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="841" length="6" line="9">
+			<expr><![CDATA[months]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="870" length="4" line="9">
+			<expr><![CDATA[days]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="897" length="5" line="9">
+			<expr><![CDATA[hours]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="925" length="7" line="9">
+			<expr><![CDATA[minutes]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="955" length="7" line="9">
+			<expr><![CDATA[seconds]]></expr>
+		</operand>
+	</marker>
+	<type  start="732" length="27" line="9" chordsig="javax.xml.datatype.Duration"/>
+	<type  start="792" length="20" line="9" chordsig="java.math.BigInteger"/>
+	<type  start="820" length="20" line="9" chordsig="java.math.BigInteger"/>
+	<type  start="849" length="20" line="9" chordsig="java.math.BigInteger"/>
+	<type  start="876" length="20" line="9" chordsig="java.math.BigInteger"/>
+	<type  start="904" length="20" line="9" chordsig="java.math.BigInteger"/>
+	<type  start="934" length="20" line="9" chordsig="java.math.BigDecimal"/>
+</method>
+<method
+ chordsig="newDuration:(ZIIIIII)Ljavax/xml/datatype/Duration;@javax.xml.datatype.DatatypeFactory"
+ sig="Duration newDuration(boolean,int,int,int,int,int,int)"
+ line="10"
+ startpos="1001"
+ endpos="1012"
+>
+	<marker line="-1" type="param">
+		<operand  start="1021" length="10" line="10">
+			<expr><![CDATA[isPositive]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1037" length="5" line="10">
+			<expr><![CDATA[years]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1048" length="6" line="10">
+			<expr><![CDATA[months]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1060" length="4" line="10">
+			<expr><![CDATA[days]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1070" length="5" line="10">
+			<expr><![CDATA[hours]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1081" length="7" line="10">
+			<expr><![CDATA[minutes]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1094" length="7" line="10">
+			<expr><![CDATA[seconds]]></expr>
+		</operand>
+	</marker>
+	<type  start="973" length="27" line="10" chordsig="javax.xml.datatype.Duration"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1115" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1111" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1132" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1115" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newDurationDayTime:(Ljava/lang/String;)Ljavax/xml/datatype/Duration;@javax.xml.datatype.DatatypeFactory"
+ sig="Duration newDurationDayTime(String)"
+ line="11"
+ startpos="1180"
+ endpos="1198"
+>
+	<marker line="-1" type="param">
+		<operand  start="1216" length="21" line="11">
+			<expr><![CDATA[lexicalRepresentation]]></expr>
+		</operand>
+	</marker>
+	<type  start="1152" length="27" line="11" chordsig="javax.xml.datatype.Duration"/>
+	<type  start="1199" length="16" line="11" chordsig="java.lang.String"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1251" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1247" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1268" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1251" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newDurationDayTime:(J)Ljavax/xml/datatype/Duration;@javax.xml.datatype.DatatypeFactory"
+ sig="Duration newDurationDayTime(long)"
+ line="12"
+ startpos="1316"
+ endpos="1334"
+>
+	<marker line="-1" type="param">
+		<operand  start="1340" length="22" line="12">
+			<expr><![CDATA[durationInMilliseconds]]></expr>
+		</operand>
+	</marker>
+	<type  start="1288" length="27" line="12" chordsig="javax.xml.datatype.Duration"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1376" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1372" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1393" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1376" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newDurationDayTime:(ZLjava/math/BigInteger;Ljava/math/BigInteger;Ljava/math/BigInteger;Ljava/math/BigInteger;)Ljavax/xml/datatype/Duration;@javax.xml.datatype.DatatypeFactory"
+ sig="Duration newDurationDayTime(boolean,BigInteger,BigInteger,BigInteger,BigInteger)"
+ line="13"
+ startpos="1441"
+ endpos="1459"
+>
+	<marker line="-1" type="param">
+		<operand  start="1468" length="10" line="13">
+			<expr><![CDATA[isPositive]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1501" length="3" line="13">
+			<expr><![CDATA[day]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1527" length="4" line="13">
+			<expr><![CDATA[hour]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1554" length="6" line="13">
+			<expr><![CDATA[minute]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1583" length="6" line="13">
+			<expr><![CDATA[second]]></expr>
+		</operand>
+	</marker>
+	<type  start="1413" length="27" line="13" chordsig="javax.xml.datatype.Duration"/>
+	<type  start="1480" length="20" line="13" chordsig="java.math.BigInteger"/>
+	<type  start="1506" length="20" line="13" chordsig="java.math.BigInteger"/>
+	<type  start="1533" length="20" line="13" chordsig="java.math.BigInteger"/>
+	<type  start="1562" length="20" line="13" chordsig="java.math.BigInteger"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1603" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1599" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1620" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1603" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newDurationDayTime:(ZIIII)Ljavax/xml/datatype/Duration;@javax.xml.datatype.DatatypeFactory"
+ sig="Duration newDurationDayTime(boolean,int,int,int,int)"
+ line="14"
+ startpos="1668"
+ endpos="1686"
+>
+	<marker line="-1" type="param">
+		<operand  start="1695" length="10" line="14">
+			<expr><![CDATA[isPositive]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1711" length="3" line="14">
+			<expr><![CDATA[day]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1720" length="4" line="14">
+			<expr><![CDATA[hour]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1730" length="6" line="14">
+			<expr><![CDATA[minute]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1742" length="6" line="14">
+			<expr><![CDATA[second]]></expr>
+		</operand>
+	</marker>
+	<type  start="1640" length="27" line="14" chordsig="javax.xml.datatype.Duration"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1762" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1758" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1779" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1762" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newDurationYearMonth:(Ljava/lang/String;)Ljavax/xml/datatype/Duration;@javax.xml.datatype.DatatypeFactory"
+ sig="Duration newDurationYearMonth(String)"
+ line="15"
+ startpos="1827"
+ endpos="1847"
+>
+	<marker line="-1" type="param">
+		<operand  start="1865" length="21" line="15">
+			<expr><![CDATA[lexicalRepresentation]]></expr>
+		</operand>
+	</marker>
+	<type  start="1799" length="27" line="15" chordsig="javax.xml.datatype.Duration"/>
+	<type  start="1848" length="16" line="15" chordsig="java.lang.String"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1900" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1896" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1917" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1900" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newDurationYearMonth:(J)Ljavax/xml/datatype/Duration;@javax.xml.datatype.DatatypeFactory"
+ sig="Duration newDurationYearMonth(long)"
+ line="16"
+ startpos="1965"
+ endpos="1985"
+>
+	<marker line="-1" type="param">
+		<operand  start="1991" length="22" line="16">
+			<expr><![CDATA[durationInMilliseconds]]></expr>
+		</operand>
+	</marker>
+	<type  start="1937" length="27" line="16" chordsig="javax.xml.datatype.Duration"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2027" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2023" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2044" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2027" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newDurationYearMonth:(ZLjava/math/BigInteger;Ljava/math/BigInteger;)Ljavax/xml/datatype/Duration;@javax.xml.datatype.DatatypeFactory"
+ sig="Duration newDurationYearMonth(boolean,BigInteger,BigInteger)"
+ line="17"
+ startpos="2092"
+ endpos="2112"
+>
+	<marker line="-1" type="param">
+		<operand  start="2121" length="10" line="17">
+			<expr><![CDATA[isPositive]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2154" length="4" line="17">
+			<expr><![CDATA[year]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2181" length="5" line="17">
+			<expr><![CDATA[month]]></expr>
+		</operand>
+	</marker>
+	<type  start="2064" length="27" line="17" chordsig="javax.xml.datatype.Duration"/>
+	<type  start="2133" length="20" line="17" chordsig="java.math.BigInteger"/>
+	<type  start="2160" length="20" line="17" chordsig="java.math.BigInteger"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2200" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2196" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2217" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2200" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newDurationYearMonth:(ZII)Ljavax/xml/datatype/Duration;@javax.xml.datatype.DatatypeFactory"
+ sig="Duration newDurationYearMonth(boolean,int,int)"
+ line="18"
+ startpos="2265"
+ endpos="2285"
+>
+	<marker line="-1" type="param">
+		<operand  start="2294" length="10" line="18">
+			<expr><![CDATA[isPositive]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2310" length="4" line="18">
+			<expr><![CDATA[year]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2320" length="5" line="18">
+			<expr><![CDATA[month]]></expr>
+		</operand>
+	</marker>
+	<type  start="2237" length="27" line="18" chordsig="javax.xml.datatype.Duration"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2339" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2335" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2356" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2339" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newXMLGregorianCalendar:()Ljavax/xml/datatype/XMLGregorianCalendar;@javax.xml.datatype.DatatypeFactory"
+ sig="XMLGregorianCalendar newXMLGregorianCalendar()"
+ line="19"
+ startpos="2425"
+ endpos="2448"
+>
+	<type  start="2385" length="39" line="19" chordsig="javax.xml.datatype.XMLGregorianCalendar"/>
+</method>
+<method
+ chordsig="newXMLGregorianCalendar:(Ljava/lang/String;)Ljavax/xml/datatype/XMLGregorianCalendar;@javax.xml.datatype.DatatypeFactory"
+ sig="XMLGregorianCalendar newXMLGregorianCalendar(String)"
+ line="20"
+ startpos="2509"
+ endpos="2532"
+>
+	<marker line="-1" type="param">
+		<operand  start="2550" length="21" line="20">
+			<expr><![CDATA[lexicalRepresentation]]></expr>
+		</operand>
+	</marker>
+	<type  start="2469" length="39" line="20" chordsig="javax.xml.datatype.XMLGregorianCalendar"/>
+	<type  start="2533" length="16" line="20" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="newXMLGregorianCalendar:(Ljava/util/GregorianCalendar;)Ljavax/xml/datatype/XMLGregorianCalendar;@javax.xml.datatype.DatatypeFactory"
+ sig="XMLGregorianCalendar newXMLGregorianCalendar(GregorianCalendar)"
+ line="21"
+ startpos="2631"
+ endpos="2654"
+>
+	<marker line="-1" type="param">
+		<operand  start="2683" length="3" line="21">
+			<expr><![CDATA[cal]]></expr>
+		</operand>
+	</marker>
+	<type  start="2591" length="39" line="21" chordsig="javax.xml.datatype.XMLGregorianCalendar"/>
+	<type  start="2655" length="27" line="21" chordsig="java.util.GregorianCalendar"/>
+</method>
+<method
+ chordsig="newXMLGregorianCalendar:(Ljava/math/BigInteger;IIIIILjava/math/BigDecimal;I)Ljavax/xml/datatype/XMLGregorianCalendar;@javax.xml.datatype.DatatypeFactory"
+ sig="XMLGregorianCalendar newXMLGregorianCalendar(BigInteger,int,int,int,int,int,BigDecimal,int)"
+ line="22"
+ startpos="2746"
+ endpos="2769"
+>
+	<marker line="-1" type="param">
+		<operand  start="2791" length="4" line="22">
+			<expr><![CDATA[year]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2801" length="5" line="22">
+			<expr><![CDATA[month]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2812" length="3" line="22">
+			<expr><![CDATA[day]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2821" length="4" line="22">
+			<expr><![CDATA[hour]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2831" length="6" line="22">
+			<expr><![CDATA[minute]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2843" length="6" line="22">
+			<expr><![CDATA[second]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2872" length="16" line="22">
+			<expr><![CDATA[fractionalSecond]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2894" length="8" line="22">
+			<expr><![CDATA[timezone]]></expr>
+		</operand>
+	</marker>
+	<type  start="2706" length="39" line="22" chordsig="javax.xml.datatype.XMLGregorianCalendar"/>
+	<type  start="2770" length="20" line="22" chordsig="java.math.BigInteger"/>
+	<type  start="2851" length="20" line="22" chordsig="java.math.BigDecimal"/>
+</method>
+<method
+ chordsig="newXMLGregorianCalendar:(IIIIIIII)Ljavax/xml/datatype/XMLGregorianCalendar;@javax.xml.datatype.DatatypeFactory"
+ sig="XMLGregorianCalendar newXMLGregorianCalendar(int,int,int,int,int,int,int,int)"
+ line="23"
+ startpos="2953"
+ endpos="2976"
+>
+	<marker line="-1" type="param">
+		<operand  start="2981" length="4" line="23">
+			<expr><![CDATA[year]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2991" length="5" line="23">
+			<expr><![CDATA[month]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3002" length="3" line="23">
+			<expr><![CDATA[day]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3011" length="4" line="23">
+			<expr><![CDATA[hour]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3021" length="6" line="23">
+			<expr><![CDATA[minute]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3033" length="6" line="23">
+			<expr><![CDATA[second]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3045" length="11" line="23">
+			<expr><![CDATA[millisecond]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3062" length="8" line="23">
+			<expr><![CDATA[timezone]]></expr>
+		</operand>
+	</marker>
+	<type  start="2913" length="39" line="23" chordsig="javax.xml.datatype.XMLGregorianCalendar"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3084" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3080" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3101" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3084" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newXMLGregorianCalendarDate:(IIII)Ljavax/xml/datatype/XMLGregorianCalendar;@javax.xml.datatype.DatatypeFactory"
+ sig="XMLGregorianCalendar newXMLGregorianCalendarDate(int,int,int,int)"
+ line="24"
+ startpos="3161"
+ endpos="3188"
+>
+	<marker line="-1" type="param">
+		<operand  start="3193" length="4" line="24">
+			<expr><![CDATA[year]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3203" length="5" line="24">
+			<expr><![CDATA[month]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3214" length="3" line="24">
+			<expr><![CDATA[day]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3223" length="8" line="24">
+			<expr><![CDATA[timezone]]></expr>
+		</operand>
+	</marker>
+	<type  start="3121" length="39" line="24" chordsig="javax.xml.datatype.XMLGregorianCalendar"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3245" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3241" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3262" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3245" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newXMLGregorianCalendarTime:(IIII)Ljavax/xml/datatype/XMLGregorianCalendar;@javax.xml.datatype.DatatypeFactory"
+ sig="XMLGregorianCalendar newXMLGregorianCalendarTime(int,int,int,int)"
+ line="25"
+ startpos="3322"
+ endpos="3349"
+>
+	<marker line="-1" type="param">
+		<operand  start="3354" length="5" line="25">
+			<expr><![CDATA[hours]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3365" length="7" line="25">
+			<expr><![CDATA[minutes]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3378" length="7" line="25">
+			<expr><![CDATA[seconds]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3391" length="8" line="25">
+			<expr><![CDATA[timezone]]></expr>
+		</operand>
+	</marker>
+	<type  start="3282" length="39" line="25" chordsig="javax.xml.datatype.XMLGregorianCalendar"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3413" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3409" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3430" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3413" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newXMLGregorianCalendarTime:(IIILjava/math/BigDecimal;I)Ljavax/xml/datatype/XMLGregorianCalendar;@javax.xml.datatype.DatatypeFactory"
+ sig="XMLGregorianCalendar newXMLGregorianCalendarTime(int,int,int,BigDecimal,int)"
+ line="26"
+ startpos="3490"
+ endpos="3517"
+>
+	<marker line="-1" type="param">
+		<operand  start="3522" length="5" line="26">
+			<expr><![CDATA[hours]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3533" length="7" line="26">
+			<expr><![CDATA[minutes]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3546" length="7" line="26">
+			<expr><![CDATA[seconds]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3576" length="16" line="26">
+			<expr><![CDATA[fractionalSecond]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3598" length="8" line="26">
+			<expr><![CDATA[timezone]]></expr>
+		</operand>
+	</marker>
+	<type  start="3450" length="39" line="26" chordsig="javax.xml.datatype.XMLGregorianCalendar"/>
+	<type  start="3555" length="20" line="26" chordsig="java.math.BigDecimal"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3620" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3616" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3637" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3620" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newXMLGregorianCalendarTime:(IIIII)Ljavax/xml/datatype/XMLGregorianCalendar;@javax.xml.datatype.DatatypeFactory"
+ sig="XMLGregorianCalendar newXMLGregorianCalendarTime(int,int,int,int,int)"
+ line="27"
+ startpos="3697"
+ endpos="3724"
+>
+	<marker line="-1" type="param">
+		<operand  start="3729" length="5" line="27">
+			<expr><![CDATA[hours]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3740" length="7" line="27">
+			<expr><![CDATA[minutes]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3753" length="7" line="27">
+			<expr><![CDATA[seconds]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3766" length="12" line="27">
+			<expr><![CDATA[milliseconds]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3784" length="8" line="27">
+			<expr><![CDATA[timezone]]></expr>
+		</operand>
+	</marker>
+	<type  start="3657" length="39" line="27" chordsig="javax.xml.datatype.XMLGregorianCalendar"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3806" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3802" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3823" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3806" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="3855" length="16" line="28" chordsig="java.lang.String"/>
+	<type  start="3957" length="16" line="29" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@javax.xml.datatype.DatatypeFactory"
+ line="30"
+>
+</method>
+</class>
+</root>

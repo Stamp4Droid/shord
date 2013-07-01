@@ -1,0 +1,15 @@
+<root>
+<class chordsig="java.security.interfaces.ECPublicKey" line="2">
+	<type  start="73" length="23" line="3" chordsig="java.security.PublicKey"/>
+	<type  start="98" length="30" line="3" chordsig="java.security.interfaces.ECKey"/>
+<method
+ chordsig="getW:()Ljava/security/spec/ECPoint;@java.security.interfaces.ECPublicKey"
+ sig="ECPoint getW()"
+ line="5"
+ startpos="175"
+ endpos="179"
+>
+	<type  start="148" length="26" line="5" chordsig="java.security.spec.ECPoint"/>
+</method>
+</class>
+</root>

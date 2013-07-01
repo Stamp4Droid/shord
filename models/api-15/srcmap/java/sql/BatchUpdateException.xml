@@ -1,0 +1,344 @@
+<root>
+<class chordsig="java.sql.BatchUpdateException" line="2">
+	<type  start="62" length="21" line="3" chordsig="java.sql.SQLException"/>
+	<type  start="97" length="20" line="4" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.sql.BatchUpdateException"
+ sig="BatchUpdateException()"
+ line="6"
+ startpos="128"
+ endpos="148"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="163" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="159" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="180" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="163" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Throwable;)V@java.sql.BatchUpdateException"
+ sig="BatchUpdateException(Throwable)"
+ line="7"
+ startpos="200"
+ endpos="220"
+>
+	<marker line="-1" type="param">
+		<operand  start="241" length="5" line="7">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="221" length="19" line="7" chordsig="java.lang.Throwable"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="260" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="256" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="277" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="260" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:([ILjava/lang/Throwable;)V@java.sql.BatchUpdateException"
+ sig="BatchUpdateException(int[],Throwable)"
+ line="8"
+ startpos="297"
+ endpos="317"
+>
+	<marker line="-1" type="param">
+		<operand  start="324" length="12" line="8">
+			<expr><![CDATA[updateCounts]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="358" length="5" line="8">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="338" length="19" line="8" chordsig="java.lang.Throwable"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="377" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="373" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="394" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="377" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;[ILjava/lang/Throwable;)V@java.sql.BatchUpdateException"
+ sig="BatchUpdateException(String,int[],Throwable)"
+ line="9"
+ startpos="414"
+ endpos="434"
+>
+	<marker line="-1" type="param">
+		<operand  start="452" length="6" line="9">
+			<expr><![CDATA[reason]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="466" length="12" line="9">
+			<expr><![CDATA[updateCounts]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="500" length="5" line="9">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="435" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="480" length="19" line="9" chordsig="java.lang.Throwable"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="519" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="515" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="536" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="519" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;[ILjava/lang/Throwable;)V@java.sql.BatchUpdateException"
+ sig="BatchUpdateException(String,String,int[],Throwable)"
+ line="10"
+ startpos="556"
+ endpos="576"
+>
+	<marker line="-1" type="param">
+		<operand  start="594" length="6" line="10">
+			<expr><![CDATA[reason]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="619" length="8" line="10">
+			<expr><![CDATA[SQLState]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="635" length="12" line="10">
+			<expr><![CDATA[updateCounts]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="669" length="5" line="10">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="577" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="602" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="649" length="19" line="10" chordsig="java.lang.Throwable"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="688" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="684" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="705" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="688" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;I[ILjava/lang/Throwable;)V@java.sql.BatchUpdateException"
+ sig="BatchUpdateException(String,String,int,int[],Throwable)"
+ line="11"
+ startpos="725"
+ endpos="745"
+>
+	<marker line="-1" type="param">
+		<operand  start="763" length="6" line="11">
+			<expr><![CDATA[reason]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="788" length="8" line="11">
+			<expr><![CDATA[SQLState]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="802" length="10" line="11">
+			<expr><![CDATA[vendorCode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="820" length="12" line="11">
+			<expr><![CDATA[updateCounts]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="854" length="5" line="11">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="746" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="771" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="834" length="19" line="11" chordsig="java.lang.Throwable"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="873" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="869" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="890" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="873" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:([I)V@java.sql.BatchUpdateException"
+ sig="BatchUpdateException(int[])"
+ line="12"
+ startpos="910"
+ endpos="930"
+>
+	<marker line="-1" type="param">
+		<operand  start="937" length="12" line="12">
+			<expr><![CDATA[updateCounts]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="963" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="959" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="980" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="963" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;[I)V@java.sql.BatchUpdateException"
+ sig="BatchUpdateException(String,int[])"
+ line="13"
+ startpos="1000"
+ endpos="1020"
+>
+	<marker line="-1" type="param">
+		<operand  start="1038" length="6" line="13">
+			<expr><![CDATA[reason]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1052" length="12" line="13">
+			<expr><![CDATA[updateCounts]]></expr>
+		</operand>
+	</marker>
+	<type  start="1021" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1078" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1074" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1095" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1078" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;[I)V@java.sql.BatchUpdateException"
+ sig="BatchUpdateException(String,String,int[])"
+ line="14"
+ startpos="1115"
+ endpos="1135"
+>
+	<marker line="-1" type="param">
+		<operand  start="1153" length="6" line="14">
+			<expr><![CDATA[reason]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1178" length="8" line="14">
+			<expr><![CDATA[SQLState]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1194" length="12" line="14">
+			<expr><![CDATA[updateCounts]]></expr>
+		</operand>
+	</marker>
+	<type  start="1136" length="16" line="14" chordsig="java.lang.String"/>
+	<type  start="1161" length="16" line="14" chordsig="java.lang.String"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1220" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1216" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1237" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1220" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;I[I)V@java.sql.BatchUpdateException"
+ sig="BatchUpdateException(String,String,int,int[])"
+ line="15"
+ startpos="1257"
+ endpos="1277"
+>
+	<marker line="-1" type="param">
+		<operand  start="1295" length="6" line="15">
+			<expr><![CDATA[reason]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1320" length="8" line="15">
+			<expr><![CDATA[SQLState]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1334" length="10" line="15">
+			<expr><![CDATA[vendorCode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1352" length="12" line="15">
+			<expr><![CDATA[updateCounts]]></expr>
+		</operand>
+	</marker>
+	<type  start="1278" length="16" line="15" chordsig="java.lang.String"/>
+	<type  start="1303" length="16" line="15" chordsig="java.lang.String"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1378" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1374" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1395" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1378" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getUpdateCounts:()[I@java.sql.BatchUpdateException"
+ sig="int[] getUpdateCounts()"
+ line="16"
+ startpos="1421"
+ endpos="1436"
+>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1451" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1447" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1468" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1451" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

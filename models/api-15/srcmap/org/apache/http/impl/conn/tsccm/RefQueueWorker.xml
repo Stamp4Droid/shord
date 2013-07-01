@@ -1,0 +1,93 @@
+<root>
+<class chordsig="org.apache.http.impl.conn.tsccm.RefQueueWorker" line="2">
+	<type  start="82" length="18" line="3" chordsig="java.lang.Runnable"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/ref/ReferenceQueue;Lorg/apache/http/impl/conn/tsccm/RefQueueHandler;)V@org.apache.http.impl.conn.tsccm.RefQueueWorker"
+ sig="RefQueueWorker(ReferenceQueue&lt;?&gt;,RefQueueHandler)"
+ line="5"
+ startpos="111"
+ endpos="125"
+>
+	<marker line="-1" type="param">
+		<operand  start="158" length="5" line="5">
+			<expr><![CDATA[queue]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="213" length="7" line="5">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="126" length="28" line="5" chordsig="java.lang.ref.ReferenceQueue"/>
+	<type  start="165" length="47" line="5" chordsig="org.apache.http.impl.conn.tsccm.RefQueueHandler"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="234" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="230" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="251" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="234" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="run:()V@org.apache.http.impl.conn.tsccm.RefQueueWorker"
+ sig="void run()"
+ line="6"
+ startpos="276"
+ endpos="279"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="294" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="290" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="311" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="294" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="shutdown:()V@org.apache.http.impl.conn.tsccm.RefQueueWorker"
+ sig="void shutdown()"
+ line="7"
+ startpos="336"
+ endpos="344"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="359" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="355" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="376" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="359" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@org.apache.http.impl.conn.tsccm.RefQueueWorker"
+ sig="String toString()"
+ line="8"
+ startpos="413"
+ endpos="421"
+>
+	<type  start="396" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="436" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="432" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="453" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="436" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="481" length="28" line="9" chordsig="java.lang.ref.ReferenceQueue"/>
+	<type  start="539" length="47" line="10" chordsig="org.apache.http.impl.conn.tsccm.RefQueueHandler"/>
+	<type  start="618" length="16" line="11" chordsig="java.lang.Thread"/>
+</class>
+</root>

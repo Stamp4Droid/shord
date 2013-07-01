@@ -1,0 +1,47 @@
+<root>
+<class chordsig="android.app.AliasActivity" line="2">
+	<type  start="58" length="20" line="3" chordsig="android.app.Activity"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.app.AliasActivity"
+ sig="AliasActivity()"
+ line="5"
+ startpos="89"
+ endpos="102"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="117" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="113" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="134" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="117" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onCreate:(Landroid/os/Bundle;)V@android.app.AliasActivity"
+ sig="void onCreate(Bundle)"
+ line="6"
+ startpos="162"
+ endpos="170"
+>
+	<marker line="-1" type="param">
+		<operand  start="189" length="18" line="6">
+			<expr><![CDATA[savedInstanceState]]></expr>
+		</operand>
+	</marker>
+	<type  start="171" length="17" line="6" chordsig="android.os.Bundle"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="221" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="217" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="238" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="221" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

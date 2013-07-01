@@ -1,0 +1,30 @@
+<root>
+<class chordsig="org.apache.http.protocol.HttpExpectationVerifier" line="2">
+<method
+ chordsig="verify:(Lorg/apache/http/HttpRequest;Lorg/apache/http/HttpResponse;Lorg/apache/http/protocol/HttpContext;)V@org.apache.http.protocol.HttpExpectationVerifier"
+ sig="void verify(HttpRequest,HttpResponse,HttpContext)"
+ line="4"
+ startpos="99"
+ endpos="105"
+>
+	<marker line="-1" type="param">
+		<operand  start="134" length="7" line="4">
+			<expr><![CDATA[request]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="172" length="8" line="4">
+			<expr><![CDATA[response]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="219" length="7" line="4">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="106" length="27" line="4" chordsig="org.apache.http.HttpRequest"/>
+	<type  start="143" length="28" line="4" chordsig="org.apache.http.HttpResponse"/>
+	<type  start="182" length="36" line="4" chordsig="org.apache.http.protocol.HttpContext"/>
+</method>
+</class>
+</root>

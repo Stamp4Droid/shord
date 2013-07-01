@@ -1,0 +1,38 @@
+<root>
+<class chordsig="java.lang.reflect.Member" line="2">
+<method
+ chordsig="getDeclaringClass:()Ljava/lang/Class;@java.lang.reflect.Member"
+ sig="Class&lt;?&gt; getDeclaringClass()"
+ line="4"
+ startpos="89"
+ endpos="106"
+>
+	<type  start="70" length="15" line="4" chordsig="java.lang.Class"/>
+</method>
+<method
+ chordsig="getModifiers:()I@java.lang.reflect.Member"
+ sig="int getModifiers()"
+ line="5"
+ startpos="131"
+ endpos="143"
+>
+</method>
+<method
+ chordsig="getName:()Ljava/lang/String;@java.lang.reflect.Member"
+ sig="String getName()"
+ line="6"
+ startpos="181"
+ endpos="188"
+>
+	<type  start="164" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="isSynthetic:()Z@java.lang.reflect.Member"
+ sig="boolean isSynthetic()"
+ line="7"
+ startpos="217"
+ endpos="228"
+>
+</method>
+</class>
+</root>

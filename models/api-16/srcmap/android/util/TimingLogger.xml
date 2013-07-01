@@ -1,0 +1,124 @@
+<root>
+<class chordsig="android.util.TimingLogger" line="2">
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;)V@android.util.TimingLogger"
+ sig="TimingLogger(String,String)"
+ line="4"
+ startpos="58"
+ endpos="70"
+>
+	<marker line="-1" type="param">
+		<operand  start="88" length="3" line="4">
+			<expr><![CDATA[tag]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="110" length="5" line="4">
+			<expr><![CDATA[label]]></expr>
+		</operand>
+	</marker>
+	<type  start="71" length="16" line="4" chordsig="java.lang.String"/>
+	<type  start="93" length="16" line="4" chordsig="java.lang.String"/>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="129" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="125" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="146" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="129" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="reset:(Ljava/lang/String;Ljava/lang/String;)V@android.util.TimingLogger"
+ sig="void reset(String,String)"
+ line="5"
+ startpos="171"
+ endpos="176"
+>
+	<marker line="-1" type="param">
+		<operand  start="194" length="3" line="5">
+			<expr><![CDATA[tag]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="216" length="5" line="5">
+			<expr><![CDATA[label]]></expr>
+		</operand>
+	</marker>
+	<type  start="177" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="199" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="235" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="231" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="252" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="235" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="reset:()V@android.util.TimingLogger"
+ sig="void reset()"
+ line="6"
+ startpos="277"
+ endpos="282"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="297" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="293" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="314" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="297" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addSplit:(Ljava/lang/String;)V@android.util.TimingLogger"
+ sig="void addSplit(String)"
+ line="7"
+ startpos="339"
+ endpos="347"
+>
+	<marker line="-1" type="param">
+		<operand  start="365" length="10" line="7">
+			<expr><![CDATA[splitLabel]]></expr>
+		</operand>
+	</marker>
+	<type  start="348" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="389" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="385" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="406" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="389" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dumpToLog:()V@android.util.TimingLogger"
+ sig="void dumpToLog()"
+ line="8"
+ startpos="431"
+ endpos="440"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="455" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="451" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="472" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="455" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

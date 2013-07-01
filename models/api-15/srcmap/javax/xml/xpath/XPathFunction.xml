@@ -1,0 +1,19 @@
+<root>
+<class chordsig="javax.xml.xpath.XPathFunction" line="2">
+<method
+ chordsig="evaluate:(Ljava/util/List;)Ljava/lang/Object;@javax.xml.xpath.XPathFunction"
+ sig="Object evaluate(List)"
+ line="4"
+ startpos="92"
+ endpos="100"
+>
+	<marker line="-1" type="param">
+		<operand  start="116" length="4" line="4">
+			<expr><![CDATA[args]]></expr>
+		</operand>
+	</marker>
+	<type  start="75" length="16" line="4" chordsig="java.lang.Object"/>
+	<type  start="101" length="14" line="4" chordsig="java.util.List"/>
+</method>
+</class>
+</root>

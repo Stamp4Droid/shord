@@ -1,0 +1,253 @@
+<root>
+<class chordsig="android.media.audiofx.BassBoost" line="2">
+	<type  start="64" length="33" line="3" chordsig="android.media.audiofx.AudioEffect"/>
+<class chordsig="android.media.audiofx.BassBoost$OnParameterChangeListener" line="5">
+<method
+ chordsig="onParameterChange:(Landroid/media/audiofx/BassBoost;IIS)V@android.media.audiofx.BassBoost$OnParameterChangeListener"
+ sig="void onParameterChange(BassBoost,int,int,short)"
+ line="7"
+ startpos="174"
+ endpos="191"
+>
+	<marker line="-1" type="param">
+		<operand  start="224" length="6" line="7">
+			<expr><![CDATA[effect]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="236" length="6" line="7">
+			<expr><![CDATA[status]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="248" length="5" line="7">
+			<expr><![CDATA[param]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="261" length="5" line="7">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="192" length="31" line="7" chordsig="android.media.audiofx.BassBoost"/>
+</method>
+</class>
+<class chordsig="android.media.audiofx.BassBoost$Settings" line="9">
+<method
+ chordsig="&lt;init&gt;:()V@android.media.audiofx.BassBoost$Settings"
+ sig="Settings()"
+ line="11"
+ startpos="310"
+ endpos="318"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="333" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="329" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="350" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="333" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.media.audiofx.BassBoost$Settings"
+ sig="Settings(String)"
+ line="12"
+ startpos="370"
+ endpos="378"
+>
+	<marker line="-1" type="param">
+		<operand  start="396" length="8" line="12">
+			<expr><![CDATA[settings]]></expr>
+		</operand>
+	</marker>
+	<type  start="379" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="418" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="414" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="435" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="418" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.media.audiofx.BassBoost$Settings"
+ sig="String toString()"
+ line="13"
+ startpos="472"
+ endpos="480"
+>
+	<type  start="455" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="495" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="491" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="512" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="495" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(II)V@android.media.audiofx.BassBoost"
+ sig="BassBoost(int,int)"
+ line="16"
+ startpos="557"
+ endpos="566"
+>
+	<marker line="-1" type="param">
+		<operand  start="571" length="8" line="16">
+			<expr><![CDATA[priority]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="585" length="12" line="16">
+			<expr><![CDATA[audioSession]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="755" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="751" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="772" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="755" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getStrengthSupported:()Z@android.media.audiofx.BassBoost"
+ sig="boolean getStrengthSupported()"
+ line="17"
+ startpos="800"
+ endpos="820"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="835" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="831" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="852" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="835" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setStrength:(S)V@android.media.audiofx.BassBoost"
+ sig="void setStrength(short)"
+ line="18"
+ startpos="877"
+ endpos="888"
+>
+	<marker line="-1" type="param">
+		<operand  start="895" length="8" line="18">
+			<expr><![CDATA[strength]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1033" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1029" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1050" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1033" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRoundedStrength:()S@android.media.audiofx.BassBoost"
+ sig="short getRoundedStrength()"
+ line="19"
+ startpos="1076"
+ endpos="1094"
+>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1225" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1221" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1242" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1225" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setParameterListener:(Landroid/media/audiofx/BassBoost$OnParameterChangeListener;)V@android.media.audiofx.BassBoost"
+ sig="void setParameterListener(OnParameterChangeListener)"
+ line="20"
+ startpos="1267"
+ endpos="1287"
+>
+	<marker line="-1" type="param">
+		<operand  start="1346" length="8" line="20">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1288" length="57" line="20" chordsig="android.media.audiofx.BassBoost$OnParameterChangeListener"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1368" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1364" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1385" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1368" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getProperties:()Landroid/media/audiofx/BassBoost$Settings;@android.media.audiofx.BassBoost"
+ sig="Settings getProperties()"
+ line="21"
+ startpos="1446"
+ endpos="1459"
+>
+	<type  start="1405" length="40" line="21" chordsig="android.media.audiofx.BassBoost$Settings"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1590" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1586" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1607" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1590" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setProperties:(Landroid/media/audiofx/BassBoost$Settings;)V@android.media.audiofx.BassBoost"
+ sig="void setProperties(Settings)"
+ line="22"
+ startpos="1632"
+ endpos="1645"
+>
+	<marker line="-1" type="param">
+		<operand  start="1687" length="8" line="22">
+			<expr><![CDATA[settings]]></expr>
+		</operand>
+	</marker>
+	<type  start="1646" length="40" line="22" chordsig="android.media.audiofx.BassBoost$Settings"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1825" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1821" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1842" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1825" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

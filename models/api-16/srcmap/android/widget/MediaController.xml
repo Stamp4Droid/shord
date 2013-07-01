@@ -1,0 +1,497 @@
+<root>
+<class chordsig="android.widget.MediaController" line="2">
+	<type  start="63" length="26" line="3" chordsig="android.widget.FrameLayout"/>
+<class chordsig="android.widget.MediaController$MediaPlayerControl" line="5">
+<method
+ chordsig="start:()V@android.widget.MediaController$MediaPlayerControl"
+ sig="void start()"
+ line="7"
+ startpos="159"
+ endpos="164"
+>
+</method>
+<method
+ chordsig="pause:()V@android.widget.MediaController$MediaPlayerControl"
+ sig="void pause()"
+ line="8"
+ startpos="190"
+ endpos="195"
+>
+</method>
+<method
+ chordsig="getDuration:()I@android.widget.MediaController$MediaPlayerControl"
+ sig="int getDuration()"
+ line="9"
+ startpos="220"
+ endpos="231"
+>
+</method>
+<method
+ chordsig="getCurrentPosition:()I@android.widget.MediaController$MediaPlayerControl"
+ sig="int getCurrentPosition()"
+ line="10"
+ startpos="256"
+ endpos="274"
+>
+</method>
+<method
+ chordsig="seekTo:(I)V@android.widget.MediaController$MediaPlayerControl"
+ sig="void seekTo(int)"
+ line="11"
+ startpos="300"
+ endpos="306"
+>
+	<marker line="-1" type="param">
+		<operand  start="311" length="3" line="11">
+			<expr><![CDATA[pos]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="isPlaying:()Z@android.widget.MediaController$MediaPlayerControl"
+ sig="boolean isPlaying()"
+ line="12"
+ startpos="342"
+ endpos="351"
+>
+</method>
+<method
+ chordsig="getBufferPercentage:()I@android.widget.MediaController$MediaPlayerControl"
+ sig="int getBufferPercentage()"
+ line="13"
+ startpos="376"
+ endpos="395"
+>
+</method>
+<method
+ chordsig="canPause:()Z@android.widget.MediaController$MediaPlayerControl"
+ sig="boolean canPause()"
+ line="14"
+ startpos="424"
+ endpos="432"
+>
+</method>
+<method
+ chordsig="canSeekBackward:()Z@android.widget.MediaController$MediaPlayerControl"
+ sig="boolean canSeekBackward()"
+ line="15"
+ startpos="461"
+ endpos="476"
+>
+</method>
+<method
+ chordsig="canSeekForward:()Z@android.widget.MediaController$MediaPlayerControl"
+ sig="boolean canSeekForward()"
+ line="16"
+ startpos="505"
+ endpos="519"
+>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.widget.MediaController"
+ sig="MediaController(Context,AttributeSet)"
+ line="18"
+ startpos="533"
+ endpos="548"
+>
+	<marker line="-1" type="param">
+		<operand  start="573" length="7" line="18">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="608" length="5" line="18">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="549" length="23" line="18" chordsig="android.content.Context"/>
+	<type  start="582" length="25" line="18" chordsig="android.util.AttributeSet"/>
+	<type  start="624" length="23" line="18" chordsig="android.content.Context"/>
+	<type  start="654" length="25" line="18" chordsig="android.util.AttributeSet"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="699" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="695" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="716" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="699" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Z)V@android.widget.MediaController"
+ sig="MediaController(Context,boolean)"
+ line="19"
+ startpos="736"
+ endpos="751"
+>
+	<marker line="-1" type="param">
+		<operand  start="776" length="7" line="19">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="793" length="14" line="19">
+			<expr><![CDATA[useFastForward]]></expr>
+		</operand>
+	</marker>
+	<type  start="752" length="23" line="19" chordsig="android.content.Context"/>
+	<type  start="818" length="23" line="19" chordsig="android.content.Context"/>
+	<type  start="848" length="25" line="19" chordsig="android.util.AttributeSet"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="893" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="889" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="910" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="893" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.widget.MediaController"
+ sig="MediaController(Context)"
+ line="20"
+ startpos="930"
+ endpos="945"
+>
+	<marker line="-1" type="param">
+		<operand  start="970" length="7" line="20">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="946" length="23" line="20" chordsig="android.content.Context"/>
+	<type  start="988" length="23" line="20" chordsig="android.content.Context"/>
+	<type  start="1018" length="25" line="20" chordsig="android.util.AttributeSet"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1063" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1059" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1080" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1063" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onFinishInflate:()V@android.widget.MediaController"
+ sig="void onFinishInflate()"
+ line="21"
+ startpos="1105"
+ endpos="1120"
+>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1135" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1131" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1152" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1135" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMediaPlayer:(Landroid/widget/MediaController$MediaPlayerControl;)V@android.widget.MediaController"
+ sig="void setMediaPlayer(MediaPlayerControl)"
+ line="22"
+ startpos="1177"
+ endpos="1191"
+>
+	<marker line="-1" type="param">
+		<operand  start="1242" length="6" line="22">
+			<expr><![CDATA[player]]></expr>
+		</operand>
+	</marker>
+	<type  start="1192" length="49" line="22" chordsig="android.widget.MediaController$MediaPlayerControl"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1262" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1258" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1279" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1262" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setAnchorView:(Landroid/view/View;)V@android.widget.MediaController"
+ sig="void setAnchorView(View)"
+ line="23"
+ startpos="1304"
+ endpos="1317"
+>
+	<marker line="-1" type="param">
+		<operand  start="1336" length="4" line="23">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<type  start="1318" length="17" line="23" chordsig="android.view.View"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1354" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1350" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1371" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1354" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="show:()V@android.widget.MediaController"
+ sig="void show()"
+ line="24"
+ startpos="1396"
+ endpos="1400"
+>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1415" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1411" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1432" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1415" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="show:(I)V@android.widget.MediaController"
+ sig="void show(int)"
+ line="25"
+ startpos="1457"
+ endpos="1461"
+>
+	<marker line="-1" type="param">
+		<operand  start="1466" length="7" line="25">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1487" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1483" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1504" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1487" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isShowing:()Z@android.widget.MediaController"
+ sig="boolean isShowing()"
+ line="26"
+ startpos="1532"
+ endpos="1541"
+>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1556" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1552" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1573" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1556" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hide:()V@android.widget.MediaController"
+ sig="void hide()"
+ line="27"
+ startpos="1598"
+ endpos="1602"
+>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1617" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1613" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1634" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1617" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onTouchEvent:(Landroid/view/MotionEvent;)Z@android.widget.MediaController"
+ sig="boolean onTouchEvent(MotionEvent)"
+ line="28"
+ startpos="1662"
+ endpos="1674"
+>
+	<marker line="-1" type="param">
+		<operand  start="1700" length="5" line="28">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="1675" length="24" line="28" chordsig="android.view.MotionEvent"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1719" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1715" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1736" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1719" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onTrackballEvent:(Landroid/view/MotionEvent;)Z@android.widget.MediaController"
+ sig="boolean onTrackballEvent(MotionEvent)"
+ line="29"
+ startpos="1764"
+ endpos="1780"
+>
+	<marker line="-1" type="param">
+		<operand  start="1806" length="2" line="29">
+			<expr><![CDATA[ev]]></expr>
+		</operand>
+	</marker>
+	<type  start="1781" length="24" line="29" chordsig="android.view.MotionEvent"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1822" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1818" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1839" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1822" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dispatchKeyEvent:(Landroid/view/KeyEvent;)Z@android.widget.MediaController"
+ sig="boolean dispatchKeyEvent(KeyEvent)"
+ line="30"
+ startpos="1867"
+ endpos="1883"
+>
+	<marker line="-1" type="param">
+		<operand  start="1906" length="5" line="30">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="1884" length="21" line="30" chordsig="android.view.KeyEvent"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1925" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1921" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1942" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1925" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setEnabled:(Z)V@android.widget.MediaController"
+ sig="void setEnabled(boolean)"
+ line="31"
+ startpos="1967"
+ endpos="1977"
+>
+	<marker line="-1" type="param">
+		<operand  start="1986" length="7" line="31">
+			<expr><![CDATA[enabled]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2007" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2003" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2024" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2007" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityEvent:(Landroid/view/accessibility/AccessibilityEvent;)V@android.widget.MediaController"
+ sig="void onInitializeAccessibilityEvent(AccessibilityEvent)"
+ line="32"
+ startpos="2049"
+ endpos="2079"
+>
+	<marker line="-1" type="param">
+		<operand  start="2126" length="5" line="32">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="2080" length="45" line="32" chordsig="android.view.accessibility.AccessibilityEvent"/>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2145" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2141" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2162" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2145" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityNodeInfo:(Landroid/view/accessibility/AccessibilityNodeInfo;)V@android.widget.MediaController"
+ sig="void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo)"
+ line="33"
+ startpos="2187"
+ endpos="2220"
+>
+	<marker line="-1" type="param">
+		<operand  start="2270" length="4" line="33">
+			<expr><![CDATA[info]]></expr>
+		</operand>
+	</marker>
+	<type  start="2221" length="48" line="33" chordsig="android.view.accessibility.AccessibilityNodeInfo"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2288" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2284" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2305" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2288" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPrevNextListeners:(Landroid/view/View$OnClickListener;Landroid/view/View$OnClickListener;)V@android.widget.MediaController"
+ sig="void setPrevNextListeners(OnClickListener,OnClickListener)"
+ line="34"
+ startpos="2330"
+ endpos="2350"
+>
+	<marker line="-1" type="param">
+		<operand  start="2385" length="4" line="34">
+			<expr><![CDATA[next]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2425" length="4" line="34">
+			<expr><![CDATA[prev]]></expr>
+		</operand>
+	</marker>
+	<type  start="2351" length="33" line="34" chordsig="android.view.View$OnClickListener"/>
+	<type  start="2391" length="33" line="34" chordsig="android.view.View$OnClickListener"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2443" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2439" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2460" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2443" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

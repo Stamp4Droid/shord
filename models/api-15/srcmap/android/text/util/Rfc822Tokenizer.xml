@@ -1,0 +1,162 @@
+<root>
+<class chordsig="android.text.util.Rfc822Tokenizer" line="2">
+	<type  start="69" length="50" line="3" chordsig="android.widget.MultiAutoCompleteTextView$Tokenizer"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.text.util.Rfc822Tokenizer"
+ sig="Rfc822Tokenizer()"
+ line="5"
+ startpos="130"
+ endpos="145"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="160" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="156" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="177" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="160" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="tokenize:(Ljava/lang/CharSequence;Ljava/util/Collection;)V@android.text.util.Rfc822Tokenizer"
+ sig="void tokenize(CharSequence,Collection&lt;Rfc822Token&gt;)"
+ line="6"
+ startpos="209"
+ endpos="217"
+>
+	<marker line="-1" type="param">
+		<operand  start="241" length="4" line="6">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="299" length="3" line="6">
+			<expr><![CDATA[out]]></expr>
+		</operand>
+	</marker>
+	<type  start="218" length="22" line="6" chordsig="java.lang.CharSequence"/>
+	<type  start="247" length="20" line="6" chordsig="java.util.Collection"/>
+	<type  start="268" length="29" line="6" chordsig="android.text.util.Rfc822Token"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="316" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="312" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="333" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="316" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="tokenize:(Ljava/lang/CharSequence;)[Landroid/text/util/Rfc822Token;@android.text.util.Rfc822Tokenizer"
+ sig="Rfc822Token[] tokenize(CharSequence)"
+ line="7"
+ startpos="392"
+ endpos="400"
+>
+	<marker line="-1" type="param">
+		<operand  start="424" length="4" line="7">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="360" length="29" line="7" chordsig="android.text.util.Rfc822Token"/>
+	<type  start="401" length="22" line="7" chordsig="java.lang.CharSequence"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="442" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="438" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="459" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="442" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="findTokenStart:(Ljava/lang/CharSequence;I)I@android.text.util.Rfc822Tokenizer"
+ sig="int findTokenStart(CharSequence,int)"
+ line="8"
+ startpos="483"
+ endpos="497"
+>
+	<marker line="-1" type="param">
+		<operand  start="521" length="4" line="8">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="531" length="6" line="8">
+			<expr><![CDATA[cursor]]></expr>
+		</operand>
+	</marker>
+	<type  start="498" length="22" line="8" chordsig="java.lang.CharSequence"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="551" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="547" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="568" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="551" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="findTokenEnd:(Ljava/lang/CharSequence;I)I@android.text.util.Rfc822Tokenizer"
+ sig="int findTokenEnd(CharSequence,int)"
+ line="9"
+ startpos="592"
+ endpos="604"
+>
+	<marker line="-1" type="param">
+		<operand  start="628" length="4" line="9">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="638" length="6" line="9">
+			<expr><![CDATA[cursor]]></expr>
+		</operand>
+	</marker>
+	<type  start="605" length="22" line="9" chordsig="java.lang.CharSequence"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="658" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="654" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="675" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="658" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="terminateToken:(Ljava/lang/CharSequence;)Ljava/lang/CharSequence;@android.text.util.Rfc822Tokenizer"
+ sig="CharSequence terminateToken(CharSequence)"
+ line="10"
+ startpos="718"
+ endpos="732"
+>
+	<marker line="-1" type="param">
+		<operand  start="756" length="4" line="10">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="695" length="22" line="10" chordsig="java.lang.CharSequence"/>
+	<type  start="733" length="22" line="10" chordsig="java.lang.CharSequence"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="774" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="770" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="791" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="774" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

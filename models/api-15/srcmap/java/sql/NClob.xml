@@ -1,0 +1,5 @@
+<root>
+<class chordsig="java.sql.NClob" line="2">
+	<type  start="51" length="13" line="3" chordsig="java.sql.Clob"/>
+</class>
+</root>

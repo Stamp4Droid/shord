@@ -1,0 +1,451 @@
+<root>
+<class chordsig="android.view.Menu" line="2">
+<method
+ chordsig="add:(Ljava/lang/CharSequence;)Landroid/view/MenuItem;@android.view.Menu"
+ sig="MenuItem add(CharSequence)"
+ line="4"
+ startpos="85"
+ endpos="88"
+>
+	<marker line="-1" type="param">
+		<operand  start="112" length="5" line="4">
+			<expr><![CDATA[title]]></expr>
+		</operand>
+	</marker>
+	<type  start="63" length="21" line="4" chordsig="android.view.MenuItem"/>
+	<type  start="89" length="22" line="4" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="add:(I)Landroid/view/MenuItem;@android.view.Menu"
+ sig="MenuItem add(int)"
+ line="5"
+ startpos="159"
+ endpos="162"
+>
+	<marker line="-1" type="param">
+		<operand  start="167" length="8" line="5">
+			<expr><![CDATA[titleRes]]></expr>
+		</operand>
+	</marker>
+	<type  start="137" length="21" line="5" chordsig="android.view.MenuItem"/>
+</method>
+<method
+ chordsig="add:(IIILjava/lang/CharSequence;)Landroid/view/MenuItem;@android.view.Menu"
+ sig="MenuItem add(int,int,int,CharSequence)"
+ line="6"
+ startpos="217"
+ endpos="220"
+>
+	<marker line="-1" type="param">
+		<operand  start="225" length="7" line="6">
+			<expr><![CDATA[groupId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="238" length="6" line="6">
+			<expr><![CDATA[itemId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="250" length="5" line="6">
+			<expr><![CDATA[order]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="280" length="5" line="6">
+			<expr><![CDATA[title]]></expr>
+		</operand>
+	</marker>
+	<type  start="195" length="21" line="6" chordsig="android.view.MenuItem"/>
+	<type  start="257" length="22" line="6" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="add:(IIII)Landroid/view/MenuItem;@android.view.Menu"
+ sig="MenuItem add(int,int,int,int)"
+ line="7"
+ startpos="327"
+ endpos="330"
+>
+	<marker line="-1" type="param">
+		<operand  start="335" length="7" line="7">
+			<expr><![CDATA[groupId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="348" length="6" line="7">
+			<expr><![CDATA[itemId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="360" length="5" line="7">
+			<expr><![CDATA[order]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="371" length="8" line="7">
+			<expr><![CDATA[titleRes]]></expr>
+		</operand>
+	</marker>
+	<type  start="305" length="21" line="7" chordsig="android.view.MenuItem"/>
+</method>
+<method
+ chordsig="addSubMenu:(Ljava/lang/CharSequence;)Landroid/view/SubMenu;@android.view.Menu"
+ sig="SubMenu addSubMenu(CharSequence)"
+ line="8"
+ startpos="420"
+ endpos="430"
+>
+	<marker line="-1" type="param">
+		<operand  start="454" length="5" line="8">
+			<expr><![CDATA[title]]></expr>
+		</operand>
+	</marker>
+	<type  start="399" length="20" line="8" chordsig="android.view.SubMenu"/>
+	<type  start="431" length="22" line="8" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="addSubMenu:(I)Landroid/view/SubMenu;@android.view.Menu"
+ sig="SubMenu addSubMenu(int)"
+ line="9"
+ startpos="500"
+ endpos="510"
+>
+	<marker line="-1" type="param">
+		<operand  start="515" length="8" line="9">
+			<expr><![CDATA[titleRes]]></expr>
+		</operand>
+	</marker>
+	<type  start="479" length="20" line="9" chordsig="android.view.SubMenu"/>
+</method>
+<method
+ chordsig="addSubMenu:(IIILjava/lang/CharSequence;)Landroid/view/SubMenu;@android.view.Menu"
+ sig="SubMenu addSubMenu(int,int,int,CharSequence)"
+ line="10"
+ startpos="564"
+ endpos="574"
+>
+	<marker line="-1" type="param">
+		<operand  start="579" length="7" line="10">
+			<expr><![CDATA[groupId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="592" length="6" line="10">
+			<expr><![CDATA[itemId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="604" length="5" line="10">
+			<expr><![CDATA[order]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="634" length="5" line="10">
+			<expr><![CDATA[title]]></expr>
+		</operand>
+	</marker>
+	<type  start="543" length="20" line="10" chordsig="android.view.SubMenu"/>
+	<type  start="611" length="22" line="10" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="addSubMenu:(IIII)Landroid/view/SubMenu;@android.view.Menu"
+ sig="SubMenu addSubMenu(int,int,int,int)"
+ line="11"
+ startpos="680"
+ endpos="690"
+>
+	<marker line="-1" type="param">
+		<operand  start="695" length="7" line="11">
+			<expr><![CDATA[groupId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="708" length="6" line="11">
+			<expr><![CDATA[itemId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="720" length="5" line="11">
+			<expr><![CDATA[order]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="731" length="8" line="11">
+			<expr><![CDATA[titleRes]]></expr>
+		</operand>
+	</marker>
+	<type  start="659" length="20" line="11" chordsig="android.view.SubMenu"/>
+</method>
+<method
+ chordsig="addIntentOptions:(IIILandroid/content/ComponentName;[Landroid/content/Intent;Landroid/content/Intent;I[Landroid/view/MenuItem;)I@android.view.Menu"
+ sig="int addIntentOptions(int,int,int,ComponentName,Intent[],Intent,int,MenuItem[])"
+ line="12"
+ startpos="763"
+ endpos="779"
+>
+	<marker line="-1" type="param">
+		<operand  start="784" length="7" line="12">
+			<expr><![CDATA[groupId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="797" length="6" line="12">
+			<expr><![CDATA[itemId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="809" length="5" line="12">
+			<expr><![CDATA[order]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="846" length="6" line="12">
+			<expr><![CDATA[caller]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="879" length="9" line="12">
+			<expr><![CDATA[specifics]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="913" length="6" line="12">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="925" length="5" line="12">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="956" length="16" line="12">
+			<expr><![CDATA[outSpecificItems]]></expr>
+		</operand>
+	</marker>
+	<type  start="816" length="29" line="12" chordsig="android.content.ComponentName"/>
+	<type  start="854" length="22" line="12" chordsig="android.content.Intent"/>
+	<type  start="890" length="22" line="12" chordsig="android.content.Intent"/>
+	<type  start="932" length="21" line="12" chordsig="android.view.MenuItem"/>
+</method>
+<method
+ chordsig="removeItem:(I)V@android.view.Menu"
+ sig="void removeItem(int)"
+ line="13"
+ startpos="997"
+ endpos="1007"
+>
+	<marker line="-1" type="param">
+		<operand  start="1012" length="2" line="13">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="removeGroup:(I)V@android.view.Menu"
+ sig="void removeGroup(int)"
+ line="14"
+ startpos="1039"
+ endpos="1050"
+>
+	<marker line="-1" type="param">
+		<operand  start="1055" length="7" line="14">
+			<expr><![CDATA[groupId]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="clear:()V@android.view.Menu"
+ sig="void clear()"
+ line="15"
+ startpos="1087"
+ endpos="1092"
+>
+</method>
+<method
+ chordsig="setGroupCheckable:(IZZ)V@android.view.Menu"
+ sig="void setGroupCheckable(int,boolean,boolean)"
+ line="16"
+ startpos="1118"
+ endpos="1135"
+>
+	<marker line="-1" type="param">
+		<operand  start="1140" length="5" line="16">
+			<expr><![CDATA[group]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1155" length="9" line="16">
+			<expr><![CDATA[checkable]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1174" length="9" line="16">
+			<expr><![CDATA[exclusive]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setGroupVisible:(IZ)V@android.view.Menu"
+ sig="void setGroupVisible(int,boolean)"
+ line="17"
+ startpos="1208"
+ endpos="1223"
+>
+	<marker line="-1" type="param">
+		<operand  start="1228" length="5" line="17">
+			<expr><![CDATA[group]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1243" length="7" line="17">
+			<expr><![CDATA[visible]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setGroupEnabled:(IZ)V@android.view.Menu"
+ sig="void setGroupEnabled(int,boolean)"
+ line="18"
+ startpos="1275"
+ endpos="1290"
+>
+	<marker line="-1" type="param">
+		<operand  start="1295" length="5" line="18">
+			<expr><![CDATA[group]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1310" length="7" line="18">
+			<expr><![CDATA[enabled]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="hasVisibleItems:()Z@android.view.Menu"
+ sig="boolean hasVisibleItems()"
+ line="19"
+ startpos="1345"
+ endpos="1360"
+>
+</method>
+<method
+ chordsig="findItem:(I)Landroid/view/MenuItem;@android.view.Menu"
+ sig="MenuItem findItem(int)"
+ line="20"
+ startpos="1403"
+ endpos="1411"
+>
+	<marker line="-1" type="param">
+		<operand  start="1416" length="2" line="20">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<type  start="1381" length="21" line="20" chordsig="android.view.MenuItem"/>
+</method>
+<method
+ chordsig="size:()I@android.view.Menu"
+ sig="int size()"
+ line="21"
+ startpos="1442"
+ endpos="1446"
+>
+</method>
+<method
+ chordsig="getItem:(I)Landroid/view/MenuItem;@android.view.Menu"
+ sig="MenuItem getItem(int)"
+ line="22"
+ startpos="1489"
+ endpos="1496"
+>
+	<marker line="-1" type="param">
+		<operand  start="1501" length="5" line="22">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="1467" length="21" line="22" chordsig="android.view.MenuItem"/>
+</method>
+<method
+ chordsig="close:()V@android.view.Menu"
+ sig="void close()"
+ line="23"
+ startpos="1531"
+ endpos="1536"
+>
+</method>
+<method
+ chordsig="performShortcut:(ILandroid/view/KeyEvent;I)Z@android.view.Menu"
+ sig="boolean performShortcut(int,KeyEvent,int)"
+ line="24"
+ startpos="1565"
+ endpos="1580"
+>
+	<marker line="-1" type="param">
+		<operand  start="1585" length="7" line="24">
+			<expr><![CDATA[keyCode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1616" length="5" line="24">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1627" length="5" line="24">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="1594" length="21" line="24" chordsig="android.view.KeyEvent"/>
+</method>
+<method
+ chordsig="isShortcutKey:(ILandroid/view/KeyEvent;)Z@android.view.Menu"
+ sig="boolean isShortcutKey(int,KeyEvent)"
+ line="25"
+ startpos="1660"
+ endpos="1673"
+>
+	<marker line="-1" type="param">
+		<operand  start="1678" length="7" line="25">
+			<expr><![CDATA[keyCode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1709" length="5" line="25">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="1687" length="21" line="25" chordsig="android.view.KeyEvent"/>
+</method>
+<method
+ chordsig="performIdentifierAction:(II)Z@android.view.Menu"
+ sig="boolean performIdentifierAction(int,int)"
+ line="26"
+ startpos="1742"
+ endpos="1765"
+>
+	<marker line="-1" type="param">
+		<operand  start="1770" length="2" line="26">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1778" length="5" line="26">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setQwertyMode:(Z)V@android.view.Menu"
+ sig="void setQwertyMode(boolean)"
+ line="27"
+ startpos="1808"
+ endpos="1821"
+>
+	<marker line="-1" type="param">
+		<operand  start="1830" length="8" line="27">
+			<expr><![CDATA[isQwerty]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

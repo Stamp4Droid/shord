@@ -1,0 +1,477 @@
+<root>
+<class chordsig="java.nio.DoubleBuffer" line="2">
+	<type  start="63" length="15" line="3" chordsig="java.nio.Buffer"/>
+	<type  start="92" length="20" line="4" chordsig="java.lang.Comparable"/>
+	<type  start="113" length="21" line="4" chordsig="java.nio.DoubleBuffer"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.nio.DoubleBuffer"
+ sig="DoubleBuffer()"
+ line="6"
+ startpos="138"
+ endpos="150"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="165" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="161" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="182" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="165" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="allocate:(I)Ljava/nio/DoubleBuffer;@java.nio.DoubleBuffer"
+ sig="DoubleBuffer allocate(int)"
+ line="7"
+ startpos="231"
+ endpos="239"
+>
+	<marker line="-1" type="param">
+		<operand  start="244" length="8" line="7">
+			<expr><![CDATA[capacity]]></expr>
+		</operand>
+	</marker>
+	<type  start="209" length="21" line="7" chordsig="java.nio.DoubleBuffer"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="266" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="262" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="283" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="266" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="wrap:([D)Ljava/nio/DoubleBuffer;@java.nio.DoubleBuffer"
+ sig="DoubleBuffer wrap(double[])"
+ line="8"
+ startpos="332"
+ endpos="336"
+>
+	<marker line="-1" type="param">
+		<operand  start="346" length="5" line="8">
+			<expr><![CDATA[array]]></expr>
+		</operand>
+	</marker>
+	<type  start="310" length="21" line="8" chordsig="java.nio.DoubleBuffer"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="365" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="361" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="382" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="365" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="wrap:([DII)Ljava/nio/DoubleBuffer;@java.nio.DoubleBuffer"
+ sig="DoubleBuffer wrap(double[],int,int)"
+ line="9"
+ startpos="431"
+ endpos="435"
+>
+	<marker line="-1" type="param">
+		<operand  start="445" length="5" line="9">
+			<expr><![CDATA[array]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="456" length="5" line="9">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="467" length="11" line="9">
+			<expr><![CDATA[doubleCount]]></expr>
+		</operand>
+	</marker>
+	<type  start="409" length="21" line="9" chordsig="java.nio.DoubleBuffer"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="492" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="488" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="509" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="492" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="array:()[D@java.nio.DoubleBuffer"
+ sig="double[] array()"
+ line="10"
+ startpos="544"
+ endpos="549"
+>
+	<alias>()Ljava/lang/Object;</alias>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="564" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="560" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="581" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="564" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="arrayOffset:()I@java.nio.DoubleBuffer"
+ sig="int arrayOffset()"
+ line="11"
+ startpos="611"
+ endpos="622"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="637" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="633" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="654" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="637" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="asReadOnlyBuffer:()Ljava/nio/DoubleBuffer;@java.nio.DoubleBuffer"
+ sig="DoubleBuffer asReadOnlyBuffer()"
+ line="12"
+ startpos="705"
+ endpos="721"
+>
+	<type  start="683" length="21" line="12" chordsig="java.nio.DoubleBuffer"/>
+</method>
+<method
+ chordsig="compact:()Ljava/nio/DoubleBuffer;@java.nio.DoubleBuffer"
+ sig="DoubleBuffer compact()"
+ line="13"
+ startpos="764"
+ endpos="771"
+>
+	<type  start="742" length="21" line="13" chordsig="java.nio.DoubleBuffer"/>
+</method>
+<method
+ chordsig="compareTo:(Ljava/nio/DoubleBuffer;)I@java.nio.DoubleBuffer"
+ sig="int compareTo(DoubleBuffer)"
+ line="14"
+ startpos="787"
+ endpos="796"
+>
+	<alias>(Ljava/lang/Object;)I</alias>
+	<marker line="-1" type="param">
+		<operand  start="819" length="11" line="14">
+			<expr><![CDATA[otherBuffer]]></expr>
+		</operand>
+	</marker>
+	<type  start="797" length="21" line="14" chordsig="java.nio.DoubleBuffer"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="844" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="840" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="861" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="844" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="duplicate:()Ljava/nio/DoubleBuffer;@java.nio.DoubleBuffer"
+ sig="DoubleBuffer duplicate()"
+ line="15"
+ startpos="912"
+ endpos="921"
+>
+	<type  start="890" length="21" line="15" chordsig="java.nio.DoubleBuffer"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.nio.DoubleBuffer"
+ sig="boolean equals(Object)"
+ line="16"
+ startpos="941"
+ endpos="947"
+>
+	<marker line="-1" type="param">
+		<operand  start="965" length="5" line="16">
+			<expr><![CDATA[other]]></expr>
+		</operand>
+	</marker>
+	<type  start="948" length="16" line="16" chordsig="java.lang.Object"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="984" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="980" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1001" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="984" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="get:()D@java.nio.DoubleBuffer"
+ sig="double get()"
+ line="17"
+ startpos="1037"
+ endpos="1040"
+>
+</method>
+<method
+ chordsig="get:([D)Ljava/nio/DoubleBuffer;@java.nio.DoubleBuffer"
+ sig="DoubleBuffer get(double[])"
+ line="18"
+ startpos="1074"
+ endpos="1077"
+>
+	<marker line="-1" type="param">
+		<operand  start="1087" length="3" line="18">
+			<expr><![CDATA[dst]]></expr>
+		</operand>
+	</marker>
+	<type  start="1052" length="21" line="18" chordsig="java.nio.DoubleBuffer"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1104" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1100" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1121" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1104" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="get:([DII)Ljava/nio/DoubleBuffer;@java.nio.DoubleBuffer"
+ sig="DoubleBuffer get(double[],int,int)"
+ line="19"
+ startpos="1163"
+ endpos="1166"
+>
+	<marker line="-1" type="param">
+		<operand  start="1176" length="3" line="19">
+			<expr><![CDATA[dst]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1185" length="9" line="19">
+			<expr><![CDATA[dstOffset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1200" length="11" line="19">
+			<expr><![CDATA[doubleCount]]></expr>
+		</operand>
+	</marker>
+	<type  start="1141" length="21" line="19" chordsig="java.nio.DoubleBuffer"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1225" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1221" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1242" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1225" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="get:(I)D@java.nio.DoubleBuffer"
+ sig="double get(int)"
+ line="20"
+ startpos="1278"
+ endpos="1281"
+>
+	<marker line="-1" type="param">
+		<operand  start="1286" length="5" line="20">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="hasArray:()Z@java.nio.DoubleBuffer"
+ sig="boolean hasArray()"
+ line="21"
+ startpos="1316"
+ endpos="1324"
+>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1339" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1335" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1356" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1339" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@java.nio.DoubleBuffer"
+ sig="int hashCode()"
+ line="22"
+ startpos="1380"
+ endpos="1388"
+>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1403" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1399" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1420" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1403" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isDirect:()Z@java.nio.DoubleBuffer"
+ sig="boolean isDirect()"
+ line="23"
+ startpos="1457"
+ endpos="1465"
+>
+</method>
+<method
+ chordsig="order:()Ljava/nio/ByteOrder;@java.nio.DoubleBuffer"
+ sig="ByteOrder order()"
+ line="24"
+ startpos="1505"
+ endpos="1510"
+>
+	<type  start="1486" length="18" line="24" chordsig="java.nio.ByteOrder"/>
+</method>
+<method
+ chordsig="put:(D)Ljava/nio/DoubleBuffer;@java.nio.DoubleBuffer"
+ sig="DoubleBuffer put(double)"
+ line="25"
+ startpos="1553"
+ endpos="1556"
+>
+	<marker line="-1" type="param">
+		<operand  start="1564" length="1" line="25">
+			<expr><![CDATA[d]]></expr>
+		</operand>
+	</marker>
+	<type  start="1531" length="21" line="25" chordsig="java.nio.DoubleBuffer"/>
+</method>
+<method
+ chordsig="put:([D)Ljava/nio/DoubleBuffer;@java.nio.DoubleBuffer"
+ sig="DoubleBuffer put(double[])"
+ line="26"
+ startpos="1604"
+ endpos="1607"
+>
+	<marker line="-1" type="param">
+		<operand  start="1617" length="3" line="26">
+			<expr><![CDATA[src]]></expr>
+		</operand>
+	</marker>
+	<type  start="1582" length="21" line="26" chordsig="java.nio.DoubleBuffer"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1634" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1630" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1651" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1634" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="put:([DII)Ljava/nio/DoubleBuffer;@java.nio.DoubleBuffer"
+ sig="DoubleBuffer put(double[],int,int)"
+ line="27"
+ startpos="1693"
+ endpos="1696"
+>
+	<marker line="-1" type="param">
+		<operand  start="1706" length="3" line="27">
+			<expr><![CDATA[src]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1715" length="9" line="27">
+			<expr><![CDATA[srcOffset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1730" length="11" line="27">
+			<expr><![CDATA[doubleCount]]></expr>
+		</operand>
+	</marker>
+	<type  start="1671" length="21" line="27" chordsig="java.nio.DoubleBuffer"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1755" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1751" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1772" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1755" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="put:(Ljava/nio/DoubleBuffer;)Ljava/nio/DoubleBuffer;@java.nio.DoubleBuffer"
+ sig="DoubleBuffer put(DoubleBuffer)"
+ line="28"
+ startpos="1814"
+ endpos="1817"
+>
+	<marker line="-1" type="param">
+		<operand  start="1840" length="3" line="28">
+			<expr><![CDATA[src]]></expr>
+		</operand>
+	</marker>
+	<type  start="1792" length="21" line="28" chordsig="java.nio.DoubleBuffer"/>
+	<type  start="1818" length="21" line="28" chordsig="java.nio.DoubleBuffer"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1857" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1853" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1874" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1857" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="put:(ID)Ljava/nio/DoubleBuffer;@java.nio.DoubleBuffer"
+ sig="DoubleBuffer put(int,double)"
+ line="29"
+ startpos="1925"
+ endpos="1928"
+>
+	<marker line="-1" type="param">
+		<operand  start="1933" length="5" line="29">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1947" length="1" line="29">
+			<expr><![CDATA[d]]></expr>
+		</operand>
+	</marker>
+	<type  start="1903" length="21" line="29" chordsig="java.nio.DoubleBuffer"/>
+</method>
+<method
+ chordsig="slice:()Ljava/nio/DoubleBuffer;@java.nio.DoubleBuffer"
+ sig="DoubleBuffer slice()"
+ line="30"
+ startpos="1990"
+ endpos="1995"
+>
+	<type  start="1968" length="21" line="30" chordsig="java.nio.DoubleBuffer"/>
+</method>
+</class>
+</root>

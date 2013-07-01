@@ -1,0 +1,94 @@
+<root>
+<class chordsig="java.awt.font.TextAttribute" line="2">
+	<type  start="66" length="47" line="3" chordsig="java.text.AttributedCharacterIterator$Attribute"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.awt.font.TextAttribute"
+ sig="TextAttribute(String)"
+ line="5"
+ startpos="127"
+ endpos="140"
+>
+	<marker line="-1" type="param">
+		<operand  start="158" length="4" line="5">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="141" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="173" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="207" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="203" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="224" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="207" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="256" length="27" line="6" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="316" length="27" line="7" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="380" length="27" line="8" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="446" length="27" line="9" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="502" length="27" line="10" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="556" length="27" line="11" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="616" length="27" line="12" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="688" length="27" line="13" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="760" length="27" line="14" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="823" length="15" line="15" chordsig="java.lang.Float"/>
+	<type  start="879" length="15" line="16" chordsig="java.lang.Float"/>
+	<type  start="935" length="27" line="17" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="992" length="17" line="18" chordsig="java.lang.Integer"/>
+	<type  start="1042" length="27" line="19" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="1101" length="17" line="20" chordsig="java.lang.Integer"/>
+	<type  start="1153" length="27" line="21" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="1218" length="27" line="22" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="1275" length="15" line="23" chordsig="java.lang.Float"/>
+	<type  start="1328" length="15" line="24" chordsig="java.lang.Float"/>
+	<type  start="1381" length="27" line="25" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="1444" length="17" line="26" chordsig="java.lang.Boolean"/>
+	<type  start="1501" length="17" line="27" chordsig="java.lang.Boolean"/>
+	<type  start="1558" length="27" line="28" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="1612" length="27" line="29" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="1675" length="17" line="30" chordsig="java.lang.Boolean"/>
+	<type  start="1731" length="27" line="31" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="1792" length="17" line="32" chordsig="java.lang.Integer"/>
+	<type  start="1847" length="17" line="33" chordsig="java.lang.Integer"/>
+	<type  start="1904" length="27" line="34" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="1965" length="17" line="35" chordsig="java.lang.Boolean"/>
+	<type  start="2019" length="27" line="36" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="2077" length="15" line="37" chordsig="java.lang.Float"/>
+	<type  start="2129" length="15" line="38" chordsig="java.lang.Float"/>
+	<type  start="2181" length="27" line="39" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="2240" length="27" line="40" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="2299" length="17" line="41" chordsig="java.lang.Integer"/>
+	<type  start="2351" length="17" line="42" chordsig="java.lang.Integer"/>
+	<type  start="2414" length="17" line="43" chordsig="java.lang.Integer"/>
+	<type  start="2477" length="17" line="44" chordsig="java.lang.Integer"/>
+	<type  start="2537" length="17" line="45" chordsig="java.lang.Integer"/>
+	<type  start="2595" length="17" line="46" chordsig="java.lang.Integer"/>
+	<type  start="2655" length="27" line="47" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="2711" length="15" line="48" chordsig="java.lang.Float"/>
+	<type  start="2767" length="15" line="49" chordsig="java.lang.Float"/>
+	<type  start="2817" length="15" line="50" chordsig="java.lang.Float"/>
+	<type  start="2871" length="15" line="51" chordsig="java.lang.Float"/>
+	<type  start="2923" length="15" line="52" chordsig="java.lang.Float"/>
+	<type  start="2976" length="15" line="53" chordsig="java.lang.Float"/>
+	<type  start="3027" length="15" line="54" chordsig="java.lang.Float"/>
+	<type  start="3080" length="15" line="55" chordsig="java.lang.Float"/>
+	<type  start="3129" length="15" line="56" chordsig="java.lang.Float"/>
+	<type  start="3179" length="15" line="57" chordsig="java.lang.Float"/>
+	<type  start="3233" length="15" line="58" chordsig="java.lang.Float"/>
+	<type  start="3287" length="27" line="59" chordsig="java.awt.font.TextAttribute"/>
+	<type  start="3342" length="15" line="60" chordsig="java.lang.Float"/>
+	<type  start="3395" length="15" line="61" chordsig="java.lang.Float"/>
+	<type  start="3453" length="15" line="62" chordsig="java.lang.Float"/>
+	<type  start="3504" length="15" line="63" chordsig="java.lang.Float"/>
+	<type  start="3561" length="15" line="64" chordsig="java.lang.Float"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@java.awt.font.TextAttribute"
+ line="65"
+>
+</method>
+</class>
+</root>

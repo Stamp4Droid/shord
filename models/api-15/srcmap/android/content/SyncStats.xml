@@ -1,0 +1,138 @@
+<root>
+<class chordsig="android.content.SyncStats" line="2">
+	<type  start="61" length="21" line="3" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.content.SyncStats"
+ sig="SyncStats()"
+ line="5"
+ startpos="93"
+ endpos="102"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="117" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="113" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="134" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="117" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/os/Parcel;)V@android.content.SyncStats"
+ sig="SyncStats(Parcel)"
+ line="6"
+ startpos="154"
+ endpos="163"
+>
+	<marker line="-1" type="param">
+		<operand  start="182" length="2" line="6">
+			<expr><![CDATA[in]]></expr>
+		</operand>
+	</marker>
+	<type  start="164" length="17" line="6" chordsig="android.os.Parcel"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="198" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="194" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="215" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="198" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.content.SyncStats"
+ sig="String toString()"
+ line="7"
+ startpos="252"
+ endpos="260"
+>
+	<type  start="235" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="275" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="271" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="292" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="275" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clear:()V@android.content.SyncStats"
+ sig="void clear()"
+ line="8"
+ startpos="317"
+ endpos="322"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="337" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="333" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="354" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="337" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.content.SyncStats"
+ sig="int describeContents()"
+ line="9"
+ startpos="378"
+ endpos="394"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="409" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="405" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="426" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="409" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.content.SyncStats"
+ sig="void writeToParcel(Parcel,int)"
+ line="10"
+ startpos="451"
+ endpos="464"
+>
+	<marker line="-1" type="param">
+		<operand  start="483" length="4" line="10">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="493" length="5" line="10">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="465" length="17" line="10" chordsig="android.os.Parcel"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="512" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="508" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="529" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="512" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="823" length="29" line="20" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="853" length="25" line="20" chordsig="android.content.SyncStats"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.content.SyncStats"
+ line="21"
+>
+</method>
+</class>
+</root>

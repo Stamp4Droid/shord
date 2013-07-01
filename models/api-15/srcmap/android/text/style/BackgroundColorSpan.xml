@@ -1,0 +1,161 @@
+<root>
+<class chordsig="android.text.style.BackgroundColorSpan" line="2">
+	<type  start="71" length="33" line="3" chordsig="android.text.style.CharacterStyle"/>
+	<type  start="118" length="35" line="4" chordsig="android.text.style.UpdateAppearance"/>
+	<type  start="155" length="27" line="4" chordsig="android.text.ParcelableSpan"/>
+<method
+ chordsig="&lt;init&gt;:(I)V@android.text.style.BackgroundColorSpan"
+ sig="BackgroundColorSpan(int)"
+ line="6"
+ startpos="193"
+ endpos="212"
+>
+	<marker line="-1" type="param">
+		<operand  start="217" length="5" line="6">
+			<expr><![CDATA[color]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="236" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="232" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="253" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="236" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/os/Parcel;)V@android.text.style.BackgroundColorSpan"
+ sig="BackgroundColorSpan(Parcel)"
+ line="7"
+ startpos="273"
+ endpos="292"
+>
+	<marker line="-1" type="param">
+		<operand  start="311" length="3" line="7">
+			<expr><![CDATA[src]]></expr>
+		</operand>
+	</marker>
+	<type  start="293" length="17" line="7" chordsig="android.os.Parcel"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="328" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="324" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="345" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="328" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSpanTypeId:()I@android.text.style.BackgroundColorSpan"
+ sig="int getSpanTypeId()"
+ line="8"
+ startpos="369"
+ endpos="382"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="397" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="393" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="414" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="397" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.text.style.BackgroundColorSpan"
+ sig="int describeContents()"
+ line="9"
+ startpos="438"
+ endpos="454"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="469" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="465" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="486" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="469" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.text.style.BackgroundColorSpan"
+ sig="void writeToParcel(Parcel,int)"
+ line="10"
+ startpos="511"
+ endpos="524"
+>
+	<marker line="-1" type="param">
+		<operand  start="543" length="4" line="10">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="553" length="5" line="10">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="525" length="17" line="10" chordsig="android.os.Parcel"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="572" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="568" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="589" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="572" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getBackgroundColor:()I@android.text.style.BackgroundColorSpan"
+ sig="int getBackgroundColor()"
+ line="11"
+ startpos="613"
+ endpos="631"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="646" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="642" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="663" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="646" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="updateDrawState:(Landroid/text/TextPaint;)V@android.text.style.BackgroundColorSpan"
+ sig="void updateDrawState(TextPaint)"
+ line="12"
+ startpos="688"
+ endpos="703"
+>
+	<marker line="-1" type="param">
+		<operand  start="727" length="2" line="12">
+			<expr><![CDATA[ds]]></expr>
+		</operand>
+	</marker>
+	<type  start="704" length="22" line="12" chordsig="android.text.TextPaint"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="743" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="739" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="760" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="743" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

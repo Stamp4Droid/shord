@@ -1,0 +1,255 @@
+<root>
+<class chordsig="java.security.cert.X509CRL" line="2">
+	<type  start="68" length="22" line="3" chordsig="java.security.cert.CRL"/>
+	<type  start="104" length="32" line="4" chordsig="java.security.cert.X509Extension"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.security.cert.X509CRL"
+ sig="X509CRL()"
+ line="6"
+ startpos="150"
+ endpos="157"
+>
+	<type  start="169" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="203" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="199" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="220" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="203" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.security.cert.X509CRL"
+ sig="boolean equals(Object)"
+ line="7"
+ startpos="248"
+ endpos="254"
+>
+	<marker line="-1" type="param">
+		<operand  start="272" length="5" line="7">
+			<expr><![CDATA[other]]></expr>
+		</operand>
+	</marker>
+	<type  start="255" length="16" line="7" chordsig="java.lang.Object"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="291" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="287" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="308" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="291" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@java.security.cert.X509CRL"
+ sig="int hashCode()"
+ line="8"
+ startpos="332"
+ endpos="340"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="355" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="351" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="372" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="355" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getEncoded:()[B@java.security.cert.X509CRL"
+ sig="byte[] getEncoded()"
+ line="9"
+ startpos="408"
+ endpos="418"
+>
+</method>
+<method
+ chordsig="verify:(Ljava/security/PublicKey;)V@java.security.cert.X509CRL"
+ sig="void verify(PublicKey)"
+ line="10"
+ startpos="483"
+ endpos="489"
+>
+	<marker line="-1" type="param">
+		<operand  start="514" length="3" line="10">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="490" length="23" line="10" chordsig="java.security.PublicKey"/>
+</method>
+<method
+ chordsig="verify:(Ljava/security/PublicKey;Ljava/lang/String;)V@java.security.cert.X509CRL"
+ sig="void verify(PublicKey,String)"
+ line="11"
+ startpos="729"
+ endpos="735"
+>
+	<marker line="-1" type="param">
+		<operand  start="760" length="3" line="11">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="782" length="11" line="11">
+			<expr><![CDATA[sigProvider]]></expr>
+		</operand>
+	</marker>
+	<type  start="736" length="23" line="11" chordsig="java.security.PublicKey"/>
+	<type  start="765" length="16" line="11" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getVersion:()I@java.security.cert.X509CRL"
+ sig="int getVersion()"
+ line="12"
+ startpos="1004"
+ endpos="1014"
+>
+</method>
+<method
+ chordsig="getIssuerDN:()Ljava/security/Principal;@java.security.cert.X509CRL"
+ sig="Principal getIssuerDN()"
+ line="13"
+ startpos="1059"
+ endpos="1070"
+>
+	<type  start="1035" length="23" line="13" chordsig="java.security.Principal"/>
+</method>
+<method
+ chordsig="getIssuerX500Principal:()Ljavax/security/auth/x500/X500Principal;@java.security.cert.X509CRL"
+ sig="X500Principal getIssuerX500Principal()"
+ line="14"
+ startpos="1121"
+ endpos="1143"
+>
+	<type  start="1082" length="38" line="14" chordsig="javax.security.auth.x500.X500Principal"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1158" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1154" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1175" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1158" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getThisUpdate:()Ljava/util/Date;@java.security.cert.X509CRL"
+ sig="Date getThisUpdate()"
+ line="15"
+ startpos="1219"
+ endpos="1232"
+>
+	<type  start="1204" length="14" line="15" chordsig="java.util.Date"/>
+</method>
+<method
+ chordsig="getNextUpdate:()Ljava/util/Date;@java.security.cert.X509CRL"
+ sig="Date getNextUpdate()"
+ line="16"
+ startpos="1268"
+ endpos="1281"
+>
+	<type  start="1253" length="14" line="16" chordsig="java.util.Date"/>
+</method>
+<method
+ chordsig="getRevokedCertificate:(Ljava/math/BigInteger;)Ljava/security/cert/X509CRLEntry;@java.security.cert.X509CRL"
+ sig="X509CRLEntry getRevokedCertificate(BigInteger)"
+ line="17"
+ startpos="1334"
+ endpos="1355"
+>
+	<marker line="-1" type="param">
+		<operand  start="1377" length="12" line="17">
+			<expr><![CDATA[serialNumber]]></expr>
+		</operand>
+	</marker>
+	<type  start="1302" length="31" line="17" chordsig="java.security.cert.X509CRLEntry"/>
+	<type  start="1356" length="20" line="17" chordsig="java.math.BigInteger"/>
+</method>
+<method
+ chordsig="getRevokedCertificate:(Ljava/security/cert/X509Certificate;)Ljava/security/cert/X509CRLEntry;@java.security.cert.X509CRL"
+ sig="X509CRLEntry getRevokedCertificate(X509Certificate)"
+ line="18"
+ startpos="1432"
+ endpos="1453"
+>
+	<marker line="-1" type="param">
+		<operand  start="1489" length="11" line="18">
+			<expr><![CDATA[certificate]]></expr>
+		</operand>
+	</marker>
+	<type  start="1400" length="31" line="18" chordsig="java.security.cert.X509CRLEntry"/>
+	<type  start="1454" length="34" line="18" chordsig="java.security.cert.X509Certificate"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1514" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1510" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1531" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1514" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRevokedCertificates:()Ljava/util/Set;@java.security.cert.X509CRL"
+ sig="Set&lt;? extends X509CRLEntry&gt; getRevokedCertificates()"
+ line="19"
+ startpos="1617"
+ endpos="1639"
+>
+	<type  start="1560" length="13" line="19" chordsig="java.util.Set"/>
+	<type  start="1584" length="31" line="19" chordsig="java.security.cert.X509CRLEntry"/>
+</method>
+<method
+ chordsig="getTBSCertList:()[B@java.security.cert.X509CRL"
+ sig="byte[] getTBSCertList()"
+ line="20"
+ startpos="1667"
+ endpos="1681"
+>
+</method>
+<method
+ chordsig="getSignature:()[B@java.security.cert.X509CRL"
+ sig="byte[] getSignature()"
+ line="21"
+ startpos="1748"
+ endpos="1760"
+>
+</method>
+<method
+ chordsig="getSigAlgName:()Ljava/lang/String;@java.security.cert.X509CRL"
+ sig="String getSigAlgName()"
+ line="22"
+ startpos="1798"
+ endpos="1811"
+>
+	<type  start="1781" length="16" line="22" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getSigAlgOID:()Ljava/lang/String;@java.security.cert.X509CRL"
+ sig="String getSigAlgOID()"
+ line="23"
+ startpos="1849"
+ endpos="1861"
+>
+	<type  start="1832" length="16" line="23" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getSigAlgParams:()[B@java.security.cert.X509CRL"
+ sig="byte[] getSigAlgParams()"
+ line="24"
+ startpos="1889"
+ endpos="1904"
+>
+</method>
+</class>
+</root>

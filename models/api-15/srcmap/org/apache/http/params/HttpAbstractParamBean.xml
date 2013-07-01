@@ -1,0 +1,29 @@
+<root>
+<class chordsig="org.apache.http.params.HttpAbstractParamBean" line="2">
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/params/HttpParams;)V@org.apache.http.params.HttpAbstractParamBean"
+ sig="HttpAbstractParamBean(HttpParams)"
+ line="4"
+ startpos="86"
+ endpos="107"
+>
+	<marker line="-1" type="param">
+		<operand  start="142" length="6" line="4">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="108" length="33" line="4" chordsig="org.apache.http.params.HttpParams"/>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="162" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="158" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="179" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="162" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="207" length="33" line="5" chordsig="org.apache.http.params.HttpParams"/>
+</class>
+</root>

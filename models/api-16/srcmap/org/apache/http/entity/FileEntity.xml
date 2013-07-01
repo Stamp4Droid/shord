@@ -1,0 +1,153 @@
+<root>
+<class chordsig="org.apache.http.entity.FileEntity" line="2">
+	<type  start="66" length="41" line="3" chordsig="org.apache.http.entity.AbstractHttpEntity"/>
+	<type  start="121" length="19" line="4" chordsig="java.lang.Cloneable"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/File;Ljava/lang/String;)V@org.apache.http.entity.FileEntity"
+ sig="FileEntity(File,String)"
+ line="6"
+ startpos="151"
+ endpos="161"
+>
+	<marker line="-1" type="param">
+		<operand  start="175" length="4" line="6">
+			<expr><![CDATA[file]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="198" length="11" line="6">
+			<expr><![CDATA[contentType]]></expr>
+		</operand>
+	</marker>
+	<type  start="162" length="12" line="6" chordsig="java.io.File"/>
+	<type  start="181" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="223" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="219" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="240" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="223" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isRepeatable:()Z@org.apache.http.entity.FileEntity"
+ sig="boolean isRepeatable()"
+ line="7"
+ startpos="268"
+ endpos="280"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="295" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="291" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="312" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="295" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContentLength:()J@org.apache.http.entity.FileEntity"
+ sig="long getContentLength()"
+ line="8"
+ startpos="337"
+ endpos="353"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="368" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="364" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="385" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="368" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContent:()Ljava/io/InputStream;@org.apache.http.entity.FileEntity"
+ sig="InputStream getContent()"
+ line="9"
+ startpos="425"
+ endpos="435"
+>
+	<type  start="405" length="19" line="9" chordsig="java.io.InputStream"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="477" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="473" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="494" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="477" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeTo:(Ljava/io/OutputStream;)V@org.apache.http.entity.FileEntity"
+ sig="void writeTo(OutputStream)"
+ line="10"
+ startpos="519"
+ endpos="526"
+>
+	<marker line="-1" type="param">
+		<operand  start="548" length="9" line="10">
+			<expr><![CDATA[outstream]]></expr>
+		</operand>
+	</marker>
+	<type  start="527" length="20" line="10" chordsig="java.io.OutputStream"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="598" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="594" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="615" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="598" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isStreaming:()Z@org.apache.http.entity.FileEntity"
+ sig="boolean isStreaming()"
+ line="11"
+ startpos="643"
+ endpos="654"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="669" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="665" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="686" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="669" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clone:()Ljava/lang/Object;@org.apache.http.entity.FileEntity"
+ sig="Object clone()"
+ line="12"
+ startpos="723"
+ endpos="728"
+>
+	<type  start="706" length="16" line="12" chordsig="java.lang.Object"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="787" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="783" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="804" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="787" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="832" length="12" line="13" chordsig="java.io.File"/>
+</class>
+</root>

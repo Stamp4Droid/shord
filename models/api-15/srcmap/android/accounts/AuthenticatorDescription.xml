@@ -1,0 +1,252 @@
+<root>
+<class chordsig="android.accounts.AuthenticatorDescription" line="2">
+	<type  start="77" length="21" line="3" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;IIIIZ)V@android.accounts.AuthenticatorDescription"
+ sig="AuthenticatorDescription(String,String,int,int,int,int,boolean)"
+ line="5"
+ startpos="109"
+ endpos="133"
+>
+	<marker line="-1" type="param">
+		<operand  start="151" length="4" line="5">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="174" length="11" line="5">
+			<expr><![CDATA[packageName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="191" length="7" line="5">
+			<expr><![CDATA[labelId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="204" length="6" line="5">
+			<expr><![CDATA[iconId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="216" length="11" line="5">
+			<expr><![CDATA[smallIconId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="233" length="6" line="5">
+			<expr><![CDATA[prefId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="249" length="12" line="5">
+			<expr><![CDATA[customTokens]]></expr>
+		</operand>
+	</marker>
+	<type  start="134" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="157" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="275" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="271" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="292" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="275" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;IIII)V@android.accounts.AuthenticatorDescription"
+ sig="AuthenticatorDescription(String,String,int,int,int,int)"
+ line="6"
+ startpos="312"
+ endpos="336"
+>
+	<marker line="-1" type="param">
+		<operand  start="354" length="4" line="6">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="377" length="11" line="6">
+			<expr><![CDATA[packageName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="394" length="7" line="6">
+			<expr><![CDATA[labelId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="407" length="6" line="6">
+			<expr><![CDATA[iconId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="419" length="11" line="6">
+			<expr><![CDATA[smallIconId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="436" length="6" line="6">
+			<expr><![CDATA[prefId]]></expr>
+		</operand>
+	</marker>
+	<type  start="337" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="360" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="456" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="452" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="473" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="456" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newKey:(Ljava/lang/String;)Landroid/accounts/AuthenticatorDescription;@android.accounts.AuthenticatorDescription"
+ sig="AuthenticatorDescription newKey(String)"
+ line="7"
+ startpos="542"
+ endpos="548"
+>
+	<marker line="-1" type="param">
+		<operand  start="566" length="4" line="7">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<type  start="500" length="41" line="7" chordsig="android.accounts.AuthenticatorDescription"/>
+	<type  start="549" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="584" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="580" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="601" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="584" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.accounts.AuthenticatorDescription"
+ sig="int describeContents()"
+ line="8"
+ startpos="625"
+ endpos="641"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="656" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="652" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="673" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="656" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@android.accounts.AuthenticatorDescription"
+ sig="int hashCode()"
+ line="9"
+ startpos="697"
+ endpos="705"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="720" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="716" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="737" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="720" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@android.accounts.AuthenticatorDescription"
+ sig="boolean equals(Object)"
+ line="10"
+ startpos="765"
+ endpos="771"
+>
+	<marker line="-1" type="param">
+		<operand  start="789" length="1" line="10">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="772" length="16" line="10" chordsig="java.lang.Object"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="804" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="800" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="821" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="804" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.accounts.AuthenticatorDescription"
+ sig="String toString()"
+ line="11"
+ startpos="858"
+ endpos="866"
+>
+	<type  start="841" length="16" line="11" chordsig="java.lang.String"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="881" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="877" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="898" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="881" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.accounts.AuthenticatorDescription"
+ sig="void writeToParcel(Parcel,int)"
+ line="12"
+ startpos="923"
+ endpos="936"
+>
+	<marker line="-1" type="param">
+		<operand  start="955" length="4" line="12">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="965" length="5" line="12">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="937" length="17" line="12" chordsig="android.os.Parcel"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="984" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="980" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1001" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="984" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1026" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="1182" length="16" line="18" chordsig="java.lang.String"/>
+	<type  start="1267" length="29" line="20" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="1297" length="41" line="20" chordsig="android.accounts.AuthenticatorDescription"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.accounts.AuthenticatorDescription"
+ line="21"
+>
+</method>
+</class>
+</root>

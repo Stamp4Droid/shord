@@ -1,0 +1,329 @@
+<root>
+<class chordsig="android.view.ActionMode" line="2">
+<class chordsig="android.view.ActionMode$Callback" line="4">
+<method
+ chordsig="onCreateActionMode:(Landroid/view/ActionMode;Landroid/view/Menu;)Z@android.view.ActionMode$Callback"
+ sig="boolean onCreateActionMode(ActionMode,Menu)"
+ line="6"
+ startpos="117"
+ endpos="135"
+>
+	<marker line="-1" type="param">
+		<operand  start="160" length="4" line="6">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="184" length="4" line="6">
+			<expr><![CDATA[menu]]></expr>
+		</operand>
+	</marker>
+	<type  start="136" length="23" line="6" chordsig="android.view.ActionMode"/>
+	<type  start="166" length="17" line="6" chordsig="android.view.Menu"/>
+</method>
+<method
+ chordsig="onPrepareActionMode:(Landroid/view/ActionMode;Landroid/view/Menu;)Z@android.view.ActionMode$Callback"
+ sig="boolean onPrepareActionMode(ActionMode,Menu)"
+ line="7"
+ startpos="216"
+ endpos="235"
+>
+	<marker line="-1" type="param">
+		<operand  start="260" length="4" line="7">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="284" length="4" line="7">
+			<expr><![CDATA[menu]]></expr>
+		</operand>
+	</marker>
+	<type  start="236" length="23" line="7" chordsig="android.view.ActionMode"/>
+	<type  start="266" length="17" line="7" chordsig="android.view.Menu"/>
+</method>
+<method
+ chordsig="onActionItemClicked:(Landroid/view/ActionMode;Landroid/view/MenuItem;)Z@android.view.ActionMode$Callback"
+ sig="boolean onActionItemClicked(ActionMode,MenuItem)"
+ line="8"
+ startpos="316"
+ endpos="335"
+>
+	<marker line="-1" type="param">
+		<operand  start="360" length="4" line="8">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="388" length="4" line="8">
+			<expr><![CDATA[item]]></expr>
+		</operand>
+	</marker>
+	<type  start="336" length="23" line="8" chordsig="android.view.ActionMode"/>
+	<type  start="366" length="21" line="8" chordsig="android.view.MenuItem"/>
+</method>
+<method
+ chordsig="onDestroyActionMode:(Landroid/view/ActionMode;)V@android.view.ActionMode$Callback"
+ sig="void onDestroyActionMode(ActionMode)"
+ line="9"
+ startpos="417"
+ endpos="436"
+>
+	<marker line="-1" type="param">
+		<operand  start="461" length="4" line="9">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+	<type  start="437" length="23" line="9" chordsig="android.view.ActionMode"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.view.ActionMode"
+ sig="ActionMode()"
+ line="11"
+ startpos="478"
+ endpos="488"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="503" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="499" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="520" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="503" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTag:(Ljava/lang/Object;)V@android.view.ActionMode"
+ sig="void setTag(Object)"
+ line="12"
+ startpos="545"
+ endpos="551"
+>
+	<marker line="-1" type="param">
+		<operand  start="569" length="3" line="12">
+			<expr><![CDATA[tag]]></expr>
+		</operand>
+	</marker>
+	<type  start="552" length="16" line="12" chordsig="java.lang.Object"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="586" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="582" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="603" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="586" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTag:()Ljava/lang/Object;@android.view.ActionMode"
+ sig="Object getTag()"
+ line="13"
+ startpos="640"
+ endpos="646"
+>
+	<type  start="623" length="16" line="13" chordsig="java.lang.Object"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="661" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="657" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="678" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="661" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTitle:(Ljava/lang/CharSequence;)V@android.view.ActionMode"
+ sig="void setTitle(CharSequence)"
+ line="14"
+ startpos="712"
+ endpos="720"
+>
+	<marker line="-1" type="param">
+		<operand  start="744" length="5" line="14">
+			<expr><![CDATA[title]]></expr>
+		</operand>
+	</marker>
+	<type  start="721" length="22" line="14" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="setTitle:(I)V@android.view.ActionMode"
+ sig="void setTitle(int)"
+ line="15"
+ startpos="774"
+ endpos="782"
+>
+	<marker line="-1" type="param">
+		<operand  start="787" length="5" line="15">
+			<expr><![CDATA[resId]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setSubtitle:(Ljava/lang/CharSequence;)V@android.view.ActionMode"
+ sig="void setSubtitle(CharSequence)"
+ line="16"
+ startpos="817"
+ endpos="828"
+>
+	<marker line="-1" type="param">
+		<operand  start="852" length="8" line="16">
+			<expr><![CDATA[subtitle]]></expr>
+		</operand>
+	</marker>
+	<type  start="829" length="22" line="16" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="setSubtitle:(I)V@android.view.ActionMode"
+ sig="void setSubtitle(int)"
+ line="17"
+ startpos="885"
+ endpos="896"
+>
+	<marker line="-1" type="param">
+		<operand  start="901" length="5" line="17">
+			<expr><![CDATA[resId]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setTitleOptionalHint:(Z)V@android.view.ActionMode"
+ sig="void setTitleOptionalHint(boolean)"
+ line="18"
+ startpos="922"
+ endpos="942"
+>
+	<marker line="-1" type="param">
+		<operand  start="951" length="13" line="18">
+			<expr><![CDATA[titleOptional]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="978" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="974" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="995" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="978" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTitleOptionalHint:()Z@android.view.ActionMode"
+ sig="boolean getTitleOptionalHint()"
+ line="19"
+ startpos="1023"
+ endpos="1043"
+>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1058" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1054" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1075" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1058" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isTitleOptional:()Z@android.view.ActionMode"
+ sig="boolean isTitleOptional()"
+ line="20"
+ startpos="1103"
+ endpos="1118"
+>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1133" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1129" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1150" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1133" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setCustomView:(Landroid/view/View;)V@android.view.ActionMode"
+ sig="void setCustomView(View)"
+ line="21"
+ startpos="1184"
+ endpos="1197"
+>
+	<marker line="-1" type="param">
+		<operand  start="1216" length="4" line="21">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<type  start="1198" length="17" line="21" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="invalidate:()V@android.view.ActionMode"
+ sig="void invalidate()"
+ line="22"
+ startpos="1245"
+ endpos="1255"
+>
+</method>
+<method
+ chordsig="finish:()V@android.view.ActionMode"
+ sig="void finish()"
+ line="23"
+ startpos="1281"
+ endpos="1287"
+>
+</method>
+<method
+ chordsig="getMenu:()Landroid/view/Menu;@android.view.ActionMode"
+ sig="Menu getMenu()"
+ line="24"
+ startpos="1326"
+ endpos="1333"
+>
+	<type  start="1308" length="17" line="24" chordsig="android.view.Menu"/>
+</method>
+<method
+ chordsig="getTitle:()Ljava/lang/CharSequence;@android.view.ActionMode"
+ sig="CharSequence getTitle()"
+ line="25"
+ startpos="1377"
+ endpos="1385"
+>
+	<type  start="1354" length="22" line="25" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="getSubtitle:()Ljava/lang/CharSequence;@android.view.ActionMode"
+ sig="CharSequence getSubtitle()"
+ line="26"
+ startpos="1429"
+ endpos="1440"
+>
+	<type  start="1406" length="22" line="26" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="getCustomView:()Landroid/view/View;@android.view.ActionMode"
+ sig="View getCustomView()"
+ line="27"
+ startpos="1479"
+ endpos="1492"
+>
+	<type  start="1461" length="17" line="27" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="getMenuInflater:()Landroid/view/MenuInflater;@android.view.ActionMode"
+ sig="MenuInflater getMenuInflater()"
+ line="28"
+ startpos="1539"
+ endpos="1554"
+>
+	<type  start="1513" length="25" line="28" chordsig="android.view.MenuInflater"/>
+</method>
+</class>
+</root>

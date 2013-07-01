@@ -1,0 +1,101 @@
+<root>
+<class chordsig="java.security.cert.CertPathBuilderException" line="2">
+	<type  start="76" length="38" line="3" chordsig="java.security.GeneralSecurityException"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/Throwable;)V@java.security.cert.CertPathBuilderException"
+ sig="CertPathBuilderException(String,Throwable)"
+ line="5"
+ startpos="125"
+ endpos="149"
+>
+	<marker line="-1" type="param">
+		<operand  start="167" length="3" line="5">
+			<expr><![CDATA[msg]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="192" length="5" line="5">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="150" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="172" length="19" line="5" chordsig="java.lang.Throwable"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="211" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="207" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="228" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="211" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Throwable;)V@java.security.cert.CertPathBuilderException"
+ sig="CertPathBuilderException(Throwable)"
+ line="6"
+ startpos="248"
+ endpos="272"
+>
+	<marker line="-1" type="param">
+		<operand  start="293" length="5" line="6">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="273" length="19" line="6" chordsig="java.lang.Throwable"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="312" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="308" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="329" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="312" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.security.cert.CertPathBuilderException"
+ sig="CertPathBuilderException(String)"
+ line="7"
+ startpos="349"
+ endpos="373"
+>
+	<marker line="-1" type="param">
+		<operand  start="391" length="3" line="7">
+			<expr><![CDATA[msg]]></expr>
+		</operand>
+	</marker>
+	<type  start="374" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="408" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="404" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="425" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="408" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:()V@java.security.cert.CertPathBuilderException"
+ sig="CertPathBuilderException()"
+ line="8"
+ startpos="445"
+ endpos="469"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="484" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="480" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="501" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="484" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

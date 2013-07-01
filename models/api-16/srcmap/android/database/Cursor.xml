@@ -1,0 +1,447 @@
+<root>
+<class chordsig="android.database.Cursor" line="2">
+	<type  start="60" length="17" line="3" chordsig="java.io.Closeable"/>
+<method
+ chordsig="getCount:()I@android.database.Cursor"
+ sig="int getCount()"
+ line="5"
+ startpos="101"
+ endpos="109"
+>
+</method>
+<method
+ chordsig="getPosition:()I@android.database.Cursor"
+ sig="int getPosition()"
+ line="6"
+ startpos="134"
+ endpos="145"
+>
+</method>
+<method
+ chordsig="move:(I)Z@android.database.Cursor"
+ sig="boolean move(int)"
+ line="7"
+ startpos="174"
+ endpos="178"
+>
+	<marker line="-1" type="param">
+		<operand  start="183" length="6" line="7">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="moveToPosition:(I)Z@android.database.Cursor"
+ sig="boolean moveToPosition(int)"
+ line="8"
+ startpos="217"
+ endpos="231"
+>
+	<marker line="-1" type="param">
+		<operand  start="236" length="8" line="8">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="moveToFirst:()Z@android.database.Cursor"
+ sig="boolean moveToFirst()"
+ line="9"
+ startpos="272"
+ endpos="283"
+>
+</method>
+<method
+ chordsig="moveToLast:()Z@android.database.Cursor"
+ sig="boolean moveToLast()"
+ line="10"
+ startpos="312"
+ endpos="322"
+>
+</method>
+<method
+ chordsig="moveToNext:()Z@android.database.Cursor"
+ sig="boolean moveToNext()"
+ line="11"
+ startpos="351"
+ endpos="361"
+>
+</method>
+<method
+ chordsig="moveToPrevious:()Z@android.database.Cursor"
+ sig="boolean moveToPrevious()"
+ line="12"
+ startpos="390"
+ endpos="404"
+>
+</method>
+<method
+ chordsig="isFirst:()Z@android.database.Cursor"
+ sig="boolean isFirst()"
+ line="13"
+ startpos="433"
+ endpos="440"
+>
+</method>
+<method
+ chordsig="isLast:()Z@android.database.Cursor"
+ sig="boolean isLast()"
+ line="14"
+ startpos="469"
+ endpos="475"
+>
+</method>
+<method
+ chordsig="isBeforeFirst:()Z@android.database.Cursor"
+ sig="boolean isBeforeFirst()"
+ line="15"
+ startpos="504"
+ endpos="517"
+>
+</method>
+<method
+ chordsig="isAfterLast:()Z@android.database.Cursor"
+ sig="boolean isAfterLast()"
+ line="16"
+ startpos="546"
+ endpos="557"
+>
+</method>
+<method
+ chordsig="getColumnIndex:(Ljava/lang/String;)I@android.database.Cursor"
+ sig="int getColumnIndex(String)"
+ line="17"
+ startpos="582"
+ endpos="596"
+>
+	<marker line="-1" type="param">
+		<operand  start="614" length="10" line="17">
+			<expr><![CDATA[columnName]]></expr>
+		</operand>
+	</marker>
+	<type  start="597" length="16" line="17" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getColumnIndexOrThrow:(Ljava/lang/String;)I@android.database.Cursor"
+ sig="int getColumnIndexOrThrow(String)"
+ line="18"
+ startpos="648"
+ endpos="669"
+>
+	<marker line="-1" type="param">
+		<operand  start="687" length="10" line="18">
+			<expr><![CDATA[columnName]]></expr>
+		</operand>
+	</marker>
+	<type  start="670" length="16" line="18" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getColumnName:(I)Ljava/lang/String;@android.database.Cursor"
+ sig="String getColumnName(int)"
+ line="19"
+ startpos="776"
+ endpos="789"
+>
+	<marker line="-1" type="param">
+		<operand  start="794" length="11" line="19">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<type  start="759" length="16" line="19" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getColumnNames:()[Ljava/lang/String;@android.database.Cursor"
+ sig="String[] getColumnNames()"
+ line="20"
+ startpos="844"
+ endpos="858"
+>
+	<type  start="825" length="16" line="20" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getColumnCount:()I@android.database.Cursor"
+ sig="int getColumnCount()"
+ line="21"
+ startpos="883"
+ endpos="897"
+>
+</method>
+<method
+ chordsig="getBlob:(I)[B@android.database.Cursor"
+ sig="byte[] getBlob(int)"
+ line="22"
+ startpos="925"
+ endpos="932"
+>
+	<marker line="-1" type="param">
+		<operand  start="937" length="11" line="22">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getString:(I)Ljava/lang/String;@android.database.Cursor"
+ sig="String getString(int)"
+ line="23"
+ startpos="985"
+ endpos="994"
+>
+	<marker line="-1" type="param">
+		<operand  start="999" length="11" line="23">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<type  start="968" length="16" line="23" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="copyStringToBuffer:(ILandroid/database/CharArrayBuffer;)V@android.database.Cursor"
+ sig="void copyStringToBuffer(int,CharArrayBuffer)"
+ line="24"
+ startpos="1035"
+ endpos="1053"
+>
+	<marker line="-1" type="param">
+		<operand  start="1058" length="11" line="24">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1104" length="6" line="24">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<type  start="1071" length="32" line="24" chordsig="android.database.CharArrayBuffer"/>
+</method>
+<method
+ chordsig="getShort:(I)S@android.database.Cursor"
+ sig="short getShort(int)"
+ line="25"
+ startpos="1136"
+ endpos="1144"
+>
+	<marker line="-1" type="param">
+		<operand  start="1149" length="11" line="25">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getInt:(I)I@android.database.Cursor"
+ sig="int getInt(int)"
+ line="26"
+ startpos="1184"
+ endpos="1190"
+>
+	<marker line="-1" type="param">
+		<operand  start="1195" length="11" line="26">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getLong:(I)J@android.database.Cursor"
+ sig="long getLong(int)"
+ line="27"
+ startpos="1231"
+ endpos="1238"
+>
+	<marker line="-1" type="param">
+		<operand  start="1243" length="11" line="27">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getFloat:(I)F@android.database.Cursor"
+ sig="float getFloat(int)"
+ line="28"
+ startpos="1280"
+ endpos="1288"
+>
+	<marker line="-1" type="param">
+		<operand  start="1293" length="11" line="28">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getDouble:(I)D@android.database.Cursor"
+ sig="double getDouble(int)"
+ line="29"
+ startpos="1331"
+ endpos="1340"
+>
+	<marker line="-1" type="param">
+		<operand  start="1345" length="11" line="29">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getType:(I)I@android.database.Cursor"
+ sig="int getType(int)"
+ line="30"
+ startpos="1380"
+ endpos="1387"
+>
+	<marker line="-1" type="param">
+		<operand  start="1392" length="11" line="30">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="isNull:(I)Z@android.database.Cursor"
+ sig="boolean isNull(int)"
+ line="31"
+ startpos="1431"
+ endpos="1437"
+>
+	<marker line="-1" type="param">
+		<operand  start="1442" length="11" line="31">
+			<expr><![CDATA[columnIndex]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="deactivate:()V@android.database.Cursor"
+ sig="void deactivate()"
+ line="33"
+ startpos="1490"
+ endpos="1500"
+>
+</method>
+<method
+ chordsig="requery:()Z@android.database.Cursor"
+ sig="boolean requery()"
+ line="35"
+ startpos="1553"
+ endpos="1560"
+>
+</method>
+<method
+ chordsig="close:()V@android.database.Cursor"
+ sig="void close()"
+ line="36"
+ startpos="1586"
+ endpos="1591"
+>
+</method>
+<method
+ chordsig="isClosed:()Z@android.database.Cursor"
+ sig="boolean isClosed()"
+ line="37"
+ startpos="1620"
+ endpos="1628"
+>
+</method>
+<method
+ chordsig="registerContentObserver:(Landroid/database/ContentObserver;)V@android.database.Cursor"
+ sig="void registerContentObserver(ContentObserver)"
+ line="38"
+ startpos="1654"
+ endpos="1677"
+>
+	<marker line="-1" type="param">
+		<operand  start="1711" length="8" line="38">
+			<expr><![CDATA[observer]]></expr>
+		</operand>
+	</marker>
+	<type  start="1678" length="32" line="38" chordsig="android.database.ContentObserver"/>
+</method>
+<method
+ chordsig="unregisterContentObserver:(Landroid/database/ContentObserver;)V@android.database.Cursor"
+ sig="void unregisterContentObserver(ContentObserver)"
+ line="39"
+ startpos="1744"
+ endpos="1769"
+>
+	<marker line="-1" type="param">
+		<operand  start="1803" length="8" line="39">
+			<expr><![CDATA[observer]]></expr>
+		</operand>
+	</marker>
+	<type  start="1770" length="32" line="39" chordsig="android.database.ContentObserver"/>
+</method>
+<method
+ chordsig="registerDataSetObserver:(Landroid/database/DataSetObserver;)V@android.database.Cursor"
+ sig="void registerDataSetObserver(DataSetObserver)"
+ line="40"
+ startpos="1836"
+ endpos="1859"
+>
+	<marker line="-1" type="param">
+		<operand  start="1893" length="8" line="40">
+			<expr><![CDATA[observer]]></expr>
+		</operand>
+	</marker>
+	<type  start="1860" length="32" line="40" chordsig="android.database.DataSetObserver"/>
+</method>
+<method
+ chordsig="unregisterDataSetObserver:(Landroid/database/DataSetObserver;)V@android.database.Cursor"
+ sig="void unregisterDataSetObserver(DataSetObserver)"
+ line="41"
+ startpos="1926"
+ endpos="1951"
+>
+	<marker line="-1" type="param">
+		<operand  start="1985" length="8" line="41">
+			<expr><![CDATA[observer]]></expr>
+		</operand>
+	</marker>
+	<type  start="1952" length="32" line="41" chordsig="android.database.DataSetObserver"/>
+</method>
+<method
+ chordsig="setNotificationUri:(Landroid/content/ContentResolver;Landroid/net/Uri;)V@android.database.Cursor"
+ sig="void setNotificationUri(ContentResolver,Uri)"
+ line="42"
+ startpos="2018"
+ endpos="2036"
+>
+	<marker line="-1" type="param">
+		<operand  start="2069" length="2" line="42">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2089" length="3" line="42">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<type  start="2037" length="31" line="42" chordsig="android.content.ContentResolver"/>
+	<type  start="2073" length="15" line="42" chordsig="android.net.Uri"/>
+</method>
+<method
+ chordsig="getWantsAllOnMoveCalls:()Z@android.database.Cursor"
+ sig="boolean getWantsAllOnMoveCalls()"
+ line="43"
+ startpos="2120"
+ endpos="2142"
+>
+</method>
+<method
+ chordsig="getExtras:()Landroid/os/Bundle;@android.database.Cursor"
+ sig="Bundle getExtras()"
+ line="44"
+ startpos="2181"
+ endpos="2190"
+>
+	<type  start="2163" length="17" line="44" chordsig="android.os.Bundle"/>
+</method>
+<method
+ chordsig="respond:(Landroid/os/Bundle;)Landroid/os/Bundle;@android.database.Cursor"
+ sig="Bundle respond(Bundle)"
+ line="45"
+ startpos="2229"
+ endpos="2236"
+>
+	<marker line="-1" type="param">
+		<operand  start="2255" length="6" line="45">
+			<expr><![CDATA[extras]]></expr>
+		</operand>
+	</marker>
+	<type  start="2211" length="17" line="45" chordsig="android.os.Bundle"/>
+	<type  start="2237" length="17" line="45" chordsig="android.os.Bundle"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,150 @@
+<root>
+<class chordsig="android.content.Entity" line="2">
+<class chordsig="android.content.Entity$NamedContentValues" line="4">
+<method
+ chordsig="&lt;init&gt;:(Landroid/net/Uri;Landroid/content/ContentValues;)V@android.content.Entity$NamedContentValues"
+ sig="NamedContentValues(Uri,ContentValues)"
+ line="6"
+ startpos="102"
+ endpos="120"
+>
+	<marker line="-1" type="param">
+		<operand  start="137" length="3" line="6">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="172" length="6" line="6">
+			<expr><![CDATA[values]]></expr>
+		</operand>
+	</marker>
+	<type  start="121" length="15" line="6" chordsig="android.net.Uri"/>
+	<type  start="142" length="29" line="6" chordsig="android.content.ContentValues"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="192" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="188" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="209" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="192" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="234" length="15" line="7" chordsig="android.net.Uri"/>
+	<type  start="268" length="29" line="8" chordsig="android.content.ContentValues"/>
+</class>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/ContentValues;)V@android.content.Entity"
+ sig="Entity(ContentValues)"
+ line="10"
+ startpos="316"
+ endpos="322"
+>
+	<marker line="-1" type="param">
+		<operand  start="353" length="6" line="10">
+			<expr><![CDATA[values]]></expr>
+		</operand>
+	</marker>
+	<type  start="323" length="29" line="10" chordsig="android.content.ContentValues"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="373" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="369" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="390" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="373" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getEntityValues:()Landroid/content/ContentValues;@android.content.Entity"
+ sig="ContentValues getEntityValues()"
+ line="11"
+ startpos="440"
+ endpos="455"
+>
+	<type  start="410" length="29" line="11" chordsig="android.content.ContentValues"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="470" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="466" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="487" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="470" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSubValues:()Ljava/util/ArrayList;@android.content.Entity"
+ sig="ArrayList&lt;NamedContentValues&gt; getSubValues()"
+ line="12"
+ startpos="570"
+ endpos="582"
+>
+	<type  start="507" length="19" line="12" chordsig="java.util.ArrayList"/>
+	<type  start="527" length="41" line="12" chordsig="android.content.Entity$NamedContentValues"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="597" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="593" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="614" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="597" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addSubValue:(Landroid/net/Uri;Landroid/content/ContentValues;)V@android.content.Entity"
+ sig="void addSubValue(Uri,ContentValues)"
+ line="13"
+ startpos="639"
+ endpos="650"
+>
+	<marker line="-1" type="param">
+		<operand  start="667" length="3" line="13">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="702" length="6" line="13">
+			<expr><![CDATA[values]]></expr>
+		</operand>
+	</marker>
+	<type  start="651" length="15" line="13" chordsig="android.net.Uri"/>
+	<type  start="672" length="29" line="13" chordsig="android.content.ContentValues"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="722" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="718" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="739" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="722" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.content.Entity"
+ sig="String toString()"
+ line="14"
+ startpos="776"
+ endpos="784"
+>
+	<type  start="759" length="16" line="14" chordsig="java.lang.String"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="799" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="795" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="816" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="799" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,84 @@
+<root>
+<class chordsig="javax.crypto.KeyGeneratorSpi" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@javax.crypto.KeyGeneratorSpi"
+ sig="KeyGeneratorSpi()"
+ line="4"
+ startpos="70"
+ endpos="85"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="100" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="96" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="117" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="100" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="engineGenerateKey:()Ljavax/crypto/SecretKey;@javax.crypto.KeyGeneratorSpi"
+ sig="SecretKey engineGenerateKey()"
+ line="5"
+ startpos="172"
+ endpos="189"
+>
+	<type  start="149" length="22" line="5" chordsig="javax.crypto.SecretKey"/>
+</method>
+<method
+ chordsig="engineInit:(Ljava/security/spec/AlgorithmParameterSpec;Ljava/security/SecureRandom;)V@javax.crypto.KeyGeneratorSpi"
+ sig="void engineInit(AlgorithmParameterSpec,SecureRandom)"
+ line="6"
+ startpos="218"
+ endpos="228"
+>
+	<marker line="-1" type="param">
+		<operand  start="271" length="6" line="6">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="306" length="6" line="6">
+			<expr><![CDATA[random]]></expr>
+		</operand>
+	</marker>
+	<type  start="229" length="41" line="6" chordsig="java.security.spec.AlgorithmParameterSpec"/>
+	<type  start="279" length="26" line="6" chordsig="java.security.SecureRandom"/>
+</method>
+<method
+ chordsig="engineInit:(ILjava/security/SecureRandom;)V@javax.crypto.KeyGeneratorSpi"
+ sig="void engineInit(int,SecureRandom)"
+ line="7"
+ startpos="396"
+ endpos="406"
+>
+	<marker line="-1" type="param">
+		<operand  start="411" length="7" line="7">
+			<expr><![CDATA[keysize]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="447" length="6" line="7">
+			<expr><![CDATA[random]]></expr>
+		</operand>
+	</marker>
+	<type  start="420" length="26" line="7" chordsig="java.security.SecureRandom"/>
+</method>
+<method
+ chordsig="engineInit:(Ljava/security/SecureRandom;)V@javax.crypto.KeyGeneratorSpi"
+ sig="void engineInit(SecureRandom)"
+ line="8"
+ startpos="481"
+ endpos="491"
+>
+	<marker line="-1" type="param">
+		<operand  start="519" length="6" line="8">
+			<expr><![CDATA[random]]></expr>
+		</operand>
+	</marker>
+	<type  start="492" length="26" line="8" chordsig="java.security.SecureRandom"/>
+</method>
+</class>
+</root>

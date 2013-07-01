@@ -1,0 +1,53 @@
+<root>
+<class chordsig="android.text.ClipboardManager" line="3">
+<method
+ chordsig="&lt;init&gt;:()V@android.text.ClipboardManager"
+ sig="ClipboardManager()"
+ line="5"
+ startpos="95"
+ endpos="111"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="126" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="122" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="143" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="126" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getText:()Ljava/lang/CharSequence;@android.text.ClipboardManager"
+ sig="CharSequence getText()"
+ line="6"
+ startpos="195"
+ endpos="202"
+>
+	<type  start="172" length="22" line="6" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="setText:(Ljava/lang/CharSequence;)V@android.text.ClipboardManager"
+ sig="void setText(CharSequence)"
+ line="7"
+ startpos="228"
+ endpos="235"
+>
+	<marker line="-1" type="param">
+		<operand  start="259" length="4" line="7">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="236" length="22" line="7" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="hasText:()Z@android.text.ClipboardManager"
+ sig="boolean hasText()"
+ line="8"
+ startpos="291"
+ endpos="298"
+>
+</method>
+</class>
+</root>

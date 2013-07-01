@@ -1,0 +1,836 @@
+<root>
+<class chordsig="android.net.wifi.WifiManager" line="6">
+<class chordsig="android.net.wifi.WifiManager$WifiLock" line="8">
+<method
+ chordsig="&lt;init&gt;:()V@android.net.wifi.WifiManager$WifiLock"
+ sig="WifiLock()"
+ line="10"
+ startpos="180"
+ endpos="188"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="215" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="211" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="232" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="215" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="acquire:()V@android.net.wifi.WifiManager$WifiLock"
+ sig="void acquire()"
+ line="14"
+ startpos="273"
+ endpos="280"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="307" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="303" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="324" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="307" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="release:()V@android.net.wifi.WifiManager$WifiLock"
+ sig="void release()"
+ line="18"
+ startpos="365"
+ endpos="372"
+>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="399" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="395" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="416" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="399" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setReferenceCounted:(Z)V@android.net.wifi.WifiManager$WifiLock"
+ sig="void setReferenceCounted(boolean)"
+ line="22"
+ startpos="457"
+ endpos="476"
+>
+	<marker line="-1" type="param">
+		<operand  start="485" length="10" line="22">
+			<expr><![CDATA[refCounted]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="521" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="517" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="538" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="521" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isHeld:()Z@android.net.wifi.WifiManager$WifiLock"
+ sig="boolean isHeld()"
+ line="26"
+ startpos="582"
+ endpos="588"
+>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="615" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="611" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="632" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="615" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setWorkSource:(Landroid/os/WorkSource;)V@android.net.wifi.WifiManager$WifiLock"
+ sig="void setWorkSource(WorkSource)"
+ line="30"
+ startpos="673"
+ endpos="686"
+>
+	<marker line="-1" type="param">
+		<operand  start="709" length="2" line="30">
+			<expr><![CDATA[ws]]></expr>
+		</operand>
+	</marker>
+	<type  start="687" length="21" line="30" chordsig="android.os.WorkSource"/>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="737" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="733" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="754" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="737" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.net.wifi.WifiManager$WifiLock"
+ sig="String toString()"
+ line="34"
+ startpos="807"
+ endpos="815"
+>
+	<type  start="790" length="16" line="34" chordsig="java.lang.String"/>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="842" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="838" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="859" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="842" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="finalize:()V@android.net.wifi.WifiManager$WifiLock"
+ sig="void finalize()"
+ line="38"
+ startpos="903"
+ endpos="911"
+>
+	<newexpr line="39" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="965" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="961" length="29" line="39">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="982" length="7" line="39">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="965" length="16" line="39" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.net.wifi.WifiManager$MulticastLock" line="43">
+<method
+ chordsig="&lt;init&gt;:()V@android.net.wifi.WifiManager$MulticastLock"
+ sig="MulticastLock()"
+ line="45"
+ startpos="1051"
+ endpos="1064"
+>
+	<newexpr line="46" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1091" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1087" length="29" line="46">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1108" length="7" line="46">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1091" length="16" line="46" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="acquire:()V@android.net.wifi.WifiManager$MulticastLock"
+ sig="void acquire()"
+ line="49"
+ startpos="1149"
+ endpos="1156"
+>
+	<newexpr line="50" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1183" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1179" length="29" line="50">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1200" length="7" line="50">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1183" length="16" line="50" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="release:()V@android.net.wifi.WifiManager$MulticastLock"
+ sig="void release()"
+ line="53"
+ startpos="1241"
+ endpos="1248"
+>
+	<newexpr line="54" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1275" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1271" length="29" line="54">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1292" length="7" line="54">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1275" length="16" line="54" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setReferenceCounted:(Z)V@android.net.wifi.WifiManager$MulticastLock"
+ sig="void setReferenceCounted(boolean)"
+ line="57"
+ startpos="1333"
+ endpos="1352"
+>
+	<marker line="-1" type="param">
+		<operand  start="1361" length="10" line="57">
+			<expr><![CDATA[refCounted]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="58" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1397" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1393" length="29" line="58">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1414" length="7" line="58">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1397" length="16" line="58" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isHeld:()Z@android.net.wifi.WifiManager$MulticastLock"
+ sig="boolean isHeld()"
+ line="61"
+ startpos="1458"
+ endpos="1464"
+>
+	<newexpr line="62" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1491" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1487" length="29" line="62">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1508" length="7" line="62">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1491" length="16" line="62" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.net.wifi.WifiManager$MulticastLock"
+ sig="String toString()"
+ line="65"
+ startpos="1561"
+ endpos="1569"
+>
+	<type  start="1544" length="16" line="65" chordsig="java.lang.String"/>
+	<newexpr line="66" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1596" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1592" length="29" line="66">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1613" length="7" line="66">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1596" length="16" line="66" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="finalize:()V@android.net.wifi.WifiManager$MulticastLock"
+ sig="void finalize()"
+ line="69"
+ startpos="1657"
+ endpos="1665"
+>
+	<newexpr line="70" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1719" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1715" length="29" line="70">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1736" length="7" line="70">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1719" length="16" line="70" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.net.wifi.WifiManager"
+ sig="WifiManager()"
+ line="74"
+ startpos="1767"
+ endpos="1778"
+>
+	<newexpr line="75" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1801" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1797" length="29" line="75">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1818" length="7" line="75">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1801" length="16" line="75" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getConfiguredNetworks:()Ljava/util/List;@android.net.wifi.WifiManager"
+ sig="List&lt;WifiConfiguration&gt; getConfiguredNetworks()"
+ line="78"
+ startpos="1897"
+ endpos="1918"
+>
+	<type  start="1846" length="14" line="78" chordsig="java.util.List"/>
+	<type  start="1861" length="34" line="78" chordsig="android.net.wifi.WifiConfiguration"/>
+	<newexpr line="79" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1941" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1937" length="29" line="79">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1958" length="7" line="79">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1941" length="16" line="79" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addNetwork:(Landroid/net/wifi/WifiConfiguration;)I@android.net.wifi.WifiManager"
+ sig="int addNetwork(WifiConfiguration)"
+ line="82"
+ startpos="1990"
+ endpos="2000"
+>
+	<marker line="-1" type="param">
+		<operand  start="2036" length="6" line="82">
+			<expr><![CDATA[config]]></expr>
+		</operand>
+	</marker>
+	<type  start="2001" length="34" line="82" chordsig="android.net.wifi.WifiConfiguration"/>
+	<newexpr line="83" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2064" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2060" length="29" line="83">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2081" length="7" line="83">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2064" length="16" line="83" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="updateNetwork:(Landroid/net/wifi/WifiConfiguration;)I@android.net.wifi.WifiManager"
+ sig="int updateNetwork(WifiConfiguration)"
+ line="86"
+ startpos="2113"
+ endpos="2126"
+>
+	<marker line="-1" type="param">
+		<operand  start="2162" length="6" line="86">
+			<expr><![CDATA[config]]></expr>
+		</operand>
+	</marker>
+	<type  start="2127" length="34" line="86" chordsig="android.net.wifi.WifiConfiguration"/>
+	<newexpr line="87" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2190" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2186" length="29" line="87">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2207" length="7" line="87">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2190" length="16" line="87" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeNetwork:(I)Z@android.net.wifi.WifiManager"
+ sig="boolean removeNetwork(int)"
+ line="90"
+ startpos="2243"
+ endpos="2256"
+>
+	<marker line="-1" type="param">
+		<operand  start="2261" length="5" line="90">
+			<expr><![CDATA[netId]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="91" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2288" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2284" length="29" line="91">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2305" length="7" line="91">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2288" length="16" line="91" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="enableNetwork:(IZ)Z@android.net.wifi.WifiManager"
+ sig="boolean enableNetwork(int,boolean)"
+ line="94"
+ startpos="2341"
+ endpos="2354"
+>
+	<marker line="-1" type="param">
+		<operand  start="2359" length="5" line="94">
+			<expr><![CDATA[netId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2374" length="13" line="94">
+			<expr><![CDATA[disableOthers]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="95" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2409" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2405" length="29" line="95">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2426" length="7" line="95">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2409" length="16" line="95" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="disableNetwork:(I)Z@android.net.wifi.WifiManager"
+ sig="boolean disableNetwork(int)"
+ line="98"
+ startpos="2462"
+ endpos="2476"
+>
+	<marker line="-1" type="param">
+		<operand  start="2481" length="5" line="98">
+			<expr><![CDATA[netId]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="99" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2508" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2504" length="29" line="99">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2525" length="7" line="99">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2508" length="16" line="99" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="disconnect:()Z@android.net.wifi.WifiManager"
+ sig="boolean disconnect()"
+ line="102"
+ startpos="2561"
+ endpos="2571"
+>
+	<newexpr line="103" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2594" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2590" length="29" line="103">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2611" length="7" line="103">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2594" length="16" line="103" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="reconnect:()Z@android.net.wifi.WifiManager"
+ sig="boolean reconnect()"
+ line="106"
+ startpos="2647"
+ endpos="2656"
+>
+	<newexpr line="107" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2679" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2675" length="29" line="107">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2696" length="7" line="107">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2679" length="16" line="107" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="reassociate:()Z@android.net.wifi.WifiManager"
+ sig="boolean reassociate()"
+ line="110"
+ startpos="2732"
+ endpos="2743"
+>
+	<newexpr line="111" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2766" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2762" length="29" line="111">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2783" length="7" line="111">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2766" length="16" line="111" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="pingSupplicant:()Z@android.net.wifi.WifiManager"
+ sig="boolean pingSupplicant()"
+ line="114"
+ startpos="2819"
+ endpos="2833"
+>
+	<newexpr line="115" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2856" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2852" length="29" line="115">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2873" length="7" line="115">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2856" length="16" line="115" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="startScan:()Z@android.net.wifi.WifiManager"
+ sig="boolean startScan()"
+ line="118"
+ startpos="2909"
+ endpos="2918"
+>
+	<newexpr line="119" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2941" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2937" length="29" line="119">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2958" length="7" line="119">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2941" length="16" line="119" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getConnectionInfo:()Landroid/net/wifi/WifiInfo;@android.net.wifi.WifiManager"
+ sig="WifiInfo getConnectionInfo()"
+ line="122"
+ startpos="3012"
+ endpos="3029"
+>
+	<type  start="2986" length="25" line="122" chordsig="android.net.wifi.WifiInfo"/>
+	<newexpr line="123" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3052" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3048" length="29" line="123">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3069" length="7" line="123">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3052" length="16" line="123" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getScanResults:()Ljava/util/List;@android.net.wifi.WifiManager"
+ sig="List&lt;ScanResult&gt; getScanResults()"
+ line="126"
+ startpos="3141"
+ endpos="3155"
+>
+	<type  start="3097" length="14" line="126" chordsig="java.util.List"/>
+	<type  start="3112" length="27" line="126" chordsig="android.net.wifi.ScanResult"/>
+	<newexpr line="127" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3178" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3174" length="29" line="127">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3195" length="7" line="127">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3178" length="16" line="127" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="saveConfiguration:()Z@android.net.wifi.WifiManager"
+ sig="boolean saveConfiguration()"
+ line="130"
+ startpos="3231"
+ endpos="3248"
+>
+	<newexpr line="131" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3271" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3267" length="29" line="131">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3288" length="7" line="131">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3271" length="16" line="131" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setWifiEnabled:(Z)Z@android.net.wifi.WifiManager"
+ sig="boolean setWifiEnabled(boolean)"
+ line="134"
+ startpos="3324"
+ endpos="3338"
+>
+	<marker line="-1" type="param">
+		<operand  start="3347" length="7" line="134">
+			<expr><![CDATA[enabled]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="135" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3376" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3372" length="29" line="135">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3393" length="7" line="135">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3376" length="16" line="135" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getWifiState:()I@android.net.wifi.WifiManager"
+ sig="int getWifiState()"
+ line="138"
+ startpos="3425"
+ endpos="3437"
+>
+	<newexpr line="139" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3460" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3456" length="29" line="139">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3477" length="7" line="139">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3460" length="16" line="139" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isWifiEnabled:()Z@android.net.wifi.WifiManager"
+ sig="boolean isWifiEnabled()"
+ line="142"
+ startpos="3513"
+ endpos="3526"
+>
+	<newexpr line="143" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3549" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3545" length="29" line="143">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3566" length="7" line="143">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3549" length="16" line="143" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="calculateSignalLevel:(II)I@android.net.wifi.WifiManager"
+ sig="int calculateSignalLevel(int,int)"
+ line="146"
+ startpos="3605"
+ endpos="3625"
+>
+	<marker line="-1" type="param">
+		<operand  start="3630" length="4" line="146">
+			<expr><![CDATA[rssi]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3640" length="9" line="146">
+			<expr><![CDATA[numLevels]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="147" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3671" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3667" length="29" line="147">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3688" length="7" line="147">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3671" length="16" line="147" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="compareSignalLevel:(II)I@android.net.wifi.WifiManager"
+ sig="int compareSignalLevel(int,int)"
+ line="150"
+ startpos="3727"
+ endpos="3745"
+>
+	<marker line="-1" type="param">
+		<operand  start="3750" length="5" line="150">
+			<expr><![CDATA[rssiA]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3761" length="5" line="150">
+			<expr><![CDATA[rssiB]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="151" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3788" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3784" length="29" line="151">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3805" length="7" line="151">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3788" length="16" line="151" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createWifiLock:(ILjava/lang/String;)Landroid/net/wifi/WifiManager$WifiLock;@android.net.wifi.WifiManager"
+ sig="WifiLock createWifiLock(int,String)"
+ line="154"
+ startpos="3871"
+ endpos="3885"
+>
+	<marker line="-1" type="param">
+		<operand  start="3890" length="8" line="154">
+			<expr><![CDATA[lockType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3917" length="3" line="154">
+			<expr><![CDATA[tag]]></expr>
+		</operand>
+	</marker>
+	<type  start="3833" length="37" line="154" chordsig="android.net.wifi.WifiManager$WifiLock"/>
+	<type  start="3900" length="16" line="154" chordsig="java.lang.String"/>
+	<newexpr line="155" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3942" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3938" length="29" line="155">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3959" length="7" line="155">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3942" length="16" line="155" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createWifiLock:(Ljava/lang/String;)Landroid/net/wifi/WifiManager$WifiLock;@android.net.wifi.WifiManager"
+ sig="WifiLock createWifiLock(String)"
+ line="158"
+ startpos="4025"
+ endpos="4039"
+>
+	<marker line="-1" type="param">
+		<operand  start="4057" length="3" line="158">
+			<expr><![CDATA[tag]]></expr>
+		</operand>
+	</marker>
+	<type  start="3987" length="37" line="158" chordsig="android.net.wifi.WifiManager$WifiLock"/>
+	<type  start="4040" length="16" line="158" chordsig="java.lang.String"/>
+	<newexpr line="159" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4082" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4078" length="29" line="159">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4099" length="7" line="159">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4082" length="16" line="159" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createMulticastLock:(Ljava/lang/String;)Landroid/net/wifi/WifiManager$MulticastLock;@android.net.wifi.WifiManager"
+ sig="MulticastLock createMulticastLock(String)"
+ line="162"
+ startpos="4170"
+ endpos="4189"
+>
+	<marker line="-1" type="param">
+		<operand  start="4207" length="3" line="162">
+			<expr><![CDATA[tag]]></expr>
+		</operand>
+	</marker>
+	<type  start="4127" length="42" line="162" chordsig="android.net.wifi.WifiManager$MulticastLock"/>
+	<type  start="4190" length="16" line="162" chordsig="java.lang.String"/>
+	<newexpr line="163" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4232" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4228" length="29" line="163">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4249" length="7" line="163">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4232" length="16" line="163" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="4345" length="16" line="168" chordsig="java.lang.String"/>
+	<type  start="4454" length="16" line="170" chordsig="java.lang.String"/>
+	<type  start="4529" length="16" line="172" chordsig="java.lang.String"/>
+	<type  start="4891" length="16" line="184" chordsig="java.lang.String"/>
+	<type  start="5020" length="16" line="186" chordsig="java.lang.String"/>
+	<type  start="5104" length="16" line="188" chordsig="java.lang.String"/>
+	<type  start="5210" length="16" line="190" chordsig="java.lang.String"/>
+	<type  start="5288" length="16" line="192" chordsig="java.lang.String"/>
+	<type  start="5353" length="16" line="194" chordsig="java.lang.String"/>
+	<type  start="5425" length="16" line="196" chordsig="java.lang.String"/>
+	<type  start="5545" length="16" line="198" chordsig="java.lang.String"/>
+	<type  start="5617" length="16" line="200" chordsig="java.lang.String"/>
+	<type  start="5703" length="16" line="202" chordsig="java.lang.String"/>
+	<type  start="5810" length="16" line="204" chordsig="java.lang.String"/>
+	<type  start="5907" length="16" line="206" chordsig="java.lang.String"/>
+	<type  start="5977" length="16" line="208" chordsig="java.lang.String"/>
+	<type  start="6088" length="16" line="210" chordsig="java.lang.String"/>
+<method
+ chordsig="getDhcpInfo:()Landroid/net/DhcpInfo;@android.net.wifi.WifiManager"
+ sig="DhcpInfo getDhcpInfo()"
+ line="219"
+ startpos="6446"
+ endpos="6457"
+>
+	<type  start="6425" length="20" line="219" chordsig="android.net.DhcpInfo"/>
+	<marker line="220" type="return">
+		<operand  start="6477" length="26" line="220">
+			<expr><![CDATA[new android.net.DhcpInfo()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="220" chordsig="&lt;init&gt;:()V@android.net.DhcpInfo" start="6481" length="20" type="invoke">
+			<expr><![CDATA[new android.net.DhcpInfo()]]></expr>
+		<param  start="6477" length="26" line="220">
+			<expr><![CDATA[new android.net.DhcpInfo()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6481" length="20" line="220" chordsig="android.net.DhcpInfo"/>
+</method>
+</class>
+</root>

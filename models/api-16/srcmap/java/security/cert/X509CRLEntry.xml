@@ -1,0 +1,127 @@
+<root>
+<class chordsig="java.security.cert.X509CRLEntry" line="2">
+	<type  start="76" length="32" line="3" chordsig="java.security.cert.X509Extension"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.security.cert.X509CRLEntry"
+ sig="X509CRLEntry()"
+ line="5"
+ startpos="119"
+ endpos="131"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="146" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="142" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="163" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="146" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.security.cert.X509CRLEntry"
+ sig="boolean equals(Object)"
+ line="6"
+ startpos="191"
+ endpos="197"
+>
+	<marker line="-1" type="param">
+		<operand  start="215" length="5" line="6">
+			<expr><![CDATA[other]]></expr>
+		</operand>
+	</marker>
+	<type  start="198" length="16" line="6" chordsig="java.lang.Object"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="234" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="230" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="251" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="234" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@java.security.cert.X509CRLEntry"
+ sig="int hashCode()"
+ line="7"
+ startpos="275"
+ endpos="283"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="298" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="294" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="315" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="298" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getEncoded:()[B@java.security.cert.X509CRLEntry"
+ sig="byte[] getEncoded()"
+ line="8"
+ startpos="351"
+ endpos="361"
+>
+</method>
+<method
+ chordsig="getSerialNumber:()Ljava/math/BigInteger;@java.security.cert.X509CRLEntry"
+ sig="BigInteger getSerialNumber()"
+ line="9"
+ startpos="442"
+ endpos="457"
+>
+	<type  start="421" length="20" line="9" chordsig="java.math.BigInteger"/>
+</method>
+<method
+ chordsig="getCertificateIssuer:()Ljavax/security/auth/x500/X500Principal;@java.security.cert.X509CRLEntry"
+ sig="X500Principal getCertificateIssuer()"
+ line="10"
+ startpos="508"
+ endpos="528"
+>
+	<type  start="469" length="38" line="10" chordsig="javax.security.auth.x500.X500Principal"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="543" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="539" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="560" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="543" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRevocationDate:()Ljava/util/Date;@java.security.cert.X509CRLEntry"
+ sig="Date getRevocationDate()"
+ line="11"
+ startpos="604"
+ endpos="621"
+>
+	<type  start="589" length="14" line="11" chordsig="java.util.Date"/>
+</method>
+<method
+ chordsig="hasExtensions:()Z@java.security.cert.X509CRLEntry"
+ sig="boolean hasExtensions()"
+ line="12"
+ startpos="650"
+ endpos="663"
+>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.security.cert.X509CRLEntry"
+ sig="String toString()"
+ line="13"
+ startpos="701"
+ endpos="709"
+>
+	<type  start="684" length="16" line="13" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

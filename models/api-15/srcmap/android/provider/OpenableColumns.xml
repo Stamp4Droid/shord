@@ -1,0 +1,6 @@
+<root>
+<class chordsig="android.provider.OpenableColumns" line="2">
+	<type  start="81" length="16" line="4" chordsig="java.lang.String"/>
+	<type  start="150" length="16" line="5" chordsig="java.lang.String"/>
+</class>
+</root>

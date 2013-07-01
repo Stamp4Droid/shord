@@ -1,0 +1,176 @@
+<root>
+<class chordsig="java.sql.Blob" line="2">
+<method
+ chordsig="getBinaryStream:()Ljava/io/InputStream;@java.sql.Blob"
+ sig="InputStream getBinaryStream()"
+ line="4"
+ startpos="79"
+ endpos="94"
+>
+	<type  start="59" length="19" line="4" chordsig="java.io.InputStream"/>
+</method>
+<method
+ chordsig="getBinaryStream:(JJ)Ljava/io/InputStream;@java.sql.Blob"
+ sig="InputStream getBinaryStream(long,long)"
+ line="5"
+ startpos="164"
+ endpos="179"
+>
+	<marker line="-1" type="param">
+		<operand  start="185" length="3" line="5">
+			<expr><![CDATA[pos]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="195" length="6" line="5">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<type  start="144" length="19" line="5" chordsig="java.io.InputStream"/>
+</method>
+<method
+ chordsig="getBytes:(JI)[B@java.sql.Blob"
+ sig="byte[] getBytes(long,int)"
+ line="6"
+ startpos="257"
+ endpos="265"
+>
+	<marker line="-1" type="param">
+		<operand  start="271" length="3" line="6">
+			<expr><![CDATA[pos]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="280" length="6" line="6">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="length:()J@java.sql.Blob"
+ sig="long length()"
+ line="7"
+ startpos="340"
+ endpos="346"
+>
+</method>
+<method
+ chordsig="position:(Ljava/sql/Blob;J)J@java.sql.Blob"
+ sig="long position(Blob,long)"
+ line="8"
+ startpos="401"
+ endpos="409"
+>
+	<marker line="-1" type="param">
+		<operand  start="424" length="7" line="8">
+			<expr><![CDATA[pattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="438" length="5" line="8">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<type  start="410" length="13" line="8" chordsig="java.sql.Blob"/>
+</method>
+<method
+ chordsig="position:([BJ)J@java.sql.Blob"
+ sig="long position(byte[],long)"
+ line="9"
+ startpos="497"
+ endpos="505"
+>
+	<marker line="-1" type="param">
+		<operand  start="513" length="7" line="9">
+			<expr><![CDATA[pattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="527" length="5" line="9">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setBinaryStream:(J)Ljava/io/OutputStream;@java.sql.Blob"
+ sig="OutputStream setBinaryStream(long)"
+ line="10"
+ startpos="602"
+ endpos="617"
+>
+	<marker line="-1" type="param">
+		<operand  start="623" length="3" line="10">
+			<expr><![CDATA[pos]]></expr>
+		</operand>
+	</marker>
+	<type  start="581" length="20" line="10" chordsig="java.io.OutputStream"/>
+</method>
+<method
+ chordsig="setBytes:(J[B)I@java.sql.Blob"
+ sig="int setBytes(long,byte[])"
+ line="11"
+ startpos="679"
+ endpos="687"
+>
+	<marker line="-1" type="param">
+		<operand  start="693" length="3" line="11">
+			<expr><![CDATA[pos]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="705" length="8" line="11">
+			<expr><![CDATA[theBytes]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setBytes:(J[BII)I@java.sql.Blob"
+ sig="int setBytes(long,byte[],int,int)"
+ line="12"
+ startpos="766"
+ endpos="774"
+>
+	<marker line="-1" type="param">
+		<operand  start="780" length="3" line="12">
+			<expr><![CDATA[pos]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="792" length="8" line="12">
+			<expr><![CDATA[theBytes]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="806" length="6" line="12">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="818" length="3" line="12">
+			<expr><![CDATA[len]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="truncate:(J)V@java.sql.Blob"
+ sig="void truncate(long)"
+ line="13"
+ startpos="875"
+ endpos="883"
+>
+	<marker line="-1" type="param">
+		<operand  start="889" length="3" line="13">
+			<expr><![CDATA[len]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="free:()V@java.sql.Blob"
+ sig="void free()"
+ line="14"
+ startpos="946"
+ endpos="950"
+>
+</method>
+</class>
+</root>

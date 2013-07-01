@@ -1,0 +1,119 @@
+<root>
+<class chordsig="android.animation.AnimatorListenerAdapter" line="2">
+	<type  start="86" length="43" line="3" chordsig="android.animation.Animator$AnimatorListener"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.animation.AnimatorListenerAdapter"
+ sig="AnimatorListenerAdapter()"
+ line="5"
+ startpos="140"
+ endpos="163"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="178" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="174" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="195" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="178" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onAnimationCancel:(Landroid/animation/Animator;)V@android.animation.AnimatorListenerAdapter"
+ sig="void onAnimationCancel(Animator)"
+ line="6"
+ startpos="220"
+ endpos="237"
+>
+	<marker line="-1" type="param">
+		<operand  start="265" length="9" line="6">
+			<expr><![CDATA[animation]]></expr>
+		</operand>
+	</marker>
+	<type  start="238" length="26" line="6" chordsig="android.animation.Animator"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="288" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="284" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="305" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="288" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onAnimationEnd:(Landroid/animation/Animator;)V@android.animation.AnimatorListenerAdapter"
+ sig="void onAnimationEnd(Animator)"
+ line="7"
+ startpos="330"
+ endpos="344"
+>
+	<marker line="-1" type="param">
+		<operand  start="372" length="9" line="7">
+			<expr><![CDATA[animation]]></expr>
+		</operand>
+	</marker>
+	<type  start="345" length="26" line="7" chordsig="android.animation.Animator"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="395" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="391" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="412" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="395" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onAnimationRepeat:(Landroid/animation/Animator;)V@android.animation.AnimatorListenerAdapter"
+ sig="void onAnimationRepeat(Animator)"
+ line="8"
+ startpos="437"
+ endpos="454"
+>
+	<marker line="-1" type="param">
+		<operand  start="482" length="9" line="8">
+			<expr><![CDATA[animation]]></expr>
+		</operand>
+	</marker>
+	<type  start="455" length="26" line="8" chordsig="android.animation.Animator"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="505" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="501" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="522" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="505" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onAnimationStart:(Landroid/animation/Animator;)V@android.animation.AnimatorListenerAdapter"
+ sig="void onAnimationStart(Animator)"
+ line="9"
+ startpos="547"
+ endpos="563"
+>
+	<marker line="-1" type="param">
+		<operand  start="591" length="9" line="9">
+			<expr><![CDATA[animation]]></expr>
+		</operand>
+	</marker>
+	<type  start="564" length="26" line="9" chordsig="android.animation.Animator"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="614" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="610" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="631" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="614" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

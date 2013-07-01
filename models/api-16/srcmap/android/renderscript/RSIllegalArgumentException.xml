@@ -1,0 +1,30 @@
+<root>
+<class chordsig="android.renderscript.RSIllegalArgumentException" line="2">
+	<type  start="80" length="39" line="3" chordsig="android.renderscript.RSRuntimeException"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.renderscript.RSIllegalArgumentException"
+ sig="RSIllegalArgumentException(String)"
+ line="5"
+ startpos="130"
+ endpos="156"
+>
+	<marker line="-1" type="param">
+		<operand  start="174" length="6" line="5">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<type  start="157" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="191" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="225" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="221" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="242" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="225" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

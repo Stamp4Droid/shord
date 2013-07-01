@@ -1,0 +1,95 @@
+<root>
+<class chordsig="android.text.style.LineHeightSpan" line="2">
+	<type  start="70" length="33" line="3" chordsig="android.text.style.ParagraphStyle"/>
+	<type  start="105" length="35" line="3" chordsig="android.text.style.WrapTogetherSpan"/>
+<class chordsig="android.text.style.LineHeightSpan$WithDensity" line="5">
+	<type  start="189" length="33" line="6" chordsig="android.text.style.LineHeightSpan"/>
+<method
+ chordsig="chooseHeight:(Ljava/lang/CharSequence;IIIILandroid/graphics/Paint$FontMetricsInt;Landroid/text/TextPaint;)V@android.text.style.LineHeightSpan$WithDensity"
+ sig="void chooseHeight(CharSequence,int,int,int,int,FontMetricsInt,TextPaint)"
+ line="8"
+ startpos="247"
+ endpos="259"
+>
+	<marker line="-1" type="param">
+		<operand  start="283" length="4" line="8">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="293" length="5" line="8">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="304" length="3" line="8">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="313" length="10" line="8">
+			<expr><![CDATA[spanstartv]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="329" length="1" line="8">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="370" length="2" line="8">
+			<expr><![CDATA[fm]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="397" length="5" line="8">
+			<expr><![CDATA[paint]]></expr>
+		</operand>
+	</marker>
+	<type  start="260" length="22" line="8" chordsig="java.lang.CharSequence"/>
+	<type  start="332" length="37" line="8" chordsig="android.graphics.Paint$FontMetricsInt"/>
+	<type  start="374" length="22" line="8" chordsig="android.text.TextPaint"/>
+</method>
+</class>
+<method
+ chordsig="chooseHeight:(Ljava/lang/CharSequence;IIIILandroid/graphics/Paint$FontMetricsInt;)V@android.text.style.LineHeightSpan"
+ sig="void chooseHeight(CharSequence,int,int,int,int,FontMetricsInt)"
+ line="10"
+ startpos="429"
+ endpos="441"
+>
+	<marker line="-1" type="param">
+		<operand  start="465" length="4" line="10">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="475" length="5" line="10">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="486" length="3" line="10">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="495" length="10" line="10">
+			<expr><![CDATA[spanstartv]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="511" length="1" line="10">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="552" length="2" line="10">
+			<expr><![CDATA[fm]]></expr>
+		</operand>
+	</marker>
+	<type  start="442" length="22" line="10" chordsig="java.lang.CharSequence"/>
+	<type  start="514" length="37" line="10" chordsig="android.graphics.Paint$FontMetricsInt"/>
+</method>
+</class>
+</root>

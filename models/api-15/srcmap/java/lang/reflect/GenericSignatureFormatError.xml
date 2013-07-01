@@ -1,0 +1,23 @@
+<root>
+<class chordsig="java.lang.reflect.GenericSignatureFormatError" line="2">
+	<type  start="78" length="26" line="3" chordsig="java.lang.ClassFormatError"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.lang.reflect.GenericSignatureFormatError"
+ sig="GenericSignatureFormatError()"
+ line="5"
+ startpos="115"
+ endpos="142"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="157" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="153" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="174" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="157" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

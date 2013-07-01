@@ -1,0 +1,166 @@
+<root>
+<class chordsig="android.widget.RadioButton" line="2">
+	<type  start="59" length="29" line="3" chordsig="android.widget.CompoundButton"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.widget.RadioButton"
+ sig="RadioButton(Context)"
+ line="5"
+ startpos="99"
+ endpos="110"
+>
+	<marker line="-1" type="param">
+		<operand  start="135" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="111" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="153" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="183" length="25" line="5" chordsig="android.util.AttributeSet"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="228" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="224" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="245" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="228" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.widget.RadioButton"
+ sig="RadioButton(Context,AttributeSet)"
+ line="6"
+ startpos="265"
+ endpos="276"
+>
+	<marker line="-1" type="param">
+		<operand  start="301" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="336" length="5" line="6">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="277" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="310" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<type  start="352" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="382" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="427" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="423" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="444" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="427" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;I)V@android.widget.RadioButton"
+ sig="RadioButton(Context,AttributeSet,int)"
+ line="7"
+ startpos="464"
+ endpos="475"
+>
+	<marker line="-1" type="param">
+		<operand  start="500" length="7" line="7">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="535" length="5" line="7">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="546" length="8" line="7">
+			<expr><![CDATA[defStyle]]></expr>
+		</operand>
+	</marker>
+	<type  start="476" length="23" line="7" chordsig="android.content.Context"/>
+	<type  start="509" length="25" line="7" chordsig="android.util.AttributeSet"/>
+	<type  start="565" length="23" line="7" chordsig="android.content.Context"/>
+	<type  start="595" length="25" line="7" chordsig="android.util.AttributeSet"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="640" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="636" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="657" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="640" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toggle:()V@android.widget.RadioButton"
+ sig="void toggle()"
+ line="8"
+ startpos="682"
+ endpos="688"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="703" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="699" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="720" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="703" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityEvent:(Landroid/view/accessibility/AccessibilityEvent;)V@android.widget.RadioButton"
+ sig="void onInitializeAccessibilityEvent(AccessibilityEvent)"
+ line="9"
+ startpos="745"
+ endpos="775"
+>
+	<marker line="-1" type="param">
+		<operand  start="822" length="5" line="9">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="776" length="45" line="9" chordsig="android.view.accessibility.AccessibilityEvent"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="841" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="837" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="858" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="841" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityNodeInfo:(Landroid/view/accessibility/AccessibilityNodeInfo;)V@android.widget.RadioButton"
+ sig="void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo)"
+ line="10"
+ startpos="883"
+ endpos="916"
+>
+	<marker line="-1" type="param">
+		<operand  start="966" length="4" line="10">
+			<expr><![CDATA[info]]></expr>
+		</operand>
+	</marker>
+	<type  start="917" length="48" line="10" chordsig="android.view.accessibility.AccessibilityNodeInfo"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="984" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="980" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1001" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="984" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

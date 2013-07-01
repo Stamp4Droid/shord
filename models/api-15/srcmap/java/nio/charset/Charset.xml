@@ -1,0 +1,437 @@
+<root>
+<class chordsig="java.nio.charset.Charset" line="2">
+	<type  start="69" length="20" line="3" chordsig="java.lang.Comparable"/>
+	<type  start="90" length="24" line="3" chordsig="java.nio.charset.Charset"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;[Ljava/lang/String;)V@java.nio.charset.Charset"
+ sig="Charset(String,String[])"
+ line="5"
+ startpos="129"
+ endpos="136"
+>
+	<marker line="-1" type="param">
+		<operand  start="154" length="13" line="5">
+			<expr><![CDATA[canonicalName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="188" length="7" line="5">
+			<expr><![CDATA[aliases]]></expr>
+		</operand>
+	</marker>
+	<type  start="137" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="169" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="209" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="205" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="226" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="209" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="availableCharsets:()Ljava/util/SortedMap;@java.nio.charset.Charset"
+ sig="SortedMap&lt;String,Charset&gt; availableCharsets()"
+ line="6"
+ startpos="317"
+ endpos="334"
+>
+	<type  start="253" length="19" line="6" chordsig="java.util.SortedMap"/>
+	<type  start="273" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="291" length="24" line="6" chordsig="java.nio.charset.Charset"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="349" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="345" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="366" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="349" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="forName:(Ljava/lang/String;)Ljava/nio/charset/Charset;@java.nio.charset.Charset"
+ sig="Charset forName(String)"
+ line="7"
+ startpos="418"
+ endpos="425"
+>
+	<marker line="-1" type="param">
+		<operand  start="443" length="11" line="7">
+			<expr><![CDATA[charsetName]]></expr>
+		</operand>
+	</marker>
+	<type  start="393" length="24" line="7" chordsig="java.nio.charset.Charset"/>
+	<type  start="426" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="468" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="464" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="485" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="468" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isSupported:(Ljava/lang/String;)Z@java.nio.charset.Charset"
+ sig="boolean isSupported(String)"
+ line="8"
+ startpos="520"
+ endpos="531"
+>
+	<marker line="-1" type="param">
+		<operand  start="549" length="11" line="8">
+			<expr><![CDATA[charsetName]]></expr>
+		</operand>
+	</marker>
+	<type  start="532" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="574" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="570" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="591" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="574" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="contains:(Ljava/nio/charset/Charset;)Z@java.nio.charset.Charset"
+ sig="boolean contains(Charset)"
+ line="9"
+ startpos="628"
+ endpos="636"
+>
+	<marker line="-1" type="param">
+		<operand  start="662" length="7" line="9">
+			<expr><![CDATA[charset]]></expr>
+		</operand>
+	</marker>
+	<type  start="637" length="24" line="9" chordsig="java.nio.charset.Charset"/>
+</method>
+<method
+ chordsig="newEncoder:()Ljava/nio/charset/CharsetEncoder;@java.nio.charset.Charset"
+ sig="CharsetEncoder newEncoder()"
+ line="10"
+ startpos="721"
+ endpos="731"
+>
+	<type  start="689" length="31" line="10" chordsig="java.nio.charset.CharsetEncoder"/>
+</method>
+<method
+ chordsig="newDecoder:()Ljava/nio/charset/CharsetDecoder;@java.nio.charset.Charset"
+ sig="CharsetDecoder newDecoder()"
+ line="11"
+ startpos="784"
+ endpos="794"
+>
+	<type  start="752" length="31" line="11" chordsig="java.nio.charset.CharsetDecoder"/>
+</method>
+<method
+ chordsig="name:()Ljava/lang/String;@java.nio.charset.Charset"
+ sig="String name()"
+ line="12"
+ startpos="829"
+ endpos="833"
+>
+	<type  start="812" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="848" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="844" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="865" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="848" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="aliases:()Ljava/util/Set;@java.nio.charset.Charset"
+ sig="Set&lt;String&gt; aliases()"
+ line="13"
+ startpos="923"
+ endpos="930"
+>
+	<type  start="891" length="13" line="13" chordsig="java.util.Set"/>
+	<type  start="905" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="945" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="941" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="962" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="945" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="displayName:()Ljava/lang/String;@java.nio.charset.Charset"
+ sig="String displayName()"
+ line="14"
+ startpos="999"
+ endpos="1010"
+>
+	<type  start="982" length="16" line="14" chordsig="java.lang.String"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1025" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1021" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1042" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1025" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="displayName:(Ljava/util/Locale;)Ljava/lang/String;@java.nio.charset.Charset"
+ sig="String displayName(Locale)"
+ line="15"
+ startpos="1079"
+ endpos="1090"
+>
+	<marker line="-1" type="param">
+		<operand  start="1108" length="1" line="15">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<type  start="1062" length="16" line="15" chordsig="java.lang.String"/>
+	<type  start="1091" length="16" line="15" chordsig="java.util.Locale"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1123" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1119" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1140" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1123" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isRegistered:()Z@java.nio.charset.Charset"
+ sig="boolean isRegistered()"
+ line="16"
+ startpos="1174"
+ endpos="1186"
+>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1201" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1197" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1218" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1201" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="canEncode:()Z@java.nio.charset.Charset"
+ sig="boolean canEncode()"
+ line="17"
+ startpos="1246"
+ endpos="1255"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1270" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1266" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1287" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1270" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="encode:(Ljava/nio/CharBuffer;)Ljava/nio/ByteBuffer;@java.nio.charset.Charset"
+ sig="ByteBuffer encode(CharBuffer)"
+ line="18"
+ startpos="1333"
+ endpos="1339"
+>
+	<marker line="-1" type="param">
+		<operand  start="1360" length="6" line="18">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<type  start="1313" length="19" line="18" chordsig="java.nio.ByteBuffer"/>
+	<type  start="1340" length="19" line="18" chordsig="java.nio.CharBuffer"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1380" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1376" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1397" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1380" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="encode:(Ljava/lang/String;)Ljava/nio/ByteBuffer;@java.nio.charset.Charset"
+ sig="ByteBuffer encode(String)"
+ line="19"
+ startpos="1443"
+ endpos="1449"
+>
+	<marker line="-1" type="param">
+		<operand  start="1467" length="1" line="19">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<type  start="1423" length="19" line="19" chordsig="java.nio.ByteBuffer"/>
+	<type  start="1450" length="16" line="19" chordsig="java.lang.String"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1482" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1478" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1499" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1482" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="decode:(Ljava/nio/ByteBuffer;)Ljava/nio/CharBuffer;@java.nio.charset.Charset"
+ sig="CharBuffer decode(ByteBuffer)"
+ line="20"
+ startpos="1545"
+ endpos="1551"
+>
+	<marker line="-1" type="param">
+		<operand  start="1572" length="6" line="20">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<type  start="1525" length="19" line="20" chordsig="java.nio.CharBuffer"/>
+	<type  start="1552" length="19" line="20" chordsig="java.nio.ByteBuffer"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1592" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1588" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1609" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1592" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="compareTo:(Ljava/nio/charset/Charset;)I@java.nio.charset.Charset"
+ sig="int compareTo(Charset)"
+ line="21"
+ startpos="1639"
+ endpos="1648"
+>
+	<alias>(Ljava/lang/Object;)I</alias>
+	<marker line="-1" type="param">
+		<operand  start="1674" length="7" line="21">
+			<expr><![CDATA[charset]]></expr>
+		</operand>
+	</marker>
+	<type  start="1649" length="24" line="21" chordsig="java.nio.charset.Charset"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1695" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1691" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1712" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1695" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.nio.charset.Charset"
+ sig="boolean equals(Object)"
+ line="22"
+ startpos="1746"
+ endpos="1752"
+>
+	<marker line="-1" type="param">
+		<operand  start="1770" length="3" line="22">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="1753" length="16" line="22" chordsig="java.lang.Object"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1787" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1783" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1804" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1787" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@java.nio.charset.Charset"
+ sig="int hashCode()"
+ line="23"
+ startpos="1834"
+ endpos="1842"
+>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1857" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1853" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1874" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1857" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.nio.charset.Charset"
+ sig="String toString()"
+ line="24"
+ startpos="1917"
+ endpos="1925"
+>
+	<type  start="1900" length="16" line="24" chordsig="java.lang.String"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1940" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1936" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1957" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1940" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="defaultCharset:()Ljava/nio/charset/Charset;@java.nio.charset.Charset"
+ sig="Charset defaultCharset()"
+ line="25"
+ startpos="2009"
+ endpos="2023"
+>
+	<type  start="1984" length="24" line="25" chordsig="java.nio.charset.Charset"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2038" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2034" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2055" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2038" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

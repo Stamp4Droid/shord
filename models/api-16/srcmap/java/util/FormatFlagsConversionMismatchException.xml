@@ -1,0 +1,91 @@
+<root>
+<class chordsig="java.util.FormatFlagsConversionMismatchException" line="2">
+	<type  start="81" length="32" line="3" chordsig="java.util.IllegalFormatException"/>
+	<type  start="127" length="20" line="4" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;C)V@java.util.FormatFlagsConversionMismatchException"
+ sig="FormatFlagsConversionMismatchException(String,char)"
+ line="6"
+ startpos="158"
+ endpos="196"
+>
+	<marker line="-1" type="param">
+		<operand  start="214" length="1" line="6">
+			<expr><![CDATA[f]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="222" length="1" line="6">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<type  start="197" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="237" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="233" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="254" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="237" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFlags:()Ljava/lang/String;@java.util.FormatFlagsConversionMismatchException"
+ sig="String getFlags()"
+ line="7"
+ startpos="291"
+ endpos="299"
+>
+	<type  start="274" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="314" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="310" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="331" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="314" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getConversion:()C@java.util.FormatFlagsConversionMismatchException"
+ sig="char getConversion()"
+ line="8"
+ startpos="356"
+ endpos="369"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="384" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="380" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="401" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="384" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMessage:()Ljava/lang/String;@java.util.FormatFlagsConversionMismatchException"
+ sig="String getMessage()"
+ line="9"
+ startpos="438"
+ endpos="448"
+>
+	<type  start="421" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="463" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="459" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="480" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="463" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

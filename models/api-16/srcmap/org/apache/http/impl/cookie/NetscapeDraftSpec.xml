@@ -1,0 +1,144 @@
+<root>
+<class chordsig="org.apache.http.impl.cookie.NetscapeDraftSpec" line="2">
+	<type  start="78" length="42" line="3" chordsig="org.apache.http.impl.cookie.CookieSpecBase"/>
+<method
+ chordsig="&lt;init&gt;:([Ljava/lang/String;)V@org.apache.http.impl.cookie.NetscapeDraftSpec"
+ sig="NetscapeDraftSpec(String[])"
+ line="5"
+ startpos="131"
+ endpos="148"
+>
+	<marker line="-1" type="param">
+		<operand  start="168" length="12" line="5">
+			<expr><![CDATA[datepatterns]]></expr>
+		</operand>
+	</marker>
+	<type  start="149" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="194" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="190" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="211" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="194" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.impl.cookie.NetscapeDraftSpec"
+ sig="NetscapeDraftSpec()"
+ line="6"
+ startpos="231"
+ endpos="248"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="263" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="259" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="280" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="263" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parse:(Lorg/apache/http/Header;Lorg/apache/http/cookie/CookieOrigin;)Ljava/util/List;@org.apache.http.impl.cookie.NetscapeDraftSpec"
+ sig="List&lt;Cookie&gt; parse(Header,CookieOrigin)"
+ line="7"
+ startpos="346"
+ endpos="351"
+>
+	<marker line="-1" type="param">
+		<operand  start="375" length="6" line="7">
+			<expr><![CDATA[header]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="419" length="6" line="7">
+			<expr><![CDATA[origin]]></expr>
+		</operand>
+	</marker>
+	<type  start="300" length="14" line="7" chordsig="java.util.List"/>
+	<type  start="315" length="29" line="7" chordsig="org.apache.http.cookie.Cookie"/>
+	<type  start="352" length="22" line="7" chordsig="org.apache.http.Header"/>
+	<type  start="383" length="35" line="7" chordsig="org.apache.http.cookie.CookieOrigin"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="494" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="490" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="511" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="494" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="formatCookies:(Ljava/util/List;)Ljava/util/List;@org.apache.http.impl.cookie.NetscapeDraftSpec"
+ sig="List&lt;Header&gt; formatCookies(List&lt;Cookie&gt;)"
+ line="8"
+ startpos="570"
+ endpos="583"
+>
+	<marker line="-1" type="param">
+		<operand  start="630" length="7" line="8">
+			<expr><![CDATA[cookies]]></expr>
+		</operand>
+	</marker>
+	<type  start="531" length="14" line="8" chordsig="java.util.List"/>
+	<type  start="546" length="22" line="8" chordsig="org.apache.http.Header"/>
+	<type  start="584" length="14" line="8" chordsig="java.util.List"/>
+	<type  start="599" length="29" line="8" chordsig="org.apache.http.cookie.Cookie"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="651" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="647" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="668" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="651" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getVersion:()I@org.apache.http.impl.cookie.NetscapeDraftSpec"
+ sig="int getVersion()"
+ line="9"
+ startpos="692"
+ endpos="702"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="717" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="713" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="734" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="717" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getVersionHeader:()Lorg/apache/http/Header;@org.apache.http.impl.cookie.NetscapeDraftSpec"
+ sig="Header getVersionHeader()"
+ line="10"
+ startpos="777"
+ endpos="793"
+>
+	<type  start="754" length="22" line="10" chordsig="org.apache.http.Header"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="808" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="804" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="825" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="808" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="860" length="16" line="11" chordsig="java.lang.String"/>
+</class>
+</root>

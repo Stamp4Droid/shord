@@ -1,0 +1,433 @@
+<root>
+<class chordsig="javax.net.ssl.SSLSocket" line="2">
+	<type  start="65" length="15" line="3" chordsig="java.net.Socket"/>
+<method
+ chordsig="&lt;init&gt;:()V@javax.net.ssl.SSLSocket"
+ sig="SSLSocket()"
+ line="5"
+ startpos="94"
+ endpos="103"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="118" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="114" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="135" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="118" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;I)V@javax.net.ssl.SSLSocket"
+ sig="SSLSocket(String,int)"
+ line="6"
+ startpos="158"
+ endpos="167"
+>
+	<marker line="-1" type="param">
+		<operand  start="185" length="4" line="6">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="195" length="4" line="6">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<type  start="168" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="271" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="267" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="288" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="271" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/net/InetAddress;I)V@javax.net.ssl.SSLSocket"
+ sig="SSLSocket(InetAddress,int)"
+ line="7"
+ startpos="311"
+ endpos="320"
+>
+	<marker line="-1" type="param">
+		<operand  start="342" length="7" line="7">
+			<expr><![CDATA[address]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="355" length="4" line="7">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<type  start="321" length="20" line="7" chordsig="java.net.InetAddress"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="400" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="396" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="417" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="400" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;ILjava/net/InetAddress;I)V@javax.net.ssl.SSLSocket"
+ sig="SSLSocket(String,int,InetAddress,int)"
+ line="8"
+ startpos="440"
+ endpos="449"
+>
+	<marker line="-1" type="param">
+		<operand  start="467" length="4" line="8">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="477" length="4" line="8">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="504" length="13" line="8">
+			<expr><![CDATA[clientAddress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="523" length="10" line="8">
+			<expr><![CDATA[clientPort]]></expr>
+		</operand>
+	</marker>
+	<type  start="450" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="483" length="20" line="8" chordsig="java.net.InetAddress"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="605" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="601" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="622" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="605" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/net/InetAddress;ILjava/net/InetAddress;I)V@javax.net.ssl.SSLSocket"
+ sig="SSLSocket(InetAddress,int,InetAddress,int)"
+ line="9"
+ startpos="645"
+ endpos="654"
+>
+	<marker line="-1" type="param">
+		<operand  start="676" length="7" line="9">
+			<expr><![CDATA[address]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="689" length="4" line="9">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="716" length="13" line="9">
+			<expr><![CDATA[clientAddress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="735" length="10" line="9">
+			<expr><![CDATA[clientPort]]></expr>
+		</operand>
+	</marker>
+	<type  start="655" length="20" line="9" chordsig="java.net.InetAddress"/>
+	<type  start="695" length="20" line="9" chordsig="java.net.InetAddress"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="786" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="782" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="803" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="786" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="shutdownInput:()V@javax.net.ssl.SSLSocket"
+ sig="void shutdownInput()"
+ line="10"
+ startpos="828"
+ endpos="841"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="883" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="879" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="900" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="883" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="shutdownOutput:()V@javax.net.ssl.SSLSocket"
+ sig="void shutdownOutput()"
+ line="11"
+ startpos="925"
+ endpos="939"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="981" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="977" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="998" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="981" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSupportedCipherSuites:()[Ljava/lang/String;@javax.net.ssl.SSLSocket"
+ sig="String[] getSupportedCipherSuites()"
+ line="12"
+ startpos="1046"
+ endpos="1070"
+>
+	<type  start="1027" length="16" line="12" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getEnabledCipherSuites:()[Ljava/lang/String;@javax.net.ssl.SSLSocket"
+ sig="String[] getEnabledCipherSuites()"
+ line="13"
+ startpos="1110"
+ endpos="1132"
+>
+	<type  start="1091" length="16" line="13" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setEnabledCipherSuites:([Ljava/lang/String;)V@javax.net.ssl.SSLSocket"
+ sig="void setEnabledCipherSuites(String[])"
+ line="14"
+ startpos="1158"
+ endpos="1180"
+>
+	<marker line="-1" type="param">
+		<operand  start="1200" length="6" line="14">
+			<expr><![CDATA[suites]]></expr>
+		</operand>
+	</marker>
+	<type  start="1181" length="16" line="14" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getSupportedProtocols:()[Ljava/lang/String;@javax.net.ssl.SSLSocket"
+ sig="String[] getSupportedProtocols()"
+ line="15"
+ startpos="1245"
+ endpos="1266"
+>
+	<type  start="1226" length="16" line="15" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getEnabledProtocols:()[Ljava/lang/String;@javax.net.ssl.SSLSocket"
+ sig="String[] getEnabledProtocols()"
+ line="16"
+ startpos="1306"
+ endpos="1325"
+>
+	<type  start="1287" length="16" line="16" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setEnabledProtocols:([Ljava/lang/String;)V@javax.net.ssl.SSLSocket"
+ sig="void setEnabledProtocols(String[])"
+ line="17"
+ startpos="1351"
+ endpos="1370"
+>
+	<marker line="-1" type="param">
+		<operand  start="1390" length="9" line="17">
+			<expr><![CDATA[protocols]]></expr>
+		</operand>
+	</marker>
+	<type  start="1371" length="16" line="17" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getSession:()Ljavax/net/ssl/SSLSession;@javax.net.ssl.SSLSocket"
+ sig="SSLSession getSession()"
+ line="18"
+ startpos="1444"
+ endpos="1454"
+>
+	<type  start="1419" length="24" line="18" chordsig="javax.net.ssl.SSLSession"/>
+</method>
+<method
+ chordsig="addHandshakeCompletedListener:(Ljavax/net/ssl/HandshakeCompletedListener;)V@javax.net.ssl.SSLSocket"
+ sig="void addHandshakeCompletedListener(HandshakeCompletedListener)"
+ line="19"
+ startpos="1480"
+ endpos="1509"
+>
+	<marker line="-1" type="param">
+		<operand  start="1551" length="8" line="19">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1510" length="40" line="19" chordsig="javax.net.ssl.HandshakeCompletedListener"/>
+</method>
+<method
+ chordsig="removeHandshakeCompletedListener:(Ljavax/net/ssl/HandshakeCompletedListener;)V@javax.net.ssl.SSLSocket"
+ sig="void removeHandshakeCompletedListener(HandshakeCompletedListener)"
+ line="20"
+ startpos="1584"
+ endpos="1616"
+>
+	<marker line="-1" type="param">
+		<operand  start="1658" length="8" line="20">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1617" length="40" line="20" chordsig="javax.net.ssl.HandshakeCompletedListener"/>
+</method>
+<method
+ chordsig="startHandshake:()V@javax.net.ssl.SSLSocket"
+ sig="void startHandshake()"
+ line="21"
+ startpos="1691"
+ endpos="1705"
+>
+</method>
+<method
+ chordsig="setUseClientMode:(Z)V@javax.net.ssl.SSLSocket"
+ sig="void setUseClientMode(boolean)"
+ line="22"
+ startpos="1758"
+ endpos="1774"
+>
+	<marker line="-1" type="param">
+		<operand  start="1783" length="4" line="22">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getUseClientMode:()Z@javax.net.ssl.SSLSocket"
+ sig="boolean getUseClientMode()"
+ line="23"
+ startpos="1815"
+ endpos="1831"
+>
+</method>
+<method
+ chordsig="setNeedClientAuth:(Z)V@javax.net.ssl.SSLSocket"
+ sig="void setNeedClientAuth(boolean)"
+ line="24"
+ startpos="1857"
+ endpos="1874"
+>
+	<marker line="-1" type="param">
+		<operand  start="1883" length="4" line="24">
+			<expr><![CDATA[need]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setWantClientAuth:(Z)V@javax.net.ssl.SSLSocket"
+ sig="void setWantClientAuth(boolean)"
+ line="25"
+ startpos="1912"
+ endpos="1929"
+>
+	<marker line="-1" type="param">
+		<operand  start="1938" length="4" line="25">
+			<expr><![CDATA[want]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getNeedClientAuth:()Z@javax.net.ssl.SSLSocket"
+ sig="boolean getNeedClientAuth()"
+ line="26"
+ startpos="1970"
+ endpos="1987"
+>
+</method>
+<method
+ chordsig="getWantClientAuth:()Z@javax.net.ssl.SSLSocket"
+ sig="boolean getWantClientAuth()"
+ line="27"
+ startpos="2016"
+ endpos="2033"
+>
+</method>
+<method
+ chordsig="setEnableSessionCreation:(Z)V@javax.net.ssl.SSLSocket"
+ sig="void setEnableSessionCreation(boolean)"
+ line="28"
+ startpos="2059"
+ endpos="2083"
+>
+	<marker line="-1" type="param">
+		<operand  start="2092" length="4" line="28">
+			<expr><![CDATA[flag]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getEnableSessionCreation:()Z@javax.net.ssl.SSLSocket"
+ sig="boolean getEnableSessionCreation()"
+ line="29"
+ startpos="2124"
+ endpos="2148"
+>
+</method>
+<method
+ chordsig="getSSLParameters:()Ljavax/net/ssl/SSLParameters;@javax.net.ssl.SSLSocket"
+ sig="SSLParameters getSSLParameters()"
+ line="30"
+ startpos="2188"
+ endpos="2204"
+>
+	<type  start="2160" length="27" line="30" chordsig="javax.net.ssl.SSLParameters"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2219" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2215" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2236" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2219" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSSLParameters:(Ljavax/net/ssl/SSLParameters;)V@javax.net.ssl.SSLSocket"
+ sig="void setSSLParameters(SSLParameters)"
+ line="31"
+ startpos="2261"
+ endpos="2277"
+>
+	<marker line="-1" type="param">
+		<operand  start="2306" length="1" line="31">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<type  start="2278" length="27" line="31" chordsig="javax.net.ssl.SSLParameters"/>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2321" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2317" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2338" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2321" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

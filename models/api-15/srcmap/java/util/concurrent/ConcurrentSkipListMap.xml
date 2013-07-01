@@ -1,0 +1,1139 @@
+<root>
+<class chordsig="java.util.concurrent.ConcurrentSkipListMap" line="2">
+	<type  start="81" length="21" line="3" chordsig="java.util.AbstractMap"/>
+	<type  start="103" length="1" line="3" chordsig="java.lang.Object"/>
+	<type  start="106" length="1" line="3" chordsig="java.lang.Object"/>
+	<type  start="122" length="43" line="4" chordsig="java.util.concurrent.ConcurrentNavigableMap"/>
+	<type  start="166" length="1" line="4" chordsig="java.lang.Object"/>
+	<type  start="169" length="1" line="4" chordsig="java.lang.Object"/>
+	<type  start="173" length="19" line="4" chordsig="java.lang.Cloneable"/>
+	<type  start="194" length="20" line="4" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.util.concurrent.ConcurrentSkipListMap"
+ sig="ConcurrentSkipListMap()"
+ line="6"
+ startpos="225"
+ endpos="246"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="261" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="257" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="278" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="261" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/util/Comparator;)V@java.util.concurrent.ConcurrentSkipListMap"
+ sig="ConcurrentSkipListMap(Comparator&lt;? super K&gt;)"
+ line="7"
+ startpos="298"
+ endpos="319"
+>
+	<marker line="-1" type="param">
+		<operand  start="352" length="10" line="7">
+			<expr><![CDATA[comparator]]></expr>
+		</operand>
+	</marker>
+	<type  start="320" length="20" line="7" chordsig="java.util.Comparator"/>
+	<type  start="349" length="1" line="7" chordsig="java.lang.Object"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="376" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="372" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="393" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="376" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/util/Map;)V@java.util.concurrent.ConcurrentSkipListMap"
+ sig="ConcurrentSkipListMap(Map&lt;? extends K,? extends V&gt;)"
+ line="8"
+ startpos="413"
+ endpos="434"
+>
+	<marker line="-1" type="param">
+		<operand  start="475" length="1" line="8">
+			<expr><![CDATA[m]]></expr>
+		</operand>
+	</marker>
+	<type  start="435" length="13" line="8" chordsig="java.util.Map"/>
+	<type  start="459" length="1" line="8" chordsig="java.lang.Object"/>
+	<type  start="472" length="1" line="8" chordsig="java.lang.Object"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="490" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="486" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="507" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="490" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/util/SortedMap;)V@java.util.concurrent.ConcurrentSkipListMap"
+ sig="ConcurrentSkipListMap(SortedMap&lt;K,? extends V&gt;)"
+ line="9"
+ startpos="527"
+ endpos="548"
+>
+	<marker line="-1" type="param">
+		<operand  start="585" length="1" line="9">
+			<expr><![CDATA[m]]></expr>
+		</operand>
+	</marker>
+	<type  start="549" length="19" line="9" chordsig="java.util.SortedMap"/>
+	<type  start="569" length="1" line="9" chordsig="java.lang.Object"/>
+	<type  start="582" length="1" line="9" chordsig="java.lang.Object"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="600" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="596" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="617" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="600" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clone:()Ljava/util/concurrent/ConcurrentSkipListMap;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="ConcurrentSkipListMap&lt;K,V&gt; clone()"
+ line="10"
+ startpos="686"
+ endpos="691"
+>
+	<alias>()Ljava/lang/Object;</alias>
+	<type  start="637" length="42" line="10" chordsig="java.util.concurrent.ConcurrentSkipListMap"/>
+	<type  start="680" length="1" line="10" chordsig="java.lang.Object"/>
+	<type  start="683" length="1" line="10" chordsig="java.lang.Object"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="706" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="702" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="723" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="706" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="containsKey:(Ljava/lang/Object;)Z@java.util.concurrent.ConcurrentSkipListMap"
+ sig="boolean containsKey(Object)"
+ line="11"
+ startpos="751"
+ endpos="762"
+>
+	<marker line="-1" type="param">
+		<operand  start="780" length="3" line="11">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="763" length="16" line="11" chordsig="java.lang.Object"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="797" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="793" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="814" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="797" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="get:(Ljava/lang/Object;)Ljava/lang/Object;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="V get(Object)"
+ line="12"
+ startpos="836"
+ endpos="839"
+>
+	<marker line="-1" type="param">
+		<operand  start="857" length="3" line="12">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="834" length="1" line="12" chordsig="java.lang.Object"/>
+	<type  start="840" length="16" line="12" chordsig="java.lang.Object"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="874" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="870" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="891" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="874" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="V put(K,V)"
+ line="13"
+ startpos="913"
+ endpos="916"
+>
+	<marker line="-1" type="param">
+		<operand  start="919" length="3" line="13">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="926" length="5" line="13">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="911" length="1" line="13" chordsig="java.lang.Object"/>
+	<type  start="917" length="1" line="13" chordsig="java.lang.Object"/>
+	<type  start="924" length="1" line="13" chordsig="java.lang.Object"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="945" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="941" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="962" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="945" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="remove:(Ljava/lang/Object;)Ljava/lang/Object;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="V remove(Object)"
+ line="14"
+ startpos="984"
+ endpos="990"
+>
+	<marker line="-1" type="param">
+		<operand  start="1008" length="3" line="14">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="982" length="1" line="14" chordsig="java.lang.Object"/>
+	<type  start="991" length="16" line="14" chordsig="java.lang.Object"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1025" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1021" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1042" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1025" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="containsValue:(Ljava/lang/Object;)Z@java.util.concurrent.ConcurrentSkipListMap"
+ sig="boolean containsValue(Object)"
+ line="15"
+ startpos="1070"
+ endpos="1083"
+>
+	<marker line="-1" type="param">
+		<operand  start="1101" length="5" line="15">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="1084" length="16" line="15" chordsig="java.lang.Object"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1120" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1116" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1137" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1120" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="size:()I@java.util.concurrent.ConcurrentSkipListMap"
+ sig="int size()"
+ line="16"
+ startpos="1161"
+ endpos="1165"
+>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1180" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1176" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1197" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1180" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isEmpty:()Z@java.util.concurrent.ConcurrentSkipListMap"
+ sig="boolean isEmpty()"
+ line="17"
+ startpos="1225"
+ endpos="1232"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1247" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1243" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1264" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1247" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clear:()V@java.util.concurrent.ConcurrentSkipListMap"
+ sig="void clear()"
+ line="18"
+ startpos="1289"
+ endpos="1294"
+>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1309" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1305" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1326" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1309" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="keySet:()Ljava/util/NavigableSet;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="NavigableSet&lt;K&gt; keySet()"
+ line="19"
+ startpos="1372"
+ endpos="1378"
+>
+	<alias>()Ljava/util/Set;</alias>
+	<type  start="1346" length="22" line="19" chordsig="java.util.NavigableSet"/>
+	<type  start="1369" length="1" line="19" chordsig="java.lang.Object"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1393" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1389" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1410" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1393" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="navigableKeySet:()Ljava/util/NavigableSet;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="NavigableSet&lt;K&gt; navigableKeySet()"
+ line="20"
+ startpos="1456"
+ endpos="1471"
+>
+	<type  start="1430" length="22" line="20" chordsig="java.util.NavigableSet"/>
+	<type  start="1453" length="1" line="20" chordsig="java.lang.Object"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1486" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1482" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1503" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1486" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="values:()Ljava/util/Collection;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="Collection&lt;V&gt; values()"
+ line="21"
+ startpos="1547"
+ endpos="1553"
+>
+	<type  start="1523" length="20" line="21" chordsig="java.util.Collection"/>
+	<type  start="1544" length="1" line="21" chordsig="java.lang.Object"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1568" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1564" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1585" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1568" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="entrySet:()Ljava/util/Set;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="Set&lt;Entry&lt;K,V&gt;&gt; entrySet()"
+ line="22"
+ startpos="1646"
+ endpos="1654"
+>
+	<type  start="1605" length="13" line="22" chordsig="java.util.Set"/>
+	<type  start="1619" length="19" line="22" chordsig="java.util.Map$Entry"/>
+	<type  start="1639" length="1" line="22" chordsig="java.lang.Object"/>
+	<type  start="1642" length="1" line="22" chordsig="java.lang.Object"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1669" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1665" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1686" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1669" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="descendingMap:()Ljava/util/concurrent/ConcurrentNavigableMap;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="ConcurrentNavigableMap&lt;K,V&gt; descendingMap()"
+ line="23"
+ startpos="1756"
+ endpos="1769"
+>
+	<alias>()Ljava/util/NavigableMap;</alias>
+	<type  start="1706" length="43" line="23" chordsig="java.util.concurrent.ConcurrentNavigableMap"/>
+	<type  start="1750" length="1" line="23" chordsig="java.lang.Object"/>
+	<type  start="1753" length="1" line="23" chordsig="java.lang.Object"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1784" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1780" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1801" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1784" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="descendingKeySet:()Ljava/util/NavigableSet;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="NavigableSet&lt;K&gt; descendingKeySet()"
+ line="24"
+ startpos="1847"
+ endpos="1863"
+>
+	<type  start="1821" length="22" line="24" chordsig="java.util.NavigableSet"/>
+	<type  start="1844" length="1" line="24" chordsig="java.lang.Object"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1878" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1874" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1895" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1878" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.util.concurrent.ConcurrentSkipListMap"
+ sig="boolean equals(Object)"
+ line="25"
+ startpos="1923"
+ endpos="1929"
+>
+	<marker line="-1" type="param">
+		<operand  start="1947" length="1" line="25">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="1930" length="16" line="25" chordsig="java.lang.Object"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1962" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1958" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1979" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1962" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="putIfAbsent:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="V putIfAbsent(K,V)"
+ line="26"
+ startpos="2001"
+ endpos="2012"
+>
+	<marker line="-1" type="param">
+		<operand  start="2015" length="3" line="26">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2022" length="5" line="26">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="1999" length="1" line="26" chordsig="java.lang.Object"/>
+	<type  start="2013" length="1" line="26" chordsig="java.lang.Object"/>
+	<type  start="2020" length="1" line="26" chordsig="java.lang.Object"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2041" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2037" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2058" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2041" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="remove:(Ljava/lang/Object;Ljava/lang/Object;)Z@java.util.concurrent.ConcurrentSkipListMap"
+ sig="boolean remove(Object,Object)"
+ line="27"
+ startpos="2086"
+ endpos="2092"
+>
+	<marker line="-1" type="param">
+		<operand  start="2110" length="3" line="27">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2132" length="5" line="27">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="2093" length="16" line="27" chordsig="java.lang.Object"/>
+	<type  start="2115" length="16" line="27" chordsig="java.lang.Object"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2151" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2147" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2168" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2151" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="replace:(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Z@java.util.concurrent.ConcurrentSkipListMap"
+ sig="boolean replace(K,V,V)"
+ line="28"
+ startpos="2196"
+ endpos="2203"
+>
+	<marker line="-1" type="param">
+		<operand  start="2206" length="3" line="28">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2213" length="8" line="28">
+			<expr><![CDATA[oldValue]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2225" length="8" line="28">
+			<expr><![CDATA[newValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="2204" length="1" line="28" chordsig="java.lang.Object"/>
+	<type  start="2211" length="1" line="28" chordsig="java.lang.Object"/>
+	<type  start="2223" length="1" line="28" chordsig="java.lang.Object"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2247" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2243" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2264" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2247" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="replace:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="V replace(K,V)"
+ line="29"
+ startpos="2286"
+ endpos="2293"
+>
+	<marker line="-1" type="param">
+		<operand  start="2296" length="3" line="29">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2303" length="5" line="29">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="2284" length="1" line="29" chordsig="java.lang.Object"/>
+	<type  start="2294" length="1" line="29" chordsig="java.lang.Object"/>
+	<type  start="2301" length="1" line="29" chordsig="java.lang.Object"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2322" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2318" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2339" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2322" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="comparator:()Ljava/util/Comparator;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="Comparator&lt;? super K&gt; comparator()"
+ line="30"
+ startpos="2391"
+ endpos="2401"
+>
+	<type  start="2359" length="20" line="30" chordsig="java.util.Comparator"/>
+	<type  start="2388" length="1" line="30" chordsig="java.lang.Object"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2416" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2412" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2433" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2416" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="firstKey:()Ljava/lang/Object;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="K firstKey()"
+ line="31"
+ startpos="2455"
+ endpos="2463"
+>
+	<type  start="2453" length="1" line="31" chordsig="java.lang.Object"/>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2478" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2474" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2495" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2478" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="lastKey:()Ljava/lang/Object;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="K lastKey()"
+ line="32"
+ startpos="2517"
+ endpos="2524"
+>
+	<type  start="2515" length="1" line="32" chordsig="java.lang.Object"/>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2539" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2535" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2556" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2539" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="subMap:(Ljava/lang/Object;ZLjava/lang/Object;Z)Ljava/util/concurrent/ConcurrentNavigableMap;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="ConcurrentNavigableMap&lt;K,V&gt; subMap(K,boolean,K,boolean)"
+ line="33"
+ startpos="2626"
+ endpos="2632"
+>
+	<alias>(Ljava/lang/Object;ZLjava/lang/Object;Z)Ljava/util/NavigableMap;</alias>
+	<marker line="-1" type="param">
+		<operand  start="2635" length="7" line="33">
+			<expr><![CDATA[fromKey]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2652" length="13" line="33">
+			<expr><![CDATA[fromInclusive]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2669" length="5" line="33">
+			<expr><![CDATA[toKey]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2684" length="11" line="33">
+			<expr><![CDATA[toInclusive]]></expr>
+		</operand>
+	</marker>
+	<type  start="2576" length="43" line="33" chordsig="java.util.concurrent.ConcurrentNavigableMap"/>
+	<type  start="2620" length="1" line="33" chordsig="java.lang.Object"/>
+	<type  start="2623" length="1" line="33" chordsig="java.lang.Object"/>
+	<type  start="2633" length="1" line="33" chordsig="java.lang.Object"/>
+	<type  start="2667" length="1" line="33" chordsig="java.lang.Object"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2709" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2705" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2726" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2709" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="headMap:(Ljava/lang/Object;Z)Ljava/util/concurrent/ConcurrentNavigableMap;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="ConcurrentNavigableMap&lt;K,V&gt; headMap(K,boolean)"
+ line="34"
+ startpos="2796"
+ endpos="2803"
+>
+	<alias>(Ljava/lang/Object;Z)Ljava/util/NavigableMap;</alias>
+	<marker line="-1" type="param">
+		<operand  start="2806" length="5" line="34">
+			<expr><![CDATA[toKey]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2821" length="9" line="34">
+			<expr><![CDATA[inclusive]]></expr>
+		</operand>
+	</marker>
+	<type  start="2746" length="43" line="34" chordsig="java.util.concurrent.ConcurrentNavigableMap"/>
+	<type  start="2790" length="1" line="34" chordsig="java.lang.Object"/>
+	<type  start="2793" length="1" line="34" chordsig="java.lang.Object"/>
+	<type  start="2804" length="1" line="34" chordsig="java.lang.Object"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2844" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2840" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2861" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2844" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="tailMap:(Ljava/lang/Object;Z)Ljava/util/concurrent/ConcurrentNavigableMap;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="ConcurrentNavigableMap&lt;K,V&gt; tailMap(K,boolean)"
+ line="35"
+ startpos="2931"
+ endpos="2938"
+>
+	<alias>(Ljava/lang/Object;Z)Ljava/util/NavigableMap;</alias>
+	<marker line="-1" type="param">
+		<operand  start="2941" length="7" line="35">
+			<expr><![CDATA[fromKey]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2958" length="9" line="35">
+			<expr><![CDATA[inclusive]]></expr>
+		</operand>
+	</marker>
+	<type  start="2881" length="43" line="35" chordsig="java.util.concurrent.ConcurrentNavigableMap"/>
+	<type  start="2925" length="1" line="35" chordsig="java.lang.Object"/>
+	<type  start="2928" length="1" line="35" chordsig="java.lang.Object"/>
+	<type  start="2939" length="1" line="35" chordsig="java.lang.Object"/>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2981" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2977" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2998" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2981" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="subMap:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/concurrent/ConcurrentNavigableMap;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="ConcurrentNavigableMap&lt;K,V&gt; subMap(K,K)"
+ line="36"
+ startpos="3068"
+ endpos="3074"
+>
+	<alias>(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/SortedMap;</alias>
+	<marker line="-1" type="param">
+		<operand  start="3077" length="7" line="36">
+			<expr><![CDATA[fromKey]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3088" length="5" line="36">
+			<expr><![CDATA[toKey]]></expr>
+		</operand>
+	</marker>
+	<type  start="3018" length="43" line="36" chordsig="java.util.concurrent.ConcurrentNavigableMap"/>
+	<type  start="3062" length="1" line="36" chordsig="java.lang.Object"/>
+	<type  start="3065" length="1" line="36" chordsig="java.lang.Object"/>
+	<type  start="3075" length="1" line="36" chordsig="java.lang.Object"/>
+	<type  start="3086" length="1" line="36" chordsig="java.lang.Object"/>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3107" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3103" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3124" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3107" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="headMap:(Ljava/lang/Object;)Ljava/util/concurrent/ConcurrentNavigableMap;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="ConcurrentNavigableMap&lt;K,V&gt; headMap(K)"
+ line="37"
+ startpos="3194"
+ endpos="3201"
+>
+	<alias>(Ljava/lang/Object;)Ljava/util/SortedMap;</alias>
+	<marker line="-1" type="param">
+		<operand  start="3204" length="5" line="37">
+			<expr><![CDATA[toKey]]></expr>
+		</operand>
+	</marker>
+	<type  start="3144" length="43" line="37" chordsig="java.util.concurrent.ConcurrentNavigableMap"/>
+	<type  start="3188" length="1" line="37" chordsig="java.lang.Object"/>
+	<type  start="3191" length="1" line="37" chordsig="java.lang.Object"/>
+	<type  start="3202" length="1" line="37" chordsig="java.lang.Object"/>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3223" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3219" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3240" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3223" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="tailMap:(Ljava/lang/Object;)Ljava/util/concurrent/ConcurrentNavigableMap;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="ConcurrentNavigableMap&lt;K,V&gt; tailMap(K)"
+ line="38"
+ startpos="3310"
+ endpos="3317"
+>
+	<alias>(Ljava/lang/Object;)Ljava/util/SortedMap;</alias>
+	<marker line="-1" type="param">
+		<operand  start="3320" length="7" line="38">
+			<expr><![CDATA[fromKey]]></expr>
+		</operand>
+	</marker>
+	<type  start="3260" length="43" line="38" chordsig="java.util.concurrent.ConcurrentNavigableMap"/>
+	<type  start="3304" length="1" line="38" chordsig="java.lang.Object"/>
+	<type  start="3307" length="1" line="38" chordsig="java.lang.Object"/>
+	<type  start="3318" length="1" line="38" chordsig="java.lang.Object"/>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3341" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3337" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3358" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3341" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="lowerEntry:(Ljava/lang/Object;)Ljava/util/Map$Entry;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="Entry&lt;K,V&gt; lowerEntry(K)"
+ line="39"
+ startpos="3404"
+ endpos="3414"
+>
+	<marker line="-1" type="param">
+		<operand  start="3417" length="3" line="39">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="3378" length="19" line="39" chordsig="java.util.Map$Entry"/>
+	<type  start="3398" length="1" line="39" chordsig="java.lang.Object"/>
+	<type  start="3401" length="1" line="39" chordsig="java.lang.Object"/>
+	<type  start="3415" length="1" line="39" chordsig="java.lang.Object"/>
+	<newexpr line="39" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3434" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3430" length="29" line="39">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3451" length="7" line="39">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3434" length="16" line="39" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="lowerKey:(Ljava/lang/Object;)Ljava/lang/Object;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="K lowerKey(K)"
+ line="40"
+ startpos="3473"
+ endpos="3481"
+>
+	<marker line="-1" type="param">
+		<operand  start="3484" length="3" line="40">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="3471" length="1" line="40" chordsig="java.lang.Object"/>
+	<type  start="3482" length="1" line="40" chordsig="java.lang.Object"/>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3501" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3497" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3518" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3501" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="floorEntry:(Ljava/lang/Object;)Ljava/util/Map$Entry;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="Entry&lt;K,V&gt; floorEntry(K)"
+ line="41"
+ startpos="3564"
+ endpos="3574"
+>
+	<marker line="-1" type="param">
+		<operand  start="3577" length="3" line="41">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="3538" length="19" line="41" chordsig="java.util.Map$Entry"/>
+	<type  start="3558" length="1" line="41" chordsig="java.lang.Object"/>
+	<type  start="3561" length="1" line="41" chordsig="java.lang.Object"/>
+	<type  start="3575" length="1" line="41" chordsig="java.lang.Object"/>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3594" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3590" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3611" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3594" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="floorKey:(Ljava/lang/Object;)Ljava/lang/Object;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="K floorKey(K)"
+ line="42"
+ startpos="3633"
+ endpos="3641"
+>
+	<marker line="-1" type="param">
+		<operand  start="3644" length="3" line="42">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="3631" length="1" line="42" chordsig="java.lang.Object"/>
+	<type  start="3642" length="1" line="42" chordsig="java.lang.Object"/>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3661" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3657" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3678" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3661" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="ceilingEntry:(Ljava/lang/Object;)Ljava/util/Map$Entry;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="Entry&lt;K,V&gt; ceilingEntry(K)"
+ line="43"
+ startpos="3724"
+ endpos="3736"
+>
+	<marker line="-1" type="param">
+		<operand  start="3739" length="3" line="43">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="3698" length="19" line="43" chordsig="java.util.Map$Entry"/>
+	<type  start="3718" length="1" line="43" chordsig="java.lang.Object"/>
+	<type  start="3721" length="1" line="43" chordsig="java.lang.Object"/>
+	<type  start="3737" length="1" line="43" chordsig="java.lang.Object"/>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3756" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3752" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3773" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3756" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="ceilingKey:(Ljava/lang/Object;)Ljava/lang/Object;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="K ceilingKey(K)"
+ line="44"
+ startpos="3795"
+ endpos="3805"
+>
+	<marker line="-1" type="param">
+		<operand  start="3808" length="3" line="44">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="3793" length="1" line="44" chordsig="java.lang.Object"/>
+	<type  start="3806" length="1" line="44" chordsig="java.lang.Object"/>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3825" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3821" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3842" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3825" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="higherEntry:(Ljava/lang/Object;)Ljava/util/Map$Entry;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="Entry&lt;K,V&gt; higherEntry(K)"
+ line="45"
+ startpos="3888"
+ endpos="3899"
+>
+	<marker line="-1" type="param">
+		<operand  start="3902" length="3" line="45">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="3862" length="19" line="45" chordsig="java.util.Map$Entry"/>
+	<type  start="3882" length="1" line="45" chordsig="java.lang.Object"/>
+	<type  start="3885" length="1" line="45" chordsig="java.lang.Object"/>
+	<type  start="3900" length="1" line="45" chordsig="java.lang.Object"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3919" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3915" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3936" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3919" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="higherKey:(Ljava/lang/Object;)Ljava/lang/Object;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="K higherKey(K)"
+ line="46"
+ startpos="3958"
+ endpos="3967"
+>
+	<marker line="-1" type="param">
+		<operand  start="3970" length="3" line="46">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="3956" length="1" line="46" chordsig="java.lang.Object"/>
+	<type  start="3968" length="1" line="46" chordsig="java.lang.Object"/>
+	<newexpr line="46" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3987" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3983" length="29" line="46">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4004" length="7" line="46">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3987" length="16" line="46" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="firstEntry:()Ljava/util/Map$Entry;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="Entry&lt;K,V&gt; firstEntry()"
+ line="47"
+ startpos="4050"
+ endpos="4060"
+>
+	<type  start="4024" length="19" line="47" chordsig="java.util.Map$Entry"/>
+	<type  start="4044" length="1" line="47" chordsig="java.lang.Object"/>
+	<type  start="4047" length="1" line="47" chordsig="java.lang.Object"/>
+	<newexpr line="47" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4075" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4071" length="29" line="47">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4092" length="7" line="47">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4075" length="16" line="47" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="lastEntry:()Ljava/util/Map$Entry;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="Entry&lt;K,V&gt; lastEntry()"
+ line="48"
+ startpos="4138"
+ endpos="4147"
+>
+	<type  start="4112" length="19" line="48" chordsig="java.util.Map$Entry"/>
+	<type  start="4132" length="1" line="48" chordsig="java.lang.Object"/>
+	<type  start="4135" length="1" line="48" chordsig="java.lang.Object"/>
+	<newexpr line="48" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4162" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4158" length="29" line="48">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4179" length="7" line="48">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4162" length="16" line="48" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="pollFirstEntry:()Ljava/util/Map$Entry;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="Entry&lt;K,V&gt; pollFirstEntry()"
+ line="49"
+ startpos="4225"
+ endpos="4239"
+>
+	<type  start="4199" length="19" line="49" chordsig="java.util.Map$Entry"/>
+	<type  start="4219" length="1" line="49" chordsig="java.lang.Object"/>
+	<type  start="4222" length="1" line="49" chordsig="java.lang.Object"/>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4254" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4250" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4271" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4254" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="pollLastEntry:()Ljava/util/Map$Entry;@java.util.concurrent.ConcurrentSkipListMap"
+ sig="Entry&lt;K,V&gt; pollLastEntry()"
+ line="50"
+ startpos="4317"
+ endpos="4330"
+>
+	<type  start="4291" length="19" line="50" chordsig="java.util.Map$Entry"/>
+	<type  start="4311" length="1" line="50" chordsig="java.lang.Object"/>
+	<type  start="4314" length="1" line="50" chordsig="java.lang.Object"/>
+	<newexpr line="50" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4345" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4341" length="29" line="50">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4362" length="7" line="50">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4345" length="16" line="50" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

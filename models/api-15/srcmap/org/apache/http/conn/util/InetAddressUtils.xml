@@ -1,0 +1,118 @@
+<root>
+<class chordsig="org.apache.http.conn.util.InetAddressUtils" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.conn.util.InetAddressUtils"
+ sig="InetAddressUtils()"
+ line="4"
+ startpos="67"
+ endpos="83"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="98" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="94" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="115" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="98" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isIPv4Address:(Ljava/lang/String;)Z@org.apache.http.conn.util.InetAddressUtils"
+ sig="boolean isIPv4Address(String)"
+ line="5"
+ startpos="150"
+ endpos="163"
+>
+	<marker line="-1" type="param">
+		<operand  start="181" length="5" line="5">
+			<expr><![CDATA[input]]></expr>
+		</operand>
+	</marker>
+	<type  start="164" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="200" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="196" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="217" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="200" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isIPv6StdAddress:(Ljava/lang/String;)Z@org.apache.http.conn.util.InetAddressUtils"
+ sig="boolean isIPv6StdAddress(String)"
+ line="6"
+ startpos="252"
+ endpos="268"
+>
+	<marker line="-1" type="param">
+		<operand  start="286" length="5" line="6">
+			<expr><![CDATA[input]]></expr>
+		</operand>
+	</marker>
+	<type  start="269" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="305" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="301" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="322" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="305" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isIPv6HexCompressedAddress:(Ljava/lang/String;)Z@org.apache.http.conn.util.InetAddressUtils"
+ sig="boolean isIPv6HexCompressedAddress(String)"
+ line="7"
+ startpos="357"
+ endpos="383"
+>
+	<marker line="-1" type="param">
+		<operand  start="401" length="5" line="7">
+			<expr><![CDATA[input]]></expr>
+		</operand>
+	</marker>
+	<type  start="384" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="420" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="416" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="437" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="420" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isIPv6Address:(Ljava/lang/String;)Z@org.apache.http.conn.util.InetAddressUtils"
+ sig="boolean isIPv6Address(String)"
+ line="8"
+ startpos="472"
+ endpos="485"
+>
+	<marker line="-1" type="param">
+		<operand  start="503" length="5" line="8">
+			<expr><![CDATA[input]]></expr>
+		</operand>
+	</marker>
+	<type  start="486" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="522" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="518" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="539" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="522" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

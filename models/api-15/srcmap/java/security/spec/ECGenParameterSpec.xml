@@ -1,0 +1,48 @@
+<root>
+<class chordsig="java.security.spec.ECGenParameterSpec" line="2">
+	<type  start="73" length="41" line="3" chordsig="java.security.spec.AlgorithmParameterSpec"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.security.spec.ECGenParameterSpec"
+ sig="ECGenParameterSpec(String)"
+ line="5"
+ startpos="125"
+ endpos="143"
+>
+	<marker line="-1" type="param">
+		<operand  start="161" length="4" line="5">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="144" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="179" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="175" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="196" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="179" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getName:()Ljava/lang/String;@java.security.spec.ECGenParameterSpec"
+ sig="String getName()"
+ line="6"
+ startpos="233"
+ endpos="240"
+>
+	<type  start="216" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="255" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="251" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="272" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="255" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

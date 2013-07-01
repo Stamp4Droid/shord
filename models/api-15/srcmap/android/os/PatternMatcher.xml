@@ -1,0 +1,192 @@
+<root>
+<class chordsig="android.os.PatternMatcher" line="2">
+	<type  start="61" length="21" line="3" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;I)V@android.os.PatternMatcher"
+ sig="PatternMatcher(String,int)"
+ line="5"
+ startpos="93"
+ endpos="107"
+>
+	<marker line="-1" type="param">
+		<operand  start="125" length="7" line="5">
+			<expr><![CDATA[pattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="138" length="4" line="5">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<type  start="108" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="156" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="152" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="173" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="156" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/os/Parcel;)V@android.os.PatternMatcher"
+ sig="PatternMatcher(Parcel)"
+ line="6"
+ startpos="193"
+ endpos="207"
+>
+	<marker line="-1" type="param">
+		<operand  start="226" length="3" line="6">
+			<expr><![CDATA[src]]></expr>
+		</operand>
+	</marker>
+	<type  start="208" length="17" line="6" chordsig="android.os.Parcel"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="243" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="239" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="260" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="243" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPath:()Ljava/lang/String;@android.os.PatternMatcher"
+ sig="String getPath()"
+ line="7"
+ startpos="303"
+ endpos="310"
+>
+	<type  start="286" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="325" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="321" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="342" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="325" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getType:()I@android.os.PatternMatcher"
+ sig="int getType()"
+ line="8"
+ startpos="372"
+ endpos="379"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="394" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="390" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="411" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="394" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="match:(Ljava/lang/String;)Z@android.os.PatternMatcher"
+ sig="boolean match(String)"
+ line="9"
+ startpos="439"
+ endpos="444"
+>
+	<marker line="-1" type="param">
+		<operand  start="462" length="3" line="9">
+			<expr><![CDATA[str]]></expr>
+		</operand>
+	</marker>
+	<type  start="445" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="479" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="475" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="496" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="479" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.os.PatternMatcher"
+ sig="String toString()"
+ line="10"
+ startpos="533"
+ endpos="541"
+>
+	<type  start="516" length="16" line="10" chordsig="java.lang.String"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="556" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="552" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="573" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="556" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.os.PatternMatcher"
+ sig="int describeContents()"
+ line="11"
+ startpos="597"
+ endpos="613"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="628" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="624" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="645" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="628" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.os.PatternMatcher"
+ sig="void writeToParcel(Parcel,int)"
+ line="12"
+ startpos="670"
+ endpos="683"
+>
+	<marker line="-1" type="param">
+		<operand  start="702" length="4" line="12">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="712" length="5" line="12">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="684" length="17" line="12" chordsig="android.os.Parcel"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="731" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="727" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="748" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="731" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="918" length="29" line="16" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="948" length="25" line="16" chordsig="android.os.PatternMatcher"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.os.PatternMatcher"
+ line="17"
+>
+</method>
+</class>
+</root>

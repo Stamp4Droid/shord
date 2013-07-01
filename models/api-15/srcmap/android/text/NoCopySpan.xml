@@ -1,0 +1,25 @@
+<root>
+<class chordsig="android.text.NoCopySpan" line="2">
+<class chordsig="android.text.NoCopySpan$Concrete" line="4">
+	<type  start="94" length="23" line="5" chordsig="android.text.NoCopySpan"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.text.NoCopySpan$Concrete"
+ sig="Concrete()"
+ line="7"
+ startpos="128"
+ endpos="136"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="151" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="147" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="168" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="151" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</class>
+</root>

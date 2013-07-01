@@ -1,0 +1,100 @@
+<root>
+<class chordsig="org.apache.http.cookie.CookieSpec" line="2">
+<method
+ chordsig="getVersion:()I@org.apache.http.cookie.CookieSpec"
+ sig="int getVersion()"
+ line="4"
+ startpos="83"
+ endpos="93"
+>
+</method>
+<method
+ chordsig="parse:(Lorg/apache/http/Header;Lorg/apache/http/cookie/CookieOrigin;)Ljava/util/List;@org.apache.http.cookie.CookieSpec"
+ sig="List&lt;Cookie&gt; parse(Header,CookieOrigin)"
+ line="5"
+ startpos="160"
+ endpos="165"
+>
+	<marker line="-1" type="param">
+		<operand  start="189" length="6" line="5">
+			<expr><![CDATA[header]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="233" length="6" line="5">
+			<expr><![CDATA[origin]]></expr>
+		</operand>
+	</marker>
+	<type  start="114" length="14" line="5" chordsig="java.util.List"/>
+	<type  start="129" length="29" line="5" chordsig="org.apache.http.cookie.Cookie"/>
+	<type  start="166" length="22" line="5" chordsig="org.apache.http.Header"/>
+	<type  start="197" length="35" line="5" chordsig="org.apache.http.cookie.CookieOrigin"/>
+</method>
+<method
+ chordsig="validate:(Lorg/apache/http/cookie/Cookie;Lorg/apache/http/cookie/CookieOrigin;)V@org.apache.http.cookie.CookieSpec"
+ sig="void validate(Cookie,CookieOrigin)"
+ line="6"
+ startpos="319"
+ endpos="327"
+>
+	<marker line="-1" type="param">
+		<operand  start="358" length="6" line="6">
+			<expr><![CDATA[cookie]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="402" length="6" line="6">
+			<expr><![CDATA[origin]]></expr>
+		</operand>
+	</marker>
+	<type  start="328" length="29" line="6" chordsig="org.apache.http.cookie.Cookie"/>
+	<type  start="366" length="35" line="6" chordsig="org.apache.http.cookie.CookieOrigin"/>
+</method>
+<method
+ chordsig="match:(Lorg/apache/http/cookie/Cookie;Lorg/apache/http/cookie/CookieOrigin;)Z@org.apache.http.cookie.CookieSpec"
+ sig="boolean match(Cookie,CookieOrigin)"
+ line="7"
+ startpos="491"
+ endpos="496"
+>
+	<marker line="-1" type="param">
+		<operand  start="527" length="6" line="7">
+			<expr><![CDATA[cookie]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="571" length="6" line="7">
+			<expr><![CDATA[origin]]></expr>
+		</operand>
+	</marker>
+	<type  start="497" length="29" line="7" chordsig="org.apache.http.cookie.Cookie"/>
+	<type  start="535" length="35" line="7" chordsig="org.apache.http.cookie.CookieOrigin"/>
+</method>
+<method
+ chordsig="formatCookies:(Ljava/util/List;)Ljava/util/List;@org.apache.http.cookie.CookieSpec"
+ sig="List&lt;Header&gt; formatCookies(List&lt;Cookie&gt;)"
+ line="8"
+ startpos="636"
+ endpos="649"
+>
+	<marker line="-1" type="param">
+		<operand  start="696" length="7" line="8">
+			<expr><![CDATA[cookies]]></expr>
+		</operand>
+	</marker>
+	<type  start="597" length="14" line="8" chordsig="java.util.List"/>
+	<type  start="612" length="22" line="8" chordsig="org.apache.http.Header"/>
+	<type  start="650" length="14" line="8" chordsig="java.util.List"/>
+	<type  start="665" length="29" line="8" chordsig="org.apache.http.cookie.Cookie"/>
+</method>
+<method
+ chordsig="getVersionHeader:()Lorg/apache/http/Header;@org.apache.http.cookie.CookieSpec"
+ sig="Header getVersionHeader()"
+ line="9"
+ startpos="746"
+ endpos="762"
+>
+	<type  start="723" length="22" line="9" chordsig="org.apache.http.Header"/>
+</method>
+</class>
+</root>

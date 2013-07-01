@@ -1,0 +1,468 @@
+<root>
+<class chordsig="org.w3c.dom.Node" line="2">
+<method
+ chordsig="getNodeName:()Ljava/lang/String;@org.w3c.dom.Node"
+ sig="String getNodeName()"
+ line="4"
+ startpos="79"
+ endpos="90"
+>
+	<type  start="62" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getNodeValue:()Ljava/lang/String;@org.w3c.dom.Node"
+ sig="String getNodeValue()"
+ line="5"
+ startpos="128"
+ endpos="140"
+>
+	<type  start="111" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setNodeValue:(Ljava/lang/String;)V@org.w3c.dom.Node"
+ sig="void setNodeValue(String)"
+ line="6"
+ startpos="198"
+ endpos="210"
+>
+	<marker line="-1" type="param">
+		<operand  start="228" length="9" line="6">
+			<expr><![CDATA[nodeValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="211" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getNodeType:()S@org.w3c.dom.Node"
+ sig="short getNodeType()"
+ line="7"
+ startpos="295"
+ endpos="306"
+>
+</method>
+<method
+ chordsig="getParentNode:()Lorg/w3c/dom/Node;@org.w3c.dom.Node"
+ sig="Node getParentNode()"
+ line="8"
+ startpos="344"
+ endpos="357"
+>
+	<type  start="327" length="16" line="8" chordsig="org.w3c.dom.Node"/>
+</method>
+<method
+ chordsig="getChildNodes:()Lorg/w3c/dom/NodeList;@org.w3c.dom.Node"
+ sig="NodeList getChildNodes()"
+ line="9"
+ startpos="399"
+ endpos="412"
+>
+	<type  start="378" length="20" line="9" chordsig="org.w3c.dom.NodeList"/>
+</method>
+<method
+ chordsig="getFirstChild:()Lorg/w3c/dom/Node;@org.w3c.dom.Node"
+ sig="Node getFirstChild()"
+ line="10"
+ startpos="450"
+ endpos="463"
+>
+	<type  start="433" length="16" line="10" chordsig="org.w3c.dom.Node"/>
+</method>
+<method
+ chordsig="getLastChild:()Lorg/w3c/dom/Node;@org.w3c.dom.Node"
+ sig="Node getLastChild()"
+ line="11"
+ startpos="501"
+ endpos="513"
+>
+	<type  start="484" length="16" line="11" chordsig="org.w3c.dom.Node"/>
+</method>
+<method
+ chordsig="getPreviousSibling:()Lorg/w3c/dom/Node;@org.w3c.dom.Node"
+ sig="Node getPreviousSibling()"
+ line="12"
+ startpos="551"
+ endpos="569"
+>
+	<type  start="534" length="16" line="12" chordsig="org.w3c.dom.Node"/>
+</method>
+<method
+ chordsig="getNextSibling:()Lorg/w3c/dom/Node;@org.w3c.dom.Node"
+ sig="Node getNextSibling()"
+ line="13"
+ startpos="607"
+ endpos="621"
+>
+	<type  start="590" length="16" line="13" chordsig="org.w3c.dom.Node"/>
+</method>
+<method
+ chordsig="getAttributes:()Lorg/w3c/dom/NamedNodeMap;@org.w3c.dom.Node"
+ sig="NamedNodeMap getAttributes()"
+ line="14"
+ startpos="667"
+ endpos="680"
+>
+	<type  start="642" length="24" line="14" chordsig="org.w3c.dom.NamedNodeMap"/>
+</method>
+<method
+ chordsig="getOwnerDocument:()Lorg/w3c/dom/Document;@org.w3c.dom.Node"
+ sig="Document getOwnerDocument()"
+ line="15"
+ startpos="722"
+ endpos="738"
+>
+	<type  start="701" length="20" line="15" chordsig="org.w3c.dom.Document"/>
+</method>
+<method
+ chordsig="insertBefore:(Lorg/w3c/dom/Node;Lorg/w3c/dom/Node;)Lorg/w3c/dom/Node;@org.w3c.dom.Node"
+ sig="Node insertBefore(Node,Node)"
+ line="16"
+ startpos="776"
+ endpos="788"
+>
+	<marker line="-1" type="param">
+		<operand  start="806" length="8" line="16">
+			<expr><![CDATA[newChild]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="833" length="8" line="16">
+			<expr><![CDATA[refChild]]></expr>
+		</operand>
+	</marker>
+	<type  start="759" length="16" line="16" chordsig="org.w3c.dom.Node"/>
+	<type  start="789" length="16" line="16" chordsig="org.w3c.dom.Node"/>
+	<type  start="816" length="16" line="16" chordsig="org.w3c.dom.Node"/>
+</method>
+<method
+ chordsig="replaceChild:(Lorg/w3c/dom/Node;Lorg/w3c/dom/Node;)Lorg/w3c/dom/Node;@org.w3c.dom.Node"
+ sig="Node replaceChild(Node,Node)"
+ line="17"
+ startpos="910"
+ endpos="922"
+>
+	<marker line="-1" type="param">
+		<operand  start="940" length="8" line="17">
+			<expr><![CDATA[newChild]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="967" length="8" line="17">
+			<expr><![CDATA[oldChild]]></expr>
+		</operand>
+	</marker>
+	<type  start="893" length="16" line="17" chordsig="org.w3c.dom.Node"/>
+	<type  start="923" length="16" line="17" chordsig="org.w3c.dom.Node"/>
+	<type  start="950" length="16" line="17" chordsig="org.w3c.dom.Node"/>
+</method>
+<method
+ chordsig="removeChild:(Lorg/w3c/dom/Node;)Lorg/w3c/dom/Node;@org.w3c.dom.Node"
+ sig="Node removeChild(Node)"
+ line="18"
+ startpos="1044"
+ endpos="1055"
+>
+	<marker line="-1" type="param">
+		<operand  start="1073" length="8" line="18">
+			<expr><![CDATA[oldChild]]></expr>
+		</operand>
+	</marker>
+	<type  start="1027" length="16" line="18" chordsig="org.w3c.dom.Node"/>
+	<type  start="1056" length="16" line="18" chordsig="org.w3c.dom.Node"/>
+</method>
+<method
+ chordsig="appendChild:(Lorg/w3c/dom/Node;)Lorg/w3c/dom/Node;@org.w3c.dom.Node"
+ sig="Node appendChild(Node)"
+ line="19"
+ startpos="1150"
+ endpos="1161"
+>
+	<marker line="-1" type="param">
+		<operand  start="1179" length="8" line="19">
+			<expr><![CDATA[newChild]]></expr>
+		</operand>
+	</marker>
+	<type  start="1133" length="16" line="19" chordsig="org.w3c.dom.Node"/>
+	<type  start="1162" length="16" line="19" chordsig="org.w3c.dom.Node"/>
+</method>
+<method
+ chordsig="hasChildNodes:()Z@org.w3c.dom.Node"
+ sig="boolean hasChildNodes()"
+ line="20"
+ startpos="1247"
+ endpos="1260"
+>
+</method>
+<method
+ chordsig="cloneNode:(Z)Lorg/w3c/dom/Node;@org.w3c.dom.Node"
+ sig="Node cloneNode(boolean)"
+ line="21"
+ startpos="1298"
+ endpos="1307"
+>
+	<marker line="-1" type="param">
+		<operand  start="1316" length="4" line="21">
+			<expr><![CDATA[deep]]></expr>
+		</operand>
+	</marker>
+	<type  start="1281" length="16" line="21" chordsig="org.w3c.dom.Node"/>
+</method>
+<method
+ chordsig="normalize:()V@org.w3c.dom.Node"
+ sig="void normalize()"
+ line="22"
+ startpos="1345"
+ endpos="1354"
+>
+</method>
+<method
+ chordsig="isSupported:(Ljava/lang/String;Ljava/lang/String;)Z@org.w3c.dom.Node"
+ sig="boolean isSupported(String,String)"
+ line="23"
+ startpos="1383"
+ endpos="1394"
+>
+	<marker line="-1" type="param">
+		<operand  start="1412" length="7" line="23">
+			<expr><![CDATA[feature]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1438" length="7" line="23">
+			<expr><![CDATA[version]]></expr>
+		</operand>
+	</marker>
+	<type  start="1395" length="16" line="23" chordsig="java.lang.String"/>
+	<type  start="1421" length="16" line="23" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getNamespaceURI:()Ljava/lang/String;@org.w3c.dom.Node"
+ sig="String getNamespaceURI()"
+ line="24"
+ startpos="1482"
+ endpos="1497"
+>
+	<type  start="1465" length="16" line="24" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getPrefix:()Ljava/lang/String;@org.w3c.dom.Node"
+ sig="String getPrefix()"
+ line="25"
+ startpos="1535"
+ endpos="1544"
+>
+	<type  start="1518" length="16" line="25" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setPrefix:(Ljava/lang/String;)V@org.w3c.dom.Node"
+ sig="void setPrefix(String)"
+ line="26"
+ startpos="1570"
+ endpos="1579"
+>
+	<marker line="-1" type="param">
+		<operand  start="1597" length="6" line="26">
+			<expr><![CDATA[prefix]]></expr>
+		</operand>
+	</marker>
+	<type  start="1580" length="16" line="26" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getLocalName:()Ljava/lang/String;@org.w3c.dom.Node"
+ sig="String getLocalName()"
+ line="27"
+ startpos="1672"
+ endpos="1684"
+>
+	<type  start="1655" length="16" line="27" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="hasAttributes:()Z@org.w3c.dom.Node"
+ sig="boolean hasAttributes()"
+ line="28"
+ startpos="1713"
+ endpos="1726"
+>
+</method>
+<method
+ chordsig="getBaseURI:()Ljava/lang/String;@org.w3c.dom.Node"
+ sig="String getBaseURI()"
+ line="29"
+ startpos="1764"
+ endpos="1774"
+>
+	<type  start="1747" length="16" line="29" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="compareDocumentPosition:(Lorg/w3c/dom/Node;)S@org.w3c.dom.Node"
+ sig="short compareDocumentPosition(Node)"
+ line="30"
+ startpos="1801"
+ endpos="1824"
+>
+	<marker line="-1" type="param">
+		<operand  start="1842" length="5" line="30">
+			<expr><![CDATA[other]]></expr>
+		</operand>
+	</marker>
+	<type  start="1825" length="16" line="30" chordsig="org.w3c.dom.Node"/>
+</method>
+<method
+ chordsig="getTextContent:()Ljava/lang/String;@org.w3c.dom.Node"
+ sig="String getTextContent()"
+ line="31"
+ startpos="1916"
+ endpos="1930"
+>
+	<type  start="1899" length="16" line="31" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setTextContent:(Ljava/lang/String;)V@org.w3c.dom.Node"
+ sig="void setTextContent(String)"
+ line="32"
+ startpos="1988"
+ endpos="2002"
+>
+	<marker line="-1" type="param">
+		<operand  start="2020" length="11" line="32">
+			<expr><![CDATA[textContent]]></expr>
+		</operand>
+	</marker>
+	<type  start="2003" length="16" line="32" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="isSameNode:(Lorg/w3c/dom/Node;)Z@org.w3c.dom.Node"
+ sig="boolean isSameNode(Node)"
+ line="33"
+ startpos="2091"
+ endpos="2101"
+>
+	<marker line="-1" type="param">
+		<operand  start="2119" length="5" line="33">
+			<expr><![CDATA[other]]></expr>
+		</operand>
+	</marker>
+	<type  start="2102" length="16" line="33" chordsig="org.w3c.dom.Node"/>
+</method>
+<method
+ chordsig="lookupPrefix:(Ljava/lang/String;)Ljava/lang/String;@org.w3c.dom.Node"
+ sig="String lookupPrefix(String)"
+ line="34"
+ startpos="2161"
+ endpos="2173"
+>
+	<marker line="-1" type="param">
+		<operand  start="2191" length="12" line="34">
+			<expr><![CDATA[namespaceURI]]></expr>
+		</operand>
+	</marker>
+	<type  start="2144" length="16" line="34" chordsig="java.lang.String"/>
+	<type  start="2174" length="16" line="34" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="isDefaultNamespace:(Ljava/lang/String;)Z@org.w3c.dom.Node"
+ sig="boolean isDefaultNamespace(String)"
+ line="35"
+ startpos="2231"
+ endpos="2249"
+>
+	<marker line="-1" type="param">
+		<operand  start="2267" length="12" line="35">
+			<expr><![CDATA[namespaceURI]]></expr>
+		</operand>
+	</marker>
+	<type  start="2250" length="16" line="35" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="lookupNamespaceURI:(Ljava/lang/String;)Ljava/lang/String;@org.w3c.dom.Node"
+ sig="String lookupNamespaceURI(String)"
+ line="36"
+ startpos="2316"
+ endpos="2334"
+>
+	<marker line="-1" type="param">
+		<operand  start="2352" length="6" line="36">
+			<expr><![CDATA[prefix]]></expr>
+		</operand>
+	</marker>
+	<type  start="2299" length="16" line="36" chordsig="java.lang.String"/>
+	<type  start="2335" length="16" line="36" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="isEqualNode:(Lorg/w3c/dom/Node;)Z@org.w3c.dom.Node"
+ sig="boolean isEqualNode(Node)"
+ line="37"
+ startpos="2386"
+ endpos="2397"
+>
+	<marker line="-1" type="param">
+		<operand  start="2415" length="3" line="37">
+			<expr><![CDATA[arg]]></expr>
+		</operand>
+	</marker>
+	<type  start="2398" length="16" line="37" chordsig="org.w3c.dom.Node"/>
+</method>
+<method
+ chordsig="getFeature:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Object;@org.w3c.dom.Node"
+ sig="Object getFeature(String,String)"
+ line="38"
+ startpos="2455"
+ endpos="2465"
+>
+	<marker line="-1" type="param">
+		<operand  start="2483" length="7" line="38">
+			<expr><![CDATA[feature]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2509" length="7" line="38">
+			<expr><![CDATA[version]]></expr>
+		</operand>
+	</marker>
+	<type  start="2438" length="16" line="38" chordsig="java.lang.Object"/>
+	<type  start="2466" length="16" line="38" chordsig="java.lang.String"/>
+	<type  start="2492" length="16" line="38" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setUserData:(Ljava/lang/String;Ljava/lang/Object;Lorg/w3c/dom/UserDataHandler;)Ljava/lang/Object;@org.w3c.dom.Node"
+ sig="Object setUserData(String,Object,UserDataHandler)"
+ line="39"
+ startpos="2553"
+ endpos="2564"
+>
+	<marker line="-1" type="param">
+		<operand  start="2582" length="3" line="39">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2604" length="4" line="39">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2638" length="7" line="39">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="2536" length="16" line="39" chordsig="java.lang.Object"/>
+	<type  start="2565" length="16" line="39" chordsig="java.lang.String"/>
+	<type  start="2587" length="16" line="39" chordsig="java.lang.Object"/>
+	<type  start="2610" length="27" line="39" chordsig="org.w3c.dom.UserDataHandler"/>
+</method>
+<method
+ chordsig="getUserData:(Ljava/lang/String;)Ljava/lang/Object;@org.w3c.dom.Node"
+ sig="Object getUserData(String)"
+ line="40"
+ startpos="2682"
+ endpos="2693"
+>
+	<marker line="-1" type="param">
+		<operand  start="2711" length="3" line="40">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="2665" length="16" line="40" chordsig="java.lang.Object"/>
+	<type  start="2694" length="16" line="40" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

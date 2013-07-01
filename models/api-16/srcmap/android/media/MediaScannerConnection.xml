@@ -1,0 +1,268 @@
+<root>
+<class chordsig="android.media.MediaScannerConnection" line="2">
+	<type  start="72" length="33" line="3" chordsig="android.content.ServiceConnection"/>
+<class chordsig="android.media.MediaScannerConnection$OnScanCompletedListener" line="5">
+<method
+ chordsig="onScanCompleted:(Ljava/lang/String;Landroid/net/Uri;)V@android.media.MediaScannerConnection$OnScanCompletedListener"
+ sig="void onScanCompleted(String,Uri)"
+ line="7"
+ startpos="180"
+ endpos="195"
+>
+	<marker line="-1" type="param">
+		<operand  start="213" length="4" line="7">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="235" length="3" line="7">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<type  start="196" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="219" length="15" line="7" chordsig="android.net.Uri"/>
+</method>
+</class>
+<class chordsig="android.media.MediaScannerConnection$MediaScannerConnectionClient" line="9">
+	<type  start="306" length="60" line="10" chordsig="android.media.MediaScannerConnection$OnScanCompletedListener"/>
+<method
+ chordsig="onMediaScannerConnected:()V@android.media.MediaScannerConnection$MediaScannerConnectionClient"
+ sig="void onMediaScannerConnected()"
+ line="12"
+ startpos="391"
+ endpos="414"
+>
+</method>
+<method
+ chordsig="onScanCompleted:(Ljava/lang/String;Landroid/net/Uri;)V@android.media.MediaScannerConnection$MediaScannerConnectionClient"
+ sig="void onScanCompleted(String,Uri)"
+ line="13"
+ startpos="440"
+ endpos="455"
+>
+	<marker line="-1" type="param">
+		<operand  start="473" length="4" line="13">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="495" length="3" line="13">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<type  start="456" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="479" length="15" line="13" chordsig="android.net.Uri"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/media/MediaScannerConnection$MediaScannerConnectionClient;)V@android.media.MediaScannerConnection"
+ sig="MediaScannerConnection(Context,MediaScannerConnectionClient)"
+ line="15"
+ startpos="511"
+ endpos="533"
+>
+	<marker line="-1" type="param">
+		<operand  start="558" length="7" line="15">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="633" length="6" line="15">
+			<expr><![CDATA[client]]></expr>
+		</operand>
+	</marker>
+	<type  start="534" length="23" line="15" chordsig="android.content.Context"/>
+	<type  start="567" length="65" line="15" chordsig="android.media.MediaScannerConnection$MediaScannerConnectionClient"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="653" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="649" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="670" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="653" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="connect:()V@android.media.MediaScannerConnection"
+ sig="void connect()"
+ line="16"
+ startpos="695"
+ endpos="702"
+>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="717" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="713" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="734" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="717" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="disconnect:()V@android.media.MediaScannerConnection"
+ sig="void disconnect()"
+ line="17"
+ startpos="759"
+ endpos="769"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="784" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="780" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="801" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="784" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isConnected:()Z@android.media.MediaScannerConnection"
+ sig="boolean isConnected()"
+ line="18"
+ startpos="842"
+ endpos="853"
+>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="868" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="864" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="885" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="868" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="scanFile:(Ljava/lang/String;Ljava/lang/String;)V@android.media.MediaScannerConnection"
+ sig="void scanFile(String,String)"
+ line="19"
+ startpos="910"
+ endpos="918"
+>
+	<marker line="-1" type="param">
+		<operand  start="936" length="4" line="19">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="959" length="8" line="19">
+			<expr><![CDATA[mimeType]]></expr>
+		</operand>
+	</marker>
+	<type  start="919" length="16" line="19" chordsig="java.lang.String"/>
+	<type  start="942" length="16" line="19" chordsig="java.lang.String"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="981" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="977" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="998" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="981" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="scanFile:(Landroid/content/Context;[Ljava/lang/String;[Ljava/lang/String;Landroid/media/MediaScannerConnection$OnScanCompletedListener;)V@android.media.MediaScannerConnection"
+ sig="void scanFile(Context,String[],String[],OnScanCompletedListener)"
+ line="20"
+ startpos="1030"
+ endpos="1038"
+>
+	<marker line="-1" type="param">
+		<operand  start="1063" length="7" line="20">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1091" length="5" line="20">
+			<expr><![CDATA[paths]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1117" length="9" line="20">
+			<expr><![CDATA[mimeTypes]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1189" length="8" line="20">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<type  start="1039" length="23" line="20" chordsig="android.content.Context"/>
+	<type  start="1072" length="16" line="20" chordsig="java.lang.String"/>
+	<type  start="1098" length="16" line="20" chordsig="java.lang.String"/>
+	<type  start="1128" length="60" line="20" chordsig="android.media.MediaScannerConnection$OnScanCompletedListener"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1211" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1207" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1228" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1211" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onServiceConnected:(Landroid/content/ComponentName;Landroid/os/IBinder;)V@android.media.MediaScannerConnection"
+ sig="void onServiceConnected(ComponentName,IBinder)"
+ line="21"
+ startpos="1253"
+ endpos="1271"
+>
+	<marker line="-1" type="param">
+		<operand  start="1302" length="9" line="21">
+			<expr><![CDATA[className]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1332" length="7" line="21">
+			<expr><![CDATA[service]]></expr>
+		</operand>
+	</marker>
+	<type  start="1272" length="29" line="21" chordsig="android.content.ComponentName"/>
+	<type  start="1313" length="18" line="21" chordsig="android.os.IBinder"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1353" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1349" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1370" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1353" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onServiceDisconnected:(Landroid/content/ComponentName;)V@android.media.MediaScannerConnection"
+ sig="void onServiceDisconnected(ComponentName)"
+ line="22"
+ startpos="1395"
+ endpos="1416"
+>
+	<marker line="-1" type="param">
+		<operand  start="1447" length="9" line="22">
+			<expr><![CDATA[className]]></expr>
+		</operand>
+	</marker>
+	<type  start="1417" length="29" line="22" chordsig="android.content.ComponentName"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1470" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1466" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1487" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1470" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

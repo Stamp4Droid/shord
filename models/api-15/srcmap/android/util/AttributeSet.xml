@@ -1,0 +1,392 @@
+<root>
+<class chordsig="android.util.AttributeSet" line="2">
+<method
+ chordsig="getAttributeCount:()I@android.util.AttributeSet"
+ sig="int getAttributeCount()"
+ line="4"
+ startpos="75"
+ endpos="92"
+>
+</method>
+<method
+ chordsig="getAttributeName:(I)Ljava/lang/String;@android.util.AttributeSet"
+ sig="String getAttributeName(int)"
+ line="5"
+ startpos="130"
+ endpos="146"
+>
+	<marker line="-1" type="param">
+		<operand  start="151" length="5" line="5">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="113" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getAttributeValue:(I)Ljava/lang/String;@android.util.AttributeSet"
+ sig="String getAttributeValue(int)"
+ line="6"
+ startpos="193"
+ endpos="210"
+>
+	<marker line="-1" type="param">
+		<operand  start="215" length="5" line="6">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="176" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getAttributeValue:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;@android.util.AttributeSet"
+ sig="String getAttributeValue(String,String)"
+ line="7"
+ startpos="257"
+ endpos="274"
+>
+	<marker line="-1" type="param">
+		<operand  start="292" length="9" line="7">
+			<expr><![CDATA[namespace]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="320" length="4" line="7">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="240" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="275" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="303" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getPositionDescription:()Ljava/lang/String;@android.util.AttributeSet"
+ sig="String getPositionDescription()"
+ line="8"
+ startpos="361"
+ endpos="383"
+>
+	<type  start="344" length="16" line="8" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getAttributeNameResource:(I)I@android.util.AttributeSet"
+ sig="int getAttributeNameResource(int)"
+ line="9"
+ startpos="408"
+ endpos="432"
+>
+	<marker line="-1" type="param">
+		<operand  start="437" length="5" line="9">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getAttributeListValue:(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;I)I@android.util.AttributeSet"
+ sig="int getAttributeListValue(String,String,String[],int)"
+ line="10"
+ startpos="466"
+ endpos="487"
+>
+	<marker line="-1" type="param">
+		<operand  start="505" length="9" line="10">
+			<expr><![CDATA[namespace]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="533" length="9" line="10">
+			<expr><![CDATA[attribute]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="563" length="7" line="10">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="576" length="12" line="10">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="488" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="516" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="544" length="16" line="10" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getAttributeBooleanValue:(Ljava/lang/String;Ljava/lang/String;Z)Z@android.util.AttributeSet"
+ sig="boolean getAttributeBooleanValue(String,String,boolean)"
+ line="11"
+ startpos="616"
+ endpos="640"
+>
+	<marker line="-1" type="param">
+		<operand  start="658" length="9" line="11">
+			<expr><![CDATA[namespace]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="686" length="9" line="11">
+			<expr><![CDATA[attribute]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="705" length="12" line="11">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="641" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="669" length="16" line="11" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getAttributeResourceValue:(Ljava/lang/String;Ljava/lang/String;I)I@android.util.AttributeSet"
+ sig="int getAttributeResourceValue(String,String,int)"
+ line="12"
+ startpos="741"
+ endpos="766"
+>
+	<marker line="-1" type="param">
+		<operand  start="784" length="9" line="12">
+			<expr><![CDATA[namespace]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="812" length="9" line="12">
+			<expr><![CDATA[attribute]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="827" length="12" line="12">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="767" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="795" length="16" line="12" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getAttributeIntValue:(Ljava/lang/String;Ljava/lang/String;I)I@android.util.AttributeSet"
+ sig="int getAttributeIntValue(String,String,int)"
+ line="13"
+ startpos="863"
+ endpos="883"
+>
+	<marker line="-1" type="param">
+		<operand  start="901" length="9" line="13">
+			<expr><![CDATA[namespace]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="929" length="9" line="13">
+			<expr><![CDATA[attribute]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="944" length="12" line="13">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="884" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="912" length="16" line="13" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getAttributeUnsignedIntValue:(Ljava/lang/String;Ljava/lang/String;I)I@android.util.AttributeSet"
+ sig="int getAttributeUnsignedIntValue(String,String,int)"
+ line="14"
+ startpos="980"
+ endpos="1008"
+>
+	<marker line="-1" type="param">
+		<operand  start="1026" length="9" line="14">
+			<expr><![CDATA[namespace]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1054" length="9" line="14">
+			<expr><![CDATA[attribute]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1069" length="12" line="14">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="1009" length="16" line="14" chordsig="java.lang.String"/>
+	<type  start="1037" length="16" line="14" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getAttributeFloatValue:(Ljava/lang/String;Ljava/lang/String;F)F@android.util.AttributeSet"
+ sig="float getAttributeFloatValue(String,String,float)"
+ line="15"
+ startpos="1107"
+ endpos="1129"
+>
+	<marker line="-1" type="param">
+		<operand  start="1147" length="9" line="15">
+			<expr><![CDATA[namespace]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1175" length="9" line="15">
+			<expr><![CDATA[attribute]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1192" length="12" line="15">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="1130" length="16" line="15" chordsig="java.lang.String"/>
+	<type  start="1158" length="16" line="15" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getAttributeListValue:(I[Ljava/lang/String;I)I@android.util.AttributeSet"
+ sig="int getAttributeListValue(int,String[],int)"
+ line="16"
+ startpos="1228"
+ endpos="1249"
+>
+	<marker line="-1" type="param">
+		<operand  start="1254" length="5" line="16">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1280" length="7" line="16">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1293" length="12" line="16">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="1261" length="16" line="16" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getAttributeBooleanValue:(IZ)Z@android.util.AttributeSet"
+ sig="boolean getAttributeBooleanValue(int,boolean)"
+ line="17"
+ startpos="1333"
+ endpos="1357"
+>
+	<marker line="-1" type="param">
+		<operand  start="1362" length="5" line="17">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1377" length="12" line="17">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getAttributeResourceValue:(II)I@android.util.AttributeSet"
+ sig="int getAttributeResourceValue(int,int)"
+ line="18"
+ startpos="1413"
+ endpos="1438"
+>
+	<marker line="-1" type="param">
+		<operand  start="1443" length="5" line="18">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1454" length="12" line="18">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getAttributeIntValue:(II)I@android.util.AttributeSet"
+ sig="int getAttributeIntValue(int,int)"
+ line="19"
+ startpos="1490"
+ endpos="1510"
+>
+	<marker line="-1" type="param">
+		<operand  start="1515" length="5" line="19">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1526" length="12" line="19">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getAttributeUnsignedIntValue:(II)I@android.util.AttributeSet"
+ sig="int getAttributeUnsignedIntValue(int,int)"
+ line="20"
+ startpos="1562"
+ endpos="1590"
+>
+	<marker line="-1" type="param">
+		<operand  start="1595" length="5" line="20">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1606" length="12" line="20">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getAttributeFloatValue:(IF)F@android.util.AttributeSet"
+ sig="float getAttributeFloatValue(int,float)"
+ line="21"
+ startpos="1644"
+ endpos="1666"
+>
+	<marker line="-1" type="param">
+		<operand  start="1671" length="5" line="21">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1684" length="12" line="21">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getIdAttribute:()Ljava/lang/String;@android.util.AttributeSet"
+ sig="String getIdAttribute()"
+ line="22"
+ startpos="1733"
+ endpos="1747"
+>
+	<type  start="1716" length="16" line="22" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getClassAttribute:()Ljava/lang/String;@android.util.AttributeSet"
+ sig="String getClassAttribute()"
+ line="23"
+ startpos="1785"
+ endpos="1802"
+>
+	<type  start="1768" length="16" line="23" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getIdAttributeResourceValue:(I)I@android.util.AttributeSet"
+ sig="int getIdAttributeResourceValue(int)"
+ line="24"
+ startpos="1827"
+ endpos="1854"
+>
+	<marker line="-1" type="param">
+		<operand  start="1859" length="12" line="24">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getStyleAttribute:()I@android.util.AttributeSet"
+ sig="int getStyleAttribute()"
+ line="25"
+ startpos="1895"
+ endpos="1912"
+>
+</method>
+</class>
+</root>

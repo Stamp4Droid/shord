@@ -1,0 +1,77 @@
+<root>
+<class chordsig="android.view.inputmethod.ExtractedTextRequest" line="2">
+	<type  start="81" length="21" line="3" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.view.inputmethod.ExtractedTextRequest"
+ sig="ExtractedTextRequest()"
+ line="5"
+ startpos="113"
+ endpos="133"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="148" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="144" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="165" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="148" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.view.inputmethod.ExtractedTextRequest"
+ sig="void writeToParcel(Parcel,int)"
+ line="6"
+ startpos="190"
+ endpos="203"
+>
+	<marker line="-1" type="param">
+		<operand  start="222" length="4" line="6">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="232" length="5" line="6">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="204" length="17" line="6" chordsig="android.os.Parcel"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="251" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="247" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="268" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="251" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.view.inputmethod.ExtractedTextRequest"
+ sig="int describeContents()"
+ line="7"
+ startpos="292"
+ endpos="308"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="323" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="319" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="340" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="323" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="458" length="29" line="12" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="488" length="45" line="12" chordsig="android.view.inputmethod.ExtractedTextRequest"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.view.inputmethod.ExtractedTextRequest"
+ line="13"
+>
+</method>
+</class>
+</root>

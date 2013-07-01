@@ -1,0 +1,787 @@
+<root>
+<class chordsig="android.renderscript.Mesh" line="2">
+	<type  start="58" length="28" line="3" chordsig="android.renderscript.BaseObj"/>
+<class chordsig="android.renderscript.Mesh$Primitive" line="5">
+</class>
+<class chordsig="android.renderscript.Mesh$Builder" line="14">
+<method
+ chordsig="&lt;init&gt;:(Landroid/renderscript/RenderScript;I)V@android.renderscript.Mesh$Builder"
+ sig="Builder(RenderScript,int)"
+ line="16"
+ startpos="237"
+ endpos="244"
+>
+	<marker line="-1" type="param">
+		<operand  start="279" length="2" line="16">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="287" length="5" line="16">
+			<expr><![CDATA[usage]]></expr>
+		</operand>
+	</marker>
+	<type  start="245" length="33" line="16" chordsig="android.renderscript.RenderScript"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="306" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="302" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="323" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="306" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCurrentVertexTypeIndex:()I@android.renderscript.Mesh$Builder"
+ sig="int getCurrentVertexTypeIndex()"
+ line="17"
+ startpos="347"
+ endpos="372"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="387" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="383" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="404" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="387" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCurrentIndexSetIndex:()I@android.renderscript.Mesh$Builder"
+ sig="int getCurrentIndexSetIndex()"
+ line="18"
+ startpos="428"
+ endpos="451"
+>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="466" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="462" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="483" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="466" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addVertexType:(Landroid/renderscript/Type;)Landroid/renderscript/Mesh$Builder;@android.renderscript.Mesh$Builder"
+ sig="Builder addVertexType(Type)"
+ line="19"
+ startpos="537"
+ endpos="550"
+>
+	<marker line="-1" type="param">
+		<operand  start="577" length="1" line="19">
+			<expr><![CDATA[t]]></expr>
+		</operand>
+	</marker>
+	<type  start="503" length="33" line="19" chordsig="android.renderscript.Mesh$Builder"/>
+	<type  start="551" length="25" line="19" chordsig="android.renderscript.Type"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="631" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="627" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="648" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="631" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addVertexType:(Landroid/renderscript/Element;I)Landroid/renderscript/Mesh$Builder;@android.renderscript.Mesh$Builder"
+ sig="Builder addVertexType(Element,int)"
+ line="20"
+ startpos="702"
+ endpos="715"
+>
+	<marker line="-1" type="param">
+		<operand  start="745" length="1" line="20">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="752" length="4" line="20">
+			<expr><![CDATA[size]]></expr>
+		</operand>
+	</marker>
+	<type  start="668" length="33" line="20" chordsig="android.renderscript.Mesh$Builder"/>
+	<type  start="716" length="28" line="20" chordsig="android.renderscript.Element"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="809" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="805" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="826" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="809" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addIndexSetType:(Landroid/renderscript/Type;Landroid/renderscript/Mesh$Primitive;)Landroid/renderscript/Mesh$Builder;@android.renderscript.Mesh$Builder"
+ sig="Builder addIndexSetType(Type,Primitive)"
+ line="21"
+ startpos="880"
+ endpos="895"
+>
+	<marker line="-1" type="param">
+		<operand  start="922" length="1" line="21">
+			<expr><![CDATA[t]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="961" length="1" line="21">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<type  start="846" length="33" line="21" chordsig="android.renderscript.Mesh$Builder"/>
+	<type  start="896" length="25" line="21" chordsig="android.renderscript.Type"/>
+	<type  start="925" length="35" line="21" chordsig="android.renderscript.Mesh$Primitive"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="976" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="972" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="993" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="976" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addIndexSetType:(Landroid/renderscript/Mesh$Primitive;)Landroid/renderscript/Mesh$Builder;@android.renderscript.Mesh$Builder"
+ sig="Builder addIndexSetType(Primitive)"
+ line="22"
+ startpos="1047"
+ endpos="1062"
+>
+	<marker line="-1" type="param">
+		<operand  start="1099" length="1" line="22">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<type  start="1013" length="33" line="22" chordsig="android.renderscript.Mesh$Builder"/>
+	<type  start="1063" length="35" line="22" chordsig="android.renderscript.Mesh$Primitive"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1114" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1110" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1131" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1114" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addIndexSetType:(Landroid/renderscript/Element;ILandroid/renderscript/Mesh$Primitive;)Landroid/renderscript/Mesh$Builder;@android.renderscript.Mesh$Builder"
+ sig="Builder addIndexSetType(Element,int,Primitive)"
+ line="23"
+ startpos="1185"
+ endpos="1200"
+>
+	<marker line="-1" type="param">
+		<operand  start="1230" length="1" line="23">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1237" length="4" line="23">
+			<expr><![CDATA[size]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1279" length="1" line="23">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<type  start="1151" length="33" line="23" chordsig="android.renderscript.Mesh$Builder"/>
+	<type  start="1201" length="28" line="23" chordsig="android.renderscript.Element"/>
+	<type  start="1243" length="35" line="23" chordsig="android.renderscript.Mesh$Primitive"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1294" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1290" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1311" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1294" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="create:()Landroid/renderscript/Mesh;@android.renderscript.Mesh$Builder"
+ sig="Mesh create()"
+ line="24"
+ startpos="1357"
+ endpos="1363"
+>
+	<type  start="1331" length="25" line="24" chordsig="android.renderscript.Mesh"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1378" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1374" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1395" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1378" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.renderscript.Mesh$AllocationBuilder" line="26">
+<method
+ chordsig="&lt;init&gt;:(Landroid/renderscript/RenderScript;)V@android.renderscript.Mesh$AllocationBuilder"
+ sig="AllocationBuilder(RenderScript)"
+ line="28"
+ startpos="1457"
+ endpos="1474"
+>
+	<marker line="-1" type="param">
+		<operand  start="1509" length="2" line="28">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<type  start="1475" length="33" line="28" chordsig="android.renderscript.RenderScript"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1525" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1521" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1542" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1525" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCurrentVertexTypeIndex:()I@android.renderscript.Mesh$AllocationBuilder"
+ sig="int getCurrentVertexTypeIndex()"
+ line="29"
+ startpos="1566"
+ endpos="1591"
+>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1606" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1602" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1623" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1606" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCurrentIndexSetIndex:()I@android.renderscript.Mesh$AllocationBuilder"
+ sig="int getCurrentIndexSetIndex()"
+ line="30"
+ startpos="1647"
+ endpos="1670"
+>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1685" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1681" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1702" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1685" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addVertexAllocation:(Landroid/renderscript/Allocation;)Landroid/renderscript/Mesh$AllocationBuilder;@android.renderscript.Mesh$AllocationBuilder"
+ sig="AllocationBuilder addVertexAllocation(Allocation)"
+ line="31"
+ startpos="1766"
+ endpos="1785"
+>
+	<marker line="-1" type="param">
+		<operand  start="1818" length="1" line="31">
+			<expr><![CDATA[a]]></expr>
+		</operand>
+	</marker>
+	<type  start="1722" length="43" line="31" chordsig="android.renderscript.Mesh$AllocationBuilder"/>
+	<type  start="1786" length="31" line="31" chordsig="android.renderscript.Allocation"/>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1872" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1868" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1889" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1872" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addIndexSetAllocation:(Landroid/renderscript/Allocation;Landroid/renderscript/Mesh$Primitive;)Landroid/renderscript/Mesh$AllocationBuilder;@android.renderscript.Mesh$AllocationBuilder"
+ sig="AllocationBuilder addIndexSetAllocation(Allocation,Primitive)"
+ line="32"
+ startpos="1953"
+ endpos="1974"
+>
+	<marker line="-1" type="param">
+		<operand  start="2007" length="1" line="32">
+			<expr><![CDATA[a]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2046" length="1" line="32">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<type  start="1909" length="43" line="32" chordsig="android.renderscript.Mesh$AllocationBuilder"/>
+	<type  start="1975" length="31" line="32" chordsig="android.renderscript.Allocation"/>
+	<type  start="2010" length="35" line="32" chordsig="android.renderscript.Mesh$Primitive"/>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2061" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2057" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2078" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2061" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addIndexSetType:(Landroid/renderscript/Mesh$Primitive;)Landroid/renderscript/Mesh$AllocationBuilder;@android.renderscript.Mesh$AllocationBuilder"
+ sig="AllocationBuilder addIndexSetType(Primitive)"
+ line="33"
+ startpos="2142"
+ endpos="2157"
+>
+	<marker line="-1" type="param">
+		<operand  start="2194" length="1" line="33">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<type  start="2098" length="43" line="33" chordsig="android.renderscript.Mesh$AllocationBuilder"/>
+	<type  start="2158" length="35" line="33" chordsig="android.renderscript.Mesh$Primitive"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2209" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2205" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2226" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2209" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="create:()Landroid/renderscript/Mesh;@android.renderscript.Mesh$AllocationBuilder"
+ sig="Mesh create()"
+ line="34"
+ startpos="2272"
+ endpos="2278"
+>
+	<type  start="2246" length="25" line="34" chordsig="android.renderscript.Mesh"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2293" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2289" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2310" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2293" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.renderscript.Mesh$TriangleMeshBuilder" line="36">
+<method
+ chordsig="&lt;init&gt;:(Landroid/renderscript/RenderScript;II)V@android.renderscript.Mesh$TriangleMeshBuilder"
+ sig="TriangleMeshBuilder(RenderScript,int,int)"
+ line="38"
+ startpos="2374"
+ endpos="2393"
+>
+	<marker line="-1" type="param">
+		<operand  start="2428" length="2" line="38">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2436" length="7" line="38">
+			<expr><![CDATA[vtxSize]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2449" length="5" line="38">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="2394" length="33" line="38" chordsig="android.renderscript.RenderScript"/>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2468" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2464" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2485" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2468" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addVertex:(FF)Landroid/renderscript/Mesh$TriangleMeshBuilder;@android.renderscript.Mesh$TriangleMeshBuilder"
+ sig="TriangleMeshBuilder addVertex(float,float)"
+ line="39"
+ startpos="2551"
+ endpos="2560"
+>
+	<marker line="-1" type="param">
+		<operand  start="2567" length="1" line="39">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2576" length="1" line="39">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<type  start="2505" length="45" line="39" chordsig="android.renderscript.Mesh$TriangleMeshBuilder"/>
+	<newexpr line="39" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2591" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2587" length="29" line="39">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2608" length="7" line="39">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2591" length="16" line="39" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addVertex:(FFF)Landroid/renderscript/Mesh$TriangleMeshBuilder;@android.renderscript.Mesh$TriangleMeshBuilder"
+ sig="TriangleMeshBuilder addVertex(float,float,float)"
+ line="40"
+ startpos="2674"
+ endpos="2683"
+>
+	<marker line="-1" type="param">
+		<operand  start="2690" length="1" line="40">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2699" length="1" line="40">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2708" length="1" line="40">
+			<expr><![CDATA[z]]></expr>
+		</operand>
+	</marker>
+	<type  start="2628" length="45" line="40" chordsig="android.renderscript.Mesh$TriangleMeshBuilder"/>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2723" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2719" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2740" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2723" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTexture:(FF)Landroid/renderscript/Mesh$TriangleMeshBuilder;@android.renderscript.Mesh$TriangleMeshBuilder"
+ sig="TriangleMeshBuilder setTexture(float,float)"
+ line="41"
+ startpos="2806"
+ endpos="2816"
+>
+	<marker line="-1" type="param">
+		<operand  start="2823" length="1" line="41">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2832" length="1" line="41">
+			<expr><![CDATA[t]]></expr>
+		</operand>
+	</marker>
+	<type  start="2760" length="45" line="41" chordsig="android.renderscript.Mesh$TriangleMeshBuilder"/>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2847" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2843" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2864" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2847" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setNormal:(FFF)Landroid/renderscript/Mesh$TriangleMeshBuilder;@android.renderscript.Mesh$TriangleMeshBuilder"
+ sig="TriangleMeshBuilder setNormal(float,float,float)"
+ line="42"
+ startpos="2930"
+ endpos="2939"
+>
+	<marker line="-1" type="param">
+		<operand  start="2946" length="1" line="42">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2955" length="1" line="42">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2964" length="1" line="42">
+			<expr><![CDATA[z]]></expr>
+		</operand>
+	</marker>
+	<type  start="2884" length="45" line="42" chordsig="android.renderscript.Mesh$TriangleMeshBuilder"/>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2979" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2975" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2996" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2979" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setColor:(FFFF)Landroid/renderscript/Mesh$TriangleMeshBuilder;@android.renderscript.Mesh$TriangleMeshBuilder"
+ sig="TriangleMeshBuilder setColor(float,float,float,float)"
+ line="43"
+ startpos="3062"
+ endpos="3070"
+>
+	<marker line="-1" type="param">
+		<operand  start="3077" length="1" line="43">
+			<expr><![CDATA[r]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3086" length="1" line="43">
+			<expr><![CDATA[g]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3095" length="1" line="43">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3104" length="1" line="43">
+			<expr><![CDATA[a]]></expr>
+		</operand>
+	</marker>
+	<type  start="3016" length="45" line="43" chordsig="android.renderscript.Mesh$TriangleMeshBuilder"/>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3119" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3115" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3136" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3119" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addTriangle:(III)Landroid/renderscript/Mesh$TriangleMeshBuilder;@android.renderscript.Mesh$TriangleMeshBuilder"
+ sig="TriangleMeshBuilder addTriangle(int,int,int)"
+ line="44"
+ startpos="3202"
+ endpos="3213"
+>
+	<marker line="-1" type="param">
+		<operand  start="3218" length="4" line="44">
+			<expr><![CDATA[idx1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3228" length="4" line="44">
+			<expr><![CDATA[idx2]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3238" length="4" line="44">
+			<expr><![CDATA[idx3]]></expr>
+		</operand>
+	</marker>
+	<type  start="3156" length="45" line="44" chordsig="android.renderscript.Mesh$TriangleMeshBuilder"/>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3256" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3252" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3273" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3256" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="create:(Z)Landroid/renderscript/Mesh;@android.renderscript.Mesh$TriangleMeshBuilder"
+ sig="Mesh create(boolean)"
+ line="45"
+ startpos="3319"
+ endpos="3325"
+>
+	<marker line="-1" type="param">
+		<operand  start="3334" length="20" line="45">
+			<expr><![CDATA[uploadToBufferObject]]></expr>
+		</operand>
+	</marker>
+	<type  start="3293" length="25" line="45" chordsig="android.renderscript.Mesh"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3368" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3364" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3385" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3368" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.renderscript.Mesh"
+ sig="Mesh()"
+ line="50"
+ startpos="3511"
+ endpos="3515"
+>
+	<newexpr line="50" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3530" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3526" length="29" line="50">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3547" length="7" line="50">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3530" length="16" line="50" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getVertexAllocationCount:()I@android.renderscript.Mesh"
+ sig="int getVertexAllocationCount()"
+ line="51"
+ startpos="3571"
+ endpos="3595"
+>
+	<newexpr line="51" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3610" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3606" length="29" line="51">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3627" length="7" line="51">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3610" length="16" line="51" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getVertexAllocation:(I)Landroid/renderscript/Allocation;@android.renderscript.Mesh"
+ sig="Allocation getVertexAllocation(int)"
+ line="52"
+ startpos="3679"
+ endpos="3698"
+>
+	<marker line="-1" type="param">
+		<operand  start="3703" length="4" line="52">
+			<expr><![CDATA[slot]]></expr>
+		</operand>
+	</marker>
+	<type  start="3647" length="31" line="52" chordsig="android.renderscript.Allocation"/>
+	<newexpr line="52" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3721" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3717" length="29" line="52">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3738" length="7" line="52">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3721" length="16" line="52" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPrimitiveCount:()I@android.renderscript.Mesh"
+ sig="int getPrimitiveCount()"
+ line="53"
+ startpos="3762"
+ endpos="3779"
+>
+	<newexpr line="53" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3794" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3790" length="29" line="53">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3811" length="7" line="53">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3794" length="16" line="53" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getIndexSetAllocation:(I)Landroid/renderscript/Allocation;@android.renderscript.Mesh"
+ sig="Allocation getIndexSetAllocation(int)"
+ line="54"
+ startpos="3863"
+ endpos="3884"
+>
+	<marker line="-1" type="param">
+		<operand  start="3889" length="4" line="54">
+			<expr><![CDATA[slot]]></expr>
+		</operand>
+	</marker>
+	<type  start="3831" length="31" line="54" chordsig="android.renderscript.Allocation"/>
+	<newexpr line="54" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3907" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3903" length="29" line="54">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3924" length="7" line="54">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3907" length="16" line="54" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPrimitive:(I)Landroid/renderscript/Mesh$Primitive;@android.renderscript.Mesh"
+ sig="Primitive getPrimitive(int)"
+ line="55"
+ startpos="3980"
+ endpos="3992"
+>
+	<marker line="-1" type="param">
+		<operand  start="3997" length="4" line="55">
+			<expr><![CDATA[slot]]></expr>
+		</operand>
+	</marker>
+	<type  start="3944" length="35" line="55" chordsig="android.renderscript.Mesh$Primitive"/>
+	<newexpr line="55" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4015" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4011" length="29" line="55">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4032" length="7" line="55">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4015" length="16" line="55" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

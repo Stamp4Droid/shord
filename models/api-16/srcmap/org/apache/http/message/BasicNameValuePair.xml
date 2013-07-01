@@ -1,0 +1,141 @@
+<root>
+<class chordsig="org.apache.http.message.BasicNameValuePair" line="3">
+	<type  start="77" length="29" line="3" chordsig="org.apache.http.NameValuePair"/>
+	<type  start="108" length="19" line="3" chordsig="java.lang.Cloneable"/>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@org.apache.http.message.BasicNameValuePair"
+ sig="boolean equals(Object)"
+ line="5"
+ startpos="150"
+ endpos="156"
+>
+	<marker line="-1" type="param">
+		<operand  start="174" length="6" line="5">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="157" length="16" line="5" chordsig="java.lang.Object"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="202" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="198" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="219" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="202" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@org.apache.http.message.BasicNameValuePair"
+ sig="int hashCode()"
+ line="9"
+ startpos="251"
+ endpos="259"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="282" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="278" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="299" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="282" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clone:()Ljava/lang/Object;@org.apache.http.message.BasicNameValuePair"
+ sig="Object clone()"
+ line="13"
+ startpos="344"
+ endpos="349"
+>
+	<type  start="327" length="16" line="13" chordsig="java.lang.Object"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="416" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="412" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="433" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="416" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="462" length="6" line="17" chordsig="java.lang.String"/>
+	<type  start="488" length="6" line="19" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;)V@org.apache.http.message.BasicNameValuePair"
+ sig="BasicNameValuePair(String,String)"
+ line="21"
+ startpos="514"
+ endpos="532"
+>
+	<marker line="-1" type="param">
+		<operand  start="550" length="4" line="21">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="573" length="5" line="21">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="533" length="16" line="21" chordsig="java.lang.String"/>
+	<type  start="556" length="16" line="21" chordsig="java.lang.String"/>
+	<marker line="22" type="fieldexpr" chordsig="name:Ljava/lang/String;@org.apache.http.message.BasicNameValuePair">
+		<operand  start="590" length="4" line="22">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+	<marker line="23" type="fieldexpr" chordsig="value:Ljava/lang/String;@org.apache.http.message.BasicNameValuePair">
+		<operand  start="616" length="4" line="23">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getName:()Ljava/lang/String;@org.apache.http.message.BasicNameValuePair"
+ sig="String getName()"
+ line="26"
+ startpos="671"
+ endpos="678"
+>
+	<type  start="654" length="16" line="26" chordsig="java.lang.String"/>
+	<marker line="27" type="return">
+		<operand  start="698" length="4" line="27">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getValue:()Ljava/lang/String;@org.apache.http.message.BasicNameValuePair"
+ sig="String getValue()"
+ line="30"
+ startpos="739"
+ endpos="747"
+>
+	<type  start="722" length="16" line="30" chordsig="java.lang.String"/>
+	<marker line="31" type="return">
+		<operand  start="767" length="5" line="31">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@org.apache.http.message.BasicNameValuePair"
+ sig="String toString()"
+ line="34"
+ startpos="809"
+ endpos="817"
+>
+	<type  start="792" length="16" line="34" chordsig="java.lang.String"/>
+	<marker line="35" type="return">
+		<operand  start="837" length="12" line="35">
+			<expr><![CDATA[name + value]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

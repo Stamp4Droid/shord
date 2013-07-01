@@ -1,0 +1,452 @@
+<root>
+<class chordsig="android.database.MergeCursor" line="2">
+	<type  start="61" length="31" line="3" chordsig="android.database.AbstractCursor"/>
+<method
+ chordsig="&lt;init&gt;:([Landroid/database/Cursor;)V@android.database.MergeCursor"
+ sig="MergeCursor(Cursor[])"
+ line="5"
+ startpos="103"
+ endpos="114"
+>
+	<marker line="-1" type="param">
+		<operand  start="141" length="7" line="5">
+			<expr><![CDATA[cursors]]></expr>
+		</operand>
+	</marker>
+	<type  start="115" length="23" line="5" chordsig="android.database.Cursor"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="162" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="158" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="179" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="162" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCount:()I@android.database.MergeCursor"
+ sig="int getCount()"
+ line="6"
+ startpos="203"
+ endpos="211"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="226" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="222" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="243" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="226" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onMove:(II)Z@android.database.MergeCursor"
+ sig="boolean onMove(int,int)"
+ line="7"
+ startpos="271"
+ endpos="277"
+>
+	<marker line="-1" type="param">
+		<operand  start="282" length="11" line="7">
+			<expr><![CDATA[oldPosition]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="299" length="11" line="7">
+			<expr><![CDATA[newPosition]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="324" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="320" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="341" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="324" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getString:(I)Ljava/lang/String;@android.database.MergeCursor"
+ sig="String getString(int)"
+ line="8"
+ startpos="378"
+ endpos="387"
+>
+	<marker line="-1" type="param">
+		<operand  start="392" length="6" line="8">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+	<type  start="361" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="412" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="408" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="429" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="412" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getShort:(I)S@android.database.MergeCursor"
+ sig="short getShort(int)"
+ line="9"
+ startpos="455"
+ endpos="463"
+>
+	<marker line="-1" type="param">
+		<operand  start="468" length="6" line="9">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="488" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="484" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="505" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="488" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInt:(I)I@android.database.MergeCursor"
+ sig="int getInt(int)"
+ line="10"
+ startpos="529"
+ endpos="535"
+>
+	<marker line="-1" type="param">
+		<operand  start="540" length="6" line="10">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="560" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="556" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="577" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="560" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLong:(I)J@android.database.MergeCursor"
+ sig="long getLong(int)"
+ line="11"
+ startpos="602"
+ endpos="609"
+>
+	<marker line="-1" type="param">
+		<operand  start="614" length="6" line="11">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="634" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="630" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="651" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="634" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFloat:(I)F@android.database.MergeCursor"
+ sig="float getFloat(int)"
+ line="12"
+ startpos="677"
+ endpos="685"
+>
+	<marker line="-1" type="param">
+		<operand  start="690" length="6" line="12">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="710" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="706" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="727" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="710" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDouble:(I)D@android.database.MergeCursor"
+ sig="double getDouble(int)"
+ line="13"
+ startpos="754"
+ endpos="763"
+>
+	<marker line="-1" type="param">
+		<operand  start="768" length="6" line="13">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="788" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="784" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="805" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="788" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getType:(I)I@android.database.MergeCursor"
+ sig="int getType(int)"
+ line="14"
+ startpos="829"
+ endpos="836"
+>
+	<marker line="-1" type="param">
+		<operand  start="841" length="6" line="14">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="861" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="857" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="878" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="861" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isNull:(I)Z@android.database.MergeCursor"
+ sig="boolean isNull(int)"
+ line="15"
+ startpos="906"
+ endpos="912"
+>
+	<marker line="-1" type="param">
+		<operand  start="917" length="6" line="15">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="937" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="933" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="954" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="937" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getBlob:(I)[B@android.database.MergeCursor"
+ sig="byte[] getBlob(int)"
+ line="16"
+ startpos="981"
+ endpos="988"
+>
+	<marker line="-1" type="param">
+		<operand  start="993" length="6" line="16">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1013" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1009" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1030" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1013" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getColumnNames:()[Ljava/lang/String;@android.database.MergeCursor"
+ sig="String[] getColumnNames()"
+ line="17"
+ startpos="1069"
+ endpos="1083"
+>
+	<type  start="1050" length="16" line="17" chordsig="java.lang.String"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1098" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1094" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1115" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1098" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="deactivate:()V@android.database.MergeCursor"
+ sig="void deactivate()"
+ line="18"
+ startpos="1140"
+ endpos="1150"
+>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1165" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1161" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1182" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1165" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:()V@android.database.MergeCursor"
+ sig="void close()"
+ line="19"
+ startpos="1207"
+ endpos="1212"
+>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1227" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1223" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1244" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1227" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="registerContentObserver:(Landroid/database/ContentObserver;)V@android.database.MergeCursor"
+ sig="void registerContentObserver(ContentObserver)"
+ line="20"
+ startpos="1269"
+ endpos="1292"
+>
+	<marker line="-1" type="param">
+		<operand  start="1326" length="8" line="20">
+			<expr><![CDATA[observer]]></expr>
+		</operand>
+	</marker>
+	<type  start="1293" length="32" line="20" chordsig="android.database.ContentObserver"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1348" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1344" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1365" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1348" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unregisterContentObserver:(Landroid/database/ContentObserver;)V@android.database.MergeCursor"
+ sig="void unregisterContentObserver(ContentObserver)"
+ line="21"
+ startpos="1390"
+ endpos="1415"
+>
+	<marker line="-1" type="param">
+		<operand  start="1449" length="8" line="21">
+			<expr><![CDATA[observer]]></expr>
+		</operand>
+	</marker>
+	<type  start="1416" length="32" line="21" chordsig="android.database.ContentObserver"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1471" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1467" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1488" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1471" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="registerDataSetObserver:(Landroid/database/DataSetObserver;)V@android.database.MergeCursor"
+ sig="void registerDataSetObserver(DataSetObserver)"
+ line="22"
+ startpos="1513"
+ endpos="1536"
+>
+	<marker line="-1" type="param">
+		<operand  start="1570" length="8" line="22">
+			<expr><![CDATA[observer]]></expr>
+		</operand>
+	</marker>
+	<type  start="1537" length="32" line="22" chordsig="android.database.DataSetObserver"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1592" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1588" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1609" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1592" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unregisterDataSetObserver:(Landroid/database/DataSetObserver;)V@android.database.MergeCursor"
+ sig="void unregisterDataSetObserver(DataSetObserver)"
+ line="23"
+ startpos="1634"
+ endpos="1659"
+>
+	<marker line="-1" type="param">
+		<operand  start="1693" length="8" line="23">
+			<expr><![CDATA[observer]]></expr>
+		</operand>
+	</marker>
+	<type  start="1660" length="32" line="23" chordsig="android.database.DataSetObserver"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1715" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1711" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1732" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1715" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="requery:()Z@android.database.MergeCursor"
+ sig="boolean requery()"
+ line="24"
+ startpos="1760"
+ endpos="1767"
+>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1782" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1778" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1799" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1782" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

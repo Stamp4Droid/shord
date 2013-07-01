@@ -1,0 +1,165 @@
+<root>
+<class chordsig="android.security.KeyChain" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.security.KeyChain"
+ sig="KeyChain()"
+ line="4"
+ startpos="64"
+ endpos="72"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="87" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="83" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="104" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="87" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createInstallIntent:()Landroid/content/Intent;@android.security.KeyChain"
+ sig="Intent createInstallIntent()"
+ line="5"
+ startpos="154"
+ endpos="173"
+>
+	<type  start="131" length="22" line="5" chordsig="android.content.Intent"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="188" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="184" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="205" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="188" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="choosePrivateKeyAlias:(Landroid/app/Activity;Landroid/security/KeyChainAliasCallback;[Ljava/lang/String;[Ljava/security/Principal;Ljava/lang/String;ILjava/lang/String;)V@android.security.KeyChain"
+ sig="void choosePrivateKeyAlias(Activity,KeyChainAliasCallback,String[],Principal[],String,int,String)"
+ line="6"
+ startpos="237"
+ endpos="258"
+>
+	<marker line="-1" type="param">
+		<operand  start="280" length="8" line="6">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="329" length="8" line="6">
+			<expr><![CDATA[response]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="358" length="8" line="6">
+			<expr><![CDATA[keyTypes]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="394" length="7" line="6">
+			<expr><![CDATA[issuers]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="420" length="4" line="6">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="430" length="4" line="6">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="453" length="5" line="6">
+			<expr><![CDATA[alias]]></expr>
+		</operand>
+	</marker>
+	<type  start="259" length="20" line="6" chordsig="android.app.Activity"/>
+	<type  start="290" length="38" line="6" chordsig="android.security.KeyChainAliasCallback"/>
+	<type  start="339" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="368" length="23" line="6" chordsig="java.security.Principal"/>
+	<type  start="403" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="436" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="472" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="468" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="489" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="472" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPrivateKey:(Landroid/content/Context;Ljava/lang/String;)Ljava/security/PrivateKey;@android.security.KeyChain"
+ sig="PrivateKey getPrivateKey(Context,String)"
+ line="7"
+ startpos="541"
+ endpos="554"
+>
+	<marker line="-1" type="param">
+		<operand  start="579" length="7" line="7">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="605" length="5" line="7">
+			<expr><![CDATA[alias]]></expr>
+		</operand>
+	</marker>
+	<type  start="516" length="24" line="7" chordsig="java.security.PrivateKey"/>
+	<type  start="555" length="23" line="7" chordsig="android.content.Context"/>
+	<type  start="588" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="698" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="694" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="715" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="698" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCertificateChain:(Landroid/content/Context;Ljava/lang/String;)[Ljava/security/cert/X509Certificate;@android.security.KeyChain"
+ sig="X509Certificate[] getCertificateChain(Context,String)"
+ line="8"
+ startpos="779"
+ endpos="798"
+>
+	<marker line="-1" type="param">
+		<operand  start="823" length="7" line="8">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="849" length="5" line="8">
+			<expr><![CDATA[alias]]></expr>
+		</operand>
+	</marker>
+	<type  start="742" length="34" line="8" chordsig="java.security.cert.X509Certificate"/>
+	<type  start="799" length="23" line="8" chordsig="android.content.Context"/>
+	<type  start="832" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="942" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="938" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="959" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="942" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="991" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="1049" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="1114" length="16" line="11" chordsig="java.lang.String"/>
+</class>
+</root>

@@ -1,0 +1,238 @@
+<root>
+<class chordsig="org.apache.http.HttpMessage" line="2">
+<method
+ chordsig="getProtocolVersion:()Lorg/apache/http/ProtocolVersion;@org.apache.http.HttpMessage"
+ sig="ProtocolVersion getProtocolVersion()"
+ line="4"
+ startpos="105"
+ endpos="123"
+>
+	<type  start="73" length="31" line="4" chordsig="org.apache.http.ProtocolVersion"/>
+</method>
+<method
+ chordsig="containsHeader:(Ljava/lang/String;)Z@org.apache.http.HttpMessage"
+ sig="boolean containsHeader(String)"
+ line="5"
+ startpos="152"
+ endpos="166"
+>
+	<marker line="-1" type="param">
+		<operand  start="184" length="4" line="5">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="167" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getHeaders:(Ljava/lang/String;)[Lorg/apache/http/Header;@org.apache.http.HttpMessage"
+ sig="Header[] getHeaders(String)"
+ line="6"
+ startpos="233"
+ endpos="243"
+>
+	<marker line="-1" type="param">
+		<operand  start="261" length="4" line="6">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="208" length="22" line="6" chordsig="org.apache.http.Header"/>
+	<type  start="244" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getFirstHeader:(Ljava/lang/String;)Lorg/apache/http/Header;@org.apache.http.HttpMessage"
+ sig="Header getFirstHeader(String)"
+ line="7"
+ startpos="308"
+ endpos="322"
+>
+	<marker line="-1" type="param">
+		<operand  start="340" length="4" line="7">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="285" length="22" line="7" chordsig="org.apache.http.Header"/>
+	<type  start="323" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getLastHeader:(Ljava/lang/String;)Lorg/apache/http/Header;@org.apache.http.HttpMessage"
+ sig="Header getLastHeader(String)"
+ line="8"
+ startpos="387"
+ endpos="400"
+>
+	<marker line="-1" type="param">
+		<operand  start="418" length="4" line="8">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="364" length="22" line="8" chordsig="org.apache.http.Header"/>
+	<type  start="401" length="16" line="8" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getAllHeaders:()[Lorg/apache/http/Header;@org.apache.http.HttpMessage"
+ sig="Header[] getAllHeaders()"
+ line="9"
+ startpos="467"
+ endpos="480"
+>
+	<type  start="442" length="22" line="9" chordsig="org.apache.http.Header"/>
+</method>
+<method
+ chordsig="addHeader:(Lorg/apache/http/Header;)V@org.apache.http.HttpMessage"
+ sig="void addHeader(Header)"
+ line="10"
+ startpos="506"
+ endpos="515"
+>
+	<marker line="-1" type="param">
+		<operand  start="539" length="6" line="10">
+			<expr><![CDATA[header]]></expr>
+		</operand>
+	</marker>
+	<type  start="516" length="22" line="10" chordsig="org.apache.http.Header"/>
+</method>
+<method
+ chordsig="addHeader:(Ljava/lang/String;Ljava/lang/String;)V@org.apache.http.HttpMessage"
+ sig="void addHeader(String,String)"
+ line="11"
+ startpos="570"
+ endpos="579"
+>
+	<marker line="-1" type="param">
+		<operand  start="597" length="4" line="11">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="620" length="5" line="11">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="580" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="603" length="16" line="11" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setHeader:(Lorg/apache/http/Header;)V@org.apache.http.HttpMessage"
+ sig="void setHeader(Header)"
+ line="12"
+ startpos="650"
+ endpos="659"
+>
+	<marker line="-1" type="param">
+		<operand  start="683" length="6" line="12">
+			<expr><![CDATA[header]]></expr>
+		</operand>
+	</marker>
+	<type  start="660" length="22" line="12" chordsig="org.apache.http.Header"/>
+</method>
+<method
+ chordsig="setHeader:(Ljava/lang/String;Ljava/lang/String;)V@org.apache.http.HttpMessage"
+ sig="void setHeader(String,String)"
+ line="13"
+ startpos="714"
+ endpos="723"
+>
+	<marker line="-1" type="param">
+		<operand  start="741" length="4" line="13">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="764" length="5" line="13">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="724" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="747" length="16" line="13" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setHeaders:([Lorg/apache/http/Header;)V@org.apache.http.HttpMessage"
+ sig="void setHeaders(Header[])"
+ line="14"
+ startpos="794"
+ endpos="804"
+>
+	<marker line="-1" type="param">
+		<operand  start="830" length="7" line="14">
+			<expr><![CDATA[headers]]></expr>
+		</operand>
+	</marker>
+	<type  start="805" length="22" line="14" chordsig="org.apache.http.Header"/>
+</method>
+<method
+ chordsig="removeHeader:(Lorg/apache/http/Header;)V@org.apache.http.HttpMessage"
+ sig="void removeHeader(Header)"
+ line="15"
+ startpos="862"
+ endpos="874"
+>
+	<marker line="-1" type="param">
+		<operand  start="898" length="6" line="15">
+			<expr><![CDATA[header]]></expr>
+		</operand>
+	</marker>
+	<type  start="875" length="22" line="15" chordsig="org.apache.http.Header"/>
+</method>
+<method
+ chordsig="removeHeaders:(Ljava/lang/String;)V@org.apache.http.HttpMessage"
+ sig="void removeHeaders(String)"
+ line="16"
+ startpos="929"
+ endpos="942"
+>
+	<marker line="-1" type="param">
+		<operand  start="960" length="4" line="16">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="943" length="16" line="16" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="headerIterator:()Lorg/apache/http/HeaderIterator;@org.apache.http.HttpMessage"
+ sig="HeaderIterator headerIterator()"
+ line="17"
+ startpos="1015"
+ endpos="1029"
+>
+	<type  start="984" length="30" line="17" chordsig="org.apache.http.HeaderIterator"/>
+</method>
+<method
+ chordsig="headerIterator:(Ljava/lang/String;)Lorg/apache/http/HeaderIterator;@org.apache.http.HttpMessage"
+ sig="HeaderIterator headerIterator(String)"
+ line="18"
+ startpos="1081"
+ endpos="1095"
+>
+	<marker line="-1" type="param">
+		<operand  start="1113" length="4" line="18">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="1050" length="30" line="18" chordsig="org.apache.http.HeaderIterator"/>
+	<type  start="1096" length="16" line="18" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getParams:()Lorg/apache/http/params/HttpParams;@org.apache.http.HttpMessage"
+ sig="HttpParams getParams()"
+ line="19"
+ startpos="1171"
+ endpos="1180"
+>
+	<type  start="1137" length="33" line="19" chordsig="org.apache.http.params.HttpParams"/>
+</method>
+<method
+ chordsig="setParams:(Lorg/apache/http/params/HttpParams;)V@org.apache.http.HttpMessage"
+ sig="void setParams(HttpParams)"
+ line="20"
+ startpos="1206"
+ endpos="1215"
+>
+	<marker line="-1" type="param">
+		<operand  start="1250" length="6" line="20">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="1216" length="33" line="20" chordsig="org.apache.http.params.HttpParams"/>
+</method>
+</class>
+</root>

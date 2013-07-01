@@ -1,0 +1,79 @@
+<root>
+<class chordsig="javax.crypto.spec.IvParameterSpec" line="2">
+	<type  start="69" length="41" line="3" chordsig="java.security.spec.AlgorithmParameterSpec"/>
+<method
+ chordsig="&lt;init&gt;:([B)V@javax.crypto.spec.IvParameterSpec"
+ sig="IvParameterSpec(byte[])"
+ line="5"
+ startpos="121"
+ endpos="136"
+>
+	<marker line="-1" type="param">
+		<operand  start="144" length="2" line="5">
+			<expr><![CDATA[iv]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="160" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="156" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="177" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="160" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:([BII)V@javax.crypto.spec.IvParameterSpec"
+ sig="IvParameterSpec(byte[],int,int)"
+ line="6"
+ startpos="197"
+ endpos="212"
+>
+	<marker line="-1" type="param">
+		<operand  start="220" length="2" line="6">
+			<expr><![CDATA[iv]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="228" length="6" line="6">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="240" length="9" line="6">
+			<expr><![CDATA[byteCount]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="263" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="259" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="280" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="263" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getIV:()[B@javax.crypto.spec.IvParameterSpec"
+ sig="byte[] getIV()"
+ line="7"
+ startpos="307"
+ endpos="312"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="327" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="323" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="344" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="327" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

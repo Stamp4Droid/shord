@@ -1,0 +1,400 @@
+<root>
+<class chordsig="android.app.FragmentTransaction" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.app.FragmentTransaction"
+ sig="FragmentTransaction()"
+ line="4"
+ startpos="73"
+ endpos="92"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="107" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="103" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="124" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="107" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="add:(Landroid/app/Fragment;Ljava/lang/String;)Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction add(Fragment,String)"
+ line="5"
+ startpos="185"
+ endpos="188"
+>
+	<marker line="-1" type="param">
+		<operand  start="210" length="8" line="5">
+			<expr><![CDATA[fragment]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="237" length="3" line="5">
+			<expr><![CDATA[tag]]></expr>
+		</operand>
+	</marker>
+	<type  start="153" length="31" line="5" chordsig="android.app.FragmentTransaction"/>
+	<type  start="189" length="20" line="5" chordsig="android.app.Fragment"/>
+	<type  start="220" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="add:(ILandroid/app/Fragment;)Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction add(int,Fragment)"
+ line="6"
+ startpos="292"
+ endpos="295"
+>
+	<marker line="-1" type="param">
+		<operand  start="300" length="15" line="6">
+			<expr><![CDATA[containerViewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="338" length="8" line="6">
+			<expr><![CDATA[fragment]]></expr>
+		</operand>
+	</marker>
+	<type  start="260" length="31" line="6" chordsig="android.app.FragmentTransaction"/>
+	<type  start="317" length="20" line="6" chordsig="android.app.Fragment"/>
+</method>
+<method
+ chordsig="add:(ILandroid/app/Fragment;Ljava/lang/String;)Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction add(int,Fragment,String)"
+ line="7"
+ startpos="398"
+ endpos="401"
+>
+	<marker line="-1" type="param">
+		<operand  start="406" length="15" line="7">
+			<expr><![CDATA[containerViewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="444" length="8" line="7">
+			<expr><![CDATA[fragment]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="471" length="3" line="7">
+			<expr><![CDATA[tag]]></expr>
+		</operand>
+	</marker>
+	<type  start="366" length="31" line="7" chordsig="android.app.FragmentTransaction"/>
+	<type  start="423" length="20" line="7" chordsig="android.app.Fragment"/>
+	<type  start="454" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="replace:(ILandroid/app/Fragment;)Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction replace(int,Fragment)"
+ line="8"
+ startpos="526"
+ endpos="533"
+>
+	<marker line="-1" type="param">
+		<operand  start="538" length="15" line="8">
+			<expr><![CDATA[containerViewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="576" length="8" line="8">
+			<expr><![CDATA[fragment]]></expr>
+		</operand>
+	</marker>
+	<type  start="494" length="31" line="8" chordsig="android.app.FragmentTransaction"/>
+	<type  start="555" length="20" line="8" chordsig="android.app.Fragment"/>
+</method>
+<method
+ chordsig="replace:(ILandroid/app/Fragment;Ljava/lang/String;)Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction replace(int,Fragment,String)"
+ line="9"
+ startpos="636"
+ endpos="643"
+>
+	<marker line="-1" type="param">
+		<operand  start="648" length="15" line="9">
+			<expr><![CDATA[containerViewId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="686" length="8" line="9">
+			<expr><![CDATA[fragment]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="713" length="3" line="9">
+			<expr><![CDATA[tag]]></expr>
+		</operand>
+	</marker>
+	<type  start="604" length="31" line="9" chordsig="android.app.FragmentTransaction"/>
+	<type  start="665" length="20" line="9" chordsig="android.app.Fragment"/>
+	<type  start="696" length="16" line="9" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="remove:(Landroid/app/Fragment;)Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction remove(Fragment)"
+ line="10"
+ startpos="768"
+ endpos="774"
+>
+	<marker line="-1" type="param">
+		<operand  start="796" length="8" line="10">
+			<expr><![CDATA[fragment]]></expr>
+		</operand>
+	</marker>
+	<type  start="736" length="31" line="10" chordsig="android.app.FragmentTransaction"/>
+	<type  start="775" length="20" line="10" chordsig="android.app.Fragment"/>
+</method>
+<method
+ chordsig="hide:(Landroid/app/Fragment;)Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction hide(Fragment)"
+ line="11"
+ startpos="856"
+ endpos="860"
+>
+	<marker line="-1" type="param">
+		<operand  start="882" length="8" line="11">
+			<expr><![CDATA[fragment]]></expr>
+		</operand>
+	</marker>
+	<type  start="824" length="31" line="11" chordsig="android.app.FragmentTransaction"/>
+	<type  start="861" length="20" line="11" chordsig="android.app.Fragment"/>
+</method>
+<method
+ chordsig="show:(Landroid/app/Fragment;)Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction show(Fragment)"
+ line="12"
+ startpos="942"
+ endpos="946"
+>
+	<marker line="-1" type="param">
+		<operand  start="968" length="8" line="12">
+			<expr><![CDATA[fragment]]></expr>
+		</operand>
+	</marker>
+	<type  start="910" length="31" line="12" chordsig="android.app.FragmentTransaction"/>
+	<type  start="947" length="20" line="12" chordsig="android.app.Fragment"/>
+</method>
+<method
+ chordsig="detach:(Landroid/app/Fragment;)Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction detach(Fragment)"
+ line="13"
+ startpos="1028"
+ endpos="1034"
+>
+	<marker line="-1" type="param">
+		<operand  start="1056" length="8" line="13">
+			<expr><![CDATA[fragment]]></expr>
+		</operand>
+	</marker>
+	<type  start="996" length="31" line="13" chordsig="android.app.FragmentTransaction"/>
+	<type  start="1035" length="20" line="13" chordsig="android.app.Fragment"/>
+</method>
+<method
+ chordsig="attach:(Landroid/app/Fragment;)Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction attach(Fragment)"
+ line="14"
+ startpos="1116"
+ endpos="1122"
+>
+	<marker line="-1" type="param">
+		<operand  start="1144" length="8" line="14">
+			<expr><![CDATA[fragment]]></expr>
+		</operand>
+	</marker>
+	<type  start="1084" length="31" line="14" chordsig="android.app.FragmentTransaction"/>
+	<type  start="1123" length="20" line="14" chordsig="android.app.Fragment"/>
+</method>
+<method
+ chordsig="isEmpty:()Z@android.app.FragmentTransaction"
+ sig="boolean isEmpty()"
+ line="15"
+ startpos="1180"
+ endpos="1187"
+>
+</method>
+<method
+ chordsig="setCustomAnimations:(II)Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction setCustomAnimations(int,int)"
+ line="16"
+ startpos="1240"
+ endpos="1259"
+>
+	<marker line="-1" type="param">
+		<operand  start="1264" length="5" line="16">
+			<expr><![CDATA[enter]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1275" length="4" line="16">
+			<expr><![CDATA[exit]]></expr>
+		</operand>
+	</marker>
+	<type  start="1208" length="31" line="16" chordsig="android.app.FragmentTransaction"/>
+</method>
+<method
+ chordsig="setCustomAnimations:(IIII)Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction setCustomAnimations(int,int,int,int)"
+ line="17"
+ startpos="1331"
+ endpos="1350"
+>
+	<marker line="-1" type="param">
+		<operand  start="1355" length="5" line="17">
+			<expr><![CDATA[enter]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1366" length="4" line="17">
+			<expr><![CDATA[exit]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1376" length="8" line="17">
+			<expr><![CDATA[popEnter]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1390" length="7" line="17">
+			<expr><![CDATA[popExit]]></expr>
+		</operand>
+	</marker>
+	<type  start="1299" length="31" line="17" chordsig="android.app.FragmentTransaction"/>
+</method>
+<method
+ chordsig="setTransition:(I)Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction setTransition(int)"
+ line="18"
+ startpos="1449"
+ endpos="1462"
+>
+	<marker line="-1" type="param">
+		<operand  start="1467" length="7" line="18">
+			<expr><![CDATA[transit]]></expr>
+		</operand>
+	</marker>
+	<type  start="1417" length="31" line="18" chordsig="android.app.FragmentTransaction"/>
+</method>
+<method
+ chordsig="setTransitionStyle:(I)Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction setTransitionStyle(int)"
+ line="19"
+ startpos="1526"
+ endpos="1544"
+>
+	<marker line="-1" type="param">
+		<operand  start="1549" length="8" line="19">
+			<expr><![CDATA[styleRes]]></expr>
+		</operand>
+	</marker>
+	<type  start="1494" length="31" line="19" chordsig="android.app.FragmentTransaction"/>
+</method>
+<method
+ chordsig="addToBackStack:(Ljava/lang/String;)Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction addToBackStack(String)"
+ line="20"
+ startpos="1609"
+ endpos="1623"
+>
+	<marker line="-1" type="param">
+		<operand  start="1641" length="4" line="20">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="1577" length="31" line="20" chordsig="android.app.FragmentTransaction"/>
+	<type  start="1624" length="16" line="20" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="isAddToBackStackAllowed:()Z@android.app.FragmentTransaction"
+ sig="boolean isAddToBackStackAllowed()"
+ line="21"
+ startpos="1673"
+ endpos="1696"
+>
+</method>
+<method
+ chordsig="disallowAddToBackStack:()Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction disallowAddToBackStack()"
+ line="22"
+ startpos="1749"
+ endpos="1771"
+>
+	<type  start="1717" length="31" line="22" chordsig="android.app.FragmentTransaction"/>
+</method>
+<method
+ chordsig="setBreadCrumbTitle:(I)Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction setBreadCrumbTitle(int)"
+ line="23"
+ startpos="1824"
+ endpos="1842"
+>
+	<marker line="-1" type="param">
+		<operand  start="1847" length="3" line="23">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<type  start="1792" length="31" line="23" chordsig="android.app.FragmentTransaction"/>
+</method>
+<method
+ chordsig="setBreadCrumbTitle:(Ljava/lang/CharSequence;)Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction setBreadCrumbTitle(CharSequence)"
+ line="24"
+ startpos="1902"
+ endpos="1920"
+>
+	<marker line="-1" type="param">
+		<operand  start="1944" length="4" line="24">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="1870" length="31" line="24" chordsig="android.app.FragmentTransaction"/>
+	<type  start="1921" length="22" line="24" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="setBreadCrumbShortTitle:(I)Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction setBreadCrumbShortTitle(int)"
+ line="25"
+ startpos="2000"
+ endpos="2023"
+>
+	<marker line="-1" type="param">
+		<operand  start="2028" length="3" line="25">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<type  start="1968" length="31" line="25" chordsig="android.app.FragmentTransaction"/>
+</method>
+<method
+ chordsig="setBreadCrumbShortTitle:(Ljava/lang/CharSequence;)Landroid/app/FragmentTransaction;@android.app.FragmentTransaction"
+ sig="FragmentTransaction setBreadCrumbShortTitle(CharSequence)"
+ line="26"
+ startpos="2083"
+ endpos="2106"
+>
+	<marker line="-1" type="param">
+		<operand  start="2130" length="4" line="26">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="2051" length="31" line="26" chordsig="android.app.FragmentTransaction"/>
+	<type  start="2107" length="22" line="26" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="commit:()I@android.app.FragmentTransaction"
+ sig="int commit()"
+ line="27"
+ startpos="2158"
+ endpos="2164"
+>
+</method>
+<method
+ chordsig="commitAllowingStateLoss:()I@android.app.FragmentTransaction"
+ sig="int commitAllowingStateLoss()"
+ line="28"
+ startpos="2189"
+ endpos="2212"
+>
+</method>
+</class>
+</root>

@@ -1,0 +1,5 @@
+<root>
+<class chordsig="android.view.animation.Interpolator" line="2">
+	<type  start="72" length="34" line="3" chordsig="android.animation.TimeInterpolator"/>
+</class>
+</root>

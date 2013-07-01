@@ -1,0 +1,400 @@
+<root>
+<class chordsig="org.xmlpull.v1.XmlSerializer" line="2">
+<method
+ chordsig="setFeature:(Ljava/lang/String;Z)V@org.xmlpull.v1.XmlSerializer"
+ sig="void setFeature(String,boolean)"
+ line="4"
+ startpos="79"
+ endpos="89"
+>
+	<marker line="-1" type="param">
+		<operand  start="107" length="4" line="4">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="121" length="5" line="4">
+			<expr><![CDATA[state]]></expr>
+		</operand>
+	</marker>
+	<type  start="90" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getFeature:(Ljava/lang/String;)Z@org.xmlpull.v1.XmlSerializer"
+ sig="boolean getFeature(String)"
+ line="5"
+ startpos="229"
+ endpos="239"
+>
+	<marker line="-1" type="param">
+		<operand  start="257" length="4" line="5">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="240" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setProperty:(Ljava/lang/String;Ljava/lang/Object;)V@org.xmlpull.v1.XmlSerializer"
+ sig="void setProperty(String,Object)"
+ line="6"
+ startpos="286"
+ endpos="297"
+>
+	<marker line="-1" type="param">
+		<operand  start="315" length="4" line="6">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="338" length="5" line="6">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="298" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="321" length="16" line="6" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="getProperty:(Ljava/lang/String;)Ljava/lang/Object;@org.xmlpull.v1.XmlSerializer"
+ sig="Object getProperty(String)"
+ line="7"
+ startpos="455"
+ endpos="466"
+>
+	<marker line="-1" type="param">
+		<operand  start="484" length="4" line="7">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="438" length="16" line="7" chordsig="java.lang.Object"/>
+	<type  start="467" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setOutput:(Ljava/io/OutputStream;Ljava/lang/String;)V@org.xmlpull.v1.XmlSerializer"
+ sig="void setOutput(OutputStream,String)"
+ line="8"
+ startpos="513"
+ endpos="522"
+>
+	<marker line="-1" type="param">
+		<operand  start="544" length="2" line="8">
+			<expr><![CDATA[os]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="565" length="8" line="8">
+			<expr><![CDATA[encoding]]></expr>
+		</operand>
+	</marker>
+	<type  start="523" length="20" line="8" chordsig="java.io.OutputStream"/>
+	<type  start="548" length="16" line="8" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setOutput:(Ljava/io/Writer;)V@org.xmlpull.v1.XmlSerializer"
+ sig="void setOutput(Writer)"
+ line="9"
+ startpos="694"
+ endpos="703"
+>
+	<marker line="-1" type="param">
+		<operand  start="719" length="6" line="9">
+			<expr><![CDATA[writer]]></expr>
+		</operand>
+	</marker>
+	<type  start="704" length="14" line="9" chordsig="java.io.Writer"/>
+</method>
+<method
+ chordsig="startDocument:(Ljava/lang/String;Ljava/lang/Boolean;)V@org.xmlpull.v1.XmlSerializer"
+ sig="void startDocument(String,Boolean)"
+ line="10"
+ startpos="846"
+ endpos="859"
+>
+	<marker line="-1" type="param">
+		<operand  start="877" length="8" line="10">
+			<expr><![CDATA[encoding]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="905" length="10" line="10">
+			<expr><![CDATA[standalone]]></expr>
+		</operand>
+	</marker>
+	<type  start="860" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="887" length="17" line="10" chordsig="java.lang.Boolean"/>
+</method>
+<method
+ chordsig="endDocument:()V@org.xmlpull.v1.XmlSerializer"
+ sig="void endDocument()"
+ line="11"
+ startpos="1036"
+ endpos="1047"
+>
+</method>
+<method
+ chordsig="setPrefix:(Ljava/lang/String;Ljava/lang/String;)V@org.xmlpull.v1.XmlSerializer"
+ sig="void setPrefix(String,String)"
+ line="12"
+ startpos="1169"
+ endpos="1178"
+>
+	<marker line="-1" type="param">
+		<operand  start="1196" length="6" line="12">
+			<expr><![CDATA[prefix]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1221" length="9" line="12">
+			<expr><![CDATA[namespace]]></expr>
+		</operand>
+	</marker>
+	<type  start="1179" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="1204" length="16" line="12" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getPrefix:(Ljava/lang/String;Z)Ljava/lang/String;@org.xmlpull.v1.XmlSerializer"
+ sig="String getPrefix(String,boolean)"
+ line="13"
+ startpos="1363"
+ endpos="1372"
+>
+	<marker line="-1" type="param">
+		<operand  start="1390" length="9" line="13">
+			<expr><![CDATA[namespace]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1409" length="14" line="13">
+			<expr><![CDATA[generatePrefix]]></expr>
+		</operand>
+	</marker>
+	<type  start="1346" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="1373" length="16" line="13" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getDepth:()I@org.xmlpull.v1.XmlSerializer"
+ sig="int getDepth()"
+ line="14"
+ startpos="1489"
+ endpos="1497"
+>
+</method>
+<method
+ chordsig="getNamespace:()Ljava/lang/String;@org.xmlpull.v1.XmlSerializer"
+ sig="String getNamespace()"
+ line="15"
+ startpos="1535"
+ endpos="1547"
+>
+	<type  start="1518" length="16" line="15" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getName:()Ljava/lang/String;@org.xmlpull.v1.XmlSerializer"
+ sig="String getName()"
+ line="16"
+ startpos="1585"
+ endpos="1592"
+>
+	<type  start="1568" length="16" line="16" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="startTag:(Ljava/lang/String;Ljava/lang/String;)Lorg/xmlpull/v1/XmlSerializer;@org.xmlpull.v1.XmlSerializer"
+ sig="XmlSerializer startTag(String,String)"
+ line="17"
+ startpos="1642"
+ endpos="1650"
+>
+	<marker line="-1" type="param">
+		<operand  start="1668" length="9" line="17">
+			<expr><![CDATA[namespace]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1696" length="4" line="17">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="1613" length="28" line="17" chordsig="org.xmlpull.v1.XmlSerializer"/>
+	<type  start="1651" length="16" line="17" chordsig="java.lang.String"/>
+	<type  start="1679" length="16" line="17" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="attribute:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/xmlpull/v1/XmlSerializer;@org.xmlpull.v1.XmlSerializer"
+ sig="XmlSerializer attribute(String,String,String)"
+ line="18"
+ startpos="1845"
+ endpos="1854"
+>
+	<marker line="-1" type="param">
+		<operand  start="1872" length="9" line="18">
+			<expr><![CDATA[namespace]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1900" length="4" line="18">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1923" length="5" line="18">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="1816" length="28" line="18" chordsig="org.xmlpull.v1.XmlSerializer"/>
+	<type  start="1855" length="16" line="18" chordsig="java.lang.String"/>
+	<type  start="1883" length="16" line="18" chordsig="java.lang.String"/>
+	<type  start="1906" length="16" line="18" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="endTag:(Ljava/lang/String;Ljava/lang/String;)Lorg/xmlpull/v1/XmlSerializer;@org.xmlpull.v1.XmlSerializer"
+ sig="XmlSerializer endTag(String,String)"
+ line="19"
+ startpos="2073"
+ endpos="2079"
+>
+	<marker line="-1" type="param">
+		<operand  start="2097" length="9" line="19">
+			<expr><![CDATA[namespace]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2125" length="4" line="19">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="2044" length="28" line="19" chordsig="org.xmlpull.v1.XmlSerializer"/>
+	<type  start="2080" length="16" line="19" chordsig="java.lang.String"/>
+	<type  start="2108" length="16" line="19" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="text:(Ljava/lang/String;)Lorg/xmlpull/v1/XmlSerializer;@org.xmlpull.v1.XmlSerializer"
+ sig="XmlSerializer text(String)"
+ line="20"
+ startpos="2274"
+ endpos="2278"
+>
+	<marker line="-1" type="param">
+		<operand  start="2296" length="4" line="20">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="2245" length="28" line="20" chordsig="org.xmlpull.v1.XmlSerializer"/>
+	<type  start="2279" length="16" line="20" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="text:([CII)Lorg/xmlpull/v1/XmlSerializer;@org.xmlpull.v1.XmlSerializer"
+ sig="XmlSerializer text(char[],int,int)"
+ line="21"
+ startpos="2445"
+ endpos="2449"
+>
+	<marker line="-1" type="param">
+		<operand  start="2457" length="3" line="21">
+			<expr><![CDATA[buf]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2466" length="5" line="21">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2477" length="3" line="21">
+			<expr><![CDATA[len]]></expr>
+		</operand>
+	</marker>
+	<type  start="2416" length="28" line="21" chordsig="org.xmlpull.v1.XmlSerializer"/>
+</method>
+<method
+ chordsig="cdsect:(Ljava/lang/String;)V@org.xmlpull.v1.XmlSerializer"
+ sig="void cdsect(String)"
+ line="22"
+ startpos="2601"
+ endpos="2607"
+>
+	<marker line="-1" type="param">
+		<operand  start="2625" length="4" line="22">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="2608" length="16" line="22" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="entityRef:(Ljava/lang/String;)V@org.xmlpull.v1.XmlSerializer"
+ sig="void entityRef(String)"
+ line="23"
+ startpos="2750"
+ endpos="2759"
+>
+	<marker line="-1" type="param">
+		<operand  start="2777" length="4" line="23">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="2760" length="16" line="23" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="processingInstruction:(Ljava/lang/String;)V@org.xmlpull.v1.XmlSerializer"
+ sig="void processingInstruction(String)"
+ line="24"
+ startpos="2902"
+ endpos="2923"
+>
+	<marker line="-1" type="param">
+		<operand  start="2941" length="4" line="24">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="2924" length="16" line="24" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="comment:(Ljava/lang/String;)V@org.xmlpull.v1.XmlSerializer"
+ sig="void comment(String)"
+ line="25"
+ startpos="3066"
+ endpos="3073"
+>
+	<marker line="-1" type="param">
+		<operand  start="3091" length="4" line="25">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="3074" length="16" line="25" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="docdecl:(Ljava/lang/String;)V@org.xmlpull.v1.XmlSerializer"
+ sig="void docdecl(String)"
+ line="26"
+ startpos="3216"
+ endpos="3223"
+>
+	<marker line="-1" type="param">
+		<operand  start="3241" length="4" line="26">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="3224" length="16" line="26" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="ignorableWhitespace:(Ljava/lang/String;)V@org.xmlpull.v1.XmlSerializer"
+ sig="void ignorableWhitespace(String)"
+ line="27"
+ startpos="3366"
+ endpos="3385"
+>
+	<marker line="-1" type="param">
+		<operand  start="3403" length="4" line="27">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="3386" length="16" line="27" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="flush:()V@org.xmlpull.v1.XmlSerializer"
+ sig="void flush()"
+ line="28"
+ startpos="3528"
+ endpos="3533"
+>
+</method>
+</class>
+</root>

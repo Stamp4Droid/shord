@@ -1,0 +1,109 @@
+<root>
+<class chordsig="java.nio.channels.spi.AbstractInterruptibleChannel" line="2">
+	<type  start="95" length="25" line="3" chordsig="java.nio.channels.Channel"/>
+	<type  start="122" length="38" line="3" chordsig="java.nio.channels.InterruptibleChannel"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.nio.channels.spi.AbstractInterruptibleChannel"
+ sig="AbstractInterruptibleChannel()"
+ line="5"
+ startpos="174"
+ endpos="202"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="217" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="213" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="234" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="217" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isOpen:()Z@java.nio.channels.spi.AbstractInterruptibleChannel"
+ sig="boolean isOpen()"
+ line="6"
+ startpos="281"
+ endpos="287"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="302" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="298" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="319" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="302" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:()V@java.nio.channels.spi.AbstractInterruptibleChannel"
+ sig="void close()"
+ line="7"
+ startpos="350"
+ endpos="355"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="397" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="393" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="414" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="397" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="begin:()V@java.nio.channels.spi.AbstractInterruptibleChannel"
+ sig="void begin()"
+ line="8"
+ startpos="448"
+ endpos="453"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="468" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="464" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="485" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="468" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="end:(Z)V@java.nio.channels.spi.AbstractInterruptibleChannel"
+ sig="void end(boolean)"
+ line="9"
+ startpos="519"
+ endpos="522"
+>
+	<marker line="-1" type="param">
+		<operand  start="531" length="7" line="9">
+			<expr><![CDATA[success]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="604" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="600" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="621" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="604" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="implCloseChannel:()V@java.nio.channels.spi.AbstractInterruptibleChannel"
+ sig="void implCloseChannel()"
+ line="10"
+ startpos="658"
+ endpos="674"
+>
+</method>
+</class>
+</root>

@@ -1,0 +1,59 @@
+<root>
+<class chordsig="android.webkit.SslErrorHandler" line="2">
+	<type  start="63" length="18" line="3" chordsig="android.os.Handler"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.webkit.SslErrorHandler"
+ sig="SslErrorHandler()"
+ line="5"
+ startpos="84"
+ endpos="99"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="114" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="110" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="131" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="114" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="proceed:()V@android.webkit.SslErrorHandler"
+ sig="void proceed()"
+ line="6"
+ startpos="156"
+ endpos="163"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="178" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="174" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="195" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="178" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="cancel:()V@android.webkit.SslErrorHandler"
+ sig="void cancel()"
+ line="7"
+ startpos="220"
+ endpos="226"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="241" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="237" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="258" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="241" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

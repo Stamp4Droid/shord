@@ -1,0 +1,263 @@
+<root>
+<class chordsig="org.apache.http.params.BasicHttpParams" line="2">
+	<type  start="77" length="41" line="3" chordsig="org.apache.http.params.AbstractHttpParams"/>
+	<type  start="132" length="20" line="4" chordsig="java.io.Serializable"/>
+	<type  start="154" length="19" line="4" chordsig="java.lang.Cloneable"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.params.BasicHttpParams"
+ sig="BasicHttpParams()"
+ line="6"
+ startpos="184"
+ endpos="199"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="214" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="210" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="231" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="214" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getParameter:(Ljava/lang/String;)Ljava/lang/Object;@org.apache.http.params.BasicHttpParams"
+ sig="Object getParameter(String)"
+ line="7"
+ startpos="268"
+ endpos="280"
+>
+	<marker line="-1" type="param">
+		<operand  start="298" length="4" line="7">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="251" length="16" line="7" chordsig="java.lang.Object"/>
+	<type  start="281" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="316" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="312" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="333" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="316" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setParameter:(Ljava/lang/String;Ljava/lang/Object;)Lorg/apache/http/params/HttpParams;@org.apache.http.params.BasicHttpParams"
+ sig="HttpParams setParameter(String,Object)"
+ line="8"
+ startpos="387"
+ endpos="399"
+>
+	<marker line="-1" type="param">
+		<operand  start="417" length="4" line="8">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="440" length="5" line="8">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="353" length="33" line="8" chordsig="org.apache.http.params.HttpParams"/>
+	<type  start="400" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="423" length="16" line="8" chordsig="java.lang.Object"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="459" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="455" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="476" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="459" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeParameter:(Ljava/lang/String;)Z@org.apache.http.params.BasicHttpParams"
+ sig="boolean removeParameter(String)"
+ line="9"
+ startpos="504"
+ endpos="519"
+>
+	<marker line="-1" type="param">
+		<operand  start="537" length="4" line="9">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="520" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="555" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="551" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="572" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="555" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setParameters:([Ljava/lang/String;Ljava/lang/Object;)V@org.apache.http.params.BasicHttpParams"
+ sig="void setParameters(String[],Object)"
+ line="10"
+ startpos="597"
+ endpos="610"
+>
+	<marker line="-1" type="param">
+		<operand  start="630" length="5" line="10">
+			<expr><![CDATA[names]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="654" length="5" line="10">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="611" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="637" length="16" line="10" chordsig="java.lang.Object"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="673" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="669" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="690" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="673" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isParameterSet:(Ljava/lang/String;)Z@org.apache.http.params.BasicHttpParams"
+ sig="boolean isParameterSet(String)"
+ line="11"
+ startpos="718"
+ endpos="732"
+>
+	<marker line="-1" type="param">
+		<operand  start="750" length="4" line="11">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="733" length="16" line="11" chordsig="java.lang.String"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="768" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="764" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="785" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="768" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isParameterSetLocally:(Ljava/lang/String;)Z@org.apache.http.params.BasicHttpParams"
+ sig="boolean isParameterSetLocally(String)"
+ line="12"
+ startpos="813"
+ endpos="834"
+>
+	<marker line="-1" type="param">
+		<operand  start="852" length="4" line="12">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="835" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="870" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="866" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="887" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="870" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clear:()V@org.apache.http.params.BasicHttpParams"
+ sig="void clear()"
+ line="13"
+ startpos="912"
+ endpos="917"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="932" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="928" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="949" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="932" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="copy:()Lorg/apache/http/params/HttpParams;@org.apache.http.params.BasicHttpParams"
+ sig="HttpParams copy()"
+ line="14"
+ startpos="1003"
+ endpos="1007"
+>
+	<type  start="969" length="33" line="14" chordsig="org.apache.http.params.HttpParams"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1022" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1018" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1039" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1022" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clone:()Ljava/lang/Object;@org.apache.http.params.BasicHttpParams"
+ sig="Object clone()"
+ line="15"
+ startpos="1076"
+ endpos="1081"
+>
+	<type  start="1059" length="16" line="15" chordsig="java.lang.Object"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1140" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1136" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1157" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1140" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="copyParams:(Lorg/apache/http/params/HttpParams;)V@org.apache.http.params.BasicHttpParams"
+ sig="void copyParams(HttpParams)"
+ line="16"
+ startpos="1185"
+ endpos="1195"
+>
+	<marker line="-1" type="param">
+		<operand  start="1230" length="6" line="16">
+			<expr><![CDATA[target]]></expr>
+		</operand>
+	</marker>
+	<type  start="1196" length="33" line="16" chordsig="org.apache.http.params.HttpParams"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1250" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1246" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1267" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1250" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

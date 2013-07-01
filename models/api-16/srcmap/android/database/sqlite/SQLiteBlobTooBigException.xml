@@ -1,0 +1,47 @@
+<root>
+<class chordsig="android.database.sqlite.SQLiteBlobTooBigException" line="2">
+	<type  start="82" length="39" line="3" chordsig="android.database.sqlite.SQLiteException"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.database.sqlite.SQLiteBlobTooBigException"
+ sig="SQLiteBlobTooBigException()"
+ line="5"
+ startpos="132"
+ endpos="157"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="172" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="168" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="189" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="172" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.database.sqlite.SQLiteBlobTooBigException"
+ sig="SQLiteBlobTooBigException(String)"
+ line="6"
+ startpos="209"
+ endpos="234"
+>
+	<marker line="-1" type="param">
+		<operand  start="252" length="5" line="6">
+			<expr><![CDATA[error]]></expr>
+		</operand>
+	</marker>
+	<type  start="235" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="271" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="267" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="288" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="271" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

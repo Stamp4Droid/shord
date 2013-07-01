@@ -1,0 +1,1359 @@
+<root>
+<class chordsig="android.provider.Settings" line="2">
+<class chordsig="android.provider.Settings$SettingNotFoundException" line="4">
+	<type  start="111" length="29" line="5" chordsig="android.util.AndroidException"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.provider.Settings$SettingNotFoundException"
+ sig="SettingNotFoundException(String)"
+ line="7"
+ startpos="151"
+ endpos="175"
+>
+	<marker line="-1" type="param">
+		<operand  start="193" length="3" line="7">
+			<expr><![CDATA[msg]]></expr>
+		</operand>
+	</marker>
+	<type  start="176" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="210" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="206" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="227" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="210" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.provider.Settings$NameValueTable" line="9">
+	<type  start="289" length="28" line="10" chordsig="android.provider.BaseColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.Settings$NameValueTable"
+ sig="NameValueTable()"
+ line="12"
+ startpos="328"
+ endpos="342"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="357" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="353" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="374" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="357" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="putString:(Landroid/content/ContentResolver;Landroid/net/Uri;Ljava/lang/String;Ljava/lang/String;)Z@android.provider.Settings$NameValueTable"
+ sig="boolean putString(ContentResolver,Uri,String,String)"
+ line="13"
+ startpos="412"
+ endpos="421"
+>
+	<marker line="-1" type="param">
+		<operand  start="454" length="8" line="13">
+			<expr><![CDATA[resolver]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="480" length="3" line="13">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="502" length="4" line="13">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="525" length="5" line="13">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="422" length="31" line="13" chordsig="android.content.ContentResolver"/>
+	<type  start="464" length="15" line="13" chordsig="android.net.Uri"/>
+	<type  start="485" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="508" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="544" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="540" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="561" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="544" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getUriFor:(Landroid/net/Uri;Ljava/lang/String;)Landroid/net/Uri;@android.provider.Settings$NameValueTable"
+ sig="Uri getUriFor(Uri,String)"
+ line="14"
+ startpos="604"
+ endpos="613"
+>
+	<marker line="-1" type="param">
+		<operand  start="630" length="3" line="14">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="652" length="4" line="14">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="588" length="15" line="14" chordsig="android.net.Uri"/>
+	<type  start="614" length="15" line="14" chordsig="android.net.Uri"/>
+	<type  start="635" length="16" line="14" chordsig="java.lang.String"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="670" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="666" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="687" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="670" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="719" length="16" line="15" chordsig="java.lang.String"/>
+	<type  start="771" length="16" line="16" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.Settings$System" line="18">
+	<type  start="850" length="40" line="19" chordsig="android.provider.Settings$NameValueTable"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.Settings$System"
+ sig="System()"
+ line="21"
+ startpos="901"
+ endpos="907"
+>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="922" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="918" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="939" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="922" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getString:(Landroid/content/ContentResolver;Ljava/lang/String;)Ljava/lang/String;@android.provider.Settings$System"
+ sig="String getString(ContentResolver,String)"
+ line="22"
+ startpos="996"
+ endpos="1005"
+>
+	<marker line="-1" type="param">
+		<operand  start="1038" length="8" line="22">
+			<expr><![CDATA[resolver]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1065" length="4" line="22">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="979" length="16" line="22" chordsig="java.lang.String"/>
+	<type  start="1006" length="31" line="22" chordsig="android.content.ContentResolver"/>
+	<type  start="1048" length="16" line="22" chordsig="java.lang.String"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1083" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1079" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1100" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1083" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="putString:(Landroid/content/ContentResolver;Ljava/lang/String;Ljava/lang/String;)Z@android.provider.Settings$System"
+ sig="boolean putString(ContentResolver,String,String)"
+ line="23"
+ startpos="1135"
+ endpos="1144"
+>
+	<marker line="-1" type="param">
+		<operand  start="1177" length="8" line="23">
+			<expr><![CDATA[resolver]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1204" length="4" line="23">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1227" length="5" line="23">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="1145" length="31" line="23" chordsig="android.content.ContentResolver"/>
+	<type  start="1187" length="16" line="23" chordsig="java.lang.String"/>
+	<type  start="1210" length="16" line="23" chordsig="java.lang.String"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1246" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1242" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1263" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1246" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getUriFor:(Ljava/lang/String;)Landroid/net/Uri;@android.provider.Settings$System"
+ sig="Uri getUriFor(String)"
+ line="24"
+ startpos="1306"
+ endpos="1315"
+>
+	<marker line="-1" type="param">
+		<operand  start="1333" length="4" line="24">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="1290" length="15" line="24" chordsig="android.net.Uri"/>
+	<type  start="1316" length="16" line="24" chordsig="java.lang.String"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1351" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1347" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1368" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1351" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInt:(Landroid/content/ContentResolver;Ljava/lang/String;I)I@android.provider.Settings$System"
+ sig="int getInt(ContentResolver,String,int)"
+ line="25"
+ startpos="1399"
+ endpos="1405"
+>
+	<marker line="-1" type="param">
+		<operand  start="1438" length="2" line="25">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1459" length="4" line="25">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1469" length="3" line="25">
+			<expr><![CDATA[def]]></expr>
+		</operand>
+	</marker>
+	<type  start="1406" length="31" line="25" chordsig="android.content.ContentResolver"/>
+	<type  start="1442" length="16" line="25" chordsig="java.lang.String"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1486" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1482" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1503" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1486" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInt:(Landroid/content/ContentResolver;Ljava/lang/String;)I@android.provider.Settings$System"
+ sig="int getInt(ContentResolver,String)"
+ line="26"
+ startpos="1534"
+ endpos="1540"
+>
+	<marker line="-1" type="param">
+		<operand  start="1573" length="2" line="26">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1594" length="4" line="26">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="1541" length="31" line="26" chordsig="android.content.ContentResolver"/>
+	<type  start="1577" length="16" line="26" chordsig="java.lang.String"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1670" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1666" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1687" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1670" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="putInt:(Landroid/content/ContentResolver;Ljava/lang/String;I)Z@android.provider.Settings$System"
+ sig="boolean putInt(ContentResolver,String,int)"
+ line="27"
+ startpos="1722"
+ endpos="1728"
+>
+	<marker line="-1" type="param">
+		<operand  start="1761" length="2" line="27">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1782" length="4" line="27">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1792" length="5" line="27">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="1729" length="31" line="27" chordsig="android.content.ContentResolver"/>
+	<type  start="1765" length="16" line="27" chordsig="java.lang.String"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1811" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1807" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1828" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1811" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLong:(Landroid/content/ContentResolver;Ljava/lang/String;J)J@android.provider.Settings$System"
+ sig="long getLong(ContentResolver,String,long)"
+ line="28"
+ startpos="1860"
+ endpos="1867"
+>
+	<marker line="-1" type="param">
+		<operand  start="1900" length="2" line="28">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1921" length="4" line="28">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1932" length="3" line="28">
+			<expr><![CDATA[def]]></expr>
+		</operand>
+	</marker>
+	<type  start="1868" length="31" line="28" chordsig="android.content.ContentResolver"/>
+	<type  start="1904" length="16" line="28" chordsig="java.lang.String"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1949" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1945" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1966" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1949" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLong:(Landroid/content/ContentResolver;Ljava/lang/String;)J@android.provider.Settings$System"
+ sig="long getLong(ContentResolver,String)"
+ line="29"
+ startpos="1998"
+ endpos="2005"
+>
+	<marker line="-1" type="param">
+		<operand  start="2038" length="2" line="29">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2059" length="4" line="29">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="2006" length="31" line="29" chordsig="android.content.ContentResolver"/>
+	<type  start="2042" length="16" line="29" chordsig="java.lang.String"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2135" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2131" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2152" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2135" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="putLong:(Landroid/content/ContentResolver;Ljava/lang/String;J)Z@android.provider.Settings$System"
+ sig="boolean putLong(ContentResolver,String,long)"
+ line="30"
+ startpos="2187"
+ endpos="2194"
+>
+	<marker line="-1" type="param">
+		<operand  start="2227" length="2" line="30">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2248" length="4" line="30">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2259" length="5" line="30">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="2195" length="31" line="30" chordsig="android.content.ContentResolver"/>
+	<type  start="2231" length="16" line="30" chordsig="java.lang.String"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2278" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2274" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2295" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2278" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFloat:(Landroid/content/ContentResolver;Ljava/lang/String;F)F@android.provider.Settings$System"
+ sig="float getFloat(ContentResolver,String,float)"
+ line="31"
+ startpos="2328"
+ endpos="2336"
+>
+	<marker line="-1" type="param">
+		<operand  start="2369" length="2" line="31">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2390" length="4" line="31">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2402" length="3" line="31">
+			<expr><![CDATA[def]]></expr>
+		</operand>
+	</marker>
+	<type  start="2337" length="31" line="31" chordsig="android.content.ContentResolver"/>
+	<type  start="2373" length="16" line="31" chordsig="java.lang.String"/>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2419" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2415" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2436" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2419" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFloat:(Landroid/content/ContentResolver;Ljava/lang/String;)F@android.provider.Settings$System"
+ sig="float getFloat(ContentResolver,String)"
+ line="32"
+ startpos="2469"
+ endpos="2477"
+>
+	<marker line="-1" type="param">
+		<operand  start="2510" length="2" line="32">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2531" length="4" line="32">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="2478" length="31" line="32" chordsig="android.content.ContentResolver"/>
+	<type  start="2514" length="16" line="32" chordsig="java.lang.String"/>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2607" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2603" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2624" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2607" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="putFloat:(Landroid/content/ContentResolver;Ljava/lang/String;F)Z@android.provider.Settings$System"
+ sig="boolean putFloat(ContentResolver,String,float)"
+ line="33"
+ startpos="2659"
+ endpos="2667"
+>
+	<marker line="-1" type="param">
+		<operand  start="2700" length="2" line="33">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2721" length="4" line="33">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2733" length="5" line="33">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="2668" length="31" line="33" chordsig="android.content.ContentResolver"/>
+	<type  start="2704" length="16" line="33" chordsig="java.lang.String"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2752" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2748" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2769" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2752" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getConfiguration:(Landroid/content/ContentResolver;Landroid/content/res/Configuration;)V@android.provider.Settings$System"
+ sig="void getConfiguration(ContentResolver,Configuration)"
+ line="34"
+ startpos="2801"
+ endpos="2817"
+>
+	<marker line="-1" type="param">
+		<operand  start="2850" length="2" line="34">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2888" length="9" line="34">
+			<expr><![CDATA[outConfig]]></expr>
+		</operand>
+	</marker>
+	<type  start="2818" length="31" line="34" chordsig="android.content.ContentResolver"/>
+	<type  start="2854" length="33" line="34" chordsig="android.content.res.Configuration"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2911" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2907" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2928" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2911" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="putConfiguration:(Landroid/content/ContentResolver;Landroid/content/res/Configuration;)Z@android.provider.Settings$System"
+ sig="boolean putConfiguration(ContentResolver,Configuration)"
+ line="35"
+ startpos="2963"
+ endpos="2979"
+>
+	<marker line="-1" type="param">
+		<operand  start="3012" length="2" line="35">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3050" length="6" line="35">
+			<expr><![CDATA[config]]></expr>
+		</operand>
+	</marker>
+	<type  start="2980" length="31" line="35" chordsig="android.content.ContentResolver"/>
+	<type  start="3016" length="33" line="35" chordsig="android.content.res.Configuration"/>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3070" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3066" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3087" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3070" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getShowGTalkServiceStatus:(Landroid/content/ContentResolver;)Z@android.provider.Settings$System"
+ sig="boolean getShowGTalkServiceStatus(ContentResolver)"
+ line="36"
+ startpos="3122"
+ endpos="3147"
+>
+	<marker line="-1" type="param">
+		<operand  start="3180" length="2" line="36">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<type  start="3148" length="31" line="36" chordsig="android.content.ContentResolver"/>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3196" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3192" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3213" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3196" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setShowGTalkServiceStatus:(Landroid/content/ContentResolver;Z)V@android.provider.Settings$System"
+ sig="void setShowGTalkServiceStatus(ContentResolver,boolean)"
+ line="37"
+ startpos="3245"
+ endpos="3270"
+>
+	<marker line="-1" type="param">
+		<operand  start="3303" length="2" line="37">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3315" length="4" line="37">
+			<expr><![CDATA[flag]]></expr>
+		</operand>
+	</marker>
+	<type  start="3271" length="31" line="37" chordsig="android.content.ContentResolver"/>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3333" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3329" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3350" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3333" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="3382" length="16" line="38" chordsig="java.lang.String"/>
+	<type  start="3477" length="15" line="39" chordsig="android.net.Uri"/>
+	<type  start="3526" length="16" line="40" chordsig="java.lang.String"/>
+	<type  start="3618" length="16" line="41" chordsig="java.lang.String"/>
+	<type  start="3700" length="16" line="42" chordsig="java.lang.String"/>
+	<type  start="3776" length="16" line="43" chordsig="java.lang.String"/>
+	<type  start="3844" length="16" line="44" chordsig="java.lang.String"/>
+	<type  start="3902" length="16" line="45" chordsig="java.lang.String"/>
+	<type  start="3960" length="16" line="46" chordsig="java.lang.String"/>
+	<type  start="4016" length="16" line="47" chordsig="java.lang.String"/>
+	<type  start="4100" length="16" line="48" chordsig="java.lang.String"/>
+	<type  start="4353" length="16" line="52" chordsig="java.lang.String"/>
+	<type  start="4433" length="16" line="53" chordsig="java.lang.String"/>
+	<type  start="4505" length="16" line="54" chordsig="java.lang.String"/>
+	<type  start="4587" length="16" line="55" chordsig="java.lang.String"/>
+	<type  start="4669" length="16" line="56" chordsig="java.lang.String"/>
+	<type  start="4745" length="16" line="57" chordsig="java.lang.String"/>
+	<type  start="4821" length="16" line="58" chordsig="java.lang.String"/>
+	<type  start="4915" length="16" line="59" chordsig="java.lang.String"/>
+	<type  start="5049" length="16" line="61" chordsig="java.lang.String"/>
+	<type  start="5158" length="16" line="63" chordsig="java.lang.String"/>
+	<type  start="5274" length="16" line="65" chordsig="java.lang.String"/>
+	<type  start="5392" length="16" line="66" chordsig="java.lang.String"/>
+	<type  start="5476" length="16" line="67" chordsig="java.lang.String"/>
+	<type  start="5540" length="16" line="68" chordsig="java.lang.String"/>
+	<type  start="5602" length="16" line="69" chordsig="java.lang.String"/>
+	<type  start="5680" length="16" line="70" chordsig="java.lang.String"/>
+	<type  start="5744" length="16" line="71" chordsig="java.lang.String"/>
+	<type  start="5824" length="16" line="72" chordsig="java.lang.String"/>
+	<type  start="5902" length="16" line="73" chordsig="java.lang.String"/>
+	<type  start="6111" length="16" line="76" chordsig="java.lang.String"/>
+	<type  start="6183" length="16" line="77" chordsig="java.lang.String"/>
+	<type  start="6275" length="16" line="78" chordsig="java.lang.String"/>
+	<type  start="6341" length="16" line="79" chordsig="java.lang.String"/>
+	<type  start="6441" length="16" line="80" chordsig="java.lang.String"/>
+	<type  start="6527" length="16" line="81" chordsig="java.lang.String"/>
+	<type  start="6591" length="16" line="82" chordsig="java.lang.String"/>
+	<type  start="6657" length="16" line="83" chordsig="java.lang.String"/>
+	<type  start="6727" length="16" line="84" chordsig="java.lang.String"/>
+	<type  start="6795" length="16" line="85" chordsig="java.lang.String"/>
+	<type  start="6863" length="16" line="86" chordsig="java.lang.String"/>
+	<type  start="6931" length="16" line="87" chordsig="java.lang.String"/>
+	<type  start="7013" length="16" line="88" chordsig="java.lang.String"/>
+	<type  start="7097" length="16" line="89" chordsig="java.lang.String"/>
+	<type  start="7160" length="16" line="90" chordsig="java.lang.String"/>
+	<type  start="7240" length="16" line="91" chordsig="java.lang.String"/>
+	<type  start="7300" length="15" line="92" chordsig="android.net.Uri"/>
+	<type  start="7358" length="16" line="93" chordsig="java.lang.String"/>
+	<type  start="7438" length="15" line="94" chordsig="android.net.Uri"/>
+	<type  start="7500" length="16" line="95" chordsig="java.lang.String"/>
+	<type  start="7566" length="15" line="96" chordsig="android.net.Uri"/>
+	<type  start="7627" length="16" line="97" chordsig="java.lang.String"/>
+	<type  start="7700" length="16" line="98" chordsig="java.lang.String"/>
+	<type  start="7767" length="16" line="99" chordsig="java.lang.String"/>
+	<type  start="7844" length="16" line="100" chordsig="java.lang.String"/>
+	<type  start="7919" length="16" line="101" chordsig="java.lang.String"/>
+	<type  start="8013" length="16" line="102" chordsig="java.lang.String"/>
+	<type  start="8093" length="16" line="103" chordsig="java.lang.String"/>
+	<type  start="8155" length="16" line="104" chordsig="java.lang.String"/>
+	<type  start="8227" length="16" line="105" chordsig="java.lang.String"/>
+	<type  start="8291" length="16" line="106" chordsig="java.lang.String"/>
+	<type  start="8357" length="16" line="107" chordsig="java.lang.String"/>
+	<type  start="8441" length="16" line="108" chordsig="java.lang.String"/>
+	<type  start="8529" length="16" line="109" chordsig="java.lang.String"/>
+	<type  start="8625" length="16" line="110" chordsig="java.lang.String"/>
+	<type  start="8715" length="16" line="111" chordsig="java.lang.String"/>
+	<type  start="8803" length="16" line="112" chordsig="java.lang.String"/>
+	<type  start="8873" length="16" line="113" chordsig="java.lang.String"/>
+	<type  start="8948" length="16" line="114" chordsig="java.lang.String"/>
+	<type  start="9034" length="16" line="115" chordsig="java.lang.String"/>
+	<type  start="9148" length="16" line="117" chordsig="java.lang.String"/>
+	<type  start="9256" length="16" line="119" chordsig="java.lang.String"/>
+	<type  start="9346" length="16" line="121" chordsig="java.lang.String"/>
+	<type  start="9434" length="16" line="123" chordsig="java.lang.String"/>
+	<type  start="9526" length="16" line="125" chordsig="java.lang.String"/>
+	<type  start="9618" length="16" line="127" chordsig="java.lang.String"/>
+	<type  start="9722" length="16" line="129" chordsig="java.lang.String"/>
+	<type  start="9810" length="16" line="131" chordsig="java.lang.String"/>
+	<type  start="9924" length="16" line="133" chordsig="java.lang.String"/>
+	<type  start="10044" length="16" line="135" chordsig="java.lang.String"/>
+	<type  start="10132" length="16" line="137" chordsig="java.lang.String"/>
+	<type  start="10236" length="16" line="139" chordsig="java.lang.String"/>
+	<type  start="10352" length="16" line="141" chordsig="java.lang.String"/>
+	<type  start="10476" length="16" line="143" chordsig="java.lang.String"/>
+	<type  start="10602" length="16" line="145" chordsig="java.lang.String"/>
+	<type  start="10706" length="16" line="147" chordsig="java.lang.String"/>
+	<type  start="10822" length="16" line="149" chordsig="java.lang.String"/>
+	<type  start="10920" length="16" line="151" chordsig="java.lang.String"/>
+	<type  start="11038" length="16" line="153" chordsig="java.lang.String"/>
+	<type  start="11200" length="16" line="155" chordsig="java.lang.String"/>
+	<type  start="11346" length="16" line="157" chordsig="java.lang.String"/>
+	<type  start="11486" length="16" line="159" chordsig="java.lang.String"/>
+	<type  start="11608" length="16" line="161" chordsig="java.lang.String"/>
+	<type  start="11690" length="16" line="163" chordsig="java.lang.String"/>
+	<type  start="11852" length="16" line="165" chordsig="java.lang.String"/>
+	<type  start="11964" length="16" line="167" chordsig="java.lang.String"/>
+	<type  start="12110" length="16" line="169" chordsig="java.lang.String"/>
+	<type  start="12254" length="16" line="171" chordsig="java.lang.String"/>
+	<type  start="12404" length="16" line="173" chordsig="java.lang.String"/>
+	<type  start="12552" length="16" line="175" chordsig="java.lang.String"/>
+	<type  start="12674" length="16" line="177" chordsig="java.lang.String"/>
+	<type  start="12774" length="16" line="179" chordsig="java.lang.String"/>
+	<type  start="12890" length="16" line="181" chordsig="java.lang.String"/>
+	<type  start="13012" length="16" line="183" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.Settings$System"
+ line="184"
+>
+</method>
+</class>
+<class chordsig="android.provider.Settings$Secure" line="186">
+	<type  start="13264" length="40" line="187" chordsig="android.provider.Settings$NameValueTable"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.Settings$Secure"
+ sig="Secure()"
+ line="189"
+ startpos="13315"
+ endpos="13321"
+>
+	<newexpr line="189" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="13336" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="13332" length="29" line="189">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="13353" length="7" line="189">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="13336" length="16" line="189" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getString:(Landroid/content/ContentResolver;Ljava/lang/String;)Ljava/lang/String;@android.provider.Settings$Secure"
+ sig="String getString(ContentResolver,String)"
+ line="190"
+ startpos="13410"
+ endpos="13419"
+>
+	<marker line="-1" type="param">
+		<operand  start="13452" length="8" line="190">
+			<expr><![CDATA[resolver]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="13479" length="4" line="190">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="13393" length="16" line="190" chordsig="java.lang.String"/>
+	<type  start="13420" length="31" line="190" chordsig="android.content.ContentResolver"/>
+	<type  start="13462" length="16" line="190" chordsig="java.lang.String"/>
+	<newexpr line="190" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="13497" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="13493" length="29" line="190">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="13514" length="7" line="190">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="13497" length="16" line="190" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="putString:(Landroid/content/ContentResolver;Ljava/lang/String;Ljava/lang/String;)Z@android.provider.Settings$Secure"
+ sig="boolean putString(ContentResolver,String,String)"
+ line="191"
+ startpos="13549"
+ endpos="13558"
+>
+	<marker line="-1" type="param">
+		<operand  start="13591" length="8" line="191">
+			<expr><![CDATA[resolver]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="13618" length="4" line="191">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="13641" length="5" line="191">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="13559" length="31" line="191" chordsig="android.content.ContentResolver"/>
+	<type  start="13601" length="16" line="191" chordsig="java.lang.String"/>
+	<type  start="13624" length="16" line="191" chordsig="java.lang.String"/>
+	<newexpr line="191" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="13660" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="13656" length="29" line="191">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="13677" length="7" line="191">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="13660" length="16" line="191" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getUriFor:(Ljava/lang/String;)Landroid/net/Uri;@android.provider.Settings$Secure"
+ sig="Uri getUriFor(String)"
+ line="192"
+ startpos="13720"
+ endpos="13729"
+>
+	<marker line="-1" type="param">
+		<operand  start="13747" length="4" line="192">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="13704" length="15" line="192" chordsig="android.net.Uri"/>
+	<type  start="13730" length="16" line="192" chordsig="java.lang.String"/>
+	<newexpr line="192" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="13765" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="13761" length="29" line="192">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="13782" length="7" line="192">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="13765" length="16" line="192" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInt:(Landroid/content/ContentResolver;Ljava/lang/String;I)I@android.provider.Settings$Secure"
+ sig="int getInt(ContentResolver,String,int)"
+ line="193"
+ startpos="13813"
+ endpos="13819"
+>
+	<marker line="-1" type="param">
+		<operand  start="13852" length="2" line="193">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="13873" length="4" line="193">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="13883" length="3" line="193">
+			<expr><![CDATA[def]]></expr>
+		</operand>
+	</marker>
+	<type  start="13820" length="31" line="193" chordsig="android.content.ContentResolver"/>
+	<type  start="13856" length="16" line="193" chordsig="java.lang.String"/>
+	<newexpr line="193" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="13900" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="13896" length="29" line="193">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="13917" length="7" line="193">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="13900" length="16" line="193" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInt:(Landroid/content/ContentResolver;Ljava/lang/String;)I@android.provider.Settings$Secure"
+ sig="int getInt(ContentResolver,String)"
+ line="194"
+ startpos="13948"
+ endpos="13954"
+>
+	<marker line="-1" type="param">
+		<operand  start="13987" length="2" line="194">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="14008" length="4" line="194">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="13955" length="31" line="194" chordsig="android.content.ContentResolver"/>
+	<type  start="13991" length="16" line="194" chordsig="java.lang.String"/>
+	<newexpr line="194" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="14084" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="14080" length="29" line="194">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="14101" length="7" line="194">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="14084" length="16" line="194" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="putInt:(Landroid/content/ContentResolver;Ljava/lang/String;I)Z@android.provider.Settings$Secure"
+ sig="boolean putInt(ContentResolver,String,int)"
+ line="195"
+ startpos="14136"
+ endpos="14142"
+>
+	<marker line="-1" type="param">
+		<operand  start="14175" length="2" line="195">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="14196" length="4" line="195">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="14206" length="5" line="195">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="14143" length="31" line="195" chordsig="android.content.ContentResolver"/>
+	<type  start="14179" length="16" line="195" chordsig="java.lang.String"/>
+	<newexpr line="195" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="14225" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="14221" length="29" line="195">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="14242" length="7" line="195">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="14225" length="16" line="195" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLong:(Landroid/content/ContentResolver;Ljava/lang/String;J)J@android.provider.Settings$Secure"
+ sig="long getLong(ContentResolver,String,long)"
+ line="196"
+ startpos="14274"
+ endpos="14281"
+>
+	<marker line="-1" type="param">
+		<operand  start="14314" length="2" line="196">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="14335" length="4" line="196">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="14346" length="3" line="196">
+			<expr><![CDATA[def]]></expr>
+		</operand>
+	</marker>
+	<type  start="14282" length="31" line="196" chordsig="android.content.ContentResolver"/>
+	<type  start="14318" length="16" line="196" chordsig="java.lang.String"/>
+	<newexpr line="196" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="14363" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="14359" length="29" line="196">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="14380" length="7" line="196">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="14363" length="16" line="196" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLong:(Landroid/content/ContentResolver;Ljava/lang/String;)J@android.provider.Settings$Secure"
+ sig="long getLong(ContentResolver,String)"
+ line="197"
+ startpos="14412"
+ endpos="14419"
+>
+	<marker line="-1" type="param">
+		<operand  start="14452" length="2" line="197">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="14473" length="4" line="197">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="14420" length="31" line="197" chordsig="android.content.ContentResolver"/>
+	<type  start="14456" length="16" line="197" chordsig="java.lang.String"/>
+	<newexpr line="197" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="14549" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="14545" length="29" line="197">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="14566" length="7" line="197">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="14549" length="16" line="197" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="putLong:(Landroid/content/ContentResolver;Ljava/lang/String;J)Z@android.provider.Settings$Secure"
+ sig="boolean putLong(ContentResolver,String,long)"
+ line="198"
+ startpos="14601"
+ endpos="14608"
+>
+	<marker line="-1" type="param">
+		<operand  start="14641" length="2" line="198">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="14662" length="4" line="198">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="14673" length="5" line="198">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="14609" length="31" line="198" chordsig="android.content.ContentResolver"/>
+	<type  start="14645" length="16" line="198" chordsig="java.lang.String"/>
+	<newexpr line="198" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="14692" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="14688" length="29" line="198">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="14709" length="7" line="198">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="14692" length="16" line="198" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFloat:(Landroid/content/ContentResolver;Ljava/lang/String;F)F@android.provider.Settings$Secure"
+ sig="float getFloat(ContentResolver,String,float)"
+ line="199"
+ startpos="14742"
+ endpos="14750"
+>
+	<marker line="-1" type="param">
+		<operand  start="14783" length="2" line="199">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="14804" length="4" line="199">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="14816" length="3" line="199">
+			<expr><![CDATA[def]]></expr>
+		</operand>
+	</marker>
+	<type  start="14751" length="31" line="199" chordsig="android.content.ContentResolver"/>
+	<type  start="14787" length="16" line="199" chordsig="java.lang.String"/>
+	<newexpr line="199" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="14833" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="14829" length="29" line="199">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="14850" length="7" line="199">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="14833" length="16" line="199" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFloat:(Landroid/content/ContentResolver;Ljava/lang/String;)F@android.provider.Settings$Secure"
+ sig="float getFloat(ContentResolver,String)"
+ line="200"
+ startpos="14883"
+ endpos="14891"
+>
+	<marker line="-1" type="param">
+		<operand  start="14924" length="2" line="200">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="14945" length="4" line="200">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="14892" length="31" line="200" chordsig="android.content.ContentResolver"/>
+	<type  start="14928" length="16" line="200" chordsig="java.lang.String"/>
+	<newexpr line="200" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="15021" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="15017" length="29" line="200">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="15038" length="7" line="200">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="15021" length="16" line="200" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="putFloat:(Landroid/content/ContentResolver;Ljava/lang/String;F)Z@android.provider.Settings$Secure"
+ sig="boolean putFloat(ContentResolver,String,float)"
+ line="201"
+ startpos="15073"
+ endpos="15081"
+>
+	<marker line="-1" type="param">
+		<operand  start="15114" length="2" line="201">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="15135" length="4" line="201">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="15147" length="5" line="201">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="15082" length="31" line="201" chordsig="android.content.ContentResolver"/>
+	<type  start="15118" length="16" line="201" chordsig="java.lang.String"/>
+	<newexpr line="201" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="15166" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="15162" length="29" line="201">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="15183" length="7" line="201">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="15166" length="16" line="201" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isLocationProviderEnabled:(Landroid/content/ContentResolver;Ljava/lang/String;)Z@android.provider.Settings$Secure"
+ sig="boolean isLocationProviderEnabled(ContentResolver,String)"
+ line="202"
+ startpos="15224"
+ endpos="15249"
+>
+	<marker line="-1" type="param">
+		<operand  start="15282" length="2" line="202">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="15303" length="8" line="202">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<type  start="15250" length="31" line="202" chordsig="android.content.ContentResolver"/>
+	<type  start="15286" length="16" line="202" chordsig="java.lang.String"/>
+	<newexpr line="202" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="15325" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="15321" length="29" line="202">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="15342" length="7" line="202">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="15325" length="16" line="202" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setLocationProviderEnabled:(Landroid/content/ContentResolver;Ljava/lang/String;Z)V@android.provider.Settings$Secure"
+ sig="void setLocationProviderEnabled(ContentResolver,String,boolean)"
+ line="203"
+ startpos="15380"
+ endpos="15406"
+>
+	<marker line="-1" type="param">
+		<operand  start="15439" length="2" line="203">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="15460" length="8" line="203">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="15478" length="7" line="203">
+			<expr><![CDATA[enabled]]></expr>
+		</operand>
+	</marker>
+	<type  start="15407" length="31" line="203" chordsig="android.content.ContentResolver"/>
+	<type  start="15443" length="16" line="203" chordsig="java.lang.String"/>
+	<newexpr line="203" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="15499" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="15495" length="29" line="203">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="15516" length="7" line="203">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="15499" length="16" line="203" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="15548" length="16" line="204" chordsig="java.lang.String"/>
+	<type  start="15643" length="15" line="205" chordsig="android.net.Uri"/>
+	<type  start="15692" length="16" line="206" chordsig="java.lang.String"/>
+	<type  start="15792" length="16" line="207" chordsig="java.lang.String"/>
+	<type  start="15858" length="16" line="208" chordsig="java.lang.String"/>
+	<type  start="15934" length="16" line="209" chordsig="java.lang.String"/>
+	<type  start="15998" length="16" line="210" chordsig="java.lang.String"/>
+	<type  start="16066" length="16" line="211" chordsig="java.lang.String"/>
+	<type  start="16134" length="16" line="212" chordsig="java.lang.String"/>
+	<type  start="16218" length="16" line="213" chordsig="java.lang.String"/>
+	<type  start="16320" length="16" line="214" chordsig="java.lang.String"/>
+	<type  start="16428" length="16" line="215" chordsig="java.lang.String"/>
+	<type  start="16508" length="16" line="216" chordsig="java.lang.String"/>
+	<type  start="16594" length="16" line="217" chordsig="java.lang.String"/>
+	<type  start="16658" length="16" line="218" chordsig="java.lang.String"/>
+	<type  start="16748" length="16" line="219" chordsig="java.lang.String"/>
+	<type  start="16844" length="16" line="220" chordsig="java.lang.String"/>
+	<type  start="16929" length="16" line="221" chordsig="java.lang.String"/>
+	<type  start="17021" length="16" line="222" chordsig="java.lang.String"/>
+	<type  start="17163" length="16" line="224" chordsig="java.lang.String"/>
+	<type  start="17227" length="16" line="225" chordsig="java.lang.String"/>
+	<type  start="17307" length="16" line="226" chordsig="java.lang.String"/>
+	<type  start="17399" length="16" line="227" chordsig="java.lang.String"/>
+	<type  start="17499" length="16" line="228" chordsig="java.lang.String"/>
+	<type  start="17601" length="16" line="229" chordsig="java.lang.String"/>
+	<type  start="17681" length="16" line="230" chordsig="java.lang.String"/>
+	<type  start="17773" length="16" line="231" chordsig="java.lang.String"/>
+	<type  start="17847" length="16" line="232" chordsig="java.lang.String"/>
+	<type  start="17933" length="16" line="233" chordsig="java.lang.String"/>
+	<type  start="18027" length="16" line="234" chordsig="java.lang.String"/>
+	<type  start="18131" length="16" line="235" chordsig="java.lang.String"/>
+	<type  start="18241" length="16" line="237" chordsig="java.lang.String"/>
+	<type  start="18317" length="16" line="238" chordsig="java.lang.String"/>
+	<type  start="18393" length="16" line="239" chordsig="java.lang.String"/>
+	<type  start="18471" length="16" line="240" chordsig="java.lang.String"/>
+	<type  start="18573" length="16" line="242" chordsig="java.lang.String"/>
+	<type  start="18673" length="16" line="244" chordsig="java.lang.String"/>
+	<type  start="18779" length="16" line="246" chordsig="java.lang.String"/>
+	<type  start="18861" length="16" line="247" chordsig="java.lang.String"/>
+	<type  start="18943" length="16" line="248" chordsig="java.lang.String"/>
+	<type  start="19065" length="16" line="249" chordsig="java.lang.String"/>
+	<type  start="19181" length="16" line="250" chordsig="java.lang.String"/>
+	<type  start="19279" length="16" line="251" chordsig="java.lang.String"/>
+	<type  start="19361" length="16" line="253" chordsig="java.lang.String"/>
+	<type  start="19523" length="16" line="255" chordsig="java.lang.String"/>
+	<type  start="19635" length="16" line="257" chordsig="java.lang.String"/>
+	<type  start="19781" length="16" line="259" chordsig="java.lang.String"/>
+	<type  start="19925" length="16" line="261" chordsig="java.lang.String"/>
+	<type  start="20075" length="16" line="263" chordsig="java.lang.String"/>
+	<type  start="20223" length="16" line="265" chordsig="java.lang.String"/>
+	<type  start="20321" length="16" line="266" chordsig="java.lang.String"/>
+	<type  start="20421" length="16" line="268" chordsig="java.lang.String"/>
+	<type  start="20537" length="16" line="270" chordsig="java.lang.String"/>
+	<type  start="20653" length="16" line="272" chordsig="java.lang.String"/>
+	<type  start="20775" length="16" line="274" chordsig="java.lang.String"/>
+	<type  start="20877" length="16" line="275" chordsig="java.lang.String"/>
+	<type  start="20971" length="16" line="276" chordsig="java.lang.String"/>
+	<type  start="21133" length="16" line="278" chordsig="java.lang.String"/>
+	<type  start="21207" length="16" line="279" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.Settings$Secure"
+ line="280"
+>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.Settings"
+ sig="Settings()"
+ line="282"
+ startpos="21326"
+ endpos="21334"
+>
+	<newexpr line="282" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="21349" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="21345" length="29" line="282">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="21366" length="7" line="282">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="21349" length="16" line="282" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="21398" length="16" line="283" chordsig="java.lang.String"/>
+	<type  start="21482" length="16" line="284" chordsig="java.lang.String"/>
+	<type  start="21574" length="16" line="285" chordsig="java.lang.String"/>
+	<type  start="21690" length="16" line="286" chordsig="java.lang.String"/>
+	<type  start="21792" length="16" line="287" chordsig="java.lang.String"/>
+	<type  start="21904" length="16" line="288" chordsig="java.lang.String"/>
+	<type  start="22016" length="16" line="289" chordsig="java.lang.String"/>
+	<type  start="22118" length="16" line="290" chordsig="java.lang.String"/>
+	<type  start="22218" length="16" line="291" chordsig="java.lang.String"/>
+	<type  start="22312" length="16" line="292" chordsig="java.lang.String"/>
+	<type  start="22412" length="16" line="293" chordsig="java.lang.String"/>
+	<type  start="22516" length="16" line="294" chordsig="java.lang.String"/>
+	<type  start="22610" length="16" line="295" chordsig="java.lang.String"/>
+	<type  start="22706" length="16" line="296" chordsig="java.lang.String"/>
+	<type  start="22806" length="16" line="297" chordsig="java.lang.String"/>
+	<type  start="22904" length="16" line="298" chordsig="java.lang.String"/>
+	<type  start="23014" length="16" line="299" chordsig="java.lang.String"/>
+	<type  start="23140" length="16" line="300" chordsig="java.lang.String"/>
+	<type  start="23256" length="16" line="301" chordsig="java.lang.String"/>
+	<type  start="23364" length="16" line="302" chordsig="java.lang.String"/>
+	<type  start="23496" length="16" line="303" chordsig="java.lang.String"/>
+	<type  start="23606" length="16" line="304" chordsig="java.lang.String"/>
+	<type  start="23730" length="16" line="305" chordsig="java.lang.String"/>
+	<type  start="23862" length="16" line="306" chordsig="java.lang.String"/>
+	<type  start="23986" length="16" line="307" chordsig="java.lang.String"/>
+	<type  start="24080" length="16" line="308" chordsig="java.lang.String"/>
+	<type  start="24179" length="16" line="309" chordsig="java.lang.String"/>
+	<type  start="24297" length="16" line="310" chordsig="java.lang.String"/>
+	<type  start="24407" length="16" line="311" chordsig="java.lang.String"/>
+	<type  start="24525" length="16" line="312" chordsig="java.lang.String"/>
+	<type  start="24633" length="16" line="313" chordsig="java.lang.String"/>
+	<type  start="24736" length="16" line="314" chordsig="java.lang.String"/>
+	<type  start="24844" length="16" line="315" chordsig="java.lang.String"/>
+	<type  start="24936" length="16" line="316" chordsig="java.lang.String"/>
+	<type  start="25042" length="16" line="317" chordsig="java.lang.String"/>
+	<type  start="25114" length="16" line="318" chordsig="java.lang.String"/>
+	<type  start="25194" length="16" line="319" chordsig="java.lang.String"/>
+</class>
+</root>

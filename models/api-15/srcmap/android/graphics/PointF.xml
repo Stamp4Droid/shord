@@ -1,0 +1,325 @@
+<root>
+<class chordsig="android.graphics.PointF" line="2">
+	<type  start="59" length="21" line="3" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.graphics.PointF"
+ sig="PointF()"
+ line="5"
+ startpos="91"
+ endpos="97"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="112" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="108" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="129" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="112" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(FF)V@android.graphics.PointF"
+ sig="PointF(float,float)"
+ line="6"
+ startpos="149"
+ endpos="155"
+>
+	<marker line="-1" type="param">
+		<operand  start="162" length="1" line="6">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="171" length="1" line="6">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="186" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="182" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="203" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="186" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/graphics/Point;)V@android.graphics.PointF"
+ sig="PointF(Point)"
+ line="7"
+ startpos="223"
+ endpos="229"
+>
+	<marker line="-1" type="param">
+		<operand  start="253" length="1" line="7">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<type  start="230" length="22" line="7" chordsig="android.graphics.Point"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="268" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="264" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="285" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="268" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="set:(FF)V@android.graphics.PointF"
+ sig="void set(float,float)"
+ line="8"
+ startpos="316"
+ endpos="319"
+>
+	<marker line="-1" type="param">
+		<operand  start="326" length="1" line="8">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="335" length="1" line="8">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="350" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="346" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="367" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="350" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="set:(Landroid/graphics/PointF;)V@android.graphics.PointF"
+ sig="void set(PointF)"
+ line="9"
+ startpos="398"
+ endpos="401"
+>
+	<marker line="-1" type="param">
+		<operand  start="426" length="1" line="9">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<type  start="402" length="23" line="9" chordsig="android.graphics.PointF"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="441" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="437" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="458" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="441" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="negate:()V@android.graphics.PointF"
+ sig="void negate()"
+ line="10"
+ startpos="489"
+ endpos="495"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="510" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="506" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="527" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="510" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="offset:(FF)V@android.graphics.PointF"
+ sig="void offset(float,float)"
+ line="11"
+ startpos="558"
+ endpos="564"
+>
+	<marker line="-1" type="param">
+		<operand  start="571" length="2" line="11">
+			<expr><![CDATA[dx]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="581" length="2" line="11">
+			<expr><![CDATA[dy]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="597" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="593" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="614" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="597" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(FF)Z@android.graphics.PointF"
+ sig="boolean equals(float,float)"
+ line="12"
+ startpos="648"
+ endpos="654"
+>
+	<marker line="-1" type="param">
+		<operand  start="661" length="1" line="12">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="670" length="1" line="12">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="685" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="681" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="702" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="685" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="length:()F@android.graphics.PointF"
+ sig="float length()"
+ line="13"
+ startpos="734"
+ endpos="740"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="755" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="751" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="772" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="755" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="length:(FF)F@android.graphics.PointF"
+ sig="float length(float,float)"
+ line="14"
+ startpos="805"
+ endpos="811"
+>
+	<marker line="-1" type="param">
+		<operand  start="818" length="1" line="14">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="827" length="1" line="14">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="842" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="838" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="859" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="842" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.graphics.PointF"
+ sig="int describeContents()"
+ line="15"
+ startpos="883"
+ endpos="899"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="914" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="910" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="931" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="914" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.graphics.PointF"
+ sig="void writeToParcel(Parcel,int)"
+ line="16"
+ startpos="956"
+ endpos="969"
+>
+	<marker line="-1" type="param">
+		<operand  start="988" length="3" line="16">
+			<expr><![CDATA[out]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="997" length="5" line="16">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="970" length="17" line="16" chordsig="android.os.Parcel"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1016" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1012" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1033" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1016" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="readFromParcel:(Landroid/os/Parcel;)V@android.graphics.PointF"
+ sig="void readFromParcel(Parcel)"
+ line="17"
+ startpos="1058"
+ endpos="1072"
+>
+	<marker line="-1" type="param">
+		<operand  start="1091" length="2" line="17">
+			<expr><![CDATA[in]]></expr>
+		</operand>
+	</marker>
+	<type  start="1073" length="17" line="17" chordsig="android.os.Parcel"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1107" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1103" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1124" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1107" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1188" length="29" line="20" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="1218" length="23" line="20" chordsig="android.graphics.PointF"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.graphics.PointF"
+ line="21"
+>
+</method>
+</class>
+</root>

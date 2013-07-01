@@ -1,0 +1,280 @@
+<root>
+<class chordsig="java.sql.ResultSetMetaData" line="2">
+	<type  start="63" length="16" line="3" chordsig="java.sql.Wrapper"/>
+<method
+ chordsig="getCatalogName:(I)Ljava/lang/String;@java.sql.ResultSetMetaData"
+ sig="String getCatalogName(int)"
+ line="5"
+ startpos="116"
+ endpos="130"
+>
+	<marker line="-1" type="param">
+		<operand  start="135" length="6" line="5">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+	<type  start="99" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getColumnClassName:(I)Ljava/lang/String;@java.sql.ResultSetMetaData"
+ sig="String getColumnClassName(int)"
+ line="6"
+ startpos="207"
+ endpos="225"
+>
+	<marker line="-1" type="param">
+		<operand  start="230" length="6" line="6">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+	<type  start="190" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getColumnCount:()I@java.sql.ResultSetMetaData"
+ sig="int getColumnCount()"
+ line="7"
+ startpos="289"
+ endpos="303"
+>
+</method>
+<method
+ chordsig="getColumnDisplaySize:(I)I@java.sql.ResultSetMetaData"
+ sig="int getColumnDisplaySize(int)"
+ line="8"
+ startpos="357"
+ endpos="377"
+>
+	<marker line="-1" type="param">
+		<operand  start="382" length="6" line="8">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getColumnLabel:(I)Ljava/lang/String;@java.sql.ResultSetMetaData"
+ sig="String getColumnLabel(int)"
+ line="9"
+ startpos="454"
+ endpos="468"
+>
+	<marker line="-1" type="param">
+		<operand  start="473" length="6" line="9">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+	<type  start="437" length="16" line="9" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getColumnName:(I)Ljava/lang/String;@java.sql.ResultSetMetaData"
+ sig="String getColumnName(int)"
+ line="10"
+ startpos="545"
+ endpos="558"
+>
+	<marker line="-1" type="param">
+		<operand  start="563" length="6" line="10">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+	<type  start="528" length="16" line="10" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getColumnType:(I)I@java.sql.ResultSetMetaData"
+ sig="int getColumnType(int)"
+ line="11"
+ startpos="622"
+ endpos="635"
+>
+	<marker line="-1" type="param">
+		<operand  start="640" length="6" line="11">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getColumnTypeName:(I)Ljava/lang/String;@java.sql.ResultSetMetaData"
+ sig="String getColumnTypeName(int)"
+ line="12"
+ startpos="712"
+ endpos="729"
+>
+	<marker line="-1" type="param">
+		<operand  start="734" length="6" line="12">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+	<type  start="695" length="16" line="12" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getPrecision:(I)I@java.sql.ResultSetMetaData"
+ sig="int getPrecision(int)"
+ line="13"
+ startpos="793"
+ endpos="805"
+>
+	<marker line="-1" type="param">
+		<operand  start="810" length="6" line="13">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getScale:(I)I@java.sql.ResultSetMetaData"
+ sig="int getScale(int)"
+ line="14"
+ startpos="869"
+ endpos="877"
+>
+	<marker line="-1" type="param">
+		<operand  start="882" length="6" line="14">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getSchemaName:(I)Ljava/lang/String;@java.sql.ResultSetMetaData"
+ sig="String getSchemaName(int)"
+ line="15"
+ startpos="954"
+ endpos="967"
+>
+	<marker line="-1" type="param">
+		<operand  start="972" length="6" line="15">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+	<type  start="937" length="16" line="15" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getTableName:(I)Ljava/lang/String;@java.sql.ResultSetMetaData"
+ sig="String getTableName(int)"
+ line="16"
+ startpos="1044"
+ endpos="1056"
+>
+	<marker line="-1" type="param">
+		<operand  start="1061" length="6" line="16">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+	<type  start="1027" length="16" line="16" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="isAutoIncrement:(I)Z@java.sql.ResultSetMetaData"
+ sig="boolean isAutoIncrement(int)"
+ line="17"
+ startpos="1124"
+ endpos="1139"
+>
+	<marker line="-1" type="param">
+		<operand  start="1144" length="6" line="17">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="isCaseSensitive:(I)Z@java.sql.ResultSetMetaData"
+ sig="boolean isCaseSensitive(int)"
+ line="18"
+ startpos="1207"
+ endpos="1222"
+>
+	<marker line="-1" type="param">
+		<operand  start="1227" length="6" line="18">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="isCurrency:(I)Z@java.sql.ResultSetMetaData"
+ sig="boolean isCurrency(int)"
+ line="19"
+ startpos="1290"
+ endpos="1300"
+>
+	<marker line="-1" type="param">
+		<operand  start="1305" length="6" line="19">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="isDefinitelyWritable:(I)Z@java.sql.ResultSetMetaData"
+ sig="boolean isDefinitelyWritable(int)"
+ line="20"
+ startpos="1368"
+ endpos="1388"
+>
+	<marker line="-1" type="param">
+		<operand  start="1393" length="6" line="20">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="isNullable:(I)I@java.sql.ResultSetMetaData"
+ sig="int isNullable(int)"
+ line="21"
+ startpos="1452"
+ endpos="1462"
+>
+	<marker line="-1" type="param">
+		<operand  start="1467" length="6" line="21">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="isReadOnly:(I)Z@java.sql.ResultSetMetaData"
+ sig="boolean isReadOnly(int)"
+ line="22"
+ startpos="1530"
+ endpos="1540"
+>
+	<marker line="-1" type="param">
+		<operand  start="1545" length="6" line="22">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="isSearchable:(I)Z@java.sql.ResultSetMetaData"
+ sig="boolean isSearchable(int)"
+ line="23"
+ startpos="1608"
+ endpos="1620"
+>
+	<marker line="-1" type="param">
+		<operand  start="1625" length="6" line="23">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="isSigned:(I)Z@java.sql.ResultSetMetaData"
+ sig="boolean isSigned(int)"
+ line="24"
+ startpos="1688"
+ endpos="1696"
+>
+	<marker line="-1" type="param">
+		<operand  start="1701" length="6" line="24">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="isWritable:(I)Z@java.sql.ResultSetMetaData"
+ sig="boolean isWritable(int)"
+ line="25"
+ startpos="1764"
+ endpos="1774"
+>
+	<marker line="-1" type="param">
+		<operand  start="1779" length="6" line="25">
+			<expr><![CDATA[column]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

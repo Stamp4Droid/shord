@@ -1,0 +1,47 @@
+<root>
+<class chordsig="java.net.PortUnreachableException" line="2">
+	<type  start="66" length="24" line="3" chordsig="java.net.SocketException"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.net.PortUnreachableException"
+ sig="PortUnreachableException()"
+ line="5"
+ startpos="101"
+ endpos="125"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="140" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="136" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="157" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="140" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.net.PortUnreachableException"
+ sig="PortUnreachableException(String)"
+ line="6"
+ startpos="177"
+ endpos="201"
+>
+	<marker line="-1" type="param">
+		<operand  start="219" length="13" line="6">
+			<expr><![CDATA[detailMessage]]></expr>
+		</operand>
+	</marker>
+	<type  start="202" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="246" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="242" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="263" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="246" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

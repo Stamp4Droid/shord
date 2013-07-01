@@ -1,0 +1,593 @@
+<root>
+<class chordsig="android.net.sip.SipManager" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.net.sip.SipManager"
+ sig="SipManager()"
+ line="4"
+ startpos="51"
+ endpos="61"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="76" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="72" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="93" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="76" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newInstance:(Landroid/content/Context;)Landroid/net/sip/SipManager;@android.net.sip.SipManager"
+ sig="SipManager newInstance(Context)"
+ line="5"
+ startpos="147"
+ endpos="158"
+>
+	<marker line="-1" type="param">
+		<operand  start="183" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="120" length="26" line="5" chordsig="android.net.sip.SipManager"/>
+	<type  start="159" length="23" line="5" chordsig="android.content.Context"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="204" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="200" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="221" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="204" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isApiSupported:(Landroid/content/Context;)Z@android.net.sip.SipManager"
+ sig="boolean isApiSupported(Context)"
+ line="6"
+ startpos="256"
+ endpos="270"
+>
+	<marker line="-1" type="param">
+		<operand  start="295" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="271" length="23" line="6" chordsig="android.content.Context"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="316" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="312" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="333" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="316" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isVoipSupported:(Landroid/content/Context;)Z@android.net.sip.SipManager"
+ sig="boolean isVoipSupported(Context)"
+ line="7"
+ startpos="368"
+ endpos="383"
+>
+	<marker line="-1" type="param">
+		<operand  start="408" length="7" line="7">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="384" length="23" line="7" chordsig="android.content.Context"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="429" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="425" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="446" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="429" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isSipWifiOnly:(Landroid/content/Context;)Z@android.net.sip.SipManager"
+ sig="boolean isSipWifiOnly(Context)"
+ line="8"
+ startpos="481"
+ endpos="494"
+>
+	<marker line="-1" type="param">
+		<operand  start="519" length="7" line="8">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="495" length="23" line="8" chordsig="android.content.Context"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="540" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="536" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="557" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="540" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="open:(Landroid/net/sip/SipProfile;)V@android.net.sip.SipManager"
+ sig="void open(SipProfile)"
+ line="9"
+ startpos="582"
+ endpos="586"
+>
+	<marker line="-1" type="param">
+		<operand  start="614" length="12" line="9">
+			<expr><![CDATA[localProfile]]></expr>
+		</operand>
+	</marker>
+	<type  start="587" length="26" line="9" chordsig="android.net.sip.SipProfile"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="676" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="672" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="693" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="676" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="open:(Landroid/net/sip/SipProfile;Landroid/app/PendingIntent;Landroid/net/sip/SipRegistrationListener;)V@android.net.sip.SipManager"
+ sig="void open(SipProfile,PendingIntent,SipRegistrationListener)"
+ line="10"
+ startpos="718"
+ endpos="722"
+>
+	<marker line="-1" type="param">
+		<operand  start="750" length="12" line="10">
+			<expr><![CDATA[localProfile]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="790" length="25" line="10">
+			<expr><![CDATA[incomingCallPendingIntent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="857" length="8" line="10">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="723" length="26" line="10" chordsig="android.net.sip.SipProfile"/>
+	<type  start="764" length="25" line="10" chordsig="android.app.PendingIntent"/>
+	<type  start="817" length="39" line="10" chordsig="android.net.sip.SipRegistrationListener"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="915" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="911" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="932" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="915" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setRegistrationListener:(Ljava/lang/String;Landroid/net/sip/SipRegistrationListener;)V@android.net.sip.SipManager"
+ sig="void setRegistrationListener(String,SipRegistrationListener)"
+ line="11"
+ startpos="957"
+ endpos="980"
+>
+	<marker line="-1" type="param">
+		<operand  start="998" length="15" line="11">
+			<expr><![CDATA[localProfileUri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1055" length="8" line="11">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="981" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="1015" length="39" line="11" chordsig="android.net.sip.SipRegistrationListener"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1113" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1109" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1130" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1113" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:(Ljava/lang/String;)V@android.net.sip.SipManager"
+ sig="void close(String)"
+ line="12"
+ startpos="1155"
+ endpos="1160"
+>
+	<marker line="-1" type="param">
+		<operand  start="1178" length="15" line="12">
+			<expr><![CDATA[localProfileUri]]></expr>
+		</operand>
+	</marker>
+	<type  start="1161" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1243" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1239" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1260" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1243" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isOpened:(Ljava/lang/String;)Z@android.net.sip.SipManager"
+ sig="boolean isOpened(String)"
+ line="13"
+ startpos="1288"
+ endpos="1296"
+>
+	<marker line="-1" type="param">
+		<operand  start="1314" length="15" line="13">
+			<expr><![CDATA[localProfileUri]]></expr>
+		</operand>
+	</marker>
+	<type  start="1297" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1379" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1375" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1396" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1379" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isRegistered:(Ljava/lang/String;)Z@android.net.sip.SipManager"
+ sig="boolean isRegistered(String)"
+ line="14"
+ startpos="1424"
+ endpos="1436"
+>
+	<marker line="-1" type="param">
+		<operand  start="1454" length="15" line="14">
+			<expr><![CDATA[localProfileUri]]></expr>
+		</operand>
+	</marker>
+	<type  start="1437" length="16" line="14" chordsig="java.lang.String"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1519" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1515" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1536" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1519" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="makeAudioCall:(Landroid/net/sip/SipProfile;Landroid/net/sip/SipProfile;Landroid/net/sip/SipAudioCall$Listener;I)Landroid/net/sip/SipAudioCall;@android.net.sip.SipManager"
+ sig="SipAudioCall makeAudioCall(SipProfile,SipProfile,Listener,int)"
+ line="15"
+ startpos="1585"
+ endpos="1598"
+>
+	<marker line="-1" type="param">
+		<operand  start="1626" length="12" line="15">
+			<expr><![CDATA[localProfile]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1667" length="11" line="15">
+			<expr><![CDATA[peerProfile]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1718" length="8" line="15">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1732" length="7" line="15">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<type  start="1556" length="28" line="15" chordsig="android.net.sip.SipAudioCall"/>
+	<type  start="1599" length="26" line="15" chordsig="android.net.sip.SipProfile"/>
+	<type  start="1640" length="26" line="15" chordsig="android.net.sip.SipProfile"/>
+	<type  start="1680" length="37" line="15" chordsig="android.net.sip.SipAudioCall$Listener"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1789" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1785" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1806" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1789" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="makeAudioCall:(Ljava/lang/String;Ljava/lang/String;Landroid/net/sip/SipAudioCall$Listener;I)Landroid/net/sip/SipAudioCall;@android.net.sip.SipManager"
+ sig="SipAudioCall makeAudioCall(String,String,Listener,int)"
+ line="16"
+ startpos="1855"
+ endpos="1868"
+>
+	<marker line="-1" type="param">
+		<operand  start="1886" length="15" line="16">
+			<expr><![CDATA[localProfileUri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1920" length="14" line="16">
+			<expr><![CDATA[peerProfileUri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1974" length="8" line="16">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1988" length="7" line="16">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<type  start="1826" length="28" line="16" chordsig="android.net.sip.SipAudioCall"/>
+	<type  start="1869" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="1903" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="1936" length="37" line="16" chordsig="android.net.sip.SipAudioCall$Listener"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2045" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2041" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2062" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2045" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="takeAudioCall:(Landroid/content/Intent;Landroid/net/sip/SipAudioCall$Listener;)Landroid/net/sip/SipAudioCall;@android.net.sip.SipManager"
+ sig="SipAudioCall takeAudioCall(Intent,Listener)"
+ line="17"
+ startpos="2111"
+ endpos="2124"
+>
+	<marker line="-1" type="param">
+		<operand  start="2148" length="18" line="17">
+			<expr><![CDATA[incomingCallIntent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2206" length="8" line="17">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="2082" length="28" line="17" chordsig="android.net.sip.SipAudioCall"/>
+	<type  start="2125" length="22" line="17" chordsig="android.content.Intent"/>
+	<type  start="2168" length="37" line="17" chordsig="android.net.sip.SipAudioCall$Listener"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2264" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2260" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2281" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2264" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isIncomingCallIntent:(Landroid/content/Intent;)Z@android.net.sip.SipManager"
+ sig="boolean isIncomingCallIntent(Intent)"
+ line="18"
+ startpos="2316"
+ endpos="2336"
+>
+	<marker line="-1" type="param">
+		<operand  start="2360" length="6" line="18">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="2337" length="22" line="18" chordsig="android.content.Intent"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2380" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2376" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2397" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2380" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCallId:(Landroid/content/Intent;)Ljava/lang/String;@android.net.sip.SipManager"
+ sig="String getCallId(Intent)"
+ line="19"
+ startpos="2441"
+ endpos="2450"
+>
+	<marker line="-1" type="param">
+		<operand  start="2474" length="18" line="19">
+			<expr><![CDATA[incomingCallIntent]]></expr>
+		</operand>
+	</marker>
+	<type  start="2424" length="16" line="19" chordsig="java.lang.String"/>
+	<type  start="2451" length="22" line="19" chordsig="android.content.Intent"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2506" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2502" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2523" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2506" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getOfferSessionDescription:(Landroid/content/Intent;)Ljava/lang/String;@android.net.sip.SipManager"
+ sig="String getOfferSessionDescription(Intent)"
+ line="20"
+ startpos="2567"
+ endpos="2593"
+>
+	<marker line="-1" type="param">
+		<operand  start="2617" length="18" line="20">
+			<expr><![CDATA[incomingCallIntent]]></expr>
+		</operand>
+	</marker>
+	<type  start="2550" length="16" line="20" chordsig="java.lang.String"/>
+	<type  start="2594" length="22" line="20" chordsig="android.content.Intent"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2649" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2645" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2666" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2649" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="register:(Landroid/net/sip/SipProfile;ILandroid/net/sip/SipRegistrationListener;)V@android.net.sip.SipManager"
+ sig="void register(SipProfile,int,SipRegistrationListener)"
+ line="21"
+ startpos="2691"
+ endpos="2699"
+>
+	<marker line="-1" type="param">
+		<operand  start="2727" length="12" line="21">
+			<expr><![CDATA[localProfile]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2745" length="10" line="21">
+			<expr><![CDATA[expiryTime]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2797" length="8" line="21">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="2700" length="26" line="21" chordsig="android.net.sip.SipProfile"/>
+	<type  start="2757" length="39" line="21" chordsig="android.net.sip.SipRegistrationListener"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2855" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2851" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2872" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2855" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unregister:(Landroid/net/sip/SipProfile;Landroid/net/sip/SipRegistrationListener;)V@android.net.sip.SipManager"
+ sig="void unregister(SipProfile,SipRegistrationListener)"
+ line="22"
+ startpos="2897"
+ endpos="2907"
+>
+	<marker line="-1" type="param">
+		<operand  start="2935" length="12" line="22">
+			<expr><![CDATA[localProfile]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2989" length="8" line="22">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="2908" length="26" line="22" chordsig="android.net.sip.SipProfile"/>
+	<type  start="2949" length="39" line="22" chordsig="android.net.sip.SipRegistrationListener"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3047" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3043" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3064" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3047" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSessionFor:(Landroid/content/Intent;)Landroid/net/sip/SipSession;@android.net.sip.SipManager"
+ sig="SipSession getSessionFor(Intent)"
+ line="23"
+ startpos="3111"
+ endpos="3124"
+>
+	<marker line="-1" type="param">
+		<operand  start="3148" length="18" line="23">
+			<expr><![CDATA[incomingCallIntent]]></expr>
+		</operand>
+	</marker>
+	<type  start="3084" length="26" line="23" chordsig="android.net.sip.SipSession"/>
+	<type  start="3125" length="22" line="23" chordsig="android.content.Intent"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3216" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3212" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3233" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3216" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createSipSession:(Landroid/net/sip/SipProfile;Landroid/net/sip/SipSession$Listener;)Landroid/net/sip/SipSession;@android.net.sip.SipManager"
+ sig="SipSession createSipSession(SipProfile,Listener)"
+ line="24"
+ startpos="3280"
+ endpos="3296"
+>
+	<marker line="-1" type="param">
+		<operand  start="3324" length="12" line="24">
+			<expr><![CDATA[localProfile]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3374" length="8" line="24">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="3253" length="26" line="24" chordsig="android.net.sip.SipSession"/>
+	<type  start="3297" length="26" line="24" chordsig="android.net.sip.SipProfile"/>
+	<type  start="3338" length="35" line="24" chordsig="android.net.sip.SipSession$Listener"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3432" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3428" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3449" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3432" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="3538" length="16" line="26" chordsig="java.lang.String"/>
+	<type  start="3612" length="16" line="27" chordsig="java.lang.String"/>
+</class>
+</root>

@@ -1,0 +1,282 @@
+<root>
+<class chordsig="android.view.SurfaceHolder" line="2">
+<class chordsig="android.view.SurfaceHolder$BadSurfaceTypeException" line="4">
+	<type  start="109" length="26" line="5" chordsig="java.lang.RuntimeException"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.view.SurfaceHolder$BadSurfaceTypeException"
+ sig="BadSurfaceTypeException()"
+ line="7"
+ startpos="146"
+ endpos="169"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="184" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="180" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="201" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="184" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.view.SurfaceHolder$BadSurfaceTypeException"
+ sig="BadSurfaceTypeException(String)"
+ line="8"
+ startpos="221"
+ endpos="244"
+>
+	<marker line="-1" type="param">
+		<operand  start="262" length="4" line="8">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="245" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="280" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="276" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="297" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="280" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.view.SurfaceHolder$Callback" line="10">
+<method
+ chordsig="surfaceCreated:(Landroid/view/SurfaceHolder;)V@android.view.SurfaceHolder$Callback"
+ sig="void surfaceCreated(SurfaceHolder)"
+ line="12"
+ startpos="368"
+ endpos="382"
+>
+	<marker line="-1" type="param">
+		<operand  start="410" length="6" line="12">
+			<expr><![CDATA[holder]]></expr>
+		</operand>
+	</marker>
+	<type  start="383" length="26" line="12" chordsig="android.view.SurfaceHolder"/>
+</method>
+<method
+ chordsig="surfaceChanged:(Landroid/view/SurfaceHolder;III)V@android.view.SurfaceHolder$Callback"
+ sig="void surfaceChanged(SurfaceHolder,int,int,int)"
+ line="13"
+ startpos="441"
+ endpos="455"
+>
+	<marker line="-1" type="param">
+		<operand  start="483" length="6" line="13">
+			<expr><![CDATA[holder]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="495" length="6" line="13">
+			<expr><![CDATA[format]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="507" length="5" line="13">
+			<expr><![CDATA[width]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="518" length="6" line="13">
+			<expr><![CDATA[height]]></expr>
+		</operand>
+	</marker>
+	<type  start="456" length="26" line="13" chordsig="android.view.SurfaceHolder"/>
+</method>
+<method
+ chordsig="surfaceDestroyed:(Landroid/view/SurfaceHolder;)V@android.view.SurfaceHolder$Callback"
+ sig="void surfaceDestroyed(SurfaceHolder)"
+ line="14"
+ startpos="549"
+ endpos="565"
+>
+	<marker line="-1" type="param">
+		<operand  start="593" length="6" line="14">
+			<expr><![CDATA[holder]]></expr>
+		</operand>
+	</marker>
+	<type  start="566" length="26" line="14" chordsig="android.view.SurfaceHolder"/>
+</method>
+</class>
+<class chordsig="android.view.SurfaceHolder$Callback2" line="16">
+	<type  start="648" length="35" line="17" chordsig="android.view.SurfaceHolder$Callback"/>
+<method
+ chordsig="surfaceRedrawNeeded:(Landroid/view/SurfaceHolder;)V@android.view.SurfaceHolder$Callback2"
+ sig="void surfaceRedrawNeeded(SurfaceHolder)"
+ line="19"
+ startpos="708"
+ endpos="727"
+>
+	<marker line="-1" type="param">
+		<operand  start="755" length="6" line="19">
+			<expr><![CDATA[holder]]></expr>
+		</operand>
+	</marker>
+	<type  start="728" length="26" line="19" chordsig="android.view.SurfaceHolder"/>
+</method>
+</class>
+<method
+ chordsig="addCallback:(Landroid/view/SurfaceHolder$Callback;)V@android.view.SurfaceHolder"
+ sig="void addCallback(Callback)"
+ line="21"
+ startpos="788"
+ endpos="799"
+>
+	<marker line="-1" type="param">
+		<operand  start="836" length="8" line="21">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<type  start="800" length="35" line="21" chordsig="android.view.SurfaceHolder$Callback"/>
+</method>
+<method
+ chordsig="removeCallback:(Landroid/view/SurfaceHolder$Callback;)V@android.view.SurfaceHolder"
+ sig="void removeCallback(Callback)"
+ line="22"
+ startpos="869"
+ endpos="883"
+>
+	<marker line="-1" type="param">
+		<operand  start="920" length="8" line="22">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<type  start="884" length="35" line="22" chordsig="android.view.SurfaceHolder$Callback"/>
+</method>
+<method
+ chordsig="isCreating:()Z@android.view.SurfaceHolder"
+ sig="boolean isCreating()"
+ line="23"
+ startpos="956"
+ endpos="966"
+>
+</method>
+<method
+ chordsig="setType:(I)V@android.view.SurfaceHolder"
+ sig="void setType(int)"
+ line="25"
+ startpos="1016"
+ endpos="1023"
+>
+	<marker line="-1" type="param">
+		<operand  start="1028" length="4" line="25">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setFixedSize:(II)V@android.view.SurfaceHolder"
+ sig="void setFixedSize(int,int)"
+ line="26"
+ startpos="1057"
+ endpos="1069"
+>
+	<marker line="-1" type="param">
+		<operand  start="1074" length="5" line="26">
+			<expr><![CDATA[width]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1085" length="6" line="26">
+			<expr><![CDATA[height]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setSizeFromLayout:()V@android.view.SurfaceHolder"
+ sig="void setSizeFromLayout()"
+ line="27"
+ startpos="1116"
+ endpos="1133"
+>
+</method>
+<method
+ chordsig="setFormat:(I)V@android.view.SurfaceHolder"
+ sig="void setFormat(int)"
+ line="28"
+ startpos="1159"
+ endpos="1168"
+>
+	<marker line="-1" type="param">
+		<operand  start="1173" length="6" line="28">
+			<expr><![CDATA[format]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setKeepScreenOn:(Z)V@android.view.SurfaceHolder"
+ sig="void setKeepScreenOn(boolean)"
+ line="29"
+ startpos="1204"
+ endpos="1219"
+>
+	<marker line="-1" type="param">
+		<operand  start="1228" length="8" line="29">
+			<expr><![CDATA[screenOn]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="lockCanvas:()Landroid/graphics/Canvas;@android.view.SurfaceHolder"
+ sig="Canvas lockCanvas()"
+ line="30"
+ startpos="1280"
+ endpos="1290"
+>
+	<type  start="1256" length="23" line="30" chordsig="android.graphics.Canvas"/>
+</method>
+<method
+ chordsig="lockCanvas:(Landroid/graphics/Rect;)Landroid/graphics/Canvas;@android.view.SurfaceHolder"
+ sig="Canvas lockCanvas(Rect)"
+ line="31"
+ startpos="1335"
+ endpos="1345"
+>
+	<marker line="-1" type="param">
+		<operand  start="1368" length="5" line="31">
+			<expr><![CDATA[dirty]]></expr>
+		</operand>
+	</marker>
+	<type  start="1311" length="23" line="31" chordsig="android.graphics.Canvas"/>
+	<type  start="1346" length="21" line="31" chordsig="android.graphics.Rect"/>
+</method>
+<method
+ chordsig="unlockCanvasAndPost:(Landroid/graphics/Canvas;)V@android.view.SurfaceHolder"
+ sig="void unlockCanvasAndPost(Canvas)"
+ line="32"
+ startpos="1398"
+ endpos="1417"
+>
+	<marker line="-1" type="param">
+		<operand  start="1442" length="6" line="32">
+			<expr><![CDATA[canvas]]></expr>
+		</operand>
+	</marker>
+	<type  start="1418" length="23" line="32" chordsig="android.graphics.Canvas"/>
+</method>
+<method
+ chordsig="getSurfaceFrame:()Landroid/graphics/Rect;@android.view.SurfaceHolder"
+ sig="Rect getSurfaceFrame()"
+ line="33"
+ startpos="1490"
+ endpos="1505"
+>
+	<type  start="1468" length="21" line="33" chordsig="android.graphics.Rect"/>
+</method>
+<method
+ chordsig="getSurface:()Landroid/view/Surface;@android.view.SurfaceHolder"
+ sig="Surface getSurface()"
+ line="34"
+ startpos="1547"
+ endpos="1557"
+>
+	<type  start="1526" length="20" line="34" chordsig="android.view.Surface"/>
+</method>
+</class>
+</root>

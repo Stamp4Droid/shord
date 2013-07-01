@@ -1,0 +1,211 @@
+<root>
+<class chordsig="android.speech.tts.TextToSpeechService" line="2">
+	<type  start="80" length="19" line="3" chordsig="android.app.Service"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.speech.tts.TextToSpeechService"
+ sig="TextToSpeechService()"
+ line="5"
+ startpos="110"
+ endpos="129"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="144" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="140" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="161" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="144" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onCreate:()V@android.speech.tts.TextToSpeechService"
+ sig="void onCreate()"
+ line="6"
+ startpos="186"
+ endpos="194"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="209" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="205" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="226" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="209" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onDestroy:()V@android.speech.tts.TextToSpeechService"
+ sig="void onDestroy()"
+ line="7"
+ startpos="251"
+ endpos="260"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="275" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="271" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="292" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="275" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onIsLanguageAvailable:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I@android.speech.tts.TextToSpeechService"
+ sig="int onIsLanguageAvailable(String,String,String)"
+ line="8"
+ startpos="328"
+ endpos="349"
+>
+	<marker line="-1" type="param">
+		<operand  start="367" length="4" line="8">
+			<expr><![CDATA[lang]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="390" length="7" line="8">
+			<expr><![CDATA[country]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="416" length="7" line="8">
+			<expr><![CDATA[variant]]></expr>
+		</operand>
+	</marker>
+	<type  start="350" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="373" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="399" length="16" line="8" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="onGetLanguage:()[Ljava/lang/String;@android.speech.tts.TextToSpeechService"
+ sig="String[] onGetLanguage()"
+ line="9"
+ startpos="465"
+ endpos="478"
+>
+	<type  start="446" length="16" line="9" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="onLoadLanguage:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I@android.speech.tts.TextToSpeechService"
+ sig="int onLoadLanguage(String,String,String)"
+ line="10"
+ startpos="506"
+ endpos="520"
+>
+	<marker line="-1" type="param">
+		<operand  start="538" length="4" line="10">
+			<expr><![CDATA[lang]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="561" length="7" line="10">
+			<expr><![CDATA[country]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="587" length="7" line="10">
+			<expr><![CDATA[variant]]></expr>
+		</operand>
+	</marker>
+	<type  start="521" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="544" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="570" length="16" line="10" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="onStop:()V@android.speech.tts.TextToSpeechService"
+ sig="void onStop()"
+ line="11"
+ startpos="622"
+ endpos="628"
+>
+</method>
+<method
+ chordsig="onSynthesizeText:(Landroid/speech/tts/SynthesisRequest;Landroid/speech/tts/SynthesisCallback;)V@android.speech.tts.TextToSpeechService"
+ sig="void onSynthesizeText(SynthesisRequest,SynthesisCallback)"
+ line="12"
+ startpos="657"
+ endpos="673"
+>
+	<marker line="-1" type="param">
+		<operand  start="710" length="7" line="12">
+			<expr><![CDATA[request]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="756" length="8" line="12">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<type  start="674" length="35" line="12" chordsig="android.speech.tts.SynthesisRequest"/>
+	<type  start="719" length="36" line="12" chordsig="android.speech.tts.SynthesisCallback"/>
+</method>
+<method
+ chordsig="onGetFeaturesForLanguage:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/util/Set;@android.speech.tts.TextToSpeechService"
+ sig="Set&lt;String&gt; onGetFeaturesForLanguage(String,String,String)"
+ line="13"
+ startpos="810"
+ endpos="834"
+>
+	<marker line="-1" type="param">
+		<operand  start="852" length="4" line="13">
+			<expr><![CDATA[lang]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="875" length="7" line="13">
+			<expr><![CDATA[country]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="901" length="7" line="13">
+			<expr><![CDATA[variant]]></expr>
+		</operand>
+	</marker>
+	<type  start="778" length="13" line="13" chordsig="java.util.Set"/>
+	<type  start="792" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="835" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="858" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="884" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="922" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="918" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="939" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="922" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onBind:(Landroid/content/Intent;)Landroid/os/IBinder;@android.speech.tts.TextToSpeechService"
+ sig="IBinder onBind(Intent)"
+ line="14"
+ startpos="978"
+ endpos="984"
+>
+	<marker line="-1" type="param">
+		<operand  start="1008" length="6" line="14">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="959" length="18" line="14" chordsig="android.os.IBinder"/>
+	<type  start="985" length="22" line="14" chordsig="android.content.Intent"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1028" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1024" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1045" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1028" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

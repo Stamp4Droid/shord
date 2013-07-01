@@ -1,0 +1,127 @@
+<root>
+<class chordsig="java.security.SignedObject" line="2">
+	<type  start="68" length="20" line="3" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/Serializable;Ljava/security/PrivateKey;Ljava/security/Signature;)V@java.security.SignedObject"
+ sig="SignedObject(Serializable,PrivateKey,Signature)"
+ line="5"
+ startpos="99"
+ endpos="111"
+>
+	<marker line="-1" type="param">
+		<operand  start="133" length="6" line="5">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="166" length="10" line="5">
+			<expr><![CDATA[signingKey]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="202" length="13" line="5">
+			<expr><![CDATA[signingEngine]]></expr>
+		</operand>
+	</marker>
+	<type  start="112" length="20" line="5" chordsig="java.io.Serializable"/>
+	<type  start="141" length="24" line="5" chordsig="java.security.PrivateKey"/>
+	<type  start="178" length="23" line="5" chordsig="java.security.Signature"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="325" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="321" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="342" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="325" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getObject:()Ljava/lang/Object;@java.security.SignedObject"
+ sig="Object getObject()"
+ line="6"
+ startpos="379"
+ endpos="388"
+>
+	<type  start="362" length="16" line="6" chordsig="java.lang.Object"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="464" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="460" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="481" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="464" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSignature:()[B@java.security.SignedObject"
+ sig="byte[] getSignature()"
+ line="7"
+ startpos="508"
+ endpos="520"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="535" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="531" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="552" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="535" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAlgorithm:()Ljava/lang/String;@java.security.SignedObject"
+ sig="String getAlgorithm()"
+ line="8"
+ startpos="589"
+ endpos="601"
+>
+	<type  start="572" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="616" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="612" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="633" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="616" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="verify:(Ljava/security/PublicKey;Ljava/security/Signature;)Z@java.security.SignedObject"
+ sig="boolean verify(PublicKey,Signature)"
+ line="9"
+ startpos="661"
+ endpos="667"
+>
+	<marker line="-1" type="param">
+		<operand  start="692" length="15" line="9">
+			<expr><![CDATA[verificationKey]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="733" length="18" line="9">
+			<expr><![CDATA[verificationEngine]]></expr>
+		</operand>
+	</marker>
+	<type  start="668" length="23" line="9" chordsig="java.security.PublicKey"/>
+	<type  start="709" length="23" line="9" chordsig="java.security.Signature"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="840" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="836" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="857" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="840" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

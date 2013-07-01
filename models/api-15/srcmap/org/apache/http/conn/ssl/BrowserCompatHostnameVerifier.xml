@@ -1,0 +1,78 @@
+<root>
+<class chordsig="org.apache.http.conn.ssl.BrowserCompatHostnameVerifier" line="2">
+	<type  start="87" length="41" line="3" chordsig="org.apache.http.conn.ssl.AbstractVerifier"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.conn.ssl.BrowserCompatHostnameVerifier"
+ sig="BrowserCompatHostnameVerifier()"
+ line="5"
+ startpos="139"
+ endpos="168"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="183" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="179" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="200" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="183" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="verify:(Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;)V@org.apache.http.conn.ssl.BrowserCompatHostnameVerifier"
+ sig="void verify(String,String[],String[])"
+ line="6"
+ startpos="231"
+ endpos="237"
+>
+	<marker line="-1" type="param">
+		<operand  start="255" length="4" line="6">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="280" length="3" line="6">
+			<expr><![CDATA[cns]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="304" length="11" line="6">
+			<expr><![CDATA[subjectAlts]]></expr>
+		</operand>
+	</marker>
+	<type  start="238" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="261" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="285" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="363" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="359" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="380" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="363" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@org.apache.http.conn.ssl.BrowserCompatHostnameVerifier"
+ sig="String toString()"
+ line="7"
+ startpos="423"
+ endpos="431"
+>
+	<type  start="406" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="446" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="442" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="463" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="446" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

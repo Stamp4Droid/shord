@@ -1,0 +1,27 @@
+<root>
+<class chordsig="dalvik.bytecode.OpcodeInfo" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@dalvik.bytecode.OpcodeInfo"
+ sig="OpcodeInfo()"
+ line="4"
+ startpos="57"
+ endpos="67"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="82" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="78" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="99" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="82" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;clinit&gt;:()V@dalvik.bytecode.OpcodeInfo"
+ line="7"
+>
+</method>
+</class>
+</root>

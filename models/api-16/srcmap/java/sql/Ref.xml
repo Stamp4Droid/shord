@@ -1,0 +1,53 @@
+<root>
+<class chordsig="java.sql.Ref" line="2">
+<method
+ chordsig="getBaseTypeName:()Ljava/lang/String;@java.sql.Ref"
+ sig="String getBaseTypeName()"
+ line="4"
+ startpos="75"
+ endpos="90"
+>
+	<type  start="58" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getObject:()Ljava/lang/Object;@java.sql.Ref"
+ sig="Object getObject()"
+ line="5"
+ startpos="157"
+ endpos="166"
+>
+	<type  start="140" length="16" line="5" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="getObject:(Ljava/util/Map;)Ljava/lang/Object;@java.sql.Ref"
+ sig="Object getObject(Map&lt;String,Class&lt;?&gt;&gt;)"
+ line="6"
+ startpos="233"
+ endpos="242"
+>
+	<marker line="-1" type="param">
+		<operand  start="295" length="3" line="6">
+			<expr><![CDATA[map]]></expr>
+		</operand>
+	</marker>
+	<type  start="216" length="16" line="6" chordsig="java.lang.Object"/>
+	<type  start="243" length="13" line="6" chordsig="java.util.Map"/>
+	<type  start="257" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="275" length="15" line="6" chordsig="java.lang.Class"/>
+</method>
+<method
+ chordsig="setObject:(Ljava/lang/Object;)V@java.sql.Ref"
+ sig="void setObject(Object)"
+ line="7"
+ startpos="352"
+ endpos="361"
+>
+	<marker line="-1" type="param">
+		<operand  start="379" length="5" line="7">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="362" length="16" line="7" chordsig="java.lang.Object"/>
+</method>
+</class>
+</root>

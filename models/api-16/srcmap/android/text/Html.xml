@@ -1,0 +1,184 @@
+<root>
+<class chordsig="android.text.Html" line="2">
+<class chordsig="android.text.Html$ImageGetter" line="4">
+<method
+ chordsig="getDrawable:(Ljava/lang/String;)Landroid/graphics/drawable/Drawable;@android.text.Html$ImageGetter"
+ sig="Drawable getDrawable(String)"
+ line="6"
+ startpos="132"
+ endpos="143"
+>
+	<marker line="-1" type="param">
+		<operand  start="161" length="6" line="6">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="97" length="34" line="6" chordsig="android.graphics.drawable.Drawable"/>
+	<type  start="144" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+</class>
+<class chordsig="android.text.Html$TagHandler" line="8">
+<method
+ chordsig="handleTag:(ZLjava/lang/String;Landroid/text/Editable;Lorg/xml/sax/XMLReader;)V@android.text.Html$TagHandler"
+ sig="void handleTag(boolean,String,Editable,XMLReader)"
+ line="10"
+ startpos="231"
+ endpos="240"
+>
+	<marker line="-1" type="param">
+		<operand  start="249" length="7" line="10">
+			<expr><![CDATA[opening]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="275" length="3" line="10">
+			<expr><![CDATA[tag]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="302" length="6" line="10">
+			<expr><![CDATA[output]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="332" length="9" line="10">
+			<expr><![CDATA[xmlReader]]></expr>
+		</operand>
+	</marker>
+	<type  start="258" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="280" length="21" line="10" chordsig="android.text.Editable"/>
+	<type  start="310" length="21" line="10" chordsig="org.xml.sax.XMLReader"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.text.Html"
+ sig="Html()"
+ line="12"
+ startpos="346"
+ endpos="350"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="365" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="361" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="382" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="365" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="fromHtml:(Ljava/lang/String;)Landroid/text/Spanned;@android.text.Html"
+ sig="Spanned fromHtml(String)"
+ line="13"
+ startpos="430"
+ endpos="438"
+>
+	<marker line="-1" type="param">
+		<operand  start="456" length="6" line="13">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="409" length="20" line="13" chordsig="android.text.Spanned"/>
+	<type  start="439" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="476" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="472" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="493" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="476" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="fromHtml:(Ljava/lang/String;Landroid/text/Html$ImageGetter;Landroid/text/Html$TagHandler;)Landroid/text/Spanned;@android.text.Html"
+ sig="Spanned fromHtml(String,ImageGetter,TagHandler)"
+ line="14"
+ startpos="541"
+ endpos="549"
+>
+	<marker line="-1" type="param">
+		<operand  start="567" length="6" line="14">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="605" length="11" line="14">
+			<expr><![CDATA[imageGetter]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="647" length="10" line="14">
+			<expr><![CDATA[tagHandler]]></expr>
+		</operand>
+	</marker>
+	<type  start="520" length="20" line="14" chordsig="android.text.Spanned"/>
+	<type  start="550" length="16" line="14" chordsig="java.lang.String"/>
+	<type  start="575" length="29" line="14" chordsig="android.text.Html$ImageGetter"/>
+	<type  start="618" length="28" line="14" chordsig="android.text.Html$TagHandler"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="671" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="667" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="688" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="671" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toHtml:(Landroid/text/Spanned;)Ljava/lang/String;@android.text.Html"
+ sig="String toHtml(Spanned)"
+ line="15"
+ startpos="732"
+ endpos="738"
+>
+	<marker line="-1" type="param">
+		<operand  start="760" length="4" line="15">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="715" length="16" line="15" chordsig="java.lang.String"/>
+	<type  start="739" length="20" line="15" chordsig="android.text.Spanned"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="778" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="774" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="795" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="778" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="escapeHtml:(Ljava/lang/CharSequence;)Ljava/lang/String;@android.text.Html"
+ sig="String escapeHtml(CharSequence)"
+ line="16"
+ startpos="839"
+ endpos="849"
+>
+	<marker line="-1" type="param">
+		<operand  start="873" length="4" line="16">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="822" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="850" length="22" line="16" chordsig="java.lang.CharSequence"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="891" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="887" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="908" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="891" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

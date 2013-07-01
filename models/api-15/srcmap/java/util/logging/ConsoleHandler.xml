@@ -1,0 +1,65 @@
+<root>
+<class chordsig="java.util.logging.ConsoleHandler" line="2">
+	<type  start="65" length="31" line="3" chordsig="java.util.logging.StreamHandler"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.util.logging.ConsoleHandler"
+ sig="ConsoleHandler()"
+ line="5"
+ startpos="107"
+ endpos="121"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="136" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="132" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="153" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="136" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:()V@java.util.logging.ConsoleHandler"
+ sig="void close()"
+ line="6"
+ startpos="178"
+ endpos="183"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="198" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="194" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="215" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="198" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="publish:(Ljava/util/logging/LogRecord;)V@java.util.logging.ConsoleHandler"
+ sig="void publish(LogRecord)"
+ line="7"
+ startpos="240"
+ endpos="247"
+>
+	<marker line="-1" type="param">
+		<operand  start="276" length="6" line="7">
+			<expr><![CDATA[record]]></expr>
+		</operand>
+	</marker>
+	<type  start="248" length="27" line="7" chordsig="java.util.logging.LogRecord"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="296" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="292" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="313" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="296" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

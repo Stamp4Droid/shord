@@ -1,0 +1,599 @@
+<root>
+<class chordsig="android.media.JetPlayer" line="2">
+<class chordsig="android.media.JetPlayer$OnJetEventListener" line="4">
+<method
+ chordsig="onJetEvent:(Landroid/media/JetPlayer;SBBBB)V@android.media.JetPlayer$OnJetEventListener"
+ sig="void onJetEvent(JetPlayer,short,byte,byte,byte,byte)"
+ line="6"
+ startpos="115"
+ endpos="125"
+>
+	<marker line="-1" type="param">
+		<operand  start="150" length="6" line="6">
+			<expr><![CDATA[player]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="164" length="7" line="6">
+			<expr><![CDATA[segment]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="178" length="5" line="6">
+			<expr><![CDATA[track]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="190" length="7" line="6">
+			<expr><![CDATA[channel]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="204" length="10" line="6">
+			<expr><![CDATA[controller]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="221" length="5" line="6">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="126" length="23" line="6" chordsig="android.media.JetPlayer"/>
+</method>
+<method
+ chordsig="onJetUserIdUpdate:(Landroid/media/JetPlayer;II)V@android.media.JetPlayer$OnJetEventListener"
+ sig="void onJetUserIdUpdate(JetPlayer,int,int)"
+ line="7"
+ startpos="251"
+ endpos="268"
+>
+	<marker line="-1" type="param">
+		<operand  start="293" length="6" line="7">
+			<expr><![CDATA[player]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="305" length="6" line="7">
+			<expr><![CDATA[userId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="317" length="11" line="7">
+			<expr><![CDATA[repeatCount]]></expr>
+		</operand>
+	</marker>
+	<type  start="269" length="23" line="7" chordsig="android.media.JetPlayer"/>
+</method>
+<method
+ chordsig="onJetNumQueuedSegmentUpdate:(Landroid/media/JetPlayer;I)V@android.media.JetPlayer$OnJetEventListener"
+ sig="void onJetNumQueuedSegmentUpdate(JetPlayer,int)"
+ line="8"
+ startpos="353"
+ endpos="380"
+>
+	<marker line="-1" type="param">
+		<operand  start="405" length="6" line="8">
+			<expr><![CDATA[player]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="417" length="10" line="8">
+			<expr><![CDATA[nbSegments]]></expr>
+		</operand>
+	</marker>
+	<type  start="381" length="23" line="8" chordsig="android.media.JetPlayer"/>
+</method>
+<method
+ chordsig="onJetPauseUpdate:(Landroid/media/JetPlayer;I)V@android.media.JetPlayer$OnJetEventListener"
+ sig="void onJetPauseUpdate(JetPlayer,int)"
+ line="9"
+ startpos="452"
+ endpos="468"
+>
+	<marker line="-1" type="param">
+		<operand  start="493" length="6" line="9">
+			<expr><![CDATA[player]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="505" length="6" line="9">
+			<expr><![CDATA[paused]]></expr>
+		</operand>
+	</marker>
+	<type  start="469" length="23" line="9" chordsig="android.media.JetPlayer"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.media.JetPlayer"
+ sig="JetPlayer()"
+ line="11"
+ startpos="516"
+ endpos="525"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="540" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="536" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="557" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="540" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getJetPlayer:()Landroid/media/JetPlayer;@android.media.JetPlayer"
+ sig="JetPlayer getJetPlayer()"
+ line="12"
+ startpos="608"
+ endpos="620"
+>
+	<type  start="584" length="23" line="12" chordsig="android.media.JetPlayer"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="635" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="631" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="652" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="635" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clone:()Ljava/lang/Object;@android.media.JetPlayer"
+ sig="Object clone()"
+ line="13"
+ startpos="689"
+ endpos="694"
+>
+	<type  start="672" length="16" line="13" chordsig="java.lang.Object"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="753" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="749" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="770" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="753" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="finalize:()V@android.media.JetPlayer"
+ sig="void finalize()"
+ line="14"
+ startpos="798"
+ endpos="806"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="821" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="817" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="838" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="821" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="release:()V@android.media.JetPlayer"
+ sig="void release()"
+ line="15"
+ startpos="863"
+ endpos="870"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="885" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="881" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="902" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="885" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMaxTracks:()I@android.media.JetPlayer"
+ sig="int getMaxTracks()"
+ line="16"
+ startpos="933"
+ endpos="945"
+>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="960" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="956" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="977" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="960" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="loadJetFile:(Ljava/lang/String;)Z@android.media.JetPlayer"
+ sig="boolean loadJetFile(String)"
+ line="17"
+ startpos="1005"
+ endpos="1016"
+>
+	<marker line="-1" type="param">
+		<operand  start="1034" length="4" line="17">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<type  start="1017" length="16" line="17" chordsig="java.lang.String"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1052" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1048" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1069" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1052" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="loadJetFile:(Landroid/content/res/AssetFileDescriptor;)Z@android.media.JetPlayer"
+ sig="boolean loadJetFile(AssetFileDescriptor)"
+ line="18"
+ startpos="1097"
+ endpos="1108"
+>
+	<marker line="-1" type="param">
+		<operand  start="1149" length="3" line="18">
+			<expr><![CDATA[afd]]></expr>
+		</operand>
+	</marker>
+	<type  start="1109" length="39" line="18" chordsig="android.content.res.AssetFileDescriptor"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1166" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1162" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1183" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1166" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="closeJetFile:()Z@android.media.JetPlayer"
+ sig="boolean closeJetFile()"
+ line="19"
+ startpos="1211"
+ endpos="1223"
+>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1238" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1234" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1255" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1238" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="play:()Z@android.media.JetPlayer"
+ sig="boolean play()"
+ line="20"
+ startpos="1283"
+ endpos="1287"
+>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1302" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1298" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1319" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1302" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="pause:()Z@android.media.JetPlayer"
+ sig="boolean pause()"
+ line="21"
+ startpos="1347"
+ endpos="1352"
+>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1367" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1363" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1384" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1367" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="queueJetSegment:(IIIIIB)Z@android.media.JetPlayer"
+ sig="boolean queueJetSegment(int,int,int,int,int,byte)"
+ line="22"
+ startpos="1412"
+ endpos="1427"
+>
+	<marker line="-1" type="param">
+		<operand  start="1432" length="10" line="22">
+			<expr><![CDATA[segmentNum]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1448" length="6" line="22">
+			<expr><![CDATA[libNum]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1460" length="11" line="22">
+			<expr><![CDATA[repeatCount]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1477" length="9" line="22">
+			<expr><![CDATA[transpose]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1492" length="9" line="22">
+			<expr><![CDATA[muteFlags]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1508" length="6" line="22">
+			<expr><![CDATA[userID]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1528" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1524" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1545" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1528" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="queueJetSegmentMuteArray:(IIII[ZB)Z@android.media.JetPlayer"
+ sig="boolean queueJetSegmentMuteArray(int,int,int,int,boolean[],byte)"
+ line="23"
+ startpos="1573"
+ endpos="1597"
+>
+	<marker line="-1" type="param">
+		<operand  start="1602" length="10" line="23">
+			<expr><![CDATA[segmentNum]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1618" length="6" line="23">
+			<expr><![CDATA[libNum]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1630" length="11" line="23">
+			<expr><![CDATA[repeatCount]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1647" length="9" line="23">
+			<expr><![CDATA[transpose]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1668" length="9" line="23">
+			<expr><![CDATA[muteArray]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1684" length="6" line="23">
+			<expr><![CDATA[userID]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1704" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1700" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1721" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1704" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMuteFlags:(IZ)Z@android.media.JetPlayer"
+ sig="boolean setMuteFlags(int,boolean)"
+ line="24"
+ startpos="1749"
+ endpos="1761"
+>
+	<marker line="-1" type="param">
+		<operand  start="1766" length="9" line="24">
+			<expr><![CDATA[muteFlags]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1785" length="4" line="24">
+			<expr><![CDATA[sync]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1803" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1799" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1820" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1803" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMuteArray:([ZZ)Z@android.media.JetPlayer"
+ sig="boolean setMuteArray(boolean[],boolean)"
+ line="25"
+ startpos="1848"
+ endpos="1860"
+>
+	<marker line="-1" type="param">
+		<operand  start="1871" length="9" line="25">
+			<expr><![CDATA[muteArray]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1890" length="4" line="25">
+			<expr><![CDATA[sync]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1908" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1904" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1925" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1908" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMuteFlag:(IZZ)Z@android.media.JetPlayer"
+ sig="boolean setMuteFlag(int,boolean,boolean)"
+ line="26"
+ startpos="1953"
+ endpos="1964"
+>
+	<marker line="-1" type="param">
+		<operand  start="1969" length="7" line="26">
+			<expr><![CDATA[trackId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1986" length="8" line="26">
+			<expr><![CDATA[muteFlag]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2004" length="4" line="26">
+			<expr><![CDATA[sync]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2022" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2018" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2039" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2022" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="triggerClip:(I)Z@android.media.JetPlayer"
+ sig="boolean triggerClip(int)"
+ line="27"
+ startpos="2067"
+ endpos="2078"
+>
+	<marker line="-1" type="param">
+		<operand  start="2083" length="6" line="27">
+			<expr><![CDATA[clipId]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2103" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2099" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2120" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2103" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clearQueue:()Z@android.media.JetPlayer"
+ sig="boolean clearQueue()"
+ line="28"
+ startpos="2148"
+ endpos="2158"
+>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2173" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2169" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2190" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2173" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setEventListener:(Landroid/media/JetPlayer$OnJetEventListener;)V@android.media.JetPlayer"
+ sig="void setEventListener(OnJetEventListener)"
+ line="29"
+ startpos="2215"
+ endpos="2231"
+>
+	<marker line="-1" type="param">
+		<operand  start="2275" length="8" line="29">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="2232" length="42" line="29" chordsig="android.media.JetPlayer$OnJetEventListener"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2297" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2293" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2314" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2297" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setEventListener:(Landroid/media/JetPlayer$OnJetEventListener;Landroid/os/Handler;)V@android.media.JetPlayer"
+ sig="void setEventListener(OnJetEventListener,Handler)"
+ line="30"
+ startpos="2339"
+ endpos="2355"
+>
+	<marker line="-1" type="param">
+		<operand  start="2399" length="8" line="30">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2428" length="7" line="30">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="2356" length="42" line="30" chordsig="android.media.JetPlayer$OnJetEventListener"/>
+	<type  start="2409" length="18" line="30" chordsig="android.os.Handler"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2449" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2445" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2466" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2449" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

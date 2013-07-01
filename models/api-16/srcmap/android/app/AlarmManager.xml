@@ -1,0 +1,205 @@
+<root>
+<class chordsig="android.app.AlarmManager" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.app.AlarmManager"
+ sig="AlarmManager()"
+ line="4"
+ startpos="49"
+ endpos="61"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="76" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="72" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="93" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="76" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="set:(IJLandroid/app/PendingIntent;)V@android.app.AlarmManager"
+ sig="void set(int,long,PendingIntent)"
+ line="5"
+ startpos="118"
+ endpos="121"
+>
+	<marker line="-1" type="param">
+		<operand  start="126" length="4" line="5">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="137" length="15" line="5">
+			<expr><![CDATA[triggerAtMillis]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="180" length="9" line="5">
+			<expr><![CDATA[operation]]></expr>
+		</operand>
+	</marker>
+	<type  start="154" length="25" line="5" chordsig="android.app.PendingIntent"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="203" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="199" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="220" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="203" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setRepeating:(IJJLandroid/app/PendingIntent;)V@android.app.AlarmManager"
+ sig="void setRepeating(int,long,long,PendingIntent)"
+ line="6"
+ startpos="245"
+ endpos="257"
+>
+	<marker line="-1" type="param">
+		<operand  start="262" length="4" line="6">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="273" length="15" line="6">
+			<expr><![CDATA[triggerAtMillis]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="295" length="14" line="6">
+			<expr><![CDATA[intervalMillis]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="337" length="9" line="6">
+			<expr><![CDATA[operation]]></expr>
+		</operand>
+	</marker>
+	<type  start="311" length="25" line="6" chordsig="android.app.PendingIntent"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="360" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="356" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="377" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="360" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setInexactRepeating:(IJJLandroid/app/PendingIntent;)V@android.app.AlarmManager"
+ sig="void setInexactRepeating(int,long,long,PendingIntent)"
+ line="7"
+ startpos="402"
+ endpos="421"
+>
+	<marker line="-1" type="param">
+		<operand  start="426" length="4" line="7">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="437" length="15" line="7">
+			<expr><![CDATA[triggerAtMillis]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="459" length="14" line="7">
+			<expr><![CDATA[intervalMillis]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="501" length="9" line="7">
+			<expr><![CDATA[operation]]></expr>
+		</operand>
+	</marker>
+	<type  start="475" length="25" line="7" chordsig="android.app.PendingIntent"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="524" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="520" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="541" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="524" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="cancel:(Landroid/app/PendingIntent;)V@android.app.AlarmManager"
+ sig="void cancel(PendingIntent)"
+ line="8"
+ startpos="566"
+ endpos="572"
+>
+	<marker line="-1" type="param">
+		<operand  start="599" length="9" line="8">
+			<expr><![CDATA[operation]]></expr>
+		</operand>
+	</marker>
+	<type  start="573" length="25" line="8" chordsig="android.app.PendingIntent"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="622" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="618" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="639" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="622" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTime:(J)V@android.app.AlarmManager"
+ sig="void setTime(long)"
+ line="9"
+ startpos="664"
+ endpos="671"
+>
+	<marker line="-1" type="param">
+		<operand  start="677" length="6" line="9">
+			<expr><![CDATA[millis]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="697" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="693" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="714" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="697" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTimeZone:(Ljava/lang/String;)V@android.app.AlarmManager"
+ sig="void setTimeZone(String)"
+ line="10"
+ startpos="739"
+ endpos="750"
+>
+	<marker line="-1" type="param">
+		<operand  start="768" length="8" line="10">
+			<expr><![CDATA[timeZone]]></expr>
+		</operand>
+	</marker>
+	<type  start="751" length="16" line="10" chordsig="java.lang.String"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="790" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="786" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="807" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="790" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

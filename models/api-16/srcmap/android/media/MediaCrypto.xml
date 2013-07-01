@@ -1,0 +1,97 @@
+<root>
+<class chordsig="android.media.MediaCrypto" line="2">
+<method
+ chordsig="&lt;init&gt;:(Ljava/util/UUID;[B)V@android.media.MediaCrypto"
+ sig="MediaCrypto(UUID,byte[])"
+ line="4"
+ startpos="64"
+ endpos="75"
+>
+	<marker line="-1" type="param">
+		<operand  start="91" length="4" line="4">
+			<expr><![CDATA[uuid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="104" length="8" line="4">
+			<expr><![CDATA[initData]]></expr>
+		</operand>
+	</marker>
+	<type  start="76" length="14" line="4" chordsig="java.util.UUID"/>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="168" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="164" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="185" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="168" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isCryptoSchemeSupported:(Ljava/util/UUID;)Z@android.media.MediaCrypto"
+ sig="boolean isCryptoSchemeSupported(UUID)"
+ line="5"
+ startpos="226"
+ endpos="249"
+>
+	<marker line="-1" type="param">
+		<operand  start="265" length="4" line="5">
+			<expr><![CDATA[uuid]]></expr>
+		</operand>
+	</marker>
+	<type  start="250" length="14" line="5" chordsig="java.util.UUID"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="283" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="279" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="300" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="283" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="requiresSecureDecoderComponent:(Ljava/lang/String;)Z@android.media.MediaCrypto"
+ sig="boolean requiresSecureDecoderComponent(String)"
+ line="6"
+ startpos="341"
+ endpos="371"
+>
+	<marker line="-1" type="param">
+		<operand  start="389" length="4" line="6">
+			<expr><![CDATA[mime]]></expr>
+		</operand>
+	</marker>
+	<type  start="372" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="finalize:()V@android.media.MediaCrypto"
+ sig="void finalize()"
+ line="7"
+ startpos="412"
+ endpos="420"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="435" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="431" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="452" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="435" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="release:()V@android.media.MediaCrypto"
+ sig="void release()"
+ line="8"
+ startpos="490"
+ endpos="497"
+>
+</method>
+</class>
+</root>

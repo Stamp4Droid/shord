@@ -1,0 +1,97 @@
+<root>
+<class chordsig="javax.net.ssl.X509ExtendedKeyManager" line="2">
+	<type  start="81" length="28" line="3" chordsig="javax.net.ssl.X509KeyManager"/>
+<method
+ chordsig="&lt;init&gt;:()V@javax.net.ssl.X509ExtendedKeyManager"
+ sig="X509ExtendedKeyManager()"
+ line="5"
+ startpos="123"
+ endpos="145"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="160" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="156" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="177" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="160" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="chooseEngineClientAlias:([Ljava/lang/String;[Ljava/security/Principal;Ljavax/net/ssl/SSLEngine;)Ljava/lang/String;@javax.net.ssl.X509ExtendedKeyManager"
+ sig="String chooseEngineClientAlias(String[],Principal[],SSLEngine)"
+ line="6"
+ startpos="214"
+ endpos="237"
+>
+	<marker line="-1" type="param">
+		<operand  start="257" length="7" line="6">
+			<expr><![CDATA[keyType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="292" length="7" line="6">
+			<expr><![CDATA[issuers]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="325" length="6" line="6">
+			<expr><![CDATA[engine]]></expr>
+		</operand>
+	</marker>
+	<type  start="197" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="238" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="266" length="23" line="6" chordsig="java.security.Principal"/>
+	<type  start="301" length="23" line="6" chordsig="javax.net.ssl.SSLEngine"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="345" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="341" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="362" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="345" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="chooseEngineServerAlias:(Ljava/lang/String;[Ljava/security/Principal;Ljavax/net/ssl/SSLEngine;)Ljava/lang/String;@javax.net.ssl.X509ExtendedKeyManager"
+ sig="String chooseEngineServerAlias(String,Principal[],SSLEngine)"
+ line="7"
+ startpos="399"
+ endpos="422"
+>
+	<marker line="-1" type="param">
+		<operand  start="440" length="7" line="7">
+			<expr><![CDATA[keyType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="475" length="7" line="7">
+			<expr><![CDATA[issuers]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="508" length="6" line="7">
+			<expr><![CDATA[engine]]></expr>
+		</operand>
+	</marker>
+	<type  start="382" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="423" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="449" length="23" line="7" chordsig="java.security.Principal"/>
+	<type  start="484" length="23" line="7" chordsig="javax.net.ssl.SSLEngine"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="528" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="524" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="545" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="528" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

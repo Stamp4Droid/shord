@@ -1,0 +1,201 @@
+<root>
+<class chordsig="java.util.concurrent.atomic.AtomicReferenceFieldUpdater" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@java.util.concurrent.atomic.AtomicReferenceFieldUpdater"
+ sig="AtomicReferenceFieldUpdater()"
+ line="4"
+ startpos="106"
+ endpos="133"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="148" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="144" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="165" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="148" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newUpdater:(Ljava/lang/Class;Ljava/lang/Class;Ljava/lang/String;)Ljava/util/concurrent/atomic/AtomicReferenceFieldUpdater;@java.util.concurrent.atomic.AtomicReferenceFieldUpdater"
+ sig="AtomicReferenceFieldUpdater&lt;U,W&gt; newUpdater(Class&lt;U&gt;,Class&lt;W&gt;,String)"
+ line="5"
+ startpos="260"
+ endpos="270"
+>
+	<marker line="-1" type="param">
+		<operand  start="290" length="6" line="5">
+			<expr><![CDATA[tclass]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="317" length="6" line="5">
+			<expr><![CDATA[vclass]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="342" length="9" line="5">
+			<expr><![CDATA[fieldName]]></expr>
+		</operand>
+	</marker>
+	<type  start="198" length="55" line="5" chordsig="java.util.concurrent.atomic.AtomicReferenceFieldUpdater"/>
+	<type  start="254" length="1" line="5" chordsig="java.lang.Object"/>
+	<type  start="257" length="1" line="5" chordsig="java.lang.Object"/>
+	<type  start="271" length="15" line="5" chordsig="java.lang.Class"/>
+	<type  start="287" length="1" line="5" chordsig="java.lang.Object"/>
+	<type  start="298" length="15" line="5" chordsig="java.lang.Class"/>
+	<type  start="314" length="1" line="5" chordsig="java.lang.Object"/>
+	<type  start="325" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="365" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="361" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="382" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="365" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="compareAndSet:(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Z@java.util.concurrent.atomic.AtomicReferenceFieldUpdater"
+ sig="boolean compareAndSet(T,V,V)"
+ line="6"
+ startpos="419"
+ endpos="432"
+>
+	<marker line="-1" type="param">
+		<operand  start="435" length="3" line="6">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="442" length="6" line="6">
+			<expr><![CDATA[expect]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="452" length="6" line="6">
+			<expr><![CDATA[update]]></expr>
+		</operand>
+	</marker>
+	<type  start="433" length="1" line="6" chordsig="java.lang.Object"/>
+	<type  start="440" length="1" line="6" chordsig="java.lang.Object"/>
+	<type  start="450" length="1" line="6" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="weakCompareAndSet:(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Z@java.util.concurrent.atomic.AtomicReferenceFieldUpdater"
+ sig="boolean weakCompareAndSet(T,V,V)"
+ line="7"
+ startpos="486"
+ endpos="503"
+>
+	<marker line="-1" type="param">
+		<operand  start="506" length="3" line="7">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="513" length="6" line="7">
+			<expr><![CDATA[expect]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="523" length="6" line="7">
+			<expr><![CDATA[update]]></expr>
+		</operand>
+	</marker>
+	<type  start="504" length="1" line="7" chordsig="java.lang.Object"/>
+	<type  start="511" length="1" line="7" chordsig="java.lang.Object"/>
+	<type  start="521" length="1" line="7" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="set:(Ljava/lang/Object;Ljava/lang/Object;)V@java.util.concurrent.atomic.AtomicReferenceFieldUpdater"
+ sig="void set(T,V)"
+ line="8"
+ startpos="554"
+ endpos="557"
+>
+	<marker line="-1" type="param">
+		<operand  start="560" length="3" line="8">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="567" length="8" line="8">
+			<expr><![CDATA[newValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="558" length="1" line="8" chordsig="java.lang.Object"/>
+	<type  start="565" length="1" line="8" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="lazySet:(Ljava/lang/Object;Ljava/lang/Object;)V@java.util.concurrent.atomic.AtomicReferenceFieldUpdater"
+ sig="void lazySet(T,V)"
+ line="9"
+ startpos="600"
+ endpos="607"
+>
+	<marker line="-1" type="param">
+		<operand  start="610" length="3" line="9">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="617" length="8" line="9">
+			<expr><![CDATA[newValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="608" length="1" line="9" chordsig="java.lang.Object"/>
+	<type  start="615" length="1" line="9" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="get:(Ljava/lang/Object;)Ljava/lang/Object;@java.util.concurrent.atomic.AtomicReferenceFieldUpdater"
+ sig="V get(T)"
+ line="10"
+ startpos="647"
+ endpos="650"
+>
+	<marker line="-1" type="param">
+		<operand  start="653" length="3" line="10">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="645" length="1" line="10" chordsig="java.lang.Object"/>
+	<type  start="651" length="1" line="10" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="getAndSet:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;@java.util.concurrent.atomic.AtomicReferenceFieldUpdater"
+ sig="V getAndSet(T,V)"
+ line="11"
+ startpos="669"
+ endpos="678"
+>
+	<marker line="-1" type="param">
+		<operand  start="681" length="3" line="11">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="688" length="8" line="11">
+			<expr><![CDATA[newValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="667" length="1" line="11" chordsig="java.lang.Object"/>
+	<type  start="679" length="1" line="11" chordsig="java.lang.Object"/>
+	<type  start="686" length="1" line="11" chordsig="java.lang.Object"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="710" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="706" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="727" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="710" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,12 @@
+<root>
+<class chordsig="java.io.ObjectInputValidation" line="2">
+<method
+ chordsig="validateObject:()V@java.io.ObjectInputValidation"
+ sig="void validateObject()"
+ line="4"
+ startpos="80"
+ endpos="94"
+>
+</method>
+</class>
+</root>

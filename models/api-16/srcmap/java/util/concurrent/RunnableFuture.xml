@@ -1,0 +1,15 @@
+<root>
+<class chordsig="java.util.concurrent.RunnableFuture" line="2">
+	<type  start="75" length="18" line="3" chordsig="java.lang.Runnable"/>
+	<type  start="95" length="27" line="3" chordsig="java.util.concurrent.Future"/>
+	<type  start="123" length="1" line="3" chordsig="java.lang.Object"/>
+<method
+ chordsig="run:()V@java.util.concurrent.RunnableFuture"
+ sig="void run()"
+ line="5"
+ startpos="150"
+ endpos="153"
+>
+</method>
+</class>
+</root>

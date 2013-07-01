@@ -1,0 +1,273 @@
+<root>
+<class chordsig="android.accounts.AbstractAccountAuthenticator" line="2">
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.accounts.AbstractAccountAuthenticator"
+ sig="AbstractAccountAuthenticator(Context)"
+ line="4"
+ startpos="87"
+ endpos="115"
+>
+	<marker line="-1" type="param">
+		<operand  start="140" length="7" line="4">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="116" length="23" line="4" chordsig="android.content.Context"/>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="161" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="157" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="178" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="161" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getIBinder:()Landroid/os/IBinder;@android.accounts.AbstractAccountAuthenticator"
+ sig="IBinder getIBinder()"
+ line="5"
+ startpos="223"
+ endpos="233"
+>
+	<type  start="204" length="18" line="5" chordsig="android.os.IBinder"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="248" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="244" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="265" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="248" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="editProperties:(Landroid/accounts/AccountAuthenticatorResponse;Ljava/lang/String;)Landroid/os/Bundle;@android.accounts.AbstractAccountAuthenticator"
+ sig="Bundle editProperties(AccountAuthenticatorResponse,String)"
+ line="6"
+ startpos="312"
+ endpos="326"
+>
+	<marker line="-1" type="param">
+		<operand  start="373" length="8" line="6">
+			<expr><![CDATA[response]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="400" length="11" line="6">
+			<expr><![CDATA[accountType]]></expr>
+		</operand>
+	</marker>
+	<type  start="294" length="17" line="6" chordsig="android.os.Bundle"/>
+	<type  start="327" length="45" line="6" chordsig="android.accounts.AccountAuthenticatorResponse"/>
+	<type  start="383" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="addAccount:(Landroid/accounts/AccountAuthenticatorResponse;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Landroid/os/Bundle;)Landroid/os/Bundle;@android.accounts.AbstractAccountAuthenticator"
+ sig="Bundle addAccount(AccountAuthenticatorResponse,String,String,String[],Bundle)"
+ line="7"
+ startpos="449"
+ endpos="459"
+>
+	<marker line="-1" type="param">
+		<operand  start="506" length="8" line="7">
+			<expr><![CDATA[response]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="533" length="11" line="7">
+			<expr><![CDATA[accountType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="563" length="13" line="7">
+			<expr><![CDATA[authTokenType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="597" length="16" line="7">
+			<expr><![CDATA[requiredFeatures]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="633" length="7" line="7">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<type  start="431" length="17" line="7" chordsig="android.os.Bundle"/>
+	<type  start="460" length="45" line="7" chordsig="android.accounts.AccountAuthenticatorResponse"/>
+	<type  start="516" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="546" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="578" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="615" length="17" line="7" chordsig="android.os.Bundle"/>
+</method>
+<method
+ chordsig="confirmCredentials:(Landroid/accounts/AccountAuthenticatorResponse;Landroid/accounts/Account;Landroid/os/Bundle;)Landroid/os/Bundle;@android.accounts.AbstractAccountAuthenticator"
+ sig="Bundle confirmCredentials(AccountAuthenticatorResponse,Account,Bundle)"
+ line="8"
+ startpos="724"
+ endpos="742"
+>
+	<marker line="-1" type="param">
+		<operand  start="789" length="8" line="8">
+			<expr><![CDATA[response]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="824" length="7" line="8">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="851" length="7" line="8">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<type  start="706" length="17" line="8" chordsig="android.os.Bundle"/>
+	<type  start="743" length="45" line="8" chordsig="android.accounts.AccountAuthenticatorResponse"/>
+	<type  start="799" length="24" line="8" chordsig="android.accounts.Account"/>
+	<type  start="833" length="17" line="8" chordsig="android.os.Bundle"/>
+</method>
+<method
+ chordsig="getAuthToken:(Landroid/accounts/AccountAuthenticatorResponse;Landroid/accounts/Account;Ljava/lang/String;Landroid/os/Bundle;)Landroid/os/Bundle;@android.accounts.AbstractAccountAuthenticator"
+ sig="Bundle getAuthToken(AccountAuthenticatorResponse,Account,String,Bundle)"
+ line="9"
+ startpos="942"
+ endpos="954"
+>
+	<marker line="-1" type="param">
+		<operand  start="1001" length="8" line="9">
+			<expr><![CDATA[response]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1036" length="7" line="9">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1062" length="13" line="9">
+			<expr><![CDATA[authTokenType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1095" length="7" line="9">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<type  start="924" length="17" line="9" chordsig="android.os.Bundle"/>
+	<type  start="955" length="45" line="9" chordsig="android.accounts.AccountAuthenticatorResponse"/>
+	<type  start="1011" length="24" line="9" chordsig="android.accounts.Account"/>
+	<type  start="1045" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="1077" length="17" line="9" chordsig="android.os.Bundle"/>
+</method>
+<method
+ chordsig="getAuthTokenLabel:(Ljava/lang/String;)Ljava/lang/String;@android.accounts.AbstractAccountAuthenticator"
+ sig="String getAuthTokenLabel(String)"
+ line="10"
+ startpos="1185"
+ endpos="1202"
+>
+	<marker line="-1" type="param">
+		<operand  start="1220" length="13" line="10">
+			<expr><![CDATA[authTokenType]]></expr>
+		</operand>
+	</marker>
+	<type  start="1168" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="1203" length="16" line="10" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="updateCredentials:(Landroid/accounts/AccountAuthenticatorResponse;Landroid/accounts/Account;Ljava/lang/String;Landroid/os/Bundle;)Landroid/os/Bundle;@android.accounts.AbstractAccountAuthenticator"
+ sig="Bundle updateCredentials(AccountAuthenticatorResponse,Account,String,Bundle)"
+ line="11"
+ startpos="1271"
+ endpos="1288"
+>
+	<marker line="-1" type="param">
+		<operand  start="1335" length="8" line="11">
+			<expr><![CDATA[response]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1370" length="7" line="11">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1396" length="13" line="11">
+			<expr><![CDATA[authTokenType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1429" length="7" line="11">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<type  start="1253" length="17" line="11" chordsig="android.os.Bundle"/>
+	<type  start="1289" length="45" line="11" chordsig="android.accounts.AccountAuthenticatorResponse"/>
+	<type  start="1345" length="24" line="11" chordsig="android.accounts.Account"/>
+	<type  start="1379" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="1411" length="17" line="11" chordsig="android.os.Bundle"/>
+</method>
+<method
+ chordsig="hasFeatures:(Landroid/accounts/AccountAuthenticatorResponse;Landroid/accounts/Account;[Ljava/lang/String;)Landroid/os/Bundle;@android.accounts.AbstractAccountAuthenticator"
+ sig="Bundle hasFeatures(AccountAuthenticatorResponse,Account,String[])"
+ line="12"
+ startpos="1520"
+ endpos="1531"
+>
+	<marker line="-1" type="param">
+		<operand  start="1578" length="8" line="12">
+			<expr><![CDATA[response]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1613" length="7" line="12">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1641" length="8" line="12">
+			<expr><![CDATA[features]]></expr>
+		</operand>
+	</marker>
+	<type  start="1502" length="17" line="12" chordsig="android.os.Bundle"/>
+	<type  start="1532" length="45" line="12" chordsig="android.accounts.AccountAuthenticatorResponse"/>
+	<type  start="1588" length="24" line="12" chordsig="android.accounts.Account"/>
+	<type  start="1622" length="16" line="12" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getAccountRemovalAllowed:(Landroid/accounts/AccountAuthenticatorResponse;Landroid/accounts/Account;)Landroid/os/Bundle;@android.accounts.AbstractAccountAuthenticator"
+ sig="Bundle getAccountRemovalAllowed(AccountAuthenticatorResponse,Account)"
+ line="13"
+ startpos="1724"
+ endpos="1748"
+>
+	<marker line="-1" type="param">
+		<operand  start="1795" length="8" line="13">
+			<expr><![CDATA[response]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1830" length="7" line="13">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<type  start="1706" length="17" line="13" chordsig="android.os.Bundle"/>
+	<type  start="1749" length="45" line="13" chordsig="android.accounts.AccountAuthenticatorResponse"/>
+	<type  start="1805" length="24" line="13" chordsig="android.accounts.Account"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1897" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1893" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1914" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1897" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

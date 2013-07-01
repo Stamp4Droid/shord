@@ -1,0 +1,89 @@
+<root>
+<class chordsig="android.test.mock.MockContentResolver" line="2">
+	<type  start="70" length="31" line="3" chordsig="android.content.ContentResolver"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.test.mock.MockContentResolver"
+ sig="MockContentResolver()"
+ line="5"
+ startpos="112"
+ endpos="131"
+>
+	<type  start="143" length="23" line="5" chordsig="android.content.Context"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="184" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="180" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="201" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="184" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addProvider:(Ljava/lang/String;Landroid/content/ContentProvider;)V@android.test.mock.MockContentResolver"
+ sig="void addProvider(String,ContentProvider)"
+ line="6"
+ startpos="226"
+ endpos="237"
+>
+	<marker line="-1" type="param">
+		<operand  start="255" length="4" line="6">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="293" length="8" line="6">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<type  start="238" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="261" length="31" line="6" chordsig="android.content.ContentProvider"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="315" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="311" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="332" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="315" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="notifyChange:(Landroid/net/Uri;Landroid/database/ContentObserver;Z)V@android.test.mock.MockContentResolver"
+ sig="void notifyChange(Uri,ContentObserver,boolean)"
+ line="7"
+ startpos="357"
+ endpos="369"
+>
+	<marker line="-1" type="param">
+		<operand  start="386" length="3" line="7">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="424" length="8" line="7">
+			<expr><![CDATA[observer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="442" length="13" line="7">
+			<expr><![CDATA[syncToNetwork]]></expr>
+		</operand>
+	</marker>
+	<type  start="370" length="15" line="7" chordsig="android.net.Uri"/>
+	<type  start="391" length="32" line="7" chordsig="android.database.ContentObserver"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="469" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="465" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="486" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="469" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

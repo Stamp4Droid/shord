@@ -1,0 +1,23 @@
+<root>
+<class chordsig="com.google.android.maps.OverlayBundle" line="3">
+<method
+ chordsig="getOverlays:()Ljava/util/List;@com.google.android.maps.OverlayBundle"
+ sig="List getOverlays()"
+ line="6"
+ startpos="82"
+ endpos="93"
+>
+	<type  start="67" length="14" line="6" chordsig="java.util.List"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="114" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="110" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="131" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="114" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

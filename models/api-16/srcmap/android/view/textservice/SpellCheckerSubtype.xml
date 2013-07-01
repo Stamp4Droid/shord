@@ -1,0 +1,278 @@
+<root>
+<class chordsig="android.view.textservice.SpellCheckerSubtype" line="2">
+	<type  start="86" length="21" line="3" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:(ILjava/lang/String;Ljava/lang/String;)V@android.view.textservice.SpellCheckerSubtype"
+ sig="SpellCheckerSubtype(int,String,String)"
+ line="5"
+ startpos="118"
+ endpos="137"
+>
+	<marker line="-1" type="param">
+		<operand  start="142" length="6" line="5">
+			<expr><![CDATA[nameId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="167" length="6" line="5">
+			<expr><![CDATA[locale]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="192" length="10" line="5">
+			<expr><![CDATA[extraValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="150" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="175" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="216" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="212" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="233" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="216" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getNameResId:()I@android.view.textservice.SpellCheckerSubtype"
+ sig="int getNameResId()"
+ line="6"
+ startpos="257"
+ endpos="269"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="284" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="280" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="301" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="284" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLocale:()Ljava/lang/String;@android.view.textservice.SpellCheckerSubtype"
+ sig="String getLocale()"
+ line="7"
+ startpos="338"
+ endpos="347"
+>
+	<type  start="321" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="362" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="358" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="379" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="362" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getExtraValue:()Ljava/lang/String;@android.view.textservice.SpellCheckerSubtype"
+ sig="String getExtraValue()"
+ line="8"
+ startpos="416"
+ endpos="429"
+>
+	<type  start="399" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="444" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="440" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="461" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="444" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="containsExtraValueKey:(Ljava/lang/String;)Z@android.view.textservice.SpellCheckerSubtype"
+ sig="boolean containsExtraValueKey(String)"
+ line="9"
+ startpos="489"
+ endpos="510"
+>
+	<marker line="-1" type="param">
+		<operand  start="528" length="3" line="9">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="511" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="545" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="541" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="562" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="545" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getExtraValueOf:(Ljava/lang/String;)Ljava/lang/String;@android.view.textservice.SpellCheckerSubtype"
+ sig="String getExtraValueOf(String)"
+ line="10"
+ startpos="599"
+ endpos="614"
+>
+	<marker line="-1" type="param">
+		<operand  start="632" length="3" line="10">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="582" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="615" length="16" line="10" chordsig="java.lang.String"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="649" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="645" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="666" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="649" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@android.view.textservice.SpellCheckerSubtype"
+ sig="int hashCode()"
+ line="11"
+ startpos="690"
+ endpos="698"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="713" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="709" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="730" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="713" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@android.view.textservice.SpellCheckerSubtype"
+ sig="boolean equals(Object)"
+ line="12"
+ startpos="758"
+ endpos="764"
+>
+	<marker line="-1" type="param">
+		<operand  start="782" length="1" line="12">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="765" length="16" line="12" chordsig="java.lang.Object"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="797" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="793" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="814" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="797" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDisplayName:(Landroid/content/Context;Ljava/lang/String;Landroid/content/pm/ApplicationInfo;)Ljava/lang/CharSequence;@android.view.textservice.SpellCheckerSubtype"
+ sig="CharSequence getDisplayName(Context,String,ApplicationInfo)"
+ line="13"
+ startpos="857"
+ endpos="871"
+>
+	<marker line="-1" type="param">
+		<operand  start="896" length="7" line="13">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="922" length="11" line="13">
+			<expr><![CDATA[packageName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="970" length="7" line="13">
+			<expr><![CDATA[appInfo]]></expr>
+		</operand>
+	</marker>
+	<type  start="834" length="22" line="13" chordsig="java.lang.CharSequence"/>
+	<type  start="872" length="23" line="13" chordsig="android.content.Context"/>
+	<type  start="905" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="935" length="34" line="13" chordsig="android.content.pm.ApplicationInfo"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="991" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="987" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1008" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="991" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.view.textservice.SpellCheckerSubtype"
+ sig="int describeContents()"
+ line="14"
+ startpos="1032"
+ endpos="1048"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1063" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1059" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1080" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1063" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.view.textservice.SpellCheckerSubtype"
+ sig="void writeToParcel(Parcel,int)"
+ line="15"
+ startpos="1105"
+ endpos="1118"
+>
+	<marker line="-1" type="param">
+		<operand  start="1137" length="4" line="15">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1147" length="15" line="15">
+			<expr><![CDATA[parcelableFlags]]></expr>
+		</operand>
+	</marker>
+	<type  start="1119" length="17" line="15" chordsig="android.os.Parcel"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1176" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1172" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1193" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1176" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1225" length="29" line="16" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="1255" length="44" line="16" chordsig="android.view.textservice.SpellCheckerSubtype"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.view.textservice.SpellCheckerSubtype"
+ line="17"
+>
+</method>
+</class>
+</root>

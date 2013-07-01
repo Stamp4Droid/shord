@@ -1,0 +1,19 @@
+<root>
+<class chordsig="org.apache.http.auth.AuthSchemeFactory" line="2">
+<method
+ chordsig="newInstance:(Lorg/apache/http/params/HttpParams;)Lorg/apache/http/auth/AuthScheme;@org.apache.http.auth.AuthSchemeFactory"
+ sig="AuthScheme newInstance(HttpParams)"
+ line="4"
+ startpos="116"
+ endpos="127"
+>
+	<marker line="-1" type="param">
+		<operand  start="162" length="6" line="4">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="84" length="31" line="4" chordsig="org.apache.http.auth.AuthScheme"/>
+	<type  start="128" length="33" line="4" chordsig="org.apache.http.params.HttpParams"/>
+</method>
+</class>
+</root>

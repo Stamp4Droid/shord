@@ -1,0 +1,127 @@
+<root>
+<class chordsig="android.view.animation.AnticipateOvershootInterpolator" line="2">
+	<type  start="90" length="35" line="3" chordsig="android.view.animation.Interpolator"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.view.animation.AnticipateOvershootInterpolator"
+ sig="AnticipateOvershootInterpolator()"
+ line="5"
+ startpos="136"
+ endpos="167"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="182" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="178" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="199" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="182" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(F)V@android.view.animation.AnticipateOvershootInterpolator"
+ sig="AnticipateOvershootInterpolator(float)"
+ line="6"
+ startpos="219"
+ endpos="250"
+>
+	<marker line="-1" type="param">
+		<operand  start="257" length="7" line="6">
+			<expr><![CDATA[tension]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="278" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="274" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="295" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="278" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(FF)V@android.view.animation.AnticipateOvershootInterpolator"
+ sig="AnticipateOvershootInterpolator(float,float)"
+ line="7"
+ startpos="315"
+ endpos="346"
+>
+	<marker line="-1" type="param">
+		<operand  start="353" length="7" line="7">
+			<expr><![CDATA[tension]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="368" length="12" line="7">
+			<expr><![CDATA[extraTension]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="394" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="390" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="411" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="394" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.view.animation.AnticipateOvershootInterpolator"
+ sig="AnticipateOvershootInterpolator(Context,AttributeSet)"
+ line="8"
+ startpos="431"
+ endpos="462"
+>
+	<marker line="-1" type="param">
+		<operand  start="487" length="7" line="8">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="522" length="5" line="8">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="463" length="23" line="8" chordsig="android.content.Context"/>
+	<type  start="496" length="25" line="8" chordsig="android.util.AttributeSet"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="541" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="537" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="558" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="541" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInterpolation:(F)F@android.view.animation.AnticipateOvershootInterpolator"
+ sig="float getInterpolation(float)"
+ line="9"
+ startpos="584"
+ endpos="600"
+>
+	<marker line="-1" type="param">
+		<operand  start="607" length="1" line="9">
+			<expr><![CDATA[t]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="622" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="618" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="639" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="622" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

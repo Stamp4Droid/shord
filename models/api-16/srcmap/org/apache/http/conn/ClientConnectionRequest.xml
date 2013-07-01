@@ -1,0 +1,32 @@
+<root>
+<class chordsig="org.apache.http.conn.ClientConnectionRequest" line="2">
+<method
+ chordsig="getConnection:(JLjava/util/concurrent/TimeUnit;)Lorg/apache/http/conn/ManagedClientConnection;@org.apache.http.conn.ClientConnectionRequest"
+ sig="ManagedClientConnection getConnection(long,TimeUnit)"
+ line="4"
+ startpos="135"
+ endpos="148"
+>
+	<marker line="-1" type="param">
+		<operand  start="154" length="7" line="4">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="193" length="5" line="4">
+			<expr><![CDATA[tunit]]></expr>
+		</operand>
+	</marker>
+	<type  start="90" length="44" line="4" chordsig="org.apache.http.conn.ManagedClientConnection"/>
+	<type  start="163" length="29" line="4" chordsig="java.util.concurrent.TimeUnit"/>
+</method>
+<method
+ chordsig="abortRequest:()V@org.apache.http.conn.ClientConnectionRequest"
+ sig="void abortRequest()"
+ line="5"
+ startpos="314"
+ endpos="326"
+>
+</method>
+</class>
+</root>

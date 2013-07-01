@@ -1,0 +1,239 @@
+<root>
+<class chordsig="android.accessibilityservice.AccessibilityServiceInfo" line="2">
+	<type  start="89" length="21" line="3" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.accessibilityservice.AccessibilityServiceInfo"
+ sig="AccessibilityServiceInfo()"
+ line="5"
+ startpos="121"
+ endpos="145"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="160" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="156" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="177" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="160" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getId:()Ljava/lang/String;@android.accessibilityservice.AccessibilityServiceInfo"
+ sig="String getId()"
+ line="6"
+ startpos="214"
+ endpos="219"
+>
+	<type  start="197" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="234" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="230" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="251" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="234" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getResolveInfo:()Landroid/content/pm/ResolveInfo;@android.accessibilityservice.AccessibilityServiceInfo"
+ sig="ResolveInfo getResolveInfo()"
+ line="7"
+ startpos="302"
+ endpos="316"
+>
+	<type  start="271" length="30" line="7" chordsig="android.content.pm.ResolveInfo"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="331" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="327" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="348" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="331" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSettingsActivityName:()Ljava/lang/String;@android.accessibilityservice.AccessibilityServiceInfo"
+ sig="String getSettingsActivityName()"
+ line="8"
+ startpos="385"
+ endpos="408"
+>
+	<type  start="368" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="423" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="419" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="440" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="423" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCanRetrieveWindowContent:()Z@android.accessibilityservice.AccessibilityServiceInfo"
+ sig="boolean getCanRetrieveWindowContent()"
+ line="9"
+ startpos="468"
+ endpos="495"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="510" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="506" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="527" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="510" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDescription:()Ljava/lang/String;@android.accessibilityservice.AccessibilityServiceInfo"
+ sig="String getDescription()"
+ line="10"
+ startpos="564"
+ endpos="578"
+>
+	<type  start="547" length="16" line="10" chordsig="java.lang.String"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="593" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="589" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="610" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="593" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.accessibilityservice.AccessibilityServiceInfo"
+ sig="int describeContents()"
+ line="11"
+ startpos="634"
+ endpos="650"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="665" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="661" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="682" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="665" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.accessibilityservice.AccessibilityServiceInfo"
+ sig="void writeToParcel(Parcel,int)"
+ line="12"
+ startpos="707"
+ endpos="720"
+>
+	<marker line="-1" type="param">
+		<operand  start="739" length="6" line="12">
+			<expr><![CDATA[parcel]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="751" length="5" line="12">
+			<expr><![CDATA[flagz]]></expr>
+		</operand>
+	</marker>
+	<type  start="721" length="17" line="12" chordsig="android.os.Parcel"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="770" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="766" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="787" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="770" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.accessibilityservice.AccessibilityServiceInfo"
+ sig="String toString()"
+ line="13"
+ startpos="824"
+ endpos="832"
+>
+	<type  start="807" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="847" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="843" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="864" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="847" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="feedbackTypeToString:(I)Ljava/lang/String;@android.accessibilityservice.AccessibilityServiceInfo"
+ sig="String feedbackTypeToString(int)"
+ line="14"
+ startpos="908"
+ endpos="928"
+>
+	<marker line="-1" type="param">
+		<operand  start="933" length="12" line="14">
+			<expr><![CDATA[feedbackType]]></expr>
+		</operand>
+	</marker>
+	<type  start="891" length="16" line="14" chordsig="java.lang.String"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="959" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="955" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="976" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="959" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="flagToString:(I)Ljava/lang/String;@android.accessibilityservice.AccessibilityServiceInfo"
+ sig="String flagToString(int)"
+ line="15"
+ startpos="1020"
+ endpos="1032"
+>
+	<marker line="-1" type="param">
+		<operand  start="1037" length="4" line="15">
+			<expr><![CDATA[flag]]></expr>
+		</operand>
+	</marker>
+	<type  start="1003" length="16" line="15" chordsig="java.lang.String"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1055" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1051" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1072" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1055" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1427" length="16" line="24" chordsig="java.lang.String"/>
+	<type  start="1563" length="29" line="28" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="1593" length="53" line="28" chordsig="android.accessibilityservice.AccessibilityServiceInfo"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.accessibilityservice.AccessibilityServiceInfo"
+ line="29"
+>
+</method>
+</class>
+</root>

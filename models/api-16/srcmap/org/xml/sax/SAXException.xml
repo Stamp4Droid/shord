@@ -1,0 +1,158 @@
+<root>
+<class chordsig="org.xml.sax.SAXException" line="2">
+	<type  start="57" length="19" line="3" chordsig="java.lang.Exception"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.xml.sax.SAXException"
+ sig="SAXException()"
+ line="5"
+ startpos="87"
+ endpos="99"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="114" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="110" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="131" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="114" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@org.xml.sax.SAXException"
+ sig="SAXException(String)"
+ line="6"
+ startpos="151"
+ endpos="163"
+>
+	<marker line="-1" type="param">
+		<operand  start="181" length="7" line="6">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="164" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="202" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="198" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="219" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="202" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Exception;)V@org.xml.sax.SAXException"
+ sig="SAXException(Exception)"
+ line="7"
+ startpos="239"
+ endpos="251"
+>
+	<marker line="-1" type="param">
+		<operand  start="272" length="1" line="7">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="252" length="19" line="7" chordsig="java.lang.Exception"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="287" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="283" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="304" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="287" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/Exception;)V@org.xml.sax.SAXException"
+ sig="SAXException(String,Exception)"
+ line="8"
+ startpos="324"
+ endpos="336"
+>
+	<marker line="-1" type="param">
+		<operand  start="354" length="7" line="8">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="383" length="1" line="8">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="337" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="363" length="19" line="8" chordsig="java.lang.Exception"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="398" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="394" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="415" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="398" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMessage:()Ljava/lang/String;@org.xml.sax.SAXException"
+ sig="String getMessage()"
+ line="9"
+ startpos="452"
+ endpos="462"
+>
+	<type  start="435" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="477" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="473" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="494" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="477" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getException:()Ljava/lang/Exception;@org.xml.sax.SAXException"
+ sig="Exception getException()"
+ line="10"
+ startpos="534"
+ endpos="546"
+>
+	<type  start="514" length="19" line="10" chordsig="java.lang.Exception"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="561" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="557" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="578" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="561" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@org.xml.sax.SAXException"
+ sig="String toString()"
+ line="11"
+ startpos="615"
+ endpos="623"
+>
+	<type  start="598" length="16" line="11" chordsig="java.lang.String"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="638" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="634" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="655" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="638" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

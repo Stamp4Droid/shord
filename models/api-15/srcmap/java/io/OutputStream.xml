@@ -1,0 +1,109 @@
+<root>
+<class chordsig="java.io.OutputStream" line="6">
+	<type  start="152" length="17" line="6" chordsig="java.io.Closeable"/>
+	<type  start="171" length="17" line="6" chordsig="java.io.Flushable"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.io.OutputStream"
+ sig="OutputStream()"
+ line="8"
+ startpos="203"
+ endpos="215"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="238" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="234" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="255" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="238" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:()V@java.io.OutputStream"
+ sig="void close()"
+ line="12"
+ startpos="288"
+ endpos="293"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="343" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="339" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="360" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="343" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="flush:()V@java.io.OutputStream"
+ sig="void flush()"
+ line="16"
+ startpos="393"
+ endpos="398"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="448" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="444" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="465" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="448" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="write:([B)V@java.io.OutputStream"
+ sig="void write(byte[])"
+ line="21"
+ startpos="559"
+ endpos="564"
+>
+	<marker line="-1" type="param">
+		<operand  start="572" length="6" line="21">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="write:([BII)V@java.io.OutputStream"
+ sig="void write(byte[],int,int)"
+ line="25"
+ startpos="693"
+ endpos="698"
+>
+	<marker line="-1" type="param">
+		<operand  start="706" length="6" line="25">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="718" length="6" line="25">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="730" length="5" line="25">
+			<expr><![CDATA[count]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="write:(I)V@java.io.OutputStream"
+ sig="void write(int)"
+ line="29"
+ startpos="860"
+ endpos="865"
+>
+	<marker line="-1" type="param">
+		<operand  start="870" length="7" line="29">
+			<expr><![CDATA[oneByte]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

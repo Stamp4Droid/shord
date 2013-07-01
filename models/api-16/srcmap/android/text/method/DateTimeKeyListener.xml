@@ -1,0 +1,78 @@
+<root>
+<class chordsig="android.text.method.DateTimeKeyListener" line="2">
+	<type  start="72" length="37" line="3" chordsig="android.text.method.NumberKeyListener"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.text.method.DateTimeKeyListener"
+ sig="DateTimeKeyListener()"
+ line="5"
+ startpos="120"
+ endpos="139"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="154" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="150" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="171" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="154" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInputType:()I@android.text.method.DateTimeKeyListener"
+ sig="int getInputType()"
+ line="6"
+ startpos="195"
+ endpos="207"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="222" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="218" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="239" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="222" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAcceptedChars:()[C@android.text.method.DateTimeKeyListener"
+ sig="char[] getAcceptedChars()"
+ line="7"
+ startpos="269"
+ endpos="285"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="300" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="296" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="317" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="300" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInstance:()Landroid/text/method/DateTimeKeyListener;@android.text.method.DateTimeKeyListener"
+ sig="DateTimeKeyListener getInstance()"
+ line="8"
+ startpos="384"
+ endpos="395"
+>
+	<type  start="344" length="39" line="8" chordsig="android.text.method.DateTimeKeyListener"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="410" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="406" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="427" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="410" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

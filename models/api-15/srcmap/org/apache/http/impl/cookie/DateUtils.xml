@@ -1,0 +1,180 @@
+<root>
+<class chordsig="org.apache.http.impl.cookie.DateUtils" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.impl.cookie.DateUtils"
+ sig="DateUtils()"
+ line="4"
+ startpos="68"
+ endpos="77"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="92" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="88" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="109" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="92" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parseDate:(Ljava/lang/String;)Ljava/util/Date;@org.apache.http.impl.cookie.DateUtils"
+ sig="Date parseDate(String)"
+ line="5"
+ startpos="151"
+ endpos="160"
+>
+	<marker line="-1" type="param">
+		<operand  start="178" length="9" line="5">
+			<expr><![CDATA[dateValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="136" length="14" line="5" chordsig="java.util.Date"/>
+	<type  start="161" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="255" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="251" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="272" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="255" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parseDate:(Ljava/lang/String;[Ljava/lang/String;)Ljava/util/Date;@org.apache.http.impl.cookie.DateUtils"
+ sig="Date parseDate(String,String[])"
+ line="6"
+ startpos="314"
+ endpos="323"
+>
+	<marker line="-1" type="param">
+		<operand  start="341" length="9" line="6">
+			<expr><![CDATA[dateValue]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="371" length="11" line="6">
+			<expr><![CDATA[dateFormats]]></expr>
+		</operand>
+	</marker>
+	<type  start="299" length="14" line="6" chordsig="java.util.Date"/>
+	<type  start="324" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="352" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="450" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="446" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="467" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="450" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parseDate:(Ljava/lang/String;[Ljava/lang/String;Ljava/util/Date;)Ljava/util/Date;@org.apache.http.impl.cookie.DateUtils"
+ sig="Date parseDate(String,String[],Date)"
+ line="7"
+ startpos="509"
+ endpos="518"
+>
+	<marker line="-1" type="param">
+		<operand  start="536" length="9" line="7">
+			<expr><![CDATA[dateValue]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="566" length="11" line="7">
+			<expr><![CDATA[dateFormats]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="594" length="9" line="7">
+			<expr><![CDATA[startDate]]></expr>
+		</operand>
+	</marker>
+	<type  start="494" length="14" line="7" chordsig="java.util.Date"/>
+	<type  start="519" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="547" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="579" length="14" line="7" chordsig="java.util.Date"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="671" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="667" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="688" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="671" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="formatDate:(Ljava/util/Date;)Ljava/lang/String;@org.apache.http.impl.cookie.DateUtils"
+ sig="String formatDate(Date)"
+ line="8"
+ startpos="732"
+ endpos="742"
+>
+	<marker line="-1" type="param">
+		<operand  start="758" length="4" line="8">
+			<expr><![CDATA[date]]></expr>
+		</operand>
+	</marker>
+	<type  start="715" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="743" length="14" line="8" chordsig="java.util.Date"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="776" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="772" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="793" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="776" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="formatDate:(Ljava/util/Date;Ljava/lang/String;)Ljava/lang/String;@org.apache.http.impl.cookie.DateUtils"
+ sig="String formatDate(Date,String)"
+ line="9"
+ startpos="837"
+ endpos="847"
+>
+	<marker line="-1" type="param">
+		<operand  start="863" length="4" line="9">
+			<expr><![CDATA[date]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="886" length="7" line="9">
+			<expr><![CDATA[pattern]]></expr>
+		</operand>
+	</marker>
+	<type  start="820" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="848" length="14" line="9" chordsig="java.util.Date"/>
+	<type  start="869" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="907" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="903" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="924" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="907" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="956" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="1044" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="1131" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="1213" length="18" line="13" chordsig="java.util.TimeZone"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@org.apache.http.impl.cookie.DateUtils"
+ line="14"
+>
+</method>
+</class>
+</root>

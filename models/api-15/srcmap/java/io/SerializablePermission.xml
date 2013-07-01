@@ -1,0 +1,106 @@
+<root>
+<class chordsig="java.io.SerializablePermission" line="2">
+	<type  start="69" length="29" line="3" chordsig="java.security.BasicPermission"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.io.SerializablePermission"
+ sig="SerializablePermission(String)"
+ line="5"
+ startpos="109"
+ endpos="131"
+>
+	<marker line="-1" type="param">
+		<operand  start="149" length="14" line="5">
+			<expr><![CDATA[permissionName]]></expr>
+		</operand>
+	</marker>
+	<type  start="132" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="174" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="197" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="231" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="227" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="248" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="231" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;)V@java.io.SerializablePermission"
+ sig="SerializablePermission(String,String)"
+ line="6"
+ startpos="268"
+ endpos="290"
+>
+	<marker line="-1" type="param">
+		<operand  start="308" length="4" line="6">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="331" length="7" line="6">
+			<expr><![CDATA[actions]]></expr>
+		</operand>
+	</marker>
+	<type  start="291" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="314" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="349" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="372" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="406" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="402" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="423" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="406" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getActions:()Ljava/lang/String;@java.io.SerializablePermission"
+ sig="String getActions()"
+ line="7"
+ startpos="460"
+ endpos="470"
+>
+	<type  start="443" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="485" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="481" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="502" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="485" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="implies:(Ljava/security/Permission;)Z@java.io.SerializablePermission"
+ sig="boolean implies(Permission)"
+ line="8"
+ startpos="530"
+ endpos="537"
+>
+	<marker line="-1" type="param">
+		<operand  start="563" length="10" line="8">
+			<expr><![CDATA[permission]]></expr>
+		</operand>
+	</marker>
+	<type  start="538" length="24" line="8" chordsig="java.security.Permission"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="587" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="583" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="604" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="587" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

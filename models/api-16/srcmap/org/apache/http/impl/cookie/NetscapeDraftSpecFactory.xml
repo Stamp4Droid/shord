@@ -1,0 +1,48 @@
+<root>
+<class chordsig="org.apache.http.impl.cookie.NetscapeDraftSpecFactory" line="2">
+	<type  start="88" length="40" line="3" chordsig="org.apache.http.cookie.CookieSpecFactory"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.impl.cookie.NetscapeDraftSpecFactory"
+ sig="NetscapeDraftSpecFactory()"
+ line="5"
+ startpos="139"
+ endpos="163"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="178" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="174" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="195" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="178" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newInstance:(Lorg/apache/http/params/HttpParams;)Lorg/apache/http/cookie/CookieSpec;@org.apache.http.impl.cookie.NetscapeDraftSpecFactory"
+ sig="CookieSpec newInstance(HttpParams)"
+ line="6"
+ startpos="249"
+ endpos="260"
+>
+	<marker line="-1" type="param">
+		<operand  start="295" length="6" line="6">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="215" length="33" line="6" chordsig="org.apache.http.cookie.CookieSpec"/>
+	<type  start="261" length="33" line="6" chordsig="org.apache.http.params.HttpParams"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="315" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="311" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="332" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="315" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

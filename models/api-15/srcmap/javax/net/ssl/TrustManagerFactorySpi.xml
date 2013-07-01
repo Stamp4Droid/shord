@@ -1,0 +1,59 @@
+<root>
+<class chordsig="javax.net.ssl.TrustManagerFactorySpi" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@javax.net.ssl.TrustManagerFactorySpi"
+ sig="TrustManagerFactorySpi()"
+ line="4"
+ startpos="78"
+ endpos="100"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="115" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="111" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="132" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="115" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="engineInit:(Ljava/security/KeyStore;)V@javax.net.ssl.TrustManagerFactorySpi"
+ sig="void engineInit(KeyStore)"
+ line="5"
+ startpos="169"
+ endpos="179"
+>
+	<marker line="-1" type="param">
+		<operand  start="203" length="2" line="5">
+			<expr><![CDATA[ks]]></expr>
+		</operand>
+	</marker>
+	<type  start="180" length="22" line="5" chordsig="java.security.KeyStore"/>
+</method>
+<method
+ chordsig="engineInit:(Ljavax/net/ssl/ManagerFactoryParameters;)V@javax.net.ssl.TrustManagerFactorySpi"
+ sig="void engineInit(ManagerFactoryParameters)"
+ line="6"
+ startpos="272"
+ endpos="282"
+>
+	<marker line="-1" type="param">
+		<operand  start="322" length="4" line="6">
+			<expr><![CDATA[spec]]></expr>
+		</operand>
+	</marker>
+	<type  start="283" length="38" line="6" chordsig="javax.net.ssl.ManagerFactoryParameters"/>
+</method>
+<method
+ chordsig="engineGetTrustManagers:()[Ljavax/net/ssl/TrustManager;@javax.net.ssl.TrustManagerFactorySpi"
+ sig="TrustManager[] engineGetTrustManagers()"
+ line="7"
+ startpos="434"
+ endpos="456"
+>
+	<type  start="405" length="26" line="7" chordsig="javax.net.ssl.TrustManager"/>
+</method>
+</class>
+</root>

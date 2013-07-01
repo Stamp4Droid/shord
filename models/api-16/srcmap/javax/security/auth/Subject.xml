@@ -1,0 +1,469 @@
+<root>
+<class chordsig="javax.security.auth.Subject" line="2">
+	<type  start="69" length="20" line="3" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:()V@javax.security.auth.Subject"
+ sig="Subject()"
+ line="5"
+ startpos="100"
+ endpos="107"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="122" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="118" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="139" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="122" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(ZLjava/util/Set;Ljava/util/Set;Ljava/util/Set;)V@javax.security.auth.Subject"
+ sig="Subject(boolean,Set&lt;? extends Principal&gt;,Set&lt;?&gt;,Set&lt;?&gt;)"
+ line="6"
+ startpos="159"
+ endpos="166"
+>
+	<marker line="-1" type="param">
+		<operand  start="175" length="8" line="6">
+			<expr><![CDATA[readOnly]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="234" length="14" line="6">
+			<expr><![CDATA[subjPrincipals]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="267" length="14" line="6">
+			<expr><![CDATA[pubCredentials]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="300" length="15" line="6">
+			<expr><![CDATA[privCredentials]]></expr>
+		</operand>
+	</marker>
+	<type  start="185" length="13" line="6" chordsig="java.util.Set"/>
+	<type  start="209" length="23" line="6" chordsig="java.security.Principal"/>
+	<type  start="250" length="13" line="6" chordsig="java.util.Set"/>
+	<type  start="283" length="13" line="6" chordsig="java.util.Set"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="329" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="325" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="346" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="329" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="doAs:(Ljavax/security/auth/Subject;Ljava/security/PrivilegedAction;)Ljava/lang/Object;@javax.security.auth.Subject"
+ sig="T doAs(Subject,PrivilegedAction&lt;T&gt;)"
+ line="8"
+ startpos="427"
+ endpos="431"
+>
+	<marker line="-1" type="param">
+		<operand  start="460" length="7" line="8">
+			<expr><![CDATA[subject]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="503" length="6" line="8">
+			<expr><![CDATA[action]]></expr>
+		</operand>
+	</marker>
+	<type  start="425" length="1" line="8" chordsig="java.lang.Object"/>
+	<type  start="432" length="27" line="8" chordsig="javax.security.auth.Subject"/>
+	<type  start="469" length="30" line="8" chordsig="java.security.PrivilegedAction"/>
+	<type  start="500" length="1" line="8" chordsig="java.lang.Object"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="523" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="519" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="540" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="523" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="doAsPrivileged:(Ljavax/security/auth/Subject;Ljava/security/PrivilegedAction;Ljava/security/AccessControlContext;)Ljava/lang/Object;@javax.security.auth.Subject"
+ sig="T doAsPrivileged(Subject,PrivilegedAction&lt;T&gt;,AccessControlContext)"
+ line="10"
+ startpos="621"
+ endpos="635"
+>
+	<marker line="-1" type="param">
+		<operand  start="664" length="7" line="10">
+			<expr><![CDATA[subject]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="707" length="6" line="10">
+			<expr><![CDATA[action]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="750" length="7" line="10">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="619" length="1" line="10" chordsig="java.lang.Object"/>
+	<type  start="636" length="27" line="10" chordsig="javax.security.auth.Subject"/>
+	<type  start="673" length="30" line="10" chordsig="java.security.PrivilegedAction"/>
+	<type  start="704" length="1" line="10" chordsig="java.lang.Object"/>
+	<type  start="715" length="34" line="10" chordsig="java.security.AccessControlContext"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="771" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="767" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="788" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="771" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="doAs:(Ljavax/security/auth/Subject;Ljava/security/PrivilegedExceptionAction;)Ljava/lang/Object;@javax.security.auth.Subject"
+ sig="T doAs(Subject,PrivilegedExceptionAction&lt;T&gt;)"
+ line="12"
+ startpos="869"
+ endpos="873"
+>
+	<marker line="-1" type="param">
+		<operand  start="902" length="7" line="12">
+			<expr><![CDATA[subject]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="954" length="6" line="12">
+			<expr><![CDATA[action]]></expr>
+		</operand>
+	</marker>
+	<type  start="867" length="1" line="12" chordsig="java.lang.Object"/>
+	<type  start="874" length="27" line="12" chordsig="javax.security.auth.Subject"/>
+	<type  start="911" length="39" line="12" chordsig="java.security.PrivilegedExceptionAction"/>
+	<type  start="951" length="1" line="12" chordsig="java.lang.Object"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1021" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1017" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1038" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1021" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="doAsPrivileged:(Ljavax/security/auth/Subject;Ljava/security/PrivilegedExceptionAction;Ljava/security/AccessControlContext;)Ljava/lang/Object;@javax.security.auth.Subject"
+ sig="T doAsPrivileged(Subject,PrivilegedExceptionAction&lt;T&gt;,AccessControlContext)"
+ line="14"
+ startpos="1119"
+ endpos="1133"
+>
+	<marker line="-1" type="param">
+		<operand  start="1162" length="7" line="14">
+			<expr><![CDATA[subject]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1214" length="6" line="14">
+			<expr><![CDATA[action]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1257" length="7" line="14">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="1117" length="1" line="14" chordsig="java.lang.Object"/>
+	<type  start="1134" length="27" line="14" chordsig="javax.security.auth.Subject"/>
+	<type  start="1171" length="39" line="14" chordsig="java.security.PrivilegedExceptionAction"/>
+	<type  start="1211" length="1" line="14" chordsig="java.lang.Object"/>
+	<type  start="1222" length="34" line="14" chordsig="java.security.AccessControlContext"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1325" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1321" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1342" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1325" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@javax.security.auth.Subject"
+ sig="boolean equals(Object)"
+ line="15"
+ startpos="1370"
+ endpos="1376"
+>
+	<marker line="-1" type="param">
+		<operand  start="1394" length="3" line="15">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="1377" length="16" line="15" chordsig="java.lang.Object"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1411" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1407" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1428" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1411" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPrincipals:()Ljava/util/Set;@javax.security.auth.Subject"
+ sig="Set&lt;Principal&gt; getPrincipals()"
+ line="16"
+ startpos="1487"
+ endpos="1500"
+>
+	<type  start="1448" length="13" line="16" chordsig="java.util.Set"/>
+	<type  start="1462" length="23" line="16" chordsig="java.security.Principal"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1515" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1511" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1532" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1515" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPrincipals:(Ljava/lang/Class;)Ljava/util/Set;@javax.security.auth.Subject"
+ sig="Set&lt;T&gt; getPrincipals(Class&lt;T&gt;)"
+ line="17"
+ startpos="1604"
+ endpos="1617"
+>
+	<marker line="-1" type="param">
+		<operand  start="1637" length="1" line="17">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<type  start="1562" length="23" line="17" chordsig="java.security.Principal"/>
+	<type  start="1587" length="13" line="17" chordsig="java.util.Set"/>
+	<type  start="1601" length="1" line="17" chordsig="java.security.Principal"/>
+	<type  start="1618" length="15" line="17" chordsig="java.lang.Class"/>
+	<type  start="1634" length="1" line="17" chordsig="java.security.Principal"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1652" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1648" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1669" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1652" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPrivateCredentials:()Ljava/util/Set;@javax.security.auth.Subject"
+ sig="Set&lt;Object&gt; getPrivateCredentials()"
+ line="18"
+ startpos="1721"
+ endpos="1742"
+>
+	<type  start="1689" length="13" line="18" chordsig="java.util.Set"/>
+	<type  start="1703" length="16" line="18" chordsig="java.lang.Object"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1757" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1753" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1774" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1757" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPrivateCredentials:(Ljava/lang/Class;)Ljava/util/Set;@javax.security.auth.Subject"
+ sig="Set&lt;T&gt; getPrivateCredentials(Class&lt;T&gt;)"
+ line="19"
+ startpos="1814"
+ endpos="1835"
+>
+	<marker line="-1" type="param">
+		<operand  start="1855" length="1" line="19">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<type  start="1797" length="13" line="19" chordsig="java.util.Set"/>
+	<type  start="1811" length="1" line="19" chordsig="java.lang.Object"/>
+	<type  start="1836" length="15" line="19" chordsig="java.lang.Class"/>
+	<type  start="1852" length="1" line="19" chordsig="java.lang.Object"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1870" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1866" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1887" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1870" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPublicCredentials:()Ljava/util/Set;@javax.security.auth.Subject"
+ sig="Set&lt;Object&gt; getPublicCredentials()"
+ line="20"
+ startpos="1939"
+ endpos="1959"
+>
+	<type  start="1907" length="13" line="20" chordsig="java.util.Set"/>
+	<type  start="1921" length="16" line="20" chordsig="java.lang.Object"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1974" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1970" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1991" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1974" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPublicCredentials:(Ljava/lang/Class;)Ljava/util/Set;@javax.security.auth.Subject"
+ sig="Set&lt;T&gt; getPublicCredentials(Class&lt;T&gt;)"
+ line="21"
+ startpos="2031"
+ endpos="2051"
+>
+	<marker line="-1" type="param">
+		<operand  start="2071" length="1" line="21">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<type  start="2014" length="13" line="21" chordsig="java.util.Set"/>
+	<type  start="2028" length="1" line="21" chordsig="java.lang.Object"/>
+	<type  start="2052" length="15" line="21" chordsig="java.lang.Class"/>
+	<type  start="2068" length="1" line="21" chordsig="java.lang.Object"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2086" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2082" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2103" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2086" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@javax.security.auth.Subject"
+ sig="int hashCode()"
+ line="22"
+ startpos="2127"
+ endpos="2135"
+>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2150" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2146" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2167" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2150" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setReadOnly:()V@javax.security.auth.Subject"
+ sig="void setReadOnly()"
+ line="23"
+ startpos="2192"
+ endpos="2203"
+>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2218" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2214" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2235" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2218" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isReadOnly:()Z@javax.security.auth.Subject"
+ sig="boolean isReadOnly()"
+ line="24"
+ startpos="2263"
+ endpos="2273"
+>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2288" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2284" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2305" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2288" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@javax.security.auth.Subject"
+ sig="String toString()"
+ line="25"
+ startpos="2342"
+ endpos="2350"
+>
+	<type  start="2325" length="16" line="25" chordsig="java.lang.String"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2365" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2361" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2382" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2365" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSubject:(Ljava/security/AccessControlContext;)Ljavax/security/auth/Subject;@javax.security.auth.Subject"
+ sig="Subject getSubject(AccessControlContext)"
+ line="26"
+ startpos="2437"
+ endpos="2447"
+>
+	<marker line="-1" type="param">
+		<operand  start="2483" length="7" line="26">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="2409" length="27" line="26" chordsig="javax.security.auth.Subject"/>
+	<type  start="2448" length="34" line="26" chordsig="java.security.AccessControlContext"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2504" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2500" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2521" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2504" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

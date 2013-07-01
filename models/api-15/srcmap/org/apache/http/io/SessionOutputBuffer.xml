@@ -1,0 +1,98 @@
+<root>
+<class chordsig="org.apache.http.io.SessionOutputBuffer" line="2">
+<method
+ chordsig="write:([BII)V@org.apache.http.io.SessionOutputBuffer"
+ sig="void write(byte[],int,int)"
+ line="4"
+ startpos="89"
+ endpos="94"
+>
+	<marker line="-1" type="param">
+		<operand  start="102" length="1" line="4">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="109" length="3" line="4">
+			<expr><![CDATA[off]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="118" length="3" line="4">
+			<expr><![CDATA[len]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="write:([B)V@org.apache.http.io.SessionOutputBuffer"
+ sig="void write(byte[])"
+ line="5"
+ startpos="173"
+ endpos="178"
+>
+	<marker line="-1" type="param">
+		<operand  start="186" length="1" line="5">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="write:(I)V@org.apache.http.io.SessionOutputBuffer"
+ sig="void write(int)"
+ line="6"
+ startpos="239"
+ endpos="244"
+>
+	<marker line="-1" type="param">
+		<operand  start="249" length="1" line="6">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="writeLine:(Ljava/lang/String;)V@org.apache.http.io.SessionOutputBuffer"
+ sig="void writeLine(String)"
+ line="7"
+ startpos="302"
+ endpos="311"
+>
+	<marker line="-1" type="param">
+		<operand  start="329" length="1" line="7">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<type  start="312" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="writeLine:(Lorg/apache/http/util/CharArrayBuffer;)V@org.apache.http.io.SessionOutputBuffer"
+ sig="void writeLine(CharArrayBuffer)"
+ line="8"
+ startpos="382"
+ endpos="391"
+>
+	<marker line="-1" type="param">
+		<operand  start="429" length="6" line="8">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<type  start="392" length="36" line="8" chordsig="org.apache.http.util.CharArrayBuffer"/>
+</method>
+<method
+ chordsig="flush:()V@org.apache.http.io.SessionOutputBuffer"
+ sig="void flush()"
+ line="9"
+ startpos="487"
+ endpos="492"
+>
+</method>
+<method
+ chordsig="getMetrics:()Lorg/apache/http/io/HttpTransportMetrics;@org.apache.http.io.SessionOutputBuffer"
+ sig="HttpTransportMetrics getMetrics()"
+ line="10"
+ startpos="580"
+ endpos="590"
+>
+	<type  start="540" length="39" line="10" chordsig="org.apache.http.io.HttpTransportMetrics"/>
+</method>
+</class>
+</root>

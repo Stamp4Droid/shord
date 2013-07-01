@@ -1,0 +1,164 @@
+<root>
+<class chordsig="javax.xml.transform.dom.DOMSource" line="2">
+	<type  start="69" length="26" line="3" chordsig="javax.xml.transform.Source"/>
+<method
+ chordsig="&lt;init&gt;:()V@javax.xml.transform.dom.DOMSource"
+ sig="DOMSource()"
+ line="5"
+ startpos="106"
+ endpos="115"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="130" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="126" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="147" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="130" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Lorg/w3c/dom/Node;)V@javax.xml.transform.dom.DOMSource"
+ sig="DOMSource(Node)"
+ line="6"
+ startpos="167"
+ endpos="176"
+>
+	<marker line="-1" type="param">
+		<operand  start="194" length="1" line="6">
+			<expr><![CDATA[n]]></expr>
+		</operand>
+	</marker>
+	<type  start="177" length="16" line="6" chordsig="org.w3c.dom.Node"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="209" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="205" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="226" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="209" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Lorg/w3c/dom/Node;Ljava/lang/String;)V@javax.xml.transform.dom.DOMSource"
+ sig="DOMSource(Node,String)"
+ line="7"
+ startpos="246"
+ endpos="255"
+>
+	<marker line="-1" type="param">
+		<operand  start="273" length="4" line="7">
+			<expr><![CDATA[node]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="296" length="8" line="7">
+			<expr><![CDATA[systemID]]></expr>
+		</operand>
+	</marker>
+	<type  start="256" length="16" line="7" chordsig="org.w3c.dom.Node"/>
+	<type  start="279" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="318" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="314" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="335" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="318" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setNode:(Lorg/w3c/dom/Node;)V@javax.xml.transform.dom.DOMSource"
+ sig="void setNode(Node)"
+ line="8"
+ startpos="360"
+ endpos="367"
+>
+	<marker line="-1" type="param">
+		<operand  start="385" length="4" line="8">
+			<expr><![CDATA[node]]></expr>
+		</operand>
+	</marker>
+	<type  start="368" length="16" line="8" chordsig="org.w3c.dom.Node"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="403" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="399" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="420" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="403" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getNode:()Lorg/w3c/dom/Node;@javax.xml.transform.dom.DOMSource"
+ sig="Node getNode()"
+ line="9"
+ startpos="457"
+ endpos="464"
+>
+	<type  start="440" length="16" line="9" chordsig="org.w3c.dom.Node"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="479" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="475" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="496" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="479" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSystemId:(Ljava/lang/String;)V@javax.xml.transform.dom.DOMSource"
+ sig="void setSystemId(String)"
+ line="10"
+ startpos="521"
+ endpos="532"
+>
+	<marker line="-1" type="param">
+		<operand  start="550" length="8" line="10">
+			<expr><![CDATA[systemID]]></expr>
+		</operand>
+	</marker>
+	<type  start="533" length="16" line="10" chordsig="java.lang.String"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="572" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="568" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="589" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="572" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSystemId:()Ljava/lang/String;@javax.xml.transform.dom.DOMSource"
+ sig="String getSystemId()"
+ line="11"
+ startpos="626"
+ endpos="637"
+>
+	<type  start="609" length="16" line="11" chordsig="java.lang.String"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="652" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="648" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="669" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="652" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="701" length="16" line="12" chordsig="java.lang.String"/>
+</class>
+</root>

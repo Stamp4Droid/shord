@@ -1,0 +1,55 @@
+<root>
+<class chordsig="javax.xml.xpath.XPathFactoryConfigurationException" line="2">
+	<type  start="83" length="30" line="3" chordsig="javax.xml.xpath.XPathException"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@javax.xml.xpath.XPathFactoryConfigurationException"
+ sig="XPathFactoryConfigurationException(String)"
+ line="5"
+ startpos="124"
+ endpos="158"
+>
+	<marker line="-1" type="param">
+		<operand  start="176" length="7" line="5">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="159" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="194" length="19" line="5" chordsig="java.lang.Throwable"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="231" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="227" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="248" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="231" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Throwable;)V@javax.xml.xpath.XPathFactoryConfigurationException"
+ sig="XPathFactoryConfigurationException(Throwable)"
+ line="6"
+ startpos="268"
+ endpos="302"
+>
+	<marker line="-1" type="param">
+		<operand  start="323" length="5" line="6">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="303" length="19" line="6" chordsig="java.lang.Throwable"/>
+	<type  start="339" length="19" line="6" chordsig="java.lang.Throwable"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="376" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="372" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="393" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="376" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

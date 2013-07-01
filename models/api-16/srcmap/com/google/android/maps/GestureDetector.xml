@@ -1,0 +1,672 @@
+<root>
+<class chordsig="com.google.android.maps.GestureDetector" line="3">
+<method
+ chordsig="&lt;init&gt;:(Lcom/google/android/maps/GestureDetector$OnGestureListener;Landroid/os/Handler;)V@com.google.android.maps.GestureDetector"
+ sig="GestureDetector(OnGestureListener,Handler)"
+ line="6"
+ startpos="70"
+ endpos="85"
+>
+	<marker line="-1" type="param">
+		<operand  start="144" length="6" line="6">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="171" length="6" line="6">
+			<expr><![CDATA[param2]]></expr>
+		</operand>
+	</marker>
+	<type  start="86" length="57" line="6" chordsig="com.google.android.maps.GestureDetector$OnGestureListener"/>
+	<type  start="152" length="18" line="6" chordsig="android.os.Handler"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="197" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="193" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="214" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="197" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Lcom/google/android/maps/GestureDetector$OnGestureListener;)V@com.google.android.maps.GestureDetector"
+ sig="GestureDetector(OnGestureListener)"
+ line="11"
+ startpos="239"
+ endpos="254"
+>
+	<marker line="-1" type="param">
+		<operand  start="313" length="6" line="11">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="255" length="57" line="11" chordsig="com.google.android.maps.GestureDetector$OnGestureListener"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="339" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="335" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="356" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="339" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Lcom/google/android/maps/GestureDetector$OnGestureListener;)V@com.google.android.maps.GestureDetector"
+ sig="GestureDetector(Context,OnGestureListener)"
+ line="16"
+ startpos="381"
+ endpos="396"
+>
+	<marker line="-1" type="param">
+		<operand  start="421" length="6" line="16">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="487" length="6" line="16">
+			<expr><![CDATA[param2]]></expr>
+		</operand>
+	</marker>
+	<type  start="397" length="23" line="16" chordsig="android.content.Context"/>
+	<type  start="429" length="57" line="16" chordsig="com.google.android.maps.GestureDetector$OnGestureListener"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="513" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="509" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="530" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="513" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Lcom/google/android/maps/GestureDetector$OnGestureListener;Landroid/os/Handler;)V@com.google.android.maps.GestureDetector"
+ sig="GestureDetector(Context,OnGestureListener,Handler)"
+ line="21"
+ startpos="555"
+ endpos="570"
+>
+	<marker line="-1" type="param">
+		<operand  start="595" length="6" line="21">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="661" length="6" line="21">
+			<expr><![CDATA[param2]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="688" length="6" line="21">
+			<expr><![CDATA[param3]]></expr>
+		</operand>
+	</marker>
+	<type  start="571" length="23" line="21" chordsig="android.content.Context"/>
+	<type  start="603" length="57" line="21" chordsig="com.google.android.maps.GestureDetector$OnGestureListener"/>
+	<type  start="669" length="18" line="21" chordsig="android.os.Handler"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="714" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="710" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="731" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="714" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnDoubleTapListener:(Lcom/google/android/maps/GestureDetector$OnDoubleTapListener;)V@com.google.android.maps.GestureDetector"
+ sig="void setOnDoubleTapListener(OnDoubleTapListener)"
+ line="26"
+ startpos="760"
+ endpos="782"
+>
+	<marker line="-1" type="param">
+		<operand  start="843" length="6" line="26">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="783" length="59" line="26" chordsig="com.google.android.maps.GestureDetector$OnDoubleTapListener"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="869" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="865" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="886" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="869" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setIsLongpressEnabled:(Z)V@com.google.android.maps.GestureDetector"
+ sig="void setIsLongpressEnabled(boolean)"
+ line="31"
+ startpos="915"
+ endpos="936"
+>
+	<marker line="-1" type="param">
+		<operand  start="945" length="6" line="31">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="971" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="967" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="988" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="971" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isLongpressEnabled:()Z@com.google.android.maps.GestureDetector"
+ sig="boolean isLongpressEnabled()"
+ line="36"
+ startpos="1020"
+ endpos="1038"
+>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1059" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1055" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1076" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1059" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onTouchEvent:(Landroid/view/MotionEvent;)Z@com.google.android.maps.GestureDetector"
+ sig="boolean onTouchEvent(MotionEvent)"
+ line="41"
+ startpos="1108"
+ endpos="1120"
+>
+	<marker line="-1" type="param">
+		<operand  start="1146" length="6" line="41">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="1121" length="24" line="41" chordsig="android.view.MotionEvent"/>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1172" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1168" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1189" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1172" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<class chordsig="com.google.android.maps.GestureDetector$GestureHandler" line="46">
+	<type  start="1236" length="18" line="46" chordsig="android.os.Handler"/>
+<method
+ chordsig="handleMessage:(Landroid/os/Message;)V@com.google.android.maps.GestureDetector$GestureHandler"
+ sig="void handleMessage(Message)"
+ line="49"
+ startpos="1276"
+ endpos="1289"
+>
+	<marker line="-1" type="param">
+		<operand  start="1309" length="6" line="49">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="1290" length="18" line="49" chordsig="android.os.Message"/>
+	<newexpr line="51" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1339" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1335" length="29" line="51">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1356" length="7" line="51">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1339" length="16" line="51" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="com.google.android.maps.GestureDetector$OnGestureListener" line="57">
+<method
+ chordsig="onDown:(Landroid/view/MotionEvent;)Z@com.google.android.maps.GestureDetector$OnGestureListener"
+ sig="boolean onDown(MotionEvent)"
+ line="60"
+ startpos="1449"
+ endpos="1455"
+>
+	<marker line="-1" type="param">
+		<operand  start="1481" length="6" line="60">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="1456" length="24" line="60" chordsig="android.view.MotionEvent"/>
+</method>
+<method
+ chordsig="onShowPress:(Landroid/view/MotionEvent;)V@com.google.android.maps.GestureDetector$OnGestureListener"
+ sig="void onShowPress(MotionEvent)"
+ line="62"
+ startpos="1516"
+ endpos="1527"
+>
+	<marker line="-1" type="param">
+		<operand  start="1553" length="6" line="62">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="1528" length="24" line="62" chordsig="android.view.MotionEvent"/>
+</method>
+<method
+ chordsig="onSingleTapUp:(Landroid/view/MotionEvent;)Z@com.google.android.maps.GestureDetector$OnGestureListener"
+ sig="boolean onSingleTapUp(MotionEvent)"
+ line="64"
+ startpos="1591"
+ endpos="1604"
+>
+	<marker line="-1" type="param">
+		<operand  start="1630" length="6" line="64">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="1605" length="24" line="64" chordsig="android.view.MotionEvent"/>
+</method>
+<method
+ chordsig="onScroll:(Landroid/view/MotionEvent;Landroid/view/MotionEvent;FF)Z@com.google.android.maps.GestureDetector$OnGestureListener"
+ sig="boolean onScroll(MotionEvent,MotionEvent,float,float)"
+ line="66"
+ startpos="1668"
+ endpos="1676"
+>
+	<marker line="-1" type="param">
+		<operand  start="1702" length="6" line="66">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1735" length="6" line="66">
+			<expr><![CDATA[param2]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1749" length="6" line="66">
+			<expr><![CDATA[param3]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1763" length="6" line="66">
+			<expr><![CDATA[param4]]></expr>
+		</operand>
+	</marker>
+	<type  start="1677" length="24" line="66" chordsig="android.view.MotionEvent"/>
+	<type  start="1710" length="24" line="66" chordsig="android.view.MotionEvent"/>
+</method>
+<method
+ chordsig="onLongPress:(Landroid/view/MotionEvent;)V@com.google.android.maps.GestureDetector$OnGestureListener"
+ sig="void onLongPress(MotionEvent)"
+ line="68"
+ startpos="1798"
+ endpos="1809"
+>
+	<marker line="-1" type="param">
+		<operand  start="1835" length="6" line="68">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="1810" length="24" line="68" chordsig="android.view.MotionEvent"/>
+</method>
+<method
+ chordsig="onFling:(Landroid/view/MotionEvent;Landroid/view/MotionEvent;FF)Z@com.google.android.maps.GestureDetector$OnGestureListener"
+ sig="boolean onFling(MotionEvent,MotionEvent,float,float)"
+ line="70"
+ startpos="1873"
+ endpos="1880"
+>
+	<marker line="-1" type="param">
+		<operand  start="1906" length="6" line="70">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1939" length="6" line="70">
+			<expr><![CDATA[param2]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1953" length="6" line="70">
+			<expr><![CDATA[param3]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1967" length="6" line="70">
+			<expr><![CDATA[param4]]></expr>
+		</operand>
+	</marker>
+	<type  start="1881" length="24" line="70" chordsig="android.view.MotionEvent"/>
+	<type  start="1914" length="24" line="70" chordsig="android.view.MotionEvent"/>
+</method>
+</class>
+<class chordsig="com.google.android.maps.GestureDetector$OnDoubleTapListener" line="75">
+<method
+ chordsig="onSingleTapConfirmed:(Landroid/view/MotionEvent;)Z@com.google.android.maps.GestureDetector$OnDoubleTapListener"
+ sig="boolean onSingleTapConfirmed(MotionEvent)"
+ line="78"
+ startpos="2055"
+ endpos="2075"
+>
+	<marker line="-1" type="param">
+		<operand  start="2101" length="6" line="78">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="2076" length="24" line="78" chordsig="android.view.MotionEvent"/>
+</method>
+<method
+ chordsig="onDoubleTap:(Landroid/view/MotionEvent;)Z@com.google.android.maps.GestureDetector$OnDoubleTapListener"
+ sig="boolean onDoubleTap(MotionEvent)"
+ line="80"
+ startpos="2139"
+ endpos="2150"
+>
+	<marker line="-1" type="param">
+		<operand  start="2176" length="6" line="80">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="2151" length="24" line="80" chordsig="android.view.MotionEvent"/>
+</method>
+<method
+ chordsig="onDoubleTapEvent:(Landroid/view/MotionEvent;)Z@com.google.android.maps.GestureDetector$OnDoubleTapListener"
+ sig="boolean onDoubleTapEvent(MotionEvent)"
+ line="82"
+ startpos="2214"
+ endpos="2230"
+>
+	<marker line="-1" type="param">
+		<operand  start="2256" length="6" line="82">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="2231" length="24" line="82" chordsig="android.view.MotionEvent"/>
+</method>
+</class>
+<class chordsig="com.google.android.maps.GestureDetector$SimpleOnGestureListener" line="87">
+	<type  start="2322" length="57" line="87" chordsig="com.google.android.maps.GestureDetector$OnGestureListener"/>
+	<type  start="2381" length="59" line="87" chordsig="com.google.android.maps.GestureDetector$OnDoubleTapListener"/>
+<method
+ chordsig="&lt;init&gt;:()V@com.google.android.maps.GestureDetector$SimpleOnGestureListener"
+ sig="SimpleOnGestureListener()"
+ line="90"
+ startpos="2458"
+ endpos="2481"
+>
+	<newexpr line="92" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2506" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2502" length="29" line="92">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2523" length="7" line="92">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2506" length="16" line="92" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onSingleTapUp:(Landroid/view/MotionEvent;)Z@com.google.android.maps.GestureDetector$SimpleOnGestureListener"
+ sig="boolean onSingleTapUp(MotionEvent)"
+ line="95"
+ startpos="2559"
+ endpos="2572"
+>
+	<marker line="-1" type="param">
+		<operand  start="2598" length="6" line="95">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="2573" length="24" line="95" chordsig="android.view.MotionEvent"/>
+	<newexpr line="97" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2628" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2624" length="29" line="97">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2645" length="7" line="97">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2628" length="16" line="97" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onLongPress:(Landroid/view/MotionEvent;)V@com.google.android.maps.GestureDetector$SimpleOnGestureListener"
+ sig="void onLongPress(MotionEvent)"
+ line="100"
+ startpos="2678"
+ endpos="2689"
+>
+	<marker line="-1" type="param">
+		<operand  start="2715" length="6" line="100">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="2690" length="24" line="100" chordsig="android.view.MotionEvent"/>
+	<newexpr line="102" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2745" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2741" length="29" line="102">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2762" length="7" line="102">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2745" length="16" line="102" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onScroll:(Landroid/view/MotionEvent;Landroid/view/MotionEvent;FF)Z@com.google.android.maps.GestureDetector$SimpleOnGestureListener"
+ sig="boolean onScroll(MotionEvent,MotionEvent,float,float)"
+ line="105"
+ startpos="2798"
+ endpos="2806"
+>
+	<marker line="-1" type="param">
+		<operand  start="2832" length="6" line="105">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2865" length="6" line="105">
+			<expr><![CDATA[param2]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2879" length="6" line="105">
+			<expr><![CDATA[param3]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2893" length="6" line="105">
+			<expr><![CDATA[param4]]></expr>
+		</operand>
+	</marker>
+	<type  start="2807" length="24" line="105" chordsig="android.view.MotionEvent"/>
+	<type  start="2840" length="24" line="105" chordsig="android.view.MotionEvent"/>
+	<newexpr line="107" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2923" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2919" length="29" line="107">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2940" length="7" line="107">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2923" length="16" line="107" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onFling:(Landroid/view/MotionEvent;Landroid/view/MotionEvent;FF)Z@com.google.android.maps.GestureDetector$SimpleOnGestureListener"
+ sig="boolean onFling(MotionEvent,MotionEvent,float,float)"
+ line="110"
+ startpos="2976"
+ endpos="2983"
+>
+	<marker line="-1" type="param">
+		<operand  start="3009" length="6" line="110">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3042" length="6" line="110">
+			<expr><![CDATA[param2]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3056" length="6" line="110">
+			<expr><![CDATA[param3]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3070" length="6" line="110">
+			<expr><![CDATA[param4]]></expr>
+		</operand>
+	</marker>
+	<type  start="2984" length="24" line="110" chordsig="android.view.MotionEvent"/>
+	<type  start="3017" length="24" line="110" chordsig="android.view.MotionEvent"/>
+	<newexpr line="112" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3100" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3096" length="29" line="112">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3117" length="7" line="112">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3100" length="16" line="112" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onShowPress:(Landroid/view/MotionEvent;)V@com.google.android.maps.GestureDetector$SimpleOnGestureListener"
+ sig="void onShowPress(MotionEvent)"
+ line="115"
+ startpos="3150"
+ endpos="3161"
+>
+	<marker line="-1" type="param">
+		<operand  start="3187" length="6" line="115">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="3162" length="24" line="115" chordsig="android.view.MotionEvent"/>
+	<newexpr line="117" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3217" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3213" length="29" line="117">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3234" length="7" line="117">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3217" length="16" line="117" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onDown:(Landroid/view/MotionEvent;)Z@com.google.android.maps.GestureDetector$SimpleOnGestureListener"
+ sig="boolean onDown(MotionEvent)"
+ line="120"
+ startpos="3270"
+ endpos="3276"
+>
+	<marker line="-1" type="param">
+		<operand  start="3302" length="6" line="120">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="3277" length="24" line="120" chordsig="android.view.MotionEvent"/>
+	<newexpr line="122" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3332" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3328" length="29" line="122">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3349" length="7" line="122">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3332" length="16" line="122" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onDoubleTap:(Landroid/view/MotionEvent;)Z@com.google.android.maps.GestureDetector$SimpleOnGestureListener"
+ sig="boolean onDoubleTap(MotionEvent)"
+ line="125"
+ startpos="3385"
+ endpos="3396"
+>
+	<marker line="-1" type="param">
+		<operand  start="3422" length="6" line="125">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="3397" length="24" line="125" chordsig="android.view.MotionEvent"/>
+	<newexpr line="127" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3452" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3448" length="29" line="127">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3469" length="7" line="127">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3452" length="16" line="127" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onDoubleTapEvent:(Landroid/view/MotionEvent;)Z@com.google.android.maps.GestureDetector$SimpleOnGestureListener"
+ sig="boolean onDoubleTapEvent(MotionEvent)"
+ line="130"
+ startpos="3505"
+ endpos="3521"
+>
+	<marker line="-1" type="param">
+		<operand  start="3547" length="6" line="130">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="3522" length="24" line="130" chordsig="android.view.MotionEvent"/>
+	<newexpr line="132" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3577" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3573" length="29" line="132">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3594" length="7" line="132">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3577" length="16" line="132" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onSingleTapConfirmed:(Landroid/view/MotionEvent;)Z@com.google.android.maps.GestureDetector$SimpleOnGestureListener"
+ sig="boolean onSingleTapConfirmed(MotionEvent)"
+ line="135"
+ startpos="3630"
+ endpos="3650"
+>
+	<marker line="-1" type="param">
+		<operand  start="3676" length="6" line="135">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="3651" length="24" line="135" chordsig="android.view.MotionEvent"/>
+	<newexpr line="137" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3706" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3702" length="29" line="137">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3723" length="7" line="137">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3706" length="16" line="137" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</class>
+</root>

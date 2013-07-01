@@ -1,0 +1,367 @@
+<root>
+<class chordsig="android.appwidget.AppWidgetHostView" line="2">
+	<type  start="68" length="26" line="3" chordsig="android.widget.FrameLayout"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.appwidget.AppWidgetHostView"
+ sig="AppWidgetHostView(Context)"
+ line="5"
+ startpos="105"
+ endpos="122"
+>
+	<marker line="-1" type="param">
+		<operand  start="147" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="123" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="165" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="195" length="25" line="5" chordsig="android.util.AttributeSet"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="240" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="236" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="257" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="240" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;II)V@android.appwidget.AppWidgetHostView"
+ sig="AppWidgetHostView(Context,int,int)"
+ line="6"
+ startpos="277"
+ endpos="294"
+>
+	<marker line="-1" type="param">
+		<operand  start="319" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="332" length="11" line="6">
+			<expr><![CDATA[animationIn]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="349" length="12" line="6">
+			<expr><![CDATA[animationOut]]></expr>
+		</operand>
+	</marker>
+	<type  start="295" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="372" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="402" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="447" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="443" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="464" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="447" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setAppWidget:(ILandroid/appwidget/AppWidgetProviderInfo;)V@android.appwidget.AppWidgetHostView"
+ sig="void setAppWidget(int,AppWidgetProviderInfo)"
+ line="7"
+ startpos="489"
+ endpos="501"
+>
+	<marker line="-1" type="param">
+		<operand  start="506" length="11" line="7">
+			<expr><![CDATA[appWidgetId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="559" length="4" line="7">
+			<expr><![CDATA[info]]></expr>
+		</operand>
+	</marker>
+	<type  start="519" length="39" line="7" chordsig="android.appwidget.AppWidgetProviderInfo"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="577" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="573" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="594" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="577" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDefaultPaddingForWidget:(Landroid/content/Context;Landroid/content/ComponentName;Landroid/graphics/Rect;)Landroid/graphics/Rect;@android.appwidget.AppWidgetHostView"
+ sig="Rect getDefaultPaddingForWidget(Context,ComponentName,Rect)"
+ line="8"
+ startpos="643"
+ endpos="669"
+>
+	<marker line="-1" type="param">
+		<operand  start="694" length="7" line="8">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="733" length="9" line="8">
+			<expr><![CDATA[component]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="766" length="7" line="8">
+			<expr><![CDATA[padding]]></expr>
+		</operand>
+	</marker>
+	<type  start="621" length="21" line="8" chordsig="android.graphics.Rect"/>
+	<type  start="670" length="23" line="8" chordsig="android.content.Context"/>
+	<type  start="703" length="29" line="8" chordsig="android.content.ComponentName"/>
+	<type  start="744" length="21" line="8" chordsig="android.graphics.Rect"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="787" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="783" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="804" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="787" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAppWidgetId:()I@android.appwidget.AppWidgetHostView"
+ sig="int getAppWidgetId()"
+ line="9"
+ startpos="828"
+ endpos="842"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="857" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="853" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="874" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="857" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAppWidgetInfo:()Landroid/appwidget/AppWidgetProviderInfo;@android.appwidget.AppWidgetHostView"
+ sig="AppWidgetProviderInfo getAppWidgetInfo()"
+ line="10"
+ startpos="934"
+ endpos="950"
+>
+	<type  start="894" length="39" line="10" chordsig="android.appwidget.AppWidgetProviderInfo"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="965" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="961" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="982" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="965" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dispatchSaveInstanceState:(Landroid/util/SparseArray;)V@android.appwidget.AppWidgetHostView"
+ sig="void dispatchSaveInstanceState(SparseArray&lt;Parcelable&gt;)"
+ line="11"
+ startpos="1010"
+ endpos="1035"
+>
+	<marker line="-1" type="param">
+		<operand  start="1084" length="9" line="11">
+			<expr><![CDATA[container]]></expr>
+		</operand>
+	</marker>
+	<type  start="1036" length="24" line="11" chordsig="android.util.SparseArray"/>
+	<type  start="1061" length="21" line="11" chordsig="android.os.Parcelable"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1107" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1103" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1124" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1107" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dispatchRestoreInstanceState:(Landroid/util/SparseArray;)V@android.appwidget.AppWidgetHostView"
+ sig="void dispatchRestoreInstanceState(SparseArray&lt;Parcelable&gt;)"
+ line="12"
+ startpos="1152"
+ endpos="1180"
+>
+	<marker line="-1" type="param">
+		<operand  start="1229" length="9" line="12">
+			<expr><![CDATA[container]]></expr>
+		</operand>
+	</marker>
+	<type  start="1181" length="24" line="12" chordsig="android.util.SparseArray"/>
+	<type  start="1206" length="21" line="12" chordsig="android.os.Parcelable"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1252" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1248" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1269" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1252" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="generateLayoutParams:(Landroid/util/AttributeSet;)Landroid/widget/FrameLayout$LayoutParams;@android.appwidget.AppWidgetHostView"
+ sig="LayoutParams generateLayoutParams(AttributeSet)"
+ line="13"
+ startpos="1329"
+ endpos="1349"
+>
+	<alias>(Landroid/util/AttributeSet;)Landroid/view/ViewGroup$LayoutParams;</alias>
+	<marker line="-1" type="param">
+		<operand  start="1376" length="5" line="13">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="1289" length="39" line="13" chordsig="android.widget.FrameLayout$LayoutParams"/>
+	<type  start="1350" length="25" line="13" chordsig="android.util.AttributeSet"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1395" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1391" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1412" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1395" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="updateAppWidget:(Landroid/widget/RemoteViews;)V@android.appwidget.AppWidgetHostView"
+ sig="void updateAppWidget(RemoteViews)"
+ line="14"
+ startpos="1437"
+ endpos="1452"
+>
+	<marker line="-1" type="param">
+		<operand  start="1480" length="11" line="14">
+			<expr><![CDATA[remoteViews]]></expr>
+		</operand>
+	</marker>
+	<type  start="1453" length="26" line="14" chordsig="android.widget.RemoteViews"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1505" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1501" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1522" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1505" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="drawChild:(Landroid/graphics/Canvas;Landroid/view/View;J)Z@android.appwidget.AppWidgetHostView"
+ sig="boolean drawChild(Canvas,View,long)"
+ line="15"
+ startpos="1553"
+ endpos="1562"
+>
+	<marker line="-1" type="param">
+		<operand  start="1587" length="6" line="15">
+			<expr><![CDATA[canvas]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1613" length="5" line="15">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1625" length="11" line="15">
+			<expr><![CDATA[drawingTime]]></expr>
+		</operand>
+	</marker>
+	<type  start="1563" length="23" line="15" chordsig="android.graphics.Canvas"/>
+	<type  start="1595" length="17" line="15" chordsig="android.view.View"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1650" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1646" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1667" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1650" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="prepareView:(Landroid/view/View;)V@android.appwidget.AppWidgetHostView"
+ sig="void prepareView(View)"
+ line="16"
+ startpos="1695"
+ endpos="1706"
+>
+	<marker line="-1" type="param">
+		<operand  start="1725" length="4" line="16">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<type  start="1707" length="17" line="16" chordsig="android.view.View"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1743" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1739" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1760" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1743" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDefaultView:()Landroid/view/View;@android.appwidget.AppWidgetHostView"
+ sig="View getDefaultView()"
+ line="17"
+ startpos="1801"
+ endpos="1815"
+>
+	<type  start="1783" length="17" line="17" chordsig="android.view.View"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1830" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1826" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1847" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1830" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getErrorView:()Landroid/view/View;@android.appwidget.AppWidgetHostView"
+ sig="View getErrorView()"
+ line="18"
+ startpos="1888"
+ endpos="1900"
+>
+	<type  start="1870" length="17" line="18" chordsig="android.view.View"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1915" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1911" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1932" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1915" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

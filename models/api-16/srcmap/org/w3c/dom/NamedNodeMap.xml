@@ -1,0 +1,128 @@
+<root>
+<class chordsig="org.w3c.dom.NamedNodeMap" line="2">
+<method
+ chordsig="getNamedItem:(Ljava/lang/String;)Lorg/w3c/dom/Node;@org.w3c.dom.NamedNodeMap"
+ sig="Node getNamedItem(String)"
+ line="4"
+ startpos="87"
+ endpos="99"
+>
+	<marker line="-1" type="param">
+		<operand  start="117" length="4" line="4">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="70" length="16" line="4" chordsig="org.w3c.dom.Node"/>
+	<type  start="100" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setNamedItem:(Lorg/w3c/dom/Node;)Lorg/w3c/dom/Node;@org.w3c.dom.NamedNodeMap"
+ sig="Node setNamedItem(Node)"
+ line="5"
+ startpos="158"
+ endpos="170"
+>
+	<marker line="-1" type="param">
+		<operand  start="188" length="3" line="5">
+			<expr><![CDATA[arg]]></expr>
+		</operand>
+	</marker>
+	<type  start="141" length="16" line="5" chordsig="org.w3c.dom.Node"/>
+	<type  start="171" length="16" line="5" chordsig="org.w3c.dom.Node"/>
+</method>
+<method
+ chordsig="removeNamedItem:(Ljava/lang/String;)Lorg/w3c/dom/Node;@org.w3c.dom.NamedNodeMap"
+ sig="Node removeNamedItem(String)"
+ line="6"
+ startpos="260"
+ endpos="275"
+>
+	<marker line="-1" type="param">
+		<operand  start="293" length="4" line="6">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="243" length="16" line="6" chordsig="org.w3c.dom.Node"/>
+	<type  start="276" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="item:(I)Lorg/w3c/dom/Node;@org.w3c.dom.NamedNodeMap"
+ sig="Node item(int)"
+ line="7"
+ startpos="366"
+ endpos="370"
+>
+	<marker line="-1" type="param">
+		<operand  start="375" length="5" line="7">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="349" length="16" line="7" chordsig="org.w3c.dom.Node"/>
+</method>
+<method
+ chordsig="getLength:()I@org.w3c.dom.NamedNodeMap"
+ sig="int getLength()"
+ line="8"
+ startpos="404"
+ endpos="413"
+>
+</method>
+<method
+ chordsig="getNamedItemNS:(Ljava/lang/String;Ljava/lang/String;)Lorg/w3c/dom/Node;@org.w3c.dom.NamedNodeMap"
+ sig="Node getNamedItemNS(String,String)"
+ line="9"
+ startpos="451"
+ endpos="465"
+>
+	<marker line="-1" type="param">
+		<operand  start="483" length="12" line="9">
+			<expr><![CDATA[namespaceURI]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="514" length="9" line="9">
+			<expr><![CDATA[localName]]></expr>
+		</operand>
+	</marker>
+	<type  start="434" length="16" line="9" chordsig="org.w3c.dom.Node"/>
+	<type  start="466" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="497" length="16" line="9" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setNamedItemNS:(Lorg/w3c/dom/Node;)Lorg/w3c/dom/Node;@org.w3c.dom.NamedNodeMap"
+ sig="Node setNamedItemNS(Node)"
+ line="10"
+ startpos="592"
+ endpos="606"
+>
+	<marker line="-1" type="param">
+		<operand  start="624" length="3" line="10">
+			<expr><![CDATA[arg]]></expr>
+		</operand>
+	</marker>
+	<type  start="575" length="16" line="10" chordsig="org.w3c.dom.Node"/>
+	<type  start="607" length="16" line="10" chordsig="org.w3c.dom.Node"/>
+</method>
+<method
+ chordsig="removeNamedItemNS:(Ljava/lang/String;Ljava/lang/String;)Lorg/w3c/dom/Node;@org.w3c.dom.NamedNodeMap"
+ sig="Node removeNamedItemNS(String,String)"
+ line="11"
+ startpos="696"
+ endpos="713"
+>
+	<marker line="-1" type="param">
+		<operand  start="731" length="12" line="11">
+			<expr><![CDATA[namespaceURI]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="762" length="9" line="11">
+			<expr><![CDATA[localName]]></expr>
+		</operand>
+	</marker>
+	<type  start="679" length="16" line="11" chordsig="org.w3c.dom.Node"/>
+	<type  start="714" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="745" length="16" line="11" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

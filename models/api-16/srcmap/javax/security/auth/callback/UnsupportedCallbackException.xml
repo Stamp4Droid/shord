@@ -1,0 +1,78 @@
+<root>
+<class chordsig="javax.security.auth.callback.UnsupportedCallbackException" line="2">
+	<type  start="90" length="19" line="3" chordsig="java.lang.Exception"/>
+<method
+ chordsig="&lt;init&gt;:(Ljavax/security/auth/callback/Callback;)V@javax.security.auth.callback.UnsupportedCallbackException"
+ sig="UnsupportedCallbackException(Callback)"
+ line="5"
+ startpos="120"
+ endpos="148"
+>
+	<marker line="-1" type="param">
+		<operand  start="187" length="8" line="5">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<type  start="149" length="37" line="5" chordsig="javax.security.auth.callback.Callback"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="209" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="205" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="226" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="209" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljavax/security/auth/callback/Callback;Ljava/lang/String;)V@javax.security.auth.callback.UnsupportedCallbackException"
+ sig="UnsupportedCallbackException(Callback,String)"
+ line="6"
+ startpos="246"
+ endpos="274"
+>
+	<marker line="-1" type="param">
+		<operand  start="313" length="8" line="6">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="340" length="7" line="6">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="275" length="37" line="6" chordsig="javax.security.auth.callback.Callback"/>
+	<type  start="323" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="361" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="357" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="378" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="361" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCallback:()Ljavax/security/auth/callback/Callback;@javax.security.auth.callback.UnsupportedCallbackException"
+ sig="Callback getCallback()"
+ line="7"
+ startpos="436"
+ endpos="447"
+>
+	<type  start="398" length="37" line="7" chordsig="javax.security.auth.callback.Callback"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="462" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="458" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="479" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="462" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

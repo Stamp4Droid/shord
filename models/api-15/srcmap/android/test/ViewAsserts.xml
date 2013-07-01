@@ -1,0 +1,586 @@
+<root>
+<class chordsig="android.test.ViewAsserts" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.test.ViewAsserts"
+ sig="ViewAsserts()"
+ line="4"
+ startpos="49"
+ endpos="60"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="75" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="71" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="92" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="75" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertOnScreen:(Landroid/view/View;Landroid/view/View;)V@android.test.ViewAsserts"
+ sig="void assertOnScreen(View,View)"
+ line="5"
+ startpos="124"
+ endpos="138"
+>
+	<marker line="-1" type="param">
+		<operand  start="157" length="6" line="5">
+			<expr><![CDATA[origin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="183" length="4" line="5">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<type  start="139" length="17" line="5" chordsig="android.view.View"/>
+	<type  start="165" length="17" line="5" chordsig="android.view.View"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="201" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="197" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="218" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="201" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertOffScreenBelow:(Landroid/view/View;Landroid/view/View;)V@android.test.ViewAsserts"
+ sig="void assertOffScreenBelow(View,View)"
+ line="6"
+ startpos="250"
+ endpos="270"
+>
+	<marker line="-1" type="param">
+		<operand  start="289" length="6" line="6">
+			<expr><![CDATA[origin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="315" length="4" line="6">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<type  start="271" length="17" line="6" chordsig="android.view.View"/>
+	<type  start="297" length="17" line="6" chordsig="android.view.View"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="333" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="329" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="350" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="333" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertOffScreenAbove:(Landroid/view/View;Landroid/view/View;)V@android.test.ViewAsserts"
+ sig="void assertOffScreenAbove(View,View)"
+ line="7"
+ startpos="382"
+ endpos="402"
+>
+	<marker line="-1" type="param">
+		<operand  start="421" length="6" line="7">
+			<expr><![CDATA[origin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="447" length="4" line="7">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<type  start="403" length="17" line="7" chordsig="android.view.View"/>
+	<type  start="429" length="17" line="7" chordsig="android.view.View"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="465" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="461" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="482" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="465" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertHasScreenCoordinates:(Landroid/view/View;Landroid/view/View;II)V@android.test.ViewAsserts"
+ sig="void assertHasScreenCoordinates(View,View,int,int)"
+ line="8"
+ startpos="514"
+ endpos="540"
+>
+	<marker line="-1" type="param">
+		<operand  start="559" length="6" line="8">
+			<expr><![CDATA[origin]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="585" length="4" line="8">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="595" length="1" line="8">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="602" length="1" line="8">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<type  start="541" length="17" line="8" chordsig="android.view.View"/>
+	<type  start="567" length="17" line="8" chordsig="android.view.View"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="617" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="613" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="634" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="617" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertBaselineAligned:(Landroid/view/View;Landroid/view/View;)V@android.test.ViewAsserts"
+ sig="void assertBaselineAligned(View,View)"
+ line="9"
+ startpos="666"
+ endpos="687"
+>
+	<marker line="-1" type="param">
+		<operand  start="706" length="5" line="9">
+			<expr><![CDATA[first]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="731" length="6" line="9">
+			<expr><![CDATA[second]]></expr>
+		</operand>
+	</marker>
+	<type  start="688" length="17" line="9" chordsig="android.view.View"/>
+	<type  start="713" length="17" line="9" chordsig="android.view.View"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="751" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="747" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="768" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="751" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertRightAligned:(Landroid/view/View;Landroid/view/View;)V@android.test.ViewAsserts"
+ sig="void assertRightAligned(View,View)"
+ line="10"
+ startpos="800"
+ endpos="818"
+>
+	<marker line="-1" type="param">
+		<operand  start="837" length="5" line="10">
+			<expr><![CDATA[first]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="862" length="6" line="10">
+			<expr><![CDATA[second]]></expr>
+		</operand>
+	</marker>
+	<type  start="819" length="17" line="10" chordsig="android.view.View"/>
+	<type  start="844" length="17" line="10" chordsig="android.view.View"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="882" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="878" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="899" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="882" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertRightAligned:(Landroid/view/View;Landroid/view/View;I)V@android.test.ViewAsserts"
+ sig="void assertRightAligned(View,View,int)"
+ line="11"
+ startpos="931"
+ endpos="949"
+>
+	<marker line="-1" type="param">
+		<operand  start="968" length="5" line="11">
+			<expr><![CDATA[first]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="993" length="6" line="11">
+			<expr><![CDATA[second]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1005" length="6" line="11">
+			<expr><![CDATA[margin]]></expr>
+		</operand>
+	</marker>
+	<type  start="950" length="17" line="11" chordsig="android.view.View"/>
+	<type  start="975" length="17" line="11" chordsig="android.view.View"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1025" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1021" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1042" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1025" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertLeftAligned:(Landroid/view/View;Landroid/view/View;)V@android.test.ViewAsserts"
+ sig="void assertLeftAligned(View,View)"
+ line="12"
+ startpos="1074"
+ endpos="1091"
+>
+	<marker line="-1" type="param">
+		<operand  start="1110" length="5" line="12">
+			<expr><![CDATA[first]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1135" length="6" line="12">
+			<expr><![CDATA[second]]></expr>
+		</operand>
+	</marker>
+	<type  start="1092" length="17" line="12" chordsig="android.view.View"/>
+	<type  start="1117" length="17" line="12" chordsig="android.view.View"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1155" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1151" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1172" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1155" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertLeftAligned:(Landroid/view/View;Landroid/view/View;I)V@android.test.ViewAsserts"
+ sig="void assertLeftAligned(View,View,int)"
+ line="13"
+ startpos="1204"
+ endpos="1221"
+>
+	<marker line="-1" type="param">
+		<operand  start="1240" length="5" line="13">
+			<expr><![CDATA[first]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1265" length="6" line="13">
+			<expr><![CDATA[second]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1277" length="6" line="13">
+			<expr><![CDATA[margin]]></expr>
+		</operand>
+	</marker>
+	<type  start="1222" length="17" line="13" chordsig="android.view.View"/>
+	<type  start="1247" length="17" line="13" chordsig="android.view.View"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1297" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1293" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1314" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1297" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertBottomAligned:(Landroid/view/View;Landroid/view/View;)V@android.test.ViewAsserts"
+ sig="void assertBottomAligned(View,View)"
+ line="14"
+ startpos="1346"
+ endpos="1365"
+>
+	<marker line="-1" type="param">
+		<operand  start="1384" length="5" line="14">
+			<expr><![CDATA[first]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1409" length="6" line="14">
+			<expr><![CDATA[second]]></expr>
+		</operand>
+	</marker>
+	<type  start="1366" length="17" line="14" chordsig="android.view.View"/>
+	<type  start="1391" length="17" line="14" chordsig="android.view.View"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1429" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1425" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1446" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1429" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertBottomAligned:(Landroid/view/View;Landroid/view/View;I)V@android.test.ViewAsserts"
+ sig="void assertBottomAligned(View,View,int)"
+ line="15"
+ startpos="1478"
+ endpos="1497"
+>
+	<marker line="-1" type="param">
+		<operand  start="1516" length="5" line="15">
+			<expr><![CDATA[first]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1541" length="6" line="15">
+			<expr><![CDATA[second]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1553" length="6" line="15">
+			<expr><![CDATA[margin]]></expr>
+		</operand>
+	</marker>
+	<type  start="1498" length="17" line="15" chordsig="android.view.View"/>
+	<type  start="1523" length="17" line="15" chordsig="android.view.View"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1573" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1569" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1590" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1573" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertTopAligned:(Landroid/view/View;Landroid/view/View;)V@android.test.ViewAsserts"
+ sig="void assertTopAligned(View,View)"
+ line="16"
+ startpos="1622"
+ endpos="1638"
+>
+	<marker line="-1" type="param">
+		<operand  start="1657" length="5" line="16">
+			<expr><![CDATA[first]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1682" length="6" line="16">
+			<expr><![CDATA[second]]></expr>
+		</operand>
+	</marker>
+	<type  start="1639" length="17" line="16" chordsig="android.view.View"/>
+	<type  start="1664" length="17" line="16" chordsig="android.view.View"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1702" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1698" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1719" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1702" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertTopAligned:(Landroid/view/View;Landroid/view/View;I)V@android.test.ViewAsserts"
+ sig="void assertTopAligned(View,View,int)"
+ line="17"
+ startpos="1751"
+ endpos="1767"
+>
+	<marker line="-1" type="param">
+		<operand  start="1786" length="5" line="17">
+			<expr><![CDATA[first]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1811" length="6" line="17">
+			<expr><![CDATA[second]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1823" length="6" line="17">
+			<expr><![CDATA[margin]]></expr>
+		</operand>
+	</marker>
+	<type  start="1768" length="17" line="17" chordsig="android.view.View"/>
+	<type  start="1793" length="17" line="17" chordsig="android.view.View"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1843" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1839" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1860" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1843" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertHorizontalCenterAligned:(Landroid/view/View;Landroid/view/View;)V@android.test.ViewAsserts"
+ sig="void assertHorizontalCenterAligned(View,View)"
+ line="18"
+ startpos="1892"
+ endpos="1921"
+>
+	<marker line="-1" type="param">
+		<operand  start="1940" length="9" line="18">
+			<expr><![CDATA[reference]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1969" length="4" line="18">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<type  start="1922" length="17" line="18" chordsig="android.view.View"/>
+	<type  start="1951" length="17" line="18" chordsig="android.view.View"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1987" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1983" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2004" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1987" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertVerticalCenterAligned:(Landroid/view/View;Landroid/view/View;)V@android.test.ViewAsserts"
+ sig="void assertVerticalCenterAligned(View,View)"
+ line="19"
+ startpos="2036"
+ endpos="2063"
+>
+	<marker line="-1" type="param">
+		<operand  start="2082" length="9" line="19">
+			<expr><![CDATA[reference]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2111" length="4" line="19">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<type  start="2064" length="17" line="19" chordsig="android.view.View"/>
+	<type  start="2093" length="17" line="19" chordsig="android.view.View"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2129" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2125" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2146" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2129" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertGroupIntegrity:(Landroid/view/ViewGroup;)V@android.test.ViewAsserts"
+ sig="void assertGroupIntegrity(ViewGroup)"
+ line="20"
+ startpos="2178"
+ endpos="2198"
+>
+	<marker line="-1" type="param">
+		<operand  start="2222" length="6" line="20">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<type  start="2199" length="22" line="20" chordsig="android.view.ViewGroup"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2242" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2238" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2259" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2242" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertGroupContains:(Landroid/view/ViewGroup;Landroid/view/View;)V@android.test.ViewAsserts"
+ sig="void assertGroupContains(ViewGroup,View)"
+ line="21"
+ startpos="2291"
+ endpos="2310"
+>
+	<marker line="-1" type="param">
+		<operand  start="2334" length="6" line="21">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2360" length="5" line="21">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<type  start="2311" length="22" line="21" chordsig="android.view.ViewGroup"/>
+	<type  start="2342" length="17" line="21" chordsig="android.view.View"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2379" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2375" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2396" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2379" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertGroupNotContains:(Landroid/view/ViewGroup;Landroid/view/View;)V@android.test.ViewAsserts"
+ sig="void assertGroupNotContains(ViewGroup,View)"
+ line="22"
+ startpos="2428"
+ endpos="2450"
+>
+	<marker line="-1" type="param">
+		<operand  start="2474" length="6" line="22">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2500" length="5" line="22">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<type  start="2451" length="22" line="22" chordsig="android.view.ViewGroup"/>
+	<type  start="2482" length="17" line="22" chordsig="android.view.View"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2519" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2515" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2536" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2519" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

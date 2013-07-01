@@ -1,0 +1,21 @@
+<root>
+<class chordsig="java.sql.Savepoint" line="2">
+<method
+ chordsig="getSavepointId:()I@java.sql.Savepoint"
+ sig="int getSavepointId()"
+ line="4"
+ startpos="68"
+ endpos="82"
+>
+</method>
+<method
+ chordsig="getSavepointName:()Ljava/lang/String;@java.sql.Savepoint"
+ sig="String getSavepointName()"
+ line="5"
+ startpos="149"
+ endpos="165"
+>
+	<type  start="132" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

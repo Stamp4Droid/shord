@@ -1,0 +1,142 @@
+<root>
+<class chordsig="android.os.storage.StorageManager" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.os.storage.StorageManager"
+ sig="StorageManager()"
+ line="4"
+ startpos="58"
+ endpos="72"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="87" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="83" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="104" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="87" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="mountObb:(Ljava/lang/String;Ljava/lang/String;Landroid/os/storage/OnObbStateChangeListener;)Z@android.os.storage.StorageManager"
+ sig="boolean mountObb(String,String,OnObbStateChangeListener)"
+ line="5"
+ startpos="132"
+ endpos="140"
+>
+	<marker line="-1" type="param">
+		<operand  start="158" length="8" line="5">
+			<expr><![CDATA[filename]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="185" length="3" line="5">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="234" length="8" line="5">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="141" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="168" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="190" length="43" line="5" chordsig="android.os.storage.OnObbStateChangeListener"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="256" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="252" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="273" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="256" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unmountObb:(Ljava/lang/String;ZLandroid/os/storage/OnObbStateChangeListener;)Z@android.os.storage.StorageManager"
+ sig="boolean unmountObb(String,boolean,OnObbStateChangeListener)"
+ line="6"
+ startpos="301"
+ endpos="311"
+>
+	<marker line="-1" type="param">
+		<operand  start="329" length="8" line="6">
+			<expr><![CDATA[filename]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="347" length="5" line="6">
+			<expr><![CDATA[force]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="398" length="8" line="6">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="312" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="354" length="43" line="6" chordsig="android.os.storage.OnObbStateChangeListener"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="420" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="416" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="437" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="420" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isObbMounted:(Ljava/lang/String;)Z@android.os.storage.StorageManager"
+ sig="boolean isObbMounted(String)"
+ line="7"
+ startpos="465"
+ endpos="477"
+>
+	<marker line="-1" type="param">
+		<operand  start="495" length="8" line="7">
+			<expr><![CDATA[filename]]></expr>
+		</operand>
+	</marker>
+	<type  start="478" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="517" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="513" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="534" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="517" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMountedObbPath:(Ljava/lang/String;)Ljava/lang/String;@android.os.storage.StorageManager"
+ sig="String getMountedObbPath(String)"
+ line="8"
+ startpos="571"
+ endpos="588"
+>
+	<marker line="-1" type="param">
+		<operand  start="606" length="8" line="8">
+			<expr><![CDATA[filename]]></expr>
+		</operand>
+	</marker>
+	<type  start="554" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="589" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="628" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="624" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="645" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="628" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

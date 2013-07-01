@@ -1,0 +1,251 @@
+<root>
+<class chordsig="android.preference.PreferenceScreen" line="2">
+	<type  start="74" length="34" line="3" chordsig="android.preference.PreferenceGroup"/>
+	<type  start="122" length="46" line="4" chordsig="android.widget.AdapterView$OnItemClickListener"/>
+	<type  start="170" length="49" line="4" chordsig="android.content.DialogInterface$OnDismissListener"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.preference.PreferenceScreen"
+ sig="PreferenceScreen()"
+ line="6"
+ startpos="222"
+ endpos="238"
+>
+	<type  start="250" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="280" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="323" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="319" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="340" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="323" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRootAdapter:()Landroid/widget/ListAdapter;@android.preference.PreferenceScreen"
+ sig="ListAdapter getRootAdapter()"
+ line="7"
+ startpos="387"
+ endpos="401"
+>
+	<type  start="360" length="26" line="7" chordsig="android.widget.ListAdapter"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="416" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="412" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="433" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="416" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onCreateRootAdapter:()Landroid/widget/ListAdapter;@android.preference.PreferenceScreen"
+ sig="ListAdapter onCreateRootAdapter()"
+ line="8"
+ startpos="483"
+ endpos="502"
+>
+	<type  start="456" length="26" line="8" chordsig="android.widget.ListAdapter"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="517" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="513" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="534" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="517" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="bind:(Landroid/widget/ListView;)V@android.preference.PreferenceScreen"
+ sig="void bind(ListView)"
+ line="9"
+ startpos="559"
+ endpos="563"
+>
+	<marker line="-1" type="param">
+		<operand  start="588" length="8" line="9">
+			<expr><![CDATA[listView]]></expr>
+		</operand>
+	</marker>
+	<type  start="564" length="23" line="9" chordsig="android.widget.ListView"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="610" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="606" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="627" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="610" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onClick:()V@android.preference.PreferenceScreen"
+ sig="void onClick()"
+ line="10"
+ startpos="655"
+ endpos="662"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="677" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="673" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="694" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="677" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onDismiss:(Landroid/content/DialogInterface;)V@android.preference.PreferenceScreen"
+ sig="void onDismiss(DialogInterface)"
+ line="11"
+ startpos="719"
+ endpos="728"
+>
+	<marker line="-1" type="param">
+		<operand  start="761" length="6" line="11">
+			<expr><![CDATA[dialog]]></expr>
+		</operand>
+	</marker>
+	<type  start="729" length="31" line="11" chordsig="android.content.DialogInterface"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="781" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="777" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="798" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="781" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDialog:()Landroid/app/Dialog;@android.preference.PreferenceScreen"
+ sig="Dialog getDialog()"
+ line="12"
+ startpos="837"
+ endpos="846"
+>
+	<type  start="818" length="18" line="12" chordsig="android.app.Dialog"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="861" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="857" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="878" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="861" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onItemClick:(Landroid/widget/AdapterView;Landroid/view/View;IJ)V@android.preference.PreferenceScreen"
+ sig="void onItemClick(AdapterView,View,int,long)"
+ line="13"
+ startpos="903"
+ endpos="914"
+>
+	<marker line="-1" type="param">
+		<operand  start="942" length="6" line="13">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="968" length="4" line="13">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="978" length="8" line="13">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="993" length="2" line="13">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<type  start="915" length="26" line="13" chordsig="android.widget.AdapterView"/>
+	<type  start="950" length="17" line="13" chordsig="android.view.View"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1009" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1005" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1026" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1009" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isOnSameScreenAsChildren:()Z@android.preference.PreferenceScreen"
+ sig="boolean isOnSameScreenAsChildren()"
+ line="14"
+ startpos="1057"
+ endpos="1081"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1096" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1092" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1113" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1096" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onSaveInstanceState:()Landroid/os/Parcelable;@android.preference.PreferenceScreen"
+ sig="Parcelable onSaveInstanceState()"
+ line="15"
+ startpos="1158"
+ endpos="1177"
+>
+	<type  start="1136" length="21" line="15" chordsig="android.os.Parcelable"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1192" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1188" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1209" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1192" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onRestoreInstanceState:(Landroid/os/Parcelable;)V@android.preference.PreferenceScreen"
+ sig="void onRestoreInstanceState(Parcelable)"
+ line="16"
+ startpos="1237"
+ endpos="1259"
+>
+	<marker line="-1" type="param">
+		<operand  start="1282" length="5" line="16">
+			<expr><![CDATA[state]]></expr>
+		</operand>
+	</marker>
+	<type  start="1260" length="21" line="16" chordsig="android.os.Parcelable"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1301" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1297" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1318" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1301" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

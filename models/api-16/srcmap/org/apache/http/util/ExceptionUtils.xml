@@ -1,0 +1,52 @@
+<root>
+<class chordsig="org.apache.http.util.ExceptionUtils" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.util.ExceptionUtils"
+ sig="ExceptionUtils()"
+ line="4"
+ startpos="66"
+ endpos="80"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="95" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="91" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="112" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="95" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="initCause:(Ljava/lang/Throwable;Ljava/lang/Throwable;)V@org.apache.http.util.ExceptionUtils"
+ sig="void initCause(Throwable,Throwable)"
+ line="5"
+ startpos="144"
+ endpos="153"
+>
+	<marker line="-1" type="param">
+		<operand  start="174" length="9" line="5">
+			<expr><![CDATA[throwable]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="205" length="5" line="5">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="154" length="19" line="5" chordsig="java.lang.Throwable"/>
+	<type  start="185" length="19" line="5" chordsig="java.lang.Throwable"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="224" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="220" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="241" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="224" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

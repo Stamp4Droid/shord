@@ -1,0 +1,47 @@
+<root>
+<class chordsig="java.util.ConcurrentModificationException" line="2">
+	<type  start="74" length="26" line="3" chordsig="java.lang.RuntimeException"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.util.ConcurrentModificationException"
+ sig="ConcurrentModificationException()"
+ line="5"
+ startpos="111"
+ endpos="142"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="157" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="153" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="174" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="157" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.util.ConcurrentModificationException"
+ sig="ConcurrentModificationException(String)"
+ line="6"
+ startpos="194"
+ endpos="225"
+>
+	<marker line="-1" type="param">
+		<operand  start="243" length="13" line="6">
+			<expr><![CDATA[detailMessage]]></expr>
+		</operand>
+	</marker>
+	<type  start="226" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="270" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="266" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="287" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="270" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,226 @@
+<root>
+<class chordsig="java.util.zip.DeflaterOutputStream" line="2">
+	<type  start="67" length="26" line="3" chordsig="java.io.FilterOutputStream"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/OutputStream;Ljava/util/zip/Deflater;)V@java.util.zip.DeflaterOutputStream"
+ sig="DeflaterOutputStream(OutputStream,Deflater)"
+ line="5"
+ startpos="104"
+ endpos="124"
+>
+	<marker line="-1" type="param">
+		<operand  start="146" length="2" line="5">
+			<expr><![CDATA[os]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="173" length="3" line="5">
+			<expr><![CDATA[def]]></expr>
+		</operand>
+	</marker>
+	<type  start="125" length="20" line="5" chordsig="java.io.OutputStream"/>
+	<type  start="150" length="22" line="5" chordsig="java.util.zip.Deflater"/>
+	<type  start="187" length="20" line="5" chordsig="java.io.OutputStream"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="225" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="221" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="242" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="225" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/OutputStream;)V@java.util.zip.DeflaterOutputStream"
+ sig="DeflaterOutputStream(OutputStream)"
+ line="6"
+ startpos="262"
+ endpos="282"
+>
+	<marker line="-1" type="param">
+		<operand  start="304" length="2" line="6">
+			<expr><![CDATA[os]]></expr>
+		</operand>
+	</marker>
+	<type  start="283" length="20" line="6" chordsig="java.io.OutputStream"/>
+	<type  start="317" length="20" line="6" chordsig="java.io.OutputStream"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="355" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="351" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="372" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="355" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/OutputStream;Ljava/util/zip/Deflater;I)V@java.util.zip.DeflaterOutputStream"
+ sig="DeflaterOutputStream(OutputStream,Deflater,int)"
+ line="7"
+ startpos="392"
+ endpos="412"
+>
+	<marker line="-1" type="param">
+		<operand  start="434" length="2" line="7">
+			<expr><![CDATA[os]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="461" length="3" line="7">
+			<expr><![CDATA[def]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="470" length="5" line="7">
+			<expr><![CDATA[bsize]]></expr>
+		</operand>
+	</marker>
+	<type  start="413" length="20" line="7" chordsig="java.io.OutputStream"/>
+	<type  start="438" length="22" line="7" chordsig="java.util.zip.Deflater"/>
+	<type  start="486" length="20" line="7" chordsig="java.io.OutputStream"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="524" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="520" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="541" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="524" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="deflate:()V@java.util.zip.DeflaterOutputStream"
+ sig="void deflate()"
+ line="8"
+ startpos="569"
+ endpos="576"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="618" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="614" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="635" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="618" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:()V@java.util.zip.DeflaterOutputStream"
+ sig="void close()"
+ line="9"
+ startpos="660"
+ endpos="665"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="707" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="703" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="724" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="707" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="finish:()V@java.util.zip.DeflaterOutputStream"
+ sig="void finish()"
+ line="10"
+ startpos="749"
+ endpos="755"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="797" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="793" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="814" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="797" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="write:(I)V@java.util.zip.DeflaterOutputStream"
+ sig="void write(int)"
+ line="11"
+ startpos="839"
+ endpos="844"
+>
+	<marker line="-1" type="param">
+		<operand  start="849" length="1" line="11">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="891" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="887" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="908" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="891" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="write:([BII)V@java.util.zip.DeflaterOutputStream"
+ sig="void write(byte[],int,int)"
+ line="12"
+ startpos="933"
+ endpos="938"
+>
+	<marker line="-1" type="param">
+		<operand  start="946" length="6" line="12">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="958" length="6" line="12">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="970" length="9" line="12">
+			<expr><![CDATA[byteCount]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1020" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1016" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1037" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1020" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="flush:()V@java.util.zip.DeflaterOutputStream"
+ sig="void flush()"
+ line="13"
+ startpos="1062"
+ endpos="1067"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1109" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1105" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1126" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1109" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1177" length="22" line="15" chordsig="java.util.zip.Deflater"/>
+</class>
+</root>

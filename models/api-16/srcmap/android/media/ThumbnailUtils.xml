@@ -1,0 +1,127 @@
+<root>
+<class chordsig="android.media.ThumbnailUtils" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.media.ThumbnailUtils"
+ sig="ThumbnailUtils()"
+ line="4"
+ startpos="61"
+ endpos="75"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="90" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="86" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="107" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="90" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createVideoThumbnail:(Ljava/lang/String;I)Landroid/graphics/Bitmap;@android.media.ThumbnailUtils"
+ sig="Bitmap createVideoThumbnail(String,int)"
+ line="5"
+ startpos="158"
+ endpos="178"
+>
+	<marker line="-1" type="param">
+		<operand  start="196" length="8" line="5">
+			<expr><![CDATA[filePath]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="210" length="4" line="5">
+			<expr><![CDATA[kind]]></expr>
+		</operand>
+	</marker>
+	<type  start="134" length="23" line="5" chordsig="android.graphics.Bitmap"/>
+	<type  start="179" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="228" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="224" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="245" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="228" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="extractThumbnail:(Landroid/graphics/Bitmap;II)Landroid/graphics/Bitmap;@android.media.ThumbnailUtils"
+ sig="Bitmap extractThumbnail(Bitmap,int,int)"
+ line="6"
+ startpos="296"
+ endpos="312"
+>
+	<marker line="-1" type="param">
+		<operand  start="337" length="6" line="6">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="349" length="5" line="6">
+			<expr><![CDATA[width]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="360" length="6" line="6">
+			<expr><![CDATA[height]]></expr>
+		</operand>
+	</marker>
+	<type  start="272" length="23" line="6" chordsig="android.graphics.Bitmap"/>
+	<type  start="313" length="23" line="6" chordsig="android.graphics.Bitmap"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="380" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="376" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="397" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="380" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="extractThumbnail:(Landroid/graphics/Bitmap;III)Landroid/graphics/Bitmap;@android.media.ThumbnailUtils"
+ sig="Bitmap extractThumbnail(Bitmap,int,int,int)"
+ line="7"
+ startpos="448"
+ endpos="464"
+>
+	<marker line="-1" type="param">
+		<operand  start="489" length="6" line="7">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="501" length="5" line="7">
+			<expr><![CDATA[width]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="512" length="6" line="7">
+			<expr><![CDATA[height]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="524" length="7" line="7">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<type  start="424" length="23" line="7" chordsig="android.graphics.Bitmap"/>
+	<type  start="465" length="23" line="7" chordsig="android.graphics.Bitmap"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="545" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="541" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="562" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="545" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,276 @@
+<root>
+<class chordsig="android.graphics.SurfaceTexture" line="2">
+<class chordsig="android.graphics.SurfaceTexture$OnFrameAvailableListener" line="4">
+<method
+ chordsig="onFrameAvailable:(Landroid/graphics/SurfaceTexture;)V@android.graphics.SurfaceTexture$OnFrameAvailableListener"
+ sig="void onFrameAvailable(SurfaceTexture)"
+ line="6"
+ startpos="129"
+ endpos="145"
+>
+	<marker line="-1" type="param">
+		<operand  start="178" length="14" line="6">
+			<expr><![CDATA[surfaceTexture]]></expr>
+		</operand>
+	</marker>
+	<type  start="146" length="31" line="6" chordsig="android.graphics.SurfaceTexture"/>
+</method>
+</class>
+<class chordsig="android.graphics.SurfaceTexture$OutOfResourcesException" line="8">
+	<type  start="251" length="19" line="9" chordsig="java.lang.Exception"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.graphics.SurfaceTexture$OutOfResourcesException"
+ sig="OutOfResourcesException()"
+ line="11"
+ startpos="281"
+ endpos="304"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="319" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="315" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="336" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="319" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.graphics.SurfaceTexture$OutOfResourcesException"
+ sig="OutOfResourcesException(String)"
+ line="12"
+ startpos="356"
+ endpos="379"
+>
+	<marker line="-1" type="param">
+		<operand  start="397" length="4" line="12">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="380" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="415" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="411" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="432" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="415" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(I)V@android.graphics.SurfaceTexture"
+ sig="SurfaceTexture(int)"
+ line="14"
+ startpos="454"
+ endpos="468"
+>
+	<marker line="-1" type="param">
+		<operand  start="473" length="7" line="14">
+			<expr><![CDATA[texName]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="494" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="490" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="511" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="494" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnFrameAvailableListener:(Landroid/graphics/SurfaceTexture$OnFrameAvailableListener;)V@android.graphics.SurfaceTexture"
+ sig="void setOnFrameAvailableListener(OnFrameAvailableListener)"
+ line="15"
+ startpos="536"
+ endpos="563"
+>
+	<marker line="-1" type="param">
+		<operand  start="621" length="1" line="15">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<type  start="564" length="56" line="15" chordsig="android.graphics.SurfaceTexture$OnFrameAvailableListener"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="636" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="632" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="653" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="636" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDefaultBufferSize:(II)V@android.graphics.SurfaceTexture"
+ sig="void setDefaultBufferSize(int,int)"
+ line="16"
+ startpos="678"
+ endpos="698"
+>
+	<marker line="-1" type="param">
+		<operand  start="703" length="5" line="16">
+			<expr><![CDATA[width]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="714" length="6" line="16">
+			<expr><![CDATA[height]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="734" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="730" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="751" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="734" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="updateTexImage:()V@android.graphics.SurfaceTexture"
+ sig="void updateTexImage()"
+ line="17"
+ startpos="776"
+ endpos="790"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="805" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="801" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="822" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="805" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="detachFromGLContext:()V@android.graphics.SurfaceTexture"
+ sig="void detachFromGLContext()"
+ line="18"
+ startpos="847"
+ endpos="866"
+>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="881" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="877" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="898" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="881" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="attachToGLContext:(I)V@android.graphics.SurfaceTexture"
+ sig="void attachToGLContext(int)"
+ line="19"
+ startpos="923"
+ endpos="940"
+>
+	<marker line="-1" type="param">
+		<operand  start="945" length="7" line="19">
+			<expr><![CDATA[texName]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="966" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="962" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="983" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="966" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTransformMatrix:([F)V@android.graphics.SurfaceTexture"
+ sig="void getTransformMatrix(float[])"
+ line="20"
+ startpos="1008"
+ endpos="1026"
+>
+	<marker line="-1" type="param">
+		<operand  start="1035" length="3" line="20">
+			<expr><![CDATA[mtx]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1052" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1048" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1069" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1052" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTimestamp:()J@android.graphics.SurfaceTexture"
+ sig="long getTimestamp()"
+ line="21"
+ startpos="1094"
+ endpos="1106"
+>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1121" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1117" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1138" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1121" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="release:()V@android.graphics.SurfaceTexture"
+ sig="void release()"
+ line="22"
+ startpos="1163"
+ endpos="1170"
+>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1185" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1181" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1202" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1185" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="finalize:()V@android.graphics.SurfaceTexture"
+ sig="void finalize()"
+ line="23"
+ startpos="1230"
+ endpos="1238"
+>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1280" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1276" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1297" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1280" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

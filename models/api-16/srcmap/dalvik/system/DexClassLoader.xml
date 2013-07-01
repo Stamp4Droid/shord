@@ -1,0 +1,51 @@
+<root>
+<class chordsig="dalvik.system.DexClassLoader" line="2">
+	<type  start="61" length="32" line="3" chordsig="dalvik.system.BaseDexClassLoader"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/ClassLoader;)V@dalvik.system.DexClassLoader"
+ sig="DexClassLoader(String,String,String,ClassLoader)"
+ line="5"
+ startpos="104"
+ endpos="118"
+>
+	<marker line="-1" type="param">
+		<operand  start="136" length="7" line="5">
+			<expr><![CDATA[dexPath]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="162" length="18" line="5">
+			<expr><![CDATA[optimizedDirectory]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="199" length="11" line="5">
+			<expr><![CDATA[libraryPath]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="234" length="6" line="5">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<type  start="119" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="145" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="182" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="212" length="21" line="5" chordsig="java.lang.ClassLoader"/>
+	<type  start="251" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="274" length="12" line="5" chordsig="java.io.File"/>
+	<type  start="293" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="316" length="21" line="5" chordsig="java.lang.ClassLoader"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="355" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="351" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="372" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="355" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

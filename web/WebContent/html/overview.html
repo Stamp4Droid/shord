@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" class="fuelux">
+  <head>
+	<link href="/stamp/fuelux/css/fuelux.min.css" rel="stylesheet" />
+	
+	<style type="text/css">
+	  body {
+	  padding-top: 60px;
+	  padding-bottom: 20px;
+      }
+      
+      .source-view {height:680px; overflow:auto; resize:auto;}
+      .right-view {overflow:auto; }
+      
+      .fuelux .nav-tabs > li > a {
+      padding-top: 0px;
+      padding-bottom: 5px;
+      line-height: 10px;
+      }
+ 
+      .bar {
+      height: 8px;
+      }
+      
+      table.appslist td.status {
+      text-align: right;
+      }
+	</style>
+
+	<link href="/stamp/fuelux/css/fuelux-responsive.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../fileupload/jquery.fileupload-ui.css">
+	
+  </head>	  
+
+  <body>
+	<!-- navigation bar -->
+	<div class="navbar navbar-inverse navbar-fixed-top">
+	  <div class="navbar-inner">
+	    <div class="container">
+
+	      <ul class="nav pull-left">
+		<li><a class="brand" href="#">STAMP&alpha;-APK</a></li>
+	      </ul>
+
+	      <ul class="nav pull-left">
+		<li>
+		  <form id="fileupload" action="../fileUpload" method="POST" enctype="multipart/form-data">
+		    <span class="btn btn-success fileinput-button">
+		      <i class="icon-plus icon-white"></i>
+		      <span>Analyze</span>
+		      <input type="file" name="files[]" multiple>
+		    </span>
+		  </form>
+		</li>
+	      </ul>
+
+	      <ul class="nav">
+		<!-- Settings -->
+		<li class="dropdown">
+		  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
+		  <ul class="dropdown-menu">
+		    <li><a onClick="toggleClass()">Toggle Class</a></li>
+		    <li><a onClick="toggleFlows()">Toggle Flows</a></li>
+		    <li><a onClick="toggleWarnings()">Toggle Warnings</a></li>
+		  </ul>
+		</li>
+	      </ul>
+	      
+	      <ul class="nav">
+		<!-- Help -->
+		<li class="dropdown">
+		  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help <b class="caret"></b></a>
+		  <ul class="dropdown-menu">
+		    <li><a href="/doc/stamp.html" target="_blank">Docs</a></li>
+		    <li><a href="http://www.youtube.com/user/STAMPStanford" target="_blank">Video Tutorials</a></li>
+		  </ul>
+		</li>
+	      </ul>
+
+	    </div>
+ 	  </div>
+	</div> 
+
+	
+	<!-- content -->
+	<div class="container-fluid">
+	  <div class="row-fluid">
+
+	    <!--Sidebar content-->
+ 	    <div class="span3">
+	      <table id="appslist" class="table table-striped appslist">
+		<tbody>
+		</tbody>
+	      </table>
+	    </div>
+
+	    <!-- Main content -->
+	    <div class="span6">
+	      <div class="accordion" id="accordionFlows">
+	      </div>
+	    </div>
+
+	    <div class="span3 right-view" id="rightbar">
+		<table class="table table-condensed table-hover" id="warnings"></table>
+	    </div>
+	  </div>
+	</div>
+	
+	<div class="modal hide fade" id="errormsgs-modal">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h3>Only files with .apk extensions can be uploaded. The following files were ignored:</h3>
+		</div>
+		<div class="modal-body">
+			<ul class="unstyled" id="errormsgs">
+		  	</ul>
+		</div>
+	</div>
+	
+	<script src="/stamp/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+	<script src="/stamp/fuelux/loader.js" type="text/javascript"></script>
+	<script src="../jquery-ui/jquery.ui.widget.js"></script>
+	<script src="../fileupload/jquery.iframe-transport.js"></script>
+	<script src="../fileupload/jquery.fileupload.js"></script>
+	<script src="/stamp/scripts/processMsg.js"></script>
+
+	<script>
+		var apkIdToRow = new Object();
+		
+	  $(function () {
+		  
+        'use strict';
+
+        $('#fileupload').fileupload({
+          url: '../fileUpload',
+
+          maxFileSize: 15000000,
+          
+          add: function (e, data) {
+        	//alert('hellp');
+        	var file = data.files[0];
+        	if(file.name.match(/\.apk$/)){
+        		var row = $('<tr><td>'+file.name+'</td><td class="status"><div class="progress progess-striped" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar bar-success" style="width: 10%;"></div></div></td></tr>');
+        		apkIdToRow[file.name+file.size] = row;
+        		data.context = row.appendTo('#appslist > tbody:last');
+    			data.submit();
+        	} else {
+        		$('<li>'+file.name+'</li>').appendTo('#errormsgs');
+        		$('#errormsgs-modal').modal('show');
+        	}
+          },
+			
+          progress: function (e, data) {
+                if (data.context) {
+                    var progress = Math.floor(data.loaded / data.total * 100);
+                    data.context.find('.progress')
+                        .attr('aria-valuenow', progress)
+                        .find('.bar').css(
+                            'width',
+                            progress + '%'
+                        );
+                }
+          },
+          
+          done: function (e,data) {
+        	  data.context.find('.progress').replaceWith('<span class="label">Uploaded</span>');
+          }
+          
+        });
+	  });
+	</script>
+	
+	<script>
+	  var ws = new WebSocket("ws://localhost:8080/stamp/pushupdates");
+	  ws.onmessage = processMessage;
+	</script>
+	
+  </body>
+</html>

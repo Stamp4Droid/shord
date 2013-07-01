@@ -1,0 +1,185 @@
+<root>
+<class chordsig="android.text.style.DynamicDrawableSpan" line="2">
+	<type  start="80" length="34" line="3" chordsig="android.text.style.ReplacementSpan"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.text.style.DynamicDrawableSpan"
+ sig="DynamicDrawableSpan()"
+ line="5"
+ startpos="125"
+ endpos="144"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="159" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="155" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="176" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="159" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(I)V@android.text.style.DynamicDrawableSpan"
+ sig="DynamicDrawableSpan(int)"
+ line="6"
+ startpos="199"
+ endpos="218"
+>
+	<marker line="-1" type="param">
+		<operand  start="223" length="17" line="6">
+			<expr><![CDATA[verticalAlignment]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="254" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="250" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="271" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="254" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getVerticalAlignment:()I@android.text.style.DynamicDrawableSpan"
+ sig="int getVerticalAlignment()"
+ line="7"
+ startpos="295"
+ endpos="315"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="330" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="326" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="347" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="330" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDrawable:()Landroid/graphics/drawable/Drawable;@android.text.style.DynamicDrawableSpan"
+ sig="Drawable getDrawable()"
+ line="8"
+ startpos="411"
+ endpos="422"
+>
+	<type  start="376" length="34" line="8" chordsig="android.graphics.drawable.Drawable"/>
+</method>
+<method
+ chordsig="getSize:(Landroid/graphics/Paint;Ljava/lang/CharSequence;IILandroid/graphics/Paint$FontMetricsInt;)I@android.text.style.DynamicDrawableSpan"
+ sig="int getSize(Paint,CharSequence,int,int,FontMetricsInt)"
+ line="9"
+ startpos="438"
+ endpos="445"
+>
+	<marker line="-1" type="param">
+		<operand  start="469" length="5" line="9">
+			<expr><![CDATA[paint]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="499" length="4" line="9">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="509" length="5" line="9">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="520" length="3" line="9">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="563" length="2" line="9">
+			<expr><![CDATA[fm]]></expr>
+		</operand>
+	</marker>
+	<type  start="446" length="22" line="9" chordsig="android.graphics.Paint"/>
+	<type  start="476" length="22" line="9" chordsig="java.lang.CharSequence"/>
+	<type  start="525" length="37" line="9" chordsig="android.graphics.Paint$FontMetricsInt"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="579" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="575" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="596" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="579" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="draw:(Landroid/graphics/Canvas;Ljava/lang/CharSequence;IIFIIILandroid/graphics/Paint;)V@android.text.style.DynamicDrawableSpan"
+ sig="void draw(Canvas,CharSequence,int,int,float,int,int,int,Paint)"
+ line="10"
+ startpos="621"
+ endpos="625"
+>
+	<marker line="-1" type="param">
+		<operand  start="650" length="6" line="10">
+			<expr><![CDATA[canvas]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="681" length="4" line="10">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="691" length="5" line="10">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="702" length="3" line="10">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="713" length="1" line="10">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="720" length="3" line="10">
+			<expr><![CDATA[top]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="729" length="1" line="10">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="736" length="6" line="10">
+			<expr><![CDATA[bottom]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="767" length="5" line="10">
+			<expr><![CDATA[paint]]></expr>
+		</operand>
+	</marker>
+	<type  start="626" length="23" line="10" chordsig="android.graphics.Canvas"/>
+	<type  start="658" length="22" line="10" chordsig="java.lang.CharSequence"/>
+	<type  start="744" length="22" line="10" chordsig="android.graphics.Paint"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="786" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="782" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="803" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="786" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

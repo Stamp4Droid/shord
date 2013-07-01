@@ -1,0 +1,12 @@
+<root>
+<class chordsig="java.security.spec.ECField" line="2">
+<method
+ chordsig="getFieldSize:()I@java.security.spec.ECField"
+ sig="int getFieldSize()"
+ line="4"
+ startpos="76"
+ endpos="88"
+>
+</method>
+</class>
+</root>

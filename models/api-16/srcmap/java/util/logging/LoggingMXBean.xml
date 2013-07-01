@@ -1,0 +1,64 @@
+<root>
+<class chordsig="java.util.logging.LoggingMXBean" line="2">
+<method
+ chordsig="getLoggerLevel:(Ljava/lang/String;)Ljava/lang/String;@java.util.logging.LoggingMXBean"
+ sig="String getLoggerLevel(String)"
+ line="4"
+ startpos="94"
+ endpos="108"
+>
+	<marker line="-1" type="param">
+		<operand  start="126" length="10" line="4">
+			<expr><![CDATA[loggerName]]></expr>
+		</operand>
+	</marker>
+	<type  start="77" length="16" line="4" chordsig="java.lang.String"/>
+	<type  start="109" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getLoggerNames:()Ljava/util/List;@java.util.logging.LoggingMXBean"
+ sig="List&lt;String&gt; getLoggerNames()"
+ line="5"
+ startpos="189"
+ endpos="203"
+>
+	<type  start="156" length="14" line="5" chordsig="java.util.List"/>
+	<type  start="171" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getParentLoggerName:(Ljava/lang/String;)Ljava/lang/String;@java.util.logging.LoggingMXBean"
+ sig="String getParentLoggerName(String)"
+ line="6"
+ startpos="241"
+ endpos="260"
+>
+	<marker line="-1" type="param">
+		<operand  start="278" length="10" line="6">
+			<expr><![CDATA[loggerName]]></expr>
+		</operand>
+	</marker>
+	<type  start="224" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="261" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setLoggerLevel:(Ljava/lang/String;Ljava/lang/String;)V@java.util.logging.LoggingMXBean"
+ sig="void setLoggerLevel(String,String)"
+ line="7"
+ startpos="313"
+ endpos="327"
+>
+	<marker line="-1" type="param">
+		<operand  start="345" length="10" line="7">
+			<expr><![CDATA[loggerName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="374" length="9" line="7">
+			<expr><![CDATA[levelName]]></expr>
+		</operand>
+	</marker>
+	<type  start="328" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="357" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

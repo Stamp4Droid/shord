@@ -1,0 +1,65 @@
+<root>
+<class chordsig="java.util.IllegalFormatWidthException" line="2">
+	<type  start="70" length="32" line="3" chordsig="java.util.IllegalFormatException"/>
+<method
+ chordsig="&lt;init&gt;:(I)V@java.util.IllegalFormatWidthException"
+ sig="IllegalFormatWidthException(int)"
+ line="5"
+ startpos="113"
+ endpos="140"
+>
+	<marker line="-1" type="param">
+		<operand  start="145" length="1" line="5">
+			<expr><![CDATA[w]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="160" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="156" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="177" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="160" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getWidth:()I@java.util.IllegalFormatWidthException"
+ sig="int getWidth()"
+ line="6"
+ startpos="201"
+ endpos="209"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="224" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="220" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="241" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="224" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMessage:()Ljava/lang/String;@java.util.IllegalFormatWidthException"
+ sig="String getMessage()"
+ line="7"
+ startpos="278"
+ endpos="288"
+>
+	<type  start="261" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="303" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="299" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="320" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="303" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

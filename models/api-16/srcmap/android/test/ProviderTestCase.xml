@@ -1,0 +1,186 @@
+<root>
+<class chordsig="android.test.ProviderTestCase" line="3">
+	<type  start="95" length="31" line="3" chordsig="android.content.ContentProvider"/>
+	<type  start="138" length="36" line="4" chordsig="android.test.InstrumentationTestCase"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Class;Ljava/lang/String;)V@android.test.ProviderTestCase"
+ sig="ProviderTestCase(Class&lt;T&gt;,String)"
+ line="6"
+ startpos="185"
+ endpos="201"
+>
+	<marker line="-1" type="param">
+		<operand  start="221" length="13" line="6">
+			<expr><![CDATA[providerClass]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="253" length="17" line="6">
+			<expr><![CDATA[providerAuthority]]></expr>
+		</operand>
+	</marker>
+	<type  start="202" length="15" line="6" chordsig="java.lang.Class"/>
+	<type  start="218" length="1" line="6" chordsig="android.content.ContentProvider"/>
+	<type  start="236" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="284" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="280" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="301" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="284" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getProvider:()Landroid/content/ContentProvider;@android.test.ProviderTestCase"
+ sig="T getProvider()"
+ line="7"
+ startpos="323"
+ endpos="334"
+>
+	<type  start="321" length="1" line="7" chordsig="android.content.ContentProvider"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="349" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="345" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="366" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="349" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setUp:()V@android.test.ProviderTestCase"
+ sig="void setUp()"
+ line="8"
+ startpos="394"
+ endpos="399"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="441" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="437" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="458" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="441" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="tearDown:()V@android.test.ProviderTestCase"
+ sig="void tearDown()"
+ line="9"
+ startpos="486"
+ endpos="494"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="536" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="532" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="553" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="536" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMockContentResolver:()Landroid/test/mock/MockContentResolver;@android.test.ProviderTestCase"
+ sig="MockContentResolver getMockContentResolver()"
+ line="10"
+ startpos="611"
+ endpos="633"
+>
+	<type  start="573" length="37" line="10" chordsig="android.test.mock.MockContentResolver"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="648" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="644" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="665" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="648" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMockContext:()Landroid/test/IsolatedContext;@android.test.ProviderTestCase"
+ sig="IsolatedContext getMockContext()"
+ line="11"
+ startpos="714"
+ endpos="728"
+>
+	<type  start="685" length="28" line="11" chordsig="android.test.IsolatedContext"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="743" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="739" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="760" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="743" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newResolverWithContentProviderFromSql:(Landroid/content/Context;Ljava/lang/Class;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)Landroid/content/ContentResolver;@android.test.ProviderTestCase"
+ sig="ContentResolver newResolverWithContentProviderFromSql(Context,Class&lt;T&gt;,String,String,int,String)"
+ line="12"
+ startpos="862"
+ endpos="899"
+>
+	<marker line="-1" type="param">
+		<operand  start="924" length="13" line="12">
+			<expr><![CDATA[targetContext]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="958" length="13" line="12">
+			<expr><![CDATA[providerClass]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="990" length="9" line="12">
+			<expr><![CDATA[authority]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1018" length="12" line="12">
+			<expr><![CDATA[databaseName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1036" length="15" line="12">
+			<expr><![CDATA[databaseVersion]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1070" length="3" line="12">
+			<expr><![CDATA[sql]]></expr>
+		</operand>
+	</marker>
+	<type  start="797" length="31" line="12" chordsig="android.content.ContentProvider"/>
+	<type  start="830" length="31" line="12" chordsig="android.content.ContentResolver"/>
+	<type  start="900" length="23" line="12" chordsig="android.content.Context"/>
+	<type  start="939" length="15" line="12" chordsig="java.lang.Class"/>
+	<type  start="955" length="1" line="12" chordsig="android.content.ContentProvider"/>
+	<type  start="973" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="1001" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="1053" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1161" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1157" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1178" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1161" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

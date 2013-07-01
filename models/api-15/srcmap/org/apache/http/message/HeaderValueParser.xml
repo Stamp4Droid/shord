@@ -1,0 +1,88 @@
+<root>
+<class chordsig="org.apache.http.message.HeaderValueParser" line="2">
+<method
+ chordsig="parseElements:(Lorg/apache/http/util/CharArrayBuffer;Lorg/apache/http/message/ParserCursor;)[Lorg/apache/http/HeaderElement;@org.apache.http.message.HeaderValueParser"
+ sig="HeaderElement[] parseElements(CharArrayBuffer,ParserCursor)"
+ line="4"
+ startpos="119"
+ endpos="132"
+>
+	<marker line="-1" type="param">
+		<operand  start="170" length="6" line="4">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="215" length="6" line="4">
+			<expr><![CDATA[cursor]]></expr>
+		</operand>
+	</marker>
+	<type  start="87" length="29" line="4" chordsig="org.apache.http.HeaderElement"/>
+	<type  start="133" length="36" line="4" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="178" length="36" line="4" chordsig="org.apache.http.message.ParserCursor"/>
+</method>
+<method
+ chordsig="parseHeaderElement:(Lorg/apache/http/util/CharArrayBuffer;Lorg/apache/http/message/ParserCursor;)Lorg/apache/http/HeaderElement;@org.apache.http.message.HeaderValueParser"
+ sig="HeaderElement parseHeaderElement(CharArrayBuffer,ParserCursor)"
+ line="5"
+ startpos="309"
+ endpos="327"
+>
+	<marker line="-1" type="param">
+		<operand  start="365" length="6" line="5">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="410" length="6" line="5">
+			<expr><![CDATA[cursor]]></expr>
+		</operand>
+	</marker>
+	<type  start="279" length="29" line="5" chordsig="org.apache.http.HeaderElement"/>
+	<type  start="328" length="36" line="5" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="373" length="36" line="5" chordsig="org.apache.http.message.ParserCursor"/>
+</method>
+<method
+ chordsig="parseParameters:(Lorg/apache/http/util/CharArrayBuffer;Lorg/apache/http/message/ParserCursor;)[Lorg/apache/http/NameValuePair;@org.apache.http.message.HeaderValueParser"
+ sig="NameValuePair[] parseParameters(CharArrayBuffer,ParserCursor)"
+ line="6"
+ startpos="506"
+ endpos="521"
+>
+	<marker line="-1" type="param">
+		<operand  start="559" length="6" line="6">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="604" length="6" line="6">
+			<expr><![CDATA[cursor]]></expr>
+		</operand>
+	</marker>
+	<type  start="474" length="29" line="6" chordsig="org.apache.http.NameValuePair"/>
+	<type  start="522" length="36" line="6" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="567" length="36" line="6" chordsig="org.apache.http.message.ParserCursor"/>
+</method>
+<method
+ chordsig="parseNameValuePair:(Lorg/apache/http/util/CharArrayBuffer;Lorg/apache/http/message/ParserCursor;)Lorg/apache/http/NameValuePair;@org.apache.http.message.HeaderValueParser"
+ sig="NameValuePair parseNameValuePair(CharArrayBuffer,ParserCursor)"
+ line="7"
+ startpos="698"
+ endpos="716"
+>
+	<marker line="-1" type="param">
+		<operand  start="754" length="6" line="7">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="799" length="6" line="7">
+			<expr><![CDATA[cursor]]></expr>
+		</operand>
+	</marker>
+	<type  start="668" length="29" line="7" chordsig="org.apache.http.NameValuePair"/>
+	<type  start="717" length="36" line="7" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="762" length="36" line="7" chordsig="org.apache.http.message.ParserCursor"/>
+</method>
+</class>
+</root>

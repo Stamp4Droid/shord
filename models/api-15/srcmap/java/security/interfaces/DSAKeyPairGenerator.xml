@@ -1,0 +1,48 @@
+<root>
+<class chordsig="java.security.interfaces.DSAKeyPairGenerator" line="2">
+<method
+ chordsig="initialize:(Ljava/security/interfaces/DSAParams;Ljava/security/SecureRandom;)V@java.security.interfaces.DSAKeyPairGenerator"
+ sig="void initialize(DSAParams,SecureRandom)"
+ line="4"
+ startpos="95"
+ endpos="105"
+>
+	<marker line="-1" type="param">
+		<operand  start="141" length="6" line="4">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="176" length="6" line="4">
+			<expr><![CDATA[random]]></expr>
+		</operand>
+	</marker>
+	<type  start="106" length="34" line="4" chordsig="java.security.interfaces.DSAParams"/>
+	<type  start="149" length="26" line="4" chordsig="java.security.SecureRandom"/>
+</method>
+<method
+ chordsig="initialize:(IZLjava/security/SecureRandom;)V@java.security.interfaces.DSAKeyPairGenerator"
+ sig="void initialize(int,boolean,SecureRandom)"
+ line="5"
+ startpos="254"
+ endpos="264"
+>
+	<marker line="-1" type="param">
+		<operand  start="269" length="6" line="5">
+			<expr><![CDATA[modlen]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="285" length="9" line="5">
+			<expr><![CDATA[genParams]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="323" length="6" line="5">
+			<expr><![CDATA[random]]></expr>
+		</operand>
+	</marker>
+	<type  start="296" length="26" line="5" chordsig="java.security.SecureRandom"/>
+</method>
+</class>
+</root>

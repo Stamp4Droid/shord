@@ -1,0 +1,28 @@
+<root>
+<class chordsig="org.xml.sax.XMLFilter" line="2">
+	<type  start="58" length="21" line="3" chordsig="org.xml.sax.XMLReader"/>
+<method
+ chordsig="setParent:(Lorg/xml/sax/XMLReader;)V@org.xml.sax.XMLFilter"
+ sig="void setParent(XMLReader)"
+ line="5"
+ startpos="104"
+ endpos="113"
+>
+	<marker line="-1" type="param">
+		<operand  start="136" length="6" line="5">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<type  start="114" length="21" line="5" chordsig="org.xml.sax.XMLReader"/>
+</method>
+<method
+ chordsig="getParent:()Lorg/xml/sax/XMLReader;@org.xml.sax.XMLFilter"
+ sig="XMLReader getParent()"
+ line="6"
+ startpos="184"
+ endpos="193"
+>
+	<type  start="162" length="21" line="6" chordsig="org.xml.sax.XMLReader"/>
+</method>
+</class>
+</root>

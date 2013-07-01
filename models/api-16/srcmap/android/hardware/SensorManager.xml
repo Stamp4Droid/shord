@@ -1,0 +1,579 @@
+<root>
+<class chordsig="android.hardware.SensorManager" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.hardware.SensorManager"
+ sig="SensorManager()"
+ line="4"
+ startpos="64"
+ endpos="77"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="92" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="88" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="109" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="92" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSensors:()I@android.hardware.SensorManager"
+ sig="int getSensors()"
+ line="6"
+ startpos="157"
+ endpos="167"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="182" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="178" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="199" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="182" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSensorList:(I)Ljava/util/List;@android.hardware.SensorManager"
+ sig="List&lt;Sensor&gt; getSensorList(int)"
+ line="7"
+ startpos="259"
+ endpos="272"
+>
+	<marker line="-1" type="param">
+		<operand  start="277" length="4" line="7">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<type  start="219" length="14" line="7" chordsig="java.util.List"/>
+	<type  start="234" length="23" line="7" chordsig="android.hardware.Sensor"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="295" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="291" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="312" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="295" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDefaultSensor:(I)Landroid/hardware/Sensor;@android.hardware.SensorManager"
+ sig="Sensor getDefaultSensor(int)"
+ line="8"
+ startpos="356"
+ endpos="372"
+>
+	<marker line="-1" type="param">
+		<operand  start="377" length="4" line="8">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<type  start="332" length="23" line="8" chordsig="android.hardware.Sensor"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="395" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="391" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="412" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="395" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="registerListener:(Landroid/hardware/SensorListener;I)Z@android.hardware.SensorManager"
+ sig="boolean registerListener(SensorListener,int)"
+ line="10"
+ startpos="464"
+ endpos="480"
+>
+	<marker line="-1" type="param">
+		<operand  start="513" length="8" line="10">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="527" length="7" line="10">
+			<expr><![CDATA[sensors]]></expr>
+		</operand>
+	</marker>
+	<type  start="481" length="31" line="10" chordsig="android.hardware.SensorListener"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="548" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="544" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="565" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="548" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="registerListener:(Landroid/hardware/SensorListener;II)Z@android.hardware.SensorManager"
+ sig="boolean registerListener(SensorListener,int,int)"
+ line="12"
+ startpos="617"
+ endpos="633"
+>
+	<marker line="-1" type="param">
+		<operand  start="666" length="8" line="12">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="680" length="7" line="12">
+			<expr><![CDATA[sensors]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="693" length="4" line="12">
+			<expr><![CDATA[rate]]></expr>
+		</operand>
+	</marker>
+	<type  start="634" length="31" line="12" chordsig="android.hardware.SensorListener"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="711" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="707" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="728" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="711" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unregisterListener:(Landroid/hardware/SensorListener;)V@android.hardware.SensorManager"
+ sig="void unregisterListener(SensorListener)"
+ line="14"
+ startpos="777"
+ endpos="795"
+>
+	<marker line="-1" type="param">
+		<operand  start="828" length="8" line="14">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="796" length="31" line="14" chordsig="android.hardware.SensorListener"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="850" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="846" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="867" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="850" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unregisterListener:(Landroid/hardware/SensorListener;I)V@android.hardware.SensorManager"
+ sig="void unregisterListener(SensorListener,int)"
+ line="16"
+ startpos="916"
+ endpos="934"
+>
+	<marker line="-1" type="param">
+		<operand  start="967" length="8" line="16">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="981" length="7" line="16">
+			<expr><![CDATA[sensors]]></expr>
+		</operand>
+	</marker>
+	<type  start="935" length="31" line="16" chordsig="android.hardware.SensorListener"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1002" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="998" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1019" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1002" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unregisterListener:(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;)V@android.hardware.SensorManager"
+ sig="void unregisterListener(SensorEventListener,Sensor)"
+ line="17"
+ startpos="1044"
+ endpos="1062"
+>
+	<marker line="-1" type="param">
+		<operand  start="1100" length="8" line="17">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1134" length="6" line="17">
+			<expr><![CDATA[sensor]]></expr>
+		</operand>
+	</marker>
+	<type  start="1063" length="36" line="17" chordsig="android.hardware.SensorEventListener"/>
+	<type  start="1110" length="23" line="17" chordsig="android.hardware.Sensor"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1154" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1150" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1171" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1154" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unregisterListener:(Landroid/hardware/SensorEventListener;)V@android.hardware.SensorManager"
+ sig="void unregisterListener(SensorEventListener)"
+ line="18"
+ startpos="1196"
+ endpos="1214"
+>
+	<marker line="-1" type="param">
+		<operand  start="1252" length="8" line="18">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1215" length="36" line="18" chordsig="android.hardware.SensorEventListener"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1274" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1270" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1291" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1274" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="registerListener:(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;I)Z@android.hardware.SensorManager"
+ sig="boolean registerListener(SensorEventListener,Sensor,int)"
+ line="19"
+ startpos="1319"
+ endpos="1335"
+>
+	<marker line="-1" type="param">
+		<operand  start="1373" length="8" line="19">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1407" length="6" line="19">
+			<expr><![CDATA[sensor]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1419" length="4" line="19">
+			<expr><![CDATA[rate]]></expr>
+		</operand>
+	</marker>
+	<type  start="1336" length="36" line="19" chordsig="android.hardware.SensorEventListener"/>
+	<type  start="1383" length="23" line="19" chordsig="android.hardware.Sensor"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1437" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1433" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1454" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1437" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="registerListener:(Landroid/hardware/SensorEventListener;Landroid/hardware/Sensor;ILandroid/os/Handler;)Z@android.hardware.SensorManager"
+ sig="boolean registerListener(SensorEventListener,Sensor,int,Handler)"
+ line="20"
+ startpos="1482"
+ endpos="1498"
+>
+	<marker line="-1" type="param">
+		<operand  start="1536" length="8" line="20">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1570" length="6" line="20">
+			<expr><![CDATA[sensor]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1582" length="4" line="20">
+			<expr><![CDATA[rate]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1607" length="7" line="20">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="1499" length="36" line="20" chordsig="android.hardware.SensorEventListener"/>
+	<type  start="1546" length="23" line="20" chordsig="android.hardware.Sensor"/>
+	<type  start="1588" length="18" line="20" chordsig="android.os.Handler"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1628" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1624" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1645" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1628" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRotationMatrix:([F[F[F[F)Z@android.hardware.SensorManager"
+ sig="boolean getRotationMatrix(float[],float[],float[],float[])"
+ line="21"
+ startpos="1680"
+ endpos="1697"
+>
+	<marker line="-1" type="param">
+		<operand  start="1706" length="1" line="21">
+			<expr><![CDATA[R]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1717" length="1" line="21">
+			<expr><![CDATA[I]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1728" length="7" line="21">
+			<expr><![CDATA[gravity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1745" length="11" line="21">
+			<expr><![CDATA[geomagnetic]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1770" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1766" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1787" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1770" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInclination:([F)F@android.hardware.SensorManager"
+ sig="float getInclination(float[])"
+ line="22"
+ startpos="1820"
+ endpos="1834"
+>
+	<marker line="-1" type="param">
+		<operand  start="1843" length="1" line="22">
+			<expr><![CDATA[I]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1858" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1854" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1875" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1858" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="remapCoordinateSystem:([FII[F)Z@android.hardware.SensorManager"
+ sig="boolean remapCoordinateSystem(float[],int,int,float[])"
+ line="23"
+ startpos="1910"
+ endpos="1931"
+>
+	<marker line="-1" type="param">
+		<operand  start="1940" length="3" line="23">
+			<expr><![CDATA[inR]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1949" length="1" line="23">
+			<expr><![CDATA[X]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1956" length="1" line="23">
+			<expr><![CDATA[Y]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1967" length="4" line="23">
+			<expr><![CDATA[outR]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1985" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1981" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2002" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1985" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getOrientation:([F[F)[F@android.hardware.SensorManager"
+ sig="float[] getOrientation(float[],float[])"
+ line="24"
+ startpos="2037"
+ endpos="2051"
+>
+	<marker line="-1" type="param">
+		<operand  start="2060" length="1" line="24">
+			<expr><![CDATA[R]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2071" length="6" line="24">
+			<expr><![CDATA[values]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2091" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2087" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2108" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2091" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAltitude:(FF)F@android.hardware.SensorManager"
+ sig="float getAltitude(float,float)"
+ line="25"
+ startpos="2141"
+ endpos="2152"
+>
+	<marker line="-1" type="param">
+		<operand  start="2159" length="2" line="25">
+			<expr><![CDATA[p0]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2169" length="1" line="25">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2184" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2180" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2201" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2184" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAngleChange:([F[F[F)V@android.hardware.SensorManager"
+ sig="void getAngleChange(float[],float[],float[])"
+ line="26"
+ startpos="2233"
+ endpos="2247"
+>
+	<marker line="-1" type="param">
+		<operand  start="2256" length="11" line="26">
+			<expr><![CDATA[angleChange]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2277" length="1" line="26">
+			<expr><![CDATA[R]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2288" length="5" line="26">
+			<expr><![CDATA[prevR]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2307" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2303" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2324" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2307" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRotationMatrixFromVector:([F[F)V@android.hardware.SensorManager"
+ sig="void getRotationMatrixFromVector(float[],float[])"
+ line="27"
+ startpos="2356"
+ endpos="2383"
+>
+	<marker line="-1" type="param">
+		<operand  start="2392" length="1" line="27">
+			<expr><![CDATA[R]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2403" length="14" line="27">
+			<expr><![CDATA[rotationVector]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2431" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2427" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2448" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2431" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getQuaternionFromVector:([F[F)V@android.hardware.SensorManager"
+ sig="void getQuaternionFromVector(float[],float[])"
+ line="28"
+ startpos="2480"
+ endpos="2503"
+>
+	<marker line="-1" type="param">
+		<operand  start="2512" length="1" line="28">
+			<expr><![CDATA[Q]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2523" length="2" line="28">
+			<expr><![CDATA[rv]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2539" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2535" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2556" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2539" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

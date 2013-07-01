@@ -1,0 +1,47 @@
+<root>
+<class chordsig="java.sql.SQLData" line="2">
+<method
+ chordsig="getSQLTypeName:()Ljava/lang/String;@java.sql.SQLData"
+ sig="String getSQLTypeName()"
+ line="4"
+ startpos="79"
+ endpos="93"
+>
+	<type  start="62" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="readSQL:(Ljava/sql/SQLInput;Ljava/lang/String;)V@java.sql.SQLData"
+ sig="void readSQL(SQLInput,String)"
+ line="5"
+ startpos="148"
+ endpos="155"
+>
+	<marker line="-1" type="param">
+		<operand  start="174" length="6" line="5">
+			<expr><![CDATA[stream]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="199" length="8" line="5">
+			<expr><![CDATA[typeName]]></expr>
+		</operand>
+	</marker>
+	<type  start="156" length="17" line="5" chordsig="java.sql.SQLInput"/>
+	<type  start="182" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="writeSQL:(Ljava/sql/SQLOutput;)V@java.sql.SQLData"
+ sig="void writeSQL(SQLOutput)"
+ line="6"
+ startpos="261"
+ endpos="269"
+>
+	<marker line="-1" type="param">
+		<operand  start="289" length="6" line="6">
+			<expr><![CDATA[stream]]></expr>
+		</operand>
+	</marker>
+	<type  start="270" length="18" line="6" chordsig="java.sql.SQLOutput"/>
+</method>
+</class>
+</root>

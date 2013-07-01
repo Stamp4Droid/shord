@@ -1,0 +1,79 @@
+class android.app.Fragment$1 extends edu.stanford.stamp.harness.Callback
+{
+    final android.app.Fragment this$0;
+
+    void <init>(android.app.Fragment)
+    {
+        android.app.Fragment$1 r0;
+        android.app.Fragment r1;
+
+        r0 := @this: android.app.Fragment$1;
+        r1 := @parameter0: android.app.Fragment;
+        r0.<android.app.Fragment$1: android.app.Fragment this$0> = r1;
+        specialinvoke r0.<edu.stanford.stamp.harness.Callback: void <init>()>();
+        return;
+    }
+
+    public void run()
+    {
+        android.app.Fragment$1 r0;
+        android.app.Fragment $r1, $r2, $r3, $r4, $r5, $r6, $r7, $r8, $r10, $r11, $r12, $r13, $r14, $r15, $r16, $r17, $r18, $r19, $r20, $r21, $r22, $r23, $r24, $r25, $r26, $r27, $r28;
+
+        r0 := @this: android.app.Fragment$1;
+        $r1 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r1.<android.app.Fragment: void onHiddenChanged(boolean)>(0);
+        $r2 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r2.<android.app.Fragment: void onActivityResult(int,int,android.content.Intent)>(0, 0, null);
+        $r3 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r3.<android.app.Fragment: void onInflate(android.util.AttributeSet,android.os.Bundle)>(null, null);
+        $r4 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r4.<android.app.Fragment: void onInflate(android.app.Activity,android.util.AttributeSet,android.os.Bundle)>(null, null, null);
+        $r5 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r5.<android.app.Fragment: void onAttach(android.app.Activity)>(null);
+        $r6 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r6.<android.app.Fragment: void onCreate(android.os.Bundle)>(null);
+        $r7 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r7.<android.app.Fragment: void onViewCreated(android.view.View,android.os.Bundle)>(null, null);
+        $r8 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r8.<android.app.Fragment: android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle)>(null, null, null);
+        $r10 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r10.<android.app.Fragment: void onActivityCreated(android.os.Bundle)>(null);
+        $r11 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r11.<android.app.Fragment: void onStart()>();
+        $r12 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r12.<android.app.Fragment: void onResume()>();
+        $r13 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r13.<android.app.Fragment: void onSaveInstanceState(android.os.Bundle)>(null);
+        $r14 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r14.<android.app.Fragment: void onConfigurationChanged(android.content.res.Configuration)>(null);
+        $r15 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r15.<android.app.Fragment: void onPause()>();
+        $r16 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r16.<android.app.Fragment: void onStop()>();
+        $r17 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r17.<android.app.Fragment: void onLowMemory()>();
+        $r18 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r18.<android.app.Fragment: void onTrimMemory(int)>(0);
+        $r19 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r19.<android.app.Fragment: void onDestroyView()>();
+        $r20 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r20.<android.app.Fragment: void onDestroy()>();
+        $r21 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r21.<android.app.Fragment: void onDetach()>();
+        $r22 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r22.<android.app.Fragment: void onCreateOptionsMenu(android.view.Menu,android.view.MenuInflater)>(null, null);
+        $r23 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r23.<android.app.Fragment: void onPrepareOptionsMenu(android.view.Menu)>(null);
+        $r24 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r24.<android.app.Fragment: void onDestroyOptionsMenu()>();
+        $r25 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r25.<android.app.Fragment: boolean onOptionsItemSelected(android.view.MenuItem)>(null);
+        $r26 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r26.<android.app.Fragment: void onOptionsMenuClosed(android.view.Menu)>(null);
+        $r27 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r27.<android.app.Fragment: void onCreateContextMenu(android.view.ContextMenu,android.view.View,android.view.ContextMenu$ContextMenuInfo)>(null, null, null);
+        $r28 = r0.<android.app.Fragment$1: android.app.Fragment this$0>;
+        virtualinvoke $r28.<android.app.Fragment: boolean onContextItemSelected(android.view.MenuItem)>(null);
+        return;
+    }
+}

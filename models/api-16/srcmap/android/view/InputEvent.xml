@@ -1,0 +1,91 @@
+<root>
+<class chordsig="android.view.InputEvent" line="2">
+	<type  start="68" length="21" line="3" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.view.InputEvent"
+ sig="InputEvent()"
+ line="5"
+ startpos="92"
+ endpos="102"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="117" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="113" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="134" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="117" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDeviceId:()I@android.view.InputEvent"
+ sig="int getDeviceId()"
+ line="6"
+ startpos="167"
+ endpos="178"
+>
+</method>
+<method
+ chordsig="getDevice:()Landroid/view/InputDevice;@android.view.InputEvent"
+ sig="InputDevice getDevice()"
+ line="7"
+ startpos="221"
+ endpos="230"
+>
+	<type  start="196" length="24" line="7" chordsig="android.view.InputDevice"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="245" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="241" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="262" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="245" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSource:()I@android.view.InputEvent"
+ sig="int getSource()"
+ line="8"
+ startpos="295"
+ endpos="304"
+>
+</method>
+<method
+ chordsig="getEventTime:()J@android.view.InputEvent"
+ sig="long getEventTime()"
+ line="9"
+ startpos="330"
+ endpos="342"
+>
+</method>
+<method
+ chordsig="describeContents:()I@android.view.InputEvent"
+ sig="int describeContents()"
+ line="10"
+ startpos="358"
+ endpos="374"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="389" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="385" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="406" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="389" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="438" length="29" line="11" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="468" length="23" line="11" chordsig="android.view.InputEvent"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.view.InputEvent"
+ line="12"
+>
+</method>
+</class>
+</root>

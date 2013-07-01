@@ -1,0 +1,815 @@
+<root>
+<class chordsig="android.inputmethodservice.Keyboard" line="2">
+<class chordsig="android.inputmethodservice.Keyboard$Row" line="4">
+<method
+ chordsig="&lt;init&gt;:(Landroid/inputmethodservice/Keyboard;)V@android.inputmethodservice.Keyboard$Row"
+ sig="Row(Keyboard)"
+ line="6"
+ startpos="94"
+ endpos="97"
+>
+	<marker line="-1" type="param">
+		<operand  start="134" length="6" line="6">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<type  start="98" length="35" line="6" chordsig="android.inputmethodservice.Keyboard"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="154" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="150" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="171" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="154" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/res/Resources;Landroid/inputmethodservice/Keyboard;Landroid/content/res/XmlResourceParser;)V@android.inputmethodservice.Keyboard$Row"
+ sig="Row(Resources,Keyboard,XmlResourceParser)"
+ line="7"
+ startpos="191"
+ endpos="194"
+>
+	<marker line="-1" type="param">
+		<operand  start="225" length="3" line="7">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="266" length="6" line="7">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="312" length="6" line="7">
+			<expr><![CDATA[parser]]></expr>
+		</operand>
+	</marker>
+	<type  start="195" length="29" line="7" chordsig="android.content.res.Resources"/>
+	<type  start="230" length="35" line="7" chordsig="android.inputmethodservice.Keyboard"/>
+	<type  start="274" length="37" line="7" chordsig="android.content.res.XmlResourceParser"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="332" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="328" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="349" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="332" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.inputmethodservice.Keyboard$Key" line="15">
+<method
+ chordsig="&lt;init&gt;:(Landroid/inputmethodservice/Keyboard$Row;)V@android.inputmethodservice.Keyboard$Key"
+ sig="Key(Row)"
+ line="17"
+ startpos="547"
+ endpos="550"
+>
+	<marker line="-1" type="param">
+		<operand  start="591" length="6" line="17">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<type  start="551" length="39" line="17" chordsig="android.inputmethodservice.Keyboard$Row"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="611" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="607" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="628" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="611" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/res/Resources;Landroid/inputmethodservice/Keyboard$Row;IILandroid/content/res/XmlResourceParser;)V@android.inputmethodservice.Keyboard$Key"
+ sig="Key(Resources,Row,int,int,XmlResourceParser)"
+ line="18"
+ startpos="648"
+ endpos="651"
+>
+	<marker line="-1" type="param">
+		<operand  start="682" length="3" line="18">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="727" length="6" line="18">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="739" length="1" line="18">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="746" length="1" line="18">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="787" length="6" line="18">
+			<expr><![CDATA[parser]]></expr>
+		</operand>
+	</marker>
+	<type  start="652" length="29" line="18" chordsig="android.content.res.Resources"/>
+	<type  start="687" length="39" line="18" chordsig="android.inputmethodservice.Keyboard$Row"/>
+	<type  start="749" length="37" line="18" chordsig="android.content.res.XmlResourceParser"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="807" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="803" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="824" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="807" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onPressed:()V@android.inputmethodservice.Keyboard$Key"
+ sig="void onPressed()"
+ line="19"
+ startpos="849"
+ endpos="858"
+>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="873" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="869" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="890" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="873" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onReleased:(Z)V@android.inputmethodservice.Keyboard$Key"
+ sig="void onReleased(boolean)"
+ line="20"
+ startpos="915"
+ endpos="925"
+>
+	<marker line="-1" type="param">
+		<operand  start="934" length="6" line="20">
+			<expr><![CDATA[inside]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="954" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="950" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="971" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="954" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isInside:(II)Z@android.inputmethodservice.Keyboard$Key"
+ sig="boolean isInside(int,int)"
+ line="21"
+ startpos="999"
+ endpos="1007"
+>
+	<marker line="-1" type="param">
+		<operand  start="1012" length="1" line="21">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1019" length="1" line="21">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1034" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1030" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1051" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1034" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="squaredDistanceFrom:(II)I@android.inputmethodservice.Keyboard$Key"
+ sig="int squaredDistanceFrom(int,int)"
+ line="22"
+ startpos="1075"
+ endpos="1094"
+>
+	<marker line="-1" type="param">
+		<operand  start="1099" length="1" line="22">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1106" length="1" line="22">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1121" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1117" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1138" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1121" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCurrentDrawableState:()[I@android.inputmethodservice.Keyboard$Key"
+ sig="int[] getCurrentDrawableState()"
+ line="23"
+ startpos="1164"
+ endpos="1187"
+>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1202" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1198" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1219" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1202" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1265" length="22" line="25" chordsig="java.lang.CharSequence"/>
+	<type  start="1302" length="34" line="26" chordsig="android.graphics.drawable.Drawable"/>
+	<type  start="1350" length="34" line="27" chordsig="android.graphics.drawable.Drawable"/>
+	<type  start="1552" length="22" line="36" chordsig="java.lang.CharSequence"/>
+	<type  start="1588" length="22" line="37" chordsig="java.lang.CharSequence"/>
+</class>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;I)V@android.inputmethodservice.Keyboard"
+ sig="Keyboard(Context,int)"
+ line="43"
+ startpos="1735"
+ endpos="1743"
+>
+	<marker line="-1" type="param">
+		<operand  start="1768" length="7" line="43">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1781" length="14" line="43">
+			<expr><![CDATA[xmlLayoutResId]]></expr>
+		</operand>
+	</marker>
+	<type  start="1744" length="23" line="43" chordsig="android.content.Context"/>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1809" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1805" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1826" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1809" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;IIII)V@android.inputmethodservice.Keyboard"
+ sig="Keyboard(Context,int,int,int,int)"
+ line="44"
+ startpos="1846"
+ endpos="1854"
+>
+	<marker line="-1" type="param">
+		<operand  start="1879" length="7" line="44">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1892" length="14" line="44">
+			<expr><![CDATA[xmlLayoutResId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1912" length="6" line="44">
+			<expr><![CDATA[modeId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1924" length="5" line="44">
+			<expr><![CDATA[width]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1935" length="6" line="44">
+			<expr><![CDATA[height]]></expr>
+		</operand>
+	</marker>
+	<type  start="1855" length="23" line="44" chordsig="android.content.Context"/>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1955" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1951" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1972" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1955" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;II)V@android.inputmethodservice.Keyboard"
+ sig="Keyboard(Context,int,int)"
+ line="45"
+ startpos="1992"
+ endpos="2000"
+>
+	<marker line="-1" type="param">
+		<operand  start="2025" length="7" line="45">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2038" length="14" line="45">
+			<expr><![CDATA[xmlLayoutResId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2058" length="6" line="45">
+			<expr><![CDATA[modeId]]></expr>
+		</operand>
+	</marker>
+	<type  start="2001" length="23" line="45" chordsig="android.content.Context"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2078" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2074" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2095" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2078" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;ILjava/lang/CharSequence;II)V@android.inputmethodservice.Keyboard"
+ sig="Keyboard(Context,int,CharSequence,int,int)"
+ line="46"
+ startpos="2115"
+ endpos="2123"
+>
+	<marker line="-1" type="param">
+		<operand  start="2148" length="7" line="46">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2161" length="19" line="46">
+			<expr><![CDATA[layoutTemplateResId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2205" length="10" line="46">
+			<expr><![CDATA[characters]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2221" length="7" line="46">
+			<expr><![CDATA[columns]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2234" length="17" line="46">
+			<expr><![CDATA[horizontalPadding]]></expr>
+		</operand>
+	</marker>
+	<type  start="2124" length="23" line="46" chordsig="android.content.Context"/>
+	<type  start="2182" length="22" line="46" chordsig="java.lang.CharSequence"/>
+	<newexpr line="46" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2265" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2261" length="29" line="46">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2282" length="7" line="46">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2265" length="16" line="46" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getKeys:()Ljava/util/List;@android.inputmethodservice.Keyboard"
+ sig="List&lt;Key&gt; getKeys()"
+ line="47"
+ startpos="2358"
+ endpos="2365"
+>
+	<type  start="2302" length="14" line="47" chordsig="java.util.List"/>
+	<type  start="2317" length="39" line="47" chordsig="android.inputmethodservice.Keyboard$Key"/>
+	<newexpr line="47" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2380" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2376" length="29" line="47">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2397" length="7" line="47">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2380" length="16" line="47" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getModifierKeys:()Ljava/util/List;@android.inputmethodservice.Keyboard"
+ sig="List&lt;Key&gt; getModifierKeys()"
+ line="48"
+ startpos="2473"
+ endpos="2488"
+>
+	<type  start="2417" length="14" line="48" chordsig="java.util.List"/>
+	<type  start="2432" length="39" line="48" chordsig="android.inputmethodservice.Keyboard$Key"/>
+	<newexpr line="48" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2503" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2499" length="29" line="48">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2520" length="7" line="48">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2503" length="16" line="48" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getHorizontalGap:()I@android.inputmethodservice.Keyboard"
+ sig="int getHorizontalGap()"
+ line="49"
+ startpos="2547"
+ endpos="2563"
+>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2578" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2574" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2595" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2578" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setHorizontalGap:(I)V@android.inputmethodservice.Keyboard"
+ sig="void setHorizontalGap(int)"
+ line="50"
+ startpos="2623"
+ endpos="2639"
+>
+	<marker line="-1" type="param">
+		<operand  start="2644" length="3" line="50">
+			<expr><![CDATA[gap]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="50" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2661" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2657" length="29" line="50">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2678" length="7" line="50">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2661" length="16" line="50" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getVerticalGap:()I@android.inputmethodservice.Keyboard"
+ sig="int getVerticalGap()"
+ line="51"
+ startpos="2705"
+ endpos="2719"
+>
+	<newexpr line="51" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2734" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2730" length="29" line="51">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2751" length="7" line="51">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2734" length="16" line="51" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setVerticalGap:(I)V@android.inputmethodservice.Keyboard"
+ sig="void setVerticalGap(int)"
+ line="52"
+ startpos="2779"
+ endpos="2793"
+>
+	<marker line="-1" type="param">
+		<operand  start="2798" length="3" line="52">
+			<expr><![CDATA[gap]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="52" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2815" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2811" length="29" line="52">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2832" length="7" line="52">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2815" length="16" line="52" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getKeyHeight:()I@android.inputmethodservice.Keyboard"
+ sig="int getKeyHeight()"
+ line="53"
+ startpos="2859"
+ endpos="2871"
+>
+	<newexpr line="53" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2886" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2882" length="29" line="53">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2903" length="7" line="53">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2886" length="16" line="53" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setKeyHeight:(I)V@android.inputmethodservice.Keyboard"
+ sig="void setKeyHeight(int)"
+ line="54"
+ startpos="2931"
+ endpos="2943"
+>
+	<marker line="-1" type="param">
+		<operand  start="2948" length="6" line="54">
+			<expr><![CDATA[height]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="54" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2968" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2964" length="29" line="54">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2985" length="7" line="54">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2968" length="16" line="54" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getKeyWidth:()I@android.inputmethodservice.Keyboard"
+ sig="int getKeyWidth()"
+ line="55"
+ startpos="3012"
+ endpos="3023"
+>
+	<newexpr line="55" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3038" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3034" length="29" line="55">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3055" length="7" line="55">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3038" length="16" line="55" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setKeyWidth:(I)V@android.inputmethodservice.Keyboard"
+ sig="void setKeyWidth(int)"
+ line="56"
+ startpos="3083"
+ endpos="3094"
+>
+	<marker line="-1" type="param">
+		<operand  start="3099" length="5" line="56">
+			<expr><![CDATA[width]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="56" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3118" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3114" length="29" line="56">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3135" length="7" line="56">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3118" length="16" line="56" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getHeight:()I@android.inputmethodservice.Keyboard"
+ sig="int getHeight()"
+ line="57"
+ startpos="3159"
+ endpos="3168"
+>
+	<newexpr line="57" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3183" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3179" length="29" line="57">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3200" length="7" line="57">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3183" length="16" line="57" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMinWidth:()I@android.inputmethodservice.Keyboard"
+ sig="int getMinWidth()"
+ line="58"
+ startpos="3224"
+ endpos="3235"
+>
+	<newexpr line="58" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3250" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3246" length="29" line="58">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3267" length="7" line="58">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3250" length="16" line="58" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setShifted:(Z)Z@android.inputmethodservice.Keyboard"
+ sig="boolean setShifted(boolean)"
+ line="59"
+ startpos="3295"
+ endpos="3305"
+>
+	<marker line="-1" type="param">
+		<operand  start="3314" length="10" line="59">
+			<expr><![CDATA[shiftState]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="59" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3338" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3334" length="29" line="59">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3355" length="7" line="59">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3338" length="16" line="59" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isShifted:()Z@android.inputmethodservice.Keyboard"
+ sig="boolean isShifted()"
+ line="60"
+ startpos="3383"
+ endpos="3392"
+>
+	<newexpr line="60" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3407" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3403" length="29" line="60">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3424" length="7" line="60">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3407" length="16" line="60" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getShiftKeyIndex:()I@android.inputmethodservice.Keyboard"
+ sig="int getShiftKeyIndex()"
+ line="61"
+ startpos="3448"
+ endpos="3464"
+>
+	<newexpr line="61" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3479" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3475" length="29" line="61">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3496" length="7" line="61">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3479" length="16" line="61" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getNearestKeys:(II)[I@android.inputmethodservice.Keyboard"
+ sig="int[] getNearestKeys(int,int)"
+ line="62"
+ startpos="3522"
+ endpos="3536"
+>
+	<marker line="-1" type="param">
+		<operand  start="3541" length="1" line="62">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3548" length="1" line="62">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="62" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3563" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3559" length="29" line="62">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3580" length="7" line="62">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3563" length="16" line="62" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createRowFromXml:(Landroid/content/res/Resources;Landroid/content/res/XmlResourceParser;)Landroid/inputmethodservice/Keyboard$Row;@android.inputmethodservice.Keyboard"
+ sig="Row createRowFromXml(Resources,XmlResourceParser)"
+ line="63"
+ startpos="3643"
+ endpos="3659"
+>
+	<marker line="-1" type="param">
+		<operand  start="3690" length="3" line="63">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3733" length="6" line="63">
+			<expr><![CDATA[parser]]></expr>
+		</operand>
+	</marker>
+	<type  start="3603" length="39" line="63" chordsig="android.inputmethodservice.Keyboard$Row"/>
+	<type  start="3660" length="29" line="63" chordsig="android.content.res.Resources"/>
+	<type  start="3695" length="37" line="63" chordsig="android.content.res.XmlResourceParser"/>
+	<newexpr line="63" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3753" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3749" length="29" line="63">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3770" length="7" line="63">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3753" length="16" line="63" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createKeyFromXml:(Landroid/content/res/Resources;Landroid/inputmethodservice/Keyboard$Row;IILandroid/content/res/XmlResourceParser;)Landroid/inputmethodservice/Keyboard$Key;@android.inputmethodservice.Keyboard"
+ sig="Key createKeyFromXml(Resources,Row,int,int,XmlResourceParser)"
+ line="64"
+ startpos="3833"
+ endpos="3849"
+>
+	<marker line="-1" type="param">
+		<operand  start="3880" length="3" line="64">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3925" length="6" line="64">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3937" length="1" line="64">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3944" length="1" line="64">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3985" length="6" line="64">
+			<expr><![CDATA[parser]]></expr>
+		</operand>
+	</marker>
+	<type  start="3793" length="39" line="64" chordsig="android.inputmethodservice.Keyboard$Key"/>
+	<type  start="3850" length="29" line="64" chordsig="android.content.res.Resources"/>
+	<type  start="3885" length="39" line="64" chordsig="android.inputmethodservice.Keyboard$Row"/>
+	<type  start="3947" length="37" line="64" chordsig="android.content.res.XmlResourceParser"/>
+	<newexpr line="64" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4005" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4001" length="29" line="64">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4022" length="7" line="64">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4005" length="16" line="64" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

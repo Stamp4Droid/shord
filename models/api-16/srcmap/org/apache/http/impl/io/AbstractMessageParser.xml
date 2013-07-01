@@ -1,0 +1,117 @@
+<root>
+<class chordsig="org.apache.http.impl.io.AbstractMessageParser" line="2">
+	<type  start="90" length="36" line="3" chordsig="org.apache.http.io.HttpMessageParser"/>
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/io/SessionInputBuffer;Lorg/apache/http/message/LineParser;Lorg/apache/http/params/HttpParams;)V@org.apache.http.impl.io.AbstractMessageParser"
+ sig="AbstractMessageParser(SessionInputBuffer,LineParser,HttpParams)"
+ line="5"
+ startpos="137"
+ endpos="158"
+>
+	<marker line="-1" type="param">
+		<operand  start="197" length="6" line="5">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="240" length="6" line="5">
+			<expr><![CDATA[parser]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="282" length="6" line="5">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="159" length="37" line="5" chordsig="org.apache.http.io.SessionInputBuffer"/>
+	<type  start="205" length="34" line="5" chordsig="org.apache.http.message.LineParser"/>
+	<type  start="248" length="33" line="5" chordsig="org.apache.http.params.HttpParams"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="302" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="298" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="319" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="302" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parseHeaders:(Lorg/apache/http/io/SessionInputBuffer;IILorg/apache/http/message/LineParser;)[Lorg/apache/http/Header;@org.apache.http.impl.io.AbstractMessageParser"
+ sig="Header[] parseHeaders(SessionInputBuffer,int,int,LineParser)"
+ line="6"
+ startpos="371"
+ endpos="383"
+>
+	<marker line="-1" type="param">
+		<operand  start="422" length="8" line="6">
+			<expr><![CDATA[inbuffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="436" length="14" line="6">
+			<expr><![CDATA[maxHeaderCount]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="456" length="10" line="6">
+			<expr><![CDATA[maxLineLen]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="503" length="6" line="6">
+			<expr><![CDATA[parser]]></expr>
+		</operand>
+	</marker>
+	<type  start="346" length="22" line="6" chordsig="org.apache.http.Header"/>
+	<type  start="384" length="37" line="6" chordsig="org.apache.http.io.SessionInputBuffer"/>
+	<type  start="468" length="34" line="6" chordsig="org.apache.http.message.LineParser"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="581" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="577" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="598" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="581" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parseHead:(Lorg/apache/http/io/SessionInputBuffer;)Lorg/apache/http/HttpMessage;@org.apache.http.impl.io.AbstractMessageParser"
+ sig="HttpMessage parseHead(SessionInputBuffer)"
+ line="7"
+ startpos="658"
+ endpos="667"
+>
+	<marker line="-1" type="param">
+		<operand  start="706" length="13" line="7">
+			<expr><![CDATA[sessionBuffer]]></expr>
+		</operand>
+	</marker>
+	<type  start="630" length="27" line="7" chordsig="org.apache.http.HttpMessage"/>
+	<type  start="668" length="37" line="7" chordsig="org.apache.http.io.SessionInputBuffer"/>
+</method>
+<method
+ chordsig="parse:()Lorg/apache/http/HttpMessage;@org.apache.http.impl.io.AbstractMessageParser"
+ sig="HttpMessage parse()"
+ line="8"
+ startpos="848"
+ endpos="853"
+>
+	<type  start="820" length="27" line="8" chordsig="org.apache.http.HttpMessage"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="926" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="922" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="943" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="926" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="971" length="34" line="9" chordsig="org.apache.http.message.LineParser"/>
+</class>
+</root>

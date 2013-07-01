@@ -1,0 +1,74 @@
+<root>
+<class chordsig="org.w3c.dom.NameList" line="2">
+<method
+ chordsig="getName:(I)Ljava/lang/String;@org.w3c.dom.NameList"
+ sig="String getName(int)"
+ line="4"
+ startpos="83"
+ endpos="90"
+>
+	<marker line="-1" type="param">
+		<operand  start="95" length="5" line="4">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="66" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getNamespaceURI:(I)Ljava/lang/String;@org.w3c.dom.NameList"
+ sig="String getNamespaceURI(int)"
+ line="5"
+ startpos="137"
+ endpos="152"
+>
+	<marker line="-1" type="param">
+		<operand  start="157" length="5" line="5">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="120" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getLength:()I@org.w3c.dom.NameList"
+ sig="int getLength()"
+ line="6"
+ startpos="186"
+ endpos="195"
+>
+</method>
+<method
+ chordsig="contains:(Ljava/lang/String;)Z@org.w3c.dom.NameList"
+ sig="boolean contains(String)"
+ line="7"
+ startpos="224"
+ endpos="232"
+>
+	<marker line="-1" type="param">
+		<operand  start="250" length="3" line="7">
+			<expr><![CDATA[str]]></expr>
+		</operand>
+	</marker>
+	<type  start="233" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="containsNS:(Ljava/lang/String;Ljava/lang/String;)Z@org.w3c.dom.NameList"
+ sig="boolean containsNS(String,String)"
+ line="8"
+ startpos="281"
+ endpos="291"
+>
+	<marker line="-1" type="param">
+		<operand  start="309" length="12" line="8">
+			<expr><![CDATA[namespaceURI]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="340" length="4" line="8">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="292" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="323" length="16" line="8" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

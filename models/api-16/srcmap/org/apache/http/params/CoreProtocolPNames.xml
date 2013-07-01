@@ -1,0 +1,12 @@
+<root>
+<class chordsig="org.apache.http.params.CoreProtocolPNames" line="2">
+	<type  start="90" length="16" line="4" chordsig="java.lang.String"/>
+	<type  start="171" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="264" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="357" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="425" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="500" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="606" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="698" length="16" line="11" chordsig="java.lang.String"/>
+</class>
+</root>

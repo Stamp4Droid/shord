@@ -1,0 +1,24 @@
+<root>
+<class chordsig="java.util.concurrent.RejectedExecutionHandler" line="2">
+<method
+ chordsig="rejectedExecution:(Ljava/lang/Runnable;Ljava/util/concurrent/ThreadPoolExecutor;)V@java.util.concurrent.RejectedExecutionHandler"
+ sig="void rejectedExecution(Runnable,ThreadPoolExecutor)"
+ line="4"
+ startpos="96"
+ endpos="113"
+>
+	<marker line="-1" type="param">
+		<operand  start="133" length="1" line="4">
+			<expr><![CDATA[r]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="176" length="8" line="4">
+			<expr><![CDATA[executor]]></expr>
+		</operand>
+	</marker>
+	<type  start="114" length="18" line="4" chordsig="java.lang.Runnable"/>
+	<type  start="136" length="39" line="4" chordsig="java.util.concurrent.ThreadPoolExecutor"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,298 @@
+<root>
+<class chordsig="android.test.InstrumentationTestCase" line="2">
+	<type  start="69" length="24" line="3" chordsig="junit.framework.TestCase"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.test.InstrumentationTestCase"
+ sig="InstrumentationTestCase()"
+ line="5"
+ startpos="104"
+ endpos="127"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="142" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="138" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="159" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="142" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="injectInstrumentation:(Landroid/app/Instrumentation;)V@android.test.InstrumentationTestCase"
+ sig="void injectInstrumentation(Instrumentation)"
+ line="6"
+ startpos="184"
+ endpos="205"
+>
+	<marker line="-1" type="param">
+		<operand  start="234" length="15" line="6">
+			<expr><![CDATA[instrumentation]]></expr>
+		</operand>
+	</marker>
+	<type  start="206" length="27" line="6" chordsig="android.app.Instrumentation"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="263" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="259" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="280" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="263" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="injectInsrumentation:(Landroid/app/Instrumentation;)V@android.test.InstrumentationTestCase"
+ sig="void injectInsrumentation(Instrumentation)"
+ line="8"
+ startpos="329"
+ endpos="349"
+>
+	<marker line="-1" type="param">
+		<operand  start="378" length="15" line="8">
+			<expr><![CDATA[instrumentation]]></expr>
+		</operand>
+	</marker>
+	<type  start="350" length="27" line="8" chordsig="android.app.Instrumentation"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="407" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="403" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="424" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="407" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInstrumentation:()Landroid/app/Instrumentation;@android.test.InstrumentationTestCase"
+ sig="Instrumentation getInstrumentation()"
+ line="9"
+ startpos="472"
+ endpos="490"
+>
+	<type  start="444" length="27" line="9" chordsig="android.app.Instrumentation"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="505" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="501" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="522" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="505" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="launchActivity:(Ljava/lang/String;Ljava/lang/Class;Landroid/os/Bundle;)Landroid/app/Activity;@android.test.InstrumentationTestCase"
+ sig="T launchActivity(String,Class&lt;T&gt;,Bundle)"
+ line="10"
+ startpos="582"
+ endpos="596"
+>
+	<marker line="-1" type="param">
+		<operand  start="614" length="3" line="10">
+			<expr><![CDATA[pkg]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="638" length="11" line="10">
+			<expr><![CDATA[activityCls]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="669" length="6" line="10">
+			<expr><![CDATA[extras]]></expr>
+		</operand>
+	</marker>
+	<type  start="558" length="20" line="10" chordsig="android.app.Activity"/>
+	<type  start="580" length="1" line="10" chordsig="android.app.Activity"/>
+	<type  start="597" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="619" length="15" line="10" chordsig="java.lang.Class"/>
+	<type  start="635" length="1" line="10" chordsig="android.app.Activity"/>
+	<type  start="651" length="17" line="10" chordsig="android.os.Bundle"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="689" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="685" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="706" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="689" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="launchActivityWithIntent:(Ljava/lang/String;Ljava/lang/Class;Landroid/content/Intent;)Landroid/app/Activity;@android.test.InstrumentationTestCase"
+ sig="T launchActivityWithIntent(String,Class&lt;T&gt;,Intent)"
+ line="12"
+ startpos="815"
+ endpos="839"
+>
+	<marker line="-1" type="param">
+		<operand  start="857" length="3" line="12">
+			<expr><![CDATA[pkg]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="881" length="11" line="12">
+			<expr><![CDATA[activityCls]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="917" length="6" line="12">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="791" length="20" line="12" chordsig="android.app.Activity"/>
+	<type  start="813" length="1" line="12" chordsig="android.app.Activity"/>
+	<type  start="840" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="862" length="15" line="12" chordsig="java.lang.Class"/>
+	<type  start="878" length="1" line="12" chordsig="android.app.Activity"/>
+	<type  start="894" length="22" line="12" chordsig="android.content.Intent"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="937" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="933" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="954" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="937" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="runTestOnUiThread:(Ljava/lang/Runnable;)V@android.test.InstrumentationTestCase"
+ sig="void runTestOnUiThread(Runnable)"
+ line="13"
+ startpos="979"
+ endpos="996"
+>
+	<marker line="-1" type="param">
+		<operand  start="1016" length="1" line="13">
+			<expr><![CDATA[r]]></expr>
+		</operand>
+	</marker>
+	<type  start="997" length="18" line="13" chordsig="java.lang.Runnable"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1058" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1054" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1075" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1058" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="runTest:()V@android.test.InstrumentationTestCase"
+ sig="void runTest()"
+ line="14"
+ startpos="1103"
+ endpos="1110"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1152" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1148" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1169" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1152" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="sendKeys:(Ljava/lang/String;)V@android.test.InstrumentationTestCase"
+ sig="void sendKeys(String)"
+ line="15"
+ startpos="1194"
+ endpos="1202"
+>
+	<marker line="-1" type="param">
+		<operand  start="1220" length="12" line="15">
+			<expr><![CDATA[keysSequence]]></expr>
+		</operand>
+	</marker>
+	<type  start="1203" length="16" line="15" chordsig="java.lang.String"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1246" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1242" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1263" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1246" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="sendKeys:([I)V@android.test.InstrumentationTestCase"
+ sig="void sendKeys(int)"
+ line="16"
+ startpos="1288"
+ endpos="1296"
+>
+	<marker line="-1" type="param">
+		<operand  start="1304" length="4" line="16">
+			<expr><![CDATA[keys]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1322" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1318" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1339" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1322" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="sendRepeatedKeys:([I)V@android.test.InstrumentationTestCase"
+ sig="void sendRepeatedKeys(int)"
+ line="17"
+ startpos="1364"
+ endpos="1380"
+>
+	<marker line="-1" type="param">
+		<operand  start="1388" length="4" line="17">
+			<expr><![CDATA[keys]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1406" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1402" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1423" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1406" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="tearDown:()V@android.test.InstrumentationTestCase"
+ sig="void tearDown()"
+ line="18"
+ startpos="1451"
+ endpos="1459"
+>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1501" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1497" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1518" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1501" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

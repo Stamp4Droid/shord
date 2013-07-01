@@ -1,0 +1,29 @@
+<root>
+<class chordsig="org.apache.http.client.HttpRequestRetryHandler" line="2">
+<method
+ chordsig="retryRequest:(Ljava/io/IOException;ILorg/apache/http/protocol/HttpContext;)Z@org.apache.http.client.HttpRequestRetryHandler"
+ sig="boolean retryRequest(IOException,int,HttpContext)"
+ line="4"
+ startpos="100"
+ endpos="112"
+>
+	<marker line="-1" type="param">
+		<operand  start="133" length="9" line="4">
+			<expr><![CDATA[exception]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="148" length="14" line="4">
+			<expr><![CDATA[executionCount]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="201" length="7" line="4">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="113" length="19" line="4" chordsig="java.io.IOException"/>
+	<type  start="164" length="36" line="4" chordsig="org.apache.http.protocol.HttpContext"/>
+</method>
+</class>
+</root>

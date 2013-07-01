@@ -1,0 +1,604 @@
+<root>
+<class chordsig="android.media.audiofx.EnvironmentalReverb" line="2">
+	<type  start="74" length="33" line="3" chordsig="android.media.audiofx.AudioEffect"/>
+<class chordsig="android.media.audiofx.EnvironmentalReverb$OnParameterChangeListener" line="5">
+<method
+ chordsig="onParameterChange:(Landroid/media/audiofx/EnvironmentalReverb;III)V@android.media.audiofx.EnvironmentalReverb$OnParameterChangeListener"
+ sig="void onParameterChange(EnvironmentalReverb,int,int,int)"
+ line="7"
+ startpos="184"
+ endpos="201"
+>
+	<marker line="-1" type="param">
+		<operand  start="244" length="6" line="7">
+			<expr><![CDATA[effect]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="256" length="6" line="7">
+			<expr><![CDATA[status]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="268" length="5" line="7">
+			<expr><![CDATA[param]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="279" length="5" line="7">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="202" length="41" line="7" chordsig="android.media.audiofx.EnvironmentalReverb"/>
+</method>
+</class>
+<class chordsig="android.media.audiofx.EnvironmentalReverb$Settings" line="9">
+<method
+ chordsig="&lt;init&gt;:()V@android.media.audiofx.EnvironmentalReverb$Settings"
+ sig="Settings()"
+ line="11"
+ startpos="328"
+ endpos="336"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="351" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="347" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="368" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="351" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.media.audiofx.EnvironmentalReverb$Settings"
+ sig="Settings(String)"
+ line="12"
+ startpos="388"
+ endpos="396"
+>
+	<marker line="-1" type="param">
+		<operand  start="414" length="8" line="12">
+			<expr><![CDATA[settings]]></expr>
+		</operand>
+	</marker>
+	<type  start="397" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="436" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="432" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="453" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="436" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.media.audiofx.EnvironmentalReverb$Settings"
+ sig="String toString()"
+ line="13"
+ startpos="490"
+ endpos="498"
+>
+	<type  start="473" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="513" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="509" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="530" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="513" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(II)V@android.media.audiofx.EnvironmentalReverb"
+ sig="EnvironmentalReverb(int,int)"
+ line="25"
+ startpos="807"
+ endpos="826"
+>
+	<marker line="-1" type="param">
+		<operand  start="831" length="8" line="25">
+			<expr><![CDATA[priority]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="845" length="12" line="25">
+			<expr><![CDATA[audioSession]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="982" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="978" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="999" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="982" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setRoomLevel:(S)V@android.media.audiofx.EnvironmentalReverb"
+ sig="void setRoomLevel(short)"
+ line="26"
+ startpos="1024"
+ endpos="1036"
+>
+	<marker line="-1" type="param">
+		<operand  start="1043" length="4" line="26">
+			<expr><![CDATA[room]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1177" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1173" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1194" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1177" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRoomLevel:()S@android.media.audiofx.EnvironmentalReverb"
+ sig="short getRoomLevel()"
+ line="27"
+ startpos="1220"
+ endpos="1232"
+>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1363" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1359" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1380" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1363" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setRoomHFLevel:(S)V@android.media.audiofx.EnvironmentalReverb"
+ sig="void setRoomHFLevel(short)"
+ line="28"
+ startpos="1405"
+ endpos="1419"
+>
+	<marker line="-1" type="param">
+		<operand  start="1426" length="6" line="28">
+			<expr><![CDATA[roomHF]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1562" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1558" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1579" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1562" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRoomHFLevel:()S@android.media.audiofx.EnvironmentalReverb"
+ sig="short getRoomHFLevel()"
+ line="29"
+ startpos="1605"
+ endpos="1619"
+>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1750" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1746" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1767" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1750" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDecayTime:(I)V@android.media.audiofx.EnvironmentalReverb"
+ sig="void setDecayTime(int)"
+ line="30"
+ startpos="1792"
+ endpos="1804"
+>
+	<marker line="-1" type="param">
+		<operand  start="1809" length="9" line="30">
+			<expr><![CDATA[decayTime]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1948" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1944" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1965" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1948" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDecayTime:()I@android.media.audiofx.EnvironmentalReverb"
+ sig="int getDecayTime()"
+ line="31"
+ startpos="1989"
+ endpos="2001"
+>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2132" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2128" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2149" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2132" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDecayHFRatio:(S)V@android.media.audiofx.EnvironmentalReverb"
+ sig="void setDecayHFRatio(short)"
+ line="32"
+ startpos="2174"
+ endpos="2189"
+>
+	<marker line="-1" type="param">
+		<operand  start="2196" length="12" line="32">
+			<expr><![CDATA[decayHFRatio]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2338" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2334" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2355" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2338" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDecayHFRatio:()S@android.media.audiofx.EnvironmentalReverb"
+ sig="short getDecayHFRatio()"
+ line="33"
+ startpos="2381"
+ endpos="2396"
+>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2527" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2523" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2544" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2527" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setReflectionsLevel:(S)V@android.media.audiofx.EnvironmentalReverb"
+ sig="void setReflectionsLevel(short)"
+ line="34"
+ startpos="2569"
+ endpos="2588"
+>
+	<marker line="-1" type="param">
+		<operand  start="2595" length="16" line="34">
+			<expr><![CDATA[reflectionsLevel]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2741" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2737" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2758" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2741" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getReflectionsLevel:()S@android.media.audiofx.EnvironmentalReverb"
+ sig="short getReflectionsLevel()"
+ line="35"
+ startpos="2784"
+ endpos="2803"
+>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2934" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2930" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2951" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2934" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setReflectionsDelay:(I)V@android.media.audiofx.EnvironmentalReverb"
+ sig="void setReflectionsDelay(int)"
+ line="36"
+ startpos="2976"
+ endpos="2995"
+>
+	<marker line="-1" type="param">
+		<operand  start="3000" length="16" line="36">
+			<expr><![CDATA[reflectionsDelay]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3146" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3142" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3163" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3146" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getReflectionsDelay:()I@android.media.audiofx.EnvironmentalReverb"
+ sig="int getReflectionsDelay()"
+ line="37"
+ startpos="3187"
+ endpos="3206"
+>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3337" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3333" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3354" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3337" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setReverbLevel:(S)V@android.media.audiofx.EnvironmentalReverb"
+ sig="void setReverbLevel(short)"
+ line="38"
+ startpos="3379"
+ endpos="3393"
+>
+	<marker line="-1" type="param">
+		<operand  start="3400" length="11" line="38">
+			<expr><![CDATA[reverbLevel]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3541" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3537" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3558" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3541" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getReverbLevel:()S@android.media.audiofx.EnvironmentalReverb"
+ sig="short getReverbLevel()"
+ line="39"
+ startpos="3584"
+ endpos="3598"
+>
+	<newexpr line="39" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3729" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3725" length="29" line="39">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3746" length="7" line="39">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3729" length="16" line="39" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setReverbDelay:(I)V@android.media.audiofx.EnvironmentalReverb"
+ sig="void setReverbDelay(int)"
+ line="40"
+ startpos="3771"
+ endpos="3785"
+>
+	<marker line="-1" type="param">
+		<operand  start="3790" length="11" line="40">
+			<expr><![CDATA[reverbDelay]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3931" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3927" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3948" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3931" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getReverbDelay:()I@android.media.audiofx.EnvironmentalReverb"
+ sig="int getReverbDelay()"
+ line="41"
+ startpos="3972"
+ endpos="3986"
+>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4117" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4113" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4134" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4117" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDiffusion:(S)V@android.media.audiofx.EnvironmentalReverb"
+ sig="void setDiffusion(short)"
+ line="42"
+ startpos="4159"
+ endpos="4171"
+>
+	<marker line="-1" type="param">
+		<operand  start="4178" length="9" line="42">
+			<expr><![CDATA[diffusion]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4317" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4313" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4334" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4317" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDiffusion:()S@android.media.audiofx.EnvironmentalReverb"
+ sig="short getDiffusion()"
+ line="43"
+ startpos="4360"
+ endpos="4372"
+>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4503" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4499" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4520" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4503" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDensity:(S)V@android.media.audiofx.EnvironmentalReverb"
+ sig="void setDensity(short)"
+ line="44"
+ startpos="4545"
+ endpos="4555"
+>
+	<marker line="-1" type="param">
+		<operand  start="4562" length="7" line="44">
+			<expr><![CDATA[density]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4699" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4695" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4716" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4699" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDensity:()S@android.media.audiofx.EnvironmentalReverb"
+ sig="short getDensity()"
+ line="45"
+ startpos="4742"
+ endpos="4752"
+>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4883" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4879" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4900" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4883" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setParameterListener:(Landroid/media/audiofx/EnvironmentalReverb$OnParameterChangeListener;)V@android.media.audiofx.EnvironmentalReverb"
+ sig="void setParameterListener(OnParameterChangeListener)"
+ line="46"
+ startpos="4925"
+ endpos="4945"
+>
+	<marker line="-1" type="param">
+		<operand  start="5014" length="8" line="46">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="4946" length="67" line="46" chordsig="android.media.audiofx.EnvironmentalReverb$OnParameterChangeListener"/>
+	<newexpr line="46" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5036" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5032" length="29" line="46">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5053" length="7" line="46">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5036" length="16" line="46" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getProperties:()Landroid/media/audiofx/EnvironmentalReverb$Settings;@android.media.audiofx.EnvironmentalReverb"
+ sig="Settings getProperties()"
+ line="47"
+ startpos="5124"
+ endpos="5137"
+>
+	<type  start="5073" length="50" line="47" chordsig="android.media.audiofx.EnvironmentalReverb$Settings"/>
+	<newexpr line="47" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5268" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5264" length="29" line="47">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5285" length="7" line="47">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5268" length="16" line="47" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setProperties:(Landroid/media/audiofx/EnvironmentalReverb$Settings;)V@android.media.audiofx.EnvironmentalReverb"
+ sig="void setProperties(Settings)"
+ line="48"
+ startpos="5310"
+ endpos="5323"
+>
+	<marker line="-1" type="param">
+		<operand  start="5375" length="8" line="48">
+			<expr><![CDATA[settings]]></expr>
+		</operand>
+	</marker>
+	<type  start="5324" length="50" line="48" chordsig="android.media.audiofx.EnvironmentalReverb$Settings"/>
+	<newexpr line="48" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5513" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5509" length="29" line="48">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5530" length="7" line="48">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5513" length="16" line="48" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,59 @@
+<root>
+<class chordsig="org.xml.sax.ext.EntityResolver2" line="2">
+	<type  start="68" length="26" line="3" chordsig="org.xml.sax.EntityResolver"/>
+<method
+ chordsig="getExternalSubset:(Ljava/lang/String;Ljava/lang/String;)Lorg/xml/sax/InputSource;@org.xml.sax.ext.EntityResolver2"
+ sig="InputSource getExternalSubset(String,String)"
+ line="5"
+ startpos="138"
+ endpos="155"
+>
+	<marker line="-1" type="param">
+		<operand  start="173" length="4" line="5">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="196" length="7" line="5">
+			<expr><![CDATA[baseURI]]></expr>
+		</operand>
+	</marker>
+	<type  start="114" length="23" line="5" chordsig="org.xml.sax.InputSource"/>
+	<type  start="156" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="179" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="resolveEntity:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/xml/sax/InputSource;@org.xml.sax.ext.EntityResolver2"
+ sig="InputSource resolveEntity(String,String,String,String)"
+ line="6"
+ startpos="300"
+ endpos="313"
+>
+	<marker line="-1" type="param">
+		<operand  start="331" length="4" line="6">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="354" length="8" line="6">
+			<expr><![CDATA[publicId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="381" length="7" line="6">
+			<expr><![CDATA[baseURI]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="407" length="8" line="6">
+			<expr><![CDATA[systemId]]></expr>
+		</operand>
+	</marker>
+	<type  start="276" length="23" line="6" chordsig="org.xml.sax.InputSource"/>
+	<type  start="314" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="337" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="364" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="390" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

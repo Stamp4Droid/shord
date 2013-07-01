@@ -1,0 +1,130 @@
+<root>
+<class chordsig="android.widget.Adapter" line="2">
+<method
+ chordsig="registerDataSetObserver:(Landroid/database/DataSetObserver;)V@android.widget.Adapter"
+ sig="void registerDataSetObserver(DataSetObserver)"
+ line="4"
+ startpos="73"
+ endpos="96"
+>
+	<marker line="-1" type="param">
+		<operand  start="130" length="8" line="4">
+			<expr><![CDATA[observer]]></expr>
+		</operand>
+	</marker>
+	<type  start="97" length="32" line="4" chordsig="android.database.DataSetObserver"/>
+</method>
+<method
+ chordsig="unregisterDataSetObserver:(Landroid/database/DataSetObserver;)V@android.widget.Adapter"
+ sig="void unregisterDataSetObserver(DataSetObserver)"
+ line="5"
+ startpos="163"
+ endpos="188"
+>
+	<marker line="-1" type="param">
+		<operand  start="222" length="8" line="5">
+			<expr><![CDATA[observer]]></expr>
+		</operand>
+	</marker>
+	<type  start="189" length="32" line="5" chordsig="android.database.DataSetObserver"/>
+</method>
+<method
+ chordsig="getCount:()I@android.widget.Adapter"
+ sig="int getCount()"
+ line="6"
+ startpos="254"
+ endpos="262"
+>
+</method>
+<method
+ chordsig="getItem:(I)Ljava/lang/Object;@android.widget.Adapter"
+ sig="Object getItem(int)"
+ line="7"
+ startpos="300"
+ endpos="307"
+>
+	<marker line="-1" type="param">
+		<operand  start="312" length="8" line="7">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+	<type  start="283" length="16" line="7" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="getItemId:(I)J@android.widget.Adapter"
+ sig="long getItemId(int)"
+ line="8"
+ startpos="345"
+ endpos="354"
+>
+	<marker line="-1" type="param">
+		<operand  start="359" length="8" line="8">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="hasStableIds:()Z@android.widget.Adapter"
+ sig="boolean hasStableIds()"
+ line="9"
+ startpos="395"
+ endpos="407"
+>
+</method>
+<method
+ chordsig="getView:(ILandroid/view/View;Landroid/view/ViewGroup;)Landroid/view/View;@android.widget.Adapter"
+ sig="View getView(int,View,ViewGroup)"
+ line="10"
+ startpos="446"
+ endpos="453"
+>
+	<marker line="-1" type="param">
+		<operand  start="458" length="8" line="10">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="486" length="11" line="10">
+			<expr><![CDATA[convertView]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="522" length="6" line="10">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<type  start="428" length="17" line="10" chordsig="android.view.View"/>
+	<type  start="468" length="17" line="10" chordsig="android.view.View"/>
+	<type  start="499" length="22" line="10" chordsig="android.view.ViewGroup"/>
+</method>
+<method
+ chordsig="getItemViewType:(I)I@android.widget.Adapter"
+ sig="int getItemViewType(int)"
+ line="11"
+ startpos="552"
+ endpos="567"
+>
+	<marker line="-1" type="param">
+		<operand  start="572" length="8" line="11">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getViewTypeCount:()I@android.widget.Adapter"
+ sig="int getViewTypeCount()"
+ line="12"
+ startpos="604"
+ endpos="620"
+>
+</method>
+<method
+ chordsig="isEmpty:()Z@android.widget.Adapter"
+ sig="boolean isEmpty()"
+ line="13"
+ startpos="649"
+ endpos="656"
+>
+</method>
+</class>
+</root>

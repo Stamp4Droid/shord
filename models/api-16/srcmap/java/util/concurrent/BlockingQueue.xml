@@ -1,0 +1,173 @@
+<root>
+<class chordsig="java.util.concurrent.BlockingQueue" line="2">
+	<type  start="74" length="15" line="3" chordsig="java.util.Queue"/>
+	<type  start="90" length="1" line="3" chordsig="java.lang.Object"/>
+<method
+ chordsig="add:(Ljava/lang/Object;)Z@java.util.concurrent.BlockingQueue"
+ sig="boolean add(E)"
+ line="5"
+ startpos="120"
+ endpos="123"
+>
+	<marker line="-1" type="param">
+		<operand  start="126" length="1" line="5">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="124" length="1" line="5" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="offer:(Ljava/lang/Object;)Z@java.util.concurrent.BlockingQueue"
+ sig="boolean offer(E)"
+ line="6"
+ startpos="155"
+ endpos="160"
+>
+	<marker line="-1" type="param">
+		<operand  start="163" length="1" line="6">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="161" length="1" line="6" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="put:(Ljava/lang/Object;)V@java.util.concurrent.BlockingQueue"
+ sig="void put(E)"
+ line="7"
+ startpos="189"
+ endpos="192"
+>
+	<marker line="-1" type="param">
+		<operand  start="195" length="1" line="7">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="193" length="1" line="7" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="offer:(Ljava/lang/Object;JLjava/util/concurrent/TimeUnit;)Z@java.util.concurrent.BlockingQueue"
+ sig="boolean offer(E,long,TimeUnit)"
+ line="8"
+ startpos="262"
+ endpos="267"
+>
+	<marker line="-1" type="param">
+		<operand  start="270" length="1" line="8">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="278" length="7" line="8">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="317" length="4" line="8">
+			<expr><![CDATA[unit]]></expr>
+		</operand>
+	</marker>
+	<type  start="268" length="1" line="8" chordsig="java.lang.Object"/>
+	<type  start="287" length="29" line="8" chordsig="java.util.concurrent.TimeUnit"/>
+</method>
+<method
+ chordsig="take:()Ljava/lang/Object;@java.util.concurrent.BlockingQueue"
+ sig="E take()"
+ line="9"
+ startpos="381"
+ endpos="385"
+>
+	<type  start="379" length="1" line="9" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="poll:(JLjava/util/concurrent/TimeUnit;)Ljava/lang/Object;@java.util.concurrent.BlockingQueue"
+ sig="E poll(long,TimeUnit)"
+ line="10"
+ startpos="446"
+ endpos="450"
+>
+	<marker line="-1" type="param">
+		<operand  start="456" length="7" line="10">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="495" length="4" line="10">
+			<expr><![CDATA[unit]]></expr>
+		</operand>
+	</marker>
+	<type  start="444" length="1" line="10" chordsig="java.lang.Object"/>
+	<type  start="465" length="29" line="10" chordsig="java.util.concurrent.TimeUnit"/>
+</method>
+<method
+ chordsig="remainingCapacity:()I@java.util.concurrent.BlockingQueue"
+ sig="int remainingCapacity()"
+ line="11"
+ startpos="561"
+ endpos="578"
+>
+</method>
+<method
+ chordsig="remove:(Ljava/lang/Object;)Z@java.util.concurrent.BlockingQueue"
+ sig="boolean remove(Object)"
+ line="12"
+ startpos="607"
+ endpos="613"
+>
+	<marker line="-1" type="param">
+		<operand  start="631" length="1" line="12">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="614" length="16" line="12" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="contains:(Ljava/lang/Object;)Z@java.util.concurrent.BlockingQueue"
+ sig="boolean contains(Object)"
+ line="13"
+ startpos="660"
+ endpos="668"
+>
+	<marker line="-1" type="param">
+		<operand  start="686" length="1" line="13">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="669" length="16" line="13" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="drainTo:(Ljava/util/Collection;)I@java.util.concurrent.BlockingQueue"
+ sig="int drainTo(Collection&lt;? super E&gt;)"
+ line="14"
+ startpos="711"
+ endpos="718"
+>
+	<marker line="-1" type="param">
+		<operand  start="751" length="1" line="14">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<type  start="719" length="20" line="14" chordsig="java.util.Collection"/>
+	<type  start="748" length="1" line="14" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="drainTo:(Ljava/util/Collection;I)I@java.util.concurrent.BlockingQueue"
+ sig="int drainTo(Collection&lt;? super E&gt;,int)"
+ line="15"
+ startpos="776"
+ endpos="783"
+>
+	<marker line="-1" type="param">
+		<operand  start="816" length="1" line="15">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="823" length="11" line="15">
+			<expr><![CDATA[maxElements]]></expr>
+		</operand>
+	</marker>
+	<type  start="784" length="20" line="15" chordsig="java.util.Collection"/>
+	<type  start="813" length="1" line="15" chordsig="java.lang.Object"/>
+</method>
+</class>
+</root>

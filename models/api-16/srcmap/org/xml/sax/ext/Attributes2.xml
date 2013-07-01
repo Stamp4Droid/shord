@@ -1,0 +1,99 @@
+<root>
+<class chordsig="org.xml.sax.ext.Attributes2" line="2">
+	<type  start="64" length="22" line="3" chordsig="org.xml.sax.Attributes"/>
+<method
+ chordsig="isDeclared:(I)Z@org.xml.sax.ext.Attributes2"
+ sig="boolean isDeclared(int)"
+ line="5"
+ startpos="114"
+ endpos="124"
+>
+	<marker line="-1" type="param">
+		<operand  start="129" length="5" line="5">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="isDeclared:(Ljava/lang/String;)Z@org.xml.sax.ext.Attributes2"
+ sig="boolean isDeclared(String)"
+ line="6"
+ startpos="162"
+ endpos="172"
+>
+	<marker line="-1" type="param">
+		<operand  start="190" length="5" line="6">
+			<expr><![CDATA[qName]]></expr>
+		</operand>
+	</marker>
+	<type  start="173" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="isDeclared:(Ljava/lang/String;Ljava/lang/String;)Z@org.xml.sax.ext.Attributes2"
+ sig="boolean isDeclared(String,String)"
+ line="7"
+ startpos="223"
+ endpos="233"
+>
+	<marker line="-1" type="param">
+		<operand  start="251" length="3" line="7">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="273" length="9" line="7">
+			<expr><![CDATA[localName]]></expr>
+		</operand>
+	</marker>
+	<type  start="234" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="256" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="isSpecified:(I)Z@org.xml.sax.ext.Attributes2"
+ sig="boolean isSpecified(int)"
+ line="8"
+ startpos="310"
+ endpos="321"
+>
+	<marker line="-1" type="param">
+		<operand  start="326" length="5" line="8">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="isSpecified:(Ljava/lang/String;Ljava/lang/String;)Z@org.xml.sax.ext.Attributes2"
+ sig="boolean isSpecified(String,String)"
+ line="9"
+ startpos="359"
+ endpos="370"
+>
+	<marker line="-1" type="param">
+		<operand  start="388" length="3" line="9">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="410" length="9" line="9">
+			<expr><![CDATA[localName]]></expr>
+		</operand>
+	</marker>
+	<type  start="371" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="393" length="16" line="9" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="isSpecified:(Ljava/lang/String;)Z@org.xml.sax.ext.Attributes2"
+ sig="boolean isSpecified(String)"
+ line="10"
+ startpos="447"
+ endpos="458"
+>
+	<marker line="-1" type="param">
+		<operand  start="476" length="5" line="10">
+			<expr><![CDATA[qName]]></expr>
+		</operand>
+	</marker>
+	<type  start="459" length="16" line="10" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

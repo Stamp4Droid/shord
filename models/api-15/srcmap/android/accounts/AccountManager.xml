@@ -1,0 +1,1468 @@
+<root>
+<class chordsig="android.accounts.AccountManager" line="6">
+<method
+ chordsig="&lt;init&gt;:()V@android.accounts.AccountManager"
+ sig="AccountManager()"
+ line="8"
+ startpos="150"
+ endpos="164"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="187" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="183" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="204" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="187" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPassword:(Landroid/accounts/Account;)Ljava/lang/String;@android.accounts.AccountManager"
+ sig="String getPassword(Account)"
+ line="12"
+ startpos="249"
+ endpos="260"
+>
+	<marker line="-1" type="param">
+		<operand  start="286" length="7" line="12">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<type  start="232" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="261" length="24" line="12" chordsig="android.accounts.Account"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="315" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="311" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="332" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="315" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getUserData:(Landroid/accounts/Account;Ljava/lang/String;)Ljava/lang/String;@android.accounts.AccountManager"
+ sig="String getUserData(Account,String)"
+ line="16"
+ startpos="377"
+ endpos="388"
+>
+	<marker line="-1" type="param">
+		<operand  start="414" length="7" line="16">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="440" length="3" line="16">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="360" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="389" length="24" line="16" chordsig="android.accounts.Account"/>
+	<type  start="423" length="16" line="16" chordsig="java.lang.String"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="465" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="461" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="482" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="465" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAuthenticatorTypes:()[Landroid/accounts/AuthenticatorDescription;@android.accounts.AccountManager"
+ sig="AuthenticatorDescription[] getAuthenticatorTypes()"
+ line="20"
+ startpos="554"
+ endpos="575"
+>
+	<type  start="510" length="41" line="20" chordsig="android.accounts.AuthenticatorDescription"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="598" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="594" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="615" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="598" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hasFeatures:(Landroid/accounts/Account;[Ljava/lang/String;Landroid/accounts/AccountManagerCallback;Landroid/os/Handler;)Landroid/accounts/AccountManagerFuture;@android.accounts.AccountManager"
+ sig="AccountManagerFuture&lt;Boolean&gt; hasFeatures(Account,String[],AccountManagerCallback&lt;Boolean&gt;,Handler)"
+ line="24"
+ startpos="700"
+ endpos="711"
+>
+	<marker line="-1" type="param">
+		<operand  start="737" length="7" line="24">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="765" length="8" line="24">
+			<expr><![CDATA[features]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="834" length="8" line="24">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="863" length="7" line="24">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="643" length="37" line="24" chordsig="android.accounts.AccountManagerFuture"/>
+	<type  start="681" length="17" line="24" chordsig="java.lang.Boolean"/>
+	<type  start="712" length="24" line="24" chordsig="android.accounts.Account"/>
+	<type  start="746" length="16" line="24" chordsig="java.lang.String"/>
+	<type  start="775" length="39" line="24" chordsig="android.accounts.AccountManagerCallback"/>
+	<type  start="815" length="17" line="24" chordsig="java.lang.Boolean"/>
+	<type  start="844" length="18" line="24" chordsig="android.os.Handler"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="892" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="888" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="909" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="892" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAccountsByTypeAndFeatures:(Ljava/lang/String;[Ljava/lang/String;Landroid/accounts/AccountManagerCallback;Landroid/os/Handler;)Landroid/accounts/AccountManagerFuture;@android.accounts.AccountManager"
+ sig="AccountManagerFuture&lt;Account[]&gt; getAccountsByTypeAndFeatures(String,String[],AccountManagerCallback&lt;Account[]&gt;,Handler)"
+ line="28"
+ startpos="1003"
+ endpos="1031"
+>
+	<marker line="-1" type="param">
+		<operand  start="1049" length="4" line="28">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1074" length="8" line="28">
+			<expr><![CDATA[features]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1152" length="8" line="28">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1181" length="7" line="28">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="937" length="37" line="28" chordsig="android.accounts.AccountManagerFuture"/>
+	<type  start="975" length="24" line="28" chordsig="android.accounts.Account"/>
+	<type  start="1032" length="16" line="28" chordsig="java.lang.String"/>
+	<type  start="1055" length="16" line="28" chordsig="java.lang.String"/>
+	<type  start="1084" length="39" line="28" chordsig="android.accounts.AccountManagerCallback"/>
+	<type  start="1124" length="24" line="28" chordsig="android.accounts.Account"/>
+	<type  start="1162" length="18" line="28" chordsig="android.os.Handler"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1210" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1206" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1227" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1210" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addAccountExplicitly:(Landroid/accounts/Account;Ljava/lang/String;Landroid/os/Bundle;)Z@android.accounts.AccountManager"
+ sig="boolean addAccountExplicitly(Account,String,Bundle)"
+ line="32"
+ startpos="1263"
+ endpos="1283"
+>
+	<marker line="-1" type="param">
+		<operand  start="1309" length="7" line="32">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1335" length="8" line="32">
+			<expr><![CDATA[password]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1363" length="8" line="32">
+			<expr><![CDATA[userdata]]></expr>
+		</operand>
+	</marker>
+	<type  start="1284" length="24" line="32" chordsig="android.accounts.Account"/>
+	<type  start="1318" length="16" line="32" chordsig="java.lang.String"/>
+	<type  start="1345" length="17" line="32" chordsig="android.os.Bundle"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1393" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1389" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1410" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1393" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeAccount:(Landroid/accounts/Account;Landroid/accounts/AccountManagerCallback;Landroid/os/Handler;)Landroid/accounts/AccountManagerFuture;@android.accounts.AccountManager"
+ sig="AccountManagerFuture&lt;Boolean&gt; removeAccount(Account,AccountManagerCallback&lt;Boolean&gt;,Handler)"
+ line="36"
+ startpos="1495"
+ endpos="1508"
+>
+	<marker line="-1" type="param">
+		<operand  start="1534" length="7" line="36">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1602" length="8" line="36">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1631" length="7" line="36">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="1438" length="37" line="36" chordsig="android.accounts.AccountManagerFuture"/>
+	<type  start="1476" length="17" line="36" chordsig="java.lang.Boolean"/>
+	<type  start="1509" length="24" line="36" chordsig="android.accounts.Account"/>
+	<type  start="1543" length="39" line="36" chordsig="android.accounts.AccountManagerCallback"/>
+	<type  start="1583" length="17" line="36" chordsig="java.lang.Boolean"/>
+	<type  start="1612" length="18" line="36" chordsig="android.os.Handler"/>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1660" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1656" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1677" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1660" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="invalidateAuthToken:(Ljava/lang/String;Ljava/lang/String;)V@android.accounts.AccountManager"
+ sig="void invalidateAuthToken(String,String)"
+ line="40"
+ startpos="1710"
+ endpos="1729"
+>
+	<marker line="-1" type="param">
+		<operand  start="1747" length="11" line="40">
+			<expr><![CDATA[accountType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1777" length="9" line="40">
+			<expr><![CDATA[authToken]]></expr>
+		</operand>
+	</marker>
+	<type  start="1730" length="16" line="40" chordsig="java.lang.String"/>
+	<type  start="1760" length="16" line="40" chordsig="java.lang.String"/>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1808" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1804" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1825" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1808" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="peekAuthToken:(Landroid/accounts/Account;Ljava/lang/String;)Ljava/lang/String;@android.accounts.AccountManager"
+ sig="String peekAuthToken(Account,String)"
+ line="44"
+ startpos="1870"
+ endpos="1883"
+>
+	<marker line="-1" type="param">
+		<operand  start="1909" length="7" line="44">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1935" length="13" line="44">
+			<expr><![CDATA[authTokenType]]></expr>
+		</operand>
+	</marker>
+	<type  start="1853" length="16" line="44" chordsig="java.lang.String"/>
+	<type  start="1884" length="24" line="44" chordsig="android.accounts.Account"/>
+	<type  start="1918" length="16" line="44" chordsig="java.lang.String"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1970" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1966" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1987" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1970" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPassword:(Landroid/accounts/Account;Ljava/lang/String;)V@android.accounts.AccountManager"
+ sig="void setPassword(Account,String)"
+ line="48"
+ startpos="2020"
+ endpos="2031"
+>
+	<marker line="-1" type="param">
+		<operand  start="2057" length="7" line="48">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2083" length="8" line="48">
+			<expr><![CDATA[password]]></expr>
+		</operand>
+	</marker>
+	<type  start="2032" length="24" line="48" chordsig="android.accounts.Account"/>
+	<type  start="2066" length="16" line="48" chordsig="java.lang.String"/>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2113" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2109" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2130" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2113" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clearPassword:(Landroid/accounts/Account;)V@android.accounts.AccountManager"
+ sig="void clearPassword(Account)"
+ line="52"
+ startpos="2163"
+ endpos="2176"
+>
+	<marker line="-1" type="param">
+		<operand  start="2202" length="7" line="52">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<type  start="2177" length="24" line="52" chordsig="android.accounts.Account"/>
+	<newexpr line="53" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2231" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2227" length="29" line="53">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2248" length="7" line="53">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2231" length="16" line="53" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setUserData:(Landroid/accounts/Account;Ljava/lang/String;Ljava/lang/String;)V@android.accounts.AccountManager"
+ sig="void setUserData(Account,String,String)"
+ line="56"
+ startpos="2281"
+ endpos="2292"
+>
+	<marker line="-1" type="param">
+		<operand  start="2318" length="7" line="56">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2344" length="3" line="56">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2366" length="5" line="56">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="2293" length="24" line="56" chordsig="android.accounts.Account"/>
+	<type  start="2327" length="16" line="56" chordsig="java.lang.String"/>
+	<type  start="2349" length="16" line="56" chordsig="java.lang.String"/>
+	<newexpr line="57" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2393" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2389" length="29" line="57">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2410" length="7" line="57">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2393" length="16" line="57" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setAuthToken:(Landroid/accounts/Account;Ljava/lang/String;Ljava/lang/String;)V@android.accounts.AccountManager"
+ sig="void setAuthToken(Account,String,String)"
+ line="60"
+ startpos="2443"
+ endpos="2455"
+>
+	<marker line="-1" type="param">
+		<operand  start="2481" length="7" line="60">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2507" length="13" line="60">
+			<expr><![CDATA[authTokenType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2539" length="9" line="60">
+			<expr><![CDATA[authToken]]></expr>
+		</operand>
+	</marker>
+	<type  start="2456" length="24" line="60" chordsig="android.accounts.Account"/>
+	<type  start="2490" length="16" line="60" chordsig="java.lang.String"/>
+	<type  start="2522" length="16" line="60" chordsig="java.lang.String"/>
+	<newexpr line="61" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2570" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2566" length="29" line="61">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2587" length="7" line="61">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2570" length="16" line="61" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="blockingGetAuthToken:(Landroid/accounts/Account;Ljava/lang/String;Z)Ljava/lang/String;@android.accounts.AccountManager"
+ sig="String blockingGetAuthToken(Account,String,boolean)"
+ line="64"
+ startpos="2632"
+ endpos="2652"
+>
+	<marker line="-1" type="param">
+		<operand  start="2678" length="7" line="64">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2704" length="13" line="64">
+			<expr><![CDATA[authTokenType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2727" length="17" line="64">
+			<expr><![CDATA[notifyAuthFailure]]></expr>
+		</operand>
+	</marker>
+	<type  start="2615" length="16" line="64" chordsig="java.lang.String"/>
+	<type  start="2653" length="24" line="64" chordsig="android.accounts.Account"/>
+	<type  start="2687" length="16" line="64" chordsig="java.lang.String"/>
+	<newexpr line="65" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2879" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2875" length="29" line="65">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2896" length="7" line="65">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2879" length="16" line="65" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAuthToken:(Landroid/accounts/Account;Ljava/lang/String;Landroid/os/Bundle;ZLandroid/accounts/AccountManagerCallback;Landroid/os/Handler;)Landroid/accounts/AccountManagerFuture;@android.accounts.AccountManager"
+ sig="AccountManagerFuture&lt;Bundle&gt; getAuthToken(Account,String,Bundle,boolean,AccountManagerCallback&lt;Bundle&gt;,Handler)"
+ line="68"
+ startpos="2981"
+ endpos="2993"
+>
+	<marker line="-1" type="param">
+		<operand  start="3019" length="7" line="68">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3045" length="13" line="68">
+			<expr><![CDATA[authTokenType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3078" length="7" line="68">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3095" length="17" line="68">
+			<expr><![CDATA[notifyAuthFailure]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3173" length="8" line="68">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3202" length="7" line="68">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="2924" length="37" line="68" chordsig="android.accounts.AccountManagerFuture"/>
+	<type  start="2962" length="17" line="68" chordsig="android.os.Bundle"/>
+	<type  start="2994" length="24" line="68" chordsig="android.accounts.Account"/>
+	<type  start="3028" length="16" line="68" chordsig="java.lang.String"/>
+	<type  start="3060" length="17" line="68" chordsig="android.os.Bundle"/>
+	<type  start="3114" length="39" line="68" chordsig="android.accounts.AccountManagerCallback"/>
+	<type  start="3154" length="17" line="68" chordsig="android.os.Bundle"/>
+	<type  start="3183" length="18" line="68" chordsig="android.os.Handler"/>
+	<newexpr line="69" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3231" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3227" length="29" line="69">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3248" length="7" line="69">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3231" length="16" line="69" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newChooseAccountIntent:(Landroid/accounts/Account;Ljava/util/ArrayList;[Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;[Ljava/lang/String;Landroid/os/Bundle;)Landroid/content/Intent;@android.accounts.AccountManager"
+ sig="Intent newChooseAccountIntent(Account,ArrayList&lt;Account&gt;,String[],boolean,String,String,String[],Bundle)"
+ line="72"
+ startpos="3306"
+ endpos="3328"
+>
+	<marker line="-1" type="param">
+		<operand  start="3354" length="15" line="72">
+			<expr><![CDATA[selectedAccount]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3417" length="17" line="72">
+			<expr><![CDATA[allowableAccounts]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3455" length="21" line="72">
+			<expr><![CDATA[allowableAccountTypes]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3486" length="22" line="72">
+			<expr><![CDATA[alwaysPromptForAccount]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3527" length="23" line="72">
+			<expr><![CDATA[descriptionOverrideText]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3569" length="23" line="72">
+			<expr><![CDATA[addAccountAuthTokenType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3613" length="26" line="72">
+			<expr><![CDATA[addAccountRequiredFeatures]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3659" length="17" line="72">
+			<expr><![CDATA[addAccountOptions]]></expr>
+		</operand>
+	</marker>
+	<type  start="3283" length="22" line="72" chordsig="android.content.Intent"/>
+	<type  start="3329" length="24" line="72" chordsig="android.accounts.Account"/>
+	<type  start="3371" length="19" line="72" chordsig="java.util.ArrayList"/>
+	<type  start="3391" length="24" line="72" chordsig="android.accounts.Account"/>
+	<type  start="3436" length="16" line="72" chordsig="java.lang.String"/>
+	<type  start="3510" length="16" line="72" chordsig="java.lang.String"/>
+	<type  start="3552" length="16" line="72" chordsig="java.lang.String"/>
+	<type  start="3594" length="16" line="72" chordsig="java.lang.String"/>
+	<type  start="3641" length="17" line="72" chordsig="android.os.Bundle"/>
+	<newexpr line="73" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3698" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3694" length="29" line="73">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3715" length="7" line="73">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3698" length="16" line="73" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addOnAccountsUpdatedListener:(Landroid/accounts/OnAccountsUpdateListener;Landroid/os/Handler;Z)V@android.accounts.AccountManager"
+ sig="void addOnAccountsUpdatedListener(OnAccountsUpdateListener,Handler,boolean)"
+ line="76"
+ startpos="3748"
+ endpos="3776"
+>
+	<marker line="-1" type="param">
+		<operand  start="3819" length="8" line="76">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3848" length="7" line="76">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3865" length="17" line="76">
+			<expr><![CDATA[updateImmediately]]></expr>
+		</operand>
+	</marker>
+	<type  start="3777" length="41" line="76" chordsig="android.accounts.OnAccountsUpdateListener"/>
+	<type  start="3829" length="18" line="76" chordsig="android.os.Handler"/>
+	<newexpr line="77" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3904" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3900" length="29" line="77">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3921" length="7" line="77">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3904" length="16" line="77" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeOnAccountsUpdatedListener:(Landroid/accounts/OnAccountsUpdateListener;)V@android.accounts.AccountManager"
+ sig="void removeOnAccountsUpdatedListener(OnAccountsUpdateListener)"
+ line="80"
+ startpos="3954"
+ endpos="3985"
+>
+	<marker line="-1" type="param">
+		<operand  start="4028" length="8" line="80">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="3986" length="41" line="80" chordsig="android.accounts.OnAccountsUpdateListener"/>
+	<newexpr line="81" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4058" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4054" length="29" line="81">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4075" length="7" line="81">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4058" length="16" line="81" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="4536" length="16" line="98" chordsig="java.lang.String"/>
+	<type  start="4612" length="16" line="100" chordsig="java.lang.String"/>
+	<type  start="4688" length="16" line="102" chordsig="java.lang.String"/>
+	<type  start="4759" length="16" line="104" chordsig="java.lang.String"/>
+	<type  start="4824" length="16" line="106" chordsig="java.lang.String"/>
+	<type  start="4893" length="16" line="108" chordsig="java.lang.String"/>
+	<type  start="4962" length="16" line="110" chordsig="java.lang.String"/>
+	<type  start="5073" length="16" line="112" chordsig="java.lang.String"/>
+	<type  start="5172" length="16" line="114" chordsig="java.lang.String"/>
+	<type  start="5263" length="16" line="116" chordsig="java.lang.String"/>
+	<type  start="5352" length="16" line="118" chordsig="java.lang.String"/>
+	<type  start="5438" length="16" line="120" chordsig="java.lang.String"/>
+	<type  start="5518" length="16" line="122" chordsig="java.lang.String"/>
+	<type  start="5590" length="16" line="124" chordsig="java.lang.String"/>
+	<type  start="5668" length="16" line="126" chordsig="java.lang.String"/>
+	<type  start="5737" length="16" line="128" chordsig="java.lang.String"/>
+	<type  start="5809" length="16" line="130" chordsig="java.lang.String"/>
+	<type  start="5881" length="16" line="132" chordsig="java.lang.String"/>
+	<type  start="5972" length="16" line="134" chordsig="java.lang.String"/>
+	<type  start="6085" length="16" line="136" chordsig="java.lang.String"/>
+	<type  start="6199" length="16" line="138" chordsig="java.lang.String"/>
+	<type  start="6298" length="16" line="140" chordsig="java.lang.String"/>
+	<type  start="6410" length="14" line="142" chordsig="android.accounts.AccountManager"/>
+	<newexpr line="142" chordsig="&lt;init&gt;:()V@android.accounts.AccountManager" start="6446" length="14" type="invoke">
+			<expr><![CDATA[new AccountManager()]]></expr>
+		<param  start="6442" length="20" line="142">
+			<expr><![CDATA[new AccountManager()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6446" length="14" line="142" chordsig="android.accounts.AccountManager"/>
+<method
+ chordsig="get:(Landroid/content/Context;)Landroid/accounts/AccountManager;@android.accounts.AccountManager"
+ sig="AccountManager get(Context)"
+ line="144"
+ startpos="6515"
+ endpos="6518"
+>
+	<marker line="-1" type="param">
+		<operand  start="6543" length="7" line="144">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="6483" length="31" line="144" chordsig="android.accounts.AccountManager"/>
+	<type  start="6519" length="23" line="144" chordsig="android.content.Context"/>
+	<marker line="145" type="return">
+		<operand  start="6569" length="14" line="145">
+			<expr><![CDATA[accountManager]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getAccount:()Landroid/accounts/Account;@android.accounts.AccountManager"
+ sig="Account getAccount()"
+ line="149"
+ startpos="6695"
+ endpos="6705"
+>
+	<type  start="6670" length="24" line="149" chordsig="android.accounts.Account"/>
+	<marker line="150" type="return">
+		<operand  start="6725" length="43" line="150">
+			<expr><![CDATA[new Account(getAccountName(),new String())]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="150" chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;)V@android.accounts.Account" start="6729" length="7" type="invoke">
+			<expr><![CDATA[new Account(getAccountName(),new String())]]></expr>
+		<param  start="6725" length="43" line="150">
+			<expr><![CDATA[new Account(getAccountName(),new String())]]></expr>
+		</param>
+		<param  start="6737" length="16" line="150">
+			<expr><![CDATA[getAccountName()]]></expr>
+		</param>
+		<param  start="6755" length="12" line="150">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6729" length="7" line="150" chordsig="android.accounts.Account"/>
+	<invkexpr line="150" chordsig="getAccountName:()Ljava/lang/String;@android.accounts.AccountManager" start="6737" length="14" type="invoke">
+			<expr><![CDATA[getAccountName()]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+	</invkexpr>
+	<newexpr line="150" chordsig="&lt;init&gt;:()V@java.lang.String" start="6759" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="6755" length="12" line="150">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6759" length="6" line="150" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getAccountName:()Ljava/lang/String;@android.accounts.AccountManager"
+ sig="String getAccountName()"
+ line="154"
+ startpos="6877"
+ endpos="6891"
+>
+	<type  start="6860" length="16" line="154" chordsig="java.lang.String"/>
+	<marker line="155" type="return">
+		<operand  start="6911" length="12" line="155">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="155" chordsig="&lt;init&gt;:()V@java.lang.String" start="6915" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="6911" length="12" line="155">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6915" length="6" line="155" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="registerAccountManagerCallback:(Landroid/accounts/AccountManagerCallback;)Landroid/accounts/AccountManagerFuture;@android.accounts.AccountManager"
+ sig="AccountManagerFuture&lt;Bundle&gt; registerAccountManagerCallback(AccountManagerCallback&lt;Bundle&gt;)"
+ line="158"
+ startpos="7001"
+ endpos="7031"
+>
+	<marker line="-1" type="param">
+		<operand  start="7097" length="8" line="158">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<type  start="6944" length="37" line="158" chordsig="android.accounts.AccountManagerFuture"/>
+	<type  start="6982" length="17" line="158" chordsig="android.os.Bundle"/>
+	<type  start="7038" length="39" line="158" chordsig="android.accounts.AccountManagerCallback"/>
+	<type  start="7078" length="17" line="158" chordsig="android.os.Bundle"/>
+	<marker line="159" type="new.lhs" chordsig="Landroid/accounts/AccountManager$StampAccountManagerFuture;">
+		<operand  start="7149" length="6" line="159">
+			<expr><![CDATA[future]]></expr>
+		</operand>
+	</marker>
+	<type  start="7123" length="25" line="159" chordsig="android.accounts.AccountManager$StampAccountManagerFuture"/>
+	<newexpr line="159" chordsig="&lt;init&gt;:()V@android.accounts.AccountManager$StampAccountManagerFuture" start="7162" length="25" type="invoke">
+			<expr><![CDATA[new StampAccountManagerFuture()]]></expr>
+		<param  start="7158" length="31" line="159">
+			<expr><![CDATA[new StampAccountManagerFuture()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7162" length="25" line="159" chordsig="android.accounts.AccountManager$StampAccountManagerFuture"/>
+	<invkexpr line="160" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="7258" length="16" type="invoke">
+			<expr><![CDATA[edu.stanford.stamp.harness.ApplicationDriver.getInstance().registerCallback(new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    callback.run(future);
+  }
+}
+)]]></expr>
+		<param  start="7275" length="138" line="160">
+			<expr type="null"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    callback.run(future);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="160" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="7244" length="11" type="invoke">
+			<expr><![CDATA[edu.stanford.stamp.harness.ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="160" chordsig="&lt;init&gt;:()V@android.accounts.AccountManager$android.accounts.AccountManager#edu.stanford.stamp.harness.Callback#160" start="7279" length="35" type="invoke">
+			<expr><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    callback.run(future);
+  }
+}
+]]></expr>
+		<param  start="7275" length="138" line="160">
+			<expr type="android.accounts.AccountManager#edu.stanford.stamp.harness.Callback#160"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    callback.run(future);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7279" length="35" line="160" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.accounts.AccountManager$android.accounts.AccountManager#edu.stanford.stamp.harness.Callback#160" line="160">
+<method
+ chordsig="run:()V@android.accounts.AccountManager$android.accounts.AccountManager#edu.stanford.stamp.harness.Callback#160"
+ sig="void run()"
+ line="162"
+ startpos="7344"
+ endpos="7347"
+>
+	<invkexpr line="163" chordsig="run:(Landroid/accounts/AccountManagerFuture;)V@android.accounts.AccountManagerCallback" start="7377" length="3" type="invoke">
+			<expr><![CDATA[callback.run(future)]]></expr>
+		<param  start="7368" length="8" line="163">
+			<expr><![CDATA[callback]]></expr>
+		</param>
+		<param  start="7381" length="6" line="163">
+			<expr><![CDATA[future]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<marker line="166" type="return">
+		<operand  start="7431" length="6" line="166">
+			<expr><![CDATA[future]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getAuthToken:(Landroid/accounts/Account;Ljava/lang/String;Landroid/os/Bundle;Landroid/app/Activity;Landroid/accounts/AccountManagerCallback;Landroid/os/Handler;)Landroid/accounts/AccountManagerFuture;@android.accounts.AccountManager"
+ sig="AccountManagerFuture&lt;Bundle&gt; getAuthToken(Account,String,Bundle,Activity,AccountManagerCallback&lt;Bundle&gt;,Handler)"
+ line="169"
+ startpos="7514"
+ endpos="7526"
+>
+	<marker line="-1" type="param">
+		<operand  start="7552" length="7" line="169">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7578" length="13" line="169">
+			<expr><![CDATA[authTokenType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7611" length="7" line="169">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7641" length="8" line="169">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7710" length="8" line="169">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7739" length="7" line="169">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="7457" length="37" line="169" chordsig="android.accounts.AccountManagerFuture"/>
+	<type  start="7495" length="17" line="169" chordsig="android.os.Bundle"/>
+	<type  start="7527" length="24" line="169" chordsig="android.accounts.Account"/>
+	<type  start="7561" length="16" line="169" chordsig="java.lang.String"/>
+	<type  start="7593" length="17" line="169" chordsig="android.os.Bundle"/>
+	<type  start="7620" length="20" line="169" chordsig="android.app.Activity"/>
+	<type  start="7651" length="39" line="169" chordsig="android.accounts.AccountManagerCallback"/>
+	<type  start="7691" length="17" line="169" chordsig="android.os.Bundle"/>
+	<type  start="7720" length="18" line="169" chordsig="android.os.Handler"/>
+	<marker line="170" type="return">
+		<operand  start="7765" length="40" line="170">
+			<expr><![CDATA[registerAccountManagerCallback(callback)]]></expr>
+		</operand>
+	</marker>
+	<invkexpr line="170" chordsig="registerAccountManagerCallback:(Landroid/accounts/AccountManagerCallback;)Landroid/accounts/AccountManagerFuture;@android.accounts.AccountManager" start="7765" length="30" type="invoke">
+			<expr><![CDATA[registerAccountManagerCallback(callback)]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+		<param  start="7796" length="8" line="170">
+			<expr><![CDATA[callback]]></expr>
+		</param>
+	</invkexpr>
+</method>
+<method
+ chordsig="getAuthToken:(Landroid/accounts/Account;Ljava/lang/String;ZLandroid/accounts/AccountManagerCallback;Landroid/os/Handler;)Landroid/accounts/AccountManagerFuture;@android.accounts.AccountManager"
+ sig="AccountManagerFuture&lt;Bundle&gt; getAuthToken(Account,String,boolean,AccountManagerCallback&lt;Bundle&gt;,Handler)"
+ line="173"
+ startpos="7882"
+ endpos="7894"
+>
+	<marker line="-1" type="param">
+		<operand  start="7920" length="7" line="173">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7946" length="13" line="173">
+			<expr><![CDATA[authTokenType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7969" length="17" line="173">
+			<expr><![CDATA[notifyAuthFailure]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8047" length="8" line="173">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8076" length="7" line="173">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="7825" length="37" line="173" chordsig="android.accounts.AccountManagerFuture"/>
+	<type  start="7863" length="17" line="173" chordsig="android.os.Bundle"/>
+	<type  start="7895" length="24" line="173" chordsig="android.accounts.Account"/>
+	<type  start="7929" length="16" line="173" chordsig="java.lang.String"/>
+	<type  start="7988" length="39" line="173" chordsig="android.accounts.AccountManagerCallback"/>
+	<type  start="8028" length="17" line="173" chordsig="android.os.Bundle"/>
+	<type  start="8057" length="18" line="173" chordsig="android.os.Handler"/>
+	<marker line="174" type="return">
+		<operand  start="8102" length="40" line="174">
+			<expr><![CDATA[registerAccountManagerCallback(callback)]]></expr>
+		</operand>
+	</marker>
+	<invkexpr line="174" chordsig="registerAccountManagerCallback:(Landroid/accounts/AccountManagerCallback;)Landroid/accounts/AccountManagerFuture;@android.accounts.AccountManager" start="8102" length="30" type="invoke">
+			<expr><![CDATA[registerAccountManagerCallback(callback)]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+		<param  start="8133" length="8" line="174">
+			<expr><![CDATA[callback]]></expr>
+		</param>
+	</invkexpr>
+</method>
+<method
+ chordsig="addAccount:(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Landroid/os/Bundle;Landroid/app/Activity;Landroid/accounts/AccountManagerCallback;Landroid/os/Handler;)Landroid/accounts/AccountManagerFuture;@android.accounts.AccountManager"
+ sig="AccountManagerFuture&lt;Bundle&gt; addAccount(String,String,String[],Bundle,Activity,AccountManagerCallback&lt;Bundle&gt;,Handler)"
+ line="177"
+ startpos="8219"
+ endpos="8229"
+>
+	<marker line="-1" type="param">
+		<operand  start="8247" length="11" line="177">
+			<expr><![CDATA[accountType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8277" length="13" line="177">
+			<expr><![CDATA[authTokenType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8311" length="16" line="177">
+			<expr><![CDATA[requiredFeatures]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8347" length="17" line="177">
+			<expr><![CDATA[addAccountOptions]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8387" length="8" line="177">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8456" length="8" line="177">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8485" length="7" line="177">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="8162" length="37" line="177" chordsig="android.accounts.AccountManagerFuture"/>
+	<type  start="8200" length="17" line="177" chordsig="android.os.Bundle"/>
+	<type  start="8230" length="16" line="177" chordsig="java.lang.String"/>
+	<type  start="8260" length="16" line="177" chordsig="java.lang.String"/>
+	<type  start="8292" length="16" line="177" chordsig="java.lang.String"/>
+	<type  start="8329" length="17" line="177" chordsig="android.os.Bundle"/>
+	<type  start="8366" length="20" line="177" chordsig="android.app.Activity"/>
+	<type  start="8397" length="39" line="177" chordsig="android.accounts.AccountManagerCallback"/>
+	<type  start="8437" length="17" line="177" chordsig="android.os.Bundle"/>
+	<type  start="8466" length="18" line="177" chordsig="android.os.Handler"/>
+	<marker line="178" type="return">
+		<operand  start="8511" length="40" line="178">
+			<expr><![CDATA[registerAccountManagerCallback(callback)]]></expr>
+		</operand>
+	</marker>
+	<invkexpr line="178" chordsig="registerAccountManagerCallback:(Landroid/accounts/AccountManagerCallback;)Landroid/accounts/AccountManagerFuture;@android.accounts.AccountManager" start="8511" length="30" type="invoke">
+			<expr><![CDATA[registerAccountManagerCallback(callback)]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+		<param  start="8542" length="8" line="178">
+			<expr><![CDATA[callback]]></expr>
+		</param>
+	</invkexpr>
+</method>
+<method
+ chordsig="confirmCredentials:(Landroid/accounts/Account;Landroid/os/Bundle;Landroid/app/Activity;Landroid/accounts/AccountManagerCallback;Landroid/os/Handler;)Landroid/accounts/AccountManagerFuture;@android.accounts.AccountManager"
+ sig="AccountManagerFuture&lt;Bundle&gt; confirmCredentials(Account,Bundle,Activity,AccountManagerCallback&lt;Bundle&gt;,Handler)"
+ line="181"
+ startpos="8628"
+ endpos="8646"
+>
+	<marker line="-1" type="param">
+		<operand  start="8672" length="7" line="181">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8699" length="7" line="181">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8729" length="8" line="181">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8798" length="8" line="181">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="8827" length="7" line="181">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="8571" length="37" line="181" chordsig="android.accounts.AccountManagerFuture"/>
+	<type  start="8609" length="17" line="181" chordsig="android.os.Bundle"/>
+	<type  start="8647" length="24" line="181" chordsig="android.accounts.Account"/>
+	<type  start="8681" length="17" line="181" chordsig="android.os.Bundle"/>
+	<type  start="8708" length="20" line="181" chordsig="android.app.Activity"/>
+	<type  start="8739" length="39" line="181" chordsig="android.accounts.AccountManagerCallback"/>
+	<type  start="8779" length="17" line="181" chordsig="android.os.Bundle"/>
+	<type  start="8808" length="18" line="181" chordsig="android.os.Handler"/>
+	<marker line="182" type="return">
+		<operand  start="8853" length="40" line="182">
+			<expr><![CDATA[registerAccountManagerCallback(callback)]]></expr>
+		</operand>
+	</marker>
+	<invkexpr line="182" chordsig="registerAccountManagerCallback:(Landroid/accounts/AccountManagerCallback;)Landroid/accounts/AccountManagerFuture;@android.accounts.AccountManager" start="8853" length="30" type="invoke">
+			<expr><![CDATA[registerAccountManagerCallback(callback)]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+		<param  start="8884" length="8" line="182">
+			<expr><![CDATA[callback]]></expr>
+		</param>
+	</invkexpr>
+</method>
+<method
+ chordsig="updateCredentials:(Landroid/accounts/Account;Ljava/lang/String;Landroid/os/Bundle;Landroid/app/Activity;Landroid/accounts/AccountManagerCallback;Landroid/os/Handler;)Landroid/accounts/AccountManagerFuture;@android.accounts.AccountManager"
+ sig="AccountManagerFuture&lt;Bundle&gt; updateCredentials(Account,String,Bundle,Activity,AccountManagerCallback&lt;Bundle&gt;,Handler)"
+ line="185"
+ startpos="8970"
+ endpos="8987"
+>
+	<marker line="-1" type="param">
+		<operand  start="9013" length="7" line="185">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9039" length="13" line="185">
+			<expr><![CDATA[authTokenType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9072" length="7" line="185">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9102" length="8" line="185">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9171" length="8" line="185">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9200" length="7" line="185">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="8913" length="37" line="185" chordsig="android.accounts.AccountManagerFuture"/>
+	<type  start="8951" length="17" line="185" chordsig="android.os.Bundle"/>
+	<type  start="8988" length="24" line="185" chordsig="android.accounts.Account"/>
+	<type  start="9022" length="16" line="185" chordsig="java.lang.String"/>
+	<type  start="9054" length="17" line="185" chordsig="android.os.Bundle"/>
+	<type  start="9081" length="20" line="185" chordsig="android.app.Activity"/>
+	<type  start="9112" length="39" line="185" chordsig="android.accounts.AccountManagerCallback"/>
+	<type  start="9152" length="17" line="185" chordsig="android.os.Bundle"/>
+	<type  start="9181" length="18" line="185" chordsig="android.os.Handler"/>
+	<marker line="186" type="return">
+		<operand  start="9226" length="40" line="186">
+			<expr><![CDATA[registerAccountManagerCallback(callback)]]></expr>
+		</operand>
+	</marker>
+	<invkexpr line="186" chordsig="registerAccountManagerCallback:(Landroid/accounts/AccountManagerCallback;)Landroid/accounts/AccountManagerFuture;@android.accounts.AccountManager" start="9226" length="30" type="invoke">
+			<expr><![CDATA[registerAccountManagerCallback(callback)]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+		<param  start="9257" length="8" line="186">
+			<expr><![CDATA[callback]]></expr>
+		</param>
+	</invkexpr>
+</method>
+<method
+ chordsig="editProperties:(Ljava/lang/String;Landroid/app/Activity;Landroid/accounts/AccountManagerCallback;Landroid/os/Handler;)Landroid/accounts/AccountManagerFuture;@android.accounts.AccountManager"
+ sig="AccountManagerFuture&lt;Bundle&gt; editProperties(String,Activity,AccountManagerCallback&lt;Bundle&gt;,Handler)"
+ line="189"
+ startpos="9343"
+ endpos="9357"
+>
+	<marker line="-1" type="param">
+		<operand  start="9375" length="11" line="189">
+			<expr><![CDATA[accountType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9409" length="8" line="189">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9478" length="8" line="189">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9507" length="7" line="189">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="9286" length="37" line="189" chordsig="android.accounts.AccountManagerFuture"/>
+	<type  start="9324" length="17" line="189" chordsig="android.os.Bundle"/>
+	<type  start="9358" length="16" line="189" chordsig="java.lang.String"/>
+	<type  start="9388" length="20" line="189" chordsig="android.app.Activity"/>
+	<type  start="9419" length="39" line="189" chordsig="android.accounts.AccountManagerCallback"/>
+	<type  start="9459" length="17" line="189" chordsig="android.os.Bundle"/>
+	<type  start="9488" length="18" line="189" chordsig="android.os.Handler"/>
+	<marker line="190" type="return">
+		<operand  start="9533" length="40" line="190">
+			<expr><![CDATA[registerAccountManagerCallback(callback)]]></expr>
+		</operand>
+	</marker>
+	<invkexpr line="190" chordsig="registerAccountManagerCallback:(Landroid/accounts/AccountManagerCallback;)Landroid/accounts/AccountManagerFuture;@android.accounts.AccountManager" start="9533" length="30" type="invoke">
+			<expr><![CDATA[registerAccountManagerCallback(callback)]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+		<param  start="9564" length="8" line="190">
+			<expr><![CDATA[callback]]></expr>
+		</param>
+	</invkexpr>
+</method>
+<method
+ chordsig="getAuthTokenByFeatures:(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Landroid/app/Activity;Landroid/os/Bundle;Landroid/os/Bundle;Landroid/accounts/AccountManagerCallback;Landroid/os/Handler;)Landroid/accounts/AccountManagerFuture;@android.accounts.AccountManager"
+ sig="AccountManagerFuture&lt;Bundle&gt; getAuthTokenByFeatures(String,String,String[],Activity,Bundle,Bundle,AccountManagerCallback&lt;Bundle&gt;,Handler)"
+ line="193"
+ startpos="9650"
+ endpos="9672"
+>
+	<marker line="-1" type="param">
+		<operand  start="9690" length="11" line="193">
+			<expr><![CDATA[accountType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9720" length="13" line="193">
+			<expr><![CDATA[authTokenType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9754" length="8" line="193">
+			<expr><![CDATA[features]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9785" length="8" line="193">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9813" length="17" line="193">
+			<expr><![CDATA[addAccountOptions]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9850" length="19" line="193">
+			<expr><![CDATA[getAuthTokenOptions]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9930" length="8" line="193">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9959" length="7" line="193">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="9593" length="37" line="193" chordsig="android.accounts.AccountManagerFuture"/>
+	<type  start="9631" length="17" line="193" chordsig="android.os.Bundle"/>
+	<type  start="9673" length="16" line="193" chordsig="java.lang.String"/>
+	<type  start="9703" length="16" line="193" chordsig="java.lang.String"/>
+	<type  start="9735" length="16" line="193" chordsig="java.lang.String"/>
+	<type  start="9764" length="20" line="193" chordsig="android.app.Activity"/>
+	<type  start="9795" length="17" line="193" chordsig="android.os.Bundle"/>
+	<type  start="9832" length="17" line="193" chordsig="android.os.Bundle"/>
+	<type  start="9871" length="39" line="193" chordsig="android.accounts.AccountManagerCallback"/>
+	<type  start="9911" length="17" line="193" chordsig="android.os.Bundle"/>
+	<type  start="9940" length="18" line="193" chordsig="android.os.Handler"/>
+	<marker line="194" type="return">
+		<operand  start="9985" length="40" line="194">
+			<expr><![CDATA[registerAccountManagerCallback(callback)]]></expr>
+		</operand>
+	</marker>
+	<invkexpr line="194" chordsig="registerAccountManagerCallback:(Landroid/accounts/AccountManagerCallback;)Landroid/accounts/AccountManagerFuture;@android.accounts.AccountManager" start="9985" length="30" type="invoke">
+			<expr><![CDATA[registerAccountManagerCallback(callback)]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+		<param  start="10016" length="8" line="194">
+			<expr><![CDATA[callback]]></expr>
+		</param>
+	</invkexpr>
+</method>
+<method
+ chordsig="getAccounts:()[Landroid/accounts/Account;@android.accounts.AccountManager"
+ sig="Account[] getAccounts()"
+ line="197"
+ startpos="10072"
+ endpos="10083"
+>
+	<type  start="10045" length="24" line="197" chordsig="android.accounts.Account"/>
+	<marker line="198" type="invk.lhs" chordsig="getAccount:()Landroid/accounts/Account;@android.accounts.AccountManager">
+		<operand  start="10104" length="3" line="198">
+			<expr><![CDATA[act]]></expr>
+		</operand>
+	</marker>
+	<type  start="10096" length="7" line="198" chordsig="android.accounts.Account"/>
+	<invkexpr line="198" chordsig="getAccount:()Landroid/accounts/Account;@android.accounts.AccountManager" start="10110" length="10" type="invoke">
+			<expr><![CDATA[getAccount()]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+	</invkexpr>
+	<type  start="10132" length="7" line="199" chordsig="android.accounts.Account"/>
+	<type  start="10157" length="7" line="199" chordsig="android.accounts.Account"/>
+	<marker line="201" type="return">
+		<operand  start="10211" length="8" line="201">
+			<expr><![CDATA[actArray]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getAccountsByType:(Ljava/lang/String;)[Landroid/accounts/Account;@android.accounts.AccountManager"
+ sig="Account[] getAccountsByType(String)"
+ line="204"
+ startpos="10266"
+ endpos="10283"
+>
+	<marker line="-1" type="param">
+		<operand  start="10301" length="4" line="204">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<type  start="10239" length="24" line="204" chordsig="android.accounts.Account"/>
+	<type  start="10284" length="16" line="204" chordsig="java.lang.String"/>
+	<marker line="205" type="invk.lhs" chordsig="getAccount:()Landroid/accounts/Account;@android.accounts.AccountManager">
+		<operand  start="10325" length="3" line="205">
+			<expr><![CDATA[act]]></expr>
+		</operand>
+	</marker>
+	<type  start="10317" length="7" line="205" chordsig="android.accounts.Account"/>
+	<invkexpr line="205" chordsig="getAccount:()Landroid/accounts/Account;@android.accounts.AccountManager" start="10331" length="10" type="invoke">
+			<expr><![CDATA[getAccount()]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+	</invkexpr>
+	<type  start="10353" length="7" line="206" chordsig="android.accounts.Account"/>
+	<type  start="10378" length="7" line="206" chordsig="android.accounts.Account"/>
+	<marker line="208" type="return">
+		<operand  start="10432" length="8" line="208">
+			<expr><![CDATA[actArray]]></expr>
+		</operand>
+	</marker>
+</method>
+<class chordsig="android.accounts.AccountManager$StampAccountManagerFuture" line="211">
+	<type  start="10511" length="20" line="211" chordsig="android.accounts.AccountManagerFuture"/>
+	<type  start="10532" length="17" line="211" chordsig="android.os.Bundle"/>
+<method
+ chordsig="cancel:(Z)Z@android.accounts.AccountManager$StampAccountManagerFuture"
+ sig="boolean cancel(boolean)"
+ line="213"
+ startpos="10577"
+ endpos="10583"
+>
+	<marker line="-1" type="param">
+		<operand  start="10592" length="21" line="213">
+			<expr><![CDATA[mayInterruptIfRunning]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="214" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10639" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10635" length="29" line="214">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10656" length="7" line="214">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10639" length="16" line="214" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isCancelled:()Z@android.accounts.AccountManager$StampAccountManagerFuture"
+ sig="boolean isCancelled()"
+ line="217"
+ startpos="10700"
+ endpos="10711"
+>
+	<newexpr line="218" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10738" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10734" length="29" line="218">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10755" length="7" line="218">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10738" length="16" line="218" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isDone:()Z@android.accounts.AccountManager$StampAccountManagerFuture"
+ sig="boolean isDone()"
+ line="221"
+ startpos="10799"
+ endpos="10805"
+>
+	<newexpr line="222" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10832" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10828" length="29" line="222">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10849" length="7" line="222">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10832" length="16" line="222" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getResult:()Landroid/os/Bundle;@android.accounts.AccountManager$StampAccountManagerFuture"
+ sig="Bundle getResult()"
+ line="226"
+ startpos="10973"
+ endpos="10982"
+>
+	<alias>()Ljava/lang/Object;</alias>
+	<type  start="10955" length="17" line="226" chordsig="android.os.Bundle"/>
+	<marker line="227" type="return">
+		<operand  start="11119" length="23" line="227">
+			<expr><![CDATA[new android.os.Bundle()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="227" chordsig="&lt;init&gt;:()V@android.os.Bundle" start="11123" length="17" type="invoke">
+			<expr><![CDATA[new android.os.Bundle()]]></expr>
+		<param  start="11119" length="23" line="227">
+			<expr><![CDATA[new android.os.Bundle()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11123" length="17" line="227" chordsig="android.os.Bundle"/>
+</method>
+<method
+ chordsig="getResult:(JLjava/util/concurrent/TimeUnit;)Landroid/os/Bundle;@android.accounts.AccountManager$StampAccountManagerFuture"
+ sig="Bundle getResult(long,TimeUnit)"
+ line="231"
+ startpos="11258"
+ endpos="11267"
+>
+	<alias>(JLjava/util/concurrent/TimeUnit;)Ljava/lang/Object;</alias>
+	<marker line="-1" type="param">
+		<operand  start="11273" length="7" line="231">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="11312" length="4" line="231">
+			<expr><![CDATA[unit]]></expr>
+		</operand>
+	</marker>
+	<type  start="11240" length="17" line="231" chordsig="android.os.Bundle"/>
+	<type  start="11282" length="29" line="231" chordsig="java.util.concurrent.TimeUnit"/>
+	<marker line="232" type="return">
+		<operand  start="11452" length="23" line="232">
+			<expr><![CDATA[new android.os.Bundle()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="232" chordsig="&lt;init&gt;:()V@android.os.Bundle" start="11456" length="17" type="invoke">
+			<expr><![CDATA[new android.os.Bundle()]]></expr>
+		<param  start="11452" length="23" line="232">
+			<expr><![CDATA[new android.os.Bundle()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11456" length="17" line="232" chordsig="android.os.Bundle"/>
+</method>
+</class>
+</class>
+</root>

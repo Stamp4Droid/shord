@@ -1,0 +1,174 @@
+<root>
+<class chordsig="android.net.rtp.AudioStream" line="2">
+	<type  start="60" length="25" line="3" chordsig="android.net.rtp.RtpStream"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/net/InetAddress;)V@android.net.rtp.AudioStream"
+ sig="AudioStream(InetAddress)"
+ line="5"
+ startpos="96"
+ endpos="107"
+>
+	<marker line="-1" type="param">
+		<operand  start="129" length="7" line="5">
+			<expr><![CDATA[address]]></expr>
+		</operand>
+	</marker>
+	<type  start="108" length="20" line="5" chordsig="java.net.InetAddress"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="182" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="178" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="199" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="182" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isBusy:()Z@android.net.rtp.AudioStream"
+ sig="boolean isBusy()"
+ line="6"
+ startpos="233"
+ endpos="239"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="254" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="250" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="271" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="254" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getGroup:()Landroid/net/rtp/AudioGroup;@android.net.rtp.AudioStream"
+ sig="AudioGroup getGroup()"
+ line="7"
+ startpos="318"
+ endpos="326"
+>
+	<type  start="291" length="26" line="7" chordsig="android.net.rtp.AudioGroup"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="341" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="337" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="358" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="341" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="join:(Landroid/net/rtp/AudioGroup;)V@android.net.rtp.AudioStream"
+ sig="void join(AudioGroup)"
+ line="8"
+ startpos="383"
+ endpos="387"
+>
+	<marker line="-1" type="param">
+		<operand  start="415" length="5" line="8">
+			<expr><![CDATA[group]]></expr>
+		</operand>
+	</marker>
+	<type  start="388" length="26" line="8" chordsig="android.net.rtp.AudioGroup"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="434" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="430" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="451" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="434" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCodec:()Landroid/net/rtp/AudioCodec;@android.net.rtp.AudioStream"
+ sig="AudioCodec getCodec()"
+ line="9"
+ startpos="498"
+ endpos="506"
+>
+	<type  start="471" length="26" line="9" chordsig="android.net.rtp.AudioCodec"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="521" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="517" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="538" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="521" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setCodec:(Landroid/net/rtp/AudioCodec;)V@android.net.rtp.AudioStream"
+ sig="void setCodec(AudioCodec)"
+ line="10"
+ startpos="563"
+ endpos="571"
+>
+	<marker line="-1" type="param">
+		<operand  start="599" length="5" line="10">
+			<expr><![CDATA[codec]]></expr>
+		</operand>
+	</marker>
+	<type  start="572" length="26" line="10" chordsig="android.net.rtp.AudioCodec"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="618" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="614" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="635" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="618" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDtmfType:()I@android.net.rtp.AudioStream"
+ sig="int getDtmfType()"
+ line="11"
+ startpos="659"
+ endpos="670"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="685" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="681" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="702" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="685" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDtmfType:(I)V@android.net.rtp.AudioStream"
+ sig="void setDtmfType(int)"
+ line="12"
+ startpos="727"
+ endpos="738"
+>
+	<marker line="-1" type="param">
+		<operand  start="743" length="4" line="12">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="761" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="757" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="778" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="761" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

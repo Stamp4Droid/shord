@@ -1,0 +1,297 @@
+<root>
+<class chordsig="android.text.Editable" line="2">
+	<type  start="58" length="22" line="3" chordsig="java.lang.CharSequence"/>
+	<type  start="82" length="21" line="3" chordsig="android.text.GetChars"/>
+	<type  start="105" length="22" line="3" chordsig="android.text.Spannable"/>
+	<type  start="129" length="20" line="3" chordsig="java.lang.Appendable"/>
+<class chordsig="android.text.Editable$Factory" line="5">
+<method
+ chordsig="&lt;init&gt;:()V@android.text.Editable$Factory"
+ sig="Factory()"
+ line="7"
+ startpos="190"
+ endpos="197"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="212" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="208" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="229" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="212" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInstance:()Landroid/text/Editable$Factory;@android.text.Editable$Factory"
+ sig="Factory getInstance()"
+ line="8"
+ startpos="286"
+ endpos="297"
+>
+	<type  start="256" length="29" line="8" chordsig="android.text.Editable$Factory"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="312" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="308" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="329" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="312" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newEditable:(Ljava/lang/CharSequence;)Landroid/text/Editable;@android.text.Editable$Factory"
+ sig="Editable newEditable(CharSequence)"
+ line="9"
+ startpos="371"
+ endpos="382"
+>
+	<marker line="-1" type="param">
+		<operand  start="406" length="6" line="9">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="349" length="21" line="9" chordsig="android.text.Editable"/>
+	<type  start="383" length="22" line="9" chordsig="java.lang.CharSequence"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="426" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="422" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="443" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="426" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="replace:(IILjava/lang/CharSequence;II)Landroid/text/Editable;@android.text.Editable"
+ sig="Editable replace(int,int,CharSequence,int,int)"
+ line="11"
+ startpos="496"
+ endpos="503"
+>
+	<marker line="-1" type="param">
+		<operand  start="508" length="2" line="11">
+			<expr><![CDATA[st]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="516" length="2" line="11">
+			<expr><![CDATA[en]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="543" length="6" line="11">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="555" length="5" line="11">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="566" length="3" line="11">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="474" length="21" line="11" chordsig="android.text.Editable"/>
+	<type  start="520" length="22" line="11" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="replace:(IILjava/lang/CharSequence;)Landroid/text/Editable;@android.text.Editable"
+ sig="Editable replace(int,int,CharSequence)"
+ line="12"
+ startpos="611"
+ endpos="618"
+>
+	<marker line="-1" type="param">
+		<operand  start="623" length="2" line="12">
+			<expr><![CDATA[st]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="631" length="2" line="12">
+			<expr><![CDATA[en]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="658" length="4" line="12">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="589" length="21" line="12" chordsig="android.text.Editable"/>
+	<type  start="635" length="22" line="12" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="insert:(ILjava/lang/CharSequence;II)Landroid/text/Editable;@android.text.Editable"
+ sig="Editable insert(int,CharSequence,int,int)"
+ line="13"
+ startpos="704"
+ endpos="710"
+>
+	<marker line="-1" type="param">
+		<operand  start="715" length="5" line="13">
+			<expr><![CDATA[where]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="745" length="4" line="13">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="755" length="5" line="13">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="766" length="3" line="13">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="682" length="21" line="13" chordsig="android.text.Editable"/>
+	<type  start="722" length="22" line="13" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="insert:(ILjava/lang/CharSequence;)Landroid/text/Editable;@android.text.Editable"
+ sig="Editable insert(int,CharSequence)"
+ line="14"
+ startpos="811"
+ endpos="817"
+>
+	<marker line="-1" type="param">
+		<operand  start="822" length="5" line="14">
+			<expr><![CDATA[where]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="852" length="4" line="14">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="789" length="21" line="14" chordsig="android.text.Editable"/>
+	<type  start="829" length="22" line="14" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="delete:(II)Landroid/text/Editable;@android.text.Editable"
+ sig="Editable delete(int,int)"
+ line="15"
+ startpos="898"
+ endpos="904"
+>
+	<marker line="-1" type="param">
+		<operand  start="909" length="2" line="15">
+			<expr><![CDATA[st]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="917" length="2" line="15">
+			<expr><![CDATA[en]]></expr>
+		</operand>
+	</marker>
+	<type  start="876" length="21" line="15" chordsig="android.text.Editable"/>
+</method>
+<method
+ chordsig="append:(Ljava/lang/CharSequence;)Landroid/text/Editable;@android.text.Editable"
+ sig="Editable append(CharSequence)"
+ line="16"
+ startpos="961"
+ endpos="967"
+>
+	<alias>(Ljava/lang/CharSequence;)Ljava/lang/Appendable;</alias>
+	<marker line="-1" type="param">
+		<operand  start="991" length="4" line="16">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="939" length="21" line="16" chordsig="android.text.Editable"/>
+	<type  start="968" length="22" line="16" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="append:(Ljava/lang/CharSequence;II)Landroid/text/Editable;@android.text.Editable"
+ sig="Editable append(CharSequence,int,int)"
+ line="17"
+ startpos="1037"
+ endpos="1043"
+>
+	<alias>(Ljava/lang/CharSequence;II)Ljava/lang/Appendable;</alias>
+	<marker line="-1" type="param">
+		<operand  start="1067" length="4" line="17">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1077" length="5" line="17">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1088" length="3" line="17">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="1015" length="21" line="17" chordsig="android.text.Editable"/>
+	<type  start="1044" length="22" line="17" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="append:(C)Landroid/text/Editable;@android.text.Editable"
+ sig="Editable append(char)"
+ line="18"
+ startpos="1133"
+ endpos="1139"
+>
+	<alias>(C)Ljava/lang/Appendable;</alias>
+	<marker line="-1" type="param">
+		<operand  start="1145" length="4" line="18">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="1111" length="21" line="18" chordsig="android.text.Editable"/>
+</method>
+<method
+ chordsig="clear:()V@android.text.Editable"
+ sig="void clear()"
+ line="19"
+ startpos="1174"
+ endpos="1179"
+>
+</method>
+<method
+ chordsig="clearSpans:()V@android.text.Editable"
+ sig="void clearSpans()"
+ line="20"
+ startpos="1205"
+ endpos="1215"
+>
+</method>
+<method
+ chordsig="setFilters:([Landroid/text/InputFilter;)V@android.text.Editable"
+ sig="void setFilters(InputFilter[])"
+ line="21"
+ startpos="1241"
+ endpos="1251"
+>
+	<marker line="-1" type="param">
+		<operand  start="1279" length="7" line="21">
+			<expr><![CDATA[filters]]></expr>
+		</operand>
+	</marker>
+	<type  start="1252" length="24" line="21" chordsig="android.text.InputFilter"/>
+</method>
+<method
+ chordsig="getFilters:()[Landroid/text/InputFilter;@android.text.Editable"
+ sig="InputFilter[] getFilters()"
+ line="22"
+ startpos="1333"
+ endpos="1343"
+>
+	<type  start="1306" length="24" line="22" chordsig="android.text.InputFilter"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,70 @@
+<root>
+<class chordsig="java.net.SecureCacheResponse" line="2">
+	<type  start="70" length="22" line="3" chordsig="java.net.CacheResponse"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.net.SecureCacheResponse"
+ sig="SecureCacheResponse()"
+ line="5"
+ startpos="103"
+ endpos="122"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="137" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="133" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="154" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="137" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCipherSuite:()Ljava/lang/String;@java.net.SecureCacheResponse"
+ sig="String getCipherSuite()"
+ line="6"
+ startpos="200"
+ endpos="214"
+>
+	<type  start="183" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getLocalCertificateChain:()Ljava/util/List;@java.net.SecureCacheResponse"
+ sig="List&lt;Certificate&gt; getLocalCertificateChain()"
+ line="7"
+ startpos="282"
+ endpos="306"
+>
+	<type  start="235" length="14" line="7" chordsig="java.util.List"/>
+	<type  start="250" length="30" line="7" chordsig="java.security.cert.Certificate"/>
+</method>
+<method
+ chordsig="getServerCertificateChain:()Ljava/util/List;@java.net.SecureCacheResponse"
+ sig="List&lt;Certificate&gt; getServerCertificateChain()"
+ line="8"
+ startpos="374"
+ endpos="399"
+>
+	<type  start="327" length="14" line="8" chordsig="java.util.List"/>
+	<type  start="342" length="30" line="8" chordsig="java.security.cert.Certificate"/>
+</method>
+<method
+ chordsig="getPeerPrincipal:()Ljava/security/Principal;@java.net.SecureCacheResponse"
+ sig="Principal getPeerPrincipal()"
+ line="9"
+ startpos="492"
+ endpos="508"
+>
+	<type  start="468" length="23" line="9" chordsig="java.security.Principal"/>
+</method>
+<method
+ chordsig="getLocalPrincipal:()Ljava/security/Principal;@java.net.SecureCacheResponse"
+ sig="Principal getLocalPrincipal()"
+ line="10"
+ startpos="601"
+ endpos="618"
+>
+	<type  start="577" length="23" line="10" chordsig="java.security.Principal"/>
+</method>
+</class>
+</root>

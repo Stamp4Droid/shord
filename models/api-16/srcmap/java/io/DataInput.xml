@@ -1,0 +1,151 @@
+<root>
+<class chordsig="java.io.DataInput" line="2">
+<method
+ chordsig="readBoolean:()Z@java.io.DataInput"
+ sig="boolean readBoolean()"
+ line="4"
+ startpos="71"
+ endpos="82"
+>
+</method>
+<method
+ chordsig="readByte:()B@java.io.DataInput"
+ sig="byte readByte()"
+ line="5"
+ startpos="135"
+ endpos="143"
+>
+</method>
+<method
+ chordsig="readChar:()C@java.io.DataInput"
+ sig="char readChar()"
+ line="6"
+ startpos="196"
+ endpos="204"
+>
+</method>
+<method
+ chordsig="readDouble:()D@java.io.DataInput"
+ sig="double readDouble()"
+ line="7"
+ startpos="259"
+ endpos="269"
+>
+</method>
+<method
+ chordsig="readFloat:()F@java.io.DataInput"
+ sig="float readFloat()"
+ line="8"
+ startpos="323"
+ endpos="332"
+>
+</method>
+<method
+ chordsig="readFully:([B)V@java.io.DataInput"
+ sig="void readFully(byte[])"
+ line="9"
+ startpos="385"
+ endpos="394"
+>
+	<marker line="-1" type="param">
+		<operand  start="402" length="3" line="9">
+			<expr><![CDATA[dst]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="readFully:([BII)V@java.io.DataInput"
+ sig="void readFully(byte[],int,int)"
+ line="10"
+ startpos="457"
+ endpos="466"
+>
+	<marker line="-1" type="param">
+		<operand  start="474" length="3" line="10">
+			<expr><![CDATA[dst]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="483" length="6" line="10">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="495" length="9" line="10">
+			<expr><![CDATA[byteCount]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="readInt:()I@java.io.DataInput"
+ sig="int readInt()"
+ line="11"
+ startpos="555"
+ endpos="562"
+>
+</method>
+<method
+ chordsig="readLine:()Ljava/lang/String;@java.io.DataInput"
+ sig="String readLine()"
+ line="12"
+ startpos="627"
+ endpos="635"
+>
+	<type  start="610" length="16" line="12" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="readLong:()J@java.io.DataInput"
+ sig="long readLong()"
+ line="13"
+ startpos="688"
+ endpos="696"
+>
+</method>
+<method
+ chordsig="readShort:()S@java.io.DataInput"
+ sig="short readShort()"
+ line="14"
+ startpos="750"
+ endpos="759"
+>
+</method>
+<method
+ chordsig="readUnsignedByte:()I@java.io.DataInput"
+ sig="int readUnsignedByte()"
+ line="15"
+ startpos="811"
+ endpos="827"
+>
+</method>
+<method
+ chordsig="readUnsignedShort:()I@java.io.DataInput"
+ sig="int readUnsignedShort()"
+ line="16"
+ startpos="879"
+ endpos="896"
+>
+</method>
+<method
+ chordsig="readUTF:()Ljava/lang/String;@java.io.DataInput"
+ sig="String readUTF()"
+ line="17"
+ startpos="961"
+ endpos="968"
+>
+	<type  start="944" length="16" line="17" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="skipBytes:(I)I@java.io.DataInput"
+ sig="int skipBytes(int)"
+ line="18"
+ startpos="1020"
+ endpos="1029"
+>
+	<marker line="-1" type="param">
+		<operand  start="1034" length="5" line="18">
+			<expr><![CDATA[count]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

@@ -1,0 +1,535 @@
+<root>
+<class chordsig="android.widget.Switch" line="2">
+	<type  start="54" length="29" line="3" chordsig="android.widget.CompoundButton"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.widget.Switch"
+ sig="Switch(Context)"
+ line="5"
+ startpos="94"
+ endpos="100"
+>
+	<marker line="-1" type="param">
+		<operand  start="125" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="101" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="143" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="173" length="25" line="5" chordsig="android.util.AttributeSet"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="218" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="214" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="235" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="218" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.widget.Switch"
+ sig="Switch(Context,AttributeSet)"
+ line="6"
+ startpos="255"
+ endpos="261"
+>
+	<marker line="-1" type="param">
+		<operand  start="286" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="321" length="5" line="6">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="262" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="295" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<type  start="337" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="367" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="412" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="408" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="429" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="412" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;I)V@android.widget.Switch"
+ sig="Switch(Context,AttributeSet,int)"
+ line="7"
+ startpos="449"
+ endpos="455"
+>
+	<marker line="-1" type="param">
+		<operand  start="480" length="7" line="7">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="515" length="5" line="7">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="526" length="8" line="7">
+			<expr><![CDATA[defStyle]]></expr>
+		</operand>
+	</marker>
+	<type  start="456" length="23" line="7" chordsig="android.content.Context"/>
+	<type  start="489" length="25" line="7" chordsig="android.util.AttributeSet"/>
+	<type  start="545" length="23" line="7" chordsig="android.content.Context"/>
+	<type  start="575" length="25" line="7" chordsig="android.util.AttributeSet"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="620" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="616" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="637" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="620" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSwitchTextAppearance:(Landroid/content/Context;I)V@android.widget.Switch"
+ sig="void setSwitchTextAppearance(Context,int)"
+ line="8"
+ startpos="662"
+ endpos="685"
+>
+	<marker line="-1" type="param">
+		<operand  start="710" length="7" line="8">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="723" length="5" line="8">
+			<expr><![CDATA[resid]]></expr>
+		</operand>
+	</marker>
+	<type  start="686" length="23" line="8" chordsig="android.content.Context"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="742" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="738" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="759" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="742" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSwitchTypeface:(Landroid/graphics/Typeface;I)V@android.widget.Switch"
+ sig="void setSwitchTypeface(Typeface,int)"
+ line="9"
+ startpos="784"
+ endpos="801"
+>
+	<marker line="-1" type="param">
+		<operand  start="828" length="2" line="9">
+			<expr><![CDATA[tf]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="836" length="5" line="9">
+			<expr><![CDATA[style]]></expr>
+		</operand>
+	</marker>
+	<type  start="802" length="25" line="9" chordsig="android.graphics.Typeface"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="855" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="851" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="872" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="855" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSwitchTypeface:(Landroid/graphics/Typeface;)V@android.widget.Switch"
+ sig="void setSwitchTypeface(Typeface)"
+ line="10"
+ startpos="897"
+ endpos="914"
+>
+	<marker line="-1" type="param">
+		<operand  start="941" length="2" line="10">
+			<expr><![CDATA[tf]]></expr>
+		</operand>
+	</marker>
+	<type  start="915" length="25" line="10" chordsig="android.graphics.Typeface"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="957" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="953" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="974" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="957" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTextOn:()Ljava/lang/CharSequence;@android.widget.Switch"
+ sig="CharSequence getTextOn()"
+ line="11"
+ startpos="1017"
+ endpos="1026"
+>
+	<type  start="994" length="22" line="11" chordsig="java.lang.CharSequence"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1041" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1037" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1058" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1041" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTextOn:(Ljava/lang/CharSequence;)V@android.widget.Switch"
+ sig="void setTextOn(CharSequence)"
+ line="12"
+ startpos="1083"
+ endpos="1092"
+>
+	<marker line="-1" type="param">
+		<operand  start="1116" length="6" line="12">
+			<expr><![CDATA[textOn]]></expr>
+		</operand>
+	</marker>
+	<type  start="1093" length="22" line="12" chordsig="java.lang.CharSequence"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1136" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1132" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1153" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1136" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTextOff:()Ljava/lang/CharSequence;@android.widget.Switch"
+ sig="CharSequence getTextOff()"
+ line="13"
+ startpos="1196"
+ endpos="1206"
+>
+	<type  start="1173" length="22" line="13" chordsig="java.lang.CharSequence"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1221" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1217" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1238" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1221" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTextOff:(Ljava/lang/CharSequence;)V@android.widget.Switch"
+ sig="void setTextOff(CharSequence)"
+ line="14"
+ startpos="1263"
+ endpos="1273"
+>
+	<marker line="-1" type="param">
+		<operand  start="1297" length="7" line="14">
+			<expr><![CDATA[textOff]]></expr>
+		</operand>
+	</marker>
+	<type  start="1274" length="22" line="14" chordsig="java.lang.CharSequence"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1318" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1314" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1335" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1318" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onMeasure:(II)V@android.widget.Switch"
+ sig="void onMeasure(int,int)"
+ line="15"
+ startpos="1360"
+ endpos="1369"
+>
+	<marker line="-1" type="param">
+		<operand  start="1374" length="16" line="15">
+			<expr><![CDATA[widthMeasureSpec]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1396" length="17" line="15">
+			<expr><![CDATA[heightMeasureSpec]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1427" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1423" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1444" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1427" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onPopulateAccessibilityEvent:(Landroid/view/accessibility/AccessibilityEvent;)V@android.widget.Switch"
+ sig="void onPopulateAccessibilityEvent(AccessibilityEvent)"
+ line="16"
+ startpos="1469"
+ endpos="1497"
+>
+	<marker line="-1" type="param">
+		<operand  start="1544" length="5" line="16">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="1498" length="45" line="16" chordsig="android.view.accessibility.AccessibilityEvent"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1563" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1559" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1580" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1563" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onTouchEvent:(Landroid/view/MotionEvent;)Z@android.widget.Switch"
+ sig="boolean onTouchEvent(MotionEvent)"
+ line="17"
+ startpos="1608"
+ endpos="1620"
+>
+	<marker line="-1" type="param">
+		<operand  start="1646" length="2" line="17">
+			<expr><![CDATA[ev]]></expr>
+		</operand>
+	</marker>
+	<type  start="1621" length="24" line="17" chordsig="android.view.MotionEvent"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1662" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1658" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1679" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1662" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setChecked:(Z)V@android.widget.Switch"
+ sig="void setChecked(boolean)"
+ line="18"
+ startpos="1704"
+ endpos="1714"
+>
+	<marker line="-1" type="param">
+		<operand  start="1723" length="7" line="18">
+			<expr><![CDATA[checked]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1744" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1740" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1761" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1744" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onLayout:(ZIIII)V@android.widget.Switch"
+ sig="void onLayout(boolean,int,int,int,int)"
+ line="19"
+ startpos="1789"
+ endpos="1797"
+>
+	<marker line="-1" type="param">
+		<operand  start="1806" length="7" line="19">
+			<expr><![CDATA[changed]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1819" length="4" line="19">
+			<expr><![CDATA[left]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1829" length="3" line="19">
+			<expr><![CDATA[top]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1838" length="5" line="19">
+			<expr><![CDATA[right]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1849" length="6" line="19">
+			<expr><![CDATA[bottom]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1869" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1865" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1886" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1869" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onDraw:(Landroid/graphics/Canvas;)V@android.widget.Switch"
+ sig="void onDraw(Canvas)"
+ line="20"
+ startpos="1914"
+ endpos="1920"
+>
+	<marker line="-1" type="param">
+		<operand  start="1945" length="6" line="20">
+			<expr><![CDATA[canvas]]></expr>
+		</operand>
+	</marker>
+	<type  start="1921" length="23" line="20" chordsig="android.graphics.Canvas"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1965" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1961" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1982" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1965" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCompoundPaddingRight:()I@android.widget.Switch"
+ sig="int getCompoundPaddingRight()"
+ line="21"
+ startpos="2006"
+ endpos="2029"
+>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2044" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2040" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2061" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2044" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onCreateDrawableState:(I)[I@android.widget.Switch"
+ sig="int[] onCreateDrawableState(int)"
+ line="22"
+ startpos="2090"
+ endpos="2111"
+>
+	<marker line="-1" type="param">
+		<operand  start="2116" length="10" line="22">
+			<expr><![CDATA[extraSpace]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2140" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2136" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2157" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2140" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="drawableStateChanged:()V@android.widget.Switch"
+ sig="void drawableStateChanged()"
+ line="23"
+ startpos="2185"
+ endpos="2205"
+>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2220" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2216" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2237" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2220" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="verifyDrawable:(Landroid/graphics/drawable/Drawable;)Z@android.widget.Switch"
+ sig="boolean verifyDrawable(Drawable)"
+ line="24"
+ startpos="2268"
+ endpos="2282"
+>
+	<marker line="-1" type="param">
+		<operand  start="2318" length="3" line="24">
+			<expr><![CDATA[who]]></expr>
+		</operand>
+	</marker>
+	<type  start="2283" length="34" line="24" chordsig="android.graphics.drawable.Drawable"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2335" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2331" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2352" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2335" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="jumpDrawablesToCurrentState:()V@android.widget.Switch"
+ sig="void jumpDrawablesToCurrentState()"
+ line="25"
+ startpos="2377"
+ endpos="2404"
+>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2419" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2415" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2436" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2419" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

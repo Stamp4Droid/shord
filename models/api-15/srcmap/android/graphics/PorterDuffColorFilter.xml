@@ -1,0 +1,34 @@
+<root>
+<class chordsig="android.graphics.PorterDuffColorFilter" line="2">
+	<type  start="71" length="28" line="3" chordsig="android.graphics.ColorFilter"/>
+<method
+ chordsig="&lt;init&gt;:(ILandroid/graphics/PorterDuff$Mode;)V@android.graphics.PorterDuffColorFilter"
+ sig="PorterDuffColorFilter(int,Mode)"
+ line="5"
+ startpos="110"
+ endpos="131"
+>
+	<marker line="-1" type="param">
+		<operand  start="136" length="8" line="5">
+			<expr><![CDATA[srcColor]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="179" length="4" line="5">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+	<type  start="146" length="32" line="5" chordsig="android.graphics.PorterDuff$Mode"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="197" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="193" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="214" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="197" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

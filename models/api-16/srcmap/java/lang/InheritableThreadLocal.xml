@@ -1,0 +1,49 @@
+<root>
+<class chordsig="java.lang.InheritableThreadLocal" line="2">
+	<type  start="68" length="21" line="3" chordsig="java.lang.ThreadLocal"/>
+	<type  start="90" length="1" line="3" chordsig="java.lang.Object"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.lang.InheritableThreadLocal"
+ sig="InheritableThreadLocal()"
+ line="5"
+ startpos="103"
+ endpos="125"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="140" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="136" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="157" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="140" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="childValue:(Ljava/lang/Object;)Ljava/lang/Object;@java.lang.InheritableThreadLocal"
+ sig="T childValue(T)"
+ line="6"
+ startpos="182"
+ endpos="192"
+>
+	<marker line="-1" type="param">
+		<operand  start="195" length="11" line="6">
+			<expr><![CDATA[parentValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="180" length="1" line="6" chordsig="java.lang.Object"/>
+	<type  start="193" length="1" line="6" chordsig="java.lang.Object"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="220" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="216" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="237" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="220" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

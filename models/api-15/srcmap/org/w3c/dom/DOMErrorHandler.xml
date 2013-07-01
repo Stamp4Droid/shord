@@ -1,0 +1,18 @@
+<root>
+<class chordsig="org.w3c.dom.DOMErrorHandler" line="2">
+<method
+ chordsig="handleError:(Lorg/w3c/dom/DOMError;)Z@org.w3c.dom.DOMErrorHandler"
+ sig="boolean handleError(DOMError)"
+ line="4"
+ startpos="81"
+ endpos="92"
+>
+	<marker line="-1" type="param">
+		<operand  start="114" length="5" line="4">
+			<expr><![CDATA[error]]></expr>
+		</operand>
+	</marker>
+	<type  start="93" length="20" line="4" chordsig="org.w3c.dom.DOMError"/>
+</method>
+</class>
+</root>

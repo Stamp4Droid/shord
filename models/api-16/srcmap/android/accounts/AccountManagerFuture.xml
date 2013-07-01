@@ -1,0 +1,62 @@
+<root>
+<class chordsig="android.accounts.AccountManagerFuture" line="2">
+<method
+ chordsig="cancel:(Z)Z@android.accounts.AccountManagerFuture"
+ sig="boolean cancel(boolean)"
+ line="4"
+ startpos="94"
+ endpos="100"
+>
+	<marker line="-1" type="param">
+		<operand  start="109" length="21" line="4">
+			<expr><![CDATA[mayInterruptIfRunning]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="isCancelled:()Z@android.accounts.AccountManagerFuture"
+ sig="boolean isCancelled()"
+ line="5"
+ startpos="158"
+ endpos="169"
+>
+</method>
+<method
+ chordsig="isDone:()Z@android.accounts.AccountManagerFuture"
+ sig="boolean isDone()"
+ line="6"
+ startpos="198"
+ endpos="204"
+>
+</method>
+<method
+ chordsig="getResult:()Ljava/lang/Object;@android.accounts.AccountManagerFuture"
+ sig="V getResult()"
+ line="7"
+ startpos="227"
+ endpos="236"
+>
+	<type  start="225" length="1" line="7" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="getResult:(JLjava/util/concurrent/TimeUnit;)Ljava/lang/Object;@android.accounts.AccountManagerFuture"
+ sig="V getResult(long,TimeUnit)"
+ line="8"
+ startpos="372"
+ endpos="381"
+>
+	<marker line="-1" type="param">
+		<operand  start="387" length="7" line="8">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="426" length="4" line="8">
+			<expr><![CDATA[unit]]></expr>
+		</operand>
+	</marker>
+	<type  start="370" length="1" line="8" chordsig="java.lang.Object"/>
+	<type  start="396" length="29" line="8" chordsig="java.util.concurrent.TimeUnit"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,88 @@
+<root>
+<class chordsig="java.net.CookieStore" line="2">
+<method
+ chordsig="add:(Ljava/net/URI;Ljava/net/HttpCookie;)V@java.net.CookieStore"
+ sig="void add(URI,HttpCookie)"
+ line="4"
+ startpos="71"
+ endpos="74"
+>
+	<marker line="-1" type="param">
+		<operand  start="88" length="3" line="4">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="113" length="6" line="4">
+			<expr><![CDATA[cookie]]></expr>
+		</operand>
+	</marker>
+	<type  start="75" length="12" line="4" chordsig="java.net.URI"/>
+	<type  start="93" length="19" line="4" chordsig="java.net.HttpCookie"/>
+</method>
+<method
+ chordsig="get:(Ljava/net/URI;)Ljava/util/List;@java.net.CookieStore"
+ sig="List&lt;HttpCookie&gt; get(URI)"
+ line="5"
+ startpos="175"
+ endpos="178"
+>
+	<marker line="-1" type="param">
+		<operand  start="192" length="3" line="5">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<type  start="139" length="14" line="5" chordsig="java.util.List"/>
+	<type  start="154" length="19" line="5" chordsig="java.net.HttpCookie"/>
+	<type  start="179" length="12" line="5" chordsig="java.net.URI"/>
+</method>
+<method
+ chordsig="getCookies:()Ljava/util/List;@java.net.CookieStore"
+ sig="List&lt;HttpCookie&gt; getCookies()"
+ line="6"
+ startpos="251"
+ endpos="261"
+>
+	<type  start="215" length="14" line="6" chordsig="java.util.List"/>
+	<type  start="230" length="19" line="6" chordsig="java.net.HttpCookie"/>
+</method>
+<method
+ chordsig="getURIs:()Ljava/util/List;@java.net.CookieStore"
+ sig="List&lt;URI&gt; getURIs()"
+ line="7"
+ startpos="311"
+ endpos="318"
+>
+	<type  start="282" length="14" line="7" chordsig="java.util.List"/>
+	<type  start="297" length="12" line="7" chordsig="java.net.URI"/>
+</method>
+<method
+ chordsig="remove:(Ljava/net/URI;Ljava/net/HttpCookie;)Z@java.net.CookieStore"
+ sig="boolean remove(URI,HttpCookie)"
+ line="8"
+ startpos="347"
+ endpos="353"
+>
+	<marker line="-1" type="param">
+		<operand  start="367" length="3" line="8">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="392" length="6" line="8">
+			<expr><![CDATA[cookie]]></expr>
+		</operand>
+	</marker>
+	<type  start="354" length="12" line="8" chordsig="java.net.URI"/>
+	<type  start="372" length="19" line="8" chordsig="java.net.HttpCookie"/>
+</method>
+<method
+ chordsig="removeAll:()Z@java.net.CookieStore"
+ sig="boolean removeAll()"
+ line="9"
+ startpos="426"
+ endpos="435"
+>
+</method>
+</class>
+</root>

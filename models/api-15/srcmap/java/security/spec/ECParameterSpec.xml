@@ -1,0 +1,121 @@
+<root>
+<class chordsig="java.security.spec.ECParameterSpec" line="2">
+	<type  start="70" length="41" line="3" chordsig="java.security.spec.AlgorithmParameterSpec"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/security/spec/EllipticCurve;Ljava/security/spec/ECPoint;Ljava/math/BigInteger;I)V@java.security.spec.ECParameterSpec"
+ sig="ECParameterSpec(EllipticCurve,ECPoint,BigInteger,int)"
+ line="5"
+ startpos="122"
+ endpos="137"
+>
+	<marker line="-1" type="param">
+		<operand  start="171" length="5" line="5">
+			<expr><![CDATA[curve]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="205" length="9" line="5">
+			<expr><![CDATA[generator]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="237" length="5" line="5">
+			<expr><![CDATA[order]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="248" length="8" line="5">
+			<expr><![CDATA[cofactor]]></expr>
+		</operand>
+	</marker>
+	<type  start="138" length="32" line="5" chordsig="java.security.spec.EllipticCurve"/>
+	<type  start="178" length="26" line="5" chordsig="java.security.spec.ECPoint"/>
+	<type  start="216" length="20" line="5" chordsig="java.math.BigInteger"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="270" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="266" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="287" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="270" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCofactor:()I@java.security.spec.ECParameterSpec"
+ sig="int getCofactor()"
+ line="6"
+ startpos="311"
+ endpos="322"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="337" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="333" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="354" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="337" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCurve:()Ljava/security/spec/EllipticCurve;@java.security.spec.ECParameterSpec"
+ sig="EllipticCurve getCurve()"
+ line="7"
+ startpos="407"
+ endpos="415"
+>
+	<type  start="374" length="32" line="7" chordsig="java.security.spec.EllipticCurve"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="430" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="426" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="447" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="430" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getGenerator:()Ljava/security/spec/ECPoint;@java.security.spec.ECParameterSpec"
+ sig="ECPoint getGenerator()"
+ line="8"
+ startpos="494"
+ endpos="506"
+>
+	<type  start="467" length="26" line="8" chordsig="java.security.spec.ECPoint"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="521" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="517" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="538" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="521" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getOrder:()Ljava/math/BigInteger;@java.security.spec.ECParameterSpec"
+ sig="BigInteger getOrder()"
+ line="9"
+ startpos="579"
+ endpos="587"
+>
+	<type  start="558" length="20" line="9" chordsig="java.math.BigInteger"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="602" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="598" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="619" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="602" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,79 @@
+<root>
+<class chordsig="android.bluetooth.BluetoothProfile" line="2">
+<class chordsig="android.bluetooth.BluetoothProfile$ServiceListener" line="4">
+<method
+ chordsig="onServiceConnected:(ILandroid/bluetooth/BluetoothProfile;)V@android.bluetooth.BluetoothProfile$ServiceListener"
+ sig="void onServiceConnected(int,BluetoothProfile)"
+ line="6"
+ startpos="127"
+ endpos="145"
+>
+	<marker line="-1" type="param">
+		<operand  start="150" length="7" line="6">
+			<expr><![CDATA[profile]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="194" length="5" line="6">
+			<expr><![CDATA[proxy]]></expr>
+		</operand>
+	</marker>
+	<type  start="159" length="34" line="6" chordsig="android.bluetooth.BluetoothProfile"/>
+</method>
+<method
+ chordsig="onServiceDisconnected:(I)V@android.bluetooth.BluetoothProfile$ServiceListener"
+ sig="void onServiceDisconnected(int)"
+ line="7"
+ startpos="224"
+ endpos="245"
+>
+	<marker line="-1" type="param">
+		<operand  start="250" length="7" line="7">
+			<expr><![CDATA[profile]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+<method
+ chordsig="getConnectedDevices:()Ljava/util/List;@android.bluetooth.BluetoothProfile"
+ sig="List&lt;BluetoothDevice&gt; getConnectedDevices()"
+ line="9"
+ startpos="329"
+ endpos="348"
+>
+	<type  start="279" length="14" line="9" chordsig="java.util.List"/>
+	<type  start="294" length="33" line="9" chordsig="android.bluetooth.BluetoothDevice"/>
+</method>
+<method
+ chordsig="getDevicesMatchingConnectionStates:([I)Ljava/util/List;@android.bluetooth.BluetoothProfile"
+ sig="List&lt;BluetoothDevice&gt; getDevicesMatchingConnectionStates(int[])"
+ line="10"
+ startpos="419"
+ endpos="453"
+>
+	<marker line="-1" type="param">
+		<operand  start="460" length="6" line="10">
+			<expr><![CDATA[states]]></expr>
+		</operand>
+	</marker>
+	<type  start="369" length="14" line="10" chordsig="java.util.List"/>
+	<type  start="384" length="33" line="10" chordsig="android.bluetooth.BluetoothDevice"/>
+</method>
+<method
+ chordsig="getConnectionState:(Landroid/bluetooth/BluetoothDevice;)I@android.bluetooth.BluetoothProfile"
+ sig="int getConnectionState(BluetoothDevice)"
+ line="11"
+ startpos="490"
+ endpos="508"
+>
+	<marker line="-1" type="param">
+		<operand  start="543" length="6" line="11">
+			<expr><![CDATA[device]]></expr>
+		</operand>
+	</marker>
+	<type  start="509" length="33" line="11" chordsig="android.bluetooth.BluetoothDevice"/>
+</method>
+	<type  start="572" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="664" length="16" line="13" chordsig="java.lang.String"/>
+</class>
+</root>

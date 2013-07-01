@@ -1,0 +1,1122 @@
+<root>
+<class chordsig="android.test.TouchUtils" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.test.TouchUtils"
+ sig="TouchUtils()"
+ line="4"
+ startpos="56"
+ endpos="66"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="81" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="77" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="98" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="81" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragQuarterScreenDown:(Landroid/test/ActivityInstrumentationTestCase;)V@android.test.TouchUtils"
+ sig="void dragQuarterScreenDown(ActivityInstrumentationTestCase)"
+ line="5"
+ startpos="130"
+ endpos="151"
+>
+	<marker line="-1" type="param">
+		<operand  start="197" length="4" line="5">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<type  start="152" length="44" line="5" chordsig="android.test.ActivityInstrumentationTestCase"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="215" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="211" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="232" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="215" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragQuarterScreenDown:(Landroid/test/InstrumentationTestCase;Landroid/app/Activity;)V@android.test.TouchUtils"
+ sig="void dragQuarterScreenDown(InstrumentationTestCase,Activity)"
+ line="6"
+ startpos="264"
+ endpos="285"
+>
+	<marker line="-1" type="param">
+		<operand  start="323" length="4" line="6">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="350" length="8" line="6">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<type  start="286" length="36" line="6" chordsig="android.test.InstrumentationTestCase"/>
+	<type  start="329" length="20" line="6" chordsig="android.app.Activity"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="372" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="368" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="389" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="372" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragQuarterScreenUp:(Landroid/test/ActivityInstrumentationTestCase;)V@android.test.TouchUtils"
+ sig="void dragQuarterScreenUp(ActivityInstrumentationTestCase)"
+ line="7"
+ startpos="421"
+ endpos="440"
+>
+	<marker line="-1" type="param">
+		<operand  start="486" length="4" line="7">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<type  start="441" length="44" line="7" chordsig="android.test.ActivityInstrumentationTestCase"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="504" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="500" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="521" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="504" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragQuarterScreenUp:(Landroid/test/InstrumentationTestCase;Landroid/app/Activity;)V@android.test.TouchUtils"
+ sig="void dragQuarterScreenUp(InstrumentationTestCase,Activity)"
+ line="8"
+ startpos="553"
+ endpos="572"
+>
+	<marker line="-1" type="param">
+		<operand  start="610" length="4" line="8">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="637" length="8" line="8">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<type  start="573" length="36" line="8" chordsig="android.test.InstrumentationTestCase"/>
+	<type  start="616" length="20" line="8" chordsig="android.app.Activity"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="659" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="655" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="676" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="659" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="scrollToBottom:(Landroid/test/ActivityInstrumentationTestCase;Landroid/view/ViewGroup;)V@android.test.TouchUtils"
+ sig="void scrollToBottom(ActivityInstrumentationTestCase,ViewGroup)"
+ line="9"
+ startpos="708"
+ endpos="722"
+>
+	<marker line="-1" type="param">
+		<operand  start="768" length="4" line="9">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="797" length="1" line="9">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="723" length="44" line="9" chordsig="android.test.ActivityInstrumentationTestCase"/>
+	<type  start="774" length="22" line="9" chordsig="android.view.ViewGroup"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="812" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="808" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="829" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="812" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="scrollToBottom:(Landroid/test/InstrumentationTestCase;Landroid/app/Activity;Landroid/view/ViewGroup;)V@android.test.TouchUtils"
+ sig="void scrollToBottom(InstrumentationTestCase,Activity,ViewGroup)"
+ line="10"
+ startpos="861"
+ endpos="875"
+>
+	<marker line="-1" type="param">
+		<operand  start="913" length="4" line="10">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="940" length="8" line="10">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="973" length="1" line="10">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="876" length="36" line="10" chordsig="android.test.InstrumentationTestCase"/>
+	<type  start="919" length="20" line="10" chordsig="android.app.Activity"/>
+	<type  start="950" length="22" line="10" chordsig="android.view.ViewGroup"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="988" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="984" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1005" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="988" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="scrollToTop:(Landroid/test/ActivityInstrumentationTestCase;Landroid/view/ViewGroup;)V@android.test.TouchUtils"
+ sig="void scrollToTop(ActivityInstrumentationTestCase,ViewGroup)"
+ line="11"
+ startpos="1037"
+ endpos="1048"
+>
+	<marker line="-1" type="param">
+		<operand  start="1094" length="4" line="11">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1123" length="1" line="11">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="1049" length="44" line="11" chordsig="android.test.ActivityInstrumentationTestCase"/>
+	<type  start="1100" length="22" line="11" chordsig="android.view.ViewGroup"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1138" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1134" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1155" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1138" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="scrollToTop:(Landroid/test/InstrumentationTestCase;Landroid/app/Activity;Landroid/view/ViewGroup;)V@android.test.TouchUtils"
+ sig="void scrollToTop(InstrumentationTestCase,Activity,ViewGroup)"
+ line="12"
+ startpos="1187"
+ endpos="1198"
+>
+	<marker line="-1" type="param">
+		<operand  start="1236" length="4" line="12">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1263" length="8" line="12">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1296" length="1" line="12">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="1199" length="36" line="12" chordsig="android.test.InstrumentationTestCase"/>
+	<type  start="1242" length="20" line="12" chordsig="android.app.Activity"/>
+	<type  start="1273" length="22" line="12" chordsig="android.view.ViewGroup"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1311" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1307" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1328" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1311" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragViewToBottom:(Landroid/test/ActivityInstrumentationTestCase;Landroid/view/View;)V@android.test.TouchUtils"
+ sig="void dragViewToBottom(ActivityInstrumentationTestCase,View)"
+ line="13"
+ startpos="1360"
+ endpos="1376"
+>
+	<marker line="-1" type="param">
+		<operand  start="1422" length="4" line="13">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1446" length="1" line="13">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="1377" length="44" line="13" chordsig="android.test.ActivityInstrumentationTestCase"/>
+	<type  start="1428" length="17" line="13" chordsig="android.view.View"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1461" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1457" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1478" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1461" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragViewToBottom:(Landroid/test/InstrumentationTestCase;Landroid/app/Activity;Landroid/view/View;)V@android.test.TouchUtils"
+ sig="void dragViewToBottom(InstrumentationTestCase,Activity,View)"
+ line="14"
+ startpos="1510"
+ endpos="1526"
+>
+	<marker line="-1" type="param">
+		<operand  start="1564" length="4" line="14">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1591" length="8" line="14">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1619" length="1" line="14">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="1527" length="36" line="14" chordsig="android.test.InstrumentationTestCase"/>
+	<type  start="1570" length="20" line="14" chordsig="android.app.Activity"/>
+	<type  start="1601" length="17" line="14" chordsig="android.view.View"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1634" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1630" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1651" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1634" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragViewToBottom:(Landroid/test/ActivityInstrumentationTestCase;Landroid/view/View;I)V@android.test.TouchUtils"
+ sig="void dragViewToBottom(ActivityInstrumentationTestCase,View,int)"
+ line="15"
+ startpos="1683"
+ endpos="1699"
+>
+	<marker line="-1" type="param">
+		<operand  start="1745" length="4" line="15">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1769" length="1" line="15">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1776" length="9" line="15">
+			<expr><![CDATA[stepCount]]></expr>
+		</operand>
+	</marker>
+	<type  start="1700" length="44" line="15" chordsig="android.test.ActivityInstrumentationTestCase"/>
+	<type  start="1751" length="17" line="15" chordsig="android.view.View"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1799" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1795" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1816" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1799" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragViewToBottom:(Landroid/test/InstrumentationTestCase;Landroid/app/Activity;Landroid/view/View;I)V@android.test.TouchUtils"
+ sig="void dragViewToBottom(InstrumentationTestCase,Activity,View,int)"
+ line="16"
+ startpos="1848"
+ endpos="1864"
+>
+	<marker line="-1" type="param">
+		<operand  start="1902" length="4" line="16">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1929" length="8" line="16">
+			<expr><![CDATA[activity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1957" length="1" line="16">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1964" length="9" line="16">
+			<expr><![CDATA[stepCount]]></expr>
+		</operand>
+	</marker>
+	<type  start="1865" length="36" line="16" chordsig="android.test.InstrumentationTestCase"/>
+	<type  start="1908" length="20" line="16" chordsig="android.app.Activity"/>
+	<type  start="1939" length="17" line="16" chordsig="android.view.View"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1987" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1983" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2004" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1987" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="tapView:(Landroid/test/InstrumentationTestCase;Landroid/view/View;)V@android.test.TouchUtils"
+ sig="void tapView(InstrumentationTestCase,View)"
+ line="17"
+ startpos="2036"
+ endpos="2043"
+>
+	<marker line="-1" type="param">
+		<operand  start="2081" length="4" line="17">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2105" length="1" line="17">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="2044" length="36" line="17" chordsig="android.test.InstrumentationTestCase"/>
+	<type  start="2087" length="17" line="17" chordsig="android.view.View"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2120" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2116" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2137" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2120" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="touchAndCancelView:(Landroid/test/InstrumentationTestCase;Landroid/view/View;)V@android.test.TouchUtils"
+ sig="void touchAndCancelView(InstrumentationTestCase,View)"
+ line="18"
+ startpos="2169"
+ endpos="2187"
+>
+	<marker line="-1" type="param">
+		<operand  start="2225" length="4" line="18">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2249" length="1" line="18">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="2188" length="36" line="18" chordsig="android.test.InstrumentationTestCase"/>
+	<type  start="2231" length="17" line="18" chordsig="android.view.View"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2264" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2260" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2281" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2264" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clickView:(Landroid/test/InstrumentationTestCase;Landroid/view/View;)V@android.test.TouchUtils"
+ sig="void clickView(InstrumentationTestCase,View)"
+ line="19"
+ startpos="2313"
+ endpos="2322"
+>
+	<marker line="-1" type="param">
+		<operand  start="2360" length="4" line="19">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2384" length="1" line="19">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="2323" length="36" line="19" chordsig="android.test.InstrumentationTestCase"/>
+	<type  start="2366" length="17" line="19" chordsig="android.view.View"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2399" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2395" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2416" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2399" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="longClickView:(Landroid/test/ActivityInstrumentationTestCase;Landroid/view/View;)V@android.test.TouchUtils"
+ sig="void longClickView(ActivityInstrumentationTestCase,View)"
+ line="20"
+ startpos="2448"
+ endpos="2461"
+>
+	<marker line="-1" type="param">
+		<operand  start="2507" length="4" line="20">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2531" length="1" line="20">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="2462" length="44" line="20" chordsig="android.test.ActivityInstrumentationTestCase"/>
+	<type  start="2513" length="17" line="20" chordsig="android.view.View"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2546" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2542" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2563" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2546" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="longClickView:(Landroid/test/InstrumentationTestCase;Landroid/view/View;)V@android.test.TouchUtils"
+ sig="void longClickView(InstrumentationTestCase,View)"
+ line="21"
+ startpos="2595"
+ endpos="2608"
+>
+	<marker line="-1" type="param">
+		<operand  start="2646" length="4" line="21">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2670" length="1" line="21">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="2609" length="36" line="21" chordsig="android.test.InstrumentationTestCase"/>
+	<type  start="2652" length="17" line="21" chordsig="android.view.View"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2685" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2681" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2702" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2685" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragViewToTop:(Landroid/test/ActivityInstrumentationTestCase;Landroid/view/View;)V@android.test.TouchUtils"
+ sig="void dragViewToTop(ActivityInstrumentationTestCase,View)"
+ line="22"
+ startpos="2734"
+ endpos="2747"
+>
+	<marker line="-1" type="param">
+		<operand  start="2793" length="4" line="22">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2817" length="1" line="22">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="2748" length="44" line="22" chordsig="android.test.ActivityInstrumentationTestCase"/>
+	<type  start="2799" length="17" line="22" chordsig="android.view.View"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2832" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2828" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2849" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2832" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragViewToTop:(Landroid/test/ActivityInstrumentationTestCase;Landroid/view/View;I)V@android.test.TouchUtils"
+ sig="void dragViewToTop(ActivityInstrumentationTestCase,View,int)"
+ line="23"
+ startpos="2881"
+ endpos="2894"
+>
+	<marker line="-1" type="param">
+		<operand  start="2940" length="4" line="23">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2964" length="1" line="23">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2971" length="9" line="23">
+			<expr><![CDATA[stepCount]]></expr>
+		</operand>
+	</marker>
+	<type  start="2895" length="44" line="23" chordsig="android.test.ActivityInstrumentationTestCase"/>
+	<type  start="2946" length="17" line="23" chordsig="android.view.View"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2994" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2990" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3011" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2994" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragViewToTop:(Landroid/test/InstrumentationTestCase;Landroid/view/View;)V@android.test.TouchUtils"
+ sig="void dragViewToTop(InstrumentationTestCase,View)"
+ line="24"
+ startpos="3043"
+ endpos="3056"
+>
+	<marker line="-1" type="param">
+		<operand  start="3094" length="4" line="24">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3118" length="1" line="24">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="3057" length="36" line="24" chordsig="android.test.InstrumentationTestCase"/>
+	<type  start="3100" length="17" line="24" chordsig="android.view.View"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3133" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3129" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3150" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3133" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragViewToTop:(Landroid/test/InstrumentationTestCase;Landroid/view/View;I)V@android.test.TouchUtils"
+ sig="void dragViewToTop(InstrumentationTestCase,View,int)"
+ line="25"
+ startpos="3182"
+ endpos="3195"
+>
+	<marker line="-1" type="param">
+		<operand  start="3233" length="4" line="25">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3257" length="1" line="25">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3264" length="9" line="25">
+			<expr><![CDATA[stepCount]]></expr>
+		</operand>
+	</marker>
+	<type  start="3196" length="36" line="25" chordsig="android.test.InstrumentationTestCase"/>
+	<type  start="3239" length="17" line="25" chordsig="android.view.View"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3287" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3283" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3304" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3287" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragViewBy:(Landroid/test/ActivityInstrumentationTestCase;Landroid/view/View;III)I@android.test.TouchUtils"
+ sig="int dragViewBy(ActivityInstrumentationTestCase,View,int,int,int)"
+ line="26"
+ startpos="3335"
+ endpos="3345"
+>
+	<marker line="-1" type="param">
+		<operand  start="3391" length="4" line="26">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3415" length="1" line="26">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3422" length="7" line="26">
+			<expr><![CDATA[gravity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3435" length="6" line="26">
+			<expr><![CDATA[deltaX]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3447" length="6" line="26">
+			<expr><![CDATA[deltaY]]></expr>
+		</operand>
+	</marker>
+	<type  start="3346" length="44" line="26" chordsig="android.test.ActivityInstrumentationTestCase"/>
+	<type  start="3397" length="17" line="26" chordsig="android.view.View"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3467" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3463" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3484" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3467" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragViewBy:(Landroid/test/InstrumentationTestCase;Landroid/view/View;III)I@android.test.TouchUtils"
+ sig="int dragViewBy(InstrumentationTestCase,View,int,int,int)"
+ line="27"
+ startpos="3515"
+ endpos="3525"
+>
+	<marker line="-1" type="param">
+		<operand  start="3563" length="4" line="27">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3587" length="1" line="27">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3594" length="7" line="27">
+			<expr><![CDATA[gravity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3607" length="6" line="27">
+			<expr><![CDATA[deltaX]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3619" length="6" line="27">
+			<expr><![CDATA[deltaY]]></expr>
+		</operand>
+	</marker>
+	<type  start="3526" length="36" line="27" chordsig="android.test.InstrumentationTestCase"/>
+	<type  start="3569" length="17" line="27" chordsig="android.view.View"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3639" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3635" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3656" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3639" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragViewTo:(Landroid/test/ActivityInstrumentationTestCase;Landroid/view/View;III)I@android.test.TouchUtils"
+ sig="int dragViewTo(ActivityInstrumentationTestCase,View,int,int,int)"
+ line="28"
+ startpos="3687"
+ endpos="3697"
+>
+	<marker line="-1" type="param">
+		<operand  start="3743" length="4" line="28">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3767" length="1" line="28">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3774" length="7" line="28">
+			<expr><![CDATA[gravity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3787" length="3" line="28">
+			<expr><![CDATA[toX]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3796" length="3" line="28">
+			<expr><![CDATA[toY]]></expr>
+		</operand>
+	</marker>
+	<type  start="3698" length="44" line="28" chordsig="android.test.ActivityInstrumentationTestCase"/>
+	<type  start="3749" length="17" line="28" chordsig="android.view.View"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3813" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3809" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3830" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3813" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragViewTo:(Landroid/test/InstrumentationTestCase;Landroid/view/View;III)I@android.test.TouchUtils"
+ sig="int dragViewTo(InstrumentationTestCase,View,int,int,int)"
+ line="29"
+ startpos="3861"
+ endpos="3871"
+>
+	<marker line="-1" type="param">
+		<operand  start="3909" length="4" line="29">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3933" length="1" line="29">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3940" length="7" line="29">
+			<expr><![CDATA[gravity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3953" length="3" line="29">
+			<expr><![CDATA[toX]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3962" length="3" line="29">
+			<expr><![CDATA[toY]]></expr>
+		</operand>
+	</marker>
+	<type  start="3872" length="36" line="29" chordsig="android.test.InstrumentationTestCase"/>
+	<type  start="3915" length="17" line="29" chordsig="android.view.View"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3979" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3975" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3996" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3979" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragViewToX:(Landroid/test/ActivityInstrumentationTestCase;Landroid/view/View;II)I@android.test.TouchUtils"
+ sig="int dragViewToX(ActivityInstrumentationTestCase,View,int,int)"
+ line="30"
+ startpos="4027"
+ endpos="4038"
+>
+	<marker line="-1" type="param">
+		<operand  start="4084" length="4" line="30">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4108" length="1" line="30">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4115" length="7" line="30">
+			<expr><![CDATA[gravity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4128" length="3" line="30">
+			<expr><![CDATA[toX]]></expr>
+		</operand>
+	</marker>
+	<type  start="4039" length="44" line="30" chordsig="android.test.ActivityInstrumentationTestCase"/>
+	<type  start="4090" length="17" line="30" chordsig="android.view.View"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4145" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4141" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4162" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4145" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragViewToX:(Landroid/test/InstrumentationTestCase;Landroid/view/View;II)I@android.test.TouchUtils"
+ sig="int dragViewToX(InstrumentationTestCase,View,int,int)"
+ line="31"
+ startpos="4193"
+ endpos="4204"
+>
+	<marker line="-1" type="param">
+		<operand  start="4242" length="4" line="31">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4266" length="1" line="31">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4273" length="7" line="31">
+			<expr><![CDATA[gravity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4286" length="3" line="31">
+			<expr><![CDATA[toX]]></expr>
+		</operand>
+	</marker>
+	<type  start="4205" length="36" line="31" chordsig="android.test.InstrumentationTestCase"/>
+	<type  start="4248" length="17" line="31" chordsig="android.view.View"/>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4303" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4299" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4320" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4303" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragViewToY:(Landroid/test/ActivityInstrumentationTestCase;Landroid/view/View;II)I@android.test.TouchUtils"
+ sig="int dragViewToY(ActivityInstrumentationTestCase,View,int,int)"
+ line="32"
+ startpos="4351"
+ endpos="4362"
+>
+	<marker line="-1" type="param">
+		<operand  start="4408" length="4" line="32">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4432" length="1" line="32">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4439" length="7" line="32">
+			<expr><![CDATA[gravity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4452" length="3" line="32">
+			<expr><![CDATA[toY]]></expr>
+		</operand>
+	</marker>
+	<type  start="4363" length="44" line="32" chordsig="android.test.ActivityInstrumentationTestCase"/>
+	<type  start="4414" length="17" line="32" chordsig="android.view.View"/>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4469" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4465" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4486" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4469" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dragViewToY:(Landroid/test/InstrumentationTestCase;Landroid/view/View;II)I@android.test.TouchUtils"
+ sig="int dragViewToY(InstrumentationTestCase,View,int,int)"
+ line="33"
+ startpos="4517"
+ endpos="4528"
+>
+	<marker line="-1" type="param">
+		<operand  start="4566" length="4" line="33">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4590" length="1" line="33">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4597" length="7" line="33">
+			<expr><![CDATA[gravity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4610" length="3" line="33">
+			<expr><![CDATA[toY]]></expr>
+		</operand>
+	</marker>
+	<type  start="4529" length="36" line="33" chordsig="android.test.InstrumentationTestCase"/>
+	<type  start="4572" length="17" line="33" chordsig="android.view.View"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4627" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4623" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4644" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4627" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="drag:(Landroid/test/ActivityInstrumentationTestCase;FFFFI)V@android.test.TouchUtils"
+ sig="void drag(ActivityInstrumentationTestCase,float,float,float,float,int)"
+ line="34"
+ startpos="4676"
+ endpos="4680"
+>
+	<marker line="-1" type="param">
+		<operand  start="4726" length="4" line="34">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4738" length="5" line="34">
+			<expr><![CDATA[fromX]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4751" length="3" line="34">
+			<expr><![CDATA[toX]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4762" length="5" line="34">
+			<expr><![CDATA[fromY]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4775" length="3" line="34">
+			<expr><![CDATA[toY]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4784" length="9" line="34">
+			<expr><![CDATA[stepCount]]></expr>
+		</operand>
+	</marker>
+	<type  start="4681" length="44" line="34" chordsig="android.test.ActivityInstrumentationTestCase"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4807" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4803" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4824" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4807" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="drag:(Landroid/test/InstrumentationTestCase;FFFFI)V@android.test.TouchUtils"
+ sig="void drag(InstrumentationTestCase,float,float,float,float,int)"
+ line="35"
+ startpos="4856"
+ endpos="4860"
+>
+	<marker line="-1" type="param">
+		<operand  start="4898" length="4" line="35">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4910" length="5" line="35">
+			<expr><![CDATA[fromX]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4923" length="3" line="35">
+			<expr><![CDATA[toX]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4934" length="5" line="35">
+			<expr><![CDATA[fromY]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4947" length="3" line="35">
+			<expr><![CDATA[toY]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4956" length="9" line="35">
+			<expr><![CDATA[stepCount]]></expr>
+		</operand>
+	</marker>
+	<type  start="4861" length="36" line="35" chordsig="android.test.InstrumentationTestCase"/>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4979" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4975" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4996" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4979" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

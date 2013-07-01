@@ -1,0 +1,194 @@
+<root>
+<class chordsig="android.text.InputFilter" line="2">
+<class chordsig="android.text.InputFilter$AllCaps" line="4">
+	<type  start="94" length="24" line="5" chordsig="android.text.InputFilter"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.text.InputFilter$AllCaps"
+ sig="AllCaps()"
+ line="7"
+ startpos="129"
+ endpos="136"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="151" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="147" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="168" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="151" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="filter:(Ljava/lang/CharSequence;IILandroid/text/Spanned;II)Ljava/lang/CharSequence;@android.text.InputFilter$AllCaps"
+ sig="CharSequence filter(CharSequence,int,int,Spanned,int,int)"
+ line="8"
+ startpos="211"
+ endpos="217"
+>
+	<marker line="-1" type="param">
+		<operand  start="241" length="6" line="8">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="253" length="5" line="8">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="264" length="3" line="8">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="290" length="4" line="8">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="300" length="6" line="8">
+			<expr><![CDATA[dstart]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="312" length="4" line="8">
+			<expr><![CDATA[dend]]></expr>
+		</operand>
+	</marker>
+	<type  start="188" length="22" line="8" chordsig="java.lang.CharSequence"/>
+	<type  start="218" length="22" line="8" chordsig="java.lang.CharSequence"/>
+	<type  start="269" length="20" line="8" chordsig="android.text.Spanned"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="330" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="326" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="347" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="330" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.text.InputFilter$LengthFilter" line="10">
+	<type  start="407" length="24" line="11" chordsig="android.text.InputFilter"/>
+<method
+ chordsig="&lt;init&gt;:(I)V@android.text.InputFilter$LengthFilter"
+ sig="LengthFilter(int)"
+ line="13"
+ startpos="442"
+ endpos="454"
+>
+	<marker line="-1" type="param">
+		<operand  start="459" length="3" line="13">
+			<expr><![CDATA[max]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="476" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="472" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="493" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="476" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="filter:(Ljava/lang/CharSequence;IILandroid/text/Spanned;II)Ljava/lang/CharSequence;@android.text.InputFilter$LengthFilter"
+ sig="CharSequence filter(CharSequence,int,int,Spanned,int,int)"
+ line="14"
+ startpos="536"
+ endpos="542"
+>
+	<marker line="-1" type="param">
+		<operand  start="566" length="6" line="14">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="578" length="5" line="14">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="589" length="3" line="14">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="615" length="4" line="14">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="625" length="6" line="14">
+			<expr><![CDATA[dstart]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="637" length="4" line="14">
+			<expr><![CDATA[dend]]></expr>
+		</operand>
+	</marker>
+	<type  start="513" length="22" line="14" chordsig="java.lang.CharSequence"/>
+	<type  start="543" length="22" line="14" chordsig="java.lang.CharSequence"/>
+	<type  start="594" length="20" line="14" chordsig="android.text.Spanned"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="655" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="651" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="672" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="655" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="filter:(Ljava/lang/CharSequence;IILandroid/text/Spanned;II)Ljava/lang/CharSequence;@android.text.InputFilter"
+ sig="CharSequence filter(CharSequence,int,int,Spanned,int,int)"
+ line="16"
+ startpos="726"
+ endpos="732"
+>
+	<marker line="-1" type="param">
+		<operand  start="756" length="6" line="16">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="768" length="5" line="16">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="779" length="3" line="16">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="805" length="4" line="16">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="815" length="6" line="16">
+			<expr><![CDATA[dstart]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="827" length="4" line="16">
+			<expr><![CDATA[dend]]></expr>
+		</operand>
+	</marker>
+	<type  start="703" length="22" line="16" chordsig="java.lang.CharSequence"/>
+	<type  start="733" length="22" line="16" chordsig="java.lang.CharSequence"/>
+	<type  start="784" length="20" line="16" chordsig="android.text.Spanned"/>
+</method>
+</class>
+</root>

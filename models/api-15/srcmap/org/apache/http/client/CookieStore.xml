@@ -1,0 +1,50 @@
+<root>
+<class chordsig="org.apache.http.client.CookieStore" line="2">
+<method
+ chordsig="addCookie:(Lorg/apache/http/cookie/Cookie;)V@org.apache.http.client.CookieStore"
+ sig="void addCookie(Cookie)"
+ line="4"
+ startpos="85"
+ endpos="94"
+>
+	<marker line="-1" type="param">
+		<operand  start="125" length="6" line="4">
+			<expr><![CDATA[cookie]]></expr>
+		</operand>
+	</marker>
+	<type  start="95" length="29" line="4" chordsig="org.apache.http.cookie.Cookie"/>
+</method>
+<method
+ chordsig="getCookies:()Ljava/util/List;@org.apache.http.client.CookieStore"
+ sig="List&lt;Cookie&gt; getCookies()"
+ line="5"
+ startpos="197"
+ endpos="207"
+>
+	<type  start="151" length="14" line="5" chordsig="java.util.List"/>
+	<type  start="166" length="29" line="5" chordsig="org.apache.http.cookie.Cookie"/>
+</method>
+<method
+ chordsig="clearExpired:(Ljava/util/Date;)Z@org.apache.http.client.CookieStore"
+ sig="boolean clearExpired(Date)"
+ line="6"
+ startpos="236"
+ endpos="248"
+>
+	<marker line="-1" type="param">
+		<operand  start="264" length="4" line="6">
+			<expr><![CDATA[date]]></expr>
+		</operand>
+	</marker>
+	<type  start="249" length="14" line="6" chordsig="java.util.Date"/>
+</method>
+<method
+ chordsig="clear:()V@org.apache.http.client.CookieStore"
+ sig="void clear()"
+ line="7"
+ startpos="293"
+ endpos="298"
+>
+</method>
+</class>
+</root>

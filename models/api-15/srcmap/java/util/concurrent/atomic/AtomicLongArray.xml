@@ -1,0 +1,409 @@
+<root>
+<class chordsig="java.util.concurrent.atomic.AtomicLongArray" line="2">
+	<type  start="79" length="20" line="3" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:(I)V@java.util.concurrent.atomic.AtomicLongArray"
+ sig="AtomicLongArray(int)"
+ line="5"
+ startpos="110"
+ endpos="125"
+>
+	<marker line="-1" type="param">
+		<operand  start="130" length="6" line="5">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="150" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="146" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="167" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="150" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:([J)V@java.util.concurrent.atomic.AtomicLongArray"
+ sig="AtomicLongArray(long[])"
+ line="6"
+ startpos="187"
+ endpos="202"
+>
+	<marker line="-1" type="param">
+		<operand  start="210" length="5" line="6">
+			<expr><![CDATA[array]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="229" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="225" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="246" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="229" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="length:()I@java.util.concurrent.atomic.AtomicLongArray"
+ sig="int length()"
+ line="7"
+ startpos="276"
+ endpos="282"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="297" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="293" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="314" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="297" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="get:(I)J@java.util.concurrent.atomic.AtomicLongArray"
+ sig="long get(int)"
+ line="8"
+ startpos="345"
+ endpos="348"
+>
+	<marker line="-1" type="param">
+		<operand  start="353" length="1" line="8">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="368" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="364" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="385" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="368" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="set:(IJ)V@java.util.concurrent.atomic.AtomicLongArray"
+ sig="void set(int,long)"
+ line="9"
+ startpos="416"
+ endpos="419"
+>
+	<marker line="-1" type="param">
+		<operand  start="424" length="1" line="9">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="432" length="8" line="9">
+			<expr><![CDATA[newValue]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="454" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="450" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="471" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="454" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="lazySet:(IJ)V@java.util.concurrent.atomic.AtomicLongArray"
+ sig="void lazySet(int,long)"
+ line="10"
+ startpos="502"
+ endpos="509"
+>
+	<marker line="-1" type="param">
+		<operand  start="514" length="1" line="10">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="522" length="8" line="10">
+			<expr><![CDATA[newValue]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="544" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="540" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="561" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="544" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAndSet:(IJ)J@java.util.concurrent.atomic.AtomicLongArray"
+ sig="long getAndSet(int,long)"
+ line="11"
+ startpos="592"
+ endpos="601"
+>
+	<marker line="-1" type="param">
+		<operand  start="606" length="1" line="11">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="614" length="8" line="11">
+			<expr><![CDATA[newValue]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="636" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="632" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="653" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="636" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="compareAndSet:(IJJ)Z@java.util.concurrent.atomic.AtomicLongArray"
+ sig="boolean compareAndSet(int,long,long)"
+ line="12"
+ startpos="687"
+ endpos="700"
+>
+	<marker line="-1" type="param">
+		<operand  start="705" length="1" line="12">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="713" length="6" line="12">
+			<expr><![CDATA[expect]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="726" length="6" line="12">
+			<expr><![CDATA[update]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="746" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="742" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="763" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="746" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="weakCompareAndSet:(IJJ)Z@java.util.concurrent.atomic.AtomicLongArray"
+ sig="boolean weakCompareAndSet(int,long,long)"
+ line="13"
+ startpos="797"
+ endpos="814"
+>
+	<marker line="-1" type="param">
+		<operand  start="819" length="1" line="13">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="827" length="6" line="13">
+			<expr><![CDATA[expect]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="840" length="6" line="13">
+			<expr><![CDATA[update]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="860" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="856" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="877" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="860" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAndIncrement:(I)J@java.util.concurrent.atomic.AtomicLongArray"
+ sig="long getAndIncrement(int)"
+ line="14"
+ startpos="908"
+ endpos="923"
+>
+	<marker line="-1" type="param">
+		<operand  start="928" length="1" line="14">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="943" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="939" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="960" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="943" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAndDecrement:(I)J@java.util.concurrent.atomic.AtomicLongArray"
+ sig="long getAndDecrement(int)"
+ line="15"
+ startpos="991"
+ endpos="1006"
+>
+	<marker line="-1" type="param">
+		<operand  start="1011" length="1" line="15">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1026" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1022" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1043" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1026" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAndAdd:(IJ)J@java.util.concurrent.atomic.AtomicLongArray"
+ sig="long getAndAdd(int,long)"
+ line="16"
+ startpos="1074"
+ endpos="1083"
+>
+	<marker line="-1" type="param">
+		<operand  start="1088" length="1" line="16">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1096" length="5" line="16">
+			<expr><![CDATA[delta]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1115" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1111" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1132" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1115" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="incrementAndGet:(I)J@java.util.concurrent.atomic.AtomicLongArray"
+ sig="long incrementAndGet(int)"
+ line="17"
+ startpos="1163"
+ endpos="1178"
+>
+	<marker line="-1" type="param">
+		<operand  start="1183" length="1" line="17">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1198" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1194" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1215" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1198" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="decrementAndGet:(I)J@java.util.concurrent.atomic.AtomicLongArray"
+ sig="long decrementAndGet(int)"
+ line="18"
+ startpos="1246"
+ endpos="1261"
+>
+	<marker line="-1" type="param">
+		<operand  start="1266" length="1" line="18">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1281" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1277" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1298" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1281" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addAndGet:(IJ)J@java.util.concurrent.atomic.AtomicLongArray"
+ sig="long addAndGet(int,long)"
+ line="19"
+ startpos="1323"
+ endpos="1332"
+>
+	<marker line="-1" type="param">
+		<operand  start="1337" length="1" line="19">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1345" length="5" line="19">
+			<expr><![CDATA[delta]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1364" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1360" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1381" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1364" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.util.concurrent.atomic.AtomicLongArray"
+ sig="String toString()"
+ line="20"
+ startpos="1418"
+ endpos="1426"
+>
+	<type  start="1401" length="16" line="20" chordsig="java.lang.String"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1441" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1437" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1458" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1441" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,1174 @@
+<root>
+<class chordsig="android.gesture.GestureOverlayView" line="2">
+	<type  start="67" length="26" line="3" chordsig="android.widget.FrameLayout"/>
+<class chordsig="android.gesture.GestureOverlayView$OnGesturingListener" line="5">
+<method
+ chordsig="onGesturingStarted:(Landroid/gesture/GestureOverlayView;)V@android.gesture.GestureOverlayView$OnGesturingListener"
+ sig="void onGesturingStarted(GestureOverlayView)"
+ line="7"
+ startpos="164"
+ endpos="182"
+>
+	<marker line="-1" type="param">
+		<operand  start="218" length="7" line="7">
+			<expr><![CDATA[overlay]]></expr>
+		</operand>
+	</marker>
+	<type  start="183" length="34" line="7" chordsig="android.gesture.GestureOverlayView"/>
+</method>
+<method
+ chordsig="onGesturingEnded:(Landroid/gesture/GestureOverlayView;)V@android.gesture.GestureOverlayView$OnGesturingListener"
+ sig="void onGesturingEnded(GestureOverlayView)"
+ line="8"
+ startpos="250"
+ endpos="266"
+>
+	<marker line="-1" type="param">
+		<operand  start="302" length="7" line="8">
+			<expr><![CDATA[overlay]]></expr>
+		</operand>
+	</marker>
+	<type  start="267" length="34" line="8" chordsig="android.gesture.GestureOverlayView"/>
+</method>
+</class>
+<class chordsig="android.gesture.GestureOverlayView$OnGestureListener" line="10">
+<method
+ chordsig="onGestureStarted:(Landroid/gesture/GestureOverlayView;Landroid/view/MotionEvent;)V@android.gesture.GestureOverlayView$OnGestureListener"
+ sig="void onGestureStarted(GestureOverlayView,MotionEvent)"
+ line="12"
+ startpos="380"
+ endpos="396"
+>
+	<marker line="-1" type="param">
+		<operand  start="432" length="7" line="12">
+			<expr><![CDATA[overlay]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="466" length="5" line="12">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="397" length="34" line="12" chordsig="android.gesture.GestureOverlayView"/>
+	<type  start="441" length="24" line="12" chordsig="android.view.MotionEvent"/>
+</method>
+<method
+ chordsig="onGesture:(Landroid/gesture/GestureOverlayView;Landroid/view/MotionEvent;)V@android.gesture.GestureOverlayView$OnGestureListener"
+ sig="void onGesture(GestureOverlayView,MotionEvent)"
+ line="13"
+ startpos="496"
+ endpos="505"
+>
+	<marker line="-1" type="param">
+		<operand  start="541" length="7" line="13">
+			<expr><![CDATA[overlay]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="575" length="5" line="13">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="506" length="34" line="13" chordsig="android.gesture.GestureOverlayView"/>
+	<type  start="550" length="24" line="13" chordsig="android.view.MotionEvent"/>
+</method>
+<method
+ chordsig="onGestureEnded:(Landroid/gesture/GestureOverlayView;Landroid/view/MotionEvent;)V@android.gesture.GestureOverlayView$OnGestureListener"
+ sig="void onGestureEnded(GestureOverlayView,MotionEvent)"
+ line="14"
+ startpos="605"
+ endpos="619"
+>
+	<marker line="-1" type="param">
+		<operand  start="655" length="7" line="14">
+			<expr><![CDATA[overlay]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="689" length="5" line="14">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="620" length="34" line="14" chordsig="android.gesture.GestureOverlayView"/>
+	<type  start="664" length="24" line="14" chordsig="android.view.MotionEvent"/>
+</method>
+<method
+ chordsig="onGestureCancelled:(Landroid/gesture/GestureOverlayView;Landroid/view/MotionEvent;)V@android.gesture.GestureOverlayView$OnGestureListener"
+ sig="void onGestureCancelled(GestureOverlayView,MotionEvent)"
+ line="15"
+ startpos="719"
+ endpos="737"
+>
+	<marker line="-1" type="param">
+		<operand  start="773" length="7" line="15">
+			<expr><![CDATA[overlay]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="807" length="5" line="15">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="738" length="34" line="15" chordsig="android.gesture.GestureOverlayView"/>
+	<type  start="782" length="24" line="15" chordsig="android.view.MotionEvent"/>
+</method>
+</class>
+<class chordsig="android.gesture.GestureOverlayView$OnGesturePerformedListener" line="17">
+<method
+ chordsig="onGesturePerformed:(Landroid/gesture/GestureOverlayView;Landroid/gesture/Gesture;)V@android.gesture.GestureOverlayView$OnGesturePerformedListener"
+ sig="void onGesturePerformed(GestureOverlayView,Gesture)"
+ line="19"
+ startpos="892"
+ endpos="910"
+>
+	<marker line="-1" type="param">
+		<operand  start="946" length="7" line="19">
+			<expr><![CDATA[overlay]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="979" length="7" line="19">
+			<expr><![CDATA[gesture]]></expr>
+		</operand>
+	</marker>
+	<type  start="911" length="34" line="19" chordsig="android.gesture.GestureOverlayView"/>
+	<type  start="955" length="23" line="19" chordsig="android.gesture.Gesture"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.gesture.GestureOverlayView"
+ sig="GestureOverlayView(Context)"
+ line="21"
+ startpos="999"
+ endpos="1017"
+>
+	<marker line="-1" type="param">
+		<operand  start="1042" length="7" line="21">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="1018" length="23" line="21" chordsig="android.content.Context"/>
+	<type  start="1060" length="23" line="21" chordsig="android.content.Context"/>
+	<type  start="1090" length="25" line="21" chordsig="android.util.AttributeSet"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1135" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1131" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1152" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1135" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.gesture.GestureOverlayView"
+ sig="GestureOverlayView(Context,AttributeSet)"
+ line="22"
+ startpos="1172"
+ endpos="1190"
+>
+	<marker line="-1" type="param">
+		<operand  start="1215" length="7" line="22">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1250" length="5" line="22">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="1191" length="23" line="22" chordsig="android.content.Context"/>
+	<type  start="1224" length="25" line="22" chordsig="android.util.AttributeSet"/>
+	<type  start="1266" length="23" line="22" chordsig="android.content.Context"/>
+	<type  start="1296" length="25" line="22" chordsig="android.util.AttributeSet"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1341" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1337" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1358" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1341" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;I)V@android.gesture.GestureOverlayView"
+ sig="GestureOverlayView(Context,AttributeSet,int)"
+ line="23"
+ startpos="1378"
+ endpos="1396"
+>
+	<marker line="-1" type="param">
+		<operand  start="1421" length="7" line="23">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1456" length="5" line="23">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1467" length="8" line="23">
+			<expr><![CDATA[defStyle]]></expr>
+		</operand>
+	</marker>
+	<type  start="1397" length="23" line="23" chordsig="android.content.Context"/>
+	<type  start="1430" length="25" line="23" chordsig="android.util.AttributeSet"/>
+	<type  start="1486" length="23" line="23" chordsig="android.content.Context"/>
+	<type  start="1516" length="25" line="23" chordsig="android.util.AttributeSet"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1561" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1557" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1578" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1561" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCurrentStroke:()Ljava/util/ArrayList;@android.gesture.GestureOverlayView"
+ sig="ArrayList&lt;GesturePoint&gt; getCurrentStroke()"
+ line="24"
+ startpos="1648"
+ endpos="1664"
+>
+	<type  start="1598" length="19" line="24" chordsig="java.util.ArrayList"/>
+	<type  start="1618" length="28" line="24" chordsig="android.gesture.GesturePoint"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1679" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1675" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1696" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1679" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getOrientation:()I@android.gesture.GestureOverlayView"
+ sig="int getOrientation()"
+ line="25"
+ startpos="1720"
+ endpos="1734"
+>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1749" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1745" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1766" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1749" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOrientation:(I)V@android.gesture.GestureOverlayView"
+ sig="void setOrientation(int)"
+ line="26"
+ startpos="1791"
+ endpos="1805"
+>
+	<marker line="-1" type="param">
+		<operand  start="1810" length="11" line="26">
+			<expr><![CDATA[orientation]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1835" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1831" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1852" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1835" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setGestureColor:(I)V@android.gesture.GestureOverlayView"
+ sig="void setGestureColor(int)"
+ line="27"
+ startpos="1877"
+ endpos="1892"
+>
+	<marker line="-1" type="param">
+		<operand  start="1897" length="5" line="27">
+			<expr><![CDATA[color]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1916" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1912" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1933" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1916" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setUncertainGestureColor:(I)V@android.gesture.GestureOverlayView"
+ sig="void setUncertainGestureColor(int)"
+ line="28"
+ startpos="1958"
+ endpos="1982"
+>
+	<marker line="-1" type="param">
+		<operand  start="1987" length="5" line="28">
+			<expr><![CDATA[color]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2006" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2002" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2023" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2006" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getUncertainGestureColor:()I@android.gesture.GestureOverlayView"
+ sig="int getUncertainGestureColor()"
+ line="29"
+ startpos="2047"
+ endpos="2071"
+>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2086" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2082" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2103" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2086" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getGestureColor:()I@android.gesture.GestureOverlayView"
+ sig="int getGestureColor()"
+ line="30"
+ startpos="2127"
+ endpos="2142"
+>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2157" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2153" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2174" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2157" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getGestureStrokeWidth:()F@android.gesture.GestureOverlayView"
+ sig="float getGestureStrokeWidth()"
+ line="31"
+ startpos="2200"
+ endpos="2221"
+>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2236" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2232" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2253" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2236" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setGestureStrokeWidth:(F)V@android.gesture.GestureOverlayView"
+ sig="void setGestureStrokeWidth(float)"
+ line="32"
+ startpos="2278"
+ endpos="2299"
+>
+	<marker line="-1" type="param">
+		<operand  start="2306" length="18" line="32">
+			<expr><![CDATA[gestureStrokeWidth]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2338" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2334" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2355" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2338" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getGestureStrokeType:()I@android.gesture.GestureOverlayView"
+ sig="int getGestureStrokeType()"
+ line="33"
+ startpos="2379"
+ endpos="2399"
+>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2414" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2410" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2431" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2414" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setGestureStrokeType:(I)V@android.gesture.GestureOverlayView"
+ sig="void setGestureStrokeType(int)"
+ line="34"
+ startpos="2456"
+ endpos="2476"
+>
+	<marker line="-1" type="param">
+		<operand  start="2481" length="17" line="34">
+			<expr><![CDATA[gestureStrokeType]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2512" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2508" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2529" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2512" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getGestureStrokeLengthThreshold:()F@android.gesture.GestureOverlayView"
+ sig="float getGestureStrokeLengthThreshold()"
+ line="35"
+ startpos="2555"
+ endpos="2586"
+>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2601" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2597" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2618" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2601" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setGestureStrokeLengthThreshold:(F)V@android.gesture.GestureOverlayView"
+ sig="void setGestureStrokeLengthThreshold(float)"
+ line="36"
+ startpos="2643"
+ endpos="2674"
+>
+	<marker line="-1" type="param">
+		<operand  start="2681" length="28" line="36">
+			<expr><![CDATA[gestureStrokeLengthThreshold]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2723" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2719" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2740" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2723" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getGestureStrokeSquarenessTreshold:()F@android.gesture.GestureOverlayView"
+ sig="float getGestureStrokeSquarenessTreshold()"
+ line="37"
+ startpos="2766"
+ endpos="2800"
+>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2815" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2811" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2832" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2815" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setGestureStrokeSquarenessTreshold:(F)V@android.gesture.GestureOverlayView"
+ sig="void setGestureStrokeSquarenessTreshold(float)"
+ line="38"
+ startpos="2857"
+ endpos="2891"
+>
+	<marker line="-1" type="param">
+		<operand  start="2898" length="31" line="38">
+			<expr><![CDATA[gestureStrokeSquarenessTreshold]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2943" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2939" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2960" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2943" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getGestureStrokeAngleThreshold:()F@android.gesture.GestureOverlayView"
+ sig="float getGestureStrokeAngleThreshold()"
+ line="39"
+ startpos="2986"
+ endpos="3016"
+>
+	<newexpr line="39" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3031" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3027" length="29" line="39">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3048" length="7" line="39">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3031" length="16" line="39" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setGestureStrokeAngleThreshold:(F)V@android.gesture.GestureOverlayView"
+ sig="void setGestureStrokeAngleThreshold(float)"
+ line="40"
+ startpos="3073"
+ endpos="3103"
+>
+	<marker line="-1" type="param">
+		<operand  start="3110" length="27" line="40">
+			<expr><![CDATA[gestureStrokeAngleThreshold]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3151" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3147" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3168" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3151" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isEventsInterceptionEnabled:()Z@android.gesture.GestureOverlayView"
+ sig="boolean isEventsInterceptionEnabled()"
+ line="41"
+ startpos="3196"
+ endpos="3223"
+>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3238" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3234" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3255" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3238" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setEventsInterceptionEnabled:(Z)V@android.gesture.GestureOverlayView"
+ sig="void setEventsInterceptionEnabled(boolean)"
+ line="42"
+ startpos="3280"
+ endpos="3308"
+>
+	<marker line="-1" type="param">
+		<operand  start="3317" length="7" line="42">
+			<expr><![CDATA[enabled]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3338" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3334" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3355" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3338" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isFadeEnabled:()Z@android.gesture.GestureOverlayView"
+ sig="boolean isFadeEnabled()"
+ line="43"
+ startpos="3383"
+ endpos="3396"
+>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3411" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3407" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3428" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3411" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setFadeEnabled:(Z)V@android.gesture.GestureOverlayView"
+ sig="void setFadeEnabled(boolean)"
+ line="44"
+ startpos="3453"
+ endpos="3467"
+>
+	<marker line="-1" type="param">
+		<operand  start="3476" length="11" line="44">
+			<expr><![CDATA[fadeEnabled]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3501" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3497" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3518" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3501" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getGesture:()Landroid/gesture/Gesture;@android.gesture.GestureOverlayView"
+ sig="Gesture getGesture()"
+ line="45"
+ startpos="3562"
+ endpos="3572"
+>
+	<type  start="3538" length="23" line="45" chordsig="android.gesture.Gesture"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3587" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3583" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3604" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3587" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setGesture:(Landroid/gesture/Gesture;)V@android.gesture.GestureOverlayView"
+ sig="void setGesture(Gesture)"
+ line="46"
+ startpos="3629"
+ endpos="3639"
+>
+	<marker line="-1" type="param">
+		<operand  start="3664" length="7" line="46">
+			<expr><![CDATA[gesture]]></expr>
+		</operand>
+	</marker>
+	<type  start="3640" length="23" line="46" chordsig="android.gesture.Gesture"/>
+	<newexpr line="46" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3685" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3681" length="29" line="46">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3702" length="7" line="46">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3685" length="16" line="46" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getGesturePath:()Landroid/graphics/Path;@android.gesture.GestureOverlayView"
+ sig="Path getGesturePath()"
+ line="47"
+ startpos="3744"
+ endpos="3758"
+>
+	<type  start="3722" length="21" line="47" chordsig="android.graphics.Path"/>
+	<newexpr line="47" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3773" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3769" length="29" line="47">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3790" length="7" line="47">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3773" length="16" line="47" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getGesturePath:(Landroid/graphics/Path;)Landroid/graphics/Path;@android.gesture.GestureOverlayView"
+ sig="Path getGesturePath(Path)"
+ line="48"
+ startpos="3832"
+ endpos="3846"
+>
+	<marker line="-1" type="param">
+		<operand  start="3869" length="4" line="48">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<type  start="3810" length="21" line="48" chordsig="android.graphics.Path"/>
+	<type  start="3847" length="21" line="48" chordsig="android.graphics.Path"/>
+	<newexpr line="48" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3887" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3883" length="29" line="48">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3904" length="7" line="48">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3887" length="16" line="48" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isGestureVisible:()Z@android.gesture.GestureOverlayView"
+ sig="boolean isGestureVisible()"
+ line="49"
+ startpos="3932"
+ endpos="3948"
+>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3963" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3959" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3980" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3963" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setGestureVisible:(Z)V@android.gesture.GestureOverlayView"
+ sig="void setGestureVisible(boolean)"
+ line="50"
+ startpos="4005"
+ endpos="4022"
+>
+	<marker line="-1" type="param">
+		<operand  start="4031" length="7" line="50">
+			<expr><![CDATA[visible]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="50" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4052" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4048" length="29" line="50">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4069" length="7" line="50">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4052" length="16" line="50" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFadeOffset:()J@android.gesture.GestureOverlayView"
+ sig="long getFadeOffset()"
+ line="51"
+ startpos="4094"
+ endpos="4107"
+>
+	<newexpr line="51" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4122" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4118" length="29" line="51">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4139" length="7" line="51">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4122" length="16" line="51" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setFadeOffset:(J)V@android.gesture.GestureOverlayView"
+ sig="void setFadeOffset(long)"
+ line="52"
+ startpos="4164"
+ endpos="4177"
+>
+	<marker line="-1" type="param">
+		<operand  start="4183" length="10" line="52">
+			<expr><![CDATA[fadeOffset]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="52" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4207" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4203" length="29" line="52">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4224" length="7" line="52">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4207" length="16" line="52" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addOnGestureListener:(Landroid/gesture/GestureOverlayView$OnGestureListener;)V@android.gesture.GestureOverlayView"
+ sig="void addOnGestureListener(OnGestureListener)"
+ line="53"
+ startpos="4249"
+ endpos="4269"
+>
+	<marker line="-1" type="param">
+		<operand  start="4323" length="8" line="53">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="4270" length="52" line="53" chordsig="android.gesture.GestureOverlayView$OnGestureListener"/>
+	<newexpr line="53" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4345" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4341" length="29" line="53">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4362" length="7" line="53">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4345" length="16" line="53" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeOnGestureListener:(Landroid/gesture/GestureOverlayView$OnGestureListener;)V@android.gesture.GestureOverlayView"
+ sig="void removeOnGestureListener(OnGestureListener)"
+ line="54"
+ startpos="4387"
+ endpos="4410"
+>
+	<marker line="-1" type="param">
+		<operand  start="4464" length="8" line="54">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="4411" length="52" line="54" chordsig="android.gesture.GestureOverlayView$OnGestureListener"/>
+	<newexpr line="54" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4486" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4482" length="29" line="54">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4503" length="7" line="54">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4486" length="16" line="54" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeAllOnGestureListeners:()V@android.gesture.GestureOverlayView"
+ sig="void removeAllOnGestureListeners()"
+ line="55"
+ startpos="4528"
+ endpos="4555"
+>
+	<newexpr line="55" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4570" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4566" length="29" line="55">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4587" length="7" line="55">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4570" length="16" line="55" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addOnGesturePerformedListener:(Landroid/gesture/GestureOverlayView$OnGesturePerformedListener;)V@android.gesture.GestureOverlayView"
+ sig="void addOnGesturePerformedListener(OnGesturePerformedListener)"
+ line="56"
+ startpos="4612"
+ endpos="4641"
+>
+	<marker line="-1" type="param">
+		<operand  start="4704" length="8" line="56">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="4642" length="61" line="56" chordsig="android.gesture.GestureOverlayView$OnGesturePerformedListener"/>
+	<newexpr line="56" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4726" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4722" length="29" line="56">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4743" length="7" line="56">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4726" length="16" line="56" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeOnGesturePerformedListener:(Landroid/gesture/GestureOverlayView$OnGesturePerformedListener;)V@android.gesture.GestureOverlayView"
+ sig="void removeOnGesturePerformedListener(OnGesturePerformedListener)"
+ line="57"
+ startpos="4768"
+ endpos="4800"
+>
+	<marker line="-1" type="param">
+		<operand  start="4863" length="8" line="57">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="4801" length="61" line="57" chordsig="android.gesture.GestureOverlayView$OnGesturePerformedListener"/>
+	<newexpr line="57" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4885" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4881" length="29" line="57">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4902" length="7" line="57">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4885" length="16" line="57" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeAllOnGesturePerformedListeners:()V@android.gesture.GestureOverlayView"
+ sig="void removeAllOnGesturePerformedListeners()"
+ line="58"
+ startpos="4927"
+ endpos="4963"
+>
+	<newexpr line="58" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4978" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4974" length="29" line="58">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4995" length="7" line="58">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4978" length="16" line="58" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addOnGesturingListener:(Landroid/gesture/GestureOverlayView$OnGesturingListener;)V@android.gesture.GestureOverlayView"
+ sig="void addOnGesturingListener(OnGesturingListener)"
+ line="59"
+ startpos="5020"
+ endpos="5042"
+>
+	<marker line="-1" type="param">
+		<operand  start="5098" length="8" line="59">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="5043" length="54" line="59" chordsig="android.gesture.GestureOverlayView$OnGesturingListener"/>
+	<newexpr line="59" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5120" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5116" length="29" line="59">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5137" length="7" line="59">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5120" length="16" line="59" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeOnGesturingListener:(Landroid/gesture/GestureOverlayView$OnGesturingListener;)V@android.gesture.GestureOverlayView"
+ sig="void removeOnGesturingListener(OnGesturingListener)"
+ line="60"
+ startpos="5162"
+ endpos="5187"
+>
+	<marker line="-1" type="param">
+		<operand  start="5243" length="8" line="60">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="5188" length="54" line="60" chordsig="android.gesture.GestureOverlayView$OnGesturingListener"/>
+	<newexpr line="60" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5265" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5261" length="29" line="60">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5282" length="7" line="60">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5265" length="16" line="60" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeAllOnGesturingListeners:()V@android.gesture.GestureOverlayView"
+ sig="void removeAllOnGesturingListeners()"
+ line="61"
+ startpos="5307"
+ endpos="5336"
+>
+	<newexpr line="61" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5351" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5347" length="29" line="61">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5368" length="7" line="61">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5351" length="16" line="61" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isGesturing:()Z@android.gesture.GestureOverlayView"
+ sig="boolean isGesturing()"
+ line="62"
+ startpos="5396"
+ endpos="5407"
+>
+	<newexpr line="62" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5422" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5418" length="29" line="62">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5439" length="7" line="62">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5422" length="16" line="62" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="draw:(Landroid/graphics/Canvas;)V@android.gesture.GestureOverlayView"
+ sig="void draw(Canvas)"
+ line="63"
+ startpos="5464"
+ endpos="5468"
+>
+	<marker line="-1" type="param">
+		<operand  start="5493" length="6" line="63">
+			<expr><![CDATA[canvas]]></expr>
+		</operand>
+	</marker>
+	<type  start="5469" length="23" line="63" chordsig="android.graphics.Canvas"/>
+	<newexpr line="63" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5513" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5509" length="29" line="63">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5530" length="7" line="63">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5513" length="16" line="63" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clear:(Z)V@android.gesture.GestureOverlayView"
+ sig="void clear(boolean)"
+ line="64"
+ startpos="5555"
+ endpos="5560"
+>
+	<marker line="-1" type="param">
+		<operand  start="5569" length="8" line="64">
+			<expr><![CDATA[animated]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="64" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5591" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5587" length="29" line="64">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5608" length="7" line="64">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5591" length="16" line="64" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="cancelClearAnimation:()V@android.gesture.GestureOverlayView"
+ sig="void cancelClearAnimation()"
+ line="65"
+ startpos="5633"
+ endpos="5653"
+>
+	<newexpr line="65" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5668" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5664" length="29" line="65">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5685" length="7" line="65">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5668" length="16" line="65" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="cancelGesture:()V@android.gesture.GestureOverlayView"
+ sig="void cancelGesture()"
+ line="66"
+ startpos="5710"
+ endpos="5723"
+>
+	<newexpr line="66" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5738" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5734" length="29" line="66">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5755" length="7" line="66">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5738" length="16" line="66" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onDetachedFromWindow:()V@android.gesture.GestureOverlayView"
+ sig="void onDetachedFromWindow()"
+ line="67"
+ startpos="5783"
+ endpos="5803"
+>
+	<newexpr line="67" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5818" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5814" length="29" line="67">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5835" length="7" line="67">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5818" length="16" line="67" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dispatchTouchEvent:(Landroid/view/MotionEvent;)Z@android.gesture.GestureOverlayView"
+ sig="boolean dispatchTouchEvent(MotionEvent)"
+ line="68"
+ startpos="5863"
+ endpos="5881"
+>
+	<marker line="-1" type="param">
+		<operand  start="5907" length="5" line="68">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="5882" length="24" line="68" chordsig="android.view.MotionEvent"/>
+	<newexpr line="68" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5926" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5922" length="29" line="68">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5943" length="7" line="68">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5926" length="16" line="68" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

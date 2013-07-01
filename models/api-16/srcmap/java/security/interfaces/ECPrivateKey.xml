@@ -1,0 +1,15 @@
+<root>
+<class chordsig="java.security.interfaces.ECPrivateKey" line="2">
+	<type  start="74" length="24" line="3" chordsig="java.security.PrivateKey"/>
+	<type  start="100" length="30" line="3" chordsig="java.security.interfaces.ECKey"/>
+<method
+ chordsig="getS:()Ljava/math/BigInteger;@java.security.interfaces.ECPrivateKey"
+ sig="BigInteger getS()"
+ line="5"
+ startpos="171"
+ endpos="175"
+>
+	<type  start="150" length="20" line="5" chordsig="java.math.BigInteger"/>
+</method>
+</class>
+</root>

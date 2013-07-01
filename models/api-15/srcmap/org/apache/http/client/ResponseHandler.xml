@@ -1,0 +1,19 @@
+<root>
+<class chordsig="org.apache.http.client.ResponseHandler" line="2">
+<method
+ chordsig="handleResponse:(Lorg/apache/http/HttpResponse;)Ljava/lang/Object;@org.apache.http.client.ResponseHandler"
+ sig="T handleResponse(HttpResponse)"
+ line="4"
+ startpos="89"
+ endpos="103"
+>
+	<marker line="-1" type="param">
+		<operand  start="133" length="8" line="4">
+			<expr><![CDATA[response]]></expr>
+		</operand>
+	</marker>
+	<type  start="87" length="1" line="4" chordsig="java.lang.Object"/>
+	<type  start="104" length="28" line="4" chordsig="org.apache.http.HttpResponse"/>
+</method>
+</class>
+</root>

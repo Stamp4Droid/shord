@@ -1,0 +1,1833 @@
+<root>
+<class chordsig="android.provider.MediaStore" line="2">
+<class chordsig="android.provider.MediaStore$MediaColumns" line="4">
+	<type  start="105" length="28" line="5" chordsig="android.provider.BaseColumns"/>
+	<type  start="156" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="209" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="262" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="331" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="385" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="449" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="519" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="581" length="16" line="14" chordsig="java.lang.String"/>
+	<type  start="635" length="16" line="15" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.MediaStore$Files" line="17">
+<class chordsig="android.provider.MediaStore$Files$FileColumns" line="19">
+	<type  start="753" length="40" line="20" chordsig="android.provider.MediaStore$MediaColumns"/>
+	<type  start="816" length="16" line="22" chordsig="java.lang.String"/>
+	<type  start="872" length="16" line="23" chordsig="java.lang.String"/>
+	<type  start="934" length="16" line="24" chordsig="java.lang.String"/>
+	<type  start="988" length="16" line="25" chordsig="java.lang.String"/>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.MediaStore$Files"
+ sig="Files()"
+ line="32"
+ startpos="1274"
+ endpos="1279"
+>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1294" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1290" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1311" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1294" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContentUri:(Ljava/lang/String;)Landroid/net/Uri;@android.provider.MediaStore$Files"
+ sig="Uri getContentUri(String)"
+ line="33"
+ startpos="1354"
+ endpos="1367"
+>
+	<marker line="-1" type="param">
+		<operand  start="1385" length="10" line="33">
+			<expr><![CDATA[volumeName]]></expr>
+		</operand>
+	</marker>
+	<type  start="1338" length="15" line="33" chordsig="android.net.Uri"/>
+	<type  start="1368" length="16" line="33" chordsig="java.lang.String"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1409" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1405" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1426" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1409" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContentUri:(Ljava/lang/String;J)Landroid/net/Uri;@android.provider.MediaStore$Files"
+ sig="Uri getContentUri(String,long)"
+ line="34"
+ startpos="1475"
+ endpos="1488"
+>
+	<marker line="-1" type="param">
+		<operand  start="1506" length="10" line="34">
+			<expr><![CDATA[volumeName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1523" length="5" line="34">
+			<expr><![CDATA[rowId]]></expr>
+		</operand>
+	</marker>
+	<type  start="1459" length="15" line="34" chordsig="android.net.Uri"/>
+	<type  start="1489" length="16" line="34" chordsig="java.lang.String"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1542" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1538" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1559" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1542" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.provider.MediaStore$Images" line="36">
+<class chordsig="android.provider.MediaStore$Images$ImageColumns" line="38">
+	<type  start="1655" length="40" line="39" chordsig="android.provider.MediaStore$MediaColumns"/>
+	<type  start="1718" length="16" line="41" chordsig="java.lang.String"/>
+	<type  start="1784" length="16" line="42" chordsig="java.lang.String"/>
+	<type  start="1846" length="16" line="43" chordsig="java.lang.String"/>
+	<type  start="1909" length="16" line="44" chordsig="java.lang.String"/>
+	<type  start="1969" length="16" line="45" chordsig="java.lang.String"/>
+	<type  start="2031" length="16" line="46" chordsig="java.lang.String"/>
+	<type  start="2094" length="16" line="47" chordsig="java.lang.String"/>
+	<type  start="2160" length="16" line="48" chordsig="java.lang.String"/>
+	<type  start="2236" length="16" line="49" chordsig="java.lang.String"/>
+	<type  start="2298" length="16" line="50" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.MediaStore$Images$Media" line="52">
+	<type  start="2407" length="47" line="53" chordsig="android.provider.MediaStore$Images$ImageColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.MediaStore$Images$Media"
+ sig="Media()"
+ line="55"
+ startpos="2465"
+ endpos="2470"
+>
+	<newexpr line="55" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2485" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2481" length="29" line="55">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2502" length="7" line="55">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2485" length="16" line="55" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="query:(Landroid/content/ContentResolver;Landroid/net/Uri;[Ljava/lang/String;)Landroid/database/Cursor;@android.provider.MediaStore$Images$Media"
+ sig="Cursor query(ContentResolver,Uri,String[])"
+ line="56"
+ startpos="2559"
+ endpos="2564"
+>
+	<marker line="-1" type="param">
+		<operand  start="2597" length="2" line="56">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2617" length="3" line="56">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2641" length="10" line="56">
+			<expr><![CDATA[projection]]></expr>
+		</operand>
+	</marker>
+	<type  start="2535" length="23" line="56" chordsig="android.database.Cursor"/>
+	<type  start="2565" length="31" line="56" chordsig="android.content.ContentResolver"/>
+	<type  start="2601" length="15" line="56" chordsig="android.net.Uri"/>
+	<type  start="2622" length="16" line="56" chordsig="java.lang.String"/>
+	<newexpr line="56" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2665" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2661" length="29" line="56">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2682" length="7" line="56">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2665" length="16" line="56" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="query:(Landroid/content/ContentResolver;Landroid/net/Uri;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;@android.provider.MediaStore$Images$Media"
+ sig="Cursor query(ContentResolver,Uri,String[],String,String)"
+ line="57"
+ startpos="2739"
+ endpos="2744"
+>
+	<marker line="-1" type="param">
+		<operand  start="2777" length="2" line="57">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2797" length="3" line="57">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2821" length="10" line="57">
+			<expr><![CDATA[projection]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2850" length="5" line="57">
+			<expr><![CDATA[where]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2874" length="7" line="57">
+			<expr><![CDATA[orderBy]]></expr>
+		</operand>
+	</marker>
+	<type  start="2715" length="23" line="57" chordsig="android.database.Cursor"/>
+	<type  start="2745" length="31" line="57" chordsig="android.content.ContentResolver"/>
+	<type  start="2781" length="15" line="57" chordsig="android.net.Uri"/>
+	<type  start="2802" length="16" line="57" chordsig="java.lang.String"/>
+	<type  start="2833" length="16" line="57" chordsig="java.lang.String"/>
+	<type  start="2857" length="16" line="57" chordsig="java.lang.String"/>
+	<newexpr line="57" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2895" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2891" length="29" line="57">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2912" length="7" line="57">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2895" length="16" line="57" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="query:(Landroid/content/ContentResolver;Landroid/net/Uri;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;@android.provider.MediaStore$Images$Media"
+ sig="Cursor query(ContentResolver,Uri,String[],String,String[],String)"
+ line="58"
+ startpos="2969"
+ endpos="2974"
+>
+	<marker line="-1" type="param">
+		<operand  start="3007" length="2" line="58">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3027" length="3" line="58">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3051" length="10" line="58">
+			<expr><![CDATA[projection]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3080" length="9" line="58">
+			<expr><![CDATA[selection]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3110" length="13" line="58">
+			<expr><![CDATA[selectionArgs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3142" length="7" line="58">
+			<expr><![CDATA[orderBy]]></expr>
+		</operand>
+	</marker>
+	<type  start="2945" length="23" line="58" chordsig="android.database.Cursor"/>
+	<type  start="2975" length="31" line="58" chordsig="android.content.ContentResolver"/>
+	<type  start="3011" length="15" line="58" chordsig="android.net.Uri"/>
+	<type  start="3032" length="16" line="58" chordsig="java.lang.String"/>
+	<type  start="3063" length="16" line="58" chordsig="java.lang.String"/>
+	<type  start="3091" length="16" line="58" chordsig="java.lang.String"/>
+	<type  start="3125" length="16" line="58" chordsig="java.lang.String"/>
+	<newexpr line="58" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3163" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3159" length="29" line="58">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3180" length="7" line="58">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3163" length="16" line="58" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getBitmap:(Landroid/content/ContentResolver;Landroid/net/Uri;)Landroid/graphics/Bitmap;@android.provider.MediaStore$Images$Media"
+ sig="Bitmap getBitmap(ContentResolver,Uri)"
+ line="59"
+ startpos="3237"
+ endpos="3246"
+>
+	<marker line="-1" type="param">
+		<operand  start="3279" length="2" line="59">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3299" length="3" line="59">
+			<expr><![CDATA[url]]></expr>
+		</operand>
+	</marker>
+	<type  start="3213" length="23" line="59" chordsig="android.graphics.Bitmap"/>
+	<type  start="3247" length="31" line="59" chordsig="android.content.ContentResolver"/>
+	<type  start="3283" length="15" line="59" chordsig="android.net.Uri"/>
+	<newexpr line="59" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3374" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3370" length="29" line="59">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3391" length="7" line="59">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3374" length="16" line="59" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="insertImage:(Landroid/content/ContentResolver;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;@android.provider.MediaStore$Images$Media"
+ sig="String insertImage(ContentResolver,String,String,String)"
+ line="60"
+ startpos="3441"
+ endpos="3452"
+>
+	<marker line="-1" type="param">
+		<operand  start="3485" length="2" line="60">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3506" length="9" line="60">
+			<expr><![CDATA[imagePath]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3534" length="4" line="60">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3557" length="11" line="60">
+			<expr><![CDATA[description]]></expr>
+		</operand>
+	</marker>
+	<type  start="3424" length="16" line="60" chordsig="java.lang.String"/>
+	<type  start="3453" length="31" line="60" chordsig="android.content.ContentResolver"/>
+	<type  start="3489" length="16" line="60" chordsig="java.lang.String"/>
+	<type  start="3517" length="16" line="60" chordsig="java.lang.String"/>
+	<type  start="3540" length="16" line="60" chordsig="java.lang.String"/>
+	<newexpr line="60" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3619" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3615" length="29" line="60">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3636" length="7" line="60">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3619" length="16" line="60" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="insertImage:(Landroid/content/ContentResolver;Landroid/graphics/Bitmap;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;@android.provider.MediaStore$Images$Media"
+ sig="String insertImage(ContentResolver,Bitmap,String,String)"
+ line="61"
+ startpos="3686"
+ endpos="3697"
+>
+	<marker line="-1" type="param">
+		<operand  start="3730" length="2" line="61">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3758" length="6" line="61">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3783" length="5" line="61">
+			<expr><![CDATA[title]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3807" length="11" line="61">
+			<expr><![CDATA[description]]></expr>
+		</operand>
+	</marker>
+	<type  start="3669" length="16" line="61" chordsig="java.lang.String"/>
+	<type  start="3698" length="31" line="61" chordsig="android.content.ContentResolver"/>
+	<type  start="3734" length="23" line="61" chordsig="android.graphics.Bitmap"/>
+	<type  start="3766" length="16" line="61" chordsig="java.lang.String"/>
+	<type  start="3790" length="16" line="61" chordsig="java.lang.String"/>
+	<newexpr line="61" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3832" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3828" length="29" line="61">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3849" length="7" line="61">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3832" length="16" line="61" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContentUri:(Ljava/lang/String;)Landroid/net/Uri;@android.provider.MediaStore$Images$Media"
+ sig="Uri getContentUri(String)"
+ line="62"
+ startpos="3892"
+ endpos="3905"
+>
+	<marker line="-1" type="param">
+		<operand  start="3923" length="10" line="62">
+			<expr><![CDATA[volumeName]]></expr>
+		</operand>
+	</marker>
+	<type  start="3876" length="15" line="62" chordsig="android.net.Uri"/>
+	<type  start="3906" length="16" line="62" chordsig="java.lang.String"/>
+	<newexpr line="62" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3947" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3943" length="29" line="62">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3964" length="7" line="62">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3947" length="16" line="62" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="3996" length="15" line="63" chordsig="android.net.Uri"/>
+	<type  start="4054" length="15" line="64" chordsig="android.net.Uri"/>
+	<type  start="4112" length="16" line="65" chordsig="java.lang.String"/>
+	<type  start="4196" length="16" line="66" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.MediaStore$Images$Media"
+ line="67"
+>
+</method>
+</class>
+<class chordsig="android.provider.MediaStore$Images$Thumbnails" line="69">
+	<type  start="4372" length="28" line="70" chordsig="android.provider.BaseColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.MediaStore$Images$Thumbnails"
+ sig="Thumbnails()"
+ line="72"
+ startpos="4411"
+ endpos="4421"
+>
+	<newexpr line="72" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4436" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4432" length="29" line="72">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4453" length="7" line="72">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4436" length="16" line="72" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="query:(Landroid/content/ContentResolver;Landroid/net/Uri;[Ljava/lang/String;)Landroid/database/Cursor;@android.provider.MediaStore$Images$Thumbnails"
+ sig="Cursor query(ContentResolver,Uri,String[])"
+ line="73"
+ startpos="4510"
+ endpos="4515"
+>
+	<marker line="-1" type="param">
+		<operand  start="4548" length="2" line="73">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4568" length="3" line="73">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4592" length="10" line="73">
+			<expr><![CDATA[projection]]></expr>
+		</operand>
+	</marker>
+	<type  start="4486" length="23" line="73" chordsig="android.database.Cursor"/>
+	<type  start="4516" length="31" line="73" chordsig="android.content.ContentResolver"/>
+	<type  start="4552" length="15" line="73" chordsig="android.net.Uri"/>
+	<type  start="4573" length="16" line="73" chordsig="java.lang.String"/>
+	<newexpr line="73" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4616" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4612" length="29" line="73">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4633" length="7" line="73">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4616" length="16" line="73" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="queryMiniThumbnails:(Landroid/content/ContentResolver;Landroid/net/Uri;I[Ljava/lang/String;)Landroid/database/Cursor;@android.provider.MediaStore$Images$Thumbnails"
+ sig="Cursor queryMiniThumbnails(ContentResolver,Uri,int,String[])"
+ line="74"
+ startpos="4690"
+ endpos="4709"
+>
+	<marker line="-1" type="param">
+		<operand  start="4742" length="2" line="74">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4762" length="3" line="74">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4771" length="4" line="74">
+			<expr><![CDATA[kind]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4796" length="10" line="74">
+			<expr><![CDATA[projection]]></expr>
+		</operand>
+	</marker>
+	<type  start="4666" length="23" line="74" chordsig="android.database.Cursor"/>
+	<type  start="4710" length="31" line="74" chordsig="android.content.ContentResolver"/>
+	<type  start="4746" length="15" line="74" chordsig="android.net.Uri"/>
+	<type  start="4777" length="16" line="74" chordsig="java.lang.String"/>
+	<newexpr line="74" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4820" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4816" length="29" line="74">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4837" length="7" line="74">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4820" length="16" line="74" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="queryMiniThumbnail:(Landroid/content/ContentResolver;JI[Ljava/lang/String;)Landroid/database/Cursor;@android.provider.MediaStore$Images$Thumbnails"
+ sig="Cursor queryMiniThumbnail(ContentResolver,long,int,String[])"
+ line="75"
+ startpos="4894"
+ endpos="4912"
+>
+	<marker line="-1" type="param">
+		<operand  start="4945" length="2" line="75">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4954" length="6" line="75">
+			<expr><![CDATA[origId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4966" length="4" line="75">
+			<expr><![CDATA[kind]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4991" length="10" line="75">
+			<expr><![CDATA[projection]]></expr>
+		</operand>
+	</marker>
+	<type  start="4870" length="23" line="75" chordsig="android.database.Cursor"/>
+	<type  start="4913" length="31" line="75" chordsig="android.content.ContentResolver"/>
+	<type  start="4972" length="16" line="75" chordsig="java.lang.String"/>
+	<newexpr line="75" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5015" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5011" length="29" line="75">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5032" length="7" line="75">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5015" length="16" line="75" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="cancelThumbnailRequest:(Landroid/content/ContentResolver;J)V@android.provider.MediaStore$Images$Thumbnails"
+ sig="void cancelThumbnailRequest(ContentResolver,long)"
+ line="76"
+ startpos="5064"
+ endpos="5086"
+>
+	<marker line="-1" type="param">
+		<operand  start="5119" length="2" line="76">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5128" length="6" line="76">
+			<expr><![CDATA[origId]]></expr>
+		</operand>
+	</marker>
+	<type  start="5087" length="31" line="76" chordsig="android.content.ContentResolver"/>
+	<newexpr line="76" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5148" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5144" length="29" line="76">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5165" length="7" line="76">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5148" length="16" line="76" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getThumbnail:(Landroid/content/ContentResolver;JILandroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;@android.provider.MediaStore$Images$Thumbnails"
+ sig="Bitmap getThumbnail(ContentResolver,long,int,Options)"
+ line="77"
+ startpos="5216"
+ endpos="5228"
+>
+	<marker line="-1" type="param">
+		<operand  start="5261" length="2" line="77">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5270" length="6" line="77">
+			<expr><![CDATA[origId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5282" length="4" line="77">
+			<expr><![CDATA[kind]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5327" length="7" line="77">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<type  start="5192" length="23" line="77" chordsig="android.graphics.Bitmap"/>
+	<type  start="5229" length="31" line="77" chordsig="android.content.ContentResolver"/>
+	<type  start="5288" length="38" line="77" chordsig="android.graphics.BitmapFactory$Options"/>
+	<newexpr line="77" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5348" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5344" length="29" line="77">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5365" length="7" line="77">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5348" length="16" line="77" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="cancelThumbnailRequest:(Landroid/content/ContentResolver;JJ)V@android.provider.MediaStore$Images$Thumbnails"
+ sig="void cancelThumbnailRequest(ContentResolver,long,long)"
+ line="78"
+ startpos="5397"
+ endpos="5419"
+>
+	<marker line="-1" type="param">
+		<operand  start="5452" length="2" line="78">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5461" length="6" line="78">
+			<expr><![CDATA[origId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5474" length="7" line="78">
+			<expr><![CDATA[groupId]]></expr>
+		</operand>
+	</marker>
+	<type  start="5420" length="31" line="78" chordsig="android.content.ContentResolver"/>
+	<newexpr line="78" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5495" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5491" length="29" line="78">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5512" length="7" line="78">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5495" length="16" line="78" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getThumbnail:(Landroid/content/ContentResolver;JJILandroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;@android.provider.MediaStore$Images$Thumbnails"
+ sig="Bitmap getThumbnail(ContentResolver,long,long,int,Options)"
+ line="79"
+ startpos="5563"
+ endpos="5575"
+>
+	<marker line="-1" type="param">
+		<operand  start="5608" length="2" line="79">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5617" length="6" line="79">
+			<expr><![CDATA[origId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5630" length="7" line="79">
+			<expr><![CDATA[groupId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5643" length="4" line="79">
+			<expr><![CDATA[kind]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5688" length="7" line="79">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<type  start="5539" length="23" line="79" chordsig="android.graphics.Bitmap"/>
+	<type  start="5576" length="31" line="79" chordsig="android.content.ContentResolver"/>
+	<type  start="5649" length="38" line="79" chordsig="android.graphics.BitmapFactory$Options"/>
+	<newexpr line="79" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5709" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5705" length="29" line="79">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5726" length="7" line="79">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5709" length="16" line="79" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContentUri:(Ljava/lang/String;)Landroid/net/Uri;@android.provider.MediaStore$Images$Thumbnails"
+ sig="Uri getContentUri(String)"
+ line="80"
+ startpos="5769"
+ endpos="5782"
+>
+	<marker line="-1" type="param">
+		<operand  start="5800" length="10" line="80">
+			<expr><![CDATA[volumeName]]></expr>
+		</operand>
+	</marker>
+	<type  start="5753" length="15" line="80" chordsig="android.net.Uri"/>
+	<type  start="5783" length="16" line="80" chordsig="java.lang.String"/>
+	<newexpr line="80" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5824" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5820" length="29" line="80">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5841" length="7" line="80">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5824" length="16" line="80" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="5873" length="15" line="81" chordsig="android.net.Uri"/>
+	<type  start="5931" length="15" line="82" chordsig="android.net.Uri"/>
+	<type  start="5989" length="16" line="83" chordsig="java.lang.String"/>
+	<type  start="6063" length="16" line="84" chordsig="java.lang.String"/>
+	<type  start="6116" length="16" line="85" chordsig="java.lang.String"/>
+	<type  start="6176" length="16" line="86" chordsig="java.lang.String"/>
+	<type  start="6353" length="16" line="90" chordsig="java.lang.String"/>
+	<type  start="6417" length="16" line="91" chordsig="java.lang.String"/>
+	<type  start="6471" length="16" line="92" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.MediaStore$Images$Thumbnails"
+ line="93"
+>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.MediaStore$Images"
+ sig="Images()"
+ line="95"
+ startpos="6586"
+ endpos="6592"
+>
+	<newexpr line="95" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6607" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6603" length="29" line="95">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6624" length="7" line="95">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6607" length="16" line="95" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.provider.MediaStore$Audio" line="97">
+<class chordsig="android.provider.MediaStore$Audio$AudioColumns" line="99">
+	<type  start="6719" length="40" line="100" chordsig="android.provider.MediaStore$MediaColumns"/>
+	<type  start="6782" length="16" line="102" chordsig="java.lang.String"/>
+	<type  start="6844" length="16" line="103" chordsig="java.lang.String"/>
+	<type  start="6904" length="16" line="104" chordsig="java.lang.String"/>
+	<type  start="6964" length="16" line="105" chordsig="java.lang.String"/>
+	<type  start="7026" length="16" line="106" chordsig="java.lang.String"/>
+	<type  start="7082" length="16" line="107" chordsig="java.lang.String"/>
+	<type  start="7146" length="16" line="108" chordsig="java.lang.String"/>
+	<type  start="7206" length="16" line="109" chordsig="java.lang.String"/>
+	<type  start="7266" length="16" line="110" chordsig="java.lang.String"/>
+	<type  start="7320" length="16" line="111" chordsig="java.lang.String"/>
+	<type  start="7382" length="16" line="112" chordsig="java.lang.String"/>
+	<type  start="7436" length="16" line="113" chordsig="java.lang.String"/>
+	<type  start="7488" length="16" line="114" chordsig="java.lang.String"/>
+	<type  start="7548" length="16" line="115" chordsig="java.lang.String"/>
+	<type  start="7612" length="16" line="116" chordsig="java.lang.String"/>
+	<type  start="7678" length="16" line="117" chordsig="java.lang.String"/>
+	<type  start="7738" length="16" line="118" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.MediaStore$Audio$Media" line="120">
+	<type  start="7839" length="46" line="121" chordsig="android.provider.MediaStore$Audio$AudioColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.MediaStore$Audio$Media"
+ sig="Media()"
+ line="123"
+ startpos="7896"
+ endpos="7901"
+>
+	<newexpr line="123" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7916" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7912" length="29" line="123">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7933" length="7" line="123">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7916" length="16" line="123" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContentUri:(Ljava/lang/String;)Landroid/net/Uri;@android.provider.MediaStore$Audio$Media"
+ sig="Uri getContentUri(String)"
+ line="124"
+ startpos="7976"
+ endpos="7989"
+>
+	<marker line="-1" type="param">
+		<operand  start="8007" length="10" line="124">
+			<expr><![CDATA[volumeName]]></expr>
+		</operand>
+	</marker>
+	<type  start="7960" length="15" line="124" chordsig="android.net.Uri"/>
+	<type  start="7990" length="16" line="124" chordsig="java.lang.String"/>
+	<newexpr line="124" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="8031" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="8027" length="29" line="124">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="8048" length="7" line="124">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="8031" length="16" line="124" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContentUriForPath:(Ljava/lang/String;)Landroid/net/Uri;@android.provider.MediaStore$Audio$Media"
+ sig="Uri getContentUriForPath(String)"
+ line="125"
+ startpos="8091"
+ endpos="8111"
+>
+	<marker line="-1" type="param">
+		<operand  start="8129" length="4" line="125">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<type  start="8075" length="15" line="125" chordsig="android.net.Uri"/>
+	<type  start="8112" length="16" line="125" chordsig="java.lang.String"/>
+	<newexpr line="125" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="8147" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="8143" length="29" line="125">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="8164" length="7" line="125">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="8147" length="16" line="125" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="8196" length="15" line="126" chordsig="android.net.Uri"/>
+	<type  start="8254" length="15" line="127" chordsig="android.net.Uri"/>
+	<type  start="8312" length="16" line="128" chordsig="java.lang.String"/>
+	<type  start="8396" length="16" line="129" chordsig="java.lang.String"/>
+	<type  start="8467" length="16" line="130" chordsig="java.lang.String"/>
+	<type  start="8570" length="16" line="131" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.MediaStore$Audio$Media"
+ line="132"
+>
+</method>
+</class>
+<class chordsig="android.provider.MediaStore$Audio$GenresColumns" line="134">
+	<type  start="8783" length="16" line="136" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.MediaStore$Audio$Genres" line="138">
+	<type  start="8863" length="28" line="139" chordsig="android.provider.BaseColumns"/>
+	<type  start="8893" length="47" line="139" chordsig="android.provider.MediaStore$Audio$GenresColumns"/>
+<class chordsig="android.provider.MediaStore$Audio$Genres$Members" line="141">
+	<type  start="8990" length="46" line="142" chordsig="android.provider.MediaStore$Audio$AudioColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.MediaStore$Audio$Genres$Members"
+ sig="Members()"
+ line="144"
+ startpos="9047"
+ endpos="9054"
+>
+	<newexpr line="144" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9069" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9065" length="29" line="144">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9086" length="7" line="144">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9069" length="16" line="144" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContentUri:(Ljava/lang/String;J)Landroid/net/Uri;@android.provider.MediaStore$Audio$Genres$Members"
+ sig="Uri getContentUri(String,long)"
+ line="145"
+ startpos="9135"
+ endpos="9148"
+>
+	<marker line="-1" type="param">
+		<operand  start="9166" length="10" line="145">
+			<expr><![CDATA[volumeName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9183" length="7" line="145">
+			<expr><![CDATA[genreId]]></expr>
+		</operand>
+	</marker>
+	<type  start="9119" length="15" line="145" chordsig="android.net.Uri"/>
+	<type  start="9149" length="16" line="145" chordsig="java.lang.String"/>
+	<newexpr line="145" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9204" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9200" length="29" line="145">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9221" length="7" line="145">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9204" length="16" line="145" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="9253" length="16" line="146" chordsig="java.lang.String"/>
+	<type  start="9321" length="16" line="147" chordsig="java.lang.String"/>
+	<type  start="9392" length="16" line="148" chordsig="java.lang.String"/>
+	<type  start="9452" length="16" line="149" chordsig="java.lang.String"/>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.MediaStore$Audio$Genres"
+ sig="Genres()"
+ line="151"
+ startpos="9502"
+ endpos="9508"
+>
+	<newexpr line="151" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9523" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9519" length="29" line="151">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9540" length="7" line="151">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9523" length="16" line="151" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContentUri:(Ljava/lang/String;)Landroid/net/Uri;@android.provider.MediaStore$Audio$Genres"
+ sig="Uri getContentUri(String)"
+ line="152"
+ startpos="9583"
+ endpos="9596"
+>
+	<marker line="-1" type="param">
+		<operand  start="9614" length="10" line="152">
+			<expr><![CDATA[volumeName]]></expr>
+		</operand>
+	</marker>
+	<type  start="9567" length="15" line="152" chordsig="android.net.Uri"/>
+	<type  start="9597" length="16" line="152" chordsig="java.lang.String"/>
+	<newexpr line="152" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9638" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9634" length="29" line="152">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9655" length="7" line="152">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9638" length="16" line="152" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContentUriForAudioId:(Ljava/lang/String;I)Landroid/net/Uri;@android.provider.MediaStore$Audio$Genres"
+ sig="Uri getContentUriForAudioId(String,int)"
+ line="153"
+ startpos="9698"
+ endpos="9721"
+>
+	<marker line="-1" type="param">
+		<operand  start="9739" length="10" line="153">
+			<expr><![CDATA[volumeName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="9755" length="7" line="153">
+			<expr><![CDATA[audioId]]></expr>
+		</operand>
+	</marker>
+	<type  start="9682" length="15" line="153" chordsig="android.net.Uri"/>
+	<type  start="9722" length="16" line="153" chordsig="java.lang.String"/>
+	<newexpr line="153" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9776" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9772" length="29" line="153">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9793" length="7" line="153">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9776" length="16" line="153" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="9825" length="15" line="154" chordsig="android.net.Uri"/>
+	<type  start="9883" length="15" line="155" chordsig="android.net.Uri"/>
+	<type  start="9941" length="16" line="156" chordsig="java.lang.String"/>
+	<type  start="10025" length="16" line="157" chordsig="java.lang.String"/>
+	<type  start="10116" length="16" line="158" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.MediaStore$Audio$Genres"
+ line="159"
+>
+</method>
+</class>
+<class chordsig="android.provider.MediaStore$Audio$PlaylistsColumns" line="161">
+	<type  start="10296" length="16" line="163" chordsig="java.lang.String"/>
+	<type  start="10348" length="16" line="164" chordsig="java.lang.String"/>
+	<type  start="10401" length="16" line="165" chordsig="java.lang.String"/>
+	<type  start="10465" length="16" line="166" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.MediaStore$Audio$Playlists" line="168">
+	<type  start="10566" length="28" line="169" chordsig="android.provider.BaseColumns"/>
+	<type  start="10596" length="50" line="169" chordsig="android.provider.MediaStore$Audio$PlaylistsColumns"/>
+<class chordsig="android.provider.MediaStore$Audio$Playlists$Members" line="171">
+	<type  start="10696" length="46" line="172" chordsig="android.provider.MediaStore$Audio$AudioColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.MediaStore$Audio$Playlists$Members"
+ sig="Members()"
+ line="174"
+ startpos="10753"
+ endpos="10760"
+>
+	<newexpr line="174" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10775" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10771" length="29" line="174">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10792" length="7" line="174">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10775" length="16" line="174" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContentUri:(Ljava/lang/String;J)Landroid/net/Uri;@android.provider.MediaStore$Audio$Playlists$Members"
+ sig="Uri getContentUri(String,long)"
+ line="175"
+ startpos="10841"
+ endpos="10854"
+>
+	<marker line="-1" type="param">
+		<operand  start="10872" length="10" line="175">
+			<expr><![CDATA[volumeName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="10889" length="10" line="175">
+			<expr><![CDATA[playlistId]]></expr>
+		</operand>
+	</marker>
+	<type  start="10825" length="15" line="175" chordsig="android.net.Uri"/>
+	<type  start="10855" length="16" line="175" chordsig="java.lang.String"/>
+	<newexpr line="175" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10913" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10909" length="29" line="175">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10930" length="7" line="175">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10913" length="16" line="175" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="moveItem:(Landroid/content/ContentResolver;JII)Z@android.provider.MediaStore$Audio$Playlists$Members"
+ sig="boolean moveItem(ContentResolver,long,int,int)"
+ line="176"
+ startpos="10971"
+ endpos="10979"
+>
+	<marker line="-1" type="param">
+		<operand  start="11012" length="3" line="176">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="11022" length="10" line="176">
+			<expr><![CDATA[playlistId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="11038" length="4" line="176">
+			<expr><![CDATA[from]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="11048" length="2" line="176">
+			<expr><![CDATA[to]]></expr>
+		</operand>
+	</marker>
+	<type  start="10980" length="31" line="176" chordsig="android.content.ContentResolver"/>
+	<newexpr line="176" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11064" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11060" length="29" line="176">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11081" length="7" line="176">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11064" length="16" line="176" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="11113" length="16" line="177" chordsig="java.lang.String"/>
+	<type  start="11163" length="16" line="178" chordsig="java.lang.String"/>
+	<type  start="11231" length="16" line="179" chordsig="java.lang.String"/>
+	<type  start="11291" length="16" line="180" chordsig="java.lang.String"/>
+	<type  start="11357" length="16" line="181" chordsig="java.lang.String"/>
+	<type  start="11421" length="16" line="182" chordsig="java.lang.String"/>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.MediaStore$Audio$Playlists"
+ sig="Playlists()"
+ line="184"
+ startpos="11483"
+ endpos="11492"
+>
+	<newexpr line="184" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11507" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11503" length="29" line="184">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11524" length="7" line="184">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11507" length="16" line="184" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContentUri:(Ljava/lang/String;)Landroid/net/Uri;@android.provider.MediaStore$Audio$Playlists"
+ sig="Uri getContentUri(String)"
+ line="185"
+ startpos="11567"
+ endpos="11580"
+>
+	<marker line="-1" type="param">
+		<operand  start="11598" length="10" line="185">
+			<expr><![CDATA[volumeName]]></expr>
+		</operand>
+	</marker>
+	<type  start="11551" length="15" line="185" chordsig="android.net.Uri"/>
+	<type  start="11581" length="16" line="185" chordsig="java.lang.String"/>
+	<newexpr line="185" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11622" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11618" length="29" line="185">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11639" length="7" line="185">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11622" length="16" line="185" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="11671" length="15" line="186" chordsig="android.net.Uri"/>
+	<type  start="11729" length="15" line="187" chordsig="android.net.Uri"/>
+	<type  start="11787" length="16" line="188" chordsig="java.lang.String"/>
+	<type  start="11874" length="16" line="189" chordsig="java.lang.String"/>
+	<type  start="11968" length="16" line="190" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.MediaStore$Audio$Playlists"
+ line="191"
+>
+</method>
+</class>
+<class chordsig="android.provider.MediaStore$Audio$ArtistColumns" line="193">
+	<type  start="12145" length="16" line="195" chordsig="java.lang.String"/>
+	<type  start="12201" length="16" line="196" chordsig="java.lang.String"/>
+	<type  start="12265" length="16" line="197" chordsig="java.lang.String"/>
+	<type  start="12341" length="16" line="198" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.MediaStore$Audio$Artists" line="200">
+	<type  start="12446" length="28" line="201" chordsig="android.provider.BaseColumns"/>
+	<type  start="12476" length="47" line="201" chordsig="android.provider.MediaStore$Audio$ArtistColumns"/>
+<class chordsig="android.provider.MediaStore$Audio$Artists$Albums" line="203">
+	<type  start="12572" length="46" line="204" chordsig="android.provider.MediaStore$Audio$AlbumColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.MediaStore$Audio$Artists$Albums"
+ sig="Albums()"
+ line="206"
+ startpos="12629"
+ endpos="12635"
+>
+	<newexpr line="206" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12650" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="12646" length="29" line="206">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="12667" length="7" line="206">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12650" length="16" line="206" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContentUri:(Ljava/lang/String;J)Landroid/net/Uri;@android.provider.MediaStore$Audio$Artists$Albums"
+ sig="Uri getContentUri(String,long)"
+ line="207"
+ startpos="12716"
+ endpos="12729"
+>
+	<marker line="-1" type="param">
+		<operand  start="12747" length="10" line="207">
+			<expr><![CDATA[volumeName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="12764" length="8" line="207">
+			<expr><![CDATA[artistId]]></expr>
+		</operand>
+	</marker>
+	<type  start="12700" length="15" line="207" chordsig="android.net.Uri"/>
+	<type  start="12730" length="16" line="207" chordsig="java.lang.String"/>
+	<newexpr line="207" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12786" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="12782" length="29" line="207">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="12803" length="7" line="207">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12786" length="16" line="207" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.MediaStore$Audio$Artists"
+ sig="Artists()"
+ line="209"
+ startpos="12825"
+ endpos="12832"
+>
+	<newexpr line="209" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12847" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="12843" length="29" line="209">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="12864" length="7" line="209">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12847" length="16" line="209" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContentUri:(Ljava/lang/String;)Landroid/net/Uri;@android.provider.MediaStore$Audio$Artists"
+ sig="Uri getContentUri(String)"
+ line="210"
+ startpos="12907"
+ endpos="12920"
+>
+	<marker line="-1" type="param">
+		<operand  start="12938" length="10" line="210">
+			<expr><![CDATA[volumeName]]></expr>
+		</operand>
+	</marker>
+	<type  start="12891" length="15" line="210" chordsig="android.net.Uri"/>
+	<type  start="12921" length="16" line="210" chordsig="java.lang.String"/>
+	<newexpr line="210" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12962" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="12958" length="29" line="210">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="12979" length="7" line="210">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12962" length="16" line="210" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="13011" length="15" line="211" chordsig="android.net.Uri"/>
+	<type  start="13069" length="15" line="212" chordsig="android.net.Uri"/>
+	<type  start="13127" length="16" line="213" chordsig="java.lang.String"/>
+	<type  start="13213" length="16" line="214" chordsig="java.lang.String"/>
+	<type  start="13305" length="16" line="215" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.MediaStore$Audio$Artists"
+ line="216"
+>
+</method>
+</class>
+<class chordsig="android.provider.MediaStore$Audio$AlbumColumns" line="218">
+	<type  start="13487" length="16" line="220" chordsig="java.lang.String"/>
+	<type  start="13547" length="16" line="221" chordsig="java.lang.String"/>
+	<type  start="13601" length="16" line="222" chordsig="java.lang.String"/>
+	<type  start="13657" length="16" line="223" chordsig="java.lang.String"/>
+	<type  start="13724" length="16" line="224" chordsig="java.lang.String"/>
+	<type  start="13812" length="16" line="225" chordsig="java.lang.String"/>
+	<type  start="13873" length="16" line="226" chordsig="java.lang.String"/>
+	<type  start="13933" length="16" line="227" chordsig="java.lang.String"/>
+	<type  start="13995" length="16" line="228" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.MediaStore$Audio$Albums" line="230">
+	<type  start="14085" length="28" line="231" chordsig="android.provider.BaseColumns"/>
+	<type  start="14115" length="46" line="231" chordsig="android.provider.MediaStore$Audio$AlbumColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.MediaStore$Audio$Albums"
+ sig="Albums()"
+ line="233"
+ startpos="14172"
+ endpos="14178"
+>
+	<newexpr line="233" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="14193" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="14189" length="29" line="233">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="14210" length="7" line="233">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="14193" length="16" line="233" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContentUri:(Ljava/lang/String;)Landroid/net/Uri;@android.provider.MediaStore$Audio$Albums"
+ sig="Uri getContentUri(String)"
+ line="234"
+ startpos="14253"
+ endpos="14266"
+>
+	<marker line="-1" type="param">
+		<operand  start="14284" length="10" line="234">
+			<expr><![CDATA[volumeName]]></expr>
+		</operand>
+	</marker>
+	<type  start="14237" length="15" line="234" chordsig="android.net.Uri"/>
+	<type  start="14267" length="16" line="234" chordsig="java.lang.String"/>
+	<newexpr line="234" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="14308" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="14304" length="29" line="234">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="14325" length="7" line="234">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="14308" length="16" line="234" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="14357" length="15" line="235" chordsig="android.net.Uri"/>
+	<type  start="14415" length="15" line="236" chordsig="android.net.Uri"/>
+	<type  start="14473" length="16" line="237" chordsig="java.lang.String"/>
+	<type  start="14558" length="16" line="238" chordsig="java.lang.String"/>
+	<type  start="14649" length="16" line="239" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.MediaStore$Audio$Albums"
+ line="240"
+>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.MediaStore$Audio"
+ sig="Audio()"
+ line="242"
+ startpos="14779"
+ endpos="14784"
+>
+	<newexpr line="242" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="14799" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="14795" length="29" line="242">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="14816" length="7" line="242">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="14799" length="16" line="242" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="keyFor:(Ljava/lang/String;)Ljava/lang/String;@android.provider.MediaStore$Audio"
+ sig="String keyFor(String)"
+ line="243"
+ startpos="14860"
+ endpos="14866"
+>
+	<marker line="-1" type="param">
+		<operand  start="14884" length="4" line="243">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="14843" length="16" line="243" chordsig="java.lang.String"/>
+	<type  start="14867" length="16" line="243" chordsig="java.lang.String"/>
+	<newexpr line="243" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="14902" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="14898" length="29" line="243">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="14919" length="7" line="243">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="14902" length="16" line="243" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.provider.MediaStore$Video" line="245">
+<class chordsig="android.provider.MediaStore$Video$VideoColumns" line="247">
+	<type  start="15014" length="40" line="248" chordsig="android.provider.MediaStore$MediaColumns"/>
+	<type  start="15077" length="16" line="250" chordsig="java.lang.String"/>
+	<type  start="15137" length="16" line="251" chordsig="java.lang.String"/>
+	<type  start="15193" length="16" line="252" chordsig="java.lang.String"/>
+	<type  start="15247" length="16" line="253" chordsig="java.lang.String"/>
+	<type  start="15311" length="16" line="254" chordsig="java.lang.String"/>
+	<type  start="15377" length="16" line="255" chordsig="java.lang.String"/>
+	<type  start="15440" length="16" line="256" chordsig="java.lang.String"/>
+	<type  start="15492" length="16" line="257" chordsig="java.lang.String"/>
+	<type  start="15552" length="16" line="258" chordsig="java.lang.String"/>
+	<type  start="15612" length="16" line="259" chordsig="java.lang.String"/>
+	<type  start="15672" length="16" line="260" chordsig="java.lang.String"/>
+	<type  start="15734" length="16" line="261" chordsig="java.lang.String"/>
+	<type  start="15797" length="16" line="262" chordsig="java.lang.String"/>
+	<type  start="15873" length="16" line="263" chordsig="java.lang.String"/>
+	<type  start="15935" length="16" line="264" chordsig="java.lang.String"/>
+	<type  start="16017" length="16" line="265" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.provider.MediaStore$Video$Media" line="267">
+	<type  start="16104" length="46" line="268" chordsig="android.provider.MediaStore$Video$VideoColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.MediaStore$Video$Media"
+ sig="Media()"
+ line="270"
+ startpos="16161"
+ endpos="16166"
+>
+	<newexpr line="270" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="16181" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="16177" length="29" line="270">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="16198" length="7" line="270">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="16181" length="16" line="270" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContentUri:(Ljava/lang/String;)Landroid/net/Uri;@android.provider.MediaStore$Video$Media"
+ sig="Uri getContentUri(String)"
+ line="271"
+ startpos="16241"
+ endpos="16254"
+>
+	<marker line="-1" type="param">
+		<operand  start="16272" length="10" line="271">
+			<expr><![CDATA[volumeName]]></expr>
+		</operand>
+	</marker>
+	<type  start="16225" length="15" line="271" chordsig="android.net.Uri"/>
+	<type  start="16255" length="16" line="271" chordsig="java.lang.String"/>
+	<newexpr line="271" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="16296" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="16292" length="29" line="271">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="16313" length="7" line="271">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="16296" length="16" line="271" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="16345" length="15" line="272" chordsig="android.net.Uri"/>
+	<type  start="16403" length="15" line="273" chordsig="android.net.Uri"/>
+	<type  start="16461" length="16" line="274" chordsig="java.lang.String"/>
+	<type  start="16545" length="16" line="275" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.MediaStore$Video$Media"
+ line="276"
+>
+</method>
+</class>
+<class chordsig="android.provider.MediaStore$Video$Thumbnails" line="278">
+	<type  start="16707" length="28" line="279" chordsig="android.provider.BaseColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.MediaStore$Video$Thumbnails"
+ sig="Thumbnails()"
+ line="281"
+ startpos="16746"
+ endpos="16756"
+>
+	<newexpr line="281" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="16771" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="16767" length="29" line="281">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="16788" length="7" line="281">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="16771" length="16" line="281" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="cancelThumbnailRequest:(Landroid/content/ContentResolver;J)V@android.provider.MediaStore$Video$Thumbnails"
+ sig="void cancelThumbnailRequest(ContentResolver,long)"
+ line="282"
+ startpos="16820"
+ endpos="16842"
+>
+	<marker line="-1" type="param">
+		<operand  start="16875" length="2" line="282">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="16884" length="6" line="282">
+			<expr><![CDATA[origId]]></expr>
+		</operand>
+	</marker>
+	<type  start="16843" length="31" line="282" chordsig="android.content.ContentResolver"/>
+	<newexpr line="282" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="16904" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="16900" length="29" line="282">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="16921" length="7" line="282">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="16904" length="16" line="282" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getThumbnail:(Landroid/content/ContentResolver;JILandroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;@android.provider.MediaStore$Video$Thumbnails"
+ sig="Bitmap getThumbnail(ContentResolver,long,int,Options)"
+ line="283"
+ startpos="16972"
+ endpos="16984"
+>
+	<marker line="-1" type="param">
+		<operand  start="17017" length="2" line="283">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="17026" length="6" line="283">
+			<expr><![CDATA[origId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="17038" length="4" line="283">
+			<expr><![CDATA[kind]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="17083" length="7" line="283">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<type  start="16948" length="23" line="283" chordsig="android.graphics.Bitmap"/>
+	<type  start="16985" length="31" line="283" chordsig="android.content.ContentResolver"/>
+	<type  start="17044" length="38" line="283" chordsig="android.graphics.BitmapFactory$Options"/>
+	<newexpr line="283" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="17104" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="17100" length="29" line="283">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="17121" length="7" line="283">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="17104" length="16" line="283" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getThumbnail:(Landroid/content/ContentResolver;JJILandroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;@android.provider.MediaStore$Video$Thumbnails"
+ sig="Bitmap getThumbnail(ContentResolver,long,long,int,Options)"
+ line="284"
+ startpos="17172"
+ endpos="17184"
+>
+	<marker line="-1" type="param">
+		<operand  start="17217" length="2" line="284">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="17226" length="6" line="284">
+			<expr><![CDATA[origId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="17239" length="7" line="284">
+			<expr><![CDATA[groupId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="17252" length="4" line="284">
+			<expr><![CDATA[kind]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="17297" length="7" line="284">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<type  start="17148" length="23" line="284" chordsig="android.graphics.Bitmap"/>
+	<type  start="17185" length="31" line="284" chordsig="android.content.ContentResolver"/>
+	<type  start="17258" length="38" line="284" chordsig="android.graphics.BitmapFactory$Options"/>
+	<newexpr line="284" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="17318" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="17314" length="29" line="284">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="17335" length="7" line="284">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="17318" length="16" line="284" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="cancelThumbnailRequest:(Landroid/content/ContentResolver;JJ)V@android.provider.MediaStore$Video$Thumbnails"
+ sig="void cancelThumbnailRequest(ContentResolver,long,long)"
+ line="285"
+ startpos="17367"
+ endpos="17389"
+>
+	<marker line="-1" type="param">
+		<operand  start="17422" length="2" line="285">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="17431" length="6" line="285">
+			<expr><![CDATA[origId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="17444" length="7" line="285">
+			<expr><![CDATA[groupId]]></expr>
+		</operand>
+	</marker>
+	<type  start="17390" length="31" line="285" chordsig="android.content.ContentResolver"/>
+	<newexpr line="285" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="17465" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="17461" length="29" line="285">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="17482" length="7" line="285">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="17465" length="16" line="285" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContentUri:(Ljava/lang/String;)Landroid/net/Uri;@android.provider.MediaStore$Video$Thumbnails"
+ sig="Uri getContentUri(String)"
+ line="286"
+ startpos="17525"
+ endpos="17538"
+>
+	<marker line="-1" type="param">
+		<operand  start="17556" length="10" line="286">
+			<expr><![CDATA[volumeName]]></expr>
+		</operand>
+	</marker>
+	<type  start="17509" length="15" line="286" chordsig="android.net.Uri"/>
+	<type  start="17539" length="16" line="286" chordsig="java.lang.String"/>
+	<newexpr line="286" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="17580" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="17576" length="29" line="286">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="17597" length="7" line="286">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="17580" length="16" line="286" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="17629" length="15" line="287" chordsig="android.net.Uri"/>
+	<type  start="17687" length="15" line="288" chordsig="android.net.Uri"/>
+	<type  start="17745" length="16" line="289" chordsig="java.lang.String"/>
+	<type  start="17819" length="16" line="290" chordsig="java.lang.String"/>
+	<type  start="17872" length="16" line="291" chordsig="java.lang.String"/>
+	<type  start="17932" length="16" line="292" chordsig="java.lang.String"/>
+	<type  start="18109" length="16" line="296" chordsig="java.lang.String"/>
+	<type  start="18163" length="16" line="297" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.MediaStore$Video$Thumbnails"
+ line="298"
+>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.MediaStore$Video"
+ sig="Video()"
+ line="300"
+ startpos="18278"
+ endpos="18283"
+>
+	<newexpr line="300" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="18298" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="18294" length="29" line="300">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="18315" length="7" line="300">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="18298" length="16" line="300" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="query:(Landroid/content/ContentResolver;Landroid/net/Uri;[Ljava/lang/String;)Landroid/database/Cursor;@android.provider.MediaStore$Video"
+ sig="Cursor query(ContentResolver,Uri,String[])"
+ line="301"
+ startpos="18372"
+ endpos="18377"
+>
+	<marker line="-1" type="param">
+		<operand  start="18410" length="2" line="301">
+			<expr><![CDATA[cr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="18430" length="3" line="301">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="18454" length="10" line="301">
+			<expr><![CDATA[projection]]></expr>
+		</operand>
+	</marker>
+	<type  start="18348" length="23" line="301" chordsig="android.database.Cursor"/>
+	<type  start="18378" length="31" line="301" chordsig="android.content.ContentResolver"/>
+	<type  start="18414" length="15" line="301" chordsig="android.net.Uri"/>
+	<type  start="18435" length="16" line="301" chordsig="java.lang.String"/>
+	<newexpr line="301" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="18478" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="18474" length="29" line="301">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="18495" length="7" line="301">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="18478" length="16" line="301" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="18527" length="16" line="302" chordsig="java.lang.String"/>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.MediaStore"
+ sig="MediaStore()"
+ line="304"
+ startpos="18592"
+ endpos="18602"
+>
+	<newexpr line="304" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="18617" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="18613" length="29" line="304">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="18634" length="7" line="304">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="18617" length="16" line="304" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMediaScannerUri:()Landroid/net/Uri;@android.provider.MediaStore"
+ sig="Uri getMediaScannerUri()"
+ line="305"
+ startpos="18677"
+ endpos="18695"
+>
+	<type  start="18661" length="15" line="305" chordsig="android.net.Uri"/>
+	<newexpr line="305" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="18710" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="18706" length="29" line="305">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="18727" length="7" line="305">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="18710" length="16" line="305" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getVersion:(Landroid/content/Context;)Ljava/lang/String;@android.provider.MediaStore"
+ sig="String getVersion(Context)"
+ line="306"
+ startpos="18771"
+ endpos="18781"
+>
+	<marker line="-1" type="param">
+		<operand  start="18806" length="7" line="306">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="18754" length="16" line="306" chordsig="java.lang.String"/>
+	<type  start="18782" length="23" line="306" chordsig="android.content.Context"/>
+	<newexpr line="306" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="18827" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="18823" length="29" line="306">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="18844" length="7" line="306">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="18827" length="16" line="306" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="18876" length="16" line="307" chordsig="java.lang.String"/>
+	<type  start="18958" length="16" line="309" chordsig="java.lang.String"/>
+	<type  start="19062" length="16" line="310" chordsig="java.lang.String"/>
+	<type  start="19166" length="16" line="311" chordsig="java.lang.String"/>
+	<type  start="19289" length="16" line="312" chordsig="java.lang.String"/>
+	<type  start="19378" length="16" line="313" chordsig="java.lang.String"/>
+	<type  start="19465" length="16" line="314" chordsig="java.lang.String"/>
+	<type  start="19552" length="16" line="315" chordsig="java.lang.String"/>
+	<type  start="19639" length="16" line="316" chordsig="java.lang.String"/>
+	<type  start="19745" length="16" line="317" chordsig="java.lang.String"/>
+	<type  start="19837" length="16" line="318" chordsig="java.lang.String"/>
+	<type  start="19940" length="16" line="319" chordsig="java.lang.String"/>
+	<type  start="20049" length="16" line="320" chordsig="java.lang.String"/>
+	<type  start="20164" length="16" line="321" chordsig="java.lang.String"/>
+	<type  start="20267" length="16" line="322" chordsig="java.lang.String"/>
+	<type  start="20365" length="16" line="323" chordsig="java.lang.String"/>
+	<type  start="20463" length="16" line="324" chordsig="java.lang.String"/>
+	<type  start="20559" length="16" line="325" chordsig="java.lang.String"/>
+	<type  start="20649" length="16" line="326" chordsig="java.lang.String"/>
+	<type  start="20747" length="16" line="327" chordsig="java.lang.String"/>
+	<type  start="20809" length="16" line="328" chordsig="java.lang.String"/>
+	<type  start="20876" length="16" line="329" chordsig="java.lang.String"/>
+	<type  start="20946" length="16" line="330" chordsig="java.lang.String"/>
+</class>
+</root>

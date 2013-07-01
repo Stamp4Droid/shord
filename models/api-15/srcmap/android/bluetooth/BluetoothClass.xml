@@ -1,0 +1,257 @@
+<root>
+<class chordsig="android.bluetooth.BluetoothClass" line="2">
+	<type  start="74" length="21" line="3" chordsig="android.os.Parcelable"/>
+<class chordsig="android.bluetooth.BluetoothClass$Service" line="5">
+<method
+ chordsig="&lt;init&gt;:()V@android.bluetooth.BluetoothClass$Service"
+ sig="Service()"
+ line="7"
+ startpos="142"
+ endpos="149"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="164" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="160" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="181" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="164" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.bluetooth.BluetoothClass$Device" line="18">
+<class chordsig="android.bluetooth.BluetoothClass$Device$Major" line="20">
+<method
+ chordsig="&lt;init&gt;:()V@android.bluetooth.BluetoothClass$Device$Major"
+ sig="Major()"
+ line="22"
+ startpos="673"
+ endpos="678"
+>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="693" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="689" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="710" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="693" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.bluetooth.BluetoothClass$Device"
+ sig="Device()"
+ line="35"
+ startpos="1174"
+ endpos="1180"
+>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1195" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1191" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1212" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1195" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.bluetooth.BluetoothClass"
+ sig="BluetoothClass()"
+ line="87"
+ startpos="3832"
+ endpos="3846"
+>
+	<newexpr line="87" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3861" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3857" length="29" line="87">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3878" length="7" line="87">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3861" length="16" line="87" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@android.bluetooth.BluetoothClass"
+ sig="boolean equals(Object)"
+ line="88"
+ startpos="3906"
+ endpos="3912"
+>
+	<marker line="-1" type="param">
+		<operand  start="3930" length="1" line="88">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="3913" length="16" line="88" chordsig="java.lang.Object"/>
+	<newexpr line="88" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3945" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3941" length="29" line="88">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3962" length="7" line="88">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3945" length="16" line="88" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@android.bluetooth.BluetoothClass"
+ sig="int hashCode()"
+ line="89"
+ startpos="3986"
+ endpos="3994"
+>
+	<newexpr line="89" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4009" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4005" length="29" line="89">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4026" length="7" line="89">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4009" length="16" line="89" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.bluetooth.BluetoothClass"
+ sig="String toString()"
+ line="90"
+ startpos="4063"
+ endpos="4071"
+>
+	<type  start="4046" length="16" line="90" chordsig="java.lang.String"/>
+	<newexpr line="90" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4086" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4082" length="29" line="90">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4103" length="7" line="90">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4086" length="16" line="90" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.bluetooth.BluetoothClass"
+ sig="int describeContents()"
+ line="91"
+ startpos="4127"
+ endpos="4143"
+>
+	<newexpr line="91" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4158" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4154" length="29" line="91">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4175" length="7" line="91">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4158" length="16" line="91" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.bluetooth.BluetoothClass"
+ sig="void writeToParcel(Parcel,int)"
+ line="92"
+ startpos="4200"
+ endpos="4213"
+>
+	<marker line="-1" type="param">
+		<operand  start="4232" length="3" line="92">
+			<expr><![CDATA[out]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4241" length="5" line="92">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="4214" length="17" line="92" chordsig="android.os.Parcel"/>
+	<newexpr line="92" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4260" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4256" length="29" line="92">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4277" length="7" line="92">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4260" length="16" line="92" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hasService:(I)Z@android.bluetooth.BluetoothClass"
+ sig="boolean hasService(int)"
+ line="93"
+ startpos="4305"
+ endpos="4315"
+>
+	<marker line="-1" type="param">
+		<operand  start="4320" length="7" line="93">
+			<expr><![CDATA[service]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="93" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4341" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4337" length="29" line="93">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4358" length="7" line="93">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4341" length="16" line="93" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMajorDeviceClass:()I@android.bluetooth.BluetoothClass"
+ sig="int getMajorDeviceClass()"
+ line="94"
+ startpos="4382"
+ endpos="4401"
+>
+	<newexpr line="94" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4416" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4412" length="29" line="94">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4433" length="7" line="94">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4416" length="16" line="94" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDeviceClass:()I@android.bluetooth.BluetoothClass"
+ sig="int getDeviceClass()"
+ line="95"
+ startpos="4457"
+ endpos="4471"
+>
+	<newexpr line="95" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4486" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4482" length="29" line="95">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4503" length="7" line="95">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4486" length="16" line="95" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="4535" length="29" line="96" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="4565" length="32" line="96" chordsig="android.bluetooth.BluetoothClass"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.bluetooth.BluetoothClass"
+ line="97"
+>
+</method>
+</class>
+</root>

@@ -1,0 +1,98 @@
+<root>
+<class chordsig="android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest" line="2">
+	<type  start="84" length="46" line="3" chordsig="android.net.wifi.p2p.nsd.WifiP2pServiceRequest"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest"
+ sig="WifiP2pDnsSdServiceRequest()"
+ line="5"
+ startpos="133"
+ endpos="159"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="174" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="170" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="191" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="174" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newInstance:()Landroid/net/wifi/p2p/nsd/WifiP2pDnsSdServiceRequest;@android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest"
+ sig="WifiP2pDnsSdServiceRequest newInstance()"
+ line="6"
+ startpos="270"
+ endpos="281"
+>
+	<type  start="218" length="51" line="6" chordsig="android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="296" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="292" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="313" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="296" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newInstance:(Ljava/lang/String;)Landroid/net/wifi/p2p/nsd/WifiP2pDnsSdServiceRequest;@android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest"
+ sig="WifiP2pDnsSdServiceRequest newInstance(String)"
+ line="7"
+ startpos="392"
+ endpos="403"
+>
+	<marker line="-1" type="param">
+		<operand  start="421" length="11" line="7">
+			<expr><![CDATA[serviceType]]></expr>
+		</operand>
+	</marker>
+	<type  start="340" length="51" line="7" chordsig="android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest"/>
+	<type  start="404" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="446" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="442" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="463" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="446" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newInstance:(Ljava/lang/String;Ljava/lang/String;)Landroid/net/wifi/p2p/nsd/WifiP2pDnsSdServiceRequest;@android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest"
+ sig="WifiP2pDnsSdServiceRequest newInstance(String,String)"
+ line="8"
+ startpos="542"
+ endpos="553"
+>
+	<marker line="-1" type="param">
+		<operand  start="571" length="12" line="8">
+			<expr><![CDATA[instanceName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="602" length="11" line="8">
+			<expr><![CDATA[serviceType]]></expr>
+		</operand>
+	</marker>
+	<type  start="490" length="51" line="8" chordsig="android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest"/>
+	<type  start="554" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="585" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="627" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="623" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="644" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="627" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

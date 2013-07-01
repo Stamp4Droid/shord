@@ -1,0 +1,79 @@
+<root>
+<class chordsig="java.util.MissingResourceException" line="2">
+	<type  start="67" length="26" line="3" chordsig="java.lang.RuntimeException"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V@java.util.MissingResourceException"
+ sig="MissingResourceException(String,String,String)"
+ line="5"
+ startpos="104"
+ endpos="128"
+>
+	<marker line="-1" type="param">
+		<operand  start="146" length="13" line="5">
+			<expr><![CDATA[detailMessage]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="178" length="9" line="5">
+			<expr><![CDATA[className]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="206" length="12" line="5">
+			<expr><![CDATA[resourceName]]></expr>
+		</operand>
+	</marker>
+	<type  start="129" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="161" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="189" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="232" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="228" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="249" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="232" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getClassName:()Ljava/lang/String;@java.util.MissingResourceException"
+ sig="String getClassName()"
+ line="6"
+ startpos="286"
+ endpos="298"
+>
+	<type  start="269" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="313" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="309" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="330" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="313" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getKey:()Ljava/lang/String;@java.util.MissingResourceException"
+ sig="String getKey()"
+ line="7"
+ startpos="367"
+ endpos="373"
+>
+	<type  start="350" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="388" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="384" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="405" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="388" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,101 @@
+<root>
+<class chordsig="java.lang.RuntimeException" line="2">
+	<type  start="59" length="19" line="3" chordsig="java.lang.Exception"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.lang.RuntimeException"
+ sig="RuntimeException()"
+ line="5"
+ startpos="89"
+ endpos="105"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="120" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="116" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="137" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="120" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException"
+ sig="RuntimeException(String)"
+ line="6"
+ startpos="157"
+ endpos="173"
+>
+	<marker line="-1" type="param">
+		<operand  start="191" length="13" line="6">
+			<expr><![CDATA[detailMessage]]></expr>
+		</operand>
+	</marker>
+	<type  start="174" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="218" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="214" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="235" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="218" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/Throwable;)V@java.lang.RuntimeException"
+ sig="RuntimeException(String,Throwable)"
+ line="7"
+ startpos="255"
+ endpos="271"
+>
+	<marker line="-1" type="param">
+		<operand  start="289" length="13" line="7">
+			<expr><![CDATA[detailMessage]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="324" length="9" line="7">
+			<expr><![CDATA[throwable]]></expr>
+		</operand>
+	</marker>
+	<type  start="272" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="304" length="19" line="7" chordsig="java.lang.Throwable"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="347" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="343" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="364" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="347" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Throwable;)V@java.lang.RuntimeException"
+ sig="RuntimeException(Throwable)"
+ line="8"
+ startpos="384"
+ endpos="400"
+>
+	<marker line="-1" type="param">
+		<operand  start="421" length="9" line="8">
+			<expr><![CDATA[throwable]]></expr>
+		</operand>
+	</marker>
+	<type  start="401" length="19" line="8" chordsig="java.lang.Throwable"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="444" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="440" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="461" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="444" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

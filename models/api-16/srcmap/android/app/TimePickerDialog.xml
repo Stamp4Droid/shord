@@ -1,0 +1,284 @@
+<root>
+<class chordsig="android.app.TimePickerDialog" line="2">
+	<type  start="61" length="23" line="3" chordsig="android.app.AlertDialog"/>
+	<type  start="98" length="47" line="4" chordsig="android.content.DialogInterface$OnClickListener"/>
+	<type  start="147" length="47" line="4" chordsig="android.widget.TimePicker$OnTimeChangedListener"/>
+<class chordsig="android.app.TimePickerDialog$OnTimeSetListener" line="6">
+<method
+ chordsig="onTimeSet:(Landroid/widget/TimePicker;II)V@android.app.TimePickerDialog$OnTimeSetListener"
+ sig="void onTimeSet(TimePicker,int,int)"
+ line="8"
+ startpos="263"
+ endpos="272"
+>
+	<marker line="-1" type="param">
+		<operand  start="299" length="4" line="8">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="309" length="9" line="8">
+			<expr><![CDATA[hourOfDay]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="324" length="6" line="8">
+			<expr><![CDATA[minute]]></expr>
+		</operand>
+	</marker>
+	<type  start="273" length="25" line="8" chordsig="android.widget.TimePicker"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/app/TimePickerDialog$OnTimeSetListener;IIZ)V@android.app.TimePickerDialog"
+ sig="TimePickerDialog(Context,OnTimeSetListener,int,int,boolean)"
+ line="10"
+ startpos="343"
+ endpos="359"
+>
+	<marker line="-1" type="param">
+		<operand  start="384" length="7" line="10">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="440" length="8" line="10">
+			<expr><![CDATA[callBack]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="454" length="9" line="10">
+			<expr><![CDATA[hourOfDay]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="469" length="6" line="10">
+			<expr><![CDATA[minute]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="485" length="12" line="10">
+			<expr><![CDATA[is24HourView]]></expr>
+		</operand>
+	</marker>
+	<type  start="360" length="23" line="10" chordsig="android.content.Context"/>
+	<type  start="393" length="46" line="10" chordsig="android.app.TimePickerDialog$OnTimeSetListener"/>
+	<type  start="508" length="23" line="10" chordsig="android.content.Context"/>
+	<type  start="544" length="48" line="10" chordsig="android.content.DialogInterface$OnCancelListener"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="610" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="606" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="627" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="610" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;ILandroid/app/TimePickerDialog$OnTimeSetListener;IIZ)V@android.app.TimePickerDialog"
+ sig="TimePickerDialog(Context,int,OnTimeSetListener,int,int,boolean)"
+ line="11"
+ startpos="647"
+ endpos="663"
+>
+	<marker line="-1" type="param">
+		<operand  start="688" length="7" line="11">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="701" length="5" line="11">
+			<expr><![CDATA[theme]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="755" length="8" line="11">
+			<expr><![CDATA[callBack]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="769" length="9" line="11">
+			<expr><![CDATA[hourOfDay]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="784" length="6" line="11">
+			<expr><![CDATA[minute]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="800" length="12" line="11">
+			<expr><![CDATA[is24HourView]]></expr>
+		</operand>
+	</marker>
+	<type  start="664" length="23" line="11" chordsig="android.content.Context"/>
+	<type  start="708" length="46" line="11" chordsig="android.app.TimePickerDialog$OnTimeSetListener"/>
+	<type  start="823" length="23" line="11" chordsig="android.content.Context"/>
+	<type  start="859" length="48" line="11" chordsig="android.content.DialogInterface$OnCancelListener"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="925" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="921" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="942" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="925" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onClick:(Landroid/content/DialogInterface;I)V@android.app.TimePickerDialog"
+ sig="void onClick(DialogInterface,int)"
+ line="12"
+ startpos="967"
+ endpos="974"
+>
+	<marker line="-1" type="param">
+		<operand  start="1007" length="6" line="12">
+			<expr><![CDATA[dialog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1019" length="5" line="12">
+			<expr><![CDATA[which]]></expr>
+		</operand>
+	</marker>
+	<type  start="975" length="31" line="12" chordsig="android.content.DialogInterface"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1038" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1034" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1055" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1038" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="updateTime:(II)V@android.app.TimePickerDialog"
+ sig="void updateTime(int,int)"
+ line="13"
+ startpos="1080"
+ endpos="1090"
+>
+	<marker line="-1" type="param">
+		<operand  start="1095" length="9" line="13">
+			<expr><![CDATA[hourOfDay]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1110" length="11" line="13">
+			<expr><![CDATA[minutOfHour]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1135" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1131" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1152" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1135" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onTimeChanged:(Landroid/widget/TimePicker;II)V@android.app.TimePickerDialog"
+ sig="void onTimeChanged(TimePicker,int,int)"
+ line="14"
+ startpos="1177"
+ endpos="1190"
+>
+	<marker line="-1" type="param">
+		<operand  start="1217" length="4" line="14">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1227" length="9" line="14">
+			<expr><![CDATA[hourOfDay]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1242" length="6" line="14">
+			<expr><![CDATA[minute]]></expr>
+		</operand>
+	</marker>
+	<type  start="1191" length="25" line="14" chordsig="android.widget.TimePicker"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1262" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1258" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1279" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1262" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onStop:()V@android.app.TimePickerDialog"
+ sig="void onStop()"
+ line="15"
+ startpos="1307"
+ endpos="1313"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1328" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1324" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1345" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1328" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onSaveInstanceState:()Landroid/os/Bundle;@android.app.TimePickerDialog"
+ sig="Bundle onSaveInstanceState()"
+ line="16"
+ startpos="1383"
+ endpos="1402"
+>
+	<type  start="1365" length="17" line="16" chordsig="android.os.Bundle"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1417" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1413" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1434" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1417" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onRestoreInstanceState:(Landroid/os/Bundle;)V@android.app.TimePickerDialog"
+ sig="void onRestoreInstanceState(Bundle)"
+ line="17"
+ startpos="1459"
+ endpos="1481"
+>
+	<marker line="-1" type="param">
+		<operand  start="1500" length="18" line="17">
+			<expr><![CDATA[savedInstanceState]]></expr>
+		</operand>
+	</marker>
+	<type  start="1482" length="17" line="17" chordsig="android.os.Bundle"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1532" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1528" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1549" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1532" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

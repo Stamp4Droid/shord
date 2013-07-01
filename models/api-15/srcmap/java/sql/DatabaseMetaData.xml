@@ -1,0 +1,1939 @@
+<root>
+<class chordsig="java.sql.DatabaseMetaData" line="2">
+	<type  start="62" length="16" line="3" chordsig="java.sql.Wrapper"/>
+<method
+ chordsig="allProceduresAreCallable:()Z@java.sql.DatabaseMetaData"
+ sig="boolean allProceduresAreCallable()"
+ line="5"
+ startpos="106"
+ endpos="130"
+>
+</method>
+<method
+ chordsig="allTablesAreSelectable:()Z@java.sql.DatabaseMetaData"
+ sig="boolean allTablesAreSelectable()"
+ line="6"
+ startpos="188"
+ endpos="210"
+>
+</method>
+<method
+ chordsig="dataDefinitionCausesTransactionCommit:()Z@java.sql.DatabaseMetaData"
+ sig="boolean dataDefinitionCausesTransactionCommit()"
+ line="7"
+ startpos="268"
+ endpos="305"
+>
+</method>
+<method
+ chordsig="dataDefinitionIgnoredInTransactions:()Z@java.sql.DatabaseMetaData"
+ sig="boolean dataDefinitionIgnoredInTransactions()"
+ line="8"
+ startpos="363"
+ endpos="398"
+>
+</method>
+<method
+ chordsig="deletesAreDetected:(I)Z@java.sql.DatabaseMetaData"
+ sig="boolean deletesAreDetected(int)"
+ line="9"
+ startpos="456"
+ endpos="474"
+>
+	<marker line="-1" type="param">
+		<operand  start="479" length="4" line="9">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="doesMaxRowSizeIncludeBlobs:()Z@java.sql.DatabaseMetaData"
+ sig="boolean doesMaxRowSizeIncludeBlobs()"
+ line="10"
+ startpos="540"
+ endpos="566"
+>
+</method>
+<method
+ chordsig="getAttributes:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getAttributes(String,String,String,String)"
+ line="11"
+ startpos="635"
+ endpos="648"
+>
+	<marker line="-1" type="param">
+		<operand  start="666" length="7" line="11">
+			<expr><![CDATA[catalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="692" length="13" line="11">
+			<expr><![CDATA[schemaPattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="724" length="15" line="11">
+			<expr><![CDATA[typeNamePattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="758" length="20" line="11">
+			<expr><![CDATA[attributeNamePattern]]></expr>
+		</operand>
+	</marker>
+	<type  start="616" length="18" line="11" chordsig="java.sql.ResultSet"/>
+	<type  start="649" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="675" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="707" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="741" length="16" line="11" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getBestRowIdentifier:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZ)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getBestRowIdentifier(String,String,String,int,boolean)"
+ line="12"
+ startpos="846"
+ endpos="866"
+>
+	<marker line="-1" type="param">
+		<operand  start="884" length="7" line="12">
+			<expr><![CDATA[catalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="910" length="6" line="12">
+			<expr><![CDATA[schema]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="935" length="5" line="12">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="946" length="5" line="12">
+			<expr><![CDATA[scope]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="961" length="8" line="12">
+			<expr><![CDATA[nullable]]></expr>
+		</operand>
+	</marker>
+	<type  start="827" length="18" line="12" chordsig="java.sql.ResultSet"/>
+	<type  start="867" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="893" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="918" length="16" line="12" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getCatalogs:()Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getCatalogs()"
+ line="13"
+ startpos="1037"
+ endpos="1048"
+>
+	<type  start="1018" length="18" line="13" chordsig="java.sql.ResultSet"/>
+</method>
+<method
+ chordsig="getCatalogSeparator:()Ljava/lang/String;@java.sql.DatabaseMetaData"
+ sig="String getCatalogSeparator()"
+ line="14"
+ startpos="1115"
+ endpos="1134"
+>
+	<type  start="1098" length="16" line="14" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getCatalogTerm:()Ljava/lang/String;@java.sql.DatabaseMetaData"
+ sig="String getCatalogTerm()"
+ line="15"
+ startpos="1201"
+ endpos="1215"
+>
+	<type  start="1184" length="16" line="15" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getColumnPrivileges:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getColumnPrivileges(String,String,String,String)"
+ line="16"
+ startpos="1284"
+ endpos="1303"
+>
+	<marker line="-1" type="param">
+		<operand  start="1321" length="7" line="16">
+			<expr><![CDATA[catalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1347" length="6" line="16">
+			<expr><![CDATA[schema]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1372" length="5" line="16">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1396" length="17" line="16">
+			<expr><![CDATA[columnNamePattern]]></expr>
+		</operand>
+	</marker>
+	<type  start="1265" length="18" line="16" chordsig="java.sql.ResultSet"/>
+	<type  start="1304" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="1330" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="1355" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="1379" length="16" line="16" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getColumns:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getColumns(String,String,String,String)"
+ line="17"
+ startpos="1481"
+ endpos="1491"
+>
+	<marker line="-1" type="param">
+		<operand  start="1509" length="7" line="17">
+			<expr><![CDATA[catalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1535" length="13" line="17">
+			<expr><![CDATA[schemaPattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1567" length="16" line="17">
+			<expr><![CDATA[tableNamePattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1602" length="17" line="17">
+			<expr><![CDATA[columnNamePattern]]></expr>
+		</operand>
+	</marker>
+	<type  start="1462" length="18" line="17" chordsig="java.sql.ResultSet"/>
+	<type  start="1492" length="16" line="17" chordsig="java.lang.String"/>
+	<type  start="1518" length="16" line="17" chordsig="java.lang.String"/>
+	<type  start="1550" length="16" line="17" chordsig="java.lang.String"/>
+	<type  start="1585" length="16" line="17" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getConnection:()Ljava/sql/Connection;@java.sql.DatabaseMetaData"
+ sig="Connection getConnection()"
+ line="18"
+ startpos="1688"
+ endpos="1701"
+>
+	<type  start="1668" length="19" line="18" chordsig="java.sql.Connection"/>
+</method>
+<method
+ chordsig="getCrossReference:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getCrossReference(String,String,String,String,String,String)"
+ line="19"
+ startpos="1770"
+ endpos="1787"
+>
+	<marker line="-1" type="param">
+		<operand  start="1805" length="14" line="19">
+			<expr><![CDATA[primaryCatalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1838" length="13" line="19">
+			<expr><![CDATA[primarySchema]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1870" length="12" line="19">
+			<expr><![CDATA[primaryTable]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1901" length="14" line="19">
+			<expr><![CDATA[foreignCatalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1934" length="13" line="19">
+			<expr><![CDATA[foreignSchema]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1966" length="12" line="19">
+			<expr><![CDATA[foreignTable]]></expr>
+		</operand>
+	</marker>
+	<type  start="1751" length="18" line="19" chordsig="java.sql.ResultSet"/>
+	<type  start="1788" length="16" line="19" chordsig="java.lang.String"/>
+	<type  start="1821" length="16" line="19" chordsig="java.lang.String"/>
+	<type  start="1853" length="16" line="19" chordsig="java.lang.String"/>
+	<type  start="1884" length="16" line="19" chordsig="java.lang.String"/>
+	<type  start="1917" length="16" line="19" chordsig="java.lang.String"/>
+	<type  start="1949" length="16" line="19" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getDatabaseMajorVersion:()I@java.sql.DatabaseMetaData"
+ sig="int getDatabaseMajorVersion()"
+ line="20"
+ startpos="2031"
+ endpos="2054"
+>
+</method>
+<method
+ chordsig="getDatabaseMinorVersion:()I@java.sql.DatabaseMetaData"
+ sig="int getDatabaseMinorVersion()"
+ line="21"
+ startpos="2108"
+ endpos="2131"
+>
+</method>
+<method
+ chordsig="getDatabaseProductName:()Ljava/lang/String;@java.sql.DatabaseMetaData"
+ sig="String getDatabaseProductName()"
+ line="22"
+ startpos="2198"
+ endpos="2220"
+>
+	<type  start="2181" length="16" line="22" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getDatabaseProductVersion:()Ljava/lang/String;@java.sql.DatabaseMetaData"
+ sig="String getDatabaseProductVersion()"
+ line="23"
+ startpos="2287"
+ endpos="2312"
+>
+	<type  start="2270" length="16" line="23" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getDefaultTransactionIsolation:()I@java.sql.DatabaseMetaData"
+ sig="int getDefaultTransactionIsolation()"
+ line="24"
+ startpos="2366"
+ endpos="2396"
+>
+</method>
+<method
+ chordsig="getDriverMajorVersion:()I@java.sql.DatabaseMetaData"
+ sig="int getDriverMajorVersion()"
+ line="25"
+ startpos="2450"
+ endpos="2471"
+>
+</method>
+<method
+ chordsig="getDriverMinorVersion:()I@java.sql.DatabaseMetaData"
+ sig="int getDriverMinorVersion()"
+ line="26"
+ startpos="2496"
+ endpos="2517"
+>
+</method>
+<method
+ chordsig="getDriverName:()Ljava/lang/String;@java.sql.DatabaseMetaData"
+ sig="String getDriverName()"
+ line="27"
+ startpos="2555"
+ endpos="2568"
+>
+	<type  start="2538" length="16" line="27" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getDriverVersion:()Ljava/lang/String;@java.sql.DatabaseMetaData"
+ sig="String getDriverVersion()"
+ line="28"
+ startpos="2635"
+ endpos="2651"
+>
+	<type  start="2618" length="16" line="28" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getExportedKeys:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getExportedKeys(String,String,String)"
+ line="29"
+ startpos="2720"
+ endpos="2735"
+>
+	<marker line="-1" type="param">
+		<operand  start="2753" length="7" line="29">
+			<expr><![CDATA[catalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2779" length="6" line="29">
+			<expr><![CDATA[schema]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2804" length="5" line="29">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<type  start="2701" length="18" line="29" chordsig="java.sql.ResultSet"/>
+	<type  start="2736" length="16" line="29" chordsig="java.lang.String"/>
+	<type  start="2762" length="16" line="29" chordsig="java.lang.String"/>
+	<type  start="2787" length="16" line="29" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getExtraNameCharacters:()Ljava/lang/String;@java.sql.DatabaseMetaData"
+ sig="String getExtraNameCharacters()"
+ line="30"
+ startpos="2875"
+ endpos="2897"
+>
+	<type  start="2858" length="16" line="30" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getIdentifierQuoteString:()Ljava/lang/String;@java.sql.DatabaseMetaData"
+ sig="String getIdentifierQuoteString()"
+ line="31"
+ startpos="2964"
+ endpos="2988"
+>
+	<type  start="2947" length="16" line="31" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getImportedKeys:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getImportedKeys(String,String,String)"
+ line="32"
+ startpos="3057"
+ endpos="3072"
+>
+	<marker line="-1" type="param">
+		<operand  start="3090" length="7" line="32">
+			<expr><![CDATA[catalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3116" length="6" line="32">
+			<expr><![CDATA[schema]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3141" length="5" line="32">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<type  start="3038" length="18" line="32" chordsig="java.sql.ResultSet"/>
+	<type  start="3073" length="16" line="32" chordsig="java.lang.String"/>
+	<type  start="3099" length="16" line="32" chordsig="java.lang.String"/>
+	<type  start="3124" length="16" line="32" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getIndexInfo:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZZ)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getIndexInfo(String,String,String,boolean,boolean)"
+ line="33"
+ startpos="3214"
+ endpos="3226"
+>
+	<marker line="-1" type="param">
+		<operand  start="3244" length="7" line="33">
+			<expr><![CDATA[catalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3270" length="6" line="33">
+			<expr><![CDATA[schema]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3295" length="5" line="33">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3310" length="6" line="33">
+			<expr><![CDATA[unique]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3326" length="11" line="33">
+			<expr><![CDATA[approximate]]></expr>
+		</operand>
+	</marker>
+	<type  start="3195" length="18" line="33" chordsig="java.sql.ResultSet"/>
+	<type  start="3227" length="16" line="33" chordsig="java.lang.String"/>
+	<type  start="3253" length="16" line="33" chordsig="java.lang.String"/>
+	<type  start="3278" length="16" line="33" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getJDBCMajorVersion:()I@java.sql.DatabaseMetaData"
+ sig="int getJDBCMajorVersion()"
+ line="34"
+ startpos="3390"
+ endpos="3409"
+>
+</method>
+<method
+ chordsig="getJDBCMinorVersion:()I@java.sql.DatabaseMetaData"
+ sig="int getJDBCMinorVersion()"
+ line="35"
+ startpos="3463"
+ endpos="3482"
+>
+</method>
+<method
+ chordsig="getMaxBinaryLiteralLength:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxBinaryLiteralLength()"
+ line="36"
+ startpos="3536"
+ endpos="3561"
+>
+</method>
+<method
+ chordsig="getMaxCatalogNameLength:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxCatalogNameLength()"
+ line="37"
+ startpos="3615"
+ endpos="3638"
+>
+</method>
+<method
+ chordsig="getMaxCharLiteralLength:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxCharLiteralLength()"
+ line="38"
+ startpos="3692"
+ endpos="3715"
+>
+</method>
+<method
+ chordsig="getMaxColumnNameLength:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxColumnNameLength()"
+ line="39"
+ startpos="3769"
+ endpos="3791"
+>
+</method>
+<method
+ chordsig="getMaxColumnsInGroupBy:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxColumnsInGroupBy()"
+ line="40"
+ startpos="3845"
+ endpos="3867"
+>
+</method>
+<method
+ chordsig="getMaxColumnsInIndex:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxColumnsInIndex()"
+ line="41"
+ startpos="3921"
+ endpos="3941"
+>
+</method>
+<method
+ chordsig="getMaxColumnsInOrderBy:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxColumnsInOrderBy()"
+ line="42"
+ startpos="3995"
+ endpos="4017"
+>
+</method>
+<method
+ chordsig="getMaxColumnsInSelect:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxColumnsInSelect()"
+ line="43"
+ startpos="4071"
+ endpos="4092"
+>
+</method>
+<method
+ chordsig="getMaxColumnsInTable:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxColumnsInTable()"
+ line="44"
+ startpos="4146"
+ endpos="4166"
+>
+</method>
+<method
+ chordsig="getMaxConnections:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxConnections()"
+ line="45"
+ startpos="4220"
+ endpos="4237"
+>
+</method>
+<method
+ chordsig="getMaxCursorNameLength:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxCursorNameLength()"
+ line="46"
+ startpos="4291"
+ endpos="4313"
+>
+</method>
+<method
+ chordsig="getMaxIndexLength:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxIndexLength()"
+ line="47"
+ startpos="4367"
+ endpos="4384"
+>
+</method>
+<method
+ chordsig="getMaxProcedureNameLength:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxProcedureNameLength()"
+ line="48"
+ startpos="4438"
+ endpos="4463"
+>
+</method>
+<method
+ chordsig="getMaxRowSize:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxRowSize()"
+ line="49"
+ startpos="4517"
+ endpos="4530"
+>
+</method>
+<method
+ chordsig="getMaxSchemaNameLength:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxSchemaNameLength()"
+ line="50"
+ startpos="4584"
+ endpos="4606"
+>
+</method>
+<method
+ chordsig="getMaxStatementLength:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxStatementLength()"
+ line="51"
+ startpos="4660"
+ endpos="4681"
+>
+</method>
+<method
+ chordsig="getMaxStatements:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxStatements()"
+ line="52"
+ startpos="4735"
+ endpos="4751"
+>
+</method>
+<method
+ chordsig="getMaxTableNameLength:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxTableNameLength()"
+ line="53"
+ startpos="4805"
+ endpos="4826"
+>
+</method>
+<method
+ chordsig="getMaxTablesInSelect:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxTablesInSelect()"
+ line="54"
+ startpos="4880"
+ endpos="4900"
+>
+</method>
+<method
+ chordsig="getMaxUserNameLength:()I@java.sql.DatabaseMetaData"
+ sig="int getMaxUserNameLength()"
+ line="55"
+ startpos="4954"
+ endpos="4974"
+>
+</method>
+<method
+ chordsig="getNumericFunctions:()Ljava/lang/String;@java.sql.DatabaseMetaData"
+ sig="String getNumericFunctions()"
+ line="56"
+ startpos="5041"
+ endpos="5060"
+>
+	<type  start="5024" length="16" line="56" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getPrimaryKeys:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getPrimaryKeys(String,String,String)"
+ line="57"
+ startpos="5129"
+ endpos="5143"
+>
+	<marker line="-1" type="param">
+		<operand  start="5161" length="7" line="57">
+			<expr><![CDATA[catalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5187" length="6" line="57">
+			<expr><![CDATA[schema]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5212" length="5" line="57">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<type  start="5110" length="18" line="57" chordsig="java.sql.ResultSet"/>
+	<type  start="5144" length="16" line="57" chordsig="java.lang.String"/>
+	<type  start="5170" length="16" line="57" chordsig="java.lang.String"/>
+	<type  start="5195" length="16" line="57" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getProcedureColumns:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getProcedureColumns(String,String,String,String)"
+ line="58"
+ startpos="5285"
+ endpos="5304"
+>
+	<marker line="-1" type="param">
+		<operand  start="5322" length="7" line="58">
+			<expr><![CDATA[catalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5348" length="13" line="58">
+			<expr><![CDATA[schemaPattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5380" length="20" line="58">
+			<expr><![CDATA[procedureNamePattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5419" length="17" line="58">
+			<expr><![CDATA[columnNamePattern]]></expr>
+		</operand>
+	</marker>
+	<type  start="5266" length="18" line="58" chordsig="java.sql.ResultSet"/>
+	<type  start="5305" length="16" line="58" chordsig="java.lang.String"/>
+	<type  start="5331" length="16" line="58" chordsig="java.lang.String"/>
+	<type  start="5363" length="16" line="58" chordsig="java.lang.String"/>
+	<type  start="5402" length="16" line="58" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getProcedures:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getProcedures(String,String,String)"
+ line="59"
+ startpos="5504"
+ endpos="5517"
+>
+	<marker line="-1" type="param">
+		<operand  start="5535" length="7" line="59">
+			<expr><![CDATA[catalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5561" length="13" line="59">
+			<expr><![CDATA[schemaPattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5593" length="20" line="59">
+			<expr><![CDATA[procedureNamePattern]]></expr>
+		</operand>
+	</marker>
+	<type  start="5485" length="18" line="59" chordsig="java.sql.ResultSet"/>
+	<type  start="5518" length="16" line="59" chordsig="java.lang.String"/>
+	<type  start="5544" length="16" line="59" chordsig="java.lang.String"/>
+	<type  start="5576" length="16" line="59" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getProcedureTerm:()Ljava/lang/String;@java.sql.DatabaseMetaData"
+ sig="String getProcedureTerm()"
+ line="60"
+ startpos="5679"
+ endpos="5695"
+>
+	<type  start="5662" length="16" line="60" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getResultSetHoldability:()I@java.sql.DatabaseMetaData"
+ sig="int getResultSetHoldability()"
+ line="61"
+ startpos="5749"
+ endpos="5772"
+>
+</method>
+<method
+ chordsig="getSchemas:()Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getSchemas()"
+ line="62"
+ startpos="5841"
+ endpos="5851"
+>
+	<type  start="5822" length="18" line="62" chordsig="java.sql.ResultSet"/>
+</method>
+<method
+ chordsig="getSchemaTerm:()Ljava/lang/String;@java.sql.DatabaseMetaData"
+ sig="String getSchemaTerm()"
+ line="63"
+ startpos="5918"
+ endpos="5931"
+>
+	<type  start="5901" length="16" line="63" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getSearchStringEscape:()Ljava/lang/String;@java.sql.DatabaseMetaData"
+ sig="String getSearchStringEscape()"
+ line="64"
+ startpos="5998"
+ endpos="6019"
+>
+	<type  start="5981" length="16" line="64" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getSQLKeywords:()Ljava/lang/String;@java.sql.DatabaseMetaData"
+ sig="String getSQLKeywords()"
+ line="65"
+ startpos="6086"
+ endpos="6100"
+>
+	<type  start="6069" length="16" line="65" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getSQLStateType:()I@java.sql.DatabaseMetaData"
+ sig="int getSQLStateType()"
+ line="66"
+ startpos="6154"
+ endpos="6169"
+>
+</method>
+<method
+ chordsig="getStringFunctions:()Ljava/lang/String;@java.sql.DatabaseMetaData"
+ sig="String getStringFunctions()"
+ line="67"
+ startpos="6236"
+ endpos="6254"
+>
+	<type  start="6219" length="16" line="67" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getSuperTables:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getSuperTables(String,String,String)"
+ line="68"
+ startpos="6323"
+ endpos="6337"
+>
+	<marker line="-1" type="param">
+		<operand  start="6355" length="7" line="68">
+			<expr><![CDATA[catalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6381" length="13" line="68">
+			<expr><![CDATA[schemaPattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6413" length="16" line="68">
+			<expr><![CDATA[tableNamePattern]]></expr>
+		</operand>
+	</marker>
+	<type  start="6304" length="18" line="68" chordsig="java.sql.ResultSet"/>
+	<type  start="6338" length="16" line="68" chordsig="java.lang.String"/>
+	<type  start="6364" length="16" line="68" chordsig="java.lang.String"/>
+	<type  start="6396" length="16" line="68" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getSuperTypes:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getSuperTypes(String,String,String)"
+ line="69"
+ startpos="6497"
+ endpos="6510"
+>
+	<marker line="-1" type="param">
+		<operand  start="6528" length="7" line="69">
+			<expr><![CDATA[catalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6554" length="13" line="69">
+			<expr><![CDATA[schemaPattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6586" length="15" line="69">
+			<expr><![CDATA[typeNamePattern]]></expr>
+		</operand>
+	</marker>
+	<type  start="6478" length="18" line="69" chordsig="java.sql.ResultSet"/>
+	<type  start="6511" length="16" line="69" chordsig="java.lang.String"/>
+	<type  start="6537" length="16" line="69" chordsig="java.lang.String"/>
+	<type  start="6569" length="16" line="69" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getSystemFunctions:()Ljava/lang/String;@java.sql.DatabaseMetaData"
+ sig="String getSystemFunctions()"
+ line="70"
+ startpos="6667"
+ endpos="6685"
+>
+	<type  start="6650" length="16" line="70" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getTablePrivileges:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getTablePrivileges(String,String,String)"
+ line="71"
+ startpos="6754"
+ endpos="6772"
+>
+	<marker line="-1" type="param">
+		<operand  start="6790" length="7" line="71">
+			<expr><![CDATA[catalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6816" length="13" line="71">
+			<expr><![CDATA[schemaPattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6848" length="16" line="71">
+			<expr><![CDATA[tableNamePattern]]></expr>
+		</operand>
+	</marker>
+	<type  start="6735" length="18" line="71" chordsig="java.sql.ResultSet"/>
+	<type  start="6773" length="16" line="71" chordsig="java.lang.String"/>
+	<type  start="6799" length="16" line="71" chordsig="java.lang.String"/>
+	<type  start="6831" length="16" line="71" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getTables:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getTables(String,String,String,String[])"
+ line="72"
+ startpos="6932"
+ endpos="6941"
+>
+	<marker line="-1" type="param">
+		<operand  start="6959" length="7" line="72">
+			<expr><![CDATA[catalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6985" length="13" line="72">
+			<expr><![CDATA[schemaPattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7017" length="16" line="72">
+			<expr><![CDATA[tableNamePattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7054" length="5" line="72">
+			<expr><![CDATA[types]]></expr>
+		</operand>
+	</marker>
+	<type  start="6913" length="18" line="72" chordsig="java.sql.ResultSet"/>
+	<type  start="6942" length="16" line="72" chordsig="java.lang.String"/>
+	<type  start="6968" length="16" line="72" chordsig="java.lang.String"/>
+	<type  start="7000" length="16" line="72" chordsig="java.lang.String"/>
+	<type  start="7035" length="16" line="72" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getTableTypes:()Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getTableTypes()"
+ line="73"
+ startpos="7127"
+ endpos="7140"
+>
+	<type  start="7108" length="18" line="73" chordsig="java.sql.ResultSet"/>
+</method>
+<method
+ chordsig="getTimeDateFunctions:()Ljava/lang/String;@java.sql.DatabaseMetaData"
+ sig="String getTimeDateFunctions()"
+ line="74"
+ startpos="7207"
+ endpos="7227"
+>
+	<type  start="7190" length="16" line="74" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getTypeInfo:()Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getTypeInfo()"
+ line="75"
+ startpos="7296"
+ endpos="7307"
+>
+	<type  start="7277" length="18" line="75" chordsig="java.sql.ResultSet"/>
+</method>
+<method
+ chordsig="getUDTs:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[I)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getUDTs(String,String,String,int[])"
+ line="76"
+ startpos="7376"
+ endpos="7383"
+>
+	<marker line="-1" type="param">
+		<operand  start="7401" length="7" line="76">
+			<expr><![CDATA[catalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7427" length="13" line="76">
+			<expr><![CDATA[schemaPattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7459" length="15" line="76">
+			<expr><![CDATA[typeNamePattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7482" length="5" line="76">
+			<expr><![CDATA[types]]></expr>
+		</operand>
+	</marker>
+	<type  start="7357" length="18" line="76" chordsig="java.sql.ResultSet"/>
+	<type  start="7384" length="16" line="76" chordsig="java.lang.String"/>
+	<type  start="7410" length="16" line="76" chordsig="java.lang.String"/>
+	<type  start="7442" length="16" line="76" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getURL:()Ljava/lang/String;@java.sql.DatabaseMetaData"
+ sig="String getURL()"
+ line="77"
+ startpos="7553"
+ endpos="7559"
+>
+	<type  start="7536" length="16" line="77" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getUserName:()Ljava/lang/String;@java.sql.DatabaseMetaData"
+ sig="String getUserName()"
+ line="78"
+ startpos="7626"
+ endpos="7637"
+>
+	<type  start="7609" length="16" line="78" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getVersionColumns:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getVersionColumns(String,String,String)"
+ line="79"
+ startpos="7706"
+ endpos="7723"
+>
+	<marker line="-1" type="param">
+		<operand  start="7741" length="7" line="79">
+			<expr><![CDATA[catalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7767" length="6" line="79">
+			<expr><![CDATA[schema]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7792" length="5" line="79">
+			<expr><![CDATA[table]]></expr>
+		</operand>
+	</marker>
+	<type  start="7687" length="18" line="79" chordsig="java.sql.ResultSet"/>
+	<type  start="7724" length="16" line="79" chordsig="java.lang.String"/>
+	<type  start="7750" length="16" line="79" chordsig="java.lang.String"/>
+	<type  start="7775" length="16" line="79" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="insertsAreDetected:(I)Z@java.sql.DatabaseMetaData"
+ sig="boolean insertsAreDetected(int)"
+ line="80"
+ startpos="7854"
+ endpos="7872"
+>
+	<marker line="-1" type="param">
+		<operand  start="7877" length="4" line="80">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="isCatalogAtStart:()Z@java.sql.DatabaseMetaData"
+ sig="boolean isCatalogAtStart()"
+ line="81"
+ startpos="7938"
+ endpos="7954"
+>
+</method>
+<method
+ chordsig="isReadOnly:()Z@java.sql.DatabaseMetaData"
+ sig="boolean isReadOnly()"
+ line="82"
+ startpos="8012"
+ endpos="8022"
+>
+</method>
+<method
+ chordsig="locatorsUpdateCopy:()Z@java.sql.DatabaseMetaData"
+ sig="boolean locatorsUpdateCopy()"
+ line="83"
+ startpos="8080"
+ endpos="8098"
+>
+</method>
+<method
+ chordsig="nullPlusNonNullIsNull:()Z@java.sql.DatabaseMetaData"
+ sig="boolean nullPlusNonNullIsNull()"
+ line="84"
+ startpos="8156"
+ endpos="8177"
+>
+</method>
+<method
+ chordsig="nullsAreSortedAtEnd:()Z@java.sql.DatabaseMetaData"
+ sig="boolean nullsAreSortedAtEnd()"
+ line="85"
+ startpos="8235"
+ endpos="8254"
+>
+</method>
+<method
+ chordsig="nullsAreSortedAtStart:()Z@java.sql.DatabaseMetaData"
+ sig="boolean nullsAreSortedAtStart()"
+ line="86"
+ startpos="8312"
+ endpos="8333"
+>
+</method>
+<method
+ chordsig="nullsAreSortedHigh:()Z@java.sql.DatabaseMetaData"
+ sig="boolean nullsAreSortedHigh()"
+ line="87"
+ startpos="8391"
+ endpos="8409"
+>
+</method>
+<method
+ chordsig="nullsAreSortedLow:()Z@java.sql.DatabaseMetaData"
+ sig="boolean nullsAreSortedLow()"
+ line="88"
+ startpos="8467"
+ endpos="8484"
+>
+</method>
+<method
+ chordsig="othersDeletesAreVisible:(I)Z@java.sql.DatabaseMetaData"
+ sig="boolean othersDeletesAreVisible(int)"
+ line="89"
+ startpos="8542"
+ endpos="8565"
+>
+	<marker line="-1" type="param">
+		<operand  start="8570" length="4" line="89">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="othersInsertsAreVisible:(I)Z@java.sql.DatabaseMetaData"
+ sig="boolean othersInsertsAreVisible(int)"
+ line="90"
+ startpos="8631"
+ endpos="8654"
+>
+	<marker line="-1" type="param">
+		<operand  start="8659" length="4" line="90">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="othersUpdatesAreVisible:(I)Z@java.sql.DatabaseMetaData"
+ sig="boolean othersUpdatesAreVisible(int)"
+ line="91"
+ startpos="8720"
+ endpos="8743"
+>
+	<marker line="-1" type="param">
+		<operand  start="8748" length="4" line="91">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="ownDeletesAreVisible:(I)Z@java.sql.DatabaseMetaData"
+ sig="boolean ownDeletesAreVisible(int)"
+ line="92"
+ startpos="8809"
+ endpos="8829"
+>
+	<marker line="-1" type="param">
+		<operand  start="8834" length="4" line="92">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="ownInsertsAreVisible:(I)Z@java.sql.DatabaseMetaData"
+ sig="boolean ownInsertsAreVisible(int)"
+ line="93"
+ startpos="8895"
+ endpos="8915"
+>
+	<marker line="-1" type="param">
+		<operand  start="8920" length="4" line="93">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="ownUpdatesAreVisible:(I)Z@java.sql.DatabaseMetaData"
+ sig="boolean ownUpdatesAreVisible(int)"
+ line="94"
+ startpos="8981"
+ endpos="9001"
+>
+	<marker line="-1" type="param">
+		<operand  start="9006" length="4" line="94">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="storesLowerCaseIdentifiers:()Z@java.sql.DatabaseMetaData"
+ sig="boolean storesLowerCaseIdentifiers()"
+ line="95"
+ startpos="9067"
+ endpos="9093"
+>
+</method>
+<method
+ chordsig="storesLowerCaseQuotedIdentifiers:()Z@java.sql.DatabaseMetaData"
+ sig="boolean storesLowerCaseQuotedIdentifiers()"
+ line="96"
+ startpos="9151"
+ endpos="9183"
+>
+</method>
+<method
+ chordsig="storesMixedCaseIdentifiers:()Z@java.sql.DatabaseMetaData"
+ sig="boolean storesMixedCaseIdentifiers()"
+ line="97"
+ startpos="9241"
+ endpos="9267"
+>
+</method>
+<method
+ chordsig="storesMixedCaseQuotedIdentifiers:()Z@java.sql.DatabaseMetaData"
+ sig="boolean storesMixedCaseQuotedIdentifiers()"
+ line="98"
+ startpos="9325"
+ endpos="9357"
+>
+</method>
+<method
+ chordsig="storesUpperCaseIdentifiers:()Z@java.sql.DatabaseMetaData"
+ sig="boolean storesUpperCaseIdentifiers()"
+ line="99"
+ startpos="9415"
+ endpos="9441"
+>
+</method>
+<method
+ chordsig="storesUpperCaseQuotedIdentifiers:()Z@java.sql.DatabaseMetaData"
+ sig="boolean storesUpperCaseQuotedIdentifiers()"
+ line="100"
+ startpos="9499"
+ endpos="9531"
+>
+</method>
+<method
+ chordsig="supportsAlterTableWithAddColumn:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsAlterTableWithAddColumn()"
+ line="101"
+ startpos="9589"
+ endpos="9620"
+>
+</method>
+<method
+ chordsig="supportsAlterTableWithDropColumn:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsAlterTableWithDropColumn()"
+ line="102"
+ startpos="9678"
+ endpos="9710"
+>
+</method>
+<method
+ chordsig="supportsANSI92EntryLevelSQL:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsANSI92EntryLevelSQL()"
+ line="103"
+ startpos="9768"
+ endpos="9795"
+>
+</method>
+<method
+ chordsig="supportsANSI92FullSQL:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsANSI92FullSQL()"
+ line="104"
+ startpos="9853"
+ endpos="9874"
+>
+</method>
+<method
+ chordsig="supportsANSI92IntermediateSQL:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsANSI92IntermediateSQL()"
+ line="105"
+ startpos="9932"
+ endpos="9961"
+>
+</method>
+<method
+ chordsig="supportsBatchUpdates:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsBatchUpdates()"
+ line="106"
+ startpos="10019"
+ endpos="10039"
+>
+</method>
+<method
+ chordsig="supportsCatalogsInDataManipulation:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsCatalogsInDataManipulation()"
+ line="107"
+ startpos="10097"
+ endpos="10131"
+>
+</method>
+<method
+ chordsig="supportsCatalogsInIndexDefinitions:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsCatalogsInIndexDefinitions()"
+ line="108"
+ startpos="10189"
+ endpos="10223"
+>
+</method>
+<method
+ chordsig="supportsCatalogsInPrivilegeDefinitions:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsCatalogsInPrivilegeDefinitions()"
+ line="109"
+ startpos="10281"
+ endpos="10319"
+>
+</method>
+<method
+ chordsig="supportsCatalogsInProcedureCalls:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsCatalogsInProcedureCalls()"
+ line="110"
+ startpos="10377"
+ endpos="10409"
+>
+</method>
+<method
+ chordsig="supportsCatalogsInTableDefinitions:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsCatalogsInTableDefinitions()"
+ line="111"
+ startpos="10467"
+ endpos="10501"
+>
+</method>
+<method
+ chordsig="supportsColumnAliasing:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsColumnAliasing()"
+ line="112"
+ startpos="10559"
+ endpos="10581"
+>
+</method>
+<method
+ chordsig="supportsConvert:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsConvert()"
+ line="113"
+ startpos="10639"
+ endpos="10654"
+>
+</method>
+<method
+ chordsig="supportsConvert:(II)Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsConvert(int,int)"
+ line="114"
+ startpos="10712"
+ endpos="10727"
+>
+	<marker line="-1" type="param">
+		<operand  start="10732" length="8" line="114">
+			<expr><![CDATA[fromType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="10746" length="6" line="114">
+			<expr><![CDATA[toType]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="supportsCoreSQLGrammar:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsCoreSQLGrammar()"
+ line="115"
+ startpos="10809"
+ endpos="10831"
+>
+</method>
+<method
+ chordsig="supportsCorrelatedSubqueries:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsCorrelatedSubqueries()"
+ line="116"
+ startpos="10889"
+ endpos="10917"
+>
+</method>
+<method
+ chordsig="supportsDataDefinitionAndDataManipulationTransactions:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsDataDefinitionAndDataManipulationTransactions()"
+ line="117"
+ startpos="10975"
+ endpos="11028"
+>
+</method>
+<method
+ chordsig="supportsDataManipulationTransactionsOnly:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsDataManipulationTransactionsOnly()"
+ line="118"
+ startpos="11086"
+ endpos="11126"
+>
+</method>
+<method
+ chordsig="supportsDifferentTableCorrelationNames:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsDifferentTableCorrelationNames()"
+ line="119"
+ startpos="11184"
+ endpos="11222"
+>
+</method>
+<method
+ chordsig="supportsExpressionsInOrderBy:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsExpressionsInOrderBy()"
+ line="120"
+ startpos="11280"
+ endpos="11308"
+>
+</method>
+<method
+ chordsig="supportsExtendedSQLGrammar:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsExtendedSQLGrammar()"
+ line="121"
+ startpos="11366"
+ endpos="11392"
+>
+</method>
+<method
+ chordsig="supportsFullOuterJoins:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsFullOuterJoins()"
+ line="122"
+ startpos="11450"
+ endpos="11472"
+>
+</method>
+<method
+ chordsig="supportsGetGeneratedKeys:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsGetGeneratedKeys()"
+ line="123"
+ startpos="11530"
+ endpos="11554"
+>
+</method>
+<method
+ chordsig="supportsGroupBy:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsGroupBy()"
+ line="124"
+ startpos="11612"
+ endpos="11627"
+>
+</method>
+<method
+ chordsig="supportsGroupByBeyondSelect:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsGroupByBeyondSelect()"
+ line="125"
+ startpos="11685"
+ endpos="11712"
+>
+</method>
+<method
+ chordsig="supportsGroupByUnrelated:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsGroupByUnrelated()"
+ line="126"
+ startpos="11770"
+ endpos="11794"
+>
+</method>
+<method
+ chordsig="supportsIntegrityEnhancementFacility:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsIntegrityEnhancementFacility()"
+ line="127"
+ startpos="11852"
+ endpos="11888"
+>
+</method>
+<method
+ chordsig="supportsLikeEscapeClause:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsLikeEscapeClause()"
+ line="128"
+ startpos="11946"
+ endpos="11970"
+>
+</method>
+<method
+ chordsig="supportsLimitedOuterJoins:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsLimitedOuterJoins()"
+ line="129"
+ startpos="12028"
+ endpos="12053"
+>
+</method>
+<method
+ chordsig="supportsMinimumSQLGrammar:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsMinimumSQLGrammar()"
+ line="130"
+ startpos="12111"
+ endpos="12136"
+>
+</method>
+<method
+ chordsig="supportsMixedCaseIdentifiers:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsMixedCaseIdentifiers()"
+ line="131"
+ startpos="12194"
+ endpos="12222"
+>
+</method>
+<method
+ chordsig="supportsMixedCaseQuotedIdentifiers:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsMixedCaseQuotedIdentifiers()"
+ line="132"
+ startpos="12280"
+ endpos="12314"
+>
+</method>
+<method
+ chordsig="supportsMultipleOpenResults:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsMultipleOpenResults()"
+ line="133"
+ startpos="12372"
+ endpos="12399"
+>
+</method>
+<method
+ chordsig="supportsMultipleResultSets:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsMultipleResultSets()"
+ line="134"
+ startpos="12457"
+ endpos="12483"
+>
+</method>
+<method
+ chordsig="supportsMultipleTransactions:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsMultipleTransactions()"
+ line="135"
+ startpos="12541"
+ endpos="12569"
+>
+</method>
+<method
+ chordsig="supportsNamedParameters:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsNamedParameters()"
+ line="136"
+ startpos="12627"
+ endpos="12650"
+>
+</method>
+<method
+ chordsig="supportsNonNullableColumns:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsNonNullableColumns()"
+ line="137"
+ startpos="12708"
+ endpos="12734"
+>
+</method>
+<method
+ chordsig="supportsOpenCursorsAcrossCommit:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsOpenCursorsAcrossCommit()"
+ line="138"
+ startpos="12792"
+ endpos="12823"
+>
+</method>
+<method
+ chordsig="supportsOpenCursorsAcrossRollback:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsOpenCursorsAcrossRollback()"
+ line="139"
+ startpos="12881"
+ endpos="12914"
+>
+</method>
+<method
+ chordsig="supportsOpenStatementsAcrossCommit:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsOpenStatementsAcrossCommit()"
+ line="140"
+ startpos="12972"
+ endpos="13006"
+>
+</method>
+<method
+ chordsig="supportsOpenStatementsAcrossRollback:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsOpenStatementsAcrossRollback()"
+ line="141"
+ startpos="13064"
+ endpos="13100"
+>
+</method>
+<method
+ chordsig="supportsOrderByUnrelated:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsOrderByUnrelated()"
+ line="142"
+ startpos="13158"
+ endpos="13182"
+>
+</method>
+<method
+ chordsig="supportsOuterJoins:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsOuterJoins()"
+ line="143"
+ startpos="13240"
+ endpos="13258"
+>
+</method>
+<method
+ chordsig="supportsPositionedDelete:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsPositionedDelete()"
+ line="144"
+ startpos="13316"
+ endpos="13340"
+>
+</method>
+<method
+ chordsig="supportsPositionedUpdate:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsPositionedUpdate()"
+ line="145"
+ startpos="13398"
+ endpos="13422"
+>
+</method>
+<method
+ chordsig="supportsResultSetConcurrency:(II)Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsResultSetConcurrency(int,int)"
+ line="146"
+ startpos="13480"
+ endpos="13508"
+>
+	<marker line="-1" type="param">
+		<operand  start="13513" length="4" line="146">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="13523" length="11" line="146">
+			<expr><![CDATA[concurrency]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="supportsResultSetHoldability:(I)Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsResultSetHoldability(int)"
+ line="147"
+ startpos="13591"
+ endpos="13619"
+>
+	<marker line="-1" type="param">
+		<operand  start="13624" length="11" line="147">
+			<expr><![CDATA[holdability]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="supportsResultSetType:(I)Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsResultSetType(int)"
+ line="148"
+ startpos="13692"
+ endpos="13713"
+>
+	<marker line="-1" type="param">
+		<operand  start="13718" length="4" line="148">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="supportsSavepoints:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsSavepoints()"
+ line="149"
+ startpos="13779"
+ endpos="13797"
+>
+</method>
+<method
+ chordsig="supportsSchemasInDataManipulation:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsSchemasInDataManipulation()"
+ line="150"
+ startpos="13855"
+ endpos="13888"
+>
+</method>
+<method
+ chordsig="supportsSchemasInIndexDefinitions:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsSchemasInIndexDefinitions()"
+ line="151"
+ startpos="13946"
+ endpos="13979"
+>
+</method>
+<method
+ chordsig="supportsSchemasInPrivilegeDefinitions:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsSchemasInPrivilegeDefinitions()"
+ line="152"
+ startpos="14037"
+ endpos="14074"
+>
+</method>
+<method
+ chordsig="supportsSchemasInProcedureCalls:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsSchemasInProcedureCalls()"
+ line="153"
+ startpos="14132"
+ endpos="14163"
+>
+</method>
+<method
+ chordsig="supportsSchemasInTableDefinitions:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsSchemasInTableDefinitions()"
+ line="154"
+ startpos="14221"
+ endpos="14254"
+>
+</method>
+<method
+ chordsig="supportsSelectForUpdate:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsSelectForUpdate()"
+ line="155"
+ startpos="14312"
+ endpos="14335"
+>
+</method>
+<method
+ chordsig="supportsStatementPooling:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsStatementPooling()"
+ line="156"
+ startpos="14393"
+ endpos="14417"
+>
+</method>
+<method
+ chordsig="supportsStoredProcedures:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsStoredProcedures()"
+ line="157"
+ startpos="14475"
+ endpos="14499"
+>
+</method>
+<method
+ chordsig="supportsSubqueriesInComparisons:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsSubqueriesInComparisons()"
+ line="158"
+ startpos="14557"
+ endpos="14588"
+>
+</method>
+<method
+ chordsig="supportsSubqueriesInExists:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsSubqueriesInExists()"
+ line="159"
+ startpos="14646"
+ endpos="14672"
+>
+</method>
+<method
+ chordsig="supportsSubqueriesInIns:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsSubqueriesInIns()"
+ line="160"
+ startpos="14730"
+ endpos="14753"
+>
+</method>
+<method
+ chordsig="supportsSubqueriesInQuantifieds:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsSubqueriesInQuantifieds()"
+ line="161"
+ startpos="14811"
+ endpos="14842"
+>
+</method>
+<method
+ chordsig="supportsTableCorrelationNames:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsTableCorrelationNames()"
+ line="162"
+ startpos="14900"
+ endpos="14929"
+>
+</method>
+<method
+ chordsig="supportsTransactionIsolationLevel:(I)Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsTransactionIsolationLevel(int)"
+ line="163"
+ startpos="14987"
+ endpos="15020"
+>
+	<marker line="-1" type="param">
+		<operand  start="15025" length="5" line="163">
+			<expr><![CDATA[level]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="supportsTransactions:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsTransactions()"
+ line="164"
+ startpos="15087"
+ endpos="15107"
+>
+</method>
+<method
+ chordsig="supportsUnion:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsUnion()"
+ line="165"
+ startpos="15165"
+ endpos="15178"
+>
+</method>
+<method
+ chordsig="supportsUnionAll:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsUnionAll()"
+ line="166"
+ startpos="15236"
+ endpos="15252"
+>
+</method>
+<method
+ chordsig="updatesAreDetected:(I)Z@java.sql.DatabaseMetaData"
+ sig="boolean updatesAreDetected(int)"
+ line="167"
+ startpos="15310"
+ endpos="15328"
+>
+	<marker line="-1" type="param">
+		<operand  start="15333" length="4" line="167">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="usesLocalFilePerTable:()Z@java.sql.DatabaseMetaData"
+ sig="boolean usesLocalFilePerTable()"
+ line="168"
+ startpos="15394"
+ endpos="15415"
+>
+</method>
+<method
+ chordsig="usesLocalFiles:()Z@java.sql.DatabaseMetaData"
+ sig="boolean usesLocalFiles()"
+ line="169"
+ startpos="15473"
+ endpos="15487"
+>
+</method>
+<method
+ chordsig="autoCommitFailureClosesAllResultSets:()Z@java.sql.DatabaseMetaData"
+ sig="boolean autoCommitFailureClosesAllResultSets()"
+ line="170"
+ startpos="15545"
+ endpos="15581"
+>
+</method>
+<method
+ chordsig="getClientInfoProperties:()Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getClientInfoProperties()"
+ line="171"
+ startpos="15650"
+ endpos="15673"
+>
+	<type  start="15631" length="18" line="171" chordsig="java.sql.ResultSet"/>
+</method>
+<method
+ chordsig="getFunctionColumns:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getFunctionColumns(String,String,String,String)"
+ line="172"
+ startpos="15742"
+ endpos="15760"
+>
+	<marker line="-1" type="param">
+		<operand  start="15778" length="7" line="172">
+			<expr><![CDATA[catalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="15804" length="13" line="172">
+			<expr><![CDATA[schemaPattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="15836" length="19" line="172">
+			<expr><![CDATA[functionNamePattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="15874" length="17" line="172">
+			<expr><![CDATA[columnNamePattern]]></expr>
+		</operand>
+	</marker>
+	<type  start="15723" length="18" line="172" chordsig="java.sql.ResultSet"/>
+	<type  start="15761" length="16" line="172" chordsig="java.lang.String"/>
+	<type  start="15787" length="16" line="172" chordsig="java.lang.String"/>
+	<type  start="15819" length="16" line="172" chordsig="java.lang.String"/>
+	<type  start="15857" length="16" line="172" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getFunctions:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getFunctions(String,String,String)"
+ line="173"
+ startpos="15959"
+ endpos="15971"
+>
+	<marker line="-1" type="param">
+		<operand  start="15989" length="7" line="173">
+			<expr><![CDATA[catalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="16015" length="13" line="173">
+			<expr><![CDATA[schemaPattern]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="16047" length="19" line="173">
+			<expr><![CDATA[functionNamePattern]]></expr>
+		</operand>
+	</marker>
+	<type  start="15940" length="18" line="173" chordsig="java.sql.ResultSet"/>
+	<type  start="15972" length="16" line="173" chordsig="java.lang.String"/>
+	<type  start="15998" length="16" line="173" chordsig="java.lang.String"/>
+	<type  start="16030" length="16" line="173" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getRowIdLifetime:()Ljava/sql/RowIdLifetime;@java.sql.DatabaseMetaData"
+ sig="RowIdLifetime getRowIdLifetime()"
+ line="174"
+ startpos="16138"
+ endpos="16154"
+>
+	<type  start="16115" length="22" line="174" chordsig="java.sql.RowIdLifetime"/>
+</method>
+<method
+ chordsig="getSchemas:(Ljava/lang/String;Ljava/lang/String;)Ljava/sql/ResultSet;@java.sql.DatabaseMetaData"
+ sig="ResultSet getSchemas(String,String)"
+ line="175"
+ startpos="16223"
+ endpos="16233"
+>
+	<marker line="-1" type="param">
+		<operand  start="16251" length="7" line="175">
+			<expr><![CDATA[catalog]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="16277" length="13" line="175">
+			<expr><![CDATA[schemaPattern]]></expr>
+		</operand>
+	</marker>
+	<type  start="16204" length="18" line="175" chordsig="java.sql.ResultSet"/>
+	<type  start="16234" length="16" line="175" chordsig="java.lang.String"/>
+	<type  start="16260" length="16" line="175" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="supportsStoredFunctionsUsingCallSyntax:()Z@java.sql.DatabaseMetaData"
+ sig="boolean supportsStoredFunctionsUsingCallSyntax()"
+ line="176"
+ startpos="16347"
+ endpos="16385"
+>
+</method>
+</class>
+</root>

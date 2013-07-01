@@ -1,0 +1,419 @@
+<root>
+<class chordsig="java.util.HashMap" line="3">
+	<type  start="55" length="21" line="3" chordsig="java.util.AbstractMap"/>
+	<type  start="77" length="1" line="3" chordsig="java.lang.Object"/>
+	<type  start="80" length="1" line="3" chordsig="java.lang.Object"/>
+	<type  start="94" length="19" line="3" chordsig="java.lang.Cloneable"/>
+	<type  start="115" length="20" line="3" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.util.HashMap"
+ sig="HashMap()"
+ line="6"
+ startpos="207"
+ endpos="214"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="237" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="233" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="254" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="237" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(I)V@java.util.HashMap"
+ sig="HashMap(int)"
+ line="10"
+ startpos="282"
+ endpos="289"
+>
+	<marker line="-1" type="param">
+		<operand  start="294" length="8" line="10">
+			<expr><![CDATA[capacity]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="324" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="320" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="341" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="324" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(IF)V@java.util.HashMap"
+ sig="HashMap(int,float)"
+ line="14"
+ startpos="369"
+ endpos="376"
+>
+	<marker line="-1" type="param">
+		<operand  start="381" length="8" line="14">
+			<expr><![CDATA[capacity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="397" length="10" line="14">
+			<expr><![CDATA[loadFactor]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="429" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="425" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="446" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="429" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/util/Map;)V@java.util.HashMap"
+ sig="HashMap(Map&lt;? extends K,? extends V&gt;)"
+ line="18"
+ startpos="474"
+ endpos="481"
+>
+	<marker line="-1" type="param">
+		<operand  start="522" length="3" line="18">
+			<expr><![CDATA[map]]></expr>
+		</operand>
+	</marker>
+	<type  start="482" length="13" line="18" chordsig="java.util.Map"/>
+	<type  start="506" length="1" line="18" chordsig="java.lang.Object"/>
+	<type  start="519" length="1" line="18" chordsig="java.lang.Object"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="547" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="543" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="564" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="547" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clone:()Ljava/lang/Object;@java.util.HashMap"
+ sig="Object clone()"
+ line="23"
+ startpos="666"
+ endpos="671"
+>
+	<type  start="649" length="16" line="23" chordsig="java.lang.Object"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="694" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="690" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="711" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="694" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isEmpty:()Z@java.util.HashMap"
+ sig="boolean isEmpty()"
+ line="27"
+ startpos="747"
+ endpos="754"
+>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="777" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="773" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="794" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="777" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="size:()I@java.util.HashMap"
+ sig="int size()"
+ line="31"
+ startpos="826"
+ endpos="830"
+>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="853" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="849" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="870" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="853" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="containsKey:(Ljava/lang/Object;)Z@java.util.HashMap"
+ sig="boolean containsKey(Object)"
+ line="35"
+ startpos="906"
+ endpos="917"
+>
+	<marker line="-1" type="param">
+		<operand  start="935" length="3" line="35">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="918" length="16" line="35" chordsig="java.lang.Object"/>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="960" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="956" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="977" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="960" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="containsValue:(Ljava/lang/Object;)Z@java.util.HashMap"
+ sig="boolean containsValue(Object)"
+ line="39"
+ startpos="1013"
+ endpos="1026"
+>
+	<marker line="-1" type="param">
+		<operand  start="1044" length="5" line="39">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="1027" length="16" line="39" chordsig="java.lang.Object"/>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1071" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1067" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1088" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1071" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="putAll:(Ljava/util/Map;)V@java.util.HashMap"
+ sig="void putAll(Map&lt;? extends K,? extends V&gt;)"
+ line="43"
+ startpos="1121"
+ endpos="1127"
+>
+	<marker line="-1" type="param">
+		<operand  start="1168" length="3" line="43">
+			<expr><![CDATA[map]]></expr>
+		</operand>
+	</marker>
+	<type  start="1128" length="13" line="43" chordsig="java.util.Map"/>
+	<type  start="1152" length="1" line="43" chordsig="java.lang.Object"/>
+	<type  start="1165" length="1" line="43" chordsig="java.lang.Object"/>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1193" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1189" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1210" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1193" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="remove:(Ljava/lang/Object;)Ljava/lang/Object;@java.util.HashMap"
+ sig="V remove(Object)"
+ line="47"
+ startpos="1240"
+ endpos="1246"
+>
+	<marker line="-1" type="param">
+		<operand  start="1264" length="3" line="47">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="1238" length="1" line="47" chordsig="java.lang.Object"/>
+	<type  start="1247" length="16" line="47" chordsig="java.lang.Object"/>
+	<newexpr line="48" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1289" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1285" length="29" line="48">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1306" length="7" line="48">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1289" length="16" line="48" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clear:()V@java.util.HashMap"
+ sig="void clear()"
+ line="51"
+ startpos="1339"
+ endpos="1344"
+>
+	<newexpr line="52" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1367" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1363" length="29" line="52">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1384" length="7" line="52">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1367" length="16" line="52" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="keySet:()Ljava/util/Set;@java.util.HashMap"
+ sig="Set&lt;K&gt; keySet()"
+ line="55"
+ startpos="1429"
+ endpos="1435"
+>
+	<type  start="1412" length="13" line="55" chordsig="java.util.Set"/>
+	<type  start="1426" length="1" line="55" chordsig="java.lang.Object"/>
+	<newexpr line="56" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1458" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1454" length="29" line="56">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1475" length="7" line="56">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1458" length="16" line="56" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="entrySet:()Ljava/util/Set;@java.util.HashMap"
+ sig="Set&lt;Entry&lt;K,V&gt;&gt; entrySet()"
+ line="59"
+ startpos="1544"
+ endpos="1552"
+>
+	<type  start="1503" length="13" line="59" chordsig="java.util.Set"/>
+	<type  start="1517" length="19" line="59" chordsig="java.util.Map$Entry"/>
+	<type  start="1537" length="1" line="59" chordsig="java.lang.Object"/>
+	<type  start="1540" length="1" line="59" chordsig="java.lang.Object"/>
+	<newexpr line="60" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1575" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1571" length="29" line="60">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1592" length="7" line="60">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1575" length="16" line="60" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1621" length="1" line="63" chordsig="java.lang.Object"/>
+	<type  start="1641" length="1" line="65" chordsig="java.lang.Object"/>
+<method
+ chordsig="get:(Ljava/lang/Object;)Ljava/lang/Object;@java.util.HashMap"
+ sig="V get(Object)"
+ line="67"
+ startpos="1664"
+ endpos="1667"
+>
+	<marker line="-1" type="param">
+		<operand  start="1685" length="1" line="67">
+			<expr><![CDATA[k]]></expr>
+		</operand>
+	</marker>
+	<type  start="1662" length="1" line="67" chordsig="java.lang.Object"/>
+	<type  start="1668" length="16" line="67" chordsig="java.lang.Object"/>
+	<marker line="68" type="return">
+		<operand  start="1705" length="5" line="68">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;@java.util.HashMap"
+ sig="V put(K,V)"
+ line="71"
+ startpos="1732"
+ endpos="1735"
+>
+	<marker line="-1" type="param">
+		<operand  start="1738" length="1" line="71">
+			<expr><![CDATA[k]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1743" length="1" line="71">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="1730" length="1" line="71" chordsig="java.lang.Object"/>
+	<type  start="1736" length="1" line="71" chordsig="java.lang.Object"/>
+	<type  start="1741" length="1" line="71" chordsig="java.lang.Object"/>
+	<marker line="72" type="fieldexpr" chordsig="key:Ljava/lang/Object;@java.util.HashMap">
+		<operand  start="1756" length="4" line="72">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+	<marker line="73" type="fieldexpr" chordsig="value:Ljava/lang/Object;@java.util.HashMap">
+		<operand  start="1778" length="4" line="73">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+	<marker line="74" type="return">
+		<operand  start="1809" length="10" line="74">
+			<expr><![CDATA[this.value]]></expr>
+		</operand>
+	</marker>
+	<marker line="74" type="fieldexpr" chordsig="value:Ljava/lang/Object;@java.util.HashMap">
+		<operand  start="1809" length="4" line="74">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="values:()Ljava/util/Collection;@java.util.HashMap"
+ sig="Collection&lt;V&gt; values()"
+ line="77"
+ startpos="1863"
+ endpos="1869"
+>
+	<type  start="1839" length="20" line="77" chordsig="java.util.Collection"/>
+	<type  start="1860" length="1" line="77" chordsig="java.lang.Object"/>
+	<marker line="78" type="new.lhs" chordsig="Ljava/util/ArrayList;">
+		<operand  start="1902" length="4" line="78">
+			<expr><![CDATA[list]]></expr>
+		</operand>
+	</marker>
+	<type  start="1882" length="19" line="78" chordsig="java.util.ArrayList"/>
+	<newexpr line="78" chordsig="&lt;init&gt;:()V@java.util.ArrayList" start="1913" length="22" type="invoke">
+			<expr><![CDATA[new java.util.ArrayList<V>()]]></expr>
+		<param  start="1909" length="28" line="78">
+			<expr><![CDATA[new java.util.ArrayList<V>()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1913" length="19" line="78" chordsig="java.util.ArrayList"/>
+	<type  start="1933" length="1" line="78" chordsig="java.lang.Object"/>
+	<invkexpr line="79" chordsig="add:(Ljava/lang/Object;)Z@java.util.ArrayList" start="1952" length="3" type="invoke">
+			<expr><![CDATA[list.add(value)]]></expr>
+		<param  start="1947" length="4" line="79">
+			<expr><![CDATA[list]]></expr>
+		</param>
+		<param  start="1956" length="5" line="79">
+			<expr><![CDATA[value]]></expr>
+		</param>
+	</invkexpr>
+	<marker line="80" type="return">
+		<operand  start="1979" length="4" line="80">
+			<expr><![CDATA[list]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

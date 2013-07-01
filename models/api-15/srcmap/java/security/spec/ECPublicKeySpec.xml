@@ -1,0 +1,73 @@
+<root>
+<class chordsig="java.security.spec.ECPublicKeySpec" line="2">
+	<type  start="70" length="26" line="3" chordsig="java.security.spec.KeySpec"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/security/spec/ECPoint;Ljava/security/spec/ECParameterSpec;)V@java.security.spec.ECPublicKeySpec"
+ sig="ECPublicKeySpec(ECPoint,ECParameterSpec)"
+ line="5"
+ startpos="107"
+ endpos="122"
+>
+	<marker line="-1" type="param">
+		<operand  start="150" length="1" line="5">
+			<expr><![CDATA[w]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="188" length="6" line="5">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="123" length="26" line="5" chordsig="java.security.spec.ECPoint"/>
+	<type  start="153" length="34" line="5" chordsig="java.security.spec.ECParameterSpec"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="208" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="204" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="225" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="208" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getParams:()Ljava/security/spec/ECParameterSpec;@java.security.spec.ECPublicKeySpec"
+ sig="ECParameterSpec getParams()"
+ line="6"
+ startpos="280"
+ endpos="289"
+>
+	<type  start="245" length="34" line="6" chordsig="java.security.spec.ECParameterSpec"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="304" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="300" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="321" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="304" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getW:()Ljava/security/spec/ECPoint;@java.security.spec.ECPublicKeySpec"
+ sig="ECPoint getW()"
+ line="7"
+ startpos="368"
+ endpos="372"
+>
+	<type  start="341" length="26" line="7" chordsig="java.security.spec.ECPoint"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="387" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="383" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="404" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="387" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

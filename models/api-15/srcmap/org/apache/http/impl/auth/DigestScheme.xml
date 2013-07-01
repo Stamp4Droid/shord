@@ -1,0 +1,182 @@
+<root>
+<class chordsig="org.apache.http.impl.auth.DigestScheme" line="2">
+	<type  start="71" length="39" line="3" chordsig="org.apache.http.impl.auth.RFC2617Scheme"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.impl.auth.DigestScheme"
+ sig="DigestScheme()"
+ line="5"
+ startpos="121"
+ endpos="133"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="148" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="144" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="165" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="148" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="processChallenge:(Lorg/apache/http/Header;)V@org.apache.http.impl.auth.DigestScheme"
+ sig="void processChallenge(Header)"
+ line="6"
+ startpos="190"
+ endpos="206"
+>
+	<marker line="-1" type="param">
+		<operand  start="230" length="6" line="6">
+			<expr><![CDATA[header]]></expr>
+		</operand>
+	</marker>
+	<type  start="207" length="22" line="6" chordsig="org.apache.http.Header"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="306" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="302" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="323" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="306" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isComplete:()Z@org.apache.http.impl.auth.DigestScheme"
+ sig="boolean isComplete()"
+ line="7"
+ startpos="351"
+ endpos="361"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="376" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="372" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="393" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="376" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSchemeName:()Ljava/lang/String;@org.apache.http.impl.auth.DigestScheme"
+ sig="String getSchemeName()"
+ line="8"
+ startpos="430"
+ endpos="443"
+>
+	<type  start="413" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="458" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="454" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="475" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="458" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isConnectionBased:()Z@org.apache.http.impl.auth.DigestScheme"
+ sig="boolean isConnectionBased()"
+ line="9"
+ startpos="503"
+ endpos="520"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="535" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="531" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="552" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="535" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="overrideParamter:(Ljava/lang/String;Ljava/lang/String;)V@org.apache.http.impl.auth.DigestScheme"
+ sig="void overrideParamter(String,String)"
+ line="10"
+ startpos="577"
+ endpos="593"
+>
+	<marker line="-1" type="param">
+		<operand  start="611" length="4" line="10">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="634" length="5" line="10">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="594" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="617" length="16" line="10" chordsig="java.lang.String"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="653" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="649" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="670" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="653" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="authenticate:(Lorg/apache/http/auth/Credentials;Lorg/apache/http/HttpRequest;)Lorg/apache/http/Header;@org.apache.http.impl.auth.DigestScheme"
+ sig="Header authenticate(Credentials,HttpRequest)"
+ line="11"
+ startpos="713"
+ endpos="725"
+>
+	<marker line="-1" type="param">
+		<operand  start="759" length="11" line="11">
+			<expr><![CDATA[credentials]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="800" length="7" line="11">
+			<expr><![CDATA[request]]></expr>
+		</operand>
+	</marker>
+	<type  start="690" length="22" line="11" chordsig="org.apache.http.Header"/>
+	<type  start="726" length="32" line="11" chordsig="org.apache.http.auth.Credentials"/>
+	<type  start="772" length="27" line="11" chordsig="org.apache.http.HttpRequest"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="873" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="869" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="890" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="873" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createCnonce:()Ljava/lang/String;@org.apache.http.impl.auth.DigestScheme"
+ sig="String createCnonce()"
+ line="12"
+ startpos="934"
+ endpos="946"
+>
+	<type  start="917" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="961" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="957" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="978" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="961" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

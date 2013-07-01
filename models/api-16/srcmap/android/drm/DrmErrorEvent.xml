@@ -1,0 +1,83 @@
+<root>
+<class chordsig="android.drm.DrmErrorEvent" line="2">
+	<type  start="58" length="20" line="3" chordsig="android.drm.DrmEvent"/>
+<method
+ chordsig="&lt;init&gt;:(IILjava/lang/String;)V@android.drm.DrmErrorEvent"
+ sig="DrmErrorEvent(int,int,String)"
+ line="5"
+ startpos="89"
+ endpos="102"
+>
+	<marker line="-1" type="param">
+		<operand  start="107" length="8" line="5">
+			<expr><![CDATA[uniqueId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="121" length="4" line="5">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="144" length="7" line="5">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="127" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="166" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="200" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="196" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="217" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="200" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(IILjava/lang/String;Ljava/util/HashMap;)V@android.drm.DrmErrorEvent"
+ sig="DrmErrorEvent(int,int,String,HashMap&lt;String,Object&gt;)"
+ line="6"
+ startpos="237"
+ endpos="250"
+>
+	<marker line="-1" type="param">
+		<operand  start="255" length="8" line="6">
+			<expr><![CDATA[uniqueId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="269" length="4" line="6">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="292" length="7" line="6">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="355" length="10" line="6">
+			<expr><![CDATA[attributes]]></expr>
+		</operand>
+	</marker>
+	<type  start="275" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="301" length="17" line="6" chordsig="java.util.HashMap"/>
+	<type  start="319" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="337" length="16" line="6" chordsig="java.lang.Object"/>
+	<type  start="380" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="414" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="410" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="431" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="414" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

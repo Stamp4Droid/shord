@@ -1,0 +1,37 @@
+<root>
+<class chordsig="javax.xml.validation.SchemaFactoryLoader" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@javax.xml.validation.SchemaFactoryLoader"
+ sig="SchemaFactoryLoader()"
+ line="4"
+ startpos="85"
+ endpos="104"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="119" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="115" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="136" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="119" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newFactory:(Ljava/lang/String;)Ljavax/xml/validation/SchemaFactory;@javax.xml.validation.SchemaFactoryLoader"
+ sig="SchemaFactory newFactory(String)"
+ line="5"
+ startpos="200"
+ endpos="210"
+>
+	<marker line="-1" type="param">
+		<operand  start="228" length="14" line="5">
+			<expr><![CDATA[schemaLanguage]]></expr>
+		</operand>
+	</marker>
+	<type  start="165" length="34" line="5" chordsig="javax.xml.validation.SchemaFactory"/>
+	<type  start="211" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

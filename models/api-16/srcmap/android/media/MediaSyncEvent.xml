@@ -1,0 +1,106 @@
+<root>
+<class chordsig="android.media.MediaSyncEvent" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.media.MediaSyncEvent"
+ sig="MediaSyncEvent()"
+ line="4"
+ startpos="53"
+ endpos="67"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="82" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="78" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="99" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="82" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createEvent:(I)Landroid/media/MediaSyncEvent;@android.media.MediaSyncEvent"
+ sig="MediaSyncEvent createEvent(int)"
+ line="5"
+ startpos="155"
+ endpos="166"
+>
+	<marker line="-1" type="param">
+		<operand  start="171" length="9" line="5">
+			<expr><![CDATA[eventType]]></expr>
+		</operand>
+	</marker>
+	<type  start="126" length="28" line="5" chordsig="android.media.MediaSyncEvent"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="236" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="232" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="253" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="236" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setAudioSessionId:(I)Landroid/media/MediaSyncEvent;@android.media.MediaSyncEvent"
+ sig="MediaSyncEvent setAudioSessionId(int)"
+ line="6"
+ startpos="302"
+ endpos="319"
+>
+	<marker line="-1" type="param">
+		<operand  start="324" length="14" line="6">
+			<expr><![CDATA[audioSessionId]]></expr>
+		</operand>
+	</marker>
+	<type  start="273" length="28" line="6" chordsig="android.media.MediaSyncEvent"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="394" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="390" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="411" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="394" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getType:()I@android.media.MediaSyncEvent"
+ sig="int getType()"
+ line="7"
+ startpos="435"
+ endpos="442"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="457" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="453" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="474" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="457" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAudioSessionId:()I@android.media.MediaSyncEvent"
+ sig="int getAudioSessionId()"
+ line="8"
+ startpos="498"
+ endpos="515"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="530" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="526" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="547" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="530" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,93 @@
+<root>
+<class chordsig="org.apache.http.io.SessionInputBuffer" line="2">
+<method
+ chordsig="read:([BII)I@org.apache.http.io.SessionInputBuffer"
+ sig="int read(byte[],int,int)"
+ line="4"
+ startpos="87"
+ endpos="91"
+>
+	<marker line="-1" type="param">
+		<operand  start="99" length="1" line="4">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="106" length="3" line="4">
+			<expr><![CDATA[off]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="115" length="3" line="4">
+			<expr><![CDATA[len]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="read:([B)I@org.apache.http.io.SessionInputBuffer"
+ sig="int read(byte[])"
+ line="5"
+ startpos="169"
+ endpos="173"
+>
+	<marker line="-1" type="param">
+		<operand  start="181" length="1" line="5">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="read:()I@org.apache.http.io.SessionInputBuffer"
+ sig="int read()"
+ line="6"
+ startpos="233"
+ endpos="237"
+>
+</method>
+<method
+ chordsig="readLine:(Lorg/apache/http/util/CharArrayBuffer;)I@org.apache.http.io.SessionInputBuffer"
+ sig="int readLine(CharArrayBuffer)"
+ line="7"
+ startpos="289"
+ endpos="297"
+>
+	<marker line="-1" type="param">
+		<operand  start="335" length="6" line="7">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<type  start="298" length="36" line="7" chordsig="org.apache.http.util.CharArrayBuffer"/>
+</method>
+<method
+ chordsig="readLine:()Ljava/lang/String;@org.apache.http.io.SessionInputBuffer"
+ sig="String readLine()"
+ line="8"
+ startpos="405"
+ endpos="413"
+>
+	<type  start="388" length="16" line="8" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="isDataAvailable:(I)Z@org.apache.http.io.SessionInputBuffer"
+ sig="boolean isDataAvailable(int)"
+ line="9"
+ startpos="469"
+ endpos="484"
+>
+	<marker line="-1" type="param">
+		<operand  start="489" length="7" line="9">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getMetrics:()Lorg/apache/http/io/HttpTransportMetrics;@org.apache.http.io.SessionInputBuffer"
+ sig="HttpTransportMetrics getMetrics()"
+ line="10"
+ startpos="583"
+ endpos="593"
+>
+	<type  start="543" length="39" line="10" chordsig="org.apache.http.io.HttpTransportMetrics"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,99 @@
+<root>
+<class chordsig="android.widget.DigitalClock" line="2">
+	<type  start="60" length="23" line="3" chordsig="android.widget.TextView"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.widget.DigitalClock"
+ sig="DigitalClock(Context)"
+ line="5"
+ startpos="94"
+ endpos="106"
+>
+	<marker line="-1" type="param">
+		<operand  start="131" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="107" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="149" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="179" length="25" line="5" chordsig="android.util.AttributeSet"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="224" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="220" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="241" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="224" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.widget.DigitalClock"
+ sig="DigitalClock(Context,AttributeSet)"
+ line="6"
+ startpos="261"
+ endpos="273"
+>
+	<marker line="-1" type="param">
+		<operand  start="298" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="333" length="5" line="6">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="274" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="307" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<type  start="349" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="379" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="424" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="420" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="441" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="424" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onAttachedToWindow:()V@android.widget.DigitalClock"
+ sig="void onAttachedToWindow()"
+ line="7"
+ startpos="469"
+ endpos="487"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="502" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="498" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="519" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="502" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onDetachedFromWindow:()V@android.widget.DigitalClock"
+ sig="void onDetachedFromWindow()"
+ line="8"
+ startpos="547"
+ endpos="567"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="582" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="578" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="599" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="582" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

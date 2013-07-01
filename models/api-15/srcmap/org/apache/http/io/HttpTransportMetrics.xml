@@ -1,0 +1,20 @@
+<root>
+<class chordsig="org.apache.http.io.HttpTransportMetrics" line="2">
+<method
+ chordsig="getBytesTransferred:()J@org.apache.http.io.HttpTransportMetrics"
+ sig="long getBytesTransferred()"
+ line="4"
+ startpos="90"
+ endpos="109"
+>
+</method>
+<method
+ chordsig="reset:()V@org.apache.http.io.HttpTransportMetrics"
+ sig="void reset()"
+ line="5"
+ startpos="135"
+ endpos="140"
+>
+</method>
+</class>
+</root>

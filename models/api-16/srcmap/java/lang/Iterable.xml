@@ -1,0 +1,14 @@
+<root>
+<class chordsig="java.lang.Iterable" line="2">
+<method
+ chordsig="iterator:()Ljava/util/Iterator;@java.lang.Iterable"
+ sig="Iterator&lt;T&gt; iterator()"
+ line="4"
+ startpos="89"
+ endpos="97"
+>
+	<type  start="67" length="18" line="4" chordsig="java.util.Iterator"/>
+	<type  start="86" length="1" line="4" chordsig="java.lang.Object"/>
+</method>
+</class>
+</root>

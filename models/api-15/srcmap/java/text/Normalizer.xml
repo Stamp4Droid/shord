@@ -1,0 +1,85 @@
+<root>
+<class chordsig="java.text.Normalizer" line="2">
+<class chordsig="java.text.Normalizer$Form" line="4">
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@java.text.Normalizer"
+ sig="Normalizer()"
+ line="11"
+ startpos="109"
+ endpos="119"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="134" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="130" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="151" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="134" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isNormalized:(Ljava/lang/CharSequence;Ljava/text/Normalizer$Form;)Z@java.text.Normalizer"
+ sig="boolean isNormalized(CharSequence,Form)"
+ line="12"
+ startpos="186"
+ endpos="198"
+>
+	<marker line="-1" type="param">
+		<operand  start="222" length="3" line="12">
+			<expr><![CDATA[src]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="253" length="4" line="12">
+			<expr><![CDATA[form]]></expr>
+		</operand>
+	</marker>
+	<type  start="199" length="22" line="12" chordsig="java.lang.CharSequence"/>
+	<type  start="227" length="25" line="12" chordsig="java.text.Normalizer$Form"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="271" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="267" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="288" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="271" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="normalize:(Ljava/lang/CharSequence;Ljava/text/Normalizer$Form;)Ljava/lang/String;@java.text.Normalizer"
+ sig="String normalize(CharSequence,Form)"
+ line="13"
+ startpos="332"
+ endpos="341"
+>
+	<marker line="-1" type="param">
+		<operand  start="365" length="3" line="13">
+			<expr><![CDATA[src]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="396" length="4" line="13">
+			<expr><![CDATA[form]]></expr>
+		</operand>
+	</marker>
+	<type  start="315" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="342" length="22" line="13" chordsig="java.lang.CharSequence"/>
+	<type  start="370" length="25" line="13" chordsig="java.text.Normalizer$Form"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="414" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="410" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="431" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="414" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

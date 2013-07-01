@@ -1,0 +1,31 @@
+<root>
+<class chordsig="org.apache.http.client.RequestDirector" line="2">
+<method
+ chordsig="execute:(Lorg/apache/http/HttpHost;Lorg/apache/http/HttpRequest;Lorg/apache/http/protocol/HttpContext;)Lorg/apache/http/HttpResponse;@org.apache.http.client.RequestDirector"
+ sig="HttpResponse execute(HttpHost,HttpRequest,HttpContext)"
+ line="4"
+ startpos="113"
+ endpos="120"
+>
+	<marker line="-1" type="param">
+		<operand  start="146" length="6" line="4">
+			<expr><![CDATA[target]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="182" length="7" line="4">
+			<expr><![CDATA[request]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="228" length="7" line="4">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="84" length="28" line="4" chordsig="org.apache.http.HttpResponse"/>
+	<type  start="121" length="24" line="4" chordsig="org.apache.http.HttpHost"/>
+	<type  start="154" length="27" line="4" chordsig="org.apache.http.HttpRequest"/>
+	<type  start="191" length="36" line="4" chordsig="org.apache.http.protocol.HttpContext"/>
+</method>
+</class>
+</root>

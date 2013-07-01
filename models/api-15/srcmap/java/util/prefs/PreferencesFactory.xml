@@ -1,0 +1,22 @@
+<root>
+<class chordsig="java.util.prefs.PreferencesFactory" line="2">
+<method
+ chordsig="userRoot:()Ljava/util/prefs/Preferences;@java.util.prefs.PreferencesFactory"
+ sig="Preferences userRoot()"
+ line="4"
+ startpos="108"
+ endpos="116"
+>
+	<type  start="80" length="27" line="4" chordsig="java.util.prefs.Preferences"/>
+</method>
+<method
+ chordsig="systemRoot:()Ljava/util/prefs/Preferences;@java.util.prefs.PreferencesFactory"
+ sig="Preferences systemRoot()"
+ line="5"
+ startpos="165"
+ endpos="175"
+>
+	<type  start="137" length="27" line="5" chordsig="java.util.prefs.Preferences"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,235 @@
+<root>
+<class chordsig="android.media.audiofx.PresetReverb" line="2">
+	<type  start="67" length="33" line="3" chordsig="android.media.audiofx.AudioEffect"/>
+<class chordsig="android.media.audiofx.PresetReverb$OnParameterChangeListener" line="5">
+<method
+ chordsig="onParameterChange:(Landroid/media/audiofx/PresetReverb;IIS)V@android.media.audiofx.PresetReverb$OnParameterChangeListener"
+ sig="void onParameterChange(PresetReverb,int,int,short)"
+ line="7"
+ startpos="177"
+ endpos="194"
+>
+	<marker line="-1" type="param">
+		<operand  start="230" length="6" line="7">
+			<expr><![CDATA[effect]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="242" length="6" line="7">
+			<expr><![CDATA[status]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="254" length="5" line="7">
+			<expr><![CDATA[param]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="267" length="5" line="7">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="195" length="34" line="7" chordsig="android.media.audiofx.PresetReverb"/>
+</method>
+</class>
+<class chordsig="android.media.audiofx.PresetReverb$Settings" line="9">
+<method
+ chordsig="&lt;init&gt;:()V@android.media.audiofx.PresetReverb$Settings"
+ sig="Settings()"
+ line="11"
+ startpos="316"
+ endpos="324"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="339" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="335" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="356" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="339" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.media.audiofx.PresetReverb$Settings"
+ sig="Settings(String)"
+ line="12"
+ startpos="376"
+ endpos="384"
+>
+	<marker line="-1" type="param">
+		<operand  start="402" length="8" line="12">
+			<expr><![CDATA[settings]]></expr>
+		</operand>
+	</marker>
+	<type  start="385" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="424" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="420" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="441" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="424" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.media.audiofx.PresetReverb$Settings"
+ sig="String toString()"
+ line="13"
+ startpos="478"
+ endpos="486"
+>
+	<type  start="461" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="501" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="497" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="518" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="501" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(II)V@android.media.audiofx.PresetReverb"
+ sig="PresetReverb(int,int)"
+ line="16"
+ startpos="561"
+ endpos="573"
+>
+	<marker line="-1" type="param">
+		<operand  start="578" length="8" line="16">
+			<expr><![CDATA[priority]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="592" length="12" line="16">
+			<expr><![CDATA[audioSession]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="729" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="725" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="746" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="729" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPreset:(S)V@android.media.audiofx.PresetReverb"
+ sig="void setPreset(short)"
+ line="17"
+ startpos="771"
+ endpos="780"
+>
+	<marker line="-1" type="param">
+		<operand  start="787" length="6" line="17">
+			<expr><![CDATA[preset]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="923" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="919" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="940" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="923" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPreset:()S@android.media.audiofx.PresetReverb"
+ sig="short getPreset()"
+ line="18"
+ startpos="966"
+ endpos="975"
+>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1106" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1102" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1123" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1106" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setParameterListener:(Landroid/media/audiofx/PresetReverb$OnParameterChangeListener;)V@android.media.audiofx.PresetReverb"
+ sig="void setParameterListener(OnParameterChangeListener)"
+ line="19"
+ startpos="1148"
+ endpos="1168"
+>
+	<marker line="-1" type="param">
+		<operand  start="1230" length="8" line="19">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1169" length="60" line="19" chordsig="android.media.audiofx.PresetReverb$OnParameterChangeListener"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1252" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1248" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1269" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1252" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getProperties:()Landroid/media/audiofx/PresetReverb$Settings;@android.media.audiofx.PresetReverb"
+ sig="Settings getProperties()"
+ line="20"
+ startpos="1333"
+ endpos="1346"
+>
+	<type  start="1289" length="43" line="20" chordsig="android.media.audiofx.PresetReverb$Settings"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1477" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1473" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1494" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1477" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setProperties:(Landroid/media/audiofx/PresetReverb$Settings;)V@android.media.audiofx.PresetReverb"
+ sig="void setProperties(Settings)"
+ line="21"
+ startpos="1519"
+ endpos="1532"
+>
+	<marker line="-1" type="param">
+		<operand  start="1577" length="8" line="21">
+			<expr><![CDATA[settings]]></expr>
+		</operand>
+	</marker>
+	<type  start="1533" length="43" line="21" chordsig="android.media.audiofx.PresetReverb$Settings"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1715" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1711" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1732" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1715" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

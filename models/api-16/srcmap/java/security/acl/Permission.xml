@@ -1,0 +1,27 @@
+<root>
+<class chordsig="java.security.acl.Permission" line="2">
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.security.acl.Permission"
+ sig="boolean equals(Object)"
+ line="4"
+ startpos="82"
+ endpos="88"
+>
+	<marker line="-1" type="param">
+		<operand  start="106" length="7" line="4">
+			<expr><![CDATA[another]]></expr>
+		</operand>
+	</marker>
+	<type  start="89" length="16" line="4" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.security.acl.Permission"
+ sig="String toString()"
+ line="5"
+ startpos="150"
+ endpos="158"
+>
+	<type  start="133" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

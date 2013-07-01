@@ -1,0 +1,18 @@
+<root>
+<class chordsig="android.database.DatabaseErrorHandler" line="2">
+<method
+ chordsig="onCorruption:(Landroid/database/sqlite/SQLiteDatabase;)V@android.database.DatabaseErrorHandler"
+ sig="void onCorruption(SQLiteDatabase)"
+ line="4"
+ startpos="88"
+ endpos="100"
+>
+	<marker line="-1" type="param">
+		<operand  start="140" length="5" line="4">
+			<expr><![CDATA[dbObj]]></expr>
+		</operand>
+	</marker>
+	<type  start="101" length="38" line="4" chordsig="android.database.sqlite.SQLiteDatabase"/>
+</method>
+</class>
+</root>

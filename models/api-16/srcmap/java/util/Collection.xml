@@ -1,0 +1,185 @@
+<root>
+<class chordsig="java.util.Collection" line="2">
+	<type  start="60" length="18" line="3" chordsig="java.lang.Iterable"/>
+	<type  start="79" length="1" line="3" chordsig="java.lang.Object"/>
+<method
+ chordsig="add:(Ljava/lang/Object;)Z@java.util.Collection"
+ sig="boolean add(E)"
+ line="5"
+ startpos="109"
+ endpos="112"
+>
+	<marker line="-1" type="param">
+		<operand  start="115" length="6" line="5">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="113" length="1" line="5" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="addAll:(Ljava/util/Collection;)Z@java.util.Collection"
+ sig="boolean addAll(Collection&lt;? extends E&gt;)"
+ line="6"
+ startpos="149"
+ endpos="155"
+>
+	<marker line="-1" type="param">
+		<operand  start="190" length="10" line="6">
+			<expr><![CDATA[collection]]></expr>
+		</operand>
+	</marker>
+	<type  start="156" length="20" line="6" chordsig="java.util.Collection"/>
+	<type  start="187" length="1" line="6" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="clear:()V@java.util.Collection"
+ sig="void clear()"
+ line="7"
+ startpos="225"
+ endpos="230"
+>
+</method>
+<method
+ chordsig="contains:(Ljava/lang/Object;)Z@java.util.Collection"
+ sig="boolean contains(Object)"
+ line="8"
+ startpos="259"
+ endpos="267"
+>
+	<marker line="-1" type="param">
+		<operand  start="285" length="6" line="8">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="268" length="16" line="8" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="containsAll:(Ljava/util/Collection;)Z@java.util.Collection"
+ sig="boolean containsAll(Collection&lt;?&gt;)"
+ line="9"
+ startpos="319"
+ endpos="330"
+>
+	<marker line="-1" type="param">
+		<operand  start="355" length="10" line="9">
+			<expr><![CDATA[collection]]></expr>
+		</operand>
+	</marker>
+	<type  start="331" length="20" line="9" chordsig="java.util.Collection"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.util.Collection"
+ sig="boolean equals(Object)"
+ line="10"
+ startpos="393"
+ endpos="399"
+>
+	<marker line="-1" type="param">
+		<operand  start="417" length="6" line="10">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="400" length="16" line="10" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="hashCode:()I@java.util.Collection"
+ sig="int hashCode()"
+ line="11"
+ startpos="447"
+ endpos="455"
+>
+</method>
+<method
+ chordsig="isEmpty:()Z@java.util.Collection"
+ sig="boolean isEmpty()"
+ line="12"
+ startpos="484"
+ endpos="491"
+>
+</method>
+<method
+ chordsig="iterator:()Ljava/util/Iterator;@java.util.Collection"
+ sig="Iterator&lt;E&gt; iterator()"
+ line="13"
+ startpos="534"
+ endpos="542"
+>
+	<type  start="512" length="18" line="13" chordsig="java.util.Iterator"/>
+	<type  start="531" length="1" line="13" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="remove:(Ljava/lang/Object;)Z@java.util.Collection"
+ sig="boolean remove(Object)"
+ line="14"
+ startpos="571"
+ endpos="577"
+>
+	<marker line="-1" type="param">
+		<operand  start="595" length="6" line="14">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="578" length="16" line="14" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="removeAll:(Ljava/util/Collection;)Z@java.util.Collection"
+ sig="boolean removeAll(Collection&lt;?&gt;)"
+ line="15"
+ startpos="629"
+ endpos="638"
+>
+	<marker line="-1" type="param">
+		<operand  start="663" length="10" line="15">
+			<expr><![CDATA[collection]]></expr>
+		</operand>
+	</marker>
+	<type  start="639" length="20" line="15" chordsig="java.util.Collection"/>
+</method>
+<method
+ chordsig="retainAll:(Ljava/util/Collection;)Z@java.util.Collection"
+ sig="boolean retainAll(Collection&lt;?&gt;)"
+ line="16"
+ startpos="701"
+ endpos="710"
+>
+	<marker line="-1" type="param">
+		<operand  start="735" length="10" line="16">
+			<expr><![CDATA[collection]]></expr>
+		</operand>
+	</marker>
+	<type  start="711" length="20" line="16" chordsig="java.util.Collection"/>
+</method>
+<method
+ chordsig="size:()I@java.util.Collection"
+ sig="int size()"
+ line="17"
+ startpos="769"
+ endpos="773"
+>
+</method>
+<method
+ chordsig="toArray:()[Ljava/lang/Object;@java.util.Collection"
+ sig="Object[] toArray()"
+ line="18"
+ startpos="813"
+ endpos="820"
+>
+	<type  start="794" length="16" line="18" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="toArray:([Ljava/lang/Object;)[Ljava/lang/Object;@java.util.Collection"
+ sig="T[] toArray(T[])"
+ line="19"
+ startpos="848"
+ endpos="855"
+>
+	<marker line="-1" type="param">
+		<operand  start="860" length="5" line="19">
+			<expr><![CDATA[array]]></expr>
+		</operand>
+	</marker>
+	<type  start="844" length="1" line="19" chordsig="java.lang.Object"/>
+	<type  start="856" length="1" line="19" chordsig="java.lang.Object"/>
+</method>
+</class>
+</root>

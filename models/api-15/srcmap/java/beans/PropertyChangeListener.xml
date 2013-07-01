@@ -1,0 +1,19 @@
+<root>
+<class chordsig="java.beans.PropertyChangeListener" line="2">
+	<type  start="70" length="23" line="3" chordsig="java.util.EventListener"/>
+<method
+ chordsig="propertyChange:(Ljava/beans/PropertyChangeEvent;)V@java.beans.PropertyChangeListener"
+ sig="void propertyChange(PropertyChangeEvent)"
+ line="5"
+ startpos="118"
+ endpos="132"
+>
+	<marker line="-1" type="param">
+		<operand  start="164" length="5" line="5">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="133" length="30" line="5" chordsig="java.beans.PropertyChangeEvent"/>
+</method>
+</class>
+</root>

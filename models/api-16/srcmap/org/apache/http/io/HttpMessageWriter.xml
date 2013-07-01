@@ -1,0 +1,18 @@
+<root>
+<class chordsig="org.apache.http.io.HttpMessageWriter" line="2">
+<method
+ chordsig="write:(Lorg/apache/http/HttpMessage;)V@org.apache.http.io.HttpMessageWriter"
+ sig="void write(HttpMessage)"
+ line="4"
+ startpos="87"
+ endpos="92"
+>
+	<marker line="-1" type="param">
+		<operand  start="121" length="7" line="4">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="93" length="27" line="4" chordsig="org.apache.http.HttpMessage"/>
+</method>
+</class>
+</root>

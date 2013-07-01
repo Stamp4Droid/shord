@@ -1,0 +1,39 @@
+<root>
+<class chordsig="org.apache.http.HttpInetConnection" line="2">
+	<type  start="71" length="30" line="3" chordsig="org.apache.http.HttpConnection"/>
+<method
+ chordsig="getLocalAddress:()Ljava/net/InetAddress;@org.apache.http.HttpInetConnection"
+ sig="InetAddress getLocalAddress()"
+ line="5"
+ startpos="142"
+ endpos="157"
+>
+	<type  start="121" length="20" line="5" chordsig="java.net.InetAddress"/>
+</method>
+<method
+ chordsig="getLocalPort:()I@org.apache.http.HttpInetConnection"
+ sig="int getLocalPort()"
+ line="6"
+ startpos="182"
+ endpos="194"
+>
+</method>
+<method
+ chordsig="getRemoteAddress:()Ljava/net/InetAddress;@org.apache.http.HttpInetConnection"
+ sig="InetAddress getRemoteAddress()"
+ line="7"
+ startpos="236"
+ endpos="252"
+>
+	<type  start="215" length="20" line="7" chordsig="java.net.InetAddress"/>
+</method>
+<method
+ chordsig="getRemotePort:()I@org.apache.http.HttpInetConnection"
+ sig="int getRemotePort()"
+ line="8"
+ startpos="277"
+ endpos="290"
+>
+</method>
+</class>
+</root>

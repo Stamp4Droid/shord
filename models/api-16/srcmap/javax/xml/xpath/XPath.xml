@@ -1,0 +1,192 @@
+<root>
+<class chordsig="javax.xml.xpath.XPath" line="2">
+<method
+ chordsig="reset:()V@javax.xml.xpath.XPath"
+ sig="void reset()"
+ line="4"
+ startpos="72"
+ endpos="77"
+>
+</method>
+<method
+ chordsig="setXPathVariableResolver:(Ljavax/xml/xpath/XPathVariableResolver;)V@javax.xml.xpath.XPath"
+ sig="void setXPathVariableResolver(XPathVariableResolver)"
+ line="5"
+ startpos="103"
+ endpos="127"
+>
+	<marker line="-1" type="param">
+		<operand  start="166" length="8" line="5">
+			<expr><![CDATA[resolver]]></expr>
+		</operand>
+	</marker>
+	<type  start="128" length="37" line="5" chordsig="javax.xml.xpath.XPathVariableResolver"/>
+</method>
+<method
+ chordsig="getXPathVariableResolver:()Ljavax/xml/xpath/XPathVariableResolver;@javax.xml.xpath.XPath"
+ sig="XPathVariableResolver getXPathVariableResolver()"
+ line="6"
+ startpos="232"
+ endpos="256"
+>
+	<type  start="194" length="37" line="6" chordsig="javax.xml.xpath.XPathVariableResolver"/>
+</method>
+<method
+ chordsig="setXPathFunctionResolver:(Ljavax/xml/xpath/XPathFunctionResolver;)V@javax.xml.xpath.XPath"
+ sig="void setXPathFunctionResolver(XPathFunctionResolver)"
+ line="7"
+ startpos="282"
+ endpos="306"
+>
+	<marker line="-1" type="param">
+		<operand  start="345" length="8" line="7">
+			<expr><![CDATA[resolver]]></expr>
+		</operand>
+	</marker>
+	<type  start="307" length="37" line="7" chordsig="javax.xml.xpath.XPathFunctionResolver"/>
+</method>
+<method
+ chordsig="getXPathFunctionResolver:()Ljavax/xml/xpath/XPathFunctionResolver;@javax.xml.xpath.XPath"
+ sig="XPathFunctionResolver getXPathFunctionResolver()"
+ line="8"
+ startpos="411"
+ endpos="435"
+>
+	<type  start="373" length="37" line="8" chordsig="javax.xml.xpath.XPathFunctionResolver"/>
+</method>
+<method
+ chordsig="setNamespaceContext:(Ljavax/xml/namespace/NamespaceContext;)V@javax.xml.xpath.XPath"
+ sig="void setNamespaceContext(NamespaceContext)"
+ line="9"
+ startpos="461"
+ endpos="480"
+>
+	<marker line="-1" type="param">
+		<operand  start="518" length="9" line="9">
+			<expr><![CDATA[nsContext]]></expr>
+		</operand>
+	</marker>
+	<type  start="481" length="36" line="9" chordsig="javax.xml.namespace.NamespaceContext"/>
+</method>
+<method
+ chordsig="getNamespaceContext:()Ljavax/xml/namespace/NamespaceContext;@javax.xml.xpath.XPath"
+ sig="NamespaceContext getNamespaceContext()"
+ line="10"
+ startpos="584"
+ endpos="603"
+>
+	<type  start="547" length="36" line="10" chordsig="javax.xml.namespace.NamespaceContext"/>
+</method>
+<method
+ chordsig="compile:(Ljava/lang/String;)Ljavax/xml/xpath/XPathExpression;@javax.xml.xpath.XPath"
+ sig="XPathExpression compile(String)"
+ line="11"
+ startpos="656"
+ endpos="663"
+>
+	<marker line="-1" type="param">
+		<operand  start="681" length="10" line="11">
+			<expr><![CDATA[expression]]></expr>
+		</operand>
+	</marker>
+	<type  start="624" length="31" line="11" chordsig="javax.xml.xpath.XPathExpression"/>
+	<type  start="664" length="16" line="11" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="evaluate:(Ljava/lang/String;Ljava/lang/Object;Ljavax/xml/namespace/QName;)Ljava/lang/Object;@javax.xml.xpath.XPath"
+ sig="Object evaluate(String,Object,QName)"
+ line="12"
+ startpos="776"
+ endpos="784"
+>
+	<marker line="-1" type="param">
+		<operand  start="802" length="10" line="12">
+			<expr><![CDATA[expression]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="831" length="4" line="12">
+			<expr><![CDATA[item]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="863" length="10" line="12">
+			<expr><![CDATA[returnType]]></expr>
+		</operand>
+	</marker>
+	<type  start="759" length="16" line="12" chordsig="java.lang.Object"/>
+	<type  start="785" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="814" length="16" line="12" chordsig="java.lang.Object"/>
+	<type  start="837" length="25" line="12" chordsig="javax.xml.namespace.QName"/>
+</method>
+<method
+ chordsig="evaluate:(Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/String;@javax.xml.xpath.XPath"
+ sig="String evaluate(String,Object)"
+ line="13"
+ startpos="958"
+ endpos="966"
+>
+	<marker line="-1" type="param">
+		<operand  start="984" length="10" line="13">
+			<expr><![CDATA[expression]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1013" length="4" line="13">
+			<expr><![CDATA[item]]></expr>
+		</operand>
+	</marker>
+	<type  start="941" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="967" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="996" length="16" line="13" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="evaluate:(Ljava/lang/String;Lorg/xml/sax/InputSource;Ljavax/xml/namespace/QName;)Ljava/lang/Object;@javax.xml.xpath.XPath"
+ sig="Object evaluate(String,InputSource,QName)"
+ line="14"
+ startpos="1102"
+ endpos="1110"
+>
+	<marker line="-1" type="param">
+		<operand  start="1128" length="10" line="14">
+			<expr><![CDATA[expression]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1164" length="6" line="14">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1198" length="10" line="14">
+			<expr><![CDATA[returnType]]></expr>
+		</operand>
+	</marker>
+	<type  start="1085" length="16" line="14" chordsig="java.lang.Object"/>
+	<type  start="1111" length="16" line="14" chordsig="java.lang.String"/>
+	<type  start="1140" length="23" line="14" chordsig="org.xml.sax.InputSource"/>
+	<type  start="1172" length="25" line="14" chordsig="javax.xml.namespace.QName"/>
+</method>
+<method
+ chordsig="evaluate:(Ljava/lang/String;Lorg/xml/sax/InputSource;)Ljava/lang/String;@javax.xml.xpath.XPath"
+ sig="String evaluate(String,InputSource)"
+ line="15"
+ startpos="1293"
+ endpos="1301"
+>
+	<marker line="-1" type="param">
+		<operand  start="1319" length="10" line="15">
+			<expr><![CDATA[expression]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1355" length="6" line="15">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="1276" length="16" line="15" chordsig="java.lang.String"/>
+	<type  start="1302" length="16" line="15" chordsig="java.lang.String"/>
+	<type  start="1331" length="23" line="15" chordsig="org.xml.sax.InputSource"/>
+</method>
+</class>
+</root>

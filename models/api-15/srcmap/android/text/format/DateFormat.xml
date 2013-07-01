@@ -1,0 +1,262 @@
+<root>
+<class chordsig="android.text.format.DateFormat" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.text.format.DateFormat"
+ sig="DateFormat()"
+ line="4"
+ startpos="63"
+ endpos="73"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="88" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="84" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="105" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="88" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="is24HourFormat:(Landroid/content/Context;)Z@android.text.format.DateFormat"
+ sig="boolean is24HourFormat(Context)"
+ line="5"
+ startpos="140"
+ endpos="154"
+>
+	<marker line="-1" type="param">
+		<operand  start="179" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="155" length="23" line="5" chordsig="android.content.Context"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="200" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="196" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="217" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="200" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTimeFormat:(Landroid/content/Context;)Ljava/text/DateFormat;@android.text.format.DateFormat"
+ sig="DateFormat getTimeFormat(Context)"
+ line="6"
+ startpos="271"
+ endpos="284"
+>
+	<marker line="-1" type="param">
+		<operand  start="309" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="250" length="20" line="6" chordsig="java.text.DateFormat"/>
+	<type  start="285" length="23" line="6" chordsig="android.content.Context"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="330" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="326" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="347" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="330" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDateFormat:(Landroid/content/Context;)Ljava/text/DateFormat;@android.text.format.DateFormat"
+ sig="DateFormat getDateFormat(Context)"
+ line="7"
+ startpos="401"
+ endpos="414"
+>
+	<marker line="-1" type="param">
+		<operand  start="439" length="7" line="7">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="380" length="20" line="7" chordsig="java.text.DateFormat"/>
+	<type  start="415" length="23" line="7" chordsig="android.content.Context"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="460" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="456" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="477" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="460" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLongDateFormat:(Landroid/content/Context;)Ljava/text/DateFormat;@android.text.format.DateFormat"
+ sig="DateFormat getLongDateFormat(Context)"
+ line="8"
+ startpos="531"
+ endpos="548"
+>
+	<marker line="-1" type="param">
+		<operand  start="573" length="7" line="8">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="510" length="20" line="8" chordsig="java.text.DateFormat"/>
+	<type  start="549" length="23" line="8" chordsig="android.content.Context"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="594" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="590" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="611" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="594" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMediumDateFormat:(Landroid/content/Context;)Ljava/text/DateFormat;@android.text.format.DateFormat"
+ sig="DateFormat getMediumDateFormat(Context)"
+ line="9"
+ startpos="665"
+ endpos="684"
+>
+	<marker line="-1" type="param">
+		<operand  start="709" length="7" line="9">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="644" length="20" line="9" chordsig="java.text.DateFormat"/>
+	<type  start="685" length="23" line="9" chordsig="android.content.Context"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="730" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="726" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="747" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="730" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDateFormatOrder:(Landroid/content/Context;)[C@android.text.format.DateFormat"
+ sig="char[] getDateFormatOrder(Context)"
+ line="10"
+ startpos="787"
+ endpos="805"
+>
+	<marker line="-1" type="param">
+		<operand  start="830" length="7" line="10">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="806" length="23" line="10" chordsig="android.content.Context"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="851" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="847" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="868" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="851" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="format:(Ljava/lang/CharSequence;J)Ljava/lang/CharSequence;@android.text.format.DateFormat"
+ sig="CharSequence format(CharSequence,long)"
+ line="11"
+ startpos="924"
+ endpos="930"
+>
+	<marker line="-1" type="param">
+		<operand  start="954" length="8" line="11">
+			<expr><![CDATA[inFormat]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="969" length="14" line="11">
+			<expr><![CDATA[inTimeInMillis]]></expr>
+		</operand>
+	</marker>
+	<type  start="901" length="22" line="11" chordsig="java.lang.CharSequence"/>
+	<type  start="931" length="22" line="11" chordsig="java.lang.CharSequence"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="997" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="993" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1014" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="997" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="format:(Ljava/lang/CharSequence;Ljava/util/Date;)Ljava/lang/CharSequence;@android.text.format.DateFormat"
+ sig="CharSequence format(CharSequence,Date)"
+ line="12"
+ startpos="1070"
+ endpos="1076"
+>
+	<marker line="-1" type="param">
+		<operand  start="1100" length="8" line="12">
+			<expr><![CDATA[inFormat]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1125" length="6" line="12">
+			<expr><![CDATA[inDate]]></expr>
+		</operand>
+	</marker>
+	<type  start="1047" length="22" line="12" chordsig="java.lang.CharSequence"/>
+	<type  start="1077" length="22" line="12" chordsig="java.lang.CharSequence"/>
+	<type  start="1110" length="14" line="12" chordsig="java.util.Date"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1145" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1141" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1162" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1145" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="format:(Ljava/lang/CharSequence;Ljava/util/Calendar;)Ljava/lang/CharSequence;@android.text.format.DateFormat"
+ sig="CharSequence format(CharSequence,Calendar)"
+ line="13"
+ startpos="1218"
+ endpos="1224"
+>
+	<marker line="-1" type="param">
+		<operand  start="1248" length="8" line="13">
+			<expr><![CDATA[inFormat]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1277" length="6" line="13">
+			<expr><![CDATA[inDate]]></expr>
+		</operand>
+	</marker>
+	<type  start="1195" length="22" line="13" chordsig="java.lang.CharSequence"/>
+	<type  start="1225" length="22" line="13" chordsig="java.lang.CharSequence"/>
+	<type  start="1258" length="18" line="13" chordsig="java.util.Calendar"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1297" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1293" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1314" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1297" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,1055 @@
+<root>
+<class chordsig="android.media.AudioManager" line="2">
+<class chordsig="android.media.AudioManager$OnAudioFocusChangeListener" line="4">
+<method
+ chordsig="onAudioFocusChange:(I)V@android.media.AudioManager$OnAudioFocusChangeListener"
+ sig="void onAudioFocusChange(int)"
+ line="6"
+ startpos="126"
+ endpos="144"
+>
+	<marker line="-1" type="param">
+		<operand  start="149" length="11" line="6">
+			<expr><![CDATA[focusChange]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.media.AudioManager"
+ sig="AudioManager()"
+ line="8"
+ startpos="165"
+ endpos="177"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="192" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="188" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="209" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="192" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="adjustStreamVolume:(III)V@android.media.AudioManager"
+ sig="void adjustStreamVolume(int,int,int)"
+ line="9"
+ startpos="234"
+ endpos="252"
+>
+	<marker line="-1" type="param">
+		<operand  start="257" length="10" line="9">
+			<expr><![CDATA[streamType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="273" length="9" line="9">
+			<expr><![CDATA[direction]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="288" length="5" line="9">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="307" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="303" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="324" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="307" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="adjustVolume:(II)V@android.media.AudioManager"
+ sig="void adjustVolume(int,int)"
+ line="10"
+ startpos="349"
+ endpos="361"
+>
+	<marker line="-1" type="param">
+		<operand  start="366" length="9" line="10">
+			<expr><![CDATA[direction]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="381" length="5" line="10">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="400" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="396" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="417" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="400" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="adjustSuggestedStreamVolume:(III)V@android.media.AudioManager"
+ sig="void adjustSuggestedStreamVolume(int,int,int)"
+ line="11"
+ startpos="442"
+ endpos="469"
+>
+	<marker line="-1" type="param">
+		<operand  start="474" length="9" line="11">
+			<expr><![CDATA[direction]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="489" length="19" line="11">
+			<expr><![CDATA[suggestedStreamType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="514" length="5" line="11">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="533" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="529" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="550" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="533" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRingerMode:()I@android.media.AudioManager"
+ sig="int getRingerMode()"
+ line="12"
+ startpos="574"
+ endpos="587"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="602" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="598" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="619" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="602" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getStreamMaxVolume:(I)I@android.media.AudioManager"
+ sig="int getStreamMaxVolume(int)"
+ line="13"
+ startpos="643"
+ endpos="661"
+>
+	<marker line="-1" type="param">
+		<operand  start="666" length="10" line="13">
+			<expr><![CDATA[streamType]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="690" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="686" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="707" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="690" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getStreamVolume:(I)I@android.media.AudioManager"
+ sig="int getStreamVolume(int)"
+ line="14"
+ startpos="731"
+ endpos="746"
+>
+	<marker line="-1" type="param">
+		<operand  start="751" length="10" line="14">
+			<expr><![CDATA[streamType]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="775" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="771" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="792" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="775" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setRingerMode:(I)V@android.media.AudioManager"
+ sig="void setRingerMode(int)"
+ line="15"
+ startpos="817"
+ endpos="830"
+>
+	<marker line="-1" type="param">
+		<operand  start="835" length="10" line="15">
+			<expr><![CDATA[ringerMode]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="859" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="855" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="876" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="859" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setStreamVolume:(III)V@android.media.AudioManager"
+ sig="void setStreamVolume(int,int,int)"
+ line="16"
+ startpos="901"
+ endpos="916"
+>
+	<marker line="-1" type="param">
+		<operand  start="921" length="10" line="16">
+			<expr><![CDATA[streamType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="937" length="5" line="16">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="948" length="5" line="16">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="967" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="963" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="984" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="967" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setStreamSolo:(IZ)V@android.media.AudioManager"
+ sig="void setStreamSolo(int,boolean)"
+ line="17"
+ startpos="1009"
+ endpos="1022"
+>
+	<marker line="-1" type="param">
+		<operand  start="1027" length="10" line="17">
+			<expr><![CDATA[streamType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1047" length="5" line="17">
+			<expr><![CDATA[state]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1066" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1062" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1083" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1066" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setStreamMute:(IZ)V@android.media.AudioManager"
+ sig="void setStreamMute(int,boolean)"
+ line="18"
+ startpos="1108"
+ endpos="1121"
+>
+	<marker line="-1" type="param">
+		<operand  start="1126" length="10" line="18">
+			<expr><![CDATA[streamType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1146" length="5" line="18">
+			<expr><![CDATA[state]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1165" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1161" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1182" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1165" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="shouldVibrate:(I)Z@android.media.AudioManager"
+ sig="boolean shouldVibrate(int)"
+ line="20"
+ startpos="1222"
+ endpos="1235"
+>
+	<marker line="-1" type="param">
+		<operand  start="1240" length="11" line="20">
+			<expr><![CDATA[vibrateType]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1265" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1261" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1282" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1265" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getVibrateSetting:(I)I@android.media.AudioManager"
+ sig="int getVibrateSetting(int)"
+ line="22"
+ startpos="1318"
+ endpos="1335"
+>
+	<marker line="-1" type="param">
+		<operand  start="1340" length="11" line="22">
+			<expr><![CDATA[vibrateType]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1365" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1361" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1382" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1365" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setVibrateSetting:(II)V@android.media.AudioManager"
+ sig="void setVibrateSetting(int,int)"
+ line="24"
+ startpos="1419"
+ endpos="1436"
+>
+	<marker line="-1" type="param">
+		<operand  start="1441" length="11" line="24">
+			<expr><![CDATA[vibrateType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1458" length="14" line="24">
+			<expr><![CDATA[vibrateSetting]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1486" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1482" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1503" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1486" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSpeakerphoneOn:(Z)V@android.media.AudioManager"
+ sig="void setSpeakerphoneOn(boolean)"
+ line="25"
+ startpos="1528"
+ endpos="1545"
+>
+	<marker line="-1" type="param">
+		<operand  start="1554" length="2" line="25">
+			<expr><![CDATA[on]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1570" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1566" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1587" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1570" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isSpeakerphoneOn:()Z@android.media.AudioManager"
+ sig="boolean isSpeakerphoneOn()"
+ line="26"
+ startpos="1615"
+ endpos="1631"
+>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1646" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1642" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1663" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1646" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isBluetoothScoAvailableOffCall:()Z@android.media.AudioManager"
+ sig="boolean isBluetoothScoAvailableOffCall()"
+ line="27"
+ startpos="1691"
+ endpos="1721"
+>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1736" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1732" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1753" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1736" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="startBluetoothSco:()V@android.media.AudioManager"
+ sig="void startBluetoothSco()"
+ line="28"
+ startpos="1778"
+ endpos="1795"
+>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1810" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1806" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1827" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1810" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="stopBluetoothSco:()V@android.media.AudioManager"
+ sig="void stopBluetoothSco()"
+ line="29"
+ startpos="1852"
+ endpos="1868"
+>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1883" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1879" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1900" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1883" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setBluetoothScoOn:(Z)V@android.media.AudioManager"
+ sig="void setBluetoothScoOn(boolean)"
+ line="30"
+ startpos="1925"
+ endpos="1942"
+>
+	<marker line="-1" type="param">
+		<operand  start="1951" length="2" line="30">
+			<expr><![CDATA[on]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1967" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1963" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1984" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1967" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isBluetoothScoOn:()Z@android.media.AudioManager"
+ sig="boolean isBluetoothScoOn()"
+ line="31"
+ startpos="2012"
+ endpos="2028"
+>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2043" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2039" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2060" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2043" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setBluetoothA2dpOn:(Z)V@android.media.AudioManager"
+ sig="void setBluetoothA2dpOn(boolean)"
+ line="33"
+ startpos="2109"
+ endpos="2127"
+>
+	<marker line="-1" type="param">
+		<operand  start="2136" length="2" line="33">
+			<expr><![CDATA[on]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2152" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2148" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2169" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2152" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isBluetoothA2dpOn:()Z@android.media.AudioManager"
+ sig="boolean isBluetoothA2dpOn()"
+ line="34"
+ startpos="2197"
+ endpos="2214"
+>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2229" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2225" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2246" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2229" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setWiredHeadsetOn:(Z)V@android.media.AudioManager"
+ sig="void setWiredHeadsetOn(boolean)"
+ line="36"
+ startpos="2295"
+ endpos="2312"
+>
+	<marker line="-1" type="param">
+		<operand  start="2321" length="2" line="36">
+			<expr><![CDATA[on]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2337" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2333" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2354" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2337" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isWiredHeadsetOn:()Z@android.media.AudioManager"
+ sig="boolean isWiredHeadsetOn()"
+ line="38"
+ startpos="2394"
+ endpos="2410"
+>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2425" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2421" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2442" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2425" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMicrophoneMute:(Z)V@android.media.AudioManager"
+ sig="void setMicrophoneMute(boolean)"
+ line="39"
+ startpos="2467"
+ endpos="2484"
+>
+	<marker line="-1" type="param">
+		<operand  start="2493" length="2" line="39">
+			<expr><![CDATA[on]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="39" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2509" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2505" length="29" line="39">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2526" length="7" line="39">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2509" length="16" line="39" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isMicrophoneMute:()Z@android.media.AudioManager"
+ sig="boolean isMicrophoneMute()"
+ line="40"
+ startpos="2554"
+ endpos="2570"
+>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2585" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2581" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2602" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2585" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMode:(I)V@android.media.AudioManager"
+ sig="void setMode(int)"
+ line="41"
+ startpos="2627"
+ endpos="2634"
+>
+	<marker line="-1" type="param">
+		<operand  start="2639" length="4" line="41">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2657" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2653" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2674" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2657" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMode:()I@android.media.AudioManager"
+ sig="int getMode()"
+ line="42"
+ startpos="2698"
+ endpos="2705"
+>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2720" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2716" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2737" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2720" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setRouting:(III)V@android.media.AudioManager"
+ sig="void setRouting(int,int,int)"
+ line="44"
+ startpos="2786"
+ endpos="2796"
+>
+	<marker line="-1" type="param">
+		<operand  start="2801" length="4" line="44">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2811" length="6" line="44">
+			<expr><![CDATA[routes]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2823" length="4" line="44">
+			<expr><![CDATA[mask]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2841" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2837" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2858" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2841" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRouting:(I)I@android.media.AudioManager"
+ sig="int getRouting(int)"
+ line="46"
+ startpos="2906"
+ endpos="2916"
+>
+	<marker line="-1" type="param">
+		<operand  start="2921" length="4" line="46">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="46" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2939" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2935" length="29" line="46">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2956" length="7" line="46">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2939" length="16" line="46" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isMusicActive:()Z@android.media.AudioManager"
+ sig="boolean isMusicActive()"
+ line="47"
+ startpos="2984"
+ endpos="2997"
+>
+	<newexpr line="47" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3012" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3008" length="29" line="47">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3029" length="7" line="47">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3012" length="16" line="47" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setParameters:(Ljava/lang/String;)V@android.media.AudioManager"
+ sig="void setParameters(String)"
+ line="48"
+ startpos="3054"
+ endpos="3067"
+>
+	<marker line="-1" type="param">
+		<operand  start="3085" length="13" line="48">
+			<expr><![CDATA[keyValuePairs]]></expr>
+		</operand>
+	</marker>
+	<type  start="3068" length="16" line="48" chordsig="java.lang.String"/>
+	<newexpr line="48" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3112" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3108" length="29" line="48">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3129" length="7" line="48">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3112" length="16" line="48" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getParameters:(Ljava/lang/String;)Ljava/lang/String;@android.media.AudioManager"
+ sig="String getParameters(String)"
+ line="49"
+ startpos="3166"
+ endpos="3179"
+>
+	<marker line="-1" type="param">
+		<operand  start="3197" length="4" line="49">
+			<expr><![CDATA[keys]]></expr>
+		</operand>
+	</marker>
+	<type  start="3149" length="16" line="49" chordsig="java.lang.String"/>
+	<type  start="3180" length="16" line="49" chordsig="java.lang.String"/>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3215" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3211" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3232" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3215" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="playSoundEffect:(I)V@android.media.AudioManager"
+ sig="void playSoundEffect(int)"
+ line="50"
+ startpos="3257"
+ endpos="3272"
+>
+	<marker line="-1" type="param">
+		<operand  start="3277" length="10" line="50">
+			<expr><![CDATA[effectType]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="50" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3301" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3297" length="29" line="50">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3318" length="7" line="50">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3301" length="16" line="50" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="playSoundEffect:(IF)V@android.media.AudioManager"
+ sig="void playSoundEffect(int,float)"
+ line="51"
+ startpos="3343"
+ endpos="3358"
+>
+	<marker line="-1" type="param">
+		<operand  start="3363" length="10" line="51">
+			<expr><![CDATA[effectType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3381" length="6" line="51">
+			<expr><![CDATA[volume]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="51" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3401" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3397" length="29" line="51">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3418" length="7" line="51">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3401" length="16" line="51" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="loadSoundEffects:()V@android.media.AudioManager"
+ sig="void loadSoundEffects()"
+ line="52"
+ startpos="3443"
+ endpos="3459"
+>
+	<newexpr line="52" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3474" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3470" length="29" line="52">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3491" length="7" line="52">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3474" length="16" line="52" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unloadSoundEffects:()V@android.media.AudioManager"
+ sig="void unloadSoundEffects()"
+ line="53"
+ startpos="3516"
+ endpos="3534"
+>
+	<newexpr line="53" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3549" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3545" length="29" line="53">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3566" length="7" line="53">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3549" length="16" line="53" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="requestAudioFocus:(Landroid/media/AudioManager$OnAudioFocusChangeListener;II)I@android.media.AudioManager"
+ sig="int requestAudioFocus(OnAudioFocusChangeListener,int,int)"
+ line="54"
+ startpos="3590"
+ endpos="3607"
+>
+	<marker line="-1" type="param">
+		<operand  start="3662" length="1" line="54">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3669" length="10" line="54">
+			<expr><![CDATA[streamType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3685" length="12" line="54">
+			<expr><![CDATA[durationHint]]></expr>
+		</operand>
+	</marker>
+	<type  start="3608" length="53" line="54" chordsig="android.media.AudioManager$OnAudioFocusChangeListener"/>
+	<newexpr line="54" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3711" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3707" length="29" line="54">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3728" length="7" line="54">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3711" length="16" line="54" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="abandonAudioFocus:(Landroid/media/AudioManager$OnAudioFocusChangeListener;)I@android.media.AudioManager"
+ sig="int abandonAudioFocus(OnAudioFocusChangeListener)"
+ line="55"
+ startpos="3752"
+ endpos="3769"
+>
+	<marker line="-1" type="param">
+		<operand  start="3824" length="1" line="55">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<type  start="3770" length="53" line="55" chordsig="android.media.AudioManager$OnAudioFocusChangeListener"/>
+	<newexpr line="55" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3839" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3835" length="29" line="55">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3856" length="7" line="55">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3839" length="16" line="55" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="registerMediaButtonEventReceiver:(Landroid/content/ComponentName;)V@android.media.AudioManager"
+ sig="void registerMediaButtonEventReceiver(ComponentName)"
+ line="56"
+ startpos="3881"
+ endpos="3913"
+>
+	<marker line="-1" type="param">
+		<operand  start="3944" length="13" line="56">
+			<expr><![CDATA[eventReceiver]]></expr>
+		</operand>
+	</marker>
+	<type  start="3914" length="29" line="56" chordsig="android.content.ComponentName"/>
+	<newexpr line="56" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3971" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3967" length="29" line="56">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3988" length="7" line="56">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3971" length="16" line="56" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unregisterMediaButtonEventReceiver:(Landroid/content/ComponentName;)V@android.media.AudioManager"
+ sig="void unregisterMediaButtonEventReceiver(ComponentName)"
+ line="57"
+ startpos="4013"
+ endpos="4047"
+>
+	<marker line="-1" type="param">
+		<operand  start="4078" length="13" line="57">
+			<expr><![CDATA[eventReceiver]]></expr>
+		</operand>
+	</marker>
+	<type  start="4048" length="29" line="57" chordsig="android.content.ComponentName"/>
+	<newexpr line="57" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4105" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4101" length="29" line="57">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4122" length="7" line="57">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4105" length="16" line="57" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="registerRemoteControlClient:(Landroid/media/RemoteControlClient;)V@android.media.AudioManager"
+ sig="void registerRemoteControlClient(RemoteControlClient)"
+ line="58"
+ startpos="4147"
+ endpos="4174"
+>
+	<marker line="-1" type="param">
+		<operand  start="4209" length="8" line="58">
+			<expr><![CDATA[rcClient]]></expr>
+		</operand>
+	</marker>
+	<type  start="4175" length="33" line="58" chordsig="android.media.RemoteControlClient"/>
+	<newexpr line="58" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4231" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4227" length="29" line="58">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4248" length="7" line="58">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4231" length="16" line="58" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unregisterRemoteControlClient:(Landroid/media/RemoteControlClient;)V@android.media.AudioManager"
+ sig="void unregisterRemoteControlClient(RemoteControlClient)"
+ line="59"
+ startpos="4273"
+ endpos="4302"
+>
+	<marker line="-1" type="param">
+		<operand  start="4337" length="8" line="59">
+			<expr><![CDATA[rcClient]]></expr>
+		</operand>
+	</marker>
+	<type  start="4303" length="33" line="59" chordsig="android.media.RemoteControlClient"/>
+	<newexpr line="59" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4359" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4355" length="29" line="59">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4376" length="7" line="59">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4359" length="16" line="59" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="4408" length="16" line="60" chordsig="java.lang.String"/>
+	<type  start="4513" length="16" line="61" chordsig="java.lang.String"/>
+	<type  start="4616" length="16" line="62" chordsig="java.lang.String"/>
+	<type  start="4720" length="16" line="64" chordsig="java.lang.String"/>
+	<type  start="4843" length="16" line="66" chordsig="java.lang.String"/>
+	<type  start="4955" length="16" line="68" chordsig="java.lang.String"/>
+	<type  start="6337" length="16" line="101" chordsig="java.lang.String"/>
+	<type  start="6448" length="16" line="102" chordsig="java.lang.String"/>
+	<type  start="6566" length="16" line="103" chordsig="java.lang.String"/>
+	<type  start="6666" length="16" line="104" chordsig="java.lang.String"/>
+</class>
+</root>

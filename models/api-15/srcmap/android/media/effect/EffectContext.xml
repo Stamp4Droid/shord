@@ -1,0 +1,78 @@
+<root>
+<class chordsig="android.media.effect.EffectContext" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.media.effect.EffectContext"
+ sig="EffectContext()"
+ line="4"
+ startpos="59"
+ endpos="72"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="87" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="83" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="104" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="87" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createWithCurrentGlContext:()Landroid/media/effect/EffectContext;@android.media.effect.EffectContext"
+ sig="EffectContext createWithCurrentGlContext()"
+ line="5"
+ startpos="166"
+ endpos="192"
+>
+	<type  start="131" length="34" line="5" chordsig="android.media.effect.EffectContext"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="207" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="203" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="224" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="207" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFactory:()Landroid/media/effect/EffectFactory;@android.media.effect.EffectContext"
+ sig="EffectFactory getFactory()"
+ line="6"
+ startpos="279"
+ endpos="289"
+>
+	<type  start="244" length="34" line="6" chordsig="android.media.effect.EffectFactory"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="304" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="300" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="321" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="304" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="release:()V@android.media.effect.EffectContext"
+ sig="void release()"
+ line="7"
+ startpos="346"
+ endpos="353"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="368" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="364" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="385" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="368" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

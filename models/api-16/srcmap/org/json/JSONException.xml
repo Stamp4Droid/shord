@@ -1,0 +1,29 @@
+<root>
+<class chordsig="org.json.JSONException" line="2">
+	<type  start="55" length="19" line="3" chordsig="java.lang.Exception"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@org.json.JSONException"
+ sig="JSONException(String)"
+ line="5"
+ startpos="85"
+ endpos="98"
+>
+	<marker line="-1" type="param">
+		<operand  start="116" length="1" line="5">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<type  start="99" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="131" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="127" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="148" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="131" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

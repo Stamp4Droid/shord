@@ -1,0 +1,1239 @@
+<root>
+<class chordsig="android.location.LocationManager" line="6">
+<method
+ chordsig="&lt;init&gt;:()V@android.location.LocationManager"
+ sig="LocationManager()"
+ line="8"
+ startpos="151"
+ endpos="166"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="189" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="185" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="206" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="189" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAllProviders:()Ljava/util/List;@android.location.LocationManager"
+ sig="List&lt;String&gt; getAllProviders()"
+ line="12"
+ startpos="267"
+ endpos="282"
+>
+	<type  start="234" length="14" line="12" chordsig="java.util.List"/>
+	<type  start="249" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="305" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="301" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="322" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="305" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getProviders:(Z)Ljava/util/List;@android.location.LocationManager"
+ sig="List&lt;String&gt; getProviders(boolean)"
+ line="16"
+ startpos="383"
+ endpos="395"
+>
+	<marker line="-1" type="param">
+		<operand  start="404" length="11" line="16">
+			<expr><![CDATA[enabledOnly]]></expr>
+		</operand>
+	</marker>
+	<type  start="350" length="14" line="16" chordsig="java.util.List"/>
+	<type  start="365" length="16" line="16" chordsig="java.lang.String"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="437" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="433" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="454" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="437" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getProvider:(Ljava/lang/String;)Landroid/location/LocationProvider;@android.location.LocationManager"
+ sig="LocationProvider getProvider(String)"
+ line="20"
+ startpos="516"
+ endpos="527"
+>
+	<marker line="-1" type="param">
+		<operand  start="545" length="4" line="20">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="482" length="33" line="20" chordsig="android.location.LocationProvider"/>
+	<type  start="528" length="16" line="20" chordsig="java.lang.String"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="571" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="567" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="588" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="571" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getProviders:(Landroid/location/Criteria;Z)Ljava/util/List;@android.location.LocationManager"
+ sig="List&lt;String&gt; getProviders(Criteria,boolean)"
+ line="24"
+ startpos="649"
+ endpos="661"
+>
+	<marker line="-1" type="param">
+		<operand  start="688" length="8" line="24">
+			<expr><![CDATA[criteria]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="706" length="11" line="24">
+			<expr><![CDATA[enabledOnly]]></expr>
+		</operand>
+	</marker>
+	<type  start="616" length="14" line="24" chordsig="java.util.List"/>
+	<type  start="631" length="16" line="24" chordsig="java.lang.String"/>
+	<type  start="662" length="25" line="24" chordsig="android.location.Criteria"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="739" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="735" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="756" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="739" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getBestProvider:(Landroid/location/Criteria;Z)Ljava/lang/String;@android.location.LocationManager"
+ sig="String getBestProvider(Criteria,boolean)"
+ line="28"
+ startpos="801"
+ endpos="816"
+>
+	<marker line="-1" type="param">
+		<operand  start="843" length="8" line="28">
+			<expr><![CDATA[criteria]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="861" length="11" line="28">
+			<expr><![CDATA[enabledOnly]]></expr>
+		</operand>
+	</marker>
+	<type  start="784" length="16" line="28" chordsig="java.lang.String"/>
+	<type  start="817" length="25" line="28" chordsig="android.location.Criteria"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="894" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="890" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="911" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="894" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeUpdates:(Landroid/location/LocationListener;)V@android.location.LocationManager"
+ sig="void removeUpdates(LocationListener)"
+ line="32"
+ startpos="944"
+ endpos="957"
+>
+	<marker line="-1" type="param">
+		<operand  start="992" length="8" line="32">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="958" length="33" line="32" chordsig="android.location.LocationListener"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1022" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1018" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1039" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1022" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeUpdates:(Landroid/app/PendingIntent;)V@android.location.LocationManager"
+ sig="void removeUpdates(PendingIntent)"
+ line="36"
+ startpos="1072"
+ endpos="1085"
+>
+	<marker line="-1" type="param">
+		<operand  start="1112" length="6" line="36">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="1086" length="25" line="36" chordsig="android.app.PendingIntent"/>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1140" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1136" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1157" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1140" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeProximityAlert:(Landroid/app/PendingIntent;)V@android.location.LocationManager"
+ sig="void removeProximityAlert(PendingIntent)"
+ line="40"
+ startpos="1190"
+ endpos="1210"
+>
+	<marker line="-1" type="param">
+		<operand  start="1237" length="6" line="40">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="1211" length="25" line="40" chordsig="android.app.PendingIntent"/>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1265" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1261" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1282" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1265" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isProviderEnabled:(Ljava/lang/String;)Z@android.location.LocationManager"
+ sig="boolean isProviderEnabled(String)"
+ line="44"
+ startpos="1318"
+ endpos="1335"
+>
+	<marker line="-1" type="param">
+		<operand  start="1353" length="8" line="44">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<type  start="1336" length="16" line="44" chordsig="java.lang.String"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1383" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1379" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1400" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1383" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addTestProvider:(Ljava/lang/String;ZZZZZZZII)V@android.location.LocationManager"
+ sig="void addTestProvider(String,boolean,boolean,boolean,boolean,boolean,boolean,boolean,int,int)"
+ line="48"
+ startpos="1433"
+ endpos="1448"
+>
+	<marker line="-1" type="param">
+		<operand  start="1466" length="4" line="48">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1480" length="15" line="48">
+			<expr><![CDATA[requiresNetwork]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1505" length="17" line="48">
+			<expr><![CDATA[requiresSatellite]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1532" length="12" line="48">
+			<expr><![CDATA[requiresCell]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1554" length="15" line="48">
+			<expr><![CDATA[hasMonetaryCost]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1579" length="16" line="48">
+			<expr><![CDATA[supportsAltitude]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1605" length="13" line="48">
+			<expr><![CDATA[supportsSpeed]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1628" length="15" line="48">
+			<expr><![CDATA[supportsBearing]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1649" length="16" line="48">
+			<expr><![CDATA[powerRequirement]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1671" length="8" line="48">
+			<expr><![CDATA[accuracy]]></expr>
+		</operand>
+	</marker>
+	<type  start="1449" length="16" line="48" chordsig="java.lang.String"/>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1701" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1697" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1718" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1701" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeTestProvider:(Ljava/lang/String;)V@android.location.LocationManager"
+ sig="void removeTestProvider(String)"
+ line="52"
+ startpos="1751"
+ endpos="1769"
+>
+	<marker line="-1" type="param">
+		<operand  start="1787" length="8" line="52">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<type  start="1770" length="16" line="52" chordsig="java.lang.String"/>
+	<newexpr line="53" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1817" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1813" length="29" line="53">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1834" length="7" line="53">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1817" length="16" line="53" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTestProviderLocation:(Ljava/lang/String;Landroid/location/Location;)V@android.location.LocationManager"
+ sig="void setTestProviderLocation(String,Location)"
+ line="56"
+ startpos="1867"
+ endpos="1890"
+>
+	<marker line="-1" type="param">
+		<operand  start="1908" length="8" line="56">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1944" length="3" line="56">
+			<expr><![CDATA[loc]]></expr>
+		</operand>
+	</marker>
+	<type  start="1891" length="16" line="56" chordsig="java.lang.String"/>
+	<type  start="1918" length="25" line="56" chordsig="android.location.Location"/>
+	<newexpr line="57" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1969" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1965" length="29" line="57">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1986" length="7" line="57">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1969" length="16" line="57" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clearTestProviderLocation:(Ljava/lang/String;)V@android.location.LocationManager"
+ sig="void clearTestProviderLocation(String)"
+ line="60"
+ startpos="2019"
+ endpos="2044"
+>
+	<marker line="-1" type="param">
+		<operand  start="2062" length="8" line="60">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<type  start="2045" length="16" line="60" chordsig="java.lang.String"/>
+	<newexpr line="61" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2092" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2088" length="29" line="61">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2109" length="7" line="61">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2092" length="16" line="61" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTestProviderEnabled:(Ljava/lang/String;Z)V@android.location.LocationManager"
+ sig="void setTestProviderEnabled(String,boolean)"
+ line="64"
+ startpos="2142"
+ endpos="2164"
+>
+	<marker line="-1" type="param">
+		<operand  start="2182" length="8" line="64">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2200" length="7" line="64">
+			<expr><![CDATA[enabled]]></expr>
+		</operand>
+	</marker>
+	<type  start="2165" length="16" line="64" chordsig="java.lang.String"/>
+	<newexpr line="65" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2229" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2225" length="29" line="65">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2246" length="7" line="65">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2229" length="16" line="65" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clearTestProviderEnabled:(Ljava/lang/String;)V@android.location.LocationManager"
+ sig="void clearTestProviderEnabled(String)"
+ line="68"
+ startpos="2279"
+ endpos="2303"
+>
+	<marker line="-1" type="param">
+		<operand  start="2321" length="8" line="68">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<type  start="2304" length="16" line="68" chordsig="java.lang.String"/>
+	<newexpr line="69" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2351" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2347" length="29" line="69">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2368" length="7" line="69">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2351" length="16" line="69" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTestProviderStatus:(Ljava/lang/String;ILandroid/os/Bundle;J)V@android.location.LocationManager"
+ sig="void setTestProviderStatus(String,int,Bundle,long)"
+ line="72"
+ startpos="2401"
+ endpos="2422"
+>
+	<marker line="-1" type="param">
+		<operand  start="2440" length="8" line="72">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2454" length="6" line="72">
+			<expr><![CDATA[status]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2480" length="6" line="72">
+			<expr><![CDATA[extras]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2493" length="10" line="72">
+			<expr><![CDATA[updateTime]]></expr>
+		</operand>
+	</marker>
+	<type  start="2423" length="16" line="72" chordsig="java.lang.String"/>
+	<type  start="2462" length="17" line="72" chordsig="android.os.Bundle"/>
+	<newexpr line="73" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2525" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2521" length="29" line="73">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2542" length="7" line="73">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2525" length="16" line="73" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clearTestProviderStatus:(Ljava/lang/String;)V@android.location.LocationManager"
+ sig="void clearTestProviderStatus(String)"
+ line="76"
+ startpos="2575"
+ endpos="2598"
+>
+	<marker line="-1" type="param">
+		<operand  start="2616" length="8" line="76">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<type  start="2599" length="16" line="76" chordsig="java.lang.String"/>
+	<newexpr line="77" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2646" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2642" length="29" line="77">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2663" length="7" line="77">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2646" length="16" line="77" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addGpsStatusListener:(Landroid/location/GpsStatus$Listener;)Z@android.location.LocationManager"
+ sig="boolean addGpsStatusListener(Listener)"
+ line="80"
+ startpos="2699"
+ endpos="2719"
+>
+	<marker line="-1" type="param">
+		<operand  start="2756" length="8" line="80">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="2720" length="35" line="80" chordsig="android.location.GpsStatus$Listener"/>
+	<newexpr line="81" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2786" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2782" length="29" line="81">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2803" length="7" line="81">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2786" length="16" line="81" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeGpsStatusListener:(Landroid/location/GpsStatus$Listener;)V@android.location.LocationManager"
+ sig="void removeGpsStatusListener(Listener)"
+ line="84"
+ startpos="2836"
+ endpos="2859"
+>
+	<marker line="-1" type="param">
+		<operand  start="2896" length="8" line="84">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="2860" length="35" line="84" chordsig="android.location.GpsStatus$Listener"/>
+	<newexpr line="85" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2926" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2922" length="29" line="85">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2943" length="7" line="85">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2926" length="16" line="85" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeNmeaListener:(Landroid/location/GpsStatus$NmeaListener;)V@android.location.LocationManager"
+ sig="void removeNmeaListener(NmeaListener)"
+ line="88"
+ startpos="2976"
+ endpos="2994"
+>
+	<marker line="-1" type="param">
+		<operand  start="3035" length="8" line="88">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="2995" length="39" line="88" chordsig="android.location.GpsStatus$NmeaListener"/>
+	<newexpr line="89" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3065" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3061" length="29" line="89">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3082" length="7" line="89">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3065" length="16" line="89" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getGpsStatus:(Landroid/location/GpsStatus;)Landroid/location/GpsStatus;@android.location.LocationManager"
+ sig="GpsStatus getGpsStatus(GpsStatus)"
+ line="92"
+ startpos="3137"
+ endpos="3149"
+>
+	<marker line="-1" type="param">
+		<operand  start="3177" length="6" line="92">
+			<expr><![CDATA[status]]></expr>
+		</operand>
+	</marker>
+	<type  start="3110" length="26" line="92" chordsig="android.location.GpsStatus"/>
+	<type  start="3150" length="26" line="92" chordsig="android.location.GpsStatus"/>
+	<newexpr line="93" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3205" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3201" length="29" line="93">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3222" length="7" line="93">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3205" length="16" line="93" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="sendExtraCommand:(Ljava/lang/String;Ljava/lang/String;Landroid/os/Bundle;)Z@android.location.LocationManager"
+ sig="boolean sendExtraCommand(String,String,Bundle)"
+ line="96"
+ startpos="3258"
+ endpos="3274"
+>
+	<marker line="-1" type="param">
+		<operand  start="3292" length="8" line="96">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3319" length="7" line="96">
+			<expr><![CDATA[command]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3346" length="6" line="96">
+			<expr><![CDATA[extras]]></expr>
+		</operand>
+	</marker>
+	<type  start="3275" length="16" line="96" chordsig="java.lang.String"/>
+	<type  start="3302" length="16" line="96" chordsig="java.lang.String"/>
+	<type  start="3328" length="17" line="96" chordsig="android.os.Bundle"/>
+	<newexpr line="97" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3374" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3370" length="29" line="97">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3391" length="7" line="97">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3374" length="16" line="97" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="3432" length="16" line="100" chordsig="java.lang.String"/>
+	<type  start="3504" length="16" line="102" chordsig="java.lang.String"/>
+	<type  start="3568" length="16" line="104" chordsig="java.lang.String"/>
+	<type  start="3640" length="16" line="106" chordsig="java.lang.String"/>
+	<type  start="3719" length="16" line="108" chordsig="java.lang.String"/>
+	<type  start="3792" length="16" line="110" chordsig="java.lang.String"/>
+	<type  start="3876" length="16" line="112" chordsig="java.lang.String"/>
+	<type  start="3953" length="16" line="114" chordsig="java.lang.String"/>
+<method
+ chordsig="getLocation:()Landroid/location/Location;@android.location.LocationManager"
+ sig="Location getLocation()"
+ line="117"
+ startpos="4123"
+ endpos="4134"
+>
+	<type  start="4114" length="8" line="117" chordsig="android.location.Location"/>
+	<marker line="118" type="return">
+		<operand  start="4154" length="27" line="118">
+			<expr><![CDATA[new Location((String)null)]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="118" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.location.Location" start="4158" length="8" type="invoke">
+			<expr><![CDATA[new Location((String)null)]]></expr>
+		<param  start="4154" length="27" line="118">
+			<expr><![CDATA[new Location((String)null)]]></expr>
+		</param>
+		<param  start="4167" length="13" line="118">
+			<expr><![CDATA[(String)null]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4158" length="8" line="118" chordsig="android.location.Location"/>
+	<type  start="4168" length="6" line="118" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="registerListener:(Landroid/location/LocationListener;)V@android.location.LocationManager"
+ sig="void registerListener(LocationListener)"
+ line="121"
+ startpos="4207"
+ endpos="4223"
+>
+	<marker line="-1" type="param">
+		<operand  start="4264" length="8" line="121">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="4230" length="33" line="121" chordsig="android.location.LocationListener"/>
+	<invkexpr line="122" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="4343" length="16" type="invoke">
+			<expr><![CDATA[edu.stanford.stamp.harness.ApplicationDriver.getInstance().registerCallback(new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    listener.onLocationChanged(getLocation());
+  }
+}
+)]]></expr>
+		<param  start="4360" length="159" line="122">
+			<expr type="null"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    listener.onLocationChanged(getLocation());
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="122" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="4329" length="11" type="invoke">
+			<expr><![CDATA[edu.stanford.stamp.harness.ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="122" chordsig="&lt;init&gt;:()V@android.location.LocationManager$android.location.LocationManager#edu.stanford.stamp.harness.Callback#122" start="4364" length="35" type="invoke">
+			<expr><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    listener.onLocationChanged(getLocation());
+  }
+}
+]]></expr>
+		<param  start="4360" length="159" line="122">
+			<expr type="android.location.LocationManager#edu.stanford.stamp.harness.Callback#122"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    listener.onLocationChanged(getLocation());
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4364" length="35" line="122" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.location.LocationManager$android.location.LocationManager#edu.stanford.stamp.harness.Callback#122" line="122">
+<method
+ chordsig="run:()V@android.location.LocationManager$android.location.LocationManager#edu.stanford.stamp.harness.Callback#122"
+ sig="void run()"
+ line="124"
+ startpos="4429"
+ endpos="4432"
+>
+	<invkexpr line="125" chordsig="onLocationChanged:(Landroid/location/Location;)V@android.location.LocationListener" start="4462" length="17" type="invoke">
+			<expr><![CDATA[listener.onLocationChanged(getLocation())]]></expr>
+		<param  start="4453" length="8" line="125">
+			<expr><![CDATA[listener]]></expr>
+		</param>
+		<param  start="4480" length="13" line="125">
+			<expr><![CDATA[getLocation()]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="125" chordsig="getLocation:()Landroid/location/Location;@android.location.LocationManager" start="4480" length="11" type="invoke">
+			<expr><![CDATA[getLocation()]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+</method>
+<method
+ chordsig="requestLocationUpdates:(Ljava/lang/String;JFLandroid/app/PendingIntent;)V@android.location.LocationManager"
+ sig="void requestLocationUpdates(String,long,float,PendingIntent)"
+ line="131"
+ startpos="4616"
+ endpos="4638"
+>
+	<marker line="-1" type="param">
+		<operand  start="4656" length="8" line="131">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4671" length="7" line="131">
+			<expr><![CDATA[minTime]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4686" length="11" line="131">
+			<expr><![CDATA[minDistance]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4725" length="6" line="131">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="4639" length="16" line="131" chordsig="java.lang.String"/>
+	<type  start="4699" length="25" line="131" chordsig="android.app.PendingIntent"/>
+</method>
+<method
+ chordsig="requestLocationUpdates:(Ljava/lang/String;JFLandroid/location/LocationListener;)V@android.location.LocationManager"
+ sig="void requestLocationUpdates(String,long,float,LocationListener)"
+ line="134"
+ startpos="4758"
+ endpos="4780"
+>
+	<marker line="-1" type="param">
+		<operand  start="4798" length="8" line="134">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4813" length="7" line="134">
+			<expr><![CDATA[minTime]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4828" length="11" line="134">
+			<expr><![CDATA[minDistance]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4875" length="8" line="134">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="4781" length="16" line="134" chordsig="java.lang.String"/>
+	<type  start="4841" length="33" line="134" chordsig="android.location.LocationListener"/>
+	<invkexpr line="135" chordsig="registerListener:(Landroid/location/LocationListener;)V@android.location.LocationManager" start="4895" length="16" type="invoke">
+			<expr><![CDATA[registerListener(listener)]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+		<param  start="4912" length="8" line="135">
+			<expr><![CDATA[listener]]></expr>
+		</param>
+	</invkexpr>
+</method>
+<method
+ chordsig="requestLocationUpdates:(Ljava/lang/String;JFLandroid/location/LocationListener;Landroid/os/Looper;)V@android.location.LocationManager"
+ sig="void requestLocationUpdates(String,long,float,LocationListener,Looper)"
+ line="138"
+ startpos="4946"
+ endpos="4968"
+>
+	<marker line="-1" type="param">
+		<operand  start="4986" length="8" line="138">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5001" length="7" line="138">
+			<expr><![CDATA[minTime]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5016" length="11" line="138">
+			<expr><![CDATA[minDistance]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5063" length="8" line="138">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5091" length="6" line="138">
+			<expr><![CDATA[looper]]></expr>
+		</operand>
+	</marker>
+	<type  start="4969" length="16" line="138" chordsig="java.lang.String"/>
+	<type  start="5029" length="33" line="138" chordsig="android.location.LocationListener"/>
+	<type  start="5073" length="17" line="138" chordsig="android.os.Looper"/>
+	<invkexpr line="139" chordsig="registerListener:(Landroid/location/LocationListener;)V@android.location.LocationManager" start="5109" length="16" type="invoke">
+			<expr><![CDATA[registerListener(listener)]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+		<param  start="5126" length="8" line="139">
+			<expr><![CDATA[listener]]></expr>
+		</param>
+	</invkexpr>
+</method>
+<method
+ chordsig="requestLocationUpdates:(JFLandroid/location/Criteria;Landroid/location/LocationListener;Landroid/os/Looper;)V@android.location.LocationManager"
+ sig="void requestLocationUpdates(long,float,Criteria,LocationListener,Looper)"
+ line="142"
+ startpos="5160"
+ endpos="5182"
+>
+	<marker line="-1" type="param">
+		<operand  start="5188" length="7" line="142">
+			<expr><![CDATA[minTime]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5203" length="11" line="142">
+			<expr><![CDATA[minDistance]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5242" length="8" line="142">
+			<expr><![CDATA[criteria]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5286" length="8" line="142">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5314" length="6" line="142">
+			<expr><![CDATA[looper]]></expr>
+		</operand>
+	</marker>
+	<type  start="5216" length="25" line="142" chordsig="android.location.Criteria"/>
+	<type  start="5252" length="33" line="142" chordsig="android.location.LocationListener"/>
+	<type  start="5296" length="17" line="142" chordsig="android.os.Looper"/>
+	<invkexpr line="143" chordsig="registerListener:(Landroid/location/LocationListener;)V@android.location.LocationManager" start="5332" length="16" type="invoke">
+			<expr><![CDATA[registerListener(listener)]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+		<param  start="5349" length="8" line="143">
+			<expr><![CDATA[listener]]></expr>
+		</param>
+	</invkexpr>
+</method>
+<method
+ chordsig="requestLocationUpdates:(JFLandroid/location/Criteria;Landroid/app/PendingIntent;)V@android.location.LocationManager"
+ sig="void requestLocationUpdates(long,float,Criteria,PendingIntent)"
+ line="147"
+ startpos="5454"
+ endpos="5476"
+>
+	<marker line="-1" type="param">
+		<operand  start="5482" length="7" line="147">
+			<expr><![CDATA[minTime]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5497" length="11" line="147">
+			<expr><![CDATA[minDistance]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5536" length="8" line="147">
+			<expr><![CDATA[criteria]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5572" length="6" line="147">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="5510" length="25" line="147" chordsig="android.location.Criteria"/>
+	<type  start="5546" length="25" line="147" chordsig="android.app.PendingIntent"/>
+</method>
+<method
+ chordsig="requestSingleUpdate:(Ljava/lang/String;Landroid/location/LocationListener;Landroid/os/Looper;)V@android.location.LocationManager"
+ sig="void requestSingleUpdate(String,LocationListener,Looper)"
+ line="150"
+ startpos="5605"
+ endpos="5624"
+>
+	<marker line="-1" type="param">
+		<operand  start="5642" length="8" line="150">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5686" length="8" line="150">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5714" length="6" line="150">
+			<expr><![CDATA[looper]]></expr>
+		</operand>
+	</marker>
+	<type  start="5625" length="16" line="150" chordsig="java.lang.String"/>
+	<type  start="5652" length="33" line="150" chordsig="android.location.LocationListener"/>
+	<type  start="5696" length="17" line="150" chordsig="android.os.Looper"/>
+	<invkexpr line="151" chordsig="registerListener:(Landroid/location/LocationListener;)V@android.location.LocationManager" start="5732" length="16" type="invoke">
+			<expr><![CDATA[registerListener(listener)]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+		<param  start="5749" length="8" line="151">
+			<expr><![CDATA[listener]]></expr>
+		</param>
+	</invkexpr>
+</method>
+<method
+ chordsig="requestSingleUpdate:(Landroid/location/Criteria;Landroid/location/LocationListener;Landroid/os/Looper;)V@android.location.LocationManager"
+ sig="void requestSingleUpdate(Criteria,LocationListener,Looper)"
+ line="154"
+ startpos="5783"
+ endpos="5802"
+>
+	<marker line="-1" type="param">
+		<operand  start="5829" length="8" line="154">
+			<expr><![CDATA[criteria]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5873" length="8" line="154">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5901" length="6" line="154">
+			<expr><![CDATA[looper]]></expr>
+		</operand>
+	</marker>
+	<type  start="5803" length="25" line="154" chordsig="android.location.Criteria"/>
+	<type  start="5839" length="33" line="154" chordsig="android.location.LocationListener"/>
+	<type  start="5883" length="17" line="154" chordsig="android.os.Looper"/>
+	<invkexpr line="155" chordsig="registerListener:(Landroid/location/LocationListener;)V@android.location.LocationManager" start="5919" length="16" type="invoke">
+			<expr><![CDATA[registerListener(listener)]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+		<param  start="5936" length="8" line="155">
+			<expr><![CDATA[listener]]></expr>
+		</param>
+	</invkexpr>
+</method>
+<method
+ chordsig="requestSingleUpdate:(Ljava/lang/String;Landroid/app/PendingIntent;)V@android.location.LocationManager"
+ sig="void requestSingleUpdate(String,PendingIntent)"
+ line="159"
+ startpos="6041"
+ endpos="6060"
+>
+	<marker line="-1" type="param">
+		<operand  start="6078" length="8" line="159">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6114" length="6" line="159">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="6061" length="16" line="159" chordsig="java.lang.String"/>
+	<type  start="6088" length="25" line="159" chordsig="android.app.PendingIntent"/>
+</method>
+<method
+ chordsig="requestSingleUpdate:(Landroid/location/Criteria;Landroid/app/PendingIntent;)V@android.location.LocationManager"
+ sig="void requestSingleUpdate(Criteria,PendingIntent)"
+ line="163"
+ startpos="6218"
+ endpos="6237"
+>
+	<marker line="-1" type="param">
+		<operand  start="6264" length="8" line="163">
+			<expr><![CDATA[criteria]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6300" length="6" line="163">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="6238" length="25" line="163" chordsig="android.location.Criteria"/>
+	<type  start="6274" length="25" line="163" chordsig="android.app.PendingIntent"/>
+</method>
+<method
+ chordsig="getLastKnownLocation:(Ljava/lang/String;)Landroid/location/Location;@android.location.LocationManager"
+ sig="Location getLastKnownLocation(String)"
+ line="166"
+ startpos="6354"
+ endpos="6374"
+>
+	<marker line="-1" type="param">
+		<operand  start="6392" length="8" line="166">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<type  start="6328" length="25" line="166" chordsig="android.location.Location"/>
+	<type  start="6375" length="16" line="166" chordsig="java.lang.String"/>
+	<marker line="167" type="return">
+		<operand  start="6419" length="13" line="167">
+			<expr><![CDATA[getLocation()]]></expr>
+		</operand>
+	</marker>
+	<invkexpr line="167" chordsig="getLocation:()Landroid/location/Location;@android.location.LocationManager" start="6419" length="11" type="invoke">
+			<expr><![CDATA[getLocation()]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+	</invkexpr>
+</method>
+	<type  start="6460" length="15" line="170" chordsig="android.location.LocationManager"/>
+	<newexpr line="170" chordsig="&lt;init&gt;:()V@android.location.LocationManager" start="6498" length="15" type="invoke">
+			<expr><![CDATA[new LocationManager()]]></expr>
+		<param  start="6494" length="21" line="170">
+			<expr><![CDATA[new LocationManager()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6498" length="15" line="170" chordsig="android.location.LocationManager"/>
+<method
+ chordsig="getInstance:()Landroid/location/LocationManager;@android.location.LocationManager"
+ sig="LocationManager getInstance()"
+ line="172"
+ startpos="6552"
+ endpos="6563"
+>
+	<type  start="6536" length="15" line="172" chordsig="android.location.LocationManager"/>
+	<marker line="173" type="return">
+		<operand  start="6583" length="15" line="173">
+			<expr><![CDATA[locationManager]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="addProximityAlert:(DDFJLandroid/app/PendingIntent;)V@android.location.LocationManager"
+ sig="void addProximityAlert(double,double,float,long,PendingIntent)"
+ line="177"
+ startpos="6694"
+ endpos="6711"
+>
+	<marker line="-1" type="param">
+		<operand  start="6719" length="8" line="177">
+			<expr><![CDATA[latitude]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6736" length="9" line="177">
+			<expr><![CDATA[longitude]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6753" length="6" line="177">
+			<expr><![CDATA[radius]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6766" length="10" line="177">
+			<expr><![CDATA[expiration]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6804" length="6" line="177">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="6778" length="25" line="177" chordsig="android.app.PendingIntent"/>
+</method>
+<method
+ chordsig="getNmea:()Ljava/lang/String;@android.location.LocationManager"
+ sig="String getNmea()"
+ line="181"
+ startpos="6916"
+ endpos="6923"
+>
+	<type  start="6909" length="6" line="181" chordsig="java.lang.String"/>
+	<marker line="182" type="return">
+		<operand  start="6943" length="12" line="182">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="182" chordsig="&lt;init&gt;:()V@java.lang.String" start="6947" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="6943" length="12" line="182">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6947" length="6" line="182" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="addNmeaListener:(Landroid/location/GpsStatus$NmeaListener;)Z@android.location.LocationManager"
+ sig="boolean addNmeaListener(NmeaListener)"
+ line="185"
+ startpos="6983"
+ endpos="6998"
+>
+	<marker line="-1" type="param">
+		<operand  start="7045" length="8" line="185">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="7005" length="39" line="185" chordsig="android.location.GpsStatus$NmeaListener"/>
+	<invkexpr line="186" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="7124" length="16" type="invoke">
+			<expr><![CDATA[edu.stanford.stamp.harness.ApplicationDriver.getInstance().registerCallback(new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    listener.onNmeaReceived(0,getNmea());
+  }
+}
+)]]></expr>
+		<param  start="7141" length="155" line="186">
+			<expr type="null"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    listener.onNmeaReceived(0,getNmea());
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="186" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="7110" length="11" type="invoke">
+			<expr><![CDATA[edu.stanford.stamp.harness.ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="186" chordsig="&lt;init&gt;:()V@android.location.LocationManager$android.location.LocationManager#edu.stanford.stamp.harness.Callback#186" start="7145" length="35" type="invoke">
+			<expr><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    listener.onNmeaReceived(0,getNmea());
+  }
+}
+]]></expr>
+		<param  start="7141" length="155" line="186">
+			<expr type="android.location.LocationManager#edu.stanford.stamp.harness.Callback#186"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    listener.onNmeaReceived(0,getNmea());
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7145" length="35" line="186" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.location.LocationManager$android.location.LocationManager#edu.stanford.stamp.harness.Callback#186" line="186">
+<method
+ chordsig="run:()V@android.location.LocationManager$android.location.LocationManager#edu.stanford.stamp.harness.Callback#186"
+ sig="void run()"
+ line="188"
+ startpos="7210"
+ endpos="7213"
+>
+	<invkexpr line="189" chordsig="onNmeaReceived:(JLjava/lang/String;)V@android.location.GpsStatus$NmeaListener" start="7243" length="14" type="invoke">
+			<expr><![CDATA[listener.onNmeaReceived(0,getNmea())]]></expr>
+		<param  start="7234" length="8" line="189">
+			<expr><![CDATA[listener]]></expr>
+		</param>
+		<param  start="7258" length="1" line="189">
+			<expr><![CDATA[0]]></expr>
+		</param>
+		<param  start="7261" length="9" line="189">
+			<expr><![CDATA[getNmea()]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="189" chordsig="getNmea:()Ljava/lang/String;@android.location.LocationManager" start="7261" length="7" type="invoke">
+			<expr><![CDATA[getNmea()]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<marker line="192" type="return">
+		<operand  start="7314" length="4" line="192">
+			<expr><![CDATA[true]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

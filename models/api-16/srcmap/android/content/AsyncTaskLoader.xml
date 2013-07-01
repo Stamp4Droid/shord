@@ -1,0 +1,220 @@
+<root>
+<class chordsig="android.content.AsyncTaskLoader" line="2">
+	<type  start="76" length="22" line="3" chordsig="android.content.Loader"/>
+	<type  start="99" length="1" line="3" chordsig="java.lang.Object"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.content.AsyncTaskLoader"
+ sig="AsyncTaskLoader(Context)"
+ line="5"
+ startpos="112"
+ endpos="127"
+>
+	<marker line="-1" type="param">
+		<operand  start="152" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="128" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="170" length="23" line="5" chordsig="android.content.Context"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="211" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="207" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="228" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="211" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setUpdateThrottle:(J)V@android.content.AsyncTaskLoader"
+ sig="void setUpdateThrottle(long)"
+ line="6"
+ startpos="253"
+ endpos="270"
+>
+	<marker line="-1" type="param">
+		<operand  start="276" length="7" line="6">
+			<expr><![CDATA[delayMS]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="297" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="293" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="314" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="297" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onForceLoad:()V@android.content.AsyncTaskLoader"
+ sig="void onForceLoad()"
+ line="7"
+ startpos="342"
+ endpos="353"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="368" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="364" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="385" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="368" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onCancelLoad:()Z@android.content.AsyncTaskLoader"
+ sig="boolean onCancelLoad()"
+ line="8"
+ startpos="416"
+ endpos="428"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="443" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="439" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="460" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="443" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onCanceled:(Ljava/lang/Object;)V@android.content.AsyncTaskLoader"
+ sig="void onCanceled(D)"
+ line="9"
+ startpos="485"
+ endpos="495"
+>
+	<marker line="-1" type="param">
+		<operand  start="498" length="4" line="9">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<type  start="496" length="1" line="9" chordsig="java.lang.Object"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="516" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="512" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="533" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="516" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="loadInBackground:()Ljava/lang/Object;@android.content.AsyncTaskLoader"
+ sig="D loadInBackground()"
+ line="10"
+ startpos="564"
+ endpos="580"
+>
+	<type  start="562" length="1" line="10" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="onLoadInBackground:()Ljava/lang/Object;@android.content.AsyncTaskLoader"
+ sig="D onLoadInBackground()"
+ line="11"
+ startpos="597"
+ endpos="615"
+>
+	<type  start="595" length="1" line="11" chordsig="java.lang.Object"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="630" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="626" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="647" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="630" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="cancelLoadInBackground:()V@android.content.AsyncTaskLoader"
+ sig="void cancelLoadInBackground()"
+ line="12"
+ startpos="672"
+ endpos="694"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="709" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="705" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="726" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="709" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isLoadInBackgroundCanceled:()Z@android.content.AsyncTaskLoader"
+ sig="boolean isLoadInBackgroundCanceled()"
+ line="13"
+ startpos="754"
+ endpos="780"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="795" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="791" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="812" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="795" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dump:(Ljava/lang/String;Ljava/io/FileDescriptor;Ljava/io/PrintWriter;[Ljava/lang/String;)V@android.content.AsyncTaskLoader"
+ sig="void dump(String,FileDescriptor,PrintWriter,String[])"
+ line="14"
+ startpos="837"
+ endpos="841"
+>
+	<marker line="-1" type="param">
+		<operand  start="859" length="6" line="14">
+			<expr><![CDATA[prefix]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="890" length="2" line="14">
+			<expr><![CDATA[fd]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="914" length="6" line="14">
+			<expr><![CDATA[writer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="941" length="4" line="14">
+			<expr><![CDATA[args]]></expr>
+		</operand>
+	</marker>
+	<type  start="842" length="16" line="14" chordsig="java.lang.String"/>
+	<type  start="867" length="22" line="14" chordsig="java.io.FileDescriptor"/>
+	<type  start="894" length="19" line="14" chordsig="java.io.PrintWriter"/>
+	<type  start="922" length="16" line="14" chordsig="java.lang.String"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="959" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="955" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="976" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="959" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

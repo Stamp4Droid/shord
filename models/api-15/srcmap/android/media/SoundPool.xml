@@ -1,0 +1,427 @@
+<root>
+<class chordsig="android.media.SoundPool" line="2">
+<class chordsig="android.media.SoundPool$OnLoadCompleteListener" line="4">
+<method
+ chordsig="onLoadComplete:(Landroid/media/SoundPool;II)V@android.media.SoundPool$OnLoadCompleteListener"
+ sig="void onLoadComplete(SoundPool,int,int)"
+ line="6"
+ startpos="119"
+ endpos="133"
+>
+	<marker line="-1" type="param">
+		<operand  start="158" length="9" line="6">
+			<expr><![CDATA[soundPool]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="173" length="8" line="6">
+			<expr><![CDATA[sampleId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="187" length="6" line="6">
+			<expr><![CDATA[status]]></expr>
+		</operand>
+	</marker>
+	<type  start="134" length="23" line="6" chordsig="android.media.SoundPool"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(III)V@android.media.SoundPool"
+ sig="SoundPool(int,int,int)"
+ line="8"
+ startpos="206"
+ endpos="215"
+>
+	<marker line="-1" type="param">
+		<operand  start="220" length="10" line="8">
+			<expr><![CDATA[maxStreams]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="236" length="10" line="8">
+			<expr><![CDATA[streamType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="252" length="10" line="8">
+			<expr><![CDATA[srcQuality]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="276" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="272" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="293" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="276" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="load:(Ljava/lang/String;I)I@android.media.SoundPool"
+ sig="int load(String,int)"
+ line="9"
+ startpos="317"
+ endpos="321"
+>
+	<marker line="-1" type="param">
+		<operand  start="339" length="4" line="9">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="349" length="8" line="9">
+			<expr><![CDATA[priority]]></expr>
+		</operand>
+	</marker>
+	<type  start="322" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="371" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="367" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="388" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="371" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="load:(Landroid/content/Context;II)I@android.media.SoundPool"
+ sig="int load(Context,int,int)"
+ line="10"
+ startpos="412"
+ endpos="416"
+>
+	<marker line="-1" type="param">
+		<operand  start="441" length="7" line="10">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="454" length="5" line="10">
+			<expr><![CDATA[resId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="465" length="8" line="10">
+			<expr><![CDATA[priority]]></expr>
+		</operand>
+	</marker>
+	<type  start="417" length="23" line="10" chordsig="android.content.Context"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="487" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="483" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="504" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="487" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="load:(Landroid/content/res/AssetFileDescriptor;I)I@android.media.SoundPool"
+ sig="int load(AssetFileDescriptor,int)"
+ line="11"
+ startpos="528"
+ endpos="532"
+>
+	<marker line="-1" type="param">
+		<operand  start="573" length="3" line="11">
+			<expr><![CDATA[afd]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="582" length="8" line="11">
+			<expr><![CDATA[priority]]></expr>
+		</operand>
+	</marker>
+	<type  start="533" length="39" line="11" chordsig="android.content.res.AssetFileDescriptor"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="604" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="600" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="621" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="604" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="load:(Ljava/io/FileDescriptor;JJI)I@android.media.SoundPool"
+ sig="int load(FileDescriptor,long,long,int)"
+ line="12"
+ startpos="645"
+ endpos="649"
+>
+	<marker line="-1" type="param">
+		<operand  start="673" length="2" line="12">
+			<expr><![CDATA[fd]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="682" length="6" line="12">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="695" length="6" line="12">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="707" length="8" line="12">
+			<expr><![CDATA[priority]]></expr>
+		</operand>
+	</marker>
+	<type  start="650" length="22" line="12" chordsig="java.io.FileDescriptor"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="729" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="725" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="746" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="729" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unload:(I)Z@android.media.SoundPool"
+ sig="boolean unload(int)"
+ line="13"
+ startpos="787"
+ endpos="793"
+>
+	<marker line="-1" type="param">
+		<operand  start="798" length="7" line="13">
+			<expr><![CDATA[soundID]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="play:(IFFIIF)I@android.media.SoundPool"
+ sig="int play(int,float,float,int,int,float)"
+ line="14"
+ startpos="833"
+ endpos="837"
+>
+	<marker line="-1" type="param">
+		<operand  start="842" length="7" line="14">
+			<expr><![CDATA[soundID]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="857" length="10" line="14">
+			<expr><![CDATA[leftVolume]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="875" length="11" line="14">
+			<expr><![CDATA[rightVolume]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="892" length="8" line="14">
+			<expr><![CDATA[priority]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="906" length="4" line="14">
+			<expr><![CDATA[loop]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="918" length="4" line="14">
+			<expr><![CDATA[rate]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="pause:(I)V@android.media.SoundPool"
+ sig="void pause(int)"
+ line="15"
+ startpos="951"
+ endpos="956"
+>
+	<marker line="-1" type="param">
+		<operand  start="961" length="8" line="15">
+			<expr><![CDATA[streamID]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="resume:(I)V@android.media.SoundPool"
+ sig="void resume(int)"
+ line="16"
+ startpos="998"
+ endpos="1004"
+>
+	<marker line="-1" type="param">
+		<operand  start="1009" length="8" line="16">
+			<expr><![CDATA[streamID]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="autoPause:()V@android.media.SoundPool"
+ sig="void autoPause()"
+ line="17"
+ startpos="1046"
+ endpos="1055"
+>
+</method>
+<method
+ chordsig="autoResume:()V@android.media.SoundPool"
+ sig="void autoResume()"
+ line="18"
+ startpos="1085"
+ endpos="1095"
+>
+</method>
+<method
+ chordsig="stop:(I)V@android.media.SoundPool"
+ sig="void stop(int)"
+ line="19"
+ startpos="1125"
+ endpos="1129"
+>
+	<marker line="-1" type="param">
+		<operand  start="1134" length="8" line="19">
+			<expr><![CDATA[streamID]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setVolume:(IFF)V@android.media.SoundPool"
+ sig="void setVolume(int,float,float)"
+ line="20"
+ startpos="1171"
+ endpos="1180"
+>
+	<marker line="-1" type="param">
+		<operand  start="1185" length="8" line="20">
+			<expr><![CDATA[streamID]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1201" length="10" line="20">
+			<expr><![CDATA[leftVolume]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1219" length="11" line="20">
+			<expr><![CDATA[rightVolume]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setPriority:(II)V@android.media.SoundPool"
+ sig="void setPriority(int,int)"
+ line="21"
+ startpos="1259"
+ endpos="1270"
+>
+	<marker line="-1" type="param">
+		<operand  start="1275" length="8" line="21">
+			<expr><![CDATA[streamID]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1289" length="8" line="21">
+			<expr><![CDATA[priority]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setLoop:(II)V@android.media.SoundPool"
+ sig="void setLoop(int,int)"
+ line="22"
+ startpos="1326"
+ endpos="1333"
+>
+	<marker line="-1" type="param">
+		<operand  start="1338" length="8" line="22">
+			<expr><![CDATA[streamID]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1352" length="4" line="22">
+			<expr><![CDATA[loop]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setRate:(IF)V@android.media.SoundPool"
+ sig="void setRate(int,float)"
+ line="23"
+ startpos="1385"
+ endpos="1392"
+>
+	<marker line="-1" type="param">
+		<operand  start="1397" length="8" line="23">
+			<expr><![CDATA[streamID]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1413" length="4" line="23">
+			<expr><![CDATA[rate]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setOnLoadCompleteListener:(Landroid/media/SoundPool$OnLoadCompleteListener;)V@android.media.SoundPool"
+ sig="void setOnLoadCompleteListener(OnLoadCompleteListener)"
+ line="24"
+ startpos="1433"
+ endpos="1458"
+>
+	<marker line="-1" type="param">
+		<operand  start="1506" length="8" line="24">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1459" length="46" line="24" chordsig="android.media.SoundPool$OnLoadCompleteListener"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1528" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1524" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1545" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1528" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="release:()V@android.media.SoundPool"
+ sig="void release()"
+ line="25"
+ startpos="1583"
+ endpos="1590"
+>
+</method>
+<method
+ chordsig="finalize:()V@android.media.SoundPool"
+ sig="void finalize()"
+ line="26"
+ startpos="1610"
+ endpos="1618"
+>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1633" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1629" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1650" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1633" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

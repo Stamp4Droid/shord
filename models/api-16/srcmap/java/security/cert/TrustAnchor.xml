@@ -1,0 +1,216 @@
+<root>
+<class chordsig="java.security.cert.TrustAnchor" line="2">
+<method
+ chordsig="&lt;init&gt;:(Ljava/security/cert/X509Certificate;[B)V@java.security.cert.TrustAnchor"
+ sig="TrustAnchor(X509Certificate,byte[])"
+ line="4"
+ startpos="63"
+ endpos="74"
+>
+	<marker line="-1" type="param">
+		<operand  start="110" length="11" line="4">
+			<expr><![CDATA[trustedCert]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="130" length="15" line="4">
+			<expr><![CDATA[nameConstraints]]></expr>
+		</operand>
+	</marker>
+	<type  start="75" length="34" line="4" chordsig="java.security.cert.X509Certificate"/>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="159" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="155" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="176" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="159" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/security/PublicKey;[B)V@java.security.cert.TrustAnchor"
+ sig="TrustAnchor(String,PublicKey,byte[])"
+ line="5"
+ startpos="196"
+ endpos="207"
+>
+	<marker line="-1" type="param">
+		<operand  start="225" length="6" line="5">
+			<expr><![CDATA[caName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="257" length="11" line="5">
+			<expr><![CDATA[caPublicKey]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="277" length="15" line="5">
+			<expr><![CDATA[nameConstraints]]></expr>
+		</operand>
+	</marker>
+	<type  start="208" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="233" length="23" line="5" chordsig="java.security.PublicKey"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="306" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="302" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="323" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="306" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljavax/security/auth/x500/X500Principal;Ljava/security/PublicKey;[B)V@java.security.cert.TrustAnchor"
+ sig="TrustAnchor(X500Principal,PublicKey,byte[])"
+ line="6"
+ startpos="343"
+ endpos="354"
+>
+	<marker line="-1" type="param">
+		<operand  start="394" length="11" line="6">
+			<expr><![CDATA[caPrincipal]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="431" length="11" line="6">
+			<expr><![CDATA[caPublicKey]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="451" length="15" line="6">
+			<expr><![CDATA[nameConstraints]]></expr>
+		</operand>
+	</marker>
+	<type  start="355" length="38" line="6" chordsig="javax.security.auth.x500.X500Principal"/>
+	<type  start="407" length="23" line="6" chordsig="java.security.PublicKey"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="480" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="476" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="497" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="480" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getNameConstraints:()[B@java.security.cert.TrustAnchor"
+ sig="byte[] getNameConstraints()"
+ line="7"
+ startpos="530"
+ endpos="548"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="563" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="559" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="580" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="563" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTrustedCert:()Ljava/security/cert/X509Certificate;@java.security.cert.TrustAnchor"
+ sig="X509Certificate getTrustedCert()"
+ line="8"
+ startpos="641"
+ endpos="655"
+>
+	<type  start="606" length="34" line="8" chordsig="java.security.cert.X509Certificate"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="670" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="666" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="687" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="670" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCA:()Ljavax/security/auth/x500/X500Principal;@java.security.cert.TrustAnchor"
+ sig="X500Principal getCA()"
+ line="9"
+ startpos="752"
+ endpos="757"
+>
+	<type  start="713" length="38" line="9" chordsig="javax.security.auth.x500.X500Principal"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="772" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="768" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="789" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="772" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCAName:()Ljava/lang/String;@java.security.cert.TrustAnchor"
+ sig="String getCAName()"
+ line="10"
+ startpos="832"
+ endpos="841"
+>
+	<type  start="815" length="16" line="10" chordsig="java.lang.String"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="856" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="852" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="873" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="856" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCAPublicKey:()Ljava/security/PublicKey;@java.security.cert.TrustAnchor"
+ sig="PublicKey getCAPublicKey()"
+ line="11"
+ startpos="923"
+ endpos="937"
+>
+	<type  start="899" length="23" line="11" chordsig="java.security.PublicKey"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="952" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="948" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="969" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="952" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.security.cert.TrustAnchor"
+ sig="String toString()"
+ line="12"
+ startpos="1006"
+ endpos="1014"
+>
+	<type  start="989" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1029" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1025" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1046" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1029" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

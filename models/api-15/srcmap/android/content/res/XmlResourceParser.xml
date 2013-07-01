@@ -1,0 +1,14 @@
+<root>
+<class chordsig="android.content.res.XmlResourceParser" line="2">
+	<type  start="74" length="28" line="3" chordsig="org.xmlpull.v1.XmlPullParser"/>
+	<type  start="104" length="25" line="3" chordsig="android.util.AttributeSet"/>
+<method
+ chordsig="close:()V@android.content.res.XmlResourceParser"
+ sig="void close()"
+ line="5"
+ startpos="154"
+ endpos="159"
+>
+</method>
+</class>
+</root>

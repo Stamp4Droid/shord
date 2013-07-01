@@ -1,0 +1,19 @@
+<root>
+<class chordsig="javax.net.ssl.HandshakeCompletedListener" line="2">
+	<type  start="77" length="23" line="3" chordsig="java.util.EventListener"/>
+<method
+ chordsig="handshakeCompleted:(Ljavax/net/ssl/HandshakeCompletedEvent;)V@javax.net.ssl.HandshakeCompletedListener"
+ sig="void handshakeCompleted(HandshakeCompletedEvent)"
+ line="5"
+ startpos="125"
+ endpos="143"
+>
+	<marker line="-1" type="param">
+		<operand  start="182" length="5" line="5">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="144" length="37" line="5" chordsig="javax.net.ssl.HandshakeCompletedEvent"/>
+</method>
+</class>
+</root>

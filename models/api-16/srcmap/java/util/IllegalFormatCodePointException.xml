@@ -1,0 +1,66 @@
+<root>
+<class chordsig="java.util.IllegalFormatCodePointException" line="2">
+	<type  start="74" length="32" line="3" chordsig="java.util.IllegalFormatException"/>
+	<type  start="120" length="20" line="4" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:(I)V@java.util.IllegalFormatCodePointException"
+ sig="IllegalFormatCodePointException(int)"
+ line="6"
+ startpos="151"
+ endpos="182"
+>
+	<marker line="-1" type="param">
+		<operand  start="187" length="1" line="6">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="202" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="198" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="219" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="202" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCodePoint:()I@java.util.IllegalFormatCodePointException"
+ sig="int getCodePoint()"
+ line="7"
+ startpos="243"
+ endpos="255"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="270" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="266" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="287" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="270" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMessage:()Ljava/lang/String;@java.util.IllegalFormatCodePointException"
+ sig="String getMessage()"
+ line="8"
+ startpos="324"
+ endpos="334"
+>
+	<type  start="307" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="349" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="345" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="366" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="349" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

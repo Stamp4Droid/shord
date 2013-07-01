@@ -1,0 +1,90 @@
+<root>
+<class chordsig="android.os.CountDownTimer" line="2">
+<method
+ chordsig="&lt;init&gt;:(JJ)V@android.os.CountDownTimer"
+ sig="CountDownTimer(long,long)"
+ line="4"
+ startpos="67"
+ endpos="81"
+>
+	<marker line="-1" type="param">
+		<operand  start="87" length="14" line="4">
+			<expr><![CDATA[millisInFuture]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="108" length="17" line="4">
+			<expr><![CDATA[countDownInterval]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="139" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="135" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="156" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="139" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="cancel:()V@android.os.CountDownTimer"
+ sig="void cancel()"
+ line="5"
+ startpos="187"
+ endpos="193"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="208" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="204" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="225" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="208" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="start:()Landroid/os/CountDownTimer;@android.os.CountDownTimer"
+ sig="CountDownTimer start()"
+ line="6"
+ startpos="290"
+ endpos="295"
+>
+	<type  start="264" length="25" line="6" chordsig="android.os.CountDownTimer"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="310" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="306" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="327" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="310" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onTick:(J)V@android.os.CountDownTimer"
+ sig="void onTick(long)"
+ line="7"
+ startpos="361"
+ endpos="367"
+>
+	<marker line="-1" type="param">
+		<operand  start="373" length="19" line="7">
+			<expr><![CDATA[millisUntilFinished]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="onFinish:()V@android.os.CountDownTimer"
+ sig="void onFinish()"
+ line="8"
+ startpos="417"
+ endpos="425"
+>
+</method>
+</class>
+</root>

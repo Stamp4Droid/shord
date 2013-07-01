@@ -1,0 +1,273 @@
+<root>
+<class chordsig="javax.xml.transform.dom.DOMResult" line="2">
+	<type  start="69" length="26" line="3" chordsig="javax.xml.transform.Result"/>
+<method
+ chordsig="&lt;init&gt;:()V@javax.xml.transform.dom.DOMResult"
+ sig="DOMResult()"
+ line="5"
+ startpos="106"
+ endpos="115"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="130" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="126" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="147" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="130" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Lorg/w3c/dom/Node;)V@javax.xml.transform.dom.DOMResult"
+ sig="DOMResult(Node)"
+ line="6"
+ startpos="167"
+ endpos="176"
+>
+	<marker line="-1" type="param">
+		<operand  start="194" length="4" line="6">
+			<expr><![CDATA[node]]></expr>
+		</operand>
+	</marker>
+	<type  start="177" length="16" line="6" chordsig="org.w3c.dom.Node"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="212" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="208" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="229" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="212" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Lorg/w3c/dom/Node;Ljava/lang/String;)V@javax.xml.transform.dom.DOMResult"
+ sig="DOMResult(Node,String)"
+ line="7"
+ startpos="249"
+ endpos="258"
+>
+	<marker line="-1" type="param">
+		<operand  start="276" length="4" line="7">
+			<expr><![CDATA[node]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="299" length="8" line="7">
+			<expr><![CDATA[systemId]]></expr>
+		</operand>
+	</marker>
+	<type  start="259" length="16" line="7" chordsig="org.w3c.dom.Node"/>
+	<type  start="282" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="321" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="317" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="338" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="321" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Lorg/w3c/dom/Node;Lorg/w3c/dom/Node;)V@javax.xml.transform.dom.DOMResult"
+ sig="DOMResult(Node,Node)"
+ line="8"
+ startpos="358"
+ endpos="367"
+>
+	<marker line="-1" type="param">
+		<operand  start="385" length="4" line="8">
+			<expr><![CDATA[node]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="408" length="11" line="8">
+			<expr><![CDATA[nextSibling]]></expr>
+		</operand>
+	</marker>
+	<type  start="368" length="16" line="8" chordsig="org.w3c.dom.Node"/>
+	<type  start="391" length="16" line="8" chordsig="org.w3c.dom.Node"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="433" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="429" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="450" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="433" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Lorg/w3c/dom/Node;Lorg/w3c/dom/Node;Ljava/lang/String;)V@javax.xml.transform.dom.DOMResult"
+ sig="DOMResult(Node,Node,String)"
+ line="9"
+ startpos="470"
+ endpos="479"
+>
+	<marker line="-1" type="param">
+		<operand  start="497" length="4" line="9">
+			<expr><![CDATA[node]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="520" length="11" line="9">
+			<expr><![CDATA[nextSibling]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="550" length="8" line="9">
+			<expr><![CDATA[systemId]]></expr>
+		</operand>
+	</marker>
+	<type  start="480" length="16" line="9" chordsig="org.w3c.dom.Node"/>
+	<type  start="503" length="16" line="9" chordsig="org.w3c.dom.Node"/>
+	<type  start="533" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="572" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="568" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="589" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="572" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setNode:(Lorg/w3c/dom/Node;)V@javax.xml.transform.dom.DOMResult"
+ sig="void setNode(Node)"
+ line="10"
+ startpos="614"
+ endpos="621"
+>
+	<marker line="-1" type="param">
+		<operand  start="639" length="4" line="10">
+			<expr><![CDATA[node]]></expr>
+		</operand>
+	</marker>
+	<type  start="622" length="16" line="10" chordsig="org.w3c.dom.Node"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="657" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="653" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="674" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="657" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getNode:()Lorg/w3c/dom/Node;@javax.xml.transform.dom.DOMResult"
+ sig="Node getNode()"
+ line="11"
+ startpos="711"
+ endpos="718"
+>
+	<type  start="694" length="16" line="11" chordsig="org.w3c.dom.Node"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="733" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="729" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="750" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="733" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setNextSibling:(Lorg/w3c/dom/Node;)V@javax.xml.transform.dom.DOMResult"
+ sig="void setNextSibling(Node)"
+ line="12"
+ startpos="775"
+ endpos="789"
+>
+	<marker line="-1" type="param">
+		<operand  start="807" length="11" line="12">
+			<expr><![CDATA[nextSibling]]></expr>
+		</operand>
+	</marker>
+	<type  start="790" length="16" line="12" chordsig="org.w3c.dom.Node"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="832" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="828" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="849" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="832" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getNextSibling:()Lorg/w3c/dom/Node;@javax.xml.transform.dom.DOMResult"
+ sig="Node getNextSibling()"
+ line="13"
+ startpos="886"
+ endpos="900"
+>
+	<type  start="869" length="16" line="13" chordsig="org.w3c.dom.Node"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="915" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="911" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="932" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="915" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSystemId:(Ljava/lang/String;)V@javax.xml.transform.dom.DOMResult"
+ sig="void setSystemId(String)"
+ line="14"
+ startpos="957"
+ endpos="968"
+>
+	<marker line="-1" type="param">
+		<operand  start="986" length="8" line="14">
+			<expr><![CDATA[systemId]]></expr>
+		</operand>
+	</marker>
+	<type  start="969" length="16" line="14" chordsig="java.lang.String"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1008" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1004" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1025" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1008" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSystemId:()Ljava/lang/String;@javax.xml.transform.dom.DOMResult"
+ sig="String getSystemId()"
+ line="15"
+ startpos="1062"
+ endpos="1073"
+>
+	<type  start="1045" length="16" line="15" chordsig="java.lang.String"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1088" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1084" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1105" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1088" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1137" length="16" line="16" chordsig="java.lang.String"/>
+</class>
+</root>

@@ -1,0 +1,22 @@
+<root>
+<class chordsig="org.apache.http.HeaderElementIterator" line="2">
+	<type  start="74" length="18" line="3" chordsig="java.util.Iterator"/>
+<method
+ chordsig="hasNext:()Z@org.apache.http.HeaderElementIterator"
+ sig="boolean hasNext()"
+ line="5"
+ startpos="120"
+ endpos="127"
+>
+</method>
+<method
+ chordsig="nextElement:()Lorg/apache/http/HeaderElement;@org.apache.http.HeaderElementIterator"
+ sig="HeaderElement nextElement()"
+ line="6"
+ startpos="178"
+ endpos="189"
+>
+	<type  start="148" length="29" line="6" chordsig="org.apache.http.HeaderElement"/>
+</method>
+</class>
+</root>

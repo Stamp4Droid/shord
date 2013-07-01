@@ -1,0 +1,53 @@
+<root>
+<class chordsig="org.apache.http.protocol.RequestTargetHost" line="2">
+	<type  start="78" length="38" line="3" chordsig="org.apache.http.HttpRequestInterceptor"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.protocol.RequestTargetHost"
+ sig="RequestTargetHost()"
+ line="5"
+ startpos="127"
+ endpos="144"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="159" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="155" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="176" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="159" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="process:(Lorg/apache/http/HttpRequest;Lorg/apache/http/protocol/HttpContext;)V@org.apache.http.protocol.RequestTargetHost"
+ sig="void process(HttpRequest,HttpContext)"
+ line="6"
+ startpos="201"
+ endpos="208"
+>
+	<marker line="-1" type="param">
+		<operand  start="237" length="7" line="6">
+			<expr><![CDATA[request]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="283" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="209" length="27" line="6" chordsig="org.apache.http.HttpRequest"/>
+	<type  start="246" length="36" line="6" chordsig="org.apache.http.protocol.HttpContext"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="362" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="358" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="379" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="362" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

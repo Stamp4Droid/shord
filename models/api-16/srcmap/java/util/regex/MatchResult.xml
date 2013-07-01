@@ -1,0 +1,77 @@
+<root>
+<class chordsig="java.util.regex.MatchResult" line="2">
+<method
+ chordsig="end:()I@java.util.regex.MatchResult"
+ sig="int end()"
+ line="4"
+ startpos="77"
+ endpos="80"
+>
+</method>
+<method
+ chordsig="end:(I)I@java.util.regex.MatchResult"
+ sig="int end(int)"
+ line="5"
+ startpos="105"
+ endpos="108"
+>
+	<marker line="-1" type="param">
+		<operand  start="113" length="5" line="5">
+			<expr><![CDATA[group]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="group:()Ljava/lang/String;@java.util.regex.MatchResult"
+ sig="String group()"
+ line="6"
+ startpos="155"
+ endpos="160"
+>
+	<type  start="138" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="group:(I)Ljava/lang/String;@java.util.regex.MatchResult"
+ sig="String group(int)"
+ line="7"
+ startpos="198"
+ endpos="203"
+>
+	<marker line="-1" type="param">
+		<operand  start="208" length="5" line="7">
+			<expr><![CDATA[group]]></expr>
+		</operand>
+	</marker>
+	<type  start="181" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="groupCount:()I@java.util.regex.MatchResult"
+ sig="int groupCount()"
+ line="8"
+ startpos="237"
+ endpos="247"
+>
+</method>
+<method
+ chordsig="start:()I@java.util.regex.MatchResult"
+ sig="int start()"
+ line="9"
+ startpos="272"
+ endpos="277"
+>
+</method>
+<method
+ chordsig="start:(I)I@java.util.regex.MatchResult"
+ sig="int start(int)"
+ line="10"
+ startpos="302"
+ endpos="307"
+>
+	<marker line="-1" type="param">
+		<operand  start="312" length="5" line="10">
+			<expr><![CDATA[group]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

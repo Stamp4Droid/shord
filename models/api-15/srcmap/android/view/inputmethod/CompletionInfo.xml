@@ -1,0 +1,226 @@
+<root>
+<class chordsig="android.view.inputmethod.CompletionInfo" line="2">
+	<type  start="81" length="21" line="3" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:(JILjava/lang/CharSequence;)V@android.view.inputmethod.CompletionInfo"
+ sig="CompletionInfo(long,int,CharSequence)"
+ line="5"
+ startpos="113"
+ endpos="127"
+>
+	<marker line="-1" type="param">
+		<operand  start="133" length="2" line="5">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="141" length="5" line="5">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="171" length="4" line="5">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="148" length="22" line="5" chordsig="java.lang.CharSequence"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="189" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="185" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="206" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="189" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(JILjava/lang/CharSequence;Ljava/lang/CharSequence;)V@android.view.inputmethod.CompletionInfo"
+ sig="CompletionInfo(long,int,CharSequence,CharSequence)"
+ line="6"
+ startpos="226"
+ endpos="240"
+>
+	<marker line="-1" type="param">
+		<operand  start="246" length="2" line="6">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="254" length="5" line="6">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="284" length="4" line="6">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="313" length="5" line="6">
+			<expr><![CDATA[label]]></expr>
+		</operand>
+	</marker>
+	<type  start="261" length="22" line="6" chordsig="java.lang.CharSequence"/>
+	<type  start="290" length="22" line="6" chordsig="java.lang.CharSequence"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="332" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="328" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="349" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="332" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getId:()J@android.view.inputmethod.CompletionInfo"
+ sig="long getId()"
+ line="7"
+ startpos="374"
+ endpos="379"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="394" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="390" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="411" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="394" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPosition:()I@android.view.inputmethod.CompletionInfo"
+ sig="int getPosition()"
+ line="8"
+ startpos="435"
+ endpos="446"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="461" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="457" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="478" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="461" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getText:()Ljava/lang/CharSequence;@android.view.inputmethod.CompletionInfo"
+ sig="CharSequence getText()"
+ line="9"
+ startpos="521"
+ endpos="528"
+>
+	<type  start="498" length="22" line="9" chordsig="java.lang.CharSequence"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="543" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="539" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="560" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="543" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLabel:()Ljava/lang/CharSequence;@android.view.inputmethod.CompletionInfo"
+ sig="CharSequence getLabel()"
+ line="10"
+ startpos="603"
+ endpos="611"
+>
+	<type  start="580" length="22" line="10" chordsig="java.lang.CharSequence"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="626" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="622" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="643" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="626" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.view.inputmethod.CompletionInfo"
+ sig="String toString()"
+ line="11"
+ startpos="680"
+ endpos="688"
+>
+	<type  start="663" length="16" line="11" chordsig="java.lang.String"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="703" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="699" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="720" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="703" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.view.inputmethod.CompletionInfo"
+ sig="void writeToParcel(Parcel,int)"
+ line="12"
+ startpos="745"
+ endpos="758"
+>
+	<marker line="-1" type="param">
+		<operand  start="777" length="4" line="12">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="787" length="5" line="12">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="759" length="17" line="12" chordsig="android.os.Parcel"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="806" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="802" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="823" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="806" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.view.inputmethod.CompletionInfo"
+ sig="int describeContents()"
+ line="13"
+ startpos="847"
+ endpos="863"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="878" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="874" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="895" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="878" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="927" length="29" line="14" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="957" length="39" line="14" chordsig="android.view.inputmethod.CompletionInfo"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.view.inputmethod.CompletionInfo"
+ line="15"
+>
+</method>
+</class>
+</root>

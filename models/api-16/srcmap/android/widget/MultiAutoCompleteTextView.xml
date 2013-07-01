@@ -1,0 +1,459 @@
+<root>
+<class chordsig="android.widget.MultiAutoCompleteTextView" line="2">
+	<type  start="73" length="35" line="3" chordsig="android.widget.AutoCompleteTextView"/>
+<class chordsig="android.widget.MultiAutoCompleteTextView$Tokenizer" line="5">
+<method
+ chordsig="findTokenStart:(Ljava/lang/CharSequence;I)I@android.widget.MultiAutoCompleteTextView$Tokenizer"
+ sig="int findTokenStart(CharSequence,int)"
+ line="7"
+ startpos="168"
+ endpos="182"
+>
+	<marker line="-1" type="param">
+		<operand  start="206" length="4" line="7">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="216" length="6" line="7">
+			<expr><![CDATA[cursor]]></expr>
+		</operand>
+	</marker>
+	<type  start="183" length="22" line="7" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="findTokenEnd:(Ljava/lang/CharSequence;I)I@android.widget.MultiAutoCompleteTextView$Tokenizer"
+ sig="int findTokenEnd(CharSequence,int)"
+ line="8"
+ startpos="246"
+ endpos="258"
+>
+	<marker line="-1" type="param">
+		<operand  start="282" length="4" line="8">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="292" length="6" line="8">
+			<expr><![CDATA[cursor]]></expr>
+		</operand>
+	</marker>
+	<type  start="259" length="22" line="8" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="terminateToken:(Ljava/lang/CharSequence;)Ljava/lang/CharSequence;@android.widget.MultiAutoCompleteTextView$Tokenizer"
+ sig="CharSequence terminateToken(CharSequence)"
+ line="9"
+ startpos="341"
+ endpos="355"
+>
+	<marker line="-1" type="param">
+		<operand  start="379" length="4" line="9">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="318" length="22" line="9" chordsig="java.lang.CharSequence"/>
+	<type  start="356" length="22" line="9" chordsig="java.lang.CharSequence"/>
+</method>
+</class>
+<class chordsig="android.widget.MultiAutoCompleteTextView$CommaTokenizer" line="11">
+	<type  start="436" length="50" line="12" chordsig="android.widget.MultiAutoCompleteTextView$Tokenizer"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.widget.MultiAutoCompleteTextView$CommaTokenizer"
+ sig="CommaTokenizer()"
+ line="14"
+ startpos="497"
+ endpos="511"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="526" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="522" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="543" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="526" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="findTokenStart:(Ljava/lang/CharSequence;I)I@android.widget.MultiAutoCompleteTextView$CommaTokenizer"
+ sig="int findTokenStart(CharSequence,int)"
+ line="15"
+ startpos="567"
+ endpos="581"
+>
+	<marker line="-1" type="param">
+		<operand  start="605" length="4" line="15">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="615" length="6" line="15">
+			<expr><![CDATA[cursor]]></expr>
+		</operand>
+	</marker>
+	<type  start="582" length="22" line="15" chordsig="java.lang.CharSequence"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="635" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="631" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="652" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="635" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="findTokenEnd:(Ljava/lang/CharSequence;I)I@android.widget.MultiAutoCompleteTextView$CommaTokenizer"
+ sig="int findTokenEnd(CharSequence,int)"
+ line="16"
+ startpos="676"
+ endpos="688"
+>
+	<marker line="-1" type="param">
+		<operand  start="712" length="4" line="16">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="722" length="6" line="16">
+			<expr><![CDATA[cursor]]></expr>
+		</operand>
+	</marker>
+	<type  start="689" length="22" line="16" chordsig="java.lang.CharSequence"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="742" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="738" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="759" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="742" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="terminateToken:(Ljava/lang/CharSequence;)Ljava/lang/CharSequence;@android.widget.MultiAutoCompleteTextView$CommaTokenizer"
+ sig="CharSequence terminateToken(CharSequence)"
+ line="17"
+ startpos="802"
+ endpos="816"
+>
+	<marker line="-1" type="param">
+		<operand  start="840" length="4" line="17">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="779" length="22" line="17" chordsig="java.lang.CharSequence"/>
+	<type  start="817" length="22" line="17" chordsig="java.lang.CharSequence"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="858" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="854" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="875" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="858" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.widget.MultiAutoCompleteTextView"
+ sig="MultiAutoCompleteTextView(Context)"
+ line="19"
+ startpos="897"
+ endpos="922"
+>
+	<marker line="-1" type="param">
+		<operand  start="947" length="7" line="19">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="923" length="23" line="19" chordsig="android.content.Context"/>
+	<type  start="965" length="23" line="19" chordsig="android.content.Context"/>
+	<type  start="995" length="25" line="19" chordsig="android.util.AttributeSet"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1040" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1036" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1057" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1040" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.widget.MultiAutoCompleteTextView"
+ sig="MultiAutoCompleteTextView(Context,AttributeSet)"
+ line="20"
+ startpos="1077"
+ endpos="1102"
+>
+	<marker line="-1" type="param">
+		<operand  start="1127" length="7" line="20">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1162" length="5" line="20">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="1103" length="23" line="20" chordsig="android.content.Context"/>
+	<type  start="1136" length="25" line="20" chordsig="android.util.AttributeSet"/>
+	<type  start="1178" length="23" line="20" chordsig="android.content.Context"/>
+	<type  start="1208" length="25" line="20" chordsig="android.util.AttributeSet"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1253" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1249" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1270" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1253" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;I)V@android.widget.MultiAutoCompleteTextView"
+ sig="MultiAutoCompleteTextView(Context,AttributeSet,int)"
+ line="21"
+ startpos="1290"
+ endpos="1315"
+>
+	<marker line="-1" type="param">
+		<operand  start="1340" length="7" line="21">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1375" length="5" line="21">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1386" length="8" line="21">
+			<expr><![CDATA[defStyle]]></expr>
+		</operand>
+	</marker>
+	<type  start="1316" length="23" line="21" chordsig="android.content.Context"/>
+	<type  start="1349" length="25" line="21" chordsig="android.util.AttributeSet"/>
+	<type  start="1405" length="23" line="21" chordsig="android.content.Context"/>
+	<type  start="1435" length="25" line="21" chordsig="android.util.AttributeSet"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1480" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1476" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1497" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1480" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTokenizer:(Landroid/widget/MultiAutoCompleteTextView$Tokenizer;)V@android.widget.MultiAutoCompleteTextView"
+ sig="void setTokenizer(Tokenizer)"
+ line="22"
+ startpos="1522"
+ endpos="1534"
+>
+	<marker line="-1" type="param">
+		<operand  start="1586" length="1" line="22">
+			<expr><![CDATA[t]]></expr>
+		</operand>
+	</marker>
+	<type  start="1535" length="50" line="22" chordsig="android.widget.MultiAutoCompleteTextView$Tokenizer"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1601" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1597" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1618" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1601" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="performFiltering:(Ljava/lang/CharSequence;I)V@android.widget.MultiAutoCompleteTextView"
+ sig="void performFiltering(CharSequence,int)"
+ line="23"
+ startpos="1646"
+ endpos="1662"
+>
+	<marker line="-1" type="param">
+		<operand  start="1686" length="4" line="23">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1696" length="7" line="23">
+			<expr><![CDATA[keyCode]]></expr>
+		</operand>
+	</marker>
+	<type  start="1663" length="22" line="23" chordsig="java.lang.CharSequence"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1717" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1713" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1734" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1717" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="enoughToFilter:()Z@android.widget.MultiAutoCompleteTextView"
+ sig="boolean enoughToFilter()"
+ line="24"
+ startpos="1762"
+ endpos="1776"
+>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1791" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1787" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1808" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1791" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="performValidation:()V@android.widget.MultiAutoCompleteTextView"
+ sig="void performValidation()"
+ line="25"
+ startpos="1833"
+ endpos="1850"
+>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1865" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1861" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1882" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1865" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="performFiltering:(Ljava/lang/CharSequence;III)V@android.widget.MultiAutoCompleteTextView"
+ sig="void performFiltering(CharSequence,int,int,int)"
+ line="26"
+ startpos="1910"
+ endpos="1926"
+>
+	<marker line="-1" type="param">
+		<operand  start="1950" length="4" line="26">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1960" length="5" line="26">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1971" length="3" line="26">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1980" length="7" line="26">
+			<expr><![CDATA[keyCode]]></expr>
+		</operand>
+	</marker>
+	<type  start="1927" length="22" line="26" chordsig="java.lang.CharSequence"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2001" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1997" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2018" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2001" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="replaceText:(Ljava/lang/CharSequence;)V@android.widget.MultiAutoCompleteTextView"
+ sig="void replaceText(CharSequence)"
+ line="27"
+ startpos="2046"
+ endpos="2057"
+>
+	<marker line="-1" type="param">
+		<operand  start="2081" length="4" line="27">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="2058" length="22" line="27" chordsig="java.lang.CharSequence"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2099" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2095" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2116" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2099" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityEvent:(Landroid/view/accessibility/AccessibilityEvent;)V@android.widget.MultiAutoCompleteTextView"
+ sig="void onInitializeAccessibilityEvent(AccessibilityEvent)"
+ line="28"
+ startpos="2141"
+ endpos="2171"
+>
+	<marker line="-1" type="param">
+		<operand  start="2218" length="5" line="28">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="2172" length="45" line="28" chordsig="android.view.accessibility.AccessibilityEvent"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2237" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2233" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2254" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2237" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityNodeInfo:(Landroid/view/accessibility/AccessibilityNodeInfo;)V@android.widget.MultiAutoCompleteTextView"
+ sig="void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo)"
+ line="29"
+ startpos="2279"
+ endpos="2312"
+>
+	<marker line="-1" type="param">
+		<operand  start="2362" length="4" line="29">
+			<expr><![CDATA[info]]></expr>
+		</operand>
+	</marker>
+	<type  start="2313" length="48" line="29" chordsig="android.view.accessibility.AccessibilityNodeInfo"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2380" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2376" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2397" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2380" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

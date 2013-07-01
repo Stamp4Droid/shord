@@ -1,0 +1,851 @@
+<root>
+<class chordsig="android.location.Location" line="6">
+	<type  start="148" length="21" line="6" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.location.Location"
+ sig="Location(String)"
+ line="8"
+ startpos="184"
+ endpos="192"
+>
+	<marker line="-1" type="param">
+		<operand  start="210" length="8" line="8">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<type  start="193" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="240" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="236" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="257" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="240" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/location/Location;)V@android.location.Location"
+ sig="Location(Location)"
+ line="12"
+ startpos="285"
+ endpos="293"
+>
+	<marker line="-1" type="param">
+		<operand  start="320" length="1" line="12">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<type  start="294" length="25" line="12" chordsig="android.location.Location"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="343" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="339" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="360" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="343" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dump:(Landroid/util/Printer;Ljava/lang/String;)V@android.location.Location"
+ sig="void dump(Printer,String)"
+ line="16"
+ startpos="393"
+ endpos="397"
+>
+	<marker line="-1" type="param">
+		<operand  start="419" length="2" line="16">
+			<expr><![CDATA[pw]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="440" length="6" line="16">
+			<expr><![CDATA[prefix]]></expr>
+		</operand>
+	</marker>
+	<type  start="398" length="20" line="16" chordsig="android.util.Printer"/>
+	<type  start="423" length="16" line="16" chordsig="java.lang.String"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="468" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="464" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="485" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="468" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="set:(Landroid/location/Location;)V@android.location.Location"
+ sig="void set(Location)"
+ line="20"
+ startpos="518"
+ endpos="521"
+>
+	<marker line="-1" type="param">
+		<operand  start="548" length="1" line="20">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<type  start="522" length="25" line="20" chordsig="android.location.Location"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="571" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="567" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="588" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="571" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="reset:()V@android.location.Location"
+ sig="void reset()"
+ line="24"
+ startpos="621"
+ endpos="626"
+>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="649" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="645" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="666" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="649" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="convert:(DI)Ljava/lang/String;@android.location.Location"
+ sig="String convert(double,int)"
+ line="28"
+ startpos="718"
+ endpos="725"
+>
+	<marker line="-1" type="param">
+		<operand  start="733" length="10" line="28">
+			<expr><![CDATA[coordinate]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="749" length="10" line="28">
+			<expr><![CDATA[outputType]]></expr>
+		</operand>
+	</marker>
+	<type  start="701" length="16" line="28" chordsig="java.lang.String"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="781" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="777" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="798" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="781" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="convert:(Ljava/lang/String;)D@android.location.Location"
+ sig="double convert(String)"
+ line="32"
+ startpos="840"
+ endpos="847"
+>
+	<marker line="-1" type="param">
+		<operand  start="865" length="10" line="32">
+			<expr><![CDATA[coordinate]]></expr>
+		</operand>
+	</marker>
+	<type  start="848" length="16" line="32" chordsig="java.lang.String"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="897" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="893" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="914" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="897" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="distanceBetween:(DDDD[F)V@android.location.Location"
+ sig="void distanceBetween(double,double,double,double,float[])"
+ line="36"
+ startpos="954"
+ endpos="969"
+>
+	<marker line="-1" type="param">
+		<operand  start="977" length="13" line="36">
+			<expr><![CDATA[startLatitude]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="999" length="14" line="36">
+			<expr><![CDATA[startLongitude]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1022" length="11" line="36">
+			<expr><![CDATA[endLatitude]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1042" length="12" line="36">
+			<expr><![CDATA[endLongitude]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1064" length="7" line="36">
+			<expr><![CDATA[results]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1093" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1089" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1110" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1093" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="distanceTo:(Landroid/location/Location;)F@android.location.Location"
+ sig="float distanceTo(Location)"
+ line="40"
+ startpos="1144"
+ endpos="1154"
+>
+	<marker line="-1" type="param">
+		<operand  start="1181" length="4" line="40">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<type  start="1155" length="25" line="40" chordsig="android.location.Location"/>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1207" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1203" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1224" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1207" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="bearingTo:(Landroid/location/Location;)F@android.location.Location"
+ sig="float bearingTo(Location)"
+ line="44"
+ startpos="1258"
+ endpos="1267"
+>
+	<marker line="-1" type="param">
+		<operand  start="1294" length="4" line="44">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<type  start="1268" length="25" line="44" chordsig="android.location.Location"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1320" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1316" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1337" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1320" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getProvider:()Ljava/lang/String;@android.location.Location"
+ sig="String getProvider()"
+ line="48"
+ startpos="1382"
+ endpos="1393"
+>
+	<type  start="1365" length="16" line="48" chordsig="java.lang.String"/>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1416" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1412" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1433" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1416" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setProvider:(Ljava/lang/String;)V@android.location.Location"
+ sig="void setProvider(String)"
+ line="52"
+ startpos="1466"
+ endpos="1477"
+>
+	<marker line="-1" type="param">
+		<operand  start="1495" length="8" line="52">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<type  start="1478" length="16" line="52" chordsig="java.lang.String"/>
+	<newexpr line="53" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1525" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1521" length="29" line="53">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1542" length="7" line="53">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1525" length="16" line="53" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTime:()J@android.location.Location"
+ sig="long getTime()"
+ line="56"
+ startpos="1575"
+ endpos="1582"
+>
+	<newexpr line="57" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1605" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1601" length="29" line="57">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1622" length="7" line="57">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1605" length="16" line="57" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTime:(J)V@android.location.Location"
+ sig="void setTime(long)"
+ line="60"
+ startpos="1655"
+ endpos="1662"
+>
+	<marker line="-1" type="param">
+		<operand  start="1668" length="4" line="60">
+			<expr><![CDATA[time]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="61" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1694" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1690" length="29" line="61">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1711" length="7" line="61">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1694" length="16" line="61" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setLatitude:(D)V@android.location.Location"
+ sig="void setLatitude(double)"
+ line="64"
+ startpos="1744"
+ endpos="1755"
+>
+	<marker line="-1" type="param">
+		<operand  start="1763" length="8" line="64">
+			<expr><![CDATA[latitude]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="65" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1793" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1789" length="29" line="65">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1810" length="7" line="65">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1793" length="16" line="65" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setLongitude:(D)V@android.location.Location"
+ sig="void setLongitude(double)"
+ line="68"
+ startpos="1843"
+ endpos="1855"
+>
+	<marker line="-1" type="param">
+		<operand  start="1863" length="9" line="68">
+			<expr><![CDATA[longitude]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="69" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1894" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1890" length="29" line="69">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1911" length="7" line="69">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1894" length="16" line="69" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hasAltitude:()Z@android.location.Location"
+ sig="boolean hasAltitude()"
+ line="72"
+ startpos="1947"
+ endpos="1958"
+>
+	<newexpr line="73" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1981" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1977" length="29" line="73">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1998" length="7" line="73">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1981" length="16" line="73" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAltitude:()D@android.location.Location"
+ sig="double getAltitude()"
+ line="76"
+ startpos="2033"
+ endpos="2044"
+>
+	<newexpr line="77" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2067" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2063" length="29" line="77">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2084" length="7" line="77">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2067" length="16" line="77" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setAltitude:(D)V@android.location.Location"
+ sig="void setAltitude(double)"
+ line="80"
+ startpos="2117"
+ endpos="2128"
+>
+	<marker line="-1" type="param">
+		<operand  start="2136" length="8" line="80">
+			<expr><![CDATA[altitude]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="81" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2166" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2162" length="29" line="81">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2183" length="7" line="81">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2166" length="16" line="81" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeAltitude:()V@android.location.Location"
+ sig="void removeAltitude()"
+ line="84"
+ startpos="2216"
+ endpos="2230"
+>
+	<newexpr line="85" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2253" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2249" length="29" line="85">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2270" length="7" line="85">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2253" length="16" line="85" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hasSpeed:()Z@android.location.Location"
+ sig="boolean hasSpeed()"
+ line="88"
+ startpos="2306"
+ endpos="2314"
+>
+	<newexpr line="89" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2337" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2333" length="29" line="89">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2354" length="7" line="89">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2337" length="16" line="89" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSpeed:()F@android.location.Location"
+ sig="float getSpeed()"
+ line="92"
+ startpos="2388"
+ endpos="2396"
+>
+	<newexpr line="93" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2419" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2415" length="29" line="93">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2436" length="7" line="93">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2419" length="16" line="93" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSpeed:(F)V@android.location.Location"
+ sig="void setSpeed(float)"
+ line="96"
+ startpos="2469"
+ endpos="2477"
+>
+	<marker line="-1" type="param">
+		<operand  start="2484" length="5" line="96">
+			<expr><![CDATA[speed]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="97" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2511" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2507" length="29" line="97">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2528" length="7" line="97">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2511" length="16" line="97" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeSpeed:()V@android.location.Location"
+ sig="void removeSpeed()"
+ line="100"
+ startpos="2561"
+ endpos="2572"
+>
+	<newexpr line="101" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2595" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2591" length="29" line="101">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2612" length="7" line="101">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2595" length="16" line="101" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hasBearing:()Z@android.location.Location"
+ sig="boolean hasBearing()"
+ line="104"
+ startpos="2648"
+ endpos="2658"
+>
+	<newexpr line="105" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2681" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2677" length="29" line="105">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2698" length="7" line="105">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2681" length="16" line="105" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getBearing:()F@android.location.Location"
+ sig="float getBearing()"
+ line="108"
+ startpos="2732"
+ endpos="2742"
+>
+	<newexpr line="109" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2765" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2761" length="29" line="109">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2782" length="7" line="109">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2765" length="16" line="109" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setBearing:(F)V@android.location.Location"
+ sig="void setBearing(float)"
+ line="112"
+ startpos="2815"
+ endpos="2825"
+>
+	<marker line="-1" type="param">
+		<operand  start="2832" length="7" line="112">
+			<expr><![CDATA[bearing]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="113" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2861" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2857" length="29" line="113">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2878" length="7" line="113">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2861" length="16" line="113" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeBearing:()V@android.location.Location"
+ sig="void removeBearing()"
+ line="116"
+ startpos="2911"
+ endpos="2924"
+>
+	<newexpr line="117" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2947" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2943" length="29" line="117">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2964" length="7" line="117">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2947" length="16" line="117" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hasAccuracy:()Z@android.location.Location"
+ sig="boolean hasAccuracy()"
+ line="120"
+ startpos="3000"
+ endpos="3011"
+>
+	<newexpr line="121" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3034" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3030" length="29" line="121">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3051" length="7" line="121">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3034" length="16" line="121" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAccuracy:()F@android.location.Location"
+ sig="float getAccuracy()"
+ line="124"
+ startpos="3085"
+ endpos="3096"
+>
+	<newexpr line="125" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3119" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3115" length="29" line="125">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3136" length="7" line="125">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3119" length="16" line="125" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setAccuracy:(F)V@android.location.Location"
+ sig="void setAccuracy(float)"
+ line="128"
+ startpos="3169"
+ endpos="3180"
+>
+	<marker line="-1" type="param">
+		<operand  start="3187" length="8" line="128">
+			<expr><![CDATA[accuracy]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="129" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3217" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3213" length="29" line="129">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3234" length="7" line="129">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3217" length="16" line="129" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeAccuracy:()V@android.location.Location"
+ sig="void removeAccuracy()"
+ line="132"
+ startpos="3267"
+ endpos="3281"
+>
+	<newexpr line="133" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3304" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3300" length="29" line="133">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3321" length="7" line="133">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3304" length="16" line="133" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getExtras:()Landroid/os/Bundle;@android.location.Location"
+ sig="Bundle getExtras()"
+ line="136"
+ startpos="3367"
+ endpos="3376"
+>
+	<type  start="3349" length="17" line="136" chordsig="android.os.Bundle"/>
+	<newexpr line="137" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3399" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3395" length="29" line="137">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3416" length="7" line="137">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3399" length="16" line="137" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setExtras:(Landroid/os/Bundle;)V@android.location.Location"
+ sig="void setExtras(Bundle)"
+ line="140"
+ startpos="3449"
+ endpos="3458"
+>
+	<marker line="-1" type="param">
+		<operand  start="3477" length="6" line="140">
+			<expr><![CDATA[extras]]></expr>
+		</operand>
+	</marker>
+	<type  start="3459" length="17" line="140" chordsig="android.os.Bundle"/>
+	<newexpr line="141" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3505" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3501" length="29" line="141">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3522" length="7" line="141">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3505" length="16" line="141" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.location.Location"
+ sig="int describeContents()"
+ line="144"
+ startpos="3554"
+ endpos="3570"
+>
+	<newexpr line="145" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3593" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3589" length="29" line="145">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3610" length="7" line="145">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3593" length="16" line="145" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.location.Location"
+ sig="void writeToParcel(Parcel,int)"
+ line="148"
+ startpos="3643"
+ endpos="3656"
+>
+	<marker line="-1" type="param">
+		<operand  start="3675" length="6" line="148">
+			<expr><![CDATA[parcel]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3687" length="5" line="148">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="3657" length="17" line="148" chordsig="android.os.Parcel"/>
+	<newexpr line="149" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3714" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3710" length="29" line="149">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3731" length="7" line="149">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3714" length="16" line="149" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="3919" length="29" line="158" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="3949" length="25" line="158" chordsig="android.location.Location"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.location.Location"
+ line="160"
+>
+</method>
+<method
+ chordsig="getLatitude:()D@android.location.Location"
+ sig="double getLatitude()"
+ line="165"
+ startpos="4117"
+ endpos="4128"
+>
+	<marker line="166" type="return">
+		<operand  start="4148" length="4" line="166">
+			<expr><![CDATA[13.0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getLongitude:()D@android.location.Location"
+ sig="double getLongitude()"
+ line="170"
+ startpos="4249"
+ endpos="4261"
+>
+	<marker line="171" type="return">
+		<operand  start="4281" length="4" line="171">
+			<expr><![CDATA[13.0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.location.Location"
+ sig="String toString()"
+ line="175"
+ startpos="4383"
+ endpos="4391"
+>
+	<type  start="4366" length="16" line="175" chordsig="java.lang.String"/>
+	<marker line="176" type="return">
+		<operand  start="4411" length="12" line="176">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="176" chordsig="&lt;init&gt;:()V@java.lang.String" start="4415" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="4411" length="12" line="176">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4415" length="6" line="176" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

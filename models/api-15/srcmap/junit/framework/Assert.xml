@@ -1,0 +1,1056 @@
+<root>
+<class chordsig="junit.framework.Assert" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@junit.framework.Assert"
+ sig="Assert()"
+ line="4"
+ startpos="58"
+ endpos="64"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="79" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="75" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="96" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="79" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertTrue:(Ljava/lang/String;Z)V@junit.framework.Assert"
+ sig="void assertTrue(String,boolean)"
+ line="5"
+ startpos="128"
+ endpos="138"
+>
+	<marker line="-1" type="param">
+		<operand  start="156" length="7" line="5">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="173" length="9" line="5">
+			<expr><![CDATA[condition]]></expr>
+		</operand>
+	</marker>
+	<type  start="139" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="196" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="192" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="213" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="196" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertTrue:(Z)V@junit.framework.Assert"
+ sig="void assertTrue(boolean)"
+ line="6"
+ startpos="245"
+ endpos="255"
+>
+	<marker line="-1" type="param">
+		<operand  start="264" length="9" line="6">
+			<expr><![CDATA[condition]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="287" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="283" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="304" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="287" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertFalse:(Ljava/lang/String;Z)V@junit.framework.Assert"
+ sig="void assertFalse(String,boolean)"
+ line="7"
+ startpos="336"
+ endpos="347"
+>
+	<marker line="-1" type="param">
+		<operand  start="365" length="7" line="7">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="382" length="9" line="7">
+			<expr><![CDATA[condition]]></expr>
+		</operand>
+	</marker>
+	<type  start="348" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="405" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="401" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="422" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="405" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertFalse:(Z)V@junit.framework.Assert"
+ sig="void assertFalse(boolean)"
+ line="8"
+ startpos="454"
+ endpos="465"
+>
+	<marker line="-1" type="param">
+		<operand  start="474" length="9" line="8">
+			<expr><![CDATA[condition]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="497" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="493" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="514" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="497" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="fail:(Ljava/lang/String;)V@junit.framework.Assert"
+ sig="void fail(String)"
+ line="9"
+ startpos="546"
+ endpos="550"
+>
+	<marker line="-1" type="param">
+		<operand  start="568" length="7" line="9">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="551" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="589" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="585" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="606" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="589" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="fail:()V@junit.framework.Assert"
+ sig="void fail()"
+ line="10"
+ startpos="638"
+ endpos="642"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="657" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="653" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="674" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="657" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V@junit.framework.Assert"
+ sig="void assertEquals(String,Object,Object)"
+ line="11"
+ startpos="706"
+ endpos="718"
+>
+	<marker line="-1" type="param">
+		<operand  start="736" length="7" line="11">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="762" length="8" line="11">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="789" length="6" line="11">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<type  start="719" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="745" length="16" line="11" chordsig="java.lang.Object"/>
+	<type  start="772" length="16" line="11" chordsig="java.lang.Object"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="809" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="805" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="826" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="809" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(Ljava/lang/Object;Ljava/lang/Object;)V@junit.framework.Assert"
+ sig="void assertEquals(Object,Object)"
+ line="12"
+ startpos="858"
+ endpos="870"
+>
+	<marker line="-1" type="param">
+		<operand  start="888" length="8" line="12">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="915" length="6" line="12">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<type  start="871" length="16" line="12" chordsig="java.lang.Object"/>
+	<type  start="898" length="16" line="12" chordsig="java.lang.Object"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="935" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="931" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="952" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="935" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V@junit.framework.Assert"
+ sig="void assertEquals(String,String,String)"
+ line="13"
+ startpos="984"
+ endpos="996"
+>
+	<marker line="-1" type="param">
+		<operand  start="1014" length="7" line="13">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1040" length="8" line="13">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1067" length="6" line="13">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<type  start="997" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="1023" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="1050" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1087" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1083" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1104" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1087" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(Ljava/lang/String;Ljava/lang/String;)V@junit.framework.Assert"
+ sig="void assertEquals(String,String)"
+ line="14"
+ startpos="1136"
+ endpos="1148"
+>
+	<marker line="-1" type="param">
+		<operand  start="1166" length="8" line="14">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1193" length="6" line="14">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<type  start="1149" length="16" line="14" chordsig="java.lang.String"/>
+	<type  start="1176" length="16" line="14" chordsig="java.lang.String"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1213" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1209" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1230" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1213" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(Ljava/lang/String;DDD)V@junit.framework.Assert"
+ sig="void assertEquals(String,double,double,double)"
+ line="15"
+ startpos="1262"
+ endpos="1274"
+>
+	<marker line="-1" type="param">
+		<operand  start="1292" length="7" line="15">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1308" length="8" line="15">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1325" length="6" line="15">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1340" length="5" line="15">
+			<expr><![CDATA[delta]]></expr>
+		</operand>
+	</marker>
+	<type  start="1275" length="16" line="15" chordsig="java.lang.String"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1359" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1355" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1376" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1359" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(DDD)V@junit.framework.Assert"
+ sig="void assertEquals(double,double,double)"
+ line="16"
+ startpos="1408"
+ endpos="1420"
+>
+	<marker line="-1" type="param">
+		<operand  start="1428" length="8" line="16">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1445" length="6" line="16">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1460" length="5" line="16">
+			<expr><![CDATA[delta]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1479" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1475" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1496" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1479" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(Ljava/lang/String;FFF)V@junit.framework.Assert"
+ sig="void assertEquals(String,float,float,float)"
+ line="17"
+ startpos="1528"
+ endpos="1540"
+>
+	<marker line="-1" type="param">
+		<operand  start="1558" length="7" line="17">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1573" length="8" line="17">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1589" length="6" line="17">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1603" length="5" line="17">
+			<expr><![CDATA[delta]]></expr>
+		</operand>
+	</marker>
+	<type  start="1541" length="16" line="17" chordsig="java.lang.String"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1622" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1618" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1639" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1622" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(FFF)V@junit.framework.Assert"
+ sig="void assertEquals(float,float,float)"
+ line="18"
+ startpos="1671"
+ endpos="1683"
+>
+	<marker line="-1" type="param">
+		<operand  start="1690" length="8" line="18">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1706" length="6" line="18">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1720" length="5" line="18">
+			<expr><![CDATA[delta]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1739" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1735" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1756" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1739" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(Ljava/lang/String;JJ)V@junit.framework.Assert"
+ sig="void assertEquals(String,long,long)"
+ line="19"
+ startpos="1788"
+ endpos="1800"
+>
+	<marker line="-1" type="param">
+		<operand  start="1818" length="7" line="19">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1832" length="8" line="19">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1847" length="6" line="19">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<type  start="1801" length="16" line="19" chordsig="java.lang.String"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1867" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1863" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1884" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1867" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(JJ)V@junit.framework.Assert"
+ sig="void assertEquals(long,long)"
+ line="20"
+ startpos="1916"
+ endpos="1928"
+>
+	<marker line="-1" type="param">
+		<operand  start="1934" length="8" line="20">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1949" length="6" line="20">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1969" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1965" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1986" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1969" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(Ljava/lang/String;ZZ)V@junit.framework.Assert"
+ sig="void assertEquals(String,boolean,boolean)"
+ line="21"
+ startpos="2018"
+ endpos="2030"
+>
+	<marker line="-1" type="param">
+		<operand  start="2048" length="7" line="21">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2065" length="8" line="21">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2083" length="6" line="21">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<type  start="2031" length="16" line="21" chordsig="java.lang.String"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2103" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2099" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2120" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2103" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(ZZ)V@junit.framework.Assert"
+ sig="void assertEquals(boolean,boolean)"
+ line="22"
+ startpos="2152"
+ endpos="2164"
+>
+	<marker line="-1" type="param">
+		<operand  start="2173" length="8" line="22">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2191" length="6" line="22">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2211" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2207" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2228" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2211" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(Ljava/lang/String;BB)V@junit.framework.Assert"
+ sig="void assertEquals(String,byte,byte)"
+ line="23"
+ startpos="2260"
+ endpos="2272"
+>
+	<marker line="-1" type="param">
+		<operand  start="2290" length="7" line="23">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2304" length="8" line="23">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2319" length="6" line="23">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<type  start="2273" length="16" line="23" chordsig="java.lang.String"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2339" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2335" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2356" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2339" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(BB)V@junit.framework.Assert"
+ sig="void assertEquals(byte,byte)"
+ line="24"
+ startpos="2388"
+ endpos="2400"
+>
+	<marker line="-1" type="param">
+		<operand  start="2406" length="8" line="24">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2421" length="6" line="24">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2441" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2437" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2458" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2441" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(Ljava/lang/String;CC)V@junit.framework.Assert"
+ sig="void assertEquals(String,char,char)"
+ line="25"
+ startpos="2490"
+ endpos="2502"
+>
+	<marker line="-1" type="param">
+		<operand  start="2520" length="7" line="25">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2534" length="8" line="25">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2549" length="6" line="25">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<type  start="2503" length="16" line="25" chordsig="java.lang.String"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2569" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2565" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2586" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2569" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(CC)V@junit.framework.Assert"
+ sig="void assertEquals(char,char)"
+ line="26"
+ startpos="2618"
+ endpos="2630"
+>
+	<marker line="-1" type="param">
+		<operand  start="2636" length="8" line="26">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2651" length="6" line="26">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2671" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2667" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2688" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2671" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(Ljava/lang/String;SS)V@junit.framework.Assert"
+ sig="void assertEquals(String,short,short)"
+ line="27"
+ startpos="2720"
+ endpos="2732"
+>
+	<marker line="-1" type="param">
+		<operand  start="2750" length="7" line="27">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2765" length="8" line="27">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2781" length="6" line="27">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<type  start="2733" length="16" line="27" chordsig="java.lang.String"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2801" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2797" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2818" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2801" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(SS)V@junit.framework.Assert"
+ sig="void assertEquals(short,short)"
+ line="28"
+ startpos="2850"
+ endpos="2862"
+>
+	<marker line="-1" type="param">
+		<operand  start="2869" length="8" line="28">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2885" length="6" line="28">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2905" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2901" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2922" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2905" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(Ljava/lang/String;II)V@junit.framework.Assert"
+ sig="void assertEquals(String,int,int)"
+ line="29"
+ startpos="2954"
+ endpos="2966"
+>
+	<marker line="-1" type="param">
+		<operand  start="2984" length="7" line="29">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2997" length="8" line="29">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3011" length="6" line="29">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<type  start="2967" length="16" line="29" chordsig="java.lang.String"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3031" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3027" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3048" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3031" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertEquals:(II)V@junit.framework.Assert"
+ sig="void assertEquals(int,int)"
+ line="30"
+ startpos="3080"
+ endpos="3092"
+>
+	<marker line="-1" type="param">
+		<operand  start="3097" length="8" line="30">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3111" length="6" line="30">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3131" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3127" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3148" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3131" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertNotNull:(Ljava/lang/Object;)V@junit.framework.Assert"
+ sig="void assertNotNull(Object)"
+ line="31"
+ startpos="3180"
+ endpos="3193"
+>
+	<marker line="-1" type="param">
+		<operand  start="3211" length="6" line="31">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="3194" length="16" line="31" chordsig="java.lang.Object"/>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3231" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3227" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3248" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3231" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertNotNull:(Ljava/lang/String;Ljava/lang/Object;)V@junit.framework.Assert"
+ sig="void assertNotNull(String,Object)"
+ line="32"
+ startpos="3280"
+ endpos="3293"
+>
+	<marker line="-1" type="param">
+		<operand  start="3311" length="7" line="32">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3337" length="6" line="32">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="3294" length="16" line="32" chordsig="java.lang.String"/>
+	<type  start="3320" length="16" line="32" chordsig="java.lang.Object"/>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3357" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3353" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3374" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3357" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertNull:(Ljava/lang/Object;)V@junit.framework.Assert"
+ sig="void assertNull(Object)"
+ line="33"
+ startpos="3406"
+ endpos="3416"
+>
+	<marker line="-1" type="param">
+		<operand  start="3434" length="6" line="33">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="3417" length="16" line="33" chordsig="java.lang.Object"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3454" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3450" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3471" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3454" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertNull:(Ljava/lang/String;Ljava/lang/Object;)V@junit.framework.Assert"
+ sig="void assertNull(String,Object)"
+ line="34"
+ startpos="3503"
+ endpos="3513"
+>
+	<marker line="-1" type="param">
+		<operand  start="3531" length="7" line="34">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3557" length="6" line="34">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="3514" length="16" line="34" chordsig="java.lang.String"/>
+	<type  start="3540" length="16" line="34" chordsig="java.lang.Object"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3577" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3573" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3594" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3577" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertSame:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V@junit.framework.Assert"
+ sig="void assertSame(String,Object,Object)"
+ line="35"
+ startpos="3626"
+ endpos="3636"
+>
+	<marker line="-1" type="param">
+		<operand  start="3654" length="7" line="35">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3680" length="8" line="35">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3707" length="6" line="35">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<type  start="3637" length="16" line="35" chordsig="java.lang.String"/>
+	<type  start="3663" length="16" line="35" chordsig="java.lang.Object"/>
+	<type  start="3690" length="16" line="35" chordsig="java.lang.Object"/>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3727" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3723" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3744" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3727" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertSame:(Ljava/lang/Object;Ljava/lang/Object;)V@junit.framework.Assert"
+ sig="void assertSame(Object,Object)"
+ line="36"
+ startpos="3776"
+ endpos="3786"
+>
+	<marker line="-1" type="param">
+		<operand  start="3804" length="8" line="36">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3831" length="6" line="36">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<type  start="3787" length="16" line="36" chordsig="java.lang.Object"/>
+	<type  start="3814" length="16" line="36" chordsig="java.lang.Object"/>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3851" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3847" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3868" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3851" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertNotSame:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V@junit.framework.Assert"
+ sig="void assertNotSame(String,Object,Object)"
+ line="37"
+ startpos="3900"
+ endpos="3913"
+>
+	<marker line="-1" type="param">
+		<operand  start="3931" length="7" line="37">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3957" length="8" line="37">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3984" length="6" line="37">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<type  start="3914" length="16" line="37" chordsig="java.lang.String"/>
+	<type  start="3940" length="16" line="37" chordsig="java.lang.Object"/>
+	<type  start="3967" length="16" line="37" chordsig="java.lang.Object"/>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4004" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4000" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4021" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4004" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="assertNotSame:(Ljava/lang/Object;Ljava/lang/Object;)V@junit.framework.Assert"
+ sig="void assertNotSame(Object,Object)"
+ line="38"
+ startpos="4053"
+ endpos="4066"
+>
+	<marker line="-1" type="param">
+		<operand  start="4084" length="8" line="38">
+			<expr><![CDATA[expected]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4111" length="6" line="38">
+			<expr><![CDATA[actual]]></expr>
+		</operand>
+	</marker>
+	<type  start="4067" length="16" line="38" chordsig="java.lang.Object"/>
+	<type  start="4094" length="16" line="38" chordsig="java.lang.Object"/>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4131" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4127" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4148" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4131" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

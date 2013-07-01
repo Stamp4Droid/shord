@@ -1,0 +1,353 @@
+<root>
+<class chordsig="org.w3c.dom.Element" line="2">
+	<type  start="56" length="16" line="3" chordsig="org.w3c.dom.Node"/>
+<method
+ chordsig="getTagName:()Ljava/lang/String;@org.w3c.dom.Element"
+ sig="String getTagName()"
+ line="5"
+ startpos="109"
+ endpos="119"
+>
+	<type  start="92" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getAttribute:(Ljava/lang/String;)Ljava/lang/String;@org.w3c.dom.Element"
+ sig="String getAttribute(String)"
+ line="6"
+ startpos="157"
+ endpos="169"
+>
+	<marker line="-1" type="param">
+		<operand  start="187" length="4" line="6">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="140" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="170" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setAttribute:(Ljava/lang/String;Ljava/lang/String;)V@org.w3c.dom.Element"
+ sig="void setAttribute(String,String)"
+ line="7"
+ startpos="216"
+ endpos="228"
+>
+	<marker line="-1" type="param">
+		<operand  start="246" length="4" line="7">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="269" length="5" line="7">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="229" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="252" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="removeAttribute:(Ljava/lang/String;)V@org.w3c.dom.Element"
+ sig="void removeAttribute(String)"
+ line="8"
+ startpos="331"
+ endpos="346"
+>
+	<marker line="-1" type="param">
+		<operand  start="364" length="4" line="8">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="347" length="16" line="8" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getAttributeNode:(Ljava/lang/String;)Lorg/w3c/dom/Attr;@org.w3c.dom.Element"
+ sig="Attr getAttributeNode(String)"
+ line="9"
+ startpos="437"
+ endpos="453"
+>
+	<marker line="-1" type="param">
+		<operand  start="471" length="4" line="9">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="420" length="16" line="9" chordsig="org.w3c.dom.Attr"/>
+	<type  start="454" length="16" line="9" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setAttributeNode:(Lorg/w3c/dom/Attr;)Lorg/w3c/dom/Attr;@org.w3c.dom.Element"
+ sig="Attr setAttributeNode(Attr)"
+ line="10"
+ startpos="512"
+ endpos="528"
+>
+	<marker line="-1" type="param">
+		<operand  start="546" length="7" line="10">
+			<expr><![CDATA[newAttr]]></expr>
+		</operand>
+	</marker>
+	<type  start="495" length="16" line="10" chordsig="org.w3c.dom.Attr"/>
+	<type  start="529" length="16" line="10" chordsig="org.w3c.dom.Attr"/>
+</method>
+<method
+ chordsig="removeAttributeNode:(Lorg/w3c/dom/Attr;)Lorg/w3c/dom/Attr;@org.w3c.dom.Element"
+ sig="Attr removeAttributeNode(Attr)"
+ line="11"
+ startpos="622"
+ endpos="641"
+>
+	<marker line="-1" type="param">
+		<operand  start="659" length="7" line="11">
+			<expr><![CDATA[oldAttr]]></expr>
+		</operand>
+	</marker>
+	<type  start="605" length="16" line="11" chordsig="org.w3c.dom.Attr"/>
+	<type  start="642" length="16" line="11" chordsig="org.w3c.dom.Attr"/>
+</method>
+<method
+ chordsig="getElementsByTagName:(Ljava/lang/String;)Lorg/w3c/dom/NodeList;@org.w3c.dom.Element"
+ sig="NodeList getElementsByTagName(String)"
+ line="12"
+ startpos="739"
+ endpos="759"
+>
+	<marker line="-1" type="param">
+		<operand  start="777" length="4" line="12">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="718" length="20" line="12" chordsig="org.w3c.dom.NodeList"/>
+	<type  start="760" length="16" line="12" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getAttributeNS:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;@org.w3c.dom.Element"
+ sig="String getAttributeNS(String,String)"
+ line="13"
+ startpos="818"
+ endpos="832"
+>
+	<marker line="-1" type="param">
+		<operand  start="850" length="12" line="13">
+			<expr><![CDATA[namespaceURI]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="881" length="9" line="13">
+			<expr><![CDATA[localName]]></expr>
+		</operand>
+	</marker>
+	<type  start="801" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="833" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="864" length="16" line="13" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setAttributeNS:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V@org.w3c.dom.Element"
+ sig="void setAttributeNS(String,String,String)"
+ line="14"
+ startpos="947"
+ endpos="961"
+>
+	<marker line="-1" type="param">
+		<operand  start="979" length="12" line="14">
+			<expr><![CDATA[namespaceURI]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1010" length="13" line="14">
+			<expr><![CDATA[qualifiedName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1042" length="5" line="14">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="962" length="16" line="14" chordsig="java.lang.String"/>
+	<type  start="993" length="16" line="14" chordsig="java.lang.String"/>
+	<type  start="1025" length="16" line="14" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="removeAttributeNS:(Ljava/lang/String;Ljava/lang/String;)V@org.w3c.dom.Element"
+ sig="void removeAttributeNS(String,String)"
+ line="15"
+ startpos="1104"
+ endpos="1121"
+>
+	<marker line="-1" type="param">
+		<operand  start="1139" length="12" line="15">
+			<expr><![CDATA[namespaceURI]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1170" length="9" line="15">
+			<expr><![CDATA[localName]]></expr>
+		</operand>
+	</marker>
+	<type  start="1122" length="16" line="15" chordsig="java.lang.String"/>
+	<type  start="1153" length="16" line="15" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getAttributeNodeNS:(Ljava/lang/String;Ljava/lang/String;)Lorg/w3c/dom/Attr;@org.w3c.dom.Element"
+ sig="Attr getAttributeNodeNS(String,String)"
+ line="16"
+ startpos="1248"
+ endpos="1266"
+>
+	<marker line="-1" type="param">
+		<operand  start="1284" length="12" line="16">
+			<expr><![CDATA[namespaceURI]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1315" length="9" line="16">
+			<expr><![CDATA[localName]]></expr>
+		</operand>
+	</marker>
+	<type  start="1231" length="16" line="16" chordsig="org.w3c.dom.Attr"/>
+	<type  start="1267" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="1298" length="16" line="16" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setAttributeNodeNS:(Lorg/w3c/dom/Attr;)Lorg/w3c/dom/Attr;@org.w3c.dom.Element"
+ sig="Attr setAttributeNodeNS(Attr)"
+ line="17"
+ startpos="1393"
+ endpos="1411"
+>
+	<marker line="-1" type="param">
+		<operand  start="1429" length="7" line="17">
+			<expr><![CDATA[newAttr]]></expr>
+		</operand>
+	</marker>
+	<type  start="1376" length="16" line="17" chordsig="org.w3c.dom.Attr"/>
+	<type  start="1412" length="16" line="17" chordsig="org.w3c.dom.Attr"/>
+</method>
+<method
+ chordsig="getElementsByTagNameNS:(Ljava/lang/String;Ljava/lang/String;)Lorg/w3c/dom/NodeList;@org.w3c.dom.Element"
+ sig="NodeList getElementsByTagNameNS(String,String)"
+ line="18"
+ startpos="1509"
+ endpos="1531"
+>
+	<marker line="-1" type="param">
+		<operand  start="1549" length="12" line="18">
+			<expr><![CDATA[namespaceURI]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1580" length="9" line="18">
+			<expr><![CDATA[localName]]></expr>
+		</operand>
+	</marker>
+	<type  start="1488" length="20" line="18" chordsig="org.w3c.dom.NodeList"/>
+	<type  start="1532" length="16" line="18" chordsig="java.lang.String"/>
+	<type  start="1563" length="16" line="18" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="hasAttribute:(Ljava/lang/String;)Z@org.w3c.dom.Element"
+ sig="boolean hasAttribute(String)"
+ line="19"
+ startpos="1649"
+ endpos="1661"
+>
+	<marker line="-1" type="param">
+		<operand  start="1679" length="4" line="19">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="1662" length="16" line="19" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="hasAttributeNS:(Ljava/lang/String;Ljava/lang/String;)Z@org.w3c.dom.Element"
+ sig="boolean hasAttributeNS(String,String)"
+ line="20"
+ startpos="1711"
+ endpos="1725"
+>
+	<marker line="-1" type="param">
+		<operand  start="1743" length="12" line="20">
+			<expr><![CDATA[namespaceURI]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1774" length="9" line="20">
+			<expr><![CDATA[localName]]></expr>
+		</operand>
+	</marker>
+	<type  start="1726" length="16" line="20" chordsig="java.lang.String"/>
+	<type  start="1757" length="16" line="20" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getSchemaTypeInfo:()Lorg/w3c/dom/TypeInfo;@org.w3c.dom.Element"
+ sig="TypeInfo getSchemaTypeInfo()"
+ line="21"
+ startpos="1856"
+ endpos="1873"
+>
+	<type  start="1835" length="20" line="21" chordsig="org.w3c.dom.TypeInfo"/>
+</method>
+<method
+ chordsig="setIdAttribute:(Ljava/lang/String;Z)V@org.w3c.dom.Element"
+ sig="void setIdAttribute(String,boolean)"
+ line="22"
+ startpos="1899"
+ endpos="1913"
+>
+	<marker line="-1" type="param">
+		<operand  start="1931" length="4" line="22">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1945" length="4" line="22">
+			<expr><![CDATA[isId]]></expr>
+		</operand>
+	</marker>
+	<type  start="1914" length="16" line="22" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setIdAttributeNS:(Ljava/lang/String;Ljava/lang/String;Z)V@org.w3c.dom.Element"
+ sig="void setIdAttributeNS(String,String,boolean)"
+ line="23"
+ startpos="2006"
+ endpos="2022"
+>
+	<marker line="-1" type="param">
+		<operand  start="2040" length="12" line="23">
+			<expr><![CDATA[namespaceURI]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2071" length="9" line="23">
+			<expr><![CDATA[localName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2090" length="4" line="23">
+			<expr><![CDATA[isId]]></expr>
+		</operand>
+	</marker>
+	<type  start="2023" length="16" line="23" chordsig="java.lang.String"/>
+	<type  start="2054" length="16" line="23" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setIdAttributeNode:(Lorg/w3c/dom/Attr;Z)V@org.w3c.dom.Element"
+ sig="void setIdAttributeNode(Attr,boolean)"
+ line="24"
+ startpos="2151"
+ endpos="2169"
+>
+	<marker line="-1" type="param">
+		<operand  start="2187" length="6" line="24">
+			<expr><![CDATA[idAttr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2203" length="4" line="24">
+			<expr><![CDATA[isId]]></expr>
+		</operand>
+	</marker>
+	<type  start="2170" length="16" line="24" chordsig="org.w3c.dom.Attr"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,87 @@
+<root>
+<class chordsig="java.lang.ref.ReferenceQueue" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@java.lang.ref.ReferenceQueue"
+ sig="ReferenceQueue()"
+ line="4"
+ startpos="64"
+ endpos="78"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="93" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="89" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="110" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="93" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="poll:()Ljava/lang/ref/Reference;@java.lang.ref.ReferenceQueue"
+ sig="Reference&lt;? extends T&gt; poll()"
+ line="5"
+ startpos="180"
+ endpos="184"
+>
+	<type  start="143" length="23" line="5" chordsig="java.lang.ref.Reference"/>
+	<type  start="177" length="1" line="5" chordsig="java.lang.Object"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="199" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="195" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="216" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="199" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="remove:()Ljava/lang/ref/Reference;@java.lang.ref.ReferenceQueue"
+ sig="Reference&lt;? extends T&gt; remove()"
+ line="6"
+ startpos="273"
+ endpos="279"
+>
+	<type  start="236" length="23" line="6" chordsig="java.lang.ref.Reference"/>
+	<type  start="270" length="1" line="6" chordsig="java.lang.Object"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="332" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="328" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="349" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="332" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="remove:(J)Ljava/lang/ref/Reference;@java.lang.ref.ReferenceQueue"
+ sig="Reference&lt;? extends T&gt; remove(long)"
+ line="7"
+ startpos="419"
+ endpos="425"
+>
+	<marker line="-1" type="param">
+		<operand  start="431" length="13" line="7">
+			<expr><![CDATA[timeoutMillis]]></expr>
+		</operand>
+	</marker>
+	<type  start="382" length="23" line="7" chordsig="java.lang.ref.Reference"/>
+	<type  start="416" length="1" line="7" chordsig="java.lang.Object"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="496" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="492" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="513" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="496" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

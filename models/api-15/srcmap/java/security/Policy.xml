@@ -1,0 +1,333 @@
+<root>
+<class chordsig="java.security.Policy" line="2">
+<class chordsig="java.security.Policy$Parameters" line="4">
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@java.security.Policy"
+ sig="Policy()"
+ line="7"
+ startpos="101"
+ endpos="107"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="122" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="118" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="139" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="122" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInstance:(Ljava/lang/String;Ljava/security/Policy$Parameters;)Ljava/security/Policy;@java.security.Policy"
+ sig="Policy getInstance(String,Parameters)"
+ line="8"
+ startpos="187"
+ endpos="198"
+>
+	<marker line="-1" type="param">
+		<operand  start="216" length="4" line="8">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="254" length="6" line="8">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="166" length="20" line="8" chordsig="java.security.Policy"/>
+	<type  start="199" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="222" length="31" line="8" chordsig="java.security.Policy$Parameters"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="320" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="316" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="337" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="320" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInstance:(Ljava/lang/String;Ljava/security/Policy$Parameters;Ljava/lang/String;)Ljava/security/Policy;@java.security.Policy"
+ sig="Policy getInstance(String,Parameters,String)"
+ line="9"
+ startpos="385"
+ endpos="396"
+>
+	<marker line="-1" type="param">
+		<operand  start="414" length="4" line="9">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="452" length="6" line="9">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="477" length="8" line="9">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<type  start="364" length="20" line="9" chordsig="java.security.Policy"/>
+	<type  start="397" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="420" length="31" line="9" chordsig="java.security.Policy$Parameters"/>
+	<type  start="460" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="584" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="580" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="601" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="584" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInstance:(Ljava/lang/String;Ljava/security/Policy$Parameters;Ljava/security/Provider;)Ljava/security/Policy;@java.security.Policy"
+ sig="Policy getInstance(String,Parameters,Provider)"
+ line="10"
+ startpos="649"
+ endpos="660"
+>
+	<marker line="-1" type="param">
+		<operand  start="678" length="4" line="10">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="716" length="6" line="10">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="747" length="8" line="10">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<type  start="628" length="20" line="10" chordsig="java.security.Policy"/>
+	<type  start="661" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="684" length="31" line="10" chordsig="java.security.Policy$Parameters"/>
+	<type  start="724" length="22" line="10" chordsig="java.security.Provider"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="815" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="811" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="832" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="815" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getParameters:()Ljava/security/Policy$Parameters;@java.security.Policy"
+ sig="Parameters getParameters()"
+ line="11"
+ startpos="884"
+ endpos="897"
+>
+	<type  start="852" length="31" line="11" chordsig="java.security.Policy$Parameters"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="912" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="908" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="929" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="912" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getProvider:()Ljava/security/Provider;@java.security.Policy"
+ sig="Provider getProvider()"
+ line="12"
+ startpos="972"
+ endpos="983"
+>
+	<type  start="949" length="22" line="12" chordsig="java.security.Provider"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="998" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="994" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1015" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="998" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getType:()Ljava/lang/String;@java.security.Policy"
+ sig="String getType()"
+ line="13"
+ startpos="1052"
+ endpos="1059"
+>
+	<type  start="1035" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1074" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1070" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1091" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1074" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPermissions:(Ljava/security/CodeSource;)Ljava/security/PermissionCollection;@java.security.Policy"
+ sig="PermissionCollection getPermissions(CodeSource)"
+ line="14"
+ startpos="1146"
+ endpos="1160"
+>
+	<marker line="-1" type="param">
+		<operand  start="1186" length="2" line="14">
+			<expr><![CDATA[cs]]></expr>
+		</operand>
+	</marker>
+	<type  start="1111" length="34" line="14" chordsig="java.security.PermissionCollection"/>
+	<type  start="1161" length="24" line="14" chordsig="java.security.CodeSource"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1202" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1198" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1219" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1202" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="refresh:()V@java.security.Policy"
+ sig="void refresh()"
+ line="15"
+ startpos="1244"
+ endpos="1251"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1266" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1262" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1283" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1266" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPermissions:(Ljava/security/ProtectionDomain;)Ljava/security/PermissionCollection;@java.security.Policy"
+ sig="PermissionCollection getPermissions(ProtectionDomain)"
+ line="16"
+ startpos="1338"
+ endpos="1352"
+>
+	<marker line="-1" type="param">
+		<operand  start="1384" length="6" line="16">
+			<expr><![CDATA[domain]]></expr>
+		</operand>
+	</marker>
+	<type  start="1303" length="34" line="16" chordsig="java.security.PermissionCollection"/>
+	<type  start="1353" length="30" line="16" chordsig="java.security.ProtectionDomain"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1404" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1400" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1421" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1404" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="implies:(Ljava/security/ProtectionDomain;Ljava/security/Permission;)Z@java.security.Policy"
+ sig="boolean implies(ProtectionDomain,Permission)"
+ line="17"
+ startpos="1449"
+ endpos="1456"
+>
+	<marker line="-1" type="param">
+		<operand  start="1488" length="6" line="17">
+			<expr><![CDATA[domain]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1521" length="10" line="17">
+			<expr><![CDATA[permission]]></expr>
+		</operand>
+	</marker>
+	<type  start="1457" length="30" line="17" chordsig="java.security.ProtectionDomain"/>
+	<type  start="1496" length="24" line="17" chordsig="java.security.Permission"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1545" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1541" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1562" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1545" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPolicy:()Ljava/security/Policy;@java.security.Policy"
+ sig="Policy getPolicy()"
+ line="18"
+ startpos="1610"
+ endpos="1619"
+>
+	<type  start="1589" length="20" line="18" chordsig="java.security.Policy"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1634" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1630" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1651" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1634" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPolicy:(Ljava/security/Policy;)V@java.security.Policy"
+ sig="void setPolicy(Policy)"
+ line="19"
+ startpos="1683"
+ endpos="1692"
+>
+	<marker line="-1" type="param">
+		<operand  start="1714" length="6" line="19">
+			<expr><![CDATA[policy]]></expr>
+		</operand>
+	</marker>
+	<type  start="1693" length="20" line="19" chordsig="java.security.Policy"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1734" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1730" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1751" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1734" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1783" length="34" line="20" chordsig="java.security.PermissionCollection"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@java.security.Policy"
+ line="21"
+>
+</method>
+</class>
+</root>

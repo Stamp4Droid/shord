@@ -1,0 +1,54 @@
+<root>
+<class chordsig="javax.sql.RowSetInternal" line="2">
+<method
+ chordsig="getConnection:()Ljava/sql/Connection;@javax.sql.RowSetInternal"
+ sig="Connection getConnection()"
+ line="4"
+ startpos="90"
+ endpos="103"
+>
+	<type  start="70" length="19" line="4" chordsig="java.sql.Connection"/>
+</method>
+<method
+ chordsig="getOriginal:()Ljava/sql/ResultSet;@javax.sql.RowSetInternal"
+ sig="ResultSet getOriginal()"
+ line="5"
+ startpos="172"
+ endpos="183"
+>
+	<type  start="153" length="18" line="5" chordsig="java.sql.ResultSet"/>
+</method>
+<method
+ chordsig="getOriginalRow:()Ljava/sql/ResultSet;@javax.sql.RowSetInternal"
+ sig="ResultSet getOriginalRow()"
+ line="6"
+ startpos="252"
+ endpos="266"
+>
+	<type  start="233" length="18" line="6" chordsig="java.sql.ResultSet"/>
+</method>
+<method
+ chordsig="getParams:()[Ljava/lang/Object;@javax.sql.RowSetInternal"
+ sig="Object[] getParams()"
+ line="7"
+ startpos="335"
+ endpos="344"
+>
+	<type  start="316" length="16" line="7" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="setMetaData:(Ljavax/sql/RowSetMetaData;)V@javax.sql.RowSetInternal"
+ sig="void setMetaData(RowSetMetaData)"
+ line="8"
+ startpos="399"
+ endpos="410"
+>
+	<marker line="-1" type="param">
+		<operand  start="436" length="11" line="8">
+			<expr><![CDATA[theMetaData]]></expr>
+		</operand>
+	</marker>
+	<type  start="411" length="24" line="8" chordsig="javax.sql.RowSetMetaData"/>
+</method>
+</class>
+</root>

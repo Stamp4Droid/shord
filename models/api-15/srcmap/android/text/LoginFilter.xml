@@ -1,0 +1,347 @@
+<root>
+<class chordsig="android.text.LoginFilter" line="2">
+	<type  start="69" length="24" line="3" chordsig="android.text.InputFilter"/>
+<class chordsig="android.text.LoginFilter$UsernameFilterGMail" line="5">
+	<type  start="146" length="24" line="6" chordsig="android.text.LoginFilter"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.text.LoginFilter$UsernameFilterGMail"
+ sig="UsernameFilterGMail()"
+ line="8"
+ startpos="181"
+ endpos="200"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="215" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="211" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="232" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="215" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Z)V@android.text.LoginFilter$UsernameFilterGMail"
+ sig="UsernameFilterGMail(boolean)"
+ line="9"
+ startpos="252"
+ endpos="271"
+>
+	<marker line="-1" type="param">
+		<operand  start="280" length="13" line="9">
+			<expr><![CDATA[appendInvalid]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="307" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="303" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="324" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="307" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isAllowed:(C)Z@android.text.LoginFilter$UsernameFilterGMail"
+ sig="boolean isAllowed(char)"
+ line="10"
+ startpos="352"
+ endpos="361"
+>
+	<marker line="-1" type="param">
+		<operand  start="367" length="1" line="10">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="382" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="378" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="399" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="382" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.text.LoginFilter$UsernameFilterGeneric" line="12">
+	<type  start="465" length="24" line="13" chordsig="android.text.LoginFilter"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.text.LoginFilter$UsernameFilterGeneric"
+ sig="UsernameFilterGeneric()"
+ line="15"
+ startpos="500"
+ endpos="521"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="536" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="532" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="553" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="536" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Z)V@android.text.LoginFilter$UsernameFilterGeneric"
+ sig="UsernameFilterGeneric(boolean)"
+ line="16"
+ startpos="573"
+ endpos="594"
+>
+	<marker line="-1" type="param">
+		<operand  start="603" length="13" line="16">
+			<expr><![CDATA[appendInvalid]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="630" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="626" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="647" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="630" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isAllowed:(C)Z@android.text.LoginFilter$UsernameFilterGeneric"
+ sig="boolean isAllowed(char)"
+ line="17"
+ startpos="675"
+ endpos="684"
+>
+	<marker line="-1" type="param">
+		<operand  start="690" length="1" line="17">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="705" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="701" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="722" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="705" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.text.LoginFilter$PasswordFilterGMail" line="19">
+	<type  start="786" length="24" line="20" chordsig="android.text.LoginFilter"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.text.LoginFilter$PasswordFilterGMail"
+ sig="PasswordFilterGMail()"
+ line="22"
+ startpos="821"
+ endpos="840"
+>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="855" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="851" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="872" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="855" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Z)V@android.text.LoginFilter$PasswordFilterGMail"
+ sig="PasswordFilterGMail(boolean)"
+ line="23"
+ startpos="892"
+ endpos="911"
+>
+	<marker line="-1" type="param">
+		<operand  start="920" length="13" line="23">
+			<expr><![CDATA[appendInvalid]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="947" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="943" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="964" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="947" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isAllowed:(C)Z@android.text.LoginFilter$PasswordFilterGMail"
+ sig="boolean isAllowed(char)"
+ line="24"
+ startpos="992"
+ endpos="1001"
+>
+	<marker line="-1" type="param">
+		<operand  start="1007" length="1" line="24">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1022" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1018" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1039" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1022" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.text.LoginFilter"
+ sig="LoginFilter()"
+ line="26"
+ startpos="1053"
+ endpos="1064"
+>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1079" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1075" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1096" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1079" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="filter:(Ljava/lang/CharSequence;IILandroid/text/Spanned;II)Ljava/lang/CharSequence;@android.text.LoginFilter"
+ sig="CharSequence filter(CharSequence,int,int,Spanned,int,int)"
+ line="27"
+ startpos="1139"
+ endpos="1145"
+>
+	<marker line="-1" type="param">
+		<operand  start="1169" length="6" line="27">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1181" length="5" line="27">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1192" length="3" line="27">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1218" length="4" line="27">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1228" length="6" line="27">
+			<expr><![CDATA[dstart]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1240" length="4" line="27">
+			<expr><![CDATA[dend]]></expr>
+		</operand>
+	</marker>
+	<type  start="1116" length="22" line="27" chordsig="java.lang.CharSequence"/>
+	<type  start="1146" length="22" line="27" chordsig="java.lang.CharSequence"/>
+	<type  start="1197" length="20" line="27" chordsig="android.text.Spanned"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1258" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1254" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1275" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1258" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onStart:()V@android.text.LoginFilter"
+ sig="void onStart()"
+ line="28"
+ startpos="1300"
+ endpos="1307"
+>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1322" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1318" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1339" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1322" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInvalidCharacter:(C)V@android.text.LoginFilter"
+ sig="void onInvalidCharacter(char)"
+ line="29"
+ startpos="1364"
+ endpos="1382"
+>
+	<marker line="-1" type="param">
+		<operand  start="1388" length="1" line="29">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1403" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1399" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1420" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1403" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onStop:()V@android.text.LoginFilter"
+ sig="void onStop()"
+ line="30"
+ startpos="1445"
+ endpos="1451"
+>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1466" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1462" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1483" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1466" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isAllowed:(C)Z@android.text.LoginFilter"
+ sig="boolean isAllowed(char)"
+ line="31"
+ startpos="1520"
+ endpos="1529"
+>
+	<marker line="-1" type="param">
+		<operand  start="1535" length="1" line="31">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

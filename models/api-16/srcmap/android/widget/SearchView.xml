@@ -1,0 +1,879 @@
+<root>
+<class chordsig="android.widget.SearchView" line="2">
+	<type  start="58" length="27" line="3" chordsig="android.widget.LinearLayout"/>
+	<type  start="99" length="34" line="4" chordsig="android.view.CollapsibleActionView"/>
+<class chordsig="android.widget.SearchView$OnQueryTextListener" line="6">
+<method
+ chordsig="onQueryTextSubmit:(Ljava/lang/String;)Z@android.widget.SearchView$OnQueryTextListener"
+ sig="boolean onQueryTextSubmit(String)"
+ line="8"
+ startpos="207"
+ endpos="224"
+>
+	<marker line="-1" type="param">
+		<operand  start="242" length="5" line="8">
+			<expr><![CDATA[query]]></expr>
+		</operand>
+	</marker>
+	<type  start="225" length="16" line="8" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="onQueryTextChange:(Ljava/lang/String;)Z@android.widget.SearchView$OnQueryTextListener"
+ sig="boolean onQueryTextChange(String)"
+ line="9"
+ startpos="275"
+ endpos="292"
+>
+	<marker line="-1" type="param">
+		<operand  start="310" length="7" line="9">
+			<expr><![CDATA[newText]]></expr>
+		</operand>
+	</marker>
+	<type  start="293" length="16" line="9" chordsig="java.lang.String"/>
+</method>
+</class>
+<class chordsig="android.widget.SearchView$OnCloseListener" line="11">
+<method
+ chordsig="onClose:()Z@android.widget.SearchView$OnCloseListener"
+ sig="boolean onClose()"
+ line="13"
+ startpos="389"
+ endpos="396"
+>
+</method>
+</class>
+<class chordsig="android.widget.SearchView$OnSuggestionListener" line="15">
+<method
+ chordsig="onSuggestionSelect:(I)Z@android.widget.SearchView$OnSuggestionListener"
+ sig="boolean onSuggestionSelect(int)"
+ line="17"
+ startpos="474"
+ endpos="492"
+>
+	<marker line="-1" type="param">
+		<operand  start="497" length="8" line="17">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="onSuggestionClick:(I)Z@android.widget.SearchView$OnSuggestionListener"
+ sig="boolean onSuggestionClick(int)"
+ line="18"
+ startpos="533"
+ endpos="550"
+>
+	<marker line="-1" type="param">
+		<operand  start="555" length="8" line="18">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.widget.SearchView"
+ sig="SearchView(Context)"
+ line="20"
+ startpos="576"
+ endpos="586"
+>
+	<marker line="-1" type="param">
+		<operand  start="611" length="7" line="20">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="587" length="23" line="20" chordsig="android.content.Context"/>
+	<type  start="629" length="23" line="20" chordsig="android.content.Context"/>
+	<type  start="659" length="25" line="20" chordsig="android.util.AttributeSet"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="704" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="700" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="721" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="704" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.widget.SearchView"
+ sig="SearchView(Context,AttributeSet)"
+ line="21"
+ startpos="741"
+ endpos="751"
+>
+	<marker line="-1" type="param">
+		<operand  start="776" length="7" line="21">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="811" length="5" line="21">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="752" length="23" line="21" chordsig="android.content.Context"/>
+	<type  start="785" length="25" line="21" chordsig="android.util.AttributeSet"/>
+	<type  start="827" length="23" line="21" chordsig="android.content.Context"/>
+	<type  start="857" length="25" line="21" chordsig="android.util.AttributeSet"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="902" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="898" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="919" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="902" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSearchableInfo:(Landroid/app/SearchableInfo;)V@android.widget.SearchView"
+ sig="void setSearchableInfo(SearchableInfo)"
+ line="22"
+ startpos="944"
+ endpos="961"
+>
+	<marker line="-1" type="param">
+		<operand  start="989" length="10" line="22">
+			<expr><![CDATA[searchable]]></expr>
+		</operand>
+	</marker>
+	<type  start="962" length="26" line="22" chordsig="android.app.SearchableInfo"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1013" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1009" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1030" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1013" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setImeOptions:(I)V@android.widget.SearchView"
+ sig="void setImeOptions(int)"
+ line="23"
+ startpos="1055"
+ endpos="1068"
+>
+	<marker line="-1" type="param">
+		<operand  start="1073" length="10" line="23">
+			<expr><![CDATA[imeOptions]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1097" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1093" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1114" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1097" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getImeOptions:()I@android.widget.SearchView"
+ sig="int getImeOptions()"
+ line="24"
+ startpos="1138"
+ endpos="1151"
+>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1166" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1162" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1183" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1166" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setInputType:(I)V@android.widget.SearchView"
+ sig="void setInputType(int)"
+ line="25"
+ startpos="1208"
+ endpos="1220"
+>
+	<marker line="-1" type="param">
+		<operand  start="1225" length="9" line="25">
+			<expr><![CDATA[inputType]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1248" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1244" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1265" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1248" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInputType:()I@android.widget.SearchView"
+ sig="int getInputType()"
+ line="26"
+ startpos="1289"
+ endpos="1301"
+>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1316" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1312" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1333" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1316" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnQueryTextListener:(Landroid/widget/SearchView$OnQueryTextListener;)V@android.widget.SearchView"
+ sig="void setOnQueryTextListener(OnQueryTextListener)"
+ line="27"
+ startpos="1358"
+ endpos="1380"
+>
+	<marker line="-1" type="param">
+		<operand  start="1427" length="8" line="27">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1381" length="45" line="27" chordsig="android.widget.SearchView$OnQueryTextListener"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1449" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1445" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1466" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1449" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnCloseListener:(Landroid/widget/SearchView$OnCloseListener;)V@android.widget.SearchView"
+ sig="void setOnCloseListener(OnCloseListener)"
+ line="28"
+ startpos="1491"
+ endpos="1509"
+>
+	<marker line="-1" type="param">
+		<operand  start="1552" length="8" line="28">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1510" length="41" line="28" chordsig="android.widget.SearchView$OnCloseListener"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1574" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1570" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1591" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1574" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnQueryTextFocusChangeListener:(Landroid/view/View$OnFocusChangeListener;)V@android.widget.SearchView"
+ sig="void setOnQueryTextFocusChangeListener(OnFocusChangeListener)"
+ line="29"
+ startpos="1616"
+ endpos="1649"
+>
+	<marker line="-1" type="param">
+		<operand  start="1690" length="8" line="29">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1650" length="39" line="29" chordsig="android.view.View$OnFocusChangeListener"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1712" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1708" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1729" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1712" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnSuggestionListener:(Landroid/widget/SearchView$OnSuggestionListener;)V@android.widget.SearchView"
+ sig="void setOnSuggestionListener(OnSuggestionListener)"
+ line="30"
+ startpos="1754"
+ endpos="1777"
+>
+	<marker line="-1" type="param">
+		<operand  start="1825" length="8" line="30">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1778" length="46" line="30" chordsig="android.widget.SearchView$OnSuggestionListener"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1847" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1843" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1864" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1847" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnSearchClickListener:(Landroid/view/View$OnClickListener;)V@android.widget.SearchView"
+ sig="void setOnSearchClickListener(OnClickListener)"
+ line="31"
+ startpos="1889"
+ endpos="1913"
+>
+	<marker line="-1" type="param">
+		<operand  start="1948" length="8" line="31">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1914" length="33" line="31" chordsig="android.view.View$OnClickListener"/>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1970" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1966" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1987" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1970" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getQuery:()Ljava/lang/CharSequence;@android.widget.SearchView"
+ sig="CharSequence getQuery()"
+ line="32"
+ startpos="2030"
+ endpos="2038"
+>
+	<type  start="2007" length="22" line="32" chordsig="java.lang.CharSequence"/>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2053" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2049" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2070" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2053" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setQuery:(Ljava/lang/CharSequence;Z)V@android.widget.SearchView"
+ sig="void setQuery(CharSequence,boolean)"
+ line="33"
+ startpos="2095"
+ endpos="2103"
+>
+	<marker line="-1" type="param">
+		<operand  start="2127" length="5" line="33">
+			<expr><![CDATA[query]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2142" length="6" line="33">
+			<expr><![CDATA[submit]]></expr>
+		</operand>
+	</marker>
+	<type  start="2104" length="22" line="33" chordsig="java.lang.CharSequence"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2162" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2158" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2179" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2162" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setQueryHint:(Ljava/lang/CharSequence;)V@android.widget.SearchView"
+ sig="void setQueryHint(CharSequence)"
+ line="34"
+ startpos="2204"
+ endpos="2216"
+>
+	<marker line="-1" type="param">
+		<operand  start="2240" length="4" line="34">
+			<expr><![CDATA[hint]]></expr>
+		</operand>
+	</marker>
+	<type  start="2217" length="22" line="34" chordsig="java.lang.CharSequence"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2258" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2254" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2275" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2258" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getQueryHint:()Ljava/lang/CharSequence;@android.widget.SearchView"
+ sig="CharSequence getQueryHint()"
+ line="35"
+ startpos="2318"
+ endpos="2330"
+>
+	<type  start="2295" length="22" line="35" chordsig="java.lang.CharSequence"/>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2345" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2341" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2362" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2345" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setIconifiedByDefault:(Z)V@android.widget.SearchView"
+ sig="void setIconifiedByDefault(boolean)"
+ line="36"
+ startpos="2387"
+ endpos="2408"
+>
+	<marker line="-1" type="param">
+		<operand  start="2417" length="9" line="36">
+			<expr><![CDATA[iconified]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2440" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2436" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2457" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2440" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isIconfiedByDefault:()Z@android.widget.SearchView"
+ sig="boolean isIconfiedByDefault()"
+ line="37"
+ startpos="2485"
+ endpos="2504"
+>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2519" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2515" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2536" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2519" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setIconified:(Z)V@android.widget.SearchView"
+ sig="void setIconified(boolean)"
+ line="38"
+ startpos="2561"
+ endpos="2573"
+>
+	<marker line="-1" type="param">
+		<operand  start="2582" length="7" line="38">
+			<expr><![CDATA[iconify]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2603" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2599" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2620" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2603" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isIconified:()Z@android.widget.SearchView"
+ sig="boolean isIconified()"
+ line="39"
+ startpos="2648"
+ endpos="2659"
+>
+	<newexpr line="39" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2674" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2670" length="29" line="39">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2691" length="7" line="39">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2674" length="16" line="39" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSubmitButtonEnabled:(Z)V@android.widget.SearchView"
+ sig="void setSubmitButtonEnabled(boolean)"
+ line="40"
+ startpos="2716"
+ endpos="2738"
+>
+	<marker line="-1" type="param">
+		<operand  start="2747" length="7" line="40">
+			<expr><![CDATA[enabled]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2768" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2764" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2785" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2768" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isSubmitButtonEnabled:()Z@android.widget.SearchView"
+ sig="boolean isSubmitButtonEnabled()"
+ line="41"
+ startpos="2813"
+ endpos="2834"
+>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2849" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2845" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2866" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2849" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setQueryRefinementEnabled:(Z)V@android.widget.SearchView"
+ sig="void setQueryRefinementEnabled(boolean)"
+ line="42"
+ startpos="2891"
+ endpos="2916"
+>
+	<marker line="-1" type="param">
+		<operand  start="2925" length="6" line="42">
+			<expr><![CDATA[enable]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2945" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2941" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2962" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2945" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isQueryRefinementEnabled:()Z@android.widget.SearchView"
+ sig="boolean isQueryRefinementEnabled()"
+ line="43"
+ startpos="2990"
+ endpos="3014"
+>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3029" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3025" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3046" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3029" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSuggestionsAdapter:(Landroid/widget/CursorAdapter;)V@android.widget.SearchView"
+ sig="void setSuggestionsAdapter(CursorAdapter)"
+ line="44"
+ startpos="3071"
+ endpos="3092"
+>
+	<marker line="-1" type="param">
+		<operand  start="3122" length="7" line="44">
+			<expr><![CDATA[adapter]]></expr>
+		</operand>
+	</marker>
+	<type  start="3093" length="28" line="44" chordsig="android.widget.CursorAdapter"/>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3143" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3139" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3160" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3143" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSuggestionsAdapter:()Landroid/widget/CursorAdapter;@android.widget.SearchView"
+ sig="CursorAdapter getSuggestionsAdapter()"
+ line="45"
+ startpos="3209"
+ endpos="3230"
+>
+	<type  start="3180" length="28" line="45" chordsig="android.widget.CursorAdapter"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3245" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3241" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3262" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3245" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMaxWidth:(I)V@android.widget.SearchView"
+ sig="void setMaxWidth(int)"
+ line="46"
+ startpos="3287"
+ endpos="3298"
+>
+	<marker line="-1" type="param">
+		<operand  start="3303" length="9" line="46">
+			<expr><![CDATA[maxpixels]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="46" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3326" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3322" length="29" line="46">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3343" length="7" line="46">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3326" length="16" line="46" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMaxWidth:()I@android.widget.SearchView"
+ sig="int getMaxWidth()"
+ line="47"
+ startpos="3367"
+ endpos="3378"
+>
+	<newexpr line="47" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3393" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3389" length="29" line="47">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3410" length="7" line="47">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3393" length="16" line="47" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onMeasure:(II)V@android.widget.SearchView"
+ sig="void onMeasure(int,int)"
+ line="48"
+ startpos="3438"
+ endpos="3447"
+>
+	<marker line="-1" type="param">
+		<operand  start="3452" length="16" line="48">
+			<expr><![CDATA[widthMeasureSpec]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3474" length="17" line="48">
+			<expr><![CDATA[heightMeasureSpec]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="48" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3505" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3501" length="29" line="48">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3522" length="7" line="48">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3505" length="16" line="48" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onDetachedFromWindow:()V@android.widget.SearchView"
+ sig="void onDetachedFromWindow()"
+ line="49"
+ startpos="3550"
+ endpos="3570"
+>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3585" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3581" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3602" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3585" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onKeyDown:(ILandroid/view/KeyEvent;)Z@android.widget.SearchView"
+ sig="boolean onKeyDown(int,KeyEvent)"
+ line="50"
+ startpos="3630"
+ endpos="3639"
+>
+	<marker line="-1" type="param">
+		<operand  start="3644" length="7" line="50">
+			<expr><![CDATA[keyCode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3675" length="5" line="50">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="3653" length="21" line="50" chordsig="android.view.KeyEvent"/>
+	<newexpr line="50" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3694" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3690" length="29" line="50">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3711" length="7" line="50">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3694" length="16" line="50" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onWindowFocusChanged:(Z)V@android.widget.SearchView"
+ sig="void onWindowFocusChanged(boolean)"
+ line="51"
+ startpos="3736"
+ endpos="3756"
+>
+	<marker line="-1" type="param">
+		<operand  start="3765" length="14" line="51">
+			<expr><![CDATA[hasWindowFocus]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="51" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3793" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3789" length="29" line="51">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3810" length="7" line="51">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3793" length="16" line="51" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onActionViewCollapsed:()V@android.widget.SearchView"
+ sig="void onActionViewCollapsed()"
+ line="52"
+ startpos="3835"
+ endpos="3856"
+>
+	<newexpr line="52" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3871" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3867" length="29" line="52">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3888" length="7" line="52">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3871" length="16" line="52" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onActionViewExpanded:()V@android.widget.SearchView"
+ sig="void onActionViewExpanded()"
+ line="53"
+ startpos="3913"
+ endpos="3933"
+>
+	<newexpr line="53" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3948" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3944" length="29" line="53">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3965" length="7" line="53">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3948" length="16" line="53" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityEvent:(Landroid/view/accessibility/AccessibilityEvent;)V@android.widget.SearchView"
+ sig="void onInitializeAccessibilityEvent(AccessibilityEvent)"
+ line="54"
+ startpos="3990"
+ endpos="4020"
+>
+	<marker line="-1" type="param">
+		<operand  start="4067" length="5" line="54">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="4021" length="45" line="54" chordsig="android.view.accessibility.AccessibilityEvent"/>
+	<newexpr line="54" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4086" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4082" length="29" line="54">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4103" length="7" line="54">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4086" length="16" line="54" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityNodeInfo:(Landroid/view/accessibility/AccessibilityNodeInfo;)V@android.widget.SearchView"
+ sig="void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo)"
+ line="55"
+ startpos="4128"
+ endpos="4161"
+>
+	<marker line="-1" type="param">
+		<operand  start="4211" length="4" line="55">
+			<expr><![CDATA[info]]></expr>
+		</operand>
+	</marker>
+	<type  start="4162" length="48" line="55" chordsig="android.view.accessibility.AccessibilityNodeInfo"/>
+	<newexpr line="55" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4229" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4225" length="29" line="55">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4246" length="7" line="55">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4229" length="16" line="55" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

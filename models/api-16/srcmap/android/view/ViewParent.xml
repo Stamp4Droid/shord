@@ -1,0 +1,343 @@
+<root>
+<class chordsig="android.view.ViewParent" line="2">
+<method
+ chordsig="requestLayout:()V@android.view.ViewParent"
+ sig="void requestLayout()"
+ line="4"
+ startpos="74"
+ endpos="87"
+>
+</method>
+<method
+ chordsig="isLayoutRequested:()Z@android.view.ViewParent"
+ sig="boolean isLayoutRequested()"
+ line="5"
+ startpos="116"
+ endpos="133"
+>
+</method>
+<method
+ chordsig="requestTransparentRegion:(Landroid/view/View;)V@android.view.ViewParent"
+ sig="void requestTransparentRegion(View)"
+ line="6"
+ startpos="159"
+ endpos="183"
+>
+	<marker line="-1" type="param">
+		<operand  start="202" length="5" line="6">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<type  start="184" length="17" line="6" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="invalidateChild:(Landroid/view/View;Landroid/graphics/Rect;)V@android.view.ViewParent"
+ sig="void invalidateChild(View,Rect)"
+ line="7"
+ startpos="232"
+ endpos="247"
+>
+	<marker line="-1" type="param">
+		<operand  start="266" length="5" line="7">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="295" length="1" line="7">
+			<expr><![CDATA[r]]></expr>
+		</operand>
+	</marker>
+	<type  start="248" length="17" line="7" chordsig="android.view.View"/>
+	<type  start="273" length="21" line="7" chordsig="android.graphics.Rect"/>
+</method>
+<method
+ chordsig="invalidateChildInParent:([ILandroid/graphics/Rect;)Landroid/view/ViewParent;@android.view.ViewParent"
+ sig="ViewParent invalidateChildInParent(int[],Rect)"
+ line="8"
+ startpos="340"
+ endpos="363"
+>
+	<marker line="-1" type="param">
+		<operand  start="370" length="8" line="8">
+			<expr><![CDATA[location]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="402" length="1" line="8">
+			<expr><![CDATA[r]]></expr>
+		</operand>
+	</marker>
+	<type  start="316" length="23" line="8" chordsig="android.view.ViewParent"/>
+	<type  start="380" length="21" line="8" chordsig="android.graphics.Rect"/>
+</method>
+<method
+ chordsig="getParent:()Landroid/view/ViewParent;@android.view.ViewParent"
+ sig="ViewParent getParent()"
+ line="9"
+ startpos="447"
+ endpos="456"
+>
+	<type  start="423" length="23" line="9" chordsig="android.view.ViewParent"/>
+</method>
+<method
+ chordsig="requestChildFocus:(Landroid/view/View;Landroid/view/View;)V@android.view.ViewParent"
+ sig="void requestChildFocus(View,View)"
+ line="10"
+ startpos="482"
+ endpos="499"
+>
+	<marker line="-1" type="param">
+		<operand  start="518" length="5" line="10">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="543" length="7" line="10">
+			<expr><![CDATA[focused]]></expr>
+		</operand>
+	</marker>
+	<type  start="500" length="17" line="10" chordsig="android.view.View"/>
+	<type  start="525" length="17" line="10" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="recomputeViewAttributes:(Landroid/view/View;)V@android.view.ViewParent"
+ sig="void recomputeViewAttributes(View)"
+ line="11"
+ startpos="575"
+ endpos="598"
+>
+	<marker line="-1" type="param">
+		<operand  start="617" length="5" line="11">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<type  start="599" length="17" line="11" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="clearChildFocus:(Landroid/view/View;)V@android.view.ViewParent"
+ sig="void clearChildFocus(View)"
+ line="12"
+ startpos="647"
+ endpos="662"
+>
+	<marker line="-1" type="param">
+		<operand  start="681" length="5" line="12">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<type  start="663" length="17" line="12" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="getChildVisibleRect:(Landroid/view/View;Landroid/graphics/Rect;Landroid/graphics/Point;)Z@android.view.ViewParent"
+ sig="boolean getChildVisibleRect(View,Rect,Point)"
+ line="13"
+ startpos="714"
+ endpos="733"
+>
+	<marker line="-1" type="param">
+		<operand  start="752" length="5" line="13">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="781" length="1" line="13">
+			<expr><![CDATA[r]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="807" length="6" line="13">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<type  start="734" length="17" line="13" chordsig="android.view.View"/>
+	<type  start="759" length="21" line="13" chordsig="android.graphics.Rect"/>
+	<type  start="784" length="22" line="13" chordsig="android.graphics.Point"/>
+</method>
+<method
+ chordsig="focusSearch:(Landroid/view/View;I)Landroid/view/View;@android.view.ViewParent"
+ sig="View focusSearch(View,int)"
+ line="14"
+ startpos="851"
+ endpos="862"
+>
+	<marker line="-1" type="param">
+		<operand  start="881" length="1" line="14">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="888" length="9" line="14">
+			<expr><![CDATA[direction]]></expr>
+		</operand>
+	</marker>
+	<type  start="833" length="17" line="14" chordsig="android.view.View"/>
+	<type  start="863" length="17" line="14" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="bringChildToFront:(Landroid/view/View;)V@android.view.ViewParent"
+ sig="void bringChildToFront(View)"
+ line="15"
+ startpos="922"
+ endpos="939"
+>
+	<marker line="-1" type="param">
+		<operand  start="958" length="5" line="15">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<type  start="940" length="17" line="15" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="focusableViewAvailable:(Landroid/view/View;)V@android.view.ViewParent"
+ sig="void focusableViewAvailable(View)"
+ line="16"
+ startpos="988"
+ endpos="1010"
+>
+	<marker line="-1" type="param">
+		<operand  start="1029" length="1" line="16">
+			<expr><![CDATA[v]]></expr>
+		</operand>
+	</marker>
+	<type  start="1011" length="17" line="16" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="showContextMenuForChild:(Landroid/view/View;)Z@android.view.ViewParent"
+ sig="boolean showContextMenuForChild(View)"
+ line="17"
+ startpos="1058"
+ endpos="1081"
+>
+	<marker line="-1" type="param">
+		<operand  start="1100" length="12" line="17">
+			<expr><![CDATA[originalView]]></expr>
+		</operand>
+	</marker>
+	<type  start="1082" length="17" line="17" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="createContextMenu:(Landroid/view/ContextMenu;)V@android.view.ViewParent"
+ sig="void createContextMenu(ContextMenu)"
+ line="18"
+ startpos="1137"
+ endpos="1154"
+>
+	<marker line="-1" type="param">
+		<operand  start="1180" length="4" line="18">
+			<expr><![CDATA[menu]]></expr>
+		</operand>
+	</marker>
+	<type  start="1155" length="24" line="18" chordsig="android.view.ContextMenu"/>
+</method>
+<method
+ chordsig="startActionModeForChild:(Landroid/view/View;Landroid/view/ActionMode$Callback;)Landroid/view/ActionMode;@android.view.ViewParent"
+ sig="ActionMode startActionModeForChild(View,Callback)"
+ line="19"
+ startpos="1228"
+ endpos="1251"
+>
+	<marker line="-1" type="param">
+		<operand  start="1270" length="12" line="19">
+			<expr><![CDATA[originalView]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1317" length="8" line="19">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<type  start="1204" length="23" line="19" chordsig="android.view.ActionMode"/>
+	<type  start="1252" length="17" line="19" chordsig="android.view.View"/>
+	<type  start="1284" length="32" line="19" chordsig="android.view.ActionMode$Callback"/>
+</method>
+<method
+ chordsig="childDrawableStateChanged:(Landroid/view/View;)V@android.view.ViewParent"
+ sig="void childDrawableStateChanged(View)"
+ line="20"
+ startpos="1350"
+ endpos="1375"
+>
+	<marker line="-1" type="param">
+		<operand  start="1394" length="5" line="20">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<type  start="1376" length="17" line="20" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="requestDisallowInterceptTouchEvent:(Z)V@android.view.ViewParent"
+ sig="void requestDisallowInterceptTouchEvent(boolean)"
+ line="21"
+ startpos="1424"
+ endpos="1458"
+>
+	<marker line="-1" type="param">
+		<operand  start="1467" length="17" line="21">
+			<expr><![CDATA[disallowIntercept]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="requestChildRectangleOnScreen:(Landroid/view/View;Landroid/graphics/Rect;Z)Z@android.view.ViewParent"
+ sig="boolean requestChildRectangleOnScreen(View,Rect,boolean)"
+ line="22"
+ startpos="1512"
+ endpos="1541"
+>
+	<marker line="-1" type="param">
+		<operand  start="1560" length="5" line="22">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1589" length="9" line="22">
+			<expr><![CDATA[rectangle]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1608" length="9" line="22">
+			<expr><![CDATA[immediate]]></expr>
+		</operand>
+	</marker>
+	<type  start="1542" length="17" line="22" chordsig="android.view.View"/>
+	<type  start="1567" length="21" line="22" chordsig="android.graphics.Rect"/>
+</method>
+<method
+ chordsig="requestSendAccessibilityEvent:(Landroid/view/View;Landroid/view/accessibility/AccessibilityEvent;)Z@android.view.ViewParent"
+ sig="boolean requestSendAccessibilityEvent(View,AccessibilityEvent)"
+ line="23"
+ startpos="1645"
+ endpos="1674"
+>
+	<marker line="-1" type="param">
+		<operand  start="1693" length="5" line="23">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1746" length="5" line="23">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="1675" length="17" line="23" chordsig="android.view.View"/>
+	<type  start="1700" length="45" line="23" chordsig="android.view.accessibility.AccessibilityEvent"/>
+</method>
+<method
+ chordsig="requestFitSystemWindows:()V@android.view.ViewParent"
+ sig="void requestFitSystemWindows()"
+ line="24"
+ startpos="1776"
+ endpos="1799"
+>
+</method>
+<method
+ chordsig="getParentForAccessibility:()Landroid/view/ViewParent;@android.view.ViewParent"
+ sig="ViewParent getParentForAccessibility()"
+ line="25"
+ startpos="1844"
+ endpos="1869"
+>
+	<type  start="1820" length="23" line="25" chordsig="android.view.ViewParent"/>
+</method>
+</class>
+</root>

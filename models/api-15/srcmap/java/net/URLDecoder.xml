@@ -1,0 +1,78 @@
+<root>
+<class chordsig="java.net.URLDecoder" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@java.net.URLDecoder"
+ sig="URLDecoder()"
+ line="4"
+ startpos="52"
+ endpos="62"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="77" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="73" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="94" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="77" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="decode:(Ljava/lang/String;)Ljava/lang/String;@java.net.URLDecoder"
+ sig="String decode(String)"
+ line="5"
+ startpos="138"
+ endpos="144"
+>
+	<marker line="-1" type="param">
+		<operand  start="162" length="1" line="5">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<type  start="121" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="145" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="177" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="173" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="194" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="177" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="decode:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;@java.net.URLDecoder"
+ sig="String decode(String,String)"
+ line="6"
+ startpos="238"
+ endpos="244"
+>
+	<marker line="-1" type="param">
+		<operand  start="262" length="1" line="6">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="282" length="8" line="6">
+			<expr><![CDATA[encoding]]></expr>
+		</operand>
+	</marker>
+	<type  start="221" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="245" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="265" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="348" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="344" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="365" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="348" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

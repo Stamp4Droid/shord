@@ -1,0 +1,347 @@
+<root>
+<class chordsig="android.media.MediaExtractor" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.media.MediaExtractor"
+ sig="MediaExtractor()"
+ line="4"
+ startpos="67"
+ endpos="81"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="96" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="92" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="113" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="96" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDataSource:(Landroid/content/Context;Landroid/net/Uri;Ljava/util/Map;)V@android.media.MediaExtractor"
+ sig="void setDataSource(Context,Uri,Map&lt;String,String&gt;)"
+ line="5"
+ startpos="144"
+ endpos="157"
+>
+	<marker line="-1" type="param">
+		<operand  start="182" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="207" length="3" line="5">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="262" length="7" line="5">
+			<expr><![CDATA[headers]]></expr>
+		</operand>
+	</marker>
+	<type  start="158" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="191" length="15" line="5" chordsig="android.net.Uri"/>
+	<type  start="212" length="13" line="5" chordsig="java.util.Map"/>
+	<type  start="226" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="244" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="310" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="306" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="327" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="310" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDataSource:(Ljava/lang/String;Ljava/util/Map;)V@android.media.MediaExtractor"
+ sig="void setDataSource(String,Map&lt;String,String&gt;)"
+ line="6"
+ startpos="358"
+ endpos="371"
+>
+	<marker line="-1" type="param">
+		<operand  start="389" length="4" line="6">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="445" length="7" line="6">
+			<expr><![CDATA[headers]]></expr>
+		</operand>
+	</marker>
+	<type  start="372" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="395" length="13" line="6" chordsig="java.util.Map"/>
+	<type  start="409" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="427" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="466" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="462" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="483" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="466" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDataSource:(Ljava/lang/String;)V@android.media.MediaExtractor"
+ sig="void setDataSource(String)"
+ line="7"
+ startpos="514"
+ endpos="527"
+>
+	<marker line="-1" type="param">
+		<operand  start="545" length="4" line="7">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<type  start="528" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="563" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="559" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="580" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="563" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDataSource:(Ljava/io/FileDescriptor;)V@android.media.MediaExtractor"
+ sig="void setDataSource(FileDescriptor)"
+ line="8"
+ startpos="611"
+ endpos="624"
+>
+	<marker line="-1" type="param">
+		<operand  start="648" length="2" line="8">
+			<expr><![CDATA[fd]]></expr>
+		</operand>
+	</marker>
+	<type  start="625" length="22" line="8" chordsig="java.io.FileDescriptor"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="664" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="660" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="681" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="664" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDataSource:(Ljava/io/FileDescriptor;JJ)V@android.media.MediaExtractor"
+ sig="void setDataSource(FileDescriptor,long,long)"
+ line="9"
+ startpos="719"
+ endpos="732"
+>
+	<marker line="-1" type="param">
+		<operand  start="756" length="2" line="9">
+			<expr><![CDATA[fd]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="765" length="6" line="9">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="778" length="6" line="9">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<type  start="733" length="22" line="9" chordsig="java.io.FileDescriptor"/>
+</method>
+<method
+ chordsig="finalize:()V@android.media.MediaExtractor"
+ sig="void finalize()"
+ line="10"
+ startpos="803"
+ endpos="811"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="826" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="822" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="843" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="826" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="release:()V@android.media.MediaExtractor"
+ sig="void release()"
+ line="11"
+ startpos="881"
+ endpos="888"
+>
+</method>
+<method
+ chordsig="getTrackCount:()I@android.media.MediaExtractor"
+ sig="int getTrackCount()"
+ line="12"
+ startpos="917"
+ endpos="930"
+>
+</method>
+<method
+ chordsig="getTrackFormat:(I)Landroid/media/MediaFormat;@android.media.MediaExtractor"
+ sig="MediaFormat getTrackFormat(int)"
+ line="13"
+ startpos="968"
+ endpos="982"
+>
+	<marker line="-1" type="param">
+		<operand  start="987" length="5" line="13">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="942" length="25" line="13" chordsig="android.media.MediaFormat"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1006" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1002" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1023" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1006" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="selectTrack:(I)V@android.media.MediaExtractor"
+ sig="void selectTrack(int)"
+ line="14"
+ startpos="1055"
+ endpos="1066"
+>
+	<marker line="-1" type="param">
+		<operand  start="1071" length="5" line="14">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="unselectTrack:(I)V@android.media.MediaExtractor"
+ sig="void unselectTrack(int)"
+ line="15"
+ startpos="1099"
+ endpos="1112"
+>
+	<marker line="-1" type="param">
+		<operand  start="1117" length="5" line="15">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="seekTo:(JI)V@android.media.MediaExtractor"
+ sig="void seekTo(long,int)"
+ line="16"
+ startpos="1145"
+ endpos="1151"
+>
+	<marker line="-1" type="param">
+		<operand  start="1157" length="6" line="16">
+			<expr><![CDATA[timeUs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1169" length="4" line="16">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="advance:()Z@android.media.MediaExtractor"
+ sig="boolean advance()"
+ line="17"
+ startpos="1199"
+ endpos="1206"
+>
+</method>
+<method
+ chordsig="readSampleData:(Ljava/nio/ByteBuffer;I)I@android.media.MediaExtractor"
+ sig="int readSampleData(ByteBuffer,int)"
+ line="18"
+ startpos="1229"
+ endpos="1243"
+>
+	<marker line="-1" type="param">
+		<operand  start="1264" length="7" line="18">
+			<expr><![CDATA[byteBuf]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1277" length="6" line="18">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<type  start="1244" length="19" line="18" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="getSampleTrackIndex:()I@android.media.MediaExtractor"
+ sig="int getSampleTrackIndex()"
+ line="19"
+ startpos="1305"
+ endpos="1324"
+>
+</method>
+<method
+ chordsig="getSampleTime:()J@android.media.MediaExtractor"
+ sig="long getSampleTime()"
+ line="20"
+ startpos="1348"
+ endpos="1361"
+>
+</method>
+<method
+ chordsig="getSampleFlags:()I@android.media.MediaExtractor"
+ sig="int getSampleFlags()"
+ line="21"
+ startpos="1384"
+ endpos="1398"
+>
+</method>
+<method
+ chordsig="getSampleCryptoInfo:(Landroid/media/MediaCodec$CryptoInfo;)Z@android.media.MediaExtractor"
+ sig="boolean getSampleCryptoInfo(CryptoInfo)"
+ line="22"
+ startpos="1425"
+ endpos="1444"
+>
+	<marker line="-1" type="param">
+		<operand  start="1481" length="4" line="22">
+			<expr><![CDATA[info]]></expr>
+		</operand>
+	</marker>
+	<type  start="1445" length="35" line="22" chordsig="android.media.MediaCodec$CryptoInfo"/>
+</method>
+<method
+ chordsig="getCachedDuration:()J@android.media.MediaExtractor"
+ sig="long getCachedDuration()"
+ line="23"
+ startpos="1508"
+ endpos="1525"
+>
+</method>
+<method
+ chordsig="hasCacheReachedEndOfStream:()Z@android.media.MediaExtractor"
+ sig="boolean hasCacheReachedEndOfStream()"
+ line="24"
+ startpos="1552"
+ endpos="1578"
+>
+</method>
+</class>
+</root>

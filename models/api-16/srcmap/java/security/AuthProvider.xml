@@ -1,0 +1,84 @@
+<root>
+<class chordsig="java.security.AuthProvider" line="2">
+	<type  start="68" length="22" line="3" chordsig="java.security.Provider"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;DLjava/lang/String;)V@java.security.AuthProvider"
+ sig="AuthProvider(String,double,String)"
+ line="5"
+ startpos="104"
+ endpos="116"
+>
+	<marker line="-1" type="param">
+		<operand  start="134" length="4" line="5">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="147" length="7" line="5">
+			<expr><![CDATA[version]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="173" length="4" line="5">
+			<expr><![CDATA[info]]></expr>
+		</operand>
+	</marker>
+	<type  start="117" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="156" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="188" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="213" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="247" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="243" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="264" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="247" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="login:(Ljavax/security/auth/Subject;Ljavax/security/auth/callback/CallbackHandler;)V@java.security.AuthProvider"
+ sig="void login(Subject,CallbackHandler)"
+ line="6"
+ startpos="298"
+ endpos="303"
+>
+	<marker line="-1" type="param">
+		<operand  start="332" length="7" line="6">
+			<expr><![CDATA[subject]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="386" length="7" line="6">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="304" length="27" line="6" chordsig="javax.security.auth.Subject"/>
+	<type  start="341" length="44" line="6" chordsig="javax.security.auth.callback.CallbackHandler"/>
+</method>
+<method
+ chordsig="logout:()V@java.security.AuthProvider"
+ sig="void logout()"
+ line="7"
+ startpos="466"
+ endpos="472"
+>
+</method>
+<method
+ chordsig="setCallbackHandler:(Ljavax/security/auth/callback/CallbackHandler;)V@java.security.AuthProvider"
+ sig="void setCallbackHandler(CallbackHandler)"
+ line="8"
+ startpos="546"
+ endpos="564"
+>
+	<marker line="-1" type="param">
+		<operand  start="610" length="7" line="8">
+			<expr><![CDATA[handler]]></expr>
+		</operand>
+	</marker>
+	<type  start="565" length="44" line="8" chordsig="javax.security.auth.callback.CallbackHandler"/>
+</method>
+</class>
+</root>

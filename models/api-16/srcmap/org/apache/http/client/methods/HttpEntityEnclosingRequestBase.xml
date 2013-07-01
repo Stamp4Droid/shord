@@ -1,0 +1,104 @@
+<root>
+<class chordsig="org.apache.http.client.methods.HttpEntityEnclosingRequestBase" line="2">
+	<type  start="103" length="46" line="3" chordsig="org.apache.http.client.methods.HttpRequestBase"/>
+	<type  start="163" length="42" line="4" chordsig="org.apache.http.HttpEntityEnclosingRequest"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.client.methods.HttpEntityEnclosingRequestBase"
+ sig="HttpEntityEnclosingRequestBase()"
+ line="6"
+ startpos="216"
+ endpos="246"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="261" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="257" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="278" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="261" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getEntity:()Lorg/apache/http/HttpEntity;@org.apache.http.client.methods.HttpEntityEnclosingRequestBase"
+ sig="HttpEntity getEntity()"
+ line="7"
+ startpos="325"
+ endpos="334"
+>
+	<type  start="298" length="26" line="7" chordsig="org.apache.http.HttpEntity"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="349" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="345" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="366" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="349" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setEntity:(Lorg/apache/http/HttpEntity;)V@org.apache.http.client.methods.HttpEntityEnclosingRequestBase"
+ sig="void setEntity(HttpEntity)"
+ line="8"
+ startpos="391"
+ endpos="400"
+>
+	<marker line="-1" type="param">
+		<operand  start="428" length="6" line="8">
+			<expr><![CDATA[entity]]></expr>
+		</operand>
+	</marker>
+	<type  start="401" length="26" line="8" chordsig="org.apache.http.HttpEntity"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="448" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="444" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="465" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="448" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="expectContinue:()Z@org.apache.http.client.methods.HttpEntityEnclosingRequestBase"
+ sig="boolean expectContinue()"
+ line="9"
+ startpos="493"
+ endpos="507"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="522" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="518" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="539" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="522" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clone:()Ljava/lang/Object;@org.apache.http.client.methods.HttpEntityEnclosingRequestBase"
+ sig="Object clone()"
+ line="10"
+ startpos="576"
+ endpos="581"
+>
+	<type  start="559" length="16" line="10" chordsig="java.lang.Object"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="640" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="636" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="657" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="640" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

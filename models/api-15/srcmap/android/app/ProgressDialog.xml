@@ -1,0 +1,654 @@
+<root>
+<class chordsig="android.app.ProgressDialog" line="2">
+	<type  start="59" length="23" line="3" chordsig="android.app.AlertDialog"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.app.ProgressDialog"
+ sig="ProgressDialog(Context)"
+ line="5"
+ startpos="93"
+ endpos="107"
+>
+	<marker line="-1" type="param">
+		<operand  start="132" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="108" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="150" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="186" length="48" line="5" chordsig="android.content.DialogInterface$OnCancelListener"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="252" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="248" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="269" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="252" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;I)V@android.app.ProgressDialog"
+ sig="ProgressDialog(Context,int)"
+ line="6"
+ startpos="289"
+ endpos="303"
+>
+	<marker line="-1" type="param">
+		<operand  start="328" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="341" length="5" line="6">
+			<expr><![CDATA[theme]]></expr>
+		</operand>
+	</marker>
+	<type  start="304" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="357" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="393" length="48" line="6" chordsig="android.content.DialogInterface$OnCancelListener"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="459" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="455" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="476" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="459" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="show:(Landroid/content/Context;Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Landroid/app/ProgressDialog;@android.app.ProgressDialog"
+ sig="ProgressDialog show(Context,CharSequence,CharSequence)"
+ line="7"
+ startpos="530"
+ endpos="534"
+>
+	<marker line="-1" type="param">
+		<operand  start="559" length="7" line="7">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="591" length="5" line="7">
+			<expr><![CDATA[title]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="621" length="7" line="7">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="503" length="26" line="7" chordsig="android.app.ProgressDialog"/>
+	<type  start="535" length="23" line="7" chordsig="android.content.Context"/>
+	<type  start="568" length="22" line="7" chordsig="java.lang.CharSequence"/>
+	<type  start="598" length="22" line="7" chordsig="java.lang.CharSequence"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="642" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="638" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="659" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="642" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="show:(Landroid/content/Context;Ljava/lang/CharSequence;Ljava/lang/CharSequence;Z)Landroid/app/ProgressDialog;@android.app.ProgressDialog"
+ sig="ProgressDialog show(Context,CharSequence,CharSequence,boolean)"
+ line="8"
+ startpos="713"
+ endpos="717"
+>
+	<marker line="-1" type="param">
+		<operand  start="742" length="7" line="8">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="774" length="5" line="8">
+			<expr><![CDATA[title]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="804" length="7" line="8">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="821" length="13" line="8">
+			<expr><![CDATA[indeterminate]]></expr>
+		</operand>
+	</marker>
+	<type  start="686" length="26" line="8" chordsig="android.app.ProgressDialog"/>
+	<type  start="718" length="23" line="8" chordsig="android.content.Context"/>
+	<type  start="751" length="22" line="8" chordsig="java.lang.CharSequence"/>
+	<type  start="781" length="22" line="8" chordsig="java.lang.CharSequence"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="848" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="844" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="865" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="848" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="show:(Landroid/content/Context;Ljava/lang/CharSequence;Ljava/lang/CharSequence;ZZ)Landroid/app/ProgressDialog;@android.app.ProgressDialog"
+ sig="ProgressDialog show(Context,CharSequence,CharSequence,boolean,boolean)"
+ line="9"
+ startpos="919"
+ endpos="923"
+>
+	<marker line="-1" type="param">
+		<operand  start="948" length="7" line="9">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="980" length="5" line="9">
+			<expr><![CDATA[title]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1010" length="7" line="9">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1027" length="13" line="9">
+			<expr><![CDATA[indeterminate]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1050" length="10" line="9">
+			<expr><![CDATA[cancelable]]></expr>
+		</operand>
+	</marker>
+	<type  start="892" length="26" line="9" chordsig="android.app.ProgressDialog"/>
+	<type  start="924" length="23" line="9" chordsig="android.content.Context"/>
+	<type  start="957" length="22" line="9" chordsig="java.lang.CharSequence"/>
+	<type  start="987" length="22" line="9" chordsig="java.lang.CharSequence"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1074" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1070" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1091" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1074" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="show:(Landroid/content/Context;Ljava/lang/CharSequence;Ljava/lang/CharSequence;ZZLandroid/content/DialogInterface$OnCancelListener;)Landroid/app/ProgressDialog;@android.app.ProgressDialog"
+ sig="ProgressDialog show(Context,CharSequence,CharSequence,boolean,boolean,OnCancelListener)"
+ line="10"
+ startpos="1145"
+ endpos="1149"
+>
+	<marker line="-1" type="param">
+		<operand  start="1174" length="7" line="10">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1206" length="5" line="10">
+			<expr><![CDATA[title]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1236" length="7" line="10">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1253" length="13" line="10">
+			<expr><![CDATA[indeterminate]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1276" length="10" line="10">
+			<expr><![CDATA[cancelable]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1337" length="14" line="10">
+			<expr><![CDATA[cancelListener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1118" length="26" line="10" chordsig="android.app.ProgressDialog"/>
+	<type  start="1150" length="23" line="10" chordsig="android.content.Context"/>
+	<type  start="1183" length="22" line="10" chordsig="java.lang.CharSequence"/>
+	<type  start="1213" length="22" line="10" chordsig="java.lang.CharSequence"/>
+	<type  start="1288" length="48" line="10" chordsig="android.content.DialogInterface$OnCancelListener"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1365" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1361" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1382" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1365" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onCreate:(Landroid/os/Bundle;)V@android.app.ProgressDialog"
+ sig="void onCreate(Bundle)"
+ line="11"
+ startpos="1410"
+ endpos="1418"
+>
+	<marker line="-1" type="param">
+		<operand  start="1437" length="18" line="11">
+			<expr><![CDATA[savedInstanceState]]></expr>
+		</operand>
+	</marker>
+	<type  start="1419" length="17" line="11" chordsig="android.os.Bundle"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1469" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1465" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1486" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1469" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onStart:()V@android.app.ProgressDialog"
+ sig="void onStart()"
+ line="12"
+ startpos="1511"
+ endpos="1518"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1533" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1529" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1550" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1533" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onStop:()V@android.app.ProgressDialog"
+ sig="void onStop()"
+ line="13"
+ startpos="1578"
+ endpos="1584"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1599" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1595" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1616" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1599" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setProgress:(I)V@android.app.ProgressDialog"
+ sig="void setProgress(int)"
+ line="14"
+ startpos="1641"
+ endpos="1652"
+>
+	<marker line="-1" type="param">
+		<operand  start="1657" length="5" line="14">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1676" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1672" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1693" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1676" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSecondaryProgress:(I)V@android.app.ProgressDialog"
+ sig="void setSecondaryProgress(int)"
+ line="15"
+ startpos="1718"
+ endpos="1738"
+>
+	<marker line="-1" type="param">
+		<operand  start="1743" length="17" line="15">
+			<expr><![CDATA[secondaryProgress]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1774" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1770" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1791" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1774" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getProgress:()I@android.app.ProgressDialog"
+ sig="int getProgress()"
+ line="16"
+ startpos="1815"
+ endpos="1826"
+>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1841" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1837" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1858" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1841" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSecondaryProgress:()I@android.app.ProgressDialog"
+ sig="int getSecondaryProgress()"
+ line="17"
+ startpos="1882"
+ endpos="1902"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1917" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1913" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1934" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1917" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMax:()I@android.app.ProgressDialog"
+ sig="int getMax()"
+ line="18"
+ startpos="1958"
+ endpos="1964"
+>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1979" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1975" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1996" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1979" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMax:(I)V@android.app.ProgressDialog"
+ sig="void setMax(int)"
+ line="19"
+ startpos="2021"
+ endpos="2027"
+>
+	<marker line="-1" type="param">
+		<operand  start="2032" length="3" line="19">
+			<expr><![CDATA[max]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2049" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2045" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2066" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2049" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="incrementProgressBy:(I)V@android.app.ProgressDialog"
+ sig="void incrementProgressBy(int)"
+ line="20"
+ startpos="2091"
+ endpos="2110"
+>
+	<marker line="-1" type="param">
+		<operand  start="2115" length="4" line="20">
+			<expr><![CDATA[diff]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2133" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2129" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2150" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2133" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="incrementSecondaryProgressBy:(I)V@android.app.ProgressDialog"
+ sig="void incrementSecondaryProgressBy(int)"
+ line="21"
+ startpos="2175"
+ endpos="2203"
+>
+	<marker line="-1" type="param">
+		<operand  start="2208" length="4" line="21">
+			<expr><![CDATA[diff]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2226" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2222" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2243" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2226" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setProgressDrawable:(Landroid/graphics/drawable/Drawable;)V@android.app.ProgressDialog"
+ sig="void setProgressDrawable(Drawable)"
+ line="22"
+ startpos="2268"
+ endpos="2287"
+>
+	<marker line="-1" type="param">
+		<operand  start="2323" length="1" line="22">
+			<expr><![CDATA[d]]></expr>
+		</operand>
+	</marker>
+	<type  start="2288" length="34" line="22" chordsig="android.graphics.drawable.Drawable"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2338" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2334" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2355" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2338" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setIndeterminateDrawable:(Landroid/graphics/drawable/Drawable;)V@android.app.ProgressDialog"
+ sig="void setIndeterminateDrawable(Drawable)"
+ line="23"
+ startpos="2380"
+ endpos="2404"
+>
+	<marker line="-1" type="param">
+		<operand  start="2440" length="1" line="23">
+			<expr><![CDATA[d]]></expr>
+		</operand>
+	</marker>
+	<type  start="2405" length="34" line="23" chordsig="android.graphics.drawable.Drawable"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2455" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2451" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2472" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2455" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setIndeterminate:(Z)V@android.app.ProgressDialog"
+ sig="void setIndeterminate(boolean)"
+ line="24"
+ startpos="2497"
+ endpos="2513"
+>
+	<marker line="-1" type="param">
+		<operand  start="2522" length="13" line="24">
+			<expr><![CDATA[indeterminate]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2549" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2545" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2566" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2549" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isIndeterminate:()Z@android.app.ProgressDialog"
+ sig="boolean isIndeterminate()"
+ line="25"
+ startpos="2594"
+ endpos="2609"
+>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2624" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2620" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2641" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2624" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMessage:(Ljava/lang/CharSequence;)V@android.app.ProgressDialog"
+ sig="void setMessage(CharSequence)"
+ line="26"
+ startpos="2666"
+ endpos="2676"
+>
+	<marker line="-1" type="param">
+		<operand  start="2700" length="7" line="26">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="2677" length="22" line="26" chordsig="java.lang.CharSequence"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2721" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2717" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2738" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2721" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setProgressStyle:(I)V@android.app.ProgressDialog"
+ sig="void setProgressStyle(int)"
+ line="27"
+ startpos="2763"
+ endpos="2779"
+>
+	<marker line="-1" type="param">
+		<operand  start="2784" length="5" line="27">
+			<expr><![CDATA[style]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2803" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2799" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2820" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2803" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setProgressNumberFormat:(Ljava/lang/String;)V@android.app.ProgressDialog"
+ sig="void setProgressNumberFormat(String)"
+ line="28"
+ startpos="2845"
+ endpos="2868"
+>
+	<marker line="-1" type="param">
+		<operand  start="2886" length="6" line="28">
+			<expr><![CDATA[format]]></expr>
+		</operand>
+	</marker>
+	<type  start="2869" length="16" line="28" chordsig="java.lang.String"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2906" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2902" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2923" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2906" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setProgressPercentFormat:(Ljava/text/NumberFormat;)V@android.app.ProgressDialog"
+ sig="void setProgressPercentFormat(NumberFormat)"
+ line="29"
+ startpos="2948"
+ endpos="2972"
+>
+	<marker line="-1" type="param">
+		<operand  start="2996" length="6" line="29">
+			<expr><![CDATA[format]]></expr>
+		</operand>
+	</marker>
+	<type  start="2973" length="22" line="29" chordsig="java.text.NumberFormat"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3016" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3012" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3033" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3016" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

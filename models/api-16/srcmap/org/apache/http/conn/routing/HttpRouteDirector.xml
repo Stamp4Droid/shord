@@ -1,0 +1,24 @@
+<root>
+<class chordsig="org.apache.http.conn.routing.HttpRouteDirector" line="2">
+<method
+ chordsig="nextStep:(Lorg/apache/http/conn/routing/RouteInfo;Lorg/apache/http/conn/routing/RouteInfo;)I@org.apache.http.conn.routing.HttpRouteDirector"
+ sig="int nextStep(RouteInfo,RouteInfo)"
+ line="4"
+ startpos="96"
+ endpos="104"
+>
+	<marker line="-1" type="param">
+		<operand  start="144" length="4" line="4">
+			<expr><![CDATA[plan]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="189" length="4" line="4">
+			<expr><![CDATA[fact]]></expr>
+		</operand>
+	</marker>
+	<type  start="105" length="38" line="4" chordsig="org.apache.http.conn.routing.RouteInfo"/>
+	<type  start="150" length="38" line="4" chordsig="org.apache.http.conn.routing.RouteInfo"/>
+</method>
+</class>
+</root>

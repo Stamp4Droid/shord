@@ -1,0 +1,218 @@
+<root>
+<class chordsig="org.apache.http.client.HttpClient" line="2">
+<method
+ chordsig="getParams:()Lorg/apache/http/params/HttpParams;@org.apache.http.client.HttpClient"
+ sig="HttpParams getParams()"
+ line="4"
+ startpos="113"
+ endpos="122"
+>
+	<type  start="79" length="33" line="4" chordsig="org.apache.http.params.HttpParams"/>
+</method>
+<method
+ chordsig="getConnectionManager:()Lorg/apache/http/conn/ClientConnectionManager;@org.apache.http.client.HttpClient"
+ sig="ClientConnectionManager getConnectionManager()"
+ line="5"
+ startpos="188"
+ endpos="208"
+>
+	<type  start="143" length="44" line="5" chordsig="org.apache.http.conn.ClientConnectionManager"/>
+</method>
+<method
+ chordsig="execute:(Lorg/apache/http/client/methods/HttpUriRequest;)Lorg/apache/http/HttpResponse;@org.apache.http.client.HttpClient"
+ sig="HttpResponse execute(HttpUriRequest)"
+ line="6"
+ startpos="258"
+ endpos="265"
+>
+	<marker line="-1" type="param">
+		<operand  start="312" length="7" line="6">
+			<expr><![CDATA[request]]></expr>
+		</operand>
+	</marker>
+	<type  start="229" length="28" line="6" chordsig="org.apache.http.HttpResponse"/>
+	<type  start="266" length="45" line="6" chordsig="org.apache.http.client.methods.HttpUriRequest"/>
+</method>
+<method
+ chordsig="execute:(Lorg/apache/http/client/methods/HttpUriRequest;Lorg/apache/http/protocol/HttpContext;)Lorg/apache/http/HttpResponse;@org.apache.http.client.HttpClient"
+ sig="HttpResponse execute(HttpUriRequest,HttpContext)"
+ line="7"
+ startpos="443"
+ endpos="450"
+>
+	<marker line="-1" type="param">
+		<operand  start="497" length="7" line="7">
+			<expr><![CDATA[request]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="543" length="7" line="7">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="414" length="28" line="7" chordsig="org.apache.http.HttpResponse"/>
+	<type  start="451" length="45" line="7" chordsig="org.apache.http.client.methods.HttpUriRequest"/>
+	<type  start="506" length="36" line="7" chordsig="org.apache.http.protocol.HttpContext"/>
+</method>
+<method
+ chordsig="execute:(Lorg/apache/http/HttpHost;Lorg/apache/http/HttpRequest;)Lorg/apache/http/HttpResponse;@org.apache.http.client.HttpClient"
+ sig="HttpResponse execute(HttpHost,HttpRequest)"
+ line="8"
+ startpos="674"
+ endpos="681"
+>
+	<marker line="-1" type="param">
+		<operand  start="707" length="6" line="8">
+			<expr><![CDATA[target]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="743" length="7" line="8">
+			<expr><![CDATA[request]]></expr>
+		</operand>
+	</marker>
+	<type  start="645" length="28" line="8" chordsig="org.apache.http.HttpResponse"/>
+	<type  start="682" length="24" line="8" chordsig="org.apache.http.HttpHost"/>
+	<type  start="715" length="27" line="8" chordsig="org.apache.http.HttpRequest"/>
+</method>
+<method
+ chordsig="execute:(Lorg/apache/http/HttpHost;Lorg/apache/http/HttpRequest;Lorg/apache/http/protocol/HttpContext;)Lorg/apache/http/HttpResponse;@org.apache.http.client.HttpClient"
+ sig="HttpResponse execute(HttpHost,HttpRequest,HttpContext)"
+ line="9"
+ startpos="874"
+ endpos="881"
+>
+	<marker line="-1" type="param">
+		<operand  start="907" length="6" line="9">
+			<expr><![CDATA[target]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="943" length="7" line="9">
+			<expr><![CDATA[request]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="989" length="7" line="9">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="845" length="28" line="9" chordsig="org.apache.http.HttpResponse"/>
+	<type  start="882" length="24" line="9" chordsig="org.apache.http.HttpHost"/>
+	<type  start="915" length="27" line="9" chordsig="org.apache.http.HttpRequest"/>
+	<type  start="952" length="36" line="9" chordsig="org.apache.http.protocol.HttpContext"/>
+</method>
+<method
+ chordsig="execute:(Lorg/apache/http/client/methods/HttpUriRequest;Lorg/apache/http/client/ResponseHandler;)Ljava/lang/Object;@org.apache.http.client.HttpClient"
+ sig="T execute(HttpUriRequest,ResponseHandler&lt;? extends T&gt;)"
+ line="10"
+ startpos="1096"
+ endpos="1103"
+>
+	<marker line="-1" type="param">
+		<operand  start="1150" length="7" line="10">
+			<expr><![CDATA[request]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1211" length="15" line="10">
+			<expr><![CDATA[responseHandler]]></expr>
+		</operand>
+	</marker>
+	<type  start="1094" length="1" line="10" chordsig="java.lang.Object"/>
+	<type  start="1104" length="45" line="10" chordsig="org.apache.http.client.methods.HttpUriRequest"/>
+	<type  start="1159" length="38" line="10" chordsig="org.apache.http.client.ResponseHandler"/>
+	<type  start="1208" length="1" line="10" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="execute:(Lorg/apache/http/client/methods/HttpUriRequest;Lorg/apache/http/client/ResponseHandler;Lorg/apache/http/protocol/HttpContext;)Ljava/lang/Object;@org.apache.http.client.HttpClient"
+ sig="T execute(HttpUriRequest,ResponseHandler&lt;? extends T&gt;,HttpContext)"
+ line="11"
+ startpos="1326"
+ endpos="1333"
+>
+	<marker line="-1" type="param">
+		<operand  start="1380" length="7" line="11">
+			<expr><![CDATA[request]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1441" length="15" line="11">
+			<expr><![CDATA[responseHandler]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1495" length="7" line="11">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="1324" length="1" line="11" chordsig="java.lang.Object"/>
+	<type  start="1334" length="45" line="11" chordsig="org.apache.http.client.methods.HttpUriRequest"/>
+	<type  start="1389" length="38" line="11" chordsig="org.apache.http.client.ResponseHandler"/>
+	<type  start="1438" length="1" line="11" chordsig="java.lang.Object"/>
+	<type  start="1458" length="36" line="11" chordsig="org.apache.http.protocol.HttpContext"/>
+</method>
+<method
+ chordsig="execute:(Lorg/apache/http/HttpHost;Lorg/apache/http/HttpRequest;Lorg/apache/http/client/ResponseHandler;)Ljava/lang/Object;@org.apache.http.client.HttpClient"
+ sig="T execute(HttpHost,HttpRequest,ResponseHandler&lt;? extends T&gt;)"
+ line="12"
+ startpos="1602"
+ endpos="1609"
+>
+	<marker line="-1" type="param">
+		<operand  start="1635" length="6" line="12">
+			<expr><![CDATA[target]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1671" length="7" line="12">
+			<expr><![CDATA[request]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1732" length="15" line="12">
+			<expr><![CDATA[responseHandler]]></expr>
+		</operand>
+	</marker>
+	<type  start="1600" length="1" line="12" chordsig="java.lang.Object"/>
+	<type  start="1610" length="24" line="12" chordsig="org.apache.http.HttpHost"/>
+	<type  start="1643" length="27" line="12" chordsig="org.apache.http.HttpRequest"/>
+	<type  start="1680" length="38" line="12" chordsig="org.apache.http.client.ResponseHandler"/>
+	<type  start="1729" length="1" line="12" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="execute:(Lorg/apache/http/HttpHost;Lorg/apache/http/HttpRequest;Lorg/apache/http/client/ResponseHandler;Lorg/apache/http/protocol/HttpContext;)Ljava/lang/Object;@org.apache.http.client.HttpClient"
+ sig="T execute(HttpHost,HttpRequest,ResponseHandler&lt;? extends T&gt;,HttpContext)"
+ line="13"
+ startpos="1847"
+ endpos="1854"
+>
+	<marker line="-1" type="param">
+		<operand  start="1880" length="6" line="13">
+			<expr><![CDATA[target]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1916" length="7" line="13">
+			<expr><![CDATA[request]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1977" length="15" line="13">
+			<expr><![CDATA[responseHandler]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2031" length="7" line="13">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="1845" length="1" line="13" chordsig="java.lang.Object"/>
+	<type  start="1855" length="24" line="13" chordsig="org.apache.http.HttpHost"/>
+	<type  start="1888" length="27" line="13" chordsig="org.apache.http.HttpRequest"/>
+	<type  start="1925" length="38" line="13" chordsig="org.apache.http.client.ResponseHandler"/>
+	<type  start="1974" length="1" line="13" chordsig="java.lang.Object"/>
+	<type  start="1994" length="36" line="13" chordsig="org.apache.http.protocol.HttpContext"/>
+</method>
+</class>
+</root>

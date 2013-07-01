@@ -1,0 +1,36 @@
+<root>
+<class chordsig="org.apache.http.HttpEntityEnclosingRequest" line="2">
+	<type  start="79" length="27" line="3" chordsig="org.apache.http.HttpRequest"/>
+<method
+ chordsig="expectContinue:()Z@org.apache.http.HttpEntityEnclosingRequest"
+ sig="boolean expectContinue()"
+ line="5"
+ startpos="134"
+ endpos="148"
+>
+</method>
+<method
+ chordsig="setEntity:(Lorg/apache/http/HttpEntity;)V@org.apache.http.HttpEntityEnclosingRequest"
+ sig="void setEntity(HttpEntity)"
+ line="6"
+ startpos="174"
+ endpos="183"
+>
+	<marker line="-1" type="param">
+		<operand  start="211" length="6" line="6">
+			<expr><![CDATA[entity]]></expr>
+		</operand>
+	</marker>
+	<type  start="184" length="26" line="6" chordsig="org.apache.http.HttpEntity"/>
+</method>
+<method
+ chordsig="getEntity:()Lorg/apache/http/HttpEntity;@org.apache.http.HttpEntityEnclosingRequest"
+ sig="HttpEntity getEntity()"
+ line="7"
+ startpos="264"
+ endpos="273"
+>
+	<type  start="237" length="26" line="7" chordsig="org.apache.http.HttpEntity"/>
+</method>
+</class>
+</root>

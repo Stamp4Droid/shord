@@ -1,0 +1,353 @@
+<root>
+<class chordsig="android.test.IsolatedContext" line="2">
+	<type  start="61" length="30" line="3" chordsig="android.content.ContextWrapper"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/ContentResolver;Landroid/content/Context;)V@android.test.IsolatedContext"
+ sig="IsolatedContext(ContentResolver,Context)"
+ line="5"
+ startpos="102"
+ endpos="117"
+>
+	<marker line="-1" type="param">
+		<operand  start="150" length="8" line="5">
+			<expr><![CDATA[resolver]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="184" length="13" line="5">
+			<expr><![CDATA[targetContext]]></expr>
+		</operand>
+	</marker>
+	<type  start="118" length="31" line="5" chordsig="android.content.ContentResolver"/>
+	<type  start="160" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="208" length="23" line="5" chordsig="android.content.Context"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="249" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="245" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="266" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="249" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAndClearBroadcastIntents:()Ljava/util/List;@android.test.IsolatedContext"
+ sig="List&lt;Intent&gt; getAndClearBroadcastIntents()"
+ line="6"
+ startpos="325"
+ endpos="352"
+>
+	<type  start="286" length="14" line="6" chordsig="java.util.List"/>
+	<type  start="301" length="22" line="6" chordsig="android.content.Intent"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="367" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="363" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="384" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="367" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContentResolver:()Landroid/content/ContentResolver;@android.test.IsolatedContext"
+ sig="ContentResolver getContentResolver()"
+ line="7"
+ startpos="436"
+ endpos="454"
+>
+	<type  start="404" length="31" line="7" chordsig="android.content.ContentResolver"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="469" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="465" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="486" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="469" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="bindService:(Landroid/content/Intent;Landroid/content/ServiceConnection;I)Z@android.test.IsolatedContext"
+ sig="boolean bindService(Intent,ServiceConnection,int)"
+ line="8"
+ startpos="514"
+ endpos="525"
+>
+	<marker line="-1" type="param">
+		<operand  start="549" length="7" line="8">
+			<expr><![CDATA[service]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="592" length="4" line="8">
+			<expr><![CDATA[conn]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="602" length="5" line="8">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="526" length="22" line="8" chordsig="android.content.Intent"/>
+	<type  start="558" length="33" line="8" chordsig="android.content.ServiceConnection"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="621" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="617" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="638" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="621" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="registerReceiver:(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;@android.test.IsolatedContext"
+ sig="Intent registerReceiver(BroadcastReceiver,IntentFilter)"
+ line="9"
+ startpos="681"
+ endpos="697"
+>
+	<marker line="-1" type="param">
+		<operand  start="732" length="8" line="9">
+			<expr><![CDATA[receiver]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="771" length="6" line="9">
+			<expr><![CDATA[filter]]></expr>
+		</operand>
+	</marker>
+	<type  start="658" length="22" line="9" chordsig="android.content.Intent"/>
+	<type  start="698" length="33" line="9" chordsig="android.content.BroadcastReceiver"/>
+	<type  start="742" length="28" line="9" chordsig="android.content.IntentFilter"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="791" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="787" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="808" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="791" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unregisterReceiver:(Landroid/content/BroadcastReceiver;)V@android.test.IsolatedContext"
+ sig="void unregisterReceiver(BroadcastReceiver)"
+ line="10"
+ startpos="833"
+ endpos="851"
+>
+	<marker line="-1" type="param">
+		<operand  start="886" length="8" line="10">
+			<expr><![CDATA[receiver]]></expr>
+		</operand>
+	</marker>
+	<type  start="852" length="33" line="10" chordsig="android.content.BroadcastReceiver"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="908" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="904" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="925" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="908" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="sendBroadcast:(Landroid/content/Intent;)V@android.test.IsolatedContext"
+ sig="void sendBroadcast(Intent)"
+ line="11"
+ startpos="950"
+ endpos="963"
+>
+	<marker line="-1" type="param">
+		<operand  start="987" length="6" line="11">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="964" length="22" line="11" chordsig="android.content.Intent"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1007" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1003" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1024" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1007" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="sendOrderedBroadcast:(Landroid/content/Intent;Ljava/lang/String;)V@android.test.IsolatedContext"
+ sig="void sendOrderedBroadcast(Intent,String)"
+ line="12"
+ startpos="1049"
+ endpos="1069"
+>
+	<marker line="-1" type="param">
+		<operand  start="1093" length="6" line="12">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1118" length="18" line="12">
+			<expr><![CDATA[receiverPermission]]></expr>
+		</operand>
+	</marker>
+	<type  start="1070" length="22" line="12" chordsig="android.content.Intent"/>
+	<type  start="1101" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1150" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1146" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1167" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1150" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="checkUriPermission:(Landroid/net/Uri;Ljava/lang/String;Ljava/lang/String;III)I@android.test.IsolatedContext"
+ sig="int checkUriPermission(Uri,String,String,int,int,int)"
+ line="13"
+ startpos="1191"
+ endpos="1209"
+>
+	<marker line="-1" type="param">
+		<operand  start="1226" length="3" line="13">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1248" length="14" line="13">
+			<expr><![CDATA[readPermission]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1281" length="15" line="13">
+			<expr><![CDATA[writePermission]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1302" length="3" line="13">
+			<expr><![CDATA[pid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1311" length="3" line="13">
+			<expr><![CDATA[uid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1320" length="9" line="13">
+			<expr><![CDATA[modeFlags]]></expr>
+		</operand>
+	</marker>
+	<type  start="1210" length="15" line="13" chordsig="android.net.Uri"/>
+	<type  start="1231" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="1264" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1343" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1339" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1360" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1343" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="checkUriPermission:(Landroid/net/Uri;III)I@android.test.IsolatedContext"
+ sig="int checkUriPermission(Uri,int,int,int)"
+ line="14"
+ startpos="1384"
+ endpos="1402"
+>
+	<marker line="-1" type="param">
+		<operand  start="1419" length="3" line="14">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1428" length="3" line="14">
+			<expr><![CDATA[pid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1437" length="3" line="14">
+			<expr><![CDATA[uid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1446" length="9" line="14">
+			<expr><![CDATA[modeFlags]]></expr>
+		</operand>
+	</marker>
+	<type  start="1403" length="15" line="14" chordsig="android.net.Uri"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1469" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1465" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1486" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1469" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSystemService:(Ljava/lang/String;)Ljava/lang/Object;@android.test.IsolatedContext"
+ sig="Object getSystemService(String)"
+ line="15"
+ startpos="1523"
+ endpos="1539"
+>
+	<marker line="-1" type="param">
+		<operand  start="1557" length="4" line="15">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="1506" length="16" line="15" chordsig="java.lang.Object"/>
+	<type  start="1540" length="16" line="15" chordsig="java.lang.String"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1575" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1571" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1592" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1575" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFilesDir:()Ljava/io/File;@android.test.IsolatedContext"
+ sig="File getFilesDir()"
+ line="16"
+ startpos="1625"
+ endpos="1636"
+>
+	<type  start="1612" length="12" line="16" chordsig="java.io.File"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1651" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1647" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1668" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1651" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

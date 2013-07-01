@@ -1,0 +1,86 @@
+<root>
+<class chordsig="android.util.Patterns" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.util.Patterns"
+ sig="Patterns()"
+ line="4"
+ startpos="46"
+ endpos="54"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="69" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="65" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="86" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="69" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="concatGroups:(Ljava/util/regex/Matcher;)Ljava/lang/String;@android.util.Patterns"
+ sig="String concatGroups(Matcher)"
+ line="5"
+ startpos="136"
+ endpos="148"
+>
+	<marker line="-1" type="param">
+		<operand  start="173" length="7" line="5">
+			<expr><![CDATA[matcher]]></expr>
+		</operand>
+	</marker>
+	<type  start="119" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="149" length="23" line="5" chordsig="java.util.regex.Matcher"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="194" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="190" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="211" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="194" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="digitsAndPlusOnly:(Ljava/util/regex/Matcher;)Ljava/lang/String;@android.util.Patterns"
+ sig="String digitsAndPlusOnly(Matcher)"
+ line="6"
+ startpos="261"
+ endpos="278"
+>
+	<marker line="-1" type="param">
+		<operand  start="303" length="7" line="6">
+			<expr><![CDATA[matcher]]></expr>
+		</operand>
+	</marker>
+	<type  start="244" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="279" length="23" line="6" chordsig="java.util.regex.Matcher"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="324" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="320" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="341" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="324" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="373" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="2803" length="23" line="8" chordsig="java.util.regex.Pattern"/>
+	<type  start="2865" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="5336" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="5441" length="23" line="11" chordsig="java.util.regex.Pattern"/>
+	<type  start="5494" length="23" line="12" chordsig="java.util.regex.Pattern"/>
+	<type  start="5550" length="23" line="13" chordsig="java.util.regex.Pattern"/>
+	<type  start="5607" length="23" line="14" chordsig="java.util.regex.Pattern"/>
+	<type  start="5666" length="23" line="15" chordsig="java.util.regex.Pattern"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.util.Patterns"
+ line="16"
+>
+</method>
+</class>
+</root>

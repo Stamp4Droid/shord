@@ -1,0 +1,23 @@
+<root>
+<class chordsig="java.nio.channels.CancelledKeyException" line="2">
+	<type  start="72" length="31" line="3" chordsig="java.lang.IllegalStateException"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.nio.channels.CancelledKeyException"
+ sig="CancelledKeyException()"
+ line="5"
+ startpos="114"
+ endpos="135"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="150" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="146" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="167" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="150" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

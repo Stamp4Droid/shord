@@ -1,0 +1,52 @@
+<root>
+<class chordsig="android.net.SSLSessionCache" line="2">
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/File;)V@android.net.SSLSessionCache"
+ sig="SSLSessionCache(File)"
+ line="4"
+ startpos="66"
+ endpos="81"
+>
+	<marker line="-1" type="param">
+		<operand  start="95" length="3" line="4">
+			<expr><![CDATA[dir]]></expr>
+		</operand>
+	</marker>
+	<type  start="82" length="12" line="4" chordsig="java.io.File"/>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="139" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="135" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="156" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="139" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.net.SSLSessionCache"
+ sig="SSLSessionCache(Context)"
+ line="5"
+ startpos="176"
+ endpos="191"
+>
+	<marker line="-1" type="param">
+		<operand  start="216" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="192" length="23" line="5" chordsig="android.content.Context"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="237" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="233" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="254" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="237" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

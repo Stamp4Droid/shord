@@ -1,0 +1,302 @@
+<root>
+<class chordsig="org.apache.http.auth.AuthScope" line="2">
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;)V@org.apache.http.auth.AuthScope"
+ sig="AuthScope(String,int,String,String)"
+ line="4"
+ startpos="63"
+ endpos="72"
+>
+	<marker line="-1" type="param">
+		<operand  start="90" length="4" line="4">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="100" length="4" line="4">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="123" length="5" line="4">
+			<expr><![CDATA[realm]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="147" length="6" line="4">
+			<expr><![CDATA[scheme]]></expr>
+		</operand>
+	</marker>
+	<type  start="73" length="16" line="4" chordsig="java.lang.String"/>
+	<type  start="106" length="16" line="4" chordsig="java.lang.String"/>
+	<type  start="130" length="16" line="4" chordsig="java.lang.String"/>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="167" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="163" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="184" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="167" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;ILjava/lang/String;)V@org.apache.http.auth.AuthScope"
+ sig="AuthScope(String,int,String)"
+ line="5"
+ startpos="204"
+ endpos="213"
+>
+	<marker line="-1" type="param">
+		<operand  start="231" length="4" line="5">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="241" length="4" line="5">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="264" length="5" line="5">
+			<expr><![CDATA[realm]]></expr>
+		</operand>
+	</marker>
+	<type  start="214" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="247" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="283" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="279" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="300" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="283" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;I)V@org.apache.http.auth.AuthScope"
+ sig="AuthScope(String,int)"
+ line="6"
+ startpos="320"
+ endpos="329"
+>
+	<marker line="-1" type="param">
+		<operand  start="347" length="4" line="6">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="357" length="4" line="6">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<type  start="330" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="375" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="371" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="392" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="375" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/auth/AuthScope;)V@org.apache.http.auth.AuthScope"
+ sig="AuthScope(AuthScope)"
+ line="7"
+ startpos="412"
+ endpos="421"
+>
+	<marker line="-1" type="param">
+		<operand  start="453" length="9" line="7">
+			<expr><![CDATA[authscope]]></expr>
+		</operand>
+	</marker>
+	<type  start="422" length="30" line="7" chordsig="org.apache.http.auth.AuthScope"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="476" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="472" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="493" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="476" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getHost:()Ljava/lang/String;@org.apache.http.auth.AuthScope"
+ sig="String getHost()"
+ line="8"
+ startpos="530"
+ endpos="537"
+>
+	<type  start="513" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="552" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="548" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="569" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="552" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPort:()I@org.apache.http.auth.AuthScope"
+ sig="int getPort()"
+ line="9"
+ startpos="593"
+ endpos="600"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="615" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="611" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="632" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="615" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRealm:()Ljava/lang/String;@org.apache.http.auth.AuthScope"
+ sig="String getRealm()"
+ line="10"
+ startpos="669"
+ endpos="677"
+>
+	<type  start="652" length="16" line="10" chordsig="java.lang.String"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="692" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="688" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="709" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="692" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getScheme:()Ljava/lang/String;@org.apache.http.auth.AuthScope"
+ sig="String getScheme()"
+ line="11"
+ startpos="746"
+ endpos="755"
+>
+	<type  start="729" length="16" line="11" chordsig="java.lang.String"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="770" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="766" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="787" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="770" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="match:(Lorg/apache/http/auth/AuthScope;)I@org.apache.http.auth.AuthScope"
+ sig="int match(AuthScope)"
+ line="12"
+ startpos="811"
+ endpos="816"
+>
+	<marker line="-1" type="param">
+		<operand  start="848" length="4" line="12">
+			<expr><![CDATA[that]]></expr>
+		</operand>
+	</marker>
+	<type  start="817" length="30" line="12" chordsig="org.apache.http.auth.AuthScope"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="866" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="862" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="883" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="866" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@org.apache.http.auth.AuthScope"
+ sig="boolean equals(Object)"
+ line="13"
+ startpos="911"
+ endpos="917"
+>
+	<marker line="-1" type="param">
+		<operand  start="935" length="1" line="13">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="918" length="16" line="13" chordsig="java.lang.Object"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="950" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="946" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="967" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="950" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@org.apache.http.auth.AuthScope"
+ sig="String toString()"
+ line="14"
+ startpos="1004"
+ endpos="1012"
+>
+	<type  start="987" length="16" line="14" chordsig="java.lang.String"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1027" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1023" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1044" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1027" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@org.apache.http.auth.AuthScope"
+ sig="int hashCode()"
+ line="15"
+ startpos="1068"
+ endpos="1076"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1091" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1087" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1108" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1091" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1140" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="1226" length="16" line="18" chordsig="java.lang.String"/>
+	<type  start="1274" length="16" line="19" chordsig="java.lang.String"/>
+	<type  start="1323" length="30" line="20" chordsig="org.apache.http.auth.AuthScope"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@org.apache.http.auth.AuthScope"
+ line="21"
+>
+</method>
+</class>
+</root>

@@ -1,0 +1,144 @@
+<root>
+<class chordsig="android.media.MediaCodecInfo" line="2">
+<class chordsig="android.media.MediaCodecInfo$CodecCapabilities" line="4">
+<method
+ chordsig="&lt;init&gt;:()V@android.media.MediaCodecInfo$CodecCapabilities"
+ sig="CodecCapabilities()"
+ line="6"
+ startpos="113"
+ endpos="130"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="145" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="141" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="162" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="145" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="181" length="46" line="7" chordsig="android.media.MediaCodecInfo$CodecProfileLevel"/>
+</class>
+<class chordsig="android.media.MediaCodecInfo$CodecProfileLevel" line="55">
+<method
+ chordsig="&lt;init&gt;:()V@android.media.MediaCodecInfo$CodecProfileLevel"
+ sig="CodecProfileLevel()"
+ line="57"
+ startpos="2826"
+ endpos="2843"
+>
+	<newexpr line="57" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2858" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2854" length="29" line="57">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2875" length="7" line="57">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2858" length="16" line="57" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.media.MediaCodecInfo"
+ sig="MediaCodecInfo()"
+ line="135"
+ startpos="6351"
+ endpos="6365"
+>
+	<newexpr line="135" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6380" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6376" length="29" line="135">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6397" length="7" line="135">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6380" length="16" line="135" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getName:()Ljava/lang/String;@android.media.MediaCodecInfo"
+ sig="String getName()"
+ line="136"
+ startpos="6440"
+ endpos="6447"
+>
+	<type  start="6423" length="16" line="136" chordsig="java.lang.String"/>
+	<newexpr line="136" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6462" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6458" length="29" line="136">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6479" length="7" line="136">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6462" length="16" line="136" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isEncoder:()Z@android.media.MediaCodecInfo"
+ sig="boolean isEncoder()"
+ line="137"
+ startpos="6513"
+ endpos="6522"
+>
+	<newexpr line="137" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6537" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6533" length="29" line="137">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6554" length="7" line="137">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6537" length="16" line="137" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSupportedTypes:()[Ljava/lang/String;@android.media.MediaCodecInfo"
+ sig="String[] getSupportedTypes()"
+ line="138"
+ startpos="6599"
+ endpos="6616"
+>
+	<type  start="6580" length="16" line="138" chordsig="java.lang.String"/>
+	<newexpr line="138" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6631" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6627" length="29" line="138">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6648" length="7" line="138">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6631" length="16" line="138" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCapabilitiesForType:(Ljava/lang/String;)Landroid/media/MediaCodecInfo$CodecCapabilities;@android.media.MediaCodecInfo"
+ sig="CodecCapabilities getCapabilitiesForType(String)"
+ line="139"
+ startpos="6721"
+ endpos="6743"
+>
+	<marker line="-1" type="param">
+		<operand  start="6761" length="4" line="139">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<type  start="6674" length="46" line="139" chordsig="android.media.MediaCodecInfo$CodecCapabilities"/>
+	<type  start="6744" length="16" line="139" chordsig="java.lang.String"/>
+	<newexpr line="139" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6779" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6775" length="29" line="139">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6796" length="7" line="139">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6779" length="16" line="139" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

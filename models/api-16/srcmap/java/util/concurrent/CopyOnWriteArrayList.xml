@@ -1,0 +1,810 @@
+<root>
+<class chordsig="java.util.concurrent.CopyOnWriteArrayList" line="2">
+	<type  start="80" length="14" line="3" chordsig="java.util.List"/>
+	<type  start="95" length="1" line="3" chordsig="java.lang.Object"/>
+	<type  start="99" length="22" line="3" chordsig="java.util.RandomAccess"/>
+	<type  start="123" length="19" line="3" chordsig="java.lang.Cloneable"/>
+	<type  start="144" length="20" line="3" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.util.concurrent.CopyOnWriteArrayList"
+ sig="CopyOnWriteArrayList()"
+ line="5"
+ startpos="175"
+ endpos="195"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="210" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="206" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="227" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="210" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/util/Collection;)V@java.util.concurrent.CopyOnWriteArrayList"
+ sig="CopyOnWriteArrayList(Collection&lt;? extends E&gt;)"
+ line="7"
+ startpos="296"
+ endpos="316"
+>
+	<marker line="-1" type="param">
+		<operand  start="351" length="10" line="7">
+			<expr><![CDATA[collection]]></expr>
+		</operand>
+	</marker>
+	<type  start="317" length="20" line="7" chordsig="java.util.Collection"/>
+	<type  start="348" length="1" line="7" chordsig="java.lang.Object"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="375" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="371" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="392" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="375" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:([Ljava/lang/Object;)V@java.util.concurrent.CopyOnWriteArrayList"
+ sig="CopyOnWriteArrayList(E[])"
+ line="8"
+ startpos="412"
+ endpos="432"
+>
+	<marker line="-1" type="param">
+		<operand  start="437" length="5" line="8">
+			<expr><![CDATA[array]]></expr>
+		</operand>
+	</marker>
+	<type  start="433" length="1" line="8" chordsig="java.lang.Object"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="456" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="452" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="473" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="456" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clone:()Ljava/lang/Object;@java.util.concurrent.CopyOnWriteArrayList"
+ sig="Object clone()"
+ line="9"
+ startpos="510"
+ endpos="515"
+>
+	<type  start="493" length="16" line="9" chordsig="java.lang.Object"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="530" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="526" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="547" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="530" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="size:()I@java.util.concurrent.CopyOnWriteArrayList"
+ sig="int size()"
+ line="10"
+ startpos="571"
+ endpos="575"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="590" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="586" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="607" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="590" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="get:(I)Ljava/lang/Object;@java.util.concurrent.CopyOnWriteArrayList"
+ sig="E get(int)"
+ line="12"
+ startpos="678"
+ endpos="681"
+>
+	<marker line="-1" type="param">
+		<operand  start="686" length="5" line="12">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="676" length="1" line="12" chordsig="java.lang.Object"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="705" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="701" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="722" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="705" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="contains:(Ljava/lang/Object;)Z@java.util.concurrent.CopyOnWriteArrayList"
+ sig="boolean contains(Object)"
+ line="13"
+ startpos="750"
+ endpos="758"
+>
+	<marker line="-1" type="param">
+		<operand  start="776" length="1" line="13">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="759" length="16" line="13" chordsig="java.lang.Object"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="791" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="787" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="808" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="791" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="containsAll:(Ljava/util/Collection;)Z@java.util.concurrent.CopyOnWriteArrayList"
+ sig="boolean containsAll(Collection&lt;?&gt;)"
+ line="14"
+ startpos="836"
+ endpos="847"
+>
+	<marker line="-1" type="param">
+		<operand  start="872" length="10" line="14">
+			<expr><![CDATA[collection]]></expr>
+		</operand>
+	</marker>
+	<type  start="848" length="20" line="14" chordsig="java.util.Collection"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="896" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="892" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="913" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="896" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="indexOf:(Ljava/lang/Object;I)I@java.util.concurrent.CopyOnWriteArrayList"
+ sig="int indexOf(E,int)"
+ line="15"
+ startpos="937"
+ endpos="944"
+>
+	<marker line="-1" type="param">
+		<operand  start="947" length="6" line="15">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="959" length="4" line="15">
+			<expr><![CDATA[from]]></expr>
+		</operand>
+	</marker>
+	<type  start="945" length="1" line="15" chordsig="java.lang.Object"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="977" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="973" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="994" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="977" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="indexOf:(Ljava/lang/Object;)I@java.util.concurrent.CopyOnWriteArrayList"
+ sig="int indexOf(Object)"
+ line="16"
+ startpos="1018"
+ endpos="1025"
+>
+	<marker line="-1" type="param">
+		<operand  start="1043" length="6" line="16">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="1026" length="16" line="16" chordsig="java.lang.Object"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1063" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1059" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1080" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1063" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="lastIndexOf:(Ljava/lang/Object;I)I@java.util.concurrent.CopyOnWriteArrayList"
+ sig="int lastIndexOf(E,int)"
+ line="17"
+ startpos="1104"
+ endpos="1115"
+>
+	<marker line="-1" type="param">
+		<operand  start="1118" length="6" line="17">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1130" length="2" line="17">
+			<expr><![CDATA[to]]></expr>
+		</operand>
+	</marker>
+	<type  start="1116" length="1" line="17" chordsig="java.lang.Object"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1146" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1142" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1163" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1146" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="lastIndexOf:(Ljava/lang/Object;)I@java.util.concurrent.CopyOnWriteArrayList"
+ sig="int lastIndexOf(Object)"
+ line="18"
+ startpos="1187"
+ endpos="1198"
+>
+	<marker line="-1" type="param">
+		<operand  start="1216" length="6" line="18">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="1199" length="16" line="18" chordsig="java.lang.Object"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1236" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1232" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1253" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1236" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isEmpty:()Z@java.util.concurrent.CopyOnWriteArrayList"
+ sig="boolean isEmpty()"
+ line="19"
+ startpos="1281"
+ endpos="1288"
+>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1303" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1299" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1320" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1303" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="iterator:()Ljava/util/Iterator;@java.util.concurrent.CopyOnWriteArrayList"
+ sig="Iterator&lt;E&gt; iterator()"
+ line="20"
+ startpos="1362"
+ endpos="1370"
+>
+	<type  start="1340" length="18" line="20" chordsig="java.util.Iterator"/>
+	<type  start="1359" length="1" line="20" chordsig="java.lang.Object"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1385" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1381" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1402" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1385" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="listIterator:(I)Ljava/util/ListIterator;@java.util.concurrent.CopyOnWriteArrayList"
+ sig="ListIterator&lt;E&gt; listIterator(int)"
+ line="21"
+ startpos="1448"
+ endpos="1460"
+>
+	<marker line="-1" type="param">
+		<operand  start="1465" length="5" line="21">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="1422" length="22" line="21" chordsig="java.util.ListIterator"/>
+	<type  start="1445" length="1" line="21" chordsig="java.lang.Object"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1484" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1480" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1501" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1484" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="listIterator:()Ljava/util/ListIterator;@java.util.concurrent.CopyOnWriteArrayList"
+ sig="ListIterator&lt;E&gt; listIterator()"
+ line="22"
+ startpos="1547"
+ endpos="1559"
+>
+	<type  start="1521" length="22" line="22" chordsig="java.util.ListIterator"/>
+	<type  start="1544" length="1" line="22" chordsig="java.lang.Object"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1574" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1570" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1591" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1574" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="subList:(II)Ljava/util/List;@java.util.concurrent.CopyOnWriteArrayList"
+ sig="List&lt;E&gt; subList(int,int)"
+ line="23"
+ startpos="1629"
+ endpos="1636"
+>
+	<marker line="-1" type="param">
+		<operand  start="1641" length="4" line="23">
+			<expr><![CDATA[from]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1651" length="2" line="23">
+			<expr><![CDATA[to]]></expr>
+		</operand>
+	</marker>
+	<type  start="1611" length="14" line="23" chordsig="java.util.List"/>
+	<type  start="1626" length="1" line="23" chordsig="java.lang.Object"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1667" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1663" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1684" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1667" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toArray:()[Ljava/lang/Object;@java.util.concurrent.CopyOnWriteArrayList"
+ sig="Object[] toArray()"
+ line="24"
+ startpos="1723"
+ endpos="1730"
+>
+	<type  start="1704" length="16" line="24" chordsig="java.lang.Object"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1745" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1741" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1762" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1745" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toArray:([Ljava/lang/Object;)[Ljava/lang/Object;@java.util.concurrent.CopyOnWriteArrayList"
+ sig="T[] toArray(T[])"
+ line="26"
+ startpos="1866"
+ endpos="1873"
+>
+	<marker line="-1" type="param">
+		<operand  start="1878" length="8" line="26">
+			<expr><![CDATA[contents]]></expr>
+		</operand>
+	</marker>
+	<type  start="1862" length="1" line="26" chordsig="java.lang.Object"/>
+	<type  start="1874" length="1" line="26" chordsig="java.lang.Object"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1900" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1896" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1917" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1900" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.util.concurrent.CopyOnWriteArrayList"
+ sig="boolean equals(Object)"
+ line="27"
+ startpos="1945"
+ endpos="1951"
+>
+	<marker line="-1" type="param">
+		<operand  start="1969" length="5" line="27">
+			<expr><![CDATA[other]]></expr>
+		</operand>
+	</marker>
+	<type  start="1952" length="16" line="27" chordsig="java.lang.Object"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1988" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1984" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2005" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1988" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@java.util.concurrent.CopyOnWriteArrayList"
+ sig="int hashCode()"
+ line="28"
+ startpos="2029"
+ endpos="2037"
+>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2052" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2048" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2069" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2052" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.util.concurrent.CopyOnWriteArrayList"
+ sig="String toString()"
+ line="29"
+ startpos="2106"
+ endpos="2114"
+>
+	<type  start="2089" length="16" line="29" chordsig="java.lang.String"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2129" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2125" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2146" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2129" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="add:(Ljava/lang/Object;)Z@java.util.concurrent.CopyOnWriteArrayList"
+ sig="boolean add(E)"
+ line="30"
+ startpos="2187"
+ endpos="2190"
+>
+	<marker line="-1" type="param">
+		<operand  start="2193" length="1" line="30">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="2191" length="1" line="30" chordsig="java.lang.Object"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2208" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2204" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2225" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2208" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="add:(ILjava/lang/Object;)V@java.util.concurrent.CopyOnWriteArrayList"
+ sig="void add(int,E)"
+ line="31"
+ startpos="2263"
+ endpos="2266"
+>
+	<marker line="-1" type="param">
+		<operand  start="2271" length="5" line="31">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2280" length="1" line="31">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="2278" length="1" line="31" chordsig="java.lang.Object"/>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2295" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2291" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2312" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2295" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addAll:(Ljava/util/Collection;)Z@java.util.concurrent.CopyOnWriteArrayList"
+ sig="boolean addAll(Collection&lt;? extends E&gt;)"
+ line="32"
+ startpos="2353"
+ endpos="2359"
+>
+	<marker line="-1" type="param">
+		<operand  start="2394" length="10" line="32">
+			<expr><![CDATA[collection]]></expr>
+		</operand>
+	</marker>
+	<type  start="2360" length="20" line="32" chordsig="java.util.Collection"/>
+	<type  start="2391" length="1" line="32" chordsig="java.lang.Object"/>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2418" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2414" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2435" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2418" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addAll:(ILjava/util/Collection;)Z@java.util.concurrent.CopyOnWriteArrayList"
+ sig="boolean addAll(int,Collection&lt;? extends E&gt;)"
+ line="33"
+ startpos="2476"
+ endpos="2482"
+>
+	<marker line="-1" type="param">
+		<operand  start="2487" length="5" line="33">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2528" length="10" line="33">
+			<expr><![CDATA[collection]]></expr>
+		</operand>
+	</marker>
+	<type  start="2494" length="20" line="33" chordsig="java.util.Collection"/>
+	<type  start="2525" length="1" line="33" chordsig="java.lang.Object"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2552" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2548" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2569" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2552" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addAllAbsent:(Ljava/util/Collection;)I@java.util.concurrent.CopyOnWriteArrayList"
+ sig="int addAllAbsent(Collection&lt;? extends E&gt;)"
+ line="34"
+ startpos="2606"
+ endpos="2618"
+>
+	<marker line="-1" type="param">
+		<operand  start="2653" length="10" line="34">
+			<expr><![CDATA[collection]]></expr>
+		</operand>
+	</marker>
+	<type  start="2619" length="20" line="34" chordsig="java.util.Collection"/>
+	<type  start="2650" length="1" line="34" chordsig="java.lang.Object"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2677" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2673" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2694" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2677" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addIfAbsent:(Ljava/lang/Object;)Z@java.util.concurrent.CopyOnWriteArrayList"
+ sig="boolean addIfAbsent(E)"
+ line="35"
+ startpos="2735"
+ endpos="2746"
+>
+	<marker line="-1" type="param">
+		<operand  start="2749" length="6" line="35">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="2747" length="1" line="35" chordsig="java.lang.Object"/>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2769" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2765" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2786" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2769" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clear:()V@java.util.concurrent.CopyOnWriteArrayList"
+ sig="void clear()"
+ line="36"
+ startpos="2824"
+ endpos="2829"
+>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2844" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2840" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2861" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2844" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="remove:(I)Ljava/lang/Object;@java.util.concurrent.CopyOnWriteArrayList"
+ sig="E remove(int)"
+ line="37"
+ startpos="2896"
+ endpos="2902"
+>
+	<marker line="-1" type="param">
+		<operand  start="2907" length="5" line="37">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="2894" length="1" line="37" chordsig="java.lang.Object"/>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2926" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2922" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2943" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2926" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="remove:(Ljava/lang/Object;)Z@java.util.concurrent.CopyOnWriteArrayList"
+ sig="boolean remove(Object)"
+ line="38"
+ startpos="2984"
+ endpos="2990"
+>
+	<marker line="-1" type="param">
+		<operand  start="3008" length="1" line="38">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="2991" length="16" line="38" chordsig="java.lang.Object"/>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3023" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3019" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3040" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3023" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeAll:(Ljava/util/Collection;)Z@java.util.concurrent.CopyOnWriteArrayList"
+ sig="boolean removeAll(Collection&lt;?&gt;)"
+ line="39"
+ startpos="3081"
+ endpos="3090"
+>
+	<marker line="-1" type="param">
+		<operand  start="3115" length="10" line="39">
+			<expr><![CDATA[collection]]></expr>
+		</operand>
+	</marker>
+	<type  start="3091" length="20" line="39" chordsig="java.util.Collection"/>
+	<newexpr line="39" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3139" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3135" length="29" line="39">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3156" length="7" line="39">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3139" length="16" line="39" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="retainAll:(Ljava/util/Collection;)Z@java.util.concurrent.CopyOnWriteArrayList"
+ sig="boolean retainAll(Collection&lt;?&gt;)"
+ line="40"
+ startpos="3197"
+ endpos="3206"
+>
+	<marker line="-1" type="param">
+		<operand  start="3231" length="10" line="40">
+			<expr><![CDATA[collection]]></expr>
+		</operand>
+	</marker>
+	<type  start="3207" length="20" line="40" chordsig="java.util.Collection"/>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3255" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3251" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3272" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3255" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="set:(ILjava/lang/Object;)Ljava/lang/Object;@java.util.concurrent.CopyOnWriteArrayList"
+ sig="E set(int,E)"
+ line="41"
+ startpos="3307"
+ endpos="3310"
+>
+	<marker line="-1" type="param">
+		<operand  start="3315" length="5" line="41">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3324" length="1" line="41">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="3305" length="1" line="41" chordsig="java.lang.Object"/>
+	<type  start="3322" length="1" line="41" chordsig="java.lang.Object"/>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3339" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3335" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3356" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3339" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

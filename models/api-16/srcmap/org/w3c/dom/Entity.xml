@@ -1,0 +1,59 @@
+<root>
+<class chordsig="org.w3c.dom.Entity" line="2">
+	<type  start="55" length="16" line="3" chordsig="org.w3c.dom.Node"/>
+<method
+ chordsig="getPublicId:()Ljava/lang/String;@org.w3c.dom.Entity"
+ sig="String getPublicId()"
+ line="5"
+ startpos="108"
+ endpos="119"
+>
+	<type  start="91" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getSystemId:()Ljava/lang/String;@org.w3c.dom.Entity"
+ sig="String getSystemId()"
+ line="6"
+ startpos="157"
+ endpos="168"
+>
+	<type  start="140" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getNotationName:()Ljava/lang/String;@org.w3c.dom.Entity"
+ sig="String getNotationName()"
+ line="7"
+ startpos="206"
+ endpos="221"
+>
+	<type  start="189" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getInputEncoding:()Ljava/lang/String;@org.w3c.dom.Entity"
+ sig="String getInputEncoding()"
+ line="8"
+ startpos="259"
+ endpos="275"
+>
+	<type  start="242" length="16" line="8" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getXmlEncoding:()Ljava/lang/String;@org.w3c.dom.Entity"
+ sig="String getXmlEncoding()"
+ line="9"
+ startpos="313"
+ endpos="327"
+>
+	<type  start="296" length="16" line="9" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getXmlVersion:()Ljava/lang/String;@org.w3c.dom.Entity"
+ sig="String getXmlVersion()"
+ line="10"
+ startpos="365"
+ endpos="378"
+>
+	<type  start="348" length="16" line="10" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

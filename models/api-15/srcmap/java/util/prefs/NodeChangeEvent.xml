@@ -1,0 +1,75 @@
+<root>
+<class chordsig="java.util.prefs.NodeChangeEvent" line="2">
+	<type  start="64" length="21" line="3" chordsig="java.util.EventObject"/>
+	<type  start="99" length="20" line="4" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/util/prefs/Preferences;Ljava/util/prefs/Preferences;)V@java.util.prefs.NodeChangeEvent"
+ sig="NodeChangeEvent(Preferences,Preferences)"
+ line="6"
+ startpos="130"
+ endpos="145"
+>
+	<marker line="-1" type="param">
+		<operand  start="174" length="1" line="6">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="205" length="1" line="6">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<type  start="146" length="27" line="6" chordsig="java.util.prefs.Preferences"/>
+	<type  start="177" length="27" line="6" chordsig="java.util.prefs.Preferences"/>
+	<type  start="217" length="16" line="6" chordsig="java.lang.Object"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="251" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="247" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="268" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="251" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getParent:()Ljava/util/prefs/Preferences;@java.util.prefs.NodeChangeEvent"
+ sig="Preferences getParent()"
+ line="7"
+ startpos="316"
+ endpos="325"
+>
+	<type  start="288" length="27" line="7" chordsig="java.util.prefs.Preferences"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="340" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="336" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="357" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="340" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getChild:()Ljava/util/prefs/Preferences;@java.util.prefs.NodeChangeEvent"
+ sig="Preferences getChild()"
+ line="8"
+ startpos="405"
+ endpos="413"
+>
+	<type  start="377" length="27" line="8" chordsig="java.util.prefs.Preferences"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="428" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="424" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="445" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="428" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

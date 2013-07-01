@@ -1,0 +1,220 @@
+<root>
+<class chordsig="android.app.LoaderManager" line="2">
+<class chordsig="android.app.LoaderManager$LoaderCallbacks" line="4">
+<method
+ chordsig="onCreateLoader:(ILandroid/os/Bundle;)Landroid/content/Loader;@android.app.LoaderManager$LoaderCallbacks"
+ sig="Loader&lt;D&gt; onCreateLoader(int,Bundle)"
+ line="6"
+ startpos="147"
+ endpos="161"
+>
+	<marker line="-1" type="param">
+		<operand  start="166" length="2" line="6">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="188" length="4" line="6">
+			<expr><![CDATA[args]]></expr>
+		</operand>
+	</marker>
+	<type  start="121" length="22" line="6" chordsig="android.content.Loader"/>
+	<type  start="144" length="1" line="6" chordsig="java.lang.Object"/>
+	<type  start="170" length="17" line="6" chordsig="android.os.Bundle"/>
+</method>
+<method
+ chordsig="onLoadFinished:(Landroid/content/Loader;Ljava/lang/Object;)V@android.app.LoaderManager$LoaderCallbacks"
+ sig="void onLoadFinished(Loader&lt;D&gt;,D)"
+ line="7"
+ startpos="217"
+ endpos="231"
+>
+	<marker line="-1" type="param">
+		<operand  start="258" length="6" line="7">
+			<expr><![CDATA[loader]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="268" length="4" line="7">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<type  start="232" length="22" line="7" chordsig="android.content.Loader"/>
+	<type  start="255" length="1" line="7" chordsig="java.lang.Object"/>
+	<type  start="266" length="1" line="7" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="onLoaderReset:(Landroid/content/Loader;)V@android.app.LoaderManager$LoaderCallbacks"
+ sig="void onLoaderReset(Loader&lt;D&gt;)"
+ line="8"
+ startpos="297"
+ endpos="310"
+>
+	<marker line="-1" type="param">
+		<operand  start="337" length="6" line="8">
+			<expr><![CDATA[loader]]></expr>
+		</operand>
+	</marker>
+	<type  start="311" length="22" line="8" chordsig="android.content.Loader"/>
+	<type  start="334" length="1" line="8" chordsig="java.lang.Object"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.app.LoaderManager"
+ sig="LoaderManager()"
+ line="10"
+ startpos="356"
+ endpos="369"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="384" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="380" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="401" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="384" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="initLoader:(ILandroid/os/Bundle;Landroid/app/LoaderManager$LoaderCallbacks;)Landroid/content/Loader;@android.app.LoaderManager"
+ sig="Loader&lt;D&gt; initLoader(int,Bundle,LoaderCallbacks&lt;D&gt;)"
+ line="11"
+ startpos="459"
+ endpos="469"
+>
+	<marker line="-1" type="param">
+		<operand  start="474" length="2" line="11">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="496" length="4" line="11">
+			<expr><![CDATA[args]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="547" length="8" line="11">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<type  start="433" length="22" line="11" chordsig="android.content.Loader"/>
+	<type  start="456" length="1" line="11" chordsig="java.lang.Object"/>
+	<type  start="478" length="17" line="11" chordsig="android.os.Bundle"/>
+	<type  start="502" length="41" line="11" chordsig="android.app.LoaderManager$LoaderCallbacks"/>
+	<type  start="544" length="1" line="11" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="restartLoader:(ILandroid/os/Bundle;Landroid/app/LoaderManager$LoaderCallbacks;)Landroid/content/Loader;@android.app.LoaderManager"
+ sig="Loader&lt;D&gt; restartLoader(int,Bundle,LoaderCallbacks&lt;D&gt;)"
+ line="12"
+ startpos="604"
+ endpos="617"
+>
+	<marker line="-1" type="param">
+		<operand  start="622" length="2" line="12">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="644" length="4" line="12">
+			<expr><![CDATA[args]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="695" length="8" line="12">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<type  start="578" length="22" line="12" chordsig="android.content.Loader"/>
+	<type  start="601" length="1" line="12" chordsig="java.lang.Object"/>
+	<type  start="626" length="17" line="12" chordsig="android.os.Bundle"/>
+	<type  start="650" length="41" line="12" chordsig="android.app.LoaderManager$LoaderCallbacks"/>
+	<type  start="692" length="1" line="12" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="destroyLoader:(I)V@android.app.LoaderManager"
+ sig="void destroyLoader(int)"
+ line="13"
+ startpos="728"
+ endpos="741"
+>
+	<marker line="-1" type="param">
+		<operand  start="746" length="2" line="13">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getLoader:(I)Landroid/content/Loader;@android.app.LoaderManager"
+ sig="Loader&lt;D&gt; getLoader(int)"
+ line="14"
+ startpos="797"
+ endpos="806"
+>
+	<marker line="-1" type="param">
+		<operand  start="811" length="2" line="14">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<type  start="771" length="22" line="14" chordsig="android.content.Loader"/>
+	<type  start="794" length="1" line="14" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="dump:(Ljava/lang/String;Ljava/io/FileDescriptor;Ljava/io/PrintWriter;[Ljava/lang/String;)V@android.app.LoaderManager"
+ sig="void dump(String,FileDescriptor,PrintWriter,String[])"
+ line="15"
+ startpos="838"
+ endpos="842"
+>
+	<marker line="-1" type="param">
+		<operand  start="860" length="6" line="15">
+			<expr><![CDATA[prefix]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="891" length="2" line="15">
+			<expr><![CDATA[fd]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="915" length="6" line="15">
+			<expr><![CDATA[writer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="942" length="4" line="15">
+			<expr><![CDATA[args]]></expr>
+		</operand>
+	</marker>
+	<type  start="843" length="16" line="15" chordsig="java.lang.String"/>
+	<type  start="868" length="22" line="15" chordsig="java.io.FileDescriptor"/>
+	<type  start="895" length="19" line="15" chordsig="java.io.PrintWriter"/>
+	<type  start="923" length="16" line="15" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="enableDebugLogging:(Z)V@android.app.LoaderManager"
+ sig="void enableDebugLogging(boolean)"
+ line="16"
+ startpos="969"
+ endpos="987"
+>
+	<marker line="-1" type="param">
+		<operand  start="996" length="7" line="16">
+			<expr><![CDATA[enabled]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1017" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1013" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1034" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1017" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

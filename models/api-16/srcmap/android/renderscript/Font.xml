@@ -1,0 +1,240 @@
+<root>
+<class chordsig="android.renderscript.Font" line="3">
+	<type  start="70" length="28" line="4" chordsig="android.renderscript.BaseObj"/>
+<class chordsig="android.renderscript.Font$Style" line="7">
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.renderscript.Font"
+ sig="Font()"
+ line="14"
+ startpos="185"
+ endpos="189"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="204" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="200" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="221" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="204" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createFromFile:(Landroid/renderscript/RenderScript;Landroid/content/res/Resources;Ljava/lang/String;F)Landroid/renderscript/Font;@android.renderscript.Font"
+ sig="Font createFromFile(RenderScript,Resources,String,float)"
+ line="16"
+ startpos="286"
+ endpos="300"
+>
+	<marker line="-1" type="param">
+		<operand  start="335" length="2" line="16">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="369" length="3" line="16">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="391" length="4" line="16">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="403" length="9" line="16">
+			<expr><![CDATA[pointSize]]></expr>
+		</operand>
+	</marker>
+	<type  start="260" length="25" line="16" chordsig="android.renderscript.Font"/>
+	<type  start="301" length="33" line="16" chordsig="android.renderscript.RenderScript"/>
+	<type  start="339" length="29" line="16" chordsig="android.content.res.Resources"/>
+	<type  start="374" length="16" line="16" chordsig="java.lang.String"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="426" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="422" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="443" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="426" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createFromFile:(Landroid/renderscript/RenderScript;Landroid/content/res/Resources;Ljava/io/File;F)Landroid/renderscript/Font;@android.renderscript.Font"
+ sig="Font createFromFile(RenderScript,Resources,File,float)"
+ line="18"
+ startpos="508"
+ endpos="522"
+>
+	<marker line="-1" type="param">
+		<operand  start="557" length="2" line="18">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="591" length="3" line="18">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="609" length="4" line="18">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="621" length="9" line="18">
+			<expr><![CDATA[pointSize]]></expr>
+		</operand>
+	</marker>
+	<type  start="482" length="25" line="18" chordsig="android.renderscript.Font"/>
+	<type  start="523" length="33" line="18" chordsig="android.renderscript.RenderScript"/>
+	<type  start="561" length="29" line="18" chordsig="android.content.res.Resources"/>
+	<type  start="596" length="12" line="18" chordsig="java.io.File"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="644" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="640" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="661" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="644" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createFromAsset:(Landroid/renderscript/RenderScript;Landroid/content/res/Resources;Ljava/lang/String;F)Landroid/renderscript/Font;@android.renderscript.Font"
+ sig="Font createFromAsset(RenderScript,Resources,String,float)"
+ line="20"
+ startpos="726"
+ endpos="741"
+>
+	<marker line="-1" type="param">
+		<operand  start="776" length="2" line="20">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="810" length="3" line="20">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="832" length="4" line="20">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="844" length="9" line="20">
+			<expr><![CDATA[pointSize]]></expr>
+		</operand>
+	</marker>
+	<type  start="700" length="25" line="20" chordsig="android.renderscript.Font"/>
+	<type  start="742" length="33" line="20" chordsig="android.renderscript.RenderScript"/>
+	<type  start="780" length="29" line="20" chordsig="android.content.res.Resources"/>
+	<type  start="815" length="16" line="20" chordsig="java.lang.String"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="867" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="863" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="884" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="867" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createFromResource:(Landroid/renderscript/RenderScript;Landroid/content/res/Resources;IF)Landroid/renderscript/Font;@android.renderscript.Font"
+ sig="Font createFromResource(RenderScript,Resources,int,float)"
+ line="22"
+ startpos="949"
+ endpos="967"
+>
+	<marker line="-1" type="param">
+		<operand  start="1002" length="2" line="22">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1036" length="3" line="22">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1045" length="2" line="22">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1055" length="9" line="22">
+			<expr><![CDATA[pointSize]]></expr>
+		</operand>
+	</marker>
+	<type  start="923" length="25" line="22" chordsig="android.renderscript.Font"/>
+	<type  start="968" length="33" line="22" chordsig="android.renderscript.RenderScript"/>
+	<type  start="1006" length="29" line="22" chordsig="android.content.res.Resources"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1078" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1074" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1095" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1078" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="create:(Landroid/renderscript/RenderScript;Landroid/content/res/Resources;Ljava/lang/String;Landroid/renderscript/Font$Style;F)Landroid/renderscript/Font;@android.renderscript.Font"
+ sig="Font create(RenderScript,Resources,String,Style,float)"
+ line="24"
+ startpos="1160"
+ endpos="1166"
+>
+	<marker line="-1" type="param">
+		<operand  start="1201" length="2" line="24">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1235" length="3" line="24">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1257" length="10" line="24">
+			<expr><![CDATA[familyName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1301" length="9" line="24">
+			<expr><![CDATA[fontStyle]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1318" length="9" line="24">
+			<expr><![CDATA[pointSize]]></expr>
+		</operand>
+	</marker>
+	<type  start="1134" length="25" line="24" chordsig="android.renderscript.Font"/>
+	<type  start="1167" length="33" line="24" chordsig="android.renderscript.RenderScript"/>
+	<type  start="1205" length="29" line="24" chordsig="android.content.res.Resources"/>
+	<type  start="1240" length="16" line="24" chordsig="java.lang.String"/>
+	<type  start="1269" length="31" line="24" chordsig="android.renderscript.Font$Style"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1341" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1337" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1358" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1341" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,54 @@
+<root>
+<class chordsig="android.content.MutableContextWrapper" line="2">
+	<type  start="70" length="30" line="3" chordsig="android.content.ContextWrapper"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.content.MutableContextWrapper"
+ sig="MutableContextWrapper(Context)"
+ line="5"
+ startpos="111"
+ endpos="132"
+>
+	<marker line="-1" type="param">
+		<operand  start="157" length="4" line="5">
+			<expr><![CDATA[base]]></expr>
+		</operand>
+	</marker>
+	<type  start="133" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="172" length="23" line="5" chordsig="android.content.Context"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="213" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="209" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="230" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="213" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setBaseContext:(Landroid/content/Context;)V@android.content.MutableContextWrapper"
+ sig="void setBaseContext(Context)"
+ line="6"
+ startpos="255"
+ endpos="269"
+>
+	<marker line="-1" type="param">
+		<operand  start="294" length="4" line="6">
+			<expr><![CDATA[base]]></expr>
+		</operand>
+	</marker>
+	<type  start="270" length="23" line="6" chordsig="android.content.Context"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="312" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="308" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="329" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="312" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

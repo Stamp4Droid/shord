@@ -1,0 +1,47 @@
+<root>
+<class chordsig="javax.xml.parsers.ParserConfigurationException" line="2">
+	<type  start="79" length="19" line="3" chordsig="java.lang.Exception"/>
+<method
+ chordsig="&lt;init&gt;:()V@javax.xml.parsers.ParserConfigurationException"
+ sig="ParserConfigurationException()"
+ line="5"
+ startpos="109"
+ endpos="137"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="152" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="148" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="169" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="152" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@javax.xml.parsers.ParserConfigurationException"
+ sig="ParserConfigurationException(String)"
+ line="6"
+ startpos="189"
+ endpos="217"
+>
+	<marker line="-1" type="param">
+		<operand  start="235" length="3" line="6">
+			<expr><![CDATA[msg]]></expr>
+		</operand>
+	</marker>
+	<type  start="218" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="252" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="248" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="269" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="252" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

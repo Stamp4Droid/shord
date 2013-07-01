@@ -1,0 +1,43 @@
+<root>
+<class chordsig="org.w3c.dom.ls.LSResourceResolver" line="2">
+<method
+ chordsig="resolveResource:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/w3c/dom/ls/LSInput;@org.w3c.dom.ls.LSResourceResolver"
+ sig="LSInput resolveResource(String,String,String,String,String)"
+ line="4"
+ startpos="102"
+ endpos="117"
+>
+	<marker line="-1" type="param">
+		<operand  start="135" length="4" line="4">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="158" length="12" line="4">
+			<expr><![CDATA[namespaceURI]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="189" length="8" line="4">
+			<expr><![CDATA[publicId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="216" length="8" line="4">
+			<expr><![CDATA[systemId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="243" length="7" line="4">
+			<expr><![CDATA[baseURI]]></expr>
+		</operand>
+	</marker>
+	<type  start="79" length="22" line="4" chordsig="org.w3c.dom.ls.LSInput"/>
+	<type  start="118" length="16" line="4" chordsig="java.lang.String"/>
+	<type  start="141" length="16" line="4" chordsig="java.lang.String"/>
+	<type  start="172" length="16" line="4" chordsig="java.lang.String"/>
+	<type  start="199" length="16" line="4" chordsig="java.lang.String"/>
+	<type  start="226" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

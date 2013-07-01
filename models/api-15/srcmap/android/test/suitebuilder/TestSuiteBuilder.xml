@@ -1,0 +1,288 @@
+<root>
+<class chordsig="android.test.suitebuilder.TestSuiteBuilder" line="2">
+<class chordsig="android.test.suitebuilder.TestSuiteBuilder$FailedToCreateTests" line="4">
+	<type  start="117" length="24" line="5" chordsig="junit.framework.TestCase"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Exception;)V@android.test.suitebuilder.TestSuiteBuilder$FailedToCreateTests"
+ sig="FailedToCreateTests(Exception)"
+ line="7"
+ startpos="152"
+ endpos="171"
+>
+	<marker line="-1" type="param">
+		<operand  start="192" length="9" line="7">
+			<expr><![CDATA[exception]]></expr>
+		</operand>
+	</marker>
+	<type  start="172" length="19" line="7" chordsig="java.lang.Exception"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="215" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="211" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="232" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="215" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="testSuiteConstructionFailed:()V@android.test.suitebuilder.TestSuiteBuilder$FailedToCreateTests"
+ sig="void testSuiteConstructionFailed()"
+ line="8"
+ startpos="257"
+ endpos="284"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="299" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="295" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="316" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="299" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Class;)V@android.test.suitebuilder.TestSuiteBuilder"
+ sig="TestSuiteBuilder(Class)"
+ line="10"
+ startpos="338"
+ endpos="354"
+>
+	<marker line="-1" type="param">
+		<operand  start="371" length="5" line="10">
+			<expr><![CDATA[clazz]]></expr>
+		</operand>
+	</marker>
+	<type  start="355" length="15" line="10" chordsig="java.lang.Class"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="390" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="386" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="407" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="390" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/ClassLoader;)V@android.test.suitebuilder.TestSuiteBuilder"
+ sig="TestSuiteBuilder(String,ClassLoader)"
+ line="11"
+ startpos="427"
+ endpos="443"
+>
+	<marker line="-1" type="param">
+		<operand  start="461" length="4" line="11">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="489" length="11" line="11">
+			<expr><![CDATA[classLoader]]></expr>
+		</operand>
+	</marker>
+	<type  start="444" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="467" length="21" line="11" chordsig="java.lang.ClassLoader"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="514" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="510" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="531" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="514" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="includePackages:([Ljava/lang/String;)Landroid/test/suitebuilder/TestSuiteBuilder;@android.test.suitebuilder.TestSuiteBuilder"
+ sig="TestSuiteBuilder includePackages(String)"
+ line="12"
+ startpos="594"
+ endpos="609"
+>
+	<marker line="-1" type="param">
+		<operand  start="630" length="12" line="12">
+			<expr><![CDATA[packageNames]]></expr>
+		</operand>
+	</marker>
+	<type  start="551" length="42" line="12" chordsig="android.test.suitebuilder.TestSuiteBuilder"/>
+	<type  start="610" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="656" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="652" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="673" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="656" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="excludePackages:([Ljava/lang/String;)Landroid/test/suitebuilder/TestSuiteBuilder;@android.test.suitebuilder.TestSuiteBuilder"
+ sig="TestSuiteBuilder excludePackages(String)"
+ line="13"
+ startpos="736"
+ endpos="751"
+>
+	<marker line="-1" type="param">
+		<operand  start="772" length="12" line="13">
+			<expr><![CDATA[packageNames]]></expr>
+		</operand>
+	</marker>
+	<type  start="693" length="42" line="13" chordsig="android.test.suitebuilder.TestSuiteBuilder"/>
+	<type  start="752" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="798" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="794" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="815" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="798" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addRequirements:(Ljava/util/List;)Landroid/test/suitebuilder/TestSuiteBuilder;@android.test.suitebuilder.TestSuiteBuilder"
+ sig="TestSuiteBuilder addRequirements(List&lt;Predicate&lt;TestMethod&gt;&gt;)"
+ line="14"
+ startpos="878"
+ endpos="893"
+>
+	<marker line="-1" type="param">
+		<operand  start="984" length="10" line="14">
+			<expr><![CDATA[predicates]]></expr>
+		</operand>
+	</marker>
+	<type  start="835" length="42" line="14" chordsig="android.test.suitebuilder.TestSuiteBuilder"/>
+	<type  start="894" length="14" line="14" chordsig="java.util.List"/>
+	<type  start="909" length="35" line="14" chordsig="com.android.internal.util.Predicate"/>
+	<type  start="945" length="36" line="14" chordsig="android.test.suitebuilder.TestMethod"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1008" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1004" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1025" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1008" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="includeAllPackagesUnderHere:()Landroid/test/suitebuilder/TestSuiteBuilder;@android.test.suitebuilder.TestSuiteBuilder"
+ sig="TestSuiteBuilder includeAllPackagesUnderHere()"
+ line="15"
+ startpos="1094"
+ endpos="1121"
+>
+	<type  start="1051" length="42" line="15" chordsig="android.test.suitebuilder.TestSuiteBuilder"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1136" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1132" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1153" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1136" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="named:(Ljava/lang/String;)Landroid/test/suitebuilder/TestSuiteBuilder;@android.test.suitebuilder.TestSuiteBuilder"
+ sig="TestSuiteBuilder named(String)"
+ line="16"
+ startpos="1216"
+ endpos="1221"
+>
+	<marker line="-1" type="param">
+		<operand  start="1239" length="12" line="16">
+			<expr><![CDATA[newSuiteName]]></expr>
+		</operand>
+	</marker>
+	<type  start="1173" length="42" line="16" chordsig="android.test.suitebuilder.TestSuiteBuilder"/>
+	<type  start="1222" length="16" line="16" chordsig="java.lang.String"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1265" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1261" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1282" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1265" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="build:()Ljunit/framework/TestSuite;@android.test.suitebuilder.TestSuiteBuilder"
+ sig="TestSuite build()"
+ line="17"
+ startpos="1334"
+ endpos="1339"
+>
+	<type  start="1308" length="25" line="17" chordsig="junit.framework.TestSuite"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1354" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1350" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1371" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1354" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSuiteName:()Ljava/lang/String;@android.test.suitebuilder.TestSuiteBuilder"
+ sig="String getSuiteName()"
+ line="18"
+ startpos="1411"
+ endpos="1423"
+>
+	<type  start="1394" length="16" line="18" chordsig="java.lang.String"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1438" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1434" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1455" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1438" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addRequirements:([Lcom/android/internal/util/Predicate;)Landroid/test/suitebuilder/TestSuiteBuilder;@android.test.suitebuilder.TestSuiteBuilder"
+ sig="TestSuiteBuilder addRequirements(Predicate&lt;TestMethod&gt;)"
+ line="19"
+ startpos="1524"
+ endpos="1539"
+>
+	<marker line="-1" type="param">
+		<operand  start="1617" length="10" line="19">
+			<expr><![CDATA[predicates]]></expr>
+		</operand>
+	</marker>
+	<type  start="1481" length="42" line="19" chordsig="android.test.suitebuilder.TestSuiteBuilder"/>
+	<type  start="1540" length="35" line="19" chordsig="com.android.internal.util.Predicate"/>
+	<type  start="1576" length="36" line="19" chordsig="android.test.suitebuilder.TestMethod"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1641" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1637" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1658" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1641" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

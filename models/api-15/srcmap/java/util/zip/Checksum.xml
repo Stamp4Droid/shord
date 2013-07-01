@@ -1,0 +1,56 @@
+<root>
+<class chordsig="java.util.zip.Checksum" line="2">
+<method
+ chordsig="getValue:()J@java.util.zip.Checksum"
+ sig="long getValue()"
+ line="4"
+ startpos="73"
+ endpos="81"
+>
+</method>
+<method
+ chordsig="reset:()V@java.util.zip.Checksum"
+ sig="void reset()"
+ line="5"
+ startpos="107"
+ endpos="112"
+>
+</method>
+<method
+ chordsig="update:([BII)V@java.util.zip.Checksum"
+ sig="void update(byte[],int,int)"
+ line="6"
+ startpos="138"
+ endpos="144"
+>
+	<marker line="-1" type="param">
+		<operand  start="152" length="3" line="6">
+			<expr><![CDATA[buf]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="161" length="3" line="6">
+			<expr><![CDATA[off]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="170" length="6" line="6">
+			<expr><![CDATA[nbytes]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="update:(I)V@java.util.zip.Checksum"
+ sig="void update(int)"
+ line="7"
+ startpos="201"
+ endpos="207"
+>
+	<marker line="-1" type="param">
+		<operand  start="212" length="3" line="7">
+			<expr><![CDATA[val]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

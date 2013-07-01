@@ -1,0 +1,270 @@
+<root>
+<class chordsig="java.nio.channels.DatagramChannel" line="2">
+	<type  start="75" length="47" line="3" chordsig="java.nio.channels.spi.AbstractSelectableChannel"/>
+	<type  start="136" length="29" line="4" chordsig="java.nio.channels.ByteChannel"/>
+	<type  start="167" length="39" line="4" chordsig="java.nio.channels.ScatteringByteChannel"/>
+	<type  start="208" length="38" line="4" chordsig="java.nio.channels.GatheringByteChannel"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/nio/channels/spi/SelectorProvider;)V@java.nio.channels.DatagramChannel"
+ sig="DatagramChannel(SelectorProvider)"
+ line="6"
+ startpos="260"
+ endpos="275"
+>
+	<marker line="-1" type="param">
+		<operand  start="315" length="16" line="6">
+			<expr><![CDATA[selectorProvider]]></expr>
+		</operand>
+	</marker>
+	<type  start="276" length="38" line="6" chordsig="java.nio.channels.spi.SelectorProvider"/>
+	<type  start="342" length="38" line="6" chordsig="java.nio.channels.spi.SelectorProvider"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="398" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="394" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="415" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="398" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="open:()Ljava/nio/channels/DatagramChannel;@java.nio.channels.DatagramChannel"
+ sig="DatagramChannel open()"
+ line="7"
+ startpos="476"
+ endpos="480"
+>
+	<type  start="442" length="33" line="7" chordsig="java.nio.channels.DatagramChannel"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="522" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="518" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="539" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="522" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="validOps:()I@java.nio.channels.DatagramChannel"
+ sig="int validOps()"
+ line="8"
+ startpos="569"
+ endpos="577"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="592" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="588" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="609" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="592" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="socket:()Ljava/net/DatagramSocket;@java.nio.channels.DatagramChannel"
+ sig="DatagramSocket socket()"
+ line="9"
+ startpos="662"
+ endpos="668"
+>
+	<type  start="638" length="23" line="9" chordsig="java.net.DatagramSocket"/>
+</method>
+<method
+ chordsig="isConnected:()Z@java.nio.channels.DatagramChannel"
+ sig="boolean isConnected()"
+ line="10"
+ startpos="697"
+ endpos="708"
+>
+</method>
+<method
+ chordsig="connect:(Ljava/net/SocketAddress;)Ljava/nio/channels/DatagramChannel;@java.nio.channels.DatagramChannel"
+ sig="DatagramChannel connect(SocketAddress)"
+ line="11"
+ startpos="763"
+ endpos="770"
+>
+	<marker line="-1" type="param">
+		<operand  start="794" length="7" line="11">
+			<expr><![CDATA[address]]></expr>
+		</operand>
+	</marker>
+	<type  start="729" length="33" line="11" chordsig="java.nio.channels.DatagramChannel"/>
+	<type  start="771" length="22" line="11" chordsig="java.net.SocketAddress"/>
+</method>
+<method
+ chordsig="disconnect:()Ljava/nio/channels/DatagramChannel;@java.nio.channels.DatagramChannel"
+ sig="DatagramChannel disconnect()"
+ line="12"
+ startpos="882"
+ endpos="892"
+>
+	<type  start="848" length="33" line="12" chordsig="java.nio.channels.DatagramChannel"/>
+</method>
+<method
+ chordsig="receive:(Ljava/nio/ByteBuffer;)Ljava/net/SocketAddress;@java.nio.channels.DatagramChannel"
+ sig="SocketAddress receive(ByteBuffer)"
+ line="13"
+ startpos="963"
+ endpos="970"
+>
+	<marker line="-1" type="param">
+		<operand  start="991" length="6" line="13">
+			<expr><![CDATA[target]]></expr>
+		</operand>
+	</marker>
+	<type  start="940" length="22" line="13" chordsig="java.net.SocketAddress"/>
+	<type  start="971" length="19" line="13" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="send:(Ljava/nio/ByteBuffer;Ljava/net/SocketAddress;)I@java.nio.channels.DatagramChannel"
+ sig="int send(ByteBuffer,SocketAddress)"
+ line="14"
+ startpos="1048"
+ endpos="1052"
+>
+	<marker line="-1" type="param">
+		<operand  start="1073" length="6" line="14">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1104" length="7" line="14">
+			<expr><![CDATA[address]]></expr>
+		</operand>
+	</marker>
+	<type  start="1053" length="19" line="14" chordsig="java.nio.ByteBuffer"/>
+	<type  start="1081" length="22" line="14" chordsig="java.net.SocketAddress"/>
+</method>
+<method
+ chordsig="read:(Ljava/nio/ByteBuffer;)I@java.nio.channels.DatagramChannel"
+ sig="int read(ByteBuffer)"
+ line="15"
+ startpos="1162"
+ endpos="1166"
+>
+	<marker line="-1" type="param">
+		<operand  start="1187" length="6" line="15">
+			<expr><![CDATA[target]]></expr>
+		</operand>
+	</marker>
+	<type  start="1167" length="19" line="15" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="read:([Ljava/nio/ByteBuffer;II)J@java.nio.channels.DatagramChannel"
+ sig="long read(ByteBuffer[],int,int)"
+ line="16"
+ startpos="1245"
+ endpos="1249"
+>
+	<marker line="-1" type="param">
+		<operand  start="1272" length="7" line="16">
+			<expr><![CDATA[targets]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1285" length="6" line="16">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1297" length="6" line="16">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<type  start="1250" length="19" line="16" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="read:([Ljava/nio/ByteBuffer;)J@java.nio.channels.DatagramChannel"
+ sig="long read(ByteBuffer[])"
+ line="17"
+ startpos="1365"
+ endpos="1369"
+>
+	<marker line="-1" type="param">
+		<operand  start="1392" length="7" line="17">
+			<expr><![CDATA[targets]]></expr>
+		</operand>
+	</marker>
+	<type  start="1370" length="19" line="17" chordsig="java.nio.ByteBuffer"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1440" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1436" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1457" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1440" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="write:(Ljava/nio/ByteBuffer;)I@java.nio.channels.DatagramChannel"
+ sig="int write(ByteBuffer)"
+ line="18"
+ startpos="1490"
+ endpos="1495"
+>
+	<marker line="-1" type="param">
+		<operand  start="1516" length="6" line="18">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="1496" length="19" line="18" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="write:([Ljava/nio/ByteBuffer;II)J@java.nio.channels.DatagramChannel"
+ sig="long write(ByteBuffer[],int,int)"
+ line="19"
+ startpos="1574"
+ endpos="1579"
+>
+	<marker line="-1" type="param">
+		<operand  start="1602" length="7" line="19">
+			<expr><![CDATA[sources]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1615" length="6" line="19">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1627" length="6" line="19">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<type  start="1580" length="19" line="19" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="write:([Ljava/nio/ByteBuffer;)J@java.nio.channels.DatagramChannel"
+ sig="long write(ByteBuffer[])"
+ line="20"
+ startpos="1695"
+ endpos="1700"
+>
+	<marker line="-1" type="param">
+		<operand  start="1723" length="7" line="20">
+			<expr><![CDATA[sources]]></expr>
+		</operand>
+	</marker>
+	<type  start="1701" length="19" line="20" chordsig="java.nio.ByteBuffer"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1771" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1767" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1788" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1771" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

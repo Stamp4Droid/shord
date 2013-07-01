@@ -1,0 +1,24 @@
+<root>
+<class chordsig="org.apache.http.HttpRequestInterceptor" line="2">
+<method
+ chordsig="process:(Lorg/apache/http/HttpRequest;Lorg/apache/http/protocol/HttpContext;)V@org.apache.http.HttpRequestInterceptor"
+ sig="void process(HttpRequest,HttpContext)"
+ line="4"
+ startpos="89"
+ endpos="96"
+>
+	<marker line="-1" type="param">
+		<operand  start="125" length="7" line="4">
+			<expr><![CDATA[request]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="171" length="7" line="4">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="97" length="27" line="4" chordsig="org.apache.http.HttpRequest"/>
+	<type  start="134" length="36" line="4" chordsig="org.apache.http.protocol.HttpContext"/>
+</method>
+</class>
+</root>

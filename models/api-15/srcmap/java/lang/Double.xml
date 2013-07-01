@@ -1,0 +1,471 @@
+<root>
+<class chordsig="java.lang.Double" line="6">
+	<type  start="142" length="16" line="6" chordsig="java.lang.Number"/>
+	<type  start="170" length="20" line="6" chordsig="java.lang.Comparable"/>
+	<type  start="191" length="16" line="6" chordsig="java.lang.Double"/>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.lang.Double"
+ sig="boolean equals(Object)"
+ line="8"
+ startpos="231"
+ endpos="237"
+>
+	<marker line="-1" type="param">
+		<operand  start="255" length="6" line="8">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="238" length="16" line="8" chordsig="java.lang.Object"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="283" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="279" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="300" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="283" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isInfinite:()Z@java.lang.Double"
+ sig="boolean isInfinite()"
+ line="12"
+ startpos="336"
+ endpos="346"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="369" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="365" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="386" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="369" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isInfinite:(D)Z@java.lang.Double"
+ sig="boolean isInfinite(double)"
+ line="16"
+ startpos="429"
+ endpos="439"
+>
+	<marker line="-1" type="param">
+		<operand  start="447" length="1" line="16">
+			<expr><![CDATA[d]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="470" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="466" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="487" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="470" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isNaN:()Z@java.lang.Double"
+ sig="boolean isNaN()"
+ line="20"
+ startpos="523"
+ endpos="528"
+>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="551" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="547" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="568" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="551" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isNaN:(D)Z@java.lang.Double"
+ sig="boolean isNaN(double)"
+ line="24"
+ startpos="611"
+ endpos="616"
+>
+	<marker line="-1" type="param">
+		<operand  start="624" length="1" line="24">
+			<expr><![CDATA[d]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="647" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="643" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="664" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="647" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1180" length="15" line="44" chordsig="java.lang.Class"/>
+	<type  start="1196" length="16" line="44" chordsig="java.lang.Double"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@java.lang.Double"
+ line="48"
+>
+</method>
+<method
+ chordsig="&lt;init&gt;:(D)V@java.lang.Double"
+ sig="Double(double)"
+ line="53"
+ startpos="1372"
+ endpos="1378"
+>
+	<marker line="-1" type="param">
+		<operand  start="1386" length="5" line="53">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.Double"
+ sig="Double(String)"
+ line="57"
+ startpos="1473"
+ endpos="1479"
+>
+	<marker line="-1" type="param">
+		<operand  start="1497" length="6" line="57">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<type  start="1480" length="16" line="57" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="compareTo:(Ljava/lang/Double;)I@java.lang.Double"
+ sig="int compareTo(Double)"
+ line="61"
+ startpos="1631"
+ endpos="1640"
+>
+	<alias>(Ljava/lang/Object;)I</alias>
+	<marker line="-1" type="param">
+		<operand  start="1658" length="6" line="61">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="1641" length="16" line="61" chordsig="java.lang.Double"/>
+	<marker line="62" type="return">
+		<operand  start="1683" length="1" line="62">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="byteValue:()B@java.lang.Double"
+ sig="byte byteValue()"
+ line="66"
+ startpos="1770"
+ endpos="1779"
+>
+	<marker line="67" type="return">
+		<operand  start="1799" length="1" line="67">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="doubleToLongBits:(D)J@java.lang.Double"
+ sig="long doubleToLongBits(double)"
+ line="71"
+ startpos="1901"
+ endpos="1917"
+>
+	<marker line="-1" type="param">
+		<operand  start="1925" length="5" line="71">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="doubleToRawLongBits:(D)J@java.lang.Double"
+ sig="long doubleToRawLongBits(double)"
+ line="74"
+ startpos="2026"
+ endpos="2045"
+>
+	<marker line="-1" type="param">
+		<operand  start="2053" length="5" line="74">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="doubleValue:()D@java.lang.Double"
+ sig="double doubleValue()"
+ line="77"
+ startpos="2141"
+ endpos="2152"
+>
+	<marker line="78" type="return">
+		<operand  start="2172" length="3" line="78">
+			<expr><![CDATA[0.0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="floatValue:()F@java.lang.Double"
+ sig="float floatValue()"
+ line="82"
+ startpos="2262"
+ endpos="2272"
+>
+	<marker line="83" type="return">
+		<operand  start="2292" length="4" line="83">
+			<expr><![CDATA[0.0f]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="hashCode:()I@java.lang.Double"
+ sig="int hashCode()"
+ line="87"
+ startpos="2381"
+ endpos="2389"
+>
+	<marker line="88" type="return">
+		<operand  start="2409" length="1" line="88">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="intValue:()I@java.lang.Double"
+ sig="int intValue()"
+ line="92"
+ startpos="2495"
+ endpos="2503"
+>
+	<marker line="93" type="return">
+		<operand  start="2523" length="1" line="93">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="longBitsToDouble:(J)D@java.lang.Double"
+ sig="double longBitsToDouble(long)"
+ line="97"
+ startpos="2626"
+ endpos="2642"
+>
+	<marker line="-1" type="param">
+		<operand  start="2648" length="4" line="97">
+			<expr><![CDATA[bits]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="longValue:()J@java.lang.Double"
+ sig="long longValue()"
+ line="100"
+ startpos="2733"
+ endpos="2742"
+>
+	<marker line="101" type="return">
+		<operand  start="2762" length="2" line="101">
+			<expr><![CDATA[0L]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="parseDouble:(Ljava/lang/String;)D@java.lang.Double"
+ sig="double parseDouble(String)"
+ line="105"
+ startpos="2861"
+ endpos="2872"
+>
+	<marker line="-1" type="param">
+		<operand  start="2890" length="6" line="105">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<type  start="2873" length="16" line="105" chordsig="java.lang.String"/>
+	<marker line="106" type="return">
+		<operand  start="2954" length="3" line="106">
+			<expr><![CDATA[0.0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="shortValue:()S@java.lang.Double"
+ sig="short shortValue()"
+ line="110"
+ startpos="3044"
+ endpos="3054"
+>
+	<marker line="111" type="return">
+		<operand  start="3074" length="1" line="111">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.lang.Double"
+ sig="String toString()"
+ line="115"
+ startpos="3173"
+ endpos="3181"
+>
+	<type  start="3156" length="16" line="115" chordsig="java.lang.String"/>
+	<marker line="116" type="return">
+		<operand  start="3201" length="12" line="116">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="116" chordsig="&lt;init&gt;:()V@java.lang.String" start="3205" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="3201" length="12" line="116">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3205" length="6" line="116" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="toString:(D)Ljava/lang/String;@java.lang.Double"
+ sig="String toString(double)"
+ line="120"
+ startpos="3315"
+ endpos="3323"
+>
+	<marker line="-1" type="param">
+		<operand  start="3331" length="1" line="120">
+			<expr><![CDATA[d]]></expr>
+		</operand>
+	</marker>
+	<type  start="3298" length="16" line="120" chordsig="java.lang.String"/>
+	<marker line="121" type="return">
+		<operand  start="3351" length="12" line="121">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="121" chordsig="&lt;init&gt;:()V@java.lang.String" start="3355" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="3351" length="12" line="121">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3355" length="6" line="121" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="valueOf:(Ljava/lang/String;)Ljava/lang/Double;@java.lang.Double"
+ sig="Double valueOf(String)"
+ line="125"
+ startpos="3470"
+ endpos="3477"
+>
+	<marker line="-1" type="param">
+		<operand  start="3495" length="6" line="125">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<type  start="3453" length="16" line="125" chordsig="java.lang.Double"/>
+	<type  start="3478" length="16" line="125" chordsig="java.lang.String"/>
+	<marker line="126" type="return">
+		<operand  start="3559" length="15" line="126">
+			<expr><![CDATA[new Double(0.0)]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="126" chordsig="&lt;init&gt;:(D)V@java.lang.Double" start="3563" length="6" type="invoke">
+			<expr><![CDATA[new Double(0.0)]]></expr>
+		<param  start="3559" length="15" line="126">
+			<expr><![CDATA[new Double(0.0)]]></expr>
+		</param>
+		<param  start="3570" length="3" line="126">
+			<expr><![CDATA[0.0]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3563" length="6" line="126" chordsig="java.lang.Double"/>
+</method>
+<method
+ chordsig="compare:(DD)I@java.lang.Double"
+ sig="int compare(double,double)"
+ line="130"
+ startpos="3710"
+ endpos="3717"
+>
+	<marker line="-1" type="param">
+		<operand  start="3725" length="7" line="130">
+			<expr><![CDATA[double1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3741" length="7" line="130">
+			<expr><![CDATA[double2]]></expr>
+		</operand>
+	</marker>
+	<marker line="131" type="return">
+		<operand  start="3767" length="1" line="131">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="valueOf:(D)Ljava/lang/Double;@java.lang.Double"
+ sig="Double valueOf(double)"
+ line="135"
+ startpos="3870"
+ endpos="3877"
+>
+	<marker line="-1" type="param">
+		<operand  start="3885" length="1" line="135">
+			<expr><![CDATA[d]]></expr>
+		</operand>
+	</marker>
+	<type  start="3853" length="16" line="135" chordsig="java.lang.Double"/>
+	<marker line="136" type="return">
+		<operand  start="3905" length="13" line="136">
+			<expr><![CDATA[new Double(d)]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="136" chordsig="&lt;init&gt;:(D)V@java.lang.Double" start="3909" length="6" type="invoke">
+			<expr><![CDATA[new Double(d)]]></expr>
+		<param  start="3905" length="13" line="136">
+			<expr><![CDATA[new Double(d)]]></expr>
+		</param>
+		<param  start="3916" length="1" line="136">
+			<expr><![CDATA[d]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3909" length="6" line="136" chordsig="java.lang.Double"/>
+</method>
+<method
+ chordsig="toHexString:(D)Ljava/lang/String;@java.lang.Double"
+ sig="String toHexString(double)"
+ line="140"
+ startpos="4020"
+ endpos="4031"
+>
+	<marker line="-1" type="param">
+		<operand  start="4039" length="1" line="140">
+			<expr><![CDATA[d]]></expr>
+		</operand>
+	</marker>
+	<type  start="4003" length="16" line="140" chordsig="java.lang.String"/>
+	<marker line="141" type="return">
+		<operand  start="4059" length="12" line="141">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="141" chordsig="&lt;init&gt;:()V@java.lang.String" start="4063" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="4059" length="12" line="141">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4063" length="6" line="141" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

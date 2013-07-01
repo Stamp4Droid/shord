@@ -1,0 +1,193 @@
+<root>
+<class chordsig="com.google.android.maps.OverlayItem" line="3">
+<method
+ chordsig="&lt;init&gt;:(Lcom/google/android/maps/GeoPoint;Ljava/lang/String;Ljava/lang/String;)V@com.google.android.maps.OverlayItem"
+ sig="OverlayItem(GeoPoint,String,String)"
+ line="9"
+ startpos="238"
+ endpos="249"
+>
+	<marker line="-1" type="param">
+		<operand  start="283" length="6" line="9">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="308" length="6" line="9">
+			<expr><![CDATA[param2]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="333" length="6" line="9">
+			<expr><![CDATA[param3]]></expr>
+		</operand>
+	</marker>
+	<type  start="250" length="32" line="9" chordsig="com.google.android.maps.GeoPoint"/>
+	<type  start="291" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="316" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="359" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="355" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="376" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="359" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMarker:(Landroid/graphics/drawable/Drawable;)V@com.google.android.maps.OverlayItem"
+ sig="void setMarker(Drawable)"
+ line="14"
+ startpos="405"
+ endpos="414"
+>
+	<marker line="-1" type="param">
+		<operand  start="450" length="6" line="14">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="415" length="34" line="14" chordsig="android.graphics.drawable.Drawable"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="476" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="472" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="493" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="476" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMarker:(I)Landroid/graphics/drawable/Drawable;@com.google.android.maps.OverlayItem"
+ sig="Drawable getMarker(int)"
+ line="19"
+ startpos="552"
+ endpos="561"
+>
+	<marker line="-1" type="param">
+		<operand  start="566" length="6" line="19">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="517" length="34" line="19" chordsig="android.graphics.drawable.Drawable"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="592" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="588" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="609" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="592" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setState:(Landroid/graphics/drawable/Drawable;I)V@com.google.android.maps.OverlayItem"
+ sig="void setState(Drawable,int)"
+ line="24"
+ startpos="645"
+ endpos="653"
+>
+	<marker line="-1" type="param">
+		<operand  start="689" length="6" line="24">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="701" length="6" line="24">
+			<expr><![CDATA[param2]]></expr>
+		</operand>
+	</marker>
+	<type  start="654" length="34" line="24" chordsig="android.graphics.drawable.Drawable"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="727" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="723" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="744" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="727" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTitle:()Ljava/lang/String;@com.google.android.maps.OverlayItem"
+ sig="String getTitle()"
+ line="29"
+ startpos="785"
+ endpos="793"
+>
+	<type  start="768" length="16" line="29" chordsig="java.lang.String"/>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="814" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="810" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="831" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="814" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSnippet:()Ljava/lang/String;@com.google.android.maps.OverlayItem"
+ sig="String getSnippet()"
+ line="34"
+ startpos="872"
+ endpos="882"
+>
+	<type  start="855" length="16" line="34" chordsig="java.lang.String"/>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="903" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="899" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="920" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="903" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPoint:()Lcom/google/android/maps/GeoPoint;@com.google.android.maps.OverlayItem"
+ sig="GeoPoint getPoint()"
+ line="39"
+ startpos="977"
+ endpos="985"
+>
+	<type  start="944" length="32" line="39" chordsig="com.google.android.maps.GeoPoint"/>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1006" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1002" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1023" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1006" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="routableAddress:()Ljava/lang/String;@com.google.android.maps.OverlayItem"
+ sig="String routableAddress()"
+ line="44"
+ startpos="1064"
+ endpos="1079"
+>
+	<type  start="1047" length="16" line="44" chordsig="java.lang.String"/>
+	<newexpr line="46" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1100" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1096" length="29" line="46">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1117" length="7" line="46">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1100" length="16" line="46" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

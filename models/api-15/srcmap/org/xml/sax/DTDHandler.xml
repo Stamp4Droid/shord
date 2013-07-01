@@ -1,0 +1,62 @@
+<root>
+<class chordsig="org.xml.sax.DTDHandler" line="2">
+<method
+ chordsig="notationDecl:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V@org.xml.sax.DTDHandler"
+ sig="void notationDecl(String,String,String)"
+ line="4"
+ startpos="73"
+ endpos="85"
+>
+	<marker line="-1" type="param">
+		<operand  start="103" length="4" line="4">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="126" length="8" line="4">
+			<expr><![CDATA[publicId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="153" length="8" line="4">
+			<expr><![CDATA[systemId]]></expr>
+		</operand>
+	</marker>
+	<type  start="86" length="16" line="4" chordsig="java.lang.String"/>
+	<type  start="109" length="16" line="4" chordsig="java.lang.String"/>
+	<type  start="136" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="unparsedEntityDecl:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V@org.xml.sax.DTDHandler"
+ sig="void unparsedEntityDecl(String,String,String,String)"
+ line="5"
+ startpos="218"
+ endpos="236"
+>
+	<marker line="-1" type="param">
+		<operand  start="254" length="4" line="5">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="277" length="8" line="5">
+			<expr><![CDATA[publicId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="304" length="8" line="5">
+			<expr><![CDATA[systemId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="331" length="12" line="5">
+			<expr><![CDATA[notationName]]></expr>
+		</operand>
+	</marker>
+	<type  start="237" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="260" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="287" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="314" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

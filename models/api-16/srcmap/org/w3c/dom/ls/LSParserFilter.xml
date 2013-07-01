@@ -1,0 +1,40 @@
+<root>
+<class chordsig="org.w3c.dom.ls.LSParserFilter" line="2">
+<method
+ chordsig="startElement:(Lorg/w3c/dom/Element;)S@org.w3c.dom.ls.LSParserFilter"
+ sig="short startElement(Element)"
+ line="4"
+ startpos="81"
+ endpos="93"
+>
+	<marker line="-1" type="param">
+		<operand  start="114" length="10" line="4">
+			<expr><![CDATA[elementArg]]></expr>
+		</operand>
+	</marker>
+	<type  start="94" length="19" line="4" chordsig="org.w3c.dom.Element"/>
+</method>
+<method
+ chordsig="acceptNode:(Lorg/w3c/dom/Node;)S@org.w3c.dom.ls.LSParserFilter"
+ sig="short acceptNode(Node)"
+ line="5"
+ startpos="150"
+ endpos="160"
+>
+	<marker line="-1" type="param">
+		<operand  start="178" length="7" line="5">
+			<expr><![CDATA[nodeArg]]></expr>
+		</operand>
+	</marker>
+	<type  start="161" length="16" line="5" chordsig="org.w3c.dom.Node"/>
+</method>
+<method
+ chordsig="getWhatToShow:()I@org.w3c.dom.ls.LSParserFilter"
+ sig="int getWhatToShow()"
+ line="6"
+ startpos="209"
+ endpos="222"
+>
+</method>
+</class>
+</root>

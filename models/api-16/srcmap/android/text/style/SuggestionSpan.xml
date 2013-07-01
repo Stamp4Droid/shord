@@ -1,0 +1,368 @@
+<root>
+<class chordsig="android.text.style.SuggestionSpan" line="2">
+	<type  start="66" length="33" line="3" chordsig="android.text.style.CharacterStyle"/>
+	<type  start="113" length="27" line="4" chordsig="android.text.ParcelableSpan"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;[Ljava/lang/String;I)V@android.text.style.SuggestionSpan"
+ sig="SuggestionSpan(Context,String[],int)"
+ line="6"
+ startpos="151"
+ endpos="165"
+>
+	<marker line="-1" type="param">
+		<operand  start="190" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="218" length="11" line="6">
+			<expr><![CDATA[suggestions]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="235" length="5" line="6">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="166" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="199" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="254" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="250" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="271" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="254" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/util/Locale;[Ljava/lang/String;I)V@android.text.style.SuggestionSpan"
+ sig="SuggestionSpan(Locale,String[],int)"
+ line="7"
+ startpos="291"
+ endpos="305"
+>
+	<marker line="-1" type="param">
+		<operand  start="323" length="6" line="7">
+			<expr><![CDATA[locale]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="350" length="11" line="7">
+			<expr><![CDATA[suggestions]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="367" length="5" line="7">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="306" length="16" line="7" chordsig="java.util.Locale"/>
+	<type  start="331" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="386" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="382" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="403" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="386" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Ljava/util/Locale;[Ljava/lang/String;ILjava/lang/Class;)V@android.text.style.SuggestionSpan"
+ sig="SuggestionSpan(Context,Locale,String[],int,Class&lt;?&gt;)"
+ line="8"
+ startpos="423"
+ endpos="437"
+>
+	<marker line="-1" type="param">
+		<operand  start="462" length="7" line="8">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="488" length="6" line="8">
+			<expr><![CDATA[locale]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="515" length="11" line="8">
+			<expr><![CDATA[suggestions]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="532" length="5" line="8">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="558" length="23" line="8">
+			<expr><![CDATA[notificationTargetClass]]></expr>
+		</operand>
+	</marker>
+	<type  start="438" length="23" line="8" chordsig="android.content.Context"/>
+	<type  start="471" length="16" line="8" chordsig="java.util.Locale"/>
+	<type  start="496" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="539" length="15" line="8" chordsig="java.lang.Class"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="595" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="591" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="612" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="595" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/os/Parcel;)V@android.text.style.SuggestionSpan"
+ sig="SuggestionSpan(Parcel)"
+ line="9"
+ startpos="632"
+ endpos="646"
+>
+	<marker line="-1" type="param">
+		<operand  start="665" length="3" line="9">
+			<expr><![CDATA[src]]></expr>
+		</operand>
+	</marker>
+	<type  start="647" length="17" line="9" chordsig="android.os.Parcel"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="682" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="678" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="699" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="682" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSuggestions:()[Ljava/lang/String;@android.text.style.SuggestionSpan"
+ sig="String[] getSuggestions()"
+ line="10"
+ startpos="738"
+ endpos="752"
+>
+	<type  start="719" length="16" line="10" chordsig="java.lang.String"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="767" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="763" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="784" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="767" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLocale:()Ljava/lang/String;@android.text.style.SuggestionSpan"
+ sig="String getLocale()"
+ line="11"
+ startpos="821"
+ endpos="830"
+>
+	<type  start="804" length="16" line="11" chordsig="java.lang.String"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="845" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="841" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="862" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="845" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFlags:()I@android.text.style.SuggestionSpan"
+ sig="int getFlags()"
+ line="12"
+ startpos="886"
+ endpos="894"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="909" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="905" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="926" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="909" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setFlags:(I)V@android.text.style.SuggestionSpan"
+ sig="void setFlags(int)"
+ line="13"
+ startpos="951"
+ endpos="959"
+>
+	<marker line="-1" type="param">
+		<operand  start="964" length="5" line="13">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="983" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="979" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1000" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="983" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.text.style.SuggestionSpan"
+ sig="int describeContents()"
+ line="14"
+ startpos="1024"
+ endpos="1040"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1055" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1051" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1072" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1055" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.text.style.SuggestionSpan"
+ sig="void writeToParcel(Parcel,int)"
+ line="15"
+ startpos="1097"
+ endpos="1110"
+>
+	<marker line="-1" type="param">
+		<operand  start="1129" length="4" line="15">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1139" length="5" line="15">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="1111" length="17" line="15" chordsig="android.os.Parcel"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1158" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1154" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1175" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1158" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSpanTypeId:()I@android.text.style.SuggestionSpan"
+ sig="int getSpanTypeId()"
+ line="16"
+ startpos="1199"
+ endpos="1212"
+>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1227" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1223" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1244" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1227" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@android.text.style.SuggestionSpan"
+ sig="boolean equals(Object)"
+ line="17"
+ startpos="1272"
+ endpos="1278"
+>
+	<marker line="-1" type="param">
+		<operand  start="1296" length="1" line="17">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="1279" length="16" line="17" chordsig="java.lang.Object"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1311" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1307" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1328" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1311" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@android.text.style.SuggestionSpan"
+ sig="int hashCode()"
+ line="18"
+ startpos="1352"
+ endpos="1360"
+>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1375" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1371" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1392" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1375" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="updateDrawState:(Landroid/text/TextPaint;)V@android.text.style.SuggestionSpan"
+ sig="void updateDrawState(TextPaint)"
+ line="19"
+ startpos="1417"
+ endpos="1432"
+>
+	<marker line="-1" type="param">
+		<operand  start="1456" length="2" line="19">
+			<expr><![CDATA[tp]]></expr>
+		</operand>
+	</marker>
+	<type  start="1433" length="22" line="19" chordsig="android.text.TextPaint"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1472" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1468" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1489" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1472" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1663" length="16" line="23" chordsig="java.lang.String"/>
+	<type  start="1767" length="16" line="24" chordsig="java.lang.String"/>
+	<type  start="1844" length="16" line="25" chordsig="java.lang.String"/>
+	<type  start="1923" length="16" line="26" chordsig="java.lang.String"/>
+	<type  start="2056" length="29" line="28" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="2086" length="33" line="28" chordsig="android.text.style.SuggestionSpan"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.text.style.SuggestionSpan"
+ line="29"
+>
+</method>
+</class>
+</root>

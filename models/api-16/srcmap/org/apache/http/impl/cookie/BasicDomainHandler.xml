@@ -1,0 +1,113 @@
+<root>
+<class chordsig="org.apache.http.impl.cookie.BasicDomainHandler" line="2">
+	<type  start="82" length="45" line="3" chordsig="org.apache.http.cookie.CookieAttributeHandler"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.impl.cookie.BasicDomainHandler"
+ sig="BasicDomainHandler()"
+ line="5"
+ startpos="138"
+ endpos="156"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="171" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="167" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="188" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="171" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parse:(Lorg/apache/http/cookie/SetCookie;Ljava/lang/String;)V@org.apache.http.impl.cookie.BasicDomainHandler"
+ sig="void parse(SetCookie,String)"
+ line="6"
+ startpos="213"
+ endpos="218"
+>
+	<marker line="-1" type="param">
+		<operand  start="252" length="6" line="6">
+			<expr><![CDATA[cookie]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="277" length="5" line="6">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="219" length="32" line="6" chordsig="org.apache.http.cookie.SetCookie"/>
+	<type  start="260" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="351" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="347" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="368" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="351" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="validate:(Lorg/apache/http/cookie/Cookie;Lorg/apache/http/cookie/CookieOrigin;)V@org.apache.http.impl.cookie.BasicDomainHandler"
+ sig="void validate(Cookie,CookieOrigin)"
+ line="7"
+ startpos="393"
+ endpos="401"
+>
+	<marker line="-1" type="param">
+		<operand  start="432" length="6" line="7">
+			<expr><![CDATA[cookie]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="476" length="6" line="7">
+			<expr><![CDATA[origin]]></expr>
+		</operand>
+	</marker>
+	<type  start="402" length="29" line="7" chordsig="org.apache.http.cookie.Cookie"/>
+	<type  start="440" length="35" line="7" chordsig="org.apache.http.cookie.CookieOrigin"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="551" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="547" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="568" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="551" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="match:(Lorg/apache/http/cookie/Cookie;Lorg/apache/http/cookie/CookieOrigin;)Z@org.apache.http.impl.cookie.BasicDomainHandler"
+ sig="boolean match(Cookie,CookieOrigin)"
+ line="8"
+ startpos="596"
+ endpos="601"
+>
+	<marker line="-1" type="param">
+		<operand  start="632" length="6" line="8">
+			<expr><![CDATA[cookie]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="676" length="6" line="8">
+			<expr><![CDATA[origin]]></expr>
+		</operand>
+	</marker>
+	<type  start="602" length="29" line="8" chordsig="org.apache.http.cookie.Cookie"/>
+	<type  start="640" length="35" line="8" chordsig="org.apache.http.cookie.CookieOrigin"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="696" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="692" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="713" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="696" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

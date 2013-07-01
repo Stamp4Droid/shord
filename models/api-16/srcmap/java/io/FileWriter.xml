@@ -1,0 +1,145 @@
+<root>
+<class chordsig="java.io.FileWriter" line="2">
+	<type  start="51" length="26" line="3" chordsig="java.io.OutputStreamWriter"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/File;)V@java.io.FileWriter"
+ sig="FileWriter(File)"
+ line="5"
+ startpos="88"
+ endpos="98"
+>
+	<marker line="-1" type="param">
+		<operand  start="112" length="4" line="5">
+			<expr><![CDATA[file]]></expr>
+		</operand>
+	</marker>
+	<type  start="99" length="12" line="5" chordsig="java.io.File"/>
+	<type  start="154" length="20" line="5" chordsig="java.io.OutputStream"/>
+	<type  start="181" length="31" line="5" chordsig="java.nio.charset.CharsetEncoder"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="230" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="226" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="247" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="230" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/File;Z)V@java.io.FileWriter"
+ sig="FileWriter(File,boolean)"
+ line="6"
+ startpos="267"
+ endpos="277"
+>
+	<marker line="-1" type="param">
+		<operand  start="291" length="4" line="6">
+			<expr><![CDATA[file]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="305" length="6" line="6">
+			<expr><![CDATA[append]]></expr>
+		</operand>
+	</marker>
+	<type  start="278" length="12" line="6" chordsig="java.io.File"/>
+	<type  start="349" length="20" line="6" chordsig="java.io.OutputStream"/>
+	<type  start="376" length="31" line="6" chordsig="java.nio.charset.CharsetEncoder"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="425" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="421" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="442" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="425" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/FileDescriptor;)V@java.io.FileWriter"
+ sig="FileWriter(FileDescriptor)"
+ line="7"
+ startpos="462"
+ endpos="472"
+>
+	<marker line="-1" type="param">
+		<operand  start="496" length="2" line="7">
+			<expr><![CDATA[fd]]></expr>
+		</operand>
+	</marker>
+	<type  start="473" length="22" line="7" chordsig="java.io.FileDescriptor"/>
+	<type  start="509" length="20" line="7" chordsig="java.io.OutputStream"/>
+	<type  start="536" length="31" line="7" chordsig="java.nio.charset.CharsetEncoder"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="585" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="581" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="602" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="585" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.io.FileWriter"
+ sig="FileWriter(String)"
+ line="8"
+ startpos="622"
+ endpos="632"
+>
+	<marker line="-1" type="param">
+		<operand  start="650" length="8" line="8">
+			<expr><![CDATA[filename]]></expr>
+		</operand>
+	</marker>
+	<type  start="633" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="696" length="20" line="8" chordsig="java.io.OutputStream"/>
+	<type  start="723" length="31" line="8" chordsig="java.nio.charset.CharsetEncoder"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="772" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="768" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="789" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="772" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Z)V@java.io.FileWriter"
+ sig="FileWriter(String,boolean)"
+ line="9"
+ startpos="809"
+ endpos="819"
+>
+	<marker line="-1" type="param">
+		<operand  start="837" length="8" line="9">
+			<expr><![CDATA[filename]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="855" length="6" line="9">
+			<expr><![CDATA[append]]></expr>
+		</operand>
+	</marker>
+	<type  start="820" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="899" length="20" line="9" chordsig="java.io.OutputStream"/>
+	<type  start="926" length="31" line="9" chordsig="java.nio.charset.CharsetEncoder"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="975" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="971" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="992" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="975" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

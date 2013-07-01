@@ -1,0 +1,269 @@
+<root>
+<class chordsig="android.graphics.Typeface" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.graphics.Typeface"
+ sig="Typeface()"
+ line="4"
+ startpos="50"
+ endpos="58"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="73" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="69" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="90" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="73" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getStyle:()I@android.graphics.Typeface"
+ sig="int getStyle()"
+ line="5"
+ startpos="114"
+ endpos="122"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="137" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="133" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="154" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="137" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isBold:()Z@android.graphics.Typeface"
+ sig="boolean isBold()"
+ line="6"
+ startpos="188"
+ endpos="194"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="209" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="205" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="226" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="209" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isItalic:()Z@android.graphics.Typeface"
+ sig="boolean isItalic()"
+ line="7"
+ startpos="260"
+ endpos="268"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="283" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="279" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="300" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="283" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="create:(Ljava/lang/String;I)Landroid/graphics/Typeface;@android.graphics.Typeface"
+ sig="Typeface create(String,int)"
+ line="8"
+ startpos="353"
+ endpos="359"
+>
+	<marker line="-1" type="param">
+		<operand  start="377" length="10" line="8">
+			<expr><![CDATA[familyName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="393" length="5" line="8">
+			<expr><![CDATA[style]]></expr>
+		</operand>
+	</marker>
+	<type  start="327" length="25" line="8" chordsig="android.graphics.Typeface"/>
+	<type  start="360" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="412" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="408" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="429" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="412" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="create:(Landroid/graphics/Typeface;I)Landroid/graphics/Typeface;@android.graphics.Typeface"
+ sig="Typeface create(Typeface,int)"
+ line="9"
+ startpos="482"
+ endpos="488"
+>
+	<marker line="-1" type="param">
+		<operand  start="515" length="6" line="9">
+			<expr><![CDATA[family]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="527" length="5" line="9">
+			<expr><![CDATA[style]]></expr>
+		</operand>
+	</marker>
+	<type  start="456" length="25" line="9" chordsig="android.graphics.Typeface"/>
+	<type  start="489" length="25" line="9" chordsig="android.graphics.Typeface"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="546" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="542" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="563" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="546" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="defaultFromStyle:(I)Landroid/graphics/Typeface;@android.graphics.Typeface"
+ sig="Typeface defaultFromStyle(int)"
+ line="10"
+ startpos="616"
+ endpos="632"
+>
+	<marker line="-1" type="param">
+		<operand  start="637" length="5" line="10">
+			<expr><![CDATA[style]]></expr>
+		</operand>
+	</marker>
+	<type  start="590" length="25" line="10" chordsig="android.graphics.Typeface"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="656" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="652" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="673" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="656" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createFromAsset:(Landroid/content/res/AssetManager;Ljava/lang/String;)Landroid/graphics/Typeface;@android.graphics.Typeface"
+ sig="Typeface createFromAsset(AssetManager,String)"
+ line="11"
+ startpos="726"
+ endpos="741"
+>
+	<marker line="-1" type="param">
+		<operand  start="775" length="3" line="11">
+			<expr><![CDATA[mgr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="797" length="4" line="11">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<type  start="700" length="25" line="11" chordsig="android.graphics.Typeface"/>
+	<type  start="742" length="32" line="11" chordsig="android.content.res.AssetManager"/>
+	<type  start="780" length="16" line="11" chordsig="java.lang.String"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="815" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="811" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="832" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="815" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createFromFile:(Ljava/io/File;)Landroid/graphics/Typeface;@android.graphics.Typeface"
+ sig="Typeface createFromFile(File)"
+ line="12"
+ startpos="885"
+ endpos="899"
+>
+	<marker line="-1" type="param">
+		<operand  start="913" length="4" line="12">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<type  start="859" length="25" line="12" chordsig="android.graphics.Typeface"/>
+	<type  start="900" length="12" line="12" chordsig="java.io.File"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="931" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="927" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="948" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="931" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createFromFile:(Ljava/lang/String;)Landroid/graphics/Typeface;@android.graphics.Typeface"
+ sig="Typeface createFromFile(String)"
+ line="13"
+ startpos="1001"
+ endpos="1015"
+>
+	<marker line="-1" type="param">
+		<operand  start="1033" length="4" line="13">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<type  start="975" length="25" line="13" chordsig="android.graphics.Typeface"/>
+	<type  start="1016" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1051" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1047" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1068" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1051" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="finalize:()V@android.graphics.Typeface"
+ sig="void finalize()"
+ line="14"
+ startpos="1096"
+ endpos="1104"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1146" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1142" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1163" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1146" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1195" length="25" line="15" chordsig="android.graphics.Typeface"/>
+	<type  start="1250" length="25" line="16" chordsig="android.graphics.Typeface"/>
+	<type  start="1310" length="25" line="17" chordsig="android.graphics.Typeface"/>
+	<type  start="1368" length="25" line="18" chordsig="android.graphics.Typeface"/>
+	<type  start="1421" length="25" line="19" chordsig="android.graphics.Typeface"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.graphics.Typeface"
+ line="24"
+>
+</method>
+</class>
+</root>

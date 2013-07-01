@@ -1,0 +1,185 @@
+<root>
+<class chordsig="android.os.Process" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.os.Process"
+ sig="Process()"
+ line="4"
+ startpos="51"
+ endpos="58"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="73" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="69" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="90" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="73" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getElapsedCpuTime:()J@android.os.Process"
+ sig="long getElapsedCpuTime()"
+ line="5"
+ startpos="135"
+ endpos="152"
+>
+</method>
+<method
+ chordsig="myPid:()I@android.os.Process"
+ sig="int myPid()"
+ line="6"
+ startpos="188"
+ endpos="193"
+>
+</method>
+<method
+ chordsig="myTid:()I@android.os.Process"
+ sig="int myTid()"
+ line="7"
+ startpos="229"
+ endpos="234"
+>
+</method>
+<method
+ chordsig="myUid:()I@android.os.Process"
+ sig="int myUid()"
+ line="8"
+ startpos="270"
+ endpos="275"
+>
+</method>
+<method
+ chordsig="getUidForName:(Ljava/lang/String;)I@android.os.Process"
+ sig="int getUidForName(String)"
+ line="9"
+ startpos="311"
+ endpos="324"
+>
+	<marker line="-1" type="param">
+		<operand  start="342" length="4" line="9">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="325" length="16" line="9" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getGidForName:(Ljava/lang/String;)I@android.os.Process"
+ sig="int getGidForName(String)"
+ line="10"
+ startpos="381"
+ endpos="394"
+>
+	<marker line="-1" type="param">
+		<operand  start="412" length="4" line="10">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="395" length="16" line="10" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setThreadPriority:(II)V@android.os.Process"
+ sig="void setThreadPriority(int,int)"
+ line="11"
+ startpos="452"
+ endpos="469"
+>
+	<marker line="-1" type="param">
+		<operand  start="474" length="3" line="11">
+			<expr><![CDATA[tid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="483" length="8" line="11">
+			<expr><![CDATA[priority]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setThreadPriority:(I)V@android.os.Process"
+ sig="void setThreadPriority(int)"
+ line="12"
+ startpos="598"
+ endpos="615"
+>
+	<marker line="-1" type="param">
+		<operand  start="620" length="8" line="12">
+			<expr><![CDATA[priority]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getThreadPriority:(I)I@android.os.Process"
+ sig="int getThreadPriority(int)"
+ line="13"
+ startpos="734"
+ endpos="751"
+>
+	<marker line="-1" type="param">
+		<operand  start="756" length="3" line="13">
+			<expr><![CDATA[tid]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="supportsProcesses:()Z@android.os.Process"
+ sig="boolean supportsProcesses()"
+ line="15"
+ startpos="857"
+ endpos="874"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="889" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="885" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="906" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="889" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="killProcess:(I)V@android.os.Process"
+ sig="void killProcess(int)"
+ line="16"
+ startpos="944"
+ endpos="955"
+>
+	<marker line="-1" type="param">
+		<operand  start="960" length="3" line="16">
+			<expr><![CDATA[pid]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="977" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="973" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="994" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="977" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="sendSignal:(II)V@android.os.Process"
+ sig="void sendSignal(int,int)"
+ line="17"
+ startpos="1039"
+ endpos="1049"
+>
+	<marker line="-1" type="param">
+		<operand  start="1054" length="3" line="17">
+			<expr><![CDATA[pid]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1063" length="6" line="17">
+			<expr><![CDATA[signal]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

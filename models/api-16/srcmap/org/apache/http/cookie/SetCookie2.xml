@@ -1,0 +1,45 @@
+<root>
+<class chordsig="org.apache.http.cookie.SetCookie2" line="2">
+	<type  start="70" length="32" line="3" chordsig="org.apache.http.cookie.SetCookie"/>
+<method
+ chordsig="setCommentURL:(Ljava/lang/String;)V@org.apache.http.cookie.SetCookie2"
+ sig="void setCommentURL(String)"
+ line="5"
+ startpos="127"
+ endpos="140"
+>
+	<marker line="-1" type="param">
+		<operand  start="158" length="10" line="5">
+			<expr><![CDATA[commentURL]]></expr>
+		</operand>
+	</marker>
+	<type  start="141" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setPorts:([I)V@org.apache.http.cookie.SetCookie2"
+ sig="void setPorts(int[])"
+ line="6"
+ startpos="193"
+ endpos="201"
+>
+	<marker line="-1" type="param">
+		<operand  start="208" length="5" line="6">
+			<expr><![CDATA[ports]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setDiscard:(Z)V@org.apache.http.cookie.SetCookie2"
+ sig="void setDiscard(boolean)"
+ line="7"
+ startpos="238"
+ endpos="248"
+>
+	<marker line="-1" type="param">
+		<operand  start="257" length="7" line="7">
+			<expr><![CDATA[discard]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

@@ -1,0 +1,198 @@
+<root>
+<class chordsig="java.security.spec.EllipticCurve" line="2">
+<method
+ chordsig="&lt;init&gt;:(Ljava/security/spec/ECField;Ljava/math/BigInteger;Ljava/math/BigInteger;[B)V@java.security.spec.EllipticCurve"
+ sig="EllipticCurve(ECField,BigInteger,BigInteger,byte[])"
+ line="4"
+ startpos="65"
+ endpos="78"
+>
+	<marker line="-1" type="param">
+		<operand  start="106" length="5" line="4">
+			<expr><![CDATA[field]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="134" length="1" line="4">
+			<expr><![CDATA[a]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="158" length="1" line="4">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="168" length="4" line="4">
+			<expr><![CDATA[seed]]></expr>
+		</operand>
+	</marker>
+	<type  start="79" length="26" line="4" chordsig="java.security.spec.ECField"/>
+	<type  start="113" length="20" line="4" chordsig="java.math.BigInteger"/>
+	<type  start="137" length="20" line="4" chordsig="java.math.BigInteger"/>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="186" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="182" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="203" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="186" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/security/spec/ECField;Ljava/math/BigInteger;Ljava/math/BigInteger;)V@java.security.spec.EllipticCurve"
+ sig="EllipticCurve(ECField,BigInteger,BigInteger)"
+ line="5"
+ startpos="223"
+ endpos="236"
+>
+	<marker line="-1" type="param">
+		<operand  start="264" length="5" line="5">
+			<expr><![CDATA[field]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="292" length="1" line="5">
+			<expr><![CDATA[a]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="316" length="1" line="5">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<type  start="237" length="26" line="5" chordsig="java.security.spec.ECField"/>
+	<type  start="271" length="20" line="5" chordsig="java.math.BigInteger"/>
+	<type  start="295" length="20" line="5" chordsig="java.math.BigInteger"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="331" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="327" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="348" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="331" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getA:()Ljava/math/BigInteger;@java.security.spec.EllipticCurve"
+ sig="BigInteger getA()"
+ line="6"
+ startpos="389"
+ endpos="393"
+>
+	<type  start="368" length="20" line="6" chordsig="java.math.BigInteger"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="408" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="404" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="425" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="408" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getB:()Ljava/math/BigInteger;@java.security.spec.EllipticCurve"
+ sig="BigInteger getB()"
+ line="7"
+ startpos="466"
+ endpos="470"
+>
+	<type  start="445" length="20" line="7" chordsig="java.math.BigInteger"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="485" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="481" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="502" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="485" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getField:()Ljava/security/spec/ECField;@java.security.spec.EllipticCurve"
+ sig="ECField getField()"
+ line="8"
+ startpos="549"
+ endpos="557"
+>
+	<type  start="522" length="26" line="8" chordsig="java.security.spec.ECField"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="572" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="568" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="589" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="572" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSeed:()[B@java.security.spec.EllipticCurve"
+ sig="byte[] getSeed()"
+ line="9"
+ startpos="616"
+ endpos="623"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="638" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="634" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="655" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="638" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.security.spec.EllipticCurve"
+ sig="boolean equals(Object)"
+ line="10"
+ startpos="683"
+ endpos="689"
+>
+	<marker line="-1" type="param">
+		<operand  start="707" length="5" line="10">
+			<expr><![CDATA[other]]></expr>
+		</operand>
+	</marker>
+	<type  start="690" length="16" line="10" chordsig="java.lang.Object"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="726" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="722" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="743" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="726" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@java.security.spec.EllipticCurve"
+ sig="int hashCode()"
+ line="11"
+ startpos="767"
+ endpos="775"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="790" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="786" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="807" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="790" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

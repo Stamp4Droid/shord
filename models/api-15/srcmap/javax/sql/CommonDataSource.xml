@@ -1,0 +1,48 @@
+<root>
+<class chordsig="javax.sql.CommonDataSource" line="2">
+<method
+ chordsig="getLoginTimeout:()I@javax.sql.CommonDataSource"
+ sig="int getLoginTimeout()"
+ line="4"
+ startpos="76"
+ endpos="91"
+>
+</method>
+<method
+ chordsig="getLogWriter:()Ljava/io/PrintWriter;@javax.sql.CommonDataSource"
+ sig="PrintWriter getLogWriter()"
+ line="5"
+ startpos="161"
+ endpos="173"
+>
+	<type  start="141" length="19" line="5" chordsig="java.io.PrintWriter"/>
+</method>
+<method
+ chordsig="setLoginTimeout:(I)V@javax.sql.CommonDataSource"
+ sig="void setLoginTimeout(int)"
+ line="6"
+ startpos="228"
+ endpos="243"
+>
+	<marker line="-1" type="param">
+		<operand  start="248" length="7" line="6">
+			<expr><![CDATA[seconds]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setLogWriter:(Ljava/io/PrintWriter;)V@javax.sql.CommonDataSource"
+ sig="void setLogWriter(PrintWriter)"
+ line="7"
+ startpos="309"
+ endpos="321"
+>
+	<marker line="-1" type="param">
+		<operand  start="342" length="3" line="7">
+			<expr><![CDATA[out]]></expr>
+		</operand>
+	</marker>
+	<type  start="322" length="19" line="7" chordsig="java.io.PrintWriter"/>
+</method>
+</class>
+</root>

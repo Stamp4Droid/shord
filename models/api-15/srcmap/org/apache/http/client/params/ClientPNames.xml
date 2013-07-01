@@ -1,0 +1,15 @@
+<root>
+<class chordsig="org.apache.http.client.params.ClientPNames" line="2">
+	<type  start="91" length="16" line="4" chordsig="java.lang.String"/>
+	<type  start="214" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="322" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="412" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="518" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="602" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="708" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="808" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="892" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="965" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="1044" length="16" line="14" chordsig="java.lang.String"/>
+</class>
+</root>

@@ -1,0 +1,298 @@
+<root>
+<class chordsig="android.renderscript.FileA3D" line="2">
+	<type  start="61" length="28" line="3" chordsig="android.renderscript.BaseObj"/>
+<class chordsig="android.renderscript.FileA3D$EntryType" line="5">
+</class>
+<class chordsig="android.renderscript.FileA3D$IndexEntry" line="10">
+<method
+ chordsig="&lt;init&gt;:()V@android.renderscript.FileA3D$IndexEntry"
+ sig="IndexEntry()"
+ line="12"
+ startpos="177"
+ endpos="187"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="202" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="198" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="219" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="202" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getName:()Ljava/lang/String;@android.renderscript.FileA3D$IndexEntry"
+ sig="String getName()"
+ line="13"
+ startpos="256"
+ endpos="263"
+>
+	<type  start="239" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="278" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="274" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="295" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="278" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getEntryType:()Landroid/renderscript/FileA3D$EntryType;@android.renderscript.FileA3D$IndexEntry"
+ sig="EntryType getEntryType()"
+ line="14"
+ startpos="354"
+ endpos="366"
+>
+	<type  start="315" length="38" line="14" chordsig="android.renderscript.FileA3D$EntryType"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="381" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="377" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="398" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="381" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getObject:()Landroid/renderscript/BaseObj;@android.renderscript.FileA3D$IndexEntry"
+ sig="BaseObj getObject()"
+ line="15"
+ startpos="447"
+ endpos="456"
+>
+	<type  start="418" length="28" line="15" chordsig="android.renderscript.BaseObj"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="471" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="467" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="488" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="471" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMesh:()Landroid/renderscript/Mesh;@android.renderscript.FileA3D$IndexEntry"
+ sig="Mesh getMesh()"
+ line="16"
+ startpos="534"
+ endpos="541"
+>
+	<type  start="508" length="25" line="16" chordsig="android.renderscript.Mesh"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="556" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="552" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="573" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="556" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.renderscript.FileA3D"
+ sig="FileA3D()"
+ line="18"
+ startpos="587"
+ endpos="594"
+>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="609" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="605" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="626" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="609" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getIndexEntryCount:()I@android.renderscript.FileA3D"
+ sig="int getIndexEntryCount()"
+ line="19"
+ startpos="650"
+ endpos="668"
+>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="683" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="679" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="700" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="683" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getIndexEntry:(I)Landroid/renderscript/FileA3D$IndexEntry;@android.renderscript.FileA3D"
+ sig="IndexEntry getIndexEntry(int)"
+ line="20"
+ startpos="760"
+ endpos="773"
+>
+	<marker line="-1" type="param">
+		<operand  start="778" length="5" line="20">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="720" length="39" line="20" chordsig="android.renderscript.FileA3D$IndexEntry"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="797" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="793" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="814" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="797" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createFromAsset:(Landroid/renderscript/RenderScript;Landroid/content/res/AssetManager;Ljava/lang/String;)Landroid/renderscript/FileA3D;@android.renderscript.FileA3D"
+ sig="FileA3D createFromAsset(RenderScript,AssetManager,String)"
+ line="21"
+ startpos="870"
+ endpos="885"
+>
+	<marker line="-1" type="param">
+		<operand  start="920" length="2" line="21">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="957" length="3" line="21">
+			<expr><![CDATA[mgr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="979" length="4" line="21">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<type  start="841" length="28" line="21" chordsig="android.renderscript.FileA3D"/>
+	<type  start="886" length="33" line="21" chordsig="android.renderscript.RenderScript"/>
+	<type  start="924" length="32" line="21" chordsig="android.content.res.AssetManager"/>
+	<type  start="962" length="16" line="21" chordsig="java.lang.String"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="997" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="993" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1014" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="997" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createFromFile:(Landroid/renderscript/RenderScript;Ljava/lang/String;)Landroid/renderscript/FileA3D;@android.renderscript.FileA3D"
+ sig="FileA3D createFromFile(RenderScript,String)"
+ line="22"
+ startpos="1070"
+ endpos="1084"
+>
+	<marker line="-1" type="param">
+		<operand  start="1119" length="2" line="22">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1140" length="4" line="22">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<type  start="1041" length="28" line="22" chordsig="android.renderscript.FileA3D"/>
+	<type  start="1085" length="33" line="22" chordsig="android.renderscript.RenderScript"/>
+	<type  start="1123" length="16" line="22" chordsig="java.lang.String"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1158" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1154" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1175" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1158" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createFromFile:(Landroid/renderscript/RenderScript;Ljava/io/File;)Landroid/renderscript/FileA3D;@android.renderscript.FileA3D"
+ sig="FileA3D createFromFile(RenderScript,File)"
+ line="23"
+ startpos="1231"
+ endpos="1245"
+>
+	<marker line="-1" type="param">
+		<operand  start="1280" length="2" line="23">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1297" length="4" line="23">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<type  start="1202" length="28" line="23" chordsig="android.renderscript.FileA3D"/>
+	<type  start="1246" length="33" line="23" chordsig="android.renderscript.RenderScript"/>
+	<type  start="1284" length="12" line="23" chordsig="java.io.File"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1315" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1311" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1332" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1315" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createFromResource:(Landroid/renderscript/RenderScript;Landroid/content/res/Resources;I)Landroid/renderscript/FileA3D;@android.renderscript.FileA3D"
+ sig="FileA3D createFromResource(RenderScript,Resources,int)"
+ line="24"
+ startpos="1388"
+ endpos="1406"
+>
+	<marker line="-1" type="param">
+		<operand  start="1441" length="2" line="24">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1475" length="3" line="24">
+			<expr><![CDATA[res]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1484" length="2" line="24">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<type  start="1359" length="28" line="24" chordsig="android.renderscript.FileA3D"/>
+	<type  start="1407" length="33" line="24" chordsig="android.renderscript.RenderScript"/>
+	<type  start="1445" length="29" line="24" chordsig="android.content.res.Resources"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1500" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1496" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1517" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1500" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

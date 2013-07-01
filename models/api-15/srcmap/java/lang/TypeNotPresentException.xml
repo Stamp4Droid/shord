@@ -1,0 +1,54 @@
+<root>
+<class chordsig="java.lang.TypeNotPresentException" line="2">
+	<type  start="66" length="26" line="3" chordsig="java.lang.RuntimeException"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/Throwable;)V@java.lang.TypeNotPresentException"
+ sig="TypeNotPresentException(String,Throwable)"
+ line="5"
+ startpos="103"
+ endpos="126"
+>
+	<marker line="-1" type="param">
+		<operand  start="144" length="8" line="5">
+			<expr><![CDATA[typeName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="174" length="5" line="5">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="127" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="154" length="19" line="5" chordsig="java.lang.Throwable"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="193" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="189" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="210" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="193" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="typeName:()Ljava/lang/String;@java.lang.TypeNotPresentException"
+ sig="String typeName()"
+ line="6"
+ startpos="247"
+ endpos="255"
+>
+	<type  start="230" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="270" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="266" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="287" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="270" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

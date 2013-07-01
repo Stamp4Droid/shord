@@ -1,0 +1,47 @@
+<root>
+<class chordsig="android.graphics.PathDashPathEffect" line="2">
+	<type  start="68" length="27" line="3" chordsig="android.graphics.PathEffect"/>
+<class chordsig="android.graphics.PathDashPathEffect$Style" line="5">
+</class>
+<method
+ chordsig="&lt;init&gt;:(Landroid/graphics/Path;FFLandroid/graphics/PathDashPathEffect$Style;)V@android.graphics.PathDashPathEffect"
+ sig="PathDashPathEffect(Path,float,float,Style)"
+ line="11"
+ startpos="167"
+ endpos="185"
+>
+	<marker line="-1" type="param">
+		<operand  start="208" length="5" line="11">
+			<expr><![CDATA[shape]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="221" length="7" line="11">
+			<expr><![CDATA[advance]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="236" length="5" line="11">
+			<expr><![CDATA[phase]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="285" length="5" line="11">
+			<expr><![CDATA[style]]></expr>
+		</operand>
+	</marker>
+	<type  start="186" length="21" line="11" chordsig="android.graphics.Path"/>
+	<type  start="243" length="41" line="11" chordsig="android.graphics.PathDashPathEffect$Style"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="304" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="300" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="321" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="304" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

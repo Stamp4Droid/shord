@@ -1,0 +1,81 @@
+<root>
+<class chordsig="android.graphics.SweepGradient" line="2">
+	<type  start="63" length="23" line="3" chordsig="android.graphics.Shader"/>
+<method
+ chordsig="&lt;init&gt;:(FF[I[F)V@android.graphics.SweepGradient"
+ sig="SweepGradient(float,float,int[],float[])"
+ line="5"
+ startpos="97"
+ endpos="110"
+>
+	<marker line="-1" type="param">
+		<operand  start="117" length="2" line="5">
+			<expr><![CDATA[cx]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="127" length="2" line="5">
+			<expr><![CDATA[cy]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="137" length="6" line="5">
+			<expr><![CDATA[colors]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="153" length="9" line="5">
+			<expr><![CDATA[positions]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="176" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="172" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="193" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="176" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(FFII)V@android.graphics.SweepGradient"
+ sig="SweepGradient(float,float,int,int)"
+ line="6"
+ startpos="213"
+ endpos="226"
+>
+	<marker line="-1" type="param">
+		<operand  start="233" length="2" line="6">
+			<expr><![CDATA[cx]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="243" length="2" line="6">
+			<expr><![CDATA[cy]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="251" length="6" line="6">
+			<expr><![CDATA[color0]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="263" length="6" line="6">
+			<expr><![CDATA[color1]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="283" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="279" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="300" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="283" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,14 @@
+<root>
+<class chordsig="java.security.cert.CertPathParameters" line="2">
+	<type  start="74" length="19" line="3" chordsig="java.lang.Cloneable"/>
+<method
+ chordsig="clone:()Ljava/lang/Object;@java.security.cert.CertPathParameters"
+ sig="Object clone()"
+ line="5"
+ startpos="130"
+ endpos="135"
+>
+	<type  start="113" length="16" line="5" chordsig="java.lang.Object"/>
+</method>
+</class>
+</root>

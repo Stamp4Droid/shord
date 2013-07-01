@@ -1,0 +1,36 @@
+<root>
+<class chordsig="javax.sql.DataSource" line="2">
+	<type  start="57" length="26" line="3" chordsig="javax.sql.CommonDataSource"/>
+	<type  start="85" length="16" line="3" chordsig="java.sql.Wrapper"/>
+<method
+ chordsig="getConnection:()Ljava/sql/Connection;@javax.sql.DataSource"
+ sig="Connection getConnection()"
+ line="5"
+ startpos="141"
+ endpos="154"
+>
+	<type  start="121" length="19" line="5" chordsig="java.sql.Connection"/>
+</method>
+<method
+ chordsig="getConnection:(Ljava/lang/String;Ljava/lang/String;)Ljava/sql/Connection;@javax.sql.DataSource"
+ sig="Connection getConnection(String,String)"
+ line="6"
+ startpos="224"
+ endpos="237"
+>
+	<marker line="-1" type="param">
+		<operand  start="255" length="11" line="6">
+			<expr><![CDATA[theUsername]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="285" length="11" line="6">
+			<expr><![CDATA[thePassword]]></expr>
+		</operand>
+	</marker>
+	<type  start="204" length="19" line="6" chordsig="java.sql.Connection"/>
+	<type  start="238" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="268" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

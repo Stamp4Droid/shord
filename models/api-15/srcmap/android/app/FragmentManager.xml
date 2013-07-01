@@ -1,0 +1,406 @@
+<root>
+<class chordsig="android.app.FragmentManager" line="2">
+<class chordsig="android.app.FragmentManager$BackStackEntry" line="4">
+<method
+ chordsig="getId:()I@android.app.FragmentManager$BackStackEntry"
+ sig="int getId()"
+ line="6"
+ startpos="123"
+ endpos="128"
+>
+</method>
+<method
+ chordsig="getName:()Ljava/lang/String;@android.app.FragmentManager$BackStackEntry"
+ sig="String getName()"
+ line="7"
+ startpos="166"
+ endpos="173"
+>
+	<type  start="149" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getBreadCrumbTitleRes:()I@android.app.FragmentManager$BackStackEntry"
+ sig="int getBreadCrumbTitleRes()"
+ line="8"
+ startpos="198"
+ endpos="219"
+>
+</method>
+<method
+ chordsig="getBreadCrumbShortTitleRes:()I@android.app.FragmentManager$BackStackEntry"
+ sig="int getBreadCrumbShortTitleRes()"
+ line="9"
+ startpos="244"
+ endpos="270"
+>
+</method>
+<method
+ chordsig="getBreadCrumbTitle:()Ljava/lang/CharSequence;@android.app.FragmentManager$BackStackEntry"
+ sig="CharSequence getBreadCrumbTitle()"
+ line="10"
+ startpos="314"
+ endpos="332"
+>
+	<type  start="291" length="22" line="10" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="getBreadCrumbShortTitle:()Ljava/lang/CharSequence;@android.app.FragmentManager$BackStackEntry"
+ sig="CharSequence getBreadCrumbShortTitle()"
+ line="11"
+ startpos="376"
+ endpos="399"
+>
+	<type  start="353" length="22" line="11" chordsig="java.lang.CharSequence"/>
+</method>
+</class>
+<class chordsig="android.app.FragmentManager$OnBackStackChangedListener" line="13">
+<method
+ chordsig="onBackStackChanged:()V@android.app.FragmentManager$OnBackStackChangedListener"
+ sig="void onBackStackChanged()"
+ line="15"
+ startpos="480"
+ endpos="498"
+>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.app.FragmentManager"
+ sig="FragmentManager()"
+ line="17"
+ startpos="512"
+ endpos="527"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="542" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="538" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="559" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="542" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="beginTransaction:()Landroid/app/FragmentTransaction;@android.app.FragmentManager"
+ sig="FragmentTransaction beginTransaction()"
+ line="18"
+ startpos="620"
+ endpos="636"
+>
+	<type  start="588" length="31" line="18" chordsig="android.app.FragmentTransaction"/>
+</method>
+<method
+ chordsig="executePendingTransactions:()Z@android.app.FragmentManager"
+ sig="boolean executePendingTransactions()"
+ line="19"
+ startpos="665"
+ endpos="691"
+>
+</method>
+<method
+ chordsig="findFragmentById:(I)Landroid/app/Fragment;@android.app.FragmentManager"
+ sig="Fragment findFragmentById(int)"
+ line="20"
+ startpos="733"
+ endpos="749"
+>
+	<marker line="-1" type="param">
+		<operand  start="754" length="2" line="20">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<type  start="712" length="20" line="20" chordsig="android.app.Fragment"/>
+</method>
+<method
+ chordsig="findFragmentByTag:(Ljava/lang/String;)Landroid/app/Fragment;@android.app.FragmentManager"
+ sig="Fragment findFragmentByTag(String)"
+ line="21"
+ startpos="797"
+ endpos="814"
+>
+	<marker line="-1" type="param">
+		<operand  start="832" length="3" line="21">
+			<expr><![CDATA[tag]]></expr>
+		</operand>
+	</marker>
+	<type  start="776" length="20" line="21" chordsig="android.app.Fragment"/>
+	<type  start="815" length="16" line="21" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="popBackStack:()V@android.app.FragmentManager"
+ sig="void popBackStack()"
+ line="22"
+ startpos="860"
+ endpos="872"
+>
+</method>
+<method
+ chordsig="popBackStackImmediate:()Z@android.app.FragmentManager"
+ sig="boolean popBackStackImmediate()"
+ line="23"
+ startpos="901"
+ endpos="922"
+>
+</method>
+<method
+ chordsig="popBackStack:(Ljava/lang/String;I)V@android.app.FragmentManager"
+ sig="void popBackStack(String,int)"
+ line="24"
+ startpos="948"
+ endpos="960"
+>
+	<marker line="-1" type="param">
+		<operand  start="978" length="4" line="24">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="988" length="5" line="24">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="961" length="16" line="24" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="popBackStackImmediate:(Ljava/lang/String;I)Z@android.app.FragmentManager"
+ sig="boolean popBackStackImmediate(String,int)"
+ line="25"
+ startpos="1021"
+ endpos="1042"
+>
+	<marker line="-1" type="param">
+		<operand  start="1060" length="4" line="25">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1070" length="5" line="25">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="1043" length="16" line="25" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="popBackStack:(II)V@android.app.FragmentManager"
+ sig="void popBackStack(int,int)"
+ line="26"
+ startpos="1100"
+ endpos="1112"
+>
+	<marker line="-1" type="param">
+		<operand  start="1117" length="2" line="26">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1125" length="5" line="26">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="popBackStackImmediate:(II)Z@android.app.FragmentManager"
+ sig="boolean popBackStackImmediate(int,int)"
+ line="27"
+ startpos="1158"
+ endpos="1179"
+>
+	<marker line="-1" type="param">
+		<operand  start="1184" length="2" line="27">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1192" length="5" line="27">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getBackStackEntryCount:()I@android.app.FragmentManager"
+ sig="int getBackStackEntryCount()"
+ line="28"
+ startpos="1221"
+ endpos="1243"
+>
+</method>
+<method
+ chordsig="getBackStackEntryAt:(I)Landroid/app/FragmentManager$BackStackEntry;@android.app.FragmentManager"
+ sig="BackStackEntry getBackStackEntryAt(int)"
+ line="29"
+ startpos="1307"
+ endpos="1326"
+>
+	<marker line="-1" type="param">
+		<operand  start="1331" length="5" line="29">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="1264" length="42" line="29" chordsig="android.app.FragmentManager$BackStackEntry"/>
+</method>
+<method
+ chordsig="addOnBackStackChangedListener:(Landroid/app/FragmentManager$OnBackStackChangedListener;)V@android.app.FragmentManager"
+ sig="void addOnBackStackChangedListener(OnBackStackChangedListener)"
+ line="30"
+ startpos="1361"
+ endpos="1390"
+>
+	<marker line="-1" type="param">
+		<operand  start="1446" length="8" line="30">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1391" length="54" line="30" chordsig="android.app.FragmentManager$OnBackStackChangedListener"/>
+</method>
+<method
+ chordsig="removeOnBackStackChangedListener:(Landroid/app/FragmentManager$OnBackStackChangedListener;)V@android.app.FragmentManager"
+ sig="void removeOnBackStackChangedListener(OnBackStackChangedListener)"
+ line="31"
+ startpos="1479"
+ endpos="1511"
+>
+	<marker line="-1" type="param">
+		<operand  start="1567" length="8" line="31">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1512" length="54" line="31" chordsig="android.app.FragmentManager$OnBackStackChangedListener"/>
+</method>
+<method
+ chordsig="putFragment:(Landroid/os/Bundle;Ljava/lang/String;Landroid/app/Fragment;)V@android.app.FragmentManager"
+ sig="void putFragment(Bundle,String,Fragment)"
+ line="32"
+ startpos="1600"
+ endpos="1611"
+>
+	<marker line="-1" type="param">
+		<operand  start="1630" length="6" line="32">
+			<expr><![CDATA[bundle]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1655" length="3" line="32">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1681" length="8" line="32">
+			<expr><![CDATA[fragment]]></expr>
+		</operand>
+	</marker>
+	<type  start="1612" length="17" line="32" chordsig="android.os.Bundle"/>
+	<type  start="1638" length="16" line="32" chordsig="java.lang.String"/>
+	<type  start="1660" length="20" line="32" chordsig="android.app.Fragment"/>
+</method>
+<method
+ chordsig="getFragment:(Landroid/os/Bundle;Ljava/lang/String;)Landroid/app/Fragment;@android.app.FragmentManager"
+ sig="Fragment getFragment(Bundle,String)"
+ line="33"
+ startpos="1730"
+ endpos="1741"
+>
+	<marker line="-1" type="param">
+		<operand  start="1760" length="6" line="33">
+			<expr><![CDATA[bundle]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1785" length="3" line="33">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="1709" length="20" line="33" chordsig="android.app.Fragment"/>
+	<type  start="1742" length="17" line="33" chordsig="android.os.Bundle"/>
+	<type  start="1768" length="16" line="33" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="saveFragmentInstanceState:(Landroid/app/Fragment;)Landroid/app/Fragment$SavedState;@android.app.FragmentManager"
+ sig="SavedState saveFragmentInstanceState(Fragment)"
+ line="34"
+ startpos="1840"
+ endpos="1865"
+>
+	<marker line="-1" type="param">
+		<operand  start="1887" length="1" line="34">
+			<expr><![CDATA[f]]></expr>
+		</operand>
+	</marker>
+	<type  start="1808" length="31" line="34" chordsig="android.app.Fragment$SavedState"/>
+	<type  start="1866" length="20" line="34" chordsig="android.app.Fragment"/>
+</method>
+<method
+ chordsig="dump:(Ljava/lang/String;Ljava/io/FileDescriptor;Ljava/io/PrintWriter;[Ljava/lang/String;)V@android.app.FragmentManager"
+ sig="void dump(String,FileDescriptor,PrintWriter,String[])"
+ line="35"
+ startpos="1913"
+ endpos="1917"
+>
+	<marker line="-1" type="param">
+		<operand  start="1935" length="6" line="35">
+			<expr><![CDATA[prefix]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1966" length="2" line="35">
+			<expr><![CDATA[fd]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1990" length="6" line="35">
+			<expr><![CDATA[writer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2017" length="4" line="35">
+			<expr><![CDATA[args]]></expr>
+		</operand>
+	</marker>
+	<type  start="1918" length="16" line="35" chordsig="java.lang.String"/>
+	<type  start="1943" length="22" line="35" chordsig="java.io.FileDescriptor"/>
+	<type  start="1970" length="19" line="35" chordsig="java.io.PrintWriter"/>
+	<type  start="1998" length="16" line="35" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="enableDebugLogging:(Z)V@android.app.FragmentManager"
+ sig="void enableDebugLogging(boolean)"
+ line="36"
+ startpos="2044"
+ endpos="2062"
+>
+	<marker line="-1" type="param">
+		<operand  start="2071" length="7" line="36">
+			<expr><![CDATA[enabled]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2092" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2088" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2109" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2092" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="invalidateOptionsMenu:()V@android.app.FragmentManager"
+ sig="void invalidateOptionsMenu()"
+ line="37"
+ startpos="2134"
+ endpos="2155"
+>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2170" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2166" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2187" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2170" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

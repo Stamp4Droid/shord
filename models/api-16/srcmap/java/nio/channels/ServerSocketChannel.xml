@@ -1,0 +1,85 @@
+<root>
+<class chordsig="java.nio.channels.ServerSocketChannel" line="2">
+	<type  start="79" length="47" line="3" chordsig="java.nio.channels.spi.AbstractSelectableChannel"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/nio/channels/spi/SelectorProvider;)V@java.nio.channels.ServerSocketChannel"
+ sig="ServerSocketChannel(SelectorProvider)"
+ line="5"
+ startpos="140"
+ endpos="159"
+>
+	<marker line="-1" type="param">
+		<operand  start="199" length="16" line="5">
+			<expr><![CDATA[selectorProvider]]></expr>
+		</operand>
+	</marker>
+	<type  start="160" length="38" line="5" chordsig="java.nio.channels.spi.SelectorProvider"/>
+	<type  start="226" length="38" line="5" chordsig="java.nio.channels.spi.SelectorProvider"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="282" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="278" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="299" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="282" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="open:()Ljava/nio/channels/ServerSocketChannel;@java.nio.channels.ServerSocketChannel"
+ sig="ServerSocketChannel open()"
+ line="6"
+ startpos="364"
+ endpos="368"
+>
+	<type  start="326" length="37" line="6" chordsig="java.nio.channels.ServerSocketChannel"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="410" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="406" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="427" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="410" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="validOps:()I@java.nio.channels.ServerSocketChannel"
+ sig="int validOps()"
+ line="7"
+ startpos="457"
+ endpos="465"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="480" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="476" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="497" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="480" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="socket:()Ljava/net/ServerSocket;@java.nio.channels.ServerSocketChannel"
+ sig="ServerSocket socket()"
+ line="8"
+ startpos="548"
+ endpos="554"
+>
+	<type  start="526" length="21" line="8" chordsig="java.net.ServerSocket"/>
+</method>
+<method
+ chordsig="accept:()Ljava/nio/channels/SocketChannel;@java.nio.channels.ServerSocketChannel"
+ sig="SocketChannel accept()"
+ line="9"
+ startpos="607"
+ endpos="613"
+>
+	<type  start="575" length="31" line="9" chordsig="java.nio.channels.SocketChannel"/>
+</method>
+</class>
+</root>

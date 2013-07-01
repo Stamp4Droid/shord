@@ -1,0 +1,197 @@
+<root>
+<class chordsig="android.hardware.usb.UsbRequest" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.hardware.usb.UsbRequest"
+ sig="UsbRequest()"
+ line="4"
+ startpos="64"
+ endpos="74"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="89" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="85" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="106" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="89" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="initialize:(Landroid/hardware/usb/UsbDeviceConnection;Landroid/hardware/usb/UsbEndpoint;)Z@android.hardware.usb.UsbRequest"
+ sig="boolean initialize(UsbDeviceConnection,UsbEndpoint)"
+ line="5"
+ startpos="134"
+ endpos="144"
+>
+	<marker line="-1" type="param">
+		<operand  start="186" length="10" line="5">
+			<expr><![CDATA[connection]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="231" length="8" line="5">
+			<expr><![CDATA[endpoint]]></expr>
+		</operand>
+	</marker>
+	<type  start="145" length="40" line="5" chordsig="android.hardware.usb.UsbDeviceConnection"/>
+	<type  start="198" length="32" line="5" chordsig="android.hardware.usb.UsbEndpoint"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="253" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="249" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="270" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="253" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:()V@android.hardware.usb.UsbRequest"
+ sig="void close()"
+ line="6"
+ startpos="295"
+ endpos="300"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="315" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="311" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="332" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="315" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="finalize:()V@android.hardware.usb.UsbRequest"
+ sig="void finalize()"
+ line="7"
+ startpos="360"
+ endpos="368"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="410" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="406" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="427" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="410" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getEndpoint:()Landroid/hardware/usb/UsbEndpoint;@android.hardware.usb.UsbRequest"
+ sig="UsbEndpoint getEndpoint()"
+ line="8"
+ startpos="480"
+ endpos="491"
+>
+	<type  start="447" length="32" line="8" chordsig="android.hardware.usb.UsbEndpoint"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="506" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="502" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="523" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="506" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getClientData:()Ljava/lang/Object;@android.hardware.usb.UsbRequest"
+ sig="Object getClientData()"
+ line="9"
+ startpos="560"
+ endpos="573"
+>
+	<type  start="543" length="16" line="9" chordsig="java.lang.Object"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="588" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="584" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="605" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="588" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setClientData:(Ljava/lang/Object;)V@android.hardware.usb.UsbRequest"
+ sig="void setClientData(Object)"
+ line="10"
+ startpos="630"
+ endpos="643"
+>
+	<marker line="-1" type="param">
+		<operand  start="661" length="4" line="10">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<type  start="644" length="16" line="10" chordsig="java.lang.Object"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="679" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="675" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="696" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="679" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="queue:(Ljava/nio/ByteBuffer;I)Z@android.hardware.usb.UsbRequest"
+ sig="boolean queue(ByteBuffer,int)"
+ line="11"
+ startpos="724"
+ endpos="729"
+>
+	<marker line="-1" type="param">
+		<operand  start="750" length="6" line="11">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="762" length="6" line="11">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<type  start="730" length="19" line="11" chordsig="java.nio.ByteBuffer"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="782" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="778" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="799" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="782" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="cancel:()Z@android.hardware.usb.UsbRequest"
+ sig="boolean cancel()"
+ line="12"
+ startpos="827"
+ endpos="833"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="848" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="844" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="865" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="848" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

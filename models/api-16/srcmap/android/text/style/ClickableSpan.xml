@@ -1,0 +1,62 @@
+<root>
+<class chordsig="android.text.style.ClickableSpan" line="2">
+	<type  start="74" length="33" line="3" chordsig="android.text.style.CharacterStyle"/>
+	<type  start="121" length="35" line="4" chordsig="android.text.style.UpdateAppearance"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.text.style.ClickableSpan"
+ sig="ClickableSpan()"
+ line="6"
+ startpos="167"
+ endpos="180"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="195" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="191" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="212" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="195" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onClick:(Landroid/view/View;)V@android.text.style.ClickableSpan"
+ sig="void onClick(View)"
+ line="7"
+ startpos="246"
+ endpos="253"
+>
+	<marker line="-1" type="param">
+		<operand  start="272" length="6" line="7">
+			<expr><![CDATA[widget]]></expr>
+		</operand>
+	</marker>
+	<type  start="254" length="17" line="7" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="updateDrawState:(Landroid/text/TextPaint;)V@android.text.style.ClickableSpan"
+ sig="void updateDrawState(TextPaint)"
+ line="8"
+ startpos="294"
+ endpos="309"
+>
+	<marker line="-1" type="param">
+		<operand  start="333" length="2" line="8">
+			<expr><![CDATA[ds]]></expr>
+		</operand>
+	</marker>
+	<type  start="310" length="22" line="8" chordsig="android.text.TextPaint"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="349" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="345" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="366" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="349" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

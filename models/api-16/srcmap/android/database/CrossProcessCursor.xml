@@ -1,0 +1,51 @@
+<root>
+<class chordsig="android.database.CrossProcessCursor" line="2">
+	<type  start="72" length="23" line="3" chordsig="android.database.Cursor"/>
+<method
+ chordsig="getWindow:()Landroid/database/CursorWindow;@android.database.CrossProcessCursor"
+ sig="CursorWindow getWindow()"
+ line="5"
+ startpos="145"
+ endpos="154"
+>
+	<type  start="115" length="29" line="5" chordsig="android.database.CursorWindow"/>
+</method>
+<method
+ chordsig="fillWindow:(ILandroid/database/CursorWindow;)V@android.database.CrossProcessCursor"
+ sig="void fillWindow(int,CursorWindow)"
+ line="6"
+ startpos="180"
+ endpos="190"
+>
+	<marker line="-1" type="param">
+		<operand  start="195" length="8" line="6">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="235" length="6" line="6">
+			<expr><![CDATA[window]]></expr>
+		</operand>
+	</marker>
+	<type  start="205" length="29" line="6" chordsig="android.database.CursorWindow"/>
+</method>
+<method
+ chordsig="onMove:(II)Z@android.database.CrossProcessCursor"
+ sig="boolean onMove(int,int)"
+ line="7"
+ startpos="269"
+ endpos="275"
+>
+	<marker line="-1" type="param">
+		<operand  start="280" length="11" line="7">
+			<expr><![CDATA[oldPosition]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="297" length="11" line="7">
+			<expr><![CDATA[newPosition]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

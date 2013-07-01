@@ -1,0 +1,189 @@
+<root>
+<class chordsig="javax.crypto.CipherInputStream" line="2">
+	<type  start="63" length="25" line="3" chordsig="java.io.FilterInputStream"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/InputStream;Ljavax/crypto/Cipher;)V@javax.crypto.CipherInputStream"
+ sig="CipherInputStream(InputStream,Cipher)"
+ line="5"
+ startpos="99"
+ endpos="116"
+>
+	<marker line="-1" type="param">
+		<operand  start="137" length="2" line="5">
+			<expr><![CDATA[is]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="161" length="1" line="5">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<type  start="117" length="19" line="5" chordsig="java.io.InputStream"/>
+	<type  start="141" length="19" line="5" chordsig="javax.crypto.Cipher"/>
+	<type  start="173" length="19" line="5" chordsig="java.io.InputStream"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="210" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="206" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="227" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="210" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/InputStream;)V@javax.crypto.CipherInputStream"
+ sig="CipherInputStream(InputStream)"
+ line="6"
+ startpos="250"
+ endpos="267"
+>
+	<marker line="-1" type="param">
+		<operand  start="288" length="2" line="6">
+			<expr><![CDATA[is]]></expr>
+		</operand>
+	</marker>
+	<type  start="268" length="19" line="6" chordsig="java.io.InputStream"/>
+	<type  start="301" length="19" line="6" chordsig="java.io.InputStream"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="338" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="334" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="355" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="338" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="read:()I@javax.crypto.CipherInputStream"
+ sig="int read()"
+ line="7"
+ startpos="379"
+ endpos="383"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="425" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="421" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="442" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="425" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="read:([BII)I@javax.crypto.CipherInputStream"
+ sig="int read(byte[],int,int)"
+ line="8"
+ startpos="466"
+ endpos="470"
+>
+	<marker line="-1" type="param">
+		<operand  start="478" length="3" line="8">
+			<expr><![CDATA[buf]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="487" length="3" line="8">
+			<expr><![CDATA[off]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="496" length="3" line="8">
+			<expr><![CDATA[len]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="540" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="536" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="557" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="540" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="skip:(J)J@javax.crypto.CipherInputStream"
+ sig="long skip(long)"
+ line="9"
+ startpos="582"
+ endpos="586"
+>
+	<marker line="-1" type="param">
+		<operand  start="592" length="9" line="9">
+			<expr><![CDATA[byteCount]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="642" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="638" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="659" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="642" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="available:()I@javax.crypto.CipherInputStream"
+ sig="int available()"
+ line="10"
+ startpos="683"
+ endpos="692"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="734" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="730" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="751" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="734" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:()V@javax.crypto.CipherInputStream"
+ sig="void close()"
+ line="11"
+ startpos="776"
+ endpos="781"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="823" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="819" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="840" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="823" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="markSupported:()Z@javax.crypto.CipherInputStream"
+ sig="boolean markSupported()"
+ line="12"
+ startpos="868"
+ endpos="881"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="896" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="892" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="913" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="896" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

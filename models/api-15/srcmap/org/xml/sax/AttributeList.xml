@@ -1,0 +1,84 @@
+<root>
+<class chordsig="org.xml.sax.AttributeList" line="3">
+<method
+ chordsig="getLength:()I@org.xml.sax.AttributeList"
+ sig="int getLength()"
+ line="5"
+ startpos="99"
+ endpos="108"
+>
+</method>
+<method
+ chordsig="getName:(I)Ljava/lang/String;@org.xml.sax.AttributeList"
+ sig="String getName(int)"
+ line="6"
+ startpos="146"
+ endpos="153"
+>
+	<marker line="-1" type="param">
+		<operand  start="158" length="1" line="6">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<type  start="129" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getType:(I)Ljava/lang/String;@org.xml.sax.AttributeList"
+ sig="String getType(int)"
+ line="7"
+ startpos="196"
+ endpos="203"
+>
+	<marker line="-1" type="param">
+		<operand  start="208" length="1" line="7">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<type  start="179" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getValue:(I)Ljava/lang/String;@org.xml.sax.AttributeList"
+ sig="String getValue(int)"
+ line="8"
+ startpos="246"
+ endpos="254"
+>
+	<marker line="-1" type="param">
+		<operand  start="259" length="1" line="8">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<type  start="229" length="16" line="8" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getType:(Ljava/lang/String;)Ljava/lang/String;@org.xml.sax.AttributeList"
+ sig="String getType(String)"
+ line="9"
+ startpos="297"
+ endpos="304"
+>
+	<marker line="-1" type="param">
+		<operand  start="322" length="4" line="9">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="280" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="305" length="16" line="9" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getValue:(Ljava/lang/String;)Ljava/lang/String;@org.xml.sax.AttributeList"
+ sig="String getValue(String)"
+ line="10"
+ startpos="363"
+ endpos="371"
+>
+	<marker line="-1" type="param">
+		<operand  start="389" length="4" line="10">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="346" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="372" length="16" line="10" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,46 @@
+<root>
+<class chordsig="android.net.sip.SipErrorCode" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.net.sip.SipErrorCode"
+ sig="SipErrorCode()"
+ line="4"
+ startpos="53"
+ endpos="65"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="80" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="76" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="97" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="80" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:(I)Ljava/lang/String;@android.net.sip.SipErrorCode"
+ sig="String toString(int)"
+ line="5"
+ startpos="141"
+ endpos="149"
+>
+	<marker line="-1" type="param">
+		<operand  start="154" length="9" line="5">
+			<expr><![CDATA[errorCode]]></expr>
+		</operand>
+	</marker>
+	<type  start="124" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="177" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="173" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="194" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="177" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

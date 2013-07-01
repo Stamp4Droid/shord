@@ -1,0 +1,3323 @@
+<root>
+<class chordsig="android.hardware.Camera" line="8">
+<class chordsig="android.hardware.Camera$CameraInfo" line="10">
+<method
+ chordsig="&lt;init&gt;:()V@android.hardware.Camera$CameraInfo"
+ sig="CameraInfo()"
+ line="12"
+ startpos="288"
+ endpos="298"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="325" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="321" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="342" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="325" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.hardware.Camera$PreviewCallback" line="25">
+<method
+ chordsig="onPreviewFrame:([BLandroid/hardware/Camera;)V@android.hardware.Camera$PreviewCallback"
+ sig="void onPreviewFrame(byte[],Camera)"
+ line="27"
+ startpos="621"
+ endpos="635"
+>
+	<marker line="-1" type="param">
+		<operand  start="643" length="4" line="27">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="673" length="6" line="27">
+			<expr><![CDATA[camera]]></expr>
+		</operand>
+	</marker>
+	<type  start="649" length="23" line="27" chordsig="android.hardware.Camera"/>
+</method>
+</class>
+<class chordsig="android.hardware.Camera$AutoFocusCallback" line="30">
+<method
+ chordsig="onAutoFocus:(ZLandroid/hardware/Camera;)V@android.hardware.Camera$AutoFocusCallback"
+ sig="void onAutoFocus(boolean,Camera)"
+ line="32"
+ startpos="767"
+ endpos="778"
+>
+	<marker line="-1" type="param">
+		<operand  start="787" length="7" line="32">
+			<expr><![CDATA[success]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="820" length="6" line="32">
+			<expr><![CDATA[camera]]></expr>
+		</operand>
+	</marker>
+	<type  start="796" length="23" line="32" chordsig="android.hardware.Camera"/>
+</method>
+</class>
+<class chordsig="android.hardware.Camera$AutoFocusMoveCallback" line="35">
+<method
+ chordsig="onAutoFocusMoving:(ZLandroid/hardware/Camera;)V@android.hardware.Camera$AutoFocusMoveCallback"
+ sig="void onAutoFocusMoving(boolean,Camera)"
+ line="37"
+ startpos="918"
+ endpos="935"
+>
+	<marker line="-1" type="param">
+		<operand  start="944" length="5" line="37">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="975" length="6" line="37">
+			<expr><![CDATA[camera]]></expr>
+		</operand>
+	</marker>
+	<type  start="951" length="23" line="37" chordsig="android.hardware.Camera"/>
+</method>
+</class>
+<class chordsig="android.hardware.Camera$ShutterCallback" line="40">
+<method
+ chordsig="onShutter:()V@android.hardware.Camera$ShutterCallback"
+ sig="void onShutter()"
+ line="42"
+ startpos="1067"
+ endpos="1076"
+>
+</method>
+</class>
+<class chordsig="android.hardware.Camera$PictureCallback" line="45">
+<method
+ chordsig="onPictureTaken:([BLandroid/hardware/Camera;)V@android.hardware.Camera$PictureCallback"
+ sig="void onPictureTaken(byte[],Camera)"
+ line="47"
+ startpos="1163"
+ endpos="1177"
+>
+	<marker line="-1" type="param">
+		<operand  start="1185" length="4" line="47">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1215" length="6" line="47">
+			<expr><![CDATA[camera]]></expr>
+		</operand>
+	</marker>
+	<type  start="1191" length="23" line="47" chordsig="android.hardware.Camera"/>
+</method>
+</class>
+<class chordsig="android.hardware.Camera$OnZoomChangeListener" line="50">
+<method
+ chordsig="onZoomChange:(IZLandroid/hardware/Camera;)V@android.hardware.Camera$OnZoomChangeListener"
+ sig="void onZoomChange(int,boolean,Camera)"
+ line="52"
+ startpos="1312"
+ endpos="1324"
+>
+	<marker line="-1" type="param">
+		<operand  start="1329" length="9" line="52">
+			<expr><![CDATA[zoomValue]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1348" length="7" line="52">
+			<expr><![CDATA[stopped]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1381" length="6" line="52">
+			<expr><![CDATA[camera]]></expr>
+		</operand>
+	</marker>
+	<type  start="1357" length="23" line="52" chordsig="android.hardware.Camera"/>
+</method>
+</class>
+<class chordsig="android.hardware.Camera$FaceDetectionListener" line="55">
+<method
+ chordsig="onFaceDetection:([Landroid/hardware/Camera$Face;Landroid/hardware/Camera;)V@android.hardware.Camera$FaceDetectionListener"
+ sig="void onFaceDetection(Face[],Camera)"
+ line="57"
+ startpos="1479"
+ endpos="1494"
+>
+	<marker line="-1" type="param">
+		<operand  start="1526" length="5" line="57">
+			<expr><![CDATA[faces]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1557" length="6" line="57">
+			<expr><![CDATA[camera]]></expr>
+		</operand>
+	</marker>
+	<type  start="1495" length="28" line="57" chordsig="android.hardware.Camera$Face"/>
+	<type  start="1533" length="23" line="57" chordsig="android.hardware.Camera"/>
+</method>
+</class>
+<class chordsig="android.hardware.Camera$Face" line="60">
+<method
+ chordsig="&lt;init&gt;:()V@android.hardware.Camera$Face"
+ sig="Face()"
+ line="62"
+ startpos="1620"
+ endpos="1624"
+>
+	<newexpr line="63" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1651" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1647" length="29" line="63">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1668" length="7" line="63">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1651" length="16" line="63" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1704" length="21" line="66" chordsig="android.graphics.Rect"/>
+	<type  start="1799" length="22" line="72" chordsig="android.graphics.Point"/>
+	<type  start="1847" length="22" line="74" chordsig="android.graphics.Point"/>
+	<type  start="1896" length="22" line="76" chordsig="android.graphics.Point"/>
+</class>
+<class chordsig="android.hardware.Camera$ErrorCallback" line="79">
+<method
+ chordsig="onError:(ILandroid/hardware/Camera;)V@android.hardware.Camera$ErrorCallback"
+ sig="void onError(int,Camera)"
+ line="81"
+ startpos="2007"
+ endpos="2014"
+>
+	<marker line="-1" type="param">
+		<operand  start="2019" length="5" line="81">
+			<expr><![CDATA[error]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2050" length="6" line="81">
+			<expr><![CDATA[camera]]></expr>
+		</operand>
+	</marker>
+	<type  start="2026" length="23" line="81" chordsig="android.hardware.Camera"/>
+</method>
+</class>
+<class chordsig="android.hardware.Camera$Size" line="84">
+<method
+ chordsig="&lt;init&gt;:(II)V@android.hardware.Camera$Size"
+ sig="Size(int,int)"
+ line="86"
+ startpos="2106"
+ endpos="2110"
+>
+	<marker line="-1" type="param">
+		<operand  start="2115" length="1" line="86">
+			<expr><![CDATA[w]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2122" length="1" line="86">
+			<expr><![CDATA[h]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="87" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2149" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2145" length="29" line="87">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2166" length="7" line="87">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2149" length="16" line="87" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@android.hardware.Camera$Size"
+ sig="boolean equals(Object)"
+ line="90"
+ startpos="2210"
+ endpos="2216"
+>
+	<marker line="-1" type="param">
+		<operand  start="2234" length="3" line="90">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="2217" length="16" line="90" chordsig="java.lang.Object"/>
+	<newexpr line="91" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2263" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2259" length="29" line="91">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2280" length="7" line="91">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2263" length="16" line="91" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@android.hardware.Camera$Size"
+ sig="int hashCode()"
+ line="94"
+ startpos="2320"
+ endpos="2328"
+>
+	<newexpr line="95" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2355" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2351" length="29" line="95">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2372" length="7" line="95">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2355" length="16" line="95" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.hardware.Camera$Area" line="103">
+<method
+ chordsig="&lt;init&gt;:(Landroid/graphics/Rect;I)V@android.hardware.Camera$Area"
+ sig="Area(Rect,int)"
+ line="105"
+ startpos="2501"
+ endpos="2505"
+>
+	<marker line="-1" type="param">
+		<operand  start="2528" length="4" line="105">
+			<expr><![CDATA[rect]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2538" length="6" line="105">
+			<expr><![CDATA[weight]]></expr>
+		</operand>
+	</marker>
+	<type  start="2506" length="21" line="105" chordsig="android.graphics.Rect"/>
+	<newexpr line="106" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2570" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2566" length="29" line="106">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2587" length="7" line="106">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2570" length="16" line="106" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@android.hardware.Camera$Area"
+ sig="boolean equals(Object)"
+ line="109"
+ startpos="2631"
+ endpos="2637"
+>
+	<marker line="-1" type="param">
+		<operand  start="2655" length="3" line="109">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="2638" length="16" line="109" chordsig="java.lang.Object"/>
+	<newexpr line="110" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2684" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2680" length="29" line="110">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2701" length="7" line="110">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2684" length="16" line="110" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="2737" length="21" line="113" chordsig="android.graphics.Rect"/>
+</class>
+<class chordsig="android.hardware.Camera$Parameters" line="118">
+<method
+ chordsig="&lt;init&gt;:()V@android.hardware.Camera$Parameters"
+ sig="Parameters()"
+ line="120"
+ startpos="2839"
+ endpos="2849"
+>
+	<newexpr line="121" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2876" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2872" length="29" line="121">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2893" length="7" line="121">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2876" length="16" line="121" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="flatten:()Ljava/lang/String;@android.hardware.Camera$Parameters"
+ sig="String flatten()"
+ line="124"
+ startpos="2946"
+ endpos="2953"
+>
+	<type  start="2929" length="16" line="124" chordsig="java.lang.String"/>
+	<newexpr line="125" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2980" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2976" length="29" line="125">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2997" length="7" line="125">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2980" length="16" line="125" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unflatten:(Ljava/lang/String;)V@android.hardware.Camera$Parameters"
+ sig="void unflatten(String)"
+ line="128"
+ startpos="3038"
+ endpos="3047"
+>
+	<marker line="-1" type="param">
+		<operand  start="3065" length="9" line="128">
+			<expr><![CDATA[flattened]]></expr>
+		</operand>
+	</marker>
+	<type  start="3048" length="16" line="128" chordsig="java.lang.String"/>
+	<newexpr line="129" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3100" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3096" length="29" line="129">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3117" length="7" line="129">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3100" length="16" line="129" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="remove:(Ljava/lang/String;)V@android.hardware.Camera$Parameters"
+ sig="void remove(String)"
+ line="132"
+ startpos="3158"
+ endpos="3164"
+>
+	<marker line="-1" type="param">
+		<operand  start="3182" length="3" line="132">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="3165" length="16" line="132" chordsig="java.lang.String"/>
+	<newexpr line="133" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3211" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3207" length="29" line="133">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3228" length="7" line="133">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3211" length="16" line="133" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="set:(Ljava/lang/String;Ljava/lang/String;)V@android.hardware.Camera$Parameters"
+ sig="void set(String,String)"
+ line="136"
+ startpos="3269"
+ endpos="3272"
+>
+	<marker line="-1" type="param">
+		<operand  start="3290" length="3" line="136">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3312" length="5" line="136">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="3273" length="16" line="136" chordsig="java.lang.String"/>
+	<type  start="3295" length="16" line="136" chordsig="java.lang.String"/>
+	<newexpr line="137" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3343" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3339" length="29" line="137">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3360" length="7" line="137">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3343" length="16" line="137" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="set:(Ljava/lang/String;I)V@android.hardware.Camera$Parameters"
+ sig="void set(String,int)"
+ line="140"
+ startpos="3401"
+ endpos="3404"
+>
+	<marker line="-1" type="param">
+		<operand  start="3422" length="3" line="140">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3431" length="5" line="140">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="3405" length="16" line="140" chordsig="java.lang.String"/>
+	<newexpr line="141" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3462" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3458" length="29" line="141">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3479" length="7" line="141">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3462" length="16" line="141" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="get:(Ljava/lang/String;)Ljava/lang/String;@android.hardware.Camera$Parameters"
+ sig="String get(String)"
+ line="144"
+ startpos="3532"
+ endpos="3535"
+>
+	<marker line="-1" type="param">
+		<operand  start="3553" length="3" line="144">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="3515" length="16" line="144" chordsig="java.lang.String"/>
+	<type  start="3536" length="16" line="144" chordsig="java.lang.String"/>
+	<newexpr line="145" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3582" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3578" length="29" line="145">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3599" length="7" line="145">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3582" length="16" line="145" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInt:(Ljava/lang/String;)I@android.hardware.Camera$Parameters"
+ sig="int getInt(String)"
+ line="148"
+ startpos="3639"
+ endpos="3645"
+>
+	<marker line="-1" type="param">
+		<operand  start="3663" length="3" line="148">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="3646" length="16" line="148" chordsig="java.lang.String"/>
+	<newexpr line="149" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3692" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3688" length="29" line="149">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3709" length="7" line="149">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3692" length="16" line="149" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPreviewSize:(II)V@android.hardware.Camera$Parameters"
+ sig="void setPreviewSize(int,int)"
+ line="152"
+ startpos="3750"
+ endpos="3764"
+>
+	<marker line="-1" type="param">
+		<operand  start="3769" length="5" line="152">
+			<expr><![CDATA[width]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3780" length="6" line="152">
+			<expr><![CDATA[height]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="153" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3812" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3808" length="29" line="153">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3829" length="7" line="153">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3812" length="16" line="153" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPreviewSize:()Landroid/hardware/Camera$Size;@android.hardware.Camera$Parameters"
+ sig="Size getPreviewSize()"
+ line="156"
+ startpos="3894"
+ endpos="3908"
+>
+	<type  start="3865" length="28" line="156" chordsig="android.hardware.Camera$Size"/>
+	<newexpr line="157" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3935" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3931" length="29" line="157">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3952" length="7" line="157">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3935" length="16" line="157" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSupportedPreviewSizes:()Ljava/util/List;@android.hardware.Camera$Parameters"
+ sig="List&lt;Size&gt; getSupportedPreviewSizes()"
+ line="160"
+ startpos="4033"
+ endpos="4057"
+>
+	<type  start="3988" length="14" line="160" chordsig="java.util.List"/>
+	<type  start="4003" length="28" line="160" chordsig="android.hardware.Camera$Size"/>
+	<newexpr line="161" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4084" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4080" length="29" line="161">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4101" length="7" line="161">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4084" length="16" line="161" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSupportedVideoSizes:()Ljava/util/List;@android.hardware.Camera$Parameters"
+ sig="List&lt;Size&gt; getSupportedVideoSizes()"
+ line="164"
+ startpos="4182"
+ endpos="4204"
+>
+	<type  start="4137" length="14" line="164" chordsig="java.util.List"/>
+	<type  start="4152" length="28" line="164" chordsig="android.hardware.Camera$Size"/>
+	<newexpr line="165" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4231" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4227" length="29" line="165">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4248" length="7" line="165">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4231" length="16" line="165" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPreferredPreviewSizeForVideo:()Landroid/hardware/Camera$Size;@android.hardware.Camera$Parameters"
+ sig="Size getPreferredPreviewSizeForVideo()"
+ line="168"
+ startpos="4313"
+ endpos="4344"
+>
+	<type  start="4284" length="28" line="168" chordsig="android.hardware.Camera$Size"/>
+	<newexpr line="169" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4371" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4367" length="29" line="169">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4388" length="7" line="169">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4371" length="16" line="169" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setJpegThumbnailSize:(II)V@android.hardware.Camera$Parameters"
+ sig="void setJpegThumbnailSize(int,int)"
+ line="172"
+ startpos="4429"
+ endpos="4449"
+>
+	<marker line="-1" type="param">
+		<operand  start="4454" length="5" line="172">
+			<expr><![CDATA[width]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4465" length="6" line="172">
+			<expr><![CDATA[height]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="173" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4497" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4493" length="29" line="173">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4514" length="7" line="173">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4497" length="16" line="173" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getJpegThumbnailSize:()Landroid/hardware/Camera$Size;@android.hardware.Camera$Parameters"
+ sig="Size getJpegThumbnailSize()"
+ line="176"
+ startpos="4579"
+ endpos="4599"
+>
+	<type  start="4550" length="28" line="176" chordsig="android.hardware.Camera$Size"/>
+	<newexpr line="177" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4626" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4622" length="29" line="177">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4643" length="7" line="177">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4626" length="16" line="177" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSupportedJpegThumbnailSizes:()Ljava/util/List;@android.hardware.Camera$Parameters"
+ sig="List&lt;Size&gt; getSupportedJpegThumbnailSizes()"
+ line="180"
+ startpos="4724"
+ endpos="4754"
+>
+	<type  start="4679" length="14" line="180" chordsig="java.util.List"/>
+	<type  start="4694" length="28" line="180" chordsig="android.hardware.Camera$Size"/>
+	<newexpr line="181" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4781" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4777" length="29" line="181">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4798" length="7" line="181">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4781" length="16" line="181" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setJpegThumbnailQuality:(I)V@android.hardware.Camera$Parameters"
+ sig="void setJpegThumbnailQuality(int)"
+ line="184"
+ startpos="4839"
+ endpos="4862"
+>
+	<marker line="-1" type="param">
+		<operand  start="4867" length="7" line="184">
+			<expr><![CDATA[quality]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="185" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4900" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4896" length="29" line="185">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4917" length="7" line="185">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4900" length="16" line="185" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getJpegThumbnailQuality:()I@android.hardware.Camera$Parameters"
+ sig="int getJpegThumbnailQuality()"
+ line="188"
+ startpos="4957"
+ endpos="4980"
+>
+	<newexpr line="189" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5007" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5003" length="29" line="189">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5024" length="7" line="189">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5007" length="16" line="189" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setJpegQuality:(I)V@android.hardware.Camera$Parameters"
+ sig="void setJpegQuality(int)"
+ line="192"
+ startpos="5065"
+ endpos="5079"
+>
+	<marker line="-1" type="param">
+		<operand  start="5084" length="7" line="192">
+			<expr><![CDATA[quality]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="193" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5117" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5113" length="29" line="193">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5134" length="7" line="193">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5117" length="16" line="193" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getJpegQuality:()I@android.hardware.Camera$Parameters"
+ sig="int getJpegQuality()"
+ line="196"
+ startpos="5174"
+ endpos="5188"
+>
+	<newexpr line="197" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5215" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5211" length="29" line="197">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5232" length="7" line="197">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5215" length="16" line="197" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPreviewFrameRate:(I)V@android.hardware.Camera$Parameters"
+ sig="void setPreviewFrameRate(int)"
+ line="201"
+ startpos="5305"
+ endpos="5324"
+>
+	<marker line="-1" type="param">
+		<operand  start="5329" length="3" line="201">
+			<expr><![CDATA[fps]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="202" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5358" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5354" length="29" line="202">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5375" length="7" line="202">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5358" length="16" line="202" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPreviewFrameRate:()I@android.hardware.Camera$Parameters"
+ sig="int getPreviewFrameRate()"
+ line="206"
+ startpos="5447"
+ endpos="5466"
+>
+	<newexpr line="207" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5493" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5489" length="29" line="207">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5510" length="7" line="207">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5493" length="16" line="207" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSupportedPreviewFrameRates:()Ljava/util/List;@android.hardware.Camera$Parameters"
+ sig="List&lt;Integer&gt; getSupportedPreviewFrameRates()"
+ line="211"
+ startpos="5612"
+ endpos="5641"
+>
+	<type  start="5578" length="14" line="211" chordsig="java.util.List"/>
+	<type  start="5593" length="17" line="211" chordsig="java.lang.Integer"/>
+	<newexpr line="212" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5668" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5664" length="29" line="212">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5685" length="7" line="212">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5668" length="16" line="212" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPreviewFpsRange:(II)V@android.hardware.Camera$Parameters"
+ sig="void setPreviewFpsRange(int,int)"
+ line="215"
+ startpos="5726"
+ endpos="5744"
+>
+	<marker line="-1" type="param">
+		<operand  start="5749" length="3" line="215">
+			<expr><![CDATA[min]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5758" length="3" line="215">
+			<expr><![CDATA[max]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="216" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5787" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5783" length="29" line="216">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5804" length="7" line="216">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5787" length="16" line="216" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPreviewFpsRange:([I)V@android.hardware.Camera$Parameters"
+ sig="void getPreviewFpsRange(int[])"
+ line="219"
+ startpos="5845"
+ endpos="5863"
+>
+	<marker line="-1" type="param">
+		<operand  start="5870" length="5" line="219">
+			<expr><![CDATA[range]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="220" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5901" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5897" length="29" line="220">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5918" length="7" line="220">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5901" length="16" line="220" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSupportedPreviewFpsRange:()Ljava/util/List;@android.hardware.Camera$Parameters"
+ sig="List&lt;int[]&gt; getSupportedPreviewFpsRange()"
+ line="223"
+ startpos="5976"
+ endpos="6003"
+>
+	<type  start="5954" length="14" line="223" chordsig="java.util.List"/>
+	<newexpr line="224" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6030" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6026" length="29" line="224">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6047" length="7" line="224">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6030" length="16" line="224" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPreviewFormat:(I)V@android.hardware.Camera$Parameters"
+ sig="void setPreviewFormat(int)"
+ line="227"
+ startpos="6088"
+ endpos="6104"
+>
+	<marker line="-1" type="param">
+		<operand  start="6109" length="12" line="227">
+			<expr><![CDATA[pixel_format]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="228" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6147" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6143" length="29" line="228">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6164" length="7" line="228">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6147" length="16" line="228" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPreviewFormat:()I@android.hardware.Camera$Parameters"
+ sig="int getPreviewFormat()"
+ line="231"
+ startpos="6204"
+ endpos="6220"
+>
+	<newexpr line="232" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6247" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6243" length="29" line="232">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6264" length="7" line="232">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6247" length="16" line="232" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSupportedPreviewFormats:()Ljava/util/List;@android.hardware.Camera$Parameters"
+ sig="List&lt;Integer&gt; getSupportedPreviewFormats()"
+ line="235"
+ startpos="6334"
+ endpos="6360"
+>
+	<type  start="6300" length="14" line="235" chordsig="java.util.List"/>
+	<type  start="6315" length="17" line="235" chordsig="java.lang.Integer"/>
+	<newexpr line="236" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6387" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6383" length="29" line="236">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6404" length="7" line="236">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6387" length="16" line="236" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPictureSize:(II)V@android.hardware.Camera$Parameters"
+ sig="void setPictureSize(int,int)"
+ line="239"
+ startpos="6445"
+ endpos="6459"
+>
+	<marker line="-1" type="param">
+		<operand  start="6464" length="5" line="239">
+			<expr><![CDATA[width]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6475" length="6" line="239">
+			<expr><![CDATA[height]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="240" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6507" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6503" length="29" line="240">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6524" length="7" line="240">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6507" length="16" line="240" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPictureSize:()Landroid/hardware/Camera$Size;@android.hardware.Camera$Parameters"
+ sig="Size getPictureSize()"
+ line="243"
+ startpos="6589"
+ endpos="6603"
+>
+	<type  start="6560" length="28" line="243" chordsig="android.hardware.Camera$Size"/>
+	<newexpr line="244" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6630" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6626" length="29" line="244">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6647" length="7" line="244">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6630" length="16" line="244" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSupportedPictureSizes:()Ljava/util/List;@android.hardware.Camera$Parameters"
+ sig="List&lt;Size&gt; getSupportedPictureSizes()"
+ line="247"
+ startpos="6728"
+ endpos="6752"
+>
+	<type  start="6683" length="14" line="247" chordsig="java.util.List"/>
+	<type  start="6698" length="28" line="247" chordsig="android.hardware.Camera$Size"/>
+	<newexpr line="248" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6779" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6775" length="29" line="248">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6796" length="7" line="248">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6779" length="16" line="248" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPictureFormat:(I)V@android.hardware.Camera$Parameters"
+ sig="void setPictureFormat(int)"
+ line="251"
+ startpos="6837"
+ endpos="6853"
+>
+	<marker line="-1" type="param">
+		<operand  start="6858" length="12" line="251">
+			<expr><![CDATA[pixel_format]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="252" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6896" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6892" length="29" line="252">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6913" length="7" line="252">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6896" length="16" line="252" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPictureFormat:()I@android.hardware.Camera$Parameters"
+ sig="int getPictureFormat()"
+ line="255"
+ startpos="6953"
+ endpos="6969"
+>
+	<newexpr line="256" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6996" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6992" length="29" line="256">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7013" length="7" line="256">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6996" length="16" line="256" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSupportedPictureFormats:()Ljava/util/List;@android.hardware.Camera$Parameters"
+ sig="List&lt;Integer&gt; getSupportedPictureFormats()"
+ line="259"
+ startpos="7083"
+ endpos="7109"
+>
+	<type  start="7049" length="14" line="259" chordsig="java.util.List"/>
+	<type  start="7064" length="17" line="259" chordsig="java.lang.Integer"/>
+	<newexpr line="260" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7136" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7132" length="29" line="260">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7153" length="7" line="260">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7136" length="16" line="260" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setRotation:(I)V@android.hardware.Camera$Parameters"
+ sig="void setRotation(int)"
+ line="263"
+ startpos="7194"
+ endpos="7205"
+>
+	<marker line="-1" type="param">
+		<operand  start="7210" length="8" line="263">
+			<expr><![CDATA[rotation]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="264" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7244" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7240" length="29" line="264">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7261" length="7" line="264">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7244" length="16" line="264" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setGpsLatitude:(D)V@android.hardware.Camera$Parameters"
+ sig="void setGpsLatitude(double)"
+ line="267"
+ startpos="7302"
+ endpos="7316"
+>
+	<marker line="-1" type="param">
+		<operand  start="7324" length="8" line="267">
+			<expr><![CDATA[latitude]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="268" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7358" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7354" length="29" line="268">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7375" length="7" line="268">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7358" length="16" line="268" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setGpsLongitude:(D)V@android.hardware.Camera$Parameters"
+ sig="void setGpsLongitude(double)"
+ line="271"
+ startpos="7416"
+ endpos="7431"
+>
+	<marker line="-1" type="param">
+		<operand  start="7439" length="9" line="271">
+			<expr><![CDATA[longitude]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="272" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7474" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7470" length="29" line="272">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7491" length="7" line="272">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7474" length="16" line="272" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setGpsAltitude:(D)V@android.hardware.Camera$Parameters"
+ sig="void setGpsAltitude(double)"
+ line="275"
+ startpos="7532"
+ endpos="7546"
+>
+	<marker line="-1" type="param">
+		<operand  start="7554" length="8" line="275">
+			<expr><![CDATA[altitude]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="276" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7588" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7584" length="29" line="276">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7605" length="7" line="276">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7588" length="16" line="276" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setGpsTimestamp:(J)V@android.hardware.Camera$Parameters"
+ sig="void setGpsTimestamp(long)"
+ line="279"
+ startpos="7646"
+ endpos="7661"
+>
+	<marker line="-1" type="param">
+		<operand  start="7667" length="9" line="279">
+			<expr><![CDATA[timestamp]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="280" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7702" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7698" length="29" line="280">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7719" length="7" line="280">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7702" length="16" line="280" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setGpsProcessingMethod:(Ljava/lang/String;)V@android.hardware.Camera$Parameters"
+ sig="void setGpsProcessingMethod(String)"
+ line="283"
+ startpos="7760"
+ endpos="7782"
+>
+	<marker line="-1" type="param">
+		<operand  start="7800" length="17" line="283">
+			<expr><![CDATA[processing_method]]></expr>
+		</operand>
+	</marker>
+	<type  start="7783" length="16" line="283" chordsig="java.lang.String"/>
+	<newexpr line="284" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7843" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7839" length="29" line="284">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7860" length="7" line="284">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7843" length="16" line="284" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeGpsData:()V@android.hardware.Camera$Parameters"
+ sig="void removeGpsData()"
+ line="287"
+ startpos="7901"
+ endpos="7914"
+>
+	<newexpr line="288" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7941" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7937" length="29" line="288">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7958" length="7" line="288">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7941" length="16" line="288" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getWhiteBalance:()Ljava/lang/String;@android.hardware.Camera$Parameters"
+ sig="String getWhiteBalance()"
+ line="291"
+ startpos="8011"
+ endpos="8026"
+>
+	<type  start="7994" length="16" line="291" chordsig="java.lang.String"/>
+	<newexpr line="292" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="8053" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="8049" length="29" line="292">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="8070" length="7" line="292">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="8053" length="16" line="292" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setWhiteBalance:(Ljava/lang/String;)V@android.hardware.Camera$Parameters"
+ sig="void setWhiteBalance(String)"
+ line="295"
+ startpos="8111"
+ endpos="8126"
+>
+	<marker line="-1" type="param">
+		<operand  start="8144" length="5" line="295">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="8127" length="16" line="295" chordsig="java.lang.String"/>
+	<newexpr line="296" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="8175" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="8171" length="29" line="296">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="8192" length="7" line="296">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="8175" length="16" line="296" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSupportedWhiteBalance:()Ljava/util/List;@android.hardware.Camera$Parameters"
+ sig="List&lt;String&gt; getSupportedWhiteBalance()"
+ line="299"
+ startpos="8261"
+ endpos="8285"
+>
+	<type  start="8228" length="14" line="299" chordsig="java.util.List"/>
+	<type  start="8243" length="16" line="299" chordsig="java.lang.String"/>
+	<newexpr line="300" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="8312" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="8308" length="29" line="300">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="8329" length="7" line="300">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="8312" length="16" line="300" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getColorEffect:()Ljava/lang/String;@android.hardware.Camera$Parameters"
+ sig="String getColorEffect()"
+ line="303"
+ startpos="8382"
+ endpos="8396"
+>
+	<type  start="8365" length="16" line="303" chordsig="java.lang.String"/>
+	<newexpr line="304" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="8423" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="8419" length="29" line="304">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="8440" length="7" line="304">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="8423" length="16" line="304" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setColorEffect:(Ljava/lang/String;)V@android.hardware.Camera$Parameters"
+ sig="void setColorEffect(String)"
+ line="307"
+ startpos="8481"
+ endpos="8495"
+>
+	<marker line="-1" type="param">
+		<operand  start="8513" length="5" line="307">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="8496" length="16" line="307" chordsig="java.lang.String"/>
+	<newexpr line="308" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="8544" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="8540" length="29" line="308">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="8561" length="7" line="308">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="8544" length="16" line="308" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSupportedColorEffects:()Ljava/util/List;@android.hardware.Camera$Parameters"
+ sig="List&lt;String&gt; getSupportedColorEffects()"
+ line="311"
+ startpos="8630"
+ endpos="8654"
+>
+	<type  start="8597" length="14" line="311" chordsig="java.util.List"/>
+	<type  start="8612" length="16" line="311" chordsig="java.lang.String"/>
+	<newexpr line="312" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="8681" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="8677" length="29" line="312">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="8698" length="7" line="312">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="8681" length="16" line="312" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAntibanding:()Ljava/lang/String;@android.hardware.Camera$Parameters"
+ sig="String getAntibanding()"
+ line="315"
+ startpos="8751"
+ endpos="8765"
+>
+	<type  start="8734" length="16" line="315" chordsig="java.lang.String"/>
+	<newexpr line="316" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="8792" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="8788" length="29" line="316">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="8809" length="7" line="316">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="8792" length="16" line="316" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setAntibanding:(Ljava/lang/String;)V@android.hardware.Camera$Parameters"
+ sig="void setAntibanding(String)"
+ line="319"
+ startpos="8850"
+ endpos="8864"
+>
+	<marker line="-1" type="param">
+		<operand  start="8882" length="11" line="319">
+			<expr><![CDATA[antibanding]]></expr>
+		</operand>
+	</marker>
+	<type  start="8865" length="16" line="319" chordsig="java.lang.String"/>
+	<newexpr line="320" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="8919" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="8915" length="29" line="320">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="8936" length="7" line="320">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="8919" length="16" line="320" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSupportedAntibanding:()Ljava/util/List;@android.hardware.Camera$Parameters"
+ sig="List&lt;String&gt; getSupportedAntibanding()"
+ line="323"
+ startpos="9005"
+ endpos="9028"
+>
+	<type  start="8972" length="14" line="323" chordsig="java.util.List"/>
+	<type  start="8987" length="16" line="323" chordsig="java.lang.String"/>
+	<newexpr line="324" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9055" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9051" length="29" line="324">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9072" length="7" line="324">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9055" length="16" line="324" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSceneMode:()Ljava/lang/String;@android.hardware.Camera$Parameters"
+ sig="String getSceneMode()"
+ line="327"
+ startpos="9125"
+ endpos="9137"
+>
+	<type  start="9108" length="16" line="327" chordsig="java.lang.String"/>
+	<newexpr line="328" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9164" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9160" length="29" line="328">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9181" length="7" line="328">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9164" length="16" line="328" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSceneMode:(Ljava/lang/String;)V@android.hardware.Camera$Parameters"
+ sig="void setSceneMode(String)"
+ line="331"
+ startpos="9222"
+ endpos="9234"
+>
+	<marker line="-1" type="param">
+		<operand  start="9252" length="5" line="331">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="9235" length="16" line="331" chordsig="java.lang.String"/>
+	<newexpr line="332" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9283" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9279" length="29" line="332">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9300" length="7" line="332">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9283" length="16" line="332" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSupportedSceneModes:()Ljava/util/List;@android.hardware.Camera$Parameters"
+ sig="List&lt;String&gt; getSupportedSceneModes()"
+ line="335"
+ startpos="9369"
+ endpos="9391"
+>
+	<type  start="9336" length="14" line="335" chordsig="java.util.List"/>
+	<type  start="9351" length="16" line="335" chordsig="java.lang.String"/>
+	<newexpr line="336" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9418" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9414" length="29" line="336">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9435" length="7" line="336">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9418" length="16" line="336" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFlashMode:()Ljava/lang/String;@android.hardware.Camera$Parameters"
+ sig="String getFlashMode()"
+ line="339"
+ startpos="9488"
+ endpos="9500"
+>
+	<type  start="9471" length="16" line="339" chordsig="java.lang.String"/>
+	<newexpr line="340" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9527" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9523" length="29" line="340">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9544" length="7" line="340">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9527" length="16" line="340" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setFlashMode:(Ljava/lang/String;)V@android.hardware.Camera$Parameters"
+ sig="void setFlashMode(String)"
+ line="343"
+ startpos="9585"
+ endpos="9597"
+>
+	<marker line="-1" type="param">
+		<operand  start="9615" length="5" line="343">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="9598" length="16" line="343" chordsig="java.lang.String"/>
+	<newexpr line="344" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9646" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9642" length="29" line="344">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9663" length="7" line="344">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9646" length="16" line="344" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSupportedFlashModes:()Ljava/util/List;@android.hardware.Camera$Parameters"
+ sig="List&lt;String&gt; getSupportedFlashModes()"
+ line="347"
+ startpos="9732"
+ endpos="9754"
+>
+	<type  start="9699" length="14" line="347" chordsig="java.util.List"/>
+	<type  start="9714" length="16" line="347" chordsig="java.lang.String"/>
+	<newexpr line="348" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9781" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9777" length="29" line="348">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9798" length="7" line="348">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9781" length="16" line="348" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFocusMode:()Ljava/lang/String;@android.hardware.Camera$Parameters"
+ sig="String getFocusMode()"
+ line="351"
+ startpos="9851"
+ endpos="9863"
+>
+	<type  start="9834" length="16" line="351" chordsig="java.lang.String"/>
+	<newexpr line="352" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="9890" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="9886" length="29" line="352">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="9907" length="7" line="352">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="9890" length="16" line="352" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setFocusMode:(Ljava/lang/String;)V@android.hardware.Camera$Parameters"
+ sig="void setFocusMode(String)"
+ line="355"
+ startpos="9948"
+ endpos="9960"
+>
+	<marker line="-1" type="param">
+		<operand  start="9978" length="5" line="355">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="9961" length="16" line="355" chordsig="java.lang.String"/>
+	<newexpr line="356" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10009" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10005" length="29" line="356">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10026" length="7" line="356">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10009" length="16" line="356" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSupportedFocusModes:()Ljava/util/List;@android.hardware.Camera$Parameters"
+ sig="List&lt;String&gt; getSupportedFocusModes()"
+ line="359"
+ startpos="10095"
+ endpos="10117"
+>
+	<type  start="10062" length="14" line="359" chordsig="java.util.List"/>
+	<type  start="10077" length="16" line="359" chordsig="java.lang.String"/>
+	<newexpr line="360" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10144" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10140" length="29" line="360">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10161" length="7" line="360">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10144" length="16" line="360" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFocalLength:()F@android.hardware.Camera$Parameters"
+ sig="float getFocalLength()"
+ line="363"
+ startpos="10203"
+ endpos="10217"
+>
+	<newexpr line="364" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10244" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10240" length="29" line="364">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10261" length="7" line="364">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10244" length="16" line="364" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getHorizontalViewAngle:()F@android.hardware.Camera$Parameters"
+ sig="float getHorizontalViewAngle()"
+ line="367"
+ startpos="10303"
+ endpos="10325"
+>
+	<newexpr line="368" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10352" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10348" length="29" line="368">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10369" length="7" line="368">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10352" length="16" line="368" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getVerticalViewAngle:()F@android.hardware.Camera$Parameters"
+ sig="float getVerticalViewAngle()"
+ line="371"
+ startpos="10411"
+ endpos="10431"
+>
+	<newexpr line="372" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10458" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10454" length="29" line="372">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10475" length="7" line="372">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10458" length="16" line="372" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getExposureCompensation:()I@android.hardware.Camera$Parameters"
+ sig="int getExposureCompensation()"
+ line="375"
+ startpos="10515"
+ endpos="10538"
+>
+	<newexpr line="376" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10565" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10561" length="29" line="376">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10582" length="7" line="376">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10565" length="16" line="376" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setExposureCompensation:(I)V@android.hardware.Camera$Parameters"
+ sig="void setExposureCompensation(int)"
+ line="379"
+ startpos="10623"
+ endpos="10646"
+>
+	<marker line="-1" type="param">
+		<operand  start="10651" length="5" line="379">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="380" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10682" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10678" length="29" line="380">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10699" length="7" line="380">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10682" length="16" line="380" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMaxExposureCompensation:()I@android.hardware.Camera$Parameters"
+ sig="int getMaxExposureCompensation()"
+ line="383"
+ startpos="10739"
+ endpos="10765"
+>
+	<newexpr line="384" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10792" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10788" length="29" line="384">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10809" length="7" line="384">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10792" length="16" line="384" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMinExposureCompensation:()I@android.hardware.Camera$Parameters"
+ sig="int getMinExposureCompensation()"
+ line="387"
+ startpos="10849"
+ endpos="10875"
+>
+	<newexpr line="388" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="10902" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="10898" length="29" line="388">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="10919" length="7" line="388">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="10902" length="16" line="388" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getExposureCompensationStep:()F@android.hardware.Camera$Parameters"
+ sig="float getExposureCompensationStep()"
+ line="391"
+ startpos="10961"
+ endpos="10988"
+>
+	<newexpr line="392" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11015" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11011" length="29" line="392">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11032" length="7" line="392">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11015" length="16" line="392" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setAutoExposureLock:(Z)V@android.hardware.Camera$Parameters"
+ sig="void setAutoExposureLock(boolean)"
+ line="395"
+ startpos="11073"
+ endpos="11092"
+>
+	<marker line="-1" type="param">
+		<operand  start="11101" length="6" line="395">
+			<expr><![CDATA[toggle]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="396" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11133" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11129" length="29" line="396">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11150" length="7" line="396">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11133" length="16" line="396" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAutoExposureLock:()Z@android.hardware.Camera$Parameters"
+ sig="boolean getAutoExposureLock()"
+ line="399"
+ startpos="11194"
+ endpos="11213"
+>
+	<newexpr line="400" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11240" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11236" length="29" line="400">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11257" length="7" line="400">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11240" length="16" line="400" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isAutoExposureLockSupported:()Z@android.hardware.Camera$Parameters"
+ sig="boolean isAutoExposureLockSupported()"
+ line="403"
+ startpos="11301"
+ endpos="11328"
+>
+	<newexpr line="404" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11355" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11351" length="29" line="404">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11372" length="7" line="404">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11355" length="16" line="404" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setAutoWhiteBalanceLock:(Z)V@android.hardware.Camera$Parameters"
+ sig="void setAutoWhiteBalanceLock(boolean)"
+ line="407"
+ startpos="11413"
+ endpos="11436"
+>
+	<marker line="-1" type="param">
+		<operand  start="11445" length="6" line="407">
+			<expr><![CDATA[toggle]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="408" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11477" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11473" length="29" line="408">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11494" length="7" line="408">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11477" length="16" line="408" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAutoWhiteBalanceLock:()Z@android.hardware.Camera$Parameters"
+ sig="boolean getAutoWhiteBalanceLock()"
+ line="411"
+ startpos="11538"
+ endpos="11561"
+>
+	<newexpr line="412" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11588" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11584" length="29" line="412">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11605" length="7" line="412">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11588" length="16" line="412" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isAutoWhiteBalanceLockSupported:()Z@android.hardware.Camera$Parameters"
+ sig="boolean isAutoWhiteBalanceLockSupported()"
+ line="415"
+ startpos="11649"
+ endpos="11680"
+>
+	<newexpr line="416" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11707" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11703" length="29" line="416">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11724" length="7" line="416">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11707" length="16" line="416" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getZoom:()I@android.hardware.Camera$Parameters"
+ sig="int getZoom()"
+ line="419"
+ startpos="11764"
+ endpos="11771"
+>
+	<newexpr line="420" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11798" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11794" length="29" line="420">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11815" length="7" line="420">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11798" length="16" line="420" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setZoom:(I)V@android.hardware.Camera$Parameters"
+ sig="void setZoom(int)"
+ line="423"
+ startpos="11856"
+ endpos="11863"
+>
+	<marker line="-1" type="param">
+		<operand  start="11868" length="5" line="423">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="424" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="11899" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11895" length="29" line="424">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="11916" length="7" line="424">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="11899" length="16" line="424" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isZoomSupported:()Z@android.hardware.Camera$Parameters"
+ sig="boolean isZoomSupported()"
+ line="427"
+ startpos="11960"
+ endpos="11975"
+>
+	<newexpr line="428" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12002" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="11998" length="29" line="428">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="12019" length="7" line="428">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12002" length="16" line="428" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMaxZoom:()I@android.hardware.Camera$Parameters"
+ sig="int getMaxZoom()"
+ line="431"
+ startpos="12059"
+ endpos="12069"
+>
+	<newexpr line="432" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12096" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="12092" length="29" line="432">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="12113" length="7" line="432">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12096" length="16" line="432" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getZoomRatios:()Ljava/util/List;@android.hardware.Camera$Parameters"
+ sig="List&lt;Integer&gt; getZoomRatios()"
+ line="435"
+ startpos="12183"
+ endpos="12196"
+>
+	<type  start="12149" length="14" line="435" chordsig="java.util.List"/>
+	<type  start="12164" length="17" line="435" chordsig="java.lang.Integer"/>
+	<newexpr line="436" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12223" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="12219" length="29" line="436">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="12240" length="7" line="436">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12223" length="16" line="436" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isSmoothZoomSupported:()Z@android.hardware.Camera$Parameters"
+ sig="boolean isSmoothZoomSupported()"
+ line="439"
+ startpos="12284"
+ endpos="12305"
+>
+	<newexpr line="440" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12332" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="12328" length="29" line="440">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="12349" length="7" line="440">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12332" length="16" line="440" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFocusDistances:([F)V@android.hardware.Camera$Parameters"
+ sig="void getFocusDistances(float[])"
+ line="443"
+ startpos="12390"
+ endpos="12407"
+>
+	<marker line="-1" type="param">
+		<operand  start="12416" length="6" line="443">
+			<expr><![CDATA[output]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="444" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12448" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="12444" length="29" line="444">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="12465" length="7" line="444">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12448" length="16" line="444" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMaxNumFocusAreas:()I@android.hardware.Camera$Parameters"
+ sig="int getMaxNumFocusAreas()"
+ line="447"
+ startpos="12505"
+ endpos="12524"
+>
+	<newexpr line="448" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12551" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="12547" length="29" line="448">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="12568" length="7" line="448">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12551" length="16" line="448" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFocusAreas:()Ljava/util/List;@android.hardware.Camera$Parameters"
+ sig="List&lt;Area&gt; getFocusAreas()"
+ line="451"
+ startpos="12649"
+ endpos="12662"
+>
+	<type  start="12604" length="14" line="451" chordsig="java.util.List"/>
+	<type  start="12619" length="28" line="451" chordsig="android.hardware.Camera$Area"/>
+	<newexpr line="452" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12689" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="12685" length="29" line="452">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="12706" length="7" line="452">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12689" length="16" line="452" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setFocusAreas:(Ljava/util/List;)V@android.hardware.Camera$Parameters"
+ sig="void setFocusAreas(List&lt;Area&gt;)"
+ line="455"
+ startpos="12747"
+ endpos="12760"
+>
+	<marker line="-1" type="param">
+		<operand  start="12806" length="10" line="455">
+			<expr><![CDATA[focusAreas]]></expr>
+		</operand>
+	</marker>
+	<type  start="12761" length="14" line="455" chordsig="java.util.List"/>
+	<type  start="12776" length="28" line="455" chordsig="android.hardware.Camera$Area"/>
+	<newexpr line="456" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12842" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="12838" length="29" line="456">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="12859" length="7" line="456">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12842" length="16" line="456" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMaxNumMeteringAreas:()I@android.hardware.Camera$Parameters"
+ sig="int getMaxNumMeteringAreas()"
+ line="459"
+ startpos="12899"
+ endpos="12921"
+>
+	<newexpr line="460" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="12948" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="12944" length="29" line="460">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="12965" length="7" line="460">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="12948" length="16" line="460" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMeteringAreas:()Ljava/util/List;@android.hardware.Camera$Parameters"
+ sig="List&lt;Area&gt; getMeteringAreas()"
+ line="463"
+ startpos="13046"
+ endpos="13062"
+>
+	<type  start="13001" length="14" line="463" chordsig="java.util.List"/>
+	<type  start="13016" length="28" line="463" chordsig="android.hardware.Camera$Area"/>
+	<newexpr line="464" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="13089" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="13085" length="29" line="464">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="13106" length="7" line="464">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="13089" length="16" line="464" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMeteringAreas:(Ljava/util/List;)V@android.hardware.Camera$Parameters"
+ sig="void setMeteringAreas(List&lt;Area&gt;)"
+ line="467"
+ startpos="13147"
+ endpos="13163"
+>
+	<marker line="-1" type="param">
+		<operand  start="13209" length="13" line="467">
+			<expr><![CDATA[meteringAreas]]></expr>
+		</operand>
+	</marker>
+	<type  start="13164" length="14" line="467" chordsig="java.util.List"/>
+	<type  start="13179" length="28" line="467" chordsig="android.hardware.Camera$Area"/>
+	<newexpr line="468" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="13248" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="13244" length="29" line="468">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="13265" length="7" line="468">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="13248" length="16" line="468" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMaxNumDetectedFaces:()I@android.hardware.Camera$Parameters"
+ sig="int getMaxNumDetectedFaces()"
+ line="471"
+ startpos="13305"
+ endpos="13327"
+>
+	<newexpr line="472" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="13354" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="13350" length="29" line="472">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="13371" length="7" line="472">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="13354" length="16" line="472" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setRecordingHint:(Z)V@android.hardware.Camera$Parameters"
+ sig="void setRecordingHint(boolean)"
+ line="475"
+ startpos="13412"
+ endpos="13428"
+>
+	<marker line="-1" type="param">
+		<operand  start="13437" length="4" line="475">
+			<expr><![CDATA[hint]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="476" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="13467" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="13463" length="29" line="476">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="13484" length="7" line="476">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="13467" length="16" line="476" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isVideoSnapshotSupported:()Z@android.hardware.Camera$Parameters"
+ sig="boolean isVideoSnapshotSupported()"
+ line="479"
+ startpos="13528"
+ endpos="13552"
+>
+	<newexpr line="480" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="13579" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="13575" length="29" line="480">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="13596" length="7" line="480">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="13579" length="16" line="480" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setVideoStabilization:(Z)V@android.hardware.Camera$Parameters"
+ sig="void setVideoStabilization(boolean)"
+ line="483"
+ startpos="13637"
+ endpos="13658"
+>
+	<marker line="-1" type="param">
+		<operand  start="13667" length="6" line="483">
+			<expr><![CDATA[toggle]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="484" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="13699" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="13695" length="29" line="484">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="13716" length="7" line="484">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="13699" length="16" line="484" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getVideoStabilization:()Z@android.hardware.Camera$Parameters"
+ sig="boolean getVideoStabilization()"
+ line="487"
+ startpos="13760"
+ endpos="13781"
+>
+	<newexpr line="488" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="13808" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="13804" length="29" line="488">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="13825" length="7" line="488">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="13808" length="16" line="488" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isVideoStabilizationSupported:()Z@android.hardware.Camera$Parameters"
+ sig="boolean isVideoStabilizationSupported()"
+ line="491"
+ startpos="13869"
+ endpos="13898"
+>
+	<newexpr line="492" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="13925" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="13921" length="29" line="492">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="13942" length="7" line="492">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="13925" length="16" line="492" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="13991" length="16" line="495" chordsig="java.lang.String"/>
+	<type  start="14066" length="16" line="497" chordsig="java.lang.String"/>
+	<type  start="14157" length="16" line="499" chordsig="java.lang.String"/>
+	<type  start="14246" length="16" line="501" chordsig="java.lang.String"/>
+	<type  start="14345" length="16" line="503" chordsig="java.lang.String"/>
+	<type  start="14428" length="16" line="505" chordsig="java.lang.String"/>
+	<type  start="14525" length="16" line="507" chordsig="java.lang.String"/>
+	<type  start="14608" length="16" line="509" chordsig="java.lang.String"/>
+	<type  start="14685" length="16" line="511" chordsig="java.lang.String"/>
+	<type  start="14753" length="16" line="513" chordsig="java.lang.String"/>
+	<type  start="14821" length="16" line="515" chordsig="java.lang.String"/>
+	<type  start="14897" length="16" line="517" chordsig="java.lang.String"/>
+	<type  start="14973" length="16" line="519" chordsig="java.lang.String"/>
+	<type  start="15043" length="16" line="521" chordsig="java.lang.String"/>
+	<type  start="15121" length="16" line="523" chordsig="java.lang.String"/>
+	<type  start="15201" length="16" line="525" chordsig="java.lang.String"/>
+	<type  start="15281" length="16" line="527" chordsig="java.lang.String"/>
+	<type  start="15349" length="16" line="529" chordsig="java.lang.String"/>
+	<type  start="15422" length="16" line="531" chordsig="java.lang.String"/>
+	<type  start="15495" length="16" line="533" chordsig="java.lang.String"/>
+	<type  start="15568" length="16" line="535" chordsig="java.lang.String"/>
+	<type  start="15639" length="16" line="537" chordsig="java.lang.String"/>
+	<type  start="15709" length="16" line="539" chordsig="java.lang.String"/>
+	<type  start="15781" length="16" line="541" chordsig="java.lang.String"/>
+	<type  start="15849" length="16" line="543" chordsig="java.lang.String"/>
+	<type  start="15927" length="16" line="545" chordsig="java.lang.String"/>
+	<type  start="16001" length="16" line="547" chordsig="java.lang.String"/>
+	<type  start="16073" length="16" line="549" chordsig="java.lang.String"/>
+	<type  start="16149" length="16" line="551" chordsig="java.lang.String"/>
+	<type  start="16229" length="16" line="553" chordsig="java.lang.String"/>
+	<type  start="16311" length="16" line="555" chordsig="java.lang.String"/>
+	<type  start="16385" length="16" line="557" chordsig="java.lang.String"/>
+	<type  start="16477" length="16" line="559" chordsig="java.lang.String"/>
+	<type  start="16555" length="16" line="561" chordsig="java.lang.String"/>
+	<type  start="16629" length="16" line="563" chordsig="java.lang.String"/>
+	<type  start="16701" length="16" line="565" chordsig="java.lang.String"/>
+	<type  start="16777" length="16" line="567" chordsig="java.lang.String"/>
+	<type  start="16863" length="16" line="569" chordsig="java.lang.String"/>
+	<type  start="16945" length="16" line="571" chordsig="java.lang.String"/>
+	<type  start="17021" length="16" line="573" chordsig="java.lang.String"/>
+	<type  start="17095" length="16" line="575" chordsig="java.lang.String"/>
+	<type  start="17181" length="16" line="577" chordsig="java.lang.String"/>
+	<type  start="17259" length="16" line="579" chordsig="java.lang.String"/>
+	<type  start="17331" length="16" line="581" chordsig="java.lang.String"/>
+	<type  start="17411" length="16" line="583" chordsig="java.lang.String"/>
+	<type  start="17485" length="16" line="585" chordsig="java.lang.String"/>
+	<type  start="17559" length="16" line="587" chordsig="java.lang.String"/>
+	<type  start="17631" length="16" line="589" chordsig="java.lang.String"/>
+	<type  start="17727" length="16" line="591" chordsig="java.lang.String"/>
+</class>
+<method
+ chordsig="getNumberOfCameras:()I@android.hardware.Camera"
+ sig="int getNumberOfCameras()"
+ line="604"
+ startpos="18148"
+ endpos="18166"
+>
+</method>
+<method
+ chordsig="getCameraInfo:(ILandroid/hardware/Camera$CameraInfo;)V@android.hardware.Camera"
+ sig="void getCameraInfo(int,CameraInfo)"
+ line="606"
+ startpos="18201"
+ endpos="18214"
+>
+	<marker line="-1" type="param">
+		<operand  start="18219" length="8" line="606">
+			<expr><![CDATA[cameraId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="18264" length="10" line="606">
+			<expr><![CDATA[cameraInfo]]></expr>
+		</operand>
+	</marker>
+	<type  start="18229" length="34" line="606" chordsig="android.hardware.Camera$CameraInfo"/>
+</method>
+<method
+ chordsig="finalize:()V@android.hardware.Camera"
+ sig="void finalize()"
+ line="608"
+ startpos="18297"
+ endpos="18305"
+>
+	<newexpr line="609" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="18328" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="18324" length="29" line="609">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="18345" length="7" line="609">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="18328" length="16" line="609" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="release:()V@android.hardware.Camera"
+ sig="void release()"
+ line="612"
+ startpos="18384"
+ endpos="18391"
+>
+	<newexpr line="613" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="18414" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="18410" length="29" line="613">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="18431" length="7" line="613">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="18414" length="16" line="613" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unlock:()V@android.hardware.Camera"
+ sig="void unlock()"
+ line="616"
+ startpos="18477"
+ endpos="18483"
+>
+</method>
+<method
+ chordsig="lock:()V@android.hardware.Camera"
+ sig="void lock()"
+ line="618"
+ startpos="18517"
+ endpos="18521"
+>
+</method>
+<method
+ chordsig="reconnect:()V@android.hardware.Camera"
+ sig="void reconnect()"
+ line="620"
+ startpos="18555"
+ endpos="18564"
+>
+</method>
+<method
+ chordsig="setPreviewDisplay:(Landroid/view/SurfaceHolder;)V@android.hardware.Camera"
+ sig="void setPreviewDisplay(SurfaceHolder)"
+ line="622"
+ startpos="18618"
+ endpos="18635"
+>
+	<marker line="-1" type="param">
+		<operand  start="18663" length="6" line="622">
+			<expr><![CDATA[holder]]></expr>
+		</operand>
+	</marker>
+	<type  start="18636" length="26" line="622" chordsig="android.view.SurfaceHolder"/>
+	<newexpr line="623" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="18718" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="18714" length="29" line="623">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="18735" length="7" line="623">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="18718" length="16" line="623" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPreviewTexture:(Landroid/graphics/SurfaceTexture;)V@android.hardware.Camera"
+ sig="void setPreviewTexture(SurfaceTexture)"
+ line="626"
+ startpos="18781"
+ endpos="18798"
+>
+	<marker line="-1" type="param">
+		<operand  start="18831" length="14" line="626">
+			<expr><![CDATA[surfaceTexture]]></expr>
+		</operand>
+	</marker>
+	<type  start="18799" length="31" line="626" chordsig="android.graphics.SurfaceTexture"/>
+</method>
+<method
+ chordsig="startPreview:()V@android.hardware.Camera"
+ sig="void startPreview()"
+ line="628"
+ startpos="18905"
+ endpos="18917"
+>
+</method>
+<method
+ chordsig="stopPreview:()V@android.hardware.Camera"
+ sig="void stopPreview()"
+ line="630"
+ startpos="18944"
+ endpos="18955"
+>
+	<newexpr line="631" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="18978" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="18974" length="29" line="631">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="18995" length="7" line="631">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="18978" length="16" line="631" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addCallbackBuffer:([B)V@android.hardware.Camera"
+ sig="void addCallbackBuffer(byte[])"
+ line="634"
+ startpos="19034"
+ endpos="19051"
+>
+	<marker line="-1" type="param">
+		<operand  start="19059" length="14" line="634">
+			<expr><![CDATA[callbackBuffer]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="635" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="19095" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="19091" length="29" line="635">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="19112" length="7" line="635">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="19095" length="16" line="635" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="autoFocus:(Landroid/hardware/Camera$AutoFocusCallback;)V@android.hardware.Camera"
+ sig="void autoFocus(AutoFocusCallback)"
+ line="638"
+ startpos="19151"
+ endpos="19160"
+>
+	<marker line="-1" type="param">
+		<operand  start="19203" length="2" line="638">
+			<expr><![CDATA[cb]]></expr>
+		</operand>
+	</marker>
+	<type  start="19161" length="41" line="638" chordsig="android.hardware.Camera$AutoFocusCallback"/>
+	<newexpr line="639" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="19227" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="19223" length="29" line="639">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="19244" length="7" line="639">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="19227" length="16" line="639" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="cancelAutoFocus:()V@android.hardware.Camera"
+ sig="void cancelAutoFocus()"
+ line="642"
+ startpos="19283"
+ endpos="19298"
+>
+	<newexpr line="643" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="19321" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="19317" length="29" line="643">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="19338" length="7" line="643">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="19321" length="16" line="643" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setAutoFocusMoveCallback:(Landroid/hardware/Camera$AutoFocusMoveCallback;)V@android.hardware.Camera"
+ sig="void setAutoFocusMoveCallback(AutoFocusMoveCallback)"
+ line="646"
+ startpos="19371"
+ endpos="19395"
+>
+	<marker line="-1" type="param">
+		<operand  start="19442" length="2" line="646">
+			<expr><![CDATA[cb]]></expr>
+		</operand>
+	</marker>
+	<type  start="19396" length="45" line="646" chordsig="android.hardware.Camera$AutoFocusMoveCallback"/>
+	<newexpr line="647" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="19466" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="19462" length="29" line="647">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="19483" length="7" line="647">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="19466" length="16" line="647" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="startSmoothZoom:(I)V@android.hardware.Camera"
+ sig="void startSmoothZoom(int)"
+ line="650"
+ startpos="19529"
+ endpos="19544"
+>
+	<marker line="-1" type="param">
+		<operand  start="19549" length="5" line="650">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="stopSmoothZoom:()V@android.hardware.Camera"
+ sig="void stopSmoothZoom()"
+ line="652"
+ startpos="19587"
+ endpos="19601"
+>
+</method>
+<method
+ chordsig="setDisplayOrientation:(I)V@android.hardware.Camera"
+ sig="void setDisplayOrientation(int)"
+ line="654"
+ startpos="19635"
+ endpos="19656"
+>
+	<marker line="-1" type="param">
+		<operand  start="19661" length="7" line="654">
+			<expr><![CDATA[degrees]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setZoomChangeListener:(Landroid/hardware/Camera$OnZoomChangeListener;)V@android.hardware.Camera"
+ sig="void setZoomChangeListener(OnZoomChangeListener)"
+ line="656"
+ startpos="19694"
+ endpos="19715"
+>
+	<marker line="-1" type="param">
+		<operand  start="19761" length="8" line="656">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="19716" length="44" line="656" chordsig="android.hardware.Camera$OnZoomChangeListener"/>
+	<newexpr line="657" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="19791" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="19787" length="29" line="657">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="19808" length="7" line="657">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="19791" length="16" line="657" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setFaceDetectionListener:(Landroid/hardware/Camera$FaceDetectionListener;)V@android.hardware.Camera"
+ sig="void setFaceDetectionListener(FaceDetectionListener)"
+ line="660"
+ startpos="19847"
+ endpos="19871"
+>
+	<marker line="-1" type="param">
+		<operand  start="19918" length="8" line="660">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="19872" length="45" line="660" chordsig="android.hardware.Camera$FaceDetectionListener"/>
+	<newexpr line="661" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="19948" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="19944" length="29" line="661">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="19965" length="7" line="661">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="19948" length="16" line="661" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="startFaceDetection:()V@android.hardware.Camera"
+ sig="void startFaceDetection()"
+ line="664"
+ startpos="20004"
+ endpos="20022"
+>
+	<newexpr line="665" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="20045" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="20041" length="29" line="665">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="20062" length="7" line="665">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="20045" length="16" line="665" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="stopFaceDetection:()V@android.hardware.Camera"
+ sig="void stopFaceDetection()"
+ line="668"
+ startpos="20101"
+ endpos="20118"
+>
+	<newexpr line="669" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="20141" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="20137" length="29" line="669">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="20158" length="7" line="669">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="20141" length="16" line="669" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setErrorCallback:(Landroid/hardware/Camera$ErrorCallback;)V@android.hardware.Camera"
+ sig="void setErrorCallback(ErrorCallback)"
+ line="672"
+ startpos="20197"
+ endpos="20213"
+>
+	<marker line="-1" type="param">
+		<operand  start="20252" length="2" line="672">
+			<expr><![CDATA[cb]]></expr>
+		</operand>
+	</marker>
+	<type  start="20214" length="37" line="672" chordsig="android.hardware.Camera$ErrorCallback"/>
+	<newexpr line="673" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="20276" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="20272" length="29" line="673">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="20293" length="7" line="673">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="20276" length="16" line="673" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setParameters:(Landroid/hardware/Camera$Parameters;)V@android.hardware.Camera"
+ sig="void setParameters(Parameters)"
+ line="676"
+ startpos="20326"
+ endpos="20339"
+>
+	<marker line="-1" type="param">
+		<operand  start="20375" length="6" line="676">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="20340" length="34" line="676" chordsig="android.hardware.Camera$Parameters"/>
+	<newexpr line="677" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="20403" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="20399" length="29" line="677">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="20420" length="7" line="677">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="20403" length="16" line="677" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getParameters:()Landroid/hardware/Camera$Parameters;@android.hardware.Camera"
+ sig="Parameters getParameters()"
+ line="680"
+ startpos="20483"
+ endpos="20496"
+>
+	<type  start="20448" length="34" line="680" chordsig="android.hardware.Camera$Parameters"/>
+	<newexpr line="681" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="20519" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="20515" length="29" line="681">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="20536" length="7" line="681">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="20519" length="16" line="681" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="20577" length="16" line="684" chordsig="java.lang.String"/>
+	<type  start="20679" length="16" line="686" chordsig="java.lang.String"/>
+<method
+ chordsig="getPicture:()[B@android.hardware.Camera"
+ sig="byte[] getPicture()"
+ line="693"
+ startpos="20959"
+ endpos="20969"
+>
+	<marker line="694" type="return">
+		<operand  start="20989" length="11" line="694">
+			<expr><![CDATA[new byte[1]]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="&lt;init&gt;:()V@android.hardware.Camera"
+ sig="Camera()"
+ line="697"
+ startpos="21021"
+ endpos="21027"
+>
+</method>
+<method
+ chordsig="open:(I)Landroid/hardware/Camera;@android.hardware.Camera"
+ sig="Camera open(int)"
+ line="700"
+ startpos="21081"
+ endpos="21085"
+>
+	<marker line="-1" type="param">
+		<operand  start="21090" length="8" line="700">
+			<expr><![CDATA[cameraId]]></expr>
+		</operand>
+	</marker>
+	<type  start="21057" length="23" line="700" chordsig="android.hardware.Camera"/>
+	<marker line="701" type="return">
+		<operand  start="21117" length="12" line="701">
+			<expr><![CDATA[new Camera()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="701" chordsig="&lt;init&gt;:()V@android.hardware.Camera" start="21121" length="6" type="invoke">
+			<expr><![CDATA[new Camera()]]></expr>
+		<param  start="21117" length="12" line="701">
+			<expr><![CDATA[new Camera()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="21121" length="6" line="701" chordsig="android.hardware.Camera"/>
+</method>
+<method
+ chordsig="open:()Landroid/hardware/Camera;@android.hardware.Camera"
+ sig="Camera open()"
+ line="704"
+ startpos="21180"
+ endpos="21184"
+>
+	<type  start="21156" length="23" line="704" chordsig="android.hardware.Camera"/>
+	<marker line="705" type="return">
+		<operand  start="21204" length="12" line="705">
+			<expr><![CDATA[new Camera()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="705" chordsig="&lt;init&gt;:()V@android.hardware.Camera" start="21208" length="6" type="invoke">
+			<expr><![CDATA[new Camera()]]></expr>
+		<param  start="21204" length="12" line="705">
+			<expr><![CDATA[new Camera()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="21208" length="6" line="705" chordsig="android.hardware.Camera"/>
+</method>
+<method
+ chordsig="takePicture:(Landroid/hardware/Camera$ShutterCallback;Landroid/hardware/Camera$PictureCallback;Landroid/hardware/Camera$PictureCallback;)V@android.hardware.Camera"
+ sig="void takePicture(ShutterCallback,PictureCallback,PictureCallback)"
+ line="708"
+ startpos="21247"
+ endpos="21258"
+>
+	<marker line="-1" type="param">
+		<operand  start="21299" length="7" line="708">
+			<expr><![CDATA[shutter]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="21354" length="3" line="708">
+			<expr><![CDATA[raw]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="21405" length="4" line="708">
+			<expr><![CDATA[jpeg]]></expr>
+		</operand>
+	</marker>
+	<type  start="21259" length="39" line="708" chordsig="android.hardware.Camera$ShutterCallback"/>
+	<type  start="21314" length="39" line="708" chordsig="android.hardware.Camera$PictureCallback"/>
+	<type  start="21365" length="39" line="708" chordsig="android.hardware.Camera$PictureCallback"/>
+	<invkexpr line="709" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="21453" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    raw.onPictureTaken(getPicture(),Camera.this);
+    jpeg.onPictureTaken(getPicture(),Camera.this);
+  }
+}
+)]]></expr>
+		<param  start="21470" length="200" line="709">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    raw.onPictureTaken(getPicture(),Camera.this);
+    jpeg.onPictureTaken(getPicture(),Camera.this);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="709" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="21439" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="709" chordsig="&lt;init&gt;:()V@android.hardware.Camera$android.hardware.Camera#edu.stanford.stamp.harness.Callback#709" start="21474" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    raw.onPictureTaken(getPicture(),Camera.this);
+    jpeg.onPictureTaken(getPicture(),Camera.this);
+  }
+}
+]]></expr>
+		<param  start="21470" length="200" line="709">
+			<expr type="android.hardware.Camera#edu.stanford.stamp.harness.Callback#709"><![CDATA[new Callback(){
+  public void run(){
+    raw.onPictureTaken(getPicture(),Camera.this);
+    jpeg.onPictureTaken(getPicture(),Camera.this);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="21474" length="8" line="709" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.hardware.Camera$android.hardware.Camera#edu.stanford.stamp.harness.Callback#709" line="709">
+<method
+ chordsig="run:()V@android.hardware.Camera$android.hardware.Camera#edu.stanford.stamp.harness.Callback#709"
+ sig="void run()"
+ line="711"
+ startpos="21512"
+ endpos="21515"
+>
+	<invkexpr line="712" chordsig="onPictureTaken:([BLandroid/hardware/Camera;)V@android.hardware.Camera$PictureCallback" start="21540" length="14" type="invoke">
+			<expr><![CDATA[raw.onPictureTaken(getPicture(),Camera.this)]]></expr>
+		<param  start="21536" length="3" line="712">
+			<expr><![CDATA[raw]]></expr>
+		</param>
+		<param  start="21555" length="12" line="712">
+			<expr><![CDATA[getPicture()]]></expr>
+		</param>
+		<param  start="21569" length="11" line="712">
+			<expr><![CDATA[Camera.this]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="712" chordsig="getPicture:()[B@android.hardware.Camera" start="21555" length="10" type="invoke">
+			<expr><![CDATA[getPicture()]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="713" chordsig="onPictureTaken:([BLandroid/hardware/Camera;)V@android.hardware.Camera$PictureCallback" start="21604" length="14" type="invoke">
+			<expr><![CDATA[jpeg.onPictureTaken(getPicture(),Camera.this)]]></expr>
+		<param  start="21599" length="4" line="713">
+			<expr><![CDATA[jpeg]]></expr>
+		</param>
+		<param  start="21619" length="12" line="713">
+			<expr><![CDATA[getPicture()]]></expr>
+		</param>
+		<param  start="21633" length="11" line="713">
+			<expr><![CDATA[Camera.this]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="713" chordsig="getPicture:()[B@android.hardware.Camera" start="21619" length="10" type="invoke">
+			<expr><![CDATA[getPicture()]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+</method>
+<method
+ chordsig="takePicture:(Landroid/hardware/Camera$ShutterCallback;Landroid/hardware/Camera$PictureCallback;Landroid/hardware/Camera$PictureCallback;Landroid/hardware/Camera$PictureCallback;)V@android.hardware.Camera"
+ sig="void takePicture(ShutterCallback,PictureCallback,PictureCallback,PictureCallback)"
+ line="718"
+ startpos="21702"
+ endpos="21713"
+>
+	<marker line="-1" type="param">
+		<operand  start="21754" length="7" line="718">
+			<expr><![CDATA[shutter]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="21809" length="3" line="718">
+			<expr><![CDATA[raw]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="21860" length="8" line="718">
+			<expr><![CDATA[postview]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="21916" length="4" line="718">
+			<expr><![CDATA[jpeg]]></expr>
+		</operand>
+	</marker>
+	<type  start="21714" length="39" line="718" chordsig="android.hardware.Camera$ShutterCallback"/>
+	<type  start="21769" length="39" line="718" chordsig="android.hardware.Camera$PictureCallback"/>
+	<type  start="21820" length="39" line="718" chordsig="android.hardware.Camera$PictureCallback"/>
+	<type  start="21876" length="39" line="718" chordsig="android.hardware.Camera$PictureCallback"/>
+	<invkexpr line="719" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="21964" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    raw.onPictureTaken(getPicture(),Camera.this);
+    postview.onPictureTaken(getPicture(),Camera.this);
+    jpeg.onPictureTaken(getPicture(),Camera.this);
+  }
+}
+)]]></expr>
+		<param  start="21981" length="268" line="719">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    raw.onPictureTaken(getPicture(),Camera.this);
+    postview.onPictureTaken(getPicture(),Camera.this);
+    jpeg.onPictureTaken(getPicture(),Camera.this);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="719" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="21950" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="719" chordsig="&lt;init&gt;:()V@android.hardware.Camera$android.hardware.Camera#edu.stanford.stamp.harness.Callback#719" start="21985" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    raw.onPictureTaken(getPicture(),Camera.this);
+    postview.onPictureTaken(getPicture(),Camera.this);
+    jpeg.onPictureTaken(getPicture(),Camera.this);
+  }
+}
+]]></expr>
+		<param  start="21981" length="268" line="719">
+			<expr type="android.hardware.Camera#edu.stanford.stamp.harness.Callback#719"><![CDATA[new Callback(){
+  public void run(){
+    raw.onPictureTaken(getPicture(),Camera.this);
+    postview.onPictureTaken(getPicture(),Camera.this);
+    jpeg.onPictureTaken(getPicture(),Camera.this);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="21985" length="8" line="719" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.hardware.Camera$android.hardware.Camera#edu.stanford.stamp.harness.Callback#719" line="719">
+<method
+ chordsig="run:()V@android.hardware.Camera$android.hardware.Camera#edu.stanford.stamp.harness.Callback#719"
+ sig="void run()"
+ line="721"
+ startpos="22023"
+ endpos="22026"
+>
+	<invkexpr line="722" chordsig="onPictureTaken:([BLandroid/hardware/Camera;)V@android.hardware.Camera$PictureCallback" start="22051" length="14" type="invoke">
+			<expr><![CDATA[raw.onPictureTaken(getPicture(),Camera.this)]]></expr>
+		<param  start="22047" length="3" line="722">
+			<expr><![CDATA[raw]]></expr>
+		</param>
+		<param  start="22066" length="12" line="722">
+			<expr><![CDATA[getPicture()]]></expr>
+		</param>
+		<param  start="22080" length="11" line="722">
+			<expr><![CDATA[Camera.this]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="722" chordsig="getPicture:()[B@android.hardware.Camera" start="22066" length="10" type="invoke">
+			<expr><![CDATA[getPicture()]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="723" chordsig="onPictureTaken:([BLandroid/hardware/Camera;)V@android.hardware.Camera$PictureCallback" start="22119" length="14" type="invoke">
+			<expr><![CDATA[postview.onPictureTaken(getPicture(),Camera.this)]]></expr>
+		<param  start="22110" length="8" line="723">
+			<expr><![CDATA[postview]]></expr>
+		</param>
+		<param  start="22134" length="12" line="723">
+			<expr><![CDATA[getPicture()]]></expr>
+		</param>
+		<param  start="22148" length="11" line="723">
+			<expr><![CDATA[Camera.this]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="723" chordsig="getPicture:()[B@android.hardware.Camera" start="22134" length="10" type="invoke">
+			<expr><![CDATA[getPicture()]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="724" chordsig="onPictureTaken:([BLandroid/hardware/Camera;)V@android.hardware.Camera$PictureCallback" start="22183" length="14" type="invoke">
+			<expr><![CDATA[jpeg.onPictureTaken(getPicture(),Camera.this)]]></expr>
+		<param  start="22178" length="4" line="724">
+			<expr><![CDATA[jpeg]]></expr>
+		</param>
+		<param  start="22198" length="12" line="724">
+			<expr><![CDATA[getPicture()]]></expr>
+		</param>
+		<param  start="22212" length="11" line="724">
+			<expr><![CDATA[Camera.this]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="724" chordsig="getPicture:()[B@android.hardware.Camera" start="22198" length="10" type="invoke">
+			<expr><![CDATA[getPicture()]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+</method>
+<method
+ chordsig="setPreviewCallback:(Landroid/hardware/Camera$PreviewCallback;)V@android.hardware.Camera"
+ sig="void setPreviewCallback(PreviewCallback)"
+ line="729"
+ startpos="22281"
+ endpos="22299"
+>
+	<marker line="-1" type="param">
+		<operand  start="22346" length="2" line="729">
+			<expr><![CDATA[cb]]></expr>
+		</operand>
+	</marker>
+	<type  start="22306" length="39" line="729" chordsig="android.hardware.Camera$PreviewCallback"/>
+	<invkexpr line="730" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="22392" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    cb.onPreviewFrame(getPicture(),Camera.this);
+  }
+}
+)]]></expr>
+		<param  start="22409" length="135" line="730">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    cb.onPreviewFrame(getPicture(),Camera.this);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="730" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="22378" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="730" chordsig="&lt;init&gt;:()V@android.hardware.Camera$android.hardware.Camera#edu.stanford.stamp.harness.Callback#730" start="22413" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    cb.onPreviewFrame(getPicture(),Camera.this);
+  }
+}
+]]></expr>
+		<param  start="22409" length="135" line="730">
+			<expr type="android.hardware.Camera#edu.stanford.stamp.harness.Callback#730"><![CDATA[new Callback(){
+  public void run(){
+    cb.onPreviewFrame(getPicture(),Camera.this);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="22413" length="8" line="730" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.hardware.Camera$android.hardware.Camera#edu.stanford.stamp.harness.Callback#730" line="730">
+<method
+ chordsig="run:()V@android.hardware.Camera$android.hardware.Camera#edu.stanford.stamp.harness.Callback#730"
+ sig="void run()"
+ line="732"
+ startpos="22451"
+ endpos="22454"
+>
+	<invkexpr line="733" chordsig="onPreviewFrame:([BLandroid/hardware/Camera;)V@android.hardware.Camera$PreviewCallback" start="22478" length="14" type="invoke">
+			<expr><![CDATA[cb.onPreviewFrame(getPicture(),Camera.this)]]></expr>
+		<param  start="22475" length="2" line="733">
+			<expr><![CDATA[cb]]></expr>
+		</param>
+		<param  start="22493" length="12" line="733">
+			<expr><![CDATA[getPicture()]]></expr>
+		</param>
+		<param  start="22507" length="11" line="733">
+			<expr><![CDATA[Camera.this]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="733" chordsig="getPicture:()[B@android.hardware.Camera" start="22493" length="10" type="invoke">
+			<expr><![CDATA[getPicture()]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+</method>
+<method
+ chordsig="setOneShotPreviewCallback:(Landroid/hardware/Camera$PreviewCallback;)V@android.hardware.Camera"
+ sig="void setOneShotPreviewCallback(PreviewCallback)"
+ line="738"
+ startpos="22576"
+ endpos="22601"
+>
+	<marker line="-1" type="param">
+		<operand  start="22648" length="2" line="738">
+			<expr><![CDATA[cb]]></expr>
+		</operand>
+	</marker>
+	<type  start="22608" length="39" line="738" chordsig="android.hardware.Camera$PreviewCallback"/>
+	<invkexpr line="739" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="22694" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    cb.onPreviewFrame(getPicture(),Camera.this);
+  }
+}
+)]]></expr>
+		<param  start="22711" length="135" line="739">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    cb.onPreviewFrame(getPicture(),Camera.this);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="739" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="22680" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="739" chordsig="&lt;init&gt;:()V@android.hardware.Camera$android.hardware.Camera#edu.stanford.stamp.harness.Callback#739" start="22715" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    cb.onPreviewFrame(getPicture(),Camera.this);
+  }
+}
+]]></expr>
+		<param  start="22711" length="135" line="739">
+			<expr type="android.hardware.Camera#edu.stanford.stamp.harness.Callback#739"><![CDATA[new Callback(){
+  public void run(){
+    cb.onPreviewFrame(getPicture(),Camera.this);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="22715" length="8" line="739" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.hardware.Camera$android.hardware.Camera#edu.stanford.stamp.harness.Callback#739" line="739">
+<method
+ chordsig="run:()V@android.hardware.Camera$android.hardware.Camera#edu.stanford.stamp.harness.Callback#739"
+ sig="void run()"
+ line="741"
+ startpos="22753"
+ endpos="22756"
+>
+	<invkexpr line="742" chordsig="onPreviewFrame:([BLandroid/hardware/Camera;)V@android.hardware.Camera$PreviewCallback" start="22780" length="14" type="invoke">
+			<expr><![CDATA[cb.onPreviewFrame(getPicture(),Camera.this)]]></expr>
+		<param  start="22777" length="2" line="742">
+			<expr><![CDATA[cb]]></expr>
+		</param>
+		<param  start="22795" length="12" line="742">
+			<expr><![CDATA[getPicture()]]></expr>
+		</param>
+		<param  start="22809" length="11" line="742">
+			<expr><![CDATA[Camera.this]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="742" chordsig="getPicture:()[B@android.hardware.Camera" start="22795" length="10" type="invoke">
+			<expr><![CDATA[getPicture()]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+</method>
+<method
+ chordsig="setPreviewCallbackWithBuffer:(Landroid/hardware/Camera$PreviewCallback;)V@android.hardware.Camera"
+ sig="void setPreviewCallbackWithBuffer(PreviewCallback)"
+ line="747"
+ startpos="22878"
+ endpos="22906"
+>
+	<marker line="-1" type="param">
+		<operand  start="22953" length="2" line="747">
+			<expr><![CDATA[cb]]></expr>
+		</operand>
+	</marker>
+	<type  start="22913" length="39" line="747" chordsig="android.hardware.Camera$PreviewCallback"/>
+	<invkexpr line="748" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="22999" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    cb.onPreviewFrame(getPicture(),Camera.this);
+  }
+}
+)]]></expr>
+		<param  start="23016" length="135" line="748">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    cb.onPreviewFrame(getPicture(),Camera.this);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="748" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="22985" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="748" chordsig="&lt;init&gt;:()V@android.hardware.Camera$android.hardware.Camera#edu.stanford.stamp.harness.Callback#748" start="23020" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    cb.onPreviewFrame(getPicture(),Camera.this);
+  }
+}
+]]></expr>
+		<param  start="23016" length="135" line="748">
+			<expr type="android.hardware.Camera#edu.stanford.stamp.harness.Callback#748"><![CDATA[new Callback(){
+  public void run(){
+    cb.onPreviewFrame(getPicture(),Camera.this);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="23020" length="8" line="748" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.hardware.Camera$android.hardware.Camera#edu.stanford.stamp.harness.Callback#748" line="748">
+<method
+ chordsig="run:()V@android.hardware.Camera$android.hardware.Camera#edu.stanford.stamp.harness.Callback#748"
+ sig="void run()"
+ line="750"
+ startpos="23058"
+ endpos="23061"
+>
+	<invkexpr line="751" chordsig="onPreviewFrame:([BLandroid/hardware/Camera;)V@android.hardware.Camera$PreviewCallback" start="23085" length="14" type="invoke">
+			<expr><![CDATA[cb.onPreviewFrame(getPicture(),Camera.this)]]></expr>
+		<param  start="23082" length="2" line="751">
+			<expr><![CDATA[cb]]></expr>
+		</param>
+		<param  start="23100" length="12" line="751">
+			<expr><![CDATA[getPicture()]]></expr>
+		</param>
+		<param  start="23114" length="11" line="751">
+			<expr><![CDATA[Camera.this]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="751" chordsig="getPicture:()[B@android.hardware.Camera" start="23100" length="10" type="invoke">
+			<expr><![CDATA[getPicture()]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+</method>
+</class>
+</root>

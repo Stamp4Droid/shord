@@ -1,0 +1,1205 @@
+<root>
+<class chordsig="java.lang.StringBuffer" line="6">
+	<type  start="148" length="31" line="6" chordsig="java.lang.AbstractStringBuilder"/>
+	<type  start="191" length="20" line="6" chordsig="java.lang.Appendable"/>
+	<type  start="213" length="20" line="6" chordsig="java.io.Serializable"/>
+	<type  start="235" length="22" line="6" chordsig="java.lang.CharSequence"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.lang.StringBuffer"
+ sig="StringBuffer()"
+ line="8"
+ startpos="272"
+ endpos="284"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="307" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="303" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="324" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="307" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(I)V@java.lang.StringBuffer"
+ sig="StringBuffer(int)"
+ line="12"
+ startpos="352"
+ endpos="364"
+>
+	<marker line="-1" type="param">
+		<operand  start="369" length="8" line="12">
+			<expr><![CDATA[capacity]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="399" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="395" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="416" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="399" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="charAt:(I)C@java.lang.StringBuffer"
+ sig="char charAt(int)"
+ line="16"
+ startpos="462"
+ endpos="468"
+>
+	<marker line="-1" type="param">
+		<operand  start="473" length="5" line="16">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="500" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="496" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="517" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="500" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="codePointAt:(I)I@java.lang.StringBuffer"
+ sig="int codePointAt(int)"
+ line="20"
+ startpos="562"
+ endpos="573"
+>
+	<marker line="-1" type="param">
+		<operand  start="578" length="5" line="20">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="605" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="601" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="622" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="605" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="codePointBefore:(I)I@java.lang.StringBuffer"
+ sig="int codePointBefore(int)"
+ line="24"
+ startpos="667"
+ endpos="682"
+>
+	<marker line="-1" type="param">
+		<operand  start="687" length="5" line="24">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="714" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="710" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="731" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="714" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="codePointCount:(II)I@java.lang.StringBuffer"
+ sig="int codePointCount(int,int)"
+ line="28"
+ startpos="776"
+ endpos="790"
+>
+	<marker line="-1" type="param">
+		<operand  start="795" length="10" line="28">
+			<expr><![CDATA[beginIndex]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="811" length="8" line="28">
+			<expr><![CDATA[endIndex]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="841" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="837" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="858" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="841" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="ensureCapacity:(I)V@java.lang.StringBuffer"
+ sig="void ensureCapacity(int)"
+ line="32"
+ startpos="904"
+ endpos="918"
+>
+	<marker line="-1" type="param">
+		<operand  start="923" length="3" line="32">
+			<expr><![CDATA[min]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="948" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="944" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="965" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="948" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="indexOf:(Ljava/lang/String;I)I@java.lang.StringBuffer"
+ sig="int indexOf(String,int)"
+ line="36"
+ startpos="1010"
+ endpos="1017"
+>
+	<marker line="-1" type="param">
+		<operand  start="1035" length="9" line="36">
+			<expr><![CDATA[subString]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1050" length="5" line="36">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<type  start="1018" length="16" line="36" chordsig="java.lang.String"/>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1077" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1073" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1094" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1077" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="lastIndexOf:(Ljava/lang/String;I)I@java.lang.StringBuffer"
+ sig="int lastIndexOf(String,int)"
+ line="40"
+ startpos="1139"
+ endpos="1150"
+>
+	<marker line="-1" type="param">
+		<operand  start="1168" length="9" line="40">
+			<expr><![CDATA[subString]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1183" length="5" line="40">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<type  start="1151" length="16" line="40" chordsig="java.lang.String"/>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1210" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1206" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1227" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1210" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="offsetByCodePoints:(II)I@java.lang.StringBuffer"
+ sig="int offsetByCodePoints(int,int)"
+ line="44"
+ startpos="1272"
+ endpos="1290"
+>
+	<marker line="-1" type="param">
+		<operand  start="1295" length="5" line="44">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1306" length="15" line="44">
+			<expr><![CDATA[codePointOffset]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1343" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1339" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1360" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1343" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setCharAt:(IC)V@java.lang.StringBuffer"
+ sig="void setCharAt(int,char)"
+ line="48"
+ startpos="1406"
+ endpos="1415"
+>
+	<marker line="-1" type="param">
+		<operand  start="1420" length="5" line="48">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1432" length="2" line="48">
+			<expr><![CDATA[ch]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1456" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1452" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1473" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1456" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setLength:(I)V@java.lang.StringBuffer"
+ sig="void setLength(int)"
+ line="52"
+ startpos="1519"
+ endpos="1528"
+>
+	<marker line="-1" type="param">
+		<operand  start="1533" length="6" line="52">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="53" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1561" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1557" length="29" line="53">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1578" length="7" line="53">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1561" length="16" line="53" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="trimToSize:()V@java.lang.StringBuffer"
+ sig="void trimToSize()"
+ line="56"
+ startpos="1624"
+ endpos="1634"
+>
+	<newexpr line="57" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1657" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1653" length="29" line="57">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1674" length="7" line="57">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1657" length="16" line="57" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.StringBuffer"
+ sig="StringBuffer(String)"
+ line="61"
+ startpos="1762"
+ endpos="1774"
+>
+	<marker line="-1" type="param">
+		<operand  start="1792" length="6" line="61">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<type  start="1775" length="16" line="61" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/CharSequence;)V@java.lang.StringBuffer"
+ sig="StringBuffer(CharSequence)"
+ line="65"
+ startpos="1876"
+ endpos="1888"
+>
+	<marker line="-1" type="param">
+		<operand  start="1912" length="2" line="65">
+			<expr><![CDATA[cs]]></expr>
+		</operand>
+	</marker>
+	<type  start="1889" length="22" line="65" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="append:(Z)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer append(boolean)"
+ line="68"
+ startpos="1959"
+ endpos="1965"
+>
+	<alias>(Z)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="1974" length="1" line="68">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<type  start="1936" length="22" line="68" chordsig="java.lang.StringBuffer"/>
+	<marker line="69" type="return">
+		<operand  start="1994" length="4" line="69">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="append:(C)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer append(char)"
+ line="72"
+ startpos="2054"
+ endpos="2060"
+>
+	<alias>(C)Ljava/lang/Appendable;</alias>
+	<alias>(C)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="2066" length="2" line="72">
+			<expr><![CDATA[ch]]></expr>
+		</operand>
+	</marker>
+	<type  start="2031" length="22" line="72" chordsig="java.lang.StringBuffer"/>
+	<marker line="73" type="return">
+		<operand  start="2087" length="4" line="73">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="append:(D)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer append(double)"
+ line="76"
+ startpos="2134"
+ endpos="2140"
+>
+	<alias>(D)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="2148" length="1" line="76">
+			<expr><![CDATA[d]]></expr>
+		</operand>
+	</marker>
+	<type  start="2111" length="22" line="76" chordsig="java.lang.StringBuffer"/>
+	<marker line="77" type="return">
+		<operand  start="2168" length="4" line="77">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="append:(F)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer append(float)"
+ line="80"
+ startpos="2215"
+ endpos="2221"
+>
+	<alias>(F)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="2228" length="1" line="80">
+			<expr><![CDATA[f]]></expr>
+		</operand>
+	</marker>
+	<type  start="2192" length="22" line="80" chordsig="java.lang.StringBuffer"/>
+	<marker line="81" type="return">
+		<operand  start="2248" length="4" line="81">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="append:(I)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer append(int)"
+ line="84"
+ startpos="2295"
+ endpos="2301"
+>
+	<alias>(I)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="2306" length="1" line="84">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<type  start="2272" length="22" line="84" chordsig="java.lang.StringBuffer"/>
+	<marker line="85" type="return">
+		<operand  start="2326" length="4" line="85">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="append:(J)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer append(long)"
+ line="88"
+ startpos="2373"
+ endpos="2379"
+>
+	<alias>(J)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="2385" length="1" line="88">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<type  start="2350" length="22" line="88" chordsig="java.lang.StringBuffer"/>
+	<marker line="89" type="return">
+		<operand  start="2405" length="4" line="89">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="append:(Ljava/lang/Object;)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer append(Object)"
+ line="93"
+ startpos="2522"
+ endpos="2528"
+>
+	<alias>(Ljava/lang/Object;)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="2546" length="3" line="93">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="2499" length="22" line="93" chordsig="java.lang.StringBuffer"/>
+	<type  start="2529" length="16" line="93" chordsig="java.lang.Object"/>
+	<marker line="94" type="return">
+		<operand  start="2568" length="4" line="94">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="append:(Ljava/lang/String;)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer append(String)"
+ line="98"
+ startpos="2688"
+ endpos="2694"
+>
+	<alias>(Ljava/lang/String;)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="2712" length="6" line="98">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<type  start="2665" length="22" line="98" chordsig="java.lang.StringBuffer"/>
+	<type  start="2695" length="16" line="98" chordsig="java.lang.String"/>
+	<marker line="99" type="return">
+		<operand  start="2737" length="4" line="99">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="append:(Ljava/lang/StringBuffer;)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer append(StringBuffer)"
+ line="103"
+ startpos="2853"
+ endpos="2859"
+>
+	<alias>(Ljava/lang/StringBuffer;)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="2883" length="2" line="103">
+			<expr><![CDATA[sb]]></expr>
+		</operand>
+	</marker>
+	<type  start="2830" length="22" line="103" chordsig="java.lang.StringBuffer"/>
+	<type  start="2860" length="22" line="103" chordsig="java.lang.StringBuffer"/>
+	<marker line="104" type="return">
+		<operand  start="2904" length="4" line="104">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="append:([C)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer append(char[])"
+ line="108"
+ startpos="3023"
+ endpos="3029"
+>
+	<alias>([C)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="3037" length="5" line="108">
+			<expr><![CDATA[chars]]></expr>
+		</operand>
+	</marker>
+	<type  start="3000" length="22" line="108" chordsig="java.lang.StringBuffer"/>
+	<marker line="109" type="return">
+		<operand  start="3061" length="4" line="109">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="append:([CII)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer append(char[],int,int)"
+ line="113"
+ startpos="3180"
+ endpos="3186"
+>
+	<alias>([CII)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="3194" length="5" line="113">
+			<expr><![CDATA[chars]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3205" length="5" line="113">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3216" length="6" line="113">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<type  start="3157" length="22" line="113" chordsig="java.lang.StringBuffer"/>
+	<marker line="114" type="return">
+		<operand  start="3241" length="4" line="114">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="append:(Ljava/lang/CharSequence;)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer append(CharSequence)"
+ line="118"
+ startpos="3356"
+ endpos="3362"
+>
+	<alias>(Ljava/lang/CharSequence;)Ljava/lang/AbstractStringBuilder;</alias>
+	<alias>(Ljava/lang/CharSequence;)Ljava/lang/Appendable;</alias>
+	<marker line="-1" type="param">
+		<operand  start="3386" length="1" line="118">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<type  start="3333" length="22" line="118" chordsig="java.lang.StringBuffer"/>
+	<type  start="3363" length="22" line="118" chordsig="java.lang.CharSequence"/>
+	<marker line="119" type="return">
+		<operand  start="3406" length="4" line="119">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="append:(Ljava/lang/CharSequence;II)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer append(CharSequence,int,int)"
+ line="123"
+ startpos="3521"
+ endpos="3527"
+>
+	<alias>(Ljava/lang/CharSequence;II)Ljava/lang/AbstractStringBuilder;</alias>
+	<alias>(Ljava/lang/CharSequence;II)Ljava/lang/Appendable;</alias>
+	<marker line="-1" type="param">
+		<operand  start="3551" length="1" line="123">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3558" length="5" line="123">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3569" length="3" line="123">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="3498" length="22" line="123" chordsig="java.lang.StringBuffer"/>
+	<type  start="3528" length="22" line="123" chordsig="java.lang.CharSequence"/>
+	<marker line="124" type="return">
+		<operand  start="3591" length="4" line="124">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="appendCodePoint:(I)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer appendCodePoint(int)"
+ line="127"
+ startpos="3638"
+ endpos="3653"
+>
+	<alias>(I)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="3658" length="9" line="127">
+			<expr><![CDATA[codePoint]]></expr>
+		</operand>
+	</marker>
+	<type  start="3615" length="22" line="127" chordsig="java.lang.StringBuffer"/>
+	<marker line="128" type="return">
+		<operand  start="3686" length="4" line="128">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="delete:(II)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer delete(int,int)"
+ line="131"
+ startpos="3746"
+ endpos="3752"
+>
+	<alias>(II)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="3757" length="5" line="131">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3768" length="3" line="131">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="3723" length="22" line="131" chordsig="java.lang.StringBuffer"/>
+	<marker line="132" type="return">
+		<operand  start="3790" length="4" line="132">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="deleteCharAt:(I)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer deleteCharAt(int)"
+ line="135"
+ startpos="3850"
+ endpos="3862"
+>
+	<alias>(I)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="3867" length="8" line="135">
+			<expr><![CDATA[location]]></expr>
+		</operand>
+	</marker>
+	<type  start="3827" length="22" line="135" chordsig="java.lang.StringBuffer"/>
+	<marker line="136" type="return">
+		<operand  start="3894" length="4" line="136">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getChars:(II[CI)V@java.lang.StringBuffer"
+ sig="void getChars(int,int,char[],int)"
+ line="140"
+ startpos="3996"
+ endpos="4004"
+>
+	<marker line="-1" type="param">
+		<operand  start="4009" length="5" line="140">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4020" length="3" line="140">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4032" length="6" line="140">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4044" length="3" line="140">
+			<expr><![CDATA[idx]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="insert:(IC)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer insert(int,char)"
+ line="143"
+ startpos="4105"
+ endpos="4111"
+>
+	<alias>(IC)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="4116" length="5" line="143">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4128" length="2" line="143">
+			<expr><![CDATA[ch]]></expr>
+		</operand>
+	</marker>
+	<type  start="4082" length="22" line="143" chordsig="java.lang.StringBuffer"/>
+	<marker line="144" type="return">
+		<operand  start="4149" length="4" line="144">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="insert:(IZ)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer insert(int,boolean)"
+ line="147"
+ startpos="4196"
+ endpos="4202"
+>
+	<alias>(IZ)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="4207" length="5" line="147">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4222" length="1" line="147">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<type  start="4173" length="22" line="147" chordsig="java.lang.StringBuffer"/>
+	<marker line="148" type="return">
+		<operand  start="4242" length="4" line="148">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="insert:(II)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer insert(int,int)"
+ line="151"
+ startpos="4289"
+ endpos="4295"
+>
+	<alias>(II)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="4300" length="5" line="151">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4311" length="1" line="151">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<type  start="4266" length="22" line="151" chordsig="java.lang.StringBuffer"/>
+	<marker line="152" type="return">
+		<operand  start="4331" length="4" line="152">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="insert:(IJ)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer insert(int,long)"
+ line="155"
+ startpos="4378"
+ endpos="4384"
+>
+	<alias>(IJ)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="4389" length="5" line="155">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4401" length="1" line="155">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<type  start="4355" length="22" line="155" chordsig="java.lang.StringBuffer"/>
+	<marker line="156" type="return">
+		<operand  start="4421" length="4" line="156">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="insert:(ID)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer insert(int,double)"
+ line="159"
+ startpos="4468"
+ endpos="4474"
+>
+	<alias>(ID)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="4479" length="5" line="159">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4493" length="1" line="159">
+			<expr><![CDATA[d]]></expr>
+		</operand>
+	</marker>
+	<type  start="4445" length="22" line="159" chordsig="java.lang.StringBuffer"/>
+	<marker line="160" type="return">
+		<operand  start="4513" length="4" line="160">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="insert:(IF)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer insert(int,float)"
+ line="163"
+ startpos="4560"
+ endpos="4566"
+>
+	<alias>(IF)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="4571" length="5" line="163">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4584" length="1" line="163">
+			<expr><![CDATA[f]]></expr>
+		</operand>
+	</marker>
+	<type  start="4537" length="22" line="163" chordsig="java.lang.StringBuffer"/>
+	<marker line="164" type="return">
+		<operand  start="4604" length="4" line="164">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="insert:(ILjava/lang/Object;)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer insert(int,Object)"
+ line="168"
+ startpos="4708"
+ endpos="4714"
+>
+	<alias>(ILjava/lang/Object;)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="4719" length="5" line="168">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4743" length="3" line="168">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="4685" length="22" line="168" chordsig="java.lang.StringBuffer"/>
+	<type  start="4726" length="16" line="168" chordsig="java.lang.Object"/>
+	<marker line="169" type="return">
+		<operand  start="4765" length="4" line="169">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="insert:(ILjava/lang/String;)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer insert(int,String)"
+ line="173"
+ startpos="4885"
+ endpos="4891"
+>
+	<alias>(ILjava/lang/String;)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="4896" length="5" line="173">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4920" length="6" line="173">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<type  start="4862" length="22" line="173" chordsig="java.lang.StringBuffer"/>
+	<type  start="4903" length="16" line="173" chordsig="java.lang.String"/>
+	<marker line="174" type="return">
+		<operand  start="4945" length="4" line="174">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="insert:(I[C)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer insert(int,char[])"
+ line="178"
+ startpos="5064"
+ endpos="5070"
+>
+	<alias>(I[C)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="5075" length="5" line="178">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5089" length="5" line="178">
+			<expr><![CDATA[chars]]></expr>
+		</operand>
+	</marker>
+	<type  start="5041" length="22" line="178" chordsig="java.lang.StringBuffer"/>
+	<marker line="179" type="return">
+		<operand  start="5113" length="4" line="179">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="insert:(I[CII)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer insert(int,char[],int,int)"
+ line="183"
+ startpos="5232"
+ endpos="5238"
+>
+	<alias>(I[CII)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="5243" length="5" line="183">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5257" length="5" line="183">
+			<expr><![CDATA[chars]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5268" length="5" line="183">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5279" length="6" line="183">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<type  start="5209" length="22" line="183" chordsig="java.lang.StringBuffer"/>
+	<marker line="184" type="return">
+		<operand  start="5304" length="4" line="184">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="insert:(ILjava/lang/CharSequence;)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer insert(int,CharSequence)"
+ line="188"
+ startpos="5419"
+ endpos="5425"
+>
+	<alias>(ILjava/lang/CharSequence;)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="5430" length="5" line="188">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5460" length="1" line="188">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<type  start="5396" length="22" line="188" chordsig="java.lang.StringBuffer"/>
+	<type  start="5437" length="22" line="188" chordsig="java.lang.CharSequence"/>
+	<marker line="189" type="return">
+		<operand  start="5480" length="4" line="189">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="insert:(ILjava/lang/CharSequence;II)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer insert(int,CharSequence,int,int)"
+ line="193"
+ startpos="5595"
+ endpos="5601"
+>
+	<alias>(ILjava/lang/CharSequence;II)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="5606" length="5" line="193">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5636" length="1" line="193">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5643" length="5" line="193">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5654" length="3" line="193">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="5572" length="22" line="193" chordsig="java.lang.StringBuffer"/>
+	<type  start="5613" length="22" line="193" chordsig="java.lang.CharSequence"/>
+	<marker line="194" type="return">
+		<operand  start="5676" length="4" line="194">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="replace:(IILjava/lang/String;)Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer replace(int,int,String)"
+ line="198"
+ startpos="5796"
+ endpos="5803"
+>
+	<alias>(IILjava/lang/String;)Ljava/lang/AbstractStringBuilder;</alias>
+	<marker line="-1" type="param">
+		<operand  start="5808" length="5" line="198">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5819" length="3" line="198">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5841" length="6" line="198">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<type  start="5773" length="22" line="198" chordsig="java.lang.StringBuffer"/>
+	<type  start="5824" length="16" line="198" chordsig="java.lang.String"/>
+	<marker line="199" type="return">
+		<operand  start="5866" length="4" line="199">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="reverse:()Ljava/lang/StringBuffer;@java.lang.StringBuffer"
+ sig="StringBuffer reverse()"
+ line="202"
+ startpos="5926"
+ endpos="5933"
+>
+	<alias>()Ljava/lang/AbstractStringBuilder;</alias>
+	<type  start="5903" length="22" line="202" chordsig="java.lang.StringBuffer"/>
+	<marker line="203" type="return">
+		<operand  start="5953" length="4" line="203">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="subSequence:(II)Ljava/lang/CharSequence;@java.lang.StringBuffer"
+ sig="CharSequence subSequence(int,int)"
+ line="207"
+ startpos="6074"
+ endpos="6085"
+>
+	<marker line="-1" type="param">
+		<operand  start="6090" length="5" line="207">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6101" length="3" line="207">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="6051" length="22" line="207" chordsig="java.lang.CharSequence"/>
+	<marker line="208" type="return">
+		<operand  start="6123" length="4" line="208">
+			<expr><![CDATA[this]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="substring:(I)Ljava/lang/String;@java.lang.StringBuffer"
+ sig="String substring(int)"
+ line="212"
+ startpos="6238"
+ endpos="6247"
+>
+	<marker line="-1" type="param">
+		<operand  start="6252" length="5" line="212">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<type  start="6221" length="16" line="212" chordsig="java.lang.String"/>
+	<marker line="213" type="return">
+		<operand  start="6276" length="12" line="213">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="213" chordsig="&lt;init&gt;:()V@java.lang.String" start="6280" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="6276" length="12" line="213">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6280" length="6" line="213" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="substring:(II)Ljava/lang/String;@java.lang.StringBuffer"
+ sig="String substring(int,int)"
+ line="217"
+ startpos="6399"
+ endpos="6408"
+>
+	<marker line="-1" type="param">
+		<operand  start="6413" length="5" line="217">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6424" length="3" line="217">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="6382" length="16" line="217" chordsig="java.lang.String"/>
+	<marker line="218" type="return">
+		<operand  start="6446" length="12" line="218">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="218" chordsig="&lt;init&gt;:()V@java.lang.String" start="6450" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="6446" length="12" line="218">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6450" length="6" line="218" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.lang.StringBuffer"
+ sig="String toString()"
+ line="222"
+ startpos="6569"
+ endpos="6577"
+>
+	<type  start="6552" length="16" line="222" chordsig="java.lang.String"/>
+	<marker line="223" type="return">
+		<operand  start="6597" length="12" line="223">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="223" chordsig="&lt;init&gt;:()V@java.lang.String" start="6601" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="6597" length="12" line="223">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6601" length="6" line="223" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

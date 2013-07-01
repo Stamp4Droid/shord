@@ -1,0 +1,58 @@
+<root>
+<class chordsig="android.app.backup.BackupHelper" line="2">
+<method
+ chordsig="performBackup:(Landroid/os/ParcelFileDescriptor;Landroid/app/backup/BackupDataOutput;Landroid/os/ParcelFileDescriptor;)V@android.app.backup.BackupHelper"
+ sig="void performBackup(ParcelFileDescriptor,BackupDataOutput,ParcelFileDescriptor)"
+ line="4"
+ startpos="82"
+ endpos="95"
+>
+	<marker line="-1" type="param">
+		<operand  start="128" length="8" line="4">
+			<expr><![CDATA[oldState]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="174" length="4" line="4">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="212" length="8" line="4">
+			<expr><![CDATA[newState]]></expr>
+		</operand>
+	</marker>
+	<type  start="96" length="31" line="4" chordsig="android.os.ParcelFileDescriptor"/>
+	<type  start="138" length="35" line="4" chordsig="android.app.backup.BackupDataOutput"/>
+	<type  start="180" length="31" line="4" chordsig="android.os.ParcelFileDescriptor"/>
+</method>
+<method
+ chordsig="restoreEntity:(Landroid/app/backup/BackupDataInputStream;)V@android.app.backup.BackupHelper"
+ sig="void restoreEntity(BackupDataInputStream)"
+ line="5"
+ startpos="245"
+ endpos="258"
+>
+	<marker line="-1" type="param">
+		<operand  start="300" length="4" line="5">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<type  start="259" length="40" line="5" chordsig="android.app.backup.BackupDataInputStream"/>
+</method>
+<method
+ chordsig="writeNewStateDescription:(Landroid/os/ParcelFileDescriptor;)V@android.app.backup.BackupHelper"
+ sig="void writeNewStateDescription(ParcelFileDescriptor)"
+ line="6"
+ startpos="329"
+ endpos="353"
+>
+	<marker line="-1" type="param">
+		<operand  start="386" length="8" line="6">
+			<expr><![CDATA[newState]]></expr>
+		</operand>
+	</marker>
+	<type  start="354" length="31" line="6" chordsig="android.os.ParcelFileDescriptor"/>
+</method>
+</class>
+</root>

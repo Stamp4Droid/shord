@@ -1,0 +1,182 @@
+<root>
+<class chordsig="android.text.method.NumberKeyListener" line="2">
+	<type  start="79" length="35" line="3" chordsig="android.text.method.BaseKeyListener"/>
+	<type  start="128" length="24" line="4" chordsig="android.text.InputFilter"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.text.method.NumberKeyListener"
+ sig="NumberKeyListener()"
+ line="6"
+ startpos="163"
+ endpos="180"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="195" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="191" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="212" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="195" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAcceptedChars:()[C@android.text.method.NumberKeyListener"
+ sig="char[] getAcceptedChars()"
+ line="7"
+ startpos="251"
+ endpos="267"
+>
+</method>
+<method
+ chordsig="lookup:(Landroid/view/KeyEvent;Landroid/text/Spannable;)I@android.text.method.NumberKeyListener"
+ sig="int lookup(KeyEvent,Spannable)"
+ line="8"
+ startpos="286"
+ endpos="292"
+>
+	<marker line="-1" type="param">
+		<operand  start="315" length="5" line="8">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="345" length="7" line="8">
+			<expr><![CDATA[content]]></expr>
+		</operand>
+	</marker>
+	<type  start="293" length="21" line="8" chordsig="android.view.KeyEvent"/>
+	<type  start="322" length="22" line="8" chordsig="android.text.Spannable"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="366" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="362" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="383" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="366" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="filter:(Ljava/lang/CharSequence;IILandroid/text/Spanned;II)Ljava/lang/CharSequence;@android.text.method.NumberKeyListener"
+ sig="CharSequence filter(CharSequence,int,int,Spanned,int,int)"
+ line="9"
+ startpos="426"
+ endpos="432"
+>
+	<marker line="-1" type="param">
+		<operand  start="456" length="6" line="9">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="468" length="5" line="9">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="479" length="3" line="9">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="505" length="4" line="9">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="515" length="6" line="9">
+			<expr><![CDATA[dstart]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="527" length="4" line="9">
+			<expr><![CDATA[dend]]></expr>
+		</operand>
+	</marker>
+	<type  start="403" length="22" line="9" chordsig="java.lang.CharSequence"/>
+	<type  start="433" length="22" line="9" chordsig="java.lang.CharSequence"/>
+	<type  start="484" length="20" line="9" chordsig="android.text.Spanned"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="545" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="541" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="562" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="545" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="ok:([CC)Z@android.text.method.NumberKeyListener"
+ sig="boolean ok(char[],char)"
+ line="10"
+ startpos="600"
+ endpos="602"
+>
+	<marker line="-1" type="param">
+		<operand  start="610" length="6" line="10">
+			<expr><![CDATA[accept]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="623" length="1" line="10">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="638" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="634" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="655" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="638" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onKeyDown:(Landroid/view/View;Landroid/text/Editable;ILandroid/view/KeyEvent;)Z@android.text.method.NumberKeyListener"
+ sig="boolean onKeyDown(View,Editable,int,KeyEvent)"
+ line="11"
+ startpos="683"
+ endpos="692"
+>
+	<marker line="-1" type="param">
+		<operand  start="711" length="4" line="11">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="739" length="7" line="11">
+			<expr><![CDATA[content]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="752" length="7" line="11">
+			<expr><![CDATA[keyCode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="783" length="5" line="11">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="693" length="17" line="11" chordsig="android.view.View"/>
+	<type  start="717" length="21" line="11" chordsig="android.text.Editable"/>
+	<type  start="761" length="21" line="11" chordsig="android.view.KeyEvent"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="802" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="798" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="819" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="802" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,232 @@
+<root>
+<class chordsig="java.io.ByteArrayOutputStream" line="6">
+	<type  start="149" length="20" line="6" chordsig="java.io.OutputStream"/>
+<method
+ chordsig="close:()V@java.io.ByteArrayOutputStream"
+ sig="void close()"
+ line="8"
+ startpos="189"
+ endpos="194"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="244" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="240" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="261" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="244" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="reset:()V@java.io.ByteArrayOutputStream"
+ sig="void reset()"
+ line="12"
+ startpos="307"
+ endpos="312"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="335" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="331" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="352" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="335" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="size:()I@java.io.ByteArrayOutputStream"
+ sig="int size()"
+ line="16"
+ startpos="384"
+ endpos="388"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="411" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="407" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="428" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="411" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:()V@java.io.ByteArrayOutputStream"
+ sig="ByteArrayOutputStream()"
+ line="24"
+ startpos="516"
+ endpos="537"
+>
+</method>
+<method
+ chordsig="&lt;init&gt;:(I)V@java.io.ByteArrayOutputStream"
+ sig="ByteArrayOutputStream(int)"
+ line="27"
+ startpos="560"
+ endpos="581"
+>
+	<marker line="-1" type="param">
+		<operand  start="586" length="4" line="27">
+			<expr><![CDATA[size]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="toByteArray:()[B@java.io.ByteArrayOutputStream"
+ sig="byte[] toByteArray()"
+ line="31"
+ startpos="693"
+ endpos="704"
+>
+	<marker line="32" type="return">
+		<operand  start="724" length="11" line="32">
+			<expr><![CDATA[new byte[1]]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.io.ByteArrayOutputStream"
+ sig="String toString()"
+ line="36"
+ startpos="833"
+ endpos="841"
+>
+	<type  start="816" length="16" line="36" chordsig="java.lang.String"/>
+	<marker line="37" type="return">
+		<operand  start="861" length="12" line="37">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="37" chordsig="&lt;init&gt;:()V@java.lang.String" start="865" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="861" length="12" line="37">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="865" length="6" line="37" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="toString:(I)Ljava/lang/String;@java.io.ByteArrayOutputStream"
+ sig="String toString(int)"
+ line="41"
+ startpos="971"
+ endpos="979"
+>
+	<marker line="-1" type="param">
+		<operand  start="984" length="6" line="41">
+			<expr><![CDATA[hibyte]]></expr>
+		</operand>
+	</marker>
+	<type  start="954" length="16" line="41" chordsig="java.lang.String"/>
+	<marker line="42" type="return">
+		<operand  start="1009" length="12" line="42">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="42" chordsig="&lt;init&gt;:()V@java.lang.String" start="1013" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="1009" length="12" line="42">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1013" length="6" line="42" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="toString:(Ljava/lang/String;)Ljava/lang/String;@java.io.ByteArrayOutputStream"
+ sig="String toString(String)"
+ line="46"
+ startpos="1119"
+ endpos="1127"
+>
+	<marker line="-1" type="param">
+		<operand  start="1145" length="3" line="46">
+			<expr><![CDATA[enc]]></expr>
+		</operand>
+	</marker>
+	<type  start="1102" length="16" line="46" chordsig="java.lang.String"/>
+	<type  start="1128" length="16" line="46" chordsig="java.lang.String"/>
+	<marker line="47" type="return">
+		<operand  start="1211" length="12" line="47">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="47" chordsig="&lt;init&gt;:()V@java.lang.String" start="1215" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="1211" length="12" line="47">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1215" length="6" line="47" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="write:([BII)V@java.io.ByteArrayOutputStream"
+ sig="void write(byte[],int,int)"
+ line="51"
+ startpos="1321"
+ endpos="1326"
+>
+	<marker line="-1" type="param">
+		<operand  start="1334" length="6" line="51">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1346" length="6" line="51">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1358" length="3" line="51">
+			<expr><![CDATA[len]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="write:(I)V@java.io.ByteArrayOutputStream"
+ sig="void write(int)"
+ line="55"
+ startpos="1462"
+ endpos="1467"
+>
+	<marker line="-1" type="param">
+		<operand  start="1472" length="7" line="55">
+			<expr><![CDATA[oneByte]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="writeTo:(Ljava/io/OutputStream;)V@java.io.ByteArrayOutputStream"
+ sig="void writeTo(OutputStream)"
+ line="58"
+ startpos="1519"
+ endpos="1526"
+>
+	<marker line="-1" type="param">
+		<operand  start="1548" length="3" line="58">
+			<expr><![CDATA[out]]></expr>
+		</operand>
+	</marker>
+	<type  start="1527" length="20" line="58" chordsig="java.io.OutputStream"/>
+	<invkexpr line="59" chordsig="write:([B)V@java.io.OutputStream" start="1594" length="5" type="invoke">
+			<expr><![CDATA[out.write(toByteArray())]]></expr>
+		<param  start="1590" length="3" line="59">
+			<expr><![CDATA[out]]></expr>
+		</param>
+		<param  start="1600" length="13" line="59">
+			<expr><![CDATA[toByteArray()]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="59" chordsig="toByteArray:()[B@java.io.ByteArrayOutputStream" start="1600" length="11" type="invoke">
+			<expr><![CDATA[toByteArray()]]></expr>
+		<param  start="-1" length="-1" line="-1">
+			<expr><![CDATA[this]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+</root>

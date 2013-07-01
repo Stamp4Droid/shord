@@ -1,0 +1,5 @@
+<root>
+<class chordsig="org.apache.http.conn.params.ConnConnectionPNames" line="2">
+	<type  start="97" length="16" line="4" chordsig="java.lang.String"/>
+</class>
+</root>

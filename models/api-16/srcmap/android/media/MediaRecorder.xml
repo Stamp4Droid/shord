@@ -1,0 +1,724 @@
+<root>
+<class chordsig="android.media.MediaRecorder" line="6">
+<class chordsig="android.media.MediaRecorder$AudioSource" line="8">
+<method
+ chordsig="&lt;init&gt;:()V@android.media.MediaRecorder$AudioSource"
+ sig="AudioSource()"
+ line="10"
+ startpos="188"
+ endpos="199"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="226" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="222" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="243" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="226" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.media.MediaRecorder$VideoSource" line="31">
+<method
+ chordsig="&lt;init&gt;:()V@android.media.MediaRecorder$VideoSource"
+ sig="VideoSource()"
+ line="33"
+ startpos="719"
+ endpos="730"
+>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="757" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="753" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="774" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="757" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.media.MediaRecorder$OutputFormat" line="42">
+<method
+ chordsig="&lt;init&gt;:()V@android.media.MediaRecorder$OutputFormat"
+ sig="OutputFormat()"
+ line="44"
+ startpos="939"
+ endpos="951"
+>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="978" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="974" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="995" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="978" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.media.MediaRecorder$AudioEncoder" line="64">
+<method
+ chordsig="&lt;init&gt;:()V@android.media.MediaRecorder$AudioEncoder"
+ sig="AudioEncoder()"
+ line="66"
+ startpos="1411"
+ endpos="1423"
+>
+	<newexpr line="67" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1450" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1446" length="29" line="67">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1467" length="7" line="67">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1450" length="16" line="67" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.media.MediaRecorder$VideoEncoder" line="83">
+<method
+ chordsig="&lt;init&gt;:()V@android.media.MediaRecorder$VideoEncoder"
+ sig="VideoEncoder()"
+ line="85"
+ startpos="1810"
+ endpos="1822"
+>
+	<newexpr line="86" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1849" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1845" length="29" line="86">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1866" length="7" line="86">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1849" length="16" line="86" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.media.MediaRecorder$OnErrorListener" line="98">
+<method
+ chordsig="onError:(Landroid/media/MediaRecorder;II)V@android.media.MediaRecorder$OnErrorListener"
+ sig="void onError(MediaRecorder,int,int)"
+ line="100"
+ startpos="2149"
+ endpos="2156"
+>
+	<marker line="-1" type="param">
+		<operand  start="2185" length="2" line="100">
+			<expr><![CDATA[mr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2193" length="4" line="100">
+			<expr><![CDATA[what]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2203" length="5" line="100">
+			<expr><![CDATA[extra]]></expr>
+		</operand>
+	</marker>
+	<type  start="2157" length="27" line="100" chordsig="android.media.MediaRecorder"/>
+</method>
+</class>
+<class chordsig="android.media.MediaRecorder$OnInfoListener" line="103">
+<method
+ chordsig="onInfo:(Landroid/media/MediaRecorder;II)V@android.media.MediaRecorder$OnInfoListener"
+ sig="void onInfo(MediaRecorder,int,int)"
+ line="105"
+ startpos="2293"
+ endpos="2299"
+>
+	<marker line="-1" type="param">
+		<operand  start="2328" length="2" line="105">
+			<expr><![CDATA[mr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2336" length="4" line="105">
+			<expr><![CDATA[what]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2346" length="5" line="105">
+			<expr><![CDATA[extra]]></expr>
+		</operand>
+	</marker>
+	<type  start="2300" length="27" line="105" chordsig="android.media.MediaRecorder"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.media.MediaRecorder"
+ sig="MediaRecorder()"
+ line="108"
+ startpos="2372"
+ endpos="2385"
+>
+	<newexpr line="109" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2408" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2404" length="29" line="109">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2425" length="7" line="109">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2408" length="16" line="109" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setCamera:(Landroid/hardware/Camera;)V@android.media.MediaRecorder"
+ sig="void setCamera(Camera)"
+ line="112"
+ startpos="2465"
+ endpos="2474"
+>
+	<marker line="-1" type="param">
+		<operand  start="2499" length="1" line="112">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<type  start="2475" length="23" line="112" chordsig="android.hardware.Camera"/>
+</method>
+<method
+ chordsig="setPreviewDisplay:(Landroid/view/Surface;)V@android.media.MediaRecorder"
+ sig="void setPreviewDisplay(Surface)"
+ line="114"
+ startpos="2520"
+ endpos="2537"
+>
+	<marker line="-1" type="param">
+		<operand  start="2559" length="2" line="114">
+			<expr><![CDATA[sv]]></expr>
+		</operand>
+	</marker>
+	<type  start="2538" length="20" line="114" chordsig="android.view.Surface"/>
+	<newexpr line="115" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2583" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2579" length="29" line="115">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2600" length="7" line="115">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2583" length="16" line="115" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setAudioSource:(I)V@android.media.MediaRecorder"
+ sig="void setAudioSource(int)"
+ line="118"
+ startpos="2640"
+ endpos="2654"
+>
+	<marker line="-1" type="param">
+		<operand  start="2659" length="12" line="118">
+			<expr><![CDATA[audio_source]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getAudioSourceMax:()I@android.media.MediaRecorder"
+ sig="int getAudioSourceMax()"
+ line="120"
+ startpos="2742"
+ endpos="2759"
+>
+	<newexpr line="121" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2782" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2778" length="29" line="121">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2799" length="7" line="121">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2782" length="16" line="121" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setVideoSource:(I)V@android.media.MediaRecorder"
+ sig="void setVideoSource(int)"
+ line="124"
+ startpos="2839"
+ endpos="2853"
+>
+	<marker line="-1" type="param">
+		<operand  start="2858" length="12" line="124">
+			<expr><![CDATA[video_source]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setProfile:(Landroid/media/CamcorderProfile;)V@android.media.MediaRecorder"
+ sig="void setProfile(CamcorderProfile)"
+ line="126"
+ startpos="2929"
+ endpos="2939"
+>
+	<marker line="-1" type="param">
+		<operand  start="2971" length="7" line="126">
+			<expr><![CDATA[profile]]></expr>
+		</operand>
+	</marker>
+	<type  start="2940" length="30" line="126" chordsig="android.media.CamcorderProfile"/>
+	<newexpr line="127" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3000" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2996" length="29" line="127">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3017" length="7" line="127">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3000" length="16" line="127" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setCaptureRate:(D)V@android.media.MediaRecorder"
+ sig="void setCaptureRate(double)"
+ line="130"
+ startpos="3050"
+ endpos="3064"
+>
+	<marker line="-1" type="param">
+		<operand  start="3072" length="3" line="130">
+			<expr><![CDATA[fps]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="131" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3097" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3093" length="29" line="131">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3114" length="7" line="131">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3097" length="16" line="131" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOrientationHint:(I)V@android.media.MediaRecorder"
+ sig="void setOrientationHint(int)"
+ line="134"
+ startpos="3147"
+ endpos="3165"
+>
+	<marker line="-1" type="param">
+		<operand  start="3170" length="7" line="134">
+			<expr><![CDATA[degrees]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="135" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3199" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3195" length="29" line="135">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3216" length="7" line="135">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3199" length="16" line="135" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setLocation:(FF)V@android.media.MediaRecorder"
+ sig="void setLocation(float,float)"
+ line="138"
+ startpos="3249"
+ endpos="3260"
+>
+	<marker line="-1" type="param">
+		<operand  start="3267" length="8" line="138">
+			<expr><![CDATA[latitude]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3283" length="9" line="138">
+			<expr><![CDATA[longitude]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="139" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3314" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3310" length="29" line="139">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3331" length="7" line="139">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3314" length="16" line="139" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOutputFormat:(I)V@android.media.MediaRecorder"
+ sig="void setOutputFormat(int)"
+ line="142"
+ startpos="3371"
+ endpos="3386"
+>
+	<marker line="-1" type="param">
+		<operand  start="3391" length="13" line="142">
+			<expr><![CDATA[output_format]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setVideoSize:(II)V@android.media.MediaRecorder"
+ sig="void setVideoSize(int,int)"
+ line="144"
+ startpos="3470"
+ endpos="3482"
+>
+	<marker line="-1" type="param">
+		<operand  start="3487" length="5" line="144">
+			<expr><![CDATA[width]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3498" length="6" line="144">
+			<expr><![CDATA[height]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setVideoFrameRate:(I)V@android.media.MediaRecorder"
+ sig="void setVideoFrameRate(int)"
+ line="146"
+ startpos="3570"
+ endpos="3587"
+>
+	<marker line="-1" type="param">
+		<operand  start="3592" length="4" line="146">
+			<expr><![CDATA[rate]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setMaxDuration:(I)V@android.media.MediaRecorder"
+ sig="void setMaxDuration(int)"
+ line="148"
+ startpos="3662"
+ endpos="3676"
+>
+	<marker line="-1" type="param">
+		<operand  start="3681" length="15" line="148">
+			<expr><![CDATA[max_duration_ms]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setMaxFileSize:(J)V@android.media.MediaRecorder"
+ sig="void setMaxFileSize(long)"
+ line="150"
+ startpos="3765"
+ endpos="3779"
+>
+	<marker line="-1" type="param">
+		<operand  start="3785" length="18" line="150">
+			<expr><![CDATA[max_filesize_bytes]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setAudioEncoder:(I)V@android.media.MediaRecorder"
+ sig="void setAudioEncoder(int)"
+ line="152"
+ startpos="3872"
+ endpos="3887"
+>
+	<marker line="-1" type="param">
+		<operand  start="3892" length="13" line="152">
+			<expr><![CDATA[audio_encoder]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setVideoEncoder:(I)V@android.media.MediaRecorder"
+ sig="void setVideoEncoder(int)"
+ line="154"
+ startpos="3971"
+ endpos="3986"
+>
+	<marker line="-1" type="param">
+		<operand  start="3991" length="13" line="154">
+			<expr><![CDATA[video_encoder]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setAudioSamplingRate:(I)V@android.media.MediaRecorder"
+ sig="void setAudioSamplingRate(int)"
+ line="156"
+ startpos="4063"
+ endpos="4083"
+>
+	<marker line="-1" type="param">
+		<operand  start="4088" length="12" line="156">
+			<expr><![CDATA[samplingRate]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="157" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4122" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4118" length="29" line="157">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4139" length="7" line="157">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4122" length="16" line="157" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setAudioChannels:(I)V@android.media.MediaRecorder"
+ sig="void setAudioChannels(int)"
+ line="160"
+ startpos="4172"
+ endpos="4188"
+>
+	<marker line="-1" type="param">
+		<operand  start="4193" length="11" line="160">
+			<expr><![CDATA[numChannels]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="161" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4226" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4222" length="29" line="161">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4243" length="7" line="161">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4226" length="16" line="161" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setAudioEncodingBitRate:(I)V@android.media.MediaRecorder"
+ sig="void setAudioEncodingBitRate(int)"
+ line="164"
+ startpos="4276"
+ endpos="4299"
+>
+	<marker line="-1" type="param">
+		<operand  start="4304" length="7" line="164">
+			<expr><![CDATA[bitRate]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="165" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4333" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4329" length="29" line="165">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4350" length="7" line="165">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4333" length="16" line="165" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setVideoEncodingBitRate:(I)V@android.media.MediaRecorder"
+ sig="void setVideoEncodingBitRate(int)"
+ line="168"
+ startpos="4383"
+ endpos="4406"
+>
+	<marker line="-1" type="param">
+		<operand  start="4411" length="7" line="168">
+			<expr><![CDATA[bitRate]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="169" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4440" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4436" length="29" line="169">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4457" length="7" line="169">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4440" length="16" line="169" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="prepare:()V@android.media.MediaRecorder"
+ sig="void prepare()"
+ line="172"
+ startpos="4490"
+ endpos="4497"
+>
+	<newexpr line="173" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4580" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4576" length="29" line="173">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4597" length="7" line="173">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4580" length="16" line="173" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="start:()V@android.media.MediaRecorder"
+ sig="void start()"
+ line="176"
+ startpos="4637"
+ endpos="4642"
+>
+</method>
+<method
+ chordsig="stop:()V@android.media.MediaRecorder"
+ sig="void stop()"
+ line="178"
+ startpos="4709"
+ endpos="4713"
+>
+</method>
+<method
+ chordsig="reset:()V@android.media.MediaRecorder"
+ sig="void reset()"
+ line="180"
+ startpos="4773"
+ endpos="4778"
+>
+	<newexpr line="181" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4801" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4797" length="29" line="181">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4818" length="7" line="181">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4801" length="16" line="181" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMaxAmplitude:()I@android.media.MediaRecorder"
+ sig="int getMaxAmplitude()"
+ line="184"
+ startpos="4857"
+ endpos="4872"
+>
+</method>
+<method
+ chordsig="setOnErrorListener:(Landroid/media/MediaRecorder$OnErrorListener;)V@android.media.MediaRecorder"
+ sig="void setOnErrorListener(OnErrorListener)"
+ line="186"
+ startpos="4932"
+ endpos="4950"
+>
+	<marker line="-1" type="param">
+		<operand  start="4995" length="1" line="186">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<type  start="4951" length="43" line="186" chordsig="android.media.MediaRecorder$OnErrorListener"/>
+	<newexpr line="187" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5018" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5014" length="29" line="187">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5035" length="7" line="187">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5018" length="16" line="187" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnInfoListener:(Landroid/media/MediaRecorder$OnInfoListener;)V@android.media.MediaRecorder"
+ sig="void setOnInfoListener(OnInfoListener)"
+ line="190"
+ startpos="5068"
+ endpos="5085"
+>
+	<marker line="-1" type="param">
+		<operand  start="5129" length="8" line="190">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="5086" length="42" line="190" chordsig="android.media.MediaRecorder$OnInfoListener"/>
+	<newexpr line="191" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5159" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5155" length="29" line="191">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5176" length="7" line="191">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5159" length="16" line="191" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="release:()V@android.media.MediaRecorder"
+ sig="void release()"
+ line="194"
+ startpos="5216"
+ endpos="5223"
+>
+</method>
+<method
+ chordsig="finalize:()V@android.media.MediaRecorder"
+ sig="void finalize()"
+ line="196"
+ startpos="5247"
+ endpos="5255"
+>
+	<newexpr line="197" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5278" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5274" length="29" line="197">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5295" length="7" line="197">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5278" length="16" line="197" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOutputFile:(Ljava/io/FileDescriptor;)V@android.media.MediaRecorder"
+ sig="void setOutputFile(FileDescriptor)"
+ line="209"
+ startpos="5668"
+ endpos="5681"
+>
+	<marker line="-1" type="param">
+		<operand  start="5705" length="2" line="209">
+			<expr><![CDATA[fd]]></expr>
+		</operand>
+	</marker>
+	<type  start="5682" length="22" line="209" chordsig="java.io.FileDescriptor"/>
+	<newexpr line="210" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5768" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5764" length="29" line="210">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5785" length="7" line="210">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5768" length="16" line="210" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOutputFile:(Ljava/lang/String;)V@android.media.MediaRecorder"
+ sig="void setOutputFile(String)"
+ line="214"
+ startpos="5879"
+ endpos="5892"
+>
+	<marker line="-1" type="param">
+		<operand  start="5910" length="4" line="214">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<type  start="5893" length="16" line="214" chordsig="java.lang.String"/>
+	<newexpr line="215" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5975" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5971" length="29" line="215">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5992" length="7" line="215">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5975" length="16" line="215" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

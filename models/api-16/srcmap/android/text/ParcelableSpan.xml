@@ -1,0 +1,13 @@
+<root>
+<class chordsig="android.text.ParcelableSpan" line="2">
+	<type  start="64" length="21" line="3" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="getSpanTypeId:()I@android.text.ParcelableSpan"
+ sig="int getSpanTypeId()"
+ line="5"
+ startpos="109"
+ endpos="122"
+>
+</method>
+</class>
+</root>

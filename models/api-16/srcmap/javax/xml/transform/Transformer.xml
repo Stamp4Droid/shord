@@ -1,0 +1,207 @@
+<root>
+<class chordsig="javax.xml.transform.Transformer" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@javax.xml.transform.Transformer"
+ sig="Transformer()"
+ line="4"
+ startpos="76"
+ endpos="87"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="102" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="98" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="119" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="102" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="reset:()V@javax.xml.transform.Transformer"
+ sig="void reset()"
+ line="5"
+ startpos="144"
+ endpos="149"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="164" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="160" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="181" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="164" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="transform:(Ljavax/xml/transform/Source;Ljavax/xml/transform/Result;)V@javax.xml.transform.Transformer"
+ sig="void transform(Source,Result)"
+ line="6"
+ startpos="215"
+ endpos="224"
+>
+	<marker line="-1" type="param">
+		<operand  start="252" length="9" line="6">
+			<expr><![CDATA[xmlSource]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="290" length="12" line="6">
+			<expr><![CDATA[outputTarget]]></expr>
+		</operand>
+	</marker>
+	<type  start="225" length="26" line="6" chordsig="javax.xml.transform.Source"/>
+	<type  start="263" length="26" line="6" chordsig="javax.xml.transform.Result"/>
+</method>
+<method
+ chordsig="setParameter:(Ljava/lang/String;Ljava/lang/Object;)V@javax.xml.transform.Transformer"
+ sig="void setParameter(String,Object)"
+ line="7"
+ startpos="375"
+ endpos="387"
+>
+	<marker line="-1" type="param">
+		<operand  start="405" length="4" line="7">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="428" length="5" line="7">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="388" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="411" length="16" line="7" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="getParameter:(Ljava/lang/String;)Ljava/lang/Object;@javax.xml.transform.Transformer"
+ sig="Object getParameter(String)"
+ line="8"
+ startpos="470"
+ endpos="482"
+>
+	<marker line="-1" type="param">
+		<operand  start="500" length="4" line="8">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="453" length="16" line="8" chordsig="java.lang.Object"/>
+	<type  start="483" length="16" line="8" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="clearParameters:()V@javax.xml.transform.Transformer"
+ sig="void clearParameters()"
+ line="9"
+ startpos="529"
+ endpos="544"
+>
+</method>
+<method
+ chordsig="setURIResolver:(Ljavax/xml/transform/URIResolver;)V@javax.xml.transform.Transformer"
+ sig="void setURIResolver(URIResolver)"
+ line="10"
+ startpos="570"
+ endpos="584"
+>
+	<marker line="-1" type="param">
+		<operand  start="617" length="8" line="10">
+			<expr><![CDATA[resolver]]></expr>
+		</operand>
+	</marker>
+	<type  start="585" length="31" line="10" chordsig="javax.xml.transform.URIResolver"/>
+</method>
+<method
+ chordsig="getURIResolver:()Ljavax/xml/transform/URIResolver;@javax.xml.transform.Transformer"
+ sig="URIResolver getURIResolver()"
+ line="11"
+ startpos="677"
+ endpos="691"
+>
+	<type  start="645" length="31" line="11" chordsig="javax.xml.transform.URIResolver"/>
+</method>
+<method
+ chordsig="setOutputProperties:(Ljava/util/Properties;)V@javax.xml.transform.Transformer"
+ sig="void setOutputProperties(Properties)"
+ line="12"
+ startpos="717"
+ endpos="736"
+>
+	<marker line="-1" type="param">
+		<operand  start="758" length="7" line="12">
+			<expr><![CDATA[oformat]]></expr>
+		</operand>
+	</marker>
+	<type  start="737" length="20" line="12" chordsig="java.util.Properties"/>
+</method>
+<method
+ chordsig="getOutputProperties:()Ljava/util/Properties;@javax.xml.transform.Transformer"
+ sig="Properties getOutputProperties()"
+ line="13"
+ startpos="806"
+ endpos="825"
+>
+	<type  start="785" length="20" line="13" chordsig="java.util.Properties"/>
+</method>
+<method
+ chordsig="setOutputProperty:(Ljava/lang/String;Ljava/lang/String;)V@javax.xml.transform.Transformer"
+ sig="void setOutputProperty(String,String)"
+ line="14"
+ startpos="851"
+ endpos="868"
+>
+	<marker line="-1" type="param">
+		<operand  start="886" length="4" line="14">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="909" length="5" line="14">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="869" length="16" line="14" chordsig="java.lang.String"/>
+	<type  start="892" length="16" line="14" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getOutputProperty:(Ljava/lang/String;)Ljava/lang/String;@javax.xml.transform.Transformer"
+ sig="String getOutputProperty(String)"
+ line="15"
+ startpos="993"
+ endpos="1010"
+>
+	<marker line="-1" type="param">
+		<operand  start="1028" length="4" line="15">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="976" length="16" line="15" chordsig="java.lang.String"/>
+	<type  start="1011" length="16" line="15" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setErrorListener:(Ljavax/xml/transform/ErrorListener;)V@javax.xml.transform.Transformer"
+ sig="void setErrorListener(ErrorListener)"
+ line="16"
+ startpos="1099"
+ endpos="1115"
+>
+	<marker line="-1" type="param">
+		<operand  start="1150" length="8" line="16">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1116" length="33" line="16" chordsig="javax.xml.transform.ErrorListener"/>
+</method>
+<method
+ chordsig="getErrorListener:()Ljavax/xml/transform/ErrorListener;@javax.xml.transform.Transformer"
+ sig="ErrorListener getErrorListener()"
+ line="17"
+ startpos="1254"
+ endpos="1270"
+>
+	<type  start="1220" length="33" line="17" chordsig="javax.xml.transform.ErrorListener"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,57 @@
+<root>
+<class chordsig="java.security.spec.MGF1ParameterSpec" line="2">
+	<type  start="72" length="41" line="3" chordsig="java.security.spec.AlgorithmParameterSpec"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.security.spec.MGF1ParameterSpec"
+ sig="MGF1ParameterSpec(String)"
+ line="5"
+ startpos="124"
+ endpos="141"
+>
+	<marker line="-1" type="param">
+		<operand  start="159" length="6" line="5">
+			<expr><![CDATA[mdName]]></expr>
+		</operand>
+	</marker>
+	<type  start="142" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="179" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="175" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="196" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="179" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDigestAlgorithm:()Ljava/lang/String;@java.security.spec.MGF1ParameterSpec"
+ sig="String getDigestAlgorithm()"
+ line="6"
+ startpos="233"
+ endpos="251"
+>
+	<type  start="216" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="266" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="262" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="283" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="266" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="315" length="36" line="7" chordsig="java.security.spec.MGF1ParameterSpec"/>
+	<type  start="378" length="36" line="8" chordsig="java.security.spec.MGF1ParameterSpec"/>
+	<type  start="443" length="36" line="9" chordsig="java.security.spec.MGF1ParameterSpec"/>
+	<type  start="508" length="36" line="10" chordsig="java.security.spec.MGF1ParameterSpec"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@java.security.spec.MGF1ParameterSpec"
+ line="11"
+>
+</method>
+</class>
+</root>

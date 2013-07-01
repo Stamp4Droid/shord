@@ -1,0 +1,975 @@
+<root>
+<class chordsig="android.widget.Gallery" line="2">
+	<type  start="55" length="25" line="3" chordsig="android.widget.AbsSpinner"/>
+	<type  start="94" length="46" line="4" chordsig="android.view.GestureDetector$OnGestureListener"/>
+<class chordsig="android.widget.Gallery$LayoutParams" line="6">
+	<type  start="186" length="35" line="7" chordsig="android.view.ViewGroup$LayoutParams"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.widget.Gallery$LayoutParams"
+ sig="LayoutParams(Context,AttributeSet)"
+ line="9"
+ startpos="232"
+ endpos="244"
+>
+	<marker line="-1" type="param">
+		<operand  start="269" length="1" line="9">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="298" length="5" line="9">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="245" length="23" line="9" chordsig="android.content.Context"/>
+	<type  start="272" length="25" line="9" chordsig="android.util.AttributeSet"/>
+	<type  start="314" length="35" line="9" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="367" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="363" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="384" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="367" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(II)V@android.widget.Gallery$LayoutParams"
+ sig="LayoutParams(int,int)"
+ line="10"
+ startpos="404"
+ endpos="416"
+>
+	<marker line="-1" type="param">
+		<operand  start="421" length="1" line="10">
+			<expr><![CDATA[w]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="428" length="1" line="10">
+			<expr><![CDATA[h]]></expr>
+		</operand>
+	</marker>
+	<type  start="440" length="35" line="10" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="493" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="489" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="510" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="493" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/view/ViewGroup$LayoutParams;)V@android.widget.Gallery$LayoutParams"
+ sig="LayoutParams(LayoutParams)"
+ line="11"
+ startpos="530"
+ endpos="542"
+>
+	<marker line="-1" type="param">
+		<operand  start="579" length="6" line="11">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="543" length="35" line="11" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<type  start="596" length="35" line="11" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="649" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="645" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="666" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="649" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.widget.Gallery"
+ sig="Gallery(Context)"
+ line="13"
+ startpos="688"
+ endpos="695"
+>
+	<marker line="-1" type="param">
+		<operand  start="720" length="7" line="13">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="696" length="23" line="13" chordsig="android.content.Context"/>
+	<type  start="738" length="23" line="13" chordsig="android.content.Context"/>
+	<type  start="768" length="25" line="13" chordsig="android.util.AttributeSet"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="813" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="809" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="830" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="813" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.widget.Gallery"
+ sig="Gallery(Context,AttributeSet)"
+ line="14"
+ startpos="850"
+ endpos="857"
+>
+	<marker line="-1" type="param">
+		<operand  start="882" length="7" line="14">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="917" length="5" line="14">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="858" length="23" line="14" chordsig="android.content.Context"/>
+	<type  start="891" length="25" line="14" chordsig="android.util.AttributeSet"/>
+	<type  start="933" length="23" line="14" chordsig="android.content.Context"/>
+	<type  start="963" length="25" line="14" chordsig="android.util.AttributeSet"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1008" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1004" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1025" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1008" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;I)V@android.widget.Gallery"
+ sig="Gallery(Context,AttributeSet,int)"
+ line="15"
+ startpos="1045"
+ endpos="1052"
+>
+	<marker line="-1" type="param">
+		<operand  start="1077" length="7" line="15">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1112" length="5" line="15">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1123" length="8" line="15">
+			<expr><![CDATA[defStyle]]></expr>
+		</operand>
+	</marker>
+	<type  start="1053" length="23" line="15" chordsig="android.content.Context"/>
+	<type  start="1086" length="25" line="15" chordsig="android.util.AttributeSet"/>
+	<type  start="1142" length="23" line="15" chordsig="android.content.Context"/>
+	<type  start="1172" length="25" line="15" chordsig="android.util.AttributeSet"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1217" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1213" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1234" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1217" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setCallbackDuringFling:(Z)V@android.widget.Gallery"
+ sig="void setCallbackDuringFling(boolean)"
+ line="16"
+ startpos="1259"
+ endpos="1281"
+>
+	<marker line="-1" type="param">
+		<operand  start="1290" length="14" line="16">
+			<expr><![CDATA[shouldCallback]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1318" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1314" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1335" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1318" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setAnimationDuration:(I)V@android.widget.Gallery"
+ sig="void setAnimationDuration(int)"
+ line="17"
+ startpos="1360"
+ endpos="1380"
+>
+	<marker line="-1" type="param">
+		<operand  start="1385" length="23" line="17">
+			<expr><![CDATA[animationDurationMillis]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1422" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1418" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1439" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1422" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSpacing:(I)V@android.widget.Gallery"
+ sig="void setSpacing(int)"
+ line="18"
+ startpos="1464"
+ endpos="1474"
+>
+	<marker line="-1" type="param">
+		<operand  start="1479" length="7" line="18">
+			<expr><![CDATA[spacing]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1500" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1496" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1517" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1500" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setUnselectedAlpha:(F)V@android.widget.Gallery"
+ sig="void setUnselectedAlpha(float)"
+ line="19"
+ startpos="1542"
+ endpos="1560"
+>
+	<marker line="-1" type="param">
+		<operand  start="1567" length="15" line="19">
+			<expr><![CDATA[unselectedAlpha]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1596" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1592" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1613" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1596" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getChildStaticTransformation:(Landroid/view/View;Landroid/view/animation/Transformation;)Z@android.widget.Gallery"
+ sig="boolean getChildStaticTransformation(View,Transformation)"
+ line="20"
+ startpos="1644"
+ endpos="1672"
+>
+	<marker line="-1" type="param">
+		<operand  start="1691" length="5" line="20">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1736" length="1" line="20">
+			<expr><![CDATA[t]]></expr>
+		</operand>
+	</marker>
+	<type  start="1673" length="17" line="20" chordsig="android.view.View"/>
+	<type  start="1698" length="37" line="20" chordsig="android.view.animation.Transformation"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1751" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1747" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1768" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1751" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="computeHorizontalScrollExtent:()I@android.widget.Gallery"
+ sig="int computeHorizontalScrollExtent()"
+ line="21"
+ startpos="1795"
+ endpos="1824"
+>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1839" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1835" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1856" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1839" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="computeHorizontalScrollOffset:()I@android.widget.Gallery"
+ sig="int computeHorizontalScrollOffset()"
+ line="22"
+ startpos="1883"
+ endpos="1912"
+>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1927" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1923" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1944" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1927" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="computeHorizontalScrollRange:()I@android.widget.Gallery"
+ sig="int computeHorizontalScrollRange()"
+ line="23"
+ startpos="1971"
+ endpos="1999"
+>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2014" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2010" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2031" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2014" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="checkLayoutParams:(Landroid/view/ViewGroup$LayoutParams;)Z@android.widget.Gallery"
+ sig="boolean checkLayoutParams(LayoutParams)"
+ line="24"
+ startpos="2062"
+ endpos="2079"
+>
+	<marker line="-1" type="param">
+		<operand  start="2116" length="1" line="24">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<type  start="2080" length="35" line="24" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2131" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2127" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2148" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2131" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="generateLayoutParams:(Landroid/view/ViewGroup$LayoutParams;)Landroid/view/ViewGroup$LayoutParams;@android.widget.Gallery"
+ sig="LayoutParams generateLayoutParams(LayoutParams)"
+ line="25"
+ startpos="2207"
+ endpos="2227"
+>
+	<marker line="-1" type="param">
+		<operand  start="2264" length="1" line="25">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<type  start="2171" length="35" line="25" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<type  start="2228" length="35" line="25" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2279" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2275" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2296" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2279" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="generateLayoutParams:(Landroid/util/AttributeSet;)Landroid/view/ViewGroup$LayoutParams;@android.widget.Gallery"
+ sig="LayoutParams generateLayoutParams(AttributeSet)"
+ line="26"
+ startpos="2352"
+ endpos="2372"
+>
+	<marker line="-1" type="param">
+		<operand  start="2399" length="5" line="26">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="2316" length="35" line="26" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<type  start="2373" length="25" line="26" chordsig="android.util.AttributeSet"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2418" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2414" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2435" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2418" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="generateDefaultLayoutParams:()Landroid/view/ViewGroup$LayoutParams;@android.widget.Gallery"
+ sig="LayoutParams generateDefaultLayoutParams()"
+ line="27"
+ startpos="2494"
+ endpos="2521"
+>
+	<type  start="2458" length="35" line="27" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2536" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2532" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2553" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2536" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onLayout:(ZIIII)V@android.widget.Gallery"
+ sig="void onLayout(boolean,int,int,int,int)"
+ line="28"
+ startpos="2581"
+ endpos="2589"
+>
+	<marker line="-1" type="param">
+		<operand  start="2598" length="7" line="28">
+			<expr><![CDATA[changed]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2611" length="1" line="28">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2618" length="1" line="28">
+			<expr><![CDATA[t]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2625" length="1" line="28">
+			<expr><![CDATA[r]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2632" length="1" line="28">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2647" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2643" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2664" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2647" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onTouchEvent:(Landroid/view/MotionEvent;)Z@android.widget.Gallery"
+ sig="boolean onTouchEvent(MotionEvent)"
+ line="29"
+ startpos="2692"
+ endpos="2704"
+>
+	<marker line="-1" type="param">
+		<operand  start="2730" length="5" line="29">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="2705" length="24" line="29" chordsig="android.view.MotionEvent"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2749" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2745" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2766" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2749" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onSingleTapUp:(Landroid/view/MotionEvent;)Z@android.widget.Gallery"
+ sig="boolean onSingleTapUp(MotionEvent)"
+ line="30"
+ startpos="2794"
+ endpos="2807"
+>
+	<marker line="-1" type="param">
+		<operand  start="2833" length="1" line="30">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="2808" length="24" line="30" chordsig="android.view.MotionEvent"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2848" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2844" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2865" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2848" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onFling:(Landroid/view/MotionEvent;Landroid/view/MotionEvent;FF)Z@android.widget.Gallery"
+ sig="boolean onFling(MotionEvent,MotionEvent,float,float)"
+ line="31"
+ startpos="2893"
+ endpos="2900"
+>
+	<marker line="-1" type="param">
+		<operand  start="2926" length="2" line="31">
+			<expr><![CDATA[e1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2955" length="2" line="31">
+			<expr><![CDATA[e2]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2965" length="9" line="31">
+			<expr><![CDATA[velocityX]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2982" length="9" line="31">
+			<expr><![CDATA[velocityY]]></expr>
+		</operand>
+	</marker>
+	<type  start="2901" length="24" line="31" chordsig="android.view.MotionEvent"/>
+	<type  start="2930" length="24" line="31" chordsig="android.view.MotionEvent"/>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3005" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3001" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3022" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3005" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onScroll:(Landroid/view/MotionEvent;Landroid/view/MotionEvent;FF)Z@android.widget.Gallery"
+ sig="boolean onScroll(MotionEvent,MotionEvent,float,float)"
+ line="32"
+ startpos="3050"
+ endpos="3058"
+>
+	<marker line="-1" type="param">
+		<operand  start="3084" length="2" line="32">
+			<expr><![CDATA[e1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3113" length="2" line="32">
+			<expr><![CDATA[e2]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3123" length="9" line="32">
+			<expr><![CDATA[distanceX]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3140" length="9" line="32">
+			<expr><![CDATA[distanceY]]></expr>
+		</operand>
+	</marker>
+	<type  start="3059" length="24" line="32" chordsig="android.view.MotionEvent"/>
+	<type  start="3088" length="24" line="32" chordsig="android.view.MotionEvent"/>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3163" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3159" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3180" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3163" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onDown:(Landroid/view/MotionEvent;)Z@android.widget.Gallery"
+ sig="boolean onDown(MotionEvent)"
+ line="33"
+ startpos="3208"
+ endpos="3214"
+>
+	<marker line="-1" type="param">
+		<operand  start="3240" length="1" line="33">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="3215" length="24" line="33" chordsig="android.view.MotionEvent"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3255" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3251" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3272" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3255" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onLongPress:(Landroid/view/MotionEvent;)V@android.widget.Gallery"
+ sig="void onLongPress(MotionEvent)"
+ line="34"
+ startpos="3297"
+ endpos="3308"
+>
+	<marker line="-1" type="param">
+		<operand  start="3334" length="1" line="34">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="3309" length="24" line="34" chordsig="android.view.MotionEvent"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3349" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3345" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3366" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3349" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onShowPress:(Landroid/view/MotionEvent;)V@android.widget.Gallery"
+ sig="void onShowPress(MotionEvent)"
+ line="35"
+ startpos="3391"
+ endpos="3402"
+>
+	<marker line="-1" type="param">
+		<operand  start="3428" length="1" line="35">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="3403" length="24" line="35" chordsig="android.view.MotionEvent"/>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3443" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3439" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3460" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3443" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dispatchSetSelected:(Z)V@android.widget.Gallery"
+ sig="void dispatchSetSelected(boolean)"
+ line="36"
+ startpos="3485"
+ endpos="3504"
+>
+	<marker line="-1" type="param">
+		<operand  start="3513" length="8" line="36">
+			<expr><![CDATA[selected]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3535" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3531" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3552" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3535" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dispatchSetPressed:(Z)V@android.widget.Gallery"
+ sig="void dispatchSetPressed(boolean)"
+ line="37"
+ startpos="3580"
+ endpos="3598"
+>
+	<marker line="-1" type="param">
+		<operand  start="3607" length="7" line="37">
+			<expr><![CDATA[pressed]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3628" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3624" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3645" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3628" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContextMenuInfo:()Landroid/view/ContextMenu$ContextMenuInfo;@android.widget.Gallery"
+ sig="ContextMenuInfo getContextMenuInfo()"
+ line="38"
+ startpos="3709"
+ endpos="3727"
+>
+	<type  start="3668" length="40" line="38" chordsig="android.view.ContextMenu$ContextMenuInfo"/>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3742" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3738" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3759" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3742" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="showContextMenuForChild:(Landroid/view/View;)Z@android.widget.Gallery"
+ sig="boolean showContextMenuForChild(View)"
+ line="39"
+ startpos="3787"
+ endpos="3810"
+>
+	<marker line="-1" type="param">
+		<operand  start="3829" length="12" line="39">
+			<expr><![CDATA[originalView]]></expr>
+		</operand>
+	</marker>
+	<type  start="3811" length="17" line="39" chordsig="android.view.View"/>
+	<newexpr line="39" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3855" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3851" length="29" line="39">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3872" length="7" line="39">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3855" length="16" line="39" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="showContextMenu:()Z@android.widget.Gallery"
+ sig="boolean showContextMenu()"
+ line="40"
+ startpos="3900"
+ endpos="3915"
+>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3930" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3926" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3947" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3930" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dispatchKeyEvent:(Landroid/view/KeyEvent;)Z@android.widget.Gallery"
+ sig="boolean dispatchKeyEvent(KeyEvent)"
+ line="41"
+ startpos="3975"
+ endpos="3991"
+>
+	<marker line="-1" type="param">
+		<operand  start="4014" length="5" line="41">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="3992" length="21" line="41" chordsig="android.view.KeyEvent"/>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4033" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4029" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4050" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4033" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onKeyDown:(ILandroid/view/KeyEvent;)Z@android.widget.Gallery"
+ sig="boolean onKeyDown(int,KeyEvent)"
+ line="42"
+ startpos="4078"
+ endpos="4087"
+>
+	<marker line="-1" type="param">
+		<operand  start="4092" length="7" line="42">
+			<expr><![CDATA[keyCode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4123" length="5" line="42">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="4101" length="21" line="42" chordsig="android.view.KeyEvent"/>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4142" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4138" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4159" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4142" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onKeyUp:(ILandroid/view/KeyEvent;)Z@android.widget.Gallery"
+ sig="boolean onKeyUp(int,KeyEvent)"
+ line="43"
+ startpos="4187"
+ endpos="4194"
+>
+	<marker line="-1" type="param">
+		<operand  start="4199" length="7" line="43">
+			<expr><![CDATA[keyCode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4230" length="5" line="43">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="4208" length="21" line="43" chordsig="android.view.KeyEvent"/>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4249" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4245" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4266" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4249" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setGravity:(I)V@android.widget.Gallery"
+ sig="void setGravity(int)"
+ line="44"
+ startpos="4291"
+ endpos="4301"
+>
+	<marker line="-1" type="param">
+		<operand  start="4306" length="7" line="44">
+			<expr><![CDATA[gravity]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4327" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4323" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4344" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4327" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getChildDrawingOrder:(II)I@android.widget.Gallery"
+ sig="int getChildDrawingOrder(int,int)"
+ line="45"
+ startpos="4371"
+ endpos="4391"
+>
+	<marker line="-1" type="param">
+		<operand  start="4396" length="10" line="45">
+			<expr><![CDATA[childCount]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4412" length="1" line="45">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4427" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4423" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4444" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4427" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onFocusChanged:(ZILandroid/graphics/Rect;)V@android.widget.Gallery"
+ sig="void onFocusChanged(boolean,int,Rect)"
+ line="46"
+ startpos="4472"
+ endpos="4486"
+>
+	<marker line="-1" type="param">
+		<operand  start="4495" length="9" line="46">
+			<expr><![CDATA[gainFocus]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4510" length="9" line="46">
+			<expr><![CDATA[direction]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4543" length="21" line="46">
+			<expr><![CDATA[previouslyFocusedRect]]></expr>
+		</operand>
+	</marker>
+	<type  start="4521" length="21" line="46" chordsig="android.graphics.Rect"/>
+	<newexpr line="46" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4578" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4574" length="29" line="46">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4595" length="7" line="46">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4578" length="16" line="46" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

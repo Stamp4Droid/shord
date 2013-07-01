@@ -1,0 +1,12 @@
+<root>
+<class chordsig="org.apache.http.client.params.AllClientPNames" line="2">
+	<type  start="82" length="43" line="3" chordsig="org.apache.http.params.CoreConnectionPNames"/>
+	<type  start="127" length="41" line="3" chordsig="org.apache.http.params.CoreProtocolPNames"/>
+	<type  start="170" length="42" line="3" chordsig="org.apache.http.client.params.ClientPNames"/>
+	<type  start="214" length="38" line="3" chordsig="org.apache.http.auth.params.AuthPNames"/>
+	<type  start="254" length="46" line="3" chordsig="org.apache.http.cookie.params.CookieSpecPNames"/>
+	<type  start="302" length="48" line="3" chordsig="org.apache.http.conn.params.ConnConnectionPNames"/>
+	<type  start="352" length="45" line="3" chordsig="org.apache.http.conn.params.ConnManagerPNames"/>
+	<type  start="399" length="43" line="3" chordsig="org.apache.http.conn.params.ConnRoutePNames"/>
+</class>
+</root>

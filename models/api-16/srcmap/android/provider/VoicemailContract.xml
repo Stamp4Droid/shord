@@ -1,0 +1,150 @@
+<root>
+<class chordsig="android.provider.VoicemailContract" line="2">
+<class chordsig="android.provider.VoicemailContract$Voicemails" line="4">
+	<type  start="109" length="28" line="5" chordsig="android.provider.BaseColumns"/>
+	<type  start="139" length="32" line="5" chordsig="android.provider.OpenableColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.VoicemailContract$Voicemails"
+ sig="Voicemails()"
+ line="7"
+ startpos="174"
+ endpos="184"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="199" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="195" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="216" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="199" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="buildSourceUri:(Ljava/lang/String;)Landroid/net/Uri;@android.provider.VoicemailContract$Voicemails"
+ sig="Uri buildSourceUri(String)"
+ line="8"
+ startpos="259"
+ endpos="273"
+>
+	<marker line="-1" type="param">
+		<operand  start="291" length="11" line="8">
+			<expr><![CDATA[packageName]]></expr>
+		</operand>
+	</marker>
+	<type  start="243" length="15" line="8" chordsig="android.net.Uri"/>
+	<type  start="274" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="316" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="312" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="333" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="316" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="365" length="15" line="9" chordsig="android.net.Uri"/>
+	<type  start="414" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="499" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="585" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="641" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="693" length="16" line="14" chordsig="java.lang.String"/>
+	<type  start="753" length="16" line="15" chordsig="java.lang.String"/>
+	<type  start="811" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="883" length="16" line="17" chordsig="java.lang.String"/>
+	<type  start="949" length="16" line="18" chordsig="java.lang.String"/>
+	<type  start="1015" length="16" line="19" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.VoicemailContract$Voicemails"
+ line="20"
+>
+</method>
+</class>
+<class chordsig="android.provider.VoicemailContract$Status" line="22">
+	<type  start="1136" length="28" line="23" chordsig="android.provider.BaseColumns"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.VoicemailContract$Status"
+ sig="Status()"
+ line="25"
+ startpos="1167"
+ endpos="1173"
+>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1188" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1184" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1205" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1188" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="buildSourceUri:(Ljava/lang/String;)Landroid/net/Uri;@android.provider.VoicemailContract$Status"
+ sig="Uri buildSourceUri(String)"
+ line="26"
+ startpos="1248"
+ endpos="1262"
+>
+	<marker line="-1" type="param">
+		<operand  start="1280" length="11" line="26">
+			<expr><![CDATA[packageName]]></expr>
+		</operand>
+	</marker>
+	<type  start="1232" length="15" line="26" chordsig="android.net.Uri"/>
+	<type  start="1263" length="16" line="26" chordsig="java.lang.String"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1305" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1301" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1322" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1305" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1354" length="15" line="27" chordsig="android.net.Uri"/>
+	<type  start="1403" length="16" line="28" chordsig="java.lang.String"/>
+	<type  start="1501" length="16" line="29" chordsig="java.lang.String"/>
+	<type  start="1601" length="16" line="30" chordsig="java.lang.String"/>
+	<type  start="1673" length="16" line="31" chordsig="java.lang.String"/>
+	<type  start="1741" length="16" line="32" chordsig="java.lang.String"/>
+	<type  start="1825" length="16" line="33" chordsig="java.lang.String"/>
+	<type  start="2090" length="16" line="37" chordsig="java.lang.String"/>
+	<type  start="2283" length="16" line="40" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.provider.VoicemailContract$Status"
+ line="44"
+>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.provider.VoicemailContract"
+ sig="VoicemailContract()"
+ line="46"
+ startpos="2593"
+ endpos="2610"
+>
+	<newexpr line="46" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2625" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2621" length="29" line="46">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2642" length="7" line="46">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2625" length="16" line="46" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="2674" length="16" line="47" chordsig="java.lang.String"/>
+	<type  start="2748" length="16" line="48" chordsig="java.lang.String"/>
+	<type  start="2830" length="16" line="49" chordsig="java.lang.String"/>
+	<type  start="2929" length="16" line="50" chordsig="java.lang.String"/>
+	<type  start="3032" length="16" line="51" chordsig="java.lang.String"/>
+</class>
+</root>

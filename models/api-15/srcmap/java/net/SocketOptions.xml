@@ -1,0 +1,37 @@
+<root>
+<class chordsig="java.net.SocketOptions" line="2">
+<method
+ chordsig="getOption:(I)Ljava/lang/Object;@java.net.SocketOptions"
+ sig="Object getOption(int)"
+ line="4"
+ startpos="85"
+ endpos="94"
+>
+	<marker line="-1" type="param">
+		<operand  start="99" length="5" line="4">
+			<expr><![CDATA[optID]]></expr>
+		</operand>
+	</marker>
+	<type  start="68" length="16" line="4" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="setOption:(ILjava/lang/Object;)V@java.net.SocketOptions"
+ sig="void setOption(int,Object)"
+ line="5"
+ startpos="161"
+ endpos="170"
+>
+	<marker line="-1" type="param">
+		<operand  start="175" length="5" line="5">
+			<expr><![CDATA[optID]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="199" length="3" line="5">
+			<expr><![CDATA[val]]></expr>
+		</operand>
+	</marker>
+	<type  start="182" length="16" line="5" chordsig="java.lang.Object"/>
+</method>
+</class>
+</root>

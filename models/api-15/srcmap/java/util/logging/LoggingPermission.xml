@@ -1,0 +1,82 @@
+<root>
+<class chordsig="java.util.logging.LoggingPermission" line="2">
+	<type  start="74" length="29" line="3" chordsig="java.security.BasicPermission"/>
+	<type  start="117" length="19" line="4" chordsig="java.security.Guard"/>
+	<type  start="138" length="20" line="4" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;)V@java.util.logging.LoggingPermission"
+ sig="LoggingPermission(String,String)"
+ line="6"
+ startpos="169"
+ endpos="186"
+>
+	<marker line="-1" type="param">
+		<operand  start="204" length="4" line="6">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="227" length="7" line="6">
+			<expr><![CDATA[actions]]></expr>
+		</operand>
+	</marker>
+	<type  start="187" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="210" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="245" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="268" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="302" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="298" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="319" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="302" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getActions:()Ljava/lang/String;@java.util.logging.LoggingPermission"
+ sig="String getActions()"
+ line="7"
+ startpos="356"
+ endpos="366"
+>
+	<type  start="339" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="381" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="377" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="398" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="381" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="implies:(Ljava/security/Permission;)Z@java.util.logging.LoggingPermission"
+ sig="boolean implies(Permission)"
+ line="8"
+ startpos="426"
+ endpos="433"
+>
+	<marker line="-1" type="param">
+		<operand  start="459" length="10" line="8">
+			<expr><![CDATA[permission]]></expr>
+		</operand>
+	</marker>
+	<type  start="434" length="24" line="8" chordsig="java.security.Permission"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="483" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="479" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="500" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="483" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

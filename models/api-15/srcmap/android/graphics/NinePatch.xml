@@ -1,0 +1,269 @@
+<root>
+<class chordsig="android.graphics.NinePatch" line="2">
+<method
+ chordsig="&lt;init&gt;:(Landroid/graphics/Bitmap;[BLjava/lang/String;)V@android.graphics.NinePatch"
+ sig="NinePatch(Bitmap,byte[],String)"
+ line="4"
+ startpos="59"
+ endpos="68"
+>
+	<marker line="-1" type="param">
+		<operand  start="93" length="6" line="4">
+			<expr><![CDATA[bitmap]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="108" length="5" line="4">
+			<expr><![CDATA[chunk]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="132" length="7" line="4">
+			<expr><![CDATA[srcName]]></expr>
+		</operand>
+	</marker>
+	<type  start="69" length="23" line="4" chordsig="android.graphics.Bitmap"/>
+	<type  start="115" length="16" line="4" chordsig="java.lang.String"/>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="153" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="149" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="170" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="153" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPaint:(Landroid/graphics/Paint;)V@android.graphics.NinePatch"
+ sig="void setPaint(Paint)"
+ line="5"
+ startpos="195"
+ endpos="203"
+>
+	<marker line="-1" type="param">
+		<operand  start="227" length="1" line="5">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<type  start="204" length="22" line="5" chordsig="android.graphics.Paint"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="242" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="238" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="259" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="242" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="draw:(Landroid/graphics/Canvas;Landroid/graphics/RectF;)V@android.graphics.NinePatch"
+ sig="void draw(Canvas,RectF)"
+ line="6"
+ startpos="284"
+ endpos="288"
+>
+	<marker line="-1" type="param">
+		<operand  start="313" length="6" line="6">
+			<expr><![CDATA[canvas]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="344" length="8" line="6">
+			<expr><![CDATA[location]]></expr>
+		</operand>
+	</marker>
+	<type  start="289" length="23" line="6" chordsig="android.graphics.Canvas"/>
+	<type  start="321" length="22" line="6" chordsig="android.graphics.RectF"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="366" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="362" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="383" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="366" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="draw:(Landroid/graphics/Canvas;Landroid/graphics/Rect;)V@android.graphics.NinePatch"
+ sig="void draw(Canvas,Rect)"
+ line="7"
+ startpos="408"
+ endpos="412"
+>
+	<marker line="-1" type="param">
+		<operand  start="437" length="6" line="7">
+			<expr><![CDATA[canvas]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="467" length="8" line="7">
+			<expr><![CDATA[location]]></expr>
+		</operand>
+	</marker>
+	<type  start="413" length="23" line="7" chordsig="android.graphics.Canvas"/>
+	<type  start="445" length="21" line="7" chordsig="android.graphics.Rect"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="489" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="485" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="506" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="489" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="draw:(Landroid/graphics/Canvas;Landroid/graphics/Rect;Landroid/graphics/Paint;)V@android.graphics.NinePatch"
+ sig="void draw(Canvas,Rect,Paint)"
+ line="8"
+ startpos="531"
+ endpos="535"
+>
+	<marker line="-1" type="param">
+		<operand  start="560" length="6" line="8">
+			<expr><![CDATA[canvas]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="590" length="8" line="8">
+			<expr><![CDATA[location]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="623" length="5" line="8">
+			<expr><![CDATA[paint]]></expr>
+		</operand>
+	</marker>
+	<type  start="536" length="23" line="8" chordsig="android.graphics.Canvas"/>
+	<type  start="568" length="21" line="8" chordsig="android.graphics.Rect"/>
+	<type  start="600" length="22" line="8" chordsig="android.graphics.Paint"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="642" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="638" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="659" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="642" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDensity:()I@android.graphics.NinePatch"
+ sig="int getDensity()"
+ line="9"
+ startpos="683"
+ endpos="693"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="708" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="704" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="725" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="708" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getWidth:()I@android.graphics.NinePatch"
+ sig="int getWidth()"
+ line="10"
+ startpos="749"
+ endpos="757"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="772" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="768" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="789" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="772" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getHeight:()I@android.graphics.NinePatch"
+ sig="int getHeight()"
+ line="11"
+ startpos="813"
+ endpos="822"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="837" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="833" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="854" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="837" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hasAlpha:()Z@android.graphics.NinePatch"
+ sig="boolean hasAlpha()"
+ line="12"
+ startpos="888"
+ endpos="896"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="911" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="907" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="928" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="911" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTransparentRegion:(Landroid/graphics/Rect;)Landroid/graphics/Region;@android.graphics.NinePatch"
+ sig="Region getTransparentRegion(Rect)"
+ line="13"
+ startpos="978"
+ endpos="998"
+>
+	<marker line="-1" type="param">
+		<operand  start="1021" length="8" line="13">
+			<expr><![CDATA[location]]></expr>
+		</operand>
+	</marker>
+	<type  start="954" length="23" line="13" chordsig="android.graphics.Region"/>
+	<type  start="999" length="21" line="13" chordsig="android.graphics.Rect"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1043" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1039" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1060" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1043" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isNinePatchChunk:([B)Z@android.graphics.NinePatch"
+ sig="boolean isNinePatchChunk(byte[])"
+ line="14"
+ startpos="1102"
+ endpos="1118"
+>
+	<marker line="-1" type="param">
+		<operand  start="1126" length="5" line="14">
+			<expr><![CDATA[chunk]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

@@ -1,0 +1,83 @@
+<root>
+<class chordsig="org.apache.http.conn.ClientConnectionOperator" line="2">
+<method
+ chordsig="createConnection:()Lorg/apache/http/conn/OperatedClientConnection;@org.apache.http.conn.ClientConnectionOperator"
+ sig="OperatedClientConnection createConnection()"
+ line="4"
+ startpos="137"
+ endpos="153"
+>
+	<type  start="91" length="45" line="4" chordsig="org.apache.http.conn.OperatedClientConnection"/>
+</method>
+<method
+ chordsig="openConnection:(Lorg/apache/http/conn/OperatedClientConnection;Lorg/apache/http/HttpHost;Ljava/net/InetAddress;Lorg/apache/http/protocol/HttpContext;Lorg/apache/http/params/HttpParams;)V@org.apache.http.conn.ClientConnectionOperator"
+ sig="void openConnection(OperatedClientConnection,HttpHost,InetAddress,HttpContext,HttpParams)"
+ line="5"
+ startpos="179"
+ endpos="193"
+>
+	<marker line="-1" type="param">
+		<operand  start="240" length="4" line="5">
+			<expr><![CDATA[conn]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="271" length="6" line="5">
+			<expr><![CDATA[target]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="300" length="5" line="5">
+			<expr><![CDATA[local]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="344" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="387" length="6" line="5">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="194" length="45" line="5" chordsig="org.apache.http.conn.OperatedClientConnection"/>
+	<type  start="246" length="24" line="5" chordsig="org.apache.http.HttpHost"/>
+	<type  start="279" length="20" line="5" chordsig="java.net.InetAddress"/>
+	<type  start="307" length="36" line="5" chordsig="org.apache.http.protocol.HttpContext"/>
+	<type  start="353" length="33" line="5" chordsig="org.apache.http.params.HttpParams"/>
+</method>
+<method
+ chordsig="updateSecureConnection:(Lorg/apache/http/conn/OperatedClientConnection;Lorg/apache/http/HttpHost;Lorg/apache/http/protocol/HttpContext;Lorg/apache/http/params/HttpParams;)V@org.apache.http.conn.ClientConnectionOperator"
+ sig="void updateSecureConnection(OperatedClientConnection,HttpHost,HttpContext,HttpParams)"
+ line="6"
+ startpos="445"
+ endpos="467"
+>
+	<marker line="-1" type="param">
+		<operand  start="514" length="4" line="6">
+			<expr><![CDATA[conn]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="545" length="6" line="6">
+			<expr><![CDATA[target]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="590" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="633" length="6" line="6">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="468" length="45" line="6" chordsig="org.apache.http.conn.OperatedClientConnection"/>
+	<type  start="520" length="24" line="6" chordsig="org.apache.http.HttpHost"/>
+	<type  start="553" length="36" line="6" chordsig="org.apache.http.protocol.HttpContext"/>
+	<type  start="599" length="33" line="6" chordsig="org.apache.http.params.HttpParams"/>
+</method>
+</class>
+</root>

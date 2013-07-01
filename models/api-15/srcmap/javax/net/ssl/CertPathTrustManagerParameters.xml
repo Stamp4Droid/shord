@@ -1,0 +1,48 @@
+<root>
+<class chordsig="javax.net.ssl.CertPathTrustManagerParameters" line="2">
+	<type  start="80" length="38" line="3" chordsig="javax.net.ssl.ManagerFactoryParameters"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/security/cert/CertPathParameters;)V@javax.net.ssl.CertPathTrustManagerParameters"
+ sig="CertPathTrustManagerParameters(CertPathParameters)"
+ line="5"
+ startpos="129"
+ endpos="159"
+>
+	<marker line="-1" type="param">
+		<operand  start="198" length="10" line="5">
+			<expr><![CDATA[parameters]]></expr>
+		</operand>
+	</marker>
+	<type  start="160" length="37" line="5" chordsig="java.security.cert.CertPathParameters"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="222" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="218" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="239" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="222" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getParameters:()Ljava/security/cert/CertPathParameters;@javax.net.ssl.CertPathTrustManagerParameters"
+ sig="CertPathParameters getParameters()"
+ line="6"
+ startpos="297"
+ endpos="310"
+>
+	<type  start="259" length="37" line="6" chordsig="java.security.cert.CertPathParameters"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="325" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="321" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="342" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="325" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,34 @@
+<root>
+<class chordsig="java.sql.Wrapper" line="2">
+<method
+ chordsig="unwrap:(Ljava/lang/Class;)Ljava/lang/Object;@java.sql.Wrapper"
+ sig="T unwrap(Class&lt;T&gt;)"
+ line="4"
+ startpos="67"
+ endpos="73"
+>
+	<marker line="-1" type="param">
+		<operand  start="93" length="5" line="4">
+			<expr><![CDATA[iface]]></expr>
+		</operand>
+	</marker>
+	<type  start="65" length="1" line="4" chordsig="java.lang.Object"/>
+	<type  start="74" length="15" line="4" chordsig="java.lang.Class"/>
+	<type  start="90" length="1" line="4" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="isWrapperFor:(Ljava/lang/Class;)Z@java.sql.Wrapper"
+ sig="boolean isWrapperFor(Class&lt;?&gt;)"
+ line="5"
+ startpos="155"
+ endpos="167"
+>
+	<marker line="-1" type="param">
+		<operand  start="187" length="5" line="5">
+			<expr><![CDATA[iface]]></expr>
+		</operand>
+	</marker>
+	<type  start="168" length="15" line="5" chordsig="java.lang.Class"/>
+</method>
+</class>
+</root>

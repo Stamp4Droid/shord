@@ -1,0 +1,57 @@
+<root>
+<class chordsig="java.security.acl.Group" line="2">
+	<type  start="60" length="23" line="3" chordsig="java.security.Principal"/>
+<method
+ chordsig="addMember:(Ljava/security/Principal;)Z@java.security.acl.Group"
+ sig="boolean addMember(Principal)"
+ line="5"
+ startpos="111"
+ endpos="120"
+>
+	<marker line="-1" type="param">
+		<operand  start="145" length="4" line="5">
+			<expr><![CDATA[user]]></expr>
+		</operand>
+	</marker>
+	<type  start="121" length="23" line="5" chordsig="java.security.Principal"/>
+</method>
+<method
+ chordsig="removeMember:(Ljava/security/Principal;)Z@java.security.acl.Group"
+ sig="boolean removeMember(Principal)"
+ line="6"
+ startpos="177"
+ endpos="189"
+>
+	<marker line="-1" type="param">
+		<operand  start="214" length="4" line="6">
+			<expr><![CDATA[user]]></expr>
+		</operand>
+	</marker>
+	<type  start="190" length="23" line="6" chordsig="java.security.Principal"/>
+</method>
+<method
+ chordsig="isMember:(Ljava/security/Principal;)Z@java.security.acl.Group"
+ sig="boolean isMember(Principal)"
+ line="7"
+ startpos="246"
+ endpos="254"
+>
+	<marker line="-1" type="param">
+		<operand  start="279" length="6" line="7">
+			<expr><![CDATA[member]]></expr>
+		</operand>
+	</marker>
+	<type  start="255" length="23" line="7" chordsig="java.security.Principal"/>
+</method>
+<method
+ chordsig="members:()Ljava/util/Enumeration;@java.security.acl.Group"
+ sig="Enumeration&lt;? extends Principal&gt; members()"
+ line="8"
+ startpos="362"
+ endpos="369"
+>
+	<type  start="305" length="21" line="8" chordsig="java.util.Enumeration"/>
+	<type  start="337" length="23" line="8" chordsig="java.security.Principal"/>
+</method>
+</class>
+</root>

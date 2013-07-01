@@ -1,0 +1,496 @@
+<root>
+<class chordsig="org.apache.http.message.BasicHeaderValueFormatter" line="2">
+	<type  start="85" length="44" line="3" chordsig="org.apache.http.message.HeaderValueFormatter"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.message.BasicHeaderValueFormatter"
+ sig="BasicHeaderValueFormatter()"
+ line="5"
+ startpos="140"
+ endpos="165"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="180" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="176" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="197" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="180" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="formatElements:([Lorg/apache/http/HeaderElement;ZLorg/apache/http/message/HeaderValueFormatter;)Ljava/lang/String;@org.apache.http.message.BasicHeaderValueFormatter"
+ sig="String formatElements(HeaderElement[],boolean,HeaderValueFormatter)"
+ line="6"
+ startpos="247"
+ endpos="261"
+>
+	<marker line="-1" type="param">
+		<operand  start="294" length="5" line="6">
+			<expr><![CDATA[elems]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="309" length="5" line="6">
+			<expr><![CDATA[quote]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="361" length="9" line="6">
+			<expr><![CDATA[formatter]]></expr>
+		</operand>
+	</marker>
+	<type  start="230" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="262" length="29" line="6" chordsig="org.apache.http.HeaderElement"/>
+	<type  start="316" length="44" line="6" chordsig="org.apache.http.message.HeaderValueFormatter"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="384" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="380" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="401" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="384" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="formatElements:(Lorg/apache/http/util/CharArrayBuffer;[Lorg/apache/http/HeaderElement;Z)Lorg/apache/http/util/CharArrayBuffer;@org.apache.http.message.BasicHeaderValueFormatter"
+ sig="CharArrayBuffer formatElements(CharArrayBuffer,HeaderElement[],boolean)"
+ line="7"
+ startpos="458"
+ endpos="472"
+>
+	<marker line="-1" type="param">
+		<operand  start="510" length="6" line="7">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="550" length="5" line="7">
+			<expr><![CDATA[elems]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="565" length="5" line="7">
+			<expr><![CDATA[quote]]></expr>
+		</operand>
+	</marker>
+	<type  start="421" length="36" line="7" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="473" length="36" line="7" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="518" length="29" line="7" chordsig="org.apache.http.HeaderElement"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="584" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="580" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="601" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="584" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="estimateElementsLen:([Lorg/apache/http/HeaderElement;)I@org.apache.http.message.BasicHeaderValueFormatter"
+ sig="int estimateElementsLen(HeaderElement[])"
+ line="8"
+ startpos="628"
+ endpos="647"
+>
+	<marker line="-1" type="param">
+		<operand  start="680" length="5" line="8">
+			<expr><![CDATA[elems]]></expr>
+		</operand>
+	</marker>
+	<type  start="648" length="29" line="8" chordsig="org.apache.http.HeaderElement"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="699" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="695" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="716" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="699" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="formatHeaderElement:(Lorg/apache/http/HeaderElement;ZLorg/apache/http/message/HeaderValueFormatter;)Ljava/lang/String;@org.apache.http.message.BasicHeaderValueFormatter"
+ sig="String formatHeaderElement(HeaderElement,boolean,HeaderValueFormatter)"
+ line="9"
+ startpos="766"
+ endpos="785"
+>
+	<marker line="-1" type="param">
+		<operand  start="816" length="4" line="9">
+			<expr><![CDATA[elem]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="830" length="5" line="9">
+			<expr><![CDATA[quote]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="882" length="9" line="9">
+			<expr><![CDATA[formatter]]></expr>
+		</operand>
+	</marker>
+	<type  start="749" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="786" length="29" line="9" chordsig="org.apache.http.HeaderElement"/>
+	<type  start="837" length="44" line="9" chordsig="org.apache.http.message.HeaderValueFormatter"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="905" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="901" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="922" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="905" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="formatHeaderElement:(Lorg/apache/http/util/CharArrayBuffer;Lorg/apache/http/HeaderElement;Z)Lorg/apache/http/util/CharArrayBuffer;@org.apache.http.message.BasicHeaderValueFormatter"
+ sig="CharArrayBuffer formatHeaderElement(CharArrayBuffer,HeaderElement,boolean)"
+ line="10"
+ startpos="979"
+ endpos="998"
+>
+	<marker line="-1" type="param">
+		<operand  start="1036" length="6" line="10">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1074" length="4" line="10">
+			<expr><![CDATA[elem]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1088" length="5" line="10">
+			<expr><![CDATA[quote]]></expr>
+		</operand>
+	</marker>
+	<type  start="942" length="36" line="10" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="999" length="36" line="10" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="1044" length="29" line="10" chordsig="org.apache.http.HeaderElement"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1107" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1103" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1124" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1107" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="estimateHeaderElementLen:(Lorg/apache/http/HeaderElement;)I@org.apache.http.message.BasicHeaderValueFormatter"
+ sig="int estimateHeaderElementLen(HeaderElement)"
+ line="11"
+ startpos="1151"
+ endpos="1175"
+>
+	<marker line="-1" type="param">
+		<operand  start="1206" length="4" line="11">
+			<expr><![CDATA[elem]]></expr>
+		</operand>
+	</marker>
+	<type  start="1176" length="29" line="11" chordsig="org.apache.http.HeaderElement"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1224" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1220" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1241" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1224" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="formatParameters:([Lorg/apache/http/NameValuePair;ZLorg/apache/http/message/HeaderValueFormatter;)Ljava/lang/String;@org.apache.http.message.BasicHeaderValueFormatter"
+ sig="String formatParameters(NameValuePair[],boolean,HeaderValueFormatter)"
+ line="12"
+ startpos="1291"
+ endpos="1307"
+>
+	<marker line="-1" type="param">
+		<operand  start="1340" length="4" line="12">
+			<expr><![CDATA[nvps]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1354" length="5" line="12">
+			<expr><![CDATA[quote]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1406" length="9" line="12">
+			<expr><![CDATA[formatter]]></expr>
+		</operand>
+	</marker>
+	<type  start="1274" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="1308" length="29" line="12" chordsig="org.apache.http.NameValuePair"/>
+	<type  start="1361" length="44" line="12" chordsig="org.apache.http.message.HeaderValueFormatter"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1429" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1425" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1446" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1429" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="formatParameters:(Lorg/apache/http/util/CharArrayBuffer;[Lorg/apache/http/NameValuePair;Z)Lorg/apache/http/util/CharArrayBuffer;@org.apache.http.message.BasicHeaderValueFormatter"
+ sig="CharArrayBuffer formatParameters(CharArrayBuffer,NameValuePair[],boolean)"
+ line="13"
+ startpos="1503"
+ endpos="1519"
+>
+	<marker line="-1" type="param">
+		<operand  start="1557" length="6" line="13">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1597" length="4" line="13">
+			<expr><![CDATA[nvps]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1611" length="5" line="13">
+			<expr><![CDATA[quote]]></expr>
+		</operand>
+	</marker>
+	<type  start="1466" length="36" line="13" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="1520" length="36" line="13" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="1565" length="29" line="13" chordsig="org.apache.http.NameValuePair"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1630" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1626" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1647" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1630" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="estimateParametersLen:([Lorg/apache/http/NameValuePair;)I@org.apache.http.message.BasicHeaderValueFormatter"
+ sig="int estimateParametersLen(NameValuePair[])"
+ line="14"
+ startpos="1674"
+ endpos="1695"
+>
+	<marker line="-1" type="param">
+		<operand  start="1728" length="4" line="14">
+			<expr><![CDATA[nvps]]></expr>
+		</operand>
+	</marker>
+	<type  start="1696" length="29" line="14" chordsig="org.apache.http.NameValuePair"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1746" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1742" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1763" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1746" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="formatNameValuePair:(Lorg/apache/http/NameValuePair;ZLorg/apache/http/message/HeaderValueFormatter;)Ljava/lang/String;@org.apache.http.message.BasicHeaderValueFormatter"
+ sig="String formatNameValuePair(NameValuePair,boolean,HeaderValueFormatter)"
+ line="15"
+ startpos="1813"
+ endpos="1832"
+>
+	<marker line="-1" type="param">
+		<operand  start="1863" length="3" line="15">
+			<expr><![CDATA[nvp]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1876" length="5" line="15">
+			<expr><![CDATA[quote]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1928" length="9" line="15">
+			<expr><![CDATA[formatter]]></expr>
+		</operand>
+	</marker>
+	<type  start="1796" length="16" line="15" chordsig="java.lang.String"/>
+	<type  start="1833" length="29" line="15" chordsig="org.apache.http.NameValuePair"/>
+	<type  start="1883" length="44" line="15" chordsig="org.apache.http.message.HeaderValueFormatter"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1951" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1947" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1968" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1951" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="formatNameValuePair:(Lorg/apache/http/util/CharArrayBuffer;Lorg/apache/http/NameValuePair;Z)Lorg/apache/http/util/CharArrayBuffer;@org.apache.http.message.BasicHeaderValueFormatter"
+ sig="CharArrayBuffer formatNameValuePair(CharArrayBuffer,NameValuePair,boolean)"
+ line="16"
+ startpos="2025"
+ endpos="2044"
+>
+	<marker line="-1" type="param">
+		<operand  start="2082" length="6" line="16">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2120" length="3" line="16">
+			<expr><![CDATA[nvp]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2133" length="5" line="16">
+			<expr><![CDATA[quote]]></expr>
+		</operand>
+	</marker>
+	<type  start="1988" length="36" line="16" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="2045" length="36" line="16" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="2090" length="29" line="16" chordsig="org.apache.http.NameValuePair"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2152" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2148" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2169" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2152" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="estimateNameValuePairLen:(Lorg/apache/http/NameValuePair;)I@org.apache.http.message.BasicHeaderValueFormatter"
+ sig="int estimateNameValuePairLen(NameValuePair)"
+ line="17"
+ startpos="2196"
+ endpos="2220"
+>
+	<marker line="-1" type="param">
+		<operand  start="2251" length="3" line="17">
+			<expr><![CDATA[nvp]]></expr>
+		</operand>
+	</marker>
+	<type  start="2221" length="29" line="17" chordsig="org.apache.http.NameValuePair"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2268" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2264" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2285" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2268" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="doFormatValue:(Lorg/apache/http/util/CharArrayBuffer;Ljava/lang/String;Z)V@org.apache.http.message.BasicHeaderValueFormatter"
+ sig="void doFormatValue(CharArrayBuffer,String,boolean)"
+ line="18"
+ startpos="2313"
+ endpos="2326"
+>
+	<marker line="-1" type="param">
+		<operand  start="2364" length="6" line="18">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2389" length="5" line="18">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2404" length="5" line="18">
+			<expr><![CDATA[quote]]></expr>
+		</operand>
+	</marker>
+	<type  start="2327" length="36" line="18" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="2372" length="16" line="18" chordsig="java.lang.String"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2423" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2419" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2440" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2423" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isSeparator:(C)Z@org.apache.http.message.BasicHeaderValueFormatter"
+ sig="boolean isSeparator(char)"
+ line="19"
+ startpos="2471"
+ endpos="2482"
+>
+	<marker line="-1" type="param">
+		<operand  start="2488" length="2" line="19">
+			<expr><![CDATA[ch]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2504" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2500" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2521" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2504" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isUnsafe:(C)Z@org.apache.http.message.BasicHeaderValueFormatter"
+ sig="boolean isUnsafe(char)"
+ line="20"
+ startpos="2552"
+ endpos="2560"
+>
+	<marker line="-1" type="param">
+		<operand  start="2566" length="2" line="20">
+			<expr><![CDATA[ch]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2582" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2578" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2599" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2582" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="2631" length="49" line="21" chordsig="org.apache.http.message.BasicHeaderValueFormatter"/>
+	<type  start="2710" length="16" line="22" chordsig="java.lang.String"/>
+	<type  start="2786" length="16" line="23" chordsig="java.lang.String"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@org.apache.http.message.BasicHeaderValueFormatter"
+ line="24"
+>
+</method>
+</class>
+</root>

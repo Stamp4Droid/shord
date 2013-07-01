@@ -1,0 +1,95 @@
+<root>
+<class chordsig="android.renderscript.ProgramVertex" line="2">
+	<type  start="67" length="28" line="3" chordsig="android.renderscript.Program"/>
+<class chordsig="android.renderscript.ProgramVertex$Builder" line="5">
+	<type  start="136" length="47" line="6" chordsig="android.renderscript.Program$BaseProgramBuilder"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/renderscript/RenderScript;)V@android.renderscript.ProgramVertex$Builder"
+ sig="Builder(RenderScript)"
+ line="8"
+ startpos="194"
+ endpos="201"
+>
+	<marker line="-1" type="param">
+		<operand  start="236" length="2" line="8">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<type  start="202" length="33" line="8" chordsig="android.renderscript.RenderScript"/>
+	<type  start="249" length="33" line="8" chordsig="android.renderscript.RenderScript"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="300" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="296" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="317" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="300" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addInput:(Landroid/renderscript/Element;)Landroid/renderscript/ProgramVertex$Builder;@android.renderscript.ProgramVertex$Builder"
+ sig="Builder addInput(Element)"
+ line="9"
+ startpos="380"
+ endpos="388"
+>
+	<marker line="-1" type="param">
+		<operand  start="418" length="1" line="9">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="337" length="42" line="9" chordsig="android.renderscript.ProgramVertex$Builder"/>
+	<type  start="389" length="28" line="9" chordsig="android.renderscript.Element"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="472" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="468" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="489" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="472" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="create:()Landroid/renderscript/ProgramVertex;@android.renderscript.ProgramVertex$Builder"
+ sig="ProgramVertex create()"
+ line="10"
+ startpos="544"
+ endpos="550"
+>
+	<type  start="509" length="34" line="10" chordsig="android.renderscript.ProgramVertex"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="565" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="561" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="582" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="565" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.renderscript.ProgramVertex"
+ sig="ProgramVertex()"
+ line="12"
+ startpos="596"
+ endpos="609"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="624" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="620" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="641" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="624" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,372 @@
+<root>
+<class chordsig="android.content.SharedPreferences" line="2">
+<class chordsig="android.content.SharedPreferences$OnSharedPreferenceChangeListener" line="4">
+<method
+ chordsig="onSharedPreferenceChanged:(Landroid/content/SharedPreferences;Ljava/lang/String;)V@android.content.SharedPreferences$OnSharedPreferenceChangeListener"
+ sig="void onSharedPreferenceChanged(SharedPreferences,String)"
+ line="6"
+ startpos="143"
+ endpos="168"
+>
+	<marker line="-1" type="param">
+		<operand  start="203" length="17" line="6">
+			<expr><![CDATA[sharedPreferences]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="239" length="3" line="6">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="169" length="33" line="6" chordsig="android.content.SharedPreferences"/>
+	<type  start="222" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+</class>
+<class chordsig="android.content.SharedPreferences$Editor" line="8">
+<method
+ chordsig="putString:(Ljava/lang/String;Ljava/lang/String;)Landroid/content/SharedPreferences$Editor;@android.content.SharedPreferences$Editor"
+ sig="Editor putString(String,String)"
+ line="10"
+ startpos="338"
+ endpos="347"
+>
+	<marker line="-1" type="param">
+		<operand  start="365" length="3" line="10">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="387" length="5" line="10">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="297" length="40" line="10" chordsig="android.content.SharedPreferences$Editor"/>
+	<type  start="348" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="370" length="16" line="10" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="putStringSet:(Ljava/lang/String;Ljava/util/Set;)Landroid/content/SharedPreferences$Editor;@android.content.SharedPreferences$Editor"
+ sig="Editor putStringSet(String,Set&lt;String&gt;)"
+ line="11"
+ startpos="453"
+ endpos="465"
+>
+	<marker line="-1" type="param">
+		<operand  start="483" length="3" line="11">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="520" length="6" line="11">
+			<expr><![CDATA[values]]></expr>
+		</operand>
+	</marker>
+	<type  start="412" length="40" line="11" chordsig="android.content.SharedPreferences$Editor"/>
+	<type  start="466" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="488" length="13" line="11" chordsig="java.util.Set"/>
+	<type  start="502" length="16" line="11" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="putInt:(Ljava/lang/String;I)Landroid/content/SharedPreferences$Editor;@android.content.SharedPreferences$Editor"
+ sig="Editor putInt(String,int)"
+ line="12"
+ startpos="587"
+ endpos="593"
+>
+	<marker line="-1" type="param">
+		<operand  start="611" length="3" line="12">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="620" length="5" line="12">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="546" length="40" line="12" chordsig="android.content.SharedPreferences$Editor"/>
+	<type  start="594" length="16" line="12" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="putLong:(Ljava/lang/String;J)Landroid/content/SharedPreferences$Editor;@android.content.SharedPreferences$Editor"
+ sig="Editor putLong(String,long)"
+ line="13"
+ startpos="686"
+ endpos="693"
+>
+	<marker line="-1" type="param">
+		<operand  start="711" length="3" line="13">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="721" length="5" line="13">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="645" length="40" line="13" chordsig="android.content.SharedPreferences$Editor"/>
+	<type  start="694" length="16" line="13" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="putFloat:(Ljava/lang/String;F)Landroid/content/SharedPreferences$Editor;@android.content.SharedPreferences$Editor"
+ sig="Editor putFloat(String,float)"
+ line="14"
+ startpos="787"
+ endpos="795"
+>
+	<marker line="-1" type="param">
+		<operand  start="813" length="3" line="14">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="824" length="5" line="14">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="746" length="40" line="14" chordsig="android.content.SharedPreferences$Editor"/>
+	<type  start="796" length="16" line="14" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="putBoolean:(Ljava/lang/String;Z)Landroid/content/SharedPreferences$Editor;@android.content.SharedPreferences$Editor"
+ sig="Editor putBoolean(String,boolean)"
+ line="15"
+ startpos="890"
+ endpos="900"
+>
+	<marker line="-1" type="param">
+		<operand  start="918" length="3" line="15">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="931" length="5" line="15">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="849" length="40" line="15" chordsig="android.content.SharedPreferences$Editor"/>
+	<type  start="901" length="16" line="15" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="remove:(Ljava/lang/String;)Landroid/content/SharedPreferences$Editor;@android.content.SharedPreferences$Editor"
+ sig="Editor remove(String)"
+ line="16"
+ startpos="997"
+ endpos="1003"
+>
+	<marker line="-1" type="param">
+		<operand  start="1021" length="3" line="16">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="956" length="40" line="16" chordsig="android.content.SharedPreferences$Editor"/>
+	<type  start="1004" length="16" line="16" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="clear:()Landroid/content/SharedPreferences$Editor;@android.content.SharedPreferences$Editor"
+ sig="Editor clear()"
+ line="17"
+ startpos="1085"
+ endpos="1090"
+>
+	<type  start="1044" length="40" line="17" chordsig="android.content.SharedPreferences$Editor"/>
+</method>
+<method
+ chordsig="commit:()Z@android.content.SharedPreferences$Editor"
+ sig="boolean commit()"
+ line="18"
+ startpos="1119"
+ endpos="1125"
+>
+</method>
+<method
+ chordsig="apply:()V@android.content.SharedPreferences$Editor"
+ sig="void apply()"
+ line="19"
+ startpos="1151"
+ endpos="1156"
+>
+</method>
+</class>
+<method
+ chordsig="getAll:()Ljava/util/Map;@android.content.SharedPreferences"
+ sig="Map&lt;String,?&gt; getAll()"
+ line="21"
+ startpos="1214"
+ endpos="1220"
+>
+	<type  start="1179" length="13" line="21" chordsig="java.util.Map"/>
+	<type  start="1193" length="16" line="21" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getString:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;@android.content.SharedPreferences"
+ sig="String getString(String,String)"
+ line="22"
+ startpos="1258"
+ endpos="1267"
+>
+	<marker line="-1" type="param">
+		<operand  start="1285" length="3" line="22">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1307" length="8" line="22">
+			<expr><![CDATA[defValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="1241" length="16" line="22" chordsig="java.lang.String"/>
+	<type  start="1268" length="16" line="22" chordsig="java.lang.String"/>
+	<type  start="1290" length="16" line="22" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getStringSet:(Ljava/lang/String;Ljava/util/Set;)Ljava/util/Set;@android.content.SharedPreferences"
+ sig="Set&lt;String&gt; getStringSet(String,Set&lt;String&gt;)"
+ line="23"
+ startpos="1367"
+ endpos="1379"
+>
+	<marker line="-1" type="param">
+		<operand  start="1397" length="3" line="23">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1434" length="9" line="23">
+			<expr><![CDATA[defValues]]></expr>
+		</operand>
+	</marker>
+	<type  start="1335" length="13" line="23" chordsig="java.util.Set"/>
+	<type  start="1349" length="16" line="23" chordsig="java.lang.String"/>
+	<type  start="1380" length="16" line="23" chordsig="java.lang.String"/>
+	<type  start="1402" length="13" line="23" chordsig="java.util.Set"/>
+	<type  start="1416" length="16" line="23" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getInt:(Ljava/lang/String;I)I@android.content.SharedPreferences"
+ sig="int getInt(String,int)"
+ line="24"
+ startpos="1467"
+ endpos="1473"
+>
+	<marker line="-1" type="param">
+		<operand  start="1491" length="3" line="24">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1500" length="8" line="24">
+			<expr><![CDATA[defValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="1474" length="16" line="24" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getLong:(Ljava/lang/String;J)J@android.content.SharedPreferences"
+ sig="long getLong(String,long)"
+ line="25"
+ startpos="1533"
+ endpos="1540"
+>
+	<marker line="-1" type="param">
+		<operand  start="1558" length="3" line="25">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1568" length="8" line="25">
+			<expr><![CDATA[defValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="1541" length="16" line="25" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getFloat:(Ljava/lang/String;F)F@android.content.SharedPreferences"
+ sig="float getFloat(String,float)"
+ line="26"
+ startpos="1602"
+ endpos="1610"
+>
+	<marker line="-1" type="param">
+		<operand  start="1628" length="3" line="26">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1639" length="8" line="26">
+			<expr><![CDATA[defValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="1611" length="16" line="26" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getBoolean:(Ljava/lang/String;Z)Z@android.content.SharedPreferences"
+ sig="boolean getBoolean(String,boolean)"
+ line="27"
+ startpos="1675"
+ endpos="1685"
+>
+	<marker line="-1" type="param">
+		<operand  start="1703" length="3" line="27">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1716" length="8" line="27">
+			<expr><![CDATA[defValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="1686" length="16" line="27" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="contains:(Ljava/lang/String;)Z@android.content.SharedPreferences"
+ sig="boolean contains(String)"
+ line="28"
+ startpos="1752"
+ endpos="1760"
+>
+	<marker line="-1" type="param">
+		<operand  start="1778" length="3" line="28">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="1761" length="16" line="28" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="edit:()Landroid/content/SharedPreferences$Editor;@android.content.SharedPreferences"
+ sig="Editor edit()"
+ line="29"
+ startpos="1842"
+ endpos="1846"
+>
+	<type  start="1801" length="40" line="29" chordsig="android.content.SharedPreferences$Editor"/>
+</method>
+<method
+ chordsig="registerOnSharedPreferenceChangeListener:(Landroid/content/SharedPreferences$OnSharedPreferenceChangeListener;)V@android.content.SharedPreferences"
+ sig="void registerOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener)"
+ line="30"
+ startpos="1872"
+ endpos="1912"
+>
+	<marker line="-1" type="param">
+		<operand  start="1980" length="8" line="30">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1913" length="66" line="30" chordsig="android.content.SharedPreferences$OnSharedPreferenceChangeListener"/>
+</method>
+<method
+ chordsig="unregisterOnSharedPreferenceChangeListener:(Landroid/content/SharedPreferences$OnSharedPreferenceChangeListener;)V@android.content.SharedPreferences"
+ sig="void unregisterOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener)"
+ line="31"
+ startpos="2013"
+ endpos="2055"
+>
+	<marker line="-1" type="param">
+		<operand  start="2123" length="8" line="31">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="2056" length="66" line="31" chordsig="android.content.SharedPreferences$OnSharedPreferenceChangeListener"/>
+</method>
+</class>
+</root>

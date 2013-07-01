@@ -1,0 +1,125 @@
+<root>
+<class chordsig="android.text.method.KeyListener" line="2">
+<method
+ chordsig="getInputType:()I@android.text.method.KeyListener"
+ sig="int getInputType()"
+ line="4"
+ startpos="81"
+ endpos="93"
+>
+</method>
+<method
+ chordsig="onKeyDown:(Landroid/view/View;Landroid/text/Editable;ILandroid/view/KeyEvent;)Z@android.text.method.KeyListener"
+ sig="boolean onKeyDown(View,Editable,int,KeyEvent)"
+ line="5"
+ startpos="122"
+ endpos="131"
+>
+	<marker line="-1" type="param">
+		<operand  start="150" length="4" line="5">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="178" length="4" line="5">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="188" length="7" line="5">
+			<expr><![CDATA[keyCode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="219" length="5" line="5">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="132" length="17" line="5" chordsig="android.view.View"/>
+	<type  start="156" length="21" line="5" chordsig="android.text.Editable"/>
+	<type  start="197" length="21" line="5" chordsig="android.view.KeyEvent"/>
+</method>
+<method
+ chordsig="onKeyUp:(Landroid/view/View;Landroid/text/Editable;ILandroid/view/KeyEvent;)Z@android.text.method.KeyListener"
+ sig="boolean onKeyUp(View,Editable,int,KeyEvent)"
+ line="6"
+ startpos="252"
+ endpos="259"
+>
+	<marker line="-1" type="param">
+		<operand  start="278" length="4" line="6">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="306" length="4" line="6">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="316" length="7" line="6">
+			<expr><![CDATA[keyCode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="347" length="5" line="6">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="260" length="17" line="6" chordsig="android.view.View"/>
+	<type  start="284" length="21" line="6" chordsig="android.text.Editable"/>
+	<type  start="325" length="21" line="6" chordsig="android.view.KeyEvent"/>
+</method>
+<method
+ chordsig="onKeyOther:(Landroid/view/View;Landroid/text/Editable;Landroid/view/KeyEvent;)Z@android.text.method.KeyListener"
+ sig="boolean onKeyOther(View,Editable,KeyEvent)"
+ line="7"
+ startpos="380"
+ endpos="390"
+>
+	<marker line="-1" type="param">
+		<operand  start="409" length="4" line="7">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="437" length="4" line="7">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="465" length="5" line="7">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="391" length="17" line="7" chordsig="android.view.View"/>
+	<type  start="415" length="21" line="7" chordsig="android.text.Editable"/>
+	<type  start="443" length="21" line="7" chordsig="android.view.KeyEvent"/>
+</method>
+<method
+ chordsig="clearMetaKeyState:(Landroid/view/View;Landroid/text/Editable;I)V@android.text.method.KeyListener"
+ sig="void clearMetaKeyState(View,Editable,int)"
+ line="8"
+ startpos="495"
+ endpos="512"
+>
+	<marker line="-1" type="param">
+		<operand  start="531" length="4" line="8">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="559" length="7" line="8">
+			<expr><![CDATA[content]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="572" length="6" line="8">
+			<expr><![CDATA[states]]></expr>
+		</operand>
+	</marker>
+	<type  start="513" length="17" line="8" chordsig="android.view.View"/>
+	<type  start="537" length="21" line="8" chordsig="android.text.Editable"/>
+</method>
+</class>
+</root>

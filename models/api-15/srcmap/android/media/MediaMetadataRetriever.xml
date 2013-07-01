@@ -1,0 +1,276 @@
+<root>
+<class chordsig="android.media.MediaMetadataRetriever" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.media.MediaMetadataRetriever"
+ sig="MediaMetadataRetriever()"
+ line="4"
+ startpos="69"
+ endpos="91"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="106" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="102" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="123" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="106" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDataSource:(Ljava/lang/String;)V@android.media.MediaMetadataRetriever"
+ sig="void setDataSource(String)"
+ line="5"
+ startpos="155"
+ endpos="168"
+>
+	<marker line="-1" type="param">
+		<operand  start="186" length="4" line="5">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<type  start="169" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setDataSource:(Ljava/lang/String;Ljava/util/Map;)V@android.media.MediaMetadataRetriever"
+ sig="void setDataSource(String,Map&lt;String,String&gt;)"
+ line="6"
+ startpos="248"
+ endpos="261"
+>
+	<marker line="-1" type="param">
+		<operand  start="279" length="3" line="6">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="334" length="7" line="6">
+			<expr><![CDATA[headers]]></expr>
+		</operand>
+	</marker>
+	<type  start="262" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="284" length="13" line="6" chordsig="java.util.Map"/>
+	<type  start="298" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="316" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="397" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="393" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="414" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="397" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDataSource:(Ljava/io/FileDescriptor;JJ)V@android.media.MediaMetadataRetriever"
+ sig="void setDataSource(FileDescriptor,long,long)"
+ line="7"
+ startpos="446"
+ endpos="459"
+>
+	<marker line="-1" type="param">
+		<operand  start="483" length="2" line="7">
+			<expr><![CDATA[fd]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="492" length="6" line="7">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="505" length="6" line="7">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<type  start="460" length="22" line="7" chordsig="java.io.FileDescriptor"/>
+</method>
+<method
+ chordsig="setDataSource:(Ljava/io/FileDescriptor;)V@android.media.MediaMetadataRetriever"
+ sig="void setDataSource(FileDescriptor)"
+ line="8"
+ startpos="569"
+ endpos="582"
+>
+	<marker line="-1" type="param">
+		<operand  start="606" length="2" line="8">
+			<expr><![CDATA[fd]]></expr>
+		</operand>
+	</marker>
+	<type  start="583" length="22" line="8" chordsig="java.io.FileDescriptor"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="664" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="660" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="681" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="664" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDataSource:(Landroid/content/Context;Landroid/net/Uri;)V@android.media.MediaMetadataRetriever"
+ sig="void setDataSource(Context,Uri)"
+ line="9"
+ startpos="706"
+ endpos="719"
+>
+	<marker line="-1" type="param">
+		<operand  start="744" length="7" line="9">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="769" length="3" line="9">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<type  start="720" length="23" line="9" chordsig="android.content.Context"/>
+	<type  start="753" length="15" line="9" chordsig="android.net.Uri"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="857" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="853" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="874" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="857" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="extractMetadata:(I)Ljava/lang/String;@android.media.MediaMetadataRetriever"
+ sig="String extractMetadata(int)"
+ line="10"
+ startpos="918"
+ endpos="933"
+>
+	<marker line="-1" type="param">
+		<operand  start="938" length="7" line="10">
+			<expr><![CDATA[keyCode]]></expr>
+		</operand>
+	</marker>
+	<type  start="901" length="16" line="10" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getFrameAtTime:(JI)Landroid/graphics/Bitmap;@android.media.MediaMetadataRetriever"
+ sig="Bitmap getFrameAtTime(long,int)"
+ line="11"
+ startpos="980"
+ endpos="994"
+>
+	<marker line="-1" type="param">
+		<operand  start="1000" length="6" line="11">
+			<expr><![CDATA[timeUs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1012" length="6" line="11">
+			<expr><![CDATA[option]]></expr>
+		</operand>
+	</marker>
+	<type  start="956" length="23" line="11" chordsig="android.graphics.Bitmap"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1032" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1028" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1049" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1032" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFrameAtTime:(J)Landroid/graphics/Bitmap;@android.media.MediaMetadataRetriever"
+ sig="Bitmap getFrameAtTime(long)"
+ line="12"
+ startpos="1093"
+ endpos="1107"
+>
+	<marker line="-1" type="param">
+		<operand  start="1113" length="6" line="12">
+			<expr><![CDATA[timeUs]]></expr>
+		</operand>
+	</marker>
+	<type  start="1069" length="23" line="12" chordsig="android.graphics.Bitmap"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1133" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1129" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1150" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1133" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFrameAtTime:()Landroid/graphics/Bitmap;@android.media.MediaMetadataRetriever"
+ sig="Bitmap getFrameAtTime()"
+ line="13"
+ startpos="1194"
+ endpos="1208"
+>
+	<type  start="1170" length="23" line="13" chordsig="android.graphics.Bitmap"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1223" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1219" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1240" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1223" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getEmbeddedPicture:()[B@android.media.MediaMetadataRetriever"
+ sig="byte[] getEmbeddedPicture()"
+ line="14"
+ startpos="1267"
+ endpos="1285"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1300" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1296" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1317" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1300" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="release:()V@android.media.MediaMetadataRetriever"
+ sig="void release()"
+ line="15"
+ startpos="1349"
+ endpos="1356"
+>
+</method>
+<method
+ chordsig="finalize:()V@android.media.MediaMetadataRetriever"
+ sig="void finalize()"
+ line="16"
+ startpos="1376"
+ endpos="1384"
+>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1426" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1422" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1443" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1426" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

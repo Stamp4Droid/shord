@@ -1,0 +1,48 @@
+<root>
+<class chordsig="java.security.PrivilegedActionException" line="2">
+	<type  start="72" length="19" line="3" chordsig="java.lang.Exception"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Exception;)V@java.security.PrivilegedActionException"
+ sig="PrivilegedActionException(Exception)"
+ line="5"
+ startpos="102"
+ endpos="127"
+>
+	<marker line="-1" type="param">
+		<operand  start="148" length="2" line="5">
+			<expr><![CDATA[ex]]></expr>
+		</operand>
+	</marker>
+	<type  start="128" length="19" line="5" chordsig="java.lang.Exception"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="164" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="160" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="181" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="164" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getException:()Ljava/lang/Exception;@java.security.PrivilegedActionException"
+ sig="Exception getException()"
+ line="6"
+ startpos="221"
+ endpos="233"
+>
+	<type  start="201" length="19" line="6" chordsig="java.lang.Exception"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="248" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="244" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="265" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="248" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

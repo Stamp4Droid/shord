@@ -1,0 +1,263 @@
+<root>
+<class chordsig="java.util.jar.Manifest" line="2">
+	<type  start="58" length="19" line="3" chordsig="java.lang.Cloneable"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.util.jar.Manifest"
+ sig="Manifest()"
+ line="5"
+ startpos="88"
+ endpos="96"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="111" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="107" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="128" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="111" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/InputStream;)V@java.util.jar.Manifest"
+ sig="Manifest(InputStream)"
+ line="6"
+ startpos="148"
+ endpos="156"
+>
+	<marker line="-1" type="param">
+		<operand  start="177" length="2" line="6">
+			<expr><![CDATA[is]]></expr>
+		</operand>
+	</marker>
+	<type  start="157" length="19" line="6" chordsig="java.io.InputStream"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="220" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="216" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="237" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="220" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/util/jar/Manifest;)V@java.util.jar.Manifest"
+ sig="Manifest(Manifest)"
+ line="7"
+ startpos="257"
+ endpos="265"
+>
+	<marker line="-1" type="param">
+		<operand  start="289" length="3" line="7">
+			<expr><![CDATA[man]]></expr>
+		</operand>
+	</marker>
+	<type  start="266" length="22" line="7" chordsig="java.util.jar.Manifest"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="306" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="302" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="323" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="306" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clear:()V@java.util.jar.Manifest"
+ sig="void clear()"
+ line="8"
+ startpos="348"
+ endpos="353"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="368" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="364" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="385" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="368" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAttributes:(Ljava/lang/String;)Ljava/util/jar/Attributes;@java.util.jar.Manifest"
+ sig="Attributes getAttributes(String)"
+ line="9"
+ startpos="430"
+ endpos="443"
+>
+	<marker line="-1" type="param">
+		<operand  start="461" length="4" line="9">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="405" length="24" line="9" chordsig="java.util.jar.Attributes"/>
+	<type  start="444" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="479" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="475" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="496" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="479" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getEntries:()Ljava/util/Map;@java.util.jar.Manifest"
+ sig="Map&lt;String,Attributes&gt; getEntries()"
+ line="10"
+ startpos="574"
+ endpos="584"
+>
+	<type  start="516" length="13" line="10" chordsig="java.util.Map"/>
+	<type  start="530" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="548" length="24" line="10" chordsig="java.util.jar.Attributes"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="599" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="595" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="616" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="599" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMainAttributes:()Ljava/util/jar/Attributes;@java.util.jar.Manifest"
+ sig="Attributes getMainAttributes()"
+ line="11"
+ startpos="661"
+ endpos="678"
+>
+	<type  start="636" length="24" line="11" chordsig="java.util.jar.Attributes"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="693" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="689" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="710" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="693" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clone:()Ljava/lang/Object;@java.util.jar.Manifest"
+ sig="Object clone()"
+ line="12"
+ startpos="747"
+ endpos="752"
+>
+	<type  start="730" length="16" line="12" chordsig="java.lang.Object"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="767" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="763" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="784" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="767" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="write:(Ljava/io/OutputStream;)V@java.util.jar.Manifest"
+ sig="void write(OutputStream)"
+ line="13"
+ startpos="809"
+ endpos="814"
+>
+	<marker line="-1" type="param">
+		<operand  start="836" length="2" line="13">
+			<expr><![CDATA[os]]></expr>
+		</operand>
+	</marker>
+	<type  start="815" length="20" line="13" chordsig="java.io.OutputStream"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="879" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="875" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="896" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="879" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="read:(Ljava/io/InputStream;)V@java.util.jar.Manifest"
+ sig="void read(InputStream)"
+ line="14"
+ startpos="921"
+ endpos="925"
+>
+	<marker line="-1" type="param">
+		<operand  start="946" length="2" line="14">
+			<expr><![CDATA[is]]></expr>
+		</operand>
+	</marker>
+	<type  start="926" length="19" line="14" chordsig="java.io.InputStream"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="989" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="985" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1006" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="989" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@java.util.jar.Manifest"
+ sig="int hashCode()"
+ line="15"
+ startpos="1030"
+ endpos="1038"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1053" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1049" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1070" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1053" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.util.jar.Manifest"
+ sig="boolean equals(Object)"
+ line="16"
+ startpos="1098"
+ endpos="1104"
+>
+	<marker line="-1" type="param">
+		<operand  start="1122" length="1" line="16">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="1105" length="16" line="16" chordsig="java.lang.Object"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1137" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1133" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1154" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1137" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

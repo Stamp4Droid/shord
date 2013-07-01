@@ -1,0 +1,717 @@
+<root>
+<class chordsig="java.util.TreeSet" line="2">
+	<type  start="53" length="21" line="3" chordsig="java.util.AbstractSet"/>
+	<type  start="75" length="1" line="3" chordsig="java.lang.Object"/>
+	<type  start="91" length="22" line="4" chordsig="java.util.NavigableSet"/>
+	<type  start="114" length="1" line="4" chordsig="java.lang.Object"/>
+	<type  start="118" length="19" line="4" chordsig="java.lang.Cloneable"/>
+	<type  start="139" length="20" line="4" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.util.TreeSet"
+ sig="TreeSet()"
+ line="6"
+ startpos="170"
+ endpos="177"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="192" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="188" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="209" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="192" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/util/Collection;)V@java.util.TreeSet"
+ sig="TreeSet(Collection&lt;? extends E&gt;)"
+ line="7"
+ startpos="229"
+ endpos="236"
+>
+	<marker line="-1" type="param">
+		<operand  start="271" length="10" line="7">
+			<expr><![CDATA[collection]]></expr>
+		</operand>
+	</marker>
+	<type  start="237" length="20" line="7" chordsig="java.util.Collection"/>
+	<type  start="268" length="1" line="7" chordsig="java.lang.Object"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="295" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="291" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="312" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="295" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/util/Comparator;)V@java.util.TreeSet"
+ sig="TreeSet(Comparator&lt;? super E&gt;)"
+ line="8"
+ startpos="332"
+ endpos="339"
+>
+	<marker line="-1" type="param">
+		<operand  start="372" length="10" line="8">
+			<expr><![CDATA[comparator]]></expr>
+		</operand>
+	</marker>
+	<type  start="340" length="20" line="8" chordsig="java.util.Comparator"/>
+	<type  start="369" length="1" line="8" chordsig="java.lang.Object"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="396" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="392" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="413" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="396" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/util/SortedSet;)V@java.util.TreeSet"
+ sig="TreeSet(SortedSet&lt;E&gt;)"
+ line="9"
+ startpos="433"
+ endpos="440"
+>
+	<marker line="-1" type="param">
+		<operand  start="464" length="3" line="9">
+			<expr><![CDATA[set]]></expr>
+		</operand>
+	</marker>
+	<type  start="441" length="19" line="9" chordsig="java.util.SortedSet"/>
+	<type  start="461" length="1" line="9" chordsig="java.lang.Object"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="481" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="477" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="498" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="481" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="add:(Ljava/lang/Object;)Z@java.util.TreeSet"
+ sig="boolean add(E)"
+ line="10"
+ startpos="526"
+ endpos="529"
+>
+	<marker line="-1" type="param">
+		<operand  start="532" length="6" line="10">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="530" length="1" line="10" chordsig="java.lang.Object"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="552" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="548" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="569" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="552" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addAll:(Ljava/util/Collection;)Z@java.util.TreeSet"
+ sig="boolean addAll(Collection&lt;? extends E&gt;)"
+ line="11"
+ startpos="597"
+ endpos="603"
+>
+	<marker line="-1" type="param">
+		<operand  start="638" length="10" line="11">
+			<expr><![CDATA[collection]]></expr>
+		</operand>
+	</marker>
+	<type  start="604" length="20" line="11" chordsig="java.util.Collection"/>
+	<type  start="635" length="1" line="11" chordsig="java.lang.Object"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="662" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="658" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="679" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="662" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clear:()V@java.util.TreeSet"
+ sig="void clear()"
+ line="12"
+ startpos="704"
+ endpos="709"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="724" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="720" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="741" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="724" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clone:()Ljava/lang/Object;@java.util.TreeSet"
+ sig="Object clone()"
+ line="14"
+ startpos="827"
+ endpos="832"
+>
+	<type  start="810" length="16" line="14" chordsig="java.lang.Object"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="847" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="843" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="864" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="847" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="comparator:()Ljava/util/Comparator;@java.util.TreeSet"
+ sig="Comparator&lt;? super E&gt; comparator()"
+ line="15"
+ startpos="916"
+ endpos="926"
+>
+	<type  start="884" length="20" line="15" chordsig="java.util.Comparator"/>
+	<type  start="913" length="1" line="15" chordsig="java.lang.Object"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="941" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="937" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="958" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="941" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="contains:(Ljava/lang/Object;)Z@java.util.TreeSet"
+ sig="boolean contains(Object)"
+ line="16"
+ startpos="986"
+ endpos="994"
+>
+	<marker line="-1" type="param">
+		<operand  start="1012" length="6" line="16">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="995" length="16" line="16" chordsig="java.lang.Object"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1032" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1028" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1049" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1032" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isEmpty:()Z@java.util.TreeSet"
+ sig="boolean isEmpty()"
+ line="17"
+ startpos="1077"
+ endpos="1084"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1099" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1095" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1116" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1099" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="iterator:()Ljava/util/Iterator;@java.util.TreeSet"
+ sig="Iterator&lt;E&gt; iterator()"
+ line="18"
+ startpos="1158"
+ endpos="1166"
+>
+	<type  start="1136" length="18" line="18" chordsig="java.util.Iterator"/>
+	<type  start="1155" length="1" line="18" chordsig="java.lang.Object"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1181" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1177" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1198" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1181" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="descendingIterator:()Ljava/util/Iterator;@java.util.TreeSet"
+ sig="Iterator&lt;E&gt; descendingIterator()"
+ line="19"
+ startpos="1240"
+ endpos="1258"
+>
+	<type  start="1218" length="18" line="19" chordsig="java.util.Iterator"/>
+	<type  start="1237" length="1" line="19" chordsig="java.lang.Object"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1273" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1269" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1290" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1273" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="remove:(Ljava/lang/Object;)Z@java.util.TreeSet"
+ sig="boolean remove(Object)"
+ line="20"
+ startpos="1318"
+ endpos="1324"
+>
+	<marker line="-1" type="param">
+		<operand  start="1342" length="6" line="20">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="1325" length="16" line="20" chordsig="java.lang.Object"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1362" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1358" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1379" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1362" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="size:()I@java.util.TreeSet"
+ sig="int size()"
+ line="21"
+ startpos="1403"
+ endpos="1407"
+>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1422" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1418" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1439" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1422" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="first:()Ljava/lang/Object;@java.util.TreeSet"
+ sig="E first()"
+ line="22"
+ startpos="1461"
+ endpos="1466"
+>
+	<type  start="1459" length="1" line="22" chordsig="java.lang.Object"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1481" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1477" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1498" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1481" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="last:()Ljava/lang/Object;@java.util.TreeSet"
+ sig="E last()"
+ line="23"
+ startpos="1520"
+ endpos="1524"
+>
+	<type  start="1518" length="1" line="23" chordsig="java.lang.Object"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1539" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1535" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1556" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1539" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="pollFirst:()Ljava/lang/Object;@java.util.TreeSet"
+ sig="E pollFirst()"
+ line="24"
+ startpos="1578"
+ endpos="1587"
+>
+	<type  start="1576" length="1" line="24" chordsig="java.lang.Object"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1602" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1598" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1619" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1602" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="pollLast:()Ljava/lang/Object;@java.util.TreeSet"
+ sig="E pollLast()"
+ line="25"
+ startpos="1641"
+ endpos="1649"
+>
+	<type  start="1639" length="1" line="25" chordsig="java.lang.Object"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1664" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1660" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1681" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1664" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="higher:(Ljava/lang/Object;)Ljava/lang/Object;@java.util.TreeSet"
+ sig="E higher(E)"
+ line="26"
+ startpos="1703"
+ endpos="1709"
+>
+	<marker line="-1" type="param">
+		<operand  start="1712" length="1" line="26">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="1701" length="1" line="26" chordsig="java.lang.Object"/>
+	<type  start="1710" length="1" line="26" chordsig="java.lang.Object"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1727" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1723" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1744" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1727" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="lower:(Ljava/lang/Object;)Ljava/lang/Object;@java.util.TreeSet"
+ sig="E lower(E)"
+ line="27"
+ startpos="1766"
+ endpos="1771"
+>
+	<marker line="-1" type="param">
+		<operand  start="1774" length="1" line="27">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="1764" length="1" line="27" chordsig="java.lang.Object"/>
+	<type  start="1772" length="1" line="27" chordsig="java.lang.Object"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1789" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1785" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1806" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1789" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="ceiling:(Ljava/lang/Object;)Ljava/lang/Object;@java.util.TreeSet"
+ sig="E ceiling(E)"
+ line="28"
+ startpos="1828"
+ endpos="1835"
+>
+	<marker line="-1" type="param">
+		<operand  start="1838" length="1" line="28">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="1826" length="1" line="28" chordsig="java.lang.Object"/>
+	<type  start="1836" length="1" line="28" chordsig="java.lang.Object"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1853" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1849" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1870" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1853" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="floor:(Ljava/lang/Object;)Ljava/lang/Object;@java.util.TreeSet"
+ sig="E floor(E)"
+ line="29"
+ startpos="1892"
+ endpos="1897"
+>
+	<marker line="-1" type="param">
+		<operand  start="1900" length="1" line="29">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="1890" length="1" line="29" chordsig="java.lang.Object"/>
+	<type  start="1898" length="1" line="29" chordsig="java.lang.Object"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1915" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1911" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1932" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1915" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="descendingSet:()Ljava/util/NavigableSet;@java.util.TreeSet"
+ sig="NavigableSet&lt;E&gt; descendingSet()"
+ line="30"
+ startpos="1978"
+ endpos="1991"
+>
+	<type  start="1952" length="22" line="30" chordsig="java.util.NavigableSet"/>
+	<type  start="1975" length="1" line="30" chordsig="java.lang.Object"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2006" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2002" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2023" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2006" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="subSet:(Ljava/lang/Object;ZLjava/lang/Object;Z)Ljava/util/NavigableSet;@java.util.TreeSet"
+ sig="NavigableSet&lt;E&gt; subSet(E,boolean,E,boolean)"
+ line="32"
+ startpos="2118"
+ endpos="2124"
+>
+	<marker line="-1" type="param">
+		<operand  start="2127" length="5" line="32">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2142" length="14" line="32">
+			<expr><![CDATA[startInclusive]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2160" length="3" line="32">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2173" length="12" line="32">
+			<expr><![CDATA[endInclusive]]></expr>
+		</operand>
+	</marker>
+	<type  start="2092" length="22" line="32" chordsig="java.util.NavigableSet"/>
+	<type  start="2115" length="1" line="32" chordsig="java.lang.Object"/>
+	<type  start="2125" length="1" line="32" chordsig="java.lang.Object"/>
+	<type  start="2158" length="1" line="32" chordsig="java.lang.Object"/>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2199" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2195" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2216" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2199" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="headSet:(Ljava/lang/Object;Z)Ljava/util/NavigableSet;@java.util.TreeSet"
+ sig="NavigableSet&lt;E&gt; headSet(E,boolean)"
+ line="34"
+ startpos="2311"
+ endpos="2318"
+>
+	<marker line="-1" type="param">
+		<operand  start="2321" length="3" line="34">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2334" length="12" line="34">
+			<expr><![CDATA[endInclusive]]></expr>
+		</operand>
+	</marker>
+	<type  start="2285" length="22" line="34" chordsig="java.util.NavigableSet"/>
+	<type  start="2308" length="1" line="34" chordsig="java.lang.Object"/>
+	<type  start="2319" length="1" line="34" chordsig="java.lang.Object"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2360" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2356" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2377" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2360" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="tailSet:(Ljava/lang/Object;Z)Ljava/util/NavigableSet;@java.util.TreeSet"
+ sig="NavigableSet&lt;E&gt; tailSet(E,boolean)"
+ line="36"
+ startpos="2472"
+ endpos="2479"
+>
+	<marker line="-1" type="param">
+		<operand  start="2482" length="5" line="36">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2497" length="14" line="36">
+			<expr><![CDATA[startInclusive]]></expr>
+		</operand>
+	</marker>
+	<type  start="2446" length="22" line="36" chordsig="java.util.NavigableSet"/>
+	<type  start="2469" length="1" line="36" chordsig="java.lang.Object"/>
+	<type  start="2480" length="1" line="36" chordsig="java.lang.Object"/>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2525" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2521" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2542" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2525" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="subSet:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/SortedSet;@java.util.TreeSet"
+ sig="SortedSet&lt;E&gt; subSet(E,E)"
+ line="38"
+ startpos="2634"
+ endpos="2640"
+>
+	<marker line="-1" type="param">
+		<operand  start="2643" length="5" line="38">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2652" length="3" line="38">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="2611" length="19" line="38" chordsig="java.util.SortedSet"/>
+	<type  start="2631" length="1" line="38" chordsig="java.lang.Object"/>
+	<type  start="2641" length="1" line="38" chordsig="java.lang.Object"/>
+	<type  start="2650" length="1" line="38" chordsig="java.lang.Object"/>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2669" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2665" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2686" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2669" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="headSet:(Ljava/lang/Object;)Ljava/util/SortedSet;@java.util.TreeSet"
+ sig="SortedSet&lt;E&gt; headSet(E)"
+ line="40"
+ startpos="2778"
+ endpos="2785"
+>
+	<marker line="-1" type="param">
+		<operand  start="2788" length="3" line="40">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="2755" length="19" line="40" chordsig="java.util.SortedSet"/>
+	<type  start="2775" length="1" line="40" chordsig="java.lang.Object"/>
+	<type  start="2786" length="1" line="40" chordsig="java.lang.Object"/>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2805" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2801" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2822" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2805" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="tailSet:(Ljava/lang/Object;)Ljava/util/SortedSet;@java.util.TreeSet"
+ sig="SortedSet&lt;E&gt; tailSet(E)"
+ line="42"
+ startpos="2914"
+ endpos="2921"
+>
+	<marker line="-1" type="param">
+		<operand  start="2924" length="5" line="42">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<type  start="2891" length="19" line="42" chordsig="java.util.SortedSet"/>
+	<type  start="2911" length="1" line="42" chordsig="java.lang.Object"/>
+	<type  start="2922" length="1" line="42" chordsig="java.lang.Object"/>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2943" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2939" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2960" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2943" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

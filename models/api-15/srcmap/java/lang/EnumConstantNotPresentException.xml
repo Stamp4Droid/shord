@@ -1,0 +1,75 @@
+<root>
+<class chordsig="java.lang.EnumConstantNotPresentException" line="2">
+	<type  start="74" length="26" line="3" chordsig="java.lang.RuntimeException"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Class;Ljava/lang/String;)V@java.lang.EnumConstantNotPresentException"
+ sig="EnumConstantNotPresentException(Class&lt;? extends Enum&gt;,String)"
+ line="5"
+ startpos="111"
+ endpos="142"
+>
+	<marker line="-1" type="param">
+		<operand  start="185" length="8" line="5">
+			<expr><![CDATA[enumType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="212" length="12" line="5">
+			<expr><![CDATA[constantName]]></expr>
+		</operand>
+	</marker>
+	<type  start="143" length="15" line="5" chordsig="java.lang.Class"/>
+	<type  start="169" length="14" line="5" chordsig="java.lang.Enum"/>
+	<type  start="195" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="238" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="234" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="255" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="238" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="enumType:()Ljava/lang/Class;@java.lang.EnumConstantNotPresentException"
+ sig="Class&lt;? extends Enum&gt; enumType()"
+ line="6"
+ startpos="317"
+ endpos="325"
+>
+	<type  start="275" length="15" line="6" chordsig="java.lang.Class"/>
+	<type  start="301" length="14" line="6" chordsig="java.lang.Enum"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="340" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="336" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="357" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="340" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="constantName:()Ljava/lang/String;@java.lang.EnumConstantNotPresentException"
+ sig="String constantName()"
+ line="7"
+ startpos="394"
+ endpos="406"
+>
+	<type  start="377" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="421" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="417" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="438" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="421" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

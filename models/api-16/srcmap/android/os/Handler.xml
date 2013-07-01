@@ -1,0 +1,1584 @@
+<root>
+<class chordsig="android.os.Handler" line="5">
+<class chordsig="android.os.Handler$Callback" line="7">
+<method
+ chordsig="handleMessage:(Landroid/os/Message;)Z@android.os.Handler$Callback"
+ sig="boolean handleMessage(Message)"
+ line="9"
+ startpos="171"
+ endpos="184"
+>
+	<marker line="-1" type="param">
+		<operand  start="204" length="3" line="9">
+			<expr><![CDATA[msg]]></expr>
+		</operand>
+	</marker>
+	<type  start="185" length="18" line="9" chordsig="android.os.Message"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.os.Handler"
+ sig="Handler()"
+ line="12"
+ startpos="228"
+ endpos="235"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="258" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="254" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="275" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="258" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/os/Handler$Callback;)V@android.os.Handler"
+ sig="Handler(Callback)"
+ line="16"
+ startpos="303"
+ endpos="310"
+>
+	<marker line="-1" type="param">
+		<operand  start="339" length="8" line="16">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<type  start="311" length="27" line="16" chordsig="android.os.Handler$Callback"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="369" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="365" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="386" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="369" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/os/Looper;)V@android.os.Handler"
+ sig="Handler(Looper)"
+ line="20"
+ startpos="414"
+ endpos="421"
+>
+	<marker line="-1" type="param">
+		<operand  start="440" length="6" line="20">
+			<expr><![CDATA[looper]]></expr>
+		</operand>
+	</marker>
+	<type  start="422" length="17" line="20" chordsig="android.os.Looper"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="468" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="464" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="485" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="468" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/os/Looper;Landroid/os/Handler$Callback;)V@android.os.Handler"
+ sig="Handler(Looper,Callback)"
+ line="24"
+ startpos="513"
+ endpos="520"
+>
+	<marker line="-1" type="param">
+		<operand  start="539" length="6" line="24">
+			<expr><![CDATA[looper]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="575" length="8" line="24">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<type  start="521" length="17" line="24" chordsig="android.os.Looper"/>
+	<type  start="547" length="27" line="24" chordsig="android.os.Handler$Callback"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="605" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="601" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="622" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="605" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="handleMessage:(Landroid/os/Message;)V@android.os.Handler"
+ sig="void handleMessage(Message)"
+ line="28"
+ startpos="655"
+ endpos="668"
+>
+	<marker line="-1" type="param">
+		<operand  start="688" length="3" line="28">
+			<expr><![CDATA[msg]]></expr>
+		</operand>
+	</marker>
+	<type  start="669" length="18" line="28" chordsig="android.os.Message"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="713" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="709" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="730" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="713" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dispatchMessage:(Landroid/os/Message;)V@android.os.Handler"
+ sig="void dispatchMessage(Message)"
+ line="32"
+ startpos="763"
+ endpos="778"
+>
+	<marker line="-1" type="param">
+		<operand  start="798" length="3" line="32">
+			<expr><![CDATA[msg]]></expr>
+		</operand>
+	</marker>
+	<type  start="779" length="18" line="32" chordsig="android.os.Message"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="823" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="819" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="840" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="823" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMessageName:(Landroid/os/Message;)Ljava/lang/String;@android.os.Handler"
+ sig="String getMessageName(Message)"
+ line="36"
+ startpos="885"
+ endpos="899"
+>
+	<marker line="-1" type="param">
+		<operand  start="919" length="7" line="36">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="868" length="16" line="36" chordsig="java.lang.String"/>
+	<type  start="900" length="18" line="36" chordsig="android.os.Message"/>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="948" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="944" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="965" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="948" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeCallbacks:(Ljava/lang/Runnable;)V@android.os.Handler"
+ sig="void removeCallbacks(Runnable)"
+ line="40"
+ startpos="1004"
+ endpos="1019"
+>
+	<marker line="-1" type="param">
+		<operand  start="1039" length="1" line="40">
+			<expr><![CDATA[r]]></expr>
+		</operand>
+	</marker>
+	<type  start="1020" length="18" line="40" chordsig="java.lang.Runnable"/>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1062" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1058" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1079" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1062" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeCallbacks:(Ljava/lang/Runnable;Ljava/lang/Object;)V@android.os.Handler"
+ sig="void removeCallbacks(Runnable,Object)"
+ line="44"
+ startpos="1118"
+ endpos="1133"
+>
+	<marker line="-1" type="param">
+		<operand  start="1153" length="1" line="44">
+			<expr><![CDATA[r]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1173" length="5" line="44">
+			<expr><![CDATA[token]]></expr>
+		</operand>
+	</marker>
+	<type  start="1134" length="18" line="44" chordsig="java.lang.Runnable"/>
+	<type  start="1156" length="16" line="44" chordsig="java.lang.Object"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1200" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1196" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1217" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1200" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeMessages:(I)V@android.os.Handler"
+ sig="void removeMessages(int)"
+ line="48"
+ startpos="1256"
+ endpos="1270"
+>
+	<marker line="-1" type="param">
+		<operand  start="1275" length="4" line="48">
+			<expr><![CDATA[what]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1301" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1297" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1318" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1301" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeMessages:(ILjava/lang/Object;)V@android.os.Handler"
+ sig="void removeMessages(int,Object)"
+ line="52"
+ startpos="1357"
+ endpos="1371"
+>
+	<marker line="-1" type="param">
+		<operand  start="1376" length="4" line="52">
+			<expr><![CDATA[what]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1399" length="6" line="52">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="1382" length="16" line="52" chordsig="java.lang.Object"/>
+	<newexpr line="53" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1427" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1423" length="29" line="53">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1444" length="7" line="53">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1427" length="16" line="53" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeCallbacksAndMessages:(Ljava/lang/Object;)V@android.os.Handler"
+ sig="void removeCallbacksAndMessages(Object)"
+ line="56"
+ startpos="1483"
+ endpos="1509"
+>
+	<marker line="-1" type="param">
+		<operand  start="1527" length="5" line="56">
+			<expr><![CDATA[token]]></expr>
+		</operand>
+	</marker>
+	<type  start="1510" length="16" line="56" chordsig="java.lang.Object"/>
+	<newexpr line="57" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1554" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1550" length="29" line="57">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1571" length="7" line="57">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1554" length="16" line="57" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hasMessages:(I)Z@android.os.Handler"
+ sig="boolean hasMessages(int)"
+ line="60"
+ startpos="1613"
+ endpos="1624"
+>
+	<marker line="-1" type="param">
+		<operand  start="1629" length="4" line="60">
+			<expr><![CDATA[what]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="61" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1655" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1651" length="29" line="61">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1672" length="7" line="61">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1655" length="16" line="61" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hasMessages:(ILjava/lang/Object;)Z@android.os.Handler"
+ sig="boolean hasMessages(int,Object)"
+ line="64"
+ startpos="1714"
+ endpos="1725"
+>
+	<marker line="-1" type="param">
+		<operand  start="1730" length="4" line="64">
+			<expr><![CDATA[what]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1753" length="6" line="64">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="1736" length="16" line="64" chordsig="java.lang.Object"/>
+	<newexpr line="65" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1781" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1777" length="29" line="65">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1798" length="7" line="65">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1781" length="16" line="65" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLooper:()Landroid/os/Looper;@android.os.Handler"
+ sig="Looper getLooper()"
+ line="68"
+ startpos="1850"
+ endpos="1859"
+>
+	<type  start="1832" length="17" line="68" chordsig="android.os.Looper"/>
+	<newexpr line="69" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1882" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1878" length="29" line="69">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1899" length="7" line="69">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1882" length="16" line="69" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dump:(Landroid/util/Printer;Ljava/lang/String;)V@android.os.Handler"
+ sig="void dump(Printer,String)"
+ line="72"
+ startpos="1938"
+ endpos="1942"
+>
+	<marker line="-1" type="param">
+		<operand  start="1964" length="2" line="72">
+			<expr><![CDATA[pw]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1985" length="6" line="72">
+			<expr><![CDATA[prefix]]></expr>
+		</operand>
+	</marker>
+	<type  start="1943" length="20" line="72" chordsig="android.util.Printer"/>
+	<type  start="1968" length="16" line="72" chordsig="java.lang.String"/>
+	<newexpr line="73" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2013" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2009" length="29" line="73">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2030" length="7" line="73">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2013" length="16" line="73" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.os.Handler"
+ sig="String toString()"
+ line="76"
+ startpos="2075"
+ endpos="2083"
+>
+	<type  start="2058" length="16" line="76" chordsig="java.lang.String"/>
+	<newexpr line="77" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2106" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2102" length="29" line="77">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2123" length="7" line="77">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2106" length="16" line="77" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="sendEmptyMessageAtTime:(IJ)Z@android.os.Handler"
+ sig="boolean sendEmptyMessageAtTime(int,long)"
+ line="80"
+ startpos="2165"
+ endpos="2187"
+>
+	<marker line="-1" type="param">
+		<operand  start="2192" length="4" line="80">
+			<expr><![CDATA[what]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2203" length="12" line="80">
+			<expr><![CDATA[uptimeMillis]]></expr>
+		</operand>
+	</marker>
+	<invkexpr line="81" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="2259" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(null);
+  }
+}
+)]]></expr>
+		<param  start="2276" length="150" line="81">
+			<expr type="null"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(null);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="81" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="2245" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="81" chordsig="&lt;init&gt;:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#81" start="2280" length="35" type="invoke">
+			<expr><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(null);
+  }
+}
+]]></expr>
+		<param  start="2276" length="150" line="81">
+			<expr type="android.os.Handler#edu.stanford.stamp.harness.Callback#81"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(null);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2280" length="35" line="81" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#81" line="81">
+<method
+ chordsig="run:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#81"
+ sig="void run()"
+ line="83"
+ startpos="2345"
+ endpos="2348"
+>
+	<invkexpr line="84" chordsig="handleMessage:(Landroid/os/Message;)V@android.os.Handler" start="2382" length="13" type="invoke">
+			<expr><![CDATA[Handler.this.handleMessage(null)]]></expr>
+		<param  start="2369" length="12" line="84">
+			<expr><![CDATA[Handler.this]]></expr>
+		</param>
+		<param  start="2396" length="4" line="84">
+			<expr><![CDATA[null]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<marker line="87" type="return">
+		<operand  start="2444" length="4" line="87">
+			<expr><![CDATA[true]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="sendEmptyMessageDelayed:(IJ)Z@android.os.Handler"
+ sig="boolean sendEmptyMessageDelayed(int,long)"
+ line="90"
+ startpos="2482"
+ endpos="2505"
+>
+	<marker line="-1" type="param">
+		<operand  start="2510" length="4" line="90">
+			<expr><![CDATA[what]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2521" length="11" line="90">
+			<expr><![CDATA[delayMillis]]></expr>
+		</operand>
+	</marker>
+	<invkexpr line="91" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="2576" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(null);
+  }
+}
+)]]></expr>
+		<param  start="2593" length="150" line="91">
+			<expr type="null"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(null);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="91" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="2562" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="91" chordsig="&lt;init&gt;:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#91" start="2597" length="35" type="invoke">
+			<expr><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(null);
+  }
+}
+]]></expr>
+		<param  start="2593" length="150" line="91">
+			<expr type="android.os.Handler#edu.stanford.stamp.harness.Callback#91"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(null);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2597" length="35" line="91" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#91" line="91">
+<method
+ chordsig="run:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#91"
+ sig="void run()"
+ line="93"
+ startpos="2662"
+ endpos="2665"
+>
+	<invkexpr line="94" chordsig="handleMessage:(Landroid/os/Message;)V@android.os.Handler" start="2699" length="13" type="invoke">
+			<expr><![CDATA[Handler.this.handleMessage(null)]]></expr>
+		<param  start="2686" length="12" line="94">
+			<expr><![CDATA[Handler.this]]></expr>
+		</param>
+		<param  start="2713" length="4" line="94">
+			<expr><![CDATA[null]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<marker line="97" type="return">
+		<operand  start="2761" length="4" line="97">
+			<expr><![CDATA[true]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="sendEmptyMessage:(I)Z@android.os.Handler"
+ sig="boolean sendEmptyMessage(int)"
+ line="100"
+ startpos="2799"
+ endpos="2815"
+>
+	<marker line="-1" type="param">
+		<operand  start="2820" length="4" line="100">
+			<expr><![CDATA[what]]></expr>
+		</operand>
+	</marker>
+	<invkexpr line="101" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="2868" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(null);
+  }
+}
+)]]></expr>
+		<param  start="2885" length="150" line="101">
+			<expr type="null"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(null);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="101" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="2854" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="101" chordsig="&lt;init&gt;:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#101" start="2889" length="35" type="invoke">
+			<expr><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(null);
+  }
+}
+]]></expr>
+		<param  start="2885" length="150" line="101">
+			<expr type="android.os.Handler#edu.stanford.stamp.harness.Callback#101"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(null);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2889" length="35" line="101" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#101" line="101">
+<method
+ chordsig="run:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#101"
+ sig="void run()"
+ line="103"
+ startpos="2954"
+ endpos="2957"
+>
+	<invkexpr line="104" chordsig="handleMessage:(Landroid/os/Message;)V@android.os.Handler" start="2991" length="13" type="invoke">
+			<expr><![CDATA[Handler.this.handleMessage(null)]]></expr>
+		<param  start="2978" length="12" line="104">
+			<expr><![CDATA[Handler.this]]></expr>
+		</param>
+		<param  start="3005" length="4" line="104">
+			<expr><![CDATA[null]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<marker line="107" type="return">
+		<operand  start="3053" length="4" line="107">
+			<expr><![CDATA[true]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="sendMessage:(Landroid/os/Message;)Z@android.os.Handler"
+ sig="boolean sendMessage(Message)"
+ line="110"
+ startpos="3091"
+ endpos="3102"
+>
+	<marker line="-1" type="param">
+		<operand  start="3128" length="3" line="110">
+			<expr><![CDATA[msg]]></expr>
+		</operand>
+	</marker>
+	<type  start="3109" length="18" line="110" chordsig="android.os.Message"/>
+	<invkexpr line="111" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="3175" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(msg);
+  }
+}
+)]]></expr>
+		<param  start="3192" length="149" line="111">
+			<expr type="null"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(msg);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="111" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="3161" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="111" chordsig="&lt;init&gt;:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#111" start="3196" length="35" type="invoke">
+			<expr><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(msg);
+  }
+}
+]]></expr>
+		<param  start="3192" length="149" line="111">
+			<expr type="android.os.Handler#edu.stanford.stamp.harness.Callback#111"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(msg);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3196" length="35" line="111" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#111" line="111">
+<method
+ chordsig="run:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#111"
+ sig="void run()"
+ line="113"
+ startpos="3261"
+ endpos="3264"
+>
+	<invkexpr line="114" chordsig="handleMessage:(Landroid/os/Message;)V@android.os.Handler" start="3298" length="13" type="invoke">
+			<expr><![CDATA[Handler.this.handleMessage(msg)]]></expr>
+		<param  start="3285" length="12" line="114">
+			<expr><![CDATA[Handler.this]]></expr>
+		</param>
+		<param  start="3312" length="3" line="114">
+			<expr><![CDATA[msg]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<marker line="117" type="return">
+		<operand  start="3359" length="4" line="117">
+			<expr><![CDATA[true]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="sendMessageDelayed:(Landroid/os/Message;J)Z@android.os.Handler"
+ sig="boolean sendMessageDelayed(Message,long)"
+ line="120"
+ startpos="3397"
+ endpos="3415"
+>
+	<marker line="-1" type="param">
+		<operand  start="3441" length="3" line="120">
+			<expr><![CDATA[msg]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3457" length="11" line="120">
+			<expr><![CDATA[delayMillis]]></expr>
+		</operand>
+	</marker>
+	<type  start="3422" length="18" line="120" chordsig="android.os.Message"/>
+	<invkexpr line="121" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="3512" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    try {
+      Thread.sleep(delayMillis);
+    }
+ catch (    InterruptedException e) {
+    }
+    Handler.this.handleMessage(msg);
+  }
+}
+)]]></expr>
+		<param  start="3529" length="287" line="121">
+			<expr type="null"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    try {
+      Thread.sleep(delayMillis);
+    }
+ catch (    InterruptedException e) {
+    }
+    Handler.this.handleMessage(msg);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="121" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="3498" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="121" chordsig="&lt;init&gt;:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#121" start="3533" length="35" type="invoke">
+			<expr><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    try {
+      Thread.sleep(delayMillis);
+    }
+ catch (    InterruptedException e) {
+    }
+    Handler.this.handleMessage(msg);
+  }
+}
+]]></expr>
+		<param  start="3529" length="287" line="121">
+			<expr type="android.os.Handler#edu.stanford.stamp.harness.Callback#121"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    try {
+      Thread.sleep(delayMillis);
+    }
+ catch (    InterruptedException e) {
+    }
+    Handler.this.handleMessage(msg);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3533" length="35" line="121" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#121" line="121">
+<method
+ chordsig="run:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#121"
+ sig="void run()"
+ line="123"
+ startpos="3598"
+ endpos="3601"
+>
+	<invkexpr line="125" chordsig="sleep:(J)V@java.lang.Thread" start="3655" length="5" type="invoke">
+			<expr><![CDATA[Thread.sleep(delayMillis)]]></expr>
+		<param  start="3661" length="11" line="125">
+			<expr><![CDATA[delayMillis]]></expr>
+		</param>
+	</invkexpr>
+	<type  start="3700" length="20" line="126" chordsig="java.lang.InterruptedException"/>
+	<invkexpr line="128" chordsig="handleMessage:(Landroid/os/Message;)V@android.os.Handler" start="3773" length="13" type="invoke">
+			<expr><![CDATA[Handler.this.handleMessage(msg)]]></expr>
+		<param  start="3760" length="12" line="128">
+			<expr><![CDATA[Handler.this]]></expr>
+		</param>
+		<param  start="3787" length="3" line="128">
+			<expr><![CDATA[msg]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<marker line="131" type="return">
+		<operand  start="3834" length="4" line="131">
+			<expr><![CDATA[true]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="sendMessageAtTime:(Landroid/os/Message;J)Z@android.os.Handler"
+ sig="boolean sendMessageAtTime(Message,long)"
+ line="134"
+ startpos="3866"
+ endpos="3883"
+>
+	<marker line="-1" type="param">
+		<operand  start="3909" length="3" line="134">
+			<expr><![CDATA[msg]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3919" length="12" line="134">
+			<expr><![CDATA[uptimeMillis]]></expr>
+		</operand>
+	</marker>
+	<type  start="3890" length="18" line="134" chordsig="android.os.Message"/>
+	<invkexpr line="135" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="3975" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(msg);
+  }
+}
+)]]></expr>
+		<param  start="3992" length="149" line="135">
+			<expr type="null"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(msg);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="135" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="3961" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="135" chordsig="&lt;init&gt;:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#135" start="3996" length="35" type="invoke">
+			<expr><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(msg);
+  }
+}
+]]></expr>
+		<param  start="3992" length="149" line="135">
+			<expr type="android.os.Handler#edu.stanford.stamp.harness.Callback#135"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(msg);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3996" length="35" line="135" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#135" line="135">
+<method
+ chordsig="run:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#135"
+ sig="void run()"
+ line="137"
+ startpos="4061"
+ endpos="4064"
+>
+	<invkexpr line="138" chordsig="handleMessage:(Landroid/os/Message;)V@android.os.Handler" start="4098" length="13" type="invoke">
+			<expr><![CDATA[Handler.this.handleMessage(msg)]]></expr>
+		<param  start="4085" length="12" line="138">
+			<expr><![CDATA[Handler.this]]></expr>
+		</param>
+		<param  start="4112" length="3" line="138">
+			<expr><![CDATA[msg]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<marker line="141" type="return">
+		<operand  start="4159" length="4" line="141">
+			<expr><![CDATA[true]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="sendMessageAtFrontOfQueue:(Landroid/os/Message;)Z@android.os.Handler"
+ sig="boolean sendMessageAtFrontOfQueue(Message)"
+ line="144"
+ startpos="4197"
+ endpos="4222"
+>
+	<marker line="-1" type="param">
+		<operand  start="4248" length="3" line="144">
+			<expr><![CDATA[msg]]></expr>
+		</operand>
+	</marker>
+	<type  start="4229" length="18" line="144" chordsig="android.os.Message"/>
+	<invkexpr line="145" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="4295" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(msg);
+  }
+}
+)]]></expr>
+		<param  start="4312" length="149" line="145">
+			<expr type="null"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(msg);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="145" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="4281" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="145" chordsig="&lt;init&gt;:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#145" start="4316" length="35" type="invoke">
+			<expr><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(msg);
+  }
+}
+]]></expr>
+		<param  start="4312" length="149" line="145">
+			<expr type="android.os.Handler#edu.stanford.stamp.harness.Callback#145"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    Handler.this.handleMessage(msg);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4316" length="35" line="145" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#145" line="145">
+<method
+ chordsig="run:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#145"
+ sig="void run()"
+ line="147"
+ startpos="4381"
+ endpos="4384"
+>
+	<invkexpr line="148" chordsig="handleMessage:(Landroid/os/Message;)V@android.os.Handler" start="4418" length="13" type="invoke">
+			<expr><![CDATA[Handler.this.handleMessage(msg)]]></expr>
+		<param  start="4405" length="12" line="148">
+			<expr><![CDATA[Handler.this]]></expr>
+		</param>
+		<param  start="4432" length="3" line="148">
+			<expr><![CDATA[msg]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<marker line="151" type="return">
+		<operand  start="4479" length="4" line="151">
+			<expr><![CDATA[true]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="post:(Ljava/lang/Runnable;)Z@android.os.Handler"
+ sig="boolean post(Runnable)"
+ line="154"
+ startpos="4517"
+ endpos="4521"
+>
+	<marker line="-1" type="param">
+		<operand  start="4547" length="1" line="154">
+			<expr><![CDATA[r]]></expr>
+		</operand>
+	</marker>
+	<type  start="4528" length="18" line="154" chordsig="java.lang.Runnable"/>
+	<invkexpr line="155" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="4592" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+)]]></expr>
+		<param  start="4609" length="125" line="155">
+			<expr type="null"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="155" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="4578" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="155" chordsig="&lt;init&gt;:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#155" start="4613" length="35" type="invoke">
+			<expr><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+]]></expr>
+		<param  start="4609" length="125" line="155">
+			<expr type="android.os.Handler#edu.stanford.stamp.harness.Callback#155"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4613" length="35" line="155" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#155" line="155">
+<method
+ chordsig="run:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#155"
+ sig="void run()"
+ line="157"
+ startpos="4678"
+ endpos="4681"
+>
+	<invkexpr line="158" chordsig="run:()V@java.lang.Runnable" start="4704" length="3" type="invoke">
+			<expr><![CDATA[r.run()]]></expr>
+		<param  start="4702" length="1" line="158">
+			<expr><![CDATA[r]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<marker line="161" type="return">
+		<operand  start="4752" length="4" line="161">
+			<expr><![CDATA[true]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="postAtTime:(Ljava/lang/Runnable;J)Z@android.os.Handler"
+ sig="boolean postAtTime(Runnable,long)"
+ line="164"
+ startpos="4790"
+ endpos="4800"
+>
+	<marker line="-1" type="param">
+		<operand  start="4826" length="1" line="164">
+			<expr><![CDATA[r]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4834" length="12" line="164">
+			<expr><![CDATA[uptimeMillis]]></expr>
+		</operand>
+	</marker>
+	<type  start="4807" length="18" line="164" chordsig="java.lang.Runnable"/>
+	<invkexpr line="165" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="4890" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+)]]></expr>
+		<param  start="4907" length="125" line="165">
+			<expr type="null"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="165" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="4876" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="165" chordsig="&lt;init&gt;:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#165" start="4911" length="35" type="invoke">
+			<expr><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+]]></expr>
+		<param  start="4907" length="125" line="165">
+			<expr type="android.os.Handler#edu.stanford.stamp.harness.Callback#165"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4911" length="35" line="165" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#165" line="165">
+<method
+ chordsig="run:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#165"
+ sig="void run()"
+ line="167"
+ startpos="4976"
+ endpos="4979"
+>
+	<invkexpr line="168" chordsig="run:()V@java.lang.Runnable" start="5002" length="3" type="invoke">
+			<expr><![CDATA[r.run()]]></expr>
+		<param  start="5000" length="1" line="168">
+			<expr><![CDATA[r]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<marker line="171" type="return">
+		<operand  start="5050" length="4" line="171">
+			<expr><![CDATA[true]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="postAtTime:(Ljava/lang/Runnable;Ljava/lang/Object;J)Z@android.os.Handler"
+ sig="boolean postAtTime(Runnable,Object,long)"
+ line="174"
+ startpos="5088"
+ endpos="5098"
+>
+	<marker line="-1" type="param">
+		<operand  start="5124" length="1" line="174">
+			<expr><![CDATA[r]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5144" length="5" line="174">
+			<expr><![CDATA[token]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5156" length="12" line="174">
+			<expr><![CDATA[uptimeMillis]]></expr>
+		</operand>
+	</marker>
+	<type  start="5105" length="18" line="174" chordsig="java.lang.Runnable"/>
+	<type  start="5127" length="16" line="174" chordsig="java.lang.Object"/>
+	<invkexpr line="175" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="5212" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+)]]></expr>
+		<param  start="5229" length="125" line="175">
+			<expr type="null"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="175" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="5198" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="175" chordsig="&lt;init&gt;:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#175" start="5233" length="35" type="invoke">
+			<expr><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+]]></expr>
+		<param  start="5229" length="125" line="175">
+			<expr type="android.os.Handler#edu.stanford.stamp.harness.Callback#175"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5233" length="35" line="175" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#175" line="175">
+<method
+ chordsig="run:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#175"
+ sig="void run()"
+ line="177"
+ startpos="5298"
+ endpos="5301"
+>
+	<invkexpr line="178" chordsig="run:()V@java.lang.Runnable" start="5324" length="3" type="invoke">
+			<expr><![CDATA[r.run()]]></expr>
+		<param  start="5322" length="1" line="178">
+			<expr><![CDATA[r]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<marker line="181" type="return">
+		<operand  start="5372" length="4" line="181">
+			<expr><![CDATA[true]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="postDelayed:(Ljava/lang/Runnable;J)Z@android.os.Handler"
+ sig="boolean postDelayed(Runnable,long)"
+ line="184"
+ startpos="5410"
+ endpos="5421"
+>
+	<marker line="-1" type="param">
+		<operand  start="5447" length="1" line="184">
+			<expr><![CDATA[r]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="5455" length="11" line="184">
+			<expr><![CDATA[delayMillis]]></expr>
+		</operand>
+	</marker>
+	<type  start="5428" length="18" line="184" chordsig="java.lang.Runnable"/>
+	<invkexpr line="185" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="5510" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+)]]></expr>
+		<param  start="5527" length="125" line="185">
+			<expr type="null"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="185" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="5496" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="185" chordsig="&lt;init&gt;:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#185" start="5531" length="35" type="invoke">
+			<expr><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+]]></expr>
+		<param  start="5527" length="125" line="185">
+			<expr type="android.os.Handler#edu.stanford.stamp.harness.Callback#185"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5531" length="35" line="185" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#185" line="185">
+<method
+ chordsig="run:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#185"
+ sig="void run()"
+ line="187"
+ startpos="5596"
+ endpos="5599"
+>
+	<invkexpr line="188" chordsig="run:()V@java.lang.Runnable" start="5622" length="3" type="invoke">
+			<expr><![CDATA[r.run()]]></expr>
+		<param  start="5620" length="1" line="188">
+			<expr><![CDATA[r]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<marker line="191" type="return">
+		<operand  start="5670" length="4" line="191">
+			<expr><![CDATA[true]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="postAtFrontOfQueue:(Ljava/lang/Runnable;)Z@android.os.Handler"
+ sig="boolean postAtFrontOfQueue(Runnable)"
+ line="194"
+ startpos="5708"
+ endpos="5726"
+>
+	<marker line="-1" type="param">
+		<operand  start="5752" length="1" line="194">
+			<expr><![CDATA[r]]></expr>
+		</operand>
+	</marker>
+	<type  start="5733" length="18" line="194" chordsig="java.lang.Runnable"/>
+	<invkexpr line="195" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="5797" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+)]]></expr>
+		<param  start="5814" length="125" line="195">
+			<expr type="null"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="195" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="5783" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="195" chordsig="&lt;init&gt;:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#195" start="5818" length="35" type="invoke">
+			<expr><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+]]></expr>
+		<param  start="5814" length="125" line="195">
+			<expr type="android.os.Handler#edu.stanford.stamp.harness.Callback#195"><![CDATA[new edu.stanford.stamp.harness.Callback(){
+  public void run(){
+    r.run();
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5818" length="35" line="195" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#195" line="195">
+<method
+ chordsig="run:()V@android.os.Handler$android.os.Handler#edu.stanford.stamp.harness.Callback#195"
+ sig="void run()"
+ line="197"
+ startpos="5883"
+ endpos="5886"
+>
+	<invkexpr line="198" chordsig="run:()V@java.lang.Runnable" start="5909" length="3" type="invoke">
+			<expr><![CDATA[r.run()]]></expr>
+		<param  start="5907" length="1" line="198">
+			<expr><![CDATA[r]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<marker line="201" type="return">
+		<operand  start="5957" length="4" line="201">
+			<expr><![CDATA[true]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="obtainMessage:(IIILjava/lang/Object;)Landroid/os/Message;@android.os.Handler"
+ sig="Message obtainMessage(int,int,int,Object)"
+ line="204"
+ startpos="6006"
+ endpos="6019"
+>
+	<marker line="-1" type="param">
+		<operand  start="6024" length="4" line="204">
+			<expr><![CDATA[what]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6034" length="4" line="204">
+			<expr><![CDATA[arg1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6044" length="4" line="204">
+			<expr><![CDATA[arg2]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6067" length="3" line="204">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="5987" length="18" line="204" chordsig="android.os.Message"/>
+	<type  start="6050" length="16" line="204" chordsig="java.lang.Object"/>
+	<marker line="205" type="new.lhs" chordsig="Landroid/os/Message;">
+		<operand  start="6101" length="3" line="205">
+			<expr><![CDATA[msg]]></expr>
+		</operand>
+	</marker>
+	<type  start="6082" length="18" line="205" chordsig="android.os.Message"/>
+	<newexpr line="205" chordsig="&lt;init&gt;:()V@android.os.Message" start="6111" length="18" type="invoke">
+			<expr><![CDATA[new android.os.Message()]]></expr>
+		<param  start="6107" length="24" line="205">
+			<expr><![CDATA[new android.os.Message()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6111" length="18" line="205" chordsig="android.os.Message"/>
+	<marker line="210" type="return">
+		<operand  start="6246" length="3" line="210">
+			<expr><![CDATA[msg]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="obtainMessage:(III)Landroid/os/Message;@android.os.Handler"
+ sig="Message obtainMessage(int,int,int)"
+ line="213"
+ startpos="6294"
+ endpos="6307"
+>
+	<marker line="-1" type="param">
+		<operand  start="6312" length="4" line="213">
+			<expr><![CDATA[what]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6322" length="4" line="213">
+			<expr><![CDATA[arg1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6332" length="4" line="213">
+			<expr><![CDATA[arg2]]></expr>
+		</operand>
+	</marker>
+	<type  start="6275" length="18" line="213" chordsig="android.os.Message"/>
+	<marker line="214" type="return">
+		<operand  start="6355" length="42" line="214">
+			<expr><![CDATA[this.obtainMessage(what,arg1,arg2,null)]]></expr>
+		</operand>
+	</marker>
+	<invkexpr line="214" chordsig="obtainMessage:(IIILjava/lang/Object;)Landroid/os/Message;@android.os.Handler" start="6360" length="13" type="invoke">
+			<expr><![CDATA[this.obtainMessage(what,arg1,arg2,null)]]></expr>
+		<param  start="6355" length="4" line="214">
+			<expr><![CDATA[this]]></expr>
+		</param>
+		<param  start="6374" length="4" line="214">
+			<expr><![CDATA[what]]></expr>
+		</param>
+		<param  start="6380" length="4" line="214">
+			<expr><![CDATA[arg1]]></expr>
+		</param>
+		<param  start="6386" length="4" line="214">
+			<expr><![CDATA[arg2]]></expr>
+		</param>
+		<param  start="6392" length="4" line="214">
+			<expr><![CDATA[null]]></expr>
+		</param>
+	</invkexpr>
+</method>
+<method
+ chordsig="obtainMessage:(ILjava/lang/Object;)Landroid/os/Message;@android.os.Handler"
+ sig="Message obtainMessage(int,Object)"
+ line="217"
+ startpos="6442"
+ endpos="6455"
+>
+	<marker line="-1" type="param">
+		<operand  start="6460" length="4" line="217">
+			<expr><![CDATA[what]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6483" length="3" line="217">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="6423" length="18" line="217" chordsig="android.os.Message"/>
+	<type  start="6466" length="16" line="217" chordsig="java.lang.Object"/>
+	<marker line="218" type="return">
+		<operand  start="6505" length="35" line="218">
+			<expr><![CDATA[this.obtainMessage(what,0,0,obj)]]></expr>
+		</operand>
+	</marker>
+	<invkexpr line="218" chordsig="obtainMessage:(IIILjava/lang/Object;)Landroid/os/Message;@android.os.Handler" start="6510" length="13" type="invoke">
+			<expr><![CDATA[this.obtainMessage(what,0,0,obj)]]></expr>
+		<param  start="6505" length="4" line="218">
+			<expr><![CDATA[this]]></expr>
+		</param>
+		<param  start="6524" length="4" line="218">
+			<expr><![CDATA[what]]></expr>
+		</param>
+		<param  start="6530" length="1" line="218">
+			<expr><![CDATA[0]]></expr>
+		</param>
+		<param  start="6533" length="1" line="218">
+			<expr><![CDATA[0]]></expr>
+		</param>
+		<param  start="6536" length="3" line="218">
+			<expr><![CDATA[obj]]></expr>
+		</param>
+	</invkexpr>
+</method>
+<method
+ chordsig="obtainMessage:(I)Landroid/os/Message;@android.os.Handler"
+ sig="Message obtainMessage(int)"
+ line="221"
+ startpos="6585"
+ endpos="6598"
+>
+	<marker line="-1" type="param">
+		<operand  start="6603" length="4" line="221">
+			<expr><![CDATA[what]]></expr>
+		</operand>
+	</marker>
+	<type  start="6566" length="18" line="221" chordsig="android.os.Message"/>
+	<marker line="222" type="return">
+		<operand  start="6626" length="36" line="222">
+			<expr><![CDATA[this.obtainMessage(what,0,0,null)]]></expr>
+		</operand>
+	</marker>
+	<invkexpr line="222" chordsig="obtainMessage:(IIILjava/lang/Object;)Landroid/os/Message;@android.os.Handler" start="6631" length="13" type="invoke">
+			<expr><![CDATA[this.obtainMessage(what,0,0,null)]]></expr>
+		<param  start="6626" length="4" line="222">
+			<expr><![CDATA[this]]></expr>
+		</param>
+		<param  start="6645" length="4" line="222">
+			<expr><![CDATA[what]]></expr>
+		</param>
+		<param  start="6651" length="1" line="222">
+			<expr><![CDATA[0]]></expr>
+		</param>
+		<param  start="6654" length="1" line="222">
+			<expr><![CDATA[0]]></expr>
+		</param>
+		<param  start="6657" length="4" line="222">
+			<expr><![CDATA[null]]></expr>
+		</param>
+	</invkexpr>
+</method>
+<method
+ chordsig="obtainMessage:()Landroid/os/Message;@android.os.Handler"
+ sig="Message obtainMessage()"
+ line="225"
+ startpos="6707"
+ endpos="6720"
+>
+	<type  start="6688" length="18" line="225" chordsig="android.os.Message"/>
+	<marker line="226" type="return">
+		<operand  start="6740" length="33" line="226">
+			<expr><![CDATA[this.obtainMessage(0,0,0,null)]]></expr>
+		</operand>
+	</marker>
+	<invkexpr line="226" chordsig="obtainMessage:(IIILjava/lang/Object;)Landroid/os/Message;@android.os.Handler" start="6745" length="13" type="invoke">
+			<expr><![CDATA[this.obtainMessage(0,0,0,null)]]></expr>
+		<param  start="6740" length="4" line="226">
+			<expr><![CDATA[this]]></expr>
+		</param>
+		<param  start="6759" length="1" line="226">
+			<expr><![CDATA[0]]></expr>
+		</param>
+		<param  start="6762" length="1" line="226">
+			<expr><![CDATA[0]]></expr>
+		</param>
+		<param  start="6765" length="1" line="226">
+			<expr><![CDATA[0]]></expr>
+		</param>
+		<param  start="6768" length="4" line="226">
+			<expr><![CDATA[null]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+</root>

@@ -1,0 +1,1614 @@
+<root>
+<class chordsig="android.app.Notification" line="2">
+	<type  start="60" length="21" line="3" chordsig="android.os.Parcelable"/>
+<class chordsig="android.app.Notification$Builder" line="5">
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.app.Notification$Builder"
+ sig="Builder(Context)"
+ line="7"
+ startpos="122"
+ endpos="129"
+>
+	<marker line="-1" type="param">
+		<operand  start="154" length="7" line="7">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="130" length="23" line="7" chordsig="android.content.Context"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="175" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="171" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="192" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="175" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setWhen:(J)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setWhen(long)"
+ line="8"
+ startpos="245"
+ endpos="252"
+>
+	<marker line="-1" type="param">
+		<operand  start="258" length="4" line="8">
+			<expr><![CDATA[when]]></expr>
+		</operand>
+	</marker>
+	<type  start="212" length="32" line="8" chordsig="android.app.Notification$Builder"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="276" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="272" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="293" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="276" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setUsesChronometer:(Z)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setUsesChronometer(boolean)"
+ line="9"
+ startpos="346"
+ endpos="364"
+>
+	<marker line="-1" type="param">
+		<operand  start="373" length="1" line="9">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<type  start="313" length="32" line="9" chordsig="android.app.Notification$Builder"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="388" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="384" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="405" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="388" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSmallIcon:(I)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setSmallIcon(int)"
+ line="10"
+ startpos="458"
+ endpos="470"
+>
+	<marker line="-1" type="param">
+		<operand  start="475" length="4" line="10">
+			<expr><![CDATA[icon]]></expr>
+		</operand>
+	</marker>
+	<type  start="425" length="32" line="10" chordsig="android.app.Notification$Builder"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="493" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="489" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="510" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="493" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSmallIcon:(II)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setSmallIcon(int,int)"
+ line="11"
+ startpos="563"
+ endpos="575"
+>
+	<marker line="-1" type="param">
+		<operand  start="580" length="4" line="11">
+			<expr><![CDATA[icon]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="590" length="5" line="11">
+			<expr><![CDATA[level]]></expr>
+		</operand>
+	</marker>
+	<type  start="530" length="32" line="11" chordsig="android.app.Notification$Builder"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="609" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="605" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="626" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="609" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setContentTitle:(Ljava/lang/CharSequence;)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setContentTitle(CharSequence)"
+ line="12"
+ startpos="679"
+ endpos="694"
+>
+	<marker line="-1" type="param">
+		<operand  start="718" length="5" line="12">
+			<expr><![CDATA[title]]></expr>
+		</operand>
+	</marker>
+	<type  start="646" length="32" line="12" chordsig="android.app.Notification$Builder"/>
+	<type  start="695" length="22" line="12" chordsig="java.lang.CharSequence"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="737" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="733" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="754" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="737" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setContentText:(Ljava/lang/CharSequence;)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setContentText(CharSequence)"
+ line="13"
+ startpos="807"
+ endpos="821"
+>
+	<marker line="-1" type="param">
+		<operand  start="845" length="4" line="13">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="774" length="32" line="13" chordsig="android.app.Notification$Builder"/>
+	<type  start="822" length="22" line="13" chordsig="java.lang.CharSequence"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="863" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="859" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="880" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="863" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSubText:(Ljava/lang/CharSequence;)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setSubText(CharSequence)"
+ line="14"
+ startpos="933"
+ endpos="943"
+>
+	<marker line="-1" type="param">
+		<operand  start="967" length="4" line="14">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="900" length="32" line="14" chordsig="android.app.Notification$Builder"/>
+	<type  start="944" length="22" line="14" chordsig="java.lang.CharSequence"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="985" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="981" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1002" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="985" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setNumber:(I)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setNumber(int)"
+ line="15"
+ startpos="1055"
+ endpos="1064"
+>
+	<marker line="-1" type="param">
+		<operand  start="1069" length="6" line="15">
+			<expr><![CDATA[number]]></expr>
+		</operand>
+	</marker>
+	<type  start="1022" length="32" line="15" chordsig="android.app.Notification$Builder"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1089" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1085" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1106" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1089" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setContentInfo:(Ljava/lang/CharSequence;)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setContentInfo(CharSequence)"
+ line="16"
+ startpos="1159"
+ endpos="1173"
+>
+	<marker line="-1" type="param">
+		<operand  start="1197" length="4" line="16">
+			<expr><![CDATA[info]]></expr>
+		</operand>
+	</marker>
+	<type  start="1126" length="32" line="16" chordsig="android.app.Notification$Builder"/>
+	<type  start="1174" length="22" line="16" chordsig="java.lang.CharSequence"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1215" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1211" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1232" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1215" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setProgress:(IIZ)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setProgress(int,int,boolean)"
+ line="17"
+ startpos="1285"
+ endpos="1296"
+>
+	<marker line="-1" type="param">
+		<operand  start="1301" length="3" line="17">
+			<expr><![CDATA[max]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1310" length="8" line="17">
+			<expr><![CDATA[progress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1328" length="13" line="17">
+			<expr><![CDATA[indeterminate]]></expr>
+		</operand>
+	</marker>
+	<type  start="1252" length="32" line="17" chordsig="android.app.Notification$Builder"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1355" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1351" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1372" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1355" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setContent:(Landroid/widget/RemoteViews;)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setContent(RemoteViews)"
+ line="18"
+ startpos="1425"
+ endpos="1435"
+>
+	<marker line="-1" type="param">
+		<operand  start="1463" length="5" line="18">
+			<expr><![CDATA[views]]></expr>
+		</operand>
+	</marker>
+	<type  start="1392" length="32" line="18" chordsig="android.app.Notification$Builder"/>
+	<type  start="1436" length="26" line="18" chordsig="android.widget.RemoteViews"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1482" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1478" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1499" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1482" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setContentIntent:(Landroid/app/PendingIntent;)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setContentIntent(PendingIntent)"
+ line="19"
+ startpos="1552"
+ endpos="1568"
+>
+	<marker line="-1" type="param">
+		<operand  start="1595" length="6" line="19">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="1519" length="32" line="19" chordsig="android.app.Notification$Builder"/>
+	<type  start="1569" length="25" line="19" chordsig="android.app.PendingIntent"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1615" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1611" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1632" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1615" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDeleteIntent:(Landroid/app/PendingIntent;)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setDeleteIntent(PendingIntent)"
+ line="20"
+ startpos="1685"
+ endpos="1700"
+>
+	<marker line="-1" type="param">
+		<operand  start="1727" length="6" line="20">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="1652" length="32" line="20" chordsig="android.app.Notification$Builder"/>
+	<type  start="1701" length="25" line="20" chordsig="android.app.PendingIntent"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1747" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1743" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1764" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1747" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setFullScreenIntent:(Landroid/app/PendingIntent;Z)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setFullScreenIntent(PendingIntent,boolean)"
+ line="21"
+ startpos="1817"
+ endpos="1836"
+>
+	<marker line="-1" type="param">
+		<operand  start="1863" length="6" line="21">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1879" length="12" line="21">
+			<expr><![CDATA[highPriority]]></expr>
+		</operand>
+	</marker>
+	<type  start="1784" length="32" line="21" chordsig="android.app.Notification$Builder"/>
+	<type  start="1837" length="25" line="21" chordsig="android.app.PendingIntent"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1905" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1901" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1922" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1905" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTicker:(Ljava/lang/CharSequence;)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setTicker(CharSequence)"
+ line="22"
+ startpos="1975"
+ endpos="1984"
+>
+	<marker line="-1" type="param">
+		<operand  start="2008" length="10" line="22">
+			<expr><![CDATA[tickerText]]></expr>
+		</operand>
+	</marker>
+	<type  start="1942" length="32" line="22" chordsig="android.app.Notification$Builder"/>
+	<type  start="1985" length="22" line="22" chordsig="java.lang.CharSequence"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2032" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2028" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2049" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2032" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTicker:(Ljava/lang/CharSequence;Landroid/widget/RemoteViews;)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setTicker(CharSequence,RemoteViews)"
+ line="23"
+ startpos="2102"
+ endpos="2111"
+>
+	<marker line="-1" type="param">
+		<operand  start="2135" length="10" line="23">
+			<expr><![CDATA[tickerText]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2174" length="5" line="23">
+			<expr><![CDATA[views]]></expr>
+		</operand>
+	</marker>
+	<type  start="2069" length="32" line="23" chordsig="android.app.Notification$Builder"/>
+	<type  start="2112" length="22" line="23" chordsig="java.lang.CharSequence"/>
+	<type  start="2147" length="26" line="23" chordsig="android.widget.RemoteViews"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2193" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2189" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2210" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2193" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setLargeIcon:(Landroid/graphics/Bitmap;)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setLargeIcon(Bitmap)"
+ line="24"
+ startpos="2263"
+ endpos="2275"
+>
+	<marker line="-1" type="param">
+		<operand  start="2300" length="4" line="24">
+			<expr><![CDATA[icon]]></expr>
+		</operand>
+	</marker>
+	<type  start="2230" length="32" line="24" chordsig="android.app.Notification$Builder"/>
+	<type  start="2276" length="23" line="24" chordsig="android.graphics.Bitmap"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2318" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2314" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2335" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2318" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSound:(Landroid/net/Uri;)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setSound(Uri)"
+ line="25"
+ startpos="2388"
+ endpos="2396"
+>
+	<marker line="-1" type="param">
+		<operand  start="2413" length="5" line="25">
+			<expr><![CDATA[sound]]></expr>
+		</operand>
+	</marker>
+	<type  start="2355" length="32" line="25" chordsig="android.app.Notification$Builder"/>
+	<type  start="2397" length="15" line="25" chordsig="android.net.Uri"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2432" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2428" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2449" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2432" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSound:(Landroid/net/Uri;I)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setSound(Uri,int)"
+ line="26"
+ startpos="2502"
+ endpos="2510"
+>
+	<marker line="-1" type="param">
+		<operand  start="2527" length="5" line="26">
+			<expr><![CDATA[sound]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2538" length="10" line="26">
+			<expr><![CDATA[streamType]]></expr>
+		</operand>
+	</marker>
+	<type  start="2469" length="32" line="26" chordsig="android.app.Notification$Builder"/>
+	<type  start="2511" length="15" line="26" chordsig="android.net.Uri"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2562" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2558" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2579" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2562" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setVibrate:([J)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setVibrate(long[])"
+ line="27"
+ startpos="2632"
+ endpos="2642"
+>
+	<marker line="-1" type="param">
+		<operand  start="2650" length="7" line="27">
+			<expr><![CDATA[pattern]]></expr>
+		</operand>
+	</marker>
+	<type  start="2599" length="32" line="27" chordsig="android.app.Notification$Builder"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2671" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2667" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2688" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2671" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setLights:(III)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setLights(int,int,int)"
+ line="28"
+ startpos="2741"
+ endpos="2750"
+>
+	<marker line="-1" type="param">
+		<operand  start="2755" length="4" line="28">
+			<expr><![CDATA[argb]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2765" length="4" line="28">
+			<expr><![CDATA[onMs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2775" length="5" line="28">
+			<expr><![CDATA[offMs]]></expr>
+		</operand>
+	</marker>
+	<type  start="2708" length="32" line="28" chordsig="android.app.Notification$Builder"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2794" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2790" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2811" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2794" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOngoing:(Z)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setOngoing(boolean)"
+ line="29"
+ startpos="2864"
+ endpos="2874"
+>
+	<marker line="-1" type="param">
+		<operand  start="2883" length="7" line="29">
+			<expr><![CDATA[ongoing]]></expr>
+		</operand>
+	</marker>
+	<type  start="2831" length="32" line="29" chordsig="android.app.Notification$Builder"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2904" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2900" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2921" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2904" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnlyAlertOnce:(Z)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setOnlyAlertOnce(boolean)"
+ line="30"
+ startpos="2974"
+ endpos="2990"
+>
+	<marker line="-1" type="param">
+		<operand  start="2999" length="13" line="30">
+			<expr><![CDATA[onlyAlertOnce]]></expr>
+		</operand>
+	</marker>
+	<type  start="2941" length="32" line="30" chordsig="android.app.Notification$Builder"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3026" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3022" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3043" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3026" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setAutoCancel:(Z)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setAutoCancel(boolean)"
+ line="31"
+ startpos="3096"
+ endpos="3109"
+>
+	<marker line="-1" type="param">
+		<operand  start="3118" length="10" line="31">
+			<expr><![CDATA[autoCancel]]></expr>
+		</operand>
+	</marker>
+	<type  start="3063" length="32" line="31" chordsig="android.app.Notification$Builder"/>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3142" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3138" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3159" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3142" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDefaults:(I)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setDefaults(int)"
+ line="32"
+ startpos="3212"
+ endpos="3223"
+>
+	<marker line="-1" type="param">
+		<operand  start="3228" length="8" line="32">
+			<expr><![CDATA[defaults]]></expr>
+		</operand>
+	</marker>
+	<type  start="3179" length="32" line="32" chordsig="android.app.Notification$Builder"/>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3250" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3246" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3267" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3250" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPriority:(I)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setPriority(int)"
+ line="33"
+ startpos="3320"
+ endpos="3331"
+>
+	<marker line="-1" type="param">
+		<operand  start="3336" length="3" line="33">
+			<expr><![CDATA[pri]]></expr>
+		</operand>
+	</marker>
+	<type  start="3287" length="32" line="33" chordsig="android.app.Notification$Builder"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3353" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3349" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3370" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3353" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addAction:(ILjava/lang/CharSequence;Landroid/app/PendingIntent;)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder addAction(int,CharSequence,PendingIntent)"
+ line="34"
+ startpos="3423"
+ endpos="3432"
+>
+	<marker line="-1" type="param">
+		<operand  start="3437" length="4" line="34">
+			<expr><![CDATA[icon]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3466" length="5" line="34">
+			<expr><![CDATA[title]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3499" length="6" line="34">
+			<expr><![CDATA[intent]]></expr>
+		</operand>
+	</marker>
+	<type  start="3390" length="32" line="34" chordsig="android.app.Notification$Builder"/>
+	<type  start="3443" length="22" line="34" chordsig="java.lang.CharSequence"/>
+	<type  start="3473" length="25" line="34" chordsig="android.app.PendingIntent"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3519" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3515" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3536" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3519" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setStyle:(Landroid/app/Notification$Style;)Landroid/app/Notification$Builder;@android.app.Notification$Builder"
+ sig="Builder setStyle(Style)"
+ line="35"
+ startpos="3589"
+ endpos="3597"
+>
+	<marker line="-1" type="param">
+		<operand  start="3629" length="5" line="35">
+			<expr><![CDATA[style]]></expr>
+		</operand>
+	</marker>
+	<type  start="3556" length="32" line="35" chordsig="android.app.Notification$Builder"/>
+	<type  start="3598" length="30" line="35" chordsig="android.app.Notification$Style"/>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3648" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3644" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3665" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3648" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getNotification:()Landroid/app/Notification;@android.app.Notification$Builder"
+ sig="Notification getNotification()"
+ line="37"
+ startpos="3734"
+ endpos="3749"
+>
+	<type  start="3709" length="24" line="37" chordsig="android.app.Notification"/>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3764" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3760" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3781" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3764" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="build:()Landroid/app/Notification;@android.app.Notification$Builder"
+ sig="Notification build()"
+ line="38"
+ startpos="3826"
+ endpos="3831"
+>
+	<type  start="3801" length="24" line="38" chordsig="android.app.Notification"/>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3846" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3842" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3863" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3846" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.app.Notification$Style" line="40">
+<method
+ chordsig="&lt;init&gt;:()V@android.app.Notification$Style"
+ sig="Style()"
+ line="42"
+ startpos="3922"
+ endpos="3927"
+>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3942" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3938" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3959" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3942" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="internalSetBigContentTitle:(Ljava/lang/CharSequence;)V@android.app.Notification$Style"
+ sig="void internalSetBigContentTitle(CharSequence)"
+ line="43"
+ startpos="3987"
+ endpos="4013"
+>
+	<marker line="-1" type="param">
+		<operand  start="4037" length="5" line="43">
+			<expr><![CDATA[title]]></expr>
+		</operand>
+	</marker>
+	<type  start="4014" length="22" line="43" chordsig="java.lang.CharSequence"/>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4056" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4052" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4073" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4056" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="internalSetSummaryText:(Ljava/lang/CharSequence;)V@android.app.Notification$Style"
+ sig="void internalSetSummaryText(CharSequence)"
+ line="44"
+ startpos="4101"
+ endpos="4123"
+>
+	<marker line="-1" type="param">
+		<operand  start="4147" length="2" line="44">
+			<expr><![CDATA[cs]]></expr>
+		</operand>
+	</marker>
+	<type  start="4124" length="22" line="44" chordsig="java.lang.CharSequence"/>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4163" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4159" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4180" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4163" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setBuilder:(Landroid/app/Notification$Builder;)V@android.app.Notification$Style"
+ sig="void setBuilder(Builder)"
+ line="45"
+ startpos="4205"
+ endpos="4215"
+>
+	<marker line="-1" type="param">
+		<operand  start="4249" length="7" line="45">
+			<expr><![CDATA[builder]]></expr>
+		</operand>
+	</marker>
+	<type  start="4216" length="32" line="45" chordsig="android.app.Notification$Builder"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4270" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4266" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4287" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4270" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="checkBuilder:()V@android.app.Notification$Style"
+ sig="void checkBuilder()"
+ line="46"
+ startpos="4315"
+ endpos="4327"
+>
+	<newexpr line="46" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4342" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4338" length="29" line="46">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4359" length="7" line="46">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4342" length="16" line="46" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getStandardView:(I)Landroid/widget/RemoteViews;@android.app.Notification$Style"
+ sig="RemoteViews getStandardView(int)"
+ line="47"
+ startpos="4409"
+ endpos="4424"
+>
+	<marker line="-1" type="param">
+		<operand  start="4429" length="8" line="47">
+			<expr><![CDATA[layoutId]]></expr>
+		</operand>
+	</marker>
+	<type  start="4382" length="26" line="47" chordsig="android.widget.RemoteViews"/>
+	<newexpr line="47" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4451" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4447" length="29" line="47">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4468" length="7" line="47">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4451" length="16" line="47" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="build:()Landroid/app/Notification;@android.app.Notification$Style"
+ sig="Notification build()"
+ line="48"
+ startpos="4522"
+ endpos="4527"
+>
+	<type  start="4497" length="24" line="48" chordsig="android.app.Notification"/>
+</method>
+	<type  start="4541" length="32" line="49" chordsig="android.app.Notification$Builder"/>
+</class>
+<class chordsig="android.app.Notification$BigPictureStyle" line="51">
+	<type  start="4632" length="30" line="52" chordsig="android.app.Notification$Style"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.app.Notification$BigPictureStyle"
+ sig="BigPictureStyle()"
+ line="54"
+ startpos="4673"
+ endpos="4688"
+>
+	<newexpr line="54" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4703" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4699" length="29" line="54">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4720" length="7" line="54">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4703" length="16" line="54" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/app/Notification$Builder;)V@android.app.Notification$BigPictureStyle"
+ sig="BigPictureStyle(Builder)"
+ line="55"
+ startpos="4740"
+ endpos="4755"
+>
+	<marker line="-1" type="param">
+		<operand  start="4789" length="7" line="55">
+			<expr><![CDATA[builder]]></expr>
+		</operand>
+	</marker>
+	<type  start="4756" length="32" line="55" chordsig="android.app.Notification$Builder"/>
+	<newexpr line="55" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4810" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4806" length="29" line="55">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4827" length="7" line="55">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4810" length="16" line="55" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setBigContentTitle:(Ljava/lang/CharSequence;)Landroid/app/Notification$BigPictureStyle;@android.app.Notification$BigPictureStyle"
+ sig="BigPictureStyle setBigContentTitle(CharSequence)"
+ line="56"
+ startpos="4888"
+ endpos="4906"
+>
+	<marker line="-1" type="param">
+		<operand  start="4930" length="5" line="56">
+			<expr><![CDATA[title]]></expr>
+		</operand>
+	</marker>
+	<type  start="4847" length="40" line="56" chordsig="android.app.Notification$BigPictureStyle"/>
+	<type  start="4907" length="22" line="56" chordsig="java.lang.CharSequence"/>
+	<newexpr line="56" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4949" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4945" length="29" line="56">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4966" length="7" line="56">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4949" length="16" line="56" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSummaryText:(Ljava/lang/CharSequence;)Landroid/app/Notification$BigPictureStyle;@android.app.Notification$BigPictureStyle"
+ sig="BigPictureStyle setSummaryText(CharSequence)"
+ line="57"
+ startpos="5027"
+ endpos="5041"
+>
+	<marker line="-1" type="param">
+		<operand  start="5065" length="2" line="57">
+			<expr><![CDATA[cs]]></expr>
+		</operand>
+	</marker>
+	<type  start="4986" length="40" line="57" chordsig="android.app.Notification$BigPictureStyle"/>
+	<type  start="5042" length="22" line="57" chordsig="java.lang.CharSequence"/>
+	<newexpr line="57" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5081" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5077" length="29" line="57">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5098" length="7" line="57">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5081" length="16" line="57" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="bigPicture:(Landroid/graphics/Bitmap;)Landroid/app/Notification$BigPictureStyle;@android.app.Notification$BigPictureStyle"
+ sig="BigPictureStyle bigPicture(Bitmap)"
+ line="58"
+ startpos="5159"
+ endpos="5169"
+>
+	<marker line="-1" type="param">
+		<operand  start="5194" length="1" line="58">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<type  start="5118" length="40" line="58" chordsig="android.app.Notification$BigPictureStyle"/>
+	<type  start="5170" length="23" line="58" chordsig="android.graphics.Bitmap"/>
+	<newexpr line="58" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5209" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5205" length="29" line="58">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5226" length="7" line="58">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5209" length="16" line="58" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="bigLargeIcon:(Landroid/graphics/Bitmap;)Landroid/app/Notification$BigPictureStyle;@android.app.Notification$BigPictureStyle"
+ sig="BigPictureStyle bigLargeIcon(Bitmap)"
+ line="59"
+ startpos="5287"
+ endpos="5299"
+>
+	<marker line="-1" type="param">
+		<operand  start="5324" length="1" line="59">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<type  start="5246" length="40" line="59" chordsig="android.app.Notification$BigPictureStyle"/>
+	<type  start="5300" length="23" line="59" chordsig="android.graphics.Bitmap"/>
+	<newexpr line="59" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5339" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5335" length="29" line="59">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5356" length="7" line="59">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5339" length="16" line="59" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="build:()Landroid/app/Notification;@android.app.Notification$BigPictureStyle"
+ sig="Notification build()"
+ line="60"
+ startpos="5401"
+ endpos="5406"
+>
+	<type  start="5376" length="24" line="60" chordsig="android.app.Notification"/>
+	<newexpr line="60" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5421" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5417" length="29" line="60">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5438" length="7" line="60">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5421" length="16" line="60" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.app.Notification$BigTextStyle" line="62">
+	<type  start="5495" length="30" line="63" chordsig="android.app.Notification$Style"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.app.Notification$BigTextStyle"
+ sig="BigTextStyle()"
+ line="65"
+ startpos="5536"
+ endpos="5548"
+>
+	<newexpr line="65" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5563" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5559" length="29" line="65">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5580" length="7" line="65">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5563" length="16" line="65" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/app/Notification$Builder;)V@android.app.Notification$BigTextStyle"
+ sig="BigTextStyle(Builder)"
+ line="66"
+ startpos="5600"
+ endpos="5612"
+>
+	<marker line="-1" type="param">
+		<operand  start="5646" length="7" line="66">
+			<expr><![CDATA[builder]]></expr>
+		</operand>
+	</marker>
+	<type  start="5613" length="32" line="66" chordsig="android.app.Notification$Builder"/>
+	<newexpr line="66" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5667" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5663" length="29" line="66">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5684" length="7" line="66">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5667" length="16" line="66" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setBigContentTitle:(Ljava/lang/CharSequence;)Landroid/app/Notification$BigTextStyle;@android.app.Notification$BigTextStyle"
+ sig="BigTextStyle setBigContentTitle(CharSequence)"
+ line="67"
+ startpos="5742"
+ endpos="5760"
+>
+	<marker line="-1" type="param">
+		<operand  start="5784" length="5" line="67">
+			<expr><![CDATA[title]]></expr>
+		</operand>
+	</marker>
+	<type  start="5704" length="37" line="67" chordsig="android.app.Notification$BigTextStyle"/>
+	<type  start="5761" length="22" line="67" chordsig="java.lang.CharSequence"/>
+	<newexpr line="67" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5803" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5799" length="29" line="67">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5820" length="7" line="67">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5803" length="16" line="67" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSummaryText:(Ljava/lang/CharSequence;)Landroid/app/Notification$BigTextStyle;@android.app.Notification$BigTextStyle"
+ sig="BigTextStyle setSummaryText(CharSequence)"
+ line="68"
+ startpos="5878"
+ endpos="5892"
+>
+	<marker line="-1" type="param">
+		<operand  start="5916" length="2" line="68">
+			<expr><![CDATA[cs]]></expr>
+		</operand>
+	</marker>
+	<type  start="5840" length="37" line="68" chordsig="android.app.Notification$BigTextStyle"/>
+	<type  start="5893" length="22" line="68" chordsig="java.lang.CharSequence"/>
+	<newexpr line="68" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5932" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5928" length="29" line="68">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5949" length="7" line="68">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5932" length="16" line="68" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="bigText:(Ljava/lang/CharSequence;)Landroid/app/Notification$BigTextStyle;@android.app.Notification$BigTextStyle"
+ sig="BigTextStyle bigText(CharSequence)"
+ line="69"
+ startpos="6007"
+ endpos="6014"
+>
+	<marker line="-1" type="param">
+		<operand  start="6038" length="2" line="69">
+			<expr><![CDATA[cs]]></expr>
+		</operand>
+	</marker>
+	<type  start="5969" length="37" line="69" chordsig="android.app.Notification$BigTextStyle"/>
+	<type  start="6015" length="22" line="69" chordsig="java.lang.CharSequence"/>
+	<newexpr line="69" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6054" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6050" length="29" line="69">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6071" length="7" line="69">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6054" length="16" line="69" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="build:()Landroid/app/Notification;@android.app.Notification$BigTextStyle"
+ sig="Notification build()"
+ line="70"
+ startpos="6116"
+ endpos="6121"
+>
+	<type  start="6091" length="24" line="70" chordsig="android.app.Notification"/>
+	<newexpr line="70" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6136" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6132" length="29" line="70">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6153" length="7" line="70">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6136" length="16" line="70" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.app.Notification$InboxStyle" line="72">
+	<type  start="6208" length="30" line="73" chordsig="android.app.Notification$Style"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.app.Notification$InboxStyle"
+ sig="InboxStyle()"
+ line="75"
+ startpos="6249"
+ endpos="6259"
+>
+	<newexpr line="75" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6274" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6270" length="29" line="75">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6291" length="7" line="75">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6274" length="16" line="75" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/app/Notification$Builder;)V@android.app.Notification$InboxStyle"
+ sig="InboxStyle(Builder)"
+ line="76"
+ startpos="6311"
+ endpos="6321"
+>
+	<marker line="-1" type="param">
+		<operand  start="6355" length="7" line="76">
+			<expr><![CDATA[builder]]></expr>
+		</operand>
+	</marker>
+	<type  start="6322" length="32" line="76" chordsig="android.app.Notification$Builder"/>
+	<newexpr line="76" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6376" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6372" length="29" line="76">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6393" length="7" line="76">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6376" length="16" line="76" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setBigContentTitle:(Ljava/lang/CharSequence;)Landroid/app/Notification$InboxStyle;@android.app.Notification$InboxStyle"
+ sig="InboxStyle setBigContentTitle(CharSequence)"
+ line="77"
+ startpos="6449"
+ endpos="6467"
+>
+	<marker line="-1" type="param">
+		<operand  start="6491" length="5" line="77">
+			<expr><![CDATA[title]]></expr>
+		</operand>
+	</marker>
+	<type  start="6413" length="35" line="77" chordsig="android.app.Notification$InboxStyle"/>
+	<type  start="6468" length="22" line="77" chordsig="java.lang.CharSequence"/>
+	<newexpr line="77" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6510" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6506" length="29" line="77">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6527" length="7" line="77">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6510" length="16" line="77" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSummaryText:(Ljava/lang/CharSequence;)Landroid/app/Notification$InboxStyle;@android.app.Notification$InboxStyle"
+ sig="InboxStyle setSummaryText(CharSequence)"
+ line="78"
+ startpos="6583"
+ endpos="6597"
+>
+	<marker line="-1" type="param">
+		<operand  start="6621" length="2" line="78">
+			<expr><![CDATA[cs]]></expr>
+		</operand>
+	</marker>
+	<type  start="6547" length="35" line="78" chordsig="android.app.Notification$InboxStyle"/>
+	<type  start="6598" length="22" line="78" chordsig="java.lang.CharSequence"/>
+	<newexpr line="78" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6637" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6633" length="29" line="78">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6654" length="7" line="78">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6637" length="16" line="78" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addLine:(Ljava/lang/CharSequence;)Landroid/app/Notification$InboxStyle;@android.app.Notification$InboxStyle"
+ sig="InboxStyle addLine(CharSequence)"
+ line="79"
+ startpos="6710"
+ endpos="6717"
+>
+	<marker line="-1" type="param">
+		<operand  start="6741" length="2" line="79">
+			<expr><![CDATA[cs]]></expr>
+		</operand>
+	</marker>
+	<type  start="6674" length="35" line="79" chordsig="android.app.Notification$InboxStyle"/>
+	<type  start="6718" length="22" line="79" chordsig="java.lang.CharSequence"/>
+	<newexpr line="79" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6757" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6753" length="29" line="79">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6774" length="7" line="79">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6757" length="16" line="79" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="build:()Landroid/app/Notification;@android.app.Notification$InboxStyle"
+ sig="Notification build()"
+ line="80"
+ startpos="6819"
+ endpos="6824"
+>
+	<type  start="6794" length="24" line="80" chordsig="android.app.Notification"/>
+	<newexpr line="80" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6839" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6835" length="29" line="80">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6856" length="7" line="80">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6839" length="16" line="80" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.app.Notification"
+ sig="Notification()"
+ line="82"
+ startpos="6878"
+ endpos="6890"
+>
+	<newexpr line="82" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6905" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6901" length="29" line="82">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="6922" length="7" line="82">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6905" length="16" line="82" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(ILjava/lang/CharSequence;J)V@android.app.Notification"
+ sig="Notification(int,CharSequence,long)"
+ line="84"
+ startpos="6966"
+ endpos="6978"
+>
+	<marker line="-1" type="param">
+		<operand  start="6983" length="4" line="84">
+			<expr><![CDATA[icon]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7012" length="10" line="84">
+			<expr><![CDATA[tickerText]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7029" length="4" line="84">
+			<expr><![CDATA[when]]></expr>
+		</operand>
+	</marker>
+	<type  start="6989" length="22" line="84" chordsig="java.lang.CharSequence"/>
+	<newexpr line="84" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7047" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7043" length="29" line="84">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7064" length="7" line="84">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7047" length="16" line="84" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/os/Parcel;)V@android.app.Notification"
+ sig="Notification(Parcel)"
+ line="85"
+ startpos="7084"
+ endpos="7096"
+>
+	<marker line="-1" type="param">
+		<operand  start="7115" length="6" line="85">
+			<expr><![CDATA[parcel]]></expr>
+		</operand>
+	</marker>
+	<type  start="7097" length="17" line="85" chordsig="android.os.Parcel"/>
+	<newexpr line="85" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7135" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7131" length="29" line="85">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7152" length="7" line="85">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7135" length="16" line="85" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clone:()Landroid/app/Notification;@android.app.Notification"
+ sig="Notification clone()"
+ line="86"
+ startpos="7197"
+ endpos="7202"
+>
+	<alias>()Ljava/lang/Object;</alias>
+	<type  start="7172" length="24" line="86" chordsig="android.app.Notification"/>
+	<newexpr line="86" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7217" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7213" length="29" line="86">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7234" length="7" line="86">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7217" length="16" line="86" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.app.Notification"
+ sig="int describeContents()"
+ line="87"
+ startpos="7258"
+ endpos="7274"
+>
+	<newexpr line="87" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7289" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7285" length="29" line="87">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7306" length="7" line="87">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7289" length="16" line="87" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.app.Notification"
+ sig="void writeToParcel(Parcel,int)"
+ line="88"
+ startpos="7331"
+ endpos="7344"
+>
+	<marker line="-1" type="param">
+		<operand  start="7363" length="6" line="88">
+			<expr><![CDATA[parcel]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7375" length="5" line="88">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="7345" length="17" line="88" chordsig="android.os.Parcel"/>
+	<newexpr line="88" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7394" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7390" length="29" line="88">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7411" length="7" line="88">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7394" length="16" line="88" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setLatestEventInfo:(Landroid/content/Context;Ljava/lang/CharSequence;Ljava/lang/CharSequence;Landroid/app/PendingIntent;)V@android.app.Notification"
+ sig="void setLatestEventInfo(Context,CharSequence,CharSequence,PendingIntent)"
+ line="90"
+ startpos="7460"
+ endpos="7478"
+>
+	<marker line="-1" type="param">
+		<operand  start="7503" length="7" line="90">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7535" length="12" line="90">
+			<expr><![CDATA[contentTitle]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7572" length="11" line="90">
+			<expr><![CDATA[contentText]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="7611" length="13" line="90">
+			<expr><![CDATA[contentIntent]]></expr>
+		</operand>
+	</marker>
+	<type  start="7479" length="23" line="90" chordsig="android.content.Context"/>
+	<type  start="7512" length="22" line="90" chordsig="java.lang.CharSequence"/>
+	<type  start="7549" length="22" line="90" chordsig="java.lang.CharSequence"/>
+	<type  start="7585" length="25" line="90" chordsig="android.app.PendingIntent"/>
+	<newexpr line="90" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7638" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7634" length="29" line="90">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7655" length="7" line="90">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7638" length="16" line="90" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.app.Notification"
+ sig="String toString()"
+ line="91"
+ startpos="7692"
+ endpos="7700"
+>
+	<type  start="7675" length="16" line="91" chordsig="java.lang.String"/>
+	<newexpr line="91" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7715" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7711" length="29" line="91">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7732" length="7" line="91">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7715" length="16" line="91" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="8001" length="25" line="100" chordsig="android.app.PendingIntent"/>
+	<type  start="8049" length="25" line="101" chordsig="android.app.PendingIntent"/>
+	<type  start="8096" length="25" line="102" chordsig="android.app.PendingIntent"/>
+	<type  start="8147" length="22" line="103" chordsig="java.lang.CharSequence"/>
+	<type  start="8189" length="26" line="104" chordsig="android.widget.RemoteViews"/>
+	<type  start="8235" length="26" line="105" chordsig="android.widget.RemoteViews"/>
+	<type  start="8282" length="26" line="106" chordsig="android.widget.RemoteViews"/>
+	<type  start="8332" length="23" line="107" chordsig="android.graphics.Bitmap"/>
+	<type  start="8374" length="15" line="108" chordsig="android.net.Uri"/>
+	<type  start="9253" length="29" line="132" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="9283" length="24" line="132" chordsig="android.app.Notification"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.app.Notification"
+ line="133"
+>
+</method>
+</class>
+</root>

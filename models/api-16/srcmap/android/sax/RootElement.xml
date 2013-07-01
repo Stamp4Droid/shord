@@ -1,0 +1,78 @@
+<root>
+<class chordsig="android.sax.RootElement" line="2">
+	<type  start="56" length="19" line="3" chordsig="android.sax.Element"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;)V@android.sax.RootElement"
+ sig="RootElement(String,String)"
+ line="5"
+ startpos="86"
+ endpos="97"
+>
+	<marker line="-1" type="param">
+		<operand  start="115" length="3" line="5">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="137" length="9" line="5">
+			<expr><![CDATA[localName]]></expr>
+		</operand>
+	</marker>
+	<type  start="98" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="120" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="160" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="156" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="177" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="160" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.sax.RootElement"
+ sig="RootElement(String)"
+ line="6"
+ startpos="197"
+ endpos="208"
+>
+	<marker line="-1" type="param">
+		<operand  start="226" length="9" line="6">
+			<expr><![CDATA[localName]]></expr>
+		</operand>
+	</marker>
+	<type  start="209" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="249" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="245" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="266" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="249" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContentHandler:()Lorg/xml/sax/ContentHandler;@android.sax.RootElement"
+ sig="ContentHandler getContentHandler()"
+ line="7"
+ startpos="313"
+ endpos="330"
+>
+	<type  start="286" length="26" line="7" chordsig="org.xml.sax.ContentHandler"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="345" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="341" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="362" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="345" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

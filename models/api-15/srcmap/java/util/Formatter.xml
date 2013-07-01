@@ -1,0 +1,578 @@
+<root>
+<class chordsig="java.util.Formatter" line="2">
+	<type  start="61" length="17" line="3" chordsig="java.io.Closeable"/>
+	<type  start="80" length="17" line="3" chordsig="java.io.Flushable"/>
+<class chordsig="java.util.Formatter$BigDecimalLayoutForm" line="5">
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@java.util.Formatter"
+ sig="Formatter()"
+ line="10"
+ startpos="183"
+ endpos="192"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="207" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="203" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="224" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="207" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Appendable;)V@java.util.Formatter"
+ sig="Formatter(Appendable)"
+ line="11"
+ startpos="244"
+ endpos="253"
+>
+	<marker line="-1" type="param">
+		<operand  start="275" length="1" line="11">
+			<expr><![CDATA[a]]></expr>
+		</operand>
+	</marker>
+	<type  start="254" length="20" line="11" chordsig="java.lang.Appendable"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="290" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="286" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="307" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="290" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/util/Locale;)V@java.util.Formatter"
+ sig="Formatter(Locale)"
+ line="12"
+ startpos="327"
+ endpos="336"
+>
+	<marker line="-1" type="param">
+		<operand  start="354" length="1" line="12">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<type  start="337" length="16" line="12" chordsig="java.util.Locale"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="369" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="365" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="386" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="369" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Appendable;Ljava/util/Locale;)V@java.util.Formatter"
+ sig="Formatter(Appendable,Locale)"
+ line="13"
+ startpos="406"
+ endpos="415"
+>
+	<marker line="-1" type="param">
+		<operand  start="437" length="1" line="13">
+			<expr><![CDATA[a]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="457" length="1" line="13">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<type  start="416" length="20" line="13" chordsig="java.lang.Appendable"/>
+	<type  start="440" length="16" line="13" chordsig="java.util.Locale"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="472" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="468" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="489" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="472" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.util.Formatter"
+ sig="Formatter(String)"
+ line="14"
+ startpos="509"
+ endpos="518"
+>
+	<marker line="-1" type="param">
+		<operand  start="536" length="8" line="14">
+			<expr><![CDATA[fileName]]></expr>
+		</operand>
+	</marker>
+	<type  start="519" length="16" line="14" chordsig="java.lang.String"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="595" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="591" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="612" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="595" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;)V@java.util.Formatter"
+ sig="Formatter(String,String)"
+ line="15"
+ startpos="632"
+ endpos="641"
+>
+	<marker line="-1" type="param">
+		<operand  start="659" length="8" line="15">
+			<expr><![CDATA[fileName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="686" length="3" line="15">
+			<expr><![CDATA[csn]]></expr>
+		</operand>
+	</marker>
+	<type  start="642" length="16" line="15" chordsig="java.lang.String"/>
+	<type  start="669" length="16" line="15" chordsig="java.lang.String"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="778" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="774" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="795" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="778" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;Ljava/util/Locale;)V@java.util.Formatter"
+ sig="Formatter(String,String,Locale)"
+ line="16"
+ startpos="815"
+ endpos="824"
+>
+	<marker line="-1" type="param">
+		<operand  start="842" length="8" line="16">
+			<expr><![CDATA[fileName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="869" length="3" line="16">
+			<expr><![CDATA[csn]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="891" length="1" line="16">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<type  start="825" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="852" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="874" length="16" line="16" chordsig="java.util.Locale"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="981" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="977" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="998" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="981" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/File;)V@java.util.Formatter"
+ sig="Formatter(File)"
+ line="17"
+ startpos="1018"
+ endpos="1027"
+>
+	<marker line="-1" type="param">
+		<operand  start="1041" length="4" line="17">
+			<expr><![CDATA[file]]></expr>
+		</operand>
+	</marker>
+	<type  start="1028" length="12" line="17" chordsig="java.io.File"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1096" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1092" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1113" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1096" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/File;Ljava/lang/String;)V@java.util.Formatter"
+ sig="Formatter(File,String)"
+ line="18"
+ startpos="1133"
+ endpos="1142"
+>
+	<marker line="-1" type="param">
+		<operand  start="1156" length="4" line="18">
+			<expr><![CDATA[file]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1179" length="3" line="18">
+			<expr><![CDATA[csn]]></expr>
+		</operand>
+	</marker>
+	<type  start="1143" length="12" line="18" chordsig="java.io.File"/>
+	<type  start="1162" length="16" line="18" chordsig="java.lang.String"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1271" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1267" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1288" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1271" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/File;Ljava/lang/String;Ljava/util/Locale;)V@java.util.Formatter"
+ sig="Formatter(File,String,Locale)"
+ line="19"
+ startpos="1308"
+ endpos="1317"
+>
+	<marker line="-1" type="param">
+		<operand  start="1331" length="4" line="19">
+			<expr><![CDATA[file]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1354" length="3" line="19">
+			<expr><![CDATA[csn]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1376" length="1" line="19">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<type  start="1318" length="12" line="19" chordsig="java.io.File"/>
+	<type  start="1337" length="16" line="19" chordsig="java.lang.String"/>
+	<type  start="1359" length="16" line="19" chordsig="java.util.Locale"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1466" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1462" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1483" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1466" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/OutputStream;)V@java.util.Formatter"
+ sig="Formatter(OutputStream)"
+ line="20"
+ startpos="1503"
+ endpos="1512"
+>
+	<marker line="-1" type="param">
+		<operand  start="1534" length="2" line="20">
+			<expr><![CDATA[os]]></expr>
+		</operand>
+	</marker>
+	<type  start="1513" length="20" line="20" chordsig="java.io.OutputStream"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1550" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1546" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1567" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1550" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/OutputStream;Ljava/lang/String;)V@java.util.Formatter"
+ sig="Formatter(OutputStream,String)"
+ line="21"
+ startpos="1587"
+ endpos="1596"
+>
+	<marker line="-1" type="param">
+		<operand  start="1618" length="2" line="21">
+			<expr><![CDATA[os]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1639" length="3" line="21">
+			<expr><![CDATA[csn]]></expr>
+		</operand>
+	</marker>
+	<type  start="1597" length="20" line="21" chordsig="java.io.OutputStream"/>
+	<type  start="1622" length="16" line="21" chordsig="java.lang.String"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1700" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1696" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1717" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1700" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/OutputStream;Ljava/lang/String;Ljava/util/Locale;)V@java.util.Formatter"
+ sig="Formatter(OutputStream,String,Locale)"
+ line="22"
+ startpos="1737"
+ endpos="1746"
+>
+	<marker line="-1" type="param">
+		<operand  start="1768" length="2" line="22">
+			<expr><![CDATA[os]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1789" length="3" line="22">
+			<expr><![CDATA[csn]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1811" length="1" line="22">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<type  start="1747" length="20" line="22" chordsig="java.io.OutputStream"/>
+	<type  start="1772" length="16" line="22" chordsig="java.lang.String"/>
+	<type  start="1794" length="16" line="22" chordsig="java.util.Locale"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1870" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1866" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1887" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1870" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/PrintStream;)V@java.util.Formatter"
+ sig="Formatter(PrintStream)"
+ line="23"
+ startpos="1907"
+ endpos="1916"
+>
+	<marker line="-1" type="param">
+		<operand  start="1937" length="2" line="23">
+			<expr><![CDATA[ps]]></expr>
+		</operand>
+	</marker>
+	<type  start="1917" length="19" line="23" chordsig="java.io.PrintStream"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1953" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1949" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1970" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1953" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="locale:()Ljava/util/Locale;@java.util.Formatter"
+ sig="Locale locale()"
+ line="24"
+ startpos="2007"
+ endpos="2013"
+>
+	<type  start="1990" length="16" line="24" chordsig="java.util.Locale"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2028" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2024" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2045" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2028" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="out:()Ljava/lang/Appendable;@java.util.Formatter"
+ sig="Appendable out()"
+ line="25"
+ startpos="2086"
+ endpos="2089"
+>
+	<type  start="2065" length="20" line="25" chordsig="java.lang.Appendable"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2104" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2100" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2121" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2104" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.util.Formatter"
+ sig="String toString()"
+ line="26"
+ startpos="2158"
+ endpos="2166"
+>
+	<type  start="2141" length="16" line="26" chordsig="java.lang.String"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2181" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2177" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2198" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2181" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="flush:()V@java.util.Formatter"
+ sig="void flush()"
+ line="27"
+ startpos="2223"
+ endpos="2228"
+>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2243" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2239" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2260" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2243" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:()V@java.util.Formatter"
+ sig="void close()"
+ line="28"
+ startpos="2285"
+ endpos="2290"
+>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2305" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2301" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2322" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2305" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="ioException:()Ljava/io/IOException;@java.util.Formatter"
+ sig="IOException ioException()"
+ line="29"
+ startpos="2362"
+ endpos="2373"
+>
+	<type  start="2342" length="19" line="29" chordsig="java.io.IOException"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2388" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2384" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2405" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2388" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/util/Formatter;@java.util.Formatter"
+ sig="Formatter format(String,Object)"
+ line="30"
+ startpos="2445"
+ endpos="2451"
+>
+	<marker line="-1" type="param">
+		<operand  start="2469" length="6" line="30">
+			<expr><![CDATA[format]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2497" length="4" line="30">
+			<expr><![CDATA[args]]></expr>
+		</operand>
+	</marker>
+	<type  start="2425" length="19" line="30" chordsig="java.util.Formatter"/>
+	<type  start="2452" length="16" line="30" chordsig="java.lang.String"/>
+	<type  start="2477" length="16" line="30" chordsig="java.lang.Object"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2515" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2511" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2532" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2515" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="format:(Ljava/util/Locale;Ljava/lang/String;[Ljava/lang/Object;)Ljava/util/Formatter;@java.util.Formatter"
+ sig="Formatter format(Locale,String,Object)"
+ line="31"
+ startpos="2572"
+ endpos="2578"
+>
+	<marker line="-1" type="param">
+		<operand  start="2596" length="1" line="31">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2616" length="6" line="31">
+			<expr><![CDATA[format]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2644" length="4" line="31">
+			<expr><![CDATA[args]]></expr>
+		</operand>
+	</marker>
+	<type  start="2552" length="19" line="31" chordsig="java.util.Formatter"/>
+	<type  start="2579" length="16" line="31" chordsig="java.util.Locale"/>
+	<type  start="2599" length="16" line="31" chordsig="java.lang.String"/>
+	<type  start="2624" length="16" line="31" chordsig="java.lang.Object"/>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2662" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2658" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2679" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2662" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

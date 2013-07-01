@@ -1,0 +1,482 @@
+<root>
+<class chordsig="android.renderscript.ProgramStore" line="2">
+	<type  start="66" length="28" line="3" chordsig="android.renderscript.BaseObj"/>
+<class chordsig="android.renderscript.ProgramStore$DepthFunc" line="5">
+</class>
+<class chordsig="android.renderscript.ProgramStore$BlendSrcFunc" line="15">
+</class>
+<class chordsig="android.renderscript.ProgramStore$BlendDstFunc" line="27">
+</class>
+<class chordsig="android.renderscript.ProgramStore$Builder" line="38">
+<method
+ chordsig="&lt;init&gt;:(Landroid/renderscript/RenderScript;)V@android.renderscript.ProgramStore$Builder"
+ sig="Builder(RenderScript)"
+ line="40"
+ startpos="596"
+ endpos="603"
+>
+	<marker line="-1" type="param">
+		<operand  start="638" length="2" line="40">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<type  start="604" length="33" line="40" chordsig="android.renderscript.RenderScript"/>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="654" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="650" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="671" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="654" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDepthFunc:(Landroid/renderscript/ProgramStore$DepthFunc;)Landroid/renderscript/ProgramStore$Builder;@android.renderscript.ProgramStore$Builder"
+ sig="Builder setDepthFunc(DepthFunc)"
+ line="41"
+ startpos="733"
+ endpos="745"
+>
+	<marker line="-1" type="param">
+		<operand  start="790" length="4" line="41">
+			<expr><![CDATA[func]]></expr>
+		</operand>
+	</marker>
+	<type  start="691" length="41" line="41" chordsig="android.renderscript.ProgramStore$Builder"/>
+	<type  start="746" length="43" line="41" chordsig="android.renderscript.ProgramStore$DepthFunc"/>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="808" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="804" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="825" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="808" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDepthMaskEnabled:(Z)Landroid/renderscript/ProgramStore$Builder;@android.renderscript.ProgramStore$Builder"
+ sig="Builder setDepthMaskEnabled(boolean)"
+ line="42"
+ startpos="887"
+ endpos="906"
+>
+	<marker line="-1" type="param">
+		<operand  start="915" length="6" line="42">
+			<expr><![CDATA[enable]]></expr>
+		</operand>
+	</marker>
+	<type  start="845" length="41" line="42" chordsig="android.renderscript.ProgramStore$Builder"/>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="935" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="931" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="952" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="935" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setColorMaskEnabled:(ZZZZ)Landroid/renderscript/ProgramStore$Builder;@android.renderscript.ProgramStore$Builder"
+ sig="Builder setColorMaskEnabled(boolean,boolean,boolean,boolean)"
+ line="43"
+ startpos="1014"
+ endpos="1033"
+>
+	<marker line="-1" type="param">
+		<operand  start="1042" length="1" line="43">
+			<expr><![CDATA[r]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1053" length="1" line="43">
+			<expr><![CDATA[g]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1064" length="1" line="43">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1075" length="1" line="43">
+			<expr><![CDATA[a]]></expr>
+		</operand>
+	</marker>
+	<type  start="972" length="41" line="43" chordsig="android.renderscript.ProgramStore$Builder"/>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1090" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1086" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1107" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1090" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setBlendFunc:(Landroid/renderscript/ProgramStore$BlendSrcFunc;Landroid/renderscript/ProgramStore$BlendDstFunc;)Landroid/renderscript/ProgramStore$Builder;@android.renderscript.ProgramStore$Builder"
+ sig="Builder setBlendFunc(BlendSrcFunc,BlendDstFunc)"
+ line="44"
+ startpos="1169"
+ endpos="1181"
+>
+	<marker line="-1" type="param">
+		<operand  start="1229" length="3" line="44">
+			<expr><![CDATA[src]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1281" length="3" line="44">
+			<expr><![CDATA[dst]]></expr>
+		</operand>
+	</marker>
+	<type  start="1127" length="41" line="44" chordsig="android.renderscript.ProgramStore$Builder"/>
+	<type  start="1182" length="46" line="44" chordsig="android.renderscript.ProgramStore$BlendSrcFunc"/>
+	<type  start="1234" length="46" line="44" chordsig="android.renderscript.ProgramStore$BlendDstFunc"/>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1298" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1294" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1315" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1298" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDitherEnabled:(Z)Landroid/renderscript/ProgramStore$Builder;@android.renderscript.ProgramStore$Builder"
+ sig="Builder setDitherEnabled(boolean)"
+ line="45"
+ startpos="1377"
+ endpos="1393"
+>
+	<marker line="-1" type="param">
+		<operand  start="1402" length="6" line="45">
+			<expr><![CDATA[enable]]></expr>
+		</operand>
+	</marker>
+	<type  start="1335" length="41" line="45" chordsig="android.renderscript.ProgramStore$Builder"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1422" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1418" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1439" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1422" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="create:()Landroid/renderscript/ProgramStore;@android.renderscript.ProgramStore$Builder"
+ sig="ProgramStore create()"
+ line="46"
+ startpos="1493"
+ endpos="1499"
+>
+	<type  start="1459" length="33" line="46" chordsig="android.renderscript.ProgramStore"/>
+	<newexpr line="46" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1514" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1510" length="29" line="46">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1531" length="7" line="46">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1514" length="16" line="46" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.renderscript.ProgramStore"
+ sig="ProgramStore()"
+ line="48"
+ startpos="1545"
+ endpos="1557"
+>
+	<newexpr line="48" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1572" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1568" length="29" line="48">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1589" length="7" line="48">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1572" length="16" line="48" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDepthFunc:()Landroid/renderscript/ProgramStore$DepthFunc;@android.renderscript.ProgramStore"
+ sig="DepthFunc getDepthFunc()"
+ line="49"
+ startpos="1653"
+ endpos="1665"
+>
+	<type  start="1609" length="43" line="49" chordsig="android.renderscript.ProgramStore$DepthFunc"/>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1680" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1676" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1697" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1680" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isDepthMaskEnabled:()Z@android.renderscript.ProgramStore"
+ sig="boolean isDepthMaskEnabled()"
+ line="50"
+ startpos="1725"
+ endpos="1743"
+>
+	<newexpr line="50" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1758" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1754" length="29" line="50">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1775" length="7" line="50">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1758" length="16" line="50" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isColorMaskRedEnabled:()Z@android.renderscript.ProgramStore"
+ sig="boolean isColorMaskRedEnabled()"
+ line="51"
+ startpos="1803"
+ endpos="1824"
+>
+	<newexpr line="51" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1839" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1835" length="29" line="51">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1856" length="7" line="51">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1839" length="16" line="51" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isColorMaskGreenEnabled:()Z@android.renderscript.ProgramStore"
+ sig="boolean isColorMaskGreenEnabled()"
+ line="52"
+ startpos="1884"
+ endpos="1907"
+>
+	<newexpr line="52" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1922" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1918" length="29" line="52">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1939" length="7" line="52">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1922" length="16" line="52" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isColorMaskBlueEnabled:()Z@android.renderscript.ProgramStore"
+ sig="boolean isColorMaskBlueEnabled()"
+ line="53"
+ startpos="1967"
+ endpos="1989"
+>
+	<newexpr line="53" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2004" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2000" length="29" line="53">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2021" length="7" line="53">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2004" length="16" line="53" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isColorMaskAlphaEnabled:()Z@android.renderscript.ProgramStore"
+ sig="boolean isColorMaskAlphaEnabled()"
+ line="54"
+ startpos="2049"
+ endpos="2072"
+>
+	<newexpr line="54" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2087" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2083" length="29" line="54">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2104" length="7" line="54">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2087" length="16" line="54" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getBlendSrcFunc:()Landroid/renderscript/ProgramStore$BlendSrcFunc;@android.renderscript.ProgramStore"
+ sig="BlendSrcFunc getBlendSrcFunc()"
+ line="55"
+ startpos="2171"
+ endpos="2186"
+>
+	<type  start="2124" length="46" line="55" chordsig="android.renderscript.ProgramStore$BlendSrcFunc"/>
+	<newexpr line="55" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2201" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2197" length="29" line="55">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2218" length="7" line="55">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2201" length="16" line="55" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getBlendDstFunc:()Landroid/renderscript/ProgramStore$BlendDstFunc;@android.renderscript.ProgramStore"
+ sig="BlendDstFunc getBlendDstFunc()"
+ line="56"
+ startpos="2285"
+ endpos="2300"
+>
+	<type  start="2238" length="46" line="56" chordsig="android.renderscript.ProgramStore$BlendDstFunc"/>
+	<newexpr line="56" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2315" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2311" length="29" line="56">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2332" length="7" line="56">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2315" length="16" line="56" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isDitherEnabled:()Z@android.renderscript.ProgramStore"
+ sig="boolean isDitherEnabled()"
+ line="57"
+ startpos="2360"
+ endpos="2375"
+>
+	<newexpr line="57" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2390" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2386" length="29" line="57">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2407" length="7" line="57">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2390" length="16" line="57" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="BLEND_NONE_DEPTH_TEST:(Landroid/renderscript/RenderScript;)Landroid/renderscript/ProgramStore;@android.renderscript.ProgramStore"
+ sig="ProgramStore BLEND_NONE_DEPTH_TEST(RenderScript)"
+ line="58"
+ startpos="2468"
+ endpos="2489"
+>
+	<marker line="-1" type="param">
+		<operand  start="2524" length="2" line="58">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<type  start="2434" length="33" line="58" chordsig="android.renderscript.ProgramStore"/>
+	<type  start="2490" length="33" line="58" chordsig="android.renderscript.RenderScript"/>
+	<newexpr line="58" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2540" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2536" length="29" line="58">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2557" length="7" line="58">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2540" length="16" line="58" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="BLEND_NONE_DEPTH_NONE:(Landroid/renderscript/RenderScript;)Landroid/renderscript/ProgramStore;@android.renderscript.ProgramStore"
+ sig="ProgramStore BLEND_NONE_DEPTH_NONE(RenderScript)"
+ line="59"
+ startpos="2618"
+ endpos="2639"
+>
+	<marker line="-1" type="param">
+		<operand  start="2674" length="2" line="59">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<type  start="2584" length="33" line="59" chordsig="android.renderscript.ProgramStore"/>
+	<type  start="2640" length="33" line="59" chordsig="android.renderscript.RenderScript"/>
+	<newexpr line="59" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2690" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2686" length="29" line="59">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2707" length="7" line="59">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2690" length="16" line="59" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="BLEND_ALPHA_DEPTH_TEST:(Landroid/renderscript/RenderScript;)Landroid/renderscript/ProgramStore;@android.renderscript.ProgramStore"
+ sig="ProgramStore BLEND_ALPHA_DEPTH_TEST(RenderScript)"
+ line="60"
+ startpos="2768"
+ endpos="2790"
+>
+	<marker line="-1" type="param">
+		<operand  start="2825" length="2" line="60">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<type  start="2734" length="33" line="60" chordsig="android.renderscript.ProgramStore"/>
+	<type  start="2791" length="33" line="60" chordsig="android.renderscript.RenderScript"/>
+	<newexpr line="60" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2841" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2837" length="29" line="60">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2858" length="7" line="60">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2841" length="16" line="60" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="BLEND_ALPHA_DEPTH_NONE:(Landroid/renderscript/RenderScript;)Landroid/renderscript/ProgramStore;@android.renderscript.ProgramStore"
+ sig="ProgramStore BLEND_ALPHA_DEPTH_NONE(RenderScript)"
+ line="61"
+ startpos="2919"
+ endpos="2941"
+>
+	<marker line="-1" type="param">
+		<operand  start="2976" length="2" line="61">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<type  start="2885" length="33" line="61" chordsig="android.renderscript.ProgramStore"/>
+	<type  start="2942" length="33" line="61" chordsig="android.renderscript.RenderScript"/>
+	<newexpr line="61" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2992" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2988" length="29" line="61">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3009" length="7" line="61">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2992" length="16" line="61" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

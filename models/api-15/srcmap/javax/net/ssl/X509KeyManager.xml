@@ -1,0 +1,131 @@
+<root>
+<class chordsig="javax.net.ssl.X509KeyManager" line="2">
+	<type  start="65" length="24" line="3" chordsig="javax.net.ssl.KeyManager"/>
+<method
+ chordsig="chooseClientAlias:([Ljava/lang/String;[Ljava/security/Principal;Ljava/net/Socket;)Ljava/lang/String;@javax.net.ssl.X509KeyManager"
+ sig="String chooseClientAlias(String[],Principal[],Socket)"
+ line="5"
+ startpos="126"
+ endpos="143"
+>
+	<marker line="-1" type="param">
+		<operand  start="163" length="7" line="5">
+			<expr><![CDATA[keyType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="198" length="7" line="5">
+			<expr><![CDATA[issuers]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="223" length="6" line="5">
+			<expr><![CDATA[socket]]></expr>
+		</operand>
+	</marker>
+	<type  start="109" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="144" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="172" length="23" line="5" chordsig="java.security.Principal"/>
+	<type  start="207" length="15" line="5" chordsig="java.net.Socket"/>
+</method>
+<method
+ chordsig="chooseServerAlias:(Ljava/lang/String;[Ljava/security/Principal;Ljava/net/Socket;)Ljava/lang/String;@javax.net.ssl.X509KeyManager"
+ sig="String chooseServerAlias(String,Principal[],Socket)"
+ line="6"
+ startpos="266"
+ endpos="283"
+>
+	<marker line="-1" type="param">
+		<operand  start="301" length="7" line="6">
+			<expr><![CDATA[keyType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="336" length="7" line="6">
+			<expr><![CDATA[issuers]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="361" length="6" line="6">
+			<expr><![CDATA[socket]]></expr>
+		</operand>
+	</marker>
+	<type  start="249" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="284" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="310" length="23" line="6" chordsig="java.security.Principal"/>
+	<type  start="345" length="15" line="6" chordsig="java.net.Socket"/>
+</method>
+<method
+ chordsig="getCertificateChain:(Ljava/lang/String;)[Ljava/security/cert/X509Certificate;@javax.net.ssl.X509KeyManager"
+ sig="X509Certificate[] getCertificateChain(String)"
+ line="7"
+ startpos="424"
+ endpos="443"
+>
+	<marker line="-1" type="param">
+		<operand  start="461" length="5" line="7">
+			<expr><![CDATA[alias]]></expr>
+		</operand>
+	</marker>
+	<type  start="387" length="34" line="7" chordsig="java.security.cert.X509Certificate"/>
+	<type  start="444" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getClientAliases:(Ljava/lang/String;[Ljava/security/Principal;)[Ljava/lang/String;@javax.net.ssl.X509KeyManager"
+ sig="String[] getClientAliases(String,Principal[])"
+ line="8"
+ startpos="505"
+ endpos="521"
+>
+	<marker line="-1" type="param">
+		<operand  start="539" length="7" line="8">
+			<expr><![CDATA[keyType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="574" length="7" line="8">
+			<expr><![CDATA[issuers]]></expr>
+		</operand>
+	</marker>
+	<type  start="486" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="522" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="548" length="23" line="8" chordsig="java.security.Principal"/>
+</method>
+<method
+ chordsig="getServerAliases:(Ljava/lang/String;[Ljava/security/Principal;)[Ljava/lang/String;@javax.net.ssl.X509KeyManager"
+ sig="String[] getServerAliases(String,Principal[])"
+ line="9"
+ startpos="620"
+ endpos="636"
+>
+	<marker line="-1" type="param">
+		<operand  start="654" length="7" line="9">
+			<expr><![CDATA[keyType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="689" length="7" line="9">
+			<expr><![CDATA[issuers]]></expr>
+		</operand>
+	</marker>
+	<type  start="601" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="637" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="663" length="23" line="9" chordsig="java.security.Principal"/>
+</method>
+<method
+ chordsig="getPrivateKey:(Ljava/lang/String;)Ljava/security/PrivateKey;@javax.net.ssl.X509KeyManager"
+ sig="PrivateKey getPrivateKey(String)"
+ line="10"
+ startpos="741"
+ endpos="754"
+>
+	<marker line="-1" type="param">
+		<operand  start="772" length="5" line="10">
+			<expr><![CDATA[alias]]></expr>
+		</operand>
+	</marker>
+	<type  start="716" length="24" line="10" chordsig="java.security.PrivateKey"/>
+	<type  start="755" length="16" line="10" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

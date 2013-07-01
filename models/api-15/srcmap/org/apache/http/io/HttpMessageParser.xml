@@ -1,0 +1,13 @@
+<root>
+<class chordsig="org.apache.http.io.HttpMessageParser" line="2">
+<method
+ chordsig="parse:()Lorg/apache/http/HttpMessage;@org.apache.http.io.HttpMessageParser"
+ sig="HttpMessage parse()"
+ line="4"
+ startpos="110"
+ endpos="115"
+>
+	<type  start="82" length="27" line="4" chordsig="org.apache.http.HttpMessage"/>
+</method>
+</class>
+</root>

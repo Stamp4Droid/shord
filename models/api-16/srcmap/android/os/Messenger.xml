@@ -1,0 +1,247 @@
+<root>
+<class chordsig="android.os.Messenger" line="2">
+	<type  start="62" length="21" line="3" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/os/Handler;)V@android.os.Messenger"
+ sig="Messenger(Handler)"
+ line="5"
+ startpos="94"
+ endpos="103"
+>
+	<marker line="-1" type="param">
+		<operand  start="123" length="6" line="5">
+			<expr><![CDATA[target]]></expr>
+		</operand>
+	</marker>
+	<type  start="104" length="18" line="5" chordsig="android.os.Handler"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="143" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="139" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="160" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="143" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/os/IBinder;)V@android.os.Messenger"
+ sig="Messenger(IBinder)"
+ line="6"
+ startpos="180"
+ endpos="189"
+>
+	<marker line="-1" type="param">
+		<operand  start="209" length="6" line="6">
+			<expr><![CDATA[target]]></expr>
+		</operand>
+	</marker>
+	<type  start="190" length="18" line="6" chordsig="android.os.IBinder"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="229" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="225" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="246" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="229" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="send:(Landroid/os/Message;)V@android.os.Messenger"
+ sig="void send(Message)"
+ line="7"
+ startpos="271"
+ endpos="275"
+>
+	<marker line="-1" type="param">
+		<operand  start="295" length="7" line="7">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="276" length="18" line="7" chordsig="android.os.Message"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="350" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="346" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="367" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="350" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getBinder:()Landroid/os/IBinder;@android.os.Messenger"
+ sig="IBinder getBinder()"
+ line="8"
+ startpos="406"
+ endpos="415"
+>
+	<type  start="387" length="18" line="8" chordsig="android.os.IBinder"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="430" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="426" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="447" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="430" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@android.os.Messenger"
+ sig="boolean equals(Object)"
+ line="9"
+ startpos="475"
+ endpos="481"
+>
+	<marker line="-1" type="param">
+		<operand  start="499" length="8" line="9">
+			<expr><![CDATA[otherObj]]></expr>
+		</operand>
+	</marker>
+	<type  start="482" length="16" line="9" chordsig="java.lang.Object"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="521" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="517" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="538" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="521" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@android.os.Messenger"
+ sig="int hashCode()"
+ line="10"
+ startpos="562"
+ endpos="570"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="585" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="581" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="602" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="585" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.os.Messenger"
+ sig="int describeContents()"
+ line="11"
+ startpos="626"
+ endpos="642"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="657" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="653" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="674" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="657" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.os.Messenger"
+ sig="void writeToParcel(Parcel,int)"
+ line="12"
+ startpos="699"
+ endpos="712"
+>
+	<marker line="-1" type="param">
+		<operand  start="731" length="3" line="12">
+			<expr><![CDATA[out]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="740" length="5" line="12">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="713" length="17" line="12" chordsig="android.os.Parcel"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="759" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="755" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="776" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="759" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeMessengerOrNullToParcel:(Landroid/os/Messenger;Landroid/os/Parcel;)V@android.os.Messenger"
+ sig="void writeMessengerOrNullToParcel(Messenger,Parcel)"
+ line="13"
+ startpos="808"
+ endpos="836"
+>
+	<marker line="-1" type="param">
+		<operand  start="858" length="9" line="13">
+			<expr><![CDATA[messenger]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="887" length="3" line="13">
+			<expr><![CDATA[out]]></expr>
+		</operand>
+	</marker>
+	<type  start="837" length="20" line="13" chordsig="android.os.Messenger"/>
+	<type  start="869" length="17" line="13" chordsig="android.os.Parcel"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="904" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="900" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="921" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="904" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="readMessengerOrNullFromParcel:(Landroid/os/Parcel;)Landroid/os/Messenger;@android.os.Messenger"
+ sig="Messenger readMessengerOrNullFromParcel(Parcel)"
+ line="14"
+ startpos="969"
+ endpos="998"
+>
+	<marker line="-1" type="param">
+		<operand  start="1017" length="2" line="14">
+			<expr><![CDATA[in]]></expr>
+		</operand>
+	</marker>
+	<type  start="948" length="20" line="14" chordsig="android.os.Messenger"/>
+	<type  start="999" length="17" line="14" chordsig="android.os.Parcel"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1033" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1029" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1050" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1033" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1082" length="29" line="15" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="1112" length="20" line="15" chordsig="android.os.Messenger"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.os.Messenger"
+ line="16"
+>
+</method>
+</class>
+</root>

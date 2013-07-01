@@ -1,0 +1,129 @@
+<root>
+<class chordsig="java.security.acl.Acl" line="2">
+	<type  start="58" length="23" line="3" chordsig="java.security.acl.Owner"/>
+<method
+ chordsig="setName:(Ljava/security/Principal;Ljava/lang/String;)V@java.security.acl.Acl"
+ sig="void setName(Principal,String)"
+ line="5"
+ startpos="106"
+ endpos="113"
+>
+	<marker line="-1" type="param">
+		<operand  start="138" length="6" line="5">
+			<expr><![CDATA[caller]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="163" length="4" line="5">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="114" length="23" line="5" chordsig="java.security.Principal"/>
+	<type  start="146" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getName:()Ljava/lang/String;@java.security.acl.Acl"
+ sig="String getName()"
+ line="6"
+ startpos="247"
+ endpos="254"
+>
+	<type  start="230" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="addEntry:(Ljava/security/Principal;Ljava/security/acl/AclEntry;)Z@java.security.acl.Acl"
+ sig="boolean addEntry(Principal,AclEntry)"
+ line="7"
+ startpos="283"
+ endpos="291"
+>
+	<marker line="-1" type="param">
+		<operand  start="316" length="6" line="7">
+			<expr><![CDATA[caller]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="351" length="5" line="7">
+			<expr><![CDATA[entry]]></expr>
+		</operand>
+	</marker>
+	<type  start="292" length="23" line="7" chordsig="java.security.Principal"/>
+	<type  start="324" length="26" line="7" chordsig="java.security.acl.AclEntry"/>
+</method>
+<method
+ chordsig="removeEntry:(Ljava/security/Principal;Ljava/security/acl/AclEntry;)Z@java.security.acl.Acl"
+ sig="boolean removeEntry(Principal,AclEntry)"
+ line="8"
+ startpos="427"
+ endpos="438"
+>
+	<marker line="-1" type="param">
+		<operand  start="463" length="6" line="8">
+			<expr><![CDATA[caller]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="498" length="5" line="8">
+			<expr><![CDATA[entry]]></expr>
+		</operand>
+	</marker>
+	<type  start="439" length="23" line="8" chordsig="java.security.Principal"/>
+	<type  start="471" length="26" line="8" chordsig="java.security.acl.AclEntry"/>
+</method>
+<method
+ chordsig="getPermissions:(Ljava/security/Principal;)Ljava/util/Enumeration;@java.security.acl.Acl"
+ sig="Enumeration&lt;Permission&gt; getPermissions(Principal)"
+ line="9"
+ startpos="618"
+ endpos="632"
+>
+	<marker line="-1" type="param">
+		<operand  start="657" length="4" line="9">
+			<expr><![CDATA[user]]></expr>
+		</operand>
+	</marker>
+	<type  start="566" length="21" line="9" chordsig="java.util.Enumeration"/>
+	<type  start="588" length="28" line="9" chordsig="java.security.acl.Permission"/>
+	<type  start="633" length="23" line="9" chordsig="java.security.Principal"/>
+</method>
+<method
+ chordsig="entries:()Ljava/util/Enumeration;@java.security.acl.Acl"
+ sig="Enumeration&lt;AclEntry&gt; entries()"
+ line="10"
+ startpos="731"
+ endpos="738"
+>
+	<type  start="681" length="21" line="10" chordsig="java.util.Enumeration"/>
+	<type  start="703" length="26" line="10" chordsig="java.security.acl.AclEntry"/>
+</method>
+<method
+ chordsig="checkPermission:(Ljava/security/Principal;Ljava/security/acl/Permission;)Z@java.security.acl.Acl"
+ sig="boolean checkPermission(Principal,Permission)"
+ line="11"
+ startpos="767"
+ endpos="782"
+>
+	<marker line="-1" type="param">
+		<operand  start="807" length="9" line="11">
+			<expr><![CDATA[principal]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="847" length="10" line="11">
+			<expr><![CDATA[permission]]></expr>
+		</operand>
+	</marker>
+	<type  start="783" length="23" line="11" chordsig="java.security.Principal"/>
+	<type  start="818" length="28" line="11" chordsig="java.security.acl.Permission"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.security.acl.Acl"
+ sig="String toString()"
+ line="12"
+ startpos="894"
+ endpos="902"
+>
+	<type  start="877" length="16" line="12" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

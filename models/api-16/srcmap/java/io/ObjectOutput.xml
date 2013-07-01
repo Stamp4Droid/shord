@@ -1,0 +1,84 @@
+<root>
+<class chordsig="java.io.ObjectOutput" line="2">
+	<type  start="57" length="18" line="3" chordsig="java.io.DataOutput"/>
+<method
+ chordsig="close:()V@java.io.ObjectOutput"
+ sig="void close()"
+ line="5"
+ startpos="100"
+ endpos="105"
+>
+</method>
+<method
+ chordsig="flush:()V@java.io.ObjectOutput"
+ sig="void flush()"
+ line="6"
+ startpos="158"
+ endpos="163"
+>
+</method>
+<method
+ chordsig="write:([B)V@java.io.ObjectOutput"
+ sig="void write(byte[])"
+ line="7"
+ startpos="216"
+ endpos="221"
+>
+	<marker line="-1" type="param">
+		<operand  start="229" length="6" line="7">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="write:([BII)V@java.io.ObjectOutput"
+ sig="void write(byte[],int,int)"
+ line="8"
+ startpos="287"
+ endpos="292"
+>
+	<marker line="-1" type="param">
+		<operand  start="300" length="6" line="8">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="312" length="6" line="8">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="324" length="5" line="8">
+			<expr><![CDATA[count]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="write:(I)V@java.io.ObjectOutput"
+ sig="void write(int)"
+ line="9"
+ startpos="381"
+ endpos="386"
+>
+	<marker line="-1" type="param">
+		<operand  start="391" length="5" line="9">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="writeObject:(Ljava/lang/Object;)V@java.io.ObjectOutput"
+ sig="void writeObject(Object)"
+ line="10"
+ startpos="448"
+ endpos="459"
+>
+	<marker line="-1" type="param">
+		<operand  start="477" length="3" line="10">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="460" length="16" line="10" chordsig="java.lang.Object"/>
+</method>
+</class>
+</root>

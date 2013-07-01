@@ -1,0 +1,341 @@
+<root>
+<class chordsig="android.app.SearchManager" line="2">
+	<type  start="61" length="49" line="3" chordsig="android.content.DialogInterface$OnDismissListener"/>
+	<type  start="112" length="48" line="3" chordsig="android.content.DialogInterface$OnCancelListener"/>
+<class chordsig="android.app.SearchManager$OnDismissListener" line="5">
+<method
+ chordsig="onDismiss:()V@android.app.SearchManager$OnDismissListener"
+ sig="void onDismiss()"
+ line="7"
+ startpos="229"
+ endpos="238"
+>
+</method>
+</class>
+<class chordsig="android.app.SearchManager$OnCancelListener" line="9">
+<method
+ chordsig="onCancel:()V@android.app.SearchManager$OnCancelListener"
+ sig="void onCancel()"
+ line="11"
+ startpos="309"
+ endpos="317"
+>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.app.SearchManager"
+ sig="SearchManager()"
+ line="13"
+ startpos="323"
+ endpos="336"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="351" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="347" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="368" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="351" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="startSearch:(Ljava/lang/String;ZLandroid/content/ComponentName;Landroid/os/Bundle;Z)V@android.app.SearchManager"
+ sig="void startSearch(String,boolean,ComponentName,Bundle,boolean)"
+ line="14"
+ startpos="393"
+ endpos="404"
+>
+	<marker line="-1" type="param">
+		<operand  start="422" length="12" line="14">
+			<expr><![CDATA[initialQuery]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="444" length="18" line="14">
+			<expr><![CDATA[selectInitialQuery]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="494" length="14" line="14">
+			<expr><![CDATA[launchActivity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="528" length="13" line="14">
+			<expr><![CDATA[appSearchData]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="551" length="12" line="14">
+			<expr><![CDATA[globalSearch]]></expr>
+		</operand>
+	</marker>
+	<type  start="405" length="16" line="14" chordsig="java.lang.String"/>
+	<type  start="464" length="29" line="14" chordsig="android.content.ComponentName"/>
+	<type  start="510" length="17" line="14" chordsig="android.os.Bundle"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="577" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="573" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="594" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="577" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getGlobalSearchActivity:()Landroid/content/ComponentName;@android.app.SearchManager"
+ sig="ComponentName getGlobalSearchActivity()"
+ line="15"
+ startpos="644"
+ endpos="667"
+>
+	<type  start="614" length="29" line="15" chordsig="android.content.ComponentName"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="682" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="678" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="699" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="682" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="triggerSearch:(Ljava/lang/String;Landroid/content/ComponentName;Landroid/os/Bundle;)V@android.app.SearchManager"
+ sig="void triggerSearch(String,ComponentName,Bundle)"
+ line="16"
+ startpos="724"
+ endpos="737"
+>
+	<marker line="-1" type="param">
+		<operand  start="755" length="5" line="16">
+			<expr><![CDATA[query]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="792" length="14" line="16">
+			<expr><![CDATA[launchActivity]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="826" length="13" line="16">
+			<expr><![CDATA[appSearchData]]></expr>
+		</operand>
+	</marker>
+	<type  start="738" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="762" length="29" line="16" chordsig="android.content.ComponentName"/>
+	<type  start="808" length="17" line="16" chordsig="android.os.Bundle"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="853" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="849" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="870" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="853" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="stopSearch:()V@android.app.SearchManager"
+ sig="void stopSearch()"
+ line="17"
+ startpos="895"
+ endpos="905"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="920" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="916" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="937" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="920" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnDismissListener:(Landroid/app/SearchManager$OnDismissListener;)V@android.app.SearchManager"
+ sig="void setOnDismissListener(OnDismissListener)"
+ line="18"
+ startpos="962"
+ endpos="982"
+>
+	<marker line="-1" type="param">
+		<operand  start="1027" length="8" line="18">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="983" length="43" line="18" chordsig="android.app.SearchManager$OnDismissListener"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1049" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1045" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1066" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1049" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnCancelListener:(Landroid/app/SearchManager$OnCancelListener;)V@android.app.SearchManager"
+ sig="void setOnCancelListener(OnCancelListener)"
+ line="19"
+ startpos="1091"
+ endpos="1110"
+>
+	<marker line="-1" type="param">
+		<operand  start="1154" length="8" line="19">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1111" length="42" line="19" chordsig="android.app.SearchManager$OnCancelListener"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1176" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1172" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1193" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1176" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onCancel:(Landroid/content/DialogInterface;)V@android.app.SearchManager"
+ sig="void onCancel(DialogInterface)"
+ line="21"
+ startpos="1242"
+ endpos="1250"
+>
+	<marker line="-1" type="param">
+		<operand  start="1283" length="6" line="21">
+			<expr><![CDATA[dialog]]></expr>
+		</operand>
+	</marker>
+	<type  start="1251" length="31" line="21" chordsig="android.content.DialogInterface"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1303" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1299" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1320" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1303" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onDismiss:(Landroid/content/DialogInterface;)V@android.app.SearchManager"
+ sig="void onDismiss(DialogInterface)"
+ line="23"
+ startpos="1369"
+ endpos="1378"
+>
+	<marker line="-1" type="param">
+		<operand  start="1411" length="6" line="23">
+			<expr><![CDATA[dialog]]></expr>
+		</operand>
+	</marker>
+	<type  start="1379" length="31" line="23" chordsig="android.content.DialogInterface"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1431" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1427" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1448" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1431" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSearchableInfo:(Landroid/content/ComponentName;)Landroid/app/SearchableInfo;@android.app.SearchManager"
+ sig="SearchableInfo getSearchableInfo(ComponentName)"
+ line="24"
+ startpos="1495"
+ endpos="1512"
+>
+	<marker line="-1" type="param">
+		<operand  start="1543" length="13" line="24">
+			<expr><![CDATA[componentName]]></expr>
+		</operand>
+	</marker>
+	<type  start="1468" length="26" line="24" chordsig="android.app.SearchableInfo"/>
+	<type  start="1513" length="29" line="24" chordsig="android.content.ComponentName"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1570" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1566" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1587" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1570" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSearchablesInGlobalSearch:()Ljava/util/List;@android.app.SearchManager"
+ sig="List&lt;SearchableInfo&gt; getSearchablesInGlobalSearch()"
+ line="25"
+ startpos="1650"
+ endpos="1678"
+>
+	<type  start="1607" length="14" line="25" chordsig="java.util.List"/>
+	<type  start="1622" length="26" line="25" chordsig="android.app.SearchableInfo"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1693" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1689" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1710" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1693" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1826" length="16" line="28" chordsig="java.lang.String"/>
+	<type  start="1880" length="16" line="29" chordsig="java.lang.String"/>
+	<type  start="1944" length="16" line="30" chordsig="java.lang.String"/>
+	<type  start="2004" length="16" line="31" chordsig="java.lang.String"/>
+	<type  start="2068" length="16" line="32" chordsig="java.lang.String"/>
+	<type  start="2147" length="16" line="33" chordsig="java.lang.String"/>
+	<type  start="2221" length="16" line="34" chordsig="java.lang.String"/>
+	<type  start="2291" length="16" line="35" chordsig="java.lang.String"/>
+	<type  start="2389" length="16" line="36" chordsig="java.lang.String"/>
+	<type  start="2472" length="16" line="37" chordsig="java.lang.String"/>
+	<type  start="2587" length="16" line="39" chordsig="java.lang.String"/>
+	<type  start="2673" length="16" line="40" chordsig="java.lang.String"/>
+	<type  start="2783" length="16" line="41" chordsig="java.lang.String"/>
+	<type  start="2875" length="16" line="42" chordsig="java.lang.String"/>
+	<type  start="2987" length="16" line="43" chordsig="java.lang.String"/>
+	<type  start="3066" length="16" line="44" chordsig="java.lang.String"/>
+	<type  start="3145" length="16" line="45" chordsig="java.lang.String"/>
+	<type  start="3224" length="16" line="46" chordsig="java.lang.String"/>
+	<type  start="3311" length="16" line="47" chordsig="java.lang.String"/>
+	<type  start="3390" length="16" line="48" chordsig="java.lang.String"/>
+	<type  start="3469" length="16" line="49" chordsig="java.lang.String"/>
+	<type  start="3562" length="16" line="50" chordsig="java.lang.String"/>
+	<type  start="3651" length="16" line="51" chordsig="java.lang.String"/>
+	<type  start="3752" length="16" line="52" chordsig="java.lang.String"/>
+	<type  start="3847" length="16" line="53" chordsig="java.lang.String"/>
+	<type  start="3931" length="16" line="54" chordsig="java.lang.String"/>
+	<type  start="4020" length="16" line="55" chordsig="java.lang.String"/>
+	<type  start="4135" length="16" line="56" chordsig="java.lang.String"/>
+	<type  start="4212" length="16" line="57" chordsig="java.lang.String"/>
+	<type  start="4311" length="16" line="58" chordsig="java.lang.String"/>
+	<type  start="4385" length="16" line="59" chordsig="java.lang.String"/>
+	<type  start="4457" length="16" line="60" chordsig="java.lang.String"/>
+	<type  start="4563" length="16" line="61" chordsig="java.lang.String"/>
+	<type  start="4673" length="16" line="62" chordsig="java.lang.String"/>
+	<type  start="4791" length="16" line="63" chordsig="java.lang.String"/>
+	<type  start="4909" length="16" line="64" chordsig="java.lang.String"/>
+	<type  start="5042" length="16" line="65" chordsig="java.lang.String"/>
+</class>
+</root>

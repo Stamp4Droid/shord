@@ -1,0 +1,46 @@
+<root>
+<class chordsig="org.xml.sax.ErrorHandler" line="2">
+<method
+ chordsig="warning:(Lorg/xml/sax/SAXParseException;)V@org.xml.sax.ErrorHandler"
+ sig="void warning(SAXParseException)"
+ line="4"
+ startpos="75"
+ endpos="82"
+>
+	<marker line="-1" type="param">
+		<operand  start="113" length="9" line="4">
+			<expr><![CDATA[exception]]></expr>
+		</operand>
+	</marker>
+	<type  start="83" length="29" line="4" chordsig="org.xml.sax.SAXParseException"/>
+</method>
+<method
+ chordsig="error:(Lorg/xml/sax/SAXParseException;)V@org.xml.sax.ErrorHandler"
+ sig="void error(SAXParseException)"
+ line="5"
+ startpos="179"
+ endpos="184"
+>
+	<marker line="-1" type="param">
+		<operand  start="215" length="9" line="5">
+			<expr><![CDATA[exception]]></expr>
+		</operand>
+	</marker>
+	<type  start="185" length="29" line="5" chordsig="org.xml.sax.SAXParseException"/>
+</method>
+<method
+ chordsig="fatalError:(Lorg/xml/sax/SAXParseException;)V@org.xml.sax.ErrorHandler"
+ sig="void fatalError(SAXParseException)"
+ line="6"
+ startpos="281"
+ endpos="291"
+>
+	<marker line="-1" type="param">
+		<operand  start="322" length="9" line="6">
+			<expr><![CDATA[exception]]></expr>
+		</operand>
+	</marker>
+	<type  start="292" length="29" line="6" chordsig="org.xml.sax.SAXParseException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,242 @@
+<root>
+<class chordsig="java.util.NavigableSet" line="2">
+	<type  start="62" length="19" line="3" chordsig="java.util.SortedSet"/>
+	<type  start="82" length="1" line="3" chordsig="java.lang.Object"/>
+<method
+ chordsig="lower:(Ljava/lang/Object;)Ljava/lang/Object;@java.util.NavigableSet"
+ sig="E lower(E)"
+ line="5"
+ startpos="106"
+ endpos="111"
+>
+	<marker line="-1" type="param">
+		<operand  start="114" length="1" line="5">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="104" length="1" line="5" chordsig="java.lang.Object"/>
+	<type  start="112" length="1" line="5" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="floor:(Ljava/lang/Object;)Ljava/lang/Object;@java.util.NavigableSet"
+ sig="E floor(E)"
+ line="6"
+ startpos="137"
+ endpos="142"
+>
+	<marker line="-1" type="param">
+		<operand  start="145" length="1" line="6">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="135" length="1" line="6" chordsig="java.lang.Object"/>
+	<type  start="143" length="1" line="6" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="ceiling:(Ljava/lang/Object;)Ljava/lang/Object;@java.util.NavigableSet"
+ sig="E ceiling(E)"
+ line="7"
+ startpos="168"
+ endpos="175"
+>
+	<marker line="-1" type="param">
+		<operand  start="178" length="1" line="7">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="166" length="1" line="7" chordsig="java.lang.Object"/>
+	<type  start="176" length="1" line="7" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="higher:(Ljava/lang/Object;)Ljava/lang/Object;@java.util.NavigableSet"
+ sig="E higher(E)"
+ line="8"
+ startpos="201"
+ endpos="207"
+>
+	<marker line="-1" type="param">
+		<operand  start="210" length="1" line="8">
+			<expr><![CDATA[e]]></expr>
+		</operand>
+	</marker>
+	<type  start="199" length="1" line="8" chordsig="java.lang.Object"/>
+	<type  start="208" length="1" line="8" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="pollFirst:()Ljava/lang/Object;@java.util.NavigableSet"
+ sig="E pollFirst()"
+ line="9"
+ startpos="233"
+ endpos="242"
+>
+	<type  start="231" length="1" line="9" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="pollLast:()Ljava/lang/Object;@java.util.NavigableSet"
+ sig="E pollLast()"
+ line="10"
+ startpos="265"
+ endpos="273"
+>
+	<type  start="263" length="1" line="10" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="iterator:()Ljava/util/Iterator;@java.util.NavigableSet"
+ sig="Iterator&lt;E&gt; iterator()"
+ line="11"
+ startpos="316"
+ endpos="324"
+>
+	<type  start="294" length="18" line="11" chordsig="java.util.Iterator"/>
+	<type  start="313" length="1" line="11" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="descendingSet:()Ljava/util/NavigableSet;@java.util.NavigableSet"
+ sig="NavigableSet&lt;E&gt; descendingSet()"
+ line="12"
+ startpos="371"
+ endpos="384"
+>
+	<type  start="345" length="22" line="12" chordsig="java.util.NavigableSet"/>
+	<type  start="368" length="1" line="12" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="descendingIterator:()Ljava/util/Iterator;@java.util.NavigableSet"
+ sig="Iterator&lt;E&gt; descendingIterator()"
+ line="13"
+ startpos="427"
+ endpos="445"
+>
+	<type  start="405" length="18" line="13" chordsig="java.util.Iterator"/>
+	<type  start="424" length="1" line="13" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="subSet:(Ljava/lang/Object;ZLjava/lang/Object;Z)Ljava/util/NavigableSet;@java.util.NavigableSet"
+ sig="NavigableSet&lt;E&gt; subSet(E,boolean,E,boolean)"
+ line="14"
+ startpos="492"
+ endpos="498"
+>
+	<marker line="-1" type="param">
+		<operand  start="501" length="11" line="14">
+			<expr><![CDATA[fromElement]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="522" length="13" line="14">
+			<expr><![CDATA[fromInclusive]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="539" length="9" line="14">
+			<expr><![CDATA[toElement]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="558" length="11" line="14">
+			<expr><![CDATA[toInclusive]]></expr>
+		</operand>
+	</marker>
+	<type  start="466" length="22" line="14" chordsig="java.util.NavigableSet"/>
+	<type  start="489" length="1" line="14" chordsig="java.lang.Object"/>
+	<type  start="499" length="1" line="14" chordsig="java.lang.Object"/>
+	<type  start="537" length="1" line="14" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="headSet:(Ljava/lang/Object;Z)Ljava/util/NavigableSet;@java.util.NavigableSet"
+ sig="NavigableSet&lt;E&gt; headSet(E,boolean)"
+ line="15"
+ startpos="615"
+ endpos="622"
+>
+	<marker line="-1" type="param">
+		<operand  start="625" length="9" line="15">
+			<expr><![CDATA[toElement]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="644" length="9" line="15">
+			<expr><![CDATA[inclusive]]></expr>
+		</operand>
+	</marker>
+	<type  start="589" length="22" line="15" chordsig="java.util.NavigableSet"/>
+	<type  start="612" length="1" line="15" chordsig="java.lang.Object"/>
+	<type  start="623" length="1" line="15" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="tailSet:(Ljava/lang/Object;Z)Ljava/util/NavigableSet;@java.util.NavigableSet"
+ sig="NavigableSet&lt;E&gt; tailSet(E,boolean)"
+ line="16"
+ startpos="699"
+ endpos="706"
+>
+	<marker line="-1" type="param">
+		<operand  start="709" length="11" line="16">
+			<expr><![CDATA[fromElement]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="730" length="9" line="16">
+			<expr><![CDATA[inclusive]]></expr>
+		</operand>
+	</marker>
+	<type  start="673" length="22" line="16" chordsig="java.util.NavigableSet"/>
+	<type  start="696" length="1" line="16" chordsig="java.lang.Object"/>
+	<type  start="707" length="1" line="16" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="subSet:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/util/SortedSet;@java.util.NavigableSet"
+ sig="SortedSet&lt;E&gt; subSet(E,E)"
+ line="17"
+ startpos="782"
+ endpos="788"
+>
+	<marker line="-1" type="param">
+		<operand  start="791" length="11" line="17">
+			<expr><![CDATA[fromElement]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="806" length="9" line="17">
+			<expr><![CDATA[toElement]]></expr>
+		</operand>
+	</marker>
+	<type  start="759" length="19" line="17" chordsig="java.util.SortedSet"/>
+	<type  start="779" length="1" line="17" chordsig="java.lang.Object"/>
+	<type  start="789" length="1" line="17" chordsig="java.lang.Object"/>
+	<type  start="804" length="1" line="17" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="headSet:(Ljava/lang/Object;)Ljava/util/SortedSet;@java.util.NavigableSet"
+ sig="SortedSet&lt;E&gt; headSet(E)"
+ line="18"
+ startpos="858"
+ endpos="865"
+>
+	<marker line="-1" type="param">
+		<operand  start="868" length="9" line="18">
+			<expr><![CDATA[toElement]]></expr>
+		</operand>
+	</marker>
+	<type  start="835" length="19" line="18" chordsig="java.util.SortedSet"/>
+	<type  start="855" length="1" line="18" chordsig="java.lang.Object"/>
+	<type  start="866" length="1" line="18" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="tailSet:(Ljava/lang/Object;)Ljava/util/SortedSet;@java.util.NavigableSet"
+ sig="SortedSet&lt;E&gt; tailSet(E)"
+ line="19"
+ startpos="920"
+ endpos="927"
+>
+	<marker line="-1" type="param">
+		<operand  start="930" length="11" line="19">
+			<expr><![CDATA[fromElement]]></expr>
+		</operand>
+	</marker>
+	<type  start="897" length="19" line="19" chordsig="java.util.SortedSet"/>
+	<type  start="917" length="1" line="19" chordsig="java.lang.Object"/>
+	<type  start="928" length="1" line="19" chordsig="java.lang.Object"/>
+</method>
+</class>
+</root>

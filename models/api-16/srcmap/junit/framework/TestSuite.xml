@@ -1,0 +1,483 @@
+<root>
+<class chordsig="junit.framework.TestSuite" line="2">
+	<type  start="61" length="20" line="3" chordsig="junit.framework.Test"/>
+<method
+ chordsig="&lt;init&gt;:()V@junit.framework.TestSuite"
+ sig="TestSuite()"
+ line="5"
+ startpos="92"
+ endpos="101"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="116" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="112" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="133" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="116" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Class;)V@junit.framework.TestSuite"
+ sig="TestSuite(Class&lt;?&gt;)"
+ line="6"
+ startpos="153"
+ endpos="162"
+>
+	<marker line="-1" type="param">
+		<operand  start="182" length="8" line="6">
+			<expr><![CDATA[theClass]]></expr>
+		</operand>
+	</marker>
+	<type  start="163" length="15" line="6" chordsig="java.lang.Class"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="204" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="200" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="221" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="204" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Class;Ljava/lang/String;)V@junit.framework.TestSuite"
+ sig="TestSuite(Class&lt;? extends TestCase&gt;,String)"
+ line="7"
+ startpos="241"
+ endpos="250"
+>
+	<marker line="-1" type="param">
+		<operand  start="303" length="8" line="7">
+			<expr><![CDATA[theClass]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="330" length="4" line="7">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="251" length="15" line="7" chordsig="java.lang.Class"/>
+	<type  start="277" length="24" line="7" chordsig="junit.framework.TestCase"/>
+	<type  start="313" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="348" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="344" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="365" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="348" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@junit.framework.TestSuite"
+ sig="TestSuite(String)"
+ line="8"
+ startpos="385"
+ endpos="394"
+>
+	<marker line="-1" type="param">
+		<operand  start="412" length="4" line="8">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="395" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="430" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="426" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="447" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="430" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:([Ljava/lang/Class;)V@junit.framework.TestSuite"
+ sig="TestSuite(Class&lt;?&gt;)"
+ line="9"
+ startpos="467"
+ endpos="476"
+>
+	<marker line="-1" type="param">
+		<operand  start="499" length="7" line="9">
+			<expr><![CDATA[classes]]></expr>
+		</operand>
+	</marker>
+	<type  start="477" length="15" line="9" chordsig="java.lang.Class"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="520" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="516" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="537" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="520" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:([Ljava/lang/Class;Ljava/lang/String;)V@junit.framework.TestSuite"
+ sig="TestSuite(Class&lt;? extends TestCase&gt;[],String)"
+ line="10"
+ startpos="557"
+ endpos="566"
+>
+	<marker line="-1" type="param">
+		<operand  start="621" length="7" line="10">
+			<expr><![CDATA[classes]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="647" length="4" line="10">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="567" length="15" line="10" chordsig="java.lang.Class"/>
+	<type  start="593" length="24" line="10" chordsig="junit.framework.TestCase"/>
+	<type  start="630" length="16" line="10" chordsig="java.lang.String"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="665" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="661" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="682" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="665" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createTest:(Ljava/lang/Class;Ljava/lang/String;)Ljunit/framework/Test;@junit.framework.TestSuite"
+ sig="Test createTest(Class&lt;?&gt;,String)"
+ line="11"
+ startpos="730"
+ endpos="740"
+>
+	<marker line="-1" type="param">
+		<operand  start="760" length="8" line="11">
+			<expr><![CDATA[theClass]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="787" length="4" line="11">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="709" length="20" line="11" chordsig="junit.framework.Test"/>
+	<type  start="741" length="15" line="11" chordsig="java.lang.Class"/>
+	<type  start="770" length="16" line="11" chordsig="java.lang.String"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="805" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="801" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="822" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="805" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTestConstructor:(Ljava/lang/Class;)Ljava/lang/reflect/Constructor;@junit.framework.TestSuite"
+ sig="Constructor&lt;?&gt; getTestConstructor(Class&lt;?&gt;)"
+ line="12"
+ startpos="882"
+ endpos="900"
+>
+	<marker line="-1" type="param">
+		<operand  start="920" length="8" line="12">
+			<expr><![CDATA[theClass]]></expr>
+		</operand>
+	</marker>
+	<type  start="849" length="29" line="12" chordsig="java.lang.reflect.Constructor"/>
+	<type  start="901" length="15" line="12" chordsig="java.lang.Class"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="981" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="977" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="998" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="981" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="warning:(Ljava/lang/String;)Ljunit/framework/Test;@junit.framework.TestSuite"
+ sig="Test warning(String)"
+ line="13"
+ startpos="1046"
+ endpos="1053"
+>
+	<marker line="-1" type="param">
+		<operand  start="1071" length="7" line="13">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="1025" length="20" line="13" chordsig="junit.framework.Test"/>
+	<type  start="1054" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1092" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1088" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1109" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1092" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addTest:(Ljunit/framework/Test;)V@junit.framework.TestSuite"
+ sig="void addTest(Test)"
+ line="14"
+ startpos="1134"
+ endpos="1141"
+>
+	<marker line="-1" type="param">
+		<operand  start="1163" length="4" line="14">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<type  start="1142" length="20" line="14" chordsig="junit.framework.Test"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1181" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1177" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1198" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1181" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addTestSuite:(Ljava/lang/Class;)V@junit.framework.TestSuite"
+ sig="void addTestSuite(Class&lt;? extends TestCase&gt;)"
+ line="15"
+ startpos="1223"
+ endpos="1235"
+>
+	<marker line="-1" type="param">
+		<operand  start="1288" length="9" line="15">
+			<expr><![CDATA[testClass]]></expr>
+		</operand>
+	</marker>
+	<type  start="1236" length="15" line="15" chordsig="java.lang.Class"/>
+	<type  start="1262" length="24" line="15" chordsig="junit.framework.TestCase"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1311" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1307" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1328" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1311" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="countTestCases:()I@junit.framework.TestSuite"
+ sig="int countTestCases()"
+ line="16"
+ startpos="1352"
+ endpos="1366"
+>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1381" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1377" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1398" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1381" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getName:()Ljava/lang/String;@junit.framework.TestSuite"
+ sig="String getName()"
+ line="17"
+ startpos="1435"
+ endpos="1442"
+>
+	<type  start="1418" length="16" line="17" chordsig="java.lang.String"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1457" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1453" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1474" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1457" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="run:(Ljunit/framework/TestResult;)V@junit.framework.TestSuite"
+ sig="void run(TestResult)"
+ line="18"
+ startpos="1499"
+ endpos="1502"
+>
+	<marker line="-1" type="param">
+		<operand  start="1530" length="6" line="18">
+			<expr><![CDATA[result]]></expr>
+		</operand>
+	</marker>
+	<type  start="1503" length="26" line="18" chordsig="junit.framework.TestResult"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1550" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1546" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1567" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1550" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="runTest:(Ljunit/framework/Test;Ljunit/framework/TestResult;)V@junit.framework.TestSuite"
+ sig="void runTest(Test,TestResult)"
+ line="19"
+ startpos="1592"
+ endpos="1599"
+>
+	<marker line="-1" type="param">
+		<operand  start="1621" length="4" line="19">
+			<expr><![CDATA[test]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1654" length="6" line="19">
+			<expr><![CDATA[result]]></expr>
+		</operand>
+	</marker>
+	<type  start="1600" length="20" line="19" chordsig="junit.framework.Test"/>
+	<type  start="1627" length="26" line="19" chordsig="junit.framework.TestResult"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1674" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1670" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1691" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1674" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setName:(Ljava/lang/String;)V@junit.framework.TestSuite"
+ sig="void setName(String)"
+ line="20"
+ startpos="1716"
+ endpos="1723"
+>
+	<marker line="-1" type="param">
+		<operand  start="1741" length="4" line="20">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="1724" length="16" line="20" chordsig="java.lang.String"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1759" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1755" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1776" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1759" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="testAt:(I)Ljunit/framework/Test;@junit.framework.TestSuite"
+ sig="Test testAt(int)"
+ line="21"
+ startpos="1817"
+ endpos="1823"
+>
+	<marker line="-1" type="param">
+		<operand  start="1828" length="5" line="21">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="1796" length="20" line="21" chordsig="junit.framework.Test"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1847" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1843" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1864" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1847" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="testCount:()I@junit.framework.TestSuite"
+ sig="int testCount()"
+ line="22"
+ startpos="1888"
+ endpos="1897"
+>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1912" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1908" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1929" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1912" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="tests:()Ljava/util/Enumeration;@junit.framework.TestSuite"
+ sig="Enumeration&lt;Test&gt; tests()"
+ line="23"
+ startpos="1993"
+ endpos="1998"
+>
+	<type  start="1949" length="21" line="23" chordsig="java.util.Enumeration"/>
+	<type  start="1971" length="20" line="23" chordsig="junit.framework.Test"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2013" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2009" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2030" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2013" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@junit.framework.TestSuite"
+ sig="String toString()"
+ line="24"
+ startpos="2067"
+ endpos="2075"
+>
+	<type  start="2050" length="16" line="24" chordsig="java.lang.String"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2090" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2086" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2107" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2090" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

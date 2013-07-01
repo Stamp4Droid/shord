@@ -1,0 +1,665 @@
+<root>
+<class chordsig="android.widget.VideoView" line="2">
+	<type  start="57" length="24" line="3" chordsig="android.view.SurfaceView"/>
+	<type  start="95" length="49" line="4" chordsig="android.widget.MediaController$MediaPlayerControl"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.widget.VideoView"
+ sig="VideoView(Context)"
+ line="6"
+ startpos="155"
+ endpos="164"
+>
+	<marker line="-1" type="param">
+		<operand  start="189" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="165" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="207" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="237" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="282" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="278" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="299" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="282" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.widget.VideoView"
+ sig="VideoView(Context,AttributeSet)"
+ line="7"
+ startpos="319"
+ endpos="328"
+>
+	<marker line="-1" type="param">
+		<operand  start="353" length="7" line="7">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="388" length="5" line="7">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="329" length="23" line="7" chordsig="android.content.Context"/>
+	<type  start="362" length="25" line="7" chordsig="android.util.AttributeSet"/>
+	<type  start="404" length="23" line="7" chordsig="android.content.Context"/>
+	<type  start="434" length="25" line="7" chordsig="android.util.AttributeSet"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="479" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="475" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="496" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="479" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;I)V@android.widget.VideoView"
+ sig="VideoView(Context,AttributeSet,int)"
+ line="8"
+ startpos="516"
+ endpos="525"
+>
+	<marker line="-1" type="param">
+		<operand  start="550" length="7" line="8">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="585" length="5" line="8">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="596" length="8" line="8">
+			<expr><![CDATA[defStyle]]></expr>
+		</operand>
+	</marker>
+	<type  start="526" length="23" line="8" chordsig="android.content.Context"/>
+	<type  start="559" length="25" line="8" chordsig="android.util.AttributeSet"/>
+	<type  start="615" length="23" line="8" chordsig="android.content.Context"/>
+	<type  start="645" length="25" line="8" chordsig="android.util.AttributeSet"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="690" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="686" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="707" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="690" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onMeasure:(II)V@android.widget.VideoView"
+ sig="void onMeasure(int,int)"
+ line="9"
+ startpos="735"
+ endpos="744"
+>
+	<marker line="-1" type="param">
+		<operand  start="749" length="16" line="9">
+			<expr><![CDATA[widthMeasureSpec]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="771" length="17" line="9">
+			<expr><![CDATA[heightMeasureSpec]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="802" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="798" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="819" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="802" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityEvent:(Landroid/view/accessibility/AccessibilityEvent;)V@android.widget.VideoView"
+ sig="void onInitializeAccessibilityEvent(AccessibilityEvent)"
+ line="10"
+ startpos="844"
+ endpos="874"
+>
+	<marker line="-1" type="param">
+		<operand  start="921" length="5" line="10">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="875" length="45" line="10" chordsig="android.view.accessibility.AccessibilityEvent"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="940" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="936" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="957" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="940" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityNodeInfo:(Landroid/view/accessibility/AccessibilityNodeInfo;)V@android.widget.VideoView"
+ sig="void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo)"
+ line="11"
+ startpos="982"
+ endpos="1015"
+>
+	<marker line="-1" type="param">
+		<operand  start="1065" length="4" line="11">
+			<expr><![CDATA[info]]></expr>
+		</operand>
+	</marker>
+	<type  start="1016" length="48" line="11" chordsig="android.view.accessibility.AccessibilityNodeInfo"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1083" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1079" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1100" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1083" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="resolveAdjustedSize:(II)I@android.widget.VideoView"
+ sig="int resolveAdjustedSize(int,int)"
+ line="12"
+ startpos="1124"
+ endpos="1143"
+>
+	<marker line="-1" type="param">
+		<operand  start="1148" length="11" line="12">
+			<expr><![CDATA[desiredSize]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1165" length="11" line="12">
+			<expr><![CDATA[measureSpec]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1190" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1186" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1207" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1190" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setVideoPath:(Ljava/lang/String;)V@android.widget.VideoView"
+ sig="void setVideoPath(String)"
+ line="13"
+ startpos="1232"
+ endpos="1244"
+>
+	<marker line="-1" type="param">
+		<operand  start="1262" length="4" line="13">
+			<expr><![CDATA[path]]></expr>
+		</operand>
+	</marker>
+	<type  start="1245" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1280" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1276" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1297" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1280" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setVideoURI:(Landroid/net/Uri;)V@android.widget.VideoView"
+ sig="void setVideoURI(Uri)"
+ line="14"
+ startpos="1322"
+ endpos="1333"
+>
+	<marker line="-1" type="param">
+		<operand  start="1350" length="3" line="14">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<type  start="1334" length="15" line="14" chordsig="android.net.Uri"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1367" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1363" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1384" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1367" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="stopPlayback:()V@android.widget.VideoView"
+ sig="void stopPlayback()"
+ line="15"
+ startpos="1409"
+ endpos="1421"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1436" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1432" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1453" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1436" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setMediaController:(Landroid/widget/MediaController;)V@android.widget.VideoView"
+ sig="void setMediaController(MediaController)"
+ line="16"
+ startpos="1478"
+ endpos="1496"
+>
+	<marker line="-1" type="param">
+		<operand  start="1528" length="10" line="16">
+			<expr><![CDATA[controller]]></expr>
+		</operand>
+	</marker>
+	<type  start="1497" length="30" line="16" chordsig="android.widget.MediaController"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1552" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1548" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1569" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1552" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnPreparedListener:(Landroid/media/MediaPlayer$OnPreparedListener;)V@android.widget.VideoView"
+ sig="void setOnPreparedListener(OnPreparedListener)"
+ line="17"
+ startpos="1594"
+ endpos="1615"
+>
+	<marker line="-1" type="param">
+		<operand  start="1661" length="1" line="17">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<type  start="1616" length="44" line="17" chordsig="android.media.MediaPlayer$OnPreparedListener"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1676" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1672" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1693" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1676" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnCompletionListener:(Landroid/media/MediaPlayer$OnCompletionListener;)V@android.widget.VideoView"
+ sig="void setOnCompletionListener(OnCompletionListener)"
+ line="18"
+ startpos="1718"
+ endpos="1741"
+>
+	<marker line="-1" type="param">
+		<operand  start="1789" length="1" line="18">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<type  start="1742" length="46" line="18" chordsig="android.media.MediaPlayer$OnCompletionListener"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1804" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1800" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1821" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1804" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnErrorListener:(Landroid/media/MediaPlayer$OnErrorListener;)V@android.widget.VideoView"
+ sig="void setOnErrorListener(OnErrorListener)"
+ line="19"
+ startpos="1846"
+ endpos="1864"
+>
+	<marker line="-1" type="param">
+		<operand  start="1907" length="1" line="19">
+			<expr><![CDATA[l]]></expr>
+		</operand>
+	</marker>
+	<type  start="1865" length="41" line="19" chordsig="android.media.MediaPlayer$OnErrorListener"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1922" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1918" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1939" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1922" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onTouchEvent:(Landroid/view/MotionEvent;)Z@android.widget.VideoView"
+ sig="boolean onTouchEvent(MotionEvent)"
+ line="20"
+ startpos="1967"
+ endpos="1979"
+>
+	<marker line="-1" type="param">
+		<operand  start="2005" length="2" line="20">
+			<expr><![CDATA[ev]]></expr>
+		</operand>
+	</marker>
+	<type  start="1980" length="24" line="20" chordsig="android.view.MotionEvent"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2021" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2017" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2038" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2021" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onTrackballEvent:(Landroid/view/MotionEvent;)Z@android.widget.VideoView"
+ sig="boolean onTrackballEvent(MotionEvent)"
+ line="21"
+ startpos="2066"
+ endpos="2082"
+>
+	<marker line="-1" type="param">
+		<operand  start="2108" length="2" line="21">
+			<expr><![CDATA[ev]]></expr>
+		</operand>
+	</marker>
+	<type  start="2083" length="24" line="21" chordsig="android.view.MotionEvent"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2124" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2120" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2141" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2124" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onKeyDown:(ILandroid/view/KeyEvent;)Z@android.widget.VideoView"
+ sig="boolean onKeyDown(int,KeyEvent)"
+ line="22"
+ startpos="2169"
+ endpos="2178"
+>
+	<marker line="-1" type="param">
+		<operand  start="2183" length="7" line="22">
+			<expr><![CDATA[keyCode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2214" length="5" line="22">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="2192" length="21" line="22" chordsig="android.view.KeyEvent"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2233" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2229" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2250" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2233" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="start:()V@android.widget.VideoView"
+ sig="void start()"
+ line="23"
+ startpos="2275"
+ endpos="2280"
+>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2295" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2291" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2312" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2295" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="pause:()V@android.widget.VideoView"
+ sig="void pause()"
+ line="24"
+ startpos="2337"
+ endpos="2342"
+>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2357" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2353" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2374" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2357" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="suspend:()V@android.widget.VideoView"
+ sig="void suspend()"
+ line="25"
+ startpos="2399"
+ endpos="2406"
+>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2421" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2417" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2438" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2421" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="resume:()V@android.widget.VideoView"
+ sig="void resume()"
+ line="26"
+ startpos="2463"
+ endpos="2469"
+>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2484" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2480" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2501" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2484" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDuration:()I@android.widget.VideoView"
+ sig="int getDuration()"
+ line="27"
+ startpos="2525"
+ endpos="2536"
+>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2551" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2547" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2568" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2551" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCurrentPosition:()I@android.widget.VideoView"
+ sig="int getCurrentPosition()"
+ line="28"
+ startpos="2592"
+ endpos="2610"
+>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2625" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2621" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2642" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2625" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="seekTo:(I)V@android.widget.VideoView"
+ sig="void seekTo(int)"
+ line="29"
+ startpos="2667"
+ endpos="2673"
+>
+	<marker line="-1" type="param">
+		<operand  start="2678" length="4" line="29">
+			<expr><![CDATA[msec]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2696" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2692" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2713" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2696" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isPlaying:()Z@android.widget.VideoView"
+ sig="boolean isPlaying()"
+ line="30"
+ startpos="2741"
+ endpos="2750"
+>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2765" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2761" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2782" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2765" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getBufferPercentage:()I@android.widget.VideoView"
+ sig="int getBufferPercentage()"
+ line="31"
+ startpos="2806"
+ endpos="2825"
+>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2840" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2836" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2857" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2840" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="canPause:()Z@android.widget.VideoView"
+ sig="boolean canPause()"
+ line="32"
+ startpos="2885"
+ endpos="2893"
+>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2908" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2904" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2925" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2908" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="canSeekBackward:()Z@android.widget.VideoView"
+ sig="boolean canSeekBackward()"
+ line="33"
+ startpos="2953"
+ endpos="2968"
+>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2983" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2979" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3000" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2983" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="canSeekForward:()Z@android.widget.VideoView"
+ sig="boolean canSeekForward()"
+ line="34"
+ startpos="3028"
+ endpos="3042"
+>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3057" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3053" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3074" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3057" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

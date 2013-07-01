@@ -1,0 +1,224 @@
+<root>
+<class chordsig="android.view.ViewDebug" line="2">
+	<type  start="327" length="34" line="9" chordsig="android.view.ViewDebug$IntToString"/>
+	<type  start="386" length="34" line="10" chordsig="android.view.ViewDebug$IntToString"/>
+	<type  start="450" length="35" line="11" chordsig="android.view.ViewDebug$FlagToString"/>
+	<type  start="550" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="588" length="16" line="14" chordsig="java.lang.String"/>
+	<type  start="841" length="16" line="21" chordsig="java.lang.String"/>
+	<type  start="1092" length="16" line="29" chordsig="java.lang.String"/>
+<class chordsig="android.view.ViewDebug$HierarchyTraceType" line="38">
+</class>
+<class chordsig="android.view.ViewDebug$RecyclerTraceType" line="49">
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.view.ViewDebug"
+ sig="ViewDebug()"
+ line="58"
+ startpos="1802"
+ endpos="1811"
+>
+	<newexpr line="58" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1826" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1822" length="29" line="58">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1843" length="7" line="58">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1826" length="16" line="58" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="trace:(Landroid/view/View;Landroid/view/ViewDebug$RecyclerTraceType;[I)V@android.view.ViewDebug"
+ sig="void trace(View,RecyclerTraceType,int)"
+ line="59"
+ startpos="1875"
+ endpos="1880"
+>
+	<marker line="-1" type="param">
+		<operand  start="1899" length="4" line="59">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1946" length="4" line="59">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1959" length="10" line="59">
+			<expr><![CDATA[parameters]]></expr>
+		</operand>
+	</marker>
+	<type  start="1881" length="17" line="59" chordsig="android.view.View"/>
+	<type  start="1905" length="40" line="59" chordsig="android.view.ViewDebug$RecyclerTraceType"/>
+	<newexpr line="59" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1983" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1979" length="29" line="59">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2000" length="7" line="59">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1983" length="16" line="59" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="startRecyclerTracing:(Ljava/lang/String;Landroid/view/View;)V@android.view.ViewDebug"
+ sig="void startRecyclerTracing(String,View)"
+ line="60"
+ startpos="2032"
+ endpos="2052"
+>
+	<marker line="-1" type="param">
+		<operand  start="2070" length="6" line="60">
+			<expr><![CDATA[prefix]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2096" length="4" line="60">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<type  start="2053" length="16" line="60" chordsig="java.lang.String"/>
+	<type  start="2078" length="17" line="60" chordsig="android.view.View"/>
+	<newexpr line="60" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2114" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2110" length="29" line="60">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2131" length="7" line="60">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2114" length="16" line="60" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="stopRecyclerTracing:()V@android.view.ViewDebug"
+ sig="void stopRecyclerTracing()"
+ line="61"
+ startpos="2163"
+ endpos="2182"
+>
+	<newexpr line="61" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2197" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2193" length="29" line="61">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2214" length="7" line="61">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2197" length="16" line="61" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="trace:(Landroid/view/View;Landroid/view/ViewDebug$HierarchyTraceType;)V@android.view.ViewDebug"
+ sig="void trace(View,HierarchyTraceType)"
+ line="62"
+ startpos="2246"
+ endpos="2251"
+>
+	<marker line="-1" type="param">
+		<operand  start="2270" length="4" line="62">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2318" length="4" line="62">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<type  start="2252" length="17" line="62" chordsig="android.view.View"/>
+	<type  start="2276" length="41" line="62" chordsig="android.view.ViewDebug$HierarchyTraceType"/>
+	<newexpr line="62" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2336" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2332" length="29" line="62">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2353" length="7" line="62">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2336" length="16" line="62" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="startHierarchyTracing:(Ljava/lang/String;Landroid/view/View;)V@android.view.ViewDebug"
+ sig="void startHierarchyTracing(String,View)"
+ line="63"
+ startpos="2385"
+ endpos="2406"
+>
+	<marker line="-1" type="param">
+		<operand  start="2424" length="6" line="63">
+			<expr><![CDATA[prefix]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2450" length="4" line="63">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<type  start="2407" length="16" line="63" chordsig="java.lang.String"/>
+	<type  start="2432" length="17" line="63" chordsig="android.view.View"/>
+	<newexpr line="63" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2468" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2464" length="29" line="63">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2485" length="7" line="63">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2468" length="16" line="63" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="stopHierarchyTracing:()V@android.view.ViewDebug"
+ sig="void stopHierarchyTracing()"
+ line="64"
+ startpos="2517"
+ endpos="2537"
+>
+	<newexpr line="64" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2552" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2548" length="29" line="64">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2569" length="7" line="64">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2552" length="16" line="64" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="dumpCapturedView:(Ljava/lang/String;Ljava/lang/Object;)V@android.view.ViewDebug"
+ sig="void dumpCapturedView(String,Object)"
+ line="65"
+ startpos="2601"
+ endpos="2617"
+>
+	<marker line="-1" type="param">
+		<operand  start="2635" length="3" line="65">
+			<expr><![CDATA[tag]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2657" length="4" line="65">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<type  start="2618" length="16" line="65" chordsig="java.lang.String"/>
+	<type  start="2640" length="16" line="65" chordsig="java.lang.Object"/>
+	<newexpr line="65" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2675" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2671" length="29" line="65">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2692" length="7" line="65">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2675" length="16" line="65" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

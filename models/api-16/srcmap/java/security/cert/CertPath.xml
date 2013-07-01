@@ -1,0 +1,221 @@
+<root>
+<class chordsig="java.security.cert.CertPath" line="2">
+	<type  start="72" length="20" line="3" chordsig="java.io.Serializable"/>
+<class chordsig="java.security.cert.CertPath$CertPathRep" line="5">
+	<type  start="143" length="20" line="6" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;[B)V@java.security.cert.CertPath$CertPathRep"
+ sig="CertPathRep(String,byte[])"
+ line="8"
+ startpos="177"
+ endpos="188"
+>
+	<marker line="-1" type="param">
+		<operand  start="206" length="4" line="8">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="219" length="4" line="8">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<type  start="189" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="237" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="233" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="254" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="237" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="readResolve:()Ljava/lang/Object;@java.security.cert.CertPath$CertPathRep"
+ sig="Object readResolve()"
+ line="9"
+ startpos="294"
+ endpos="305"
+>
+	<type  start="277" length="16" line="9" chordsig="java.lang.Object"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="357" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="353" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="374" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="357" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.security.cert.CertPath"
+ sig="CertPath(String)"
+ line="11"
+ startpos="399"
+ endpos="407"
+>
+	<marker line="-1" type="param">
+		<operand  start="425" length="4" line="11">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<type  start="408" length="16" line="11" chordsig="java.lang.String"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="443" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="439" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="460" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="443" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getType:()Ljava/lang/String;@java.security.cert.CertPath"
+ sig="String getType()"
+ line="12"
+ startpos="497"
+ endpos="504"
+>
+	<type  start="480" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="519" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="515" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="536" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="519" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.security.cert.CertPath"
+ sig="boolean equals(Object)"
+ line="13"
+ startpos="564"
+ endpos="570"
+>
+	<marker line="-1" type="param">
+		<operand  start="588" length="5" line="13">
+			<expr><![CDATA[other]]></expr>
+		</operand>
+	</marker>
+	<type  start="571" length="16" line="13" chordsig="java.lang.Object"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="607" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="603" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="624" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="607" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@java.security.cert.CertPath"
+ sig="int hashCode()"
+ line="14"
+ startpos="648"
+ endpos="656"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="671" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="667" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="688" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="671" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.security.cert.CertPath"
+ sig="String toString()"
+ line="15"
+ startpos="725"
+ endpos="733"
+>
+	<type  start="708" length="16" line="15" chordsig="java.lang.String"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="748" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="744" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="765" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="748" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCertificates:()Ljava/util/List;@java.security.cert.CertPath"
+ sig="List&lt;? extends Certificate&gt; getCertificates()"
+ line="16"
+ startpos="851"
+ endpos="866"
+>
+	<type  start="794" length="14" line="16" chordsig="java.util.List"/>
+	<type  start="819" length="30" line="16" chordsig="java.security.cert.Certificate"/>
+</method>
+<method
+ chordsig="getEncoded:()[B@java.security.cert.CertPath"
+ sig="byte[] getEncoded()"
+ line="17"
+ startpos="894"
+ endpos="904"
+>
+</method>
+<method
+ chordsig="getEncoded:(Ljava/lang/String;)[B@java.security.cert.CertPath"
+ sig="byte[] getEncoded(String)"
+ line="18"
+ startpos="987"
+ endpos="997"
+>
+	<marker line="-1" type="param">
+		<operand  start="1015" length="8" line="18">
+			<expr><![CDATA[encoding]]></expr>
+		</operand>
+	</marker>
+	<type  start="998" length="16" line="18" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getEncodings:()Ljava/util/Iterator;@java.security.cert.CertPath"
+ sig="Iterator&lt;String&gt; getEncodings()"
+ line="19"
+ startpos="1135"
+ endpos="1147"
+>
+	<type  start="1098" length="18" line="19" chordsig="java.util.Iterator"/>
+	<type  start="1117" length="16" line="19" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="writeReplace:()Ljava/lang/Object;@java.security.cert.CertPath"
+ sig="Object writeReplace()"
+ line="20"
+ startpos="1179"
+ endpos="1191"
+>
+	<type  start="1162" length="16" line="20" chordsig="java.lang.Object"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1243" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1239" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1260" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1243" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

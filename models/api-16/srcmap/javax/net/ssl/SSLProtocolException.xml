@@ -1,0 +1,30 @@
+<root>
+<class chordsig="javax.net.ssl.SSLProtocolException" line="2">
+	<type  start="67" length="26" line="3" chordsig="javax.net.ssl.SSLException"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@javax.net.ssl.SSLProtocolException"
+ sig="SSLProtocolException(String)"
+ line="5"
+ startpos="104"
+ endpos="124"
+>
+	<marker line="-1" type="param">
+		<operand  start="142" length="6" line="5">
+			<expr><![CDATA[reason]]></expr>
+		</operand>
+	</marker>
+	<type  start="125" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="159" length="19" line="5" chordsig="java.lang.Throwable"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="196" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="192" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="213" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="196" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

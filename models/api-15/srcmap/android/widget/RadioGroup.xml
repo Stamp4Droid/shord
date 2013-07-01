@@ -1,0 +1,496 @@
+<root>
+<class chordsig="android.widget.RadioGroup" line="2">
+	<type  start="58" length="27" line="3" chordsig="android.widget.LinearLayout"/>
+<class chordsig="android.widget.RadioGroup$LayoutParams" line="5">
+	<type  start="131" length="40" line="6" chordsig="android.widget.LinearLayout$LayoutParams"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.widget.RadioGroup$LayoutParams"
+ sig="LayoutParams(Context,AttributeSet)"
+ line="8"
+ startpos="182"
+ endpos="194"
+>
+	<marker line="-1" type="param">
+		<operand  start="219" length="1" line="8">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="248" length="5" line="8">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="195" length="23" line="8" chordsig="android.content.Context"/>
+	<type  start="222" length="25" line="8" chordsig="android.util.AttributeSet"/>
+	<type  start="264" length="41" line="8" chordsig="android.view.ViewGroup$MarginLayoutParams"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="323" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="319" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="340" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="323" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(II)V@android.widget.RadioGroup$LayoutParams"
+ sig="LayoutParams(int,int)"
+ line="9"
+ startpos="360"
+ endpos="372"
+>
+	<marker line="-1" type="param">
+		<operand  start="377" length="1" line="9">
+			<expr><![CDATA[w]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="384" length="1" line="9">
+			<expr><![CDATA[h]]></expr>
+		</operand>
+	</marker>
+	<type  start="396" length="41" line="9" chordsig="android.view.ViewGroup$MarginLayoutParams"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="455" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="451" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="472" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="455" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(IIF)V@android.widget.RadioGroup$LayoutParams"
+ sig="LayoutParams(int,int,float)"
+ line="10"
+ startpos="492"
+ endpos="504"
+>
+	<marker line="-1" type="param">
+		<operand  start="509" length="1" line="10">
+			<expr><![CDATA[w]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="516" length="1" line="10">
+			<expr><![CDATA[h]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="525" length="10" line="10">
+			<expr><![CDATA[initWeight]]></expr>
+		</operand>
+	</marker>
+	<type  start="546" length="41" line="10" chordsig="android.view.ViewGroup$MarginLayoutParams"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="605" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="601" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="622" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="605" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/view/ViewGroup$LayoutParams;)V@android.widget.RadioGroup$LayoutParams"
+ sig="LayoutParams(LayoutParams)"
+ line="11"
+ startpos="642"
+ endpos="654"
+>
+	<marker line="-1" type="param">
+		<operand  start="691" length="1" line="11">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<type  start="655" length="35" line="11" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<type  start="703" length="41" line="11" chordsig="android.view.ViewGroup$MarginLayoutParams"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="762" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="758" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="779" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="762" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/view/ViewGroup$MarginLayoutParams;)V@android.widget.RadioGroup$LayoutParams"
+ sig="LayoutParams(MarginLayoutParams)"
+ line="12"
+ startpos="799"
+ endpos="811"
+>
+	<marker line="-1" type="param">
+		<operand  start="854" length="6" line="12">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="812" length="41" line="12" chordsig="android.view.ViewGroup$MarginLayoutParams"/>
+	<type  start="871" length="41" line="12" chordsig="android.view.ViewGroup$MarginLayoutParams"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="930" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="926" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="947" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="930" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setBaseAttributes:(Landroid/content/res/TypedArray;II)V@android.widget.RadioGroup$LayoutParams"
+ sig="void setBaseAttributes(TypedArray,int,int)"
+ line="13"
+ startpos="975"
+ endpos="992"
+>
+	<marker line="-1" type="param">
+		<operand  start="1024" length="1" line="13">
+			<expr><![CDATA[a]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1031" length="9" line="13">
+			<expr><![CDATA[widthAttr]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1046" length="10" line="13">
+			<expr><![CDATA[heightAttr]]></expr>
+		</operand>
+	</marker>
+	<type  start="993" length="30" line="13" chordsig="android.content.res.TypedArray"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1070" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1066" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1087" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1070" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<class chordsig="android.widget.RadioGroup$OnCheckedChangeListener" line="15">
+<method
+ chordsig="onCheckedChanged:(Landroid/widget/RadioGroup;I)V@android.widget.RadioGroup$OnCheckedChangeListener"
+ sig="void onCheckedChanged(RadioGroup,int)"
+ line="17"
+ startpos="1173"
+ endpos="1189"
+>
+	<marker line="-1" type="param">
+		<operand  start="1216" length="5" line="17">
+			<expr><![CDATA[group]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1227" length="9" line="17">
+			<expr><![CDATA[checkedId]]></expr>
+		</operand>
+	</marker>
+	<type  start="1190" length="25" line="17" chordsig="android.widget.RadioGroup"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.widget.RadioGroup"
+ sig="RadioGroup(Context)"
+ line="19"
+ startpos="1249"
+ endpos="1259"
+>
+	<marker line="-1" type="param">
+		<operand  start="1284" length="7" line="19">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="1260" length="23" line="19" chordsig="android.content.Context"/>
+	<type  start="1302" length="23" line="19" chordsig="android.content.Context"/>
+	<type  start="1332" length="25" line="19" chordsig="android.util.AttributeSet"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1377" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1373" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1394" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1377" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.widget.RadioGroup"
+ sig="RadioGroup(Context,AttributeSet)"
+ line="20"
+ startpos="1414"
+ endpos="1424"
+>
+	<marker line="-1" type="param">
+		<operand  start="1449" length="7" line="20">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1484" length="5" line="20">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="1425" length="23" line="20" chordsig="android.content.Context"/>
+	<type  start="1458" length="25" line="20" chordsig="android.util.AttributeSet"/>
+	<type  start="1500" length="23" line="20" chordsig="android.content.Context"/>
+	<type  start="1530" length="25" line="20" chordsig="android.util.AttributeSet"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1575" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1571" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1592" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1575" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnHierarchyChangeListener:(Landroid/view/ViewGroup$OnHierarchyChangeListener;)V@android.widget.RadioGroup"
+ sig="void setOnHierarchyChangeListener(OnHierarchyChangeListener)"
+ line="21"
+ startpos="1617"
+ endpos="1645"
+>
+	<marker line="-1" type="param">
+		<operand  start="1695" length="8" line="21">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1646" length="48" line="21" chordsig="android.view.ViewGroup$OnHierarchyChangeListener"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1717" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1713" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1734" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1717" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onFinishInflate:()V@android.widget.RadioGroup"
+ sig="void onFinishInflate()"
+ line="22"
+ startpos="1762"
+ endpos="1777"
+>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1792" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1788" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1809" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1792" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addView:(Landroid/view/View;ILandroid/view/ViewGroup$LayoutParams;)V@android.widget.RadioGroup"
+ sig="void addView(View,int,LayoutParams)"
+ line="23"
+ startpos="1834"
+ endpos="1841"
+>
+	<marker line="-1" type="param">
+		<operand  start="1860" length="5" line="23">
+			<expr><![CDATA[child]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1871" length="5" line="23">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1914" length="6" line="23">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="1842" length="17" line="23" chordsig="android.view.View"/>
+	<type  start="1878" length="35" line="23" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1934" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1930" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1951" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1934" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="check:(I)V@android.widget.RadioGroup"
+ sig="void check(int)"
+ line="24"
+ startpos="1976"
+ endpos="1981"
+>
+	<marker line="-1" type="param">
+		<operand  start="1986" length="2" line="24">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2002" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1998" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2019" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2002" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCheckedRadioButtonId:()I@android.widget.RadioGroup"
+ sig="int getCheckedRadioButtonId()"
+ line="25"
+ startpos="2043"
+ endpos="2066"
+>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2081" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2077" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2098" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2081" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clearCheck:()V@android.widget.RadioGroup"
+ sig="void clearCheck()"
+ line="26"
+ startpos="2123"
+ endpos="2133"
+>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2148" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2144" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2165" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2148" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnCheckedChangeListener:(Landroid/widget/RadioGroup$OnCheckedChangeListener;)V@android.widget.RadioGroup"
+ sig="void setOnCheckedChangeListener(OnCheckedChangeListener)"
+ line="27"
+ startpos="2190"
+ endpos="2216"
+>
+	<marker line="-1" type="param">
+		<operand  start="2267" length="8" line="27">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="2217" length="49" line="27" chordsig="android.widget.RadioGroup$OnCheckedChangeListener"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2289" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2285" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2306" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2289" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="generateLayoutParams:(Landroid/util/AttributeSet;)Landroid/widget/RadioGroup$LayoutParams;@android.widget.RadioGroup"
+ sig="LayoutParams generateLayoutParams(AttributeSet)"
+ line="28"
+ startpos="2365"
+ endpos="2385"
+>
+	<alias>(Landroid/util/AttributeSet;)Landroid/widget/LinearLayout$LayoutParams;</alias>
+	<alias>(Landroid/util/AttributeSet;)Landroid/view/ViewGroup$LayoutParams;</alias>
+	<marker line="-1" type="param">
+		<operand  start="2412" length="5" line="28">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="2326" length="38" line="28" chordsig="android.widget.RadioGroup$LayoutParams"/>
+	<type  start="2386" length="25" line="28" chordsig="android.util.AttributeSet"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2431" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2427" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2448" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2431" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="checkLayoutParams:(Landroid/view/ViewGroup$LayoutParams;)Z@android.widget.RadioGroup"
+ sig="boolean checkLayoutParams(LayoutParams)"
+ line="29"
+ startpos="2479"
+ endpos="2496"
+>
+	<marker line="-1" type="param">
+		<operand  start="2533" length="1" line="29">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<type  start="2497" length="35" line="29" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2548" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2544" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2565" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2548" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="generateDefaultLayoutParams:()Landroid/widget/LinearLayout$LayoutParams;@android.widget.RadioGroup"
+ sig="LayoutParams generateDefaultLayoutParams()"
+ line="30"
+ startpos="2629"
+ endpos="2656"
+>
+	<alias>()Landroid/view/ViewGroup$LayoutParams;</alias>
+	<type  start="2588" length="40" line="30" chordsig="android.widget.LinearLayout$LayoutParams"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2671" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2667" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2688" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2671" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

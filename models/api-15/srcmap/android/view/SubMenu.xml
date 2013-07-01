@@ -1,0 +1,124 @@
+<root>
+<class chordsig="android.view.SubMenu" line="2">
+	<type  start="57" length="17" line="3" chordsig="android.view.Menu"/>
+<method
+ chordsig="setHeaderTitle:(I)Landroid/view/SubMenu;@android.view.SubMenu"
+ sig="SubMenu setHeaderTitle(int)"
+ line="5"
+ startpos="115"
+ endpos="129"
+>
+	<marker line="-1" type="param">
+		<operand  start="134" length="8" line="5">
+			<expr><![CDATA[titleRes]]></expr>
+		</operand>
+	</marker>
+	<type  start="94" length="20" line="5" chordsig="android.view.SubMenu"/>
+</method>
+<method
+ chordsig="setHeaderTitle:(Ljava/lang/CharSequence;)Landroid/view/SubMenu;@android.view.SubMenu"
+ sig="SubMenu setHeaderTitle(CharSequence)"
+ line="6"
+ startpos="183"
+ endpos="197"
+>
+	<marker line="-1" type="param">
+		<operand  start="221" length="5" line="6">
+			<expr><![CDATA[title]]></expr>
+		</operand>
+	</marker>
+	<type  start="162" length="20" line="6" chordsig="android.view.SubMenu"/>
+	<type  start="198" length="22" line="6" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="setHeaderIcon:(I)Landroid/view/SubMenu;@android.view.SubMenu"
+ sig="SubMenu setHeaderIcon(int)"
+ line="7"
+ startpos="267"
+ endpos="280"
+>
+	<marker line="-1" type="param">
+		<operand  start="285" length="7" line="7">
+			<expr><![CDATA[iconRes]]></expr>
+		</operand>
+	</marker>
+	<type  start="246" length="20" line="7" chordsig="android.view.SubMenu"/>
+</method>
+<method
+ chordsig="setHeaderIcon:(Landroid/graphics/drawable/Drawable;)Landroid/view/SubMenu;@android.view.SubMenu"
+ sig="SubMenu setHeaderIcon(Drawable)"
+ line="8"
+ startpos="333"
+ endpos="346"
+>
+	<marker line="-1" type="param">
+		<operand  start="382" length="4" line="8">
+			<expr><![CDATA[icon]]></expr>
+		</operand>
+	</marker>
+	<type  start="312" length="20" line="8" chordsig="android.view.SubMenu"/>
+	<type  start="347" length="34" line="8" chordsig="android.graphics.drawable.Drawable"/>
+</method>
+<method
+ chordsig="setHeaderView:(Landroid/view/View;)Landroid/view/SubMenu;@android.view.SubMenu"
+ sig="SubMenu setHeaderView(View)"
+ line="9"
+ startpos="427"
+ endpos="440"
+>
+	<marker line="-1" type="param">
+		<operand  start="459" length="4" line="9">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<type  start="406" length="20" line="9" chordsig="android.view.SubMenu"/>
+	<type  start="441" length="17" line="9" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="clearHeader:()V@android.view.SubMenu"
+ sig="void clearHeader()"
+ line="10"
+ startpos="488"
+ endpos="499"
+>
+</method>
+<method
+ chordsig="setIcon:(I)Landroid/view/SubMenu;@android.view.SubMenu"
+ sig="SubMenu setIcon(int)"
+ line="11"
+ startpos="541"
+ endpos="548"
+>
+	<marker line="-1" type="param">
+		<operand  start="553" length="7" line="11">
+			<expr><![CDATA[iconRes]]></expr>
+		</operand>
+	</marker>
+	<type  start="520" length="20" line="11" chordsig="android.view.SubMenu"/>
+</method>
+<method
+ chordsig="setIcon:(Landroid/graphics/drawable/Drawable;)Landroid/view/SubMenu;@android.view.SubMenu"
+ sig="SubMenu setIcon(Drawable)"
+ line="12"
+ startpos="601"
+ endpos="608"
+>
+	<marker line="-1" type="param">
+		<operand  start="644" length="4" line="12">
+			<expr><![CDATA[icon]]></expr>
+		</operand>
+	</marker>
+	<type  start="580" length="20" line="12" chordsig="android.view.SubMenu"/>
+	<type  start="609" length="34" line="12" chordsig="android.graphics.drawable.Drawable"/>
+</method>
+<method
+ chordsig="getItem:()Landroid/view/MenuItem;@android.view.SubMenu"
+ sig="MenuItem getItem()"
+ line="13"
+ startpos="690"
+ endpos="697"
+>
+	<type  start="668" length="21" line="13" chordsig="android.view.MenuItem"/>
+</method>
+</class>
+</root>

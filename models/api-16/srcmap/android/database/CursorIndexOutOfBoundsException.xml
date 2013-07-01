@@ -1,0 +1,57 @@
+<root>
+<class chordsig="android.database.CursorIndexOutOfBoundsException" line="2">
+	<type  start="81" length="35" line="3" chordsig="java.lang.IndexOutOfBoundsException"/>
+<method
+ chordsig="&lt;init&gt;:(II)V@android.database.CursorIndexOutOfBoundsException"
+ sig="CursorIndexOutOfBoundsException(int,int)"
+ line="5"
+ startpos="127"
+ endpos="158"
+>
+	<marker line="-1" type="param">
+		<operand  start="163" length="5" line="5">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="174" length="4" line="5">
+			<expr><![CDATA[size]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="192" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="188" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="209" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="192" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.database.CursorIndexOutOfBoundsException"
+ sig="CursorIndexOutOfBoundsException(String)"
+ line="6"
+ startpos="229"
+ endpos="260"
+>
+	<marker line="-1" type="param">
+		<operand  start="278" length="7" line="6">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="261" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="299" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="295" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="316" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="299" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

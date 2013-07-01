@@ -1,0 +1,46 @@
+<root>
+<class chordsig="java.security.cert.X509Extension" line="2">
+<method
+ chordsig="getCriticalExtensionOIDs:()Ljava/util/Set;@java.security.cert.X509Extension"
+ sig="Set&lt;String&gt; getCriticalExtensionOIDs()"
+ line="4"
+ startpos="110"
+ endpos="134"
+>
+	<type  start="78" length="13" line="4" chordsig="java.util.Set"/>
+	<type  start="92" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getExtensionValue:(Ljava/lang/String;)[B@java.security.cert.X509Extension"
+ sig="byte[] getExtensionValue(String)"
+ line="5"
+ startpos="162"
+ endpos="179"
+>
+	<marker line="-1" type="param">
+		<operand  start="197" length="3" line="5">
+			<expr><![CDATA[oid]]></expr>
+		</operand>
+	</marker>
+	<type  start="180" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getNonCriticalExtensionOIDs:()Ljava/util/Set;@java.security.cert.X509Extension"
+ sig="Set&lt;String&gt; getNonCriticalExtensionOIDs()"
+ line="6"
+ startpos="252"
+ endpos="279"
+>
+	<type  start="220" length="13" line="6" chordsig="java.util.Set"/>
+	<type  start="234" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="hasUnsupportedCriticalExtension:()Z@java.security.cert.X509Extension"
+ sig="boolean hasUnsupportedCriticalExtension()"
+ line="7"
+ startpos="308"
+ endpos="339"
+>
+</method>
+</class>
+</root>

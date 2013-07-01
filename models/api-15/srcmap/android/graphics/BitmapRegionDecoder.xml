@@ -1,0 +1,272 @@
+<root>
+<class chordsig="android.graphics.BitmapRegionDecoder" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.graphics.BitmapRegionDecoder"
+ sig="BitmapRegionDecoder()"
+ line="4"
+ startpos="67"
+ endpos="86"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="101" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="97" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="118" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="101" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newInstance:([BIIZ)Landroid/graphics/BitmapRegionDecoder;@android.graphics.BitmapRegionDecoder"
+ sig="BitmapRegionDecoder newInstance(byte[],int,int,boolean)"
+ line="5"
+ startpos="182"
+ endpos="193"
+>
+	<marker line="-1" type="param">
+		<operand  start="201" length="4" line="5">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="211" length="6" line="5">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="223" length="6" line="5">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="239" length="11" line="5">
+			<expr><![CDATA[isShareable]]></expr>
+		</operand>
+	</marker>
+	<type  start="145" length="36" line="5" chordsig="android.graphics.BitmapRegionDecoder"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="291" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="287" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="308" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="291" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newInstance:(Ljava/io/FileDescriptor;Z)Landroid/graphics/BitmapRegionDecoder;@android.graphics.BitmapRegionDecoder"
+ sig="BitmapRegionDecoder newInstance(FileDescriptor,boolean)"
+ line="6"
+ startpos="372"
+ endpos="383"
+>
+	<marker line="-1" type="param">
+		<operand  start="407" length="2" line="6">
+			<expr><![CDATA[fd]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="419" length="11" line="6">
+			<expr><![CDATA[isShareable]]></expr>
+		</operand>
+	</marker>
+	<type  start="335" length="36" line="6" chordsig="android.graphics.BitmapRegionDecoder"/>
+	<type  start="384" length="22" line="6" chordsig="java.io.FileDescriptor"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="471" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="467" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="488" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="471" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newInstance:(Ljava/io/InputStream;Z)Landroid/graphics/BitmapRegionDecoder;@android.graphics.BitmapRegionDecoder"
+ sig="BitmapRegionDecoder newInstance(InputStream,boolean)"
+ line="7"
+ startpos="552"
+ endpos="563"
+>
+	<marker line="-1" type="param">
+		<operand  start="584" length="2" line="7">
+			<expr><![CDATA[is]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="596" length="11" line="7">
+			<expr><![CDATA[isShareable]]></expr>
+		</operand>
+	</marker>
+	<type  start="515" length="36" line="7" chordsig="android.graphics.BitmapRegionDecoder"/>
+	<type  start="564" length="19" line="7" chordsig="java.io.InputStream"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="648" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="644" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="665" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="648" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newInstance:(Ljava/lang/String;Z)Landroid/graphics/BitmapRegionDecoder;@android.graphics.BitmapRegionDecoder"
+ sig="BitmapRegionDecoder newInstance(String,boolean)"
+ line="8"
+ startpos="729"
+ endpos="740"
+>
+	<marker line="-1" type="param">
+		<operand  start="758" length="8" line="8">
+			<expr><![CDATA[pathName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="776" length="11" line="8">
+			<expr><![CDATA[isShareable]]></expr>
+		</operand>
+	</marker>
+	<type  start="692" length="36" line="8" chordsig="android.graphics.BitmapRegionDecoder"/>
+	<type  start="741" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="828" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="824" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="845" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="828" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="decodeRegion:(Landroid/graphics/Rect;Landroid/graphics/BitmapFactory$Options;)Landroid/graphics/Bitmap;@android.graphics.BitmapRegionDecoder"
+ sig="Bitmap decodeRegion(Rect,Options)"
+ line="9"
+ startpos="889"
+ endpos="901"
+>
+	<marker line="-1" type="param">
+		<operand  start="924" length="4" line="9">
+			<expr><![CDATA[rect]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="969" length="7" line="9">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<type  start="865" length="23" line="9" chordsig="android.graphics.Bitmap"/>
+	<type  start="902" length="21" line="9" chordsig="android.graphics.Rect"/>
+	<type  start="930" length="38" line="9" chordsig="android.graphics.BitmapFactory$Options"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="990" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="986" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1007" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="990" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getWidth:()I@android.graphics.BitmapRegionDecoder"
+ sig="int getWidth()"
+ line="10"
+ startpos="1031"
+ endpos="1039"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1054" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1050" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1071" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1054" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getHeight:()I@android.graphics.BitmapRegionDecoder"
+ sig="int getHeight()"
+ line="11"
+ startpos="1095"
+ endpos="1104"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1119" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1115" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1136" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1119" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="recycle:()V@android.graphics.BitmapRegionDecoder"
+ sig="void recycle()"
+ line="12"
+ startpos="1161"
+ endpos="1168"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1183" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1179" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1200" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1183" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isRecycled:()Z@android.graphics.BitmapRegionDecoder"
+ sig="boolean isRecycled()"
+ line="13"
+ startpos="1234"
+ endpos="1244"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1259" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1255" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1276" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1259" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="finalize:()V@android.graphics.BitmapRegionDecoder"
+ sig="void finalize()"
+ line="14"
+ startpos="1304"
+ endpos="1312"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1354" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1350" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1371" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1354" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

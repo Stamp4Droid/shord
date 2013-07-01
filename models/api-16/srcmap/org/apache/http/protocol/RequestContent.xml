@@ -1,0 +1,53 @@
+<root>
+<class chordsig="org.apache.http.protocol.RequestContent" line="2">
+	<type  start="75" length="38" line="3" chordsig="org.apache.http.HttpRequestInterceptor"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.protocol.RequestContent"
+ sig="RequestContent()"
+ line="5"
+ startpos="124"
+ endpos="138"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="153" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="149" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="170" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="153" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="process:(Lorg/apache/http/HttpRequest;Lorg/apache/http/protocol/HttpContext;)V@org.apache.http.protocol.RequestContent"
+ sig="void process(HttpRequest,HttpContext)"
+ line="6"
+ startpos="195"
+ endpos="202"
+>
+	<marker line="-1" type="param">
+		<operand  start="231" length="7" line="6">
+			<expr><![CDATA[request]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="277" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="203" length="27" line="6" chordsig="org.apache.http.HttpRequest"/>
+	<type  start="240" length="36" line="6" chordsig="org.apache.http.protocol.HttpContext"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="356" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="352" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="373" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="356" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,128 @@
+<root>
+<class chordsig="android.view.animation.AlphaAnimation" line="2">
+	<type  start="70" length="32" line="3" chordsig="android.view.animation.Animation"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.view.animation.AlphaAnimation"
+ sig="AlphaAnimation(Context,AttributeSet)"
+ line="5"
+ startpos="113"
+ endpos="127"
+>
+	<marker line="-1" type="param">
+		<operand  start="152" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="187" length="5" line="5">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="128" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="161" length="25" line="5" chordsig="android.util.AttributeSet"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="206" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="202" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="223" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="206" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(FF)V@android.view.animation.AlphaAnimation"
+ sig="AlphaAnimation(float,float)"
+ line="6"
+ startpos="243"
+ endpos="257"
+>
+	<marker line="-1" type="param">
+		<operand  start="264" length="9" line="6">
+			<expr><![CDATA[fromAlpha]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="281" length="7" line="6">
+			<expr><![CDATA[toAlpha]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="302" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="298" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="319" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="302" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="applyTransformation:(FLandroid/view/animation/Transformation;)V@android.view.animation.AlphaAnimation"
+ sig="void applyTransformation(float,Transformation)"
+ line="7"
+ startpos="347"
+ endpos="366"
+>
+	<marker line="-1" type="param">
+		<operand  start="373" length="16" line="7">
+			<expr><![CDATA[interpolatedTime]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="429" length="1" line="7">
+			<expr><![CDATA[t]]></expr>
+		</operand>
+	</marker>
+	<type  start="391" length="37" line="7" chordsig="android.view.animation.Transformation"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="444" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="440" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="461" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="444" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="willChangeTransformationMatrix:()Z@android.view.animation.AlphaAnimation"
+ sig="boolean willChangeTransformationMatrix()"
+ line="8"
+ startpos="489"
+ endpos="519"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="534" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="530" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="551" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="534" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="willChangeBounds:()Z@android.view.animation.AlphaAnimation"
+ sig="boolean willChangeBounds()"
+ line="9"
+ startpos="579"
+ endpos="595"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="610" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="606" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="627" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="610" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

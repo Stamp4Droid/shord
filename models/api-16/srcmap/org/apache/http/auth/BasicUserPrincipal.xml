@@ -1,0 +1,109 @@
+<root>
+<class chordsig="org.apache.http.auth.BasicUserPrincipal" line="2">
+	<type  start="81" length="23" line="3" chordsig="java.security.Principal"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@org.apache.http.auth.BasicUserPrincipal"
+ sig="BasicUserPrincipal(String)"
+ line="5"
+ startpos="115"
+ endpos="133"
+>
+	<marker line="-1" type="param">
+		<operand  start="151" length="8" line="5">
+			<expr><![CDATA[username]]></expr>
+		</operand>
+	</marker>
+	<type  start="134" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="173" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="169" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="190" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="173" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getName:()Ljava/lang/String;@org.apache.http.auth.BasicUserPrincipal"
+ sig="String getName()"
+ line="6"
+ startpos="227"
+ endpos="234"
+>
+	<type  start="210" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="249" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="245" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="266" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="249" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@org.apache.http.auth.BasicUserPrincipal"
+ sig="int hashCode()"
+ line="7"
+ startpos="290"
+ endpos="298"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="313" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="309" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="330" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="313" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@org.apache.http.auth.BasicUserPrincipal"
+ sig="boolean equals(Object)"
+ line="8"
+ startpos="358"
+ endpos="364"
+>
+	<marker line="-1" type="param">
+		<operand  start="382" length="1" line="8">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="365" length="16" line="8" chordsig="java.lang.Object"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="397" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="393" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="414" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="397" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@org.apache.http.auth.BasicUserPrincipal"
+ sig="String toString()"
+ line="9"
+ startpos="451"
+ endpos="459"
+>
+	<type  start="434" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="474" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="470" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="491" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="474" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

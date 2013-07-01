@@ -1,0 +1,92 @@
+<root>
+<class chordsig="java.security.Permissions" line="2">
+	<type  start="64" length="34" line="3" chordsig="java.security.PermissionCollection"/>
+	<type  start="112" length="20" line="4" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.security.Permissions"
+ sig="Permissions()"
+ line="6"
+ startpos="143"
+ endpos="154"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="169" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="165" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="186" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="169" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="add:(Ljava/security/Permission;)V@java.security.Permissions"
+ sig="void add(Permission)"
+ line="7"
+ startpos="211"
+ endpos="214"
+>
+	<marker line="-1" type="param">
+		<operand  start="240" length="10" line="7">
+			<expr><![CDATA[permission]]></expr>
+		</operand>
+	</marker>
+	<type  start="215" length="24" line="7" chordsig="java.security.Permission"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="264" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="260" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="281" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="264" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="elements:()Ljava/util/Enumeration;@java.security.Permissions"
+ sig="Enumeration&lt;Permission&gt; elements()"
+ line="8"
+ startpos="349"
+ endpos="357"
+>
+	<type  start="301" length="21" line="8" chordsig="java.util.Enumeration"/>
+	<type  start="323" length="24" line="8" chordsig="java.security.Permission"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="372" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="368" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="389" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="372" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="implies:(Ljava/security/Permission;)Z@java.security.Permissions"
+ sig="boolean implies(Permission)"
+ line="9"
+ startpos="417"
+ endpos="424"
+>
+	<marker line="-1" type="param">
+		<operand  start="450" length="10" line="9">
+			<expr><![CDATA[permission]]></expr>
+		</operand>
+	</marker>
+	<type  start="425" length="24" line="9" chordsig="java.security.Permission"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="474" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="470" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="491" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="474" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

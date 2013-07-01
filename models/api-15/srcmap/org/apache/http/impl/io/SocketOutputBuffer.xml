@@ -1,0 +1,40 @@
+<root>
+<class chordsig="org.apache.http.impl.io.SocketOutputBuffer" line="2">
+	<type  start="75" length="51" line="3" chordsig="org.apache.http.impl.io.AbstractSessionOutputBuffer"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/net/Socket;ILorg/apache/http/params/HttpParams;)V@org.apache.http.impl.io.SocketOutputBuffer"
+ sig="SocketOutputBuffer(Socket,int,HttpParams)"
+ line="5"
+ startpos="137"
+ endpos="155"
+>
+	<marker line="-1" type="param">
+		<operand  start="172" length="6" line="5">
+			<expr><![CDATA[socket]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="184" length="10" line="5">
+			<expr><![CDATA[buffersize]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="230" length="6" line="5">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="156" length="15" line="5" chordsig="java.net.Socket"/>
+	<type  start="196" length="33" line="5" chordsig="org.apache.http.params.HttpParams"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="277" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="273" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="294" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="277" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

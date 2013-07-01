@@ -1,0 +1,108 @@
+<root>
+<class chordsig="org.apache.http.message.HeaderValueFormatter" line="2">
+<method
+ chordsig="formatElements:(Lorg/apache/http/util/CharArrayBuffer;[Lorg/apache/http/HeaderElement;Z)Lorg/apache/http/util/CharArrayBuffer;@org.apache.http.message.HeaderValueFormatter"
+ sig="CharArrayBuffer formatElements(CharArrayBuffer,HeaderElement[],boolean)"
+ line="4"
+ startpos="127"
+ endpos="141"
+>
+	<marker line="-1" type="param">
+		<operand  start="179" length="6" line="4">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="219" length="5" line="4">
+			<expr><![CDATA[elems]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="234" length="5" line="4">
+			<expr><![CDATA[quote]]></expr>
+		</operand>
+	</marker>
+	<type  start="90" length="36" line="4" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="142" length="36" line="4" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="187" length="29" line="4" chordsig="org.apache.http.HeaderElement"/>
+</method>
+<method
+ chordsig="formatHeaderElement:(Lorg/apache/http/util/CharArrayBuffer;Lorg/apache/http/HeaderElement;Z)Lorg/apache/http/util/CharArrayBuffer;@org.apache.http.message.HeaderValueFormatter"
+ sig="CharArrayBuffer formatHeaderElement(CharArrayBuffer,HeaderElement,boolean)"
+ line="5"
+ startpos="296"
+ endpos="315"
+>
+	<marker line="-1" type="param">
+		<operand  start="353" length="6" line="5">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="391" length="4" line="5">
+			<expr><![CDATA[elem]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="405" length="5" line="5">
+			<expr><![CDATA[quote]]></expr>
+		</operand>
+	</marker>
+	<type  start="259" length="36" line="5" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="316" length="36" line="5" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="361" length="29" line="5" chordsig="org.apache.http.HeaderElement"/>
+</method>
+<method
+ chordsig="formatParameters:(Lorg/apache/http/util/CharArrayBuffer;[Lorg/apache/http/NameValuePair;Z)Lorg/apache/http/util/CharArrayBuffer;@org.apache.http.message.HeaderValueFormatter"
+ sig="CharArrayBuffer formatParameters(CharArrayBuffer,NameValuePair[],boolean)"
+ line="6"
+ startpos="467"
+ endpos="483"
+>
+	<marker line="-1" type="param">
+		<operand  start="521" length="6" line="6">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="561" length="4" line="6">
+			<expr><![CDATA[nvps]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="575" length="5" line="6">
+			<expr><![CDATA[quote]]></expr>
+		</operand>
+	</marker>
+	<type  start="430" length="36" line="6" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="484" length="36" line="6" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="529" length="29" line="6" chordsig="org.apache.http.NameValuePair"/>
+</method>
+<method
+ chordsig="formatNameValuePair:(Lorg/apache/http/util/CharArrayBuffer;Lorg/apache/http/NameValuePair;Z)Lorg/apache/http/util/CharArrayBuffer;@org.apache.http.message.HeaderValueFormatter"
+ sig="CharArrayBuffer formatNameValuePair(CharArrayBuffer,NameValuePair,boolean)"
+ line="7"
+ startpos="637"
+ endpos="656"
+>
+	<marker line="-1" type="param">
+		<operand  start="694" length="6" line="7">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="732" length="3" line="7">
+			<expr><![CDATA[nvp]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="745" length="5" line="7">
+			<expr><![CDATA[quote]]></expr>
+		</operand>
+	</marker>
+	<type  start="600" length="36" line="7" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="657" length="36" line="7" chordsig="org.apache.http.util.CharArrayBuffer"/>
+	<type  start="702" length="29" line="7" chordsig="org.apache.http.NameValuePair"/>
+</method>
+</class>
+</root>

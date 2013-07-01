@@ -1,0 +1,111 @@
+<root>
+<class chordsig="android.util.Pair" line="2">
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Object;Ljava/lang/Object;)V@android.util.Pair"
+ sig="Pair(F,S)"
+ line="4"
+ startpos="56"
+ endpos="60"
+>
+	<marker line="-1" type="param">
+		<operand  start="63" length="5" line="4">
+			<expr><![CDATA[first]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="72" length="6" line="4">
+			<expr><![CDATA[second]]></expr>
+		</operand>
+	</marker>
+	<type  start="61" length="1" line="4" chordsig="java.lang.Object"/>
+	<type  start="70" length="1" line="4" chordsig="java.lang.Object"/>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="92" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="88" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="109" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="92" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@android.util.Pair"
+ sig="boolean equals(Object)"
+ line="5"
+ startpos="137"
+ endpos="143"
+>
+	<marker line="-1" type="param">
+		<operand  start="161" length="1" line="5">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="144" length="16" line="5" chordsig="java.lang.Object"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="176" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="172" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="193" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="176" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@android.util.Pair"
+ sig="int hashCode()"
+ line="6"
+ startpos="217"
+ endpos="225"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="240" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="236" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="257" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="240" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="create:(Ljava/lang/Object;Ljava/lang/Object;)Landroid/util/Pair;@android.util.Pair"
+ sig="Pair&lt;A,B&gt; create(A,B)"
+ line="7"
+ startpos="314"
+ endpos="320"
+>
+	<marker line="-1" type="param">
+		<operand  start="323" length="1" line="7">
+			<expr><![CDATA[a]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="328" length="1" line="7">
+			<expr><![CDATA[b]]></expr>
+		</operand>
+	</marker>
+	<type  start="290" length="17" line="7" chordsig="android.util.Pair"/>
+	<type  start="308" length="1" line="7" chordsig="java.lang.Object"/>
+	<type  start="311" length="1" line="7" chordsig="java.lang.Object"/>
+	<type  start="321" length="1" line="7" chordsig="java.lang.Object"/>
+	<type  start="326" length="1" line="7" chordsig="java.lang.Object"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="343" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="339" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="360" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="343" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="385" length="1" line="8" chordsig="java.lang.Object"/>
+	<type  start="407" length="1" line="9" chordsig="java.lang.Object"/>
+</class>
+</root>

@@ -1,0 +1,151 @@
+<root>
+<class chordsig="android.os.RecoverySystem" line="2">
+<class chordsig="android.os.RecoverySystem$ProgressListener" line="4">
+<method
+ chordsig="onProgress:(I)V@android.os.RecoverySystem$ProgressListener"
+ sig="void onProgress(int)"
+ line="6"
+ startpos="115"
+ endpos="125"
+>
+	<marker line="-1" type="param">
+		<operand  start="130" length="8" line="6">
+			<expr><![CDATA[progress]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.os.RecoverySystem"
+ sig="RecoverySystem()"
+ line="8"
+ startpos="151"
+ endpos="165"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="180" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="176" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="197" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="180" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="verifyPackage:(Ljava/io/File;Landroid/os/RecoverySystem$ProgressListener;Ljava/io/File;)V@android.os.RecoverySystem"
+ sig="void verifyPackage(File,ProgressListener,File)"
+ line="9"
+ startpos="229"
+ endpos="242"
+>
+	<marker line="-1" type="param">
+		<operand  start="256" length="11" line="9">
+			<expr><![CDATA[packageFile]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="312" length="8" line="9">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="335" length="18" line="9">
+			<expr><![CDATA[deviceCertsZipFile]]></expr>
+		</operand>
+	</marker>
+	<type  start="243" length="12" line="9" chordsig="java.io.File"/>
+	<type  start="269" length="42" line="9" chordsig="android.os.RecoverySystem$ProgressListener"/>
+	<type  start="322" length="12" line="9" chordsig="java.io.File"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="434" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="430" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="451" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="434" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="installPackage:(Landroid/content/Context;Ljava/io/File;)V@android.os.RecoverySystem"
+ sig="void installPackage(Context,File)"
+ line="10"
+ startpos="483"
+ endpos="497"
+>
+	<marker line="-1" type="param">
+		<operand  start="522" length="7" line="10">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="544" length="11" line="10">
+			<expr><![CDATA[packageFile]]></expr>
+		</operand>
+	</marker>
+	<type  start="498" length="23" line="10" chordsig="android.content.Context"/>
+	<type  start="531" length="12" line="10" chordsig="java.io.File"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="596" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="592" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="613" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="596" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="rebootWipeUserData:(Landroid/content/Context;)V@android.os.RecoverySystem"
+ sig="void rebootWipeUserData(Context)"
+ line="11"
+ startpos="645"
+ endpos="663"
+>
+	<marker line="-1" type="param">
+		<operand  start="688" length="7" line="11">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="664" length="23" line="11" chordsig="android.content.Context"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="736" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="732" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="753" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="736" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="rebootWipeCache:(Landroid/content/Context;)V@android.os.RecoverySystem"
+ sig="void rebootWipeCache(Context)"
+ line="12"
+ startpos="785"
+ endpos="800"
+>
+	<marker line="-1" type="param">
+		<operand  start="825" length="7" line="12">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="801" length="23" line="12" chordsig="android.content.Context"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="873" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="869" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="890" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="873" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

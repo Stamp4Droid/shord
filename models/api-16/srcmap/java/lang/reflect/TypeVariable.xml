@@ -1,0 +1,33 @@
+<root>
+<class chordsig="java.lang.reflect.TypeVariable" line="2">
+	<type  start="67" length="36" line="2" chordsig="java.lang.reflect.GenericDeclaration"/>
+	<type  start="115" length="22" line="3" chordsig="java.lang.reflect.Type"/>
+<method
+ chordsig="getBounds:()[Ljava/lang/reflect/Type;@java.lang.reflect.TypeVariable"
+ sig="Type[] getBounds()"
+ line="5"
+ startpos="182"
+ endpos="191"
+>
+	<type  start="157" length="22" line="5" chordsig="java.lang.reflect.Type"/>
+</method>
+<method
+ chordsig="getGenericDeclaration:()Ljava/lang/reflect/GenericDeclaration;@java.lang.reflect.TypeVariable"
+ sig="D getGenericDeclaration()"
+ line="6"
+ startpos="214"
+ endpos="235"
+>
+	<type  start="212" length="1" line="6" chordsig="java.lang.reflect.GenericDeclaration"/>
+</method>
+<method
+ chordsig="getName:()Ljava/lang/String;@java.lang.reflect.TypeVariable"
+ sig="String getName()"
+ line="7"
+ startpos="273"
+ endpos="280"
+>
+	<type  start="256" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

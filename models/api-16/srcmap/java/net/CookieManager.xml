@@ -1,0 +1,166 @@
+<root>
+<class chordsig="java.net.CookieManager" line="2">
+	<type  start="55" length="22" line="3" chordsig="java.net.CookieHandler"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.net.CookieManager"
+ sig="CookieManager()"
+ line="5"
+ startpos="88"
+ endpos="101"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="116" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="112" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="133" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="116" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/net/CookieStore;Ljava/net/CookiePolicy;)V@java.net.CookieManager"
+ sig="CookieManager(CookieStore,CookiePolicy)"
+ line="6"
+ startpos="153"
+ endpos="166"
+>
+	<marker line="-1" type="param">
+		<operand  start="188" length="5" line="6">
+			<expr><![CDATA[store]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="217" length="12" line="6">
+			<expr><![CDATA[cookiePolicy]]></expr>
+		</operand>
+	</marker>
+	<type  start="167" length="20" line="6" chordsig="java.net.CookieStore"/>
+	<type  start="195" length="21" line="6" chordsig="java.net.CookiePolicy"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="243" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="239" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="260" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="243" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="get:(Ljava/net/URI;Ljava/util/Map;)Ljava/util/Map;@java.net.CookieManager"
+ sig="Map&lt;String,List&lt;String&gt;&gt; get(URI,Map&lt;String,List&lt;String&gt;&gt;)"
+ line="7"
+ startpos="346"
+ endpos="349"
+>
+	<marker line="-1" type="param">
+		<operand  start="363" length="3" line="7">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="434" length="14" line="7">
+			<expr><![CDATA[requestHeaders]]></expr>
+		</operand>
+	</marker>
+	<type  start="280" length="13" line="7" chordsig="java.util.Map"/>
+	<type  start="294" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="312" length="14" line="7" chordsig="java.util.List"/>
+	<type  start="327" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="350" length="12" line="7" chordsig="java.net.URI"/>
+	<type  start="368" length="13" line="7" chordsig="java.util.Map"/>
+	<type  start="382" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="400" length="14" line="7" chordsig="java.util.List"/>
+	<type  start="415" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="489" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="485" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="506" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="489" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="put:(Ljava/net/URI;Ljava/util/Map;)V@java.net.CookieManager"
+ sig="void put(URI,Map&lt;String,List&lt;String&gt;&gt;)"
+ line="8"
+ startpos="531"
+ endpos="534"
+>
+	<marker line="-1" type="param">
+		<operand  start="548" length="3" line="8">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="619" length="15" line="8">
+			<expr><![CDATA[responseHeaders]]></expr>
+		</operand>
+	</marker>
+	<type  start="535" length="12" line="8" chordsig="java.net.URI"/>
+	<type  start="553" length="13" line="8" chordsig="java.util.Map"/>
+	<type  start="567" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="585" length="14" line="8" chordsig="java.util.List"/>
+	<type  start="600" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="675" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="671" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="692" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="675" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setCookiePolicy:(Ljava/net/CookiePolicy;)V@java.net.CookieManager"
+ sig="void setCookiePolicy(CookiePolicy)"
+ line="9"
+ startpos="717"
+ endpos="732"
+>
+	<marker line="-1" type="param">
+		<operand  start="755" length="12" line="9">
+			<expr><![CDATA[cookiePolicy]]></expr>
+		</operand>
+	</marker>
+	<type  start="733" length="21" line="9" chordsig="java.net.CookiePolicy"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="781" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="777" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="798" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="781" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCookieStore:()Ljava/net/CookieStore;@java.net.CookieManager"
+ sig="CookieStore getCookieStore()"
+ line="10"
+ startpos="839"
+ endpos="853"
+>
+	<type  start="818" length="20" line="10" chordsig="java.net.CookieStore"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="868" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="864" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="885" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="868" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

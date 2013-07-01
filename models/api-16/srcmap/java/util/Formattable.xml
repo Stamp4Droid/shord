@@ -1,0 +1,33 @@
+<root>
+<class chordsig="java.util.Formattable" line="2">
+<method
+ chordsig="formatTo:(Ljava/util/Formatter;III)V@java.util.Formattable"
+ sig="void formatTo(Formatter,int,int,int)"
+ line="4"
+ startpos="72"
+ endpos="80"
+>
+	<marker line="-1" type="param">
+		<operand  start="101" length="9" line="4">
+			<expr><![CDATA[formatter]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="116" length="5" line="4">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="127" length="5" line="4">
+			<expr><![CDATA[width]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="138" length="9" line="4">
+			<expr><![CDATA[precision]]></expr>
+		</operand>
+	</marker>
+	<type  start="81" length="19" line="4" chordsig="java.util.Formatter"/>
+</method>
+</class>
+</root>

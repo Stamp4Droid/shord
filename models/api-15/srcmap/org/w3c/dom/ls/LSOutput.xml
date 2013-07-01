@@ -1,0 +1,96 @@
+<root>
+<class chordsig="org.w3c.dom.ls.LSOutput" line="2">
+<method
+ chordsig="getCharacterStream:()Ljava/io/Writer;@org.w3c.dom.ls.LSOutput"
+ sig="Writer getCharacterStream()"
+ line="4"
+ startpos="84"
+ endpos="102"
+>
+	<type  start="69" length="14" line="4" chordsig="java.io.Writer"/>
+</method>
+<method
+ chordsig="setCharacterStream:(Ljava/io/Writer;)V@org.w3c.dom.ls.LSOutput"
+ sig="void setCharacterStream(Writer)"
+ line="5"
+ startpos="128"
+ endpos="146"
+>
+	<marker line="-1" type="param">
+		<operand  start="162" length="15" line="5">
+			<expr><![CDATA[characterStream]]></expr>
+		</operand>
+	</marker>
+	<type  start="147" length="14" line="5" chordsig="java.io.Writer"/>
+</method>
+<method
+ chordsig="getByteStream:()Ljava/io/OutputStream;@org.w3c.dom.ls.LSOutput"
+ sig="OutputStream getByteStream()"
+ line="6"
+ startpos="218"
+ endpos="231"
+>
+	<type  start="197" length="20" line="6" chordsig="java.io.OutputStream"/>
+</method>
+<method
+ chordsig="setByteStream:(Ljava/io/OutputStream;)V@org.w3c.dom.ls.LSOutput"
+ sig="void setByteStream(OutputStream)"
+ line="7"
+ startpos="257"
+ endpos="270"
+>
+	<marker line="-1" type="param">
+		<operand  start="292" length="10" line="7">
+			<expr><![CDATA[byteStream]]></expr>
+		</operand>
+	</marker>
+	<type  start="271" length="20" line="7" chordsig="java.io.OutputStream"/>
+</method>
+<method
+ chordsig="getSystemId:()Ljava/lang/String;@org.w3c.dom.ls.LSOutput"
+ sig="String getSystemId()"
+ line="8"
+ startpos="339"
+ endpos="350"
+>
+	<type  start="322" length="16" line="8" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setSystemId:(Ljava/lang/String;)V@org.w3c.dom.ls.LSOutput"
+ sig="void setSystemId(String)"
+ line="9"
+ startpos="376"
+ endpos="387"
+>
+	<marker line="-1" type="param">
+		<operand  start="405" length="8" line="9">
+			<expr><![CDATA[systemId]]></expr>
+		</operand>
+	</marker>
+	<type  start="388" length="16" line="9" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getEncoding:()Ljava/lang/String;@org.w3c.dom.ls.LSOutput"
+ sig="String getEncoding()"
+ line="10"
+ startpos="450"
+ endpos="461"
+>
+	<type  start="433" length="16" line="10" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setEncoding:(Ljava/lang/String;)V@org.w3c.dom.ls.LSOutput"
+ sig="void setEncoding(String)"
+ line="11"
+ startpos="487"
+ endpos="498"
+>
+	<marker line="-1" type="param">
+		<operand  start="516" length="8" line="11">
+			<expr><![CDATA[encoding]]></expr>
+		</operand>
+	</marker>
+	<type  start="499" length="16" line="11" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

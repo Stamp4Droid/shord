@@ -1,0 +1,192 @@
+<root>
+<class chordsig="java.util.concurrent.ExecutorCompletionService" line="2">
+	<type  start="85" length="38" line="3" chordsig="java.util.concurrent.CompletionService"/>
+	<type  start="124" length="1" line="3" chordsig="java.lang.Object"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/util/concurrent/Executor;)V@java.util.concurrent.ExecutorCompletionService"
+ sig="ExecutorCompletionService(Executor)"
+ line="5"
+ startpos="137"
+ endpos="162"
+>
+	<marker line="-1" type="param">
+		<operand  start="193" length="8" line="5">
+			<expr><![CDATA[executor]]></expr>
+		</operand>
+	</marker>
+	<type  start="163" length="29" line="5" chordsig="java.util.concurrent.Executor"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="215" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="211" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="232" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="215" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/util/concurrent/Executor;Ljava/util/concurrent/BlockingQueue;)V@java.util.concurrent.ExecutorCompletionService"
+ sig="ExecutorCompletionService(Executor,BlockingQueue&lt;Future&lt;V&gt;&gt;)"
+ line="6"
+ startpos="252"
+ endpos="277"
+>
+	<marker line="-1" type="param">
+		<operand  start="308" length="8" line="6">
+			<expr><![CDATA[executor]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="385" length="15" line="6">
+			<expr><![CDATA[completionQueue]]></expr>
+		</operand>
+	</marker>
+	<type  start="278" length="29" line="6" chordsig="java.util.concurrent.Executor"/>
+	<type  start="318" length="34" line="6" chordsig="java.util.concurrent.BlockingQueue"/>
+	<type  start="353" length="27" line="6" chordsig="java.util.concurrent.Future"/>
+	<type  start="381" length="1" line="6" chordsig="java.lang.Object"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="414" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="410" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="431" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="414" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="submit:(Ljava/util/concurrent/Callable;)Ljava/util/concurrent/Future;@java.util.concurrent.ExecutorCompletionService"
+ sig="Future&lt;V&gt; submit(Callable&lt;V&gt;)"
+ line="7"
+ startpos="482"
+ endpos="488"
+>
+	<marker line="-1" type="param">
+		<operand  start="522" length="4" line="7">
+			<expr><![CDATA[task]]></expr>
+		</operand>
+	</marker>
+	<type  start="451" length="27" line="7" chordsig="java.util.concurrent.Future"/>
+	<type  start="479" length="1" line="7" chordsig="java.lang.Object"/>
+	<type  start="489" length="29" line="7" chordsig="java.util.concurrent.Callable"/>
+	<type  start="519" length="1" line="7" chordsig="java.lang.Object"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="540" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="536" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="557" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="540" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="submit:(Ljava/lang/Runnable;Ljava/lang/Object;)Ljava/util/concurrent/Future;@java.util.concurrent.ExecutorCompletionService"
+ sig="Future&lt;V&gt; submit(Runnable,V)"
+ line="8"
+ startpos="608"
+ endpos="614"
+>
+	<marker line="-1" type="param">
+		<operand  start="634" length="4" line="8">
+			<expr><![CDATA[task]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="642" length="6" line="8">
+			<expr><![CDATA[result]]></expr>
+		</operand>
+	</marker>
+	<type  start="577" length="27" line="8" chordsig="java.util.concurrent.Future"/>
+	<type  start="605" length="1" line="8" chordsig="java.lang.Object"/>
+	<type  start="615" length="18" line="8" chordsig="java.lang.Runnable"/>
+	<type  start="640" length="1" line="8" chordsig="java.lang.Object"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="662" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="658" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="679" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="662" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="take:()Ljava/util/concurrent/Future;@java.util.concurrent.ExecutorCompletionService"
+ sig="Future&lt;V&gt; take()"
+ line="9"
+ startpos="730"
+ endpos="734"
+>
+	<type  start="699" length="27" line="9" chordsig="java.util.concurrent.Future"/>
+	<type  start="727" length="1" line="9" chordsig="java.lang.Object"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="787" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="783" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="804" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="787" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="poll:()Ljava/util/concurrent/Future;@java.util.concurrent.ExecutorCompletionService"
+ sig="Future&lt;V&gt; poll()"
+ line="10"
+ startpos="855"
+ endpos="859"
+>
+	<type  start="824" length="27" line="10" chordsig="java.util.concurrent.Future"/>
+	<type  start="852" length="1" line="10" chordsig="java.lang.Object"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="874" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="870" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="891" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="874" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="poll:(JLjava/util/concurrent/TimeUnit;)Ljava/util/concurrent/Future;@java.util.concurrent.ExecutorCompletionService"
+ sig="Future&lt;V&gt; poll(long,TimeUnit)"
+ line="11"
+ startpos="942"
+ endpos="946"
+>
+	<marker line="-1" type="param">
+		<operand  start="952" length="7" line="11">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="991" length="4" line="11">
+			<expr><![CDATA[unit]]></expr>
+		</operand>
+	</marker>
+	<type  start="911" length="27" line="11" chordsig="java.util.concurrent.Future"/>
+	<type  start="939" length="1" line="11" chordsig="java.lang.Object"/>
+	<type  start="961" length="29" line="11" chordsig="java.util.concurrent.TimeUnit"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1047" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1043" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1064" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1047" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

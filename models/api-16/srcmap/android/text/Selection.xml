@@ -1,0 +1,577 @@
+<root>
+<class chordsig="android.text.Selection" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.text.Selection"
+ sig="Selection()"
+ line="4"
+ startpos="47"
+ endpos="56"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="71" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="67" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="88" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="71" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSelectionStart:(Ljava/lang/CharSequence;)I@android.text.Selection"
+ sig="int getSelectionStart(CharSequence)"
+ line="5"
+ startpos="125"
+ endpos="142"
+>
+	<marker line="-1" type="param">
+		<operand  start="166" length="4" line="5">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="143" length="22" line="5" chordsig="java.lang.CharSequence"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="184" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="180" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="201" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="184" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSelectionEnd:(Ljava/lang/CharSequence;)I@android.text.Selection"
+ sig="int getSelectionEnd(CharSequence)"
+ line="6"
+ startpos="238"
+ endpos="253"
+>
+	<marker line="-1" type="param">
+		<operand  start="277" length="4" line="6">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="254" length="22" line="6" chordsig="java.lang.CharSequence"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="295" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="291" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="312" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="295" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSelection:(Landroid/text/Spannable;II)V@android.text.Selection"
+ sig="void setSelection(Spannable,int,int)"
+ line="7"
+ startpos="344"
+ endpos="356"
+>
+	<marker line="-1" type="param">
+		<operand  start="380" length="4" line="7">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="390" length="5" line="7">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="401" length="4" line="7">
+			<expr><![CDATA[stop]]></expr>
+		</operand>
+	</marker>
+	<type  start="357" length="22" line="7" chordsig="android.text.Spannable"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="419" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="415" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="436" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="419" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSelection:(Landroid/text/Spannable;I)V@android.text.Selection"
+ sig="void setSelection(Spannable,int)"
+ line="8"
+ startpos="474"
+ endpos="486"
+>
+	<marker line="-1" type="param">
+		<operand  start="510" length="4" line="8">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="520" length="5" line="8">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="487" length="22" line="8" chordsig="android.text.Spannable"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="539" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="535" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="556" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="539" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="selectAll:(Landroid/text/Spannable;)V@android.text.Selection"
+ sig="void selectAll(Spannable)"
+ line="9"
+ startpos="594"
+ endpos="603"
+>
+	<marker line="-1" type="param">
+		<operand  start="627" length="4" line="9">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="604" length="22" line="9" chordsig="android.text.Spannable"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="645" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="641" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="662" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="645" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="extendSelection:(Landroid/text/Spannable;I)V@android.text.Selection"
+ sig="void extendSelection(Spannable,int)"
+ line="10"
+ startpos="700"
+ endpos="715"
+>
+	<marker line="-1" type="param">
+		<operand  start="739" length="4" line="10">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="749" length="5" line="10">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="716" length="22" line="10" chordsig="android.text.Spannable"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="768" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="764" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="785" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="768" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeSelection:(Landroid/text/Spannable;)V@android.text.Selection"
+ sig="void removeSelection(Spannable)"
+ line="11"
+ startpos="823"
+ endpos="838"
+>
+	<marker line="-1" type="param">
+		<operand  start="862" length="4" line="11">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="839" length="22" line="11" chordsig="android.text.Spannable"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="880" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="876" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="897" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="880" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="moveUp:(Landroid/text/Spannable;Landroid/text/Layout;)Z@android.text.Selection"
+ sig="boolean moveUp(Spannable,Layout)"
+ line="12"
+ startpos="932"
+ endpos="938"
+>
+	<marker line="-1" type="param">
+		<operand  start="962" length="4" line="12">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="988" length="6" line="12">
+			<expr><![CDATA[layout]]></expr>
+		</operand>
+	</marker>
+	<type  start="939" length="22" line="12" chordsig="android.text.Spannable"/>
+	<type  start="968" length="19" line="12" chordsig="android.text.Layout"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1008" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1004" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1025" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1008" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="moveDown:(Landroid/text/Spannable;Landroid/text/Layout;)Z@android.text.Selection"
+ sig="boolean moveDown(Spannable,Layout)"
+ line="13"
+ startpos="1060"
+ endpos="1068"
+>
+	<marker line="-1" type="param">
+		<operand  start="1092" length="4" line="13">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1118" length="6" line="13">
+			<expr><![CDATA[layout]]></expr>
+		</operand>
+	</marker>
+	<type  start="1069" length="22" line="13" chordsig="android.text.Spannable"/>
+	<type  start="1098" length="19" line="13" chordsig="android.text.Layout"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1138" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1134" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1155" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1138" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="moveLeft:(Landroid/text/Spannable;Landroid/text/Layout;)Z@android.text.Selection"
+ sig="boolean moveLeft(Spannable,Layout)"
+ line="14"
+ startpos="1190"
+ endpos="1198"
+>
+	<marker line="-1" type="param">
+		<operand  start="1222" length="4" line="14">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1248" length="6" line="14">
+			<expr><![CDATA[layout]]></expr>
+		</operand>
+	</marker>
+	<type  start="1199" length="22" line="14" chordsig="android.text.Spannable"/>
+	<type  start="1228" length="19" line="14" chordsig="android.text.Layout"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1268" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1264" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1285" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1268" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="moveRight:(Landroid/text/Spannable;Landroid/text/Layout;)Z@android.text.Selection"
+ sig="boolean moveRight(Spannable,Layout)"
+ line="15"
+ startpos="1320"
+ endpos="1329"
+>
+	<marker line="-1" type="param">
+		<operand  start="1353" length="4" line="15">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1379" length="6" line="15">
+			<expr><![CDATA[layout]]></expr>
+		</operand>
+	</marker>
+	<type  start="1330" length="22" line="15" chordsig="android.text.Spannable"/>
+	<type  start="1359" length="19" line="15" chordsig="android.text.Layout"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1399" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1395" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1416" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1399" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="extendUp:(Landroid/text/Spannable;Landroid/text/Layout;)Z@android.text.Selection"
+ sig="boolean extendUp(Spannable,Layout)"
+ line="16"
+ startpos="1451"
+ endpos="1459"
+>
+	<marker line="-1" type="param">
+		<operand  start="1483" length="4" line="16">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1509" length="6" line="16">
+			<expr><![CDATA[layout]]></expr>
+		</operand>
+	</marker>
+	<type  start="1460" length="22" line="16" chordsig="android.text.Spannable"/>
+	<type  start="1489" length="19" line="16" chordsig="android.text.Layout"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1529" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1525" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1546" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1529" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="extendDown:(Landroid/text/Spannable;Landroid/text/Layout;)Z@android.text.Selection"
+ sig="boolean extendDown(Spannable,Layout)"
+ line="17"
+ startpos="1581"
+ endpos="1591"
+>
+	<marker line="-1" type="param">
+		<operand  start="1615" length="4" line="17">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1641" length="6" line="17">
+			<expr><![CDATA[layout]]></expr>
+		</operand>
+	</marker>
+	<type  start="1592" length="22" line="17" chordsig="android.text.Spannable"/>
+	<type  start="1621" length="19" line="17" chordsig="android.text.Layout"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1661" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1657" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1678" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1661" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="extendLeft:(Landroid/text/Spannable;Landroid/text/Layout;)Z@android.text.Selection"
+ sig="boolean extendLeft(Spannable,Layout)"
+ line="18"
+ startpos="1713"
+ endpos="1723"
+>
+	<marker line="-1" type="param">
+		<operand  start="1747" length="4" line="18">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1773" length="6" line="18">
+			<expr><![CDATA[layout]]></expr>
+		</operand>
+	</marker>
+	<type  start="1724" length="22" line="18" chordsig="android.text.Spannable"/>
+	<type  start="1753" length="19" line="18" chordsig="android.text.Layout"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1793" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1789" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1810" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1793" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="extendRight:(Landroid/text/Spannable;Landroid/text/Layout;)Z@android.text.Selection"
+ sig="boolean extendRight(Spannable,Layout)"
+ line="19"
+ startpos="1845"
+ endpos="1856"
+>
+	<marker line="-1" type="param">
+		<operand  start="1880" length="4" line="19">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1906" length="6" line="19">
+			<expr><![CDATA[layout]]></expr>
+		</operand>
+	</marker>
+	<type  start="1857" length="22" line="19" chordsig="android.text.Spannable"/>
+	<type  start="1886" length="19" line="19" chordsig="android.text.Layout"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1926" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1922" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1943" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1926" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="extendToLeftEdge:(Landroid/text/Spannable;Landroid/text/Layout;)Z@android.text.Selection"
+ sig="boolean extendToLeftEdge(Spannable,Layout)"
+ line="20"
+ startpos="1978"
+ endpos="1994"
+>
+	<marker line="-1" type="param">
+		<operand  start="2018" length="4" line="20">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2044" length="6" line="20">
+			<expr><![CDATA[layout]]></expr>
+		</operand>
+	</marker>
+	<type  start="1995" length="22" line="20" chordsig="android.text.Spannable"/>
+	<type  start="2024" length="19" line="20" chordsig="android.text.Layout"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2064" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2060" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2081" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2064" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="extendToRightEdge:(Landroid/text/Spannable;Landroid/text/Layout;)Z@android.text.Selection"
+ sig="boolean extendToRightEdge(Spannable,Layout)"
+ line="21"
+ startpos="2116"
+ endpos="2133"
+>
+	<marker line="-1" type="param">
+		<operand  start="2157" length="4" line="21">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2183" length="6" line="21">
+			<expr><![CDATA[layout]]></expr>
+		</operand>
+	</marker>
+	<type  start="2134" length="22" line="21" chordsig="android.text.Spannable"/>
+	<type  start="2163" length="19" line="21" chordsig="android.text.Layout"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2203" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2199" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2220" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2203" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="moveToLeftEdge:(Landroid/text/Spannable;Landroid/text/Layout;)Z@android.text.Selection"
+ sig="boolean moveToLeftEdge(Spannable,Layout)"
+ line="22"
+ startpos="2255"
+ endpos="2269"
+>
+	<marker line="-1" type="param">
+		<operand  start="2293" length="4" line="22">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2319" length="6" line="22">
+			<expr><![CDATA[layout]]></expr>
+		</operand>
+	</marker>
+	<type  start="2270" length="22" line="22" chordsig="android.text.Spannable"/>
+	<type  start="2299" length="19" line="22" chordsig="android.text.Layout"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2339" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2335" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2356" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2339" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="moveToRightEdge:(Landroid/text/Spannable;Landroid/text/Layout;)Z@android.text.Selection"
+ sig="boolean moveToRightEdge(Spannable,Layout)"
+ line="23"
+ startpos="2391"
+ endpos="2406"
+>
+	<marker line="-1" type="param">
+		<operand  start="2430" length="4" line="23">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2456" length="6" line="23">
+			<expr><![CDATA[layout]]></expr>
+		</operand>
+	</marker>
+	<type  start="2407" length="22" line="23" chordsig="android.text.Spannable"/>
+	<type  start="2436" length="19" line="23" chordsig="android.text.Layout"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2476" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2472" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2493" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2476" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="2525" length="16" line="24" chordsig="java.lang.Object"/>
+	<type  start="2579" length="16" line="25" chordsig="java.lang.Object"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.text.Selection"
+ line="26"
+>
+</method>
+</class>
+</root>

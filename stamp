@@ -13,5 +13,5 @@ else
 	APP_DIR="$2"
 	shift
 	shift
-	ant -f "$STAMP_DIR/ant/stamp.xml" -Dbasedir="$BASE_DIR" "$TARGET" -Dapp="$APP_DIR" "$@"
+	ant -v -f "$STAMP_DIR/ant/stamp.xml" -Dbasedir="$BASE_DIR" "$TARGET" -Dapp="$APP_DIR" "$@"
 fi

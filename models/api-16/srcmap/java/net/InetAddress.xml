@@ -1,0 +1,523 @@
+<root>
+<class chordsig="java.net.InetAddress" line="6">
+	<type  start="143" length="20" line="6" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.net.InetAddress"
+ sig="InetAddress()"
+ line="8"
+ startpos="171"
+ endpos="182"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="205" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="201" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="222" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="205" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.net.InetAddress"
+ sig="boolean equals(Object)"
+ line="12"
+ startpos="258"
+ endpos="264"
+>
+	<marker line="-1" type="param">
+		<operand  start="282" length="3" line="12">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="265" length="16" line="12" chordsig="java.lang.Object"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="307" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="303" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="324" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="307" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCanonicalHostName:()Ljava/lang/String;@java.net.InetAddress"
+ sig="String getCanonicalHostName()"
+ line="16"
+ startpos="369"
+ endpos="389"
+>
+	<type  start="352" length="16" line="16" chordsig="java.lang.String"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="412" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="408" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="429" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="412" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLocalHost:()Ljava/net/InetAddress;@java.net.InetAddress"
+ sig="InetAddress getLocalHost()"
+ line="20"
+ startpos="485"
+ endpos="497"
+>
+	<type  start="464" length="20" line="20" chordsig="java.net.InetAddress"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="557" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="553" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="574" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="557" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@java.net.InetAddress"
+ sig="int hashCode()"
+ line="24"
+ startpos="606"
+ endpos="614"
+>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="637" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="633" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="654" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="637" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.net.InetAddress"
+ sig="String toString()"
+ line="28"
+ startpos="699"
+ endpos="707"
+>
+	<type  start="682" length="16" line="28" chordsig="java.lang.String"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="730" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="726" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="747" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="730" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isAnyLocalAddress:()Z@java.net.InetAddress"
+ sig="boolean isAnyLocalAddress()"
+ line="32"
+ startpos="783"
+ endpos="800"
+>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="823" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="819" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="840" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="823" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isLinkLocalAddress:()Z@java.net.InetAddress"
+ sig="boolean isLinkLocalAddress()"
+ line="36"
+ startpos="876"
+ endpos="894"
+>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="917" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="913" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="934" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="917" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isLoopbackAddress:()Z@java.net.InetAddress"
+ sig="boolean isLoopbackAddress()"
+ line="40"
+ startpos="970"
+ endpos="987"
+>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1010" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1006" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1027" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1010" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isMCGlobal:()Z@java.net.InetAddress"
+ sig="boolean isMCGlobal()"
+ line="44"
+ startpos="1063"
+ endpos="1073"
+>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1096" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1092" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1113" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1096" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isMCLinkLocal:()Z@java.net.InetAddress"
+ sig="boolean isMCLinkLocal()"
+ line="48"
+ startpos="1149"
+ endpos="1162"
+>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1185" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1181" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1202" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1185" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isMCNodeLocal:()Z@java.net.InetAddress"
+ sig="boolean isMCNodeLocal()"
+ line="52"
+ startpos="1238"
+ endpos="1251"
+>
+	<newexpr line="53" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1274" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1270" length="29" line="53">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1291" length="7" line="53">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1274" length="16" line="53" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isMCOrgLocal:()Z@java.net.InetAddress"
+ sig="boolean isMCOrgLocal()"
+ line="56"
+ startpos="1327"
+ endpos="1339"
+>
+	<newexpr line="57" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1362" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1358" length="29" line="57">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1379" length="7" line="57">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1362" length="16" line="57" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isMCSiteLocal:()Z@java.net.InetAddress"
+ sig="boolean isMCSiteLocal()"
+ line="60"
+ startpos="1415"
+ endpos="1428"
+>
+	<newexpr line="61" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1451" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1447" length="29" line="61">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1468" length="7" line="61">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1451" length="16" line="61" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isMulticastAddress:()Z@java.net.InetAddress"
+ sig="boolean isMulticastAddress()"
+ line="64"
+ startpos="1504"
+ endpos="1522"
+>
+	<newexpr line="65" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1545" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1541" length="29" line="65">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1562" length="7" line="65">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1545" length="16" line="65" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isSiteLocalAddress:()Z@java.net.InetAddress"
+ sig="boolean isSiteLocalAddress()"
+ line="68"
+ startpos="1598"
+ endpos="1616"
+>
+	<newexpr line="69" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1639" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1635" length="29" line="69">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1656" length="7" line="69">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1639" length="16" line="69" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isReachable:(I)Z@java.net.InetAddress"
+ sig="boolean isReachable(int)"
+ line="72"
+ startpos="1692"
+ endpos="1703"
+>
+	<marker line="-1" type="param">
+		<operand  start="1708" length="7" line="72">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="73" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1764" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1760" length="29" line="73">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1781" length="7" line="73">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1764" length="16" line="73" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isReachable:(Ljava/net/NetworkInterface;II)Z@java.net.InetAddress"
+ sig="boolean isReachable(NetworkInterface,int,int)"
+ line="76"
+ startpos="1817"
+ endpos="1828"
+>
+	<marker line="-1" type="param">
+		<operand  start="1855" length="16" line="76">
+			<expr><![CDATA[networkInterface]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1877" length="3" line="76">
+			<expr><![CDATA[ttl]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1886" length="7" line="76">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<type  start="1829" length="25" line="76" chordsig="java.net.NetworkInterface"/>
+	<newexpr line="77" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1942" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1938" length="29" line="77">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1959" length="7" line="77">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1942" length="16" line="77" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getByAddress:([B)Ljava/net/InetAddress;@java.net.InetAddress"
+ sig="InetAddress getByAddress(byte[])"
+ line="80"
+ startpos="2015"
+ endpos="2027"
+>
+	<marker line="-1" type="param">
+		<operand  start="2035" length="9" line="80">
+			<expr><![CDATA[ipAddress]]></expr>
+		</operand>
+	</marker>
+	<type  start="1994" length="20" line="80" chordsig="java.net.InetAddress"/>
+	<newexpr line="81" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2103" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2099" length="29" line="81">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2120" length="7" line="81">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2103" length="16" line="81" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getByAddress:(Ljava/lang/String;[B)Ljava/net/InetAddress;@java.net.InetAddress"
+ sig="InetAddress getByAddress(String,byte[])"
+ line="84"
+ startpos="2176"
+ endpos="2188"
+>
+	<marker line="-1" type="param">
+		<operand  start="2206" length="8" line="84">
+			<expr><![CDATA[hostName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2223" length="9" line="84">
+			<expr><![CDATA[ipAddress]]></expr>
+		</operand>
+	</marker>
+	<type  start="2155" length="20" line="84" chordsig="java.net.InetAddress"/>
+	<type  start="2189" length="16" line="84" chordsig="java.lang.String"/>
+	<newexpr line="85" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2291" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2287" length="29" line="85">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2308" length="7" line="85">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2291" length="16" line="85" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAddress:()[B@java.net.InetAddress"
+ sig="byte[] getAddress()"
+ line="89"
+ startpos="2404"
+ endpos="2414"
+>
+	<marker line="90" type="return">
+		<operand  start="2434" length="11" line="90">
+			<expr><![CDATA[new byte[0]]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getAllByName:(Ljava/lang/String;)[Ljava/net/InetAddress;@java.net.InetAddress"
+ sig="InetAddress[] getAllByName(String)"
+ line="93"
+ startpos="2495"
+ endpos="2507"
+>
+	<marker line="-1" type="param">
+		<operand  start="2525" length="4" line="93">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<type  start="2472" length="20" line="93" chordsig="java.net.InetAddress"/>
+	<type  start="2508" length="16" line="93" chordsig="java.lang.String"/>
+	<type  start="2578" length="11" line="94" chordsig="java.net.InetAddress"/>
+	<type  start="2604" length="11" line="94" chordsig="java.net.InetAddress"/>
+	<invkexpr line="95" chordsig="getByName:(Ljava/lang/String;)Ljava/net/InetAddress;@java.net.InetAddress" start="2639" length="9" type="invoke">
+			<expr><![CDATA[getByName(host)]]></expr>
+		<param  start="2649" length="4" line="95">
+			<expr><![CDATA[host]]></expr>
+		</param>
+	</invkexpr>
+	<marker line="96" type="return">
+		<operand  start="2671" length="5" line="96">
+			<expr><![CDATA[addrs]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getByName:(Ljava/lang/String;)Ljava/net/InetAddress;@java.net.InetAddress"
+ sig="InetAddress getByName(String)"
+ line="100"
+ startpos="2785"
+ endpos="2794"
+>
+	<marker line="-1" type="param">
+		<operand  start="2812" length="4" line="100">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<type  start="2764" length="20" line="100" chordsig="java.net.InetAddress"/>
+	<type  start="2795" length="16" line="100" chordsig="java.lang.String"/>
+	<marker line="101" type="return">
+		<operand  start="2872" length="17" line="101">
+			<expr><![CDATA[new InetAddress()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="101" chordsig="&lt;init&gt;:()V@java.net.InetAddress" start="2876" length="11" type="invoke">
+			<expr><![CDATA[new InetAddress()]]></expr>
+		<param  start="2872" length="17" line="101">
+			<expr><![CDATA[new InetAddress()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2876" length="11" line="101" chordsig="java.net.InetAddress"/>
+</method>
+<method
+ chordsig="getHostAddress:()Ljava/lang/String;@java.net.InetAddress"
+ sig="String getHostAddress()"
+ line="105"
+ startpos="2987"
+ endpos="3001"
+>
+	<type  start="2970" length="16" line="105" chordsig="java.lang.String"/>
+	<marker line="106" type="return">
+		<operand  start="3021" length="12" line="106">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="106" chordsig="&lt;init&gt;:()V@java.lang.String" start="3025" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="3021" length="12" line="106">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3025" length="6" line="106" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getHostName:()Ljava/lang/String;@java.net.InetAddress"
+ sig="String getHostName()"
+ line="110"
+ startpos="3131"
+ endpos="3142"
+>
+	<type  start="3114" length="16" line="110" chordsig="java.lang.String"/>
+	<marker line="111" type="return">
+		<operand  start="3162" length="12" line="111">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="111" chordsig="&lt;init&gt;:()V@java.lang.String" start="3166" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="3162" length="12" line="111">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3166" length="6" line="111" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

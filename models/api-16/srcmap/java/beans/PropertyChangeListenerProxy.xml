@@ -1,0 +1,80 @@
+<root>
+<class chordsig="java.beans.PropertyChangeListenerProxy" line="2">
+	<type  start="71" length="28" line="3" chordsig="java.util.EventListenerProxy"/>
+	<type  start="113" length="33" line="4" chordsig="java.beans.PropertyChangeListener"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/beans/PropertyChangeListener;)V@java.beans.PropertyChangeListenerProxy"
+ sig="PropertyChangeListenerProxy(String,PropertyChangeListener)"
+ line="6"
+ startpos="157"
+ endpos="184"
+>
+	<marker line="-1" type="param">
+		<operand  start="202" length="12" line="6">
+			<expr><![CDATA[propertyName]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="250" length="8" line="6">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="185" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="216" length="33" line="6" chordsig="java.beans.PropertyChangeListener"/>
+	<type  start="269" length="23" line="6" chordsig="java.util.EventListener"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="310" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="306" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="327" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="310" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPropertyName:()Ljava/lang/String;@java.beans.PropertyChangeListenerProxy"
+ sig="String getPropertyName()"
+ line="7"
+ startpos="364"
+ endpos="379"
+>
+	<type  start="347" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="394" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="390" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="411" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="394" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="propertyChange:(Ljava/beans/PropertyChangeEvent;)V@java.beans.PropertyChangeListenerProxy"
+ sig="void propertyChange(PropertyChangeEvent)"
+ line="8"
+ startpos="436"
+ endpos="450"
+>
+	<marker line="-1" type="param">
+		<operand  start="482" length="5" line="8">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="451" length="30" line="8" chordsig="java.beans.PropertyChangeEvent"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="501" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="497" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="518" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="501" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

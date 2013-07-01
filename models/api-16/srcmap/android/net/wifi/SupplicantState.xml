@@ -1,0 +1,76 @@
+<root>
+<class chordsig="android.net.wifi.SupplicantState" line="2">
+	<type  start="67" length="21" line="3" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="isValidState:(Landroid/net/wifi/SupplicantState;)Z@android.net.wifi.SupplicantState"
+ sig="boolean isValidState(SupplicantState)"
+ line="18"
+ startpos="316"
+ endpos="328"
+>
+	<marker line="-1" type="param">
+		<operand  start="362" length="5" line="18">
+			<expr><![CDATA[state]]></expr>
+		</operand>
+	</marker>
+	<type  start="329" length="32" line="18" chordsig="android.net.wifi.SupplicantState"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="381" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="377" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="398" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="381" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.net.wifi.SupplicantState"
+ sig="int describeContents()"
+ line="19"
+ startpos="422"
+ endpos="438"
+>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="453" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="449" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="470" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="453" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.net.wifi.SupplicantState"
+ sig="void writeToParcel(Parcel,int)"
+ line="20"
+ startpos="495"
+ endpos="508"
+>
+	<marker line="-1" type="param">
+		<operand  start="527" length="4" line="20">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="537" length="5" line="20">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="509" length="17" line="20" chordsig="android.os.Parcel"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="556" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="552" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="573" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="556" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

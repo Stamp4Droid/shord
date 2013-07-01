@@ -1,0 +1,88 @@
+<root>
+<class chordsig="org.apache.http.auth.AuthScheme" line="2">
+<method
+ chordsig="processChallenge:(Lorg/apache/http/Header;)V@org.apache.http.auth.AuthScheme"
+ sig="void processChallenge(Header)"
+ line="4"
+ startpos="82"
+ endpos="98"
+>
+	<marker line="-1" type="param">
+		<operand  start="122" length="6" line="4">
+			<expr><![CDATA[header]]></expr>
+		</operand>
+	</marker>
+	<type  start="99" length="22" line="4" chordsig="org.apache.http.Header"/>
+</method>
+<method
+ chordsig="getSchemeName:()Ljava/lang/String;@org.apache.http.auth.AuthScheme"
+ sig="String getSchemeName()"
+ line="5"
+ startpos="221"
+ endpos="234"
+>
+	<type  start="204" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getParameter:(Ljava/lang/String;)Ljava/lang/String;@org.apache.http.auth.AuthScheme"
+ sig="String getParameter(String)"
+ line="6"
+ startpos="272"
+ endpos="284"
+>
+	<marker line="-1" type="param">
+		<operand  start="302" length="4" line="6">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="255" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="285" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getRealm:()Ljava/lang/String;@org.apache.http.auth.AuthScheme"
+ sig="String getRealm()"
+ line="7"
+ startpos="343"
+ endpos="351"
+>
+	<type  start="326" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="isConnectionBased:()Z@org.apache.http.auth.AuthScheme"
+ sig="boolean isConnectionBased()"
+ line="8"
+ startpos="380"
+ endpos="397"
+>
+</method>
+<method
+ chordsig="isComplete:()Z@org.apache.http.auth.AuthScheme"
+ sig="boolean isComplete()"
+ line="9"
+ startpos="426"
+ endpos="436"
+>
+</method>
+<method
+ chordsig="authenticate:(Lorg/apache/http/auth/Credentials;Lorg/apache/http/HttpRequest;)Lorg/apache/http/Header;@org.apache.http.auth.AuthScheme"
+ sig="Header authenticate(Credentials,HttpRequest)"
+ line="10"
+ startpos="480"
+ endpos="492"
+>
+	<marker line="-1" type="param">
+		<operand  start="526" length="11" line="10">
+			<expr><![CDATA[credentials]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="567" length="7" line="10">
+			<expr><![CDATA[request]]></expr>
+		</operand>
+	</marker>
+	<type  start="457" length="22" line="10" chordsig="org.apache.http.Header"/>
+	<type  start="493" length="32" line="10" chordsig="org.apache.http.auth.Credentials"/>
+	<type  start="539" length="27" line="10" chordsig="org.apache.http.HttpRequest"/>
+</method>
+</class>
+</root>

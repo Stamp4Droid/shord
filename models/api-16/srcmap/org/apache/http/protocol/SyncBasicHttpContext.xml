@@ -1,0 +1,109 @@
+<root>
+<class chordsig="org.apache.http.protocol.SyncBasicHttpContext" line="2">
+	<type  start="78" length="41" line="3" chordsig="org.apache.http.protocol.BasicHttpContext"/>
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/protocol/HttpContext;)V@org.apache.http.protocol.SyncBasicHttpContext"
+ sig="SyncBasicHttpContext(HttpContext)"
+ line="5"
+ startpos="130"
+ endpos="150"
+>
+	<marker line="-1" type="param">
+		<operand  start="188" length="13" line="5">
+			<expr><![CDATA[parentContext]]></expr>
+		</operand>
+	</marker>
+	<type  start="151" length="36" line="5" chordsig="org.apache.http.protocol.HttpContext"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="215" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="211" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="232" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="215" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAttribute:(Ljava/lang/String;)Ljava/lang/Object;@org.apache.http.protocol.SyncBasicHttpContext"
+ sig="Object getAttribute(String)"
+ line="6"
+ startpos="282"
+ endpos="294"
+>
+	<marker line="-1" type="param">
+		<operand  start="312" length="2" line="6">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<type  start="265" length="16" line="6" chordsig="java.lang.Object"/>
+	<type  start="295" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="328" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="324" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="345" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="328" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setAttribute:(Ljava/lang/String;Ljava/lang/Object;)V@org.apache.http.protocol.SyncBasicHttpContext"
+ sig="void setAttribute(String,Object)"
+ line="7"
+ startpos="383"
+ endpos="395"
+>
+	<marker line="-1" type="param">
+		<operand  start="413" length="2" line="7">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="434" length="3" line="7">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="396" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="417" length="16" line="7" chordsig="java.lang.Object"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="451" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="447" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="468" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="451" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeAttribute:(Ljava/lang/String;)Ljava/lang/Object;@org.apache.http.protocol.SyncBasicHttpContext"
+ sig="Object removeAttribute(String)"
+ line="8"
+ startpos="518"
+ endpos="533"
+>
+	<marker line="-1" type="param">
+		<operand  start="551" length="2" line="8">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<type  start="501" length="16" line="8" chordsig="java.lang.Object"/>
+	<type  start="534" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="567" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="563" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="584" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="567" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

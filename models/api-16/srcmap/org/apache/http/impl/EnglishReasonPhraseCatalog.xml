@@ -1,0 +1,59 @@
+<root>
+<class chordsig="org.apache.http.impl.EnglishReasonPhraseCatalog" line="2">
+	<type  start="83" length="35" line="3" chordsig="org.apache.http.ReasonPhraseCatalog"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.impl.EnglishReasonPhraseCatalog"
+ sig="EnglishReasonPhraseCatalog()"
+ line="5"
+ startpos="132"
+ endpos="158"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="173" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="169" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="190" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="173" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getReason:(ILjava/util/Locale;)Ljava/lang/String;@org.apache.http.impl.EnglishReasonPhraseCatalog"
+ sig="String getReason(int,Locale)"
+ line="6"
+ startpos="227"
+ endpos="236"
+>
+	<marker line="-1" type="param">
+		<operand  start="241" length="6" line="6">
+			<expr><![CDATA[status]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="266" length="3" line="6">
+			<expr><![CDATA[loc]]></expr>
+		</operand>
+	</marker>
+	<type  start="210" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="249" length="16" line="6" chordsig="java.util.Locale"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="283" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="279" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="300" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="283" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="332" length="47" line="7" chordsig="org.apache.http.impl.EnglishReasonPhraseCatalog"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@org.apache.http.impl.EnglishReasonPhraseCatalog"
+ line="8"
+>
+</method>
+</class>
+</root>

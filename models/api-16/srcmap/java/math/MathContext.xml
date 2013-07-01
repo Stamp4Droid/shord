@@ -1,0 +1,188 @@
+<root>
+<class chordsig="java.math.MathContext" line="2">
+	<type  start="63" length="20" line="3" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:(I)V@java.math.MathContext"
+ sig="MathContext(int)"
+ line="5"
+ startpos="94"
+ endpos="105"
+>
+	<marker line="-1" type="param">
+		<operand  start="110" length="9" line="5">
+			<expr><![CDATA[precision]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="133" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="129" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="150" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="133" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(ILjava/math/RoundingMode;)V@java.math.MathContext"
+ sig="MathContext(int,RoundingMode)"
+ line="6"
+ startpos="170"
+ endpos="181"
+>
+	<marker line="-1" type="param">
+		<operand  start="186" length="9" line="6">
+			<expr><![CDATA[precision]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="220" length="12" line="6">
+			<expr><![CDATA[roundingMode]]></expr>
+		</operand>
+	</marker>
+	<type  start="197" length="22" line="6" chordsig="java.math.RoundingMode"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="246" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="242" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="263" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="246" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.math.MathContext"
+ sig="MathContext(String)"
+ line="7"
+ startpos="283"
+ endpos="294"
+>
+	<marker line="-1" type="param">
+		<operand  start="312" length="1" line="7">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<type  start="295" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="327" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="323" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="344" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="327" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPrecision:()I@java.math.MathContext"
+ sig="int getPrecision()"
+ line="8"
+ startpos="368"
+ endpos="380"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="395" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="391" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="412" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="395" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRoundingMode:()Ljava/math/RoundingMode;@java.math.MathContext"
+ sig="RoundingMode getRoundingMode()"
+ line="9"
+ startpos="455"
+ endpos="470"
+>
+	<type  start="432" length="22" line="9" chordsig="java.math.RoundingMode"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="485" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="481" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="502" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="485" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.math.MathContext"
+ sig="boolean equals(Object)"
+ line="10"
+ startpos="530"
+ endpos="536"
+>
+	<marker line="-1" type="param">
+		<operand  start="554" length="1" line="10">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<type  start="537" length="16" line="10" chordsig="java.lang.Object"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="569" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="565" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="586" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="569" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@java.math.MathContext"
+ sig="int hashCode()"
+ line="11"
+ startpos="610"
+ endpos="618"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="633" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="629" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="650" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="633" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.math.MathContext"
+ sig="String toString()"
+ line="12"
+ startpos="687"
+ endpos="695"
+>
+	<type  start="670" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="710" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="706" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="727" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="710" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="759" length="21" line="13" chordsig="java.math.MathContext"/>
+	<type  start="813" length="21" line="14" chordsig="java.math.MathContext"/>
+	<type  start="866" length="21" line="15" chordsig="java.math.MathContext"/>
+	<type  start="919" length="21" line="16" chordsig="java.math.MathContext"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@java.math.MathContext"
+ line="17"
+>
+</method>
+</class>
+</root>

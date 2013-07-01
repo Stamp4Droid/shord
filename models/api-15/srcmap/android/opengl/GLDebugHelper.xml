@@ -1,0 +1,94 @@
+<root>
+<class chordsig="android.opengl.GLDebugHelper" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.opengl.GLDebugHelper"
+ sig="GLDebugHelper()"
+ line="4"
+ startpos="61"
+ endpos="74"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="89" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="85" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="106" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="89" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="wrap:(Ljavax/microedition/khronos/opengles/GL;ILjava/io/Writer;)Ljavax/microedition/khronos/opengles/GL;@android.opengl.GLDebugHelper"
+ sig="GL wrap(GL,int,Writer)"
+ line="5"
+ startpos="172"
+ endpos="176"
+>
+	<marker line="-1" type="param">
+		<operand  start="216" length="2" line="5">
+			<expr><![CDATA[gl]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="224" length="11" line="5">
+			<expr><![CDATA[configFlags]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="252" length="3" line="5">
+			<expr><![CDATA[log]]></expr>
+		</operand>
+	</marker>
+	<type  start="133" length="38" line="5" chordsig="javax.microedition.khronos.opengles.GL"/>
+	<type  start="177" length="38" line="5" chordsig="javax.microedition.khronos.opengles.GL"/>
+	<type  start="237" length="14" line="5" chordsig="java.io.Writer"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="269" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="265" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="286" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="269" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="wrap:(Ljavax/microedition/khronos/egl/EGL;ILjava/io/Writer;)Ljavax/microedition/khronos/egl/EGL;@android.opengl.GLDebugHelper"
+ sig="EGL wrap(EGL,int,Writer)"
+ line="6"
+ startpos="348"
+ endpos="352"
+>
+	<marker line="-1" type="param">
+		<operand  start="388" length="3" line="6">
+			<expr><![CDATA[egl]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="397" length="11" line="6">
+			<expr><![CDATA[configFlags]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="425" length="3" line="6">
+			<expr><![CDATA[log]]></expr>
+		</operand>
+	</marker>
+	<type  start="313" length="34" line="6" chordsig="javax.microedition.khronos.egl.EGL"/>
+	<type  start="353" length="34" line="6" chordsig="javax.microedition.khronos.egl.EGL"/>
+	<type  start="410" length="14" line="6" chordsig="java.io.Writer"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="442" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="438" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="459" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="442" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

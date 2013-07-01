@@ -1,0 +1,252 @@
+<root>
+<class chordsig="android.nfc.NdefMessage" line="2">
+	<type  start="65" length="21" line="3" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:([B)V@android.nfc.NdefMessage"
+ sig="NdefMessage(byte[])"
+ line="5"
+ startpos="97"
+ endpos="108"
+>
+	<marker line="-1" type="param">
+		<operand  start="116" length="4" line="5">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="169" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="165" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="186" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="169" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/nfc/NdefRecord;[Landroid/nfc/NdefRecord;)V@android.nfc.NdefMessage"
+ sig="NdefMessage(NdefRecord,NdefRecord)"
+ line="6"
+ startpos="206"
+ endpos="217"
+>
+	<marker line="-1" type="param">
+		<operand  start="241" length="6" line="6">
+			<expr><![CDATA[record]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="275" length="7" line="6">
+			<expr><![CDATA[records]]></expr>
+		</operand>
+	</marker>
+	<type  start="218" length="22" line="6" chordsig="android.nfc.NdefRecord"/>
+	<type  start="249" length="22" line="6" chordsig="android.nfc.NdefRecord"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="296" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="292" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="313" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="296" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:([Landroid/nfc/NdefRecord;)V@android.nfc.NdefMessage"
+ sig="NdefMessage(NdefRecord[])"
+ line="7"
+ startpos="333"
+ endpos="344"
+>
+	<marker line="-1" type="param">
+		<operand  start="370" length="7" line="7">
+			<expr><![CDATA[records]]></expr>
+		</operand>
+	</marker>
+	<type  start="345" length="22" line="7" chordsig="android.nfc.NdefRecord"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="391" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="387" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="408" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="391" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRecords:()[Landroid/nfc/NdefRecord;@android.nfc.NdefMessage"
+ sig="NdefRecord[] getRecords()"
+ line="8"
+ startpos="453"
+ endpos="463"
+>
+	<type  start="428" length="22" line="8" chordsig="android.nfc.NdefRecord"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="478" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="474" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="495" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="478" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getByteArrayLength:()I@android.nfc.NdefMessage"
+ sig="int getByteArrayLength()"
+ line="9"
+ startpos="519"
+ endpos="537"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="552" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="548" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="569" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="552" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toByteArray:()[B@android.nfc.NdefMessage"
+ sig="byte[] toByteArray()"
+ line="10"
+ startpos="596"
+ endpos="607"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="622" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="618" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="639" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="622" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.nfc.NdefMessage"
+ sig="int describeContents()"
+ line="11"
+ startpos="663"
+ endpos="679"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="694" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="690" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="711" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="694" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.nfc.NdefMessage"
+ sig="void writeToParcel(Parcel,int)"
+ line="12"
+ startpos="736"
+ endpos="749"
+>
+	<marker line="-1" type="param">
+		<operand  start="768" length="4" line="12">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="778" length="5" line="12">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="750" length="17" line="12" chordsig="android.os.Parcel"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="797" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="793" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="814" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="797" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@android.nfc.NdefMessage"
+ sig="int hashCode()"
+ line="13"
+ startpos="838"
+ endpos="846"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="861" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="857" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="878" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="861" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@android.nfc.NdefMessage"
+ sig="boolean equals(Object)"
+ line="14"
+ startpos="906"
+ endpos="912"
+>
+	<marker line="-1" type="param">
+		<operand  start="930" length="3" line="14">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="913" length="16" line="14" chordsig="java.lang.Object"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="947" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="943" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="964" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="947" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.nfc.NdefMessage"
+ sig="String toString()"
+ line="15"
+ startpos="1001"
+ endpos="1009"
+>
+	<type  start="984" length="16" line="15" chordsig="java.lang.String"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1024" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1020" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1041" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1024" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1073" length="29" line="16" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="1103" length="23" line="16" chordsig="android.nfc.NdefMessage"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.nfc.NdefMessage"
+ line="17"
+>
+</method>
+</class>
+</root>

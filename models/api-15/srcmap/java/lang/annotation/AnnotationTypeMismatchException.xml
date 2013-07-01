@@ -1,0 +1,73 @@
+<root>
+<class chordsig="java.lang.annotation.AnnotationTypeMismatchException" line="2">
+	<type  start="85" length="26" line="3" chordsig="java.lang.RuntimeException"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/reflect/Method;Ljava/lang/String;)V@java.lang.annotation.AnnotationTypeMismatchException"
+ sig="AnnotationTypeMismatchException(Method,String)"
+ line="5"
+ startpos="122"
+ endpos="153"
+>
+	<marker line="-1" type="param">
+		<operand  start="179" length="7" line="5">
+			<expr><![CDATA[element]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="205" length="9" line="5">
+			<expr><![CDATA[foundType]]></expr>
+		</operand>
+	</marker>
+	<type  start="154" length="24" line="5" chordsig="java.lang.reflect.Method"/>
+	<type  start="188" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="228" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="224" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="245" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="228" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="element:()Ljava/lang/reflect/Method;@java.lang.annotation.AnnotationTypeMismatchException"
+ sig="Method element()"
+ line="6"
+ startpos="290"
+ endpos="297"
+>
+	<type  start="265" length="24" line="6" chordsig="java.lang.reflect.Method"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="312" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="308" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="329" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="312" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="foundType:()Ljava/lang/String;@java.lang.annotation.AnnotationTypeMismatchException"
+ sig="String foundType()"
+ line="7"
+ startpos="366"
+ endpos="375"
+>
+	<type  start="349" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="390" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="386" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="407" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="390" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

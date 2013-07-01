@@ -1,0 +1,411 @@
+<root>
+<class chordsig="android.view.ScaleGestureDetector" line="2">
+<class chordsig="android.view.ScaleGestureDetector$OnScaleGestureListener" line="4">
+<method
+ chordsig="onScale:(Landroid/view/ScaleGestureDetector;)Z@android.view.ScaleGestureDetector$OnScaleGestureListener"
+ sig="boolean onScale(ScaleGestureDetector)"
+ line="6"
+ startpos="132"
+ endpos="139"
+>
+	<marker line="-1" type="param">
+		<operand  start="174" length="8" line="6">
+			<expr><![CDATA[detector]]></expr>
+		</operand>
+	</marker>
+	<type  start="140" length="33" line="6" chordsig="android.view.ScaleGestureDetector"/>
+</method>
+<method
+ chordsig="onScaleBegin:(Landroid/view/ScaleGestureDetector;)Z@android.view.ScaleGestureDetector$OnScaleGestureListener"
+ sig="boolean onScaleBegin(ScaleGestureDetector)"
+ line="7"
+ startpos="210"
+ endpos="222"
+>
+	<marker line="-1" type="param">
+		<operand  start="257" length="8" line="7">
+			<expr><![CDATA[detector]]></expr>
+		</operand>
+	</marker>
+	<type  start="223" length="33" line="7" chordsig="android.view.ScaleGestureDetector"/>
+</method>
+<method
+ chordsig="onScaleEnd:(Landroid/view/ScaleGestureDetector;)V@android.view.ScaleGestureDetector$OnScaleGestureListener"
+ sig="void onScaleEnd(ScaleGestureDetector)"
+ line="8"
+ startpos="290"
+ endpos="300"
+>
+	<marker line="-1" type="param">
+		<operand  start="335" length="8" line="8">
+			<expr><![CDATA[detector]]></expr>
+		</operand>
+	</marker>
+	<type  start="301" length="33" line="8" chordsig="android.view.ScaleGestureDetector"/>
+</method>
+</class>
+<class chordsig="android.view.ScaleGestureDetector$SimpleOnScaleGestureListener" line="10">
+	<type  start="410" length="56" line="11" chordsig="android.view.ScaleGestureDetector$OnScaleGestureListener"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.view.ScaleGestureDetector$SimpleOnScaleGestureListener"
+ sig="SimpleOnScaleGestureListener()"
+ line="13"
+ startpos="477"
+ endpos="505"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="520" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="516" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="537" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="520" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onScale:(Landroid/view/ScaleGestureDetector;)Z@android.view.ScaleGestureDetector$SimpleOnScaleGestureListener"
+ sig="boolean onScale(ScaleGestureDetector)"
+ line="14"
+ startpos="565"
+ endpos="572"
+>
+	<marker line="-1" type="param">
+		<operand  start="607" length="8" line="14">
+			<expr><![CDATA[detector]]></expr>
+		</operand>
+	</marker>
+	<type  start="573" length="33" line="14" chordsig="android.view.ScaleGestureDetector"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="629" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="625" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="646" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="629" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onScaleBegin:(Landroid/view/ScaleGestureDetector;)Z@android.view.ScaleGestureDetector$SimpleOnScaleGestureListener"
+ sig="boolean onScaleBegin(ScaleGestureDetector)"
+ line="15"
+ startpos="674"
+ endpos="686"
+>
+	<marker line="-1" type="param">
+		<operand  start="721" length="8" line="15">
+			<expr><![CDATA[detector]]></expr>
+		</operand>
+	</marker>
+	<type  start="687" length="33" line="15" chordsig="android.view.ScaleGestureDetector"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="743" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="739" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="760" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="743" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onScaleEnd:(Landroid/view/ScaleGestureDetector;)V@android.view.ScaleGestureDetector$SimpleOnScaleGestureListener"
+ sig="void onScaleEnd(ScaleGestureDetector)"
+ line="16"
+ startpos="785"
+ endpos="795"
+>
+	<marker line="-1" type="param">
+		<operand  start="830" length="8" line="16">
+			<expr><![CDATA[detector]]></expr>
+		</operand>
+	</marker>
+	<type  start="796" length="33" line="16" chordsig="android.view.ScaleGestureDetector"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="852" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="848" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="869" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="852" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/view/ScaleGestureDetector$OnScaleGestureListener;)V@android.view.ScaleGestureDetector"
+ sig="ScaleGestureDetector(Context,OnScaleGestureListener)"
+ line="18"
+ startpos="891"
+ endpos="911"
+>
+	<marker line="-1" type="param">
+		<operand  start="936" length="7" line="18">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1002" length="8" line="18">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="912" length="23" line="18" chordsig="android.content.Context"/>
+	<type  start="945" length="56" line="18" chordsig="android.view.ScaleGestureDetector$OnScaleGestureListener"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1024" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1020" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1041" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1024" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onTouchEvent:(Landroid/view/MotionEvent;)Z@android.view.ScaleGestureDetector"
+ sig="boolean onTouchEvent(MotionEvent)"
+ line="19"
+ startpos="1069"
+ endpos="1081"
+>
+	<marker line="-1" type="param">
+		<operand  start="1107" length="5" line="19">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="1082" length="24" line="19" chordsig="android.view.MotionEvent"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1126" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1122" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1143" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1126" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isInProgress:()Z@android.view.ScaleGestureDetector"
+ sig="boolean isInProgress()"
+ line="20"
+ startpos="1171"
+ endpos="1183"
+>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1198" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1194" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1215" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1198" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFocusX:()F@android.view.ScaleGestureDetector"
+ sig="float getFocusX()"
+ line="21"
+ startpos="1241"
+ endpos="1250"
+>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1265" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1261" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1282" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1265" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFocusY:()F@android.view.ScaleGestureDetector"
+ sig="float getFocusY()"
+ line="22"
+ startpos="1308"
+ endpos="1317"
+>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1332" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1328" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1349" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1332" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCurrentSpan:()F@android.view.ScaleGestureDetector"
+ sig="float getCurrentSpan()"
+ line="23"
+ startpos="1375"
+ endpos="1389"
+>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1404" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1400" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1421" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1404" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCurrentSpanX:()F@android.view.ScaleGestureDetector"
+ sig="float getCurrentSpanX()"
+ line="24"
+ startpos="1447"
+ endpos="1462"
+>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1477" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1473" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1494" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1477" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCurrentSpanY:()F@android.view.ScaleGestureDetector"
+ sig="float getCurrentSpanY()"
+ line="25"
+ startpos="1520"
+ endpos="1535"
+>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1550" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1546" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1567" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1550" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPreviousSpan:()F@android.view.ScaleGestureDetector"
+ sig="float getPreviousSpan()"
+ line="26"
+ startpos="1593"
+ endpos="1608"
+>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1623" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1619" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1640" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1623" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPreviousSpanX:()F@android.view.ScaleGestureDetector"
+ sig="float getPreviousSpanX()"
+ line="27"
+ startpos="1666"
+ endpos="1682"
+>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1697" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1693" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1714" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1697" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPreviousSpanY:()F@android.view.ScaleGestureDetector"
+ sig="float getPreviousSpanY()"
+ line="28"
+ startpos="1740"
+ endpos="1756"
+>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1771" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1767" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1788" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1771" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getScaleFactor:()F@android.view.ScaleGestureDetector"
+ sig="float getScaleFactor()"
+ line="29"
+ startpos="1814"
+ endpos="1828"
+>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1843" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1839" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1860" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1843" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTimeDelta:()J@android.view.ScaleGestureDetector"
+ sig="long getTimeDelta()"
+ line="30"
+ startpos="1885"
+ endpos="1897"
+>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1912" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1908" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1929" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1912" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getEventTime:()J@android.view.ScaleGestureDetector"
+ sig="long getEventTime()"
+ line="31"
+ startpos="1954"
+ endpos="1966"
+>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1981" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1977" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1998" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1981" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

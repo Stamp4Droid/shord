@@ -1,0 +1,130 @@
+<root>
+<class chordsig="org.w3c.dom.CharacterData" line="2">
+	<type  start="62" length="16" line="3" chordsig="org.w3c.dom.Node"/>
+<method
+ chordsig="getData:()Ljava/lang/String;@org.w3c.dom.CharacterData"
+ sig="String getData()"
+ line="5"
+ startpos="115"
+ endpos="122"
+>
+	<type  start="98" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="setData:(Ljava/lang/String;)V@org.w3c.dom.CharacterData"
+ sig="void setData(String)"
+ line="6"
+ startpos="180"
+ endpos="187"
+>
+	<marker line="-1" type="param">
+		<operand  start="205" length="4" line="6">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<type  start="188" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="getLength:()I@org.w3c.dom.CharacterData"
+ sig="int getLength()"
+ line="7"
+ startpos="265"
+ endpos="274"
+>
+</method>
+<method
+ chordsig="substringData:(II)Ljava/lang/String;@org.w3c.dom.CharacterData"
+ sig="String substringData(int,int)"
+ line="8"
+ startpos="312"
+ endpos="325"
+>
+	<marker line="-1" type="param">
+		<operand  start="330" length="6" line="8">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="342" length="5" line="8">
+			<expr><![CDATA[count]]></expr>
+		</operand>
+	</marker>
+	<type  start="295" length="16" line="8" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="appendData:(Ljava/lang/String;)V@org.w3c.dom.CharacterData"
+ sig="void appendData(String)"
+ line="9"
+ startpos="404"
+ endpos="414"
+>
+	<marker line="-1" type="param">
+		<operand  start="432" length="3" line="9">
+			<expr><![CDATA[arg]]></expr>
+		</operand>
+	</marker>
+	<type  start="415" length="16" line="9" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="insertData:(ILjava/lang/String;)V@org.w3c.dom.CharacterData"
+ sig="void insertData(int,String)"
+ line="10"
+ startpos="492"
+ endpos="502"
+>
+	<marker line="-1" type="param">
+		<operand  start="507" length="6" line="10">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="532" length="3" line="10">
+			<expr><![CDATA[arg]]></expr>
+		</operand>
+	</marker>
+	<type  start="515" length="16" line="10" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="deleteData:(II)V@org.w3c.dom.CharacterData"
+ sig="void deleteData(int,int)"
+ line="11"
+ startpos="592"
+ endpos="602"
+>
+	<marker line="-1" type="param">
+		<operand  start="607" length="6" line="11">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="619" length="5" line="11">
+			<expr><![CDATA[count]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="replaceData:(IILjava/lang/String;)V@org.w3c.dom.CharacterData"
+ sig="void replaceData(int,int,String)"
+ line="12"
+ startpos="681"
+ endpos="692"
+>
+	<marker line="-1" type="param">
+		<operand  start="697" length="6" line="12">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="709" length="5" line="12">
+			<expr><![CDATA[count]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="733" length="3" line="12">
+			<expr><![CDATA[arg]]></expr>
+		</operand>
+	</marker>
+	<type  start="716" length="16" line="12" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

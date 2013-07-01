@@ -1,0 +1,314 @@
+<root>
+<class chordsig="android.media.audiofx.Visualizer" line="2">
+<class chordsig="android.media.audiofx.Visualizer$OnDataCaptureListener" line="4">
+<method
+ chordsig="onWaveFormDataCapture:(Landroid/media/audiofx/Visualizer;[BI)V@android.media.audiofx.Visualizer$OnDataCaptureListener"
+ sig="void onWaveFormDataCapture(Visualizer,byte[],int)"
+ line="6"
+ startpos="127"
+ endpos="148"
+>
+	<marker line="-1" type="param">
+		<operand  start="182" length="10" line="6">
+			<expr><![CDATA[visualizer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="201" length="8" line="6">
+			<expr><![CDATA[waveform]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="215" length="12" line="6">
+			<expr><![CDATA[samplingRate]]></expr>
+		</operand>
+	</marker>
+	<type  start="149" length="32" line="6" chordsig="android.media.audiofx.Visualizer"/>
+</method>
+<method
+ chordsig="onFftDataCapture:(Landroid/media/audiofx/Visualizer;[BI)V@android.media.audiofx.Visualizer$OnDataCaptureListener"
+ sig="void onFftDataCapture(Visualizer,byte[],int)"
+ line="7"
+ startpos="252"
+ endpos="268"
+>
+	<marker line="-1" type="param">
+		<operand  start="302" length="10" line="7">
+			<expr><![CDATA[visualizer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="321" length="3" line="7">
+			<expr><![CDATA[fft]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="330" length="12" line="7">
+			<expr><![CDATA[samplingRate]]></expr>
+		</operand>
+	</marker>
+	<type  start="269" length="32" line="7" chordsig="android.media.audiofx.Visualizer"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(I)V@android.media.audiofx.Visualizer"
+ sig="Visualizer(int)"
+ line="9"
+ startpos="355"
+ endpos="365"
+>
+	<marker line="-1" type="param">
+		<operand  start="370" length="12" line="9">
+			<expr><![CDATA[audioSession]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="471" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="467" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="488" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="471" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="release:()V@android.media.audiofx.Visualizer"
+ sig="void release()"
+ line="10"
+ startpos="513"
+ endpos="520"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="535" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="531" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="552" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="535" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="finalize:()V@android.media.audiofx.Visualizer"
+ sig="void finalize()"
+ line="11"
+ startpos="580"
+ endpos="588"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="603" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="599" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="620" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="603" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setEnabled:(Z)I@android.media.audiofx.Visualizer"
+ sig="int setEnabled(boolean)"
+ line="12"
+ startpos="644"
+ endpos="654"
+>
+	<marker line="-1" type="param">
+		<operand  start="663" length="7" line="12">
+			<expr><![CDATA[enabled]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="723" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="719" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="740" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="723" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getEnabled:()Z@android.media.audiofx.Visualizer"
+ sig="boolean getEnabled()"
+ line="13"
+ startpos="768"
+ endpos="778"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="793" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="789" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="810" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="793" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCaptureSizeRange:()[I@android.media.audiofx.Visualizer"
+ sig="int[] getCaptureSizeRange()"
+ line="14"
+ startpos="850"
+ endpos="869"
+>
+</method>
+<method
+ chordsig="getMaxCaptureRate:()I@android.media.audiofx.Visualizer"
+ sig="int getMaxCaptureRate()"
+ line="15"
+ startpos="899"
+ endpos="916"
+>
+</method>
+<method
+ chordsig="setCaptureSize:(I)I@android.media.audiofx.Visualizer"
+ sig="int setCaptureSize(int)"
+ line="16"
+ startpos="932"
+ endpos="946"
+>
+	<marker line="-1" type="param">
+		<operand  start="951" length="4" line="16">
+			<expr><![CDATA[size]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1008" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1004" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1025" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1008" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCaptureSize:()I@android.media.audiofx.Visualizer"
+ sig="int getCaptureSize()"
+ line="17"
+ startpos="1049"
+ endpos="1063"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1117" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1113" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1134" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1117" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSamplingRate:()I@android.media.audiofx.Visualizer"
+ sig="int getSamplingRate()"
+ line="18"
+ startpos="1158"
+ endpos="1173"
+>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1227" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1223" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1244" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1227" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getWaveForm:([B)I@android.media.audiofx.Visualizer"
+ sig="int getWaveForm(byte[])"
+ line="19"
+ startpos="1268"
+ endpos="1279"
+>
+	<marker line="-1" type="param">
+		<operand  start="1287" length="8" line="19">
+			<expr><![CDATA[waveform]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1348" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1344" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1365" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1348" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFft:([B)I@android.media.audiofx.Visualizer"
+ sig="int getFft(byte[])"
+ line="20"
+ startpos="1389"
+ endpos="1395"
+>
+	<marker line="-1" type="param">
+		<operand  start="1403" length="3" line="20">
+			<expr><![CDATA[fft]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1459" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1455" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1476" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1459" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDataCaptureListener:(Landroid/media/audiofx/Visualizer$OnDataCaptureListener;IZZ)I@android.media.audiofx.Visualizer"
+ sig="int setDataCaptureListener(OnDataCaptureListener,int,boolean,boolean)"
+ line="21"
+ startpos="1500"
+ endpos="1522"
+>
+	<marker line="-1" type="param">
+		<operand  start="1578" length="8" line="21">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1592" length="4" line="21">
+			<expr><![CDATA[rate]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1606" length="8" line="21">
+			<expr><![CDATA[waveform]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1624" length="3" line="21">
+			<expr><![CDATA[fft]]></expr>
+		</operand>
+	</marker>
+	<type  start="1523" length="54" line="21" chordsig="android.media.audiofx.Visualizer$OnDataCaptureListener"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1641" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1637" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1658" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1641" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

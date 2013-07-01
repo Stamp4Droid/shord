@@ -1,0 +1,134 @@
+<root>
+<class chordsig="android.widget.ImageSwitcher" line="2">
+	<type  start="61" length="27" line="3" chordsig="android.widget.ViewSwitcher"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.widget.ImageSwitcher"
+ sig="ImageSwitcher(Context)"
+ line="5"
+ startpos="99"
+ endpos="112"
+>
+	<marker line="-1" type="param">
+		<operand  start="137" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="113" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="155" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="185" length="25" line="5" chordsig="android.util.AttributeSet"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="228" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="224" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="245" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="228" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.widget.ImageSwitcher"
+ sig="ImageSwitcher(Context,AttributeSet)"
+ line="6"
+ startpos="265"
+ endpos="278"
+>
+	<marker line="-1" type="param">
+		<operand  start="303" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="338" length="5" line="6">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="279" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="312" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<type  start="354" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="384" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="427" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="423" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="444" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="427" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setImageResource:(I)V@android.widget.ImageSwitcher"
+ sig="void setImageResource(int)"
+ line="7"
+ startpos="469"
+ endpos="485"
+>
+	<marker line="-1" type="param">
+		<operand  start="490" length="5" line="7">
+			<expr><![CDATA[resid]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="509" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="505" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="526" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="509" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setImageURI:(Landroid/net/Uri;)V@android.widget.ImageSwitcher"
+ sig="void setImageURI(Uri)"
+ line="8"
+ startpos="551"
+ endpos="562"
+>
+	<marker line="-1" type="param">
+		<operand  start="579" length="3" line="8">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<type  start="563" length="15" line="8" chordsig="android.net.Uri"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="596" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="592" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="613" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="596" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setImageDrawable:(Landroid/graphics/drawable/Drawable;)V@android.widget.ImageSwitcher"
+ sig="void setImageDrawable(Drawable)"
+ line="9"
+ startpos="638"
+ endpos="654"
+>
+	<marker line="-1" type="param">
+		<operand  start="690" length="8" line="9">
+			<expr><![CDATA[drawable]]></expr>
+		</operand>
+	</marker>
+	<type  start="655" length="34" line="9" chordsig="android.graphics.drawable.Drawable"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="712" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="708" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="729" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="712" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

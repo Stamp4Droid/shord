@@ -1,0 +1,38 @@
+<root>
+<class chordsig="java.util.Comparator" line="2">
+<method
+ chordsig="compare:(Ljava/lang/Object;Ljava/lang/Object;)I@java.util.Comparator"
+ sig="int compare(T,T)"
+ line="4"
+ startpos="73"
+ endpos="80"
+>
+	<marker line="-1" type="param">
+		<operand  start="83" length="3" line="4">
+			<expr><![CDATA[lhs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="90" length="3" line="4">
+			<expr><![CDATA[rhs]]></expr>
+		</operand>
+	</marker>
+	<type  start="81" length="1" line="4" chordsig="java.lang.Object"/>
+	<type  start="88" length="1" line="4" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.util.Comparator"
+ sig="boolean equals(Object)"
+ line="5"
+ startpos="121"
+ endpos="127"
+>
+	<marker line="-1" type="param">
+		<operand  start="145" length="6" line="5">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="128" length="16" line="5" chordsig="java.lang.Object"/>
+</method>
+</class>
+</root>

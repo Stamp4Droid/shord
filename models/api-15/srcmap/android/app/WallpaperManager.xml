@@ -1,0 +1,455 @@
+<root>
+<class chordsig="android.app.WallpaperManager" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.app.WallpaperManager"
+ sig="WallpaperManager()"
+ line="4"
+ startpos="53"
+ endpos="69"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="84" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="80" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="101" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="84" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInstance:(Landroid/content/Context;)Landroid/app/WallpaperManager;@android.app.WallpaperManager"
+ sig="WallpaperManager getInstance(Context)"
+ line="5"
+ startpos="157"
+ endpos="168"
+>
+	<marker line="-1" type="param">
+		<operand  start="193" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="128" length="28" line="5" chordsig="android.app.WallpaperManager"/>
+	<type  start="169" length="23" line="5" chordsig="android.content.Context"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="214" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="210" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="231" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="214" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDrawable:()Landroid/graphics/drawable/Drawable;@android.app.WallpaperManager"
+ sig="Drawable getDrawable()"
+ line="6"
+ startpos="286"
+ endpos="297"
+>
+	<type  start="251" length="34" line="6" chordsig="android.graphics.drawable.Drawable"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="312" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="308" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="329" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="312" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="peekDrawable:()Landroid/graphics/drawable/Drawable;@android.app.WallpaperManager"
+ sig="Drawable peekDrawable()"
+ line="7"
+ startpos="384"
+ endpos="396"
+>
+	<type  start="349" length="34" line="7" chordsig="android.graphics.drawable.Drawable"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="411" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="407" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="428" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="411" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFastDrawable:()Landroid/graphics/drawable/Drawable;@android.app.WallpaperManager"
+ sig="Drawable getFastDrawable()"
+ line="8"
+ startpos="483"
+ endpos="498"
+>
+	<type  start="448" length="34" line="8" chordsig="android.graphics.drawable.Drawable"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="513" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="509" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="530" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="513" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="peekFastDrawable:()Landroid/graphics/drawable/Drawable;@android.app.WallpaperManager"
+ sig="Drawable peekFastDrawable()"
+ line="9"
+ startpos="585"
+ endpos="601"
+>
+	<type  start="550" length="34" line="9" chordsig="android.graphics.drawable.Drawable"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="616" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="612" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="633" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="616" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="forgetLoadedWallpaper:()V@android.app.WallpaperManager"
+ sig="void forgetLoadedWallpaper()"
+ line="10"
+ startpos="658"
+ endpos="679"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="694" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="690" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="711" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="694" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getWallpaperInfo:()Landroid/app/WallpaperInfo;@android.app.WallpaperManager"
+ sig="WallpaperInfo getWallpaperInfo()"
+ line="11"
+ startpos="757"
+ endpos="773"
+>
+	<type  start="731" length="25" line="11" chordsig="android.app.WallpaperInfo"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="788" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="784" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="805" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="788" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setResource:(I)V@android.app.WallpaperManager"
+ sig="void setResource(int)"
+ line="12"
+ startpos="830"
+ endpos="841"
+>
+	<marker line="-1" type="param">
+		<operand  start="846" length="5" line="12">
+			<expr><![CDATA[resid]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="892" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="888" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="909" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="892" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setBitmap:(Landroid/graphics/Bitmap;)V@android.app.WallpaperManager"
+ sig="void setBitmap(Bitmap)"
+ line="13"
+ startpos="934"
+ endpos="943"
+>
+	<marker line="-1" type="param">
+		<operand  start="968" length="6" line="13">
+			<expr><![CDATA[bitmap]]></expr>
+		</operand>
+	</marker>
+	<type  start="944" length="23" line="13" chordsig="android.graphics.Bitmap"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1015" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1011" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1032" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1015" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setStream:(Ljava/io/InputStream;)V@android.app.WallpaperManager"
+ sig="void setStream(InputStream)"
+ line="14"
+ startpos="1057"
+ endpos="1066"
+>
+	<marker line="-1" type="param">
+		<operand  start="1087" length="4" line="14">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<type  start="1067" length="19" line="14" chordsig="java.io.InputStream"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1132" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1128" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1149" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1132" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDesiredMinimumWidth:()I@android.app.WallpaperManager"
+ sig="int getDesiredMinimumWidth()"
+ line="15"
+ startpos="1173"
+ endpos="1195"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1210" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1206" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1227" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1210" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDesiredMinimumHeight:()I@android.app.WallpaperManager"
+ sig="int getDesiredMinimumHeight()"
+ line="16"
+ startpos="1251"
+ endpos="1274"
+>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1289" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1285" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1306" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1289" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="suggestDesiredDimensions:(II)V@android.app.WallpaperManager"
+ sig="void suggestDesiredDimensions(int,int)"
+ line="17"
+ startpos="1331"
+ endpos="1355"
+>
+	<marker line="-1" type="param">
+		<operand  start="1360" length="12" line="17">
+			<expr><![CDATA[minimumWidth]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1378" length="13" line="17">
+			<expr><![CDATA[minimumHeight]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1405" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1401" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1422" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1405" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setWallpaperOffsets:(Landroid/os/IBinder;FF)V@android.app.WallpaperManager"
+ sig="void setWallpaperOffsets(IBinder,float,float)"
+ line="18"
+ startpos="1447"
+ endpos="1466"
+>
+	<marker line="-1" type="param">
+		<operand  start="1486" length="11" line="18">
+			<expr><![CDATA[windowToken]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1505" length="7" line="18">
+			<expr><![CDATA[xOffset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1520" length="7" line="18">
+			<expr><![CDATA[yOffset]]></expr>
+		</operand>
+	</marker>
+	<type  start="1467" length="18" line="18" chordsig="android.os.IBinder"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1541" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1537" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1558" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1541" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setWallpaperOffsetSteps:(FF)V@android.app.WallpaperManager"
+ sig="void setWallpaperOffsetSteps(float,float)"
+ line="19"
+ startpos="1583"
+ endpos="1606"
+>
+	<marker line="-1" type="param">
+		<operand  start="1613" length="5" line="19">
+			<expr><![CDATA[xStep]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1626" length="5" line="19">
+			<expr><![CDATA[yStep]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1645" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1641" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1662" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1645" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="sendWallpaperCommand:(Landroid/os/IBinder;Ljava/lang/String;IIILandroid/os/Bundle;)V@android.app.WallpaperManager"
+ sig="void sendWallpaperCommand(IBinder,String,int,int,int,Bundle)"
+ line="20"
+ startpos="1687"
+ endpos="1707"
+>
+	<marker line="-1" type="param">
+		<operand  start="1727" length="11" line="20">
+			<expr><![CDATA[windowToken]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1757" length="6" line="20">
+			<expr><![CDATA[action]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1769" length="1" line="20">
+			<expr><![CDATA[x]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1776" length="1" line="20">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1783" length="1" line="20">
+			<expr><![CDATA[z]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1804" length="6" line="20">
+			<expr><![CDATA[extras]]></expr>
+		</operand>
+	</marker>
+	<type  start="1708" length="18" line="20" chordsig="android.os.IBinder"/>
+	<type  start="1740" length="16" line="20" chordsig="java.lang.String"/>
+	<type  start="1786" length="17" line="20" chordsig="android.os.Bundle"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1824" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1820" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1841" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1824" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clearWallpaperOffsets:(Landroid/os/IBinder;)V@android.app.WallpaperManager"
+ sig="void clearWallpaperOffsets(IBinder)"
+ line="21"
+ startpos="1866"
+ endpos="1887"
+>
+	<marker line="-1" type="param">
+		<operand  start="1907" length="11" line="21">
+			<expr><![CDATA[windowToken]]></expr>
+		</operand>
+	</marker>
+	<type  start="1888" length="18" line="21" chordsig="android.os.IBinder"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1932" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1928" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1949" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1932" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clear:()V@android.app.WallpaperManager"
+ sig="void clear()"
+ line="22"
+ startpos="1974"
+ endpos="1979"
+>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2021" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2017" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2038" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2021" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="2070" length="16" line="23" chordsig="java.lang.String"/>
+	<type  start="2191" length="16" line="24" chordsig="java.lang.String"/>
+	<type  start="2287" length="16" line="25" chordsig="java.lang.String"/>
+	<type  start="2363" length="16" line="26" chordsig="java.lang.String"/>
+	<type  start="2458" length="16" line="27" chordsig="java.lang.String"/>
+</class>
+</root>

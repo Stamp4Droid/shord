@@ -1,0 +1,363 @@
+<root>
+<class chordsig="android.content.AbstractThreadedSyncAdapter" line="6">
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;ZZ)V@android.content.AbstractThreadedSyncAdapter"
+ sig="AbstractThreadedSyncAdapter(Context,boolean,boolean)"
+ line="8"
+ startpos="188"
+ endpos="215"
+>
+	<marker line="-1" type="param">
+		<operand  start="240" length="7" line="8">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="257" length="14" line="8">
+			<expr><![CDATA[autoInitialize]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="281" length="18" line="8">
+			<expr><![CDATA[allowParallelSyncs]]></expr>
+		</operand>
+	</marker>
+	<type  start="216" length="23" line="8" chordsig="android.content.Context"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="321" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="317" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="338" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="321" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContext:()Landroid/content/Context;@android.content.AbstractThreadedSyncAdapter"
+ sig="Context getContext()"
+ line="12"
+ startpos="390"
+ endpos="400"
+>
+	<type  start="366" length="23" line="12" chordsig="android.content.Context"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="423" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="419" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="440" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="423" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSyncAdapterBinder:()Landroid/os/IBinder;@android.content.AbstractThreadedSyncAdapter"
+ sig="IBinder getSyncAdapterBinder()"
+ line="16"
+ startpos="493"
+ endpos="513"
+>
+	<type  start="474" length="18" line="16" chordsig="android.os.IBinder"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="536" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="532" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="553" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="536" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onPerformSync:(Landroid/accounts/Account;Landroid/os/Bundle;Ljava/lang/String;Landroid/content/ContentProviderClient;Landroid/content/SyncResult;)V@android.content.AbstractThreadedSyncAdapter"
+ sig="void onPerformSync(Account,Bundle,String,ContentProviderClient,SyncResult)"
+ line="20"
+ startpos="595"
+ endpos="608"
+>
+	<marker line="-1" type="param">
+		<operand  start="634" length="7" line="20">
+			<expr><![CDATA[account]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="661" length="6" line="20">
+			<expr><![CDATA[extras]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="686" length="9" line="20">
+			<expr><![CDATA[authority]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="735" length="8" line="20">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="772" length="10" line="20">
+			<expr><![CDATA[syncResult]]></expr>
+		</operand>
+	</marker>
+	<type  start="609" length="24" line="20" chordsig="android.accounts.Account"/>
+	<type  start="643" length="17" line="20" chordsig="android.os.Bundle"/>
+	<type  start="669" length="16" line="20" chordsig="java.lang.String"/>
+	<type  start="697" length="37" line="20" chordsig="android.content.ContentProviderClient"/>
+	<type  start="745" length="26" line="20" chordsig="android.content.SyncResult"/>
+</method>
+<method
+ chordsig="onSyncCanceled:()V@android.content.AbstractThreadedSyncAdapter"
+ sig="void onSyncCanceled()"
+ line="22"
+ startpos="802"
+ endpos="816"
+>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="839" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="835" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="856" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="839" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onSyncCanceled:(Ljava/lang/Thread;)V@android.content.AbstractThreadedSyncAdapter"
+ sig="void onSyncCanceled(Thread)"
+ line="26"
+ startpos="889"
+ endpos="903"
+>
+	<marker line="-1" type="param">
+		<operand  start="921" length="6" line="26">
+			<expr><![CDATA[thread]]></expr>
+		</operand>
+	</marker>
+	<type  start="904" length="16" line="26" chordsig="java.lang.Thread"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="949" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="945" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="966" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="949" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Z)V@android.content.AbstractThreadedSyncAdapter"
+ sig="AbstractThreadedSyncAdapter(Context,boolean)"
+ line="33"
+ startpos="1076"
+ endpos="1103"
+>
+	<marker line="-1" type="param">
+		<operand  start="1128" length="7" line="33">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1145" length="14" line="33">
+			<expr><![CDATA[autoInitialize]]></expr>
+		</operand>
+	</marker>
+	<type  start="1104" length="23" line="33" chordsig="android.content.Context"/>
+	<invkexpr line="34" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="1203" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    AbstractThreadedSyncAdapter.this.onPerformSync(null,new android.os.Bundle(),new String(),null,null);
+  }
+}
+)]]></expr>
+		<param  start="1220" length="194" line="34">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    AbstractThreadedSyncAdapter.this.onPerformSync(null,new android.os.Bundle(),new String(),null,null);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="34" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="1189" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="34" chordsig="&lt;init&gt;:()V@android.content.AbstractThreadedSyncAdapter$android.content.AbstractThreadedSyncAdapter#edu.stanford.stamp.harness.Callback#34" start="1224" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    AbstractThreadedSyncAdapter.this.onPerformSync(null,new android.os.Bundle(),new String(),null,null);
+  }
+}
+]]></expr>
+		<param  start="1220" length="194" line="34">
+			<expr type="android.content.AbstractThreadedSyncAdapter#edu.stanford.stamp.harness.Callback#34"><![CDATA[new Callback(){
+  public void run(){
+    AbstractThreadedSyncAdapter.this.onPerformSync(null,new android.os.Bundle(),new String(),null,null);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1224" length="8" line="34" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.content.AbstractThreadedSyncAdapter$android.content.AbstractThreadedSyncAdapter#edu.stanford.stamp.harness.Callback#34" line="34">
+<method
+ chordsig="run:()V@android.content.AbstractThreadedSyncAdapter$android.content.AbstractThreadedSyncAdapter#edu.stanford.stamp.harness.Callback#34"
+ sig="void run()"
+ line="36"
+ startpos="1262"
+ endpos="1265"
+>
+	<invkexpr line="37" chordsig="onPerformSync:(Landroid/accounts/Account;Landroid/os/Bundle;Ljava/lang/String;Landroid/content/ContentProviderClient;Landroid/content/SyncResult;)V@android.content.AbstractThreadedSyncAdapter" start="1319" length="13" type="invoke">
+			<expr><![CDATA[AbstractThreadedSyncAdapter.this.onPerformSync(null,new android.os.Bundle(),new String(),null,null)]]></expr>
+		<param  start="1286" length="32" line="37">
+			<expr><![CDATA[AbstractThreadedSyncAdapter.this]]></expr>
+		</param>
+		<param  start="1333" length="4" line="37">
+			<expr><![CDATA[null]]></expr>
+		</param>
+		<param  start="1339" length="23" line="37">
+			<expr><![CDATA[new android.os.Bundle()]]></expr>
+		</param>
+		<param  start="1364" length="12" line="37">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+		<param  start="1378" length="4" line="37">
+			<expr><![CDATA[null]]></expr>
+		</param>
+		<param  start="1384" length="4" line="37">
+			<expr><![CDATA[null]]></expr>
+		</param>
+	</invkexpr>
+	<newexpr line="37" chordsig="&lt;init&gt;:()V@android.os.Bundle" start="1343" length="17" type="invoke">
+			<expr><![CDATA[new android.os.Bundle()]]></expr>
+		<param  start="1339" length="23" line="37">
+			<expr><![CDATA[new android.os.Bundle()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1343" length="17" line="37" chordsig="android.os.Bundle"/>
+	<newexpr line="37" chordsig="&lt;init&gt;:()V@java.lang.String" start="1368" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="1364" length="12" line="37">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1368" length="6" line="37" chordsig="java.lang.String"/>
+</method>
+</class>
+	<invkexpr line="40" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="1457" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    AbstractThreadedSyncAdapter.this.onSyncCanceled();
+  }
+}
+)]]></expr>
+		<param  start="1474" length="140" line="40">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    AbstractThreadedSyncAdapter.this.onSyncCanceled();
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="40" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="1443" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="40" chordsig="&lt;init&gt;:()V@android.content.AbstractThreadedSyncAdapter$android.content.AbstractThreadedSyncAdapter#edu.stanford.stamp.harness.Callback#40" start="1478" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    AbstractThreadedSyncAdapter.this.onSyncCanceled();
+  }
+}
+]]></expr>
+		<param  start="1474" length="140" line="40">
+			<expr type="android.content.AbstractThreadedSyncAdapter#edu.stanford.stamp.harness.Callback#40"><![CDATA[new Callback(){
+  public void run(){
+    AbstractThreadedSyncAdapter.this.onSyncCanceled();
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1478" length="8" line="40" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.content.AbstractThreadedSyncAdapter$android.content.AbstractThreadedSyncAdapter#edu.stanford.stamp.harness.Callback#40" line="40">
+<method
+ chordsig="run:()V@android.content.AbstractThreadedSyncAdapter$android.content.AbstractThreadedSyncAdapter#edu.stanford.stamp.harness.Callback#40"
+ sig="void run()"
+ line="42"
+ startpos="1516"
+ endpos="1519"
+>
+	<invkexpr line="43" chordsig="onSyncCanceled:()V@android.content.AbstractThreadedSyncAdapter" start="1573" length="14" type="invoke">
+			<expr><![CDATA[AbstractThreadedSyncAdapter.this.onSyncCanceled()]]></expr>
+		<param  start="1540" length="32" line="43">
+			<expr><![CDATA[AbstractThreadedSyncAdapter.this]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+	<invkexpr line="46" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="1657" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    AbstractThreadedSyncAdapter.this.onSyncCanceled(null);
+  }
+}
+)]]></expr>
+		<param  start="1674" length="144" line="46">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    AbstractThreadedSyncAdapter.this.onSyncCanceled(null);
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="46" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="1643" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="46" chordsig="&lt;init&gt;:()V@android.content.AbstractThreadedSyncAdapter$android.content.AbstractThreadedSyncAdapter#edu.stanford.stamp.harness.Callback#46" start="1678" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    AbstractThreadedSyncAdapter.this.onSyncCanceled(null);
+  }
+}
+]]></expr>
+		<param  start="1674" length="144" line="46">
+			<expr type="android.content.AbstractThreadedSyncAdapter#edu.stanford.stamp.harness.Callback#46"><![CDATA[new Callback(){
+  public void run(){
+    AbstractThreadedSyncAdapter.this.onSyncCanceled(null);
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1678" length="8" line="46" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="android.content.AbstractThreadedSyncAdapter$android.content.AbstractThreadedSyncAdapter#edu.stanford.stamp.harness.Callback#46" line="46">
+<method
+ chordsig="run:()V@android.content.AbstractThreadedSyncAdapter$android.content.AbstractThreadedSyncAdapter#edu.stanford.stamp.harness.Callback#46"
+ sig="void run()"
+ line="48"
+ startpos="1716"
+ endpos="1719"
+>
+	<invkexpr line="49" chordsig="onSyncCanceled:(Ljava/lang/Thread;)V@android.content.AbstractThreadedSyncAdapter" start="1773" length="14" type="invoke">
+			<expr><![CDATA[AbstractThreadedSyncAdapter.this.onSyncCanceled(null)]]></expr>
+		<param  start="1740" length="32" line="49">
+			<expr><![CDATA[AbstractThreadedSyncAdapter.this]]></expr>
+		</param>
+		<param  start="1788" length="4" line="49">
+			<expr><![CDATA[null]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+</method>
+</class>
+</root>

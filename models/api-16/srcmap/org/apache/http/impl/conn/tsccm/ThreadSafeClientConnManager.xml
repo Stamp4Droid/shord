@@ -1,0 +1,298 @@
+<root>
+<class chordsig="org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager" line="2">
+	<type  start="95" length="44" line="3" chordsig="org.apache.http.conn.ClientConnectionManager"/>
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/params/HttpParams;Lorg/apache/http/conn/scheme/SchemeRegistry;)V@org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager"
+ sig="ThreadSafeClientConnManager(HttpParams,SchemeRegistry)"
+ line="5"
+ startpos="150"
+ endpos="177"
+>
+	<marker line="-1" type="param">
+		<operand  start="212" length="6" line="5">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="263" length="6" line="5">
+			<expr><![CDATA[schreg]]></expr>
+		</operand>
+	</marker>
+	<type  start="178" length="33" line="5" chordsig="org.apache.http.params.HttpParams"/>
+	<type  start="220" length="42" line="5" chordsig="org.apache.http.conn.scheme.SchemeRegistry"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="283" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="279" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="300" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="283" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="finalize:()V@org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager"
+ sig="void finalize()"
+ line="6"
+ startpos="328"
+ endpos="336"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="378" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="374" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="395" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="378" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createConnectionPool:(Lorg/apache/http/params/HttpParams;)Lorg/apache/http/impl/conn/tsccm/AbstractConnPool;@org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager"
+ sig="AbstractConnPool createConnectionPool(HttpParams)"
+ line="7"
+ startpos="467"
+ endpos="487"
+>
+	<marker line="-1" type="param">
+		<operand  start="522" length="6" line="7">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="418" length="48" line="7" chordsig="org.apache.http.impl.conn.tsccm.AbstractConnPool"/>
+	<type  start="488" length="33" line="7" chordsig="org.apache.http.params.HttpParams"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="542" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="538" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="559" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="542" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createConnectionOperator:(Lorg/apache/http/conn/scheme/SchemeRegistry;)Lorg/apache/http/conn/ClientConnectionOperator;@org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager"
+ sig="ClientConnectionOperator createConnectionOperator(SchemeRegistry)"
+ line="8"
+ startpos="628"
+ endpos="652"
+>
+	<marker line="-1" type="param">
+		<operand  start="696" length="6" line="8">
+			<expr><![CDATA[schreg]]></expr>
+		</operand>
+	</marker>
+	<type  start="582" length="45" line="8" chordsig="org.apache.http.conn.ClientConnectionOperator"/>
+	<type  start="653" length="42" line="8" chordsig="org.apache.http.conn.scheme.SchemeRegistry"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="716" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="712" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="733" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="716" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSchemeRegistry:()Lorg/apache/http/conn/scheme/SchemeRegistry;@org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager"
+ sig="SchemeRegistry getSchemeRegistry()"
+ line="9"
+ startpos="796"
+ endpos="813"
+>
+	<type  start="753" length="42" line="9" chordsig="org.apache.http.conn.scheme.SchemeRegistry"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="828" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="824" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="845" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="828" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="requestConnection:(Lorg/apache/http/conn/routing/HttpRoute;Ljava/lang/Object;)Lorg/apache/http/conn/ClientConnectionRequest;@org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager"
+ sig="ClientConnectionRequest requestConnection(HttpRoute,Object)"
+ line="10"
+ startpos="910"
+ endpos="927"
+>
+	<marker line="-1" type="param">
+		<operand  start="967" length="5" line="10">
+			<expr><![CDATA[route]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="991" length="5" line="10">
+			<expr><![CDATA[state]]></expr>
+		</operand>
+	</marker>
+	<type  start="865" length="44" line="10" chordsig="org.apache.http.conn.ClientConnectionRequest"/>
+	<type  start="928" length="38" line="10" chordsig="org.apache.http.conn.routing.HttpRoute"/>
+	<type  start="974" length="16" line="10" chordsig="java.lang.Object"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1010" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1006" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1027" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1010" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="releaseConnection:(Lorg/apache/http/conn/ManagedClientConnection;JLjava/util/concurrent/TimeUnit;)V@org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager"
+ sig="void releaseConnection(ManagedClientConnection,long,TimeUnit)"
+ line="11"
+ startpos="1052"
+ endpos="1069"
+>
+	<marker line="-1" type="param">
+		<operand  start="1115" length="4" line="11">
+			<expr><![CDATA[conn]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1126" length="13" line="11">
+			<expr><![CDATA[validDuration]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1171" length="8" line="11">
+			<expr><![CDATA[timeUnit]]></expr>
+		</operand>
+	</marker>
+	<type  start="1070" length="44" line="11" chordsig="org.apache.http.conn.ManagedClientConnection"/>
+	<type  start="1141" length="29" line="11" chordsig="java.util.concurrent.TimeUnit"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1193" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1189" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1210" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1193" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="shutdown:()V@org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager"
+ sig="void shutdown()"
+ line="12"
+ startpos="1235"
+ endpos="1243"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1258" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1254" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1275" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1258" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getConnectionsInPool:(Lorg/apache/http/conn/routing/HttpRoute;)I@org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager"
+ sig="int getConnectionsInPool(HttpRoute)"
+ line="13"
+ startpos="1299"
+ endpos="1319"
+>
+	<marker line="-1" type="param">
+		<operand  start="1359" length="5" line="13">
+			<expr><![CDATA[route]]></expr>
+		</operand>
+	</marker>
+	<type  start="1320" length="38" line="13" chordsig="org.apache.http.conn.routing.HttpRoute"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1378" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1374" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1395" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1378" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getConnectionsInPool:()I@org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager"
+ sig="int getConnectionsInPool()"
+ line="14"
+ startpos="1419"
+ endpos="1439"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1454" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1450" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1471" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1454" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="closeIdleConnections:(JLjava/util/concurrent/TimeUnit;)V@org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager"
+ sig="void closeIdleConnections(long,TimeUnit)"
+ line="15"
+ startpos="1496"
+ endpos="1516"
+>
+	<marker line="-1" type="param">
+		<operand  start="1522" length="11" line="15">
+			<expr><![CDATA[idleTimeout]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1565" length="5" line="15">
+			<expr><![CDATA[tunit]]></expr>
+		</operand>
+	</marker>
+	<type  start="1535" length="29" line="15" chordsig="java.util.concurrent.TimeUnit"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1584" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1580" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1601" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1584" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="closeExpiredConnections:()V@org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager"
+ sig="void closeExpiredConnections()"
+ line="16"
+ startpos="1626"
+ endpos="1649"
+>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1664" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1660" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1681" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1664" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1703" length="42" line="17" chordsig="org.apache.http.conn.scheme.SchemeRegistry"/>
+	<type  start="1778" length="48" line="18" chordsig="org.apache.http.impl.conn.tsccm.AbstractConnPool"/>
+	<type  start="1853" length="45" line="19" chordsig="org.apache.http.conn.ClientConnectionOperator"/>
+</class>
+</root>

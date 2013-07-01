@@ -1,0 +1,89 @@
+<root>
+<class chordsig="edu.stanford.stamp.harness.ApplicationDriver" line="9">
+	<type  start="214" length="4" line="11" chordsig="java.util.List"/>
+	<type  start="219" length="8" line="11" chordsig="edu.stanford.stamp.harness.Callback"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:()V@java.util.ArrayList" start="245" length="9" type="invoke">
+			<expr><![CDATA[new ArrayList()]]></expr>
+		<param  start="241" length="15" line="11">
+			<expr><![CDATA[new ArrayList()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="245" length="9" line="11" chordsig="java.util.ArrayList"/>
+	<type  start="278" length="17" line="13" chordsig="edu.stanford.stamp.harness.ApplicationDriver"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:()V@edu.stanford.stamp.harness.ApplicationDriver" start="311" length="17" type="invoke">
+			<expr><![CDATA[new ApplicationDriver()]]></expr>
+		<param  start="307" length="23" line="13">
+			<expr><![CDATA[new ApplicationDriver()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="311" length="17" line="13" chordsig="edu.stanford.stamp.harness.ApplicationDriver"/>
+<method
+ chordsig="&lt;init&gt;:()V@edu.stanford.stamp.harness.ApplicationDriver"
+ sig="ApplicationDriver()"
+ line="15"
+ startpos="345"
+ endpos="362"
+>
+</method>
+<method
+ chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver"
+ sig="ApplicationDriver getInstance()"
+ line="18"
+ startpos="410"
+ endpos="421"
+>
+	<type  start="392" length="17" line="18" chordsig="edu.stanford.stamp.harness.ApplicationDriver"/>
+	<marker line="19" type="return">
+		<operand  start="441" length="8" line="19">
+			<expr><![CDATA[instance]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver"
+ sig="void registerCallback(Callback)"
+ line="22"
+ startpos="481"
+ endpos="497"
+>
+	<marker line="-1" type="param">
+		<operand  start="507" length="2" line="22">
+			<expr><![CDATA[cb]]></expr>
+		</operand>
+	</marker>
+	<type  start="498" length="8" line="22" chordsig="edu.stanford.stamp.harness.Callback"/>
+	<invkexpr line="23" chordsig="add:(Ljava/lang/Object;)Z@java.util.List" start="531" length="3" type="invoke">
+			<expr><![CDATA[callbacks.add(cb)]]></expr>
+		<param  start="521" length="9" line="23">
+			<expr><![CDATA[callbacks]]></expr>
+		</param>
+		<param  start="535" length="2" line="23">
+			<expr><![CDATA[cb]]></expr>
+		</param>
+	</invkexpr>
+</method>
+<method
+ chordsig="callCallbacks:()V@edu.stanford.stamp.harness.ApplicationDriver"
+ sig="void callCallbacks()"
+ line="26"
+ startpos="570"
+ endpos="583"
+>
+	<invkexpr line="27" chordsig="run:()V@java.lang.Runnable" start="613" length="3" type="invoke">
+			<expr><![CDATA[callbacks.get(0).run()]]></expr>
+		<param  start="596" length="16" line="27">
+			<expr><![CDATA[callbacks.get(0)]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="27" chordsig="get:(I)Ljava/lang/Object;@java.util.List" start="606" length="3" type="invoke">
+			<expr><![CDATA[callbacks.get(0)]]></expr>
+		<param  start="596" length="9" line="27">
+			<expr><![CDATA[callbacks]]></expr>
+		</param>
+		<param  start="610" length="1" line="27">
+			<expr><![CDATA[0]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+</root>

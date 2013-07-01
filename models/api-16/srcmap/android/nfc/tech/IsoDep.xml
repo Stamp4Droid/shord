@@ -1,0 +1,184 @@
+<root>
+<class chordsig="android.nfc.tech.IsoDep" line="2">
+	<type  start="62" length="35" line="3" chordsig="android.nfc.tech.BasicTagTechnology"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.nfc.tech.IsoDep"
+ sig="IsoDep()"
+ line="5"
+ startpos="100"
+ endpos="106"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="121" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="117" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="138" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="121" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="get:(Landroid/nfc/Tag;)Landroid/nfc/tech/IsoDep;@android.nfc.tech.IsoDep"
+ sig="IsoDep get(Tag)"
+ line="6"
+ startpos="189"
+ endpos="192"
+>
+	<marker line="-1" type="param">
+		<operand  start="209" length="3" line="6">
+			<expr><![CDATA[tag]]></expr>
+		</operand>
+	</marker>
+	<type  start="165" length="23" line="6" chordsig="android.nfc.tech.IsoDep"/>
+	<type  start="193" length="15" line="6" chordsig="android.nfc.Tag"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="226" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="222" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="243" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="226" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTimeout:(I)V@android.nfc.tech.IsoDep"
+ sig="void setTimeout(int)"
+ line="7"
+ startpos="268"
+ endpos="278"
+>
+	<marker line="-1" type="param">
+		<operand  start="283" length="7" line="7">
+			<expr><![CDATA[timeout]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="304" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="300" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="321" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="304" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTimeout:()I@android.nfc.tech.IsoDep"
+ sig="int getTimeout()"
+ line="8"
+ startpos="345"
+ endpos="355"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="370" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="366" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="387" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="370" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getHistoricalBytes:()[B@android.nfc.tech.IsoDep"
+ sig="byte[] getHistoricalBytes()"
+ line="9"
+ startpos="414"
+ endpos="432"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="447" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="443" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="464" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="447" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getHiLayerResponse:()[B@android.nfc.tech.IsoDep"
+ sig="byte[] getHiLayerResponse()"
+ line="10"
+ startpos="491"
+ endpos="509"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="524" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="520" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="541" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="524" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="transceive:([B)[B@android.nfc.tech.IsoDep"
+ sig="byte[] transceive(byte[])"
+ line="11"
+ startpos="568"
+ endpos="578"
+>
+	<marker line="-1" type="param">
+		<operand  start="586" length="4" line="11">
+			<expr><![CDATA[data]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="631" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="627" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="648" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="631" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMaxTransceiveLength:()I@android.nfc.tech.IsoDep"
+ sig="int getMaxTransceiveLength()"
+ line="12"
+ startpos="672"
+ endpos="694"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="709" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="705" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="726" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="709" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isExtendedLengthApduSupported:()Z@android.nfc.tech.IsoDep"
+ sig="boolean isExtendedLengthApduSupported()"
+ line="13"
+ startpos="754"
+ endpos="783"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="798" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="794" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="815" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="798" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

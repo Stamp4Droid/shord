@@ -1,0 +1,139 @@
+<root>
+<class chordsig="org.xmlpull.v1.XmlPullParserException" line="2">
+	<type  start="70" length="19" line="3" chordsig="java.lang.Exception"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@org.xmlpull.v1.XmlPullParserException"
+ sig="XmlPullParserException(String)"
+ line="5"
+ startpos="100"
+ endpos="122"
+>
+	<marker line="-1" type="param">
+		<operand  start="140" length="1" line="5">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<type  start="123" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="155" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="151" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="172" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="155" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Lorg/xmlpull/v1/XmlPullParser;Ljava/lang/Throwable;)V@org.xmlpull.v1.XmlPullParserException"
+ sig="XmlPullParserException(String,XmlPullParser,Throwable)"
+ line="6"
+ startpos="192"
+ endpos="214"
+>
+	<marker line="-1" type="param">
+		<operand  start="232" length="3" line="6">
+			<expr><![CDATA[msg]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="266" length="6" line="6">
+			<expr><![CDATA[parser]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="294" length="5" line="6">
+			<expr><![CDATA[chain]]></expr>
+		</operand>
+	</marker>
+	<type  start="215" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="237" length="28" line="6" chordsig="org.xmlpull.v1.XmlPullParser"/>
+	<type  start="274" length="19" line="6" chordsig="java.lang.Throwable"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="313" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="309" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="330" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="313" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDetail:()Ljava/lang/Throwable;@org.xmlpull.v1.XmlPullParserException"
+ sig="Throwable getDetail()"
+ line="7"
+ startpos="370"
+ endpos="379"
+>
+	<type  start="350" length="19" line="7" chordsig="java.lang.Throwable"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="394" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="390" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="411" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="394" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLineNumber:()I@org.xmlpull.v1.XmlPullParserException"
+ sig="int getLineNumber()"
+ line="8"
+ startpos="435"
+ endpos="448"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="463" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="459" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="480" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="463" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getColumnNumber:()I@org.xmlpull.v1.XmlPullParserException"
+ sig="int getColumnNumber()"
+ line="9"
+ startpos="504"
+ endpos="519"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="534" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="530" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="551" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="534" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="printStackTrace:()V@org.xmlpull.v1.XmlPullParserException"
+ sig="void printStackTrace()"
+ line="10"
+ startpos="576"
+ endpos="591"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="606" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="602" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="623" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="606" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="645" length="19" line="11" chordsig="java.lang.Throwable"/>
+</class>
+</root>

@@ -1,0 +1,212 @@
+<root>
+<class chordsig="java.util.StringTokenizer" line="2">
+	<type  start="61" length="21" line="3" chordsig="java.util.Enumeration"/>
+	<type  start="83" length="16" line="3" chordsig="java.lang.Object"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.util.StringTokenizer"
+ sig="StringTokenizer(String)"
+ line="5"
+ startpos="111"
+ endpos="126"
+>
+	<marker line="-1" type="param">
+		<operand  start="144" length="6" line="5">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<type  start="127" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="164" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="160" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="181" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="164" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;)V@java.util.StringTokenizer"
+ sig="StringTokenizer(String,String)"
+ line="6"
+ startpos="201"
+ endpos="216"
+>
+	<marker line="-1" type="param">
+		<operand  start="234" length="6" line="6">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="259" length="10" line="6">
+			<expr><![CDATA[delimiters]]></expr>
+		</operand>
+	</marker>
+	<type  start="217" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="242" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="283" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="279" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="300" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="283" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;Z)V@java.util.StringTokenizer"
+ sig="StringTokenizer(String,String,boolean)"
+ line="7"
+ startpos="320"
+ endpos="335"
+>
+	<marker line="-1" type="param">
+		<operand  start="353" length="6" line="7">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="378" length="10" line="7">
+			<expr><![CDATA[delimiters]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="398" length="16" line="7">
+			<expr><![CDATA[returnDelimiters]]></expr>
+		</operand>
+	</marker>
+	<type  start="336" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="361" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="428" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="424" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="445" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="428" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="countTokens:()I@java.util.StringTokenizer"
+ sig="int countTokens()"
+ line="8"
+ startpos="469"
+ endpos="480"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="495" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="491" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="512" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="495" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hasMoreElements:()Z@java.util.StringTokenizer"
+ sig="boolean hasMoreElements()"
+ line="9"
+ startpos="540"
+ endpos="555"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="570" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="566" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="587" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="570" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hasMoreTokens:()Z@java.util.StringTokenizer"
+ sig="boolean hasMoreTokens()"
+ line="10"
+ startpos="615"
+ endpos="628"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="643" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="639" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="660" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="643" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="nextElement:()Ljava/lang/Object;@java.util.StringTokenizer"
+ sig="Object nextElement()"
+ line="11"
+ startpos="697"
+ endpos="708"
+>
+	<type  start="680" length="16" line="11" chordsig="java.lang.Object"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="723" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="719" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="740" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="723" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="nextToken:()Ljava/lang/String;@java.util.StringTokenizer"
+ sig="String nextToken()"
+ line="12"
+ startpos="777"
+ endpos="786"
+>
+	<type  start="760" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="801" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="797" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="818" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="801" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="nextToken:(Ljava/lang/String;)Ljava/lang/String;@java.util.StringTokenizer"
+ sig="String nextToken(String)"
+ line="13"
+ startpos="855"
+ endpos="864"
+>
+	<marker line="-1" type="param">
+		<operand  start="882" length="6" line="13">
+			<expr><![CDATA[delims]]></expr>
+		</operand>
+	</marker>
+	<type  start="838" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="865" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="902" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="898" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="919" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="902" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

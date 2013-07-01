@@ -1,0 +1,825 @@
+<root>
+<class chordsig="java.lang.Integer" line="6">
+	<type  start="143" length="16" line="6" chordsig="java.lang.Number"/>
+	<type  start="171" length="20" line="6" chordsig="java.lang.Comparable"/>
+	<type  start="192" length="17" line="6" chordsig="java.lang.Integer"/>
+	<type  start="385" length="15" line="14" chordsig="java.lang.Class"/>
+	<type  start="401" length="17" line="14" chordsig="java.lang.Integer"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@java.lang.Integer"
+ line="16"
+>
+</method>
+<method
+ chordsig="&lt;init&gt;:(I)V@java.lang.Integer"
+ sig="Integer(int)"
+ line="21"
+ startpos="538"
+ endpos="545"
+>
+	<marker line="-1" type="param">
+		<operand  start="550" length="5" line="21">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.Integer"
+ sig="Integer(String)"
+ line="25"
+ startpos="637"
+ endpos="644"
+>
+	<marker line="-1" type="param">
+		<operand  start="662" length="6" line="25">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<type  start="645" length="16" line="25" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="byteValue:()B@java.lang.Integer"
+ sig="byte byteValue()"
+ line="29"
+ startpos="795"
+ endpos="804"
+>
+	<marker line="30" type="return">
+		<operand  start="824" length="8" line="30">
+			<expr><![CDATA[(byte)0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="compareTo:(Ljava/lang/Integer;)I@java.lang.Integer"
+ sig="int compareTo(Integer)"
+ line="33"
+ startpos="856"
+ endpos="865"
+>
+	<alias>(Ljava/lang/Object;)I</alias>
+	<marker line="-1" type="param">
+		<operand  start="884" length="6" line="33">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="866" length="17" line="33" chordsig="java.lang.Integer"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="912" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="908" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="929" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="912" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="decode:(Ljava/lang/String;)Ljava/lang/Integer;@java.lang.Integer"
+ sig="Integer decode(String)"
+ line="38"
+ startpos="1045"
+ endpos="1051"
+>
+	<marker line="-1" type="param">
+		<operand  start="1069" length="6" line="38">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<type  start="1027" length="17" line="38" chordsig="java.lang.Integer"/>
+	<type  start="1052" length="16" line="38" chordsig="java.lang.String"/>
+	<marker line="39" type="return">
+		<operand  start="1133" length="14" line="39">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="39" chordsig="&lt;init&gt;:(I)V@java.lang.Integer" start="1137" length="7" type="invoke">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		<param  start="1133" length="14" line="39">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		</param>
+		<param  start="1145" length="1" line="39">
+			<expr><![CDATA[0]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1137" length="7" line="39" chordsig="java.lang.Integer"/>
+</method>
+<method
+ chordsig="doubleValue:()D@java.lang.Integer"
+ sig="double doubleValue()"
+ line="43"
+ startpos="1235"
+ endpos="1246"
+>
+	<marker line="44" type="return">
+		<operand  start="1266" length="3" line="44">
+			<expr><![CDATA[0.0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@java.lang.Integer"
+ sig="boolean equals(Object)"
+ line="47"
+ startpos="1297"
+ endpos="1303"
+>
+	<marker line="-1" type="param">
+		<operand  start="1321" length="1" line="47">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="1304" length="16" line="47" chordsig="java.lang.Object"/>
+	<newexpr line="48" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1344" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1340" length="29" line="48">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1361" length="7" line="48">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1344" length="16" line="48" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="floatValue:()F@java.lang.Integer"
+ sig="float floatValue()"
+ line="52"
+ startpos="1456"
+ endpos="1466"
+>
+	<marker line="53" type="return">
+		<operand  start="1486" length="4" line="53">
+			<expr><![CDATA[0.0f]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getInteger:(Ljava/lang/String;)Ljava/lang/Integer;@java.lang.Integer"
+ sig="Integer getInteger(String)"
+ line="57"
+ startpos="1598"
+ endpos="1608"
+>
+	<marker line="-1" type="param">
+		<operand  start="1626" length="6" line="57">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<type  start="1580" length="17" line="57" chordsig="java.lang.Integer"/>
+	<type  start="1609" length="16" line="57" chordsig="java.lang.String"/>
+	<marker line="58" type="return">
+		<operand  start="1651" length="14" line="58">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="58" chordsig="&lt;init&gt;:(I)V@java.lang.Integer" start="1655" length="7" type="invoke">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		<param  start="1651" length="14" line="58">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		</param>
+		<param  start="1663" length="1" line="58">
+			<expr><![CDATA[0]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1655" length="7" line="58" chordsig="java.lang.Integer"/>
+</method>
+<method
+ chordsig="getInteger:(Ljava/lang/String;I)Ljava/lang/Integer;@java.lang.Integer"
+ sig="Integer getInteger(String,int)"
+ line="62"
+ startpos="1773"
+ endpos="1783"
+>
+	<marker line="-1" type="param">
+		<operand  start="1801" length="6" line="62">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1813" length="12" line="62">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="1755" length="17" line="62" chordsig="java.lang.Integer"/>
+	<type  start="1784" length="16" line="62" chordsig="java.lang.String"/>
+	<marker line="63" type="return">
+		<operand  start="1844" length="14" line="63">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="63" chordsig="&lt;init&gt;:(I)V@java.lang.Integer" start="1848" length="7" type="invoke">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		<param  start="1844" length="14" line="63">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		</param>
+		<param  start="1856" length="1" line="63">
+			<expr><![CDATA[0]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1848" length="7" line="63" chordsig="java.lang.Integer"/>
+</method>
+<method
+ chordsig="getInteger:(Ljava/lang/String;Ljava/lang/Integer;)Ljava/lang/Integer;@java.lang.Integer"
+ sig="Integer getInteger(String,Integer)"
+ line="67"
+ startpos="1966"
+ endpos="1976"
+>
+	<marker line="-1" type="param">
+		<operand  start="1994" length="6" line="67">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2020" length="12" line="67">
+			<expr><![CDATA[defaultValue]]></expr>
+		</operand>
+	</marker>
+	<type  start="1948" length="17" line="67" chordsig="java.lang.Integer"/>
+	<type  start="1977" length="16" line="67" chordsig="java.lang.String"/>
+	<type  start="2002" length="17" line="67" chordsig="java.lang.Integer"/>
+	<marker line="68" type="return">
+		<operand  start="2051" length="14" line="68">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="68" chordsig="&lt;init&gt;:(I)V@java.lang.Integer" start="2055" length="7" type="invoke">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		<param  start="2051" length="14" line="68">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		</param>
+		<param  start="2063" length="1" line="68">
+			<expr><![CDATA[0]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2055" length="7" line="68" chordsig="java.lang.Integer"/>
+</method>
+<method
+ chordsig="hashCode:()I@java.lang.Integer"
+ sig="int hashCode()"
+ line="72"
+ startpos="2150"
+ endpos="2158"
+>
+	<marker line="73" type="return">
+		<operand  start="2178" length="1" line="73">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="intValue:()I@java.lang.Integer"
+ sig="int intValue()"
+ line="77"
+ startpos="2264"
+ endpos="2272"
+>
+	<marker line="78" type="return">
+		<operand  start="2292" length="1" line="78">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="longValue:()J@java.lang.Integer"
+ sig="long longValue()"
+ line="82"
+ startpos="2379"
+ endpos="2388"
+>
+	<marker line="83" type="return">
+		<operand  start="2408" length="1" line="83">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="parseInt:(Ljava/lang/String;)I@java.lang.Integer"
+ sig="int parseInt(String)"
+ line="87"
+ startpos="2503"
+ endpos="2511"
+>
+	<marker line="-1" type="param">
+		<operand  start="2529" length="6" line="87">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<type  start="2512" length="16" line="87" chordsig="java.lang.String"/>
+	<marker line="88" type="return">
+		<operand  start="2593" length="1" line="88">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="parseInt:(Ljava/lang/String;I)I@java.lang.Integer"
+ sig="int parseInt(String,int)"
+ line="92"
+ startpos="2688"
+ endpos="2696"
+>
+	<marker line="-1" type="param">
+		<operand  start="2714" length="6" line="92">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2726" length="5" line="92">
+			<expr><![CDATA[radix]]></expr>
+		</operand>
+	</marker>
+	<type  start="2697" length="16" line="92" chordsig="java.lang.String"/>
+	<marker line="93" type="return">
+		<operand  start="2789" length="1" line="93">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="shortValue:()S@java.lang.Integer"
+ sig="short shortValue()"
+ line="97"
+ startpos="2877"
+ endpos="2887"
+>
+	<marker line="98" type="return">
+		<operand  start="2907" length="1" line="98">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="toBinaryString:(I)Ljava/lang/String;@java.lang.Integer"
+ sig="String toBinaryString(int)"
+ line="102"
+ startpos="3010"
+ endpos="3024"
+>
+	<marker line="-1" type="param">
+		<operand  start="3029" length="1" line="102">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<type  start="2993" length="16" line="102" chordsig="java.lang.String"/>
+	<marker line="103" type="return">
+		<operand  start="3049" length="12" line="103">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="103" chordsig="&lt;init&gt;:()V@java.lang.String" start="3053" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="3049" length="12" line="103">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3053" length="6" line="103" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="toHexString:(I)Ljava/lang/String;@java.lang.Integer"
+ sig="String toHexString(int)"
+ line="107"
+ startpos="3163"
+ endpos="3174"
+>
+	<marker line="-1" type="param">
+		<operand  start="3179" length="1" line="107">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<type  start="3146" length="16" line="107" chordsig="java.lang.String"/>
+	<marker line="108" type="return">
+		<operand  start="3199" length="12" line="108">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="108" chordsig="&lt;init&gt;:()V@java.lang.String" start="3203" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="3199" length="12" line="108">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3203" length="6" line="108" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="toOctalString:(I)Ljava/lang/String;@java.lang.Integer"
+ sig="String toOctalString(int)"
+ line="112"
+ startpos="3313"
+ endpos="3326"
+>
+	<marker line="-1" type="param">
+		<operand  start="3331" length="1" line="112">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<type  start="3296" length="16" line="112" chordsig="java.lang.String"/>
+	<marker line="113" type="return">
+		<operand  start="3351" length="12" line="113">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="113" chordsig="&lt;init&gt;:()V@java.lang.String" start="3355" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="3351" length="12" line="113">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3355" length="6" line="113" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.lang.Integer"
+ sig="String toString()"
+ line="117"
+ startpos="3461"
+ endpos="3469"
+>
+	<type  start="3444" length="16" line="117" chordsig="java.lang.String"/>
+	<marker line="118" type="return">
+		<operand  start="3489" length="12" line="118">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="118" chordsig="&lt;init&gt;:()V@java.lang.String" start="3493" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="3489" length="12" line="118">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3493" length="6" line="118" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="toString:(I)Ljava/lang/String;@java.lang.Integer"
+ sig="String toString(int)"
+ line="122"
+ startpos="3603"
+ endpos="3611"
+>
+	<marker line="-1" type="param">
+		<operand  start="3616" length="1" line="122">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<type  start="3586" length="16" line="122" chordsig="java.lang.String"/>
+	<marker line="123" type="return">
+		<operand  start="3636" length="12" line="123">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="123" chordsig="&lt;init&gt;:()V@java.lang.String" start="3640" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="3636" length="12" line="123">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3640" length="6" line="123" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="toString:(II)Ljava/lang/String;@java.lang.Integer"
+ sig="String toString(int,int)"
+ line="127"
+ startpos="3750"
+ endpos="3758"
+>
+	<marker line="-1" type="param">
+		<operand  start="3763" length="1" line="127">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3770" length="5" line="127">
+			<expr><![CDATA[radix]]></expr>
+		</operand>
+	</marker>
+	<type  start="3733" length="16" line="127" chordsig="java.lang.String"/>
+	<marker line="128" type="return">
+		<operand  start="3794" length="12" line="128">
+			<expr><![CDATA[new String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="128" chordsig="&lt;init&gt;:()V@java.lang.String" start="3798" length="6" type="invoke">
+			<expr><![CDATA[new String()]]></expr>
+		<param  start="3794" length="12" line="128">
+			<expr><![CDATA[new String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3798" length="6" line="128" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="valueOf:(Ljava/lang/String;)Ljava/lang/Integer;@java.lang.Integer"
+ sig="Integer valueOf(String)"
+ line="132"
+ startpos="3914"
+ endpos="3921"
+>
+	<marker line="-1" type="param">
+		<operand  start="3939" length="6" line="132">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<type  start="3896" length="17" line="132" chordsig="java.lang.Integer"/>
+	<type  start="3922" length="16" line="132" chordsig="java.lang.String"/>
+	<marker line="133" type="return">
+		<operand  start="4003" length="14" line="133">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="133" chordsig="&lt;init&gt;:(I)V@java.lang.Integer" start="4007" length="7" type="invoke">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		<param  start="4003" length="14" line="133">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		</param>
+		<param  start="4015" length="1" line="133">
+			<expr><![CDATA[0]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4007" length="7" line="133" chordsig="java.lang.Integer"/>
+</method>
+<method
+ chordsig="valueOf:(Ljava/lang/String;I)Ljava/lang/Integer;@java.lang.Integer"
+ sig="Integer valueOf(String,int)"
+ line="137"
+ startpos="4125"
+ endpos="4132"
+>
+	<marker line="-1" type="param">
+		<operand  start="4150" length="6" line="137">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4162" length="5" line="137">
+			<expr><![CDATA[radix]]></expr>
+		</operand>
+	</marker>
+	<type  start="4107" length="17" line="137" chordsig="java.lang.Integer"/>
+	<type  start="4133" length="16" line="137" chordsig="java.lang.String"/>
+	<marker line="138" type="return">
+		<operand  start="4225" length="14" line="138">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="138" chordsig="&lt;init&gt;:(I)V@java.lang.Integer" start="4229" length="7" type="invoke">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		<param  start="4225" length="14" line="138">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		</param>
+		<param  start="4237" length="1" line="138">
+			<expr><![CDATA[0]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4229" length="7" line="138" chordsig="java.lang.Integer"/>
+</method>
+<method
+ chordsig="highestOneBit:(I)I@java.lang.Integer"
+ sig="int highestOneBit(int)"
+ line="141"
+ startpos="4270"
+ endpos="4283"
+>
+	<marker line="-1" type="param">
+		<operand  start="4288" length="1" line="141">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="142" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4311" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4307" length="29" line="142">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4328" length="7" line="142">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4311" length="16" line="142" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="lowestOneBit:(I)I@java.lang.Integer"
+ sig="int lowestOneBit(int)"
+ line="145"
+ startpos="4367"
+ endpos="4379"
+>
+	<marker line="-1" type="param">
+		<operand  start="4384" length="1" line="145">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="146" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4407" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4403" length="29" line="146">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4424" length="7" line="146">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4407" length="16" line="146" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="numberOfLeadingZeros:(I)I@java.lang.Integer"
+ sig="int numberOfLeadingZeros(int)"
+ line="149"
+ startpos="4463"
+ endpos="4483"
+>
+	<marker line="-1" type="param">
+		<operand  start="4488" length="1" line="149">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="150" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4511" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4507" length="29" line="150">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4528" length="7" line="150">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4511" length="16" line="150" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="numberOfTrailingZeros:(I)I@java.lang.Integer"
+ sig="int numberOfTrailingZeros(int)"
+ line="153"
+ startpos="4567"
+ endpos="4588"
+>
+	<marker line="-1" type="param">
+		<operand  start="4593" length="1" line="153">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="154" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4616" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4612" length="29" line="154">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4633" length="7" line="154">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4616" length="16" line="154" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="bitCount:(I)I@java.lang.Integer"
+ sig="int bitCount(int)"
+ line="157"
+ startpos="4672"
+ endpos="4680"
+>
+	<marker line="-1" type="param">
+		<operand  start="4685" length="1" line="157">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="158" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4708" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4704" length="29" line="158">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4725" length="7" line="158">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4708" length="16" line="158" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="rotateLeft:(II)I@java.lang.Integer"
+ sig="int rotateLeft(int,int)"
+ line="162"
+ startpos="4822"
+ endpos="4832"
+>
+	<marker line="-1" type="param">
+		<operand  start="4837" length="1" line="162">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4844" length="8" line="162">
+			<expr><![CDATA[distance]]></expr>
+		</operand>
+	</marker>
+	<marker line="163" type="return">
+		<operand  start="4871" length="1" line="163">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="rotateRight:(II)I@java.lang.Integer"
+ sig="int rotateRight(int,int)"
+ line="167"
+ startpos="4961"
+ endpos="4972"
+>
+	<marker line="-1" type="param">
+		<operand  start="4977" length="1" line="167">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4984" length="8" line="167">
+			<expr><![CDATA[distance]]></expr>
+		</operand>
+	</marker>
+	<marker line="168" type="return">
+		<operand  start="5011" length="1" line="168">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="reverseBytes:(I)I@java.lang.Integer"
+ sig="int reverseBytes(int)"
+ line="172"
+ startpos="5101"
+ endpos="5113"
+>
+	<marker line="-1" type="param">
+		<operand  start="5118" length="1" line="172">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<marker line="173" type="return">
+		<operand  start="5138" length="1" line="173">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="reverse:(I)I@java.lang.Integer"
+ sig="int reverse(int)"
+ line="177"
+ startpos="5228"
+ endpos="5235"
+>
+	<marker line="-1" type="param">
+		<operand  start="5240" length="1" line="177">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<marker line="178" type="return">
+		<operand  start="5260" length="1" line="178">
+			<expr><![CDATA[0]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="signum:(I)I@java.lang.Integer"
+ sig="int signum(int)"
+ line="181"
+ startpos="5292"
+ endpos="5298"
+>
+	<marker line="-1" type="param">
+		<operand  start="5303" length="1" line="181">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="182" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5326" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5322" length="29" line="182">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5343" length="7" line="182">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5326" length="16" line="182" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="valueOf:(I)Ljava/lang/Integer;@java.lang.Integer"
+ sig="Integer valueOf(int)"
+ line="186"
+ startpos="5454"
+ endpos="5461"
+>
+	<marker line="-1" type="param">
+		<operand  start="5466" length="1" line="186">
+			<expr><![CDATA[i]]></expr>
+		</operand>
+	</marker>
+	<type  start="5436" length="17" line="186" chordsig="java.lang.Integer"/>
+	<marker line="187" type="return">
+		<operand  start="5486" length="14" line="187">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="187" chordsig="&lt;init&gt;:(I)V@java.lang.Integer" start="5490" length="7" type="invoke">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		<param  start="5486" length="14" line="187">
+			<expr><![CDATA[new Integer(0)]]></expr>
+		</param>
+		<param  start="5498" length="1" line="187">
+			<expr><![CDATA[0]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5490" length="7" line="187" chordsig="java.lang.Integer"/>
+</method>
+</class>
+</root>

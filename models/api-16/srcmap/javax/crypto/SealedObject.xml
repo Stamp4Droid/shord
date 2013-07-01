@@ -1,0 +1,159 @@
+<root>
+<class chordsig="javax.crypto.SealedObject" line="2">
+	<type  start="61" length="20" line="3" chordsig="java.io.Serializable"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/io/Serializable;Ljavax/crypto/Cipher;)V@javax.crypto.SealedObject"
+ sig="SealedObject(Serializable,Cipher)"
+ line="5"
+ startpos="92"
+ endpos="104"
+>
+	<marker line="-1" type="param">
+		<operand  start="126" length="6" line="5">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="154" length="1" line="5">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<type  start="105" length="20" line="5" chordsig="java.io.Serializable"/>
+	<type  start="134" length="19" line="5" chordsig="javax.crypto.Cipher"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="236" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="232" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="253" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="236" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljavax/crypto/SealedObject;)V@javax.crypto.SealedObject"
+ sig="SealedObject(SealedObject)"
+ line="6"
+ startpos="276"
+ endpos="288"
+>
+	<marker line="-1" type="param">
+		<operand  start="315" length="2" line="6">
+			<expr><![CDATA[so]]></expr>
+		</operand>
+	</marker>
+	<type  start="289" length="25" line="6" chordsig="javax.crypto.SealedObject"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="331" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="327" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="348" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="331" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAlgorithm:()Ljava/lang/String;@javax.crypto.SealedObject"
+ sig="String getAlgorithm()"
+ line="7"
+ startpos="391"
+ endpos="403"
+>
+	<type  start="374" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="418" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="414" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="435" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="418" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getObject:(Ljava/security/Key;)Ljava/lang/Object;@javax.crypto.SealedObject"
+ sig="Object getObject(Key)"
+ line="8"
+ startpos="478"
+ endpos="487"
+>
+	<marker line="-1" type="param">
+		<operand  start="506" length="3" line="8">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<type  start="461" length="16" line="8" chordsig="java.lang.Object"/>
+	<type  start="488" length="17" line="8" chordsig="java.security.Key"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="659" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="655" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="676" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="659" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getObject:(Ljavax/crypto/Cipher;)Ljava/lang/Object;@javax.crypto.SealedObject"
+ sig="Object getObject(Cipher)"
+ line="9"
+ startpos="719"
+ endpos="728"
+>
+	<marker line="-1" type="param">
+		<operand  start="749" length="1" line="9">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<type  start="702" length="16" line="9" chordsig="java.lang.Object"/>
+	<type  start="729" length="19" line="9" chordsig="javax.crypto.Cipher"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="899" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="895" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="916" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="899" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getObject:(Ljava/security/Key;Ljava/lang/String;)Ljava/lang/Object;@javax.crypto.SealedObject"
+ sig="Object getObject(Key,String)"
+ line="10"
+ startpos="959"
+ endpos="968"
+>
+	<marker line="-1" type="param">
+		<operand  start="987" length="3" line="10">
+			<expr><![CDATA[key]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1009" length="8" line="10">
+			<expr><![CDATA[provider]]></expr>
+		</operand>
+	</marker>
+	<type  start="942" length="16" line="10" chordsig="java.lang.Object"/>
+	<type  start="969" length="17" line="10" chordsig="java.security.Key"/>
+	<type  start="992" length="16" line="10" chordsig="java.lang.String"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1206" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1202" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1223" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1206" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

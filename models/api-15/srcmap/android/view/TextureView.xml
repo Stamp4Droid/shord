@@ -1,0 +1,705 @@
+<root>
+<class chordsig="android.view.TextureView" line="2">
+	<type  start="57" length="17" line="3" chordsig="android.view.View"/>
+<class chordsig="android.view.TextureView$SurfaceTextureListener" line="5">
+<method
+ chordsig="onSurfaceTextureAvailable:(Landroid/graphics/SurfaceTexture;II)V@android.view.TextureView$SurfaceTextureListener"
+ sig="void onSurfaceTextureAvailable(SurfaceTexture,int,int)"
+ line="7"
+ startpos="148"
+ endpos="173"
+>
+	<marker line="-1" type="param">
+		<operand  start="206" length="7" line="7">
+			<expr><![CDATA[surface]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="219" length="5" line="7">
+			<expr><![CDATA[width]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="230" length="6" line="7">
+			<expr><![CDATA[height]]></expr>
+		</operand>
+	</marker>
+	<type  start="174" length="31" line="7" chordsig="android.graphics.SurfaceTexture"/>
+</method>
+<method
+ chordsig="onSurfaceTextureSizeChanged:(Landroid/graphics/SurfaceTexture;II)V@android.view.TextureView$SurfaceTextureListener"
+ sig="void onSurfaceTextureSizeChanged(SurfaceTexture,int,int)"
+ line="8"
+ startpos="261"
+ endpos="288"
+>
+	<marker line="-1" type="param">
+		<operand  start="321" length="7" line="8">
+			<expr><![CDATA[surface]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="334" length="5" line="8">
+			<expr><![CDATA[width]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="345" length="6" line="8">
+			<expr><![CDATA[height]]></expr>
+		</operand>
+	</marker>
+	<type  start="289" length="31" line="8" chordsig="android.graphics.SurfaceTexture"/>
+</method>
+<method
+ chordsig="onSurfaceTextureDestroyed:(Landroid/graphics/SurfaceTexture;)Z@android.view.TextureView$SurfaceTextureListener"
+ sig="boolean onSurfaceTextureDestroyed(SurfaceTexture)"
+ line="9"
+ startpos="379"
+ endpos="404"
+>
+	<marker line="-1" type="param">
+		<operand  start="437" length="7" line="9">
+			<expr><![CDATA[surface]]></expr>
+		</operand>
+	</marker>
+	<type  start="405" length="31" line="9" chordsig="android.graphics.SurfaceTexture"/>
+</method>
+<method
+ chordsig="onSurfaceTextureUpdated:(Landroid/graphics/SurfaceTexture;)V@android.view.TextureView$SurfaceTextureListener"
+ sig="void onSurfaceTextureUpdated(SurfaceTexture)"
+ line="10"
+ startpos="469"
+ endpos="492"
+>
+	<marker line="-1" type="param">
+		<operand  start="525" length="7" line="10">
+			<expr><![CDATA[surface]]></expr>
+		</operand>
+	</marker>
+	<type  start="493" length="31" line="10" chordsig="android.graphics.SurfaceTexture"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.view.TextureView"
+ sig="TextureView(Context)"
+ line="12"
+ startpos="545"
+ endpos="556"
+>
+	<marker line="-1" type="param">
+		<operand  start="581" length="7" line="12">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="557" length="23" line="12" chordsig="android.content.Context"/>
+	<type  start="599" length="23" line="12" chordsig="android.content.Context"/>
+	<type  start="629" length="25" line="12" chordsig="android.util.AttributeSet"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="674" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="670" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="691" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="674" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.view.TextureView"
+ sig="TextureView(Context,AttributeSet)"
+ line="13"
+ startpos="711"
+ endpos="722"
+>
+	<marker line="-1" type="param">
+		<operand  start="747" length="7" line="13">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="782" length="5" line="13">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="723" length="23" line="13" chordsig="android.content.Context"/>
+	<type  start="756" length="25" line="13" chordsig="android.util.AttributeSet"/>
+	<type  start="798" length="23" line="13" chordsig="android.content.Context"/>
+	<type  start="828" length="25" line="13" chordsig="android.util.AttributeSet"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="873" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="869" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="890" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="873" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;I)V@android.view.TextureView"
+ sig="TextureView(Context,AttributeSet,int)"
+ line="14"
+ startpos="910"
+ endpos="921"
+>
+	<marker line="-1" type="param">
+		<operand  start="946" length="7" line="14">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="981" length="5" line="14">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="992" length="8" line="14">
+			<expr><![CDATA[defStyle]]></expr>
+		</operand>
+	</marker>
+	<type  start="922" length="23" line="14" chordsig="android.content.Context"/>
+	<type  start="955" length="25" line="14" chordsig="android.util.AttributeSet"/>
+	<type  start="1011" length="23" line="14" chordsig="android.content.Context"/>
+	<type  start="1041" length="25" line="14" chordsig="android.util.AttributeSet"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1086" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1082" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1103" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1086" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isOpaque:()Z@android.view.TextureView"
+ sig="boolean isOpaque()"
+ line="15"
+ startpos="1131"
+ endpos="1139"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1154" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1150" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1171" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1154" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOpaque:(Z)V@android.view.TextureView"
+ sig="void setOpaque(boolean)"
+ line="16"
+ startpos="1196"
+ endpos="1205"
+>
+	<marker line="-1" type="param">
+		<operand  start="1214" length="6" line="16">
+			<expr><![CDATA[opaque]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1234" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1230" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1251" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1234" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onAttachedToWindow:()V@android.view.TextureView"
+ sig="void onAttachedToWindow()"
+ line="17"
+ startpos="1279"
+ endpos="1297"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1312" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1308" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1329" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1312" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onDetachedFromWindow:()V@android.view.TextureView"
+ sig="void onDetachedFromWindow()"
+ line="18"
+ startpos="1357"
+ endpos="1377"
+>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1392" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1388" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1409" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1392" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setLayerType:(ILandroid/graphics/Paint;)V@android.view.TextureView"
+ sig="void setLayerType(int,Paint)"
+ line="19"
+ startpos="1434"
+ endpos="1446"
+>
+	<marker line="-1" type="param">
+		<operand  start="1451" length="9" line="19">
+			<expr><![CDATA[layerType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1485" length="5" line="19">
+			<expr><![CDATA[paint]]></expr>
+		</operand>
+	</marker>
+	<type  start="1462" length="22" line="19" chordsig="android.graphics.Paint"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1504" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1500" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1521" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1504" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLayerType:()I@android.view.TextureView"
+ sig="int getLayerType()"
+ line="20"
+ startpos="1545"
+ endpos="1557"
+>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1572" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1568" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1589" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1572" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="buildLayer:()V@android.view.TextureView"
+ sig="void buildLayer()"
+ line="21"
+ startpos="1614"
+ endpos="1624"
+>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1639" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1635" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1656" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1639" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="draw:(Landroid/graphics/Canvas;)V@android.view.TextureView"
+ sig="void draw(Canvas)"
+ line="22"
+ startpos="1687"
+ endpos="1691"
+>
+	<marker line="-1" type="param">
+		<operand  start="1716" length="6" line="22">
+			<expr><![CDATA[canvas]]></expr>
+		</operand>
+	</marker>
+	<type  start="1692" length="23" line="22" chordsig="android.graphics.Canvas"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1736" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1732" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1753" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1736" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onDraw:(Landroid/graphics/Canvas;)V@android.view.TextureView"
+ sig="void onDraw(Canvas)"
+ line="23"
+ startpos="1787"
+ endpos="1793"
+>
+	<marker line="-1" type="param">
+		<operand  start="1818" length="6" line="23">
+			<expr><![CDATA[canvas]]></expr>
+		</operand>
+	</marker>
+	<type  start="1794" length="23" line="23" chordsig="android.graphics.Canvas"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1838" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1834" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1855" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1838" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onSizeChanged:(IIII)V@android.view.TextureView"
+ sig="void onSizeChanged(int,int,int,int)"
+ line="24"
+ startpos="1883"
+ endpos="1896"
+>
+	<marker line="-1" type="param">
+		<operand  start="1901" length="1" line="24">
+			<expr><![CDATA[w]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1908" length="1" line="24">
+			<expr><![CDATA[h]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1915" length="4" line="24">
+			<expr><![CDATA[oldw]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1925" length="4" line="24">
+			<expr><![CDATA[oldh]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1943" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1939" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1960" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1943" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onVisibilityChanged:(Landroid/view/View;I)V@android.view.TextureView"
+ sig="void onVisibilityChanged(View,int)"
+ line="25"
+ startpos="1988"
+ endpos="2007"
+>
+	<marker line="-1" type="param">
+		<operand  start="2026" length="11" line="25">
+			<expr><![CDATA[changedView]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2043" length="10" line="25">
+			<expr><![CDATA[visibility]]></expr>
+		</operand>
+	</marker>
+	<type  start="2008" length="17" line="25" chordsig="android.view.View"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2067" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2063" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2084" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2067" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setTransform:(Landroid/graphics/Matrix;)V@android.view.TextureView"
+ sig="void setTransform(Matrix)"
+ line="26"
+ startpos="2109"
+ endpos="2121"
+>
+	<marker line="-1" type="param">
+		<operand  start="2146" length="9" line="26">
+			<expr><![CDATA[transform]]></expr>
+		</operand>
+	</marker>
+	<type  start="2122" length="23" line="26" chordsig="android.graphics.Matrix"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2169" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2165" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2186" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2169" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTransform:(Landroid/graphics/Matrix;)Landroid/graphics/Matrix;@android.view.TextureView"
+ sig="Matrix getTransform(Matrix)"
+ line="27"
+ startpos="2230"
+ endpos="2242"
+>
+	<marker line="-1" type="param">
+		<operand  start="2267" length="9" line="27">
+			<expr><![CDATA[transform]]></expr>
+		</operand>
+	</marker>
+	<type  start="2206" length="23" line="27" chordsig="android.graphics.Matrix"/>
+	<type  start="2243" length="23" line="27" chordsig="android.graphics.Matrix"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2290" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2286" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2307" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2290" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getBitmap:()Landroid/graphics/Bitmap;@android.view.TextureView"
+ sig="Bitmap getBitmap()"
+ line="28"
+ startpos="2351"
+ endpos="2360"
+>
+	<type  start="2327" length="23" line="28" chordsig="android.graphics.Bitmap"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2375" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2371" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2392" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2375" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getBitmap:(II)Landroid/graphics/Bitmap;@android.view.TextureView"
+ sig="Bitmap getBitmap(int,int)"
+ line="29"
+ startpos="2436"
+ endpos="2445"
+>
+	<marker line="-1" type="param">
+		<operand  start="2450" length="5" line="29">
+			<expr><![CDATA[width]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2461" length="6" line="29">
+			<expr><![CDATA[height]]></expr>
+		</operand>
+	</marker>
+	<type  start="2412" length="23" line="29" chordsig="android.graphics.Bitmap"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2481" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2477" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2498" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2481" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getBitmap:(Landroid/graphics/Bitmap;)Landroid/graphics/Bitmap;@android.view.TextureView"
+ sig="Bitmap getBitmap(Bitmap)"
+ line="30"
+ startpos="2542"
+ endpos="2551"
+>
+	<marker line="-1" type="param">
+		<operand  start="2576" length="6" line="30">
+			<expr><![CDATA[bitmap]]></expr>
+		</operand>
+	</marker>
+	<type  start="2518" length="23" line="30" chordsig="android.graphics.Bitmap"/>
+	<type  start="2552" length="23" line="30" chordsig="android.graphics.Bitmap"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2596" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2592" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2613" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2596" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isAvailable:()Z@android.view.TextureView"
+ sig="boolean isAvailable()"
+ line="31"
+ startpos="2641"
+ endpos="2652"
+>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2667" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2663" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2684" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2667" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="lockCanvas:()Landroid/graphics/Canvas;@android.view.TextureView"
+ sig="Canvas lockCanvas()"
+ line="32"
+ startpos="2728"
+ endpos="2738"
+>
+	<type  start="2704" length="23" line="32" chordsig="android.graphics.Canvas"/>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2753" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2749" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2770" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2753" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="lockCanvas:(Landroid/graphics/Rect;)Landroid/graphics/Canvas;@android.view.TextureView"
+ sig="Canvas lockCanvas(Rect)"
+ line="33"
+ startpos="2814"
+ endpos="2824"
+>
+	<marker line="-1" type="param">
+		<operand  start="2847" length="5" line="33">
+			<expr><![CDATA[dirty]]></expr>
+		</operand>
+	</marker>
+	<type  start="2790" length="23" line="33" chordsig="android.graphics.Canvas"/>
+	<type  start="2825" length="21" line="33" chordsig="android.graphics.Rect"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2866" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2862" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2883" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2866" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unlockCanvasAndPost:(Landroid/graphics/Canvas;)V@android.view.TextureView"
+ sig="void unlockCanvasAndPost(Canvas)"
+ line="34"
+ startpos="2908"
+ endpos="2927"
+>
+	<marker line="-1" type="param">
+		<operand  start="2952" length="6" line="34">
+			<expr><![CDATA[canvas]]></expr>
+		</operand>
+	</marker>
+	<type  start="2928" length="23" line="34" chordsig="android.graphics.Canvas"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2972" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2968" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2989" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2972" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSurfaceTexture:()Landroid/graphics/SurfaceTexture;@android.view.TextureView"
+ sig="SurfaceTexture getSurfaceTexture()"
+ line="35"
+ startpos="3041"
+ endpos="3058"
+>
+	<type  start="3009" length="31" line="35" chordsig="android.graphics.SurfaceTexture"/>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3073" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3069" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3090" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3073" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSurfaceTextureListener:()Landroid/view/TextureView$SurfaceTextureListener;@android.view.TextureView"
+ sig="SurfaceTextureListener getSurfaceTextureListener()"
+ line="36"
+ startpos="3158"
+ endpos="3183"
+>
+	<type  start="3110" length="47" line="36" chordsig="android.view.TextureView$SurfaceTextureListener"/>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3198" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3194" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3215" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3198" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSurfaceTextureListener:(Landroid/view/TextureView$SurfaceTextureListener;)V@android.view.TextureView"
+ sig="void setSurfaceTextureListener(SurfaceTextureListener)"
+ line="37"
+ startpos="3240"
+ endpos="3265"
+>
+	<marker line="-1" type="param">
+		<operand  start="3314" length="8" line="37">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="3266" length="47" line="37" chordsig="android.view.TextureView$SurfaceTextureListener"/>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3336" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3332" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3353" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3336" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

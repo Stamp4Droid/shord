@@ -1,0 +1,70 @@
+<root>
+<class chordsig="android.renderscript.ProgramFragment" line="3">
+	<type  start="81" length="28" line="4" chordsig="android.renderscript.Program"/>
+<class chordsig="android.renderscript.ProgramFragment$Builder" line="7">
+	<type  start="162" length="47" line="8" chordsig="android.renderscript.Program$BaseProgramBuilder"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/renderscript/RenderScript;)V@android.renderscript.ProgramFragment$Builder"
+ sig="Builder(RenderScript)"
+ line="11"
+ startpos="232"
+ endpos="239"
+>
+	<marker line="-1" type="param">
+		<operand  start="274" length="2" line="11">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<type  start="240" length="33" line="11" chordsig="android.renderscript.RenderScript"/>
+	<type  start="287" length="33" line="11" chordsig="android.renderscript.RenderScript"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="338" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="334" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="355" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="338" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="create:()Landroid/renderscript/ProgramFragment;@android.renderscript.ProgramFragment$Builder"
+ sig="ProgramFragment create()"
+ line="13"
+ startpos="424"
+ endpos="430"
+>
+	<type  start="387" length="36" line="13" chordsig="android.renderscript.ProgramFragment"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="445" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="441" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="462" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="445" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.renderscript.ProgramFragment"
+ sig="ProgramFragment()"
+ line="15"
+ startpos="476"
+ endpos="491"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="506" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="502" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="523" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="506" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

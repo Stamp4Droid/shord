@@ -1,0 +1,123 @@
+<root>
+<class chordsig="java.security.spec.DSAPublicKeySpec" line="2">
+	<type  start="71" length="26" line="3" chordsig="java.security.spec.KeySpec"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/math/BigInteger;Ljava/math/BigInteger;Ljava/math/BigInteger;Ljava/math/BigInteger;)V@java.security.spec.DSAPublicKeySpec"
+ sig="DSAPublicKeySpec(BigInteger,BigInteger,BigInteger,BigInteger)"
+ line="5"
+ startpos="108"
+ endpos="124"
+>
+	<marker line="-1" type="param">
+		<operand  start="146" length="1" line="5">
+			<expr><![CDATA[y]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="170" length="1" line="5">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="194" length="1" line="5">
+			<expr><![CDATA[q]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="218" length="1" line="5">
+			<expr><![CDATA[g]]></expr>
+		</operand>
+	</marker>
+	<type  start="125" length="20" line="5" chordsig="java.math.BigInteger"/>
+	<type  start="149" length="20" line="5" chordsig="java.math.BigInteger"/>
+	<type  start="173" length="20" line="5" chordsig="java.math.BigInteger"/>
+	<type  start="197" length="20" line="5" chordsig="java.math.BigInteger"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="233" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="229" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="250" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="233" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getG:()Ljava/math/BigInteger;@java.security.spec.DSAPublicKeySpec"
+ sig="BigInteger getG()"
+ line="6"
+ startpos="291"
+ endpos="295"
+>
+	<type  start="270" length="20" line="6" chordsig="java.math.BigInteger"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="310" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="306" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="327" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="310" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getP:()Ljava/math/BigInteger;@java.security.spec.DSAPublicKeySpec"
+ sig="BigInteger getP()"
+ line="7"
+ startpos="368"
+ endpos="372"
+>
+	<type  start="347" length="20" line="7" chordsig="java.math.BigInteger"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="387" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="383" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="404" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="387" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getQ:()Ljava/math/BigInteger;@java.security.spec.DSAPublicKeySpec"
+ sig="BigInteger getQ()"
+ line="8"
+ startpos="445"
+ endpos="449"
+>
+	<type  start="424" length="20" line="8" chordsig="java.math.BigInteger"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="464" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="460" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="481" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="464" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getY:()Ljava/math/BigInteger;@java.security.spec.DSAPublicKeySpec"
+ sig="BigInteger getY()"
+ line="9"
+ startpos="522"
+ endpos="526"
+>
+	<type  start="501" length="20" line="9" chordsig="java.math.BigInteger"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="541" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="537" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="558" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="541" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

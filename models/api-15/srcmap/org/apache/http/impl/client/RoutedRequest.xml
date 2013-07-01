@@ -1,0 +1,74 @@
+<root>
+<class chordsig="org.apache.http.impl.client.RoutedRequest" line="2">
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/impl/client/RequestWrapper;Lorg/apache/http/conn/routing/HttpRoute;)V@org.apache.http.impl.client.RoutedRequest"
+ sig="RoutedRequest(RequestWrapper,HttpRoute)"
+ line="4"
+ startpos="74"
+ endpos="87"
+>
+	<marker line="-1" type="param">
+		<operand  start="131" length="3" line="4">
+			<expr><![CDATA[req]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="175" length="5" line="4">
+			<expr><![CDATA[route]]></expr>
+		</operand>
+	</marker>
+	<type  start="88" length="42" line="4" chordsig="org.apache.http.impl.client.RequestWrapper"/>
+	<type  start="136" length="38" line="4" chordsig="org.apache.http.conn.routing.HttpRoute"/>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="194" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="190" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="211" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="194" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRequest:()Lorg/apache/http/impl/client/RequestWrapper;@org.apache.http.impl.client.RoutedRequest"
+ sig="RequestWrapper getRequest()"
+ line="5"
+ startpos="280"
+ endpos="290"
+>
+	<type  start="237" length="42" line="5" chordsig="org.apache.http.impl.client.RequestWrapper"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="305" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="301" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="322" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="305" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRoute:()Lorg/apache/http/conn/routing/HttpRoute;@org.apache.http.impl.client.RoutedRequest"
+ sig="HttpRoute getRoute()"
+ line="6"
+ startpos="387"
+ endpos="395"
+>
+	<type  start="348" length="38" line="6" chordsig="org.apache.http.conn.routing.HttpRoute"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="410" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="406" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="427" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="410" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="455" length="42" line="7" chordsig="org.apache.http.impl.client.RequestWrapper"/>
+	<type  start="523" length="38" line="8" chordsig="org.apache.http.conn.routing.HttpRoute"/>
+</class>
+</root>

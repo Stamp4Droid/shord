@@ -1,0 +1,2715 @@
+public class android.app.Activity extends android.view.ContextThemeWrapper implements android.view.LayoutInflater$Factory2, android.view.Window$Callback, android.view.KeyEvent$Callback, android.view.View$OnCreateContextMenuListener, android.content.ComponentCallbacks2
+{
+    public static final int RESULT_CANCELED;
+    public static final int RESULT_OK;
+    public static final int RESULT_FIRST_USER;
+    protected static final int[] FOCUSED_STATE_SET;
+    public static final int DEFAULT_KEYS_DISABLE;
+    public static final int DEFAULT_KEYS_DIALER;
+    public static final int DEFAULT_KEYS_SHORTCUT;
+    public static final int DEFAULT_KEYS_SEARCH_LOCAL;
+    public static final int DEFAULT_KEYS_SEARCH_GLOBAL;
+
+    public android.content.Intent getIntent()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void setIntent(android.content.Intent)
+    {
+        android.app.Activity r0;
+        android.content.Intent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.Intent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public final android.app.Application getApplication()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public final boolean isChild()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public final android.app.Activity getParent()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public android.view.WindowManager getWindowManager()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public android.view.Window getWindow()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public android.app.LoaderManager getLoaderManager()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public android.view.View getCurrentFocus()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    protected void onCreate(android.os.Bundle)
+    {
+        android.app.Activity r0;
+        android.os.Bundle r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.os.Bundle;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    protected void onRestoreInstanceState(android.os.Bundle)
+    {
+        android.app.Activity r0;
+        android.os.Bundle r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.os.Bundle;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    protected void onPostCreate(android.os.Bundle)
+    {
+        android.app.Activity r0;
+        android.os.Bundle r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.os.Bundle;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    protected void onStart()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    protected void onRestart()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    protected void onResume()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    protected void onPostResume()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    protected void onNewIntent(android.content.Intent)
+    {
+        android.app.Activity r0;
+        android.content.Intent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.Intent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    protected void onSaveInstanceState(android.os.Bundle)
+    {
+        android.app.Activity r0;
+        android.os.Bundle r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.os.Bundle;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    protected void onPause()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    protected void onUserLeaveHint()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean onCreateThumbnail(android.graphics.Bitmap, android.graphics.Canvas)
+    {
+        android.app.Activity r0;
+        android.graphics.Bitmap r1;
+        android.graphics.Canvas r2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.graphics.Bitmap;
+        r2 := @parameter1: android.graphics.Canvas;
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public java.lang.CharSequence onCreateDescription()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    protected void onStop()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    protected void onDestroy()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void onConfigurationChanged(android.content.res.Configuration)
+    {
+        android.app.Activity r0;
+        android.content.res.Configuration r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.res.Configuration;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public int getChangingConfigurations()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public java.lang.Object getLastNonConfigurationInstance()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public java.lang.Object onRetainNonConfigurationInstance()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void onLowMemory()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void onTrimMemory(int)
+    {
+        android.app.Activity r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public android.app.FragmentManager getFragmentManager()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void onAttachFragment(android.app.Fragment)
+    {
+        android.app.Activity r0;
+        android.app.Fragment r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.app.Fragment;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void startManagingCursor(android.database.Cursor)
+    {
+        android.app.Activity r0;
+        android.database.Cursor r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.database.Cursor;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void stopManagingCursor(android.database.Cursor)
+    {
+        android.app.Activity r0;
+        android.database.Cursor r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.database.Cursor;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public android.app.ActionBar getActionBar()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void setContentView(int)
+    {
+        android.app.Activity r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void setContentView(android.view.View)
+    {
+        android.app.Activity r0;
+        android.view.View r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.View;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void setContentView(android.view.View, android.view.ViewGroup$LayoutParams)
+    {
+        android.app.Activity r0;
+        android.view.View r1;
+        android.view.ViewGroup$LayoutParams r2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.View;
+        r2 := @parameter1: android.view.ViewGroup$LayoutParams;
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public void addContentView(android.view.View, android.view.ViewGroup$LayoutParams)
+    {
+        android.app.Activity r0;
+        android.view.View r1;
+        android.view.ViewGroup$LayoutParams r2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.View;
+        r2 := @parameter1: android.view.ViewGroup$LayoutParams;
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public void setFinishOnTouchOutside(boolean)
+    {
+        android.app.Activity r0;
+        boolean z0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        z0 := @parameter0: boolean;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public final void setDefaultKeyMode(int)
+    {
+        android.app.Activity r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean onKeyDown(int, android.view.KeyEvent)
+    {
+        android.app.Activity r0;
+        int i0;
+        android.view.KeyEvent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        r1 := @parameter1: android.view.KeyEvent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean onKeyLongPress(int, android.view.KeyEvent)
+    {
+        android.app.Activity r0;
+        int i0;
+        android.view.KeyEvent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        r1 := @parameter1: android.view.KeyEvent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean onKeyUp(int, android.view.KeyEvent)
+    {
+        android.app.Activity r0;
+        int i0;
+        android.view.KeyEvent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        r1 := @parameter1: android.view.KeyEvent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean onKeyMultiple(int, int, android.view.KeyEvent)
+    {
+        android.app.Activity r0;
+        int i0, i1;
+        android.view.KeyEvent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        i1 := @parameter1: int;
+        r1 := @parameter2: android.view.KeyEvent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void onBackPressed()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean onKeyShortcut(int, android.view.KeyEvent)
+    {
+        android.app.Activity r0;
+        int i0;
+        android.view.KeyEvent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        r1 := @parameter1: android.view.KeyEvent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean onTouchEvent(android.view.MotionEvent)
+    {
+        android.app.Activity r0;
+        android.view.MotionEvent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.MotionEvent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean onTrackballEvent(android.view.MotionEvent)
+    {
+        android.app.Activity r0;
+        android.view.MotionEvent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.MotionEvent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean onGenericMotionEvent(android.view.MotionEvent)
+    {
+        android.app.Activity r0;
+        android.view.MotionEvent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.MotionEvent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void onUserInteraction()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void onWindowAttributesChanged(android.view.WindowManager$LayoutParams)
+    {
+        android.app.Activity r0;
+        android.view.WindowManager$LayoutParams r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.WindowManager$LayoutParams;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void onContentChanged()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void onWindowFocusChanged(boolean)
+    {
+        android.app.Activity r0;
+        boolean z0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        z0 := @parameter0: boolean;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void onAttachedToWindow()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void onDetachedFromWindow()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean hasWindowFocus()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean dispatchKeyEvent(android.view.KeyEvent)
+    {
+        android.app.Activity r0;
+        android.view.KeyEvent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.KeyEvent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean dispatchKeyShortcutEvent(android.view.KeyEvent)
+    {
+        android.app.Activity r0;
+        android.view.KeyEvent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.KeyEvent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean dispatchTouchEvent(android.view.MotionEvent)
+    {
+        android.app.Activity r0;
+        android.view.MotionEvent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.MotionEvent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean dispatchTrackballEvent(android.view.MotionEvent)
+    {
+        android.app.Activity r0;
+        android.view.MotionEvent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.MotionEvent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean dispatchGenericMotionEvent(android.view.MotionEvent)
+    {
+        android.app.Activity r0;
+        android.view.MotionEvent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.MotionEvent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean dispatchPopulateAccessibilityEvent(android.view.accessibility.AccessibilityEvent)
+    {
+        android.app.Activity r0;
+        android.view.accessibility.AccessibilityEvent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.accessibility.AccessibilityEvent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public android.view.View onCreatePanelView(int)
+    {
+        android.app.Activity r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean onCreatePanelMenu(int, android.view.Menu)
+    {
+        android.app.Activity r0;
+        int i0;
+        android.view.Menu r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        r1 := @parameter1: android.view.Menu;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean onPreparePanel(int, android.view.View, android.view.Menu)
+    {
+        android.app.Activity r0;
+        int i0;
+        android.view.View r1;
+        android.view.Menu r2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        r1 := @parameter1: android.view.View;
+        r2 := @parameter2: android.view.Menu;
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public boolean onMenuOpened(int, android.view.Menu)
+    {
+        android.app.Activity r0;
+        int i0;
+        android.view.Menu r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        r1 := @parameter1: android.view.Menu;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean onMenuItemSelected(int, android.view.MenuItem)
+    {
+        android.app.Activity r0;
+        int i0;
+        android.view.MenuItem r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        r1 := @parameter1: android.view.MenuItem;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void onPanelClosed(int, android.view.Menu)
+    {
+        android.app.Activity r0;
+        int i0;
+        android.view.Menu r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        r1 := @parameter1: android.view.Menu;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void invalidateOptionsMenu()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean onCreateOptionsMenu(android.view.Menu)
+    {
+        android.app.Activity r0;
+        android.view.Menu r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.Menu;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean onPrepareOptionsMenu(android.view.Menu)
+    {
+        android.app.Activity r0;
+        android.view.Menu r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.Menu;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean onOptionsItemSelected(android.view.MenuItem)
+    {
+        android.app.Activity r0;
+        android.view.MenuItem r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.MenuItem;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean onNavigateUp()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean onNavigateUpFromChild(android.app.Activity)
+    {
+        android.app.Activity r0, r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.app.Activity;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void onCreateNavigateUpTaskStack(android.app.TaskStackBuilder)
+    {
+        android.app.Activity r0;
+        android.app.TaskStackBuilder r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.app.TaskStackBuilder;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void onPrepareNavigateUpTaskStack(android.app.TaskStackBuilder)
+    {
+        android.app.Activity r0;
+        android.app.TaskStackBuilder r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.app.TaskStackBuilder;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void onOptionsMenuClosed(android.view.Menu)
+    {
+        android.app.Activity r0;
+        android.view.Menu r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.Menu;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void openOptionsMenu()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void closeOptionsMenu()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void onCreateContextMenu(android.view.ContextMenu, android.view.View, android.view.ContextMenu$ContextMenuInfo)
+    {
+        android.app.Activity r0;
+        android.view.ContextMenu r1;
+        android.view.View r2;
+        android.view.ContextMenu$ContextMenuInfo r3;
+        java.lang.RuntimeException $r4;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.ContextMenu;
+        r2 := @parameter1: android.view.View;
+        r3 := @parameter2: android.view.ContextMenu$ContextMenuInfo;
+        $r4 = new java.lang.RuntimeException;
+        specialinvoke $r4.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r4;
+    }
+
+    public void registerForContextMenu(android.view.View)
+    {
+        android.app.Activity r0;
+        android.view.View r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.View;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void unregisterForContextMenu(android.view.View)
+    {
+        android.app.Activity r0;
+        android.view.View r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.View;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void openContextMenu(android.view.View)
+    {
+        android.app.Activity r0;
+        android.view.View r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.View;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void closeContextMenu()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean onContextItemSelected(android.view.MenuItem)
+    {
+        android.app.Activity r0;
+        android.view.MenuItem r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.MenuItem;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void onContextMenuClosed(android.view.Menu)
+    {
+        android.app.Activity r0;
+        android.view.Menu r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.Menu;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    protected android.app.Dialog onCreateDialog(int)
+    {
+        android.app.Activity r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    protected android.app.Dialog onCreateDialog(int, android.os.Bundle)
+    {
+        android.app.Activity r0;
+        int i0;
+        android.os.Bundle r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        r1 := @parameter1: android.os.Bundle;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    protected void onPrepareDialog(int, android.app.Dialog)
+    {
+        android.app.Activity r0;
+        int i0;
+        android.app.Dialog r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        r1 := @parameter1: android.app.Dialog;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    protected void onPrepareDialog(int, android.app.Dialog, android.os.Bundle)
+    {
+        android.app.Activity r0;
+        int i0;
+        android.app.Dialog r1;
+        android.os.Bundle r2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        r1 := @parameter1: android.app.Dialog;
+        r2 := @parameter2: android.os.Bundle;
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public final boolean showDialog(int, android.os.Bundle)
+    {
+        android.app.Activity r0;
+        int i0;
+        android.os.Bundle r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        r1 := @parameter1: android.os.Bundle;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public final void dismissDialog(int)
+    {
+        android.app.Activity r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public final void removeDialog(int)
+    {
+        android.app.Activity r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean onSearchRequested()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void startSearch(java.lang.String, boolean, android.os.Bundle, boolean)
+    {
+        android.app.Activity r0;
+        java.lang.String r1;
+        boolean z0, z1;
+        android.os.Bundle r2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: java.lang.String;
+        z0 := @parameter1: boolean;
+        r2 := @parameter2: android.os.Bundle;
+        z1 := @parameter3: boolean;
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public void triggerSearch(java.lang.String, android.os.Bundle)
+    {
+        android.app.Activity r0;
+        java.lang.String r1;
+        android.os.Bundle r2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: java.lang.String;
+        r2 := @parameter1: android.os.Bundle;
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public void takeKeyEvents(boolean)
+    {
+        android.app.Activity r0;
+        boolean z0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        z0 := @parameter0: boolean;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public final boolean requestWindowFeature(int)
+    {
+        android.app.Activity r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public final void setFeatureDrawableResource(int, int)
+    {
+        android.app.Activity r0;
+        int i0, i1;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        i1 := @parameter1: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public final void setFeatureDrawableUri(int, android.net.Uri)
+    {
+        android.app.Activity r0;
+        int i0;
+        android.net.Uri r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        r1 := @parameter1: android.net.Uri;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public final void setFeatureDrawable(int, android.graphics.drawable.Drawable)
+    {
+        android.app.Activity r0;
+        int i0;
+        android.graphics.drawable.Drawable r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        r1 := @parameter1: android.graphics.drawable.Drawable;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public final void setFeatureDrawableAlpha(int, int)
+    {
+        android.app.Activity r0;
+        int i0, i1;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        i1 := @parameter1: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public android.view.LayoutInflater getLayoutInflater()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public android.view.MenuInflater getMenuInflater()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    protected void onApplyThemeResource(android.content.res.Resources$Theme, int, boolean)
+    {
+        android.app.Activity r0;
+        android.content.res.Resources$Theme r1;
+        int i0;
+        boolean z0;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.res.Resources$Theme;
+        i0 := @parameter1: int;
+        z0 := @parameter2: boolean;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void startIntentSenderForResult(android.content.IntentSender, int, android.content.Intent, int, int, int) throws android.content.IntentSender$SendIntentException
+    {
+        android.app.Activity r0;
+        android.content.IntentSender r1;
+        int i0, i1, i2, i3;
+        android.content.Intent r2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.IntentSender;
+        i0 := @parameter1: int;
+        r2 := @parameter2: android.content.Intent;
+        i1 := @parameter3: int;
+        i2 := @parameter4: int;
+        i3 := @parameter5: int;
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public void startIntentSenderForResult(android.content.IntentSender, int, android.content.Intent, int, int, int, android.os.Bundle) throws android.content.IntentSender$SendIntentException
+    {
+        android.app.Activity r0;
+        android.content.IntentSender r1;
+        int i0, i1, i2, i3;
+        android.content.Intent r2;
+        android.os.Bundle r3;
+        java.lang.RuntimeException $r4;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.IntentSender;
+        i0 := @parameter1: int;
+        r2 := @parameter2: android.content.Intent;
+        i1 := @parameter3: int;
+        i2 := @parameter4: int;
+        i3 := @parameter5: int;
+        r3 := @parameter6: android.os.Bundle;
+        $r4 = new java.lang.RuntimeException;
+        specialinvoke $r4.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r4;
+    }
+
+    public void startActivity(android.content.Intent)
+    {
+        android.app.Activity r0;
+        android.content.Intent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.Intent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void startActivity(android.content.Intent, android.os.Bundle)
+    {
+        android.app.Activity r0;
+        android.content.Intent r1;
+        android.os.Bundle r2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.Intent;
+        r2 := @parameter1: android.os.Bundle;
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public void startActivities(android.content.Intent[])
+    {
+        android.app.Activity r0;
+        android.content.Intent[] r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.Intent[];
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void startActivities(android.content.Intent[], android.os.Bundle)
+    {
+        android.app.Activity r0;
+        android.content.Intent[] r1;
+        android.os.Bundle r2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.Intent[];
+        r2 := @parameter1: android.os.Bundle;
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public void startIntentSender(android.content.IntentSender, android.content.Intent, int, int, int) throws android.content.IntentSender$SendIntentException
+    {
+        android.app.Activity r0;
+        android.content.IntentSender r1;
+        android.content.Intent r2;
+        int i0, i1, i2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.IntentSender;
+        r2 := @parameter1: android.content.Intent;
+        i0 := @parameter2: int;
+        i1 := @parameter3: int;
+        i2 := @parameter4: int;
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public void startIntentSender(android.content.IntentSender, android.content.Intent, int, int, int, android.os.Bundle) throws android.content.IntentSender$SendIntentException
+    {
+        android.app.Activity r0;
+        android.content.IntentSender r1;
+        android.content.Intent r2;
+        int i0, i1, i2;
+        android.os.Bundle r3;
+        java.lang.RuntimeException $r4;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.IntentSender;
+        r2 := @parameter1: android.content.Intent;
+        i0 := @parameter2: int;
+        i1 := @parameter3: int;
+        i2 := @parameter4: int;
+        r3 := @parameter5: android.os.Bundle;
+        $r4 = new java.lang.RuntimeException;
+        specialinvoke $r4.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r4;
+    }
+
+    public boolean startActivityIfNeeded(android.content.Intent, int)
+    {
+        android.app.Activity r0;
+        android.content.Intent r1;
+        int i0;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.Intent;
+        i0 := @parameter1: int;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean startActivityIfNeeded(android.content.Intent, int, android.os.Bundle)
+    {
+        android.app.Activity r0;
+        android.content.Intent r1;
+        int i0;
+        android.os.Bundle r2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.Intent;
+        i0 := @parameter1: int;
+        r2 := @parameter2: android.os.Bundle;
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public boolean startNextMatchingActivity(android.content.Intent)
+    {
+        android.app.Activity r0;
+        android.content.Intent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.Intent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean startNextMatchingActivity(android.content.Intent, android.os.Bundle)
+    {
+        android.app.Activity r0;
+        android.content.Intent r1;
+        android.os.Bundle r2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.Intent;
+        r2 := @parameter1: android.os.Bundle;
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public void startActivityFromChild(android.app.Activity, android.content.Intent, int)
+    {
+        android.app.Activity r0, r1;
+        android.content.Intent r2;
+        int i0;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.app.Activity;
+        r2 := @parameter1: android.content.Intent;
+        i0 := @parameter2: int;
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public void startActivityFromChild(android.app.Activity, android.content.Intent, int, android.os.Bundle)
+    {
+        android.app.Activity r0, r1;
+        android.content.Intent r2;
+        int i0;
+        android.os.Bundle r3;
+        java.lang.RuntimeException $r4;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.app.Activity;
+        r2 := @parameter1: android.content.Intent;
+        i0 := @parameter2: int;
+        r3 := @parameter3: android.os.Bundle;
+        $r4 = new java.lang.RuntimeException;
+        specialinvoke $r4.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r4;
+    }
+
+    public void startActivityFromFragment(android.app.Fragment, android.content.Intent, int)
+    {
+        android.app.Activity r0;
+        android.app.Fragment r1;
+        android.content.Intent r2;
+        int i0;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.app.Fragment;
+        r2 := @parameter1: android.content.Intent;
+        i0 := @parameter2: int;
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public void startActivityFromFragment(android.app.Fragment, android.content.Intent, int, android.os.Bundle)
+    {
+        android.app.Activity r0;
+        android.app.Fragment r1;
+        android.content.Intent r2;
+        int i0;
+        android.os.Bundle r3;
+        java.lang.RuntimeException $r4;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.app.Fragment;
+        r2 := @parameter1: android.content.Intent;
+        i0 := @parameter2: int;
+        r3 := @parameter3: android.os.Bundle;
+        $r4 = new java.lang.RuntimeException;
+        specialinvoke $r4.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r4;
+    }
+
+    public void startIntentSenderFromChild(android.app.Activity, android.content.IntentSender, int, android.content.Intent, int, int, int) throws android.content.IntentSender$SendIntentException
+    {
+        android.app.Activity r0, r1;
+        android.content.IntentSender r2;
+        int i0, i1, i2, i3;
+        android.content.Intent r3;
+        java.lang.RuntimeException $r4;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.app.Activity;
+        r2 := @parameter1: android.content.IntentSender;
+        i0 := @parameter2: int;
+        r3 := @parameter3: android.content.Intent;
+        i1 := @parameter4: int;
+        i2 := @parameter5: int;
+        i3 := @parameter6: int;
+        $r4 = new java.lang.RuntimeException;
+        specialinvoke $r4.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r4;
+    }
+
+    public void startIntentSenderFromChild(android.app.Activity, android.content.IntentSender, int, android.content.Intent, int, int, int, android.os.Bundle) throws android.content.IntentSender$SendIntentException
+    {
+        android.app.Activity r0, r1;
+        android.content.IntentSender r2;
+        int i0, i1, i2, i3;
+        android.content.Intent r3;
+        android.os.Bundle r4;
+        java.lang.RuntimeException $r5;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.app.Activity;
+        r2 := @parameter1: android.content.IntentSender;
+        i0 := @parameter2: int;
+        r3 := @parameter3: android.content.Intent;
+        i1 := @parameter4: int;
+        i2 := @parameter5: int;
+        i3 := @parameter6: int;
+        r4 := @parameter7: android.os.Bundle;
+        $r5 = new java.lang.RuntimeException;
+        specialinvoke $r5.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r5;
+    }
+
+    public void overridePendingTransition(int, int)
+    {
+        android.app.Activity r0;
+        int i0, i1;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        i1 := @parameter1: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public final void setResult(int)
+    {
+        android.app.Activity r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public final void setResult(int, android.content.Intent)
+    {
+        android.app.Activity r0;
+        int i0;
+        android.content.Intent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        r1 := @parameter1: android.content.Intent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public java.lang.String getCallingPackage()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public android.content.ComponentName getCallingActivity()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void setVisible(boolean)
+    {
+        android.app.Activity r0;
+        boolean z0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        z0 := @parameter0: boolean;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean isFinishing()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean isChangingConfigurations()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void recreate()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void finish()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void finishAffinity()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void finishFromChild(android.app.Activity)
+    {
+        android.app.Activity r0, r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.app.Activity;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void finishActivity(int)
+    {
+        android.app.Activity r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void finishActivityFromChild(android.app.Activity, int)
+    {
+        android.app.Activity r0, r1;
+        int i0;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.app.Activity;
+        i0 := @parameter1: int;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    protected void onActivityResult(int, int, android.content.Intent)
+    {
+        android.app.Activity r0;
+        int i0, i1;
+        android.content.Intent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        i1 := @parameter1: int;
+        r1 := @parameter2: android.content.Intent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public android.app.PendingIntent createPendingResult(int, android.content.Intent, int)
+    {
+        android.app.Activity r0;
+        int i0, i1;
+        android.content.Intent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        r1 := @parameter1: android.content.Intent;
+        i1 := @parameter2: int;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void setRequestedOrientation(int)
+    {
+        android.app.Activity r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public int getRequestedOrientation()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public int getTaskId()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean isTaskRoot()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean moveTaskToBack(boolean)
+    {
+        android.app.Activity r0;
+        boolean z0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        z0 := @parameter0: boolean;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public java.lang.String getLocalClassName()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public android.content.ComponentName getComponentName()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public android.content.SharedPreferences getPreferences(int)
+    {
+        android.app.Activity r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void setTitle(java.lang.CharSequence)
+    {
+        android.app.Activity r0;
+        java.lang.CharSequence r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: java.lang.CharSequence;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void setTitle(int)
+    {
+        android.app.Activity r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void setTitleColor(int)
+    {
+        android.app.Activity r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public final java.lang.CharSequence getTitle()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public final int getTitleColor()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    protected void onTitleChanged(java.lang.CharSequence, int)
+    {
+        android.app.Activity r0;
+        java.lang.CharSequence r1;
+        int i0;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: java.lang.CharSequence;
+        i0 := @parameter1: int;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    protected void onChildTitleChanged(android.app.Activity, java.lang.CharSequence)
+    {
+        android.app.Activity r0, r1;
+        java.lang.CharSequence r2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.app.Activity;
+        r2 := @parameter1: java.lang.CharSequence;
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public final void setProgressBarVisibility(boolean)
+    {
+        android.app.Activity r0;
+        boolean z0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        z0 := @parameter0: boolean;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public final void setProgressBarIndeterminateVisibility(boolean)
+    {
+        android.app.Activity r0;
+        boolean z0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        z0 := @parameter0: boolean;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public final void setProgressBarIndeterminate(boolean)
+    {
+        android.app.Activity r0;
+        boolean z0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        z0 := @parameter0: boolean;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public final void setProgress(int)
+    {
+        android.app.Activity r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public final void setSecondaryProgress(int)
+    {
+        android.app.Activity r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public final void setVolumeControlStream(int)
+    {
+        android.app.Activity r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public final int getVolumeControlStream()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public final void runOnUiThread(java.lang.Runnable)
+    {
+        android.app.Activity r0;
+        java.lang.Runnable r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: java.lang.Runnable;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public android.view.View onCreateView(java.lang.String, android.content.Context, android.util.AttributeSet)
+    {
+        android.app.Activity r0;
+        java.lang.String r1;
+        android.content.Context r2;
+        android.util.AttributeSet r3;
+        java.lang.RuntimeException $r4;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: java.lang.String;
+        r2 := @parameter1: android.content.Context;
+        r3 := @parameter2: android.util.AttributeSet;
+        $r4 = new java.lang.RuntimeException;
+        specialinvoke $r4.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r4;
+    }
+
+    public android.view.View onCreateView(android.view.View, java.lang.String, android.content.Context, android.util.AttributeSet)
+    {
+        android.app.Activity r0;
+        android.view.View r1;
+        java.lang.String r2;
+        android.content.Context r3;
+        android.util.AttributeSet r4;
+        java.lang.RuntimeException $r5;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.View;
+        r2 := @parameter1: java.lang.String;
+        r3 := @parameter2: android.content.Context;
+        r4 := @parameter3: android.util.AttributeSet;
+        $r5 = new java.lang.RuntimeException;
+        specialinvoke $r5.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r5;
+    }
+
+    public void dump(java.lang.String, java.io.FileDescriptor, java.io.PrintWriter, java.lang.String[])
+    {
+        android.app.Activity r0;
+        java.lang.String r1;
+        java.io.FileDescriptor r2;
+        java.io.PrintWriter r3;
+        java.lang.String[] r4;
+        java.lang.RuntimeException $r5;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: java.lang.String;
+        r2 := @parameter1: java.io.FileDescriptor;
+        r3 := @parameter2: java.io.PrintWriter;
+        r4 := @parameter3: java.lang.String[];
+        $r5 = new java.lang.RuntimeException;
+        specialinvoke $r5.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r5;
+    }
+
+    public android.view.ActionMode startActionMode(android.view.ActionMode$Callback)
+    {
+        android.app.Activity r0;
+        android.view.ActionMode$Callback r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.ActionMode$Callback;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public android.view.ActionMode onWindowStartingActionMode(android.view.ActionMode$Callback)
+    {
+        android.app.Activity r0;
+        android.view.ActionMode$Callback r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.ActionMode$Callback;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void onActionModeStarted(android.view.ActionMode)
+    {
+        android.app.Activity r0;
+        android.view.ActionMode r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.ActionMode;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void onActionModeFinished(android.view.ActionMode)
+    {
+        android.app.Activity r0;
+        android.view.ActionMode r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.view.ActionMode;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean shouldUpRecreateTask(android.content.Intent)
+    {
+        android.app.Activity r0;
+        android.content.Intent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.Intent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean navigateUpTo(android.content.Intent)
+    {
+        android.app.Activity r0;
+        android.content.Intent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.Intent;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean navigateUpToFromChild(android.app.Activity, android.content.Intent)
+    {
+        android.app.Activity r0, r1;
+        android.content.Intent r2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.app.Activity;
+        r2 := @parameter1: android.content.Intent;
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public android.content.Intent getParentActivityIntent()
+    {
+        android.app.Activity r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.app.Activity;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void <init>()
+    {
+        android.app.Activity r0;
+        android.app.Activity$1 $r2;
+        android.app.Activity$2 $r4;
+        android.app.Activity$3 $r6;
+        android.app.Activity$4 $r8;
+        android.app.Activity$5 $r10;
+        android.app.Activity$6 $r12;
+        android.app.Activity$7 $r14;
+        android.app.Activity$8 $r16;
+        android.app.Activity$9 $r18;
+        android.app.Activity$10 $r20;
+        android.app.Activity$11 $r22;
+        android.app.Activity$12 $r24;
+        android.app.Activity$13 $r26;
+        android.app.Activity$14 $r28;
+        android.app.Activity$15 $r30;
+        android.app.Activity$16 $r32;
+        android.app.Activity$17 $r34;
+        android.app.Activity$18 $r36;
+        android.app.Activity$19 $r38;
+        android.app.Activity$20 $r40;
+        android.app.Activity$21 $r42;
+        android.app.Activity$22 $r44;
+        android.app.Activity$23 $r46;
+        android.app.Activity$24 $r48;
+        android.app.Activity$25 $r50;
+        android.app.Activity$26 $r52;
+        android.app.Activity$27 $r54;
+        android.app.Activity$28 $r56;
+        android.app.Activity$29 $r58;
+        android.app.Activity$30 $r60;
+        android.app.Activity$31 $r62;
+        android.app.Activity$32 $r64;
+        android.app.Activity$33 $r66;
+        android.app.Activity$34 $r68;
+        android.app.Activity$35 $r70;
+        android.app.Activity$36 $r72;
+        android.app.Activity$37 $r74;
+        android.app.Activity$38 $r76;
+        android.app.Activity$39 $r78;
+        android.app.Activity$40 $r80;
+        android.app.Activity$41 $r82;
+        android.app.Activity$42 $r84;
+        android.app.Activity$43 $r86;
+        android.app.Activity$44 $r88;
+        android.app.Activity$45 $r90;
+        android.app.Activity$46 $r92;
+        android.app.Activity$47 $r94;
+        android.app.Activity$48 $r96;
+        android.app.Activity$49 $r98;
+        android.app.Activity$50 $r100;
+        android.app.Activity$51 $r102;
+        android.app.Activity$52 $r104;
+
+        r0 := @this: android.app.Activity;
+        specialinvoke r0.<android.view.ContextThemeWrapper: void <init>()>();
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r2 = new android.app.Activity$1;
+        specialinvoke $r2.<android.app.Activity$1: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r2);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r4 = new android.app.Activity$2;
+        specialinvoke $r4.<android.app.Activity$2: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r4);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r6 = new android.app.Activity$3;
+        specialinvoke $r6.<android.app.Activity$3: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r6);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r8 = new android.app.Activity$4;
+        specialinvoke $r8.<android.app.Activity$4: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r8);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r10 = new android.app.Activity$5;
+        specialinvoke $r10.<android.app.Activity$5: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r10);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r12 = new android.app.Activity$6;
+        specialinvoke $r12.<android.app.Activity$6: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r12);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r14 = new android.app.Activity$7;
+        specialinvoke $r14.<android.app.Activity$7: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r14);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r16 = new android.app.Activity$8;
+        specialinvoke $r16.<android.app.Activity$8: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r16);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r18 = new android.app.Activity$9;
+        specialinvoke $r18.<android.app.Activity$9: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r18);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r20 = new android.app.Activity$10;
+        specialinvoke $r20.<android.app.Activity$10: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r20);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r22 = new android.app.Activity$11;
+        specialinvoke $r22.<android.app.Activity$11: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r22);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r24 = new android.app.Activity$12;
+        specialinvoke $r24.<android.app.Activity$12: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r24);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r26 = new android.app.Activity$13;
+        specialinvoke $r26.<android.app.Activity$13: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r26);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r28 = new android.app.Activity$14;
+        specialinvoke $r28.<android.app.Activity$14: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r28);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r30 = new android.app.Activity$15;
+        specialinvoke $r30.<android.app.Activity$15: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r30);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r32 = new android.app.Activity$16;
+        specialinvoke $r32.<android.app.Activity$16: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r32);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r34 = new android.app.Activity$17;
+        specialinvoke $r34.<android.app.Activity$17: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r34);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r36 = new android.app.Activity$18;
+        specialinvoke $r36.<android.app.Activity$18: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r36);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r38 = new android.app.Activity$19;
+        specialinvoke $r38.<android.app.Activity$19: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r38);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r40 = new android.app.Activity$20;
+        specialinvoke $r40.<android.app.Activity$20: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r40);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r42 = new android.app.Activity$21;
+        specialinvoke $r42.<android.app.Activity$21: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r42);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r44 = new android.app.Activity$22;
+        specialinvoke $r44.<android.app.Activity$22: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r44);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r46 = new android.app.Activity$23;
+        specialinvoke $r46.<android.app.Activity$23: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r46);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r48 = new android.app.Activity$24;
+        specialinvoke $r48.<android.app.Activity$24: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r48);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r50 = new android.app.Activity$25;
+        specialinvoke $r50.<android.app.Activity$25: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r50);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r52 = new android.app.Activity$26;
+        specialinvoke $r52.<android.app.Activity$26: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r52);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r54 = new android.app.Activity$27;
+        specialinvoke $r54.<android.app.Activity$27: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r54);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r56 = new android.app.Activity$28;
+        specialinvoke $r56.<android.app.Activity$28: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r56);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r58 = new android.app.Activity$29;
+        specialinvoke $r58.<android.app.Activity$29: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r58);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r60 = new android.app.Activity$30;
+        specialinvoke $r60.<android.app.Activity$30: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r60);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r62 = new android.app.Activity$31;
+        specialinvoke $r62.<android.app.Activity$31: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r62);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r64 = new android.app.Activity$32;
+        specialinvoke $r64.<android.app.Activity$32: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r64);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r66 = new android.app.Activity$33;
+        specialinvoke $r66.<android.app.Activity$33: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r66);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r68 = new android.app.Activity$34;
+        specialinvoke $r68.<android.app.Activity$34: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r68);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r70 = new android.app.Activity$35;
+        specialinvoke $r70.<android.app.Activity$35: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r70);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r72 = new android.app.Activity$36;
+        specialinvoke $r72.<android.app.Activity$36: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r72);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r74 = new android.app.Activity$37;
+        specialinvoke $r74.<android.app.Activity$37: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r74);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r76 = new android.app.Activity$38;
+        specialinvoke $r76.<android.app.Activity$38: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r76);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r78 = new android.app.Activity$39;
+        specialinvoke $r78.<android.app.Activity$39: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r78);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r80 = new android.app.Activity$40;
+        specialinvoke $r80.<android.app.Activity$40: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r80);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r82 = new android.app.Activity$41;
+        specialinvoke $r82.<android.app.Activity$41: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r82);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r84 = new android.app.Activity$42;
+        specialinvoke $r84.<android.app.Activity$42: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r84);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r86 = new android.app.Activity$43;
+        specialinvoke $r86.<android.app.Activity$43: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r86);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r88 = new android.app.Activity$44;
+        specialinvoke $r88.<android.app.Activity$44: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r88);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r90 = new android.app.Activity$45;
+        specialinvoke $r90.<android.app.Activity$45: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r90);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r92 = new android.app.Activity$46;
+        specialinvoke $r92.<android.app.Activity$46: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r92);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r94 = new android.app.Activity$47;
+        specialinvoke $r94.<android.app.Activity$47: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r94);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r96 = new android.app.Activity$48;
+        specialinvoke $r96.<android.app.Activity$48: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r96);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r98 = new android.app.Activity$49;
+        specialinvoke $r98.<android.app.Activity$49: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r98);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r100 = new android.app.Activity$50;
+        specialinvoke $r100.<android.app.Activity$50: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r100);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r102 = new android.app.Activity$51;
+        specialinvoke $r102.<android.app.Activity$51: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r102);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r104 = new android.app.Activity$52;
+        specialinvoke $r104.<android.app.Activity$52: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r104);
+        return;
+    }
+
+    public final android.database.Cursor managedQuery(android.net.Uri, java.lang.String[], java.lang.String, java.lang.String[], java.lang.String)
+    {
+        android.app.Activity r0;
+        android.net.Uri r1;
+        java.lang.String[] r2, r4;
+        java.lang.String r3, r5;
+        android.content.ContentResolver $r6;
+        android.database.Cursor $r7;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.net.Uri;
+        r2 := @parameter1: java.lang.String[];
+        r3 := @parameter2: java.lang.String;
+        r4 := @parameter3: java.lang.String[];
+        r5 := @parameter4: java.lang.String;
+        $r6 = virtualinvoke r0.<android.app.Activity: android.content.ContentResolver getContentResolver()>();
+        $r7 = virtualinvoke $r6.<android.content.ContentResolver: android.database.Cursor query(android.net.Uri,java.lang.String[],java.lang.String,java.lang.String[],java.lang.String)>(r1, r2, r3, r4, r5);
+        return $r7;
+    }
+
+    public android.view.View findViewById(int)
+    {
+        android.app.Activity r0;
+        int i0;
+        android.view.View $r1;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        $r1 = staticinvoke <edu.stanford.stamp.harness.ViewFactory: android.view.View findViewById(android.content.Context,int)>(null, i0);
+        return $r1;
+    }
+
+    public java.lang.Object getSystemService(java.lang.String)
+    {
+        android.app.Activity r0;
+        java.lang.String r1;
+        boolean $z0, $z1;
+        android.telephony.TelephonyManager $r2;
+        android.location.LocationManager $r3;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: java.lang.String;
+        $z0 = virtualinvoke r1.<java.lang.String: boolean equals(java.lang.Object)>("phone");
+        if $z0 == 0 goto label0;
+
+        $r2 = staticinvoke <android.telephony.TelephonyManager: android.telephony.TelephonyManager getInstance()>();
+        return $r2;
+
+     label0:
+        $z1 = virtualinvoke r1.<java.lang.String: boolean equals(java.lang.Object)>("location");
+        if $z1 == 0 goto label1;
+
+        $r3 = staticinvoke <android.location.LocationManager: android.location.LocationManager getInstance()>();
+        return $r3;
+
+     label1:
+        return null;
+    }
+
+    public void startActivityForResult(android.content.Intent, int)
+    {
+        android.app.Activity r0;
+        android.content.Intent r1;
+        int i0;
+        android.app.Activity$53 $r3;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.Intent;
+        i0 := @parameter1: int;
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r3 = new android.app.Activity$53;
+        specialinvoke $r3.<android.app.Activity$53: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r3);
+        return;
+    }
+
+    public void startActivityForResult(android.content.Intent, int, android.os.Bundle)
+    {
+        android.app.Activity r0;
+        android.content.Intent r1;
+        int i0;
+        android.os.Bundle r2;
+        android.app.Activity$54 $r4;
+
+        r0 := @this: android.app.Activity;
+        r1 := @parameter0: android.content.Intent;
+        i0 := @parameter1: int;
+        r2 := @parameter2: android.os.Bundle;
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver getInstance()>();
+        $r4 = new android.app.Activity$54;
+        specialinvoke $r4.<android.app.Activity$54: void <init>(android.app.Activity)>(r0);
+        staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>($r4);
+        return;
+    }
+
+    public final void showDialog(int)
+    {
+        android.app.Activity r0;
+        int i0;
+
+        r0 := @this: android.app.Activity;
+        i0 := @parameter0: int;
+        virtualinvoke r0.<android.app.Activity: android.app.Dialog onCreateDialog(int)>(i0);
+        return;
+    }
+
+    static void <clinit>()
+    {
+        <android.app.Activity: int[] FOCUSED_STATE_SET> = null;
+        return;
+    }
+}

@@ -1,0 +1,52 @@
+<root>
+<class chordsig="org.apache.http.client.HttpResponseException" line="2">
+	<type  start="77" length="46" line="3" chordsig="org.apache.http.client.ClientProtocolException"/>
+<method
+ chordsig="&lt;init&gt;:(ILjava/lang/String;)V@org.apache.http.client.HttpResponseException"
+ sig="HttpResponseException(int,String)"
+ line="5"
+ startpos="134"
+ endpos="155"
+>
+	<marker line="-1" type="param">
+		<operand  start="160" length="10" line="5">
+			<expr><![CDATA[statusCode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="189" length="1" line="5">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<type  start="172" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="204" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="200" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="221" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="204" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getStatusCode:()I@org.apache.http.client.HttpResponseException"
+ sig="int getStatusCode()"
+ line="6"
+ startpos="245"
+ endpos="258"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="273" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="269" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="290" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="273" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

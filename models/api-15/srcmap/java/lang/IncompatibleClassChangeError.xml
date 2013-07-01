@@ -1,0 +1,47 @@
+<root>
+<class chordsig="java.lang.IncompatibleClassChangeError" line="2">
+	<type  start="71" length="22" line="3" chordsig="java.lang.LinkageError"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.lang.IncompatibleClassChangeError"
+ sig="IncompatibleClassChangeError()"
+ line="5"
+ startpos="104"
+ endpos="132"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="147" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="143" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="164" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="147" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.IncompatibleClassChangeError"
+ sig="IncompatibleClassChangeError(String)"
+ line="6"
+ startpos="184"
+ endpos="212"
+>
+	<marker line="-1" type="param">
+		<operand  start="230" length="13" line="6">
+			<expr><![CDATA[detailMessage]]></expr>
+		</operand>
+	</marker>
+	<type  start="213" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="257" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="253" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="274" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="257" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

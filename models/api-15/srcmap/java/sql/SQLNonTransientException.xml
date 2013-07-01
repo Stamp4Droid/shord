@@ -1,0 +1,243 @@
+<root>
+<class chordsig="java.sql.SQLNonTransientException" line="2">
+	<type  start="66" length="21" line="3" chordsig="java.sql.SQLException"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.sql.SQLNonTransientException"
+ sig="SQLNonTransientException()"
+ line="5"
+ startpos="98"
+ endpos="122"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="137" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="133" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="154" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="137" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.sql.SQLNonTransientException"
+ sig="SQLNonTransientException(String)"
+ line="6"
+ startpos="174"
+ endpos="198"
+>
+	<marker line="-1" type="param">
+		<operand  start="216" length="6" line="6">
+			<expr><![CDATA[reason]]></expr>
+		</operand>
+	</marker>
+	<type  start="199" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="236" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="232" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="253" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="236" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;)V@java.sql.SQLNonTransientException"
+ sig="SQLNonTransientException(String,String)"
+ line="7"
+ startpos="273"
+ endpos="297"
+>
+	<marker line="-1" type="param">
+		<operand  start="315" length="6" line="7">
+			<expr><![CDATA[reason]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="340" length="8" line="7">
+			<expr><![CDATA[sqlState]]></expr>
+		</operand>
+	</marker>
+	<type  start="298" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="323" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="362" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="358" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="379" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="362" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;I)V@java.sql.SQLNonTransientException"
+ sig="SQLNonTransientException(String,String,int)"
+ line="8"
+ startpos="399"
+ endpos="423"
+>
+	<marker line="-1" type="param">
+		<operand  start="441" length="6" line="8">
+			<expr><![CDATA[reason]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="466" length="8" line="8">
+			<expr><![CDATA[sqlState]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="480" length="10" line="8">
+			<expr><![CDATA[vendorCode]]></expr>
+		</operand>
+	</marker>
+	<type  start="424" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="449" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="504" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="500" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="521" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="504" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/Throwable;)V@java.sql.SQLNonTransientException"
+ sig="SQLNonTransientException(Throwable)"
+ line="9"
+ startpos="541"
+ endpos="565"
+>
+	<marker line="-1" type="param">
+		<operand  start="586" length="5" line="9">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="566" length="19" line="9" chordsig="java.lang.Throwable"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="605" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="601" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="622" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="605" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/Throwable;)V@java.sql.SQLNonTransientException"
+ sig="SQLNonTransientException(String,Throwable)"
+ line="10"
+ startpos="642"
+ endpos="666"
+>
+	<marker line="-1" type="param">
+		<operand  start="684" length="6" line="10">
+			<expr><![CDATA[reason]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="712" length="5" line="10">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="667" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="692" length="19" line="10" chordsig="java.lang.Throwable"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="731" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="727" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="748" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="731" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)V@java.sql.SQLNonTransientException"
+ sig="SQLNonTransientException(String,String,Throwable)"
+ line="11"
+ startpos="768"
+ endpos="792"
+>
+	<marker line="-1" type="param">
+		<operand  start="810" length="6" line="11">
+			<expr><![CDATA[reason]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="835" length="8" line="11">
+			<expr><![CDATA[sqlState]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="865" length="5" line="11">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="793" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="818" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="845" length="19" line="11" chordsig="java.lang.Throwable"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="884" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="880" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="901" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="884" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;ILjava/lang/Throwable;)V@java.sql.SQLNonTransientException"
+ sig="SQLNonTransientException(String,String,int,Throwable)"
+ line="12"
+ startpos="921"
+ endpos="945"
+>
+	<marker line="-1" type="param">
+		<operand  start="963" length="6" line="12">
+			<expr><![CDATA[reason]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="988" length="8" line="12">
+			<expr><![CDATA[sqlState]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1002" length="10" line="12">
+			<expr><![CDATA[vendorCode]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1034" length="5" line="12">
+			<expr><![CDATA[cause]]></expr>
+		</operand>
+	</marker>
+	<type  start="946" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="971" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="1014" length="19" line="12" chordsig="java.lang.Throwable"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1053" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1049" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1070" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1053" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

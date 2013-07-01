@@ -1,0 +1,15 @@
+<root>
+<class chordsig="javax.crypto.interfaces.DHPublicKey" line="2">
+	<type  start="72" length="29" line="3" chordsig="javax.crypto.interfaces.DHKey"/>
+	<type  start="103" length="23" line="3" chordsig="java.security.PublicKey"/>
+<method
+ chordsig="getY:()Ljava/math/BigInteger;@javax.crypto.interfaces.DHPublicKey"
+ sig="BigInteger getY()"
+ line="5"
+ startpos="167"
+ endpos="171"
+>
+	<type  start="146" length="20" line="5" chordsig="java.math.BigInteger"/>
+</method>
+</class>
+</root>

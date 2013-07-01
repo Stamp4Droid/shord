@@ -1,0 +1,100 @@
+<root>
+<class chordsig="android.test.PerformanceTestCase" line="2">
+<class chordsig="android.test.PerformanceTestCase$Intermediates" line="4">
+<method
+ chordsig="setInternalIterations:(I)V@android.test.PerformanceTestCase$Intermediates"
+ sig="void setInternalIterations(int)"
+ line="6"
+ startpos="123"
+ endpos="144"
+>
+	<marker line="-1" type="param">
+		<operand  start="149" length="5" line="6">
+			<expr><![CDATA[count]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="startTiming:(Z)V@android.test.PerformanceTestCase$Intermediates"
+ sig="void startTiming(boolean)"
+ line="7"
+ startpos="179"
+ endpos="190"
+>
+	<marker line="-1" type="param">
+		<operand  start="199" length="8" line="7">
+			<expr><![CDATA[realTime]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="addIntermediate:(Ljava/lang/String;)V@android.test.PerformanceTestCase$Intermediates"
+ sig="void addIntermediate(String)"
+ line="8"
+ startpos="232"
+ endpos="247"
+>
+	<marker line="-1" type="param">
+		<operand  start="265" length="4" line="8">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="248" length="16" line="8" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="addIntermediate:(Ljava/lang/String;J)V@android.test.PerformanceTestCase$Intermediates"
+ sig="void addIntermediate(String,long)"
+ line="9"
+ startpos="294"
+ endpos="309"
+>
+	<marker line="-1" type="param">
+		<operand  start="327" length="4" line="9">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="338" length="8" line="9">
+			<expr><![CDATA[timeInNS]]></expr>
+		</operand>
+	</marker>
+	<type  start="310" length="16" line="9" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="finishTiming:(Z)V@android.test.PerformanceTestCase$Intermediates"
+ sig="void finishTiming(boolean)"
+ line="10"
+ startpos="371"
+ endpos="383"
+>
+	<marker line="-1" type="param">
+		<operand  start="392" length="8" line="10">
+			<expr><![CDATA[realTime]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+<method
+ chordsig="startPerformance:(Landroid/test/PerformanceTestCase$Intermediates;)I@android.test.PerformanceTestCase"
+ sig="int startPerformance(Intermediates)"
+ line="12"
+ startpos="426"
+ endpos="442"
+>
+	<marker line="-1" type="param">
+		<operand  start="490" length="13" line="12">
+			<expr><![CDATA[intermediates]]></expr>
+		</operand>
+	</marker>
+	<type  start="443" length="46" line="12" chordsig="android.test.PerformanceTestCase$Intermediates"/>
+</method>
+<method
+ chordsig="isPerformanceOnly:()Z@android.test.PerformanceTestCase"
+ sig="boolean isPerformanceOnly()"
+ line="13"
+ startpos="531"
+ endpos="548"
+>
+</method>
+</class>
+</root>

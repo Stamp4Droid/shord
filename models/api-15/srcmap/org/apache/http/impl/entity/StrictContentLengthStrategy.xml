@@ -1,0 +1,47 @@
+<root>
+<class chordsig="org.apache.http.impl.entity.StrictContentLengthStrategy" line="2">
+	<type  start="91" length="44" line="3" chordsig="org.apache.http.entity.ContentLengthStrategy"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.impl.entity.StrictContentLengthStrategy"
+ sig="StrictContentLengthStrategy()"
+ line="5"
+ startpos="146"
+ endpos="173"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="188" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="184" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="205" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="188" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="determineLength:(Lorg/apache/http/HttpMessage;)J@org.apache.http.impl.entity.StrictContentLengthStrategy"
+ sig="long determineLength(HttpMessage)"
+ line="6"
+ startpos="230"
+ endpos="245"
+>
+	<marker line="-1" type="param">
+		<operand  start="274" length="7" line="6">
+			<expr><![CDATA[message]]></expr>
+		</operand>
+	</marker>
+	<type  start="246" length="27" line="6" chordsig="org.apache.http.HttpMessage"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="332" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="328" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="349" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="332" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

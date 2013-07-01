@@ -1,0 +1,7 @@
+<root>
+<class chordsig="java.util.concurrent.ScheduledFuture" line="2">
+	<type  start="76" length="28" line="3" chordsig="java.util.concurrent.Delayed"/>
+	<type  start="106" length="27" line="3" chordsig="java.util.concurrent.Future"/>
+	<type  start="134" length="1" line="3" chordsig="java.lang.Object"/>
+</class>
+</root>

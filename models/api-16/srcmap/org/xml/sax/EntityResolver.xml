@@ -1,0 +1,25 @@
+<root>
+<class chordsig="org.xml.sax.EntityResolver" line="2">
+<method
+ chordsig="resolveEntity:(Ljava/lang/String;Ljava/lang/String;)Lorg/xml/sax/InputSource;@org.xml.sax.EntityResolver"
+ sig="InputSource resolveEntity(String,String)"
+ line="4"
+ startpos="96"
+ endpos="109"
+>
+	<marker line="-1" type="param">
+		<operand  start="127" length="8" line="4">
+			<expr><![CDATA[publicId]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="154" length="8" line="4">
+			<expr><![CDATA[systemId]]></expr>
+		</operand>
+	</marker>
+	<type  start="72" length="23" line="4" chordsig="org.xml.sax.InputSource"/>
+	<type  start="110" length="16" line="4" chordsig="java.lang.String"/>
+	<type  start="137" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

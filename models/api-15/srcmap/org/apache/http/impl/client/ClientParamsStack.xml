@@ -1,0 +1,298 @@
+<root>
+<class chordsig="org.apache.http.impl.client.ClientParamsStack" line="2">
+	<type  start="78" length="41" line="3" chordsig="org.apache.http.params.AbstractHttpParams"/>
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/params/HttpParams;Lorg/apache/http/params/HttpParams;Lorg/apache/http/params/HttpParams;Lorg/apache/http/params/HttpParams;)V@org.apache.http.impl.client.ClientParamsStack"
+ sig="ClientParamsStack(HttpParams,HttpParams,HttpParams,HttpParams)"
+ line="5"
+ startpos="130"
+ endpos="147"
+>
+	<marker line="-1" type="param">
+		<operand  start="182" length="7" line="5">
+			<expr><![CDATA[aparams]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="225" length="7" line="5">
+			<expr><![CDATA[cparams]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="268" length="7" line="5">
+			<expr><![CDATA[rparams]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="311" length="7" line="5">
+			<expr><![CDATA[oparams]]></expr>
+		</operand>
+	</marker>
+	<type  start="148" length="33" line="5" chordsig="org.apache.http.params.HttpParams"/>
+	<type  start="191" length="33" line="5" chordsig="org.apache.http.params.HttpParams"/>
+	<type  start="234" length="33" line="5" chordsig="org.apache.http.params.HttpParams"/>
+	<type  start="277" length="33" line="5" chordsig="org.apache.http.params.HttpParams"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="332" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="328" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="349" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="332" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/impl/client/ClientParamsStack;)V@org.apache.http.impl.client.ClientParamsStack"
+ sig="ClientParamsStack(ClientParamsStack)"
+ line="6"
+ startpos="369"
+ endpos="386"
+>
+	<marker line="-1" type="param">
+		<operand  start="433" length="5" line="6">
+			<expr><![CDATA[stack]]></expr>
+		</operand>
+	</marker>
+	<type  start="387" length="45" line="6" chordsig="org.apache.http.impl.client.ClientParamsStack"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="452" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="448" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="469" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="452" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/impl/client/ClientParamsStack;Lorg/apache/http/params/HttpParams;Lorg/apache/http/params/HttpParams;Lorg/apache/http/params/HttpParams;Lorg/apache/http/params/HttpParams;)V@org.apache.http.impl.client.ClientParamsStack"
+ sig="ClientParamsStack(ClientParamsStack,HttpParams,HttpParams,HttpParams,HttpParams)"
+ line="7"
+ startpos="489"
+ endpos="506"
+>
+	<marker line="-1" type="param">
+		<operand  start="553" length="5" line="7">
+			<expr><![CDATA[stack]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="594" length="7" line="7">
+			<expr><![CDATA[aparams]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="637" length="7" line="7">
+			<expr><![CDATA[cparams]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="680" length="7" line="7">
+			<expr><![CDATA[rparams]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="723" length="7" line="7">
+			<expr><![CDATA[oparams]]></expr>
+		</operand>
+	</marker>
+	<type  start="507" length="45" line="7" chordsig="org.apache.http.impl.client.ClientParamsStack"/>
+	<type  start="560" length="33" line="7" chordsig="org.apache.http.params.HttpParams"/>
+	<type  start="603" length="33" line="7" chordsig="org.apache.http.params.HttpParams"/>
+	<type  start="646" length="33" line="7" chordsig="org.apache.http.params.HttpParams"/>
+	<type  start="689" length="33" line="7" chordsig="org.apache.http.params.HttpParams"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="744" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="740" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="761" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="744" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getApplicationParams:()Lorg/apache/http/params/HttpParams;@org.apache.http.impl.client.ClientParamsStack"
+ sig="HttpParams getApplicationParams()"
+ line="8"
+ startpos="821"
+ endpos="841"
+>
+	<type  start="787" length="33" line="8" chordsig="org.apache.http.params.HttpParams"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="856" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="852" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="873" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="856" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getClientParams:()Lorg/apache/http/params/HttpParams;@org.apache.http.impl.client.ClientParamsStack"
+ sig="HttpParams getClientParams()"
+ line="9"
+ startpos="933"
+ endpos="948"
+>
+	<type  start="899" length="33" line="9" chordsig="org.apache.http.params.HttpParams"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="963" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="959" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="980" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="963" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRequestParams:()Lorg/apache/http/params/HttpParams;@org.apache.http.impl.client.ClientParamsStack"
+ sig="HttpParams getRequestParams()"
+ line="10"
+ startpos="1040"
+ endpos="1056"
+>
+	<type  start="1006" length="33" line="10" chordsig="org.apache.http.params.HttpParams"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1071" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1067" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1088" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1071" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getOverrideParams:()Lorg/apache/http/params/HttpParams;@org.apache.http.impl.client.ClientParamsStack"
+ sig="HttpParams getOverrideParams()"
+ line="11"
+ startpos="1148"
+ endpos="1165"
+>
+	<type  start="1114" length="33" line="11" chordsig="org.apache.http.params.HttpParams"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1180" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1176" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1197" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1180" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getParameter:(Ljava/lang/String;)Ljava/lang/Object;@org.apache.http.impl.client.ClientParamsStack"
+ sig="Object getParameter(String)"
+ line="12"
+ startpos="1234"
+ endpos="1246"
+>
+	<marker line="-1" type="param">
+		<operand  start="1264" length="4" line="12">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="1217" length="16" line="12" chordsig="java.lang.Object"/>
+	<type  start="1247" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1282" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1278" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1299" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1282" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setParameter:(Ljava/lang/String;Ljava/lang/Object;)Lorg/apache/http/params/HttpParams;@org.apache.http.impl.client.ClientParamsStack"
+ sig="HttpParams setParameter(String,Object)"
+ line="13"
+ startpos="1353"
+ endpos="1365"
+>
+	<marker line="-1" type="param">
+		<operand  start="1383" length="4" line="13">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1406" length="5" line="13">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="1319" length="33" line="13" chordsig="org.apache.http.params.HttpParams"/>
+	<type  start="1366" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="1389" length="16" line="13" chordsig="java.lang.Object"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1472" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1468" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1489" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1472" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeParameter:(Ljava/lang/String;)Z@org.apache.http.impl.client.ClientParamsStack"
+ sig="boolean removeParameter(String)"
+ line="14"
+ startpos="1517"
+ endpos="1532"
+>
+	<marker line="-1" type="param">
+		<operand  start="1550" length="4" line="14">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="1533" length="16" line="14" chordsig="java.lang.String"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1568" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1564" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1585" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1568" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="copy:()Lorg/apache/http/params/HttpParams;@org.apache.http.impl.client.ClientParamsStack"
+ sig="HttpParams copy()"
+ line="15"
+ startpos="1639"
+ endpos="1643"
+>
+	<type  start="1605" length="33" line="15" chordsig="org.apache.http.params.HttpParams"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1658" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1654" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1675" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1658" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1703" length="33" line="16" chordsig="org.apache.http.params.HttpParams"/>
+	<type  start="1772" length="33" line="17" chordsig="org.apache.http.params.HttpParams"/>
+	<type  start="1836" length="33" line="18" chordsig="org.apache.http.params.HttpParams"/>
+	<type  start="1901" length="33" line="19" chordsig="org.apache.http.params.HttpParams"/>
+</class>
+</root>

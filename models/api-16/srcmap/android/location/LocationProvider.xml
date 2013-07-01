@@ -1,0 +1,137 @@
+<root>
+<class chordsig="android.location.LocationProvider" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.location.LocationProvider"
+ sig="LocationProvider()"
+ line="4"
+ startpos="67"
+ endpos="83"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="98" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="94" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="115" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="98" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getName:()Ljava/lang/String;@android.location.LocationProvider"
+ sig="String getName()"
+ line="5"
+ startpos="152"
+ endpos="159"
+>
+	<type  start="135" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="174" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="170" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="191" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="174" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="meetsCriteria:(Landroid/location/Criteria;)Z@android.location.LocationProvider"
+ sig="boolean meetsCriteria(Criteria)"
+ line="6"
+ startpos="219"
+ endpos="232"
+>
+	<marker line="-1" type="param">
+		<operand  start="259" length="8" line="6">
+			<expr><![CDATA[criteria]]></expr>
+		</operand>
+	</marker>
+	<type  start="233" length="25" line="6" chordsig="android.location.Criteria"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="281" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="277" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="298" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="281" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="requiresNetwork:()Z@android.location.LocationProvider"
+ sig="boolean requiresNetwork()"
+ line="7"
+ startpos="335"
+ endpos="350"
+>
+</method>
+<method
+ chordsig="requiresSatellite:()Z@android.location.LocationProvider"
+ sig="boolean requiresSatellite()"
+ line="8"
+ startpos="379"
+ endpos="396"
+>
+</method>
+<method
+ chordsig="requiresCell:()Z@android.location.LocationProvider"
+ sig="boolean requiresCell()"
+ line="9"
+ startpos="425"
+ endpos="437"
+>
+</method>
+<method
+ chordsig="hasMonetaryCost:()Z@android.location.LocationProvider"
+ sig="boolean hasMonetaryCost()"
+ line="10"
+ startpos="466"
+ endpos="481"
+>
+</method>
+<method
+ chordsig="supportsAltitude:()Z@android.location.LocationProvider"
+ sig="boolean supportsAltitude()"
+ line="11"
+ startpos="510"
+ endpos="526"
+>
+</method>
+<method
+ chordsig="supportsSpeed:()Z@android.location.LocationProvider"
+ sig="boolean supportsSpeed()"
+ line="12"
+ startpos="555"
+ endpos="568"
+>
+</method>
+<method
+ chordsig="supportsBearing:()Z@android.location.LocationProvider"
+ sig="boolean supportsBearing()"
+ line="13"
+ startpos="597"
+ endpos="612"
+>
+</method>
+<method
+ chordsig="getPowerRequirement:()I@android.location.LocationProvider"
+ sig="int getPowerRequirement()"
+ line="14"
+ startpos="637"
+ endpos="656"
+>
+</method>
+<method
+ chordsig="getAccuracy:()I@android.location.LocationProvider"
+ sig="int getAccuracy()"
+ line="15"
+ startpos="681"
+ endpos="692"
+>
+</method>
+</class>
+</root>

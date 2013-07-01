@@ -1,0 +1,227 @@
+<root>
+<class chordsig="java.nio.channels.spi.AbstractSelectableChannel" line="2">
+	<type  start="89" length="35" line="3" chordsig="java.nio.channels.SelectableChannel"/>
+<method
+ chordsig="&lt;init&gt;:(Ljava/nio/channels/spi/SelectorProvider;)V@java.nio.channels.spi.AbstractSelectableChannel"
+ sig="AbstractSelectableChannel(SelectorProvider)"
+ line="5"
+ startpos="138"
+ endpos="163"
+>
+	<marker line="-1" type="param">
+		<operand  start="203" length="16" line="5">
+			<expr><![CDATA[selectorProvider]]></expr>
+		</operand>
+	</marker>
+	<type  start="164" length="38" line="5" chordsig="java.nio.channels.spi.SelectorProvider"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="233" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="229" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="250" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="233" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="provider:()Ljava/nio/channels/spi/SelectorProvider;@java.nio.channels.spi.AbstractSelectableChannel"
+ sig="SelectorProvider provider()"
+ line="6"
+ startpos="315"
+ endpos="323"
+>
+	<type  start="276" length="38" line="6" chordsig="java.nio.channels.spi.SelectorProvider"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="338" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="334" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="355" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="338" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isRegistered:()Z@java.nio.channels.spi.AbstractSelectableChannel"
+ sig="boolean isRegistered()"
+ line="7"
+ startpos="402"
+ endpos="414"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="429" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="425" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="446" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="429" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="keyFor:(Ljava/nio/channels/Selector;)Ljava/nio/channels/SelectionKey;@java.nio.channels.spi.AbstractSelectableChannel"
+ sig="SelectionKey keyFor(Selector)"
+ line="8"
+ startpos="516"
+ endpos="522"
+>
+	<marker line="-1" type="param">
+		<operand  start="550" length="8" line="8">
+			<expr><![CDATA[selector]]></expr>
+		</operand>
+	</marker>
+	<type  start="485" length="30" line="8" chordsig="java.nio.channels.SelectionKey"/>
+	<type  start="523" length="26" line="8" chordsig="java.nio.channels.Selector"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="572" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="568" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="589" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="572" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="register:(Ljava/nio/channels/Selector;ILjava/lang/Object;)Ljava/nio/channels/SelectionKey;@java.nio.channels.spi.AbstractSelectableChannel"
+ sig="SelectionKey register(Selector,int,Object)"
+ line="9"
+ startpos="646"
+ endpos="654"
+>
+	<marker line="-1" type="param">
+		<operand  start="682" length="8" line="9">
+			<expr><![CDATA[selector]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="696" length="11" line="9">
+			<expr><![CDATA[interestSet]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="726" length="10" line="9">
+			<expr><![CDATA[attachment]]></expr>
+		</operand>
+	</marker>
+	<type  start="615" length="30" line="9" chordsig="java.nio.channels.SelectionKey"/>
+	<type  start="655" length="26" line="9" chordsig="java.nio.channels.Selector"/>
+	<type  start="709" length="16" line="9" chordsig="java.lang.Object"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="798" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="794" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="815" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="798" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="implCloseChannel:()V@java.nio.channels.spi.AbstractSelectableChannel"
+ sig="void implCloseChannel()"
+ line="10"
+ startpos="862"
+ endpos="878"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="920" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="916" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="937" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="920" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="implCloseSelectableChannel:()V@java.nio.channels.spi.AbstractSelectableChannel"
+ sig="void implCloseSelectableChannel()"
+ line="11"
+ startpos="974"
+ endpos="1000"
+>
+</method>
+<method
+ chordsig="isBlocking:()Z@java.nio.channels.spi.AbstractSelectableChannel"
+ sig="boolean isBlocking()"
+ line="12"
+ startpos="1053"
+ endpos="1063"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1078" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1074" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1095" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1078" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="blockingLock:()Ljava/lang/Object;@java.nio.channels.spi.AbstractSelectableChannel"
+ sig="Object blockingLock()"
+ line="13"
+ startpos="1138"
+ endpos="1150"
+>
+	<type  start="1121" length="16" line="13" chordsig="java.lang.Object"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1165" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1161" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1182" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1165" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="configureBlocking:(Z)Ljava/nio/channels/SelectableChannel;@java.nio.channels.spi.AbstractSelectableChannel"
+ sig="SelectableChannel configureBlocking(boolean)"
+ line="14"
+ startpos="1244"
+ endpos="1261"
+>
+	<marker line="-1" type="param">
+		<operand  start="1270" length="12" line="14">
+			<expr><![CDATA[blockingMode]]></expr>
+		</operand>
+	</marker>
+	<type  start="1208" length="35" line="14" chordsig="java.nio.channels.SelectableChannel"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1323" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1319" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1340" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1323" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="implConfigureBlocking:(Z)V@java.nio.channels.spi.AbstractSelectableChannel"
+ sig="void implConfigureBlocking(boolean)"
+ line="15"
+ startpos="1377"
+ endpos="1398"
+>
+	<marker line="-1" type="param">
+		<operand  start="1407" length="8" line="15">
+			<expr><![CDATA[blocking]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

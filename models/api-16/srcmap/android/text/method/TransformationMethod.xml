@@ -1,0 +1,61 @@
+<root>
+<class chordsig="android.text.method.TransformationMethod" line="2">
+<method
+ chordsig="getTransformation:(Ljava/lang/CharSequence;Landroid/view/View;)Ljava/lang/CharSequence;@android.text.method.TransformationMethod"
+ sig="CharSequence getTransformation(CharSequence,View)"
+ line="4"
+ startpos="109"
+ endpos="126"
+>
+	<marker line="-1" type="param">
+		<operand  start="150" length="6" line="4">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="176" length="4" line="4">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<type  start="86" length="22" line="4" chordsig="java.lang.CharSequence"/>
+	<type  start="127" length="22" line="4" chordsig="java.lang.CharSequence"/>
+	<type  start="158" length="17" line="4" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="onFocusChanged:(Landroid/view/View;Ljava/lang/CharSequence;ZILandroid/graphics/Rect;)V@android.text.method.TransformationMethod"
+ sig="void onFocusChanged(View,CharSequence,boolean,int,Rect)"
+ line="5"
+ startpos="205"
+ endpos="219"
+>
+	<marker line="-1" type="param">
+		<operand  start="238" length="4" line="5">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="267" length="10" line="5">
+			<expr><![CDATA[sourceText]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="287" length="7" line="5">
+			<expr><![CDATA[focused]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="300" length="9" line="5">
+			<expr><![CDATA[direction]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="333" length="21" line="5">
+			<expr><![CDATA[previouslyFocusedRect]]></expr>
+		</operand>
+	</marker>
+	<type  start="220" length="17" line="5" chordsig="android.view.View"/>
+	<type  start="244" length="22" line="5" chordsig="java.lang.CharSequence"/>
+	<type  start="311" length="21" line="5" chordsig="android.graphics.Rect"/>
+</method>
+</class>
+</root>

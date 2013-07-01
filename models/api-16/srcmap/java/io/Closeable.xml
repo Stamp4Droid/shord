@@ -1,0 +1,12 @@
+<root>
+<class chordsig="java.io.Closeable" line="2">
+<method
+ chordsig="close:()V@java.io.Closeable"
+ sig="void close()"
+ line="4"
+ startpos="68"
+ endpos="73"
+>
+</method>
+</class>
+</root>

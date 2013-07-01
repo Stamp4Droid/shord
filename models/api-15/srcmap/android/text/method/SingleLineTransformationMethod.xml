@@ -1,0 +1,78 @@
+<root>
+<class chordsig="android.text.method.SingleLineTransformationMethod" line="2">
+	<type  start="83" length="51" line="3" chordsig="android.text.method.ReplacementTransformationMethod"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.text.method.SingleLineTransformationMethod"
+ sig="SingleLineTransformationMethod()"
+ line="5"
+ startpos="145"
+ endpos="175"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="190" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="186" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="207" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="190" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getOriginal:()[C@android.text.method.SingleLineTransformationMethod"
+ sig="char[] getOriginal()"
+ line="6"
+ startpos="237"
+ endpos="248"
+>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="263" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="259" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="280" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="263" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getReplacement:()[C@android.text.method.SingleLineTransformationMethod"
+ sig="char[] getReplacement()"
+ line="7"
+ startpos="310"
+ endpos="324"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="339" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="335" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="356" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="339" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getInstance:()Landroid/text/method/SingleLineTransformationMethod;@android.text.method.SingleLineTransformationMethod"
+ sig="SingleLineTransformationMethod getInstance()"
+ line="8"
+ startpos="434"
+ endpos="445"
+>
+	<type  start="383" length="50" line="8" chordsig="android.text.method.SingleLineTransformationMethod"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="460" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="456" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="477" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="460" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

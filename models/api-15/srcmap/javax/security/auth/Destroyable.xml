@@ -1,0 +1,20 @@
+<root>
+<class chordsig="javax.security.auth.Destroyable" line="2">
+<method
+ chordsig="destroy:()V@javax.security.auth.Destroyable"
+ sig="void destroy()"
+ line="4"
+ startpos="82"
+ endpos="89"
+>
+</method>
+<method
+ chordsig="isDestroyed:()Z@javax.security.auth.Destroyable"
+ sig="boolean isDestroyed()"
+ line="5"
+ startpos="168"
+ endpos="179"
+>
+</method>
+</class>
+</root>

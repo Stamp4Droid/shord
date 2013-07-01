@@ -1,0 +1,188 @@
+<root>
+<class chordsig="javax.net.ssl.HandshakeCompletedEvent" line="2">
+	<type  start="70" length="21" line="3" chordsig="java.util.EventObject"/>
+<method
+ chordsig="&lt;init&gt;:(Ljavax/net/ssl/SSLSocket;Ljavax/net/ssl/SSLSession;)V@javax.net.ssl.HandshakeCompletedEvent"
+ sig="HandshakeCompletedEvent(SSLSocket,SSLSession)"
+ line="5"
+ startpos="102"
+ endpos="125"
+>
+	<marker line="-1" type="param">
+		<operand  start="150" length="4" line="5">
+			<expr><![CDATA[sock]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="181" length="1" line="5">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<type  start="126" length="23" line="5" chordsig="javax.net.ssl.SSLSocket"/>
+	<type  start="156" length="24" line="5" chordsig="javax.net.ssl.SSLSession"/>
+	<type  start="193" length="16" line="5" chordsig="java.lang.Object"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="227" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="223" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="244" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="227" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSession:()Ljavax/net/ssl/SSLSession;@javax.net.ssl.HandshakeCompletedEvent"
+ sig="SSLSession getSession()"
+ line="6"
+ startpos="289"
+ endpos="299"
+>
+	<type  start="264" length="24" line="6" chordsig="javax.net.ssl.SSLSession"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="314" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="310" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="331" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="314" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCipherSuite:()Ljava/lang/String;@javax.net.ssl.HandshakeCompletedEvent"
+ sig="String getCipherSuite()"
+ line="7"
+ startpos="368"
+ endpos="382"
+>
+	<type  start="351" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="397" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="393" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="414" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="397" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLocalCertificates:()[Ljava/security/cert/Certificate;@javax.net.ssl.HandshakeCompletedEvent"
+ sig="Certificate[] getLocalCertificates()"
+ line="8"
+ startpos="467"
+ endpos="487"
+>
+	<type  start="434" length="30" line="8" chordsig="java.security.cert.Certificate"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="502" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="498" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="519" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="502" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPeerCertificates:()[Ljava/security/cert/Certificate;@javax.net.ssl.HandshakeCompletedEvent"
+ sig="Certificate[] getPeerCertificates()"
+ line="9"
+ startpos="572"
+ endpos="591"
+>
+	<type  start="539" length="30" line="9" chordsig="java.security.cert.Certificate"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="654" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="650" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="671" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="654" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPeerCertificateChain:()[Ljavax/security/cert/X509Certificate;@javax.net.ssl.HandshakeCompletedEvent"
+ sig="X509Certificate[] getPeerCertificateChain()"
+ line="10"
+ startpos="729"
+ endpos="752"
+>
+	<type  start="691" length="35" line="10" chordsig="javax.security.cert.X509Certificate"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="815" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="811" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="832" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="815" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPeerPrincipal:()Ljava/security/Principal;@javax.net.ssl.HandshakeCompletedEvent"
+ sig="Principal getPeerPrincipal()"
+ line="11"
+ startpos="876"
+ endpos="892"
+>
+	<type  start="852" length="23" line="11" chordsig="java.security.Principal"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="955" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="951" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="972" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="955" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLocalPrincipal:()Ljava/security/Principal;@javax.net.ssl.HandshakeCompletedEvent"
+ sig="Principal getLocalPrincipal()"
+ line="12"
+ startpos="1016"
+ endpos="1033"
+>
+	<type  start="992" length="23" line="12" chordsig="java.security.Principal"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1048" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1044" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1065" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1048" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSocket:()Ljavax/net/ssl/SSLSocket;@javax.net.ssl.HandshakeCompletedEvent"
+ sig="SSLSocket getSocket()"
+ line="13"
+ startpos="1109"
+ endpos="1118"
+>
+	<type  start="1085" length="23" line="13" chordsig="javax.net.ssl.SSLSocket"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1133" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1129" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1150" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1133" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,88 @@
+<root>
+<class chordsig="com.google.android.maps.PixelConverter" line="3">
+	<type  start="67" length="34" line="3" chordsig="com.google.android.maps.Projection"/>
+<method
+ chordsig="toPixels:(Lcom/google/android/maps/GeoPoint;Landroid/graphics/Point;)Landroid/graphics/Point;@com.google.android.maps.PixelConverter"
+ sig="Point toPixels(GeoPoint,Point)"
+ line="6"
+ startpos="137"
+ endpos="145"
+>
+	<marker line="-1" type="param">
+		<operand  start="179" length="6" line="6">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="210" length="6" line="6">
+			<expr><![CDATA[param2]]></expr>
+		</operand>
+	</marker>
+	<type  start="114" length="22" line="6" chordsig="android.graphics.Point"/>
+	<type  start="146" length="32" line="6" chordsig="com.google.android.maps.GeoPoint"/>
+	<type  start="187" length="22" line="6" chordsig="android.graphics.Point"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="236" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="232" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="253" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="236" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="fromPixels:(II)Lcom/google/android/maps/GeoPoint;@com.google.android.maps.PixelConverter"
+ sig="GeoPoint fromPixels(int,int)"
+ line="11"
+ startpos="310"
+ endpos="320"
+>
+	<marker line="-1" type="param">
+		<operand  start="325" length="6" line="11">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="337" length="6" line="11">
+			<expr><![CDATA[param2]]></expr>
+		</operand>
+	</marker>
+	<type  start="277" length="32" line="11" chordsig="com.google.android.maps.GeoPoint"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="363" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="359" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="380" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="363" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="metersToEquatorPixels:(F)F@com.google.android.maps.PixelConverter"
+ sig="float metersToEquatorPixels(float)"
+ line="16"
+ startpos="410"
+ endpos="431"
+>
+	<marker line="-1" type="param">
+		<operand  start="438" length="6" line="16">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="464" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="460" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="481" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="464" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

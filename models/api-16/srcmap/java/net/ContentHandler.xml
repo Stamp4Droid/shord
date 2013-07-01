@@ -1,0 +1,68 @@
+<root>
+<class chordsig="java.net.ContentHandler" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@java.net.ContentHandler"
+ sig="ContentHandler()"
+ line="4"
+ startpos="65"
+ endpos="79"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="94" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="90" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="111" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="94" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getContent:(Ljava/net/URLConnection;)Ljava/lang/Object;@java.net.ContentHandler"
+ sig="Object getContent(URLConnection)"
+ line="5"
+ startpos="157"
+ endpos="167"
+>
+	<marker line="-1" type="param">
+		<operand  start="191" length="5" line="5">
+			<expr><![CDATA[uConn]]></expr>
+		</operand>
+	</marker>
+	<type  start="140" length="16" line="5" chordsig="java.lang.Object"/>
+	<type  start="168" length="22" line="5" chordsig="java.net.URLConnection"/>
+</method>
+<method
+ chordsig="getContent:(Ljava/net/URLConnection;[Ljava/lang/Class;)Ljava/lang/Object;@java.net.ContentHandler"
+ sig="Object getContent(URLConnection,Class[])"
+ line="7"
+ startpos="300"
+ endpos="310"
+>
+	<marker line="-1" type="param">
+		<operand  start="334" length="5" line="7">
+			<expr><![CDATA[uConn]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="359" length="5" line="7">
+			<expr><![CDATA[types]]></expr>
+		</operand>
+	</marker>
+	<type  start="283" length="16" line="7" chordsig="java.lang.Object"/>
+	<type  start="311" length="22" line="7" chordsig="java.net.URLConnection"/>
+	<type  start="341" length="15" line="7" chordsig="java.lang.Class"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="405" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="401" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="422" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="405" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,30 @@
+<root>
+<class chordsig="org.apache.http.StatusLine" line="2">
+<method
+ chordsig="getProtocolVersion:()Lorg/apache/http/ProtocolVersion;@org.apache.http.StatusLine"
+ sig="ProtocolVersion getProtocolVersion()"
+ line="4"
+ startpos="104"
+ endpos="122"
+>
+	<type  start="72" length="31" line="4" chordsig="org.apache.http.ProtocolVersion"/>
+</method>
+<method
+ chordsig="getStatusCode:()I@org.apache.http.StatusLine"
+ sig="int getStatusCode()"
+ line="5"
+ startpos="147"
+ endpos="160"
+>
+</method>
+<method
+ chordsig="getReasonPhrase:()Ljava/lang/String;@org.apache.http.StatusLine"
+ sig="String getReasonPhrase()"
+ line="6"
+ startpos="198"
+ endpos="213"
+>
+	<type  start="181" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

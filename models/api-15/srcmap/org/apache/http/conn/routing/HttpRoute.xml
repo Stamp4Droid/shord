@@ -1,0 +1,483 @@
+<root>
+<class chordsig="org.apache.http.conn.routing.HttpRoute" line="2">
+	<type  start="80" length="38" line="3" chordsig="org.apache.http.conn.routing.RouteInfo"/>
+	<type  start="120" length="19" line="3" chordsig="java.lang.Cloneable"/>
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/HttpHost;Ljava/net/InetAddress;[Lorg/apache/http/HttpHost;ZLorg/apache/http/conn/routing/RouteInfo$TunnelType;Lorg/apache/http/conn/routing/RouteInfo$LayerType;)V@org.apache.http.conn.routing.HttpRoute"
+ sig="HttpRoute(HttpHost,InetAddress,HttpHost[],boolean,TunnelType,LayerType)"
+ line="5"
+ startpos="150"
+ endpos="159"
+>
+	<marker line="-1" type="param">
+		<operand  start="185" length="6" line="5">
+			<expr><![CDATA[target]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="214" length="5" line="5">
+			<expr><![CDATA[local]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="248" length="7" line="5">
+			<expr><![CDATA[proxies]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="265" length="6" line="5">
+			<expr><![CDATA[secure]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="323" length="9" line="5">
+			<expr><![CDATA[tunnelled]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="383" length="7" line="5">
+			<expr><![CDATA[layered]]></expr>
+		</operand>
+	</marker>
+	<type  start="160" length="24" line="5" chordsig="org.apache.http.HttpHost"/>
+	<type  start="193" length="20" line="5" chordsig="java.net.InetAddress"/>
+	<type  start="221" length="24" line="5" chordsig="org.apache.http.HttpHost"/>
+	<type  start="273" length="49" line="5" chordsig="org.apache.http.conn.routing.RouteInfo$TunnelType"/>
+	<type  start="334" length="48" line="5" chordsig="org.apache.http.conn.routing.RouteInfo$LayerType"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="404" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="400" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="421" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="404" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/HttpHost;Ljava/net/InetAddress;Lorg/apache/http/HttpHost;ZLorg/apache/http/conn/routing/RouteInfo$TunnelType;Lorg/apache/http/conn/routing/RouteInfo$LayerType;)V@org.apache.http.conn.routing.HttpRoute"
+ sig="HttpRoute(HttpHost,InetAddress,HttpHost,boolean,TunnelType,LayerType)"
+ line="6"
+ startpos="441"
+ endpos="450"
+>
+	<marker line="-1" type="param">
+		<operand  start="476" length="6" line="6">
+			<expr><![CDATA[target]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="505" length="5" line="6">
+			<expr><![CDATA[local]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="537" length="5" line="6">
+			<expr><![CDATA[proxy]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="552" length="6" line="6">
+			<expr><![CDATA[secure]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="610" length="9" line="6">
+			<expr><![CDATA[tunnelled]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="670" length="7" line="6">
+			<expr><![CDATA[layered]]></expr>
+		</operand>
+	</marker>
+	<type  start="451" length="24" line="6" chordsig="org.apache.http.HttpHost"/>
+	<type  start="484" length="20" line="6" chordsig="java.net.InetAddress"/>
+	<type  start="512" length="24" line="6" chordsig="org.apache.http.HttpHost"/>
+	<type  start="560" length="49" line="6" chordsig="org.apache.http.conn.routing.RouteInfo$TunnelType"/>
+	<type  start="621" length="48" line="6" chordsig="org.apache.http.conn.routing.RouteInfo$LayerType"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="691" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="687" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="708" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="691" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/HttpHost;Ljava/net/InetAddress;Z)V@org.apache.http.conn.routing.HttpRoute"
+ sig="HttpRoute(HttpHost,InetAddress,boolean)"
+ line="7"
+ startpos="728"
+ endpos="737"
+>
+	<marker line="-1" type="param">
+		<operand  start="763" length="6" line="7">
+			<expr><![CDATA[target]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="792" length="5" line="7">
+			<expr><![CDATA[local]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="807" length="6" line="7">
+			<expr><![CDATA[secure]]></expr>
+		</operand>
+	</marker>
+	<type  start="738" length="24" line="7" chordsig="org.apache.http.HttpHost"/>
+	<type  start="771" length="20" line="7" chordsig="java.net.InetAddress"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="827" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="823" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="844" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="827" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/HttpHost;)V@org.apache.http.conn.routing.HttpRoute"
+ sig="HttpRoute(HttpHost)"
+ line="8"
+ startpos="864"
+ endpos="873"
+>
+	<marker line="-1" type="param">
+		<operand  start="899" length="6" line="8">
+			<expr><![CDATA[target]]></expr>
+		</operand>
+	</marker>
+	<type  start="874" length="24" line="8" chordsig="org.apache.http.HttpHost"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="919" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="915" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="936" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="919" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Lorg/apache/http/HttpHost;Ljava/net/InetAddress;Lorg/apache/http/HttpHost;Z)V@org.apache.http.conn.routing.HttpRoute"
+ sig="HttpRoute(HttpHost,InetAddress,HttpHost,boolean)"
+ line="9"
+ startpos="956"
+ endpos="965"
+>
+	<marker line="-1" type="param">
+		<operand  start="991" length="6" line="9">
+			<expr><![CDATA[target]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1020" length="5" line="9">
+			<expr><![CDATA[local]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1052" length="5" line="9">
+			<expr><![CDATA[proxy]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1067" length="6" line="9">
+			<expr><![CDATA[secure]]></expr>
+		</operand>
+	</marker>
+	<type  start="966" length="24" line="9" chordsig="org.apache.http.HttpHost"/>
+	<type  start="999" length="20" line="9" chordsig="java.net.InetAddress"/>
+	<type  start="1027" length="24" line="9" chordsig="org.apache.http.HttpHost"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1087" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1083" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1104" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1087" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTargetHost:()Lorg/apache/http/HttpHost;@org.apache.http.conn.routing.HttpRoute"
+ sig="HttpHost getTargetHost()"
+ line="10"
+ startpos="1155"
+ endpos="1168"
+>
+	<type  start="1130" length="24" line="10" chordsig="org.apache.http.HttpHost"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1183" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1179" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1200" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1183" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLocalAddress:()Ljava/net/InetAddress;@org.apache.http.conn.routing.HttpRoute"
+ sig="InetAddress getLocalAddress()"
+ line="11"
+ startpos="1247"
+ endpos="1262"
+>
+	<type  start="1226" length="20" line="11" chordsig="java.net.InetAddress"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1277" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1273" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1294" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1277" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getHopCount:()I@org.apache.http.conn.routing.HttpRoute"
+ sig="int getHopCount()"
+ line="12"
+ startpos="1324"
+ endpos="1335"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1350" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1346" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1367" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1350" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getHopTarget:(I)Lorg/apache/http/HttpHost;@org.apache.http.conn.routing.HttpRoute"
+ sig="HttpHost getHopTarget(int)"
+ line="13"
+ startpos="1418"
+ endpos="1430"
+>
+	<marker line="-1" type="param">
+		<operand  start="1435" length="3" line="13">
+			<expr><![CDATA[hop]]></expr>
+		</operand>
+	</marker>
+	<type  start="1393" length="24" line="13" chordsig="org.apache.http.HttpHost"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1452" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1448" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1469" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1452" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getProxyHost:()Lorg/apache/http/HttpHost;@org.apache.http.conn.routing.HttpRoute"
+ sig="HttpHost getProxyHost()"
+ line="14"
+ startpos="1520"
+ endpos="1532"
+>
+	<type  start="1495" length="24" line="14" chordsig="org.apache.http.HttpHost"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1547" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1543" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1564" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1547" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTunnelType:()Lorg/apache/http/conn/routing/RouteInfo$TunnelType;@org.apache.http.conn.routing.HttpRoute"
+ sig="TunnelType getTunnelType()"
+ line="15"
+ startpos="1640"
+ endpos="1653"
+>
+	<type  start="1590" length="49" line="15" chordsig="org.apache.http.conn.routing.RouteInfo$TunnelType"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1668" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1664" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1685" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1668" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isTunnelled:()Z@org.apache.http.conn.routing.HttpRoute"
+ sig="boolean isTunnelled()"
+ line="16"
+ startpos="1719"
+ endpos="1730"
+>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1745" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1741" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1762" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1745" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLayerType:()Lorg/apache/http/conn/routing/RouteInfo$LayerType;@org.apache.http.conn.routing.HttpRoute"
+ sig="LayerType getLayerType()"
+ line="17"
+ startpos="1837"
+ endpos="1849"
+>
+	<type  start="1788" length="48" line="17" chordsig="org.apache.http.conn.routing.RouteInfo$LayerType"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1864" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1860" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1881" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1864" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isLayered:()Z@org.apache.http.conn.routing.HttpRoute"
+ sig="boolean isLayered()"
+ line="18"
+ startpos="1915"
+ endpos="1924"
+>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1939" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1935" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1956" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1939" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isSecure:()Z@org.apache.http.conn.routing.HttpRoute"
+ sig="boolean isSecure()"
+ line="19"
+ startpos="1990"
+ endpos="1998"
+>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2013" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2009" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2030" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2013" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@org.apache.http.conn.routing.HttpRoute"
+ sig="boolean equals(Object)"
+ line="20"
+ startpos="2064"
+ endpos="2070"
+>
+	<marker line="-1" type="param">
+		<operand  start="2088" length="1" line="20">
+			<expr><![CDATA[o]]></expr>
+		</operand>
+	</marker>
+	<type  start="2071" length="16" line="20" chordsig="java.lang.Object"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2103" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2099" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2120" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2103" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@org.apache.http.conn.routing.HttpRoute"
+ sig="int hashCode()"
+ line="21"
+ startpos="2150"
+ endpos="2158"
+>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2173" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2169" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2190" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2173" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@org.apache.http.conn.routing.HttpRoute"
+ sig="String toString()"
+ line="22"
+ startpos="2233"
+ endpos="2241"
+>
+	<type  start="2216" length="16" line="22" chordsig="java.lang.String"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2256" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2252" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2273" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2256" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clone:()Ljava/lang/Object;@org.apache.http.conn.routing.HttpRoute"
+ sig="Object clone()"
+ line="23"
+ startpos="2310"
+ endpos="2315"
+>
+	<type  start="2293" length="16" line="23" chordsig="java.lang.Object"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2374" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2370" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2391" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2374" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

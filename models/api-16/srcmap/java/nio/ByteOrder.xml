@@ -1,0 +1,67 @@
+<root>
+<class chordsig="java.nio.ByteOrder" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@java.nio.ByteOrder"
+ sig="ByteOrder()"
+ line="4"
+ startpos="49"
+ endpos="58"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="73" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="69" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="90" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="73" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="nativeOrder:()Ljava/nio/ByteOrder;@java.nio.ByteOrder"
+ sig="ByteOrder nativeOrder()"
+ line="5"
+ startpos="136"
+ endpos="147"
+>
+	<type  start="117" length="18" line="5" chordsig="java.nio.ByteOrder"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="162" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="158" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="179" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="162" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.nio.ByteOrder"
+ sig="String toString()"
+ line="6"
+ startpos="216"
+ endpos="224"
+>
+	<type  start="199" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="239" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="235" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="256" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="239" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="288" length="18" line="7" chordsig="java.nio.ByteOrder"/>
+	<type  start="339" length="18" line="8" chordsig="java.nio.ByteOrder"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@java.nio.ByteOrder"
+ line="9"
+>
+</method>
+</class>
+</root>

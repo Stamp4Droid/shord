@@ -1,0 +1,83 @@
+<root>
+<class chordsig="org.apache.http.impl.cookie.RFC2109VersionHandler" line="2">
+	<type  start="82" length="58" line="3" chordsig="org.apache.http.impl.cookie.AbstractCookieAttributeHandler"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.impl.cookie.RFC2109VersionHandler"
+ sig="RFC2109VersionHandler()"
+ line="5"
+ startpos="151"
+ endpos="172"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="187" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="183" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="204" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="187" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parse:(Lorg/apache/http/cookie/SetCookie;Ljava/lang/String;)V@org.apache.http.impl.cookie.RFC2109VersionHandler"
+ sig="void parse(SetCookie,String)"
+ line="6"
+ startpos="229"
+ endpos="234"
+>
+	<marker line="-1" type="param">
+		<operand  start="268" length="6" line="6">
+			<expr><![CDATA[cookie]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="293" length="5" line="6">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="235" length="32" line="6" chordsig="org.apache.http.cookie.SetCookie"/>
+	<type  start="276" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="367" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="363" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="384" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="367" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="validate:(Lorg/apache/http/cookie/Cookie;Lorg/apache/http/cookie/CookieOrigin;)V@org.apache.http.impl.cookie.RFC2109VersionHandler"
+ sig="void validate(Cookie,CookieOrigin)"
+ line="7"
+ startpos="409"
+ endpos="417"
+>
+	<marker line="-1" type="param">
+		<operand  start="448" length="6" line="7">
+			<expr><![CDATA[cookie]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="492" length="6" line="7">
+			<expr><![CDATA[origin]]></expr>
+		</operand>
+	</marker>
+	<type  start="418" length="29" line="7" chordsig="org.apache.http.cookie.Cookie"/>
+	<type  start="456" length="35" line="7" chordsig="org.apache.http.cookie.CookieOrigin"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="567" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="563" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="584" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="567" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

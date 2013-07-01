@@ -1,0 +1,99 @@
+<root>
+<class chordsig="org.apache.http.conn.routing.RouteInfo" line="2">
+<class chordsig="org.apache.http.conn.routing.RouteInfo$TunnelType" line="4">
+</class>
+<class chordsig="org.apache.http.conn.routing.RouteInfo$LayerType" line="9">
+</class>
+<method
+ chordsig="getTargetHost:()Lorg/apache/http/HttpHost;@org.apache.http.conn.routing.RouteInfo"
+ sig="HttpHost getTargetHost()"
+ line="14"
+ startpos="218"
+ endpos="231"
+>
+	<type  start="193" length="24" line="14" chordsig="org.apache.http.HttpHost"/>
+</method>
+<method
+ chordsig="getLocalAddress:()Ljava/net/InetAddress;@org.apache.http.conn.routing.RouteInfo"
+ sig="InetAddress getLocalAddress()"
+ line="15"
+ startpos="273"
+ endpos="288"
+>
+	<type  start="252" length="20" line="15" chordsig="java.net.InetAddress"/>
+</method>
+<method
+ chordsig="getHopCount:()I@org.apache.http.conn.routing.RouteInfo"
+ sig="int getHopCount()"
+ line="16"
+ startpos="313"
+ endpos="324"
+>
+</method>
+<method
+ chordsig="getHopTarget:(I)Lorg/apache/http/HttpHost;@org.apache.http.conn.routing.RouteInfo"
+ sig="HttpHost getHopTarget(int)"
+ line="17"
+ startpos="370"
+ endpos="382"
+>
+	<marker line="-1" type="param">
+		<operand  start="387" length="3" line="17">
+			<expr><![CDATA[hop]]></expr>
+		</operand>
+	</marker>
+	<type  start="345" length="24" line="17" chordsig="org.apache.http.HttpHost"/>
+</method>
+<method
+ chordsig="getProxyHost:()Lorg/apache/http/HttpHost;@org.apache.http.conn.routing.RouteInfo"
+ sig="HttpHost getProxyHost()"
+ line="18"
+ startpos="435"
+ endpos="447"
+>
+	<type  start="410" length="24" line="18" chordsig="org.apache.http.HttpHost"/>
+</method>
+<method
+ chordsig="getTunnelType:()Lorg/apache/http/conn/routing/RouteInfo$TunnelType;@org.apache.http.conn.routing.RouteInfo"
+ sig="TunnelType getTunnelType()"
+ line="19"
+ startpos="518"
+ endpos="531"
+>
+	<type  start="468" length="49" line="19" chordsig="org.apache.http.conn.routing.RouteInfo$TunnelType"/>
+</method>
+<method
+ chordsig="isTunnelled:()Z@org.apache.http.conn.routing.RouteInfo"
+ sig="boolean isTunnelled()"
+ line="20"
+ startpos="560"
+ endpos="571"
+>
+</method>
+<method
+ chordsig="getLayerType:()Lorg/apache/http/conn/routing/RouteInfo$LayerType;@org.apache.http.conn.routing.RouteInfo"
+ sig="LayerType getLayerType()"
+ line="21"
+ startpos="641"
+ endpos="653"
+>
+	<type  start="592" length="48" line="21" chordsig="org.apache.http.conn.routing.RouteInfo$LayerType"/>
+</method>
+<method
+ chordsig="isLayered:()Z@org.apache.http.conn.routing.RouteInfo"
+ sig="boolean isLayered()"
+ line="22"
+ startpos="682"
+ endpos="691"
+>
+</method>
+<method
+ chordsig="isSecure:()Z@org.apache.http.conn.routing.RouteInfo"
+ sig="boolean isSecure()"
+ line="23"
+ startpos="720"
+ endpos="728"
+>
+</method>
+</class>
+</root>

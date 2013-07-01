@@ -1,0 +1,211 @@
+<root>
+<class chordsig="com.google.android.maps.MapActivity" line="6">
+	<type  start="174" length="20" line="6" chordsig="android.app.Activity"/>
+<method
+ chordsig="onCreate:(Landroid/os/Bundle;)V@com.google.android.maps.MapActivity"
+ sig="void onCreate(Bundle)"
+ line="8"
+ startpos="217"
+ endpos="225"
+>
+	<marker line="-1" type="param">
+		<operand  start="244" length="6" line="8">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="226" length="17" line="8" chordsig="android.os.Bundle"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="272" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="268" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="289" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="272" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onNewIntent:(Landroid/content/Intent;)V@com.google.android.maps.MapActivity"
+ sig="void onNewIntent(Intent)"
+ line="12"
+ startpos="322"
+ endpos="333"
+>
+	<marker line="-1" type="param">
+		<operand  start="357" length="6" line="12">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<type  start="334" length="22" line="12" chordsig="android.content.Intent"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="385" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="381" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="402" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="385" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onResume:()V@com.google.android.maps.MapActivity"
+ sig="void onResume()"
+ line="16"
+ startpos="438"
+ endpos="446"
+>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="469" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="465" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="486" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="469" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onPause:()V@com.google.android.maps.MapActivity"
+ sig="void onPause()"
+ line="20"
+ startpos="522"
+ endpos="529"
+>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="552" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="548" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="569" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="552" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onDestroy:()V@com.google.android.maps.MapActivity"
+ sig="void onDestroy()"
+ line="24"
+ startpos="605"
+ endpos="614"
+>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="637" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="633" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="654" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="637" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isRouteDisplayed:()Z@com.google.android.maps.MapActivity"
+ sig="boolean isRouteDisplayed()"
+ line="28"
+ startpos="702"
+ endpos="718"
+>
+</method>
+<method
+ chordsig="isLocationDisplayed:()Z@com.google.android.maps.MapActivity"
+ sig="boolean isLocationDisplayed()"
+ line="30"
+ startpos="745"
+ endpos="764"
+>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="787" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="783" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="804" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="787" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onGetMapDataSource:()I@com.google.android.maps.MapActivity"
+ sig="int onGetMapDataSource()"
+ line="34"
+ startpos="839"
+ endpos="857"
+>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="880" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="876" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="897" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="880" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:()V@com.google.android.maps.MapActivity"
+ sig="MapActivity()"
+ line="38"
+ startpos="925"
+ endpos="936"
+>
+	<invkexpr line="39" chordsig="registerCallback:(Ledu/stanford/stamp/harness/Callback;)V@edu.stanford.stamp.harness.ApplicationDriver" start="981" length="16" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance().registerCallback(new Callback(){
+  public void run(){
+    MapActivity.this.onGetMapDataSource();
+  }
+}
+)]]></expr>
+		<param  start="998" length="128" line="39">
+			<expr type="null"><![CDATA[new Callback(){
+  public void run(){
+    MapActivity.this.onGetMapDataSource();
+  }
+}
+]]></expr>
+		</param>
+	</invkexpr>
+	<invkexpr line="39" chordsig="getInstance:()Ledu/stanford/stamp/harness/ApplicationDriver;@edu.stanford.stamp.harness.ApplicationDriver" start="967" length="11" type="invoke">
+			<expr><![CDATA[ApplicationDriver.getInstance()]]></expr>
+	</invkexpr>
+	<newexpr line="39" chordsig="&lt;init&gt;:()V@com.google.android.maps.MapActivity$com.google.android.maps.MapActivity#edu.stanford.stamp.harness.Callback#39" start="1002" length="8" type="invoke">
+			<expr><![CDATA[new Callback(){
+  public void run(){
+    MapActivity.this.onGetMapDataSource();
+  }
+}
+]]></expr>
+		<param  start="998" length="128" line="39">
+			<expr type="com.google.android.maps.MapActivity#edu.stanford.stamp.harness.Callback#39"><![CDATA[new Callback(){
+  public void run(){
+    MapActivity.this.onGetMapDataSource();
+  }
+}
+]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1002" length="8" line="39" chordsig="edu.stanford.stamp.harness.Callback"/>
+<class anonymous="true" chordsig="com.google.android.maps.MapActivity$com.google.android.maps.MapActivity#edu.stanford.stamp.harness.Callback#39" line="39">
+<method
+ chordsig="run:()V@com.google.android.maps.MapActivity$com.google.android.maps.MapActivity#edu.stanford.stamp.harness.Callback#39"
+ sig="void run()"
+ line="41"
+ startpos="1040"
+ endpos="1043"
+>
+	<invkexpr line="42" chordsig="onGetMapDataSource:()I@com.google.android.maps.MapActivity" start="1081" length="18" type="invoke">
+			<expr><![CDATA[MapActivity.this.onGetMapDataSource()]]></expr>
+		<param  start="1064" length="16" line="42">
+			<expr><![CDATA[MapActivity.this]]></expr>
+		</param>
+	</invkexpr>
+</method>
+</class>
+</method>
+</class>
+</root>

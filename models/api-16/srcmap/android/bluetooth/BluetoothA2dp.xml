@@ -1,0 +1,118 @@
+<root>
+<class chordsig="android.bluetooth.BluetoothA2dp" line="2">
+	<type  start="73" length="34" line="3" chordsig="android.bluetooth.BluetoothProfile"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.bluetooth.BluetoothA2dp"
+ sig="BluetoothA2dp()"
+ line="5"
+ startpos="110"
+ endpos="123"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="138" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="134" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="155" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="138" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getConnectedDevices:()Ljava/util/List;@android.bluetooth.BluetoothA2dp"
+ sig="List&lt;BluetoothDevice&gt; getConnectedDevices()"
+ line="6"
+ startpos="225"
+ endpos="244"
+>
+	<type  start="175" length="14" line="6" chordsig="java.util.List"/>
+	<type  start="190" length="33" line="6" chordsig="android.bluetooth.BluetoothDevice"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="259" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="255" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="276" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="259" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getDevicesMatchingConnectionStates:([I)Ljava/util/List;@android.bluetooth.BluetoothA2dp"
+ sig="List&lt;BluetoothDevice&gt; getDevicesMatchingConnectionStates(int[])"
+ line="7"
+ startpos="346"
+ endpos="380"
+>
+	<marker line="-1" type="param">
+		<operand  start="387" length="6" line="7">
+			<expr><![CDATA[states]]></expr>
+		</operand>
+	</marker>
+	<type  start="296" length="14" line="7" chordsig="java.util.List"/>
+	<type  start="311" length="33" line="7" chordsig="android.bluetooth.BluetoothDevice"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="407" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="403" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="424" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="407" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getConnectionState:(Landroid/bluetooth/BluetoothDevice;)I@android.bluetooth.BluetoothA2dp"
+ sig="int getConnectionState(BluetoothDevice)"
+ line="8"
+ startpos="448"
+ endpos="466"
+>
+	<marker line="-1" type="param">
+		<operand  start="501" length="6" line="8">
+			<expr><![CDATA[device]]></expr>
+		</operand>
+	</marker>
+	<type  start="467" length="33" line="8" chordsig="android.bluetooth.BluetoothDevice"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="521" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="517" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="538" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="521" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isA2dpPlaying:(Landroid/bluetooth/BluetoothDevice;)Z@android.bluetooth.BluetoothA2dp"
+ sig="boolean isA2dpPlaying(BluetoothDevice)"
+ line="9"
+ startpos="566"
+ endpos="579"
+>
+	<marker line="-1" type="param">
+		<operand  start="614" length="6" line="9">
+			<expr><![CDATA[device]]></expr>
+		</operand>
+	</marker>
+	<type  start="580" length="33" line="9" chordsig="android.bluetooth.BluetoothDevice"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="634" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="630" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="651" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="634" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="683" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="820" length="16" line="11" chordsig="java.lang.String"/>
+</class>
+</root>

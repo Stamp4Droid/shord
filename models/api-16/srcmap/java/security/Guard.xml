@@ -1,0 +1,18 @@
+<root>
+<class chordsig="java.security.Guard" line="2">
+<method
+ chordsig="checkGuard:(Ljava/lang/Object;)V@java.security.Guard"
+ sig="void checkGuard(Object)"
+ line="4"
+ startpos="70"
+ endpos="80"
+>
+	<marker line="-1" type="param">
+		<operand  start="98" length="6" line="4">
+			<expr><![CDATA[object]]></expr>
+		</operand>
+	</marker>
+	<type  start="81" length="16" line="4" chordsig="java.lang.Object"/>
+</method>
+</class>
+</root>

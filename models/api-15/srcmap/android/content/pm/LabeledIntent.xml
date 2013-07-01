@@ -1,0 +1,339 @@
+<root>
+<class chordsig="android.content.pm.LabeledIntent" line="2">
+	<type  start="65" length="22" line="3" chordsig="android.content.Intent"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Intent;Ljava/lang/String;II)V@android.content.pm.LabeledIntent"
+ sig="LabeledIntent(Intent,String,int,int)"
+ line="5"
+ startpos="98"
+ endpos="111"
+>
+	<marker line="-1" type="param">
+		<operand  start="135" length="10" line="5">
+			<expr><![CDATA[origIntent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="164" length="13" line="5">
+			<expr><![CDATA[sourcePackage]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="183" length="8" line="5">
+			<expr><![CDATA[labelRes]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="197" length="4" line="5">
+			<expr><![CDATA[icon]]></expr>
+		</operand>
+	</marker>
+	<type  start="112" length="22" line="5" chordsig="android.content.Intent"/>
+	<type  start="147" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="215" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="211" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="232" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="215" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Intent;Ljava/lang/String;Ljava/lang/CharSequence;I)V@android.content.pm.LabeledIntent"
+ sig="LabeledIntent(Intent,String,CharSequence,int)"
+ line="6"
+ startpos="252"
+ endpos="265"
+>
+	<marker line="-1" type="param">
+		<operand  start="289" length="10" line="6">
+			<expr><![CDATA[origIntent]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="318" length="13" line="6">
+			<expr><![CDATA[sourcePackage]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="356" length="17" line="6">
+			<expr><![CDATA[nonLocalizedLabel]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="379" length="4" line="6">
+			<expr><![CDATA[icon]]></expr>
+		</operand>
+	</marker>
+	<type  start="266" length="22" line="6" chordsig="android.content.Intent"/>
+	<type  start="301" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="333" length="22" line="6" chordsig="java.lang.CharSequence"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="397" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="393" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="414" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="397" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;II)V@android.content.pm.LabeledIntent"
+ sig="LabeledIntent(String,int,int)"
+ line="7"
+ startpos="434"
+ endpos="447"
+>
+	<marker line="-1" type="param">
+		<operand  start="465" length="13" line="7">
+			<expr><![CDATA[sourcePackage]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="484" length="8" line="7">
+			<expr><![CDATA[labelRes]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="498" length="4" line="7">
+			<expr><![CDATA[icon]]></expr>
+		</operand>
+	</marker>
+	<type  start="448" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="516" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="512" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="533" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="516" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/CharSequence;I)V@android.content.pm.LabeledIntent"
+ sig="LabeledIntent(String,CharSequence,int)"
+ line="8"
+ startpos="553"
+ endpos="566"
+>
+	<marker line="-1" type="param">
+		<operand  start="584" length="13" line="8">
+			<expr><![CDATA[sourcePackage]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="622" length="17" line="8">
+			<expr><![CDATA[nonLocalizedLabel]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="645" length="4" line="8">
+			<expr><![CDATA[icon]]></expr>
+		</operand>
+	</marker>
+	<type  start="567" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="599" length="22" line="8" chordsig="java.lang.CharSequence"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="663" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="659" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="680" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="663" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSourcePackage:()Ljava/lang/String;@android.content.pm.LabeledIntent"
+ sig="String getSourcePackage()"
+ line="9"
+ startpos="717"
+ endpos="733"
+>
+	<type  start="700" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="748" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="744" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="765" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="748" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLabelResource:()I@android.content.pm.LabeledIntent"
+ sig="int getLabelResource()"
+ line="10"
+ startpos="789"
+ endpos="805"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="820" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="816" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="837" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="820" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getNonLocalizedLabel:()Ljava/lang/CharSequence;@android.content.pm.LabeledIntent"
+ sig="CharSequence getNonLocalizedLabel()"
+ line="11"
+ startpos="880"
+ endpos="900"
+>
+	<type  start="857" length="22" line="11" chordsig="java.lang.CharSequence"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="915" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="911" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="932" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="915" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getIconResource:()I@android.content.pm.LabeledIntent"
+ sig="int getIconResource()"
+ line="12"
+ startpos="956"
+ endpos="971"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="986" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="982" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1003" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="986" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="loadLabel:(Landroid/content/pm/PackageManager;)Ljava/lang/CharSequence;@android.content.pm.LabeledIntent"
+ sig="CharSequence loadLabel(PackageManager)"
+ line="13"
+ startpos="1046"
+ endpos="1055"
+>
+	<marker line="-1" type="param">
+		<operand  start="1090" length="2" line="13">
+			<expr><![CDATA[pm]]></expr>
+		</operand>
+	</marker>
+	<type  start="1023" length="22" line="13" chordsig="java.lang.CharSequence"/>
+	<type  start="1056" length="33" line="13" chordsig="android.content.pm.PackageManager"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1106" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1102" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1123" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1106" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="loadIcon:(Landroid/content/pm/PackageManager;)Landroid/graphics/drawable/Drawable;@android.content.pm.LabeledIntent"
+ sig="Drawable loadIcon(PackageManager)"
+ line="14"
+ startpos="1178"
+ endpos="1186"
+>
+	<marker line="-1" type="param">
+		<operand  start="1221" length="2" line="14">
+			<expr><![CDATA[pm]]></expr>
+		</operand>
+	</marker>
+	<type  start="1143" length="34" line="14" chordsig="android.graphics.drawable.Drawable"/>
+	<type  start="1187" length="33" line="14" chordsig="android.content.pm.PackageManager"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1237" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1233" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1254" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1237" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.content.pm.LabeledIntent"
+ sig="void writeToParcel(Parcel,int)"
+ line="15"
+ startpos="1279"
+ endpos="1292"
+>
+	<marker line="-1" type="param">
+		<operand  start="1311" length="4" line="15">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1321" length="15" line="15">
+			<expr><![CDATA[parcelableFlags]]></expr>
+		</operand>
+	</marker>
+	<type  start="1293" length="17" line="15" chordsig="android.os.Parcel"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1350" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1346" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1367" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1350" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="readFromParcel:(Landroid/os/Parcel;)V@android.content.pm.LabeledIntent"
+ sig="void readFromParcel(Parcel)"
+ line="16"
+ startpos="1392"
+ endpos="1406"
+>
+	<marker line="-1" type="param">
+		<operand  start="1425" length="2" line="16">
+			<expr><![CDATA[in]]></expr>
+		</operand>
+	</marker>
+	<type  start="1407" length="17" line="16" chordsig="android.os.Parcel"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1441" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1437" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1458" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1441" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="1490" length="29" line="17" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="1520" length="32" line="17" chordsig="android.content.pm.LabeledIntent"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.content.pm.LabeledIntent"
+ line="18"
+>
+</method>
+</class>
+</root>

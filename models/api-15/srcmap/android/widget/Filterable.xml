@@ -1,0 +1,13 @@
+<root>
+<class chordsig="android.widget.Filterable" line="2">
+<method
+ chordsig="getFilter:()Landroid/widget/Filter;@android.widget.Filterable"
+ sig="Filter getFilter()"
+ line="4"
+ startpos="93"
+ endpos="102"
+>
+	<type  start="71" length="21" line="4" chordsig="android.widget.Filter"/>
+</method>
+</class>
+</root>

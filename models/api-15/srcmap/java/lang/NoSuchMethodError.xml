@@ -1,0 +1,47 @@
+<root>
+<class chordsig="java.lang.NoSuchMethodError" line="2">
+	<type  start="60" length="38" line="3" chordsig="java.lang.IncompatibleClassChangeError"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.lang.NoSuchMethodError"
+ sig="NoSuchMethodError()"
+ line="5"
+ startpos="109"
+ endpos="126"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="141" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="137" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="158" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="141" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.NoSuchMethodError"
+ sig="NoSuchMethodError(String)"
+ line="6"
+ startpos="178"
+ endpos="195"
+>
+	<marker line="-1" type="param">
+		<operand  start="213" length="13" line="6">
+			<expr><![CDATA[detailMessage]]></expr>
+		</operand>
+	</marker>
+	<type  start="196" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="240" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="236" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="257" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="240" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

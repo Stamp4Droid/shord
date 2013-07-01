@@ -1,0 +1,29 @@
+<root>
+<class chordsig="edu.stanford.stamp.harness.ViewFactory" line="9">
+<method
+ chordsig="findViewById:(Landroid/content/Context;I)Landroid/view/View;@edu.stanford.stamp.harness.ViewFactory"
+ sig="View findViewById(Context,int)"
+ line="11"
+ startpos="286"
+ endpos="298"
+>
+	<marker line="-1" type="param">
+		<operand  start="323" length="1" line="11">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="330" length="2" line="11">
+			<expr><![CDATA[id]]></expr>
+		</operand>
+	</marker>
+	<type  start="268" length="17" line="11" chordsig="android.view.View"/>
+	<type  start="299" length="23" line="11" chordsig="android.content.Context"/>
+	<marker line="12" type="return">
+		<operand  start="351" length="4" line="12">
+			<expr><![CDATA[null]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

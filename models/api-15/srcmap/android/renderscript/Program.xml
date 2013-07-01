@@ -1,0 +1,303 @@
+<root>
+<class chordsig="android.renderscript.Program" line="2">
+	<type  start="61" length="28" line="3" chordsig="android.renderscript.BaseObj"/>
+<class chordsig="android.renderscript.Program$TextureType" line="5">
+</class>
+<class chordsig="android.renderscript.Program$BaseProgramBuilder" line="10">
+<method
+ chordsig="&lt;init&gt;:(Landroid/renderscript/RenderScript;)V@android.renderscript.Program$BaseProgramBuilder"
+ sig="BaseProgramBuilder(RenderScript)"
+ line="12"
+ startpos="209"
+ endpos="227"
+>
+	<marker line="-1" type="param">
+		<operand  start="262" length="2" line="12">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<type  start="228" length="33" line="12" chordsig="android.renderscript.RenderScript"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="278" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="274" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="295" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="278" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setShader:(Ljava/lang/String;)Landroid/renderscript/Program$BaseProgramBuilder;@android.renderscript.Program$BaseProgramBuilder"
+ sig="BaseProgramBuilder setShader(String)"
+ line="13"
+ startpos="363"
+ endpos="372"
+>
+	<marker line="-1" type="param">
+		<operand  start="390" length="1" line="13">
+			<expr><![CDATA[s]]></expr>
+		</operand>
+	</marker>
+	<type  start="315" length="47" line="13" chordsig="android.renderscript.Program$BaseProgramBuilder"/>
+	<type  start="373" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="405" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="401" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="422" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="405" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setShader:(Landroid/content/res/Resources;I)Landroid/renderscript/Program$BaseProgramBuilder;@android.renderscript.Program$BaseProgramBuilder"
+ sig="BaseProgramBuilder setShader(Resources,int)"
+ line="14"
+ startpos="490"
+ endpos="499"
+>
+	<marker line="-1" type="param">
+		<operand  start="530" length="9" line="14">
+			<expr><![CDATA[resources]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="545" length="10" line="14">
+			<expr><![CDATA[resourceID]]></expr>
+		</operand>
+	</marker>
+	<type  start="442" length="47" line="14" chordsig="android.renderscript.Program$BaseProgramBuilder"/>
+	<type  start="500" length="29" line="14" chordsig="android.content.res.Resources"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="569" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="565" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="586" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="569" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCurrentConstantIndex:()I@android.renderscript.Program$BaseProgramBuilder"
+ sig="int getCurrentConstantIndex()"
+ line="15"
+ startpos="610"
+ endpos="633"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="648" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="644" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="665" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="648" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCurrentTextureIndex:()I@android.renderscript.Program$BaseProgramBuilder"
+ sig="int getCurrentTextureIndex()"
+ line="16"
+ startpos="689"
+ endpos="711"
+>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="726" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="722" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="743" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="726" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addConstant:(Landroid/renderscript/Type;)Landroid/renderscript/Program$BaseProgramBuilder;@android.renderscript.Program$BaseProgramBuilder"
+ sig="BaseProgramBuilder addConstant(Type)"
+ line="17"
+ startpos="811"
+ endpos="822"
+>
+	<marker line="-1" type="param">
+		<operand  start="849" length="1" line="17">
+			<expr><![CDATA[t]]></expr>
+		</operand>
+	</marker>
+	<type  start="763" length="47" line="17" chordsig="android.renderscript.Program$BaseProgramBuilder"/>
+	<type  start="823" length="25" line="17" chordsig="android.renderscript.Type"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="903" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="899" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="920" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="903" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addTexture:(Landroid/renderscript/Program$TextureType;)Landroid/renderscript/Program$BaseProgramBuilder;@android.renderscript.Program$BaseProgramBuilder"
+ sig="BaseProgramBuilder addTexture(TextureType)"
+ line="18"
+ startpos="988"
+ endpos="998"
+>
+	<marker line="-1" type="param">
+		<operand  start="1040" length="7" line="18">
+			<expr><![CDATA[texType]]></expr>
+		</operand>
+	</marker>
+	<type  start="940" length="47" line="18" chordsig="android.renderscript.Program$BaseProgramBuilder"/>
+	<type  start="999" length="40" line="18" chordsig="android.renderscript.Program$TextureType"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1103" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1099" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1120" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1103" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="initProgram:(Landroid/renderscript/Program;)V@android.renderscript.Program$BaseProgramBuilder"
+ sig="void initProgram(Program)"
+ line="19"
+ startpos="1148"
+ endpos="1159"
+>
+	<marker line="-1" type="param">
+		<operand  start="1189" length="1" line="19">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<type  start="1160" length="28" line="19" chordsig="android.renderscript.Program"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1204" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1200" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1221" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1204" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.renderscript.Program"
+ sig="Program()"
+ line="21"
+ startpos="1235"
+ endpos="1242"
+>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1257" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1253" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1274" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1257" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="bindConstants:(Landroid/renderscript/Allocation;I)V@android.renderscript.Program"
+ sig="void bindConstants(Allocation,int)"
+ line="22"
+ startpos="1299"
+ endpos="1312"
+>
+	<marker line="-1" type="param">
+		<operand  start="1345" length="1" line="22">
+			<expr><![CDATA[a]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1352" length="4" line="22">
+			<expr><![CDATA[slot]]></expr>
+		</operand>
+	</marker>
+	<type  start="1313" length="31" line="22" chordsig="android.renderscript.Allocation"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1370" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1366" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1387" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1370" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="bindTexture:(Landroid/renderscript/Allocation;I)V@android.renderscript.Program"
+ sig="void bindTexture(Allocation,int)"
+ line="23"
+ startpos="1412"
+ endpos="1423"
+>
+	<marker line="-1" type="param">
+		<operand  start="1456" length="2" line="23">
+			<expr><![CDATA[va]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1464" length="4" line="23">
+			<expr><![CDATA[slot]]></expr>
+		</operand>
+	</marker>
+	<type  start="1424" length="31" line="23" chordsig="android.renderscript.Allocation"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1524" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1520" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1541" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1524" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="bindSampler:(Landroid/renderscript/Sampler;I)V@android.renderscript.Program"
+ sig="void bindSampler(Sampler,int)"
+ line="24"
+ startpos="1566"
+ endpos="1577"
+>
+	<marker line="-1" type="param">
+		<operand  start="1607" length="2" line="24">
+			<expr><![CDATA[vs]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1615" length="4" line="24">
+			<expr><![CDATA[slot]]></expr>
+		</operand>
+	</marker>
+	<type  start="1578" length="28" line="24" chordsig="android.renderscript.Sampler"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1675" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1671" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1692" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1675" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

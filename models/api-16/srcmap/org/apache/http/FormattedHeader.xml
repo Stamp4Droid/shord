@@ -1,0 +1,22 @@
+<root>
+<class chordsig="org.apache.http.FormattedHeader" line="2">
+	<type  start="68" length="22" line="3" chordsig="org.apache.http.Header"/>
+<method
+ chordsig="getBuffer:()Lorg/apache/http/util/CharArrayBuffer;@org.apache.http.FormattedHeader"
+ sig="CharArrayBuffer getBuffer()"
+ line="5"
+ startpos="147"
+ endpos="156"
+>
+	<type  start="110" length="36" line="5" chordsig="org.apache.http.util.CharArrayBuffer"/>
+</method>
+<method
+ chordsig="getValuePos:()I@org.apache.http.FormattedHeader"
+ sig="int getValuePos()"
+ line="6"
+ startpos="181"
+ endpos="192"
+>
+</method>
+</class>
+</root>

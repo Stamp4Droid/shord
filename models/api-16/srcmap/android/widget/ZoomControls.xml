@@ -1,0 +1,306 @@
+<root>
+<class chordsig="android.widget.ZoomControls" line="2">
+	<type  start="60" length="27" line="3" chordsig="android.widget.LinearLayout"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.widget.ZoomControls"
+ sig="ZoomControls(Context)"
+ line="5"
+ startpos="98"
+ endpos="110"
+>
+	<marker line="-1" type="param">
+		<operand  start="135" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="111" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="153" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="183" length="25" line="5" chordsig="android.util.AttributeSet"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="228" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="224" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="245" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="228" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.widget.ZoomControls"
+ sig="ZoomControls(Context,AttributeSet)"
+ line="6"
+ startpos="265"
+ endpos="277"
+>
+	<marker line="-1" type="param">
+		<operand  start="302" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="337" length="5" line="6">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="278" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="311" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<type  start="353" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="383" length="25" line="6" chordsig="android.util.AttributeSet"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="428" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="424" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="445" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="428" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnZoomInClickListener:(Landroid/view/View$OnClickListener;)V@android.widget.ZoomControls"
+ sig="void setOnZoomInClickListener(OnClickListener)"
+ line="7"
+ startpos="470"
+ endpos="494"
+>
+	<marker line="-1" type="param">
+		<operand  start="529" length="8" line="7">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="495" length="33" line="7" chordsig="android.view.View$OnClickListener"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="551" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="547" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="568" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="551" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setOnZoomOutClickListener:(Landroid/view/View$OnClickListener;)V@android.widget.ZoomControls"
+ sig="void setOnZoomOutClickListener(OnClickListener)"
+ line="8"
+ startpos="593"
+ endpos="618"
+>
+	<marker line="-1" type="param">
+		<operand  start="653" length="8" line="8">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="619" length="33" line="8" chordsig="android.view.View$OnClickListener"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="675" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="671" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="692" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="675" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setZoomSpeed:(J)V@android.widget.ZoomControls"
+ sig="void setZoomSpeed(long)"
+ line="9"
+ startpos="717"
+ endpos="729"
+>
+	<marker line="-1" type="param">
+		<operand  start="735" length="5" line="9">
+			<expr><![CDATA[speed]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="754" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="750" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="771" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="754" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onTouchEvent:(Landroid/view/MotionEvent;)Z@android.widget.ZoomControls"
+ sig="boolean onTouchEvent(MotionEvent)"
+ line="10"
+ startpos="799"
+ endpos="811"
+>
+	<marker line="-1" type="param">
+		<operand  start="837" length="5" line="10">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="812" length="24" line="10" chordsig="android.view.MotionEvent"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="856" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="852" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="873" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="856" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="show:()V@android.widget.ZoomControls"
+ sig="void show()"
+ line="11"
+ startpos="898"
+ endpos="902"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="917" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="913" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="934" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="917" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hide:()V@android.widget.ZoomControls"
+ sig="void hide()"
+ line="12"
+ startpos="959"
+ endpos="963"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="978" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="974" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="995" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="978" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setIsZoomInEnabled:(Z)V@android.widget.ZoomControls"
+ sig="void setIsZoomInEnabled(boolean)"
+ line="13"
+ startpos="1020"
+ endpos="1038"
+>
+	<marker line="-1" type="param">
+		<operand  start="1047" length="9" line="13">
+			<expr><![CDATA[isEnabled]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1070" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1066" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1087" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1070" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setIsZoomOutEnabled:(Z)V@android.widget.ZoomControls"
+ sig="void setIsZoomOutEnabled(boolean)"
+ line="14"
+ startpos="1112"
+ endpos="1131"
+>
+	<marker line="-1" type="param">
+		<operand  start="1140" length="9" line="14">
+			<expr><![CDATA[isEnabled]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1163" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1159" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1180" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1163" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hasFocus:()Z@android.widget.ZoomControls"
+ sig="boolean hasFocus()"
+ line="15"
+ startpos="1208"
+ endpos="1216"
+>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1231" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1227" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1248" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1231" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityEvent:(Landroid/view/accessibility/AccessibilityEvent;)V@android.widget.ZoomControls"
+ sig="void onInitializeAccessibilityEvent(AccessibilityEvent)"
+ line="16"
+ startpos="1273"
+ endpos="1303"
+>
+	<marker line="-1" type="param">
+		<operand  start="1350" length="5" line="16">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="1304" length="45" line="16" chordsig="android.view.accessibility.AccessibilityEvent"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1369" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1365" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1386" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1369" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onInitializeAccessibilityNodeInfo:(Landroid/view/accessibility/AccessibilityNodeInfo;)V@android.widget.ZoomControls"
+ sig="void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo)"
+ line="17"
+ startpos="1411"
+ endpos="1444"
+>
+	<marker line="-1" type="param">
+		<operand  start="1494" length="4" line="17">
+			<expr><![CDATA[info]]></expr>
+		</operand>
+	</marker>
+	<type  start="1445" length="48" line="17" chordsig="android.view.accessibility.AccessibilityNodeInfo"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1512" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1508" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1529" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1512" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

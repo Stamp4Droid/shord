@@ -1,0 +1,253 @@
+<root>
+<class chordsig="android.net.http.SslError" line="2">
+<method
+ chordsig="&lt;init&gt;:(ILandroid/net/http/SslCertificate;)V@android.net.http.SslError"
+ sig="SslError(int,SslCertificate)"
+ line="4"
+ startpos="58"
+ endpos="66"
+>
+	<marker line="-1" type="param">
+		<operand  start="71" length="5" line="4">
+			<expr><![CDATA[error]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="110" length="11" line="4">
+			<expr><![CDATA[certificate]]></expr>
+		</operand>
+	</marker>
+	<type  start="78" length="31" line="4" chordsig="android.net.http.SslCertificate"/>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="135" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="131" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="152" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="135" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(ILjava/security/cert/X509Certificate;)V@android.net.http.SslError"
+ sig="SslError(int,X509Certificate)"
+ line="5"
+ startpos="172"
+ endpos="180"
+>
+	<marker line="-1" type="param">
+		<operand  start="185" length="5" line="5">
+			<expr><![CDATA[error]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="227" length="11" line="5">
+			<expr><![CDATA[certificate]]></expr>
+		</operand>
+	</marker>
+	<type  start="192" length="34" line="5" chordsig="java.security.cert.X509Certificate"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="252" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="248" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="269" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="252" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(ILandroid/net/http/SslCertificate;Ljava/lang/String;)V@android.net.http.SslError"
+ sig="SslError(int,SslCertificate,String)"
+ line="6"
+ startpos="289"
+ endpos="297"
+>
+	<marker line="-1" type="param">
+		<operand  start="302" length="5" line="6">
+			<expr><![CDATA[error]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="341" length="11" line="6">
+			<expr><![CDATA[certificate]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="371" length="3" line="6">
+			<expr><![CDATA[url]]></expr>
+		</operand>
+	</marker>
+	<type  start="309" length="31" line="6" chordsig="android.net.http.SslCertificate"/>
+	<type  start="354" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="388" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="384" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="405" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="388" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(ILjava/security/cert/X509Certificate;Ljava/lang/String;)V@android.net.http.SslError"
+ sig="SslError(int,X509Certificate,String)"
+ line="7"
+ startpos="425"
+ endpos="433"
+>
+	<marker line="-1" type="param">
+		<operand  start="438" length="5" line="7">
+			<expr><![CDATA[error]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="480" length="11" line="7">
+			<expr><![CDATA[certificate]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="510" length="3" line="7">
+			<expr><![CDATA[url]]></expr>
+		</operand>
+	</marker>
+	<type  start="445" length="34" line="7" chordsig="java.security.cert.X509Certificate"/>
+	<type  start="493" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="527" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="523" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="544" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="527" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCertificate:()Landroid/net/http/SslCertificate;@android.net.http.SslError"
+ sig="SslCertificate getCertificate()"
+ line="8"
+ startpos="596"
+ endpos="610"
+>
+	<type  start="564" length="31" line="8" chordsig="android.net.http.SslCertificate"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="625" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="621" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="642" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="625" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getUrl:()Ljava/lang/String;@android.net.http.SslError"
+ sig="String getUrl()"
+ line="9"
+ startpos="679"
+ endpos="685"
+>
+	<type  start="662" length="16" line="9" chordsig="java.lang.String"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="700" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="696" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="717" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="700" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addError:(I)Z@android.net.http.SslError"
+ sig="boolean addError(int)"
+ line="10"
+ startpos="745"
+ endpos="753"
+>
+	<marker line="-1" type="param">
+		<operand  start="758" length="5" line="10">
+			<expr><![CDATA[error]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="777" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="773" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="794" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="777" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hasError:(I)Z@android.net.http.SslError"
+ sig="boolean hasError(int)"
+ line="11"
+ startpos="822"
+ endpos="830"
+>
+	<marker line="-1" type="param">
+		<operand  start="835" length="5" line="11">
+			<expr><![CDATA[error]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="854" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="850" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="871" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="854" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPrimaryError:()I@android.net.http.SslError"
+ sig="int getPrimaryError()"
+ line="12"
+ startpos="895"
+ endpos="910"
+>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="925" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="921" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="942" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="925" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.net.http.SslError"
+ sig="String toString()"
+ line="13"
+ startpos="979"
+ endpos="987"
+>
+	<type  start="962" length="16" line="13" chordsig="java.lang.String"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1002" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="998" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1019" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1002" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

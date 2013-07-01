@@ -1,0 +1,40 @@
+<root>
+<class chordsig="android.hardware.SensorListener" line="3">
+<method
+ chordsig="onSensorChanged:(I[F)V@android.hardware.SensorListener"
+ sig="void onSensorChanged(int,float[])"
+ line="5"
+ startpos="106"
+ endpos="121"
+>
+	<marker line="-1" type="param">
+		<operand  start="126" length="6" line="5">
+			<expr><![CDATA[sensor]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="142" length="6" line="5">
+			<expr><![CDATA[values]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="onAccuracyChanged:(II)V@android.hardware.SensorListener"
+ sig="void onAccuracyChanged(int,int)"
+ line="6"
+ startpos="173"
+ endpos="190"
+>
+	<marker line="-1" type="param">
+		<operand  start="195" length="6" line="6">
+			<expr><![CDATA[sensor]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="207" length="8" line="6">
+			<expr><![CDATA[accuracy]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

@@ -1,0 +1,43 @@
+<root>
+<class chordsig="java.nio.channels.GatheringByteChannel" line="2">
+	<type  start="75" length="37" line="3" chordsig="java.nio.channels.WritableByteChannel"/>
+<method
+ chordsig="write:([Ljava/nio/ByteBuffer;)J@java.nio.channels.GatheringByteChannel"
+ sig="long write(ByteBuffer[])"
+ line="5"
+ startpos="137"
+ endpos="142"
+>
+	<marker line="-1" type="param">
+		<operand  start="165" length="7" line="5">
+			<expr><![CDATA[buffers]]></expr>
+		</operand>
+	</marker>
+	<type  start="143" length="19" line="5" chordsig="java.nio.ByteBuffer"/>
+</method>
+<method
+ chordsig="write:([Ljava/nio/ByteBuffer;II)J@java.nio.channels.GatheringByteChannel"
+ sig="long write(ByteBuffer[],int,int)"
+ line="6"
+ startpos="224"
+ endpos="229"
+>
+	<marker line="-1" type="param">
+		<operand  start="252" length="7" line="6">
+			<expr><![CDATA[buffers]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="265" length="6" line="6">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="277" length="6" line="6">
+			<expr><![CDATA[length]]></expr>
+		</operand>
+	</marker>
+	<type  start="230" length="19" line="6" chordsig="java.nio.ByteBuffer"/>
+</method>
+</class>
+</root>

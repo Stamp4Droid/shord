@@ -1,0 +1,414 @@
+<root>
+<class chordsig="android.net.wifi.p2p.WifiP2pManager" line="2">
+<class chordsig="android.net.wifi.p2p.WifiP2pManager$ChannelListener" line="4">
+<method
+ chordsig="onChannelDisconnected:()V@android.net.wifi.p2p.WifiP2pManager$ChannelListener"
+ sig="void onChannelDisconnected()"
+ line="6"
+ startpos="124"
+ endpos="145"
+>
+</method>
+</class>
+<class chordsig="android.net.wifi.p2p.WifiP2pManager$ActionListener" line="8">
+<method
+ chordsig="onSuccess:()V@android.net.wifi.p2p.WifiP2pManager$ActionListener"
+ sig="void onSuccess()"
+ line="10"
+ startpos="214"
+ endpos="223"
+>
+</method>
+<method
+ chordsig="onFailure:(I)V@android.net.wifi.p2p.WifiP2pManager$ActionListener"
+ sig="void onFailure(int)"
+ line="11"
+ startpos="249"
+ endpos="258"
+>
+	<marker line="-1" type="param">
+		<operand  start="263" length="6" line="11">
+			<expr><![CDATA[reason]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+<class chordsig="android.net.wifi.p2p.WifiP2pManager$PeerListListener" line="13">
+<method
+ chordsig="onPeersAvailable:(Landroid/net/wifi/p2p/WifiP2pDeviceList;)V@android.net.wifi.p2p.WifiP2pManager$PeerListListener"
+ sig="void onPeersAvailable(WifiP2pDeviceList)"
+ line="15"
+ startpos="339"
+ endpos="355"
+>
+	<marker line="-1" type="param">
+		<operand  start="395" length="5" line="15">
+			<expr><![CDATA[peers]]></expr>
+		</operand>
+	</marker>
+	<type  start="356" length="38" line="15" chordsig="android.net.wifi.p2p.WifiP2pDeviceList"/>
+</method>
+</class>
+<class chordsig="android.net.wifi.p2p.WifiP2pManager$ConnectionInfoListener" line="17">
+<method
+ chordsig="onConnectionInfoAvailable:(Landroid/net/wifi/p2p/WifiP2pInfo;)V@android.net.wifi.p2p.WifiP2pManager$ConnectionInfoListener"
+ sig="void onConnectionInfoAvailable(WifiP2pInfo)"
+ line="19"
+ startpos="476"
+ endpos="501"
+>
+	<marker line="-1" type="param">
+		<operand  start="535" length="4" line="19">
+			<expr><![CDATA[info]]></expr>
+		</operand>
+	</marker>
+	<type  start="502" length="32" line="19" chordsig="android.net.wifi.p2p.WifiP2pInfo"/>
+</method>
+</class>
+<class chordsig="android.net.wifi.p2p.WifiP2pManager$GroupInfoListener" line="21">
+<method
+ chordsig="onGroupInfoAvailable:(Landroid/net/wifi/p2p/WifiP2pGroup;)V@android.net.wifi.p2p.WifiP2pManager$GroupInfoListener"
+ sig="void onGroupInfoAvailable(WifiP2pGroup)"
+ line="23"
+ startpos="610"
+ endpos="630"
+>
+	<marker line="-1" type="param">
+		<operand  start="665" length="5" line="23">
+			<expr><![CDATA[group]]></expr>
+		</operand>
+	</marker>
+	<type  start="631" length="33" line="23" chordsig="android.net.wifi.p2p.WifiP2pGroup"/>
+</method>
+</class>
+<class chordsig="android.net.wifi.p2p.WifiP2pManager$Channel" line="25">
+<method
+ chordsig="&lt;init&gt;:()V@android.net.wifi.p2p.WifiP2pManager$Channel"
+ sig="Channel()"
+ line="27"
+ startpos="705"
+ endpos="712"
+>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="727" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="723" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="744" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="727" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.net.wifi.p2p.WifiP2pManager"
+ sig="WifiP2pManager()"
+ line="29"
+ startpos="758"
+ endpos="772"
+>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="787" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="783" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="804" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="787" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="initialize:(Landroid/content/Context;Landroid/os/Looper;Landroid/net/wifi/p2p/WifiP2pManager$ChannelListener;)Landroid/net/wifi/p2p/WifiP2pManager$Channel;@android.net.wifi.p2p.WifiP2pManager"
+ sig="Channel initialize(Context,Looper,ChannelListener)"
+ line="30"
+ startpos="868"
+ endpos="878"
+>
+	<marker line="-1" type="param">
+		<operand  start="903" length="10" line="30">
+			<expr><![CDATA[srcContext]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="933" length="9" line="30">
+			<expr><![CDATA[srcLooper]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="996" length="8" line="30">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="824" length="43" line="30" chordsig="android.net.wifi.p2p.WifiP2pManager$Channel"/>
+	<type  start="879" length="23" line="30" chordsig="android.content.Context"/>
+	<type  start="915" length="17" line="30" chordsig="android.os.Looper"/>
+	<type  start="944" length="51" line="30" chordsig="android.net.wifi.p2p.WifiP2pManager$ChannelListener"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1018" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1014" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1035" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1018" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="discoverPeers:(Landroid/net/wifi/p2p/WifiP2pManager$Channel;Landroid/net/wifi/p2p/WifiP2pManager$ActionListener;)V@android.net.wifi.p2p.WifiP2pManager"
+ sig="void discoverPeers(Channel,ActionListener)"
+ line="31"
+ startpos="1060"
+ endpos="1073"
+>
+	<marker line="-1" type="param">
+		<operand  start="1118" length="1" line="31">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1172" length="8" line="31">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1074" length="43" line="31" chordsig="android.net.wifi.p2p.WifiP2pManager$Channel"/>
+	<type  start="1121" length="50" line="31" chordsig="android.net.wifi.p2p.WifiP2pManager$ActionListener"/>
+	<newexpr line="31" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1194" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1190" length="29" line="31">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1211" length="7" line="31">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1194" length="16" line="31" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="connect:(Landroid/net/wifi/p2p/WifiP2pManager$Channel;Landroid/net/wifi/p2p/WifiP2pConfig;Landroid/net/wifi/p2p/WifiP2pManager$ActionListener;)V@android.net.wifi.p2p.WifiP2pManager"
+ sig="void connect(Channel,WifiP2pConfig,ActionListener)"
+ line="32"
+ startpos="1236"
+ endpos="1243"
+>
+	<marker line="-1" type="param">
+		<operand  start="1288" length="1" line="32">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1326" length="6" line="32">
+			<expr><![CDATA[config]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1385" length="8" line="32">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1244" length="43" line="32" chordsig="android.net.wifi.p2p.WifiP2pManager$Channel"/>
+	<type  start="1291" length="34" line="32" chordsig="android.net.wifi.p2p.WifiP2pConfig"/>
+	<type  start="1334" length="50" line="32" chordsig="android.net.wifi.p2p.WifiP2pManager$ActionListener"/>
+	<newexpr line="32" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1407" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1403" length="29" line="32">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1424" length="7" line="32">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1407" length="16" line="32" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="cancelConnect:(Landroid/net/wifi/p2p/WifiP2pManager$Channel;Landroid/net/wifi/p2p/WifiP2pManager$ActionListener;)V@android.net.wifi.p2p.WifiP2pManager"
+ sig="void cancelConnect(Channel,ActionListener)"
+ line="33"
+ startpos="1449"
+ endpos="1462"
+>
+	<marker line="-1" type="param">
+		<operand  start="1507" length="1" line="33">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1561" length="8" line="33">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1463" length="43" line="33" chordsig="android.net.wifi.p2p.WifiP2pManager$Channel"/>
+	<type  start="1510" length="50" line="33" chordsig="android.net.wifi.p2p.WifiP2pManager$ActionListener"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1583" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1579" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1600" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1583" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createGroup:(Landroid/net/wifi/p2p/WifiP2pManager$Channel;Landroid/net/wifi/p2p/WifiP2pManager$ActionListener;)V@android.net.wifi.p2p.WifiP2pManager"
+ sig="void createGroup(Channel,ActionListener)"
+ line="34"
+ startpos="1625"
+ endpos="1636"
+>
+	<marker line="-1" type="param">
+		<operand  start="1681" length="1" line="34">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1735" length="8" line="34">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1637" length="43" line="34" chordsig="android.net.wifi.p2p.WifiP2pManager$Channel"/>
+	<type  start="1684" length="50" line="34" chordsig="android.net.wifi.p2p.WifiP2pManager$ActionListener"/>
+	<newexpr line="34" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1757" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1753" length="29" line="34">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1774" length="7" line="34">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1757" length="16" line="34" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeGroup:(Landroid/net/wifi/p2p/WifiP2pManager$Channel;Landroid/net/wifi/p2p/WifiP2pManager$ActionListener;)V@android.net.wifi.p2p.WifiP2pManager"
+ sig="void removeGroup(Channel,ActionListener)"
+ line="35"
+ startpos="1799"
+ endpos="1810"
+>
+	<marker line="-1" type="param">
+		<operand  start="1855" length="1" line="35">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1909" length="8" line="35">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1811" length="43" line="35" chordsig="android.net.wifi.p2p.WifiP2pManager$Channel"/>
+	<type  start="1858" length="50" line="35" chordsig="android.net.wifi.p2p.WifiP2pManager$ActionListener"/>
+	<newexpr line="35" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1931" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1927" length="29" line="35">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1948" length="7" line="35">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1931" length="16" line="35" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="requestPeers:(Landroid/net/wifi/p2p/WifiP2pManager$Channel;Landroid/net/wifi/p2p/WifiP2pManager$PeerListListener;)V@android.net.wifi.p2p.WifiP2pManager"
+ sig="void requestPeers(Channel,PeerListListener)"
+ line="36"
+ startpos="1973"
+ endpos="1985"
+>
+	<marker line="-1" type="param">
+		<operand  start="2030" length="1" line="36">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2086" length="8" line="36">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1986" length="43" line="36" chordsig="android.net.wifi.p2p.WifiP2pManager$Channel"/>
+	<type  start="2033" length="52" line="36" chordsig="android.net.wifi.p2p.WifiP2pManager$PeerListListener"/>
+	<newexpr line="36" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2108" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2104" length="29" line="36">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2125" length="7" line="36">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2108" length="16" line="36" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="requestConnectionInfo:(Landroid/net/wifi/p2p/WifiP2pManager$Channel;Landroid/net/wifi/p2p/WifiP2pManager$ConnectionInfoListener;)V@android.net.wifi.p2p.WifiP2pManager"
+ sig="void requestConnectionInfo(Channel,ConnectionInfoListener)"
+ line="37"
+ startpos="2150"
+ endpos="2171"
+>
+	<marker line="-1" type="param">
+		<operand  start="2216" length="1" line="37">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2278" length="8" line="37">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="2172" length="43" line="37" chordsig="android.net.wifi.p2p.WifiP2pManager$Channel"/>
+	<type  start="2219" length="58" line="37" chordsig="android.net.wifi.p2p.WifiP2pManager$ConnectionInfoListener"/>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2300" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2296" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2317" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2300" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="requestGroupInfo:(Landroid/net/wifi/p2p/WifiP2pManager$Channel;Landroid/net/wifi/p2p/WifiP2pManager$GroupInfoListener;)V@android.net.wifi.p2p.WifiP2pManager"
+ sig="void requestGroupInfo(Channel,GroupInfoListener)"
+ line="38"
+ startpos="2342"
+ endpos="2358"
+>
+	<marker line="-1" type="param">
+		<operand  start="2403" length="1" line="38">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2460" length="8" line="38">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="2359" length="43" line="38" chordsig="android.net.wifi.p2p.WifiP2pManager$Channel"/>
+	<type  start="2406" length="53" line="38" chordsig="android.net.wifi.p2p.WifiP2pManager$GroupInfoListener"/>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2482" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2478" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2499" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2482" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="2531" length="16" line="39" chordsig="java.lang.String"/>
+	<type  start="2638" length="16" line="40" chordsig="java.lang.String"/>
+	<type  start="2817" length="16" line="43" chordsig="java.lang.String"/>
+	<type  start="2939" length="16" line="44" chordsig="java.lang.String"/>
+	<type  start="3013" length="16" line="45" chordsig="java.lang.String"/>
+	<type  start="3086" length="16" line="46" chordsig="java.lang.String"/>
+	<type  start="3193" length="16" line="47" chordsig="java.lang.String"/>
+	<type  start="3312" length="16" line="48" chordsig="java.lang.String"/>
+</class>
+</root>

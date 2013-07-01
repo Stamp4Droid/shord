@@ -1,0 +1,359 @@
+<root>
+<class chordsig="java.io.CharArrayWriter" line="2">
+	<type  start="56" length="14" line="3" chordsig="java.io.Writer"/>
+<method
+ chordsig="&lt;init&gt;:()V@java.io.CharArrayWriter"
+ sig="CharArrayWriter()"
+ line="5"
+ startpos="81"
+ endpos="96"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="111" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="107" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="128" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="111" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(I)V@java.io.CharArrayWriter"
+ sig="CharArrayWriter(int)"
+ line="6"
+ startpos="148"
+ endpos="163"
+>
+	<marker line="-1" type="param">
+		<operand  start="168" length="11" line="6">
+			<expr><![CDATA[initialSize]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="193" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="189" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="210" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="193" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="close:()V@java.io.CharArrayWriter"
+ sig="void close()"
+ line="7"
+ startpos="235"
+ endpos="240"
+>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="255" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="251" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="272" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="255" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="flush:()V@java.io.CharArrayWriter"
+ sig="void flush()"
+ line="8"
+ startpos="297"
+ endpos="302"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="317" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="313" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="334" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="317" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="reset:()V@java.io.CharArrayWriter"
+ sig="void reset()"
+ line="9"
+ startpos="359"
+ endpos="364"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="379" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="375" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="396" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="379" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="size:()I@java.io.CharArrayWriter"
+ sig="int size()"
+ line="10"
+ startpos="420"
+ endpos="424"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="439" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="435" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="456" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="439" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toCharArray:()[C@java.io.CharArrayWriter"
+ sig="char[] toCharArray()"
+ line="11"
+ startpos="483"
+ endpos="494"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="509" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="505" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="526" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="509" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.io.CharArrayWriter"
+ sig="String toString()"
+ line="12"
+ startpos="563"
+ endpos="571"
+>
+	<type  start="546" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="586" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="582" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="603" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="586" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="write:([CII)V@java.io.CharArrayWriter"
+ sig="void write(char[],int,int)"
+ line="13"
+ startpos="628"
+ endpos="633"
+>
+	<marker line="-1" type="param">
+		<operand  start="641" length="6" line="13">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="653" length="6" line="13">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="665" length="3" line="13">
+			<expr><![CDATA[len]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="682" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="678" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="699" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="682" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="write:(I)V@java.io.CharArrayWriter"
+ sig="void write(int)"
+ line="14"
+ startpos="724"
+ endpos="729"
+>
+	<marker line="-1" type="param">
+		<operand  start="734" length="7" line="14">
+			<expr><![CDATA[oneChar]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="755" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="751" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="772" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="755" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="write:(Ljava/lang/String;II)V@java.io.CharArrayWriter"
+ sig="void write(String,int,int)"
+ line="15"
+ startpos="797"
+ endpos="802"
+>
+	<marker line="-1" type="param">
+		<operand  start="820" length="3" line="15">
+			<expr><![CDATA[str]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="829" length="6" line="15">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="841" length="5" line="15">
+			<expr><![CDATA[count]]></expr>
+		</operand>
+	</marker>
+	<type  start="803" length="16" line="15" chordsig="java.lang.String"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="860" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="856" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="877" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="860" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeTo:(Ljava/io/Writer;)V@java.io.CharArrayWriter"
+ sig="void writeTo(Writer)"
+ line="16"
+ startpos="902"
+ endpos="909"
+>
+	<marker line="-1" type="param">
+		<operand  start="925" length="3" line="16">
+			<expr><![CDATA[out]]></expr>
+		</operand>
+	</marker>
+	<type  start="910" length="14" line="16" chordsig="java.io.Writer"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="969" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="965" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="986" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="969" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="append:(C)Ljava/io/CharArrayWriter;@java.io.CharArrayWriter"
+ sig="CharArrayWriter append(char)"
+ line="17"
+ startpos="1030"
+ endpos="1036"
+>
+	<alias>(C)Ljava/lang/Appendable;</alias>
+	<alias>(C)Ljava/io/Writer;</alias>
+	<marker line="-1" type="param">
+		<operand  start="1042" length="1" line="17">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<type  start="1006" length="23" line="17" chordsig="java.io.CharArrayWriter"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1057" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1053" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1074" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1057" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="append:(Ljava/lang/CharSequence;)Ljava/io/CharArrayWriter;@java.io.CharArrayWriter"
+ sig="CharArrayWriter append(CharSequence)"
+ line="18"
+ startpos="1118"
+ endpos="1124"
+>
+	<alias>(Ljava/lang/CharSequence;)Ljava/io/Writer;</alias>
+	<alias>(Ljava/lang/CharSequence;)Ljava/lang/Appendable;</alias>
+	<marker line="-1" type="param">
+		<operand  start="1148" length="3" line="18">
+			<expr><![CDATA[csq]]></expr>
+		</operand>
+	</marker>
+	<type  start="1094" length="23" line="18" chordsig="java.io.CharArrayWriter"/>
+	<type  start="1125" length="22" line="18" chordsig="java.lang.CharSequence"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1165" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1161" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1182" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1165" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="append:(Ljava/lang/CharSequence;II)Ljava/io/CharArrayWriter;@java.io.CharArrayWriter"
+ sig="CharArrayWriter append(CharSequence,int,int)"
+ line="19"
+ startpos="1226"
+ endpos="1232"
+>
+	<alias>(Ljava/lang/CharSequence;II)Ljava/io/Writer;</alias>
+	<alias>(Ljava/lang/CharSequence;II)Ljava/lang/Appendable;</alias>
+	<marker line="-1" type="param">
+		<operand  start="1256" length="3" line="19">
+			<expr><![CDATA[csq]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1265" length="5" line="19">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1276" length="3" line="19">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="1202" length="23" line="19" chordsig="java.io.CharArrayWriter"/>
+	<type  start="1233" length="22" line="19" chordsig="java.lang.CharSequence"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1293" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1289" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1310" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1293" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,73 @@
+<root>
+<class chordsig="android.speech.RecognizerIntent" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@android.speech.RecognizerIntent"
+ sig="RecognizerIntent()"
+ line="4"
+ startpos="56"
+ endpos="72"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="87" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="83" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="104" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="87" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getVoiceDetailsIntent:(Landroid/content/Context;)Landroid/content/Intent;@android.speech.RecognizerIntent"
+ sig="Intent getVoiceDetailsIntent(Context)"
+ line="5"
+ startpos="160"
+ endpos="181"
+>
+	<marker line="-1" type="param">
+		<operand  start="206" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="137" length="22" line="5" chordsig="android.content.Intent"/>
+	<type  start="182" length="23" line="5" chordsig="android.content.Context"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="227" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="223" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="244" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="227" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="276" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="356" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="461" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="554" length="16" line="9" chordsig="java.lang.String"/>
+	<type  start="673" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="763" length="16" line="11" chordsig="java.lang.String"/>
+	<type  start="903" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="1061" length="16" line="13" chordsig="java.lang.String"/>
+	<type  start="1237" length="16" line="14" chordsig="java.lang.String"/>
+	<type  start="1336" length="16" line="15" chordsig="java.lang.String"/>
+	<type  start="1413" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="1492" length="16" line="17" chordsig="java.lang.String"/>
+	<type  start="1575" length="16" line="18" chordsig="java.lang.String"/>
+	<type  start="1662" length="16" line="19" chordsig="java.lang.String"/>
+	<type  start="1745" length="16" line="20" chordsig="java.lang.String"/>
+	<type  start="1838" length="16" line="21" chordsig="java.lang.String"/>
+	<type  start="1939" length="16" line="22" chordsig="java.lang.String"/>
+	<type  start="2040" length="16" line="23" chordsig="java.lang.String"/>
+	<type  start="2153" length="16" line="24" chordsig="java.lang.String"/>
+	<type  start="2521" length="16" line="30" chordsig="java.lang.String"/>
+	<type  start="2606" length="16" line="31" chordsig="java.lang.String"/>
+	<type  start="2711" length="16" line="32" chordsig="java.lang.String"/>
+	<type  start="2794" length="16" line="33" chordsig="java.lang.String"/>
+	<type  start="2907" length="16" line="34" chordsig="java.lang.String"/>
+	<type  start="3040" length="16" line="35" chordsig="java.lang.String"/>
+	<type  start="3149" length="16" line="36" chordsig="java.lang.String"/>
+</class>
+</root>

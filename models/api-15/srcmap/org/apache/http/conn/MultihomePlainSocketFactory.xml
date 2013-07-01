@@ -1,0 +1,180 @@
+<root>
+<class chordsig="org.apache.http.conn.MultihomePlainSocketFactory" line="2">
+	<type  start="90" length="41" line="3" chordsig="org.apache.http.conn.scheme.SocketFactory"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.conn.MultihomePlainSocketFactory"
+ sig="MultihomePlainSocketFactory()"
+ line="5"
+ startpos="134"
+ endpos="161"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="176" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="172" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="193" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="176" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSocketFactory:()Lorg/apache/http/conn/MultihomePlainSocketFactory;@org.apache.http.conn.MultihomePlainSocketFactory"
+ sig="MultihomePlainSocketFactory getSocketFactory()"
+ line="6"
+ startpos="269"
+ endpos="285"
+>
+	<type  start="220" length="48" line="6" chordsig="org.apache.http.conn.MultihomePlainSocketFactory"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="300" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="296" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="317" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="300" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createSocket:()Ljava/net/Socket;@org.apache.http.conn.MultihomePlainSocketFactory"
+ sig="Socket createSocket()"
+ line="7"
+ startpos="353"
+ endpos="365"
+>
+	<type  start="337" length="15" line="7" chordsig="java.net.Socket"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="380" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="376" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="397" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="380" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="connectSocket:(Ljava/net/Socket;Ljava/lang/String;ILjava/net/InetAddress;ILorg/apache/http/params/HttpParams;)Ljava/net/Socket;@org.apache.http.conn.MultihomePlainSocketFactory"
+ sig="Socket connectSocket(Socket,String,int,InetAddress,int,HttpParams)"
+ line="8"
+ startpos="433"
+ endpos="446"
+>
+	<marker line="-1" type="param">
+		<operand  start="463" length="4" line="8">
+			<expr><![CDATA[sock]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="486" length="4" line="8">
+			<expr><![CDATA[host]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="496" length="4" line="8">
+			<expr><![CDATA[port]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="523" length="12" line="8">
+			<expr><![CDATA[localAddress]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="541" length="9" line="8">
+			<expr><![CDATA[localPort]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="586" length="6" line="8">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="417" length="15" line="8" chordsig="java.net.Socket"/>
+	<type  start="447" length="15" line="8" chordsig="java.net.Socket"/>
+	<type  start="469" length="16" line="8" chordsig="java.lang.String"/>
+	<type  start="502" length="20" line="8" chordsig="java.net.InetAddress"/>
+	<type  start="552" length="33" line="8" chordsig="org.apache.http.params.HttpParams"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="633" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="629" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="650" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="633" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isSecure:(Ljava/net/Socket;)Z@org.apache.http.conn.MultihomePlainSocketFactory"
+ sig="boolean isSecure(Socket)"
+ line="9"
+ startpos="684"
+ endpos="692"
+>
+	<marker line="-1" type="param">
+		<operand  start="709" length="4" line="9">
+			<expr><![CDATA[sock]]></expr>
+		</operand>
+	</marker>
+	<type  start="693" length="15" line="9" chordsig="java.net.Socket"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="769" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="765" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="786" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="769" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="equals:(Ljava/lang/Object;)Z@org.apache.http.conn.MultihomePlainSocketFactory"
+ sig="boolean equals(Object)"
+ line="10"
+ startpos="814"
+ endpos="820"
+>
+	<marker line="-1" type="param">
+		<operand  start="838" length="3" line="10">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="821" length="16" line="10" chordsig="java.lang.Object"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="855" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="851" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="872" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="855" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hashCode:()I@org.apache.http.conn.MultihomePlainSocketFactory"
+ sig="int hashCode()"
+ line="11"
+ startpos="896"
+ endpos="904"
+>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="919" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="915" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="936" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="919" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

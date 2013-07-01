@@ -1,0 +1,871 @@
+<root>
+<class chordsig="android.os.StrictMode" line="2">
+<class chordsig="android.os.StrictMode$ThreadPolicy" line="4">
+<class chordsig="android.os.StrictMode$ThreadPolicy$Builder" line="6">
+<method
+ chordsig="&lt;init&gt;:()V@android.os.StrictMode$ThreadPolicy$Builder"
+ sig="Builder()"
+ line="8"
+ startpos="137"
+ endpos="144"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="159" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="155" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="176" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="159" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/os/StrictMode$ThreadPolicy;)V@android.os.StrictMode$ThreadPolicy$Builder"
+ sig="Builder(ThreadPolicy)"
+ line="9"
+ startpos="196"
+ endpos="203"
+>
+	<marker line="-1" type="param">
+		<operand  start="239" length="6" line="9">
+			<expr><![CDATA[policy]]></expr>
+		</operand>
+	</marker>
+	<type  start="204" length="34" line="9" chordsig="android.os.StrictMode$ThreadPolicy"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="259" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="255" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="276" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="259" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="detectAll:()Landroid/os/StrictMode$ThreadPolicy$Builder;@android.os.StrictMode$ThreadPolicy$Builder"
+ sig="Builder detectAll()"
+ line="10"
+ startpos="339"
+ endpos="348"
+>
+	<type  start="296" length="42" line="10" chordsig="android.os.StrictMode$ThreadPolicy$Builder"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="363" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="359" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="380" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="363" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="permitAll:()Landroid/os/StrictMode$ThreadPolicy$Builder;@android.os.StrictMode$ThreadPolicy$Builder"
+ sig="Builder permitAll()"
+ line="11"
+ startpos="443"
+ endpos="452"
+>
+	<type  start="400" length="42" line="11" chordsig="android.os.StrictMode$ThreadPolicy$Builder"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="467" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="463" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="484" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="467" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="detectNetwork:()Landroid/os/StrictMode$ThreadPolicy$Builder;@android.os.StrictMode$ThreadPolicy$Builder"
+ sig="Builder detectNetwork()"
+ line="12"
+ startpos="547"
+ endpos="560"
+>
+	<type  start="504" length="42" line="12" chordsig="android.os.StrictMode$ThreadPolicy$Builder"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="575" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="571" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="592" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="575" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="permitNetwork:()Landroid/os/StrictMode$ThreadPolicy$Builder;@android.os.StrictMode$ThreadPolicy$Builder"
+ sig="Builder permitNetwork()"
+ line="13"
+ startpos="655"
+ endpos="668"
+>
+	<type  start="612" length="42" line="13" chordsig="android.os.StrictMode$ThreadPolicy$Builder"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="683" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="679" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="700" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="683" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="detectDiskReads:()Landroid/os/StrictMode$ThreadPolicy$Builder;@android.os.StrictMode$ThreadPolicy$Builder"
+ sig="Builder detectDiskReads()"
+ line="14"
+ startpos="763"
+ endpos="778"
+>
+	<type  start="720" length="42" line="14" chordsig="android.os.StrictMode$ThreadPolicy$Builder"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="793" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="789" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="810" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="793" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="permitDiskReads:()Landroid/os/StrictMode$ThreadPolicy$Builder;@android.os.StrictMode$ThreadPolicy$Builder"
+ sig="Builder permitDiskReads()"
+ line="15"
+ startpos="873"
+ endpos="888"
+>
+	<type  start="830" length="42" line="15" chordsig="android.os.StrictMode$ThreadPolicy$Builder"/>
+	<newexpr line="15" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="903" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="899" length="29" line="15">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="920" length="7" line="15">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="903" length="16" line="15" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="detectCustomSlowCalls:()Landroid/os/StrictMode$ThreadPolicy$Builder;@android.os.StrictMode$ThreadPolicy$Builder"
+ sig="Builder detectCustomSlowCalls()"
+ line="16"
+ startpos="983"
+ endpos="1004"
+>
+	<type  start="940" length="42" line="16" chordsig="android.os.StrictMode$ThreadPolicy$Builder"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1019" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1015" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1036" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1019" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="permitCustomSlowCalls:()Landroid/os/StrictMode$ThreadPolicy$Builder;@android.os.StrictMode$ThreadPolicy$Builder"
+ sig="Builder permitCustomSlowCalls()"
+ line="17"
+ startpos="1099"
+ endpos="1120"
+>
+	<type  start="1056" length="42" line="17" chordsig="android.os.StrictMode$ThreadPolicy$Builder"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1135" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1131" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1152" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1135" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="detectDiskWrites:()Landroid/os/StrictMode$ThreadPolicy$Builder;@android.os.StrictMode$ThreadPolicy$Builder"
+ sig="Builder detectDiskWrites()"
+ line="18"
+ startpos="1215"
+ endpos="1231"
+>
+	<type  start="1172" length="42" line="18" chordsig="android.os.StrictMode$ThreadPolicy$Builder"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1246" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1242" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1263" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1246" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="permitDiskWrites:()Landroid/os/StrictMode$ThreadPolicy$Builder;@android.os.StrictMode$ThreadPolicy$Builder"
+ sig="Builder permitDiskWrites()"
+ line="19"
+ startpos="1326"
+ endpos="1342"
+>
+	<type  start="1283" length="42" line="19" chordsig="android.os.StrictMode$ThreadPolicy$Builder"/>
+	<newexpr line="19" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1357" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1353" length="29" line="19">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1374" length="7" line="19">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1357" length="16" line="19" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="penaltyDialog:()Landroid/os/StrictMode$ThreadPolicy$Builder;@android.os.StrictMode$ThreadPolicy$Builder"
+ sig="Builder penaltyDialog()"
+ line="20"
+ startpos="1437"
+ endpos="1450"
+>
+	<type  start="1394" length="42" line="20" chordsig="android.os.StrictMode$ThreadPolicy$Builder"/>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1465" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1461" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1482" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1465" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="penaltyDeath:()Landroid/os/StrictMode$ThreadPolicy$Builder;@android.os.StrictMode$ThreadPolicy$Builder"
+ sig="Builder penaltyDeath()"
+ line="21"
+ startpos="1545"
+ endpos="1557"
+>
+	<type  start="1502" length="42" line="21" chordsig="android.os.StrictMode$ThreadPolicy$Builder"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1572" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1568" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1589" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1572" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="penaltyDeathOnNetwork:()Landroid/os/StrictMode$ThreadPolicy$Builder;@android.os.StrictMode$ThreadPolicy$Builder"
+ sig="Builder penaltyDeathOnNetwork()"
+ line="22"
+ startpos="1652"
+ endpos="1673"
+>
+	<type  start="1609" length="42" line="22" chordsig="android.os.StrictMode$ThreadPolicy$Builder"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1688" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1684" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1705" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1688" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="penaltyFlashScreen:()Landroid/os/StrictMode$ThreadPolicy$Builder;@android.os.StrictMode$ThreadPolicy$Builder"
+ sig="Builder penaltyFlashScreen()"
+ line="23"
+ startpos="1768"
+ endpos="1786"
+>
+	<type  start="1725" length="42" line="23" chordsig="android.os.StrictMode$ThreadPolicy$Builder"/>
+	<newexpr line="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1801" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1797" length="29" line="23">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1818" length="7" line="23">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1801" length="16" line="23" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="penaltyLog:()Landroid/os/StrictMode$ThreadPolicy$Builder;@android.os.StrictMode$ThreadPolicy$Builder"
+ sig="Builder penaltyLog()"
+ line="24"
+ startpos="1881"
+ endpos="1891"
+>
+	<type  start="1838" length="42" line="24" chordsig="android.os.StrictMode$ThreadPolicy$Builder"/>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1906" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1902" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1923" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1906" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="penaltyDropBox:()Landroid/os/StrictMode$ThreadPolicy$Builder;@android.os.StrictMode$ThreadPolicy$Builder"
+ sig="Builder penaltyDropBox()"
+ line="25"
+ startpos="1986"
+ endpos="2000"
+>
+	<type  start="1943" length="42" line="25" chordsig="android.os.StrictMode$ThreadPolicy$Builder"/>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2015" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2011" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2032" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2015" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="build:()Landroid/os/StrictMode$ThreadPolicy;@android.os.StrictMode$ThreadPolicy$Builder"
+ sig="ThreadPolicy build()"
+ line="26"
+ startpos="2087"
+ endpos="2092"
+>
+	<type  start="2052" length="34" line="26" chordsig="android.os.StrictMode$ThreadPolicy"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2107" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2103" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2124" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2107" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.os.StrictMode$ThreadPolicy"
+ sig="ThreadPolicy()"
+ line="28"
+ startpos="2138"
+ endpos="2150"
+>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2165" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2161" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2182" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2165" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.os.StrictMode$ThreadPolicy"
+ sig="String toString()"
+ line="29"
+ startpos="2219"
+ endpos="2227"
+>
+	<type  start="2202" length="16" line="29" chordsig="java.lang.String"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2242" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2238" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2259" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2242" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="2291" length="34" line="30" chordsig="android.os.StrictMode$ThreadPolicy"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.os.StrictMode$ThreadPolicy"
+ line="31"
+>
+</method>
+</class>
+<class chordsig="android.os.StrictMode$VmPolicy" line="33">
+<class chordsig="android.os.StrictMode$VmPolicy$Builder" line="35">
+<method
+ chordsig="&lt;init&gt;:()V@android.os.StrictMode$VmPolicy$Builder"
+ sig="Builder()"
+ line="37"
+ startpos="2437"
+ endpos="2444"
+>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2459" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2455" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2476" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2459" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/os/StrictMode$VmPolicy;)V@android.os.StrictMode$VmPolicy$Builder"
+ sig="Builder(VmPolicy)"
+ line="38"
+ startpos="2496"
+ endpos="2503"
+>
+	<marker line="-1" type="param">
+		<operand  start="2535" length="4" line="38">
+			<expr><![CDATA[base]]></expr>
+		</operand>
+	</marker>
+	<type  start="2504" length="30" line="38" chordsig="android.os.StrictMode$VmPolicy"/>
+	<newexpr line="38" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2553" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2549" length="29" line="38">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2570" length="7" line="38">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2553" length="16" line="38" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setClassInstanceLimit:(Ljava/lang/Class;I)Landroid/os/StrictMode$VmPolicy$Builder;@android.os.StrictMode$VmPolicy$Builder"
+ sig="Builder setClassInstanceLimit(Class,int)"
+ line="39"
+ startpos="2629"
+ endpos="2650"
+>
+	<marker line="-1" type="param">
+		<operand  start="2667" length="5" line="39">
+			<expr><![CDATA[klass]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2678" length="13" line="39">
+			<expr><![CDATA[instanceLimit]]></expr>
+		</operand>
+	</marker>
+	<type  start="2590" length="38" line="39" chordsig="android.os.StrictMode$VmPolicy$Builder"/>
+	<type  start="2651" length="15" line="39" chordsig="java.lang.Class"/>
+	<newexpr line="39" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2705" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2701" length="29" line="39">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2722" length="7" line="39">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2705" length="16" line="39" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="detectActivityLeaks:()Landroid/os/StrictMode$VmPolicy$Builder;@android.os.StrictMode$VmPolicy$Builder"
+ sig="Builder detectActivityLeaks()"
+ line="40"
+ startpos="2781"
+ endpos="2800"
+>
+	<type  start="2742" length="38" line="40" chordsig="android.os.StrictMode$VmPolicy$Builder"/>
+	<newexpr line="40" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2815" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2811" length="29" line="40">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2832" length="7" line="40">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2815" length="16" line="40" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="detectAll:()Landroid/os/StrictMode$VmPolicy$Builder;@android.os.StrictMode$VmPolicy$Builder"
+ sig="Builder detectAll()"
+ line="41"
+ startpos="2891"
+ endpos="2900"
+>
+	<type  start="2852" length="38" line="41" chordsig="android.os.StrictMode$VmPolicy$Builder"/>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2915" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2911" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2932" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2915" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="detectLeakedSqlLiteObjects:()Landroid/os/StrictMode$VmPolicy$Builder;@android.os.StrictMode$VmPolicy$Builder"
+ sig="Builder detectLeakedSqlLiteObjects()"
+ line="42"
+ startpos="2991"
+ endpos="3017"
+>
+	<type  start="2952" length="38" line="42" chordsig="android.os.StrictMode$VmPolicy$Builder"/>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3032" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3028" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3049" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3032" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="detectLeakedClosableObjects:()Landroid/os/StrictMode$VmPolicy$Builder;@android.os.StrictMode$VmPolicy$Builder"
+ sig="Builder detectLeakedClosableObjects()"
+ line="43"
+ startpos="3108"
+ endpos="3135"
+>
+	<type  start="3069" length="38" line="43" chordsig="android.os.StrictMode$VmPolicy$Builder"/>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3150" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3146" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3167" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3150" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="penaltyDeath:()Landroid/os/StrictMode$VmPolicy$Builder;@android.os.StrictMode$VmPolicy$Builder"
+ sig="Builder penaltyDeath()"
+ line="44"
+ startpos="3226"
+ endpos="3238"
+>
+	<type  start="3187" length="38" line="44" chordsig="android.os.StrictMode$VmPolicy$Builder"/>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3253" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3249" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3270" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3253" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="penaltyLog:()Landroid/os/StrictMode$VmPolicy$Builder;@android.os.StrictMode$VmPolicy$Builder"
+ sig="Builder penaltyLog()"
+ line="45"
+ startpos="3329"
+ endpos="3339"
+>
+	<type  start="3290" length="38" line="45" chordsig="android.os.StrictMode$VmPolicy$Builder"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3354" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3350" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3371" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3354" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="penaltyDropBox:()Landroid/os/StrictMode$VmPolicy$Builder;@android.os.StrictMode$VmPolicy$Builder"
+ sig="Builder penaltyDropBox()"
+ line="46"
+ startpos="3430"
+ endpos="3444"
+>
+	<type  start="3391" length="38" line="46" chordsig="android.os.StrictMode$VmPolicy$Builder"/>
+	<newexpr line="46" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3459" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3455" length="29" line="46">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3476" length="7" line="46">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3459" length="16" line="46" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="build:()Landroid/os/StrictMode$VmPolicy;@android.os.StrictMode$VmPolicy$Builder"
+ sig="VmPolicy build()"
+ line="47"
+ startpos="3527"
+ endpos="3532"
+>
+	<type  start="3496" length="30" line="47" chordsig="android.os.StrictMode$VmPolicy"/>
+	<newexpr line="47" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3547" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3543" length="29" line="47">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3564" length="7" line="47">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3547" length="16" line="47" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.os.StrictMode$VmPolicy"
+ sig="VmPolicy()"
+ line="49"
+ startpos="3578"
+ endpos="3586"
+>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3601" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3597" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3618" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3601" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.os.StrictMode$VmPolicy"
+ sig="String toString()"
+ line="50"
+ startpos="3655"
+ endpos="3663"
+>
+	<type  start="3638" length="16" line="50" chordsig="java.lang.String"/>
+	<newexpr line="50" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3678" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3674" length="29" line="50">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3695" length="7" line="50">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3678" length="16" line="50" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="3727" length="30" line="51" chordsig="android.os.StrictMode$VmPolicy"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.os.StrictMode$VmPolicy"
+ line="52"
+>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.os.StrictMode"
+ sig="StrictMode()"
+ line="54"
+ startpos="3788"
+ endpos="3798"
+>
+	<newexpr line="54" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3813" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3809" length="29" line="54">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3830" length="7" line="54">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3813" length="16" line="54" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setThreadPolicy:(Landroid/os/StrictMode$ThreadPolicy;)V@android.os.StrictMode"
+ sig="void setThreadPolicy(ThreadPolicy)"
+ line="55"
+ startpos="3862"
+ endpos="3877"
+>
+	<marker line="-1" type="param">
+		<operand  start="3913" length="6" line="55">
+			<expr><![CDATA[policy]]></expr>
+		</operand>
+	</marker>
+	<type  start="3878" length="34" line="55" chordsig="android.os.StrictMode$ThreadPolicy"/>
+	<newexpr line="55" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3933" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3929" length="29" line="55">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3950" length="7" line="55">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3933" length="16" line="55" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getThreadPolicy:()Landroid/os/StrictMode$ThreadPolicy;@android.os.StrictMode"
+ sig="ThreadPolicy getThreadPolicy()"
+ line="56"
+ startpos="4012"
+ endpos="4027"
+>
+	<type  start="3977" length="34" line="56" chordsig="android.os.StrictMode$ThreadPolicy"/>
+	<newexpr line="56" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4042" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4038" length="29" line="56">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4059" length="7" line="56">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4042" length="16" line="56" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="allowThreadDiskWrites:()Landroid/os/StrictMode$ThreadPolicy;@android.os.StrictMode"
+ sig="ThreadPolicy allowThreadDiskWrites()"
+ line="57"
+ startpos="4121"
+ endpos="4142"
+>
+	<type  start="4086" length="34" line="57" chordsig="android.os.StrictMode$ThreadPolicy"/>
+	<newexpr line="57" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4157" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4153" length="29" line="57">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4174" length="7" line="57">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4157" length="16" line="57" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="allowThreadDiskReads:()Landroid/os/StrictMode$ThreadPolicy;@android.os.StrictMode"
+ sig="ThreadPolicy allowThreadDiskReads()"
+ line="58"
+ startpos="4236"
+ endpos="4256"
+>
+	<type  start="4201" length="34" line="58" chordsig="android.os.StrictMode$ThreadPolicy"/>
+	<newexpr line="58" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4271" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4267" length="29" line="58">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4288" length="7" line="58">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4271" length="16" line="58" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setVmPolicy:(Landroid/os/StrictMode$VmPolicy;)V@android.os.StrictMode"
+ sig="void setVmPolicy(VmPolicy)"
+ line="59"
+ startpos="4320"
+ endpos="4331"
+>
+	<marker line="-1" type="param">
+		<operand  start="4363" length="6" line="59">
+			<expr><![CDATA[policy]]></expr>
+		</operand>
+	</marker>
+	<type  start="4332" length="30" line="59" chordsig="android.os.StrictMode$VmPolicy"/>
+	<newexpr line="59" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4383" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4379" length="29" line="59">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4400" length="7" line="59">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4383" length="16" line="59" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getVmPolicy:()Landroid/os/StrictMode$VmPolicy;@android.os.StrictMode"
+ sig="VmPolicy getVmPolicy()"
+ line="60"
+ startpos="4458"
+ endpos="4469"
+>
+	<type  start="4427" length="30" line="60" chordsig="android.os.StrictMode$VmPolicy"/>
+	<newexpr line="60" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4484" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4480" length="29" line="60">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4501" length="7" line="60">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4484" length="16" line="60" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="enableDefaults:()V@android.os.StrictMode"
+ sig="void enableDefaults()"
+ line="61"
+ startpos="4533"
+ endpos="4547"
+>
+	<newexpr line="61" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4562" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4558" length="29" line="61">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4579" length="7" line="61">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4562" length="16" line="61" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="noteSlowCall:(Ljava/lang/String;)V@android.os.StrictMode"
+ sig="void noteSlowCall(String)"
+ line="62"
+ startpos="4611"
+ endpos="4623"
+>
+	<marker line="-1" type="param">
+		<operand  start="4641" length="4" line="62">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="4624" length="16" line="62" chordsig="java.lang.String"/>
+	<newexpr line="62" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4659" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4655" length="29" line="62">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4676" length="7" line="62">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4659" length="16" line="62" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

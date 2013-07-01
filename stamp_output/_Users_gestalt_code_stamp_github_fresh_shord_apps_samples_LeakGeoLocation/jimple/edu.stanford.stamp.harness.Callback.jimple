@@ -1,0 +1,12 @@
+public abstract class edu.stanford.stamp.harness.Callback extends java.lang.Object implements java.lang.Runnable
+{
+
+    public void <init>()
+    {
+        edu.stanford.stamp.harness.Callback r0;
+
+        r0 := @this: edu.stanford.stamp.harness.Callback;
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+        return;
+    }
+}

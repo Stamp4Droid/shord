@@ -1,0 +1,64 @@
+<root>
+<class chordsig="org.apache.http.impl.auth.NTLMEngine" line="2">
+<method
+ chordsig="generateType1Msg:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;@org.apache.http.impl.auth.NTLMEngine"
+ sig="String generateType1Msg(String,String)"
+ line="4"
+ startpos="99"
+ endpos="115"
+>
+	<marker line="-1" type="param">
+		<operand  start="133" length="6" line="4">
+			<expr><![CDATA[domain]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="158" length="11" line="4">
+			<expr><![CDATA[workstation]]></expr>
+		</operand>
+	</marker>
+	<type  start="82" length="16" line="4" chordsig="java.lang.String"/>
+	<type  start="116" length="16" line="4" chordsig="java.lang.String"/>
+	<type  start="141" length="16" line="4" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="generateType3Msg:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;@org.apache.http.impl.auth.NTLMEngine"
+ sig="String generateType3Msg(String,String,String,String,String)"
+ line="5"
+ startpos="259"
+ endpos="275"
+>
+	<marker line="-1" type="param">
+		<operand  start="293" length="8" line="5">
+			<expr><![CDATA[username]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="320" length="8" line="5">
+			<expr><![CDATA[password]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="347" length="6" line="5">
+			<expr><![CDATA[domain]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="372" length="11" line="5">
+			<expr><![CDATA[workstation]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="402" length="9" line="5">
+			<expr><![CDATA[challenge]]></expr>
+		</operand>
+	</marker>
+	<type  start="242" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="276" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="303" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="330" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="355" length="16" line="5" chordsig="java.lang.String"/>
+	<type  start="385" length="16" line="5" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,18 @@
+<root>
+<class chordsig="javax.sql.RowSetWriter" line="2">
+<method
+ chordsig="writeData:(Ljavax/sql/RowSetInternal;)Z@javax.sql.RowSetWriter"
+ sig="boolean writeData(RowSetInternal)"
+ line="4"
+ startpos="76"
+ endpos="85"
+>
+	<marker line="-1" type="param">
+		<operand  start="111" length="9" line="4">
+			<expr><![CDATA[theRowSet]]></expr>
+		</operand>
+	</marker>
+	<type  start="86" length="24" line="4" chordsig="javax.sql.RowSetInternal"/>
+</method>
+</class>
+</root>

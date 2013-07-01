@@ -1,0 +1,371 @@
+<root>
+<class chordsig="android.net.nsd.NsdManager" line="2">
+<class chordsig="android.net.nsd.NsdManager$DiscoveryListener" line="4">
+<method
+ chordsig="onStartDiscoveryFailed:(Ljava/lang/String;I)V@android.net.nsd.NsdManager$DiscoveryListener"
+ sig="void onStartDiscoveryFailed(String,int)"
+ line="6"
+ startpos="123"
+ endpos="145"
+>
+	<marker line="-1" type="param">
+		<operand  start="163" length="11" line="6">
+			<expr><![CDATA[serviceType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="180" length="9" line="6">
+			<expr><![CDATA[errorCode]]></expr>
+		</operand>
+	</marker>
+	<type  start="146" length="16" line="6" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="onStopDiscoveryFailed:(Ljava/lang/String;I)V@android.net.nsd.NsdManager$DiscoveryListener"
+ sig="void onStopDiscoveryFailed(String,int)"
+ line="7"
+ startpos="214"
+ endpos="235"
+>
+	<marker line="-1" type="param">
+		<operand  start="253" length="11" line="7">
+			<expr><![CDATA[serviceType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="270" length="9" line="7">
+			<expr><![CDATA[errorCode]]></expr>
+		</operand>
+	</marker>
+	<type  start="236" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="onDiscoveryStarted:(Ljava/lang/String;)V@android.net.nsd.NsdManager$DiscoveryListener"
+ sig="void onDiscoveryStarted(String)"
+ line="8"
+ startpos="304"
+ endpos="322"
+>
+	<marker line="-1" type="param">
+		<operand  start="340" length="11" line="8">
+			<expr><![CDATA[serviceType]]></expr>
+		</operand>
+	</marker>
+	<type  start="323" length="16" line="8" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="onDiscoveryStopped:(Ljava/lang/String;)V@android.net.nsd.NsdManager$DiscoveryListener"
+ sig="void onDiscoveryStopped(String)"
+ line="9"
+ startpos="376"
+ endpos="394"
+>
+	<marker line="-1" type="param">
+		<operand  start="412" length="11" line="9">
+			<expr><![CDATA[serviceType]]></expr>
+		</operand>
+	</marker>
+	<type  start="395" length="16" line="9" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="onServiceFound:(Landroid/net/nsd/NsdServiceInfo;)V@android.net.nsd.NsdManager$DiscoveryListener"
+ sig="void onServiceFound(NsdServiceInfo)"
+ line="10"
+ startpos="448"
+ endpos="462"
+>
+	<marker line="-1" type="param">
+		<operand  start="494" length="11" line="10">
+			<expr><![CDATA[serviceInfo]]></expr>
+		</operand>
+	</marker>
+	<type  start="463" length="30" line="10" chordsig="android.net.nsd.NsdServiceInfo"/>
+</method>
+<method
+ chordsig="onServiceLost:(Landroid/net/nsd/NsdServiceInfo;)V@android.net.nsd.NsdManager$DiscoveryListener"
+ sig="void onServiceLost(NsdServiceInfo)"
+ line="11"
+ startpos="530"
+ endpos="543"
+>
+	<marker line="-1" type="param">
+		<operand  start="575" length="11" line="11">
+			<expr><![CDATA[serviceInfo]]></expr>
+		</operand>
+	</marker>
+	<type  start="544" length="30" line="11" chordsig="android.net.nsd.NsdServiceInfo"/>
+</method>
+</class>
+<class chordsig="android.net.nsd.NsdManager$RegistrationListener" line="13">
+<method
+ chordsig="onRegistrationFailed:(Landroid/net/nsd/NsdServiceInfo;I)V@android.net.nsd.NsdManager$RegistrationListener"
+ sig="void onRegistrationFailed(NsdServiceInfo,int)"
+ line="15"
+ startpos="660"
+ endpos="680"
+>
+	<marker line="-1" type="param">
+		<operand  start="712" length="11" line="15">
+			<expr><![CDATA[serviceInfo]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="729" length="9" line="15">
+			<expr><![CDATA[errorCode]]></expr>
+		</operand>
+	</marker>
+	<type  start="681" length="30" line="15" chordsig="android.net.nsd.NsdServiceInfo"/>
+</method>
+<method
+ chordsig="onUnregistrationFailed:(Landroid/net/nsd/NsdServiceInfo;I)V@android.net.nsd.NsdManager$RegistrationListener"
+ sig="void onUnregistrationFailed(NsdServiceInfo,int)"
+ line="16"
+ startpos="763"
+ endpos="785"
+>
+	<marker line="-1" type="param">
+		<operand  start="817" length="11" line="16">
+			<expr><![CDATA[serviceInfo]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="834" length="9" line="16">
+			<expr><![CDATA[errorCode]]></expr>
+		</operand>
+	</marker>
+	<type  start="786" length="30" line="16" chordsig="android.net.nsd.NsdServiceInfo"/>
+</method>
+<method
+ chordsig="onServiceRegistered:(Landroid/net/nsd/NsdServiceInfo;)V@android.net.nsd.NsdManager$RegistrationListener"
+ sig="void onServiceRegistered(NsdServiceInfo)"
+ line="17"
+ startpos="868"
+ endpos="887"
+>
+	<marker line="-1" type="param">
+		<operand  start="919" length="11" line="17">
+			<expr><![CDATA[serviceInfo]]></expr>
+		</operand>
+	</marker>
+	<type  start="888" length="30" line="17" chordsig="android.net.nsd.NsdServiceInfo"/>
+</method>
+<method
+ chordsig="onServiceUnregistered:(Landroid/net/nsd/NsdServiceInfo;)V@android.net.nsd.NsdManager$RegistrationListener"
+ sig="void onServiceUnregistered(NsdServiceInfo)"
+ line="18"
+ startpos="955"
+ endpos="976"
+>
+	<marker line="-1" type="param">
+		<operand  start="1008" length="11" line="18">
+			<expr><![CDATA[serviceInfo]]></expr>
+		</operand>
+	</marker>
+	<type  start="977" length="30" line="18" chordsig="android.net.nsd.NsdServiceInfo"/>
+</method>
+</class>
+<class chordsig="android.net.nsd.NsdManager$ResolveListener" line="20">
+<method
+ chordsig="onResolveFailed:(Landroid/net/nsd/NsdServiceInfo;I)V@android.net.nsd.NsdManager$ResolveListener"
+ sig="void onResolveFailed(NsdServiceInfo,int)"
+ line="22"
+ startpos="1088"
+ endpos="1103"
+>
+	<marker line="-1" type="param">
+		<operand  start="1135" length="11" line="22">
+			<expr><![CDATA[serviceInfo]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1152" length="9" line="22">
+			<expr><![CDATA[errorCode]]></expr>
+		</operand>
+	</marker>
+	<type  start="1104" length="30" line="22" chordsig="android.net.nsd.NsdServiceInfo"/>
+</method>
+<method
+ chordsig="onServiceResolved:(Landroid/net/nsd/NsdServiceInfo;)V@android.net.nsd.NsdManager$ResolveListener"
+ sig="void onServiceResolved(NsdServiceInfo)"
+ line="23"
+ startpos="1186"
+ endpos="1203"
+>
+	<marker line="-1" type="param">
+		<operand  start="1235" length="11" line="23">
+			<expr><![CDATA[serviceInfo]]></expr>
+		</operand>
+	</marker>
+	<type  start="1204" length="30" line="23" chordsig="android.net.nsd.NsdServiceInfo"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.net.nsd.NsdManager"
+ sig="NsdManager()"
+ line="25"
+ startpos="1251"
+ endpos="1261"
+>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1276" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1272" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1293" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1276" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="registerService:(Landroid/net/nsd/NsdServiceInfo;ILandroid/net/nsd/NsdManager$RegistrationListener;)V@android.net.nsd.NsdManager"
+ sig="void registerService(NsdServiceInfo,int,RegistrationListener)"
+ line="26"
+ startpos="1318"
+ endpos="1333"
+>
+	<marker line="-1" type="param">
+		<operand  start="1365" length="11" line="26">
+			<expr><![CDATA[serviceInfo]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1382" length="12" line="26">
+			<expr><![CDATA[protocolType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1444" length="8" line="26">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1334" length="30" line="26" chordsig="android.net.nsd.NsdServiceInfo"/>
+	<type  start="1396" length="47" line="26" chordsig="android.net.nsd.NsdManager$RegistrationListener"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1466" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1462" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1483" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1466" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unregisterService:(Landroid/net/nsd/NsdManager$RegistrationListener;)V@android.net.nsd.NsdManager"
+ sig="void unregisterService(RegistrationListener)"
+ line="27"
+ startpos="1508"
+ endpos="1525"
+>
+	<marker line="-1" type="param">
+		<operand  start="1574" length="8" line="27">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1526" length="47" line="27" chordsig="android.net.nsd.NsdManager$RegistrationListener"/>
+	<newexpr line="27" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1596" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1592" length="29" line="27">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1613" length="7" line="27">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1596" length="16" line="27" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="discoverServices:(Ljava/lang/String;ILandroid/net/nsd/NsdManager$DiscoveryListener;)V@android.net.nsd.NsdManager"
+ sig="void discoverServices(String,int,DiscoveryListener)"
+ line="28"
+ startpos="1638"
+ endpos="1654"
+>
+	<marker line="-1" type="param">
+		<operand  start="1672" length="11" line="28">
+			<expr><![CDATA[serviceType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1689" length="12" line="28">
+			<expr><![CDATA[protocolType]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1748" length="8" line="28">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1655" length="16" line="28" chordsig="java.lang.String"/>
+	<type  start="1703" length="44" line="28" chordsig="android.net.nsd.NsdManager$DiscoveryListener"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1770" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1766" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1787" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1770" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="stopServiceDiscovery:(Landroid/net/nsd/NsdManager$DiscoveryListener;)V@android.net.nsd.NsdManager"
+ sig="void stopServiceDiscovery(DiscoveryListener)"
+ line="29"
+ startpos="1812"
+ endpos="1832"
+>
+	<marker line="-1" type="param">
+		<operand  start="1878" length="8" line="29">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1833" length="44" line="29" chordsig="android.net.nsd.NsdManager$DiscoveryListener"/>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1900" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1896" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1917" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1900" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="resolveService:(Landroid/net/nsd/NsdServiceInfo;Landroid/net/nsd/NsdManager$ResolveListener;)V@android.net.nsd.NsdManager"
+ sig="void resolveService(NsdServiceInfo,ResolveListener)"
+ line="30"
+ startpos="1942"
+ endpos="1956"
+>
+	<marker line="-1" type="param">
+		<operand  start="1988" length="11" line="30">
+			<expr><![CDATA[serviceInfo]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2044" length="8" line="30">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1957" length="30" line="30" chordsig="android.net.nsd.NsdServiceInfo"/>
+	<type  start="2001" length="42" line="30" chordsig="android.net.nsd.NsdManager$ResolveListener"/>
+	<newexpr line="30" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2066" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2062" length="29" line="30">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2083" length="7" line="30">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2066" length="16" line="30" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="2115" length="16" line="31" chordsig="java.lang.String"/>
+	<type  start="2212" length="16" line="32" chordsig="java.lang.String"/>
+</class>
+</root>

@@ -1,0 +1,846 @@
+<root>
+<class chordsig="android.text.SpannableStringBuilder" line="6">
+	<type  start="158" length="22" line="6" chordsig="java.lang.CharSequence"/>
+	<type  start="182" length="21" line="6" chordsig="android.text.GetChars"/>
+	<type  start="205" length="22" line="6" chordsig="android.text.Spannable"/>
+	<type  start="229" length="21" line="6" chordsig="android.text.Editable"/>
+	<type  start="252" length="20" line="6" chordsig="java.lang.Appendable"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.text.SpannableStringBuilder"
+ sig="SpannableStringBuilder()"
+ line="8"
+ startpos="287"
+ endpos="309"
+>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="332" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="328" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="349" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="332" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/CharSequence;)V@android.text.SpannableStringBuilder"
+ sig="SpannableStringBuilder(CharSequence)"
+ line="12"
+ startpos="377"
+ endpos="399"
+>
+	<marker line="-1" type="param">
+		<operand  start="423" length="4" line="12">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="400" length="22" line="12" chordsig="java.lang.CharSequence"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="449" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="445" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="466" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="449" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/CharSequence;II)V@android.text.SpannableStringBuilder"
+ sig="SpannableStringBuilder(CharSequence,int,int)"
+ line="16"
+ startpos="494"
+ endpos="516"
+>
+	<marker line="-1" type="param">
+		<operand  start="540" length="4" line="16">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="550" length="5" line="16">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="561" length="3" line="16">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="517" length="22" line="16" chordsig="java.lang.CharSequence"/>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="586" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="582" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="603" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="586" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="valueOf:(Ljava/lang/CharSequence;)Landroid/text/SpannableStringBuilder;@android.text.SpannableStringBuilder"
+ sig="SpannableStringBuilder valueOf(CharSequence)"
+ line="20"
+ startpos="674"
+ endpos="681"
+>
+	<marker line="-1" type="param">
+		<operand  start="705" length="6" line="20">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="638" length="35" line="20" chordsig="android.text.SpannableStringBuilder"/>
+	<type  start="682" length="22" line="20" chordsig="java.lang.CharSequence"/>
+	<newexpr line="21" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="733" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="729" length="29" line="21">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="750" length="7" line="21">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="733" length="16" line="21" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="charAt:(I)C@android.text.SpannableStringBuilder"
+ sig="char charAt(int)"
+ line="24"
+ startpos="783"
+ endpos="789"
+>
+	<marker line="-1" type="param">
+		<operand  start="794" length="5" line="24">
+			<expr><![CDATA[where]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="25" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="821" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="817" length="29" line="25">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="838" length="7" line="25">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="821" length="16" line="25" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="length:()I@android.text.SpannableStringBuilder"
+ sig="int length()"
+ line="28"
+ startpos="870"
+ endpos="876"
+>
+	<newexpr line="29" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="899" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="895" length="29" line="29">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="916" length="7" line="29">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="899" length="16" line="29" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="insert:(ILjava/lang/CharSequence;II)Landroid/text/SpannableStringBuilder;@android.text.SpannableStringBuilder"
+ sig="SpannableStringBuilder insert(int,CharSequence,int,int)"
+ line="32"
+ startpos="980"
+ endpos="986"
+>
+	<alias>(ILjava/lang/CharSequence;II)Landroid/text/Editable;</alias>
+	<marker line="-1" type="param">
+		<operand  start="991" length="5" line="32">
+			<expr><![CDATA[where]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1021" length="2" line="32">
+			<expr><![CDATA[tb]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1029" length="5" line="32">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1040" length="3" line="32">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="944" length="35" line="32" chordsig="android.text.SpannableStringBuilder"/>
+	<type  start="998" length="22" line="32" chordsig="java.lang.CharSequence"/>
+	<newexpr line="33" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1065" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1061" length="29" line="33">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1082" length="7" line="33">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1065" length="16" line="33" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="insert:(ILjava/lang/CharSequence;)Landroid/text/SpannableStringBuilder;@android.text.SpannableStringBuilder"
+ sig="SpannableStringBuilder insert(int,CharSequence)"
+ line="36"
+ startpos="1146"
+ endpos="1152"
+>
+	<alias>(ILjava/lang/CharSequence;)Landroid/text/Editable;</alias>
+	<marker line="-1" type="param">
+		<operand  start="1157" length="5" line="36">
+			<expr><![CDATA[where]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1187" length="2" line="36">
+			<expr><![CDATA[tb]]></expr>
+		</operand>
+	</marker>
+	<type  start="1110" length="35" line="36" chordsig="android.text.SpannableStringBuilder"/>
+	<type  start="1164" length="22" line="36" chordsig="java.lang.CharSequence"/>
+	<newexpr line="37" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1211" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1207" length="29" line="37">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1228" length="7" line="37">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1211" length="16" line="37" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="delete:(II)Landroid/text/SpannableStringBuilder;@android.text.SpannableStringBuilder"
+ sig="SpannableStringBuilder delete(int,int)"
+ line="40"
+ startpos="1292"
+ endpos="1298"
+>
+	<alias>(II)Landroid/text/Editable;</alias>
+	<marker line="-1" type="param">
+		<operand  start="1303" length="5" line="40">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1314" length="3" line="40">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="1256" length="35" line="40" chordsig="android.text.SpannableStringBuilder"/>
+	<newexpr line="41" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1339" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1335" length="29" line="41">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1356" length="7" line="41">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1339" length="16" line="41" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clear:()V@android.text.SpannableStringBuilder"
+ sig="void clear()"
+ line="44"
+ startpos="1389"
+ endpos="1394"
+>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1417" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1413" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1434" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1417" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clearSpans:()V@android.text.SpannableStringBuilder"
+ sig="void clearSpans()"
+ line="48"
+ startpos="1467"
+ endpos="1477"
+>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1500" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1496" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1517" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1500" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="append:(Ljava/lang/CharSequence;)Landroid/text/SpannableStringBuilder;@android.text.SpannableStringBuilder"
+ sig="SpannableStringBuilder append(CharSequence)"
+ line="52"
+ startpos="1581"
+ endpos="1587"
+>
+	<alias>(Ljava/lang/CharSequence;)Landroid/text/Editable;</alias>
+	<alias>(Ljava/lang/CharSequence;)Ljava/lang/Appendable;</alias>
+	<marker line="-1" type="param">
+		<operand  start="1611" length="4" line="52">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="1545" length="35" line="52" chordsig="android.text.SpannableStringBuilder"/>
+	<type  start="1588" length="22" line="52" chordsig="java.lang.CharSequence"/>
+	<newexpr line="53" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1637" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1633" length="29" line="53">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1654" length="7" line="53">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1637" length="16" line="53" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="append:(Ljava/lang/CharSequence;II)Landroid/text/SpannableStringBuilder;@android.text.SpannableStringBuilder"
+ sig="SpannableStringBuilder append(CharSequence,int,int)"
+ line="56"
+ startpos="1718"
+ endpos="1724"
+>
+	<alias>(Ljava/lang/CharSequence;II)Ljava/lang/Appendable;</alias>
+	<alias>(Ljava/lang/CharSequence;II)Landroid/text/Editable;</alias>
+	<marker line="-1" type="param">
+		<operand  start="1748" length="4" line="56">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1758" length="5" line="56">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1769" length="3" line="56">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="1682" length="35" line="56" chordsig="android.text.SpannableStringBuilder"/>
+	<type  start="1725" length="22" line="56" chordsig="java.lang.CharSequence"/>
+	<newexpr line="57" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1794" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1790" length="29" line="57">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1811" length="7" line="57">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1794" length="16" line="57" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="append:(C)Landroid/text/SpannableStringBuilder;@android.text.SpannableStringBuilder"
+ sig="SpannableStringBuilder append(char)"
+ line="60"
+ startpos="1875"
+ endpos="1881"
+>
+	<alias>(C)Ljava/lang/Appendable;</alias>
+	<alias>(C)Landroid/text/Editable;</alias>
+	<marker line="-1" type="param">
+		<operand  start="1887" length="4" line="60">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="1839" length="35" line="60" chordsig="android.text.SpannableStringBuilder"/>
+	<newexpr line="61" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1913" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1909" length="29" line="61">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1930" length="7" line="61">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1913" length="16" line="61" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="replace:(IILjava/lang/CharSequence;)Landroid/text/SpannableStringBuilder;@android.text.SpannableStringBuilder"
+ sig="SpannableStringBuilder replace(int,int,CharSequence)"
+ line="64"
+ startpos="1994"
+ endpos="2001"
+>
+	<alias>(IILjava/lang/CharSequence;)Landroid/text/Editable;</alias>
+	<marker line="-1" type="param">
+		<operand  start="2006" length="5" line="64">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2017" length="3" line="64">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2045" length="2" line="64">
+			<expr><![CDATA[tb]]></expr>
+		</operand>
+	</marker>
+	<type  start="1958" length="35" line="64" chordsig="android.text.SpannableStringBuilder"/>
+	<type  start="2022" length="22" line="64" chordsig="java.lang.CharSequence"/>
+	<newexpr line="65" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2069" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2065" length="29" line="65">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2086" length="7" line="65">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2069" length="16" line="65" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="replace:(IILjava/lang/CharSequence;II)Landroid/text/SpannableStringBuilder;@android.text.SpannableStringBuilder"
+ sig="SpannableStringBuilder replace(int,int,CharSequence,int,int)"
+ line="68"
+ startpos="2150"
+ endpos="2157"
+>
+	<alias>(IILjava/lang/CharSequence;II)Landroid/text/Editable;</alias>
+	<marker line="-1" type="param">
+		<operand  start="2162" length="5" line="68">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2173" length="3" line="68">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2201" length="2" line="68">
+			<expr><![CDATA[tb]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2209" length="7" line="68">
+			<expr><![CDATA[tbstart]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2222" length="5" line="68">
+			<expr><![CDATA[tbend]]></expr>
+		</operand>
+	</marker>
+	<type  start="2114" length="35" line="68" chordsig="android.text.SpannableStringBuilder"/>
+	<type  start="2178" length="22" line="68" chordsig="java.lang.CharSequence"/>
+	<newexpr line="69" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2249" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2245" length="29" line="69">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2266" length="7" line="69">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2249" length="16" line="69" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSpan:(Ljava/lang/Object;III)V@android.text.SpannableStringBuilder"
+ sig="void setSpan(Object,int,int,int)"
+ line="72"
+ startpos="2299"
+ endpos="2306"
+>
+	<marker line="-1" type="param">
+		<operand  start="2324" length="4" line="72">
+			<expr><![CDATA[what]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2334" length="5" line="72">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2345" length="3" line="72">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2354" length="5" line="72">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="2307" length="16" line="72" chordsig="java.lang.Object"/>
+	<newexpr line="73" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2381" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2377" length="29" line="73">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2398" length="7" line="73">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2381" length="16" line="73" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="removeSpan:(Ljava/lang/Object;)V@android.text.SpannableStringBuilder"
+ sig="void removeSpan(Object)"
+ line="76"
+ startpos="2431"
+ endpos="2441"
+>
+	<marker line="-1" type="param">
+		<operand  start="2459" length="4" line="76">
+			<expr><![CDATA[what]]></expr>
+		</operand>
+	</marker>
+	<type  start="2442" length="16" line="76" chordsig="java.lang.Object"/>
+	<newexpr line="77" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2485" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2481" length="29" line="77">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2502" length="7" line="77">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2485" length="16" line="77" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSpanStart:(Ljava/lang/Object;)I@android.text.SpannableStringBuilder"
+ sig="int getSpanStart(Object)"
+ line="80"
+ startpos="2534"
+ endpos="2546"
+>
+	<marker line="-1" type="param">
+		<operand  start="2564" length="4" line="80">
+			<expr><![CDATA[what]]></expr>
+		</operand>
+	</marker>
+	<type  start="2547" length="16" line="80" chordsig="java.lang.Object"/>
+	<newexpr line="81" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2590" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2586" length="29" line="81">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2607" length="7" line="81">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2590" length="16" line="81" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSpanEnd:(Ljava/lang/Object;)I@android.text.SpannableStringBuilder"
+ sig="int getSpanEnd(Object)"
+ line="84"
+ startpos="2639"
+ endpos="2649"
+>
+	<marker line="-1" type="param">
+		<operand  start="2667" length="4" line="84">
+			<expr><![CDATA[what]]></expr>
+		</operand>
+	</marker>
+	<type  start="2650" length="16" line="84" chordsig="java.lang.Object"/>
+	<newexpr line="85" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2693" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2689" length="29" line="85">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2710" length="7" line="85">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2693" length="16" line="85" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSpanFlags:(Ljava/lang/Object;)I@android.text.SpannableStringBuilder"
+ sig="int getSpanFlags(Object)"
+ line="88"
+ startpos="2742"
+ endpos="2754"
+>
+	<marker line="-1" type="param">
+		<operand  start="2772" length="4" line="88">
+			<expr><![CDATA[what]]></expr>
+		</operand>
+	</marker>
+	<type  start="2755" length="16" line="88" chordsig="java.lang.Object"/>
+	<newexpr line="89" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2798" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2794" length="29" line="89">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2815" length="7" line="89">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2798" length="16" line="89" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSpans:(IILjava/lang/Class;)[Ljava/lang/Object;@android.text.SpannableStringBuilder"
+ sig="T[] getSpans(int,int,Class&lt;T&gt;)"
+ line="92"
+ startpos="2851"
+ endpos="2859"
+>
+	<marker line="-1" type="param">
+		<operand  start="2864" length="10" line="92">
+			<expr><![CDATA[queryStart]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2880" length="8" line="92">
+			<expr><![CDATA[queryEnd]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2909" length="4" line="92">
+			<expr><![CDATA[kind]]></expr>
+		</operand>
+	</marker>
+	<type  start="2847" length="1" line="92" chordsig="java.lang.Object"/>
+	<type  start="2890" length="15" line="92" chordsig="java.lang.Class"/>
+	<type  start="2906" length="1" line="92" chordsig="java.lang.Object"/>
+	<newexpr line="93" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2935" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2931" length="29" line="93">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2952" length="7" line="93">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2935" length="16" line="93" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="nextSpanTransition:(IILjava/lang/Class;)I@android.text.SpannableStringBuilder"
+ sig="int nextSpanTransition(int,int,Class)"
+ line="96"
+ startpos="2984"
+ endpos="3002"
+>
+	<marker line="-1" type="param">
+		<operand  start="3007" length="5" line="96">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3018" length="5" line="96">
+			<expr><![CDATA[limit]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3041" length="4" line="96">
+			<expr><![CDATA[kind]]></expr>
+		</operand>
+	</marker>
+	<type  start="3025" length="15" line="96" chordsig="java.lang.Class"/>
+	<newexpr line="97" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3067" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3063" length="29" line="97">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3084" length="7" line="97">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3067" length="16" line="97" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="subSequence:(II)Ljava/lang/CharSequence;@android.text.SpannableStringBuilder"
+ sig="CharSequence subSequence(int,int)"
+ line="100"
+ startpos="3135"
+ endpos="3146"
+>
+	<marker line="-1" type="param">
+		<operand  start="3151" length="5" line="100">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3162" length="3" line="100">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<type  start="3112" length="22" line="100" chordsig="java.lang.CharSequence"/>
+	<newexpr line="101" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3187" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3183" length="29" line="101">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3204" length="7" line="101">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3187" length="16" line="101" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getChars:(II[CI)V@android.text.SpannableStringBuilder"
+ sig="void getChars(int,int,char[],int)"
+ line="104"
+ startpos="3237"
+ endpos="3245"
+>
+	<marker line="-1" type="param">
+		<operand  start="3250" length="5" line="104">
+			<expr><![CDATA[start]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3261" length="3" line="104">
+			<expr><![CDATA[end]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3273" length="4" line="104">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3283" length="7" line="104">
+			<expr><![CDATA[destoff]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="105" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3312" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3308" length="29" line="105">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3329" length="7" line="105">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3312" length="16" line="105" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getTextRunCursor:(IIIIILandroid/graphics/Paint;)I@android.text.SpannableStringBuilder"
+ sig="int getTextRunCursor(int,int,int,int,int,Paint)"
+ line="108"
+ startpos="3361"
+ endpos="3377"
+>
+	<marker line="-1" type="param">
+		<operand  start="3382" length="12" line="108">
+			<expr><![CDATA[contextStart]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3400" length="10" line="108">
+			<expr><![CDATA[contextEnd]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3416" length="5" line="108">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3427" length="6" line="108">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3439" length="9" line="108">
+			<expr><![CDATA[cursorOpt]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3473" length="1" line="108">
+			<expr><![CDATA[p]]></expr>
+		</operand>
+	</marker>
+	<type  start="3450" length="22" line="108" chordsig="android.graphics.Paint"/>
+	<newexpr line="109" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3496" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3492" length="29" line="109">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3513" length="7" line="109">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3496" length="16" line="109" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setFilters:([Landroid/text/InputFilter;)V@android.text.SpannableStringBuilder"
+ sig="void setFilters(InputFilter[])"
+ line="112"
+ startpos="3546"
+ endpos="3556"
+>
+	<marker line="-1" type="param">
+		<operand  start="3584" length="7" line="112">
+			<expr><![CDATA[filters]]></expr>
+		</operand>
+	</marker>
+	<type  start="3557" length="24" line="112" chordsig="android.text.InputFilter"/>
+	<newexpr line="113" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3613" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3609" length="29" line="113">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3630" length="7" line="113">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3613" length="16" line="113" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getFilters:()[Landroid/text/InputFilter;@android.text.SpannableStringBuilder"
+ sig="InputFilter[] getFilters()"
+ line="116"
+ startpos="3685"
+ endpos="3695"
+>
+	<type  start="3658" length="24" line="116" chordsig="android.text.InputFilter"/>
+	<newexpr line="117" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3718" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3714" length="29" line="117">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3735" length="7" line="117">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3718" length="16" line="117" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.text.SpannableStringBuilder"
+ sig="String toString()"
+ line="121"
+ startpos="3841"
+ endpos="3849"
+>
+	<type  start="3824" length="16" line="121" chordsig="java.lang.String"/>
+	<marker line="122" type="return">
+		<operand  start="3869" length="22" line="122">
+			<expr><![CDATA[new java.lang.String()]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="122" chordsig="&lt;init&gt;:()V@java.lang.String" start="3873" length="16" type="invoke">
+			<expr><![CDATA[new java.lang.String()]]></expr>
+		<param  start="3869" length="22" line="122">
+			<expr><![CDATA[new java.lang.String()]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3873" length="16" line="122" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

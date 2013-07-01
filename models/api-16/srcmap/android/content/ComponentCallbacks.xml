@@ -1,0 +1,26 @@
+<root>
+<class chordsig="android.content.ComponentCallbacks" line="2">
+<method
+ chordsig="onConfigurationChanged:(Landroid/content/res/Configuration;)V@android.content.ComponentCallbacks"
+ sig="void onConfigurationChanged(Configuration)"
+ line="4"
+ startpos="85"
+ endpos="107"
+>
+	<marker line="-1" type="param">
+		<operand  start="142" length="9" line="4">
+			<expr><![CDATA[newConfig]]></expr>
+		</operand>
+	</marker>
+	<type  start="108" length="33" line="4" chordsig="android.content.res.Configuration"/>
+</method>
+<method
+ chordsig="onLowMemory:()V@android.content.ComponentCallbacks"
+ sig="void onLowMemory()"
+ line="5"
+ startpos="176"
+ endpos="187"
+>
+</method>
+</class>
+</root>

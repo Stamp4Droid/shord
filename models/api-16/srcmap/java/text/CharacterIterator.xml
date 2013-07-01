@@ -1,0 +1,91 @@
+<root>
+<class chordsig="java.text.CharacterIterator" line="2">
+	<type  start="64" length="19" line="3" chordsig="java.lang.Cloneable"/>
+<method
+ chordsig="clone:()Ljava/lang/Object;@java.text.CharacterIterator"
+ sig="Object clone()"
+ line="5"
+ startpos="120"
+ endpos="125"
+>
+	<type  start="103" length="16" line="5" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="current:()C@java.text.CharacterIterator"
+ sig="char current()"
+ line="6"
+ startpos="151"
+ endpos="158"
+>
+</method>
+<method
+ chordsig="first:()C@java.text.CharacterIterator"
+ sig="char first()"
+ line="7"
+ startpos="184"
+ endpos="189"
+>
+</method>
+<method
+ chordsig="getBeginIndex:()I@java.text.CharacterIterator"
+ sig="int getBeginIndex()"
+ line="8"
+ startpos="214"
+ endpos="227"
+>
+</method>
+<method
+ chordsig="getEndIndex:()I@java.text.CharacterIterator"
+ sig="int getEndIndex()"
+ line="9"
+ startpos="252"
+ endpos="263"
+>
+</method>
+<method
+ chordsig="getIndex:()I@java.text.CharacterIterator"
+ sig="int getIndex()"
+ line="10"
+ startpos="288"
+ endpos="296"
+>
+</method>
+<method
+ chordsig="last:()C@java.text.CharacterIterator"
+ sig="char last()"
+ line="11"
+ startpos="322"
+ endpos="326"
+>
+</method>
+<method
+ chordsig="next:()C@java.text.CharacterIterator"
+ sig="char next()"
+ line="12"
+ startpos="352"
+ endpos="356"
+>
+</method>
+<method
+ chordsig="previous:()C@java.text.CharacterIterator"
+ sig="char previous()"
+ line="13"
+ startpos="382"
+ endpos="390"
+>
+</method>
+<method
+ chordsig="setIndex:(I)C@java.text.CharacterIterator"
+ sig="char setIndex(int)"
+ line="14"
+ startpos="416"
+ endpos="424"
+>
+	<marker line="-1" type="param">
+		<operand  start="429" length="8" line="14">
+			<expr><![CDATA[location]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>

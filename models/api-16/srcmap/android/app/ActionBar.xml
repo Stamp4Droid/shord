@@ -1,0 +1,1202 @@
+<root>
+<class chordsig="android.app.ActionBar" line="2">
+<class chordsig="android.app.ActionBar$OnNavigationListener" line="4">
+<method
+ chordsig="onNavigationItemSelected:(IJ)Z@android.app.ActionBar$OnNavigationListener"
+ sig="boolean onNavigationItemSelected(int,long)"
+ line="6"
+ startpos="127"
+ endpos="151"
+>
+	<marker line="-1" type="param">
+		<operand  start="156" length="12" line="6">
+			<expr><![CDATA[itemPosition]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="175" length="6" line="6">
+			<expr><![CDATA[itemId]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+<class chordsig="android.app.ActionBar$OnMenuVisibilityListener" line="8">
+<method
+ chordsig="onMenuVisibilityChanged:(Z)V@android.app.ActionBar$OnMenuVisibilityListener"
+ sig="void onMenuVisibilityChanged(boolean)"
+ line="10"
+ startpos="259"
+ endpos="282"
+>
+	<marker line="-1" type="param">
+		<operand  start="291" length="9" line="10">
+			<expr><![CDATA[isVisible]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+<class chordsig="android.app.ActionBar$Tab" line="12">
+<method
+ chordsig="&lt;init&gt;:()V@android.app.ActionBar$Tab"
+ sig="Tab()"
+ line="14"
+ startpos="348"
+ endpos="351"
+>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="366" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="362" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="383" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="366" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPosition:()I@android.app.ActionBar$Tab"
+ sig="int getPosition()"
+ line="15"
+ startpos="416"
+ endpos="427"
+>
+</method>
+<method
+ chordsig="getIcon:()Landroid/graphics/drawable/Drawable;@android.app.ActionBar$Tab"
+ sig="Drawable getIcon()"
+ line="16"
+ startpos="483"
+ endpos="490"
+>
+	<type  start="448" length="34" line="16" chordsig="android.graphics.drawable.Drawable"/>
+</method>
+<method
+ chordsig="getText:()Ljava/lang/CharSequence;@android.app.ActionBar$Tab"
+ sig="CharSequence getText()"
+ line="17"
+ startpos="534"
+ endpos="541"
+>
+	<type  start="511" length="22" line="17" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="setIcon:(Landroid/graphics/drawable/Drawable;)Landroid/app/ActionBar$Tab;@android.app.ActionBar$Tab"
+ sig="Tab setIcon(Drawable)"
+ line="18"
+ startpos="588"
+ endpos="595"
+>
+	<marker line="-1" type="param">
+		<operand  start="631" length="4" line="18">
+			<expr><![CDATA[icon]]></expr>
+		</operand>
+	</marker>
+	<type  start="562" length="25" line="18" chordsig="android.app.ActionBar$Tab"/>
+	<type  start="596" length="34" line="18" chordsig="android.graphics.drawable.Drawable"/>
+</method>
+<method
+ chordsig="setIcon:(I)Landroid/app/ActionBar$Tab;@android.app.ActionBar$Tab"
+ sig="Tab setIcon(int)"
+ line="19"
+ startpos="681"
+ endpos="688"
+>
+	<marker line="-1" type="param">
+		<operand  start="693" length="5" line="19">
+			<expr><![CDATA[resId]]></expr>
+		</operand>
+	</marker>
+	<type  start="655" length="25" line="19" chordsig="android.app.ActionBar$Tab"/>
+</method>
+<method
+ chordsig="setText:(Ljava/lang/CharSequence;)Landroid/app/ActionBar$Tab;@android.app.ActionBar$Tab"
+ sig="Tab setText(CharSequence)"
+ line="20"
+ startpos="744"
+ endpos="751"
+>
+	<marker line="-1" type="param">
+		<operand  start="775" length="4" line="20">
+			<expr><![CDATA[text]]></expr>
+		</operand>
+	</marker>
+	<type  start="718" length="25" line="20" chordsig="android.app.ActionBar$Tab"/>
+	<type  start="752" length="22" line="20" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="setText:(I)Landroid/app/ActionBar$Tab;@android.app.ActionBar$Tab"
+ sig="Tab setText(int)"
+ line="21"
+ startpos="825"
+ endpos="832"
+>
+	<marker line="-1" type="param">
+		<operand  start="837" length="5" line="21">
+			<expr><![CDATA[resId]]></expr>
+		</operand>
+	</marker>
+	<type  start="799" length="25" line="21" chordsig="android.app.ActionBar$Tab"/>
+</method>
+<method
+ chordsig="setCustomView:(Landroid/view/View;)Landroid/app/ActionBar$Tab;@android.app.ActionBar$Tab"
+ sig="Tab setCustomView(View)"
+ line="22"
+ startpos="888"
+ endpos="901"
+>
+	<marker line="-1" type="param">
+		<operand  start="920" length="4" line="22">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<type  start="862" length="25" line="22" chordsig="android.app.ActionBar$Tab"/>
+	<type  start="902" length="17" line="22" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="setCustomView:(I)Landroid/app/ActionBar$Tab;@android.app.ActionBar$Tab"
+ sig="Tab setCustomView(int)"
+ line="23"
+ startpos="970"
+ endpos="983"
+>
+	<marker line="-1" type="param">
+		<operand  start="988" length="11" line="23">
+			<expr><![CDATA[layoutResId]]></expr>
+		</operand>
+	</marker>
+	<type  start="944" length="25" line="23" chordsig="android.app.ActionBar$Tab"/>
+</method>
+<method
+ chordsig="getCustomView:()Landroid/view/View;@android.app.ActionBar$Tab"
+ sig="View getCustomView()"
+ line="24"
+ startpos="1037"
+ endpos="1050"
+>
+	<type  start="1019" length="17" line="24" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="setTag:(Ljava/lang/Object;)Landroid/app/ActionBar$Tab;@android.app.ActionBar$Tab"
+ sig="Tab setTag(Object)"
+ line="25"
+ startpos="1097"
+ endpos="1103"
+>
+	<marker line="-1" type="param">
+		<operand  start="1121" length="3" line="25">
+			<expr><![CDATA[obj]]></expr>
+		</operand>
+	</marker>
+	<type  start="1071" length="25" line="25" chordsig="android.app.ActionBar$Tab"/>
+	<type  start="1104" length="16" line="25" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="getTag:()Ljava/lang/Object;@android.app.ActionBar$Tab"
+ sig="Object getTag()"
+ line="26"
+ startpos="1161"
+ endpos="1167"
+>
+	<type  start="1144" length="16" line="26" chordsig="java.lang.Object"/>
+</method>
+<method
+ chordsig="setTabListener:(Landroid/app/ActionBar$TabListener;)Landroid/app/ActionBar$Tab;@android.app.ActionBar$Tab"
+ sig="Tab setTabListener(TabListener)"
+ line="27"
+ startpos="1214"
+ endpos="1228"
+>
+	<marker line="-1" type="param">
+		<operand  start="1263" length="8" line="27">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="1188" length="25" line="27" chordsig="android.app.ActionBar$Tab"/>
+	<type  start="1229" length="33" line="27" chordsig="android.app.ActionBar$TabListener"/>
+</method>
+<method
+ chordsig="select:()V@android.app.ActionBar$Tab"
+ sig="void select()"
+ line="28"
+ startpos="1296"
+ endpos="1302"
+>
+</method>
+<method
+ chordsig="setContentDescription:(I)Landroid/app/ActionBar$Tab;@android.app.ActionBar$Tab"
+ sig="Tab setContentDescription(int)"
+ line="29"
+ startpos="1349"
+ endpos="1370"
+>
+	<marker line="-1" type="param">
+		<operand  start="1375" length="5" line="29">
+			<expr><![CDATA[resId]]></expr>
+		</operand>
+	</marker>
+	<type  start="1323" length="25" line="29" chordsig="android.app.ActionBar$Tab"/>
+</method>
+<method
+ chordsig="setContentDescription:(Ljava/lang/CharSequence;)Landroid/app/ActionBar$Tab;@android.app.ActionBar$Tab"
+ sig="Tab setContentDescription(CharSequence)"
+ line="30"
+ startpos="1426"
+ endpos="1447"
+>
+	<marker line="-1" type="param">
+		<operand  start="1471" length="11" line="30">
+			<expr><![CDATA[contentDesc]]></expr>
+		</operand>
+	</marker>
+	<type  start="1400" length="25" line="30" chordsig="android.app.ActionBar$Tab"/>
+	<type  start="1448" length="22" line="30" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="getContentDescription:()Ljava/lang/CharSequence;@android.app.ActionBar$Tab"
+ sig="CharSequence getContentDescription()"
+ line="31"
+ startpos="1525"
+ endpos="1546"
+>
+	<type  start="1502" length="22" line="31" chordsig="java.lang.CharSequence"/>
+</method>
+</class>
+<class chordsig="android.app.ActionBar$TabListener" line="34">
+<method
+ chordsig="onTabSelected:(Landroid/app/ActionBar$Tab;Landroid/app/FragmentTransaction;)V@android.app.ActionBar$TabListener"
+ sig="void onTabSelected(Tab,FragmentTransaction)"
+ line="36"
+ startpos="1659"
+ endpos="1672"
+>
+	<marker line="-1" type="param">
+		<operand  start="1699" length="3" line="36">
+			<expr><![CDATA[tab]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1736" length="2" line="36">
+			<expr><![CDATA[ft]]></expr>
+		</operand>
+	</marker>
+	<type  start="1673" length="25" line="36" chordsig="android.app.ActionBar$Tab"/>
+	<type  start="1704" length="31" line="36" chordsig="android.app.FragmentTransaction"/>
+</method>
+<method
+ chordsig="onTabUnselected:(Landroid/app/ActionBar$Tab;Landroid/app/FragmentTransaction;)V@android.app.ActionBar$TabListener"
+ sig="void onTabUnselected(Tab,FragmentTransaction)"
+ line="37"
+ startpos="1763"
+ endpos="1778"
+>
+	<marker line="-1" type="param">
+		<operand  start="1805" length="3" line="37">
+			<expr><![CDATA[tab]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1842" length="2" line="37">
+			<expr><![CDATA[ft]]></expr>
+		</operand>
+	</marker>
+	<type  start="1779" length="25" line="37" chordsig="android.app.ActionBar$Tab"/>
+	<type  start="1810" length="31" line="37" chordsig="android.app.FragmentTransaction"/>
+</method>
+<method
+ chordsig="onTabReselected:(Landroid/app/ActionBar$Tab;Landroid/app/FragmentTransaction;)V@android.app.ActionBar$TabListener"
+ sig="void onTabReselected(Tab,FragmentTransaction)"
+ line="38"
+ startpos="1869"
+ endpos="1884"
+>
+	<marker line="-1" type="param">
+		<operand  start="1911" length="3" line="38">
+			<expr><![CDATA[tab]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1948" length="2" line="38">
+			<expr><![CDATA[ft]]></expr>
+		</operand>
+	</marker>
+	<type  start="1885" length="25" line="38" chordsig="android.app.ActionBar$Tab"/>
+	<type  start="1916" length="31" line="38" chordsig="android.app.FragmentTransaction"/>
+</method>
+</class>
+<class chordsig="android.app.ActionBar$LayoutParams" line="40">
+	<type  start="1998" length="41" line="41" chordsig="android.view.ViewGroup$MarginLayoutParams"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.app.ActionBar$LayoutParams"
+ sig="LayoutParams(Context,AttributeSet)"
+ line="43"
+ startpos="2050"
+ endpos="2062"
+>
+	<marker line="-1" type="param">
+		<operand  start="2087" length="1" line="43">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2116" length="5" line="43">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="2063" length="23" line="43" chordsig="android.content.Context"/>
+	<type  start="2090" length="25" line="43" chordsig="android.util.AttributeSet"/>
+	<type  start="2132" length="35" line="43" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2185" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2181" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2202" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2185" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(II)V@android.app.ActionBar$LayoutParams"
+ sig="LayoutParams(int,int)"
+ line="44"
+ startpos="2222"
+ endpos="2234"
+>
+	<marker line="-1" type="param">
+		<operand  start="2239" length="5" line="44">
+			<expr><![CDATA[width]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2250" length="6" line="44">
+			<expr><![CDATA[height]]></expr>
+		</operand>
+	</marker>
+	<type  start="2267" length="35" line="44" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2320" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2316" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2337" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2320" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(III)V@android.app.ActionBar$LayoutParams"
+ sig="LayoutParams(int,int,int)"
+ line="45"
+ startpos="2357"
+ endpos="2369"
+>
+	<marker line="-1" type="param">
+		<operand  start="2374" length="5" line="45">
+			<expr><![CDATA[width]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2385" length="6" line="45">
+			<expr><![CDATA[height]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="2397" length="7" line="45">
+			<expr><![CDATA[gravity]]></expr>
+		</operand>
+	</marker>
+	<type  start="2415" length="35" line="45" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2468" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2464" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2485" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2468" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(I)V@android.app.ActionBar$LayoutParams"
+ sig="LayoutParams(int)"
+ line="46"
+ startpos="2505"
+ endpos="2517"
+>
+	<marker line="-1" type="param">
+		<operand  start="2522" length="7" line="46">
+			<expr><![CDATA[gravity]]></expr>
+		</operand>
+	</marker>
+	<type  start="2540" length="35" line="46" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<newexpr line="46" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2593" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2589" length="29" line="46">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2610" length="7" line="46">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2593" length="16" line="46" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/app/ActionBar$LayoutParams;)V@android.app.ActionBar$LayoutParams"
+ sig="LayoutParams(LayoutParams)"
+ line="47"
+ startpos="2630"
+ endpos="2642"
+>
+	<marker line="-1" type="param">
+		<operand  start="2678" length="6" line="47">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="2643" length="34" line="47" chordsig="android.app.ActionBar$LayoutParams"/>
+	<type  start="2695" length="35" line="47" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<newexpr line="47" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2748" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2744" length="29" line="47">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2765" length="7" line="47">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2748" length="16" line="47" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/view/ViewGroup$LayoutParams;)V@android.app.ActionBar$LayoutParams"
+ sig="LayoutParams(LayoutParams)"
+ line="48"
+ startpos="2785"
+ endpos="2797"
+>
+	<marker line="-1" type="param">
+		<operand  start="2834" length="6" line="48">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="2798" length="35" line="48" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<type  start="2851" length="35" line="48" chordsig="android.view.ViewGroup$LayoutParams"/>
+	<newexpr line="48" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2904" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2900" length="29" line="48">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2921" length="7" line="48">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2904" length="16" line="48" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.app.ActionBar"
+ sig="ActionBar()"
+ line="52"
+ startpos="3738"
+ endpos="3747"
+>
+	<newexpr line="52" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3762" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3758" length="29" line="52">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3779" length="7" line="52">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3762" length="16" line="52" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setCustomView:(Landroid/view/View;)V@android.app.ActionBar"
+ sig="void setCustomView(View)"
+ line="53"
+ startpos="3813"
+ endpos="3826"
+>
+	<marker line="-1" type="param">
+		<operand  start="3845" length="4" line="53">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<type  start="3827" length="17" line="53" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="setCustomView:(Landroid/view/View;Landroid/app/ActionBar$LayoutParams;)V@android.app.ActionBar"
+ sig="void setCustomView(View,LayoutParams)"
+ line="54"
+ startpos="3874"
+ endpos="3887"
+>
+	<marker line="-1" type="param">
+		<operand  start="3906" length="4" line="54">
+			<expr><![CDATA[view]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3947" length="12" line="54">
+			<expr><![CDATA[layoutParams]]></expr>
+		</operand>
+	</marker>
+	<type  start="3888" length="17" line="54" chordsig="android.view.View"/>
+	<type  start="3912" length="34" line="54" chordsig="android.app.ActionBar$LayoutParams"/>
+</method>
+<method
+ chordsig="setCustomView:(I)V@android.app.ActionBar"
+ sig="void setCustomView(int)"
+ line="55"
+ startpos="3984"
+ endpos="3997"
+>
+	<marker line="-1" type="param">
+		<operand  start="4002" length="5" line="55">
+			<expr><![CDATA[resId]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setIcon:(I)V@android.app.ActionBar"
+ sig="void setIcon(int)"
+ line="56"
+ startpos="4032"
+ endpos="4039"
+>
+	<marker line="-1" type="param">
+		<operand  start="4044" length="5" line="56">
+			<expr><![CDATA[resId]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setIcon:(Landroid/graphics/drawable/Drawable;)V@android.app.ActionBar"
+ sig="void setIcon(Drawable)"
+ line="57"
+ startpos="4074"
+ endpos="4081"
+>
+	<marker line="-1" type="param">
+		<operand  start="4117" length="4" line="57">
+			<expr><![CDATA[icon]]></expr>
+		</operand>
+	</marker>
+	<type  start="4082" length="34" line="57" chordsig="android.graphics.drawable.Drawable"/>
+</method>
+<method
+ chordsig="setLogo:(I)V@android.app.ActionBar"
+ sig="void setLogo(int)"
+ line="58"
+ startpos="4146"
+ endpos="4153"
+>
+	<marker line="-1" type="param">
+		<operand  start="4158" length="5" line="58">
+			<expr><![CDATA[resId]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setLogo:(Landroid/graphics/drawable/Drawable;)V@android.app.ActionBar"
+ sig="void setLogo(Drawable)"
+ line="59"
+ startpos="4188"
+ endpos="4195"
+>
+	<marker line="-1" type="param">
+		<operand  start="4231" length="4" line="59">
+			<expr><![CDATA[logo]]></expr>
+		</operand>
+	</marker>
+	<type  start="4196" length="34" line="59" chordsig="android.graphics.drawable.Drawable"/>
+</method>
+<method
+ chordsig="setListNavigationCallbacks:(Landroid/widget/SpinnerAdapter;Landroid/app/ActionBar$OnNavigationListener;)V@android.app.ActionBar"
+ sig="void setListNavigationCallbacks(SpinnerAdapter,OnNavigationListener)"
+ line="60"
+ startpos="4260"
+ endpos="4286"
+>
+	<marker line="-1" type="param">
+		<operand  start="4317" length="7" line="60">
+			<expr><![CDATA[adapter]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4369" length="8" line="60">
+			<expr><![CDATA[callback]]></expr>
+		</operand>
+	</marker>
+	<type  start="4287" length="29" line="60" chordsig="android.widget.SpinnerAdapter"/>
+	<type  start="4326" length="42" line="60" chordsig="android.app.ActionBar$OnNavigationListener"/>
+</method>
+<method
+ chordsig="setSelectedNavigationItem:(I)V@android.app.ActionBar"
+ sig="void setSelectedNavigationItem(int)"
+ line="61"
+ startpos="4402"
+ endpos="4427"
+>
+	<marker line="-1" type="param">
+		<operand  start="4432" length="8" line="61">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getSelectedNavigationIndex:()I@android.app.ActionBar"
+ sig="int getSelectedNavigationIndex()"
+ line="62"
+ startpos="4464"
+ endpos="4490"
+>
+</method>
+<method
+ chordsig="getNavigationItemCount:()I@android.app.ActionBar"
+ sig="int getNavigationItemCount()"
+ line="63"
+ startpos="4515"
+ endpos="4537"
+>
+</method>
+<method
+ chordsig="setTitle:(Ljava/lang/CharSequence;)V@android.app.ActionBar"
+ sig="void setTitle(CharSequence)"
+ line="64"
+ startpos="4563"
+ endpos="4571"
+>
+	<marker line="-1" type="param">
+		<operand  start="4595" length="5" line="64">
+			<expr><![CDATA[title]]></expr>
+		</operand>
+	</marker>
+	<type  start="4572" length="22" line="64" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="setTitle:(I)V@android.app.ActionBar"
+ sig="void setTitle(int)"
+ line="65"
+ startpos="4625"
+ endpos="4633"
+>
+	<marker line="-1" type="param">
+		<operand  start="4638" length="5" line="65">
+			<expr><![CDATA[resId]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setSubtitle:(Ljava/lang/CharSequence;)V@android.app.ActionBar"
+ sig="void setSubtitle(CharSequence)"
+ line="66"
+ startpos="4668"
+ endpos="4679"
+>
+	<marker line="-1" type="param">
+		<operand  start="4703" length="8" line="66">
+			<expr><![CDATA[subtitle]]></expr>
+		</operand>
+	</marker>
+	<type  start="4680" length="22" line="66" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="setSubtitle:(I)V@android.app.ActionBar"
+ sig="void setSubtitle(int)"
+ line="67"
+ startpos="4736"
+ endpos="4747"
+>
+	<marker line="-1" type="param">
+		<operand  start="4752" length="5" line="67">
+			<expr><![CDATA[resId]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setDisplayOptions:(I)V@android.app.ActionBar"
+ sig="void setDisplayOptions(int)"
+ line="68"
+ startpos="4782"
+ endpos="4799"
+>
+	<marker line="-1" type="param">
+		<operand  start="4804" length="7" line="68">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setDisplayOptions:(II)V@android.app.ActionBar"
+ sig="void setDisplayOptions(int,int)"
+ line="69"
+ startpos="4836"
+ endpos="4853"
+>
+	<marker line="-1" type="param">
+		<operand  start="4858" length="7" line="69">
+			<expr><![CDATA[options]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4871" length="4" line="69">
+			<expr><![CDATA[mask]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setDisplayUseLogoEnabled:(Z)V@android.app.ActionBar"
+ sig="void setDisplayUseLogoEnabled(boolean)"
+ line="70"
+ startpos="4900"
+ endpos="4924"
+>
+	<marker line="-1" type="param">
+		<operand  start="4933" length="7" line="70">
+			<expr><![CDATA[useLogo]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setDisplayShowHomeEnabled:(Z)V@android.app.ActionBar"
+ sig="void setDisplayShowHomeEnabled(boolean)"
+ line="71"
+ startpos="4965"
+ endpos="4990"
+>
+	<marker line="-1" type="param">
+		<operand  start="4999" length="8" line="71">
+			<expr><![CDATA[showHome]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setDisplayHomeAsUpEnabled:(Z)V@android.app.ActionBar"
+ sig="void setDisplayHomeAsUpEnabled(boolean)"
+ line="72"
+ startpos="5032"
+ endpos="5057"
+>
+	<marker line="-1" type="param">
+		<operand  start="5066" length="12" line="72">
+			<expr><![CDATA[showHomeAsUp]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setDisplayShowTitleEnabled:(Z)V@android.app.ActionBar"
+ sig="void setDisplayShowTitleEnabled(boolean)"
+ line="73"
+ startpos="5103"
+ endpos="5129"
+>
+	<marker line="-1" type="param">
+		<operand  start="5138" length="9" line="73">
+			<expr><![CDATA[showTitle]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setDisplayShowCustomEnabled:(Z)V@android.app.ActionBar"
+ sig="void setDisplayShowCustomEnabled(boolean)"
+ line="74"
+ startpos="5172"
+ endpos="5199"
+>
+	<marker line="-1" type="param">
+		<operand  start="5208" length="10" line="74">
+			<expr><![CDATA[showCustom]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="setBackgroundDrawable:(Landroid/graphics/drawable/Drawable;)V@android.app.ActionBar"
+ sig="void setBackgroundDrawable(Drawable)"
+ line="75"
+ startpos="5243"
+ endpos="5264"
+>
+	<marker line="-1" type="param">
+		<operand  start="5300" length="1" line="75">
+			<expr><![CDATA[d]]></expr>
+		</operand>
+	</marker>
+	<type  start="5265" length="34" line="75" chordsig="android.graphics.drawable.Drawable"/>
+</method>
+<method
+ chordsig="setStackedBackgroundDrawable:(Landroid/graphics/drawable/Drawable;)V@android.app.ActionBar"
+ sig="void setStackedBackgroundDrawable(Drawable)"
+ line="76"
+ startpos="5317"
+ endpos="5345"
+>
+	<marker line="-1" type="param">
+		<operand  start="5381" length="1" line="76">
+			<expr><![CDATA[d]]></expr>
+		</operand>
+	</marker>
+	<type  start="5346" length="34" line="76" chordsig="android.graphics.drawable.Drawable"/>
+	<newexpr line="76" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5396" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5392" length="29" line="76">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5413" length="7" line="76">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5396" length="16" line="76" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setSplitBackgroundDrawable:(Landroid/graphics/drawable/Drawable;)V@android.app.ActionBar"
+ sig="void setSplitBackgroundDrawable(Drawable)"
+ line="77"
+ startpos="5438"
+ endpos="5464"
+>
+	<marker line="-1" type="param">
+		<operand  start="5500" length="1" line="77">
+			<expr><![CDATA[d]]></expr>
+		</operand>
+	</marker>
+	<type  start="5465" length="34" line="77" chordsig="android.graphics.drawable.Drawable"/>
+	<newexpr line="77" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5515" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5511" length="29" line="77">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5532" length="7" line="77">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5515" length="16" line="77" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getCustomView:()Landroid/view/View;@android.app.ActionBar"
+ sig="View getCustomView()"
+ line="78"
+ startpos="5579"
+ endpos="5592"
+>
+	<type  start="5561" length="17" line="78" chordsig="android.view.View"/>
+</method>
+<method
+ chordsig="getTitle:()Ljava/lang/CharSequence;@android.app.ActionBar"
+ sig="CharSequence getTitle()"
+ line="79"
+ startpos="5636"
+ endpos="5644"
+>
+	<type  start="5613" length="22" line="79" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="getSubtitle:()Ljava/lang/CharSequence;@android.app.ActionBar"
+ sig="CharSequence getSubtitle()"
+ line="80"
+ startpos="5688"
+ endpos="5699"
+>
+	<type  start="5665" length="22" line="80" chordsig="java.lang.CharSequence"/>
+</method>
+<method
+ chordsig="getNavigationMode:()I@android.app.ActionBar"
+ sig="int getNavigationMode()"
+ line="81"
+ startpos="5724"
+ endpos="5741"
+>
+</method>
+<method
+ chordsig="setNavigationMode:(I)V@android.app.ActionBar"
+ sig="void setNavigationMode(int)"
+ line="82"
+ startpos="5767"
+ endpos="5784"
+>
+	<marker line="-1" type="param">
+		<operand  start="5789" length="4" line="82">
+			<expr><![CDATA[mode]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="getDisplayOptions:()I@android.app.ActionBar"
+ sig="int getDisplayOptions()"
+ line="83"
+ startpos="5817"
+ endpos="5834"
+>
+</method>
+<method
+ chordsig="newTab:()Landroid/app/ActionBar$Tab;@android.app.ActionBar"
+ sig="Tab newTab()"
+ line="84"
+ startpos="5881"
+ endpos="5887"
+>
+	<type  start="5855" length="25" line="84" chordsig="android.app.ActionBar$Tab"/>
+</method>
+<method
+ chordsig="addTab:(Landroid/app/ActionBar$Tab;)V@android.app.ActionBar"
+ sig="void addTab(Tab)"
+ line="85"
+ startpos="5913"
+ endpos="5919"
+>
+	<marker line="-1" type="param">
+		<operand  start="5946" length="3" line="85">
+			<expr><![CDATA[tab]]></expr>
+		</operand>
+	</marker>
+	<type  start="5920" length="25" line="85" chordsig="android.app.ActionBar$Tab"/>
+</method>
+<method
+ chordsig="addTab:(Landroid/app/ActionBar$Tab;Z)V@android.app.ActionBar"
+ sig="void addTab(Tab,boolean)"
+ line="86"
+ startpos="5974"
+ endpos="5980"
+>
+	<marker line="-1" type="param">
+		<operand  start="6007" length="3" line="86">
+			<expr><![CDATA[tab]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6020" length="11" line="86">
+			<expr><![CDATA[setSelected]]></expr>
+		</operand>
+	</marker>
+	<type  start="5981" length="25" line="86" chordsig="android.app.ActionBar$Tab"/>
+</method>
+<method
+ chordsig="addTab:(Landroid/app/ActionBar$Tab;I)V@android.app.ActionBar"
+ sig="void addTab(Tab,int)"
+ line="87"
+ startpos="6056"
+ endpos="6062"
+>
+	<marker line="-1" type="param">
+		<operand  start="6089" length="3" line="87">
+			<expr><![CDATA[tab]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6098" length="8" line="87">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+	<type  start="6063" length="25" line="87" chordsig="android.app.ActionBar$Tab"/>
+</method>
+<method
+ chordsig="addTab:(Landroid/app/ActionBar$Tab;IZ)V@android.app.ActionBar"
+ sig="void addTab(Tab,int,boolean)"
+ line="88"
+ startpos="6131"
+ endpos="6137"
+>
+	<marker line="-1" type="param">
+		<operand  start="6164" length="3" line="88">
+			<expr><![CDATA[tab]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6173" length="8" line="88">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="6191" length="11" line="88">
+			<expr><![CDATA[setSelected]]></expr>
+		</operand>
+	</marker>
+	<type  start="6138" length="25" line="88" chordsig="android.app.ActionBar$Tab"/>
+</method>
+<method
+ chordsig="removeTab:(Landroid/app/ActionBar$Tab;)V@android.app.ActionBar"
+ sig="void removeTab(Tab)"
+ line="89"
+ startpos="6227"
+ endpos="6236"
+>
+	<marker line="-1" type="param">
+		<operand  start="6263" length="3" line="89">
+			<expr><![CDATA[tab]]></expr>
+		</operand>
+	</marker>
+	<type  start="6237" length="25" line="89" chordsig="android.app.ActionBar$Tab"/>
+</method>
+<method
+ chordsig="removeTabAt:(I)V@android.app.ActionBar"
+ sig="void removeTabAt(int)"
+ line="90"
+ startpos="6291"
+ endpos="6302"
+>
+	<marker line="-1" type="param">
+		<operand  start="6307" length="8" line="90">
+			<expr><![CDATA[position]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="removeAllTabs:()V@android.app.ActionBar"
+ sig="void removeAllTabs()"
+ line="91"
+ startpos="6340"
+ endpos="6353"
+>
+</method>
+<method
+ chordsig="selectTab:(Landroid/app/ActionBar$Tab;)V@android.app.ActionBar"
+ sig="void selectTab(Tab)"
+ line="92"
+ startpos="6379"
+ endpos="6388"
+>
+	<marker line="-1" type="param">
+		<operand  start="6415" length="3" line="92">
+			<expr><![CDATA[tab]]></expr>
+		</operand>
+	</marker>
+	<type  start="6389" length="25" line="92" chordsig="android.app.ActionBar$Tab"/>
+</method>
+<method
+ chordsig="getSelectedTab:()Landroid/app/ActionBar$Tab;@android.app.ActionBar"
+ sig="Tab getSelectedTab()"
+ line="93"
+ startpos="6464"
+ endpos="6478"
+>
+	<type  start="6438" length="25" line="93" chordsig="android.app.ActionBar$Tab"/>
+</method>
+<method
+ chordsig="getTabAt:(I)Landroid/app/ActionBar$Tab;@android.app.ActionBar"
+ sig="Tab getTabAt(int)"
+ line="94"
+ startpos="6525"
+ endpos="6533"
+>
+	<marker line="-1" type="param">
+		<operand  start="6538" length="5" line="94">
+			<expr><![CDATA[index]]></expr>
+		</operand>
+	</marker>
+	<type  start="6499" length="25" line="94" chordsig="android.app.ActionBar$Tab"/>
+</method>
+<method
+ chordsig="getTabCount:()I@android.app.ActionBar"
+ sig="int getTabCount()"
+ line="95"
+ startpos="6567"
+ endpos="6578"
+>
+</method>
+<method
+ chordsig="getHeight:()I@android.app.ActionBar"
+ sig="int getHeight()"
+ line="96"
+ startpos="6603"
+ endpos="6612"
+>
+</method>
+<method
+ chordsig="show:()V@android.app.ActionBar"
+ sig="void show()"
+ line="97"
+ startpos="6638"
+ endpos="6642"
+>
+</method>
+<method
+ chordsig="hide:()V@android.app.ActionBar"
+ sig="void hide()"
+ line="98"
+ startpos="6668"
+ endpos="6672"
+>
+</method>
+<method
+ chordsig="isShowing:()Z@android.app.ActionBar"
+ sig="boolean isShowing()"
+ line="99"
+ startpos="6701"
+ endpos="6710"
+>
+</method>
+<method
+ chordsig="addOnMenuVisibilityListener:(Landroid/app/ActionBar$OnMenuVisibilityListener;)V@android.app.ActionBar"
+ sig="void addOnMenuVisibilityListener(OnMenuVisibilityListener)"
+ line="100"
+ startpos="6736"
+ endpos="6763"
+>
+	<marker line="-1" type="param">
+		<operand  start="6811" length="8" line="100">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="6764" length="46" line="100" chordsig="android.app.ActionBar$OnMenuVisibilityListener"/>
+</method>
+<method
+ chordsig="removeOnMenuVisibilityListener:(Landroid/app/ActionBar$OnMenuVisibilityListener;)V@android.app.ActionBar"
+ sig="void removeOnMenuVisibilityListener(OnMenuVisibilityListener)"
+ line="101"
+ startpos="6844"
+ endpos="6874"
+>
+	<marker line="-1" type="param">
+		<operand  start="6922" length="8" line="101">
+			<expr><![CDATA[listener]]></expr>
+		</operand>
+	</marker>
+	<type  start="6875" length="46" line="101" chordsig="android.app.ActionBar$OnMenuVisibilityListener"/>
+</method>
+<method
+ chordsig="setHomeButtonEnabled:(Z)V@android.app.ActionBar"
+ sig="void setHomeButtonEnabled(boolean)"
+ line="102"
+ startpos="6946"
+ endpos="6966"
+>
+	<marker line="-1" type="param">
+		<operand  start="6975" length="7" line="102">
+			<expr><![CDATA[enabled]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="102" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="6996" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="6992" length="29" line="102">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7013" length="7" line="102">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="6996" length="16" line="102" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getThemedContext:()Landroid/content/Context;@android.app.ActionBar"
+ sig="Context getThemedContext()"
+ line="103"
+ startpos="7057"
+ endpos="7073"
+>
+	<type  start="7033" length="23" line="103" chordsig="android.content.Context"/>
+	<newexpr line="103" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="7088" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="7084" length="29" line="103">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="7105" length="7" line="103">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="7088" length="16" line="103" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

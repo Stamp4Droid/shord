@@ -1,0 +1,18 @@
+<root>
+<class chordsig="java.io.FileFilter" line="2">
+<method
+ chordsig="accept:(Ljava/io/File;)Z@java.io.FileFilter"
+ sig="boolean accept(File)"
+ line="4"
+ startpos="72"
+ endpos="78"
+>
+	<marker line="-1" type="param">
+		<operand  start="92" length="8" line="4">
+			<expr><![CDATA[pathname]]></expr>
+		</operand>
+	</marker>
+	<type  start="79" length="12" line="4" chordsig="java.io.File"/>
+</method>
+</class>
+</root>

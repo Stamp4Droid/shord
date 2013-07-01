@@ -1,0 +1,91 @@
+<root>
+<class chordsig="org.apache.http.client.methods.HttpPut" line="2">
+	<type  start="71" length="61" line="3" chordsig="org.apache.http.client.methods.HttpEntityEnclosingRequestBase"/>
+<method
+ chordsig="&lt;init&gt;:()V@org.apache.http.client.methods.HttpPut"
+ sig="HttpPut()"
+ line="5"
+ startpos="143"
+ endpos="150"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="165" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="161" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="182" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="165" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/net/URI;)V@org.apache.http.client.methods.HttpPut"
+ sig="HttpPut(URI)"
+ line="6"
+ startpos="202"
+ endpos="209"
+>
+	<marker line="-1" type="param">
+		<operand  start="223" length="3" line="6">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<type  start="210" length="12" line="6" chordsig="java.net.URI"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="240" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="236" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="257" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="240" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@org.apache.http.client.methods.HttpPut"
+ sig="HttpPut(String)"
+ line="7"
+ startpos="277"
+ endpos="284"
+>
+	<marker line="-1" type="param">
+		<operand  start="302" length="3" line="7">
+			<expr><![CDATA[uri]]></expr>
+		</operand>
+	</marker>
+	<type  start="285" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="319" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="315" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="336" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="319" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getMethod:()Ljava/lang/String;@org.apache.http.client.methods.HttpPut"
+ sig="String getMethod()"
+ line="8"
+ startpos="373"
+ endpos="382"
+>
+	<type  start="356" length="16" line="8" chordsig="java.lang.String"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="397" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="393" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="414" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="397" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="446" length="16" line="9" chordsig="java.lang.String"/>
+</class>
+</root>

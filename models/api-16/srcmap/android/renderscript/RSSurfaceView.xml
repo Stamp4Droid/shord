@@ -1,0 +1,273 @@
+<root>
+<class chordsig="android.renderscript.RSSurfaceView" line="3">
+	<type  start="79" length="24" line="4" chordsig="android.view.SurfaceView"/>
+	<type  start="117" length="35" line="5" chordsig="android.view.SurfaceHolder$Callback"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;)V@android.renderscript.RSSurfaceView"
+ sig="RSSurfaceView(Context)"
+ line="8"
+ startpos="175"
+ endpos="188"
+>
+	<marker line="-1" type="param">
+		<operand  start="213" length="7" line="8">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<type  start="189" length="23" line="8" chordsig="android.content.Context"/>
+	<type  start="231" length="23" line="8" chordsig="android.content.Context"/>
+	<type  start="261" length="25" line="8" chordsig="android.util.AttributeSet"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="306" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="302" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="323" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="306" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;Landroid/util/AttributeSet;)V@android.renderscript.RSSurfaceView"
+ sig="RSSurfaceView(Context,AttributeSet)"
+ line="10"
+ startpos="355"
+ endpos="368"
+>
+	<marker line="-1" type="param">
+		<operand  start="393" length="7" line="10">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="428" length="5" line="10">
+			<expr><![CDATA[attrs]]></expr>
+		</operand>
+	</marker>
+	<type  start="369" length="23" line="10" chordsig="android.content.Context"/>
+	<type  start="402" length="25" line="10" chordsig="android.util.AttributeSet"/>
+	<type  start="444" length="23" line="10" chordsig="android.content.Context"/>
+	<type  start="474" length="25" line="10" chordsig="android.util.AttributeSet"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="519" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="515" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="536" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="519" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="surfaceCreated:(Landroid/view/SurfaceHolder;)V@android.renderscript.RSSurfaceView"
+ sig="void surfaceCreated(SurfaceHolder)"
+ line="12"
+ startpos="573"
+ endpos="587"
+>
+	<marker line="-1" type="param">
+		<operand  start="615" length="6" line="12">
+			<expr><![CDATA[holder]]></expr>
+		</operand>
+	</marker>
+	<type  start="588" length="26" line="12" chordsig="android.view.SurfaceHolder"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="635" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="631" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="652" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="635" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="surfaceDestroyed:(Landroid/view/SurfaceHolder;)V@android.renderscript.RSSurfaceView"
+ sig="void surfaceDestroyed(SurfaceHolder)"
+ line="14"
+ startpos="689"
+ endpos="705"
+>
+	<marker line="-1" type="param">
+		<operand  start="733" length="6" line="14">
+			<expr><![CDATA[holder]]></expr>
+		</operand>
+	</marker>
+	<type  start="706" length="26" line="14" chordsig="android.view.SurfaceHolder"/>
+	<newexpr line="14" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="753" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="749" length="29" line="14">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="770" length="7" line="14">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="753" length="16" line="14" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="surfaceChanged:(Landroid/view/SurfaceHolder;III)V@android.renderscript.RSSurfaceView"
+ sig="void surfaceChanged(SurfaceHolder,int,int,int)"
+ line="16"
+ startpos="807"
+ endpos="821"
+>
+	<marker line="-1" type="param">
+		<operand  start="849" length="6" line="16">
+			<expr><![CDATA[holder]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="861" length="6" line="16">
+			<expr><![CDATA[format]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="873" length="1" line="16">
+			<expr><![CDATA[w]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="880" length="1" line="16">
+			<expr><![CDATA[h]]></expr>
+		</operand>
+	</marker>
+	<type  start="822" length="26" line="16" chordsig="android.view.SurfaceHolder"/>
+	<newexpr line="16" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="895" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="891" length="29" line="16">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="912" length="7" line="16">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="895" length="16" line="16" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="pause:()V@android.renderscript.RSSurfaceView"
+ sig="void pause()"
+ line="18"
+ startpos="949"
+ endpos="954"
+>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="969" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="965" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="986" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="969" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="resume:()V@android.renderscript.RSSurfaceView"
+ sig="void resume()"
+ line="20"
+ startpos="1023"
+ endpos="1029"
+>
+	<newexpr line="20" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1044" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1040" length="29" line="20">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1061" length="7" line="20">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1044" length="16" line="20" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="createRenderScriptGL:(Landroid/renderscript/RenderScriptGL$SurfaceConfig;)Landroid/renderscript/RenderScriptGL;@android.renderscript.RSSurfaceView"
+ sig="RenderScriptGL createRenderScriptGL(SurfaceConfig)"
+ line="22"
+ startpos="1129"
+ endpos="1149"
+>
+	<marker line="-1" type="param">
+		<operand  start="1200" length="2" line="22">
+			<expr><![CDATA[sc]]></expr>
+		</operand>
+	</marker>
+	<type  start="1093" length="35" line="22" chordsig="android.renderscript.RenderScriptGL"/>
+	<type  start="1150" length="49" line="22" chordsig="android.renderscript.RenderScriptGL$SurfaceConfig"/>
+	<newexpr line="22" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1216" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1212" length="29" line="22">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1233" length="7" line="22">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1216" length="16" line="22" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="destroyRenderScriptGL:()V@android.renderscript.RSSurfaceView"
+ sig="void destroyRenderScriptGL()"
+ line="24"
+ startpos="1270"
+ endpos="1291"
+>
+	<newexpr line="24" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1306" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1302" length="29" line="24">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1323" length="7" line="24">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1306" length="16" line="24" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setRenderScriptGL:(Landroid/renderscript/RenderScriptGL;)V@android.renderscript.RSSurfaceView"
+ sig="void setRenderScriptGL(RenderScriptGL)"
+ line="26"
+ startpos="1360"
+ endpos="1377"
+>
+	<marker line="-1" type="param">
+		<operand  start="1414" length="2" line="26">
+			<expr><![CDATA[rs]]></expr>
+		</operand>
+	</marker>
+	<type  start="1378" length="35" line="26" chordsig="android.renderscript.RenderScriptGL"/>
+	<newexpr line="26" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1430" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1426" length="29" line="26">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1447" length="7" line="26">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1430" length="16" line="26" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getRenderScriptGL:()Landroid/renderscript/RenderScriptGL;@android.renderscript.RSSurfaceView"
+ sig="RenderScriptGL getRenderScriptGL()"
+ line="28"
+ startpos="1515"
+ endpos="1532"
+>
+	<type  start="1479" length="35" line="28" chordsig="android.renderscript.RenderScriptGL"/>
+	<newexpr line="28" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1547" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1543" length="29" line="28">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1564" length="7" line="28">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1547" length="16" line="28" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

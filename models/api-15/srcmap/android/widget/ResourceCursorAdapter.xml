@@ -1,0 +1,246 @@
+<root>
+<class chordsig="android.widget.ResourceCursorAdapter" line="2">
+	<type  start="78" length="28" line="3" chordsig="android.widget.CursorAdapter"/>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;ILandroid/database/Cursor;)V@android.widget.ResourceCursorAdapter"
+ sig="ResourceCursorAdapter(Context,int,Cursor)"
+ line="5"
+ startpos="117"
+ endpos="138"
+>
+	<marker line="-1" type="param">
+		<operand  start="163" length="7" line="5">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="176" length="6" line="5">
+			<expr><![CDATA[layout]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="208" length="1" line="5">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<type  start="139" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="184" length="23" line="5" chordsig="android.database.Cursor"/>
+	<type  start="220" length="23" line="5" chordsig="android.content.Context"/>
+	<type  start="250" length="23" line="5" chordsig="android.database.Cursor"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="293" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="289" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="310" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="293" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;ILandroid/database/Cursor;Z)V@android.widget.ResourceCursorAdapter"
+ sig="ResourceCursorAdapter(Context,int,Cursor,boolean)"
+ line="6"
+ startpos="330"
+ endpos="351"
+>
+	<marker line="-1" type="param">
+		<operand  start="376" length="7" line="6">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="389" length="6" line="6">
+			<expr><![CDATA[layout]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="421" length="1" line="6">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="432" length="11" line="6">
+			<expr><![CDATA[autoRequery]]></expr>
+		</operand>
+	</marker>
+	<type  start="352" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="397" length="23" line="6" chordsig="android.database.Cursor"/>
+	<type  start="454" length="23" line="6" chordsig="android.content.Context"/>
+	<type  start="484" length="23" line="6" chordsig="android.database.Cursor"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="527" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="523" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="544" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="527" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/content/Context;ILandroid/database/Cursor;I)V@android.widget.ResourceCursorAdapter"
+ sig="ResourceCursorAdapter(Context,int,Cursor,int)"
+ line="7"
+ startpos="564"
+ endpos="585"
+>
+	<marker line="-1" type="param">
+		<operand  start="610" length="7" line="7">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="623" length="6" line="7">
+			<expr><![CDATA[layout]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="655" length="1" line="7">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="662" length="5" line="7">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="586" length="23" line="7" chordsig="android.content.Context"/>
+	<type  start="631" length="23" line="7" chordsig="android.database.Cursor"/>
+	<type  start="678" length="23" line="7" chordsig="android.content.Context"/>
+	<type  start="708" length="23" line="7" chordsig="android.database.Cursor"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="751" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="747" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="768" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="751" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newView:(Landroid/content/Context;Landroid/database/Cursor;Landroid/view/ViewGroup;)Landroid/view/View;@android.widget.ResourceCursorAdapter"
+ sig="View newView(Context,Cursor,ViewGroup)"
+ line="8"
+ startpos="806"
+ endpos="813"
+>
+	<marker line="-1" type="param">
+		<operand  start="838" length="7" line="8">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="871" length="6" line="8">
+			<expr><![CDATA[cursor]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="902" length="6" line="8">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<type  start="788" length="17" line="8" chordsig="android.view.View"/>
+	<type  start="814" length="23" line="8" chordsig="android.content.Context"/>
+	<type  start="847" length="23" line="8" chordsig="android.database.Cursor"/>
+	<type  start="879" length="22" line="8" chordsig="android.view.ViewGroup"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="922" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="918" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="939" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="922" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="newDropDownView:(Landroid/content/Context;Landroid/database/Cursor;Landroid/view/ViewGroup;)Landroid/view/View;@android.widget.ResourceCursorAdapter"
+ sig="View newDropDownView(Context,Cursor,ViewGroup)"
+ line="9"
+ startpos="977"
+ endpos="992"
+>
+	<marker line="-1" type="param">
+		<operand  start="1017" length="7" line="9">
+			<expr><![CDATA[context]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1050" length="6" line="9">
+			<expr><![CDATA[cursor]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="1081" length="6" line="9">
+			<expr><![CDATA[parent]]></expr>
+		</operand>
+	</marker>
+	<type  start="959" length="17" line="9" chordsig="android.view.View"/>
+	<type  start="993" length="23" line="9" chordsig="android.content.Context"/>
+	<type  start="1026" length="23" line="9" chordsig="android.database.Cursor"/>
+	<type  start="1058" length="22" line="9" chordsig="android.view.ViewGroup"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1101" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1097" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1118" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1101" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setViewResource:(I)V@android.widget.ResourceCursorAdapter"
+ sig="void setViewResource(int)"
+ line="10"
+ startpos="1143"
+ endpos="1158"
+>
+	<marker line="-1" type="param">
+		<operand  start="1163" length="6" line="10">
+			<expr><![CDATA[layout]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1183" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1179" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1200" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1183" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setDropDownViewResource:(I)V@android.widget.ResourceCursorAdapter"
+ sig="void setDropDownViewResource(int)"
+ line="11"
+ startpos="1225"
+ endpos="1248"
+>
+	<marker line="-1" type="param">
+		<operand  start="1253" length="14" line="11">
+			<expr><![CDATA[dropDownLayout]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1281" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1277" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1298" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1281" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,121 @@
+<root>
+<class chordsig="android.net.wifi.WpsInfo" line="2">
+	<type  start="60" length="21" line="3" chordsig="android.os.Parcelable"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.net.wifi.WpsInfo"
+ sig="WpsInfo()"
+ line="5"
+ startpos="92"
+ endpos="99"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="114" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="110" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="131" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="114" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Landroid/net/wifi/WpsInfo;)V@android.net.wifi.WpsInfo"
+ sig="WpsInfo(WpsInfo)"
+ line="6"
+ startpos="151"
+ endpos="158"
+>
+	<marker line="-1" type="param">
+		<operand  start="184" length="6" line="6">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="159" length="24" line="6" chordsig="android.net.wifi.WpsInfo"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="204" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="200" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="221" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="204" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.net.wifi.WpsInfo"
+ sig="String toString()"
+ line="7"
+ startpos="258"
+ endpos="266"
+>
+	<type  start="241" length="16" line="7" chordsig="java.lang.String"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="281" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="277" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="298" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="281" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="describeContents:()I@android.net.wifi.WpsInfo"
+ sig="int describeContents()"
+ line="8"
+ startpos="322"
+ endpos="338"
+>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="353" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="349" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="370" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="353" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.net.wifi.WpsInfo"
+ sig="void writeToParcel(Parcel,int)"
+ line="9"
+ startpos="395"
+ endpos="408"
+>
+	<marker line="-1" type="param">
+		<operand  start="427" length="4" line="9">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="437" length="5" line="9">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="409" length="17" line="9" chordsig="android.os.Parcel"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="456" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="452" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="473" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="456" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="688" length="16" line="16" chordsig="java.lang.String"/>
+	<type  start="730" length="29" line="17" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="760" length="24" line="17" chordsig="android.net.wifi.WpsInfo"/>
+<method
+ chordsig="&lt;clinit&gt;:()V@android.net.wifi.WpsInfo"
+ line="18"
+>
+</method>
+</class>
+</root>

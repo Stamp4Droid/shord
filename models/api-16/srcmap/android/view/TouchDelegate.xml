@@ -1,0 +1,58 @@
+<root>
+<class chordsig="android.view.TouchDelegate" line="2">
+<method
+ chordsig="&lt;init&gt;:(Landroid/graphics/Rect;Landroid/view/View;)V@android.view.TouchDelegate"
+ sig="TouchDelegate(Rect,View)"
+ line="4"
+ startpos="59"
+ endpos="72"
+>
+	<marker line="-1" type="param">
+		<operand  start="95" length="6" line="4">
+			<expr><![CDATA[bounds]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="121" length="12" line="4">
+			<expr><![CDATA[delegateView]]></expr>
+		</operand>
+	</marker>
+	<type  start="73" length="21" line="4" chordsig="android.graphics.Rect"/>
+	<type  start="103" length="17" line="4" chordsig="android.view.View"/>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="147" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="143" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="164" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="147" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="onTouchEvent:(Landroid/view/MotionEvent;)Z@android.view.TouchDelegate"
+ sig="boolean onTouchEvent(MotionEvent)"
+ line="5"
+ startpos="192"
+ endpos="204"
+>
+	<marker line="-1" type="param">
+		<operand  start="230" length="5" line="5">
+			<expr><![CDATA[event]]></expr>
+		</operand>
+	</marker>
+	<type  start="205" length="24" line="5" chordsig="android.view.MotionEvent"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="249" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="245" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="266" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="249" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

@@ -1,0 +1,90 @@
+<root>
+<class chordsig="android.graphics.Shader" line="2">
+<class chordsig="android.graphics.Shader$TileMode" line="4">
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.graphics.Shader"
+ sig="Shader()"
+ line="10"
+ startpos="117"
+ endpos="123"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="138" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="134" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="155" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="138" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getLocalMatrix:(Landroid/graphics/Matrix;)Z@android.graphics.Shader"
+ sig="boolean getLocalMatrix(Matrix)"
+ line="11"
+ startpos="183"
+ endpos="197"
+>
+	<marker line="-1" type="param">
+		<operand  start="222" length="6" line="11">
+			<expr><![CDATA[localM]]></expr>
+		</operand>
+	</marker>
+	<type  start="198" length="23" line="11" chordsig="android.graphics.Matrix"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="242" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="238" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="259" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="242" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setLocalMatrix:(Landroid/graphics/Matrix;)V@android.graphics.Shader"
+ sig="void setLocalMatrix(Matrix)"
+ line="12"
+ startpos="284"
+ endpos="298"
+>
+	<marker line="-1" type="param">
+		<operand  start="323" length="6" line="12">
+			<expr><![CDATA[localM]]></expr>
+		</operand>
+	</marker>
+	<type  start="299" length="23" line="12" chordsig="android.graphics.Matrix"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="343" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="339" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="360" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="343" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="finalize:()V@android.graphics.Shader"
+ sig="void finalize()"
+ line="13"
+ startpos="388"
+ endpos="396"
+>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="438" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="434" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="455" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="438" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

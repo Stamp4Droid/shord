@@ -1,0 +1,70 @@
+<root>
+<class chordsig="java.security.cert.CRL" line="2">
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.security.cert.CRL"
+ sig="CRL(String)"
+ line="4"
+ startpos="67"
+ endpos="70"
+>
+	<marker line="-1" type="param">
+		<operand  start="88" length="4" line="4">
+			<expr><![CDATA[type]]></expr>
+		</operand>
+	</marker>
+	<type  start="71" length="16" line="4" chordsig="java.lang.String"/>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="106" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="102" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="123" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="106" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getType:()Ljava/lang/String;@java.security.cert.CRL"
+ sig="String getType()"
+ line="5"
+ startpos="166"
+ endpos="173"
+>
+	<type  start="149" length="16" line="5" chordsig="java.lang.String"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="188" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="184" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="205" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="188" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isRevoked:(Ljava/security/cert/Certificate;)Z@java.security.cert.CRL"
+ sig="boolean isRevoked(Certificate)"
+ line="6"
+ startpos="242"
+ endpos="251"
+>
+	<marker line="-1" type="param">
+		<operand  start="283" length="4" line="6">
+			<expr><![CDATA[cert]]></expr>
+		</operand>
+	</marker>
+	<type  start="252" length="30" line="6" chordsig="java.security.cert.Certificate"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@java.security.cert.CRL"
+ sig="String toString()"
+ line="7"
+ startpos="324"
+ endpos="332"
+>
+	<type  start="307" length="16" line="7" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

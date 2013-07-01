@@ -1,0 +1,87 @@
+<root>
+<class chordsig="android.os.Parcelable" line="2">
+<class chordsig="android.os.Parcelable$Creator" line="4">
+<method
+ chordsig="createFromParcel:(Landroid/os/Parcel;)Ljava/lang/Object;@android.os.Parcelable$Creator"
+ sig="T createFromParcel(Parcel)"
+ line="6"
+ startpos="106"
+ endpos="122"
+>
+	<marker line="-1" type="param">
+		<operand  start="141" length="6" line="6">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<type  start="104" length="1" line="6" chordsig="java.lang.Object"/>
+	<type  start="123" length="17" line="6" chordsig="android.os.Parcel"/>
+</method>
+<method
+ chordsig="newArray:(I)[Ljava/lang/Object;@android.os.Parcelable$Creator"
+ sig="T[] newArray(int)"
+ line="7"
+ startpos="171"
+ endpos="179"
+>
+	<marker line="-1" type="param">
+		<operand  start="184" length="4" line="7">
+			<expr><![CDATA[size]]></expr>
+		</operand>
+	</marker>
+	<type  start="167" length="1" line="7" chordsig="java.lang.Object"/>
+</method>
+</class>
+<class chordsig="android.os.Parcelable$ClassLoaderCreator" line="9">
+	<type  start="249" length="29" line="10" chordsig="android.os.Parcelable$Creator"/>
+	<type  start="279" length="1" line="10" chordsig="java.lang.Object"/>
+<method
+ chordsig="createFromParcel:(Landroid/os/Parcel;Ljava/lang/ClassLoader;)Ljava/lang/Object;@android.os.Parcelable$ClassLoaderCreator"
+ sig="T createFromParcel(Parcel,ClassLoader)"
+ line="12"
+ startpos="303"
+ endpos="319"
+>
+	<marker line="-1" type="param">
+		<operand  start="338" length="6" line="12">
+			<expr><![CDATA[source]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="368" length="6" line="12">
+			<expr><![CDATA[loader]]></expr>
+		</operand>
+	</marker>
+	<type  start="301" length="1" line="12" chordsig="java.lang.Object"/>
+	<type  start="320" length="17" line="12" chordsig="android.os.Parcel"/>
+	<type  start="346" length="21" line="12" chordsig="java.lang.ClassLoader"/>
+</method>
+</class>
+<method
+ chordsig="describeContents:()I@android.os.Parcelable"
+ sig="int describeContents()"
+ line="14"
+ startpos="400"
+ endpos="416"
+>
+</method>
+<method
+ chordsig="writeToParcel:(Landroid/os/Parcel;I)V@android.os.Parcelable"
+ sig="void writeToParcel(Parcel,int)"
+ line="15"
+ startpos="442"
+ endpos="455"
+>
+	<marker line="-1" type="param">
+		<operand  start="474" length="4" line="15">
+			<expr><![CDATA[dest]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="484" length="5" line="15">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<type  start="456" length="17" line="15" chordsig="android.os.Parcel"/>
+</method>
+</class>
+</root>

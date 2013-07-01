@@ -1,0 +1,43 @@
+<root>
+<class chordsig="java.security.cert.CertPathValidatorSpi" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@java.security.cert.CertPathValidatorSpi"
+ sig="CertPathValidatorSpi()"
+ line="4"
+ startpos="81"
+ endpos="101"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="116" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="112" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="133" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="116" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="engineValidate:(Ljava/security/cert/CertPath;Ljava/security/cert/CertPathParameters;)Ljava/security/cert/CertPathValidatorResult;@java.security.cert.CertPathValidatorSpi"
+ sig="CertPathValidatorResult engineValidate(CertPath,CertPathParameters)"
+ line="5"
+ startpos="205"
+ endpos="219"
+>
+	<marker line="-1" type="param">
+		<operand  start="248" length="8" line="5">
+			<expr><![CDATA[certPath]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="296" length="6" line="5">
+			<expr><![CDATA[params]]></expr>
+		</operand>
+	</marker>
+	<type  start="162" length="42" line="5" chordsig="java.security.cert.CertPathValidatorResult"/>
+	<type  start="220" length="27" line="5" chordsig="java.security.cert.CertPath"/>
+	<type  start="258" length="37" line="5" chordsig="java.security.cert.CertPathParameters"/>
+</method>
+</class>
+</root>

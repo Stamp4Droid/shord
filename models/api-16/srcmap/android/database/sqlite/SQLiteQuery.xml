@@ -1,0 +1,42 @@
+<root>
+<class chordsig="android.database.sqlite.SQLiteQuery" line="2">
+	<type  start="74" length="37" line="3" chordsig="android.database.sqlite.SQLiteProgram"/>
+<method
+ chordsig="&lt;init&gt;:()V@android.database.sqlite.SQLiteQuery"
+ sig="SQLiteQuery()"
+ line="5"
+ startpos="114"
+ endpos="125"
+>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="140" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="136" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="157" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="140" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="toString:()Ljava/lang/String;@android.database.sqlite.SQLiteQuery"
+ sig="String toString()"
+ line="6"
+ startpos="194"
+ endpos="202"
+>
+	<type  start="177" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="217" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="213" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="234" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="217" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

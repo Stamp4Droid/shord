@@ -1,0 +1,98 @@
+<root>
+<class chordsig="android.net.LocalSocketAddress" line="2">
+<class chordsig="android.net.LocalSocketAddress$Namespace" line="4">
+</class>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Landroid/net/LocalSocketAddress$Namespace;)V@android.net.LocalSocketAddress"
+ sig="LocalSocketAddress(String,Namespace)"
+ line="10"
+ startpos="134"
+ endpos="152"
+>
+	<marker line="-1" type="param">
+		<operand  start="170" length="4" line="10">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="217" length="9" line="10">
+			<expr><![CDATA[namespace]]></expr>
+		</operand>
+	</marker>
+	<type  start="153" length="16" line="10" chordsig="java.lang.String"/>
+	<type  start="176" length="40" line="10" chordsig="android.net.LocalSocketAddress$Namespace"/>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="240" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="236" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="257" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="240" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.net.LocalSocketAddress"
+ sig="LocalSocketAddress(String)"
+ line="11"
+ startpos="277"
+ endpos="295"
+>
+	<marker line="-1" type="param">
+		<operand  start="313" length="4" line="11">
+			<expr><![CDATA[name]]></expr>
+		</operand>
+	</marker>
+	<type  start="296" length="16" line="11" chordsig="java.lang.String"/>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="331" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="327" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="348" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="331" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getName:()Ljava/lang/String;@android.net.LocalSocketAddress"
+ sig="String getName()"
+ line="12"
+ startpos="385"
+ endpos="392"
+>
+	<type  start="368" length="16" line="12" chordsig="java.lang.String"/>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="407" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="403" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="424" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="407" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getNamespace:()Landroid/net/LocalSocketAddress$Namespace;@android.net.LocalSocketAddress"
+ sig="Namespace getNamespace()"
+ line="13"
+ startpos="485"
+ endpos="497"
+>
+	<type  start="444" length="40" line="13" chordsig="android.net.LocalSocketAddress$Namespace"/>
+	<newexpr line="13" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="512" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="508" length="29" line="13">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="529" length="7" line="13">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="512" length="16" line="13" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

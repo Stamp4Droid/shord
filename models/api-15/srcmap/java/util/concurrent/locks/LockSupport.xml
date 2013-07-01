@@ -1,0 +1,217 @@
+<root>
+<class chordsig="java.util.concurrent.locks.LockSupport" line="2">
+<method
+ chordsig="&lt;init&gt;:()V@java.util.concurrent.locks.LockSupport"
+ sig="LockSupport()"
+ line="4"
+ startpos="63"
+ endpos="74"
+>
+	<newexpr line="4" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="89" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="85" length="29" line="4">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="106" length="7" line="4">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="89" length="16" line="4" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unpark:(Ljava/lang/Thread;)V@java.util.concurrent.locks.LockSupport"
+ sig="void unpark(Thread)"
+ line="5"
+ startpos="138"
+ endpos="144"
+>
+	<marker line="-1" type="param">
+		<operand  start="162" length="6" line="5">
+			<expr><![CDATA[thread]]></expr>
+		</operand>
+	</marker>
+	<type  start="145" length="16" line="5" chordsig="java.lang.Thread"/>
+	<newexpr line="5" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="182" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="178" length="29" line="5">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="199" length="7" line="5">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="182" length="16" line="5" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="park:(Ljava/lang/Object;)V@java.util.concurrent.locks.LockSupport"
+ sig="void park(Object)"
+ line="6"
+ startpos="231"
+ endpos="235"
+>
+	<marker line="-1" type="param">
+		<operand  start="253" length="7" line="6">
+			<expr><![CDATA[blocker]]></expr>
+		</operand>
+	</marker>
+	<type  start="236" length="16" line="6" chordsig="java.lang.Object"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="274" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="270" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="291" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="274" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parkNanos:(Ljava/lang/Object;J)V@java.util.concurrent.locks.LockSupport"
+ sig="void parkNanos(Object,long)"
+ line="7"
+ startpos="323"
+ endpos="332"
+>
+	<marker line="-1" type="param">
+		<operand  start="350" length="7" line="7">
+			<expr><![CDATA[blocker]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="364" length="5" line="7">
+			<expr><![CDATA[nanos]]></expr>
+		</operand>
+	</marker>
+	<type  start="333" length="16" line="7" chordsig="java.lang.Object"/>
+	<newexpr line="7" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="383" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="379" length="29" line="7">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="400" length="7" line="7">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="383" length="16" line="7" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parkUntil:(Ljava/lang/Object;J)V@java.util.concurrent.locks.LockSupport"
+ sig="void parkUntil(Object,long)"
+ line="8"
+ startpos="432"
+ endpos="441"
+>
+	<marker line="-1" type="param">
+		<operand  start="459" length="7" line="8">
+			<expr><![CDATA[blocker]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="473" length="8" line="8">
+			<expr><![CDATA[deadline]]></expr>
+		</operand>
+	</marker>
+	<type  start="442" length="16" line="8" chordsig="java.lang.Object"/>
+	<newexpr line="8" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="495" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="491" length="29" line="8">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="512" length="7" line="8">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="495" length="16" line="8" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getBlocker:(Ljava/lang/Thread;)Ljava/lang/Object;@java.util.concurrent.locks.LockSupport"
+ sig="Object getBlocker(Thread)"
+ line="9"
+ startpos="556"
+ endpos="566"
+>
+	<marker line="-1" type="param">
+		<operand  start="584" length="1" line="9">
+			<expr><![CDATA[t]]></expr>
+		</operand>
+	</marker>
+	<type  start="539" length="16" line="9" chordsig="java.lang.Object"/>
+	<type  start="567" length="16" line="9" chordsig="java.lang.Thread"/>
+	<newexpr line="9" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="599" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="595" length="29" line="9">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="616" length="7" line="9">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="599" length="16" line="9" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="park:()V@java.util.concurrent.locks.LockSupport"
+ sig="void park()"
+ line="10"
+ startpos="648"
+ endpos="652"
+>
+	<newexpr line="10" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="667" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="663" length="29" line="10">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="684" length="7" line="10">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="667" length="16" line="10" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parkNanos:(J)V@java.util.concurrent.locks.LockSupport"
+ sig="void parkNanos(long)"
+ line="11"
+ startpos="716"
+ endpos="725"
+>
+	<marker line="-1" type="param">
+		<operand  start="731" length="5" line="11">
+			<expr><![CDATA[nanos]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="11" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="750" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="746" length="29" line="11">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="767" length="7" line="11">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="750" length="16" line="11" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parkUntil:(J)V@java.util.concurrent.locks.LockSupport"
+ sig="void parkUntil(long)"
+ line="12"
+ startpos="799"
+ endpos="808"
+>
+	<marker line="-1" type="param">
+		<operand  start="814" length="8" line="12">
+			<expr><![CDATA[deadline]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="12" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="836" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="832" length="29" line="12">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="853" length="7" line="12">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="836" length="16" line="12" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

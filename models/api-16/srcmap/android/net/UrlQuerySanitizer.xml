@@ -1,0 +1,840 @@
+<root>
+<class chordsig="android.net.UrlQuerySanitizer" line="2">
+<class chordsig="android.net.UrlQuerySanitizer$ParameterValuePair" line="4">
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;Ljava/lang/String;)V@android.net.UrlQuerySanitizer$ParameterValuePair"
+ sig="ParameterValuePair(String,String)"
+ line="6"
+ startpos="96"
+ endpos="114"
+>
+	<marker line="-1" type="param">
+		<operand  start="132" length="9" line="6">
+			<expr><![CDATA[parameter]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="160" length="5" line="6">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="115" length="16" line="6" chordsig="java.lang.String"/>
+	<type  start="143" length="16" line="6" chordsig="java.lang.String"/>
+	<newexpr line="6" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="179" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="175" length="29" line="6">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="196" length="7" line="6">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="179" length="16" line="6" chordsig="java.lang.RuntimeException"/>
+</method>
+	<type  start="215" length="16" line="7" chordsig="java.lang.String"/>
+	<type  start="251" length="16" line="8" chordsig="java.lang.String"/>
+</class>
+<class chordsig="android.net.UrlQuerySanitizer$ValueSanitizer" line="10">
+<method
+ chordsig="sanitize:(Ljava/lang/String;)Ljava/lang/String;@android.net.UrlQuerySanitizer$ValueSanitizer"
+ sig="String sanitize(String)"
+ line="12"
+ startpos="353"
+ endpos="361"
+>
+	<marker line="-1" type="param">
+		<operand  start="379" length="5" line="12">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="336" length="16" line="12" chordsig="java.lang.String"/>
+	<type  start="362" length="16" line="12" chordsig="java.lang.String"/>
+</method>
+</class>
+<class chordsig="android.net.UrlQuerySanitizer$IllegalCharacterValueSanitizer" line="14">
+	<type  start="453" length="44" line="15" chordsig="android.net.UrlQuerySanitizer$ValueSanitizer"/>
+<method
+ chordsig="&lt;init&gt;:(I)V@android.net.UrlQuerySanitizer$IllegalCharacterValueSanitizer"
+ sig="IllegalCharacterValueSanitizer(int)"
+ line="17"
+ startpos="508"
+ endpos="538"
+>
+	<marker line="-1" type="param">
+		<operand  start="543" length="5" line="17">
+			<expr><![CDATA[flags]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="17" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="562" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="558" length="29" line="17">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="579" length="7" line="17">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="562" length="16" line="17" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="sanitize:(Ljava/lang/String;)Ljava/lang/String;@android.net.UrlQuerySanitizer$IllegalCharacterValueSanitizer"
+ sig="String sanitize(String)"
+ line="18"
+ startpos="616"
+ endpos="624"
+>
+	<marker line="-1" type="param">
+		<operand  start="642" length="5" line="18">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="599" length="16" line="18" chordsig="java.lang.String"/>
+	<type  start="625" length="16" line="18" chordsig="java.lang.String"/>
+	<newexpr line="18" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="661" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="657" length="29" line="18">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="678" length="7" line="18">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="661" length="16" line="18" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+<method
+ chordsig="&lt;init&gt;:()V@android.net.UrlQuerySanitizer"
+ sig="UrlQuerySanitizer()"
+ line="42"
+ startpos="1674"
+ endpos="1691"
+>
+	<newexpr line="42" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1706" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1702" length="29" line="42">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1723" length="7" line="42">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1706" length="16" line="42" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="&lt;init&gt;:(Ljava/lang/String;)V@android.net.UrlQuerySanitizer"
+ sig="UrlQuerySanitizer(String)"
+ line="43"
+ startpos="1743"
+ endpos="1760"
+>
+	<marker line="-1" type="param">
+		<operand  start="1778" length="3" line="43">
+			<expr><![CDATA[url]]></expr>
+		</operand>
+	</marker>
+	<type  start="1761" length="16" line="43" chordsig="java.lang.String"/>
+	<newexpr line="43" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1795" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1791" length="29" line="43">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1812" length="7" line="43">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1795" length="16" line="43" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getUnregisteredParameterValueSanitizer:()Landroid/net/UrlQuerySanitizer$ValueSanitizer;@android.net.UrlQuerySanitizer"
+ sig="ValueSanitizer getUnregisteredParameterValueSanitizer()"
+ line="44"
+ startpos="1877"
+ endpos="1915"
+>
+	<type  start="1832" length="44" line="44" chordsig="android.net.UrlQuerySanitizer$ValueSanitizer"/>
+	<newexpr line="44" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="1930" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="1926" length="29" line="44">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="1947" length="7" line="44">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="1930" length="16" line="44" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setUnregisteredParameterValueSanitizer:(Landroid/net/UrlQuerySanitizer$ValueSanitizer;)V@android.net.UrlQuerySanitizer"
+ sig="void setUnregisteredParameterValueSanitizer(ValueSanitizer)"
+ line="45"
+ startpos="1972"
+ endpos="2010"
+>
+	<marker line="-1" type="param">
+		<operand  start="2056" length="9" line="45">
+			<expr><![CDATA[sanitizer]]></expr>
+		</operand>
+	</marker>
+	<type  start="2011" length="44" line="45" chordsig="android.net.UrlQuerySanitizer$ValueSanitizer"/>
+	<newexpr line="45" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2079" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2075" length="29" line="45">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2096" length="7" line="45">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2079" length="16" line="45" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAllIllegal:()Landroid/net/UrlQuerySanitizer$ValueSanitizer;@android.net.UrlQuerySanitizer"
+ sig="ValueSanitizer getAllIllegal()"
+ line="46"
+ startpos="2174"
+ endpos="2187"
+>
+	<type  start="2129" length="44" line="46" chordsig="android.net.UrlQuerySanitizer$ValueSanitizer"/>
+	<newexpr line="46" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2202" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2198" length="29" line="46">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2219" length="7" line="46">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2202" length="16" line="46" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAllButNulLegal:()Landroid/net/UrlQuerySanitizer$ValueSanitizer;@android.net.UrlQuerySanitizer"
+ sig="ValueSanitizer getAllButNulLegal()"
+ line="47"
+ startpos="2297"
+ endpos="2314"
+>
+	<type  start="2252" length="44" line="47" chordsig="android.net.UrlQuerySanitizer$ValueSanitizer"/>
+	<newexpr line="47" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2329" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2325" length="29" line="47">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2346" length="7" line="47">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2329" length="16" line="47" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAllButWhitespaceLegal:()Landroid/net/UrlQuerySanitizer$ValueSanitizer;@android.net.UrlQuerySanitizer"
+ sig="ValueSanitizer getAllButWhitespaceLegal()"
+ line="48"
+ startpos="2424"
+ endpos="2448"
+>
+	<type  start="2379" length="44" line="48" chordsig="android.net.UrlQuerySanitizer$ValueSanitizer"/>
+	<newexpr line="48" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2463" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2459" length="29" line="48">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2480" length="7" line="48">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2463" length="16" line="48" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getUrlLegal:()Landroid/net/UrlQuerySanitizer$ValueSanitizer;@android.net.UrlQuerySanitizer"
+ sig="ValueSanitizer getUrlLegal()"
+ line="49"
+ startpos="2558"
+ endpos="2569"
+>
+	<type  start="2513" length="44" line="49" chordsig="android.net.UrlQuerySanitizer$ValueSanitizer"/>
+	<newexpr line="49" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2584" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2580" length="29" line="49">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2601" length="7" line="49">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2584" length="16" line="49" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getUrlAndSpaceLegal:()Landroid/net/UrlQuerySanitizer$ValueSanitizer;@android.net.UrlQuerySanitizer"
+ sig="ValueSanitizer getUrlAndSpaceLegal()"
+ line="50"
+ startpos="2679"
+ endpos="2698"
+>
+	<type  start="2634" length="44" line="50" chordsig="android.net.UrlQuerySanitizer$ValueSanitizer"/>
+	<newexpr line="50" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2713" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2709" length="29" line="50">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2730" length="7" line="50">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2713" length="16" line="50" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAmpLegal:()Landroid/net/UrlQuerySanitizer$ValueSanitizer;@android.net.UrlQuerySanitizer"
+ sig="ValueSanitizer getAmpLegal()"
+ line="51"
+ startpos="2808"
+ endpos="2819"
+>
+	<type  start="2763" length="44" line="51" chordsig="android.net.UrlQuerySanitizer$ValueSanitizer"/>
+	<newexpr line="51" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2834" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2830" length="29" line="51">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2851" length="7" line="51">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2834" length="16" line="51" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAmpAndSpaceLegal:()Landroid/net/UrlQuerySanitizer$ValueSanitizer;@android.net.UrlQuerySanitizer"
+ sig="ValueSanitizer getAmpAndSpaceLegal()"
+ line="52"
+ startpos="2929"
+ endpos="2948"
+>
+	<type  start="2884" length="44" line="52" chordsig="android.net.UrlQuerySanitizer$ValueSanitizer"/>
+	<newexpr line="52" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="2963" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="2959" length="29" line="52">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="2980" length="7" line="52">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="2963" length="16" line="52" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getSpaceLegal:()Landroid/net/UrlQuerySanitizer$ValueSanitizer;@android.net.UrlQuerySanitizer"
+ sig="ValueSanitizer getSpaceLegal()"
+ line="53"
+ startpos="3058"
+ endpos="3071"
+>
+	<type  start="3013" length="44" line="53" chordsig="android.net.UrlQuerySanitizer$ValueSanitizer"/>
+	<newexpr line="53" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3086" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3082" length="29" line="53">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3103" length="7" line="53">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3086" length="16" line="53" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAllButNulAndAngleBracketsLegal:()Landroid/net/UrlQuerySanitizer$ValueSanitizer;@android.net.UrlQuerySanitizer"
+ sig="ValueSanitizer getAllButNulAndAngleBracketsLegal()"
+ line="54"
+ startpos="3181"
+ endpos="3214"
+>
+	<type  start="3136" length="44" line="54" chordsig="android.net.UrlQuerySanitizer$ValueSanitizer"/>
+	<newexpr line="54" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3229" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3225" length="29" line="54">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3246" length="7" line="54">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3229" length="16" line="54" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parseUrl:(Ljava/lang/String;)V@android.net.UrlQuerySanitizer"
+ sig="void parseUrl(String)"
+ line="55"
+ startpos="3271"
+ endpos="3279"
+>
+	<marker line="-1" type="param">
+		<operand  start="3297" length="3" line="55">
+			<expr><![CDATA[url]]></expr>
+		</operand>
+	</marker>
+	<type  start="3280" length="16" line="55" chordsig="java.lang.String"/>
+	<newexpr line="55" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3314" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3310" length="29" line="55">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3331" length="7" line="55">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3314" length="16" line="55" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parseQuery:(Ljava/lang/String;)V@android.net.UrlQuerySanitizer"
+ sig="void parseQuery(String)"
+ line="56"
+ startpos="3356"
+ endpos="3366"
+>
+	<marker line="-1" type="param">
+		<operand  start="3384" length="5" line="56">
+			<expr><![CDATA[query]]></expr>
+		</operand>
+	</marker>
+	<type  start="3367" length="16" line="56" chordsig="java.lang.String"/>
+	<newexpr line="56" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3403" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3399" length="29" line="56">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3420" length="7" line="56">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3403" length="16" line="56" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getParameterSet:()Ljava/util/Set;@android.net.UrlQuerySanitizer"
+ sig="Set&lt;String&gt; getParameterSet()"
+ line="57"
+ startpos="3472"
+ endpos="3487"
+>
+	<type  start="3440" length="13" line="57" chordsig="java.util.Set"/>
+	<type  start="3454" length="16" line="57" chordsig="java.lang.String"/>
+	<newexpr line="57" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3502" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3498" length="29" line="57">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3519" length="7" line="57">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3502" length="16" line="57" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getParameterList:()Ljava/util/List;@android.net.UrlQuerySanitizer"
+ sig="List&lt;ParameterValuePair&gt; getParameterList()"
+ line="58"
+ startpos="3604"
+ endpos="3620"
+>
+	<type  start="3539" length="14" line="58" chordsig="java.util.List"/>
+	<type  start="3554" length="48" line="58" chordsig="android.net.UrlQuerySanitizer$ParameterValuePair"/>
+	<newexpr line="58" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3635" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3631" length="29" line="58">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3652" length="7" line="58">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3635" length="16" line="58" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="hasParameter:(Ljava/lang/String;)Z@android.net.UrlQuerySanitizer"
+ sig="boolean hasParameter(String)"
+ line="59"
+ startpos="3680"
+ endpos="3692"
+>
+	<marker line="-1" type="param">
+		<operand  start="3710" length="9" line="59">
+			<expr><![CDATA[parameter]]></expr>
+		</operand>
+	</marker>
+	<type  start="3693" length="16" line="59" chordsig="java.lang.String"/>
+	<newexpr line="59" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3733" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3729" length="29" line="59">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3750" length="7" line="59">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3733" length="16" line="59" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getValue:(Ljava/lang/String;)Ljava/lang/String;@android.net.UrlQuerySanitizer"
+ sig="String getValue(String)"
+ line="60"
+ startpos="3787"
+ endpos="3795"
+>
+	<marker line="-1" type="param">
+		<operand  start="3813" length="9" line="60">
+			<expr><![CDATA[parameter]]></expr>
+		</operand>
+	</marker>
+	<type  start="3770" length="16" line="60" chordsig="java.lang.String"/>
+	<type  start="3796" length="16" line="60" chordsig="java.lang.String"/>
+	<newexpr line="60" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3836" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3832" length="29" line="60">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="3853" length="7" line="60">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3836" length="16" line="60" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="registerParameter:(Ljava/lang/String;Landroid/net/UrlQuerySanitizer$ValueSanitizer;)V@android.net.UrlQuerySanitizer"
+ sig="void registerParameter(String,ValueSanitizer)"
+ line="61"
+ startpos="3878"
+ endpos="3895"
+>
+	<marker line="-1" type="param">
+		<operand  start="3913" length="9" line="61">
+			<expr><![CDATA[parameter]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="3969" length="14" line="61">
+			<expr><![CDATA[valueSanitizer]]></expr>
+		</operand>
+	</marker>
+	<type  start="3896" length="16" line="61" chordsig="java.lang.String"/>
+	<type  start="3924" length="44" line="61" chordsig="android.net.UrlQuerySanitizer$ValueSanitizer"/>
+	<newexpr line="61" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="3997" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="3993" length="29" line="61">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4014" length="7" line="61">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="3997" length="16" line="61" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="registerParameters:([Ljava/lang/String;Landroid/net/UrlQuerySanitizer$ValueSanitizer;)V@android.net.UrlQuerySanitizer"
+ sig="void registerParameters(String[],ValueSanitizer)"
+ line="62"
+ startpos="4039"
+ endpos="4057"
+>
+	<marker line="-1" type="param">
+		<operand  start="4077" length="10" line="62">
+			<expr><![CDATA[parameters]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4134" length="14" line="62">
+			<expr><![CDATA[valueSanitizer]]></expr>
+		</operand>
+	</marker>
+	<type  start="4058" length="16" line="62" chordsig="java.lang.String"/>
+	<type  start="4089" length="44" line="62" chordsig="android.net.UrlQuerySanitizer$ValueSanitizer"/>
+	<newexpr line="62" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4162" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4158" length="29" line="62">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4179" length="7" line="62">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4162" length="16" line="62" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setAllowUnregisteredParamaters:(Z)V@android.net.UrlQuerySanitizer"
+ sig="void setAllowUnregisteredParamaters(boolean)"
+ line="63"
+ startpos="4204"
+ endpos="4234"
+>
+	<marker line="-1" type="param">
+		<operand  start="4243" length="27" line="63">
+			<expr><![CDATA[allowUnregisteredParamaters]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="63" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4284" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4280" length="29" line="63">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4301" length="7" line="63">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4284" length="16" line="63" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getAllowUnregisteredParamaters:()Z@android.net.UrlQuerySanitizer"
+ sig="boolean getAllowUnregisteredParamaters()"
+ line="64"
+ startpos="4329"
+ endpos="4359"
+>
+	<newexpr line="64" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4374" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4370" length="29" line="64">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4391" length="7" line="64">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4374" length="16" line="64" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="setPreferFirstRepeatedParameter:(Z)V@android.net.UrlQuerySanitizer"
+ sig="void setPreferFirstRepeatedParameter(boolean)"
+ line="65"
+ startpos="4416"
+ endpos="4447"
+>
+	<marker line="-1" type="param">
+		<operand  start="4456" length="28" line="65">
+			<expr><![CDATA[preferFirstRepeatedParameter]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="65" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4498" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4494" length="29" line="65">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4515" length="7" line="65">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4498" length="16" line="65" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getPreferFirstRepeatedParameter:()Z@android.net.UrlQuerySanitizer"
+ sig="boolean getPreferFirstRepeatedParameter()"
+ line="66"
+ startpos="4543"
+ endpos="4574"
+>
+	<newexpr line="66" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4589" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4585" length="29" line="66">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4606" length="7" line="66">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4589" length="16" line="66" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="parseEntry:(Ljava/lang/String;Ljava/lang/String;)V@android.net.UrlQuerySanitizer"
+ sig="void parseEntry(String,String)"
+ line="67"
+ startpos="4634"
+ endpos="4644"
+>
+	<marker line="-1" type="param">
+		<operand  start="4662" length="9" line="67">
+			<expr><![CDATA[parameter]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4690" length="5" line="67">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="4645" length="16" line="67" chordsig="java.lang.String"/>
+	<type  start="4673" length="16" line="67" chordsig="java.lang.String"/>
+	<newexpr line="67" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4709" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4705" length="29" line="67">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4726" length="7" line="67">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4709" length="16" line="67" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="addSanitizedEntry:(Ljava/lang/String;Ljava/lang/String;)V@android.net.UrlQuerySanitizer"
+ sig="void addSanitizedEntry(String,String)"
+ line="68"
+ startpos="4754"
+ endpos="4771"
+>
+	<marker line="-1" type="param">
+		<operand  start="4789" length="9" line="68">
+			<expr><![CDATA[parameter]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="4817" length="5" line="68">
+			<expr><![CDATA[value]]></expr>
+		</operand>
+	</marker>
+	<type  start="4772" length="16" line="68" chordsig="java.lang.String"/>
+	<type  start="4800" length="16" line="68" chordsig="java.lang.String"/>
+	<newexpr line="68" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4836" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4832" length="29" line="68">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4853" length="7" line="68">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4836" length="16" line="68" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getValueSanitizer:(Ljava/lang/String;)Landroid/net/UrlQuerySanitizer$ValueSanitizer;@android.net.UrlQuerySanitizer"
+ sig="ValueSanitizer getValueSanitizer(String)"
+ line="69"
+ startpos="4918"
+ endpos="4935"
+>
+	<marker line="-1" type="param">
+		<operand  start="4953" length="9" line="69">
+			<expr><![CDATA[parameter]]></expr>
+		</operand>
+	</marker>
+	<type  start="4873" length="44" line="69" chordsig="android.net.UrlQuerySanitizer$ValueSanitizer"/>
+	<type  start="4936" length="16" line="69" chordsig="java.lang.String"/>
+	<newexpr line="69" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="4976" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="4972" length="29" line="69">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="4993" length="7" line="69">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="4976" length="16" line="69" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="getEffectiveValueSanitizer:(Ljava/lang/String;)Landroid/net/UrlQuerySanitizer$ValueSanitizer;@android.net.UrlQuerySanitizer"
+ sig="ValueSanitizer getEffectiveValueSanitizer(String)"
+ line="70"
+ startpos="5058"
+ endpos="5084"
+>
+	<marker line="-1" type="param">
+		<operand  start="5102" length="9" line="70">
+			<expr><![CDATA[parameter]]></expr>
+		</operand>
+	</marker>
+	<type  start="5013" length="44" line="70" chordsig="android.net.UrlQuerySanitizer$ValueSanitizer"/>
+	<type  start="5085" length="16" line="70" chordsig="java.lang.String"/>
+	<newexpr line="70" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5125" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5121" length="29" line="70">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5142" length="7" line="70">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5125" length="16" line="70" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="unescape:(Ljava/lang/String;)Ljava/lang/String;@android.net.UrlQuerySanitizer"
+ sig="String unescape(String)"
+ line="71"
+ startpos="5179"
+ endpos="5187"
+>
+	<marker line="-1" type="param">
+		<operand  start="5205" length="6" line="71">
+			<expr><![CDATA[string]]></expr>
+		</operand>
+	</marker>
+	<type  start="5162" length="16" line="71" chordsig="java.lang.String"/>
+	<type  start="5188" length="16" line="71" chordsig="java.lang.String"/>
+	<newexpr line="71" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5225" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5221" length="29" line="71">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5242" length="7" line="71">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5225" length="16" line="71" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="isHexDigit:(C)Z@android.net.UrlQuerySanitizer"
+ sig="boolean isHexDigit(char)"
+ line="72"
+ startpos="5273"
+ endpos="5283"
+>
+	<marker line="-1" type="param">
+		<operand  start="5289" length="1" line="72">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="72" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5304" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5300" length="29" line="72">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5321" length="7" line="72">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5304" length="16" line="72" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="decodeHexDigit:(C)I@android.net.UrlQuerySanitizer"
+ sig="int decodeHexDigit(char)"
+ line="73"
+ startpos="5348"
+ endpos="5362"
+>
+	<marker line="-1" type="param">
+		<operand  start="5368" length="1" line="73">
+			<expr><![CDATA[c]]></expr>
+		</operand>
+	</marker>
+	<newexpr line="73" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5383" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5379" length="29" line="73">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5400" length="7" line="73">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5383" length="16" line="73" chordsig="java.lang.RuntimeException"/>
+</method>
+<method
+ chordsig="clear:()V@android.net.UrlQuerySanitizer"
+ sig="void clear()"
+ line="74"
+ startpos="5428"
+ endpos="5433"
+>
+	<newexpr line="74" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@java.lang.RuntimeException" start="5448" length="16" type="invoke">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		<param  start="5444" length="29" line="74">
+			<expr><![CDATA[new RuntimeException("Stub!")]]></expr>
+		</param>
+		<param  start="5465" length="7" line="74">
+			<expr><![CDATA["Stub!"]]></expr>
+		</param>
+	</newexpr>
+	<type  start="5448" length="16" line="74" chordsig="java.lang.RuntimeException"/>
+</method>
+</class>
+</root>

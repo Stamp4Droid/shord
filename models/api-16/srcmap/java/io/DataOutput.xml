@@ -1,0 +1,199 @@
+<root>
+<class chordsig="java.io.DataOutput" line="2">
+<method
+ chordsig="write:([B)V@java.io.DataOutput"
+ sig="void write(byte[])"
+ line="4"
+ startpos="69"
+ endpos="74"
+>
+	<marker line="-1" type="param">
+		<operand  start="82" length="6" line="4">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="write:([BII)V@java.io.DataOutput"
+ sig="void write(byte[],int,int)"
+ line="5"
+ startpos="140"
+ endpos="145"
+>
+	<marker line="-1" type="param">
+		<operand  start="153" length="6" line="5">
+			<expr><![CDATA[buffer]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="165" length="6" line="5">
+			<expr><![CDATA[offset]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="177" length="5" line="5">
+			<expr><![CDATA[count]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="write:(I)V@java.io.DataOutput"
+ sig="void write(int)"
+ line="6"
+ startpos="234"
+ endpos="239"
+>
+	<marker line="-1" type="param">
+		<operand  start="244" length="7" line="6">
+			<expr><![CDATA[oneByte]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="writeBoolean:(Z)V@java.io.DataOutput"
+ sig="void writeBoolean(boolean)"
+ line="7"
+ startpos="303"
+ endpos="315"
+>
+	<marker line="-1" type="param">
+		<operand  start="324" length="3" line="7">
+			<expr><![CDATA[val]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="writeByte:(I)V@java.io.DataOutput"
+ sig="void writeByte(int)"
+ line="8"
+ startpos="379"
+ endpos="388"
+>
+	<marker line="-1" type="param">
+		<operand  start="393" length="3" line="8">
+			<expr><![CDATA[val]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="writeBytes:(Ljava/lang/String;)V@java.io.DataOutput"
+ sig="void writeBytes(String)"
+ line="9"
+ startpos="448"
+ endpos="458"
+>
+	<marker line="-1" type="param">
+		<operand  start="476" length="3" line="9">
+			<expr><![CDATA[str]]></expr>
+		</operand>
+	</marker>
+	<type  start="459" length="16" line="9" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="writeChar:(I)V@java.io.DataOutput"
+ sig="void writeChar(int)"
+ line="10"
+ startpos="531"
+ endpos="540"
+>
+	<marker line="-1" type="param">
+		<operand  start="545" length="3" line="10">
+			<expr><![CDATA[val]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="writeChars:(Ljava/lang/String;)V@java.io.DataOutput"
+ sig="void writeChars(String)"
+ line="11"
+ startpos="600"
+ endpos="610"
+>
+	<marker line="-1" type="param">
+		<operand  start="628" length="3" line="11">
+			<expr><![CDATA[str]]></expr>
+		</operand>
+	</marker>
+	<type  start="611" length="16" line="11" chordsig="java.lang.String"/>
+</method>
+<method
+ chordsig="writeDouble:(D)V@java.io.DataOutput"
+ sig="void writeDouble(double)"
+ line="12"
+ startpos="683"
+ endpos="694"
+>
+	<marker line="-1" type="param">
+		<operand  start="702" length="3" line="12">
+			<expr><![CDATA[val]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="writeFloat:(F)V@java.io.DataOutput"
+ sig="void writeFloat(float)"
+ line="13"
+ startpos="757"
+ endpos="767"
+>
+	<marker line="-1" type="param">
+		<operand  start="774" length="3" line="13">
+			<expr><![CDATA[val]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="writeInt:(I)V@java.io.DataOutput"
+ sig="void writeInt(int)"
+ line="14"
+ startpos="829"
+ endpos="837"
+>
+	<marker line="-1" type="param">
+		<operand  start="842" length="3" line="14">
+			<expr><![CDATA[val]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="writeLong:(J)V@java.io.DataOutput"
+ sig="void writeLong(long)"
+ line="15"
+ startpos="897"
+ endpos="906"
+>
+	<marker line="-1" type="param">
+		<operand  start="912" length="3" line="15">
+			<expr><![CDATA[val]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="writeShort:(I)V@java.io.DataOutput"
+ sig="void writeShort(int)"
+ line="16"
+ startpos="967"
+ endpos="977"
+>
+	<marker line="-1" type="param">
+		<operand  start="982" length="3" line="16">
+			<expr><![CDATA[val]]></expr>
+		</operand>
+	</marker>
+</method>
+<method
+ chordsig="writeUTF:(Ljava/lang/String;)V@java.io.DataOutput"
+ sig="void writeUTF(String)"
+ line="17"
+ startpos="1037"
+ endpos="1045"
+>
+	<marker line="-1" type="param">
+		<operand  start="1063" length="3" line="17">
+			<expr><![CDATA[str]]></expr>
+		</operand>
+	</marker>
+	<type  start="1046" length="16" line="17" chordsig="java.lang.String"/>
+</method>
+</class>
+</root>

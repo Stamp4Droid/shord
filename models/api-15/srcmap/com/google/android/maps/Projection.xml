@@ -1,0 +1,57 @@
+<root>
+<class chordsig="com.google.android.maps.Projection" line="3">
+<method
+ chordsig="toPixels:(Lcom/google/android/maps/GeoPoint;Landroid/graphics/Point;)Landroid/graphics/Point;@com.google.android.maps.Projection"
+ sig="Point toPixels(GeoPoint,Point)"
+ line="6"
+ startpos="106"
+ endpos="114"
+>
+	<marker line="-1" type="param">
+		<operand  start="148" length="6" line="6">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="179" length="6" line="6">
+			<expr><![CDATA[param2]]></expr>
+		</operand>
+	</marker>
+	<type  start="83" length="22" line="6" chordsig="android.graphics.Point"/>
+	<type  start="115" length="32" line="6" chordsig="com.google.android.maps.GeoPoint"/>
+	<type  start="156" length="22" line="6" chordsig="android.graphics.Point"/>
+</method>
+<method
+ chordsig="fromPixels:(II)Lcom/google/android/maps/GeoPoint;@com.google.android.maps.Projection"
+ sig="GeoPoint fromPixels(int,int)"
+ line="8"
+ startpos="240"
+ endpos="250"
+>
+	<marker line="-1" type="param">
+		<operand  start="255" length="6" line="8">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+	<marker line="-1" type="param">
+		<operand  start="267" length="6" line="8">
+			<expr><![CDATA[param2]]></expr>
+		</operand>
+	</marker>
+	<type  start="207" length="32" line="8" chordsig="com.google.android.maps.GeoPoint"/>
+</method>
+<method
+ chordsig="metersToEquatorPixels:(F)F@com.google.android.maps.Projection"
+ sig="float metersToEquatorPixels(float)"
+ line="10"
+ startpos="301"
+ endpos="322"
+>
+	<marker line="-1" type="param">
+		<operand  start="329" length="6" line="10">
+			<expr><![CDATA[param1]]></expr>
+		</operand>
+	</marker>
+</method>
+</class>
+</root>
