@@ -2,9 +2,12 @@ package stamp.srcmap;
 
 import java.io.*;
 import java.util.*;
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
 
 import soot.SootClass;
 import soot.SootMethod;
+import soot.AbstractJasminClass;
 import soot.jimple.Stmt;
 import soot.tagkit.Tag;
 import soot.tagkit.SourceFileTag;
@@ -20,21 +23,11 @@ import shord.analyses.ContainerTag;
 public class SourceInfo
 {
 	private static File frameworkSrcDir;
-	private static File stampDir;
-	private static int stampDirPathLength;
+	private static List<File> srcMapDirs = new ArrayList();
+	private static Map<String, ClassInfo> classInfos = new HashMap();
 
 	static {
-		stampDir = new File(System.getProperty("stamp.dir"));
-		if(!stampDir.exists())
-			throw new RuntimeException("stamp.dir " + stampDir + " does not exists");
-		try{
-			stampDirPathLength = stampDir.getCanonicalPath().length()+1;
-		}catch(IOException e){
-			throw new Error(e);
-		}
-
-		File frameworkDir = new File(stampDir, "android");
-		File appDir = new File(System.getProperty("chord.work.dir"));
+		File frameworkDir = new File(System.getProperty("stamp.framework.dir"));
 
 		frameworkSrcDir = new File(frameworkDir, "gen");
 		if(!frameworkSrcDir.exists())
@@ -43,13 +36,13 @@ public class SourceInfo
 		File frameworkSrcMapDir = new File(frameworkDir, "srcmap");
 	 	if(!frameworkSrcMapDir.exists())
 			throw new RuntimeException("Framework dir " + frameworkSrcMapDir + " does not exist");
-		SrcMapper.addSrcMapDir(frameworkSrcMapDir);
+		srcMapDirs.add(frameworkSrcMapDir);
 
 		String outDir = System.getProperty("stamp.out.dir");
 		File appSrcMapDir = new File(outDir+"/srcmap");
 		if(!appSrcMapDir.exists())
 			throw new RuntimeException("Framework dir " + appSrcMapDir + " does not exist");
-		SrcMapper.addSrcMapDir(appSrcMapDir);
+		srcMapDirs.add(appSrcMapDir);
 		
 		AnonymousClassMap.init();
 	}
@@ -77,15 +70,14 @@ public class SourceInfo
 	
 	public static int classLineNum(SootClass klass)
     {
-		String srcFileName = filePath(klass);
-		String classSig = klass.getName();
-		return SrcMapper.classLineNum(srcFileName, classSig);
+		ClassInfo ci = classInfo(klass);
+		return ci == null ? -1 : ci.lineNum();
 	}
 
     public static int methodLineNum(SootMethod meth)
     {
-		return SrcMapper.methodLineNum(filePath(meth.getDeclaringClass()), 
-									   srcMethodSig(meth));
+		ClassInfo ci = classInfo(meth.getDeclaringClass());
+		return ci == null ? -1 : ci.lineNum(chordSigFor(meth));
     }
 
 	public static int stmtLineNum(Stmt s)
@@ -99,7 +91,7 @@ public class SourceInfo
 		}
 		return 0;
 	}
-
+	
 	public static SootMethod containerMethod(Stmt stmt)
 	{		
 		for(Tag tag : stmt.getTags()){
@@ -109,76 +101,89 @@ public class SourceInfo
 		return null;
 	}
 
-	/*
-	static List<jq_Method> aliasFor(SootMethod meth)
+    public static RegisterMap buildRegMapFor(SootMethod meth)
+    {
+		return new RegisterMap(meth, methodInfo(meth));
+    }	
+
+	public static String chordSigFor(SootMethod m)
 	{
-		SootClass klass = meth.getDeclaringClass();
+		String className = srcClassName(m.getDeclaringClass());
+		return m.getName()
+			+":"
+			+AbstractJasminClass.jasminDescriptorOf(m.makeRef())
+			+"@"+className;
+	}
+	
+	public static boolean hasSrcFile(String srcFileName)
+	{
+		File file = srcMapFile(srcFileName);
+		return file != null;
+	}
+		
+	public static Map<String,List<String>> allAliasSigs(SootClass klass)
+	{
+		ClassInfo ci = classInfo(klass);
+		return ci == null ? Collections.EMPTY_MAP : ci.allAliasSigs();		
+	}	
+	
+	private static ClassInfo classInfo(SootClass klass)
+	{
+		String klassName = srcClassName(klass);
 		String srcFileName = filePath(klass);
-		String methSig = meth.toString();
-		List<String> aliasDescs = SrcMapper.aliasSigs(srcFileName, methSig);
-		if(aliasDescs.isEmpty())
-			return Collections.EMPTY_LIST;
-		List<jq_Method> aliases = new ArrayList();
-		String mname = meth.getName().toString();
-		for(String desc : aliasDescs)
-			aliases.add((jq_Method) klass.getDeclaredMember(mname, desc));
-		return aliases;
+		ClassInfo ci = classInfos.get(klassName);
+		if(ci == null){
+			File file = srcMapFile(srcFileName);
+			if(file == null)
+				return null;
+			ci = ClassInfo.get(klassName, file);
+			if(ci == null)
+				return null;
+			classInfos.put(klassName, ci);
+		}
+		return ci;
 	}
 
-	static void computeSyntheticToSrcMethodMap(SootClass klass, Map<jq_Method,jq_Method> syntheticToSrcMethod)
+	private static String srcClassName(SootClass declKlass)
 	{
-		Map<jq_Method,List<jq_Method>> ret = new HashMap();
-		String srcFileName = filePath(klass);
-		for(Map.Entry<String,List<String>> aliasSigEntry : SrcMapper.allAliasSigs(srcFileName, klass.getName()).entrySet()){
-			String chordSig = aliasSigEntry.getKey();
-			List<String> aliasDescs = aliasSigEntry.getValue();
-			if(aliasDescs.isEmpty())
-				continue;
-			int index = chordSig.indexOf(':');
-			String mname = chordSig.substring(0, index);
-			String mdesc = chordSig.substring(index+1, chordSig.indexOf('@'));
-			jq_Method meth = (jq_Method) klass.getDeclaredMember(mname, mdesc);
-			//System.out.println("meth with alias: " + meth);
-			List<jq_Method> aliases = new ArrayList();
-			for(String aliasDesc : aliasDescs){
-				jq_Method synthMeth = (jq_Method) klass.getDeclaredMember(mname, aliasDesc);
-				//System.out.println("synth meth: " + synthMeth);
-				if(synthMeth == null){
-					//chord seems to throw away synthetic methods that the compiler
-					//to deal with covariant return type
-					continue;
-				}
-				
-				//for(jq_Method m : klass.getDeclaredInstanceMethods())
-				//System.out.println(m.toString());
-				//}
-				assert synthMeth != null : klass + " " + mname + " " + aliasDesc;
-				
-				jq_Method prevBinding = syntheticToSrcMethod.put(synthMeth, meth);
-				assert prevBinding == null : synthMeth + " " + prevBinding + " " + aliasDesc;
+		String srcClsName = AnonymousClassMap.srcClassName(declKlass);
+		if(srcClsName != null)
+			return srcClsName;
+		else
+			return declKlass.getName();
+	}
+
+	private static MethodInfo methodInfo(SootMethod meth)
+	{
+		String methodSig = chordSigFor(meth);
+		ClassInfo ci = classInfo(meth.getDeclaringClass());
+		//System.out.println("methodInfo " + classSig + " " + srcFileName);
+		MethodInfo mi = ci == null ? null : ci.methodInfo(methodSig);
+		return mi;
+	}
+	
+	public static File srcMapFile(String srcFileName)
+	{
+		if(srcFileName != null){
+			for(File dir : srcMapDirs){
+				File f = new File(dir, srcFileName.replace(".java", ".xml"));
+				if(f.exists())
+					return f;
 			}
 		}
+		return null;
 	}
-
-	static boolean isSyntheticMethod(SootMethod meth)
+	
+	public static String srcInvkExprFor(Stmt invkQuad)
 	{
-		SootClass klass = meth.getDeclaringClass();
-		String srcFileName = filePath(klass);
-		return srcFileName != null && (SrcMapper.methodLineNum(srcFileName, meth.toString()) < 0);
-	}
-
-	static String srcInvkExprFor(Quad invkQuad)
-	{
-		int lineNum = invkQuad.getLineNumber();
-		jq_Method caller = invkQuad.getMethod();
-		jq_Class klass = caller.getDeclaringClass();
-		String srcFileName = filePath(klass);
-		String callerSig = caller.toString();
-		MethodInfo mi = SrcMapper.methodInfo(srcFileName, callerSig);
-		jq_Method callee = Operator.Invoke.getMethod(invkQuad).getMethod();
-		String calleeSig = callee.toString();
+		SootMethod caller = containerMethod(invkQuad);
+		MethodInfo mi = methodInfo(caller);
 		if(mi == null)
 			return null;
+		int lineNum = stmtLineNum(invkQuad);
+		SootMethod callee = invkQuad.getInvokeExpr().getMethod();
+		String calleeSig = chordSigFor(callee);
+
 		Marker marker = null;
 		List<Marker> markers = mi.markers(lineNum, "invoke", calleeSig);
 		if(markers == null)
@@ -197,50 +202,4 @@ public class SourceInfo
 			return null;
 		return ((InvkMarker) marker).text();
 	}
-	*/
-    public static RegisterMap buildRegMapFor(SootMethod meth)
-    {
-		MethodInfo mi = SrcMapper.methodInfo(filePath(meth.getDeclaringClass()), 
-											 srcMethodSig(meth));
-		RegisterMap regMap = new RegisterMap(meth, mi);
-		return regMap;
-    }	
-
-	//if meth is defined in an anonymous class then it returns a different sig from the chord sig.
-	//the difference is that the name of the class is changed to a name that is given (while 
-	//parsing source code) to the corresponding anonymous classes
-	//if meth is defined in a named class, it returns the chord sig
-	private static String srcMethodSig(SootMethod meth)
-	{
-		String methSig = meth.getSignature();
-		String srcClsName = AnonymousClassMap.srcClassName(meth.getDeclaringClass());
-		if(srcClsName != null){
-			methSig = "<"+srcClsName+": "+meth.getSubSignature()+">";
-			//System.out.println("!! " +methSig);
-		}
-		return methSig;
-	}
-
-	/*
-	static Map<jq_Method,RegisterMap> allRegMaps(jq_Class klass)
-	{
-		String srcFileName = klass.filePath();
-		String classSig = klass.getName();
-		Map<String,MethodInfo> methodInfos = SrcMapper.allMethodInfos(srcFileName, classSig);
-		if(methodInfos == null)
-			return null;
-		Map<jq_Method,RegisterMap> regMaps = new HashMap();
-		for(jq_Method meth : klass.getDeclaredInstanceMethods()){
-			MethodInfo mi = methodInfos.get(meth.toString());
-			RegisterMap regMap = new RegisterMap(meth, mi);
-			regMaps.put(meth, regMap);
-		}
-		for(jq_Method meth : klass.getDeclaredStaticMethods()){
-			MethodInfo mi = methodInfos.get(meth.toString());
-			RegisterMap regMap = new RegisterMap(meth, mi);
-			regMaps.put(meth, regMap);
-		}
-		return regMaps;
-	}
-	*/
 }

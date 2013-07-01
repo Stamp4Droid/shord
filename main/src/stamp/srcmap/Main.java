@@ -106,7 +106,7 @@ public class Main
 		String classPath = args[1];
 		classpathEntries = classPath.split(":");
 
-		srcMapDir = new File(args[2]); System.out.println("DEBUG "+ args[2]);
+		srcMapDir = new File(args[2]); //System.out.println("DEBUG "+ args[2]);
 		srcMapDir.mkdirs();
 
 		for(String p : srcpathEntries)
