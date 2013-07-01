@@ -20,9 +20,9 @@ public class Postmortem extends JavaAnalysis
 		new File(resultsDir).mkdirs();
 
 		Class[] srcReports = new Class[]{
-			//SrcFlow.class
-			//,ArgSinkFlow.class
-			SrcSinkFlow.class
+			SrcFlow.class
+			,ArgSinkFlow.class
+			,SrcSinkFlow.class
 			////,ReachableStub.class,
 			////,TaintedStub.class,
 			////,InvkNone.class,
