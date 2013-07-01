@@ -29,8 +29,8 @@ public class Postmortem extends JavaAnalysis
 			,TaintedVar.class
 			,IM.class
 			//,PotentialCallbacks.class
-			//,AllReachable.class
-			//,FileNames.class
+			,AllReachable.class
+			,FileNames.class
 		};
 
 		Class[] apkReports = new Class[]{
@@ -38,9 +38,9 @@ public class Postmortem extends JavaAnalysis
 		};
 
 		Class[] dontShowReports = new Class[]{
-			//IM.class
-			//,AllReachable.class
-			//,FileNames.class
+			IM.class
+			,AllReachable.class
+			,FileNames.class
 		};
 
 		try{
