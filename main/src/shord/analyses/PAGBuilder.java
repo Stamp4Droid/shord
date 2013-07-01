@@ -40,6 +40,7 @@ import soot.jimple.spark.pag.SparkField;
 import soot.jimple.spark.pag.ArrayElement;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
+import soot.tagkit.Tag;
 import soot.util.NumberedSet;
 
 import shord.project.analyses.JavaAnalysis;
@@ -404,6 +405,7 @@ public class PAGBuilder extends JavaAnalysis
 		private Set<Local> nonPrimLocals;
 		private Set<Local> primLocals;
 		private Map<Stmt,CastVarNode> stmtToCastNode;
+		private Tag containerTag;
 
 		MethodPAGBuilder(SootMethod method)
 		{
@@ -546,7 +548,8 @@ public class PAGBuilder extends JavaAnalysis
 				relVT.add(e.getValue(), castType);
 				relMV.add(method, e.getValue());
 			}
-
+			
+			containerTag = new ContainerTag(method);
 			Body body = method.retrieveActiveBody();
 			for(Unit unit : body.getUnits()){
 				handleStmt((Stmt) unit);
@@ -567,6 +570,7 @@ public class PAGBuilder extends JavaAnalysis
 				SootMethod callee = ie.getMethod();
 				int numArgs = ie.getArgCount();
 				relMI.add(method, s);
+				s.addTag(containerTag);
 
 				//handle receiver
 				int j = 0;
@@ -666,6 +670,7 @@ public class PAGBuilder extends JavaAnalysis
 					Alloc(nodeFor((Local) leftOp), s);
 					relHT.add(s, rightOp.getType());
 					relMH.add(method, s);
+					s.addTag(containerTag);
 					Iterator<Type> typesIt = Program.g().getTypes().iterator();
 					while(typesIt.hasNext()){
 						Type varType = typesIt.next();
