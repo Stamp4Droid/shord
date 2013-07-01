@@ -50,8 +50,10 @@ public class SourceInfo
 	public static String filePath(SootClass klass)
 	{		
 		for(Tag tag : klass.getTags()){
-			if(tag instanceof SourceFileTag)
-				return ((SourceFileTag) tag).getSourceFile();
+			if(tag instanceof SourceFileTag){
+				String fileName = ((SourceFileTag) tag).getSourceFile();
+				return klass.getPackageName().replace('.','/')+"/"+fileName;
+			}
 		}
 		return null;
 	}
@@ -134,6 +136,7 @@ public class SourceInfo
 		ClassInfo ci = classInfos.get(klassName);
 		if(ci == null){
 			File file = srcMapFile(srcFileName);
+			//System.out.println("klass: "+klass+" srcFileName: "+srcFileName + " " + (file == null));
 			if(file == null)
 				return null;
 			ci = ClassInfo.get(klassName, file);
@@ -157,7 +160,7 @@ public class SourceInfo
 	{
 		String methodSig = chordSigFor(meth);
 		ClassInfo ci = classInfo(meth.getDeclaringClass());
-		//System.out.println("methodInfo " + classSig + " " + srcFileName);
+		//System.out.println("methodInfo " + methodSig + " " + (ci == null));
 		MethodInfo mi = ci == null ? null : ci.methodInfo(methodSig);
 		return mi;
 	}

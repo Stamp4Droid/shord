@@ -11,7 +11,9 @@ import shord.analyses.LocalVarNode;
 import soot.Local;
 
 import java.util.*;
-import stamp.srcmap.*;
+import stamp.srcmap.SourceInfo;
+import stamp.srcmap.RegisterMap;
+import stamp.srcmap.Expr;
 
 /**
  * @author Saswat Anand
@@ -89,7 +91,7 @@ public class TaintedVar extends XMLReport
 		//System.out.println("meth " + meth);
 		SootClass klass = meth.getDeclaringClass();
 		//WATCHOUT: getName might be wrong, want to get the name of the source file (might have to do translation)
-		RegisterMap regMap = new RegisterMap(meth, SrcMapper.methodInfo(SourceInfo.filePath(meth.getDeclaringClass()), meth.getSignature()));
+		RegisterMap regMap = SourceInfo.buildRegMapFor(meth);
 
 		Set<Tuple> tuples = new HashSet();
 		for(Pair<String,VarNode> pair : taintedVars){
