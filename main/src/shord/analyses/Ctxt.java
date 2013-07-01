@@ -68,4 +68,19 @@ public class Ctxt implements Serializable
         }
         return true;
     }
+	
+	public String toString()
+	{
+		StringBuilder builder = new StringBuilder('[');
+		boolean first = true;
+        for (Unit inst : elems) {
+			if(!first)
+				builder.append(',');
+			else
+				first = false;
+			builder.append(inst == null ? "null" : inst.toString());
+		}
+		builder.append(']');
+		return builder.toString();
+	}
 }

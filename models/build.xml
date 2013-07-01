@@ -91,14 +91,14 @@
 			
 			<!-- TODO: following two steps should be done in one pass for efficiency-->
 			<!-- source map -->
-			<!--java classname="stamp.srcmap.Main"
+			<java classname="stamp.srcmap.Main"
 				  maxmemory="${stamp.maxheap}"
 				  fork="true"
 				  dir="api-@{apilevel}"
 				  failonerror="true">
 			  <jvmarg value="-ea"/>
 			  <classpath>
-				<pathelement location="${stamp.dir}/stamp.main.jar"/>
+				<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
 				<fileset dir="${stamp.dir}/lib">
 				  <include name="**/*.jar"/>
 				</fileset>
@@ -106,7 +106,7 @@
 			  <arg value="gen"/>
 			  <arg value="${stamp.dir}/bin/stamp.annotations.jar"/>
 			  <arg value="srcmap"/>
-			</java-->
+			</java>
 			
 			<!-- read annotations -->
 			<java classname="stamp.readannot.AnnotationReader"
