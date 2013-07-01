@@ -30,7 +30,6 @@ public class AnnotationInjector extends JavaAnalysis
 	private Class[] visitorClasses = new Class[]{
 		ContentProviderAnnotation.class
 		,NativeMethodAnnotation.class
-	    ,InterComponentInstrument.class
 	};
 
 	private PrintWriter writer;
@@ -40,8 +39,14 @@ public class AnnotationInjector extends JavaAnalysis
 		try{			
 			String stampOutDir = System.getProperty("stamp.out.dir");
 			File annotFile = new File(stampOutDir, "stamp_annotations.txt");
+			String icdfFlag = System.getProperty("stamp.icdf");
+			
 			writer = new PrintWriter(new FileWriter(annotFile, true));
-
+			
+			if ("true".equals(icdfFlag)) {
+				visitorClasses = Arrays.copyOf(visitorClasses, visitorClasses.length + 1);
+			    visitorClasses[visitorClasses.length-1] = InterComponentInstrument.class;
+			}
 			Visitor[] visitors = new Visitor[visitorClasses.length];
 			int i = 0;
 			for(Class visitorClass : visitorClasses){

@@ -332,6 +332,7 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 						tgtComptName = tgtComptName.replace(File.separatorChar, '.');
 					///Check whether exist such class.
 					if ( !Program.g().scene().containsClass(tgtComptName)) {
+						System.out.println("ERROR:Current class: " + this.rootClass + " || Statement: " + stmt );
 						System.out.println("ERROR:Can not find class for Class name: " + tgtComptName );
 						return;
 					}
@@ -393,6 +394,7 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		}
 		
 		if (tgtComptName.equals("")) {
+			System.out.println("ERROR:Current class: " + this.rootClass + " || Statement: " + stmt );
 			System.out.println("ERROR:Can not locate the class from current reachingDef: " + stmt.getTags() );
 			return;
 		}
@@ -400,7 +402,8 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		tgtComptName = tgtComptName.replace(File.separatorChar, '.');
 		///Check whether exist such class.
 		if ( !Program.g().scene().containsClass(tgtComptName)) {
-			System.out.println("ERROR:Can not find class for Class name: " + tgtComptName );
+			System.out.println("ERROR:Current class: " + this.rootClass + " || Statement: " + stmt );
+			System.out.println("ERROR:Can not find target class for Class name: " + tgtComptName );
 			return;
 		}
 				
