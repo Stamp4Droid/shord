@@ -115,7 +115,7 @@ public class AnonymousClassMap
 	
 	private static void performMapping(SootMethod meth, Map<Integer,String> anonymClasses)
 	{
-		if(meth.isAbstract())
+		if(!meth.isConcrete())
 			return;
 
 		for(Unit u : meth.retrieveActiveBody().getUnits()){
