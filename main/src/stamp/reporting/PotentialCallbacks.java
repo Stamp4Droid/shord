@@ -50,13 +50,16 @@ public class PotentialCallbacks extends XMLReport
 		//IndexSet<jq_Method> inScopeMethods = program.getMethods();
 		for(Map.Entry<SootMethod, List<SootMethod>> entry : frameworkMethodToCallbacks.entrySet()){
 			SootMethod fmeth = entry.getKey();
-			Category cat = makeOrGetPkgCat(fmeth);
+			Category cat = null;
 			for(SootMethod cb : entry.getValue()){
 				boolean flag = true;
 				//if(inScopeMethods.contains(cb))
 				flag = !relReachableM.contains(cb);
-				if(flag)
+				if(flag){
+					if(cat == null)
+						cat = makeOrGetPkgCat(fmeth);
 					cat.newTuple().addValue(cb, true, "method");
+				}
 			}
 		}
 		relReachableM.close();
@@ -79,12 +82,14 @@ public class PotentialCallbacks extends XMLReport
 		SootClass superClass = klass.getSuperclass();
 
 		if(SourceInfo.isFrameworkClass(superClass)){
-			for(SootMethod superMeth : superClass.getMethods()){
-				if(!canBeOverriden(superMeth))
-					continue;
-				NumberedString superMethSig = superMeth.getNumberedSubSignature();
-				if(sigs.contains(superMethSig)){
-					addCallback(superMeth, sigToMethod.get(superMethSig));
+			if(!superClass.getName().equals("java.lang.Object")) {
+				for(SootMethod superMeth : superClass.getMethods()){
+					if(!canBeOverriden(superMeth))
+						continue;
+					NumberedString superMethSig = superMeth.getNumberedSubSignature();
+					if(sigs.contains(superMethSig)){
+						addCallback(superMeth, sigToMethod.get(superMethSig));
+					}
 				}
 			}
 		}
