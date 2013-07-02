@@ -1,0 +1,86 @@
+public final enum class android.view.ViewDebug$RecyclerTraceType extends java.lang.Enum
+{
+    public static final enum android.view.ViewDebug$RecyclerTraceType BIND_VIEW;
+    public static final enum android.view.ViewDebug$RecyclerTraceType MOVE_FROM_ACTIVE_TO_SCRAP_HEAP;
+    public static final enum android.view.ViewDebug$RecyclerTraceType MOVE_TO_SCRAP_HEAP;
+    public static final enum android.view.ViewDebug$RecyclerTraceType NEW_VIEW;
+    public static final enum android.view.ViewDebug$RecyclerTraceType RECYCLE_FROM_ACTIVE_HEAP;
+    public static final enum android.view.ViewDebug$RecyclerTraceType RECYCLE_FROM_SCRAP_HEAP;
+    private static final android.view.ViewDebug$RecyclerTraceType[] $VALUES;
+
+    public static android.view.ViewDebug$RecyclerTraceType[] values()
+    {
+        android.view.ViewDebug$RecyclerTraceType[] $r0, $r2;
+        java.lang.Object $r1;
+
+        $r0 = <android.view.ViewDebug$RecyclerTraceType: android.view.ViewDebug$RecyclerTraceType[] $VALUES>;
+        $r1 = virtualinvoke $r0.<java.lang.Object: java.lang.Object clone()>();
+        $r2 = (android.view.ViewDebug$RecyclerTraceType[]) $r1;
+        return $r2;
+    }
+
+    public static android.view.ViewDebug$RecyclerTraceType valueOf(java.lang.String)
+    {
+        java.lang.String r0;
+        java.lang.Enum $r1;
+        android.view.ViewDebug$RecyclerTraceType $r2;
+
+        r0 := @parameter0: java.lang.String;
+        $r1 = staticinvoke <java.lang.Enum: java.lang.Enum valueOf(java.lang.Class,java.lang.String)>(class "android/view/ViewDebug$RecyclerTraceType", r0);
+        $r2 = (android.view.ViewDebug$RecyclerTraceType) $r1;
+        return $r2;
+    }
+
+    private void <init>(java.lang.String, int)
+    {
+        android.view.ViewDebug$RecyclerTraceType r0;
+        java.lang.String r1;
+        int i0;
+
+        r0 := @this: android.view.ViewDebug$RecyclerTraceType;
+        r1 := @parameter0: java.lang.String;
+        i0 := @parameter1: int;
+        specialinvoke r0.<java.lang.Enum: void <init>(java.lang.String,int)>(r1, i0);
+        return;
+    }
+
+    static void <clinit>()
+    {
+        android.view.ViewDebug$RecyclerTraceType $r0, $r1, $r2, $r3, $r4, $r5, $r7, $r8, $r9, $r10, $r11, $r12;
+        android.view.ViewDebug$RecyclerTraceType[] $r6;
+
+        $r0 = new android.view.ViewDebug$RecyclerTraceType;
+        specialinvoke $r0.<android.view.ViewDebug$RecyclerTraceType: void <init>(java.lang.String,int)>("BIND_VIEW", 0);
+        <android.view.ViewDebug$RecyclerTraceType: android.view.ViewDebug$RecyclerTraceType BIND_VIEW> = $r0;
+        $r1 = new android.view.ViewDebug$RecyclerTraceType;
+        specialinvoke $r1.<android.view.ViewDebug$RecyclerTraceType: void <init>(java.lang.String,int)>("MOVE_FROM_ACTIVE_TO_SCRAP_HEAP", 1);
+        <android.view.ViewDebug$RecyclerTraceType: android.view.ViewDebug$RecyclerTraceType MOVE_FROM_ACTIVE_TO_SCRAP_HEAP> = $r1;
+        $r2 = new android.view.ViewDebug$RecyclerTraceType;
+        specialinvoke $r2.<android.view.ViewDebug$RecyclerTraceType: void <init>(java.lang.String,int)>("MOVE_TO_SCRAP_HEAP", 2);
+        <android.view.ViewDebug$RecyclerTraceType: android.view.ViewDebug$RecyclerTraceType MOVE_TO_SCRAP_HEAP> = $r2;
+        $r3 = new android.view.ViewDebug$RecyclerTraceType;
+        specialinvoke $r3.<android.view.ViewDebug$RecyclerTraceType: void <init>(java.lang.String,int)>("NEW_VIEW", 3);
+        <android.view.ViewDebug$RecyclerTraceType: android.view.ViewDebug$RecyclerTraceType NEW_VIEW> = $r3;
+        $r4 = new android.view.ViewDebug$RecyclerTraceType;
+        specialinvoke $r4.<android.view.ViewDebug$RecyclerTraceType: void <init>(java.lang.String,int)>("RECYCLE_FROM_ACTIVE_HEAP", 4);
+        <android.view.ViewDebug$RecyclerTraceType: android.view.ViewDebug$RecyclerTraceType RECYCLE_FROM_ACTIVE_HEAP> = $r4;
+        $r5 = new android.view.ViewDebug$RecyclerTraceType;
+        specialinvoke $r5.<android.view.ViewDebug$RecyclerTraceType: void <init>(java.lang.String,int)>("RECYCLE_FROM_SCRAP_HEAP", 5);
+        <android.view.ViewDebug$RecyclerTraceType: android.view.ViewDebug$RecyclerTraceType RECYCLE_FROM_SCRAP_HEAP> = $r5;
+        $r6 = newarray (android.view.ViewDebug$RecyclerTraceType)[6];
+        $r7 = <android.view.ViewDebug$RecyclerTraceType: android.view.ViewDebug$RecyclerTraceType BIND_VIEW>;
+        $r6[0] = $r7;
+        $r8 = <android.view.ViewDebug$RecyclerTraceType: android.view.ViewDebug$RecyclerTraceType MOVE_FROM_ACTIVE_TO_SCRAP_HEAP>;
+        $r6[1] = $r8;
+        $r9 = <android.view.ViewDebug$RecyclerTraceType: android.view.ViewDebug$RecyclerTraceType MOVE_TO_SCRAP_HEAP>;
+        $r6[2] = $r9;
+        $r10 = <android.view.ViewDebug$RecyclerTraceType: android.view.ViewDebug$RecyclerTraceType NEW_VIEW>;
+        $r6[3] = $r10;
+        $r11 = <android.view.ViewDebug$RecyclerTraceType: android.view.ViewDebug$RecyclerTraceType RECYCLE_FROM_ACTIVE_HEAP>;
+        $r6[4] = $r11;
+        $r12 = <android.view.ViewDebug$RecyclerTraceType: android.view.ViewDebug$RecyclerTraceType RECYCLE_FROM_SCRAP_HEAP>;
+        $r6[5] = $r12;
+        <android.view.ViewDebug$RecyclerTraceType: android.view.ViewDebug$RecyclerTraceType[] $VALUES> = $r6;
+        return;
+    }
+}

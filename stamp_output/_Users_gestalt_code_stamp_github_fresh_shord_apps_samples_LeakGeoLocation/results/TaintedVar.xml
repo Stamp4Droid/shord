@@ -1,0 +1,235 @@
+<root>
+<title>Tainted Vars</title>
+<category>
+	<value>
+		<label><![CDATA[java]]></label>
+	</value>
+
+<category>
+	<value>
+		<label><![CDATA[lang]]></label>
+	</value>
+
+<category type="class">
+	<value srcFile="java/lang/String.java" lineNum="6">
+		<label><![CDATA[java.lang.String]]></label>
+	</value>
+
+<category type="method">
+	<value srcFile="java/lang/String.java" lineNum="173" chordsig="&lt;java.lang.String: java.lang.String concat(java.lang.String)&gt;" type="method">
+		<label><![CDATA[concat]]></label>
+	</value>
+
+<tuple>
+	<value srcFile="java/lang/String.java" lineNum="173" type="expr">
+		<highlight key="taintedVariable" startpos="5072" length="6"/>
+		<label><![CDATA[string]]></label>
+	</value>
+	<value>
+		<label><![CDATA[$getLatitude]]></label>
+	</value>
+
+</tuple>
+<tuple>
+	<value srcFile="java/lang/String.java" lineNum="173" type="expr">
+		<highlight key="taintedVariable" startpos="5072" length="6"/>
+		<label><![CDATA[string]]></label>
+	</value>
+	<value>
+		<label><![CDATA[$getLongitude]]></label>
+	</value>
+
+</tuple>
+</category>
+</category>
+<category type="class">
+	<value srcFile="java/lang/StringBuilder.java" lineNum="6">
+		<label><![CDATA[java.lang.StringBuilder]]></label>
+	</value>
+
+<category type="method">
+	<value srcFile="java/lang/StringBuilder.java" lineNum="58" chordsig="&lt;java.lang.StringBuilder: java.lang.StringBuilder append(double)&gt;" type="method">
+		<label><![CDATA[append]]></label>
+	</value>
+
+<tuple>
+	<value srcFile="java/lang/StringBuilder.java" lineNum="58" type="expr">
+		<highlight key="taintedVariable" startpos="1679" length="1"/>
+		<label><![CDATA[d]]></label>
+	</value>
+	<value>
+		<label><![CDATA[$getLongitude]]></label>
+	</value>
+
+</tuple>
+<tuple>
+	<value srcFile="java/lang/StringBuilder.java" lineNum="58" type="expr">
+		<highlight key="taintedVariable" startpos="1679" length="1"/>
+		<label><![CDATA[d]]></label>
+	</value>
+	<value>
+		<label><![CDATA[$getLatitude]]></label>
+	</value>
+
+</tuple>
+</category>
+</category>
+</category>
+</category>
+<category>
+	<value>
+		<label><![CDATA[org]]></label>
+	</value>
+
+<category>
+	<value>
+		<label><![CDATA[apache]]></label>
+	</value>
+
+<category>
+	<value>
+		<label><![CDATA[http]]></label>
+	</value>
+
+<category>
+	<value>
+		<label><![CDATA[client]]></label>
+	</value>
+
+<category>
+	<value>
+		<label><![CDATA[methods]]></label>
+	</value>
+
+<category type="class">
+	<value srcFile="org/apache/http/client/methods/HttpGet.java" lineNum="6">
+		<label><![CDATA[org.apache.http.client.methods.HttpGet]]></label>
+	</value>
+
+<category type="method">
+	<value srcFile="org/apache/http/client/methods/HttpGet.java" lineNum="23" chordsig="&lt;org.apache.http.client.methods.HttpGet: void &lt;init&gt;(java.lang.String)&gt;" type="method">
+		<label><![CDATA[<init>]]></label>
+	</value>
+
+<tuple>
+	<value srcFile="org/apache/http/client/methods/HttpGet.java" lineNum="23" type="expr">
+		<highlight key="taintedVariable" startpos="636" length="3"/>
+		<label><![CDATA[uri]]></label>
+	</value>
+	<value>
+		<label><![CDATA[$getLatitude]]></label>
+	</value>
+
+</tuple>
+<tuple>
+	<value srcFile="org/apache/http/client/methods/HttpGet.java" lineNum="23" type="expr">
+		<highlight key="taintedVariable" startpos="636" length="3"/>
+		<label><![CDATA[uri]]></label>
+	</value>
+	<value>
+		<label><![CDATA[$getLongitude]]></label>
+	</value>
+
+</tuple>
+</category>
+</category>
+</category>
+</category>
+<category>
+	<value>
+		<label><![CDATA[impl]]></label>
+	</value>
+
+<category>
+	<value>
+		<label><![CDATA[client]]></label>
+	</value>
+
+<category type="class">
+	<value srcFile="org/apache/http/impl/client/AbstractHttpClient.java" lineNum="6">
+		<label><![CDATA[org.apache.http.impl.client.AbstractHttpClient]]></label>
+	</value>
+
+<category type="method">
+	<value srcFile="org/apache/http/impl/client/AbstractHttpClient.java" lineNum="219" chordsig="&lt;org.apache.http.impl.client.AbstractHttpClient: org.apache.http.HttpResponse execute(org.apache.http.client.methods.HttpUriRequest)&gt;" type="method">
+		<label><![CDATA[execute]]></label>
+	</value>
+
+<tuple>
+	<value srcFile="org/apache/http/impl/client/AbstractHttpClient.java" lineNum="219" type="expr">
+		<highlight key="taintedVariable" startpos="9333" length="7"/>
+		<label><![CDATA[request]]></label>
+	</value>
+	<value>
+		<label><![CDATA[$getLongitude]]></label>
+	</value>
+
+</tuple>
+<tuple>
+	<value srcFile="org/apache/http/impl/client/AbstractHttpClient.java" lineNum="219" type="expr">
+		<highlight key="taintedVariable" startpos="9333" length="7"/>
+		<label><![CDATA[request]]></label>
+	</value>
+	<value>
+		<label><![CDATA[!INTERNET]]></label>
+	</value>
+
+</tuple>
+<tuple>
+	<value srcFile="org/apache/http/impl/client/AbstractHttpClient.java" lineNum="219" type="expr">
+		<highlight key="taintedVariable" startpos="9333" length="7"/>
+		<label><![CDATA[request]]></label>
+	</value>
+	<value>
+		<label><![CDATA[$getLatitude]]></label>
+	</value>
+
+</tuple>
+</category>
+</category>
+</category>
+</category>
+</category>
+</category>
+</category>
+<category>
+	<value>
+		<label><![CDATA[stamp]]></label>
+	</value>
+
+<category>
+	<value>
+		<label><![CDATA[stanford]]></label>
+	</value>
+
+<category>
+	<value>
+		<label><![CDATA[malware]]></label>
+	</value>
+
+<category type="class">
+	<value srcFile="stamp/stanford/malware/Malware.java" lineNum="53">
+		<label><![CDATA[stamp.stanford.malware.Malware$MyLocationListener]]></label>
+	</value>
+
+<category type="method">
+	<value srcFile="stamp/stanford/malware/Malware.java" lineNum="54" chordsig="&lt;stamp.stanford.malware.Malware$MyLocationListener: void onLocationChanged(android.location.Location)&gt;" type="method">
+		<label><![CDATA[onLocationChanged]]></label>
+	</value>
+
+<tuple>
+	<value srcFile="stamp/stanford/malware/Malware.java" lineNum="54" type="expr">
+		<highlight key="taintedVariable" startpos="1641" length="3"/>
+		<label><![CDATA[loc]]></label>
+	</value>
+	<value>
+		<label><![CDATA[$LOCATION]]></label>
+	</value>
+
+</tuple>
+</category>
+</category>
+</category>
+</category>
+</category>
+</root>

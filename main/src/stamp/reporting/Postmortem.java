@@ -20,17 +20,17 @@ public class Postmortem extends JavaAnalysis
 		new File(resultsDir).mkdirs();
 
 		Class[] srcReports = new Class[]{
-			//SrcFlow.class
-			//,ArgSinkFlow.class
-			SrcSinkFlow.class
+			SrcFlow.class
+			,ArgSinkFlow.class
+			,SrcSinkFlow.class
 			////,ReachableStub.class,
-			////,TaintedStub.class,
+			,TaintedStub.class
 			////,InvkNone.class,
-			//,TaintedVar.class
-			//,IM.class
-			//,PotentialCallbacks.class
-			//,AllReachable.class
-			//,FileNames.class
+			,TaintedVar.class
+			,IM.class
+			,PotentialCallbacks.class
+			,AllReachable.class
+			,FileNames.class
 		};
 
 		Class[] apkReports = new Class[]{
@@ -38,9 +38,9 @@ public class Postmortem extends JavaAnalysis
 		};
 
 		Class[] dontShowReports = new Class[]{
-			//IM.class
-			//,AllReachable.class
-			//,FileNames.class
+			IM.class
+			,AllReachable.class
+			,FileNames.class
 		};
 
 		try{

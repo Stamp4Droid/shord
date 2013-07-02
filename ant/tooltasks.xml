@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="STAMP-Tool">
 
-  <target name="build" depends="-build-comps"/> <!--depends="-build-comps,-deploy-webapp"/-->
+  <target name="build" depends="-build-comps,-deploy-webapp"/>
 
   <target name="-deploy-webapp"
 	  depends="-check-everythinguptodate"
@@ -26,8 +26,8 @@
 	 inheritAll="false" useNativeBasedir="true"/>
     <ant antfile="${stamp.dir}/scanner/build.xml" target="jar"
 	 inheritAll="false" useNativeBasedir="true"/>
-    <!--ant antfile="${stamp.dir}/web/build.xml" target="compile"
-	 inheritAll="false" useNativeBasedir="true"/-->
+    <ant antfile="${stamp.dir}/web/build.xml" target="compile"
+	 inheritAll="false" useNativeBasedir="true"/>
     <!--ant antfile="${stamp.dir}/cfl/jcflsolver/build.xml" target="jar"
 	 inheritAll="false" useNativeBasedir="true"/-->
   </target>
@@ -39,8 +39,8 @@
       <srcfiles dir="${stamp.dir}/bin" includes="stamp.annotations.jar"/>
       <srcfiles dir="${stamp.dir}/bin" includes="stamp.main.jar"/>
       <srcfiles dir="${stamp.dir}/bin" includes="stamp.scanner.jar"/>
-      <!--srcfiles dir="${stamp.dir}/web" includes="classes/**/*.class"/-->
-      <!--srcfiles dir="${stamp.dir}/web" includes="WebContent/**/*"/-->
+      <srcfiles dir="${stamp.dir}/web" includes="classes/**/*.class"/>
+      <srcfiles dir="${stamp.dir}/web" includes="WebContent/**/*"/>
       <srcfiles dir="${stamp.dir}/bin" includes="stamp.models.jar"/>
       <!--srcfiles dir="${stamp.dir}/bin" includes="stamp.jcflsolver.jar"/-->
     </uptodate>
@@ -61,8 +61,8 @@
 	 inheritAll="false" useNativeBasedir="true"/-->
     <!--ant antfile="${stamp.dir}/chord/build.xml" target="clean"
 	 inheritAll="false" useNativeBasedir="true"/-->
-    <!--ant antfile="${stamp.dir}/web/build.xml" target="clean"
-	 inheritAll="false" useNativeBasedir="true"/-->
+    <ant antfile="${stamp.dir}/web/build.xml" target="clean"
+	 inheritAll="false" useNativeBasedir="true"/>
   </target>
 
 </project>

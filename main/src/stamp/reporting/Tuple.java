@@ -3,12 +3,14 @@ package stamp.reporting;
 import soot.SootClass;
 import soot.Unit;
 import soot.SootMethod;
+import soot.jimple.Stmt;
 
 import java.io.*;
 import java.util.*;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
+import stamp.srcmap.SourceInfo;
 import stamp.srcmap.Expr;
 
 /*
@@ -39,16 +41,16 @@ public class Tuple
 						declKlass, 
 						line,
 						(type == null ? "method" : type),
-						meth.toString());
+						SourceInfo.chordSigFor(meth));
 		return this;
 	}
 	
 	public Tuple addValue(Unit quad)
 	{
-		SootMethod meth = SourceInfo.containerMethod(quad);
+		SootMethod meth = SourceInfo.containerMethod((Stmt) quad);
 		if(meth != null){
 			String label = quad.toString();//meth.getDeclaringClass().getSourceFileName() + ":"+ quad.getLineNumber();
-			addValue(label, meth.getDeclaringClass(), String.valueOf(SourceInfo.lineNumber(quad)));
+			addValue(label, meth.getDeclaringClass(), String.valueOf(SourceInfo.stmtLineNum((Stmt) quad)));
 		}
 		else
 			addValue(quad.toString());

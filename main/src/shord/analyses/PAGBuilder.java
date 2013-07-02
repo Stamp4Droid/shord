@@ -40,6 +40,7 @@ import soot.jimple.spark.pag.SparkField;
 import soot.jimple.spark.pag.ArrayElement;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
+import soot.tagkit.Tag;
 import soot.util.NumberedSet;
 
 import shord.project.analyses.JavaAnalysis;
@@ -53,7 +54,7 @@ import chord.project.Chord;
 import java.util.*;
 
 @Chord(name="base-java", 
-	   produces={"M", "Z", "I", "H", "V", "T", "F", "U", "Stubs",
+	   produces={"M", "Z", "I", "H", "V", "T", "F", "U",
 				 "Alloc", "Assign", 
 				 "Load", "Store", 
 				 "LoadStat", "StoreStat", 
@@ -67,9 +68,10 @@ import java.util.*;
 				 "LoadPrim", "StorePrim",
 				 "LoadStatPrim", "StoreStatPrim",
 				 "MmethPrimArg", "MmethPrimRet", 
-				 "IinvkPrimRet", "IinvkPrimArg" },
-       namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U", "Stubs" },
-       types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomStubs.class },
+				 "IinvkPrimRet", "IinvkPrimArg",
+	             "Stub" },
+       namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U"},
+       types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class},
 	   namesOfSigns = { "Alloc", "Assign", 
 						"Load", "Store", 
 						"LoadStat", "StoreStat", 
@@ -83,7 +85,8 @@ import java.util.*;
 						"LoadPrim", "StorePrim",
 						"LoadStatPrim", "StoreStatPrim",
 						"MmethPrimArg", "MmethPrimRet", 
-						"IinvkPrimRet", "IinvkPrimArg" },
+						"IinvkPrimRet", "IinvkPrimArg",
+                        "Stub" },
 	   signs = { "V0,H0:V0_H0", "V0,V1:V0xV1",
 				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
 				 "V0,F0:F0_V0", "F0,V0:F0_V0",
@@ -97,7 +100,8 @@ import java.util.*;
 				 "U0,V0,F0:U0_V0_F0", "V0,F0,U0:U0_V0_F0",
 				 "U0,F0:U0_F0", "F0,U0:U0_F0",
 				 "M0,Z0,U0:M0_U0_Z0", "M0,Z0,U0:M0_U0_Z0",
-				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0" }
+				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0",
+                 "M0:M0" }
 	   )
 public class PAGBuilder extends JavaAnalysis
 {
@@ -140,9 +144,9 @@ public class PAGBuilder extends JavaAnalysis
 
 	private int maxArgs = -1;
 	private FastHierarchy fh;
-	private NumberedSet stubMethods;
+	public static NumberedSet stubMethods;
 
-	public static final boolean ignoreStubs = true;
+	public static final boolean ignoreStubs = false;
 
 	void openRels()
 	{
@@ -404,6 +408,7 @@ public class PAGBuilder extends JavaAnalysis
 		private Set<Local> nonPrimLocals;
 		private Set<Local> primLocals;
 		private Map<Stmt,CastVarNode> stmtToCastNode;
+		private Tag containerTag;
 
 		MethodPAGBuilder(SootMethod method)
 		{
@@ -546,7 +551,8 @@ public class PAGBuilder extends JavaAnalysis
 				relVT.add(e.getValue(), castType);
 				relMV.add(method, e.getValue());
 			}
-
+			
+			containerTag = new ContainerTag(method);
 			Body body = method.retrieveActiveBody();
 			for(Unit unit : body.getUnits()){
 				handleStmt((Stmt) unit);
@@ -567,6 +573,7 @@ public class PAGBuilder extends JavaAnalysis
 				SootMethod callee = ie.getMethod();
 				int numArgs = ie.getArgCount();
 				relMI.add(method, s);
+				s.addTag(containerTag);
 
 				//handle receiver
 				int j = 0;
@@ -666,6 +673,7 @@ public class PAGBuilder extends JavaAnalysis
 					Alloc(nodeFor((Local) leftOp), s);
 					relHT.add(s, rightOp.getType());
 					relMH.add(method, s);
+					s.addTag(containerTag);
 					Iterator<Type> typesIt = Program.g().getTypes().iterator();
 					while(typesIt.hasNext()){
 						Type varType = typesIt.next();
@@ -764,7 +772,6 @@ public class PAGBuilder extends JavaAnalysis
 	void populateMethods()
 	{
 		DomM domM = (DomM) ClassicProject.g().getTrgt("M");
-		DomStubs domStubs = (DomStubs) ClassicProject.g().getTrgt("Stubs");
 		Program program = Program.g();
 		stubMethods = new NumberedSet(Scene.v().getMethodNumberer());
 		Iterator<SootMethod> mIt = program.getMethods();
@@ -773,12 +780,18 @@ public class PAGBuilder extends JavaAnalysis
 			if(isStub(m)){
 				//System.out.println("stub: "+ m);
 				stubMethods.add(m);
-				domStubs.add(m);
 			}
 			domM.add(m);
 		}
 		domM.save();
-		domStubs.save();
+
+		ProgramRel relStub = (ProgramRel) ClassicProject.g().getTrgt("Stub");
+        relStub.zero();
+		for(Iterator it = stubMethods.iterator(); it.hasNext();){
+			SootMethod stub = (SootMethod) it.next();
+			relStub.add(stub);
+		}
+		relStub.save();
 	}
 	
 	void populateFields()

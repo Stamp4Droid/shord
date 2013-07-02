@@ -42,6 +42,10 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 	private String bundleClass = "android.os.Bundle";
 
     private SootClass rootClass;
+	
+	//cache the temporary result from new ComponentName.
+	private Map<Object, String> arg2CompnentName = new HashMap();
+	
 
     public InterComponentInstrument()
     {
@@ -113,6 +117,68 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 				InvokeExpr ie = stmt.getInvokeExpr();
 				
 				String methodRefStr = ie.getMethodRef().toString();
+				//intent.putExtra(), include string, int, boolean, byte, etc.
+				if (methodRefStr
+				    .contains(this.intentClass+": "+this.intentClass+" putExtra(java.lang.String,")) {
+					
+					ImmediateBox bundleLoc = (ImmediateBox) ie.getUseBoxes().get(1);
+					Value putStringArg = bundleLoc.getValue();
+					StringConstant strVal = StringConstant.v("dummy");
+					
+					if (putStringArg instanceof StringConstant){
+						strVal = (StringConstant) putStringArg;
+					} else {
+						// otherwise we have to ask for reaching def.
+						for (Tag tagEntity : stmt.getTags()) {
+							LinkTag ttg = (LinkTag) tagEntity;
+							if ( !(ttg.getLink() instanceof JAssignStmt)) continue;
+							JAssignStmt asst = (JAssignStmt) ttg.getLink();
+							
+							// FIXME:can not deal with inter-proc now!
+							if (asst.getLeftOp().equals(putStringArg)) {
+								assert (asst.getRightOp() instanceof StringConstant);
+								strVal = (StringConstant) asst
+										.getRightOp();
+							}
+						}
+					}
+					//should triggle bundle instrument
+					String bundleKey = strVal.value;
+
+                    //need to add getter/setter of bundlekey to Bundle.class!
+					instrumentBundle(bundleKey);
+								
+					JimpleLocalBox intentObj = (JimpleLocalBox) ie.getUseBoxes().get(0);
+				    
+					SootMethod getExtrasCall = Scene.v().getMethod(
+						"<" + this.intentClass + ": "+this.bundleClass+" getExtras()>");
+					
+					//invoke intent.getExtras()
+					VirtualInvokeExpr getExtrasExpr = 
+						Jimple.v().newVirtualInvokeExpr(
+							(Local) intentObj.getValue(),
+								getExtrasCall.makeRef(), Arrays.asList(new Value[] {}));
+					
+					Local extrasLocal = Jimple.v().newLocal("r_Extras", RefType.v(this.bundleClass)); 
+					body.getLocals().add(extrasLocal);
+					AssignStmt assign2Extras = Jimple.v().newAssignStmt(extrasLocal, getExtrasExpr);
+					units.insertBefore(assign2Extras, stmt);
+					
+					//invoke extra.put_deviceId()
+					SootMethod putExtrasCall = Scene.v().getMethod(
+						"<" + this.bundleClass + ": void put_"
+							+ bundleKey + "(java.lang.Object)>");
+					
+					InvokeStmt putExtraStmt = Jimple.v().newInvokeStmt(
+						Jimple.v().newVirtualInvokeExpr(extrasLocal,
+							putExtrasCall.makeRef(), ie.getArg(1)));
+					units.insertAfter(putExtraStmt, stmt);
+					// System.out.println("putExtras body....." + body);
+					//Remove this will reduce the false alarm like deviceId=>intent, but potentially buggy,
+					//e.g, what if I assign current expr to an new intent object?
+					units.remove(stmt);				
+				}
+				
 				// Src putString -> put_id && getString -> 
 				//$r9 = virtualinvoke $r8.<android.os.Bundle: 
 				//java.lang.String getString(java.lang.String)>($r4)
@@ -224,17 +290,71 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 				// 5. intent.setComponent(ComponentName)
 				/* e.g, $r4.<android.content.Intent: android.content.Intent 
 				 *	setComponent(android.content.ComponentName)>($r3); 
+				 *  right now I can not capture inter-procedure call, so I have to combine 
+				 *  both of them, ask for the following call:
+				 *  <android.content.ComponentName: void <init>(java.lang.String,java.lang.String)>($r6, $r7)
+				 *  Notice that it's still not precise.
 				 */
+				if (methodRefStr.contains("android.content.ComponentName: void <init>(java.lang.String,java.lang.String)")) {
+                    String tgtComptName = "";
+					StringConstant strCont;
+					if (ie.getArg(1) instanceof StringConstant) {
+						strCont = (StringConstant) ie.getArg(1);
+						tgtComptName = strCont.value;
+					}else {// FIXME: too ugly to grab result in this way
+						//otherwise we have to ask for reaching def.
+						for (Tag tagEntity : stmt.getTags()) {
+							if(!(tagEntity instanceof LinkTag)) continue; 
+							LinkTag ttg = (LinkTag) tagEntity;
+							if ( !(ttg.getLink() instanceof JAssignStmt)) continue;
+							JAssignStmt asst = (JAssignStmt) ttg.getLink();
+							if (asst.getLeftOp().equals(ie.getArg(1))) {
+								// assert (asst.getRightOp() instanceof ClassConstant);
+                                if (asst.getRightOp() instanceof StringConstant) {
+									strCont = (StringConstant) asst.getRightOp();
+									tgtComptName = strCont.value;
+								}
+
+							}
+						}
+
+					}
+					JimpleLocalBox newBox = (JimpleLocalBox)ie.getUseBoxes().get(0);
+					this.arg2CompnentName.put(newBox.getValue(), tgtComptName);
+				}
+				
 				if (methodRefStr.contains(intentClass + ": " + intentClass
 						+ " setComponent(android.content.ComponentName)")) {
-					System.out.println("setComponent*************" + stmt + "|||| tags:" + stmt.getTags());
-					System.out.println("ERROR:Can not locate the class from current reachingDef for setComponent: " + stmt.getTags() );
 					//FIXME need more information on setComponent, improve current reachingDef.
-					//this.lookforTgtArgToInject(units, stmt, ie.getArg(1));							
+					String tgtComptName = this.arg2CompnentName.get(ie.getArg(0));
+					
+					if (tgtComptName != null) 
+						tgtComptName = tgtComptName.replace(File.separatorChar, '.');
+					///Check whether exist such class.
+					if ( !Program.g().scene().containsClass(tgtComptName)) {
+						System.out.println("ERROR:Current class: " + this.rootClass + " || Statement: " + stmt );
+						System.out.println("ERROR:Can not find class for Class name: " + tgtComptName );
+						return;
+					}
+				
+					this.instruTgtCompt(tgtComptName);
+		
+					//begin to instument current invoke method of src.		
+					JimpleLocalBox localBox = (JimpleLocalBox) ie
+						.getUseBoxes().get(0);
+					SootMethod toCall = Scene.v().getMethod(
+						"<" + tgtComptName + ": void set_Intent("
+							+ intentClass + ")>");
+					Stmt invokeSetter = Jimple.v().newInvokeStmt(
+						Jimple.v().newStaticInvokeExpr(
+							toCall.makeRef(), localBox.getValue()));
+					units.insertAfter(invokeSetter, stmt);
 				}
+				
 			}
 		}
     }
+	
 	
 	/* Search for the target component based on reachingDef stored in tag. */	
 	private void lookforTgtArgToInject(Chain<Unit> units, Stmt stmt, Value arg) {
@@ -274,6 +394,7 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		}
 		
 		if (tgtComptName.equals("")) {
+			System.out.println("ERROR:Current class: " + this.rootClass + " || Statement: " + stmt );
 			System.out.println("ERROR:Can not locate the class from current reachingDef: " + stmt.getTags() );
 			return;
 		}
@@ -281,7 +402,8 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		tgtComptName = tgtComptName.replace(File.separatorChar, '.');
 		///Check whether exist such class.
 		if ( !Program.g().scene().containsClass(tgtComptName)) {
-			System.out.println("ERROR:Can not find class for Class name: " + tgtComptName );
+			System.out.println("ERROR:Current class: " + this.rootClass + " || Statement: " + stmt );
+			System.out.println("ERROR:Can not find target class for Class name: " + tgtComptName );
 			return;
 		}
 				

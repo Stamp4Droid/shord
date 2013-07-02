@@ -33,7 +33,7 @@
       </then>
 	  <else>
 		<property name="stamp.input.type" value="src"/>
-		<antcall target="-build-app"/>
+		<antcall target="-analyze-src"/>
 	  </else>
     </if>
   </target>
@@ -61,10 +61,19 @@ libPath=${stamp.lib.jars}
 
     <!-- Launch browser. -->
     <exec executable="${stamp.browser}"
-		  spawn="true">
+            spawn="true"
+            os="Linux">
       <arg value="localhost:8080/stamp/html/index.jsp?propertyfile=${stamp.out.dir}/stamp.properties"/>
     </exec>
+    <exec executable="open"
+            spawn="yes"
+            os="Mac OS X">
+      <arg line="-a" />
+      <arg value="${stamp.osx_browser}" />
+      <arg line="http://localhost:8080/stamp/html/index.jsp?propertyfile=${stamp.out.dir}/stamp.properties" />
+    </exec>
   </target>
+
 
   <target name="-build-app"
 		  depends="build">

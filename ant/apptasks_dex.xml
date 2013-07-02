@@ -70,6 +70,8 @@
       <sysproperty key="stamp.out.dir" value="${stamp.out.dir}"/>
 	  <sysproperty key="stamp.input.type" value="${stamp.input.type}"/>
 	  <sysproperty key="stamp.android.jar" value="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"/>
+	  <sysproperty key="stamp.framework.dir" value="${stamp.dir}/models/api-${apilevel}"/>
+	  <sysproperty key="stamp.icdf" value="${stamp.icdf}"/>
       <classpath>
 		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
 		<pathelement location="${stamp.dir}/lib/soot.jar"/>
