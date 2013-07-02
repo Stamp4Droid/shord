@@ -4,7 +4,7 @@ r1!stamp.stanford.malware.Malware@<edu.stanford.stamp.harness.Main: void main(ja
 $r0!java.util.List@<edu.stanford.stamp.harness.ApplicationDriver: void callCallbacks()>
 $r1!java.lang.Object@<edu.stanford.stamp.harness.ApplicationDriver: void callCallbacks()>
 $r2!edu.stanford.stamp.harness.Callback@<edu.stanford.stamp.harness.ApplicationDriver: void callCallbacks()>
-shord.analyses.CastVarNode@3ae788f9
+shord.analyses.CastVarNode@2ca907da
 $r0!java.util.ArrayList@<edu.stanford.stamp.harness.ApplicationDriver: void <clinit>()>
 $r1!edu.stanford.stamp.harness.ApplicationDriver@<edu.stanford.stamp.harness.ApplicationDriver: void <clinit>()>
 this@<stamp.stanford.malware.Malware: void <init>()>
@@ -414,7 +414,7 @@ $r6!java.lang.Object@<stamp.stanford.malware.Malware: void onCreate(android.os.B
 $r7!android.location.LocationManager@<stamp.stanford.malware.Malware: void onCreate(android.os.Bundle)>
 $n0!null_type@<stamp.stanford.malware.Malware: void onCreate(android.os.Bundle)>
 $r8!java.lang.String@<stamp.stanford.malware.Malware: void onCreate(android.os.Bundle)>
-shord.analyses.CastVarNode@6856659
+shord.analyses.CastVarNode@266b950b
 this@<android.content.Intent: void <init>()>
 r0!android.content.Intent@<android.content.Intent: void <init>()>
 $r1!android.os.Bundle@<android.content.Intent: void <init>()>
@@ -466,7 +466,7 @@ return@<android.location.LocationManager: android.location.Location getLocation(
 r0!android.location.LocationManager@<android.location.LocationManager: android.location.Location getLocation()>
 $r1!android.location.Location@<android.location.LocationManager: android.location.Location getLocation()>
 $r2!java.lang.String@<android.location.LocationManager: android.location.Location getLocation()>
-shord.analyses.CastVarNode@b5a8e3c
+shord.analyses.CastVarNode@971372b
 this@<java.util.AbstractList: void <init>()>
 r0!java.util.AbstractList@<java.util.AbstractList: void <init>()>
 $r1!java.lang.RuntimeException@<java.util.AbstractList: void <init>()>
@@ -474,7 +474,7 @@ this@<android.view.ContextThemeWrapper: void <init>()>
 r0!android.view.ContextThemeWrapper@<android.view.ContextThemeWrapper: void <init>()>
 $r1!android.content.Context@<android.view.ContextThemeWrapper: void <init>()>
 $r2!java.lang.RuntimeException@<android.view.ContextThemeWrapper: void <init>()>
-shord.analyses.CastVarNode@5e3a63fd
+shord.analyses.CastVarNode@2b253604
 this@<android.app.Activity$1: void <init>(android.app.Activity)>
 param$0@<android.app.Activity$1: void <init>(android.app.Activity)>
 r0!android.app.Activity$1@<android.app.Activity$1: void <init>(android.app.Activity)>
@@ -798,7 +798,7 @@ $r1!java.lang.Object[]@<stamp.stanford.malware.Malware$LeakInfo: java.lang.Objec
 $r2!java.lang.Void@<stamp.stanford.malware.Malware$LeakInfo: java.lang.Object doInBackground(java.lang.Object[])>
 $r3!java.lang.Void@<stamp.stanford.malware.Malware$LeakInfo: java.lang.Object doInBackground(java.lang.Object[])>
 $r4!java.lang.String[]@<stamp.stanford.malware.Malware$LeakInfo: java.lang.Object doInBackground(java.lang.Object[])>
-shord.analyses.CastVarNode@78944e57
+shord.analyses.CastVarNode@7e18ddb9
 this@<java.lang.AbstractStringBuilder: void <init>()>
 r0!java.lang.AbstractStringBuilder@<java.lang.AbstractStringBuilder: void <init>()>
 $r1!java.lang.RuntimeException@<java.lang.AbstractStringBuilder: void <init>()>
@@ -812,7 +812,7 @@ this@<android.test.mock.MockContentResolver: void <init>()>
 r0!android.test.mock.MockContentResolver@<android.test.mock.MockContentResolver: void <init>()>
 $r1!android.content.Context@<android.test.mock.MockContentResolver: void <init>()>
 $r2!java.lang.RuntimeException@<android.test.mock.MockContentResolver: void <init>()>
-shord.analyses.CastVarNode@3ed0c485
+shord.analyses.CastVarNode@a0904d8
 this@<android.location.LocationManager$1: void <init>(android.location.LocationManager,android.location.LocationListener)>
 param$0@<android.location.LocationManager$1: void <init>(android.location.LocationManager,android.location.LocationListener)>
 param$1@<android.location.LocationManager$1: void <init>(android.location.LocationManager,android.location.LocationListener)>
@@ -858,8 +858,8 @@ r0!org.apache.http.impl.client.DefaultHttpClient@<org.apache.http.impl.client.De
 $r1!org.apache.http.conn.ClientConnectionManager@<org.apache.http.impl.client.DefaultHttpClient: void <init>()>
 $r2!org.apache.http.params.HttpParams@<org.apache.http.impl.client.DefaultHttpClient: void <init>()>
 $r3!java.lang.RuntimeException@<org.apache.http.impl.client.DefaultHttpClient: void <init>()>
-shord.analyses.CastVarNode@c114107
-shord.analyses.CastVarNode@40c438c1
+shord.analyses.CastVarNode@3b3af798
+shord.analyses.CastVarNode@1c553a89
 this@<org.apache.http.impl.client.AbstractHttpClient: org.apache.http.HttpResponse execute(org.apache.http.client.methods.HttpUriRequest)>
 param$0@<org.apache.http.impl.client.AbstractHttpClient: org.apache.http.HttpResponse execute(org.apache.http.client.methods.HttpUriRequest)>
 return@<org.apache.http.impl.client.AbstractHttpClient: org.apache.http.HttpResponse execute(org.apache.http.client.methods.HttpUriRequest)>

@@ -2310,8 +2310,8 @@
 <stamp.stanford.malware.Malware$MyLocationListener: stamp.stanford.malware.Malware this$0>
 <stamp.stanford.malware.R$drawable: int ic_launcher>
 <stamp.stanford.malware.R$layout: int main>
-<stamp.stanford.malware.R$string: int hello>
 <stamp.stanford.malware.R$string: int app_name>
+<stamp.stanford.malware.R$string: int hello>
 <java.lang.Character: char MIN_VALUE>
 <java.lang.Character: char MAX_VALUE>
 <java.lang.Character: int MIN_RADIX>
@@ -2503,4 +2503,4 @@
 <java.lang.Character$UnicodeBlock: java.lang.Character$UnicodeBlock VARIATION_SELECTORS_SUPPLEMENT>
 <java.lang.Character$UnicodeBlock: java.lang.Character$UnicodeBlock SUPPLEMENTARY_PRIVATE_USE_AREA_A>
 <java.lang.Character$UnicodeBlock: java.lang.Character$UnicodeBlock SUPPLEMENTARY_PRIVATE_USE_AREA_B>
-soot.jimple.spark.pag.ArrayElement@4765e109
+soot.jimple.spark.pag.ArrayElement@3b5e194a
