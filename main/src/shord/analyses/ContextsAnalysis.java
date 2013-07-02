@@ -12,6 +12,7 @@ import gnu.trove.list.array.TIntArrayList;
 
 import soot.Unit;
 import soot.SootMethod;
+import soot.util.NumberedSet;
 
 import shord.program.Program;
 import shord.project.ClassicProject;
@@ -28,7 +29,7 @@ import chord.util.graph.MutableGraph;
 import chord.util.tuple.object.Pair;
 
 @Chord(name = "contexts-java",
-	   consumes = { "chaIM", "I", "M", "H", "Stubs", "MH", "MI" },
+	   consumes = { "chaIM", "I", "M", "H", "MH", "MI" },
 	   produces = { "C", "CC", "CI", "CM", "CH" },
 	   namesOfTypes = { "C" },
 	   types = { DomC.class },
@@ -235,11 +236,12 @@ public class ContextsAnalysis extends JavaAnalysis
         Map<SootMethod, Set<SootMethod>> methToPredsMap = new HashMap<SootMethod, Set<SootMethod>>();
 		
 		boolean ignoreStubs = PAGBuilder.ignoreStubs;
-        DomStubs domStubs = (DomStubs) ClassicProject.g().getTrgt("Stubs");
+        //DomStubs domStubs = (DomStubs) ClassicProject.g().getTrgt("Stubs");
+		NumberedSet stubs = PAGBuilder.stubMethods;
 		Iterator mIt = Program.g().scene().getReachableMethods().listener();
 		while(mIt.hasNext()){
 			SootMethod meth = (SootMethod) mIt.next();
-			if(ignoreStubs && domStubs.contains(meth)){
+			if(ignoreStubs && stubs.contains(meth)){
 				//System.out.println("reachstub "+meth);
 				continue;
 			}
