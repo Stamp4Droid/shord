@@ -77,7 +77,7 @@ public class SourceInfo
 		return null;
 	}
 	
-	static boolean isFrameworkClass(SootClass klass)
+	public static boolean isFrameworkClass(SootClass klass)
 	{
 		String srcFileName = filePath(klass);
 		if(srcFileName == null){

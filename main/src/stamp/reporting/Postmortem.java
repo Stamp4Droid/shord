@@ -27,8 +27,8 @@ public class Postmortem extends JavaAnalysis
 			////,TaintedStub.class,
 			////,InvkNone.class,
 			,TaintedVar.class
-			//,IM.class
-			//,PotentialCallbacks.class
+			,IM.class
+			,PotentialCallbacks.class
 			,AllReachable.class
 			,FileNames.class
 		};
