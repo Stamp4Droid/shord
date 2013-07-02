@@ -12,6 +12,8 @@
 
 
   <property name="driver.dir" location="${stamp.out.dir}/stamp-driver"/>
+  
+  <property name="stamp.server.host" value="localhost"/>
 
   <target name="analyze">
 	<if>
@@ -63,14 +65,14 @@ libPath=${stamp.lib.jars}
     <exec executable="${stamp.browser}"
             spawn="true"
             os="Linux">
-      <arg value="localhost:8080/stamp/html/index.jsp?propertyfile=${stamp.out.dir}/stamp.properties"/>
+      <arg value="http://${stamp.server.host}:8080/stamp/html/index.jsp?propertyfile=${stamp.out.dir}/stamp.properties"/>
     </exec>
     <exec executable="open"
             spawn="yes"
             os="Mac OS X">
       <arg line="-a" />
       <arg value="${stamp.osx_browser}" />
-      <arg line="http://localhost:8080/stamp/html/index.jsp?propertyfile=${stamp.out.dir}/stamp.properties" />
+      <arg line="http://${stamp.server.host}:8080/stamp/html/index.jsp?propertyfile=${stamp.out.dir}/stamp.properties" />
     </exec>
   </target>
 
