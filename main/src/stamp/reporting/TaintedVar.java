@@ -90,7 +90,6 @@ public class TaintedVar extends XMLReport
 	{
 		//System.out.println("meth " + meth);
 		SootClass klass = meth.getDeclaringClass();
-		//WATCHOUT: getName might be wrong, want to get the name of the source file (might have to do translation)
 		RegisterMap regMap = SourceInfo.buildRegMapFor(meth);
 
 		Set<Tuple> tuples = new HashSet();
