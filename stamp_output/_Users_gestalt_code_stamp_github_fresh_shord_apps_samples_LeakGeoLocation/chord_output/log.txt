@@ -1,4 +1,4 @@
-Chord run initiated at: Jul 1, 2013 5:09:01 PM
+Chord run initiated at: Jul 1, 2013 8:35:19 PM
 java.vendor: Apple Inc.
 java.version: 1.6.0_51
 os.arch: x86_64
@@ -781,8 +781,8 @@ constant initSm: <stamp.stanford.malware.Malware$LeakInfo: void <init>(stamp.sta
 Writing to /Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/jimple/stamp.stanford.malware.Malware.jimple
 constant initSm: <stamp.stanford.malware.Malware: void <init>()>
 Writing to /Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/jimple/stamp.stanford.malware.Malware$MyLocationListener.jimple
-constant initSm: <stamp.stanford.malware.Malware$MyLocationListener: void <init>(stamp.stanford.malware.Malware)>
 constant initSm: <stamp.stanford.malware.Malware$MyLocationListener: void <init>(stamp.stanford.malware.Malware,stamp.stanford.malware.Malware$1)>
+constant initSm: <stamp.stanford.malware.Malware$MyLocationListener: void <init>(stamp.stanford.malware.Malware)>
 Writing to /Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/jimple/stamp.stanford.malware.R$attr.jimple
 constant initSm: <stamp.stanford.malware.R$attr: void <init>()>
 Writing to /Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/jimple/stamp.stanford.malware.R$drawable.jimple
@@ -826,36 +826,34 @@ Writing to /Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gest
 WARN: TaskParser: Ignoring non-existent entry '/Users/gestalt/code/stamp/github_fresh/shord/scanner/stamp.scanner.jar' in path 'chord.java.analysis.path'.
 WARN: TrgtParser: Relation 'VT' declared with different domain orders 'T0_V0' and 'V0_T0' in 'shord.analyses.PAGBuilder' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/typefilter.dlog' respectively.
 WARN: TrgtParser: Relation 'Load' declared with different domain orders 'V0xV1_F0' and 'F0_V0xV1' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pt.dlog' and 'shord.analyses.PAGBuilder' respectively.
-WARN: TrgtParser: Relation 'StorePrim' declared with different domain orders 'U0_V0_F0' and 'V0_U0_F0' in 'shord.analyses.PAGBuilder' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' respectively.
+WARN: TrgtParser: Relation 'StorePrim' declared with different domain orders 'V0_U0_F0' and 'U0_V0_F0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' and 'shord.analyses.PAGBuilder' respectively.
 WARN: TrgtParser: Relation 'IinvkPrimArg' declared with different domain orders 'I0_Z0_U0' and 'I0_U0_Z0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pre.dlog' and 'shord.analyses.PAGBuilder' respectively.
 WARN: TrgtParser: Relation 'paramPrim' declared with different domain orders 'U0xU1_I0' and 'I0_U0xU1' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pre.dlog' respectively.
 WARN: TrgtParser: Relation 'StoreStat' declared with different domain orders 'F0_V0' and 'V0_F0' in 'shord.analyses.PAGBuilder' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pt.dlog' respectively.
-WARN: TrgtParser: Relation 'LoadPrim' declared with different domain orders 'U0_V0_F0' and 'V0_U0_F0' in 'shord.analyses.PAGBuilder' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' respectively.
-WARN: TrgtParser: Relation 'LabelRet' declared with different domain orders 'L0_M0' and 'M0_L0' in 'stamp.analyses.AnnotationReader' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' respectively.
-WARN: TrgtParser: Relation 'chaIM' declared with different domain orders 'I0_M0' and 'I0xM0' in 'shord.analyses.PAGBuilder' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pre.dlog' respectively.
-WARN: TrgtParser: Relation 'chaIM' declared with different domain orders 'I0_M0' and 'M0_I0' in 'shord.analyses.PAGBuilder' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' respectively.
+WARN: TrgtParser: Relation 'LoadPrim' declared with different domain orders 'V0_U0_F0' and 'U0_V0_F0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' and 'shord.analyses.PAGBuilder' respectively.
+WARN: TrgtParser: Relation 'LabelRet' declared with different domain orders 'M0_L0' and 'L0_M0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' and 'stamp.analyses.AnnotationReader' respectively.
+WARN: TrgtParser: Relation 'chaIM' declared with different domain orders 'M0_I0' and 'I0_M0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' and 'shord.analyses.PAGBuilder' respectively.
+WARN: TrgtParser: Relation 'chaIM' declared with different domain orders 'M0_I0' and 'I0xM0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pre.dlog' respectively.
 WARN: TrgtParser: Relation 'MmethArg' declared with different domain orders 'M0_V0_Z0' and 'Z0_M0_V0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pre.dlog' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' respectively.
-WARN: TrgtParser: Relation 'LoadStat' declared with different domain orders 'F0_V0' and 'V0_F0' in 'shord.analyses.PAGBuilder' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pt.dlog' respectively.
-WARN: TrgtParser: Relation 'param' declared with different domain orders 'I0_V0xV1' and 'V0xV1_I0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pre.dlog' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pt.dlog' respectively.
+WARN: TrgtParser: Relation 'LoadStat' declared with different domain orders 'V0_F0' and 'F0_V0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pt.dlog' and 'shord.analyses.PAGBuilder' respectively.
+WARN: TrgtParser: Relation 'param' declared with different domain orders 'V0xV1_I0' and 'I0_V0xV1' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pt.dlog' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pre.dlog' respectively.
 WARN: TrgtParser: Relation 'Store' declared with different domain orders 'V0xV1_F0' and 'F0_V0xV1' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pt.dlog' and 'shord.analyses.PAGBuilder' respectively.
 WARN: TrgtParser: Relation 'IinvkPrimRet' declared with different domain orders 'I0_Z0_U0' and 'I0_U0_Z0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pre.dlog' and 'shord.analyses.PAGBuilder' respectively.
 WARN: TrgtParser: Relation 'typeFilter' declared with different domain orders 'C0_V0' and 'V0_C0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pt.dlog' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/typefilter.dlog' respectively.
-WARN: TrgtParser: Relation 'ArgRetTransfer' declared with different domain orders 'M0_Z0' and 'Z0_M0' in 'stamp.analyses.AnnotationReader' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' respectively.
-WARN: TrgtParser: Relation 'LabelArg' declared with different domain orders 'Z0_M0_L0' and 'L0_M0_Z0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' and 'stamp.analyses.AnnotationReader' respectively.
-WARN: TrgtParser: Relation 'MmethPrimRet' declared with different domain orders 'M0_Z0_U0' and 'Z0_M0_U0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pre.dlog' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' respectively.
-WARN: TrgtParser: Relation 'MmethPrimRet' declared with different domain orders 'M0_Z0_U0' and 'M0_U0_Z0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pre.dlog' and 'shord.analyses.PAGBuilder' respectively.
+WARN: TrgtParser: Relation 'ArgRetTransfer' declared with different domain orders 'Z0_M0' and 'M0_Z0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' and 'stamp.analyses.AnnotationReader' respectively.
+WARN: TrgtParser: Relation 'LabelArg' declared with different domain orders 'L0_M0_Z0' and 'Z0_M0_L0' in 'stamp.analyses.AnnotationReader' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' respectively.
+WARN: TrgtParser: Relation 'MmethPrimRet' declared with different domain orders 'M0_U0_Z0' and 'M0_Z0_U0' in 'shord.analyses.PAGBuilder' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pre.dlog' respectively.
+WARN: TrgtParser: Relation 'MmethPrimRet' declared with different domain orders 'M0_U0_Z0' and 'Z0_M0_U0' in 'shord.analyses.PAGBuilder' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' respectively.
 WARN: TrgtParser: Relation 'HTFilter' declared with different domain orders 'H0_T0' and 'T0_H0' in 'shord.analyses.PAGBuilder' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/typefilter.dlog' respectively.
 WARN: TrgtParser: Relation 'returnPrim' declared with different domain orders 'I0_U0xU1' and 'U0xU1_I0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pre.dlog' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' respectively.
 WARN: TrgtParser: Relation 'return' declared with different domain orders 'V0xV1_I0' and 'I0_V0xV1' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pt.dlog' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pre.dlog' respectively.
 WARN: TrgtParser: Relation 'MmethRet' declared with different domain orders 'M0_V0_Z0' and 'Z0_M0_V0' in 'shord.analyses.PAGBuilder' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' respectively.
-WARN: TrgtParser: Relation 'CH' declared with different domain orders 'H0_C0' and 'C0_H0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/typefilter.dlog' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pt.dlog' respectively.
-WARN: TrgtParser: Relation 'CH' declared with different domain orders 'H0_C0' and 'C0_H0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/typefilter.dlog' and 'shord.analyses.ContextsAnalysis' respectively.
-WARN: TrgtParser: Relation 'MmethPrimArg' declared with different domain orders 'M0_U0_Z0' and 'M0_Z0_U0' in 'shord.analyses.PAGBuilder' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pre.dlog' respectively.
-WARN: TrgtParser: Relation 'MmethPrimArg' declared with different domain orders 'M0_U0_Z0' and 'Z0_M0_U0' in 'shord.analyses.PAGBuilder' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' respectively.
+WARN: TrgtParser: Relation 'CH' declared with different domain orders 'C0_H0' and 'H0_C0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pt.dlog' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/typefilter.dlog' respectively.
+WARN: TrgtParser: Relation 'MmethPrimArg' declared with different domain orders 'Z0_M0_U0' and 'M0_U0_Z0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' and 'shord.analyses.PAGBuilder' respectively.
+WARN: TrgtParser: Relation 'MmethPrimArg' declared with different domain orders 'Z0_M0_U0' and 'M0_Z0_U0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pre.dlog' respectively.
 WARN: TrgtParser: Relation 'ArgArgTransfer' declared with different domain orders 'M0_Z0_Z1' and 'Z0xZ1_M0' in 'stamp.analyses.AnnotationReader' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' respectively.
 WARN: TrgtParser: Relation 'ArgArgFlow' declared with different domain orders 'M0_Z0_Z1' and 'Z0xZ1_M0' in 'stamp.analyses.AnnotationReader' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' respectively.
-WARN: TrgtParser: Relation 'CM' declared with different domain orders 'C0_M0' and 'M0_C0' in 'shord.analyses.ContextsAnalysis' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pt.dlog' respectively.
-WARN: TrgtParser: Relation 'CM' declared with different domain orders 'C0_M0' and 'M0_C0' in 'shord.analyses.ContextsAnalysis' and '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' respectively.
+WARN: TrgtParser: Relation 'CM' declared with different domain orders 'M0_C0' and 'C0_M0' in '/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog' and 'shord.analyses.ContextsAnalysis' respectively.
 WARNING: 'annot-java' not declared as produced name of any task
 
 WARNING: 'post-java' not declared as produced name of any task
@@ -866,11 +864,11 @@ WARNING: 'base-java' not declared as produced name of any task
 
 WARNING: 'contexts-java' not declared as produced name of any task
 
-ENTER: inject-annot at Mon Jul 01 17:09:32 PDT 2013
+ENTER: inject-annot at Mon Jul 01 20:35:44 PDT 2013
 LEAVE: inject-annot
-Exclusive time: 00:00:00:073 hh:mm:ss:ms
-Inclusive time: 00:00:00:073 hh:mm:ss:ms
-ENTER: base-java at Mon Jul 01 17:09:32 PDT 2013
+Exclusive time: 00:00:00:015 hh:mm:ss:ms
+Inclusive time: 00:00:00:015 hh:mm:ss:ms
+ENTER: base-java at Mon Jul 01 20:35:44 PDT 2013
 [Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
 SAVING dom M size: 8320
 SAVING dom Stubs size: 5025
@@ -909,9 +907,9 @@ SAVING rel IinvkPrimRet size: 4
 SAVING rel IinvkPrimArg size: 6
 SAVING rel chaIM size: 803
 LEAVE: base-java
-Exclusive time: 00:00:09:164 hh:mm:ss:ms
-Inclusive time: 00:00:09:164 hh:mm:ss:ms
-ENTER: annot-java at Mon Jul 01 17:09:42 PDT 2013
+Exclusive time: 00:00:10:547 hh:mm:ss:ms
+Inclusive time: 00:00:10:547 hh:mm:ss:ms
+ENTER: annot-java at Mon Jul 01 20:35:54 PDT 2013
 +++ <android.location.Location: java.lang.String toString()> 0 -1
 Unsupported annotation type requestLocationUpdates:(Ljava/lang/String;JFLandroid/app/PendingIntent;)V@android.location.LocationManager $FINE_LOCATION !INTENT
 Unsupported annotation type requestLocationUpdates:(JFLandroid/location/Criteria;Landroid/app/PendingIntent;)V@android.location.LocationManager $FINE_LOCATION !INTENT
@@ -1262,9 +1260,9 @@ SAVING rel SinkLabel size: 5
 SAVING rel LabelArg size: 60
 SAVING rel LabelRet size: 43
 LEAVE: annot-java
-Exclusive time: 00:00:02:803 hh:mm:ss:ms
-Inclusive time: 00:00:02:803 hh:mm:ss:ms
-ENTER: contexts-java at Mon Jul 01 17:09:44 PDT 2013
+Exclusive time: 00:00:01:378 hh:mm:ss:ms
+Inclusive time: 00:00:01:378 hh:mm:ss:ms
+ENTER: contexts-java at Mon Jul 01 20:35:56 PDT 2013
 numSCCs: 208
 	Iteration  #0
 	Iteration  #1
@@ -1274,15 +1272,16 @@ numSCCs: 208
 	Iteration  #1
 	Iteration  #2
 	Iteration  #3
+	Iteration  #4
 SAVING dom C size: 1474
 SAVING rel CI size: 1300
 SAVING rel CC size: 5332
 SAVING rel CH size: 173
 SAVING rel CM size: 3018
 LEAVE: contexts-java
-Exclusive time: 00:00:10:150 hh:mm:ss:ms
-Inclusive time: 00:00:10:150 hh:mm:ss:ms
-ENTER: pre-dlog at Mon Jul 01 17:09:55 PDT 2013
+Exclusive time: 00:00:01:489 hh:mm:ss:ms
+Inclusive time: 00:00:01:489 hh:mm:ss:ms
+ENTER: pre-dlog at Mon Jul 01 20:35:57 PDT 2013
 Starting command: 'java -ea -Xmx4096m -cp /Users/gestalt/code/stamp/github_fresh/shord/bin/stamp.main.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/soot.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/commons-lang3-3.1.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/stamp.chord.jar:/Users/gestalt/code/stamp/github_fresh/shord/scanner/stamp.scanner.jar:/Users/gestalt/code/stamp/github_fresh/shord/apps/samples/LeakGeoLocation/bin/Malware-debug.apk:/Users/gestalt/code/stamp/github_fresh/shord/${stamp.out.dir}/stamp-driver -Dverbose=2 -Dbdd=j -Dbasedir=/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/bddbddb net.sf.bddbddb.Solver /Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pre.dlog '
 Initializing BDD library (500000 nodes, cache size 125000, min free 0.2%)
 Using BDD library JFactory 1.28
@@ -1295,12 +1294,12 @@ list1:
     paramPrim(u:U0,v:U1,i:I0) :- chaIM(i:I0,m:M0), MmethPrimArg(m:M0,z:Z0,u:U0), IinvkPrimArg(i:I0,z:Z0,v:U1).
     return(u:V1,v:V0,i:I0) :- chaIM(i:I0,m:M0), MmethRet(m:M0,z:Z0,v:V0), IinvkRet(i:I0,z:Z0,u:V1).
     returnPrim(u:U1,v:U0,i:I0) :- chaIM(i:I0,m:M0), MmethPrimRet(m:M0,z:Z0,v:U0), IinvkPrimRet(i:I0,z:Z0,u:U1).
-done. (172 ms)
+done. (16 ms)
 Solving: 
-done. (291 ms)
-SOLVE_TIME=291
+done. (81 ms)
+SOLVE_TIME=81
 MAX_NODES=499979
-FINAL_NODES=16591
+FINAL_NODES=19719
 Rule paramPrim(u:U0,v:U1,i:I0) :- chaIM(i:I0,m:M0), MmethPrimArg(m:M0,z:Z0,u:U0), IinvkPrimArg(i:I0,z:Z0,v:U1).
    Updates: 1
    Time: 1 ms
@@ -1315,7 +1314,7 @@ Rule return(u:V1,v:V0,i:I0) :- chaIM(i:I0,m:M0), MmethRet(m:M0,z:Z0,v:V0), Iinvk
    Longest Iteration: 0 (0 ms)
 Rule param(u:V0,v:V1,i:I0) :- chaIM(i:I0,m:M0), MmethArg(m:M0,z:Z0,u:V0), IinvkArg(i:I0,z:Z0,v:V1).
    Updates: 1
-   Time: 210 ms
+   Time: 73 ms
    Longest Iteration: 0 (0 ms)
 Relation param: 4160 nodes, 826.0 elements (V0,I0,V1)
 Relation return: 392 nodes, 19.0 elements (V0,I0,V1)
@@ -1323,9 +1322,9 @@ Relation paramPrim: 47 nodes, 4.0 elements (I0,U0,U1)
 Relation returnPrim: 60 nodes, 4.0 elements (I0,U0,U1)
 Finished command: 'java -ea -Xmx4096m -cp /Users/gestalt/code/stamp/github_fresh/shord/bin/stamp.main.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/soot.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/commons-lang3-3.1.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/stamp.chord.jar:/Users/gestalt/code/stamp/github_fresh/shord/scanner/stamp.scanner.jar:/Users/gestalt/code/stamp/github_fresh/shord/apps/samples/LeakGeoLocation/bin/Malware-debug.apk:/Users/gestalt/code/stamp/github_fresh/shord/${stamp.out.dir}/stamp-driver -Dverbose=2 -Dbdd=j -Dbasedir=/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/bddbddb net.sf.bddbddb.Solver /Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pre.dlog '
 LEAVE: pre-dlog
-Exclusive time: 00:00:14:465 hh:mm:ss:ms
-Inclusive time: 00:00:14:465 hh:mm:ss:ms
-ENTER: typefilter-dlog at Mon Jul 01 17:10:09 PDT 2013
+Exclusive time: 00:00:03:113 hh:mm:ss:ms
+Inclusive time: 00:00:03:113 hh:mm:ss:ms
+ENTER: typefilter-dlog at Mon Jul 01 20:36:00 PDT 2013
 Starting command: 'java -ea -Xmx4096m -cp /Users/gestalt/code/stamp/github_fresh/shord/bin/stamp.main.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/soot.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/commons-lang3-3.1.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/stamp.chord.jar:/Users/gestalt/code/stamp/github_fresh/shord/scanner/stamp.scanner.jar:/Users/gestalt/code/stamp/github_fresh/shord/apps/samples/LeakGeoLocation/bin/Malware-debug.apk:/Users/gestalt/code/stamp/github_fresh/shord/${stamp.out.dir}/stamp-driver -Dverbose=2 -Dbdd=j -Dbasedir=/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/bddbddb net.sf.bddbddb.Solver /Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/typefilter.dlog '
 Initializing BDD library (500000 nodes, cache size 125000, min free 0.2%)
 Using BDD library JFactory 1.28
@@ -1335,22 +1334,22 @@ Stratifying:
 list1:
   list2:
     typeFilter(v:V0,o:C0) :- VT(v:V0,t:T0), HTFilter(h:H0,t:T0), CH(o:C0,h:H0).
-done. (39 ms)
+done. (14 ms)
 Solving: 
-done. (107 ms)
-SOLVE_TIME=107
+done. (51 ms)
+SOLVE_TIME=51
 MAX_NODES=499979
-FINAL_NODES=18801
+FINAL_NODES=19958
 Rule typeFilter(v:V0,o:C0) :- VT(v:V0,t:T0), HTFilter(h:H0,t:T0), CH(o:C0,h:H0).
    Updates: 1
-   Time: 104 ms
+   Time: 48 ms
    Longest Iteration: 0 (0 ms)
 Relation typeFilter: 1109 nodes, 5829.0 elements (V0,C0)
 Finished command: 'java -ea -Xmx4096m -cp /Users/gestalt/code/stamp/github_fresh/shord/bin/stamp.main.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/soot.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/commons-lang3-3.1.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/stamp.chord.jar:/Users/gestalt/code/stamp/github_fresh/shord/scanner/stamp.scanner.jar:/Users/gestalt/code/stamp/github_fresh/shord/apps/samples/LeakGeoLocation/bin/Malware-debug.apk:/Users/gestalt/code/stamp/github_fresh/shord/${stamp.out.dir}/stamp-driver -Dverbose=2 -Dbdd=j -Dbasedir=/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/bddbddb net.sf.bddbddb.Solver /Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/typefilter.dlog '
 LEAVE: typefilter-dlog
-Exclusive time: 00:00:04:886 hh:mm:ss:ms
-Inclusive time: 00:00:04:886 hh:mm:ss:ms
-ENTER: pt-dlog at Mon Jul 01 17:10:14 PDT 2013
+Exclusive time: 00:00:00:909 hh:mm:ss:ms
+Inclusive time: 00:00:00:909 hh:mm:ss:ms
+ENTER: pt-dlog at Mon Jul 01 20:36:01 PDT 2013
 Starting command: 'java -ea -Xmx4096m -cp /Users/gestalt/code/stamp/github_fresh/shord/bin/stamp.main.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/soot.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/commons-lang3-3.1.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/stamp.chord.jar:/Users/gestalt/code/stamp/github_fresh/shord/scanner/stamp.scanner.jar:/Users/gestalt/code/stamp/github_fresh/shord/apps/samples/LeakGeoLocation/bin/Malware-debug.apk:/Users/gestalt/code/stamp/github_fresh/shord/${stamp.out.dir}/stamp-driver -Dverbose=2 -Dbdd=j -Dbasedir=/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/bddbddb net.sf.bddbddb.Solver /Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pt.dlog '
 Initializing BDD library (500000 nodes, cache size 125000, min free 0.2%)
 Using BDD library JFactory 1.28
@@ -1373,50 +1372,50 @@ list1:
         fpt(o1:C2,f:F0,o2:C1) :- pt(c:C0,v:V0,o2:C1), Store(u:V1,f:F0,v:V0), pt(c:C0,u:V1,o1:C2).
       fptStat(f:F0,o:C1) :- pt(_:C0,v:V0,o:C1), StoreStat(f:F0,v:V0).
       pt(c:C1,y:V0,o:C0) :- LoadStat(y:V0,f:F0), fptStat(f:F0,o:C0), MV(m:M0,y:V0), CM(c:C1,m:M0).
-done. (46 ms)
+done. (29 ms)
 Solving: 
-done. (583 ms)
-SOLVE_TIME=583
+done. (510 ms)
+SOLVE_TIME=510
 MAX_NODES=499979
-FINAL_NODES=131775
+FINAL_NODES=121399
 Rule pt(c:C1,y:V0,o:C0) :- LoadStat(y:V0,f:F0), fptStat(f:F0,o:C0), MV(m:M0,y:V0), CM(c:C1,m:M0).
    Updates: 3
-   Time: 5 ms
+   Time: 3 ms
    Longest Iteration: 0 (0 ms)
 Rule pt(c:C0,y:V1,o2:C2) :- pt(c:C0,x:V0,o1:C1), Load(y:V1,x:V0,f:F0), fpt(o1:C1,f:F0,o2:C2).
    Updates: 34
    Time: 11 ms
    Longest Iteration: 0 (0 ms)
-Rule fpt(o1:C2,f:F0,o2:C1) :- pt(c:C0,v:V0,o2:C1), Store(u:V1,f:F0,v:V0), pt(c:C0,u:V1,o1:C2).
-   Updates: 8
-   Time: 13 ms
-   Longest Iteration: 0 (0 ms)
 Rule fptStat(f:F0,o:C1) :- pt(_:C0,v:V0,o:C1), StoreStat(f:F0,v:V0).
    Updates: 3
-   Time: 19 ms
+   Time: 13 ms
    Longest Iteration: 0 (0 ms)
 Rule pt(c:C0,v:V0,o:C1) :- Alloc(v:V0,h:H0), MV(m:M0,v:V0), CM(c:C0,m:M0), CC(c:C0,o:C1), CH(o:C1,h:H0).
    Updates: 1
-   Time: 52 ms
+   Time: 28 ms
    Longest Iteration: 0 (0 ms)
 Rule pt(c:C2,u:V1,o:C1) :- pt(d:C0,v:V0,o:C1), return(u:V1,v:V0,i:I0), CI(d:C0,i:I0), CC(c:C2,d:C0), typeFilter(u:V1,o:C1).
    Updates: 19
-   Time: 53 ms
+   Time: 48 ms
    Longest Iteration: 0 (0 ms)
 Rule pt(c:C0,v:V1,o:C1) :- pt(c:C0,u:V0,o:C1), Assign(v:V1,u:V0), typeFilter(v:V1,o:C1).
    Updates: 103
-   Time: 137 ms
+   Time: 60 ms
+   Longest Iteration: 0 (0 ms)
+Rule fpt(o1:C2,f:F0,o2:C1) :- pt(c:C0,v:V0,o2:C1), Store(u:V1,f:F0,v:V0), pt(c:C0,u:V1,o1:C2).
+   Updates: 8
+   Time: 74 ms
    Longest Iteration: 0 (0 ms)
 Rule pt(d:C2,u:V1,o:C1) :- pt(c:C0,v:V0,o:C1), param(u:V1,v:V0,i:I0), typeFilter(u:V1,o:C1), CC(c:C0,d:C2), CI(d:C2,i:I0).
    Updates: 66
-   Time: 287 ms
+   Time: 267 ms
    Longest Iteration: 0 (0 ms)
-Relation pt: 4353 nodes, 2585.0 elements (V0,C0,C1)
+Relation pt: 4394 nodes, 2585.0 elements (V0,C0,C1)
 Finished command: 'java -ea -Xmx4096m -cp /Users/gestalt/code/stamp/github_fresh/shord/bin/stamp.main.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/soot.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/commons-lang3-3.1.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/stamp.chord.jar:/Users/gestalt/code/stamp/github_fresh/shord/scanner/stamp.scanner.jar:/Users/gestalt/code/stamp/github_fresh/shord/apps/samples/LeakGeoLocation/bin/Malware-debug.apk:/Users/gestalt/code/stamp/github_fresh/shord/${stamp.out.dir}/stamp-driver -Dverbose=2 -Dbdd=j -Dbasedir=/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/bddbddb net.sf.bddbddb.Solver /Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/pt.dlog '
 LEAVE: pt-dlog
-Exclusive time: 00:00:07:942 hh:mm:ss:ms
-Inclusive time: 00:00:07:942 hh:mm:ss:ms
-ENTER: taint-dlog at Mon Jul 01 17:10:22 PDT 2013
+Exclusive time: 00:00:02:028 hh:mm:ss:ms
+Inclusive time: 00:00:02:028 hh:mm:ss:ms
+ENTER: taint-dlog at Mon Jul 01 20:36:03 PDT 2013
 Starting command: 'java -ea -Xmx4096m -cp /Users/gestalt/code/stamp/github_fresh/shord/bin/stamp.main.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/soot.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/commons-lang3-3.1.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/stamp.chord.jar:/Users/gestalt/code/stamp/github_fresh/shord/scanner/stamp.scanner.jar:/Users/gestalt/code/stamp/github_fresh/shord/apps/samples/LeakGeoLocation/bin/Malware-debug.apk:/Users/gestalt/code/stamp/github_fresh/shord/${stamp.out.dir}/stamp-driver -Dverbose=2 -Dbdd=j -Dbasedir=/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/bddbddb net.sf.bddbddb.Solver /Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog '
 Initializing BDD library (500000 nodes, cache size 125000, min free 0.2%)
 Using BDD library JFactory 1.28
@@ -1480,17 +1479,13 @@ list1:
     sink(c:C0,u:V0,l:L0) :- flowRefPrim(u:V0,v:U0), labelPrim(c:C0,v:U0,l:L0), SinkLabel(l:L0).
     sink(c:C0,u:V0,l:L0) :- flowRefRef(u:V0,v:V1), pt(c:C0,v:V1,o:C1), label(o:C1,l:L0), SinkLabel(l:L0).
     flow(src:L1,sink:L0) :- sink(c:C0,u:V0,sink:L0), pt(c:C0,u:V0,o:C1), label(o:C1,src:L1), SrcLabel(src:L1).
-done. (67 ms)
+done. (56 ms)
 Solving: 
-done. (591 ms)
-SOLVE_TIME=591
+done. (311 ms)
+SOLVE_TIME=311
 MAX_NODES=499979
-FINAL_NODES=64396
+FINAL_NODES=46881
 Rule varLabel(v:V0,l:L0) :- LabelRet(l:L0,m:M0), MmethRet(m:M0,_:Z0,v:V0).
-   Updates: 1
-   Time: 0 ms
-   Longest Iteration: 0 (0 ms)
-Rule varLabel(v:V0,l:L0) :- LabelArg(l:L0,m:M0,z:Z0), MmethArg(m:M0,z:Z0,v:V0).
    Updates: 1
    Time: 0 ms
    Longest Iteration: 0 (0 ms)
@@ -1502,11 +1497,11 @@ Rule varLabelPrim(v:U0,l:L0) :- LabelArg(l:L0,m:M0,z:Z0), MmethPrimArg(m:M0,z:Z0
    Updates: 1
    Time: 0 ms
    Longest Iteration: 0 (0 ms)
-Rule transferPrimRef(u:U0,v:V0) :- ArgArgTransfer(m:M0,z0:Z0,z1:Z1), MmethPrimArg(m:M0,z0:Z0,u:U0), MmethArg(m:M0,z1:Z1,v:V0).
+Rule transferRefPrim(u:V0,v:U0) :- ArgArgTransfer(m:M0,z0:Z0,z1:Z1), MmethArg(m:M0,z0:Z0,u:V0), MmethPrimArg(m:M0,z1:Z1,v:U0).
    Updates: 1
    Time: 0 ms
    Longest Iteration: 0 (0 ms)
-Rule transferPrimPrim(u:U0,v:U1) :- ArgArgTransfer(m:M0,z0:Z0,z1:Z1), MmethPrimArg(m:M0,z0:Z0,u:U0), MmethPrimArg(m:M0,z1:Z1,v:U1).
+Rule transferPrimRef(u:U0,v:V0) :- ArgArgTransfer(m:M0,z0:Z0,z1:Z1), MmethPrimArg(m:M0,z0:Z0,u:U0), MmethArg(m:M0,z1:Z1,v:V0).
    Updates: 1
    Time: 0 ms
    Longest Iteration: 0 (0 ms)
@@ -1522,15 +1517,19 @@ Rule transferPrimPrim(u:U0,v:U1) :- ArgRetTransfer(m:M0,z:Z0), MmethPrimArg(m:M0
    Updates: 1
    Time: 0 ms
    Longest Iteration: 0 (0 ms)
+Rule flowRefPrim(u:V0,v:U0) :- ArgArgFlow(m:M0,z0:Z0,z1:Z1), MmethArg(m:M0,z0:Z0,u:V0), MmethPrimArg(m:M0,z1:Z1,v:U0).
+   Updates: 1
+   Time: 0 ms
+   Longest Iteration: 0 (0 ms)
+Rule flowPrimPrim(u:U0,v:U1) :- ArgArgFlow(m:M0,z0:Z0,z1:Z1), MmethPrimArg(m:M0,z0:Z0,u:U0), MmethPrimArg(m:M0,z1:Z1,v:U1).
+   Updates: 1
+   Time: 0 ms
+   Longest Iteration: 0 (0 ms)
 Rule sink(c:C0,u:V0,l:L0) :- flowRefRef(u:V0,v:V1), pt(c:C0,v:V1,o:C1), label(o:C1,l:L0), SinkLabel(l:L0).
    Updates: 1
    Time: 0 ms
    Longest Iteration: 0 (0 ms)
 Rule sink(c:C0,u:V0,l:L0) :- flowRefPrim(u:V0,v:U0), labelPrim(c:C0,v:U0,l:L0), SinkLabel(l:L0).
-   Updates: 1
-   Time: 0 ms
-   Longest Iteration: 0 (0 ms)
-Rule sinkPrim(c:C0,u:U0,l:L0) :- CM(c:C0,m:M0), MU(m:M0,u:U0), varLabelPrim(u:U0,l:L0), SinkLabel(l:L0).
    Updates: 1
    Time: 0 ms
    Longest Iteration: 0 (0 ms)
@@ -1554,6 +1553,10 @@ Rule labelPrim(c:C0,v:U1,l:L0) :- transferPrimPrim(u:U0,v:U1), labelPrim(c:C0,u:
    Updates: 12
    Time: 0 ms
    Longest Iteration: 0 (0 ms)
+Rule labelPrimFld(o:C1,f:F0,l:L0) :- labelPrim(c:C0,v:U0,l:L0), StorePrim(u:V0,f:F0,v:U0), pt(c:C0,u:V0,o:C1).
+   Updates: 5
+   Time: 0 ms
+   Longest Iteration: 0 (0 ms)
 Rule labelPrim(c:C1,y:U0,l:L0) :- LoadPrim(y:U0,x:V0,f:F0), labelPrimFld(o:C0,f:F0,l:L0), pt(c:C1,x:V0,o:C0).
    Updates: 5
    Time: 0 ms
@@ -1570,6 +1573,10 @@ Rule out_taintedPrimVar(l:L0,v:U0) :- labelPrim(_:C0,v:U0,l:L0).
    Updates: 1
    Time: 0 ms
    Longest Iteration: 0 (0 ms)
+Rule out_taintSrc(l:L0,m:M0) :- chaIM(_:I0,m:M0), LabelRet(l:L0,m:M0), SrcLabel(l:L0).
+   Updates: 1
+   Time: 0 ms
+   Longest Iteration: 0 (0 ms)
 Rule out_taintSink(l:L0,m:M0) :- chaIM(_:I0,m:M0), LabelArg(l:L0,m:M0,_:Z0), SinkLabel(l:L0).
    Updates: 1
    Time: 0 ms
@@ -1578,15 +1585,11 @@ Rule transferRefRef(u:V0,v:V1) :- ArgArgTransfer(m:M0,z0:Z0,z1:Z1), MmethArg(m:M
    Updates: 1
    Time: 1 ms
    Longest Iteration: 0 (0 ms)
+Rule transferPrimPrim(u:U0,v:U1) :- ArgArgTransfer(m:M0,z0:Z0,z1:Z1), MmethPrimArg(m:M0,z0:Z0,u:U0), MmethPrimArg(m:M0,z1:Z1,v:U1).
+   Updates: 1
+   Time: 1 ms
+   Longest Iteration: 0 (0 ms)
 Rule transferRefRef(u:V0,v:V1) :- ArgRetTransfer(m:M0,z:Z0), MmethArg(m:M0,z:Z0,u:V0), MmethRet(m:M0,_:Z1,v:V1).
-   Updates: 1
-   Time: 1 ms
-   Longest Iteration: 0 (0 ms)
-Rule flowRefPrim(u:V0,v:U0) :- ArgArgFlow(m:M0,z0:Z0,z1:Z1), MmethArg(m:M0,z0:Z0,u:V0), MmethPrimArg(m:M0,z1:Z1,v:U0).
-   Updates: 1
-   Time: 1 ms
-   Longest Iteration: 0 (0 ms)
-Rule flowPrimPrim(u:U0,v:U1) :- ArgArgFlow(m:M0,z0:Z0,z1:Z1), MmethPrimArg(m:M0,z0:Z0,u:U0), MmethPrimArg(m:M0,z1:Z1,v:U1).
    Updates: 1
    Time: 1 ms
    Longest Iteration: 0 (0 ms)
@@ -1594,83 +1597,79 @@ Rule flow(src:L1,sink:L0) :- sink(c:C0,u:V0,sink:L0), pt(c:C0,u:V0,o:C1), label(
    Updates: 1
    Time: 1 ms
    Longest Iteration: 0 (0 ms)
+Rule label(o:C1,l:L0) :- transferPrimRef(u:U0,v:V0), labelPrim(c:C0,u:U0,l:L0), pt(c:C0,v:V0,o:C1).
+   Updates: 6
+   Time: 1 ms
+   Longest Iteration: 0 (0 ms)
 Rule labelPrim(c:C0,v:U0,l:L0) :- AssignPrim(v:U0,u:U1), labelPrim(c:C0,u:U1,l:L0).
    Updates: 11
    Time: 1 ms
    Longest Iteration: 0 (0 ms)
-Rule labelPrimFld(o:C1,f:F0,l:L0) :- labelPrim(c:C0,v:U0,l:L0), StorePrim(u:V0,f:F0,v:U0), pt(c:C0,u:V0,o:C1).
-   Updates: 5
-   Time: 1 ms
-   Longest Iteration: 0 (0 ms)
-Rule out_taintSrc(l:L0,m:M0) :- chaIM(_:I0,m:M0), LabelRet(l:L0,m:M0), SrcLabel(l:L0).
+Rule varLabel(v:V0,l:L0) :- LabelArg(l:L0,m:M0,z:Z0), MmethArg(m:M0,z:Z0,v:V0).
    Updates: 1
-   Time: 1 ms
-   Longest Iteration: 0 (0 ms)
-Rule labelPrim(d:C1,u:U1,l:L0) :- labelPrim(c:C0,v:U0,l:L0), paramPrim(u:U1,v:U0,i:I0), CC(c:C0,d:C1), CI(d:C1,i:I0).
-   Updates: 13
-   Time: 5 ms
-   Longest Iteration: 0 (0 ms)
-Rule labelPrim(c:C1,u:U1,l:L0) :- labelPrim(d:C0,v:U0,l:L0), returnPrim(u:U1,v:U0,i:I0), CI(d:C0,i:I0), CC(c:C1,d:C0).
-   Updates: 9
-   Time: 5 ms
-   Longest Iteration: 0 (0 ms)
-Rule out_reachableM(m:M0) :- CM(_:C0,m:M0).
-   Updates: 1
-   Time: 6 ms
-   Longest Iteration: 0 (0 ms)
-Rule transferRefPrim(u:V0,v:U0) :- ArgArgTransfer(m:M0,z0:Z0,z1:Z1), MmethArg(m:M0,z0:Z0,u:V0), MmethPrimArg(m:M0,z1:Z1,v:U0).
-   Updates: 1
-   Time: 7 ms
-   Longest Iteration: 0 (0 ms)
-Rule label(o:C1,l:L0) :- varLabel(v:V0,l:L0), CM(c:C0,m:M0), MV(m:M0,v:V0), pt(c:C0,v:V0,o:C1).
-   Updates: 1
-   Time: 19 ms
-   Longest Iteration: 0 (0 ms)
-Rule label(o:C1,l:L0) :- transferPrimRef(u:U0,v:V0), labelPrim(c:C0,u:U0,l:L0), pt(c:C0,v:V0,o:C1).
-   Updates: 6
-   Time: 26 ms
+   Time: 2 ms
    Longest Iteration: 0 (0 ms)
 Rule out_taintSrc(l:L0,m:M0) :- chaIM(_:I0,m:M0), LabelArg(l:L0,m:M0,_:Z0), SrcLabel(l:L0).
    Updates: 1
-   Time: 28 ms
-   Longest Iteration: 0 (0 ms)
-Rule sink(c:C0,u:V0,l:L0) :- CM(c:C0,m:M0), MV(m:M0,u:V0), varLabel(u:V0,l:L0), SinkLabel(l:L0).
-   Updates: 1
-   Time: 40 ms
-   Longest Iteration: 0 (0 ms)
-Rule out_taintedRefVar(l:L0,v:V0) :- label(o:C0,l:L0), pt(_:C1,v:V0,o:C0).
-   Updates: 1
-   Time: 40 ms
-   Longest Iteration: 0 (0 ms)
-Rule flowRefRef(u:V0,v:V1) :- ArgArgFlow(m:M0,z0:Z0,z1:Z1), MmethArg(m:M0,z0:Z0,u:V0), MmethArg(m:M0,z1:Z1,v:V1).
-   Updates: 1
-   Time: 67 ms
-   Longest Iteration: 0 (0 ms)
-Rule labelPrim(c:C0,v:U0,l:L0) :- varLabelPrim(v:U0,l:L0), CM(c:C0,m:M0), MU(m:M0,v:U0).
-   Updates: 1
-   Time: 87 ms
-   Longest Iteration: 0 (0 ms)
-Rule label(o2:C2,l:L0) :- transferRefRef(u:V0,v:V1), pt(c:C0,u:V0,o1:C1), label(o1:C1,l:L0), pt(c:C0,v:V1,o2:C2).
-   Updates: 4
-   Time: 112 ms
+   Time: 2 ms
    Longest Iteration: 0 (0 ms)
 Rule flowPrimRef(u:U0,v:V0) :- ArgArgFlow(m:M0,z0:Z0,z1:Z1), MmethPrimArg(m:M0,z0:Z0,u:U0), MmethArg(m:M0,z1:Z1,v:V0).
    Updates: 1
-   Time: 138 ms
+   Time: 3 ms
+   Longest Iteration: 0 (0 ms)
+Rule labelPrim(c:C1,u:U1,l:L0) :- labelPrim(d:C0,v:U0,l:L0), returnPrim(u:U1,v:U0,i:I0), CI(d:C0,i:I0), CC(c:C1,d:C0).
+   Updates: 9
+   Time: 4 ms
+   Longest Iteration: 0 (0 ms)
+Rule out_reachableM(m:M0) :- CM(_:C0,m:M0).
+   Updates: 1
+   Time: 5 ms
+   Longest Iteration: 0 (0 ms)
+Rule label(o:C1,l:L0) :- varLabel(v:V0,l:L0), CM(c:C0,m:M0), MV(m:M0,v:V0), pt(c:C0,v:V0,o:C1).
+   Updates: 1
+   Time: 7 ms
+   Longest Iteration: 0 (0 ms)
+Rule sink(c:C0,u:V0,l:L0) :- CM(c:C0,m:M0), MV(m:M0,u:V0), varLabel(u:V0,l:L0), SinkLabel(l:L0).
+   Updates: 1
+   Time: 9 ms
+   Longest Iteration: 0 (0 ms)
+Rule label(o2:C2,l:L0) :- transferRefRef(u:V0,v:V1), pt(c:C0,u:V0,o1:C1), label(o1:C1,l:L0), pt(c:C0,v:V1,o2:C2).
+   Updates: 4
+   Time: 15 ms
+   Longest Iteration: 0 (0 ms)
+Rule out_taintedRefVar(l:L0,v:V0) :- label(o:C0,l:L0), pt(_:C1,v:V0,o:C0).
+   Updates: 1
+   Time: 19 ms
+   Longest Iteration: 0 (0 ms)
+Rule labelPrim(d:C1,u:U1,l:L0) :- labelPrim(c:C0,v:U0,l:L0), paramPrim(u:U1,v:U0,i:I0), CC(c:C0,d:C1), CI(d:C1,i:I0).
+   Updates: 13
+   Time: 27 ms
+   Longest Iteration: 0 (0 ms)
+Rule sinkPrim(c:C0,u:U0,l:L0) :- CM(c:C0,m:M0), MU(m:M0,u:U0), varLabelPrim(u:U0,l:L0), SinkLabel(l:L0).
+   Updates: 1
+   Time: 34 ms
+   Longest Iteration: 0 (0 ms)
+Rule flowRefRef(u:V0,v:V1) :- ArgArgFlow(m:M0,z0:Z0,z1:Z1), MmethArg(m:M0,z0:Z0,u:V0), MmethArg(m:M0,z1:Z1,v:V1).
+   Updates: 1
+   Time: 60 ms
+   Longest Iteration: 0 (0 ms)
+Rule labelPrim(c:C0,v:U0,l:L0) :- varLabelPrim(v:U0,l:L0), CM(c:C0,m:M0), MU(m:M0,v:U0).
+   Updates: 1
+   Time: 116 ms
    Longest Iteration: 0 (0 ms)
 Relation flow: 14 nodes, 2.0 elements (L0,L1)
-Relation out_reachableM: 208 nodes, 214.0 elements (M0)
+Relation out_reachableM: 207 nodes, 214.0 elements (M0)
 Relation out_taintedRefVar: 126 nodes, 122.0 elements (V0,L0)
 Relation out_taintedPrimVar: 28 nodes, 10.0 elements (L0,U0)
 Relation out_taintSrc: 54 nodes, 5.0 elements (M0,L0)
 Relation out_taintSink: 32 nodes, 2.0 elements (M0,L0)
 Finished command: 'java -ea -Xmx4096m -cp /Users/gestalt/code/stamp/github_fresh/shord/bin/stamp.main.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/soot.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/commons-lang3-3.1.jar:/Users/gestalt/code/stamp/github_fresh/shord/lib/stamp.chord.jar:/Users/gestalt/code/stamp/github_fresh/shord/scanner/stamp.scanner.jar:/Users/gestalt/code/stamp/github_fresh/shord/apps/samples/LeakGeoLocation/bin/Malware-debug.apk:/Users/gestalt/code/stamp/github_fresh/shord/${stamp.out.dir}/stamp-driver -Dverbose=2 -Dbdd=j -Dbasedir=/Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/bddbddb net.sf.bddbddb.Solver /Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/chord_output/dlog/taint.dlog '
 LEAVE: taint-dlog
-Exclusive time: 00:00:05:668 hh:mm:ss:ms
-Inclusive time: 00:00:05:668 hh:mm:ss:ms
-ENTER: post-java at Mon Jul 01 17:10:27 PDT 2013
+Exclusive time: 00:00:01:691 hh:mm:ss:ms
+Inclusive time: 00:00:01:691 hh:mm:ss:ms
+ENTER: post-java at Mon Jul 01 20:36:05 PDT 2013
 LEAVE: post-java
-Exclusive time: 00:00:18:886 hh:mm:ss:ms
-Inclusive time: 00:00:18:886 hh:mm:ss:ms
-Chord run completed at: Jul 1, 2013 5:10:46 PM
-Total time: 00:01:45:809 hh:mm:ss:ms
+Exclusive time: 00:00:09:270 hh:mm:ss:ms
+Inclusive time: 00:00:09:270 hh:mm:ss:ms
+Chord run completed at: Jul 1, 2013 8:36:14 PM
+Total time: 00:00:55:088 hh:mm:ss:ms

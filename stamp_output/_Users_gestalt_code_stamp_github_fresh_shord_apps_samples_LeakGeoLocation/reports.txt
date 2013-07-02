@@ -2,4 +2,3 @@ Sources /Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt
 Sinks /Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/results/ArgSinkFlow.xml
 Source-to-sink Flows /Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/results/SrcSinkFlow.xml
 Tainted Vars /Users/gestalt/code/stamp/github_fresh/shord/stamp_output/_Users_gestalt_code_stamp_github_fresh_shord_apps_samples_LeakGeoLocation/results/TaintedVar.xml
-Flow Visual /Users/gestalt/code/stamp/github_fresh/shord/flowtest.xml
