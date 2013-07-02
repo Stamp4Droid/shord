@@ -1,6 +1,0 @@
-<root>
-<class chordsig="org.apache.http.cookie.params.CookieSpecPNames" line="2">
-	<type  start="95" length="16" line="4" chordsig="java.lang.String"/>
-	<type  start="185" length="16" line="5" chordsig="java.lang.String"/>
-</class>
-</root>

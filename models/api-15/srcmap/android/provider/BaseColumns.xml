@@ -1,6 +1,0 @@
-<root>
-<class chordsig="android.provider.BaseColumns" line="2">
-	<type  start="77" length="16" line="4" chordsig="java.lang.String"/>
-	<type  start="127" length="16" line="5" chordsig="java.lang.String"/>
-</class>
-</root>

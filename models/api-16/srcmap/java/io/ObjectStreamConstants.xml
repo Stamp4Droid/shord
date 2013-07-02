@@ -1,6 +1,0 @@
-<root>
-<class chordsig="java.io.ObjectStreamConstants" line="2">
-	<type  start="1018" length="30" line="25" chordsig="java.io.SerializablePermission"/>
-	<type  start="1112" length="30" line="26" chordsig="java.io.SerializablePermission"/>
-</class>
-</root>

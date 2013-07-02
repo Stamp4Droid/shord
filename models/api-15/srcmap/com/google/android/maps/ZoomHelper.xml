@@ -1,9 +1,0 @@
-<root>
-<class chordsig="com.google.android.maps.ZoomHelper" line="3">
-<class chordsig="com.google.android.maps.ZoomHelper$Snapshot" line="7">
-	<type  start="133" length="23" line="9" chordsig="android.graphics.Bitmap"/>
-	<type  start="183" length="32" line="10" chordsig="com.google.android.maps.GeoPoint"/>
-	<type  start="246" length="51" line="11" chordsig="android_maps_conflict_avoidance.com.google.map.Zoom"/>
-</class>
-</class>
-</root>

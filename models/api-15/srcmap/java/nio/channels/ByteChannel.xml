@@ -1,6 +1,0 @@
-<root>
-<class chordsig="java.nio.channels.ByteChannel" line="2">
-	<type  start="66" length="37" line="3" chordsig="java.nio.channels.ReadableByteChannel"/>
-	<type  start="105" length="37" line="3" chordsig="java.nio.channels.WritableByteChannel"/>
-</class>
-</root>

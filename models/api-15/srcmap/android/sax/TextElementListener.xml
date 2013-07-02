@@ -1,6 +1,0 @@
-<root>
-<class chordsig="android.sax.TextElementListener" line="2">
-	<type  start="68" length="32" line="3" chordsig="android.sax.StartElementListener"/>
-	<type  start="102" length="34" line="3" chordsig="android.sax.EndTextElementListener"/>
-</class>
-</root>
