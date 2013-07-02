@@ -4,12 +4,14 @@
 .project
 .classpath
 .settings
+timestamp.txt
 
 # Package Files #
 *.war
 *.ear
 
 bin/*.jar
+bin/api-*/*
 
 models/api-*/*
 stamp_output/*
