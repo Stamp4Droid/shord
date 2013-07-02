@@ -1,7 +1,10 @@
 local.config
 
-*.class
 *~
+#*#
+.#*
+
+*.class
 *.apk
 .project
 .classpath
