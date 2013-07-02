@@ -1,7 +1,20 @@
 *.class
 *~
+*.apk
+.project
+.classpath
+.settings
 
 # Package Files #
-*.jar
 *.war
 *.ear
+
+bin/*.jar
+
+models/api-*/*
+stamp_output/*
+apps/*
+
+tomcat/logs/*
+tomcat/work/Catalina/localhost/*
+tomcat/webapps/*
