@@ -20,46 +20,55 @@ import stamp.jcflsolver.grammars.*;
     private static final MultivalueMap<String,Relation> relations = new MultivalueMap<String,Relation>();
     static {
 	// ref assign
-	relations.add("cs_refAssign", new IndexRelation("cfl_cs_assign", "V", 2, 0, "V", 1, 0));
-	relations.add("cs_refAssign", new IndexRelation("cfl_cs_loadStat", "F", 2, null, "V", 1, 0));
-	relations.add("cs_refAssign", new IndexRelation("cfl_cs_storeStat", "V", 2, 0, "F", 1, null));
+	relations.add("cs_refAssign", new IndexRelation("AssignCtxt", "V", 2, 0, "V", 1, 0));
+	relations.add("cs_refAssign", new IndexRelation("LoadStatCtxt", "F", 2, null, "V", 1, 0));
+	relations.add("cs_refAssign", new IndexRelation("StoreStatCtxt", "V", 2, 0, "F", 1, null));
 
-	relations.add("cs_refAssignArg", new IndexRelation("cfl_cs_assignInterprocArg", "V", 3, 2, "V", 1, 0));
-	relations.add("cs_refAssignRet", new IndexRelation("cfl_cs_assignInterprocRet", "V", 3, 2, "V", 1, 0));
+	relations.add("cs_refAssignArg", new IndexRelation("AssignArgCtxt", "V", 3, 2, "V", 1, 0));
+	relations.add("cs_refAssignRet", new IndexRelation("AssignRetCtxt", "V", 3, 2, "V", 1, 0));
 
 	// ref alloc
-	relations.add("cs_refAlloc", new IndexRelation("cfl_cs_alloc", "C", 2, null, "V", 1, 0));
+	relations.add("cs_refAlloc", new IndexRelation("AllocCtxt", "C", 2, null, "V", 1, 0));
 
 	// ref load/store
-	//relations.add("cs_refLoad", new IndexRelation("cfl_cs_loadInst", "V", 2, 0, "V", 1, 0, 3));
-	//relations.add("cs_refStore", new IndexRelation("cfl_cs_storeInst", "V", 3, 0, "V", 1, 0, 2));
+	relations.add("cs_refLoad", new IndexRelation("LoadCtxt", "V", 2, 0, "V", 1, 0, 3));
+	relations.add("cs_refStore", new IndexRelation("StoreCtxt", "V", 3, 0, "V", 1, 0, 2));
 
 	// cross load/store
-	relations.add("cs_primStore", new IndexRelation("cfl_cs_primStoreInst", "U", 3, 0, "V", 1, 0, 2));
-	relations.add("cs_primLoad", new IndexRelation("cfl_cs_primLoadInst", "V", 2, 0, "U", 1, 0, 3));
+	relations.add("cs_primStore", new IndexRelation("StorePrimCtxt", "U", 3, 0, "V", 1, 0, 2));
+	relations.add("cs_primLoad", new IndexRelation("LoadPrimCtxt", "V", 2, 0, "U", 1, 0, 3));
 
 	// prim assign
-	relations.add("cs_primAssign", new IndexRelation("cfl_cs_primAssign", "U", 2, 0, "U", 1, 0));
-	relations.add("cs_primAssign", new IndexRelation("cfl_cs_primLoadStat", "F", 2, null, "U", 1, 0));
-	relations.add("cs_primAssign", new IndexRelation("cfl_cs_primStoreStat", "U", 2, 0, "F", 1, null));
+	relations.add("cs_primAssign", new IndexRelation("AssignPrimCtxt", "U", 2, 0, "U", 1, 0));
+	relations.add("cs_primAssign", new IndexRelation("LoadStatPrimCtxt", "F", 2, null, "U", 1, 0));
+	relations.add("cs_primAssign", new IndexRelation("StoreStatPrimCtxt", "U", 2, 0, "F", 1, null));
 
-	relations.add("cs_primAssignArg", new IndexRelation("cfl_cs_primAssignInterprocArg", "U", 3, 2, "U", 1, 0));
-	relations.add("cs_primAssignRet", new IndexRelation("cfl_cs_primAssignInterprocRet", "U", 3, 2, "U", 1, 0));
+	relations.add("cs_primAssignArg", new IndexRelation("AssignArgPrimCtxt", "U", 3, 2, "U", 1, 0));
+	relations.add("cs_primAssignRet", new IndexRelation("AssignRetPrimCtxt", "U", 3, 2, "U", 1, 0));
+
+	// Flows To relation
+	relations.add("flowsTo", new IndexRelation("pt", "C", 2, null, "V", 1, 0));
 
 	// ref taint flow
-	relations.add("cs_srcRefFlow", new IndexRelation("cfl_cs_fullSrcFlow", "SRC", 1, null, "V", 2, 0));
-	relations.add("cs_refRefFlow", new IndexRelation("cfl_cs_fullPassThrough", "V", 1, 0, "V", 2, 0));
-	relations.add("cs_refSinkFlow", new IndexRelation("cfl_cs_fullSinkFlow", "V", 1, 0, "SINK", 2, null));
+	relations.add("cs_srcRefFlow", new IndexRelation("SrcArgFlowCtxt", "L", 1, null, "V", 2, 0));
+	relations.add("cs_srcRefFlow", new IndexRelation("SrcRetFlowCtxt", "L", 1, null, "V", 2, 0));
+	relations.add("cs_refSinkFlow", new IndexRelation("ArgSinkFlowCtxt", "V", 1, 0, "L", 2, null));
+	relations.add("cs_refRefFlow", new IndexRelation("ArgArgTransferCtxt", "V", 1, 0, "V", 2, 0));
+	relations.add("cs_refRefFlow", new IndexRelation("ArgRetTransferCtxt", "V", 1, 0, "V", 2, 0));
 
 	// prim taint flow
-	relations.add("cs_srcPrimFlow", new IndexRelation("cfl_cs_primFullSrcFlow", "SRC", 1, null, "U", 2, 0));
-	relations.add("cs_primPrimFlow", new IndexRelation("cfl_cs_primFullPassThrough", "U", 1, 0, "U", 2, 0));
-	relations.add("cs_primSinkFlow", new IndexRelation("cfl_cs_primFullSinkFlow", "U", 1, 0, "SINK", 2, null));
+	relations.add("cs_srcPrimFlow", new IndexRelation("SrcArgPrimFlowCtxt", "L", 1, null, "U", 2, 0));
+	relations.add("cs_srcPrimFlow", new IndexRelation("SrcRetPrimFlowCtxt", "L", 1, null, "U", 2, 0));
+	relations.add("cs_primSinkFlow", new IndexRelation("ArgSinkPrimFlowCtxt", "U", 1, 0, "L", 2, null));
+	relations.add("cs_primPrimFlow", new IndexRelation("ArgPrimRetPrimTransferCtxt", "U", 1, 0, "U", 2, 0));
 
 	// cross taint flow
-	relations.add("cs_primRefFlow", new IndexRelation("cfl_cs_primRefFullFlow", "U", 1, 0, "V", 2, 0));
-	relations.add("cs_refPrimFlow", new IndexRelation("cfl_cs_refPrimFullFlow", "V", 1, 0, "U", 2, 0));
+	relations.add("cs_primRefFlow", new IndexRelation("ArgPrimRetTransferCtxt", "U", 1, 0, "V", 2, 0));
+	relations.add("cs_primRefFlow", new IndexRelation("ArgPrimArgTransferCtxt", "U", 1, 0, "V", 2, 0));
+	relations.add("cs_primRefFlow", new IndexRelation("ArgPrimRetTransferCtxt", "U", 1, 0, "V", 2, 0));
+	relations.add("cs_refPrimFlow", new IndexRelation("ArgPrimRetTransferCtxt", "V", 1, 0, "U", 2, 0));
 
+	/*
 	// ref stub taint flow
 	relations.add("cs_passThroughStub", new StubIndexRelation("cfl_cs_passThroughArgStub", "V", 1, 0, "V", 2, 0, 3, 4, 5));
 	relations.add("cs_passThroughStub", new StubIndexRelation("cfl_cs_passThroughRetStub", "V", 1, 0, "V", 2, 0, 3, 4));
@@ -71,9 +80,7 @@ import stamp.jcflsolver.grammars.*;
 	// cross stub taint flow
 	relations.add("cs_primRefFlowStub", new StubIndexRelation("cfl_cs_primRefArgFlowStub", "U", 1, 0, "V", 2, 0, 3, 4, 5));
 	relations.add("cs_primRefFlowStub", new StubIndexRelation("cfl_cs_primRefRetFlowStub", "U", 1, 0, "V", 2, 0, 3, 4));
-
-	// Flows To relation
-	relations.add("flowsTo", new IndexRelation("pt", "C", 2, null, "V", 1, 0));
+	*/
 	
 	// Phantom flows to relation
 	//relations.add("flowsTo", new PhantomIndexRelation("cs_ptPhantom", 2, "V", 1, 0, "V", 3, 4));
@@ -151,15 +158,27 @@ import stamp.jcflsolver.grammars.*;
 	}
 
 	@Override protected String getSourceFromTuple(int[] tuple) {
-	    return firstVarType + Integer.toString(tuple[firstVarIndex]) + (hasFirstCtxt ? "_" + Integer.toString(tuple[firstCtxtIndex]) : "");
+	    try {
+		return firstVarType + Integer.toString(tuple[firstVarIndex]) + (hasFirstCtxt ? "_" + Integer.toString(tuple[firstCtxtIndex]) : "");
+	    } catch(Exception e) {
+		throw new RuntimeException("Error parsing relation " + getRelationName() + "!");
+	    }
 	}
 
 	@Override protected String getSinkFromTuple(int[] tuple) {
-	    return secondVarType + Integer.toString(tuple[secondVarIndex]) + (hasSecondCtxt ? "_" + Integer.toString(tuple[secondCtxtIndex]) : "");
+	    try {
+		return secondVarType + Integer.toString(tuple[secondVarIndex]) + (hasSecondCtxt ? "_" + Integer.toString(tuple[secondCtxtIndex]) : "");
+	    } catch(Exception e) {
+		throw new RuntimeException("Error parsing relation " + getRelationName() + "!");
+	    }
 	}
 
 	@Override protected int getLabelFromTuple(int[] tuple) {
-	    return tuple[labelIndex];
+	    try {
+		return tuple[labelIndex];
+	    } catch(Exception e) {
+		throw new RuntimeException("Error parsing relation " + getRelationName() + "!");
+	    }
 	}
 
 	@Override protected boolean hasLabel() {
