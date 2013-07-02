@@ -62,7 +62,7 @@ libPath=${stamp.lib.jars}
     <!-- Launch browser. -->
     <exec executable="${stamp.browser}"
             spawn="true"
-            os="unix">
+            os="Linux">
       <arg value="localhost:8080/stamp/html/index.jsp?propertyfile=${stamp.out.dir}/stamp.properties"/>
     </exec>
     <exec executable="open"
