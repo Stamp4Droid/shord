@@ -1,9 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="STAMP-DroidRecord">
 
-  <property name="stamp.droidrecord.logdir" value="${app.dir}/sdcard"/>
-  <property name="stamp.droidrecord.logfile.text" value="${stamp.droidrecord.logdir}/droidrecord.log"/>
-  <property name="stamp.droidrecord.logfile.bin" value="${stamp.droidrecord.logdir}/droidrecord.log.bin"/>
+    <target name="-setup-droidrecord-env">
+      <!-- Fixme: Code copied from analyze, there should be a better way to 
+                    run droidrecord that supports both source and APKs. -->
+      <if>
+        <isset property="stamp.droidrecord.logdir"/>
+        <then/>
+        <else>
+         <if>
+          <isset property="stamp.out.dir"/>
+          <then/>
+          <else>
+    		<property name="stamp.out.dir" value="${stamp.dir}/stamp_output/${app.loc.1}"/>
+    		<delete dir="${stamp.out.dir}"/>
+    		<mkdir dir="${stamp.out.dir}"/>
+    	  </else>
+    	 </if>
+    	 <if>
+    	  <matches string="${app}" pattern="^.*\.apk$"/>
+          <then>
+            <fail>
+            Droidrecord doesn't currently support dynamic analysis of APK files (only source). 
+            This is not a fundamental problem, but requires some build system re-factoring. 
+            If you really need this, please bug me. -- Lazaro
+            </fail>
+          </then>
+    	  <else>
+    		<property name="stamp.input.type" value="src"/>
+    		<antcall target="-build-app"/>
+    	  </else>
+         </if>  
+        </else>
+      </if>
+      <!-- End Fixme -->
+      <property name="stamp.droidrecord.logdir" value="${stamp.out.dir}/droidrecord"/>
+      <property name="stamp.droidrecord.logfile.text" value="${stamp.droidrecord.logdir}/droidrecord.log"/>
+      <property name="stamp.droidrecord.logfile.bin" value="${stamp.droidrecord.logdir}/droidrecord.log.bin"/>
+      
+    </target>
 
   <target name="-check-droidrecord-present">
     <available file="${stamp.dir}/droidrecord/build.xml" property="stamp.droidrecord.present" />
@@ -25,8 +60,7 @@
 
   <target name="dynanalyze"
           if="${stamp.droidrecord.present}"
-          depends="-check-droidrecord-present">
-    <property name="app.dir" location="${app}"/>
+          depends="-check-droidrecord-present,-setup-droidrecord-env">
     <if>
       <available file="${stamp.droidrecord.logfile.text}"/>
       <then>
@@ -85,43 +119,17 @@
   <property name="stamp.droidrecord.script.prepareapp"
 	    value="${stamp.dir}/droidrecord/extra/utils/scripts/prepare_app.py" />
 
-  <target name="droidrecord-run" depends="-safe-build-droidrecord"
+  <target name="droidrecord-run" depends="-safe-build-droidrecord,-setup-droidrecord-env"
           if="${stamp.droidrecord.present}">
-    <!-- Fixme: Code copied from analyze, there should be a better way to 
-                run droidrecord that supports both source and APKs. -->
-    <if>
-      <isset property="stamp.out.dir"/>
-	  <then/>
-	  <else>
-		<property name="stamp.out.dir" value="${stamp.dir}/stamp_output/${app.loc.1}"/>
-		<delete dir="${stamp.out.dir}"/>
-		<mkdir dir="${stamp.out.dir}"/>
-	  </else>
-	</if>
-	<if>
-	  <matches string="${app}" pattern="^.*\.apk$"/>
-      <then>
-        <fail>
-        Droidrecord doesn't currently support dynamic analysis of APK files (only source). 
-        This is not a fundamental problem, but requires some build system re-factoring. 
-        If you really need this, please bug me. -- Lazaro
-        </fail>
-      </then>
-	  <else>
-		<property name="stamp.input.type" value="src"/>
-		<antcall target="-build-app"/>
-	  </else>
-    </if>
-    
     <exec executable="python"
 	  spawn="false"
 	  failonerror="true">
       <arg value="${stamp.droidrecord.script.prepareapp}"/>
-      <arg value="${app.dir}"/>
+      <arg value="${app.loc}"/>
     </exec>
-    <ant antfile="${app.dir}/build.droidrecord.xml" target="debug"
+    <ant antfile="${app.loc}/build.droidrecord.xml" target="debug"
 	 inheritAll="false" useNativeBasedir="true"/>
-    <ant antfile="${app.dir}/build.droidrecord.xml" target="installd"
+    <ant antfile="${app.loc}/build.droidrecord.xml" target="installd"
 	 inheritAll="false" useNativeBasedir="true">
         <property name="adb.device.arg" value="${stamp.dynamic.device.arg}"/>
     </ant>

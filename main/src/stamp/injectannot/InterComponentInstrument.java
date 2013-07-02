@@ -44,7 +44,7 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
     private SootClass rootClass;
 	
 	//cache the temporary result from new ComponentName.
-	private Map<Object, String> arg2CompnentName = new HashMap();
+	private Map<Value, String> arg2CompnentName = new HashMap<Value, String>();
 	
 
     public InterComponentInstrument()

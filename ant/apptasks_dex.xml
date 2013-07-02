@@ -19,6 +19,7 @@
 		<pathelement location="${stamp.dir}/lib/apktool-cli-1.5.3-SNAPSHOT.jar"/>
       </classpath>
 	  <arg value="d"/>
+      <arg value="-f"/>
 	  <arg value="--frame-path"/>
 	  <arg value="${stamp.dir}"/>
 	  <arg value="-s"/>
