@@ -1,0 +1,31 @@
+class android.content.ContentResolver$1 extends edu.stanford.stamp.harness.Callback
+{
+    final android.database.ContentObserver val$observer;
+    final android.content.ContentResolver this$0;
+
+    void <init>(android.content.ContentResolver, android.database.ContentObserver)
+    {
+        android.content.ContentResolver$1 r0;
+        android.content.ContentResolver r1;
+        android.database.ContentObserver r2;
+
+        r0 := @this: android.content.ContentResolver$1;
+        r1 := @parameter0: android.content.ContentResolver;
+        r2 := @parameter1: android.database.ContentObserver;
+        r0.<android.content.ContentResolver$1: android.content.ContentResolver this$0> = r1;
+        r0.<android.content.ContentResolver$1: android.database.ContentObserver val$observer> = r2;
+        specialinvoke r0.<edu.stanford.stamp.harness.Callback: void <init>()>();
+        return;
+    }
+
+    public void run()
+    {
+        android.content.ContentResolver$1 r0;
+        android.database.ContentObserver $r1;
+
+        r0 := @this: android.content.ContentResolver$1;
+        $r1 = r0.<android.content.ContentResolver$1: android.database.ContentObserver val$observer>;
+        virtualinvoke $r1.<android.database.ContentObserver: void onChange(boolean)>(1);
+        return;
+    }
+}

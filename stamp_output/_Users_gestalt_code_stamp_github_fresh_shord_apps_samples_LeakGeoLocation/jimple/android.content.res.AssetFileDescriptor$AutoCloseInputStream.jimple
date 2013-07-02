@@ -1,0 +1,118 @@
+public class android.content.res.AssetFileDescriptor$AutoCloseInputStream extends android.os.ParcelFileDescriptor$AutoCloseInputStream
+{
+
+    public void <init>(android.content.res.AssetFileDescriptor) throws java.io.IOException
+    {
+        android.content.res.AssetFileDescriptor$AutoCloseInputStream r0;
+        android.content.res.AssetFileDescriptor r1;
+        android.os.ParcelFileDescriptor $r2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.content.res.AssetFileDescriptor$AutoCloseInputStream;
+        r1 := @parameter0: android.content.res.AssetFileDescriptor;
+        $r2 = (android.os.ParcelFileDescriptor) null;
+        specialinvoke r0.<android.os.ParcelFileDescriptor$AutoCloseInputStream: void <init>(android.os.ParcelFileDescriptor)>($r2);
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public int available() throws java.io.IOException
+    {
+        android.content.res.AssetFileDescriptor$AutoCloseInputStream r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.content.res.AssetFileDescriptor$AutoCloseInputStream;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public int read() throws java.io.IOException
+    {
+        android.content.res.AssetFileDescriptor$AutoCloseInputStream r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.content.res.AssetFileDescriptor$AutoCloseInputStream;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public int read(byte[], int, int) throws java.io.IOException
+    {
+        android.content.res.AssetFileDescriptor$AutoCloseInputStream r0;
+        byte[] r1;
+        int i0, i1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.content.res.AssetFileDescriptor$AutoCloseInputStream;
+        r1 := @parameter0: byte[];
+        i0 := @parameter1: int;
+        i1 := @parameter2: int;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public int read(byte[]) throws java.io.IOException
+    {
+        android.content.res.AssetFileDescriptor$AutoCloseInputStream r0;
+        byte[] r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.content.res.AssetFileDescriptor$AutoCloseInputStream;
+        r1 := @parameter0: byte[];
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public long skip(long) throws java.io.IOException
+    {
+        android.content.res.AssetFileDescriptor$AutoCloseInputStream r0;
+        long l0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.content.res.AssetFileDescriptor$AutoCloseInputStream;
+        l0 := @parameter0: long;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void mark(int)
+    {
+        android.content.res.AssetFileDescriptor$AutoCloseInputStream r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.content.res.AssetFileDescriptor$AutoCloseInputStream;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean markSupported()
+    {
+        android.content.res.AssetFileDescriptor$AutoCloseInputStream r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.content.res.AssetFileDescriptor$AutoCloseInputStream;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public synchronized void reset() throws java.io.IOException
+    {
+        android.content.res.AssetFileDescriptor$AutoCloseInputStream r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.content.res.AssetFileDescriptor$AutoCloseInputStream;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+}

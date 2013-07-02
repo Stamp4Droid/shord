@@ -2,8 +2,23 @@ local.config
 
 *.class
 *~
+*.apk
+.project
+.classpath
+.settings
+timestamp.txt
 
 # Package Files #
-*.jar
 *.war
 *.ear
+
+bin/*.jar
+bin/api-*/*
+
+models/api-*/*
+stamp_output/*
+apps/*
+
+tomcat/logs/*
+tomcat/work/Catalina/localhost/*
+tomcat/webapps/*

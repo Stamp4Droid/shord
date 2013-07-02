@@ -1,0 +1,5 @@
+public annotation interface  edu.stanford.stamp.annotation.STAMP extends java.lang.Object implements java.lang.annotation.Annotation
+{
+
+    public abstract edu.stanford.stamp.annotation.Flow[] flows();
+}

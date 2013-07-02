@@ -1,0 +1,490 @@
+public class android.test.mock.MockCursor extends java.lang.Object implements android.database.Cursor
+{
+
+    public void <init>()
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public int getColumnCount()
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public int getColumnIndex(java.lang.String)
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.String r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.test.mock.MockCursor;
+        r1 := @parameter0: java.lang.String;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public int getColumnIndexOrThrow(java.lang.String)
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.String r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.test.mock.MockCursor;
+        r1 := @parameter0: java.lang.String;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public java.lang.String getColumnName(int)
+    {
+        android.test.mock.MockCursor r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public java.lang.String[] getColumnNames()
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public int getCount()
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean isNull(int)
+    {
+        android.test.mock.MockCursor r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public int getInt(int)
+    {
+        android.test.mock.MockCursor r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public long getLong(int)
+    {
+        android.test.mock.MockCursor r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public short getShort(int)
+    {
+        android.test.mock.MockCursor r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public float getFloat(int)
+    {
+        android.test.mock.MockCursor r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public double getDouble(int)
+    {
+        android.test.mock.MockCursor r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public byte[] getBlob(int)
+    {
+        android.test.mock.MockCursor r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public android.os.Bundle getExtras()
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public int getPosition()
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean isAfterLast()
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean isBeforeFirst()
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean isFirst()
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean isLast()
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean move(int)
+    {
+        android.test.mock.MockCursor r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean moveToFirst()
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean moveToLast()
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean moveToNext()
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean moveToPrevious()
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean moveToPosition(int)
+    {
+        android.test.mock.MockCursor r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void copyStringToBuffer(int, android.database.CharArrayBuffer)
+    {
+        android.test.mock.MockCursor r0;
+        int i0;
+        android.database.CharArrayBuffer r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.test.mock.MockCursor;
+        i0 := @parameter0: int;
+        r1 := @parameter1: android.database.CharArrayBuffer;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void deactivate()
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void close()
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean isClosed()
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean requery()
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void registerContentObserver(android.database.ContentObserver)
+    {
+        android.test.mock.MockCursor r0;
+        android.database.ContentObserver r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.test.mock.MockCursor;
+        r1 := @parameter0: android.database.ContentObserver;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void registerDataSetObserver(android.database.DataSetObserver)
+    {
+        android.test.mock.MockCursor r0;
+        android.database.DataSetObserver r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.test.mock.MockCursor;
+        r1 := @parameter0: android.database.DataSetObserver;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public android.os.Bundle respond(android.os.Bundle)
+    {
+        android.test.mock.MockCursor r0;
+        android.os.Bundle r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.test.mock.MockCursor;
+        r1 := @parameter0: android.os.Bundle;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public boolean getWantsAllOnMoveCalls()
+    {
+        android.test.mock.MockCursor r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void setNotificationUri(android.content.ContentResolver, android.net.Uri)
+    {
+        android.test.mock.MockCursor r0;
+        android.content.ContentResolver r1;
+        android.net.Uri r2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.test.mock.MockCursor;
+        r1 := @parameter0: android.content.ContentResolver;
+        r2 := @parameter1: android.net.Uri;
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public void unregisterContentObserver(android.database.ContentObserver)
+    {
+        android.test.mock.MockCursor r0;
+        android.database.ContentObserver r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.test.mock.MockCursor;
+        r1 := @parameter0: android.database.ContentObserver;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public void unregisterDataSetObserver(android.database.DataSetObserver)
+    {
+        android.test.mock.MockCursor r0;
+        android.database.DataSetObserver r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.test.mock.MockCursor;
+        r1 := @parameter0: android.database.DataSetObserver;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public int getType(int)
+    {
+        android.test.mock.MockCursor r0;
+        int i0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public java.lang.String getString(int)
+    {
+        android.test.mock.MockCursor r0;
+        int i0;
+        java.lang.String $r1;
+
+        r0 := @this: android.test.mock.MockCursor;
+        i0 := @parameter0: int;
+        $r1 = new java.lang.String;
+        specialinvoke $r1.<java.lang.String: void <init>()>();
+        return $r1;
+    }
+}

@@ -1,0 +1,60 @@
+public abstract class android.location.LocationProvider extends java.lang.Object
+{
+    public static final int OUT_OF_SERVICE;
+    public static final int TEMPORARILY_UNAVAILABLE;
+    public static final int AVAILABLE;
+
+    void <init>()
+    {
+        android.location.LocationProvider r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.location.LocationProvider;
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public java.lang.String getName()
+    {
+        android.location.LocationProvider r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.location.LocationProvider;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean meetsCriteria(android.location.Criteria)
+    {
+        android.location.LocationProvider r0;
+        android.location.Criteria r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.location.LocationProvider;
+        r1 := @parameter0: android.location.Criteria;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public abstract boolean requiresNetwork();
+
+    public abstract boolean requiresSatellite();
+
+    public abstract boolean requiresCell();
+
+    public abstract boolean hasMonetaryCost();
+
+    public abstract boolean supportsAltitude();
+
+    public abstract boolean supportsSpeed();
+
+    public abstract boolean supportsBearing();
+
+    public abstract int getPowerRequirement();
+
+    public abstract int getAccuracy();
+}
