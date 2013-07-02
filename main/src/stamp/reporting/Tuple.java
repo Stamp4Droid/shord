@@ -41,7 +41,7 @@ public class Tuple
 						declKlass, 
 						line,
 						(type == null ? "method" : type),
-						meth.toString());
+						SourceInfo.chordSigFor(meth));
 		return this;
 	}
 	
