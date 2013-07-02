@@ -53,6 +53,7 @@ public class RegisterMap
 				Stmt stmt = (Stmt) u;
 				visitor.handleStmt(stmt);
 			}
+
 			
 			/*
 			System.out.println("*** results");
@@ -143,7 +144,7 @@ public class RegisterMap
 
 			if(s.containsInvokeExpr()){
 				InvokeExpr ie = s.getInvokeExpr();
-				String calleeSig = ie.getMethod().getSignature();
+				String calleeSig = SourceInfo.chordSigFor(ie.getMethod());
 
                 InvkMarker marker = (InvkMarker) lookupMarker(lineNum, "invoke", calleeSig);
                 if(marker != null){
@@ -171,7 +172,7 @@ public class RegisterMap
 				Value leftOp = as.getLeftOp();
 				FieldRef fr = s.getFieldRef();
 				SootField field = fr.getField();
-				String fieldSig = field.getSignature();
+				String fieldSig = SourceInfo.chordSigFor(field);
 				if(fr instanceof InstanceFieldRef){
 					map(lineNum, ((InstanceFieldRef) fr).getBase(), "fieldexpr", fieldSig);
 				}
@@ -192,7 +193,7 @@ public class RegisterMap
 				ArrayRef ar = s.getArrayRef();
 				if(leftOp instanceof Local){
 					//array read
-					map(lineNum, leftOp, "aload.lhs", ar.getBase().getType().toString());
+					map(lineNum, leftOp, "aload.lhs", SourceInfo.chordTypeFor(ar.getBase().getType()));
 				}else{
 					//array write
 					//TODO
@@ -204,7 +205,7 @@ public class RegisterMap
 
 				if(rightOp instanceof LengthExpr){
 					Value base = ((LengthExpr) rightOp).getOp();
-					map(lineNum, base, "arraylen", base.getType().toString());
+					map(lineNum, base, "arraylen", SourceInfo.chordTypeFor(base.getType()));
 				}
 			} else if(s instanceof ReturnStmt){
 				map(lineNum, ((ReturnStmt) s).getOp(), "return", null);

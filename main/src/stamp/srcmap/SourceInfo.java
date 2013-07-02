@@ -7,6 +7,8 @@ import javax.xml.parsers.*;
 
 import soot.SootClass;
 import soot.SootMethod;
+import soot.SootField;
+import soot.Type;
 import soot.AbstractJasminClass;
 import soot.jimple.Stmt;
 import soot.tagkit.Tag;
@@ -132,6 +134,20 @@ public class SourceInfo
 			+":"
 			+AbstractJasminClass.jasminDescriptorOf(m.makeRef())
 			+"@"+className;
+	}
+
+	public static String chordSigFor(SootField f)
+	{
+		String className = srcClassName(f.getDeclaringClass());
+		return f.getName()
+			+":"
+			+AbstractJasminClass.jasminDescriptorOf(f.getType())
+			+"@"+className;
+	}
+	
+	public static String chordTypeFor(Type type)
+	{
+		return AbstractJasminClass.jasminDescriptorOf(type);
 	}
 	
 	public static boolean hasSrcFile(String srcFileName)
