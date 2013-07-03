@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="STAMP-DroidRecord">
 
+    <property name="stamp.droidrecord.cmd.readlog" value="${stamp.dir}/droidrecord/droidrecord-readlog" />
+  
+    <target name="-android-project-update">
+      <exec executable="android"
+        spawn="false"
+        failonerror="true">
+        <arg line="update project --path ${app.loc} --subprojects --target ${stamp.androidtarget}"/>
+      </exec>
+    </target>
+
     <target name="-setup-droidrecord-env">
       <!-- Fixme: Code copied from analyze, there should be a better way to 
                     run droidrecord that supports both source and APKs. -->
@@ -28,7 +38,6 @@
           </then>
     	  <else>
     		<property name="stamp.input.type" value="src"/>
-    		<antcall target="-build-app"/>
     	  </else>
          </if>  
         </else>
@@ -37,10 +46,12 @@
       <property name="stamp.droidrecord.logdir" value="${stamp.out.dir}/droidrecord"/>
       <property name="stamp.droidrecord.logfile.text" value="${stamp.droidrecord.logdir}/droidrecord.log"/>
       <property name="stamp.droidrecord.logfile.bin" value="${stamp.droidrecord.logdir}/droidrecord.log.bin"/>
-      
+      <property name="stamp.droidrecord.logfile.template" value="${stamp.droidrecord.logdir}/droidrecord.log.template"/>
+      <antcall target="-android-project-update"/>
     </target>
 
-  <target name="-check-droidrecord-present">
+  <target name="-check-droidrecord-present"
+        depends="-setup-droidrecord-env">
     <available file="${stamp.dir}/droidrecord/build.xml" property="stamp.droidrecord.present" />
   </target>
 
@@ -59,8 +70,13 @@
   </target>
 
   <target name="dynanalyze"
-          if="${stamp.droidrecord.present}"
           depends="-check-droidrecord-present,-setup-droidrecord-env">
+    <fail unless="${stamp.droidrecord.present}">
+        DroidRecord component not found: Please install droidrecord.
+        DroidRecord can be installed from the STAMP git repository by doing:
+        git submodule init
+        git submodule update
+    </fail>
     <if>
       <available file="${stamp.droidrecord.logfile.text}"/>
       <then>
@@ -86,7 +102,12 @@
         depends="analyze,
                 -safe-build-droidrecord,
                 -run-droidrecord-dyn-callback-analysis,
-                -run-droidrecord-dyn-api-calls-analysis" />
+                -run-droidrecord-dyn-api-calls-analysis" >
+    <echo>
+     If your browser fails to open automatically in a few seconds, please go to: 
+     http://${stamp.server.host}:8080/stamp/html/index.jsp?propertyfile=${stamp.out.dir}/stamp.properties
+    </echo>
+  </target>
   
   <target name="-run-droidrecord-dyn-callback-analysis"
         if="${stamp.droidrecord.present}">
@@ -137,14 +158,15 @@
            validargs="D,d"/>
     <mkdir dir="${stamp.droidrecord.logdir}"/>
     <exec executable="adb"
-	  spawn="false"
-	  failonerror="true">
-      <arg line="${stamp.dynamic.device.arg} pull sdcard/droidrecord.log ${stamp.droidrecord.logfile.text}"/>
-    </exec>
-    <exec executable="adb"
       spawn="false"
 	  failonerror="true">
       <arg line="${stamp.dynamic.device.arg} pull sdcard/droidrecord.log.bin ${stamp.droidrecord.logfile.bin}"/>
+    </exec>
+    <move file="${app.loc}/droidrecord.log.template" toFile="${stamp.droidrecord.logfile.template}"/>
+    <exec executable="${stamp.droidrecord.cmd.readlog}"
+      spawn="false"
+      failonerror="true">
+      <arg line="${stamp.droidrecord.logfile.template} ${stamp.droidrecord.logfile.bin} --lib android.support.v4 -o ${stamp.droidrecord.logfile.text}"/>
     </exec>
     <exec executable="adb"
 	  spawn="false"
