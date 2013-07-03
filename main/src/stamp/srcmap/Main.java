@@ -38,8 +38,13 @@ public class Main
 		infoFile.getParentFile().mkdirs();
 
 		ChordAdapter visitor = new ChordAdapter(cu, infoFile);
-		cu.accept(visitor);
-		visitor.finish();
+		try{
+			cu.accept(visitor);
+			visitor.finish();
+		}catch(Exception e){
+			System.out.println("Failed to generate srcmap file for "+relSrcFilePath);
+			infoFile.delete();
+		}
 	}
 
 	public static char[] toCharArray(String filePath) throws IOException

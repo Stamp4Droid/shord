@@ -1,0 +1,155 @@
+##################
+# CFL analysis inputs
+##################
+
+# name=cfl-dlog
+
+.include "Z.dom"
+.include "M.dom"
+.include "C.dom"
+.include "V.dom"
+.include "U.dom"
+.include "F.dom"
+.include "I.dom"
+.include "L.dom"
+.include "H.dom"
+
+.bddvarorder Z0xZ1_M0_C0xC1xC2_V0xV1_U0xU1_H0xF0_I0_L0xL1
+
+# reference flow inputs
+Assign(v:V,u:V)     input   # v = u
+Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
+Load(y:V,x:V,f:F)   input   # y = x.f
+Store(u:V,f:F,v:V)  input   # u.f = v
+LoadStat(y:V,f:F)   input   # y = f
+StoreStat(f:F,v:V)  input   # f = v
+param(u:V,v:V,i:I)  input   # u is the formal parameter, v is actual arg, i is invocation stmt
+return(u:V,v:V,i:I) input   # u is the lhs at callsite, v is the return var, i is invocation stmt
+
+# primitive flow inputs
+AssignPrim(v:U,u:U)      input    # v = u
+LoadPrim(y:U,x:V,f:F)    input    # y = x.f
+StorePrim(u:V,f:F,v:U)   input    # u.f = v
+LoadStatPrim(y:U,f:F)    input    # y = f
+StoreStatPrim(f:F,v:U)  input    # f = v
+paramPrim(u:U,v:U,i:I)   input    # u is the formal parameter, v is actual arg, i is invocation stmt
+returnPrim(u:U,v:U,i:I)  input    # u is the lhs at callsite, v is the return var, i is invocation stm
+
+# context information
+MU(m:M,u:U) input # u is a prim type variable in m
+MV(m:M,v:V) input # v is a variable in method m
+CM(c:C,m:M) input # c is a context of method m
+CH(o:C,h:H) input # context-ified abstract location o corresponds to new stmt h
+CI(c:C,i:I) input # stmt i is the top element in the k-limited callstack c
+CC(c:C,d:C) input # there exists i s.t. c++[i] = d
+
+# method information
+MmethArg(m:M,z:Z,v:V)     input
+MmethRet(m:M,z:Z,v:V)     input
+MmethPrimArg(m:M,z:Z,u:U) input
+MmethPrimRet(m:M,z:Z,u:U) input
+
+# stub information
+#Stub(m:M) input
+
+# annotations
+SrcLabel(l:L)  input
+SinkLabel(l:L) input
+
+LabelRet(l:L,m:M)             input
+LabelArg(l:L,m:M,z:Z)         input
+ArgRetTransfer(m:M,z:Z)       input
+ArgArgTransfer(m:M,z0:Z,z1:Z) input
+ArgArgFlow(m:M,z0:Z,z1:Z)     input
+
+# reference flows
+AssignCtxt(c:C,v:V,u:V)        output # v = u in context c
+AllocCtxt(c:C,v:V,o:C)	       output # v is the lhs of the new stmt h in context c
+LoadCtxt(c:C,y:V,x:V,f:F)      output # y = x.f in context c
+StoreCtxt(c:C,u:V,f:F,v:V)     output # u.f = v in context c
+LoadStatCtxt(c:C,y:V,f:F)      output # y = f in context c
+StoreStatCtxt(c:C,f:F,v:V)     output # f = v in context c
+AssignArgCtxt(c:C,u:V,d:C,v:V) output # u is the formal parameter in context c, v is actual arg in context d
+AssignRetCtxt(c:C,u:V,d:C,v:V) output # u is the lhs at callsite in context c, v is the return var in context d
+
+# primitive & cross flows
+AssignPrimCtxt(c:C,v:U,u:U)        output # v = u in context c
+LoadPrimCtxt(c:C,y:U,x:V,f:F)      output # y = x.f in context c
+StorePrimCtxt(c:C,u:V,f:F,v:U)     output # u.f = v in context c
+LoadStatPrimCtxt(c:C,y:U,f:F)      output # y = f in context c
+StoreStatPrimCtxt(c:C,f:F,v:U)     output # f = v in context c
+AssignArgPrimCtxt(c:C,u:U,d:C,v:U) output # u is the formal parameter in context c, v is actual arg in context d
+AssignRetPrimCtxt(c:C,u:U,d:C,v:U) output # u is the lhs at callsite in context c, v is the return var in context d
+
+# annotations
+SrcArgFlowCtxt(c:C,l:L,v:V)     output
+SrcRetFlowCtxt(c:C,l:L,v:V)     output
+ArgSinkFlowCtxt(c:C,v:V,l:L)    output
+
+ArgArgTransferCtxt(c:C,v:V,u:V) output
+ArgRetTransferCtxt(c:C,v:V,u:V) output
+
+SrcArgPrimFlowCtxt(c:C,l:L,v:U)         output
+SrcRetPrimFlowCtxt(c:C,l:L,v:U)         output
+ArgSinkPrimFlowCtxt(c:C,v:U,l:L)        output
+
+ArgPrimArgTransferCtxt(c:C,v:U,u:V)     output
+ArgPrimRetTransferCtxt(c:C,v:U,u:V)     output
+ArgRetPrimTransferCtxt(c:C,v:V,u:U)     output
+ArgPrimRetPrimTransferCtxt(c:C,v:U,u:U) output
+
+# stub annotations
+#ArgArgFlowCtxtStub(c:C,v:V,u:V)             output
+#ArgRetFlowCtxtStub(c:C,v:V,u:V)             output
+
+#ArgPrimArgFlowCtxtStub(c:C,v:U,u:V)         output
+#ArgPrimRetFlowCtxtStub(c:C,v:U,u:V)         output
+#ArgRetPrimTransferCtxtStub(c:C,v:V,u:U)     output
+#ArgPrimRetPrimTransferCtxtStub(c:C,v:U,u:U) output
+
+###################
+#    RULES
+###################
+
+AssignCtxt(c,v,u)          :- Assign(v,u), MV(m,v), CM(c,m).
+AllocCtxt(c,v,o)           :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
+LoadCtxt(c,y,x,f)          :- Load(y,x,f), MV(m,y), CM(c,m).
+StoreCtxt(c,u,f,v)         :- Store(u,f,v), MV(m,v), CM(c,m).
+LoadStatCtxt(c,y,f)        :- LoadStat(y,f), MV(m,y), CM(c,m).
+StoreStatCtxt(c,f,v)       :- StoreStat(f,v), MV(m,v), CM(c,m).
+AssignArgCtxt(c,u,d,v)     :- param(u,v,_), MV(m,u), CM(c,m), MV(n,v), CM(d,n).
+AssignRetCtxt(c,u,d,v)     :- return(u,v,_), MV(m,u), CM(c,m), MV(n,v), CM(d,n).
+
+AssignPrimCtxt(c,v,u)      :- AssignPrim(v,u), MU(m,v), CM(c,m).
+LoadPrimCtxt(c,y,x,f)      :- LoadPrim(y,x,f), MV(m,x), CM(c,m).
+StorePrimCtxt(c,u,f,v)     :- StorePrim(u,f,v), MV(m,u), CM(c,m).
+LoadStatPrimCtxt(c,y,f)    :- LoadStatPrim(y,f), MU(m,y), CM(c,m).
+StoreStatPrimCtxt(c,f,v)   :- StoreStatPrim(f,v), MU(m,v), CM(c,m).
+AssignArgPrimCtxt(c,u,d,v) :- paramPrim(u,v,_), MU(m,u), CM(c,m), MU(n,v), CM(d,n).
+AssignRetPrimCtxt(c,u,d,v) :- returnPrim(u,v,_), MU(m,u), CM(c,m), MU(n,v), CM(d,n).
+
+# annotations
+SrcArgFlowCtxt(c,l,v)     :- SrcLabel(l), LabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).
+SrcRetFlowCtxt(c,l,v)     :- SrcLabel(l), LabelRet(l,m), MmethRet(m,_,v), CM(c,m).
+ArgSinkFlowCtxt(c,v,l)    :- SinkLabel(l), LabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).
+
+ArgArgTransferCtxt(c,v,u) :- ArgArgTransfer(m,z0,z1), MmethArg(m,z0,v), MmethArg(m,z1,u), CM(c,m).
+ArgRetTransferCtxt(c,v,u) :- ArgRetTransfer(m,z), MmethArg(m,z,v), MmethRet(m,_,u), CM(c,m).
+
+SrcArgPrimFlowCtxt(c,l,v)         :- SrcLabel(l), LabelArg(l,m,z), MmethPrimArg(m,z,v), CM(c,m).
+SrcRetPrimFlowCtxt(c,l,v)         :- SrcLabel(l), LabelRet(l,m), MmethPrimRet(m,_,v), CM(c,m).
+ArgSinkPrimFlowCtxt(c,v,l)        :- SinkLabel(l), LabelArg(l,m,z), MmethPrimArg(m,z,v), CM(c,m).
+
+ArgPrimArgTransferCtxt(c,v,u)     :- ArgArgTransfer(m,z0,z1), MmethPrimArg(m,z0,v), MmethArg(m,z1,u), CM(c,m).
+ArgPrimRetTransferCtxt(c,v,u)     :- ArgRetTransfer(m,z), MmethPrimArg(m,z,v), MmethRet(m,_,u), CM(c,m).
+ArgRetPrimTransferCtxt(c,v,u)     :- ArgRetTransfer(m,z), MmethArg(m,z,v), MmethPrimRet(m,_,u), CM(c,m).
+ArgPrimRetPrimTransferCtxt(c,v,u) :- ArgRetTransfer(m,z), MmethPrimArg(m,z,v), MmethPrimRet(m,_,u), CM(c,m).
+
+# stub annotations
+#ArgArgTransferCtxtStub(c,v,u) :- Stub(m), MmethArg(m,_,v), MmethArg(m,_,u), v != u, CM(c,m).
+#ArgRetTransferCtxtStub(c,v,u) :- Stub(m), MmethArg(m,_,v), MmethRet(m,_,u), CM(c,m).
+
+#ArgPrimArgTransferCtxtStub(c,v,u)     :- Stub(m), MmethPrimArg(m,_,v), MmethArg(m,_,u), CM(c,m).
+#ArgPrimRetTransferCtxtStub(c,v,u)     :- Stub(m), MmethPrimArg(m,_,v), MmethRet(m,_,u), CM(c,m).
+#ArgRetPrimTransferCtxtStub(c,v,u)     :- Stub(m), MmethArg(m,_,v), MmethPrimRet(m,_,u), CM(c,m).
+#ArgPrimRetPrimTransferCtxtStub(c,v,u) :- Stub(m), MmethPrimArg(m,_,v), MmethPrimRet(m,_,u), CM(c,m).
