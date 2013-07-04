@@ -179,6 +179,7 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 					units.remove(stmt);				
 				}
 				
+				
 				// Src putString -> put_id && getString -> 
 				//$r9 = virtualinvoke $r8.<android.os.Bundle: 
 				//java.lang.String getString(java.lang.String)>($r4)
@@ -187,7 +188,11 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 						|| methodRefStr
 								.equals("<"
 										+ this.bundleClass
-										+ ": java.lang.String getString(java.lang.String)>")) {
+										+ ": java.lang.String getString(java.lang.String)>")
+				        || methodRefStr
+								.equals("<"
+										+ this.bundleClass
+										+ ": android.os.Parcelable getParcelable(java.lang.String)>")) {						
 											
 					ImmediateBox bundleLoc = (ImmediateBox) ie.getUseBoxes().get(1);
 					Value putStringArg = bundleLoc.getValue();
