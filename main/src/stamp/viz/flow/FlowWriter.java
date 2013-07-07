@@ -10,13 +10,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import joeq.Class.jq_Method;
-import joeq.Compiler.Quad.RegisterFactory.Register;
 import shord.analyses.DomC;
 import shord.analyses.DomM;
 import shord.analyses.DomU;
 import shord.analyses.DomV;
+import shord.analyses.LocalVarNode;
 import shord.analyses.VarNode;
+import soot.Local;
 import soot.SootMethod;
 import stamp.analyses.JCFLSolverAnalysis;
 import stamp.analyses.JCFLSolverAnalysis.StubLookupKey;
@@ -85,15 +85,20 @@ public class FlowWriter {
 
 			if(tokens[0].equals("v") || tokens[0].equals("u")) {
 				VarNode register;
-				SootMethod method = null;
 				if(tokens[0].equals("v")) {
 					DomV dom = (DomV)ClassicProject.g().getTrgt(tokens[0].toUpperCase());
 					register = dom.get(Integer.parseInt(tokens[1]));
-					//method = SourceInfo.containerMethod(register);
 				} else {
 					DomU dom = (DomU)ClassicProject.g().getTrgt(tokens[0].toUpperCase());
 					register = dom.get(Integer.parseInt(tokens[1]));
-					//method = SourceInfo.containerMethod(register);
+				}
+				
+				SootMethod method = null;
+				Local local = null;
+				if(register instanceof LocalVarNode) {
+					LocalVarNode localRegister = (LocalVarNode)register;
+					local = localRegister.local;
+					method = localRegister.meth;
 				}
 
 				// link the method
@@ -105,8 +110,7 @@ public class FlowWriter {
 
 				// link the register
 				RegisterMap regMap = getRegisterMap(method);
-				//Set<Expr> locations = regMap.srcLocsFor(register);
-				Set<Expr> locations = null;
+				Set<Expr> locations = regMap.srcLocsFor(local);
 				Integer registerLineNum = null;
 				String text = null;
 				if(locations != null) {
