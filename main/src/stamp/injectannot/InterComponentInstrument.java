@@ -44,7 +44,7 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
     private SootClass rootClass;
 	
 	//cache the temporary result from new ComponentName.
-	private Map<Object, String> arg2CompnentName = new HashMap();
+	private Map<Value, String> arg2CompnentName = new HashMap<Value, String>();
 	
 
     public InterComponentInstrument()
@@ -117,10 +117,16 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 				InvokeExpr ie = stmt.getInvokeExpr();
 				
 				String methodRefStr = ie.getMethodRef().toString();
-				//intent.putExtra(), include string, int, boolean, byte, etc.
+				
+				//For Intent: intent.putExtra(), include string, int, boolean, byte, etc.
 				if (methodRefStr
-				    .contains(this.intentClass+": "+this.intentClass+" putExtra(java.lang.String,")) {
-					
+				    .contains(this.intentClass+": "+this.intentClass+" putExtra(java.lang.String,")
+				  || methodRefStr
+				    .equals("<"+this.intentClass+": java.lang.String getStringExtra(java.lang.String)>")
+			      || methodRefStr
+			        .equals("<"+this.intentClass+": android.os.Parcelable getParcelableExtra(java.lang.String)>")
+				                                                                                             ) {
+					// System.out.println("So you are going to call getStringExtra......." + stmt);
 					ImmediateBox bundleLoc = (ImmediateBox) ie.getUseBoxes().get(1);
 					Value putStringArg = bundleLoc.getValue();
 					StringConstant strVal = StringConstant.v("dummy");
@@ -130,20 +136,26 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 					} else {
 						// otherwise we have to ask for reaching def.
 						for (Tag tagEntity : stmt.getTags()) {
+							if(!(tagEntity instanceof LinkTag)) continue; 
 							LinkTag ttg = (LinkTag) tagEntity;
 							if ( !(ttg.getLink() instanceof JAssignStmt)) continue;
 							JAssignStmt asst = (JAssignStmt) ttg.getLink();
 							
 							// FIXME:can not deal with inter-proc now!
 							if (asst.getLeftOp().equals(putStringArg)) {
-								assert (asst.getRightOp() instanceof StringConstant);
-								strVal = (StringConstant) asst
-										.getRightOp();
+								// assert (asst.getRightOp() instanceof StringConstant);
+								if (asst.getRightOp() instanceof StringConstant) {
+									strVal = (StringConstant) asst.getRightOp();
+								}
 							}
 						}
 					}
 					//should triggle bundle instrument
 					String bundleKey = strVal.value;
+					if (bundleKey.equals("dummy")) {
+						reportUnknownRegister(stmt, putStringArg);
+						continue; ///go to next stmt
+					}
 
                     //need to add getter/setter of bundlekey to Bundle.class!
 					instrumentBundle(bundleKey);
@@ -165,21 +177,57 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 					units.insertBefore(assign2Extras, stmt);
 					
 					//invoke extra.put_deviceId()
-					SootMethod putExtrasCall = Scene.v().getMethod(
-						"<" + this.bundleClass + ": void put_"
-							+ bundleKey + "(java.lang.Object)>");
+					if (methodRefStr
+					    .contains(this.intentClass+": "+this.intentClass+" putExtra(java.lang.String,") ) {
+						SootMethod putExtrasCall = Scene.v().getMethod(
+							"<" + this.bundleClass + ": void put_"
+								+ bundleKey + "(java.lang.Object)>");
 					
-					InvokeStmt putExtraStmt = Jimple.v().newInvokeStmt(
-						Jimple.v().newVirtualInvokeExpr(extrasLocal,
-							putExtrasCall.makeRef(), ie.getArg(1)));
-					units.insertAfter(putExtraStmt, stmt);
-					// System.out.println("putExtras body....." + body);
-					//Remove this will reduce the false alarm like deviceId=>intent, but potentially buggy,
-					//e.g, what if I assign current expr to an new intent object?
-					units.remove(stmt);				
+						InvokeStmt putExtraStmt = Jimple.v().newInvokeStmt(
+							Jimple.v().newVirtualInvokeExpr(extrasLocal,
+								putExtrasCall.makeRef(), ie.getArg(1)));
+						units.insertAfter(putExtraStmt, stmt);
+						//Remove this will reduce the false alarm like deviceId=>intent, but potentially buggy,
+						//e.g, what if I assign current expr to an new intent object?
+						units.remove(stmt);	
+																										 
+					}
+
+					
+					//for getter in bundle...
+					//$r6.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>($r4)
+					if (methodRefStr
+						.equals("<"+this.intentClass+": java.lang.String getStringExtra(java.lang.String)>")
+		  			 || methodRefStr
+					    .equals("<"+this.intentClass+": android.os.Parcelable getParcelableExtra(java.lang.String)>")
+					) {
+						SootMethod getObjCall = Scene.v().getMethod(
+							"<" + this.bundleClass
+								+ ": java.lang.Object get_" + bundleKey
+									+ "()>");
+
+						VirtualInvokeExpr invokeGetStr = 
+							Jimple.v().newVirtualInvokeExpr(
+								extrasLocal, getObjCall.makeRef(), Arrays.asList(new Value[] {}));
+					
+						//FIXME: what if we have multiple defboxes?
+						// assert (stmt.getDefBoxes().size > 0);
+						if (stmt.getDefBoxes().size() == 0) {
+							reportUnknownRegister(stmt, extrasLocal);
+							continue;
+						}
+						
+						VariableBox orgCallSite = (VariableBox)stmt.getDefBoxes().get(0);
+						AssignStmt invokeAssign = Jimple.v().newAssignStmt(orgCallSite.getValue(), invokeGetStr);	
+						units.insertAfter(invokeAssign, stmt);
+						units.remove(stmt);	
+						
+					}
+											
 				}
 				
-				// Src putString -> put_id && getString -> 
+				
+				// For Bundle: Src putString -> put_id && getString -> 
 				//$r9 = virtualinvoke $r8.<android.os.Bundle: 
 				//java.lang.String getString(java.lang.String)>($r4)
 				if (methodRefStr
@@ -187,7 +235,11 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 						|| methodRefStr
 								.equals("<"
 										+ this.bundleClass
-										+ ": java.lang.String getString(java.lang.String)>")) {
+										+ ": java.lang.String getString(java.lang.String)>")
+				        || methodRefStr
+								.equals("<"
+										+ this.bundleClass
+										+ ": android.os.Parcelable getParcelable(java.lang.String)>")) {						
 											
 					ImmediateBox bundleLoc = (ImmediateBox) ie.getUseBoxes().get(1);
 					Value putStringArg = bundleLoc.getValue();
@@ -197,15 +249,17 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 					} else {
 						// otherwise we have to ask for reaching def.
 						for (Tag tagEntity : stmt.getTags()) {
+							if(!(tagEntity instanceof LinkTag)) continue; 
 							LinkTag ttg = (LinkTag) tagEntity;
 							if ( !(ttg.getLink() instanceof JAssignStmt)) continue;
 							JAssignStmt asst = (JAssignStmt) ttg.getLink();
 							
 							// FIXME:can not deal with inter-proc now!
 							if (asst.getLeftOp().equals(putStringArg)) {
-								assert (asst.getRightOp() instanceof StringConstant);
-								strVal = (StringConstant) asst
-										.getRightOp();
+								// assert (asst.getRightOp() instanceof StringConstant);
+								if (asst.getRightOp() instanceof StringConstant) {
+									strVal = (StringConstant) asst.getRightOp();
+								}
 							}
 						}
 					}
@@ -213,6 +267,10 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 					JimpleLocalBox bundleObj = (JimpleLocalBox) ie
 							.getUseBoxes().get(0);
 					String bundleKey = strVal.value;
+					if (bundleKey.equals("dummy")) {
+						reportUnknownRegister(stmt, putStringArg);
+						continue; ///go to next stmt
+					}
 
                     //need to add getter/setter of bundlekey to Bundle.class!
 					instrumentBundle(bundleKey);
@@ -332,8 +390,7 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 						tgtComptName = tgtComptName.replace(File.separatorChar, '.');
 					///Check whether exist such class.
 					if ( !Program.g().scene().containsClass(tgtComptName)) {
-						System.out.println("ERROR:Current class: " + this.rootClass + " || Statement: " + stmt );
-						System.out.println("ERROR:Can not find class for Class name: " + tgtComptName );
+						reportUnknownRegister(stmt, ie.getArg(0));
 						return;
 					}
 				
@@ -394,16 +451,14 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		}
 		
 		if (tgtComptName.equals("")) {
-			System.out.println("ERROR:Current class: " + this.rootClass + " || Statement: " + stmt );
-			System.out.println("ERROR:Can not locate the class from current reachingDef: " + stmt.getTags() );
+			reportUnknownRegister(stmt, arg);
 			return;
 		}
 		
 		tgtComptName = tgtComptName.replace(File.separatorChar, '.');
 		///Check whether exist such class.
 		if ( !Program.g().scene().containsClass(tgtComptName)) {
-			System.out.println("ERROR:Current class: " + this.rootClass + " || Statement: " + stmt );
-			System.out.println("ERROR:Can not find target class for Class name: " + tgtComptName );
+            reportUnknownRegister(stmt, arg);
 			return;
 		}
 				
@@ -595,6 +650,13 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		// System.out.println("inject field and methods into bundle....done: setter: " + body);
 		
 
+	}
+	
+	/* Output the related information of the register which can't be handled by intro-proc reaching def. */
+	private void reportUnknownRegister(Stmt stmt, Value v) {
+		System.out.println("ERROR: Can not locate the value from reachingDef: " + v);
+		System.out.println("ERROR:Current class: " + this.rootClass + " || Statement: " + stmt + 
+			 "|| reachingDef: " + stmt.getTags());
 	}
     
 }

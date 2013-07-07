@@ -50,7 +50,7 @@ MmethPrimArg(m:M,z:Z,u:U) input
 MmethPrimRet(m:M,z:Z,u:U) input
 
 # stub information
-#Stub(m:M) input
+Stub(m:M) input
 
 # annotations
 SrcLabel(l:L)  input
@@ -111,13 +111,13 @@ ArgPrimArgFlowCtxt(c:C,v:U,u:V)     output
 ArgPrimArgPrimFlowCtxt(c:C,v:U,u:U) output
 
 # stub annotations
-#ArgArgFlowCtxtStub(c:C,v:V,u:V)             output
-#ArgRetFlowCtxtStub(c:C,v:V,u:V)             output
+ArgArgTransferCtxtStub(c:C,v:V,u:V,m:M,z1:Z,z2:Z)     output
+ArgRetTransferCtxtStub(c:C,v:V,u:V,m:M,z:Z)           output
 
-#ArgPrimArgFlowCtxtStub(c:C,v:U,u:V)         output
-#ArgPrimRetFlowCtxtStub(c:C,v:U,u:V)         output
-#ArgRetPrimTransferCtxtStub(c:C,v:V,u:U)     output
-#ArgPrimRetPrimTransferCtxtStub(c:C,v:U,u:U) output
+ArgPrimArgTransferCtxtStub(c:C,v:U,u:V,m:M,z1:Z,z2:Z) output
+ArgPrimRetTransferCtxtStub(c:C,v:U,u:V,m:M,z:Z)       output
+ArgRetPrimTransferCtxtStub(c:C,v:V,u:U,m:M,z:Z)       output
+ArgPrimRetPrimTransferCtxtStub(c:C,v:U,u:U,m:M,z:Z)   output
 
 ###################
 #    RULES
@@ -164,10 +164,10 @@ ArgPrimArgFlowCtxt(c,v,u)     :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,v), Mmet
 ArgPrimArgPrimFlowCtxt(c,v,u) :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,v), MmethPrimArg(m,z1,u), CM(c,m).
 
 # stub annotations
-#ArgArgTransferCtxtStub(c,v,u) :- Stub(m), MmethArg(m,_,v), MmethArg(m,_,u), v != u, CM(c,m).
-#ArgRetTransferCtxtStub(c,v,u) :- Stub(m), MmethArg(m,_,v), MmethRet(m,_,u), CM(c,m).
+ArgArgTransferCtxtStub(c,v,u,m,z1,z2)     :- Stub(m), MmethArg(m,z1,v), MmethArg(m,z2,u), z1 != z2, CM(c,m).
+ArgRetTransferCtxtStub(c,v,u,m,z)         :- Stub(m), MmethArg(m,z,v), MmethRet(m,_,u), CM(c,m).
 
-#ArgPrimArgTransferCtxtStub(c,v,u)     :- Stub(m), MmethPrimArg(m,_,v), MmethArg(m,_,u), CM(c,m).
-#ArgPrimRetTransferCtxtStub(c,v,u)     :- Stub(m), MmethPrimArg(m,_,v), MmethRet(m,_,u), CM(c,m).
-#ArgRetPrimTransferCtxtStub(c,v,u)     :- Stub(m), MmethArg(m,_,v), MmethPrimRet(m,_,u), CM(c,m).
-#ArgPrimRetPrimTransferCtxtStub(c,v,u) :- Stub(m), MmethPrimArg(m,_,v), MmethPrimRet(m,_,u), CM(c,m).
+ArgPrimArgTransferCtxtStub(c,v,u,m,z1,z2) :- Stub(m), MmethPrimArg(m,z1,v), MmethArg(m,z2,u), CM(c,m).
+ArgPrimRetTransferCtxtStub(c,v,u,m,z)     :- Stub(m), MmethPrimArg(m,z,v), MmethRet(m,_,u), CM(c,m).
+ArgRetPrimTransferCtxtStub(c,v,u,m,z)     :- Stub(m), MmethArg(m,z,v), MmethPrimRet(m,_,u), CM(c,m).
+ArgPrimRetPrimTransferCtxtStub(c,v,u,m,z) :- Stub(m), MmethPrimArg(m,z,v), MmethPrimRet(m,_,u), CM(c,m).
