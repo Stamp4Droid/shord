@@ -21,13 +21,16 @@
 
   <target name="debug-print-quads" depends="build">
     <require-prop property="stamp.debug.class"
-		  description="class whose methods to print"/>
+		  description="class whose quads to print"/>
+    <prop-default property="stamp.debug.cp" default=""
+		  description="classpath to use when loading the class"/>
     <java classname="edu.stanford.stamp.debug.QuadPrinter"
 	  maxmemory="${stamp.maxheap}"
 	  fork="true"
 	  failonerror="true">
       <jvmarg value="-ea"/>
-      <sysproperty key="stamp.debug.cp" path="${stamp.debug.cp}:${stamp.dir}/android/stamp.android.jar"/>
+      <sysproperty key="stamp.debug.cp"
+		   path="${stamp.debug.cp}:${stamp.dir}/android/stamp.android.jar"/>
       <classpath>
 	<pathelement location="${stamp.dir}/main/stamp.main.jar"/>
 	<pathelement location="${stamp.dir}/chord/stamp.chord.jar"/>

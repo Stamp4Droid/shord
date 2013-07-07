@@ -3,7 +3,7 @@
 
   <target name="-prepare-backend-solvergen">
     <!-- Compile SolverGen analysis. -->
-    <property name="stamp.solvergen.analysis" value="kcfa-hf-tf-opt"/>
+    <property name="stamp.solvergen.analysis" value="s-k-h-al"/>
     <runtarget target="make-cfl-solver"/>
 
     <!-- Prepare SolverGen I/O directories. -->
@@ -12,12 +12,12 @@
 
     <!-- Register backend-specific analyses. -->
     <property name="stamp.analyses.main"
-	      value="facts-dumper-java,cfl-solver-runner-java,dat-rel-parser-java"/>
+	      value="cfl-dlog,facts-dumper-java,cfl-solver-runner-java,dat-rel-parser-java"/>
 
     <!-- Set backend-specific system properties. -->
     <!-- Facts Dumper options -->
     <property name="stamp.dumper.templatesdir"
-	      location="${stamp.dir}/cfl/solvergen/input"/>
+	      location="${stamp.dir}/solvergen/input"/>
     <property name="stamp.dumper.outdir"
 	      location="${stamp.out.dir}/input"/>
     <property name="stamp.dumper.accrange.printindex" value="false"/>
@@ -30,7 +30,7 @@
     <property name="stamp.datparser.indir"
 	      location="${stamp.out.dir}/output"/>
     <property name="stamp.datparser.templatesdir"
-	      location="${stamp.dir}/cfl/solvergen/output"/>
+	      location="${stamp.dir}/solvergen/output"/>
 
     <!-- Register backend-specific system properties. -->
     <propertyset id="stamp.analyses.main.sysprops">
@@ -54,6 +54,8 @@
 		  description="whether to store debugging symbols in the generated solver"/>
     <prop-default property="stamp.solvergen.profiling" default="false"
 		  description="whether to enable profiling output for the generated solver"/>
+    <prop-default property="stamp.solvergen.pathrecord" default="false"
+		  description="whether to enable path recording in the generated solver"/>
 
     <!-- Set compiler flags. -->
     <prop-ite property="stamp.solvergen.logging.flag"
@@ -61,124 +63,47 @@
     <prop-ite property="stamp.solvergen.debug.flag"
 	      condition="${stamp.solvergen.debug}" then="-g" else=""/>
     <prop-ite property="stamp.solvergen.profiling.flag"
-	      condition="${stamp.solvergen.profiling}" then="-pg" else=""/>
+	      condition="${stamp.solvergen.profiling}"
+	      then="-DPROFILING" else=""/>
+    <prop-ite property="stamp.solvergen.pathrecord.flag"
+	      condition="${stamp.solvergen.pathrecord}"
+	      then="-DPATH_RECORDING" else=""/>
 
     <!-- Locate relevant files. -->
     <property name="stamp.solvergen.analysis.cfg"
-	      location="${stamp.dir}/cfl/solvergen/analyses/${stamp.solvergen.analysis}.c.cfg"/>
+	      location="${stamp.dir}/solvergen/analyses/${stamp.solvergen.analysis}.cfg"/>
     <require-file file="${stamp.solvergen.analysis.cfg}"/>
-    <strip-ext property="stamp.solvergen.analysis.c"
-	       file="${stamp.solvergen.analysis.cfg}" extension="cfg"
-	       destdir="${stamp.out.dir}"/>
+    <replace-ext property="stamp.solvergen.analysis.cpp"
+		 file="${stamp.solvergen.analysis.cfg}"
+		 destdir="${stamp.out.dir}" oldext="cfg" newext="cpp"/>
     <property name="stamp.solvergen.executable"
 	      location="${stamp.out.dir}/${stamp.solvergen.analysis}"/>
 
     <!-- Produce CFL Solver code from the input grammar. -->
     <exec executable="python" spawn="false" failonerror="true">
-      <arg file="${stamp.dir}/cfl/solvergen/cfg_parser.py"/>
+      <arg file="${stamp.dir}/solvergen/cfg_parser.py"/>
       <arg file="${stamp.solvergen.analysis.cfg}"/>
       <arg file="${stamp.out.dir}"/>
     </exec>
 
     <!-- Compile and link the analysis code with the CFL Solver engine. -->
-    <exec executable="gcc" dir="${stamp.out.dir}"
+    <exec executable="g++" dir="${stamp.out.dir}"
 	  spawn="false" failonerror="true">
-      <arg line="-std=c99 -Wall -Wextra -pedantic -O2"/>
+      <arg line="-std=c++11 -Wall -Wextra -pedantic -O2"/>
       <arg line="${stamp.solvergen.logging.flag}"/>
       <arg line="${stamp.solvergen.debug.flag}"/>
       <arg line="${stamp.solvergen.profiling.flag}"/>
+      <arg line="${stamp.solvergen.pathrecord.flag}"/>
       <arg value="-o"/><arg file="${stamp.solvergen.executable}"/>
-      <arg value="-I"/><arg file="${stamp.dir}/cfl/solvergen"/>
-      <arg file="${stamp.dir}/cfl/solvergen/engine.c"/>
-      <arg file="${stamp.solvergen.analysis.c}"/>
+      <arg value="-I"/><arg file="${stamp.dir}/solvergen"/>
+      <arg file="${stamp.dir}/solvergen/engine.cpp"/>
+      <arg file="${stamp.solvergen.analysis.cpp}"/>
     </exec>
   </target>
 
   <target name="doc-solvergen">
     <!-- Requires Doxygen v1.8+ and doxypy. -->
-    <exec executable="doxygen" dir="${stamp.dir}/cfl/solvergen"
+    <exec executable="doxygen" dir="${stamp.dir}/solvergen"
 	  spawn="false" failonerror="true"/>
   </target>
-
-  <!-- TODO: Standalone facts-dumping is currently unsupported. -->
-  <target name="dump-facts">
-    <require-prop property="stamp.dumper.templates"
-		  description="path of Chord Facts Dumper template files to process"/>
-    <prop-default property="stamp.dumper.outdir" default="${stamp.out.dir}"
-		  description="where to place the output of the dumper"/>
-    <prop-default property="stamp.dumper.printrels" default=""
-		  description="relations to print out after the dumper finishes"/>
-    <prop-default property="stamp.dumper.accrange.printindex" default="false"
-		  description="whether to replace accumulated strings with their unique indices"/>
-    <require-prop property="stamp.dumper.analyses"
-		  description="analyses that need to run before the dumper"/>
-    <if>
-      <istrue value="${is.android.app}"/>
-      <then><runtarget target="-dump-facts-android"/></then>
-      <else><runtarget target="-dump-facts-java"/></else>
-    </if>
-  </target>
-
-  <!-- TODO: Standalone facts-dumping is currently unsupported. -->
-  <target name="-dump-facts-java" depends="-build-java-app">
-    <mkdir dir="${stamp.dumper.outdir}"/>
-    <java classname="chord.project.Boot"
-	  maxmemory="${stamp.maxheap}" fork="true" failonerror="true">
-      <jvmarg value="-ea"/>
-      <sysproperty key="chord.scope.kind" value="cha"/>
-      <sysproperty key="chord.work.dir" file="${app.dir}"/>
-      <sysproperty key="chord.main.class" value="Main"/>
-      <sysproperty key="chord.src.path" path="${app.dir}/src"/>
-      <sysproperty key="chord.class.path" path="${stamp.dir}/android/stamp.android.jar:${app.jar}:${stamp.lib.jars}"/>
-      <sysproperty key="chord.ext.java.analysis.path" path="${stamp.dir}/analysis/stamp.analysis.jar"/>
-      <sysproperty key="chord.ext.dlog.analysis.path" path="${stamp.dir}/datalog"/>
-      <sysproperty key="chord.run.analyses" value="${stamp.dumper.analyses},facts-dumper-java"/>
-      <sysproperty key="chord.std.scope.exclude" value=""/>
-      <sysproperty key="chord.ext.scope.exclude" value=""/>
-      <sysproperty key="chord.std.check.exclude" value=""/>
-      <sysproperty key="chord.ext.check.exclude" value=""/>
-      <sysproperty key="chord.verbose" value="${chord.verbose}"/>
-      <sysproperty key="chord.print.rels" value="${stamp.dumper.printrels}"/>
-      <sysproperty key="chord.bddbddb.max.heap" value="${chord.bddbddb.max.heap}"/>
-      <sysproperty key="stamp.dumper.templates" file="${stamp.dumper.templates}"/>
-      <sysproperty key="stamp.dumper.outdir" file="${stamp.dumper.outdir}"/>
-      <sysproperty key="stamp.dumper.accrange.printindex"
-		   value="${stamp.dumper.accrange.printindex}"/>
-      <classpath>
-	<pathelement location="${stamp.dir}/chord/stamp.chord.jar"/>
-      </classpath>
-    </java>
-  </target>
-
-  <!-- TODO: Standalone facts-dumping is currently unsupported. -->
-  <target name="-dump-facts-android" depends="-build-app">
-    <mkdir dir="${stamp.dumper.outdir}"/>
-    <java classname="chord.project.Boot"
-	  maxmemory="${stamp.maxheap}" fork="true" failonerror="true">
-      <jvmarg value="-ea"/>
-      <sysproperty key="chord.scope.kind" value="cha"/>
-      <sysproperty key="chord.work.dir" file="${app.dir}"/>
-      <sysproperty key="chord.main.class" value="edu.stanford.stamp.harness.Main"/>
-      <sysproperty key="chord.src.path" path="${stamp.src.path}:${stamp.gen.path}:${driver.dir}"/>
-      <sysproperty key="chord.class.path" path="${stamp.dir}/android/stamp.android.jar:${app.jar}:${stamp.lib.jars}:${driver.dir}"/>
-      <sysproperty key="chord.ext.java.analysis.path" path="${stamp.dir}/analysis/stamp.analysis.jar"/>
-      <sysproperty key="chord.ext.dlog.analysis.path" path="${stamp.dir}/datalog"/>
-      <sysproperty key="chord.run.analyses" value="${stamp.dumper.analyses},facts-dumper-java"/>
-      <sysproperty key="chord.std.scope.exclude" value=""/>
-      <sysproperty key="chord.ext.scope.exclude" value=""/>
-      <sysproperty key="chord.std.check.exclude" value=""/>
-      <sysproperty key="chord.ext.check.exclude" value=""/>
-      <sysproperty key="chord.verbose" value="${chord.verbose}"/>
-      <sysproperty key="chord.print.rels" value="${stamp.dumper.printrels}"/>
-      <sysproperty key="chord.bddbddb.max.heap" value="${chord.bddbddb.max.heap}"/>
-      <sysproperty key="stamp.dumper.templates" file="${stamp.dumper.templates}"/>
-      <sysproperty key="stamp.dumper.outdir" file="${stamp.dumper.outdir}"/>
-      <sysproperty key="stamp.dumper.accrange.printindex"
-		   value="${stamp.dumper.accrange.printindex}"/>
-      <classpath>
-	<pathelement location="${stamp.dir}/chord/stamp.chord.jar"/>
-      </classpath>
-    </java>
-  </target>
-
 </project>
