@@ -5,6 +5,7 @@ local.config
 .#*
 
 *.class
+*.pyc
 *.apk
 .project
 .classpath
