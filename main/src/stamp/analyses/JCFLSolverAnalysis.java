@@ -57,30 +57,26 @@ import stamp.jcflsolver.grammars.*;
 	relations.add("cs_refRefFlow", new IndexRelation("ArgRetTransferCtxt", "V", 1, 0, "V", 2, 0));
 
 	// prim taint flow
-	relations.add("cs_srcPrimFlow", new IndexRelation("SrcArgPrimFlowCtxt", "L", 1, null, "U", 2, 0));
 	relations.add("cs_srcPrimFlow", new IndexRelation("SrcRetPrimFlowCtxt", "L", 1, null, "U", 2, 0));
 	relations.add("cs_primSinkFlow", new IndexRelation("ArgSinkPrimFlowCtxt", "U", 1, 0, "L", 2, null));
 	relations.add("cs_primPrimFlow", new IndexRelation("ArgPrimRetPrimTransferCtxt", "U", 1, 0, "U", 2, 0));
 
 	// cross taint flow
-	relations.add("cs_primRefFlow", new IndexRelation("ArgPrimRetTransferCtxt", "U", 1, 0, "V", 2, 0));
 	relations.add("cs_primRefFlow", new IndexRelation("ArgPrimArgTransferCtxt", "U", 1, 0, "V", 2, 0));
 	relations.add("cs_primRefFlow", new IndexRelation("ArgPrimRetTransferCtxt", "U", 1, 0, "V", 2, 0));
-	relations.add("cs_refPrimFlow", new IndexRelation("ArgPrimRetTransferCtxt", "V", 1, 0, "U", 2, 0));
+	relations.add("cs_refPrimFlow", new IndexRelation("ArgRetPrimTransferCtxt", "V", 1, 0, "U", 2, 0));
 
-	/*
 	// ref stub taint flow
-	relations.add("cs_passThroughStub", new StubIndexRelation("cfl_cs_passThroughArgStub", "V", 1, 0, "V", 2, 0, 3, 4, 5));
-	relations.add("cs_passThroughStub", new StubIndexRelation("cfl_cs_passThroughRetStub", "V", 1, 0, "V", 2, 0, 3, 4));
+	relations.add("cs_passThroughStub", new StubIndexRelation("ArgArgTransferCtxtStub", "V", 1, 0, "V", 2, 0, 3, 4, 5));
+	relations.add("cs_passThroughStub", new StubIndexRelation("ArgRetTransferCtxtStub", "V", 1, 0, "V", 2, 0, 3, 4));
 
 	// prim stub taint flow
-	relations.add("cs_primPassThroughStub", new StubIndexRelation("cfl_cs_primPassThroughStub", "U", 1, 0, "U", 2, 0, 3, 4));
-	relations.add("cs_refPrimFlowStub", new StubIndexRelation("cfl_cs_refPrimFlowStub", "V", 1, 0, "U", 2, 0, 3, 4));
+	relations.add("cs_primPassThroughStub", new StubIndexRelation("ArgPrimRetPrimTransferCtxtStub", "U", 1, 0, "U", 2, 0, 3, 4));
+	relations.add("cs_refPrimFlowStub", new StubIndexRelation("ArgRetPrimTransferCtxtStub", "V", 1, 0, "U", 2, 0, 3, 4));
 
 	// cross stub taint flow
-	relations.add("cs_primRefFlowStub", new StubIndexRelation("cfl_cs_primRefArgFlowStub", "U", 1, 0, "V", 2, 0, 3, 4, 5));
-	relations.add("cs_primRefFlowStub", new StubIndexRelation("cfl_cs_primRefRetFlowStub", "U", 1, 0, "V", 2, 0, 3, 4));
-	*/
+	relations.add("cs_primRefFlowStub", new StubIndexRelation("ArgPrimArgTransferCtxtStub", "U", 1, 0, "V", 2, 0, 3, 4, 5));
+	relations.add("cs_primRefFlowStub", new StubIndexRelation("ArgPrimRetTransferCtxtStub", "U", 1, 0, "V", 2, 0, 3, 4));
 	
 	// Phantom flows to relation
 	//relations.add("flowsTo", new PhantomIndexRelation("cs_ptPhantom", 2, "V", 1, 0, "V", 3, 4));
