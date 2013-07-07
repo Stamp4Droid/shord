@@ -726,16 +726,6 @@ def parse(fin, fout):
     pr.write('*/')
     pr.write('')
 
-    grammar.calc_min_lengths()
-    pr.write('PATH_LENGTH static_min_length(EDGE_KIND kind) {')
-    pr.write('switch (kind) {')
-    for s in grammar.symbols:
-        pr.write('case %s: return %s;' % (s.kind, s.min_length))
-    pr.write('default: assert(false);')
-    pr.write('}')
-    pr.write('}')
-    pr.write('')
-
     pr.write('/* Normalized Grammar:')
     pr.write('%s' % grammar.prods)
     pr.write('*/')
@@ -744,6 +734,16 @@ def parse(fin, fout):
     pr.write('/* Reverse Productions:')
     pr.write('%s' % grammar.rev_prods)
     pr.write('*/')
+    pr.write('')
+
+    grammar.calc_min_lengths()
+    pr.write('PATH_LENGTH static_min_length(EDGE_KIND kind) {')
+    pr.write('switch (kind) {')
+    for s in grammar.symbols:
+        pr.write('case %s: return %s;' % (s.kind, s.min_length))
+    pr.write('default: assert(false);')
+    pr.write('}')
+    pr.write('}')
     pr.write('')
 
     pr.write('bool is_terminal(EDGE_KIND kind) {')
