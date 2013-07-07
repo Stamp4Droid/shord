@@ -14,8 +14,8 @@ public class RelMap extends LazyMap<String,ProgramRel> {
 	private final boolean createNew;
 
 	/**
-	 * @param createNew whether to instantiate new relations in case they don't
-	 *        already exist
+	 * @param createNew whether to create new, modifiable relations, or use
+	 * unmodifiable copies of existing ones
 	 */
 	public RelMap(boolean createNew) {
 		this.createNew = createNew;
@@ -23,16 +23,21 @@ public class RelMap extends LazyMap<String,ProgramRel> {
 
 	@Override
 	public ProgramRel lazyFill(String relName) {
-		// TODO: Can this fail for non-existing relations? Need to configure
+		// TODO: Can this fail for non-existent relations? Need to configure
 		// targets / skip Project infrastructure?
 		ProgramRel rel =  (ProgramRel) ClassicProject.g().getTrgt(relName);
-		if (!rel.isOpen()) {
-			if (createNew && !ClassicProject.g().isTrgtDone(relName)) {
-				// Only initialize a new relation if we haven't yet added any
-				// tuples to it on a previous step. Otherwise, first load the
-				// existing tuples before proceeding.
-				rel.zero();
-			} else {
+		if (createNew) {
+			if (rel.isOpen() || ClassicProject.g().isTrgtDone(relName)) {
+				throw new RuntimeException("Relation " + relName +
+										   " already exists");
+			}
+			rel.zero();
+		} else {
+			if (!ClassicProject.g().isTrgtDone(relName)) {
+				throw new RuntimeException("Relation " + relName +
+										   " has not been filled yet");
+			}
+			if (!rel.isOpen()) {
 				rel.load();
 			}
 		}
@@ -40,13 +45,21 @@ public class RelMap extends LazyMap<String,ProgramRel> {
 	}
 
 	/**
-	 * Empty the map, storing all changes to the mapped ProgramRels to disk and
-	 * removing them from memory.
+	 * Empty the map, storing all changes to the mapped ProgramRels to disk (if
+	 * they were opened for writing) and removing them from memory.
 	 */
 	@Override
 	public void clear() {
 		for (ProgramRel rel : values()) {
-			rel.save();
+			if (createNew) {
+				// Save and close
+				rel.save();
+			} else {
+				// Don't save any changes if relations were opened in read-only
+				// mode.
+				// TODO: Ideally, we should disallow changes.
+				rel.close();
+			}
 		}
 		super.clear();
 	}
