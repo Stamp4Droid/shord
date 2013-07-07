@@ -21,6 +21,11 @@ class Bundle
 	}
 
 	@STAMP(flows={@Flow(from="this",to="@return")})
+    public long getLong(java.lang.String key) {
+        return 0L;
+    }
+
+	@STAMP(flows={@Flow(from="this",to="@return")})
 	public java.lang.Object get(java.lang.String key) {
         return new Object();
     }
