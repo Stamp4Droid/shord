@@ -28,6 +28,8 @@ public class RelMap extends LazyMap<String,ProgramRel> {
 		ProgramRel rel =  (ProgramRel) ClassicProject.g().getTrgt(relName);
 		if (createNew) {
 			if (rel.isOpen() || ClassicProject.g().isTrgtDone(relName)) {
+				// TODO: This will cause problems with RelParser if two .dpt
+				// files happen to fill in the same relation.
 				throw new RuntimeException("Relation " + relName +
 										   " already exists");
 			}
