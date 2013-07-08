@@ -16,28 +16,29 @@ import shord.analyses.DomU;
 import shord.analyses.DomV;
 import shord.analyses.LocalVarNode;
 import shord.analyses.VarNode;
+import shord.project.ClassicProject;
 import soot.Local;
 import soot.SootMethod;
+import stamp.analyses.DomL;
 import stamp.analyses.JCFLSolverAnalysis;
 import stamp.analyses.JCFLSolverAnalysis.StubLookupKey;
 import stamp.analyses.JCFLSolverAnalysis.StubLookupValue;
 import stamp.jcflsolver.Edge;
 import stamp.jcflsolver.EdgeData;
 import stamp.jcflsolver.Graph;
+import stamp.jcflsolver.Util.Counter;
 import stamp.jcflsolver.Util.Pair;
 import stamp.srcmap.Expr;
 import stamp.srcmap.RegisterMap;
 import stamp.srcmap.SourceInfo;
 import stamp.viz.flow.HTMLObject.ButtonObject;
 import stamp.viz.flow.HTMLObject.DivObject;
-import chord.bddbddb.Dom;
-import chord.project.ClassicProject;
 
 public class FlowWriter {
 	// v1_2 -> [v, 1, 2]; src1 -> [src, 1]
 	private static String[] toTokensHelper(String node) {
 		String[] result;
-		String dom = node.toLowerCase().replaceAll("[^a-z]", "");
+		String dom = node.replaceAll("[^a-zA-Z]", "");
 		if(!node.startsWith(dom)) {
 			throw new RuntimeException("Invalid node name " + node + "!");
 		}
@@ -57,12 +58,6 @@ public class FlowWriter {
 		return result;
 	}
 
-	public static Set<String> domains = new HashSet<String>();
-	static {
-		domains.add("src");
-		domains.add("sink");
-	}
-
 	private static Map<String,RegisterMap> regMaps = new HashMap<String,RegisterMap>();
 	public static RegisterMap getRegisterMap(SootMethod method) {
 		RegisterMap regMap = regMaps.get(method.toString());
@@ -77,22 +72,23 @@ public class FlowWriter {
 		try {
 			String[] tokens = toTokensHelper(node);
 
-			// get the variable
-			if(domains.contains(tokens[0])) {
-				Dom dom = (Dom)ClassicProject.g().getTrgt(tokens[0].toUpperCase());
+			// label domain
+			if(tokens[0].equals("l")) {
+				DomL dom = (DomL)ClassicProject.g().getTrgt(tokens[0].toUpperCase());
 				tokens[1] = dom.toUniqueString(Integer.parseInt(tokens[1]));
 			}
 
-			if(tokens[0].equals("v") || tokens[0].equals("u")) {
+			// variable domains
+			if(tokens[0].equals("V") || tokens[0].equals("U")) {
 				VarNode register;
-				if(tokens[0].equals("v")) {
+				if(tokens[0].equals("V")) {
 					DomV dom = (DomV)ClassicProject.g().getTrgt(tokens[0].toUpperCase());
 					register = dom.get(Integer.parseInt(tokens[1]));
 				} else {
 					DomU dom = (DomU)ClassicProject.g().getTrgt(tokens[0].toUpperCase());
 					register = dom.get(Integer.parseInt(tokens[1]));
 				}
-				
+
 				SootMethod method = null;
 				Local local = null;
 				if(register instanceof LocalVarNode) {
@@ -102,7 +98,7 @@ public class FlowWriter {
 				}
 
 				// link the method
-				String sourceFileName = SourceInfo.filePath(method.getDeclaringClass());
+				String sourceFileName = method == null ? "" : SourceInfo.filePath(method.getDeclaringClass());
 				int methodLineNum = SourceInfo.methodLineNum(method);
 
 				String methStr = "<a onclick=\"showSource('" + sourceFileName + "','false','" + methodLineNum + "')\">" + "[" + method.getName() + "]</a> ";
@@ -164,41 +160,100 @@ public class FlowWriter {
 		return tokens[0] +(tokens.length >= 2 ? tokens[1] : "") /*+ (tokens.length == 3 ? "_" + tokens[2] : "")*/;
 	}
 
-	public static SootMethod lookup(EdgeData edge, boolean forward) {
-		String[] fromTokens = toTokensHelper(edge.getFrom(forward));
-		String[] toTokens = toTokensHelper(edge.getTo(forward));
+	public static class StubInfo {
+		public final String relationName;
 
-		if(fromTokens.length < 3 || toTokens.length < 3) {
-			return null;
+		public final SootMethod method;
+
+		public final Integer firstArg;
+		public final Integer secondArg;
+
+		public StubInfo(String relationName, int methodId, Integer firstArg, Integer secondArg) {
+			this.relationName = relationName;
+
+			DomM dom = (DomM)ClassicProject.g().getTrgt("M");
+			this.method = dom.get(methodId);
+
+			this.firstArg = firstArg;
+			this.secondArg = secondArg;
 		}
 
+		public StubInfo(String relationName, int methodId, Integer arg) {
+			this(relationName, methodId, arg, null);
+		}
+
+		public StubInfo(String relationName, int methodId) {
+			this(relationName, methodId, null, null);
+		}
+
+		public StubInfo(StubLookupValue value) {
+			this(value.relationName, value.method, value.firstArg, value.secondArg);
+		}
+
+		@Override public String toString() {
+			return this.relationName + ":" + this.method.toString() + "[" + this.firstArg + "][" + this.secondArg + "]";
+		}
+	}
+
+	public static StubInfo lookup(EdgeData edge, boolean forward) {
 		String symbol = edge.symbol;
-
-		StubLookupKey key = new StubLookupKey(symbol, edge.getFrom(forward), edge.getTo(forward));
+		String source = edge.from;
+		String sink = edge.to;
+		StubLookupKey key = new StubLookupKey(symbol, source, sink);
 		StubLookupValue value = JCFLSolverAnalysis.getStub(key);
-		Integer methodId = value == null ? null : value.method;
 
-		if(methodId == null) {
-			return null;
+		return value == null ? null : new StubInfo(value);
+	}
+
+	public static void printAllStubs() throws IOException {
+		PrintWriter pw = new PrintWriter(new File("cfl/Stubs.out"));
+		/*
+	for(StubLookupValue stub : JCFLSolverAnalysis.getAllStubs().values()) {
+	    if(!printedStubs.contains(stub.method)) {
+		StubInfo info = new StubInfo(stub);
+		pw.println(stub.method + " " + info.method.toString());
+		printedStubs.add(stub.method);
+	    }
+	}
+		 */
+		Set<String> printedStubs = new HashSet<String>();
+		for(Map.Entry<StubLookupKey,StubLookupValue> entry : JCFLSolverAnalysis.getAllStubs().entrySet()) {
+			StubLookupKey key = entry.getKey();
+			StubLookupValue value = entry.getValue();
+			StubInfo info = new StubInfo(value);
+			if(key.source.startsWith("M") && !printedStubs.contains(key.source)) {
+				pw.println(key.source + " " + info.method.toString());
+				printedStubs.add(key.source);
+			}
+			if(key.sink.startsWith("M") && !printedStubs.contains(key.sink)) {
+				pw.println(key.sink + " " + info.method.toString());
+				printedStubs.add(key.sink);
+			}
 		}
+		pw.close();
 
-		DomM dom = (DomM)ClassicProject.g().getTrgt("M");
-		SootMethod method = dom.get(methodId);
-
-		return method;
+		pw = new PrintWriter("cfl/StubModels.out");
+		for(Map.Entry<StubLookupKey,StubLookupValue> entry : JCFLSolverAnalysis.getAllStubs().entrySet()) {
+			StubLookupKey key = entry.getKey();
+			StubInfo info = new StubInfo(entry.getValue());
+			pw.println(key.symbol + "," + key.source + "," + key.sink + " " + info.toString());
+		}
+		pw.close();
 	}
 
 	public static void printStubInputs(Graph g, File outputDir) throws IOException {
 		PrintWriter pw = new PrintWriter(new File("cfl/Src2SinkStubs.out"));
+		Counter<String> keys = new Counter<String>();
 
 		for(Edge edge : g.getEdges("Src2Sink")) {
+			pw.println(edge.from.getName() + " -> " + edge.to.getName());
+
 			String[] sourceTokens = toTokens(edge.from.getName());
-			String source = sourceTokens[1].substring(1);
+			String source = sourceTokens[1];
 
 			String[] sinkTokens = toTokens(edge.to.getName());
-			String sink = sinkTokens[1].substring(1);
-
-			pw.println(source + " to " + sink);
+			String sink = sinkTokens[1];
+			pw.println(source + " -> " + sink);
 
 			List<Pair<Edge,Boolean>> path = g.getPath(edge);
 			for(Pair<Edge,Boolean> pair : path) {
@@ -206,32 +261,79 @@ public class FlowWriter {
 				boolean forward = pair.getY();
 
 				if(data.weight > 0) {
-					SootMethod method = lookup(data, forward);
-					if(method != null) {
-						pw.println(data.toString(forward) + ": " + method.toString());
+					StubInfo info = lookup(data, forward);
+					String line;
+					if(info != null) {
+						line = data.toString(forward) + ": " + info.toString();
 					} else {
-						pw.println(data.toString(forward) + ": " + "NOT_FOUND");
+						line = data.toString(forward) + ": " + "NOT_FOUND";
 					}
+					//keys.increment(new StubLookupKey(data.symbol, data.from, data.to));
+					keys.increment(line);
+					pw.println(line);
 				}
 			}
 			pw.println();
 		}
 		pw.close();
+
+		pw = new PrintWriter(new File("cfl/Src2SinkAllStubs.out"));
+		for(String key: keys.sortedKeySet()) {
+			pw.println(key + " " + keys.getCount(key));
+		}
+		pw.close();
+	}
+
+	public static void printFlowViz(Graph g) {
+		List<Pair<String,String>> edges = new ArrayList<Pair<String,String>>();
+		Set<String> sources = new HashSet<String>();
+		Set<String> sinks = new HashSet<String>();
+		for(Edge edge : g.getEdges("Src2Sink")) {
+			List<Pair<Edge,Boolean>> path = g.getPath(edge);
+
+			if(path.size() >= 2) {
+				Pair<Edge,Boolean> source = path.get(0);
+				EdgeData sourceData = source.getX().getData(g);
+				StubInfo sourceInfo = lookup(sourceData, source.getY());
+
+				Pair<Edge,Boolean> sink = path.get(path.size()-1);
+				EdgeData sinkData = sink.getX().getData(g);
+				StubInfo sinkInfo = lookup(sinkData, sink.getY());
+
+				edges.add(new Pair<String,String>(sourceData.from, sinkData.to));
+
+				if(sourceData.symbol.equals("cs_srcRefFlowNew") || sourceData.symbol.equals("cs_srcPrimFlowNew")) {
+					sources.add(sourceData.from);
+				}
+				if(sinkData.symbol.equals("cs_refSinkFlowNew") || sinkData.symbol.equals("cs_primSinkFlowNew")) {
+					sinks.add(sinkData.to);
+				}
+				/*
+		if(sourceInfo != null && sinkInfo != null) {
+		    //edges.add(new Pair<String,String>(sourceInfo.toString(), sinkInfo.toString()));
+		} else {
+		    System.out.println("ERROR: Src2Sink path length too short!");
+		}
+				 */
+			}
+		}
+		FlowGraphViz.viz.viz(new FlowGraphViz.FlowGraph(edges, sources, sinks));
 	}
 
 	public static String parseEdge(EdgeData edge, boolean forward) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(edge.toString(forward));
 
-		SootMethod method = lookup(edge, forward);
-		if(method == null) {
+		StubInfo info = lookup(edge, forward);
+		if(info == null) {
 			return sb.toString();
 		}
 
-		String sourceFileName = SourceInfo.filePath(method.getDeclaringClass());
-		int methodLineNum = SourceInfo.methodLineNum(method);
+		String sourceFileName = SourceInfo.filePath(info.method.getDeclaringClass());
+		int methodLineNum = SourceInfo.methodLineNum(info.method);
 
-		String methStr = " <a onclick=\"showSource('" + sourceFileName + "','false','" + methodLineNum + "')\">" + "[" + method.getName() + "]</a>";
+		// TODO: make this print more than just the method name
+		String methStr = " <a onclick=\"showSource('" + sourceFileName + "','false','" + methodLineNum + "')\">" + "[" + info.method.getName() + "]</a>";
 		sb.append(methStr);
 
 		return sb.toString();
