@@ -14,6 +14,7 @@ import stamp.jcflsolver.Graph;
 import stamp.jcflsolver.Util.MultivalueMap;
 import stamp.jcflsolver.Util.Pair;
 import stamp.jcflsolver.grammars.E12;
+import stamp.viz.flow.FlowWriter;
 import chord.project.Chord;
 
 @Chord(name = "jcflsolver") public class JCFLSolverAnalysis extends JavaAnalysis {
@@ -370,11 +371,11 @@ import chord.project.Chord;
 	// TODO: currently only printing true source-sink flows (not inferred ones)
 	public void fillSrc2Sink(Graph g) {
 		for(Edge edge : g.getEdges("Src2Sink")) {
-			if(edge.from.getName().startsWith("SRC") && edge.to.getName().startsWith("SINK")) {
+			//if(edge.from.getName().startsWith("L") && edge.to.getName().startsWith("L")) {
 				int source = Integer.parseInt(edge.from.getName().replaceAll("[a-zA-Z]", ""));
 				int sink = Integer.parseInt(edge.to.getName().replaceAll("[a-zA-Z]", ""));
 				src2sink.put(new Pair<Integer,Integer>(source, sink), (int)edge.weight);
-			}
+			//}
 		}
 	}
 
@@ -416,6 +417,9 @@ import chord.project.Chord;
 		resultsDir.mkdirs();
 		try {
 			FactsWriter.write(g, resultsDir, true);
+			FlowWriter.printStubInputs(g, resultsDir);
+			FlowWriter.printAllStubs();
+			FlowWriter.viz(g, resultsDir);
 		} catch(IOException e) { e.printStackTrace(); }
 	}
 }

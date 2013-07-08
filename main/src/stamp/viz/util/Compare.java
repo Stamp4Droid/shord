@@ -1,4 +1,4 @@
-package edu.stanford.stamp.viz.util;
+package stamp.viz.util;
 
 import java.io.*;
 

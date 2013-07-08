@@ -15,6 +15,9 @@ import shord.analyses.DomM;
 import shord.analyses.DomU;
 import shord.analyses.DomV;
 import shord.analyses.LocalVarNode;
+import shord.analyses.ParamVarNode;
+import shord.analyses.RetVarNode;
+import shord.analyses.ThisVarNode;
 import shord.analyses.VarNode;
 import shord.project.ClassicProject;
 import soot.Local;
@@ -28,6 +31,7 @@ import stamp.jcflsolver.EdgeData;
 import stamp.jcflsolver.Graph;
 import stamp.jcflsolver.Util.Counter;
 import stamp.jcflsolver.Util.Pair;
+import stamp.reporting.TaintedVar;
 import stamp.srcmap.Expr;
 import stamp.srcmap.RegisterMap;
 import stamp.srcmap.SourceInfo;
@@ -73,7 +77,7 @@ public class FlowWriter {
 			String[] tokens = toTokensHelper(node);
 
 			// label domain
-			if(tokens[0].equals("l")) {
+			if(tokens[0].equals("L")) {
 				DomL dom = (DomL)ClassicProject.g().getTrgt(tokens[0].toUpperCase());
 				tokens[1] = dom.toUniqueString(Integer.parseInt(tokens[1]));
 			}
@@ -95,6 +99,15 @@ public class FlowWriter {
 					LocalVarNode localRegister = (LocalVarNode)register;
 					local = localRegister.local;
 					method = localRegister.meth;
+				} else if(register instanceof ThisVarNode) {
+					ThisVarNode thisRegister = (ThisVarNode)register;
+					method = thisRegister.method;
+				} else if(register instanceof ParamVarNode) {
+					ParamVarNode paramRegister = (ParamVarNode)register;
+					method = paramRegister.method;
+				} else if(register instanceof RetVarNode) {
+					RetVarNode retRegister = (RetVarNode)register;
+					method = retRegister.method;
 				}
 
 				// link the method
