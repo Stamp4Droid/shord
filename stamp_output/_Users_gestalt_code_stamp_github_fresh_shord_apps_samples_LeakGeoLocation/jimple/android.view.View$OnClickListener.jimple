@@ -1,5 +1,0 @@
-public interface  android.view.View$OnClickListener extends java.lang.Object
-{
-
-    public abstract void onClick(android.view.View);
-}

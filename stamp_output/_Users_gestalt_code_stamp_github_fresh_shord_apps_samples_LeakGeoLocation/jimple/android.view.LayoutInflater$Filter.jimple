@@ -1,5 +1,0 @@
-public interface  android.view.LayoutInflater$Filter extends java.lang.Object
-{
-
-    public abstract boolean onLoadClass(java.lang.Class);
-}

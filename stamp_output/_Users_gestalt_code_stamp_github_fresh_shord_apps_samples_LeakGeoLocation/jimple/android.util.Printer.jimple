@@ -1,5 +1,0 @@
-public interface  android.util.Printer extends java.lang.Object
-{
-
-    public abstract void println(java.lang.String);
-}

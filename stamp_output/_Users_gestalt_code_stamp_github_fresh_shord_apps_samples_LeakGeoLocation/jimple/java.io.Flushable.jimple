@@ -1,5 +1,0 @@
-public interface  java.io.Flushable extends java.lang.Object
-{
-
-    public abstract void flush() throws java.io.IOException;
-}

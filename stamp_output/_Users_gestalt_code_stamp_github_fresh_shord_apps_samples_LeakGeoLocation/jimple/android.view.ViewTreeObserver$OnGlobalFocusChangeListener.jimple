@@ -1,5 +1,0 @@
-public interface  android.view.ViewTreeObserver$OnGlobalFocusChangeListener extends java.lang.Object
-{
-
-    public abstract void onGlobalFocusChanged(android.view.View, android.view.View);
-}

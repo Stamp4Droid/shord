@@ -1,7 +1,0 @@
-public annotation interface  android.view.ViewDebug$IntToString extends java.lang.Object implements java.lang.annotation.Annotation
-{
-
-    public abstract int 'from'();
-
-    public abstract java.lang.String 'to'();
-}
