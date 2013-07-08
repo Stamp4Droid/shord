@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="STAMP-Apk">
 
+  <target name="-prepare-backend-chord">
+    <!-- Register backend-specific analyses. -->
+    <property name="stamp.analyses.main"
+	      value="typefilter-dlog,pt-dlog,taint-dlog"/>
+    <!-- Register backend-specific system properties (none required for this
+         backend). -->
+    <propertyset id="stamp.analyses.main.sysprops"/>
+  </target>
+
+
   <target name="-analyze-apk">
-	<unjar src="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar" 
+	<unjar src="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"
 		   dest="${stamp.out.dir}">
-	  <patternset> 
+	  <patternset>
 		<include name="stamp_annotations.txt"/>
 	  </patternset>
 	</unjar>
 
 	<!-- Run android-apktool to decompile the manifest and resource xml files -->
-	<java classname="brut.apktool.Main" 
+	<java classname="brut.apktool.Main"
 		  maxmemory="${stamp.maxheap}"
 		  fork="true"
 		  failonerror="true">
@@ -45,10 +55,26 @@
 	  <arg value="${stamp.out.dir}/apktool-out"/>
     </java>
 
+    <!-- Read required properties. -->
+    <prop-default property="stamp.backend" default="chord"
+		  description="backend to use for analyzing the app [chord,solvergen]"/>
+    <require-prop property="stamp.analyses.pre"
+		  description="Chord analyses that will set up the initial facts for later stages"/>
+    <require-prop property="stamp.analyses.post"
+		  description="Chord analyses that will prepare the output relations"/>
+    <prop-default property="stamp.printrels" default=""
+		  description="relations to print out after the analysis finishes"/>
+
+    <!-- Prepare the selected analysis backend. -->
+    <runtarget target="-prepare-backend-${stamp.backend}"/>
+    <require-prop property="stamp.analyses.main"
+		  description="backend-specific analyses to run -- should be declared in -prepare-backend-[backend]"/>
+    <require-ref refid="stamp.analyses.main.sysprops"
+		 description="backend-specific system properties to pass to Chord -- should be declared in -prepare-backend-[backend]"/>
 
     <!-- Configure remaining Chord settings. -->
     <property name="stamp.analyses"
-	      value="inject-annot,base-java,annot-java,contexts-java,pre-dlog,typefilter-dlog,pt-dlog,taint-dlog,post-java,cfl-dlog,jcflsolver"/>
+	      value="${stamp.analyses.pre},${stamp.analyses.main},${stamp.analyses.post}"/>
 
     <!-- Run Chord. -->
     <java classname="shord.project.Boot" fork="true" failonerror="true">
@@ -73,6 +99,7 @@
 	  <sysproperty key="stamp.android.jar" value="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"/>
 	  <sysproperty key="stamp.framework.dir" value="${stamp.dir}/models/api-${apilevel}"/>
 	  <sysproperty key="stamp.icdf" value="${stamp.icdf}"/>
+      <syspropertyset refid="stamp.analyses.main.sysprops"/>
       <classpath>
 		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
 		<pathelement location="${stamp.dir}/lib/soot.jar"/>

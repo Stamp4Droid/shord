@@ -16,7 +16,7 @@
   <import file="apptasks.xml"/>
   <import file="tooltasks.xml"/>
   <import file="droidrecord.xml"/>
-  <!--import file="solvergen.xml"/-->
+  <import file="solvergen.xml"/>
   <import file="debug.xml"/>
   <import file="apptasks_dex.xml"/>
 

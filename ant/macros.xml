@@ -90,23 +90,30 @@
     </sequential>
   </macrodef>
 
-  <macrodef name="strip-ext">
-    <!-- Remove the specified extension from a filename, and optionally change
-	 its directory. -->
+  <macrodef name="replace-ext">
+    <!-- Change the extension on a filename, and optionally change its
+	 directory. -->
     <attribute name="file"/>
     <attribute name="destdir" default=""/>
-    <attribute name="extension"/>
+    <attribute name="oldext"/>
+    <attribute name="newext" default=""/>
     <attribute name="property"/>
     <sequential>
+      <require-ext file="@{file}" extension="@{oldext}"/>
       <if>
 	<equals arg1="@{destdir}" arg2=""/>
 	<then><dirname property="@{property}.dir" file="@{file}"/></then>
 	<else><property name="@{property}.dir" location="@{destdir}"/></else>
       </if>
+      <if>
+	<equals arg1="@{newext}" arg2=""/>
+	<then><property name="@{property}.suffix" value=""/></then>
+	<else><property name="@{property}.suffix" value=".@{newext}"/></else>
+      </if>
       <basename property="@{property}.base" file="@{file}"
-		suffix="@{extension}"/>
+		suffix="@{oldext}"/>
       <property name="@{property}"
-		location="${@{property}.dir}/${@{property}.base}"/>
+		location="${@{property}.dir}/${@{property}.base}${@{property}.suffix}"/>
     </sequential>
   </macrodef>
 </project>
