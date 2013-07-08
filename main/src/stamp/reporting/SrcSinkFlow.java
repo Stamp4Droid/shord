@@ -1,7 +1,11 @@
 package stamp.reporting;
 
+import java.util.Map;
+
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
+import stamp.analyses.DomL;
+import stamp.analyses.JCFLSolverAnalysis;
 import chord.util.tuple.object.Trio;
 import chord.util.tuple.object.Pair;
 
@@ -33,6 +37,7 @@ public class SrcSinkFlow extends XMLReport {
 	}
 	*/
 
+	/*
 	Iterable<Pair<String,String>> res = relSrcSinkFlow.getAry2ValTuples();
 	for(Pair<String,String> pair : res) {
 	    String source = pair.val0;
@@ -42,6 +47,20 @@ public class SrcSinkFlow extends XMLReport {
 			.addValue(sink);
 
 	}
+	*/
+
+	Map<stamp.jcflsolver.Util.Pair<Integer, Integer>, Integer> src2sink = JCFLSolverAnalysis.getSrc2Sink();
+	DomL dom = (DomL)ClassicProject.g().getTrgt("L");
+	System.out.println("LENGTH:" + src2sink.entrySet().size());
+	for(Map.Entry<stamp.jcflsolver.Util.Pair<Integer, Integer>, Integer> entry : src2sink.entrySet()) {
+		//if(entry.getValue() > 0) {
+			newTuple()
+				.addValue(dom.get(entry.getKey().getX()))
+				.addValue(dom.get(entry.getKey().getY()))
+				.addValue(Integer.toString(entry.getValue()));
+		//}
+	}
+	
 	relSrcSinkFlow.close();
     }
 
