@@ -117,6 +117,7 @@
 	  <sysproperty key="stamp.icdf" value="${stamp.icdf}"/>
       <sysproperty key="stamp.droidrecord.logfile.template" value="${stamp.droidrecord.logfile.template}"/>
       <sysproperty key="stamp.droidrecord.logfile.bin" value="${stamp.droidrecord.logfile.bin}"/>
+	  <sysproperty key="stamp.print.allclasses" value="${stamp.print.allclasses}"/>
       <syspropertyset refid="stamp.analyses.main.sysprops"/>
       <classpath>
 		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>

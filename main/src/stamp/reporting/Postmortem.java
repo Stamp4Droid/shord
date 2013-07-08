@@ -2,6 +2,7 @@ package stamp.reporting;
 
 import chord.project.Chord;
 import shord.project.ClassicProject;
+import shord.program.Program;
 import shord.project.analyses.JavaAnalysis;
 import java.io.*;
 
@@ -64,5 +65,10 @@ public class Postmortem extends JavaAnalysis
 		}catch(Exception e){
 			throw new Error(e);
 		}
+		
+		boolean printClasses = !System.getProperty("stamp.print.allclasses", "false").equals("false");
+		System.out.println("stamp.print.allclasses = "+printClasses);
+		if(printClasses)
+			Program.g().printAllClasses();
     }
 }
