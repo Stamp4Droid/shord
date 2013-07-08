@@ -16,6 +16,10 @@ import soot.toolkits.graph.*;
 import soot.toolkits.scalar.*;
 import shord.program.Program;
 import java.util.*;
+import edu.stanford.droidrecord.logreader.events.info.ParamInfo;
+
+import stamp.droidrecord.DroidrecordProxy;
+import stamp.droidrecord.StampCallArgumentValueAnalysis;
 
 /**
  * Visitor class for instrumenting the app code befere they are fed to chord. 
@@ -46,9 +50,23 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 	//cache the temporary result from new ComponentName.
 	private Map<Value, String> arg2CompnentName = new HashMap<Value, String>();
 	
+    private StampCallArgumentValueAnalysis cavAnalysis = null;
 
     public InterComponentInstrument()
     {
+        DroidrecordProxy droidrecord = stamp.droidrecord.DroidrecordProxy.g();
+        if(droidrecord.isAvailable()) {
+            cavAnalysis = droidrecord.getCallArgumentValueAnalysis();
+            cavAnalysis.run();
+        }
+    }
+    
+    private List<ParamInfo> queryArgumentValues(SootMethod caller, Stmt stmt, 
+                                                int argNum) {
+        if(cavAnalysis != null)
+            return cavAnalysis.queryArgumentValues(caller, stmt, argNum);
+        else
+            return java.util.Collections.EMPTY_LIST;
     }
 	
     protected void visit(SootClass klass)
