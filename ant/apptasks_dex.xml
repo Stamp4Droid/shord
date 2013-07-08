@@ -75,6 +75,22 @@
     <!-- Configure remaining Chord settings. -->
     <property name="stamp.analyses"
 	      value="${stamp.analyses.pre},${stamp.analyses.main},${stamp.analyses.post}"/>
+    
+    <!-- Conditionally set-up DroidRecord properties -->
+    <if>
+      <isset property="stamp.droidrecord.logfile.template"/>
+      <then/>
+      <else>
+        <property name="stamp.droidrecord.logfile.template" value=""/>
+      </else>
+    </if>
+    <if>
+      <isset property="stamp.droidrecord.logfile.bin"/>
+      <then/>
+      <else>
+        <property name="stamp.droidrecord.logfile.bin" value=""/>
+      </else>
+    </if>
 
     <!-- Run Chord. -->
     <java classname="shord.project.Boot" fork="true" failonerror="true">
@@ -99,6 +115,9 @@
 	  <sysproperty key="stamp.android.jar" value="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"/>
 	  <sysproperty key="stamp.framework.dir" value="${stamp.dir}/models/api-${apilevel}"/>
 	  <sysproperty key="stamp.icdf" value="${stamp.icdf}"/>
+      <sysproperty key="stamp.droidrecord.logfile.template" value="${stamp.droidrecord.logfile.template}"/>
+      <sysproperty key="stamp.droidrecord.logfile.bin" value="${stamp.droidrecord.logfile.bin}"/>
+	  <sysproperty key="stamp.print.allclasses" value="${stamp.print.allclasses}"/>
       <syspropertyset refid="stamp.analyses.main.sysprops"/>
       <classpath>
 		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
@@ -106,6 +125,7 @@
 		<!--pathelement location="/local/mysoot/soot-github/lib/soot-develop.jar"/-->
 		<pathelement location="${stamp.dir}/lib/commons-lang3-3.1.jar"/>
 		<pathelement location="${stamp.dir}/lib/stamp.chord.jar"/>
+    	<pathelement location="${stamp.dir}/lib/droidrecord_reader.jar"/>
       </classpath>
     </java>
 

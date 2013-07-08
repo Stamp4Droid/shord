@@ -60,10 +60,6 @@ public class Program
 
 			Scene.v().setEntryPoints(Arrays.asList(new SootMethod[]{mainMethod}));
 			Scene.v().loadDynamicClasses();
-			for(SootClass klass : Scene.v().getClasses()){
-                PackManager.v().writeClass(klass);
-				//System.out.println(klass.getName());
-			}
         } catch (CompilationDeathException e) {
             if(e.getStatus()!=CompilationDeathException.COMPILATION_SUCCEEDED)
                 throw e;
@@ -81,6 +77,10 @@ public class Program
 	
 	public void printAllClasses()
 	{
+		for(SootClass klass : Scene.v().getClasses()){
+			PackManager.v().writeClass(klass);
+			//System.out.println(klass.getName());
+		}
 	}
 	
 	public void printClass(String className)

@@ -43,7 +43,7 @@
         </else>
       </if>
       <!-- End Fixme -->
-      <property name="stamp.droidrecord.logdir" value="${stamp.out.dir}/droidrecord"/>
+      <property name="stamp.droidrecord.logdir" value="${app.loc}/.droidrecord_log"/>
       <property name="stamp.droidrecord.logfile.text" value="${stamp.droidrecord.logdir}/droidrecord.log"/>
       <property name="stamp.droidrecord.logfile.bin" value="${stamp.droidrecord.logdir}/droidrecord.log.bin"/>
       <property name="stamp.droidrecord.logfile.template" value="${stamp.droidrecord.logdir}/droidrecord.log.template"/>
@@ -67,6 +67,7 @@
         if="${stamp.droidrecord.present}">
     <ant antfile="${stamp.dir}/droidrecord/build.xml"
 	 inheritAll="false" useNativeBasedir="true"/>
+    <copy file="${stamp.dir}/droidrecord/jars/droidrecord_reader.jar" toFile="${stamp.dir}/lib/droidrecord_reader.jar"/>
   </target>
 
   <target name="dynanalyze"
