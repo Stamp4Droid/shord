@@ -56,6 +56,8 @@
 		  description="whether to enable profiling output for the generated solver"/>
     <prop-default property="stamp.solvergen.pathrecord" default="false"
 		  description="whether to enable path recording in the generated solver"/>
+    <prop-default property="stamp.solvergen.assertions" default="true"
+		  description="whether to enable assertions in the generated solver (STRONGLY RECOMMENDED)"/>
 
     <!-- Set compiler flags. -->
     <prop-ite property="stamp.solvergen.logging.flag"
@@ -68,6 +70,9 @@
     <prop-ite property="stamp.solvergen.pathrecord.flag"
 	      condition="${stamp.solvergen.pathrecord}"
 	      then="-DPATH_RECORDING" else=""/>
+    <prop-ite property="stamp.solvergen.assertions.flag"
+	      condition="${stamp.solvergen.assertions}"
+	      then="" else="-DNDEBUG"/>
 
     <!-- Locate relevant files. -->
     <property name="stamp.solvergen.analysis.cfg"
@@ -94,6 +99,7 @@
       <arg line="${stamp.solvergen.debug.flag}"/>
       <arg line="${stamp.solvergen.profiling.flag}"/>
       <arg line="${stamp.solvergen.pathrecord.flag}"/>
+      <arg line="${stamp.solvergen.assertions.flag}"/>
       <arg value="-o"/><arg file="${stamp.solvergen.executable}"/>
       <arg value="-I"/><arg file="${stamp.dir}/solvergen"/>
       <arg file="${stamp.dir}/solvergen/engine.cpp"/>
