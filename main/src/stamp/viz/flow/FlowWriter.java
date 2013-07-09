@@ -180,7 +180,7 @@ public class FlowWriter {
 
 	public static String parseNode(String node) {
 		String[] tokens = toTokens(node);
-		if (tokens.length < 2) return "";
+		if (tokens.length <= 2) return "";
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < tokens.length; ++i) {
 			if (i >= 2) sb.append("_");
