@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import shord.analyses.Ctxt;
 import shord.analyses.DomC;
 import shord.analyses.DomM;
 import shord.analyses.DomU;
@@ -20,8 +22,10 @@ import shord.analyses.RetVarNode;
 import shord.analyses.ThisVarNode;
 import shord.analyses.VarNode;
 import shord.project.ClassicProject;
+import soot.jimple.Stmt;
 import soot.Local;
 import soot.SootMethod;
+import soot.Unit;
 import stamp.analyses.DomL;
 import stamp.analyses.JCFLSolverAnalysis;
 import stamp.analyses.JCFLSolverAnalysis.StubLookupKey;
@@ -75,11 +79,12 @@ public class FlowWriter {
 	private static String[] toTokens(String node) {
 		try {
 			String[] tokens = toTokensHelper(node);
+			ArrayList<String> newTokens = new ArrayList<String>(Arrays.asList(tokens));
 
 			// label domain
 			if(tokens[0].equals("L")) {
 				DomL dom = (DomL)ClassicProject.g().getTrgt(tokens[0].toUpperCase());
-				tokens[1] = dom.toUniqueString(Integer.parseInt(tokens[1]));
+				newTokens.set(1, dom.toUniqueString(Integer.parseInt(tokens[1])));
 			}
 
 			// variable domains
@@ -114,7 +119,7 @@ public class FlowWriter {
 				String sourceFileName = method == null ? "" : SourceInfo.filePath(method.getDeclaringClass());
 				int methodLineNum = SourceInfo.methodLineNum(method);
 
-				String methStr = "<a onclick=\"showSource('" + sourceFileName + "','false','" + methodLineNum + "')\">" + "[" + method.getName() + "]</a> ";
+				String methStr = "source: " + sourceFileName + " line: " + methodLineNum + " " +method.getName();
 				//tokens[0] = "<a onclick=\"showSource('" + sourceFileName + "','false','" + methodLineNum + "')\">" + "[" + method.getName() + "]</a> "/* + tokens[0]*/;
 
 				// link the register
@@ -133,11 +138,12 @@ public class FlowWriter {
 				}
 
 				if(registerLineNum != null) {
-					tokens[1] = "<a onclick=\"showSource('" + sourceFileName + "','false','" + registerLineNum + "')\">" + text + "</a>";
-					tokens[0] = methStr;
+					newTokens.set(1,"source: " + sourceFileName + " line: " + registerLineNum + " " + text);
+					newTokens.set(0, methStr);
 				}
 				else{
-					tokens[0] = methStr+tokens[0];
+					newTokens.set(0, methStr+tokens[0]);
+					newTokens.set(1, "");
 				}
 			}
 			/*
@@ -159,9 +165,12 @@ public class FlowWriter {
 			if(tokens.length == 3) {
 				DomC domC = (DomC)ClassicProject.g().getTrgt("C");
 				Ctxt c = domC.get(Integer.parseInt(tokens[2]));
-				tokens[2] = domC.toUniqueString(Integer.parseInt(tokens[2]));
+				Unit[] elems = c.getElems();
+				for (int i = 0; i < elems.length; ++i) {
+					newTokens.add(SourceInfo.containerMethod((Stmt)elems[i]).getName());
+				}
 			}
-			return tokens;
+			return newTokens.toArray(tokens);
 		} catch(Exception e) {
 			String[] tokens = new String[1];
 			tokens[0] = node;
@@ -171,12 +180,13 @@ public class FlowWriter {
 
 	public static String parseNode(String node) {
 		String[] tokens = toTokens(node);
+		if (tokens.length < 2) return "";
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < tokens.length; ++i) {
-			if (i == 2) sb.append("@");
+			if (i >= 2) sb.append("_");
 			sb.append(tokens[i]);
 		}
-		return sb.toString();
+		return sb.toString() + '\n';
 	}
 
 	public static class StubInfo {
@@ -475,7 +485,6 @@ public class FlowWriter {
 			return this.isStart(startIndex) && this.isEnd(endIndex);
 		}
 
-/*
 		public HTMLObject process(boolean start) {
 
 			DivObject d = new DivObject();
@@ -549,10 +558,10 @@ public class FlowWriter {
 			}
 			return d;
 		}
-		*/
 
-		public HTMLObject process(boolean start) {
-			DivObject d = new DivObject();
+		public String getString(boolean start) {
+			this.index = 0;
+			StringBuilder sb = new StringBuilder();
 			while(this.index < path.size()) {
 				if(this.index < 0) {
 					this.index++;
@@ -562,32 +571,30 @@ public class FlowWriter {
 				Edge edge = pair.getX();
 				boolean forward = pair.getY();
 
-				if(this.index == 0 && !subpath) {
-					d.addObject(new SpanObject('A'+parseNode(edge.getData(this.g).getFrom(forward))));
-					d.addBreak();
+				if(this.index == 0 && !subpath && !start) {
+					sb.append(parseNode(edge.getData(this.g).getFrom(forward)));
 				}
 
-				SpanObject span = new SpanObject('B'+parseEdge(edge.getData(this.g), forward));
-				if(edge.weight > 0) {
-					span.putStyle("color", "red");
-				}
-				d.addObject(span);
-				d.addBreak();
+				//SpanObject span = new SpanObject(parseEdge(edge.getData(this.g), forward));
+				//if(edge.weight > 0) {
+				//	span.putStyle("color", "red");
+				//}
+				//d.addObject(span);
+				//d.addBreak();
 
 				if(isEnd(index)) {
-					return d;
+					return sb.toString();
 				}
 
 				if(!subpath || index < path.size()-1) {
-					d.addObject(new SpanObject('C'+parseNode(edge.getData(this.g).getTo(forward))));
-					d.addBreak();
+					sb.append(parseNode(edge.getData(this.g).getTo(forward)));
 				}
 
 				this.index++;
 
 				start = false;
 			}
-			return d;
+			return sb.toString();
 		}
 	}
 
@@ -722,7 +729,8 @@ public class FlowWriter {
 			String sink = sinkTokens[1].substring(1);
 
 			PrintWriter pw = new PrintWriter(new File("cfl/" + source + "2" + sink + ".out.test"));
-			pw.println(new MethodCompressedFlowObject(g.getPath(edge), g).toString());
+			FlowObject fo = new MethodCompressedFlowObject(g.getPath(edge), g);
+			pw.println(new HTMLObject.SpanObject(fo.getString(true)).toString());
 			//pw.println(new AliasCompressedFlowObject(g.getPath(edge, terminals), g).toString());
 			pw.close();
 		}
