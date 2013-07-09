@@ -16,7 +16,7 @@
 	</value>
 
 <tuple>
-	<value srcFile="android/location/Location.java" lineNum="165" chordsig="&lt;android.location.Location: double getLatitude()&gt;" type="method">
+	<value srcFile="android/location/Location.java" lineNum="165" chordsig="getLatitude:()D@android.location.Location" type="method">
 		<label><![CDATA[getLatitude]]></label>
 	</value>
 	<value>
@@ -25,7 +25,7 @@
 
 </tuple>
 <tuple>
-	<value srcFile="android/location/Location.java" lineNum="170" chordsig="&lt;android.location.Location: double getLongitude()&gt;" type="method">
+	<value srcFile="android/location/Location.java" lineNum="170" chordsig="getLongitude:()D@android.location.Location" type="method">
 		<label><![CDATA[getLongitude]]></label>
 	</value>
 	<value>
@@ -40,7 +40,7 @@
 	</value>
 
 <tuple>
-	<value srcFile="android/location/LocationManager.java" lineNum="117" chordsig="&lt;android.location.LocationManager: android.location.Location getLocation()&gt;" type="method">
+	<value srcFile="android/location/LocationManager.java" lineNum="117" chordsig="getLocation:()Landroid/location/Location;@android.location.LocationManager" type="method">
 		<label><![CDATA[getLocation]]></label>
 	</value>
 	<value>
@@ -49,7 +49,7 @@
 
 </tuple>
 <tuple>
-	<value srcFile="android/location/LocationManager.java" lineNum="181" chordsig="&lt;android.location.LocationManager: java.lang.String getNmea()&gt;" type="method">
+	<value srcFile="android/location/LocationManager.java" lineNum="181" chordsig="getNmea:()Ljava/lang/String;@android.location.LocationManager" type="method">
 		<label><![CDATA[getNmea]]></label>
 	</value>
 	<value>
@@ -70,7 +70,7 @@
 	</value>
 
 <tuple>
-	<value srcFile="android/telephony/TelephonyManager.java" lineNum="198" chordsig="&lt;android.telephony.TelephonyManager: java.lang.String incomingCallNumber()&gt;" type="method">
+	<value srcFile="android/telephony/TelephonyManager.java" lineNum="198" chordsig="incomingCallNumber:()Ljava/lang/String;@android.telephony.TelephonyManager" type="method">
 		<label><![CDATA[incomingCallNumber]]></label>
 	</value>
 	<value>

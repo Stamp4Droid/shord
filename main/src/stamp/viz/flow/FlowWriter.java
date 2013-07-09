@@ -108,7 +108,7 @@ public class FlowWriter {
 				} else if(register instanceof RetVarNode) {
 					RetVarNode retRegister = (RetVarNode)register;
 					method = retRegister.method;
-				}
+				} 
 
 				// link the method
 				String sourceFileName = method == null ? "" : SourceInfo.filePath(method.getDeclaringClass());
@@ -158,7 +158,8 @@ public class FlowWriter {
 			// if the context exists, get the context
 			if(tokens.length == 3) {
 				DomC domC = (DomC)ClassicProject.g().getTrgt("C");
-				//tokens[2] = domC.toUniqueString(Integer.parseInt(tokens[2]));
+				Ctxt c = domC.get(Integer.parseInt(tokens[2]));
+				tokens[2] = domC.toUniqueString(Integer.parseInt(tokens[2]));
 			}
 			return tokens;
 		} catch(Exception e) {
@@ -170,7 +171,12 @@ public class FlowWriter {
 
 	public static String parseNode(String node) {
 		String[] tokens = toTokens(node);
-		return tokens[0] +(tokens.length >= 2 ? tokens[1] : "") /*+ (tokens.length == 3 ? "_" + tokens[2] : "")*/;
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < tokens.length; ++i) {
+			if (i == 2) sb.append("@");
+			sb.append(tokens[i]);
+		}
+		return sb.toString();
 	}
 
 	public static class StubInfo {
@@ -469,6 +475,7 @@ public class FlowWriter {
 			return this.isStart(startIndex) && this.isEnd(endIndex);
 		}
 
+/*
 		public HTMLObject process(boolean start) {
 
 			DivObject d = new DivObject();
@@ -539,6 +546,46 @@ public class FlowWriter {
 
 					start = false;
 				}
+			}
+			return d;
+		}
+		*/
+
+		public HTMLObject process(boolean start) {
+			DivObject d = new DivObject();
+			while(this.index < path.size()) {
+				if(this.index < 0) {
+					this.index++;
+				}
+
+				Pair<Edge,Boolean> pair = this.path.get(index);
+				Edge edge = pair.getX();
+				boolean forward = pair.getY();
+
+				if(this.index == 0 && !subpath) {
+					d.addObject(new SpanObject('A'+parseNode(edge.getData(this.g).getFrom(forward))));
+					d.addBreak();
+				}
+
+				SpanObject span = new SpanObject('B'+parseEdge(edge.getData(this.g), forward));
+				if(edge.weight > 0) {
+					span.putStyle("color", "red");
+				}
+				d.addObject(span);
+				d.addBreak();
+
+				if(isEnd(index)) {
+					return d;
+				}
+
+				if(!subpath || index < path.size()-1) {
+					d.addObject(new SpanObject('C'+parseNode(edge.getData(this.g).getTo(forward))));
+					d.addBreak();
+				}
+
+				this.index++;
+
+				start = false;
 			}
 			return d;
 		}
@@ -674,9 +721,9 @@ public class FlowWriter {
 			String[] sinkTokens = toTokens(edge.to.getName());
 			String sink = sinkTokens[1].substring(1);
 
-			PrintWriter pw = new PrintWriter(new File("cfl/" + source + "2" + sink + ".out"));
-			//pw.println(new MethodCompressedFlowObject(g.getPath(edge), g).toString());
-			pw.println(new AliasCompressedFlowObject(g.getPath(edge, terminals), g).toString());
+			PrintWriter pw = new PrintWriter(new File("cfl/" + source + "2" + sink + ".out.test"));
+			pw.println(new MethodCompressedFlowObject(g.getPath(edge), g).toString());
+			//pw.println(new AliasCompressedFlowObject(g.getPath(edge, terminals), g).toString());
 			pw.close();
 		}
 	}

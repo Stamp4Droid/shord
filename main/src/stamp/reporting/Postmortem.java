@@ -23,6 +23,7 @@ public class Postmortem extends JavaAnalysis
 			SrcFlow.class
 			,ArgSinkFlow.class
 			,SrcSinkFlow.class
+			,SrcSinkFlowViz.class
 			////,ReachableStub.class,
 			,TaintedStub.class
 			////,InvkNone.class,

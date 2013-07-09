@@ -16,7 +16,7 @@
 	</value>
 
 <tuple>
-	<value srcFile="android/util/Log.java" lineNum="63" chordsig="&lt;android.util.Log: int i(java.lang.String,java.lang.String)&gt;" type="method">
+	<value srcFile="android/util/Log.java" lineNum="63" chordsig="i:(Ljava/lang/String;Ljava/lang/String;)I@android.util.Log" type="method">
 		<label><![CDATA[i]]></label>
 	</value>
 	<value>
@@ -58,7 +58,7 @@
 	</value>
 
 <tuple>
-	<value srcFile="org/apache/http/impl/client/AbstractHttpClient.java" lineNum="219" chordsig="&lt;org.apache.http.impl.client.AbstractHttpClient: org.apache.http.HttpResponse execute(org.apache.http.client.methods.HttpUriRequest)&gt;" type="method">
+	<value srcFile="org/apache/http/impl/client/AbstractHttpClient.java" lineNum="219" chordsig="execute:(Lorg/apache/http/client/methods/HttpUriRequest;)Lorg/apache/http/HttpResponse;@org.apache.http.impl.client.AbstractHttpClient" type="method">
 		<label><![CDATA[execute]]></label>
 	</value>
 	<value>

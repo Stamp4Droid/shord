@@ -31,7 +31,8 @@ public class QueryResults
 
     public String getSrcSinkFlowBody(String src, String sink, String outpath) {
 	try {
-	    return readFile(new File(outpath + "/cfl/" + src.substring(1) + "2" + sink.substring(1) + ".out"));
+	    //return readFile(new File(outpath + "/cfl/" + src.substring(1) + "2" + sink.substring(1) + ".out"));
+	    return readFile(new File(outpath + "/cfl/" + src.substring(1) + "2" + sink.substring(1) + ".out.test"));
 	    //return readFile(new File("../cfl/" + src + "2" + sink + ".out"));
 	} catch(IOException e) {
 	    return "Error! Did you run JCFLSolverAnalysis?";

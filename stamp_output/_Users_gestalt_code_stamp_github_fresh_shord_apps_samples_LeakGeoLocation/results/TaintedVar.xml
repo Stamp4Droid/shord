@@ -2,6 +2,40 @@
 <title>Tainted Vars</title>
 <category>
 	<value>
+		<label><![CDATA[android]]></label>
+	</value>
+
+<category>
+	<value>
+		<label><![CDATA[telephony]]></label>
+	</value>
+
+<category type="class">
+	<value srcFile="android/telephony/PhoneStateListener.java" lineNum="2">
+		<label><![CDATA[android.telephony.PhoneStateListener]]></label>
+	</value>
+
+<category type="method">
+	<value srcFile="android/telephony/PhoneStateListener.java" lineNum="11" chordsig="onCallStateChanged:(ILjava/lang/String;)V@android.telephony.PhoneStateListener" type="method">
+		<label><![CDATA[onCallStateChanged]]></label>
+	</value>
+
+<tuple>
+	<value srcFile="android/telephony/PhoneStateListener.java" lineNum="11" type="expr">
+		<highlight key="taintedVariable" startpos="740" length="14"/>
+		<label><![CDATA[incomingNumber]]></label>
+	</value>
+	<value>
+		<label><![CDATA[$incomingCallNumber]]></label>
+	</value>
+
+</tuple>
+</category>
+</category>
+</category>
+</category>
+<category>
+	<value>
 		<label><![CDATA[java]]></label>
 	</value>
 
@@ -16,7 +50,7 @@
 	</value>
 
 <category type="method">
-	<value srcFile="java/lang/String.java" lineNum="173" chordsig="&lt;java.lang.String: java.lang.String concat(java.lang.String)&gt;" type="method">
+	<value srcFile="java/lang/String.java" lineNum="173" chordsig="concat:(Ljava/lang/String;)Ljava/lang/String;@java.lang.String" type="method">
 		<label><![CDATA[concat]]></label>
 	</value>
 
@@ -48,7 +82,7 @@
 	</value>
 
 <category type="method">
-	<value srcFile="java/lang/StringBuilder.java" lineNum="58" chordsig="&lt;java.lang.StringBuilder: java.lang.StringBuilder append(double)&gt;" type="method">
+	<value srcFile="java/lang/StringBuilder.java" lineNum="58" chordsig="append:(D)Ljava/lang/StringBuilder;@java.lang.StringBuilder" type="method">
 		<label><![CDATA[append]]></label>
 	</value>
 
@@ -107,7 +141,7 @@
 	</value>
 
 <category type="method">
-	<value srcFile="org/apache/http/client/methods/HttpGet.java" lineNum="23" chordsig="&lt;org.apache.http.client.methods.HttpGet: void &lt;init&gt;(java.lang.String)&gt;" type="method">
+	<value srcFile="org/apache/http/client/methods/HttpGet.java" lineNum="23" chordsig="&lt;init&gt;:(Ljava/lang/String;)V@org.apache.http.client.methods.HttpGet" type="method">
 		<label><![CDATA[<init>]]></label>
 	</value>
 
@@ -151,7 +185,7 @@
 	</value>
 
 <category type="method">
-	<value srcFile="org/apache/http/impl/client/AbstractHttpClient.java" lineNum="219" chordsig="&lt;org.apache.http.impl.client.AbstractHttpClient: org.apache.http.HttpResponse execute(org.apache.http.client.methods.HttpUriRequest)&gt;" type="method">
+	<value srcFile="org/apache/http/impl/client/AbstractHttpClient.java" lineNum="219" chordsig="execute:(Lorg/apache/http/client/methods/HttpUriRequest;)Lorg/apache/http/HttpResponse;@org.apache.http.impl.client.AbstractHttpClient" type="method">
 		<label><![CDATA[execute]]></label>
 	</value>
 
@@ -208,12 +242,54 @@
 	</value>
 
 <category type="class">
+	<value srcFile="stamp/stanford/malware/Malware.java" lineNum="26">
+		<label><![CDATA[stamp.stanford.malware.Malware$LeakInfo]]></label>
+	</value>
+
+<category type="method">
+	<value srcFile="stamp/stanford/malware/Malware.java" lineNum="29" chordsig="doInBackground:([Ljava/lang/String;)Ljava/lang/Void;@stamp.stanford.malware.Malware$LeakInfo" type="method">
+		<label><![CDATA[doInBackground]]></label>
+	</value>
+
+<tuple>
+	<value srcFile="stamp/stanford/malware/Malware.java" lineNum="35" type="expr">
+		<highlight key="taintedVariable" startpos="1132" length="3"/>
+		<label><![CDATA[get]]></label>
+	</value>
+	<value>
+		<label><![CDATA[$getLatitude]]></label>
+	</value>
+
+</tuple>
+<tuple>
+	<value srcFile="stamp/stanford/malware/Malware.java" lineNum="35" type="expr">
+		<highlight key="taintedVariable" startpos="1132" length="3"/>
+		<label><![CDATA[get]]></label>
+	</value>
+	<value>
+		<label><![CDATA[$getLongitude]]></label>
+	</value>
+
+</tuple>
+<tuple>
+	<value srcFile="stamp/stanford/malware/Malware.java" lineNum="35" type="expr">
+		<highlight key="taintedVariable" startpos="1132" length="3"/>
+		<label><![CDATA[get]]></label>
+	</value>
+	<value>
+		<label><![CDATA[!INTERNET]]></label>
+	</value>
+
+</tuple>
+</category>
+</category>
+<category type="class">
 	<value srcFile="stamp/stanford/malware/Malware.java" lineNum="53">
 		<label><![CDATA[stamp.stanford.malware.Malware$MyLocationListener]]></label>
 	</value>
 
 <category type="method">
-	<value srcFile="stamp/stanford/malware/Malware.java" lineNum="54" chordsig="&lt;stamp.stanford.malware.Malware$MyLocationListener: void onLocationChanged(android.location.Location)&gt;" type="method">
+	<value srcFile="stamp/stanford/malware/Malware.java" lineNum="54" chordsig="onLocationChanged:(Landroid/location/Location;)V@stamp.stanford.malware.Malware$MyLocationListener" type="method">
 		<label><![CDATA[onLocationChanged]]></label>
 	</value>
 
