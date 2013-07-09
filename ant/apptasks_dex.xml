@@ -4,7 +4,7 @@
   <target name="-prepare-backend-chord">
     <!-- Register backend-specific analyses. -->
     <property name="stamp.analyses.main"
-	      value="typefilter-dlog,pt-dlog,taint-dlog"/>
+	      value="typefilter-dlog,pt-dlog,taint-dlog,cfl-dlog,jcflsolver"/>
     <!-- Register backend-specific system properties (none required for this
          backend). -->
     <propertyset id="stamp.analyses.main.sysprops"/>
@@ -75,7 +75,7 @@
     <!-- Configure remaining Chord settings. -->
     <property name="stamp.analyses"
 	      value="${stamp.analyses.pre},${stamp.analyses.main},${stamp.analyses.post}"/>
-    
+
     <!-- Conditionally set-up DroidRecord properties -->
     <if>
       <isset property="stamp.droidrecord.logfile.template"/>
