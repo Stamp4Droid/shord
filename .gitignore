@@ -7,10 +7,15 @@ local.config
 *.class
 *.pyc
 *.apk
+*.dex
+*.apk.d
+*.ap_
+*.ap_.d
 .project
 .classpath
-.settings
+.settings 
 timestamp.txt
+stamp.app.properties
 
 # Package Files #
 *.war
@@ -21,7 +26,7 @@ bin/api-*/*
 
 models/api-*/*
 stamp_output/*
-apps/*
+
 
 tomcat/logs/*
 tomcat/work/Catalina/localhost/*

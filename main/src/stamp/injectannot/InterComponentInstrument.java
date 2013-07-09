@@ -88,7 +88,8 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 	{
 		///reaching def begin.
 		UnitGraph g = new ExceptionalUnitGraph(body);
-		LocalDefs sld = new SmartLocalDefs(g, new SimpleLiveLocals(g));
+		//support transitive closure.
+		LocalDefs sld = new IntraLocalDefs(g, new SimpleLiveLocals(g));
 
 		Iterator it = body.getUnits().iterator();
 		while (it.hasNext()){
@@ -257,7 +258,7 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 				        || methodRefStr
 								.equals("<"
 										+ this.bundleClass
-										+ ": android.os.Parcelable getParcelable(java.lang.String)>")) {						
+										+ ": android.os.Parcelable getParcelable(java.lang.String)>")) {								
 											
 					ImmediateBox bundleLoc = (ImmediateBox) ie.getUseBoxes().get(1);
 					Value putStringArg = bundleLoc.getValue();
