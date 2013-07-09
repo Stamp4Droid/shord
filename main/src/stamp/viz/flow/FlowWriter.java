@@ -119,7 +119,7 @@ public class FlowWriter {
 				String sourceFileName = method == null ? "" : SourceInfo.filePath(method.getDeclaringClass());
 				int methodLineNum = SourceInfo.methodLineNum(method);
 
-				String methStr = "source: " + sourceFileName + " line: " + methodLineNum + " " +method.getName();
+				String methStr = sourceFileName + " " + methodLineNum + " " +method.getName() + " ";
 				//tokens[0] = "<a onclick=\"showSource('" + sourceFileName + "','false','" + methodLineNum + "')\">" + "[" + method.getName() + "]</a> "/* + tokens[0]*/;
 
 				// link the register
@@ -138,11 +138,11 @@ public class FlowWriter {
 				}
 
 				if(registerLineNum != null) {
-					newTokens.set(1,"source: " + sourceFileName + " line: " + registerLineNum + " " + text);
+					newTokens.set(1,sourceFileName + " " + registerLineNum + " ");
 					newTokens.set(0, methStr);
 				}
 				else{
-					newTokens.set(0, methStr+tokens[0]);
+					newTokens.set(0, methStr);
 					newTokens.set(1, "");
 				}
 			}
@@ -182,9 +182,19 @@ public class FlowWriter {
 		String[] tokens = toTokens(node);
 		if (tokens.length <= 2) return "";
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < tokens.length; ++i) {
-			if (i >= 2) sb.append("_");
+		sb.append(tokens[0]);
+		sb.append(tokens[1]);
+		boolean runSeen = false;
+		for (int i = tokens.length - 1; i > 2; --i) {
 			sb.append(tokens[i]);
+			if (i != 3) sb.append(".");
+			if (tokens[i].equals("run")) {
+				if (!runSeen) {
+				 runSeen = true;
+				} else {
+				 break;
+				}
+			}
 		}
 		return sb.toString() + '\n';
 	}
