@@ -1,5 +1,0 @@
-public interface  android.content.DialogInterface$OnCancelListener extends java.lang.Object
-{
-
-    public abstract void onCancel(android.content.DialogInterface);
-}

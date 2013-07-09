@@ -1,5 +1,0 @@
-public interface  android.view.LayoutInflater$Factory2 extends java.lang.Object implements android.view.LayoutInflater$Factory
-{
-
-    public abstract android.view.View onCreateView(android.view.View, java.lang.String, android.content.Context, android.util.AttributeSet);
-}

@@ -45,6 +45,41 @@ EdgeWorklist worklist;
  */
 DECL_COUNTER(iteration, 0);
 
+/**
+ * The number of bytes allocated so far on the heap.
+ */
+size_t allocated = 0;
+
+/* MEMORY MANAGEMENT ======================================================= */
+
+/**
+ * Underlying implementation of @ref STRICT_ALLOC.
+ */
+void *strict_alloc(size_t num_bytes) {
+    void *ptr;
+    allocated += num_bytes;
+    if (allocated > MAX_MEMORY || (ptr = malloc(num_bytes)) == NULL) {
+	fprintf(stderr, "Out of memory\n");
+	exit(1);
+    }
+    return ptr;
+}
+
+/**
+ * Underlying implementation of @ref STRICT_FREE.
+ */
+void strict_free(void *ptr, size_t num_bytes) {
+    allocated -= num_bytes;
+    free(ptr);
+}
+
+/**
+ * Return the number of bytes allocated on the heap so far.
+ */
+size_t allocated_memory() {
+    return allocated;
+}
+
 /* BASE TYPE OPERATIONS ==================================================== */
 
 /**
@@ -141,8 +176,7 @@ bool worklist_is_empty() {
  * for the copied string.
  */
 char *string_copy(const char *str) {
-    char *copy;
-    STRICT_ALLOC(copy, strlen(str) + 1, char);
+    char *copy = STRICT_ALLOC(strlen(str) + 1, char);
     strcpy(copy, str);
     return copy;
 }
@@ -151,8 +185,7 @@ char *string_copy(const char *str) {
  * Initialize an empty StringQueue.
  */
 StringQueue *string_queue_new() {
-    StringQueue *q;
-    STRICT_ALLOC(q, 1, StringQueue);
+    StringQueue *q = STRICT_ALLOC(1, StringQueue);
     q->length = 0;
     q->head = NULL;
     q->tail = NULL;
@@ -165,8 +198,7 @@ StringQueue *string_queue_new() {
  * worry about keeping that memory live.
  */
 void string_queue_insert(StringQueue *q, const char *str) {
-    StringCell *cell;
-    STRICT_ALLOC(cell, 1, StringCell);
+    StringCell *cell = STRICT_ALLOC(1, StringCell);
     cell->value = string_copy(str);
     cell->next = NULL;
     if (q->tail == NULL) {
@@ -188,17 +220,16 @@ void string_queue_insert(StringQueue *q, const char *str) {
  * modified.
  */
 const char **string_queue_to_array(StringQueue *q) {
-    const char **str_arr;
-    STRICT_ALLOC(str_arr, q->length, const char *);
+    const char **str_arr = STRICT_ALLOC(q->length, const char *);
     unsigned long next_idx = 0;
     StringCell *cell = q->head;
     while (cell != NULL) {
 	str_arr[next_idx++] = cell->value;
 	StringCell *temp = cell;
 	cell = cell->next;
-	free(temp);
+	STRICT_FREE(temp, 1);
     }
-    free(q);
+    STRICT_FREE(q, 1);
     return str_arr;
 }
 
@@ -213,8 +244,7 @@ const char **string_queue_to_array(StringQueue *q) {
  * other cells.
  */
 NodeNameTrieCell *node_name_trie_cell_alloc(char character) {
-    NodeNameTrieCell *cell;
-    STRICT_ALLOC(cell, 1, NodeNameTrieCell);
+    NodeNameTrieCell *cell = STRICT_ALLOC(1, NodeNameTrieCell);
     cell->character = character;
     cell->node = NODE_NONE;
     cell->first_child = NULL;
@@ -226,8 +256,7 @@ NodeNameTrieCell *node_name_trie_cell_alloc(char character) {
  * Create an empty name-to-Node trie.
  */
 NodeNameTrie *node_name_trie_new() {
-    NodeNameTrie *trie;
-    STRICT_ALLOC(trie, 1, NodeNameTrie);
+    NodeNameTrie *trie = STRICT_ALLOC(1, NodeNameTrie);
     trie->empty_name_node = NODE_NONE;
     trie->first_child = NULL;
     return trie;
@@ -381,10 +410,10 @@ void finalize_nodes() {
     /* Initialize the input graph with the number of nodes we've inserted so
        far, and the number of kinds as returned by the grammar-generated
        code. */
-    STRICT_ALLOC(nodes, node_names.num_nodes, Node);
+    nodes = STRICT_ALLOC(node_names.num_nodes, Node);
     for (NODE_REF n = 0; n < node_names.num_nodes; n++) {
-	STRICT_ALLOC(nodes[n].in, num_kinds(), Edge *);
-	STRICT_ALLOC(nodes[n].out, num_kinds(), OutEdgeSet *);
+	nodes[n].in = STRICT_ALLOC(num_kinds(), Edge *);
+	nodes[n].out = STRICT_ALLOC(num_kinds(), OutEdgeSet *);
 	for (EDGE_KIND k = 0; k < num_kinds(); k++) {
 	    nodes[n].in[k] = NULL;
 	    nodes[n].out[k] = NULL;
@@ -433,8 +462,7 @@ NODE_REF name2node(const char *name) {
 Edge *edge_new(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	       Edge *l_edge, bool l_rev, Edge *r_edge, bool r_rev) {
     assert((is_parametric(kind)) ^ (index == INDEX_NONE));
-    Edge *e;
-    STRICT_ALLOC(e, 1, Edge);
+    Edge *e = STRICT_ALLOC(1, Edge);
     e->from = from;
     e->to = to;
     e->kind = kind;
@@ -467,8 +495,7 @@ bool edge_equals(Edge *a, Edge *b) {
  * start out empty.
  */
 Edge **out_edge_table_alloc(unsigned int size) {
-    Edge **table;
-    STRICT_ALLOC(table, size, Edge *);
+    Edge **table = STRICT_ALLOC(size, Edge *);
     for (unsigned int i = 0; i < size; i++) {
 	table[i] = NULL;
     }
@@ -631,8 +658,7 @@ Edge *out_edge_set_next(OutEdgeSet *set) {
  * buckets.
  */
 OutEdgeSet *out_edge_set_new() {
-    OutEdgeSet *set;
-    STRICT_ALLOC(set, 1, OutEdgeSet);
+    OutEdgeSet *set = STRICT_ALLOC(1, OutEdgeSet);
     set->size = 0;
     set->num_buckets = OUT_EDGE_SET_INIT_NUM_BUCKETS;
     set->table = out_edge_table_alloc(set->num_buckets);
@@ -667,7 +693,7 @@ void out_edge_set_grow(OutEdgeSet *set) {
 	    out_edge_set_get_bucket(temp->to, new_num_buckets);
 	out_edge_table_add(new_table, new_bucket, temp);
     } while (e != NULL);
-    free(set->table);
+    STRICT_FREE(set->table, set->num_buckets);
     set->num_buckets = new_num_buckets;
     set->table = new_table;
     set->iter_bucket = new_num_buckets;
@@ -736,7 +762,7 @@ void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	      Edge *l_edge, bool l_rev, Edge *r_edge, bool r_rev) {
     Edge *e = edge_new(from, to, kind, index, l_edge, l_rev, r_edge, r_rev);
     if (graph_contains(e)) {
-	free(e);
+	STRICT_FREE(e, 1);
     } else {
 	graph_add(e);
 	worklist_insert(e);
@@ -993,8 +1019,7 @@ constexpr ChoiceSequence *choice_sequence_empty() {
 }
 
 ChoiceSequence *choice_sequence_extend(ChoiceSequence *prev, CHOICE last) {
-    ChoiceSequence *choice;
-    STRICT_ALLOC(choice, 1, ChoiceSequence);
+    ChoiceSequence *choice = STRICT_ALLOC(1, ChoiceSequence);
     choice->last = last;
     choice->prev = prev;
     return choice;
@@ -1072,8 +1097,7 @@ bool derivation_is_valid(const Derivation &deriv, const Step *step) {
 /* STEP TREE HANDLING ====================================================== */
 
 Step *step_alloc() {
-    Step *step;
-    STRICT_ALLOC(step, 1, Step);
+    Step *step = STRICT_ALLOC(1, Step);
     step->is_reverse = false;
     step->is_expanded = false;
     step->num_choices = 0;
@@ -1139,7 +1163,7 @@ void step_expand(Step *step) {
 
     // Record all valid derivations as possible sub-steps of the parent step.
     step->num_choices = derivs.size();
-    STRICT_ALLOC(step->sub_step_seqs, derivs.size(), Step *);
+    step->sub_step_seqs = STRICT_ALLOC(derivs.size(), Step *);
     unsigned int i = 0;
     for (const Derivation &d : derivs) {
 	step->sub_step_seqs[i] = derivation_to_step_sequence(d, step);
@@ -1239,8 +1263,7 @@ bool bake_single_path(Step *first) {
 /* PATH HANDLING =========================================================== */
 
 PartialPath *partial_path_alloc() {
-    PartialPath *path;
-    STRICT_ALLOC(path, 1, PartialPath);
+    PartialPath *path = STRICT_ALLOC(1, PartialPath);
     path->min_length = 0;
     path->choices = NULL;
     path->curr_step = NULL;
@@ -1361,7 +1384,7 @@ std::list<PartialPath*> recover_paths(Step *top_step,
 	    queue.push(ext_p);
 	}
 	// The previous path is no longer needed, and can be free'd.
-	free(p);
+	STRICT_FREE(p, 1);
     }
 
     // We should find at least one path, the one which actually produced the
@@ -1565,6 +1588,7 @@ void print_stats() {
     print_edge_counts(true);
     LOG("Non-terminals:\n");
     print_edge_counts(false);
+    LOG("Memory usage: %'lu bytes\n", allocated_memory());
 }
 
 /**

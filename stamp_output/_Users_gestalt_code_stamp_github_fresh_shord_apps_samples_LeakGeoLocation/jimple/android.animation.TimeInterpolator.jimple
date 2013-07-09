@@ -1,5 +1,0 @@
-public interface  android.animation.TimeInterpolator extends java.lang.Object
-{
-
-    public abstract float getInterpolation(float);
-}

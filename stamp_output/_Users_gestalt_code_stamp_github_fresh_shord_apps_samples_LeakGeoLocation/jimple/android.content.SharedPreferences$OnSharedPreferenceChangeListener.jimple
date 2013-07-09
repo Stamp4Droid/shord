@@ -1,5 +1,0 @@
-public interface  android.content.SharedPreferences$OnSharedPreferenceChangeListener extends java.lang.Object
-{
-
-    public abstract void onSharedPreferenceChanged(android.content.SharedPreferences, java.lang.String);
-}

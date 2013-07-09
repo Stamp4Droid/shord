@@ -190,6 +190,11 @@ public class RelParser extends LineFilter {
 			// second group matched by linePat and use it as the first element,
 			// and take ths first group matched by linePat and use it as the
 			// second element.
+
+			// We retrieve the relation from the map at this point, to force
+			// Chord to open it, so that it gets saved as empty even if no
+			// lines match.
+			rels.get(relStr);
 		}
 
 		private void checkSpec(boolean assertion, String matchSpec)

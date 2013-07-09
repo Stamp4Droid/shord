@@ -1,5 +1,0 @@
-public interface  java.io.FileFilter extends java.lang.Object
-{
-
-    public abstract boolean accept(java.io.File);
-}

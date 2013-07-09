@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <type_traits>
 
 /**
  * @mainpage
@@ -69,6 +70,13 @@ typedef unsigned int NODE_REF;
 typedef unsigned int PATH_LENGTH;
 
 typedef unsigned char CHOICE;
+
+/**
+ * The maximum amount of memory that the solver will allocate on the heap, in
+ * bytes. Attempting to allocate memory beyond this limit will result in a
+ * program exit.
+ */
+#define MAX_MEMORY 8589934592 /* 8GB */
 
 /* DATA STRUCTURES ========================================================= */
 
@@ -449,16 +457,19 @@ typedef unsigned long COUNTER;
  */
 
 /**
- * Allocate an array of @a num objects of @a type and store a reference to it
- * in @a ptr. Terminate execution if the allocation fails.
+ * Allocate and return a pointer to @a num objects of @a type. Terminate
+ * execution if the allocation fails.
  */
-#define STRICT_ALLOC(ptr, num, type) do {\
-    (ptr) = (type*) malloc((num) * sizeof(type));\
-    if ((ptr) == NULL) {\
-	fprintf(stderr, "Out of memory\n");\
-	exit(1);\
-    }\
-} while(0)
+#define STRICT_ALLOC(num, type) ((type*) strict_alloc((num) * sizeof(type)))
+
+/**
+ * Free the memory pointed to by @a ptr, assuming it's a pointer to an array of
+ * @e num objects of its declared type.
+ */
+#define STRICT_FREE(ptr, num) do {\
+    strict_free((ptr),\
+		(num) * sizeof(std::remove_pointer<decltype(ptr)>::type));\
+} while (false)
 
 void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	      Edge *l_edge, bool l_rev, Edge *r_edge, bool r_rev);
