@@ -9,6 +9,7 @@ import soot.SootClass;
 import soot.SootMethod;
 import soot.SootField;
 import soot.Type;
+import soot.Unit;
 import soot.AbstractJasminClass;
 import soot.jimple.Stmt;
 import soot.tagkit.Tag;
@@ -237,5 +238,10 @@ public class SourceInfo
 		if(marker == null)
 			return null;
 		return ((InvkMarker) marker).text();
+	}
+
+	public static String unitToString(Unit u) {
+		SootMethod m = (u instanceof Stmt) ? containerMethod((Stmt) u) : null;
+		return (m == null) ? u.toString() : u + "@" + m;
 	}
 }

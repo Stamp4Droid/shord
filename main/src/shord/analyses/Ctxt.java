@@ -2,6 +2,7 @@ package shord.analyses;
 
 import soot.Unit;
 import java.io.Serializable;
+import stamp.srcmap.SourceInfo;
 
 /**
  * Representation of an abstract context of a method.
@@ -71,14 +72,15 @@ public class Ctxt implements Serializable
 	
 	public String toString()
 	{
-		StringBuilder builder = new StringBuilder('[');
+		StringBuilder builder = new StringBuilder("[");
 		boolean first = true;
         for (Unit inst : elems) {
 			if(!first)
 				builder.append(',');
 			else
 				first = false;
-			builder.append(inst == null ? "null" : inst.toString());
+			builder.append(inst == null ? "null"
+						   : SourceInfo.unitToString(inst));
 		}
 		builder.append(']');
 		return builder.toString();

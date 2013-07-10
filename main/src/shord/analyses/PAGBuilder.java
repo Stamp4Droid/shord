@@ -484,9 +484,11 @@ public class PAGBuilder extends JavaAnalysis
 					if(rightOp instanceof AnyNewExpr)
 						domH.add(s);
 					else if(rightOp instanceof CastExpr){
-						Type castType = ((CastExpr) rightOp).getCastType();
+						CastExpr castExpr = (CastExpr) rightOp;
+						Type castType = castExpr.getCastType();
 						if(castType instanceof RefLikeType){
-							CastVarNode node = new CastVarNode();
+							CastVarNode node =
+								new CastVarNode(method, castExpr);
 							domV.add(node);
 							stmtToCastNode.put(s, node);
 						}
