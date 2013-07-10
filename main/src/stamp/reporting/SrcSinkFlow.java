@@ -37,7 +37,6 @@ public class SrcSinkFlow extends XMLReport {
 	}
 	*/
 
-	/*
 	Iterable<Pair<String,String>> res = relSrcSinkFlow.getAry2ValTuples();
 	for(Pair<String,String> pair : res) {
 	    String source = pair.val0;
@@ -45,12 +44,12 @@ public class SrcSinkFlow extends XMLReport {
 	    newTuple()
 			.addValue(source)
 			.addValue(sink);
-
+		
 	}
-	*/
-
-	Map<stamp.jcflsolver.Util.Pair<Integer, Integer>, Integer> src2sink = JCFLSolverAnalysis.getSrc2Sink();
-	DomL dom = (DomL)ClassicProject.g().getTrgt("L");
+	
+	/*
+	  Map<stamp.jcflsolver.Util.Pair<Integer, Integer>, Integer> src2sink = JCFLSolverAnalysis.getSrc2Sink();
+	  DomL dom = (DomL)ClassicProject.g().getTrgt("L");
 	System.out.println("LENGTH:" + src2sink.entrySet().size());
 	for(Map.Entry<stamp.jcflsolver.Util.Pair<Integer, Integer>, Integer> entry : src2sink.entrySet()) {
 		//if(entry.getValue() > 0) {
@@ -63,6 +62,6 @@ public class SrcSinkFlow extends XMLReport {
 	
 	relSrcSinkFlow.close();
     }
-
-
+	*/
+	}
 }
