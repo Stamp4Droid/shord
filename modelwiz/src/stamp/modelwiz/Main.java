@@ -26,10 +26,22 @@ public class Main
 		String topLevelClass = args[2];
 		
 		String methodName = null;
-		if(args.length > 3)
+		if(args.length > 3){
 			methodName = args[3];
+			System.out.println("Method name: "+methodName);
+		}
+
+		String[] annot = null;
+		if(args.length > 4){
+			annot = args[4].split(",");
+		}
 		
-		main.perform(topLevelClass, methodName);
+		String code = null;
+		if(args.length > 5){
+			code = args[5];
+		}
+
+		main.perform(topLevelClass, methodName, annot, code);
 	}
 
 	Main(String stubsDirName, String modelsDirName)
@@ -54,7 +66,7 @@ public class Main
 		}
 	}
 
-	void perform(String topLevelClassName, String methodName) throws Exception
+	void perform(String topLevelClassName, String methodName, String[] annot, String code) throws Exception
 	{
 		File stubFile = getStubFile(topLevelClassName);
 		if(!stubFile.exists()){
@@ -113,7 +125,7 @@ public class Main
 		}
 		TypeDeclaration stubType = stubTypes.get(chosenTypeName);
 		TypeDeclaration modelType = findMatchingType(modelTypes, chosenTypeName);
-		boolean flag = handleType(stubType, modelType, methodName);
+		boolean flag = handleType(stubType, modelType, methodName, annot, code);
 		if(flag)
 			dump(modelFile, modelCU);
 	}
@@ -157,7 +169,7 @@ public class Main
 		}
 	}
 
-	boolean handleType(TypeDeclaration stubType, TypeDeclaration modelType, String methodName) throws Exception
+	boolean handleType(TypeDeclaration stubType, TypeDeclaration modelType, String methodName, String[] annot, String code) throws Exception
 	{
 		if(methodName == null) {
 			System.out.println("\n*************************");
@@ -178,6 +190,11 @@ public class Main
 			for(BodyDeclaration stubMember : stubMembers){
 				if(stubMember instanceof MethodDeclaration || 
 				   stubMember instanceof ConstructorDeclaration){
+					if(methodName.equals(signature(stubMember))){
+						//signature match
+						matchedMethods.add(stubMember);
+						break;
+					}
 					String name = methodName(stubMember);
 					boolean match = approx ? name.startsWith(methodName) : name.equals(methodName);
 					if(match){
@@ -225,7 +242,7 @@ public class Main
 			modelType.setMembers(modelMembers);
 		}
 
-		String newMethodBody = handleMethod(chosenMethod);
+		String newMethodBody = handleMethod(chosenMethod, annot, code);
 		if(newMethodBody == null)
 			return false;
 		BodyDeclaration meth = parseMethod(newMethodBody);
@@ -233,7 +250,7 @@ public class Main
 		return true;
 	}
 
-	String handleMethod(BodyDeclaration method) throws Exception
+	String handleMethod(BodyDeclaration method, String[] annot, String code) throws Exception
 	{
 		System.out.println("\n********************************");
 		System.out.println("* Choose annotations   *");
@@ -249,8 +266,24 @@ public class Main
 			for(String an : annots){
 				System.out.println(count+++". "+an);
 			}
-			System.out.print("\nEnter the white-space-separated indices of annotations (Press enter to not accept any): ");
-			int[] choices = getChoices(count-1);
+			int[] choices;
+			if(annot != null){
+				Set<String> chosenAnnots = new HashSet();
+				for(String an : annot)
+					chosenAnnots.add(an);
+
+				choices = new int[annot.length];
+				int j = 0;
+				int i = 0;
+				for(String an : annots){
+					if(chosenAnnots.contains(an))
+						choices[j++] = i;
+					i++;
+				}
+			} else {
+				System.out.print("\nEnter the white-space-separated indices of annotations (Press enter to not accept any): ");
+				choices = getChoices(count-1);
+			}
 			if(choices == null){
 				System.out.println("No annotations to be added.");
 			} else {
@@ -270,22 +303,26 @@ public class Main
 			}
 		}
 
-		System.out.println("\n*********************************************************");
-		System.out.println("* Enter code. Type ^d at the end of your input. *");
-		System.out.println("*********************************************************");
-		
-		StringBuilder code = new StringBuilder();
-		boolean first = true;
-		System.out.print("\t");
-		while (scanIn.hasNext()) {
-			if(!first)
-				code.append("\n");
+		if(code == null){
+			System.out.println("\n*********************************************************");
+			System.out.println("* Enter code. Type ^d at the end of your input. *");
+			System.out.println("*********************************************************");
+			
+			StringBuilder codeBuilder = new StringBuilder();
+			boolean first = true;
 			System.out.print("\t");
-			code.append(scanIn.nextLine());
-			first = false;
+			while (scanIn.hasNext()) {
+				if(!first)
+					codeBuilder.append("\n");
+				System.out.print("\t");
+				codeBuilder.append(scanIn.nextLine());
+				first = false;
+			}
+			code = codeBuilder.toString();
 		}
+
 		newBody.append(method.toString().replace("throw new RuntimeException(\"Stub!\");", 
-												 code.toString()));
+												 code));
 		
 		System.out.println("\n*******************");
 		System.out.println("* Confirm *");
