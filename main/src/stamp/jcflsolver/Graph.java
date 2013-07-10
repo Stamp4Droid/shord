@@ -43,34 +43,6 @@ public abstract class Graph {
 	this.addEdgeInternal(from, to, kind, addLabel, label, edgeA.weight, edgeA, null);
     }
     
-    // HACK
-    public void hack() {
-	try {
-	    int kind = symbolToKind("cs_refAlloc");
-	    for(Edge edge : getEdges("cs_passThroughStub")) {
-		Node to = edge.to;
-		if(!to.getInEdges(kind).iterator().hasNext()) {
-		    Node obj = getNode("hf" + to.name);
-		    addInputEdge("hf" + to.name, to.name, kind);
-
-		    //System.out.println("Adding hack edge from " + "hf" + to.name + " to " + to.name + ".");
-		}
-	    }
-	    for(Edge edge : getEdges("cs_primRefFlowStub")) {
-		Node to = edge.to;
-		if(!to.getInEdges(kind).iterator().hasNext()) {
-		    Node obj = getNode("hf" + to.name);
-		    addInputEdge("hf" + to.name, to.name, kind);
-
-		    //System.out.println("Adding hack edge from " + "hf" + to.name + " to " + to.name + ".");
-		}
-	    }
-	} catch(Exception e) {
-	    e.printStackTrace();
-	}
-    }
-
-
     public final void addEdge(Node from, Node to, int kind, Edge edgeA, Edge edgeB, boolean addLabel) {
 	if(!edgeA.matchesLabel(edgeB))
 	    return;

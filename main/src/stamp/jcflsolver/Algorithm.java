@@ -16,7 +16,6 @@ public abstract class Algorithm
 	public void process()
 	{
 		beforeProcess();
-		//g.hack();
 		Edge edge;
 		while((edge = nextEdgeToProcess()) != null)
 			g.process(edge);
