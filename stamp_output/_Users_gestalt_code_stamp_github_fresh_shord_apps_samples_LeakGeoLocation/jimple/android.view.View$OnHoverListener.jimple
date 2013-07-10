@@ -1,5 +1,0 @@
-public interface  android.view.View$OnHoverListener extends java.lang.Object
-{
-
-    public abstract boolean onHover(android.view.View, android.view.MotionEvent);
-}

@@ -166,6 +166,7 @@ public class FlowWriter {
 				DomC domC = (DomC)ClassicProject.g().getTrgt("C");
 				Ctxt c = domC.get(Integer.parseInt(tokens[2]));
 				Unit[] elems = c.getElems();
+				System.out.println(c.toString());
 				for (int i = 0; i < elems.length; ++i) {
 					newTokens.add(SourceInfo.containerMethod((Stmt)elems[i]).getName());
 				}
@@ -188,6 +189,7 @@ public class FlowWriter {
 		for (int i = tokens.length - 1; i > 2; --i) {
 			sb.append(tokens[i]);
 			if (i != 3) sb.append(".");
+			/*
 			if (tokens[i].equals("run")) {
 				if (!runSeen) {
 				 runSeen = true;
@@ -195,6 +197,7 @@ public class FlowWriter {
 				 break;
 				}
 			}
+			*/
 		}
 		return sb.toString() + '\n';
 	}

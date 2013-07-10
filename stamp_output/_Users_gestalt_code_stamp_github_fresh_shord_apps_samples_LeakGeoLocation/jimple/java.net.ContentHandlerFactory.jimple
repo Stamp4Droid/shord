@@ -1,5 +1,0 @@
-public interface  java.net.ContentHandlerFactory extends java.lang.Object
-{
-
-    public abstract java.net.ContentHandler createContentHandler(java.lang.String);
-}

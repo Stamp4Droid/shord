@@ -1,1 +1,0 @@
-<root><tuple><source class="location">$getLatitude</source><sink class="offdevice">!INTERNET</sink></tuple><tuple><source class="location">$getLongitude</source><sink class="offdevice">!INTERNET</sink></tuple></root>
