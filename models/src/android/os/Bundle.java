@@ -9,24 +9,24 @@ class Bundle
 {
 	
 	/* primitive type */
-	private short unknown_short;
+	public short unknown_short;
 	
-	private int unknown_int;
+	public int unknown_int;
 	
-	private boolean unknown_boolean;
+	public boolean unknown_boolean;
 	
-	private byte unknown_byte;
+	public byte unknown_byte;
 	
-	private char unknown_char;
+	public char unknown_char;
 	
-	private long unknown_long;
+	public long unknown_long;
 	
-	private float unknown_float;
+	public float unknown_float;
 	
-	private double unknown_double;
+	public double unknown_double;
 	
 	/* general unknown object. For all reference type. */
-	private java.lang.Object unknown;
+	public java.lang.Object unknown;
 	
 	
 	//getter..

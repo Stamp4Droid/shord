@@ -117,6 +117,7 @@ class Intent
 	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
 	public  android.content.Intent putExtra(java.lang.String name, boolean value) 
 	{ 
+		extras.unknown_boolean = value;
 		return this;
 	}
 
@@ -165,6 +166,7 @@ class Intent
 	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
 	public  android.content.Intent putExtra(java.lang.String name, java.lang.String value) 
 	{ 
+		extras.unknown = value;
 		return this;
 	}
 
