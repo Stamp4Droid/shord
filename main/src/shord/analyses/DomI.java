@@ -2,7 +2,7 @@ package shord.analyses;
 
 import soot.Unit;
 import shord.project.analyses.ProgramDom;
-import stamp.srcmap.SourceInfo;
+import shord.program.Program;
 
 /**
  * Domain of method invocation stmts
@@ -12,6 +12,6 @@ import stamp.srcmap.SourceInfo;
 public class DomI extends ProgramDom<Unit> {
     @Override
     public String toUniqueString(Unit u) {
-		return SourceInfo.unitToString(u);
+		return Program.unitToString(u);
     }
 }

@@ -2,7 +2,7 @@ package shord.analyses;
 
 import soot.Unit;
 import java.io.Serializable;
-import stamp.srcmap.SourceInfo;
+import shord.program.Program;
 
 /**
  * Representation of an abstract context of a method.
@@ -80,7 +80,7 @@ public class Ctxt implements Serializable
 			else
 				first = false;
 			builder.append(inst == null ? "null"
-						   : SourceInfo.unitToString(inst));
+						   : Program.unitToString(inst));
 		}
 		builder.append(']');
 		return builder.toString();

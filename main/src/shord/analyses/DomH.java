@@ -1,8 +1,8 @@
 package shord.analyses;
 
 import soot.Unit;
+import shord.program.Program;
 import shord.project.analyses.ProgramDom;
-import stamp.srcmap.SourceInfo;
 
 /**
  * Domain of new stmts
@@ -12,6 +12,6 @@ import stamp.srcmap.SourceInfo;
 public class DomH extends ProgramDom<Unit> {
     @Override
     public String toUniqueString(Unit u) {
-		return SourceInfo.unitToString(u);
+		return Program.unitToString(u);
     }
 }
