@@ -134,205 +134,11 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 			//invocation statements
 			if(stmt.containsInvokeExpr()){
 				InvokeExpr ie = stmt.getInvokeExpr();
-				
 				String methodRefStr = ie.getMethodRef().toString();
+                
+				look4BundleKeyToInject(body, stmt);
 				
-				//For Intent: intent.putExtra(), include string, int, boolean, byte, etc.
-				if (methodRefStr
-				    .contains(this.intentClass+": "+this.intentClass+" putExtra(java.lang.String,")
-				  || methodRefStr
-				    .equals("<"+this.intentClass+": java.lang.String getStringExtra(java.lang.String)>")
-			      || methodRefStr
-			        .equals("<"+this.intentClass+": android.os.Parcelable getParcelableExtra(java.lang.String)>")
-				                                                                                             ) {
-					// System.out.println("So you are going to call getStringExtra......." + stmt);
-					ImmediateBox bundleLoc = (ImmediateBox) ie.getUseBoxes().get(1);
-					Value putStringArg = bundleLoc.getValue();
-					StringConstant strVal = StringConstant.v("dummy");
-					
-					if (putStringArg instanceof StringConstant){
-						strVal = (StringConstant) putStringArg;
-					} else {
-						// otherwise we have to ask for reaching def.
-						for (Tag tagEntity : stmt.getTags()) {
-							if(!(tagEntity instanceof LinkTag)) continue; 
-							LinkTag ttg = (LinkTag) tagEntity;
-							if ( !(ttg.getLink() instanceof JAssignStmt)) continue;
-							JAssignStmt asst = (JAssignStmt) ttg.getLink();
-							
-							// FIXME:can not deal with inter-proc now!
-							if (asst.getLeftOp().equals(putStringArg)) {
-								// assert (asst.getRightOp() instanceof StringConstant);
-								if (asst.getRightOp() instanceof StringConstant) {
-									strVal = (StringConstant) asst.getRightOp();
-								}
-							}
-						}
-					}
-					//should triggle bundle instrument
-					String bundleKey = strVal.value;
-					if (bundleKey.equals("dummy")) {
-						reportUnknownRegister(stmt, putStringArg);
-						continue; ///go to next stmt
-					}
-
-                    //need to add getter/setter of bundlekey to Bundle.class!
-					instrumentBundle(bundleKey);
-								
-					JimpleLocalBox intentObj = (JimpleLocalBox) ie.getUseBoxes().get(0);
-				    
-					SootMethod getExtrasCall = Scene.v().getMethod(
-						"<" + this.intentClass + ": "+this.bundleClass+" getExtras()>");
-					
-					//invoke intent.getExtras()
-					VirtualInvokeExpr getExtrasExpr = 
-						Jimple.v().newVirtualInvokeExpr(
-							(Local) intentObj.getValue(),
-								getExtrasCall.makeRef(), Arrays.asList(new Value[] {}));
-					
-					Local extrasLocal = Jimple.v().newLocal("r_Extras", RefType.v(this.bundleClass)); 
-					body.getLocals().add(extrasLocal);
-					AssignStmt assign2Extras = Jimple.v().newAssignStmt(extrasLocal, getExtrasExpr);
-					units.insertBefore(assign2Extras, stmt);
-					
-					//invoke extra.put_deviceId()
-					if (methodRefStr
-					    .contains(this.intentClass+": "+this.intentClass+" putExtra(java.lang.String,") ) {
-						SootMethod putExtrasCall = Scene.v().getMethod(
-							"<" + this.bundleClass + ": void put_"
-								+ bundleKey + "(java.lang.Object)>");
-					
-						InvokeStmt putExtraStmt = Jimple.v().newInvokeStmt(
-							Jimple.v().newVirtualInvokeExpr(extrasLocal,
-								putExtrasCall.makeRef(), ie.getArg(1)));
-						units.insertAfter(putExtraStmt, stmt);
-						//Remove this will reduce the false alarm like deviceId=>intent, but potentially buggy,
-						//e.g, what if I assign current expr to an new intent object?
-						units.remove(stmt);	
-																										 
-					}
-
-					
-					//for getter in bundle...
-					//$r6.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>($r4)
-					if (methodRefStr
-						.equals("<"+this.intentClass+": java.lang.String getStringExtra(java.lang.String)>")
-		  			 || methodRefStr
-					    .equals("<"+this.intentClass+": android.os.Parcelable getParcelableExtra(java.lang.String)>")
-					) {
-						SootMethod getObjCall = Scene.v().getMethod(
-							"<" + this.bundleClass
-								+ ": java.lang.Object get_" + bundleKey
-									+ "()>");
-
-						VirtualInvokeExpr invokeGetStr = 
-							Jimple.v().newVirtualInvokeExpr(
-								extrasLocal, getObjCall.makeRef(), Arrays.asList(new Value[] {}));
-					
-						//FIXME: what if we have multiple defboxes?
-						// assert (stmt.getDefBoxes().size > 0);
-						if (stmt.getDefBoxes().size() == 0) {
-							reportUnknownRegister(stmt, extrasLocal);
-							continue;
-						}
-						
-						VariableBox orgCallSite = (VariableBox)stmt.getDefBoxes().get(0);
-						AssignStmt invokeAssign = Jimple.v().newAssignStmt(orgCallSite.getValue(), invokeGetStr);	
-						units.insertAfter(invokeAssign, stmt);
-						units.remove(stmt);	
-						
-					}
-											
-				}
-				
-				
-				// For Bundle: Src putString -> put_id && getString -> 
-				//$r9 = virtualinvoke $r8.<android.os.Bundle: 
-				//java.lang.String getString(java.lang.String)>($r4)
-				if (methodRefStr
-						.contains(this.bundleClass + ": void putString")
-						|| methodRefStr
-								.equals("<"
-										+ this.bundleClass
-										+ ": java.lang.String getString(java.lang.String)>")
-				        || methodRefStr
-								.equals("<"
-										+ this.bundleClass
-										+ ": android.os.Parcelable getParcelable(java.lang.String)>")) {								
-											
-					ImmediateBox bundleLoc = (ImmediateBox) ie.getUseBoxes().get(1);
-					Value putStringArg = bundleLoc.getValue();
-					StringConstant strVal = StringConstant.v("dummy");
-					if (putStringArg instanceof StringConstant){
-						strVal = (StringConstant) putStringArg;
-					} else {
-						// otherwise we have to ask for reaching def.
-						for (Tag tagEntity : stmt.getTags()) {
-							if(!(tagEntity instanceof LinkTag)) continue; 
-							LinkTag ttg = (LinkTag) tagEntity;
-							if ( !(ttg.getLink() instanceof JAssignStmt)) continue;
-							JAssignStmt asst = (JAssignStmt) ttg.getLink();
-							
-							// FIXME:can not deal with inter-proc now!
-							if (asst.getLeftOp().equals(putStringArg)) {
-								// assert (asst.getRightOp() instanceof StringConstant);
-								if (asst.getRightOp() instanceof StringConstant) {
-									strVal = (StringConstant) asst.getRightOp();
-								}
-							}
-						}
-					}
-					//should triggle bundle instrument
-					JimpleLocalBox bundleObj = (JimpleLocalBox) ie
-							.getUseBoxes().get(0);
-					String bundleKey = strVal.value;
-					if (bundleKey.equals("dummy")) {
-						reportUnknownRegister(stmt, putStringArg);
-						continue; ///go to next stmt
-					}
-
-                    //need to add getter/setter of bundlekey to Bundle.class!
-					instrumentBundle(bundleKey);
-					
-					// invoke
-					SootMethod toCall;
-					InvokeStmt invokeSetter;
-					//for put_string
-					if (methodRefStr
-					    .contains(this.bundleClass + ": void putString")){
-						toCall = Scene.v().getMethod(
-							"<" + this.bundleClass + ": void put_"
-								+ bundleKey + "(java.lang.Object)>");
-
-						// System.out.println("tocall = " + toCall );
-						invokeSetter = Jimple.v().newInvokeStmt(
-							Jimple.v().newVirtualInvokeExpr(
-								(Local) bundleObj.getValue(),
-									toCall.makeRef(), ie.getArg(1)));
-						units.insertAfter(invokeSetter, stmt);
-					} else {
-						// invoke
-						toCall = Scene.v().getMethod(
-							"<" + this.bundleClass
-								+ ": java.lang.Object get_" + bundleKey
-									+ "()>");
-
-						VirtualInvokeExpr invoke = 
-							Jimple.v().newVirtualInvokeExpr(
-								(Local) bundleObj.getValue(),
-									toCall.makeRef(), Arrays.asList(new Value[] {}));
-						
-						//FIXME: what if we have multiple defboxes?
-						VariableBox orgCallSite = (VariableBox)stmt.getDefBoxes().get(0);
-						AssignStmt invokeAssign = Jimple.v().newAssignStmt(orgCallSite.getValue(), invoke);
-						
-						units.insertAfter(invokeAssign, stmt);
-					}			
-					units.remove(stmt);
-				}
-				
-				
-				// multiple cases
+				// multiple cases to locate a target.
 				// 1. new Intent(context, class)
 				if (methodRefStr.contains(intentClass
 						+ ": void <init>(android.content.Context,java.lang.Class)")) {
@@ -430,6 +236,269 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 			}
 		}
     }
+	
+	/** 
+	  * Setter in bundle
+	  **/
+	private void look4BundleSetter(Body body, Stmt stmt) {
+		Chain<Unit> units = body.getUnits();
+		InvokeExpr ie = stmt.getInvokeExpr();																
+		ImmediateBox bundleLoc = (ImmediateBox) ie.getUseBoxes().get(1);
+		Value putStringArg = bundleLoc.getValue();
+		JimpleLocalBox bundleObj = (JimpleLocalBox) ie.getUseBoxes().get(0);
+		ArrayList<String> bundleKeyList = readKeysFromTag(stmt, putStringArg);
+		
+		for (String bundleKey : bundleKeyList) {
+			//need to add getter/setter of bundlekey to Bundle.class!
+			instrumentBundle(bundleKey);		
+
+			SootMethod toCall = Scene.v().getMethod(
+				"<" + this.bundleClass + ": void put_"
+					+ bundleKey + "(java.lang.Object)>");
+
+			// System.out.println("tocall = " + toCall );
+			InvokeStmt invokeSetter = Jimple.v().newInvokeStmt(
+				Jimple.v().newVirtualInvokeExpr(
+					(Local) bundleObj.getValue(),
+						toCall.makeRef(), ie.getArg(1)));
+			units.insertAfter(invokeSetter, stmt);
+			writeUnknownToBundle(body, stmt, (Local)bundleObj.getValue(), (Local)ie.getArg(1));
+		}
+				
+		units.remove(stmt);
+	}
+	
+	/** 
+	  * Setter in intent
+	  **/
+	private void look4IntentSetter(Body body, Stmt stmt) {
+		Chain<Unit> units = body.getUnits();
+		InvokeExpr ie = stmt.getInvokeExpr();	
+		ImmediateBox bundleLoc = (ImmediateBox) ie.getUseBoxes().get(1);
+		Value putStringArg = bundleLoc.getValue();		
+		JimpleLocalBox intentObj = (JimpleLocalBox) ie.getUseBoxes().get(0);
+		ArrayList<String> bundleKeyList = readKeysFromTag(stmt, putStringArg);
+		
+		for (String bundleKey : bundleKeyList) {
+			//need to add getter/setter of bundlekey to Bundle.class!
+			instrumentBundle(bundleKey);
+		    
+			SootMethod getExtrasCall = Scene.v().getMethod(
+				"<" + this.intentClass + ": "+this.bundleClass+" getExtras()>");
+			
+			//invoke intent.getExtras()
+			VirtualInvokeExpr getExtrasExpr = 
+				Jimple.v().newVirtualInvokeExpr(
+					(Local) intentObj.getValue(),
+						getExtrasCall.makeRef(), Arrays.asList(new Value[] {}));
+			
+			Local extrasLocal = Jimple.v().newLocal("r_Extras", RefType.v(this.bundleClass)); 
+			body.getLocals().add(extrasLocal);
+			AssignStmt assign2Extras = Jimple.v().newAssignStmt(extrasLocal, getExtrasExpr);
+			units.insertBefore(assign2Extras, stmt);
+			
+			//invoke extra.put_deviceId()
+			SootMethod putExtrasCall = Scene.v().getMethod(
+				"<" + this.bundleClass + ": void put_"
+					+ bundleKey + "(java.lang.Object)>");
+			
+			InvokeStmt putExtraStmt = Jimple.v().newInvokeStmt(
+				Jimple.v().newVirtualInvokeExpr(extrasLocal,
+					putExtrasCall.makeRef(), ie.getArg(1)));
+			units.insertAfter(putExtraStmt, stmt);
+			//write value to unknown field.
+			writeUnknownToBundle(body, stmt, extrasLocal, (Local)ie.getArg(1));
+			
+		}
+
+		//Remove this will reduce the false alarm like deviceId=>intent, but potentially buggy,
+		//e.g, what if I assign current expr to an new intent object?
+		units.remove(stmt);	
+		
+	}
+	
+	/** 
+	  * Getter in bundle
+	  **/
+	private void look4BundleGetter(Body body, Stmt stmt) {
+		Chain<Unit> units = body.getUnits();
+		InvokeExpr ie = stmt.getInvokeExpr();																
+		ImmediateBox bundleLoc = (ImmediateBox) ie.getUseBoxes().get(1);
+		Value putStringArg = bundleLoc.getValue();
+		ArrayList<String> bundleKeyList = readKeysFromTag(stmt, putStringArg);
+		JimpleLocalBox bundleObj = (JimpleLocalBox) ie.getUseBoxes().get(0);
+			
+		for (String bundleKey : bundleKeyList) {
+			instrumentBundle(bundleKey);	
+			// invoke
+			SootMethod toCall = Scene.v().getMethod(
+				"<" + this.bundleClass
+					+ ": java.lang.Object get_" + bundleKey
+						+ "()>");
+
+			VirtualInvokeExpr invoke = 
+				Jimple.v().newVirtualInvokeExpr(
+					(Local) bundleObj.getValue(),
+						toCall.makeRef(), Arrays.asList(new Value[] {}));
+				
+			//FIXME: what if we have multiple defboxes?
+			VariableBox orgCallSite = (VariableBox)stmt.getDefBoxes().get(0);
+			AssignStmt invokeAssign = Jimple.v().newAssignStmt(orgCallSite.getValue(), invoke);
+				
+			units.insertAfter(invokeAssign, stmt);
+		}
+
+		units.remove(stmt);	
+	}
+	
+	/** 
+	  * Getter in intent
+	  **/
+	private void look4IntentGetter(Body body, Stmt stmt) {
+		Chain<Unit> units = body.getUnits();
+		InvokeExpr ie = stmt.getInvokeExpr();	
+		ImmediateBox bundleLoc = (ImmediateBox) ie.getUseBoxes().get(1);
+		Value putStringArg = bundleLoc.getValue();
+		ArrayList<String> bundleKeyList = readKeysFromTag(stmt, putStringArg);
+		JimpleLocalBox intentObj = (JimpleLocalBox) ie.getUseBoxes().get(0);
+	
+		for (String bundleKey : bundleKeyList) {
+			instrumentBundle(bundleKey);					
+		    
+			SootMethod getExtrasCall = Scene.v().getMethod(
+				"<" + this.intentClass + ": "+this.bundleClass+" getExtras()>");
+			
+			//invoke intent.getExtras()
+			VirtualInvokeExpr getExtrasExpr = 
+				Jimple.v().newVirtualInvokeExpr(
+					(Local) intentObj.getValue(),
+						getExtrasCall.makeRef(), Arrays.asList(new Value[] {}));
+			
+			Local extrasLocal = Jimple.v().newLocal("r_Extras", RefType.v(this.bundleClass)); 
+			body.getLocals().add(extrasLocal);
+			AssignStmt assign2Extras = Jimple.v().newAssignStmt(extrasLocal, getExtrasExpr);
+			units.insertBefore(assign2Extras, stmt);
+
+			SootMethod getObjCall = Scene.v().getMethod("<" + this.bundleClass 
+				+ ": java.lang.Object get_" + bundleKey + "()>");
+
+			VirtualInvokeExpr invokeGetStr = 
+				Jimple.v().newVirtualInvokeExpr(
+					extrasLocal, getObjCall.makeRef(), Arrays.asList(new Value[] {}));
+			
+			//FIXME: what if we have multiple defboxes?
+			// assert (stmt.getDefBoxes().size > 0);
+			if (stmt.getDefBoxes().size() == 0) {
+				reportUnknownRegister(stmt, extrasLocal);
+				return;
+			}
+				
+			VariableBox orgCallSite = (VariableBox)stmt.getDefBoxes().get(0);
+			AssignStmt invokeAssign = Jimple.v().newAssignStmt(orgCallSite.getValue(), invokeGetStr);	
+			units.insertAfter(invokeAssign, stmt);
+		}
+
+		units.remove(stmt);	
+
+	}
+	
+	/**
+	 * Even if we find the bundle key, should also record the value to its corresponding unknown fields.
+	 * primitive types go to unknown_T, and all other ref types go to "unknown" obj.
+	 * extras.unknown_T = arg;
+	 **/
+	private void writeUnknownToBundle(Body body, Stmt stmt, Local extras, Local arg) {		
+		InvokeExpr ie = stmt.getInvokeExpr();	
+		String methodRefStr = ie.getMethodRef().toString();
+		SootClass bKlass = Program.g().scene().loadClassAndSupport(bundleClass);
+		SootField unknownField;
+		if (methodRefStr.contains("boolean)")) {
+			unknownField = bKlass.getFieldByName("unknown_boolean");  
+			
+			} else if (methodRefStr.contains("byte)")) {
+				unknownField = bKlass.getFieldByName("unknown_byte");  
+			} else if (methodRefStr.contains("char)")) {
+				unknownField = bKlass.getFieldByName("unknown_char");  
+			} else if (methodRefStr.contains("short)")) {
+				unknownField = bKlass.getFieldByName("unknown_short");  
+			} else if (methodRefStr.contains("int)")) {
+				unknownField = bKlass.getFieldByName("unknown_int");  
+			} else if (methodRefStr.contains("long)")) {
+				unknownField = bKlass.getFieldByName("unknown_long");  
+			} else if (methodRefStr.contains("float)")) {
+				unknownField = bKlass.getFieldByName("unknown_float");  
+			} else if (methodRefStr.contains("double)")) {
+				unknownField = bKlass.getFieldByName("unknown_double");  									
+			} else {
+	   		    unknownField = bKlass.getFieldByName("unknown");  										
+			}
+		     
+		SootFieldRef unknownFieldRef = unknownField.makeRef();
+
+		soot.jimple.FieldRef unknownInt = soot.jimple.Jimple.v()
+			.newInstanceFieldRef(extras, unknownFieldRef);
+
+		soot.jimple.AssignStmt assign = soot.jimple.Jimple.v()
+			.newAssignStmt(unknownInt, arg);
+		body.getUnits().insertAfter(assign, stmt);
+	}
+	
+	/* Read the reaching def values of the regester.*/
+	private ArrayList<String> readKeysFromTag(Stmt stmt, Value arg) {
+		ArrayList<String> reachingDef = new ArrayList<String>();
+		// Value putStringArg = bundleLoc.getValue();
+		StringConstant strVal = StringConstant.v("dummy");
+			
+		if (arg instanceof StringConstant){
+			strVal = (StringConstant) arg;
+			reachingDef.add(strVal.value);
+		} else {
+			// otherwise we have to ask for reaching def.
+			for (Tag tagEntity : stmt.getTags()) {
+				if(!(tagEntity instanceof LinkTag)) continue; 
+				LinkTag ttg = (LinkTag) tagEntity;
+				if ( !(ttg.getLink() instanceof JAssignStmt)) continue;
+				JAssignStmt asst = (JAssignStmt) ttg.getLink();
+					
+				// FIXME:can not deal with inter-proc now!
+				if (asst.getLeftOp().equals(arg)) {
+					// assert (asst.getRightOp() instanceof StringConstant);
+					if (asst.getRightOp() instanceof StringConstant) {
+						strVal = (StringConstant) asst.getRightOp();
+						String bundleKey = strVal.value;
+						reachingDef.add(bundleKey);			
+					} else { //may be function call or private field from inter-proc.
+						reportUnknownRegister(stmt, arg);			
+					}
+				} 
+			}
+		}
+	
+		return reachingDef;
+	}
+	
+	/* Looking for the right setter/getter to instument. */
+	private void look4BundleKeyToInject(Body body, Stmt stmt) {
+		Chain<Unit> units = body.getUnits();
+		InvokeExpr ie = stmt.getInvokeExpr();	
+		String methodRefStr = ie.getMethodRef().toString();
+		
+		if (methodRefStr.matches("^<android.content.Intent: .* get.*") && !methodRefStr.contains("getExtras()>")) {
+	        look4IntentGetter(body, stmt);	
+		}
+		
+		if (methodRefStr.matches("^<android.os.Bundle: .* get.*")) {
+	        look4BundleGetter(body, stmt);	
+		}
+		
+		if (methodRefStr.matches("^<android.content.Intent: android.content.Intent put.*")) {
+	        look4IntentSetter(body, stmt);	
+		}
+		
+		if (methodRefStr.matches("^<android.os.Bundle: void put.*")) {
+	        look4BundleSetter(body, stmt);
+		}
+	}
 	
 	
 	/* Search for the target component based on reachingDef stored in tag. */	
