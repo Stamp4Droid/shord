@@ -608,6 +608,11 @@ class Grammar(util.FinalAttrs):
         #  @Symbol.
         self.rev_prods = util.OrderedMultiDict()
 
+    def verify_grammar(self):
+        for s in self.symbols:
+            if not s.is_terminal() and self.prods.get(s) == []:
+                assert False, "Non-terminal %s can never be produced" % s
+
     def calc_min_lengths(self):
         for symbol in self.symbols:
             # TODO: Arbitrary value for "infinite length"
@@ -723,6 +728,7 @@ def parse(fin, fout):
     for line in fin:
         grammar.parse_line(line)
         pr.write(line, False)
+    grammar.verify_grammar()
     pr.write('*/')
     pr.write('')
 
