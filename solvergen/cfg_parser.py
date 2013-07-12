@@ -215,14 +215,14 @@ class Literal(util.FinalAttrs):
                 ('' if not self.symbol.parametric else
                  '[i]' if self.indexed else '[*]'))
 
-class Production(util.FinalAttrs):
+class RegularProduction(util.FinalAttrs):
     """
     A production of the input grammar.
     """
 
     def __init__(self, result, used):
-        Production._check_production(result, used)
         ## The @Symbol on the LHS of this @Production.
+        RegularProduction._check_production(result, used)
         self.result = result
         ## An ordered list of the @Literal%s on the RHS of this @Production.
         self.used = used
@@ -289,11 +289,12 @@ class NormalProduction(util.FinalAttrs):
     A normalized @Production, with up to 2 @Literal%s on the RHS.
     """
 
-    def __init__(self, result, left, right):
+    def __init__(self, result, left, right, parallel=False):
         assert not(left is None and right is not None)
+        assert not(right is None and parallel)
         used = (([] if left is None else [left]) +
                 ([] if right is None else [right]))
-        Production._check_production(result, used)
+        RegularProduction._check_production(result, used)
         ## The @Symbol on the LHS of this @NormalProduction.
         self.result = result
         ## The first of up to 2 @Literal%s on the RHS. Is @e None for empty
@@ -302,8 +303,12 @@ class NormalProduction(util.FinalAttrs):
         ## The second of up to 2 @Literal%s on the RHS. Is @e None for empty
         #  or single @NormalProduction%s.
         self.right = right
+        ## Whether this is a parallel production rather than a regular one.
+        self.parallel = parallel
 
     def update_result_min_length(self):
+        # TODO: The length of any supporting (parallel) paths is simply added
+        # to that of the main path.
         newlen = ((0 if self.left is None else self.left.symbol.min_length) +
                   (0 if self.right is None else self.right.symbol.min_length))
         if newlen < self.result.min_length:
@@ -322,38 +327,42 @@ class NormalProduction(util.FinalAttrs):
         elif self.right is None:
             return [ReverseProduction(self.result, self.left)]
         else:
-            rev_l = ReverseProduction(self.result, self.left, self.right,
-                                      True)
-            rev_r = ReverseProduction(self.result, self.right, self.left,
-                                      False)
+            lpos = Position.PARALLEL_MAIN if self.parallel else Position.FIRST
+            rpos = (Position.PARALLEL_SUPPORT if self.parallel
+                    else Position.SECOND)
+            rev_l = ReverseProduction(self.result, self.left, self.right, lpos)
+            rev_r = ReverseProduction(self.result, self.right, self.left, rpos)
             return [rev_l, rev_r]
 
     def outer_search_direction(self):
         assert self.left is not None
-        if self.right is not None and self.left.reversed:
-            return 'in'
-        else:
+        if self.right is None or self.parallel:
             return 'out'
+        return 'in' if self.left.reversed else 'out'
 
     def outer_search_source(self):
         assert self.left is not None
-        if self.right is None and self.left.reversed:
-            return 'e->to'
-        else:
-            return 'e->from'
+        if self.right is None or self.parallel:
+            return 'e->to' if self.left.reversed else 'e->from'
+        return 'e->from'
 
     def outer_search_target(self):
-        assert self.right is None
-        return 'e->from' if self.left.reversed else 'e->to'
+        assert self.left is not None
+        if self.right is None or self.parallel:
+            return 'e->from' if self.left.reversed else 'e->to'
+        return None
 
     def outer_condition(self):
+        assert self.left is not None
         if self.left.indexed and self.result.parametric:
             return 'l->index == e->index'
-        else:
-            return None
+        return None
 
     def inner_search_source(self):
-        if self.right.reversed:
+        assert self.left is not None and self.right is not None
+        if self.parallel:
+            return 'e->to' if self.right.reversed else 'e->from'
+        elif self.right.reversed:
             return 'e->to'
         elif self.left.reversed:
             return 'l->from'
@@ -361,7 +370,10 @@ class NormalProduction(util.FinalAttrs):
             return 'l->to'
 
     def inner_search_target(self):
-        if not self.right.reversed:
+        assert self.left is not None and self.right is not None
+        if self.parallel:
+            return 'e->from' if self.right.reversed else 'e->to'
+        elif not self.right.reversed:
             return 'e->to'
         elif self.left.reversed:
             return 'l->from'
@@ -369,6 +381,7 @@ class NormalProduction(util.FinalAttrs):
             return 'l->to'
 
     def inner_condition(self):
+        assert self.left is not None and self.right is not None
         if not self.right.indexed:
             return None
         elif self.left.indexed:
@@ -377,10 +390,36 @@ class NormalProduction(util.FinalAttrs):
             return 'r->index == e->index'
 
     def __str__(self):
+        conj = ' // ' if self.parallel else ' '
         rhs = ('-' if self.left is None
                else str(self.left) if self.right is None
-               else str(self.left) + ' ' + str(self.right))
+               else str(self.left) + conj + str(self.right))
         return self.result.as_lhs() + ' :: ' + rhs
+
+class Position(util.FinalAttrs):
+    """
+    An enumeration of relative Edge positions in a @NormalProduction.
+    """
+
+    ## The first in a series of two Edge%s being combined through a
+    #  @NormalProduction.
+    FIRST = 0
+    ## The second in a series of two Edge%s being combined through a
+    #  @NormalProduction.
+    SECOND = 1
+    ## The main Edge in a pair of parallel Edge%s being combined through a
+    #  @NormalProduction.
+    PARALLEL_MAIN = 2
+    ## The secondary (supporting) Edge in a pair of parallel Edge%s being
+    #  combined through a @NormalProduction.
+    PARALLEL_SUPPORT = 3
+
+    @staticmethod
+    def valid_position(pos):
+        """
+        Check whether @a pos is within the bounds of this enumeration.
+        """
+        return pos >= Position.FIRST and pos <= Position.PARALLEL_SUPPORT
 
 class ReverseProduction(util.FinalAttrs):
     """
@@ -408,12 +447,14 @@ class ReverseProduction(util.FinalAttrs):
     @Symbol `B`.
     """
 
-    def __init__(self, result, base, reqd=None, comes_after=True):
+    def __init__(self, result, base, reqd=None, base_pos=Position.FIRST):
         assert not(base is None and reqd is not None), \
             "Empty productions can't take a required literal"
+        assert not(reqd is None and base_pos != Position.FIRST)
+        assert Position.valid_position(base_pos)
         used = (([] if base is None else [base]) +
                 ([] if reqd is None else [reqd]))
-        Production._check_production(result, used)
+        RegularProduction._check_production(result, used)
         ## The @Symbol generated by this @ReverseProduction.
         self.result = result
         ## The @Literal we assume to be present.
@@ -424,9 +465,9 @@ class ReverseProduction(util.FinalAttrs):
         #
         #  Is @e None if this corresponds to a single-element @Production.
         self.reqd = reqd
-        ## Whether the required @Literal needs to come after or before the one
-        #  we already have.
-        self.comes_after = comes_after
+        ## What position the base @Literal has in the corresponding
+        #  @NormalProduction.
+        self.base_pos = base_pos
 
     def __check_need_to_search(self):
         assert self.base is not None, \
@@ -438,7 +479,7 @@ class ReverseProduction(util.FinalAttrs):
     #       particular variable and function naming. It might be more robust to
     #       return True/False and have the caller pick the strings to use.
 
-    def search_endpoint(self):
+    def search_source_endp(self):
         """
         On which endpoint of the Edge being processed we should search for an
         Edge that can complete this @ReverseProduction.
@@ -446,10 +487,16 @@ class ReverseProduction(util.FinalAttrs):
         In our running example, we need to search on the source Node.
         """
         self.__check_need_to_search()
-        if self.base.reversed ^ self.comes_after:
-            return 'to'
+        if self.base_pos == Position.FIRST:
+            return 'from' if self.base.reversed else 'to'
+        elif self.base_pos == Position.SECOND:
+            return 'to' if self.base.reversed else 'from'
+        elif self.base_pos == Position.PARALLEL_MAIN:
+            return 'to' if self.base.reversed ^ self.reqd.reversed else 'from'
+        elif self.base_pos == Position.PARALLEL_SUPPORT:
+            return 'to' if self.base.reversed ^ self.reqd.reversed else 'from'
         else:
-            return 'from'
+            assert False
 
     def search_direction(self):
         """
@@ -460,10 +507,37 @@ class ReverseProduction(util.FinalAttrs):
         In our running example, we need to search within the incoming Edge%s.
         """
         self.__check_need_to_search()
-        if self.reqd.reversed ^ self.comes_after:
+        if self.base_pos == Position.FIRST:
+            return 'in' if self.reqd.reversed else 'out'
+        elif self.base_pos == Position.SECOND:
+            return 'out' if self.reqd.reversed else 'in'
+        elif self.base_pos == Position.PARALLEL_MAIN:
+            return 'out'
+        elif self.base_pos == Position.PARALLEL_SUPPORT:
             return 'out'
         else:
-            return 'in'
+            assert False
+
+    def search_target_endp(self):
+        """
+        On which endpoint (if any) of the Edge being processed we should
+        constrain our search for an Edge that can complete this
+        @ReverseProduction.
+
+        In our running example, there is no such endpoint we can constrain our
+        search to
+        """
+        self.__check_need_to_search()
+        if self.base_pos == Position.FIRST:
+            return None
+        elif self.base_pos == Position.SECOND:
+            return None
+        elif self.base_pos == Position.PARALLEL_MAIN:
+            return 'from' if self.base.reversed ^ self.reqd.reversed else 'to'
+        elif self.base_pos == Position.PARALLEL_SUPPORT:
+            return 'from' if self.base.reversed ^ self.reqd.reversed else 'to'
+        else:
+            assert False
 
     def result_source(self):
         """
@@ -473,16 +547,26 @@ class ReverseProduction(util.FinalAttrs):
         In our running example, we would place it on the source Node of the
         'other' Edge (the one representing @Symbol `A`).
         """
-        if self.reqd is None:
+        if self.base is None:
+            edge = 'base'
+            endpoint = 'from'
+        elif self.reqd is None:
+            edge = 'base'
+            endpoint = 'to' if self.base.reversed else 'from'
+        elif self.base_pos == Position.FIRST:
+            edge = 'base'
+            endpoint = 'to' if self.base.reversed else 'from'
+        elif self.base_pos == Position.SECOND:
+            edge = 'other'
+            endpoint = 'to' if self.reqd.reversed else 'from'
+        elif self.base_pos == Position.PARALLEL_MAIN:
+            edge = 'base'
+            endpoint = 'to' if self.base.reversed else 'from'
+        elif self.base_pos == Position.PARALLEL_SUPPORT:
             edge = 'base'
             endpoint = 'to' if self.base.reversed else 'from'
         else:
-            edge = 'base' if self.comes_after else 'other'
-            if (not self.base.reversed and self.comes_after or
-                not self.reqd.reversed and not self.comes_after):
-                endpoint = 'from'
-            else:
-                endpoint = 'to'
+            assert False
         return edge + '->' + endpoint
 
     def result_target(self):
@@ -493,16 +577,26 @@ class ReverseProduction(util.FinalAttrs):
         In our running example, we would place it on the target Node of the
         'base' Edge (the one representing @Symbol `B`).
         """
-        if self.reqd is None:
+        if self.base is None:
+            edge = 'base'
+            endpoint = 'to'
+        elif self.reqd is None:
+            edge = 'base'
+            endpoint = 'from' if self.base.reversed else 'to'
+        elif self.base_pos == Position.FIRST:
+            edge = 'other'
+            endpoint = 'from' if self.reqd.reversed else 'to'
+        elif self.base_pos == Position.SECOND:
+            edge = 'base'
+            endpoint = 'from' if self.base.reversed else 'to'
+        elif self.base_pos == Position.PARALLEL_MAIN:
+            edge = 'base'
+            endpoint = 'from' if self.base.reversed else 'to'
+        elif self.base_pos == Position.PARALLEL_SUPPORT:
             edge = 'base'
             endpoint = 'from' if self.base.reversed else 'to'
         else:
-            edge = 'other' if self.comes_after else 'base'
-            if (not self.base.reversed and not self.comes_after or
-                not self.reqd.reversed and self.comes_after):
-                endpoint = 'to'
-            else:
-                endpoint = 'from'
+            assert False
         return edge + '->' + endpoint
 
     def result_index_source(self):
@@ -544,49 +638,79 @@ class ReverseProduction(util.FinalAttrs):
             return 'NULL'
         elif self.reqd is None:
             return 'base'
-        elif self.comes_after:
+        elif self.base_pos == Position.FIRST:
             return 'base'
-        else:
+        elif self.base_pos == Position.SECOND:
             return 'other'
+        elif self.base_pos == Position.PARALLEL_MAIN:
+            return 'base'
+        elif self.base_pos == Position.PARALLEL_SUPPORT:
+            return 'other'
+        else:
+            assert False
 
     def left_reverse(self):
         if self.base is None:
             return False
         elif self.reqd is None:
             return self.base.reversed
-        elif self.comes_after:
+        elif self.base_pos == Position.FIRST:
             return self.base.reversed
-        else:
+        elif self.base_pos == Position.SECOND:
             return self.reqd.reversed
+        elif self.base_pos == Position.PARALLEL_MAIN:
+            return self.base.reversed
+        elif self.base_pos == Position.PARALLEL_SUPPORT:
+            return self.reqd.reversed
+        else:
+            assert False
 
     def right_edge(self):
         if self.base is None:
             return 'NULL'
         elif self.reqd is None:
             return 'NULL'
-        elif self.comes_after:
+        elif self.base_pos == Position.FIRST:
             return 'other'
-        else:
+        elif self.base_pos == Position.SECOND:
             return 'base'
+        elif self.base_pos == Position.PARALLEL_MAIN:
+            return 'other'
+        elif self.base_pos == Position.PARALLEL_SUPPORT:
+            return 'base'
+        else:
+            assert False
 
     def right_reverse(self):
         if self.base is None:
             return False
         elif self.reqd is None:
             return False
-        elif self.comes_after:
+        elif self.base_pos == Position.FIRST:
             return self.reqd.reversed
-        else:
+        elif self.base_pos == Position.SECOND:
             return self.base.reversed
+        elif self.base_pos == Position.PARALLEL_MAIN:
+            return self.reqd.reversed
+        elif self.base_pos == Position.PARALLEL_SUPPORT:
+            return self.base.reversed
+        else:
+            assert False
 
     def __str__(self):
         have = '-' if self.base is None else str(self.base)
         if self.reqd is None:
             need = ''
-        elif self.comes_after:
+        elif self.base_pos == Position.FIRST:
             need = ' + (* %s)' % self.reqd
-        else:
+        elif self.base_pos == Position.SECOND:
             need = ' + (%s *)' % self.reqd
+        elif self.base_pos == Position.PARALLEL_MAIN:
+            need = ' + (* // %s)' % self.reqd
+        elif self.base_pos == Position.PARALLEL_SUPPORT:
+            need = ' + (%s // *)' % self.reqd
+        else:
+            assert False
         return have + need + ' => ' + self.result.as_lhs()
 
 class Grammar(util.FinalAttrs):
@@ -670,17 +794,25 @@ class Grammar(util.FinalAttrs):
     def __parse_production(self, toks):
         assert toks != [], "Empty production not marked with '-'"
         used = []
+        indices = []
+        parallel = False
         if toks != ['-']:
-            prod_index = self._lhs_index_char
+            if len(toks) == 3 and toks[1] == '//':
+                parallel = True
+                toks = [toks[0], toks[2]]
+            indices.append(self._lhs_index_char)
             for t in toks:
                 (lit, i) = self.__parse_literal(t)
                 used.append(lit)
-                if i is not None:
-                    assert prod_index is None or i == prod_index, \
-                        "Production contains more than one distinct indices"
-                    prod_index = i
-        prod = Production(self._lhs, used)
-        for p in prod.split(self.symbols):
+                indices.append(i)
+        assert util.all_same([i for i in indices if i is not None]), \
+            "Production contains more than one distinct indices"
+        if parallel:
+            assert len(used) == 2
+            prods = [NormalProduction(self._lhs, used[0], used[1], True)]
+        else:
+            prods = RegularProduction(self._lhs, used).split(self.symbols)
+        for p in prods:
             self.prods.append(p.result, p)
             for rp in p.get_rev_prods():
                 base_symbol = None if rp.base is None else rp.base.symbol
@@ -837,11 +969,18 @@ def parse(fin, fout):
             if rp.reqd is None:
                 pr.write(add_edge_stmt)
             else:
-                search_node = 'base->' + rp.search_endpoint()
+                search_src = 'base->' + rp.search_source_endp()
                 search_dir = rp.search_direction()
+                search_tgt_endp = rp.search_target_endp()
+                search_tgt = (None if search_tgt_endp is None
+                              else 'base->' + search_tgt_endp)
                 reqd_kind = rp.reqd.symbol.kind
-                pr.write('other = get_%s_edges(%s, %s);'
-                         % (search_dir, search_node, reqd_kind))
+                pr.write('other = get_%s_edges%s(%s%s, %s);'
+                         % (search_dir,
+                            '' if search_tgt is None else '_to_target',
+                            search_src,
+                            '' if search_tgt is None else (', ' + search_tgt),
+                            reqd_kind))
                 pr.write('for (; other != NULL; other = next_%s_edge(other)) {'
                          % search_dir)
                 if rp.must_check_for_common_index():
@@ -870,18 +1009,20 @@ def parse(fin, fout):
                 pr.write('derivs.push_back(derivation_empty());')
                 pr.write('}')
                 continue
-            is_single = p.right is None
             out_dir = p.outer_search_direction()
             out_src = p.outer_search_source()
+            out_tgt = p.outer_search_target()
             pr.write('l = get_%s_edges%s(%s%s, %s);'
-                     % (out_dir, '_to_target' if is_single else '', out_src,
-                        (', ' + p.outer_search_target()) if is_single else '',
+                     % (out_dir,
+                        '_to_target' if out_tgt is not None else '',
+                        out_src,
+                        (', ' + out_tgt) if out_tgt is not None else '',
                         p.left.symbol.kind))
             pr.write('for (; l != NULL; l = next_%s_edge(l)) {' % out_dir)
             out_cond = p.outer_condition()
             if out_cond is not None:
                 pr.write('if (%s) {' % out_cond)
-            if is_single:
+            if p.right is None:
                 pr.write('derivs.push_back(derivation_single(l, %s));'
                          % util.to_c_bool(p.left.reversed))
             else:
