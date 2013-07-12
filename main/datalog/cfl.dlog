@@ -16,6 +16,10 @@
 
 .bddvarorder Z0xZ1_M0_C0xC1xC2_V0xV1_U0xU1_H0xF0_I0_L0xL1
 
+###################
+# INPUT RELATIONS
+###################
+
 # reference flow inputs
 Assign(v:V,u:V)     input   # v = u
 Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
@@ -31,7 +35,7 @@ AssignPrim(v:U,u:U)      input    # v = u
 LoadPrim(y:U,x:V,f:F)    input    # y = x.f
 StorePrim(u:V,f:F,v:U)   input    # u.f = v
 LoadStatPrim(y:U,f:F)    input    # y = f
-StoreStatPrim(f:F,v:U)  input    # f = v
+StoreStatPrim(f:F,v:U)   input    # f = v
 paramPrim(u:U,v:U,i:I)   input    # u is the formal parameter, v is actual arg, i is invocation stmt
 returnPrim(u:U,v:U,i:I)  input    # u is the lhs at callsite, v is the return var, i is invocation stm
 
@@ -53,14 +57,17 @@ MmethPrimRet(m:M,z:Z,u:U) input
 Stub(m:M) input
 
 # annotations
-SrcLabel(l:L)  input
-SinkLabel(l:L) input
-
+SrcLabel(l:L)                 input
+SinkLabel(l:L)                input
 LabelRet(l:L,m:M)             input
 LabelArg(l:L,m:M,z:Z)         input
 ArgRetTransfer(m:M,z:Z)       input
 ArgArgTransfer(m:M,z0:Z,z1:Z) input
 ArgArgFlow(m:M,z0:Z,z1:Z)     input
+
+###################
+# OUTPUT RELATIONS
+###################
 
 # reference flows
 AssignCtxt(c:C,v:V,u:V)        output # v = u in context c
