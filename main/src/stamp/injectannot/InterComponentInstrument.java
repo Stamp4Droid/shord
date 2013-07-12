@@ -51,6 +51,8 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 	private Map<Value, String> arg2CompnentName = new HashMap<Value, String>();
 	
     private StampCallArgumentValueAnalysis cavAnalysis = null;
+	
+	private static HashSet<String> unknownBundleSrcMethods = new HashSet<String>();
 
     public InterComponentInstrument()
     {
@@ -267,6 +269,9 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		}
 				
 		if (bundleKeyList.size() > 0) units.remove(stmt);	
+		else unknownBundleSrcMethods.add(
+			 stmt.getInvokeExpr().getMethod().getSubSignature());
+						
 	}
 	
 	/** 
@@ -315,7 +320,9 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 
 		//Remove this will reduce the false alarm like deviceId=>intent, but potentially buggy,
 		//e.g, what if I assign current expr to an new intent object?
-		if (bundleKeyList.size() > 0) units.remove(stmt);	
+		if (bundleKeyList.size() > 0) units.remove(stmt);
+		else unknownBundleSrcMethods.add(
+			 stmt.getInvokeExpr().getMethod().getSubSignature());
 		
 	}
 	
@@ -739,9 +746,62 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 
 		units.add(Jimple.v().newReturnVoidStmt());
 		klass.addMethod(m_setter);
-		// System.out.println("inject field and methods into bundle....done: setter: " + body);
+		// System.out.println("inject field and methods into bundle....done: ");
 		
 
+	}
+	
+	/* To make it sound even parts of the bundle key is unknown, 
+	 * invoke put_xxx in all corresponding bundle/intent method.
+	 * unknownBundleSrcMethods will record all the previous unknown method.
+	 */
+	public static void injectUnknownSrc() {
+		
+		String bundleClass = "android.os.Bundle";
+		String intentClass = "android.content.Intent";
+		
+		//load bundle.java
+		SootClass bKlass = Program.g().scene().loadClassAndSupport(bundleClass);
+		SootClass iKlass = Program.g().scene().loadClassAndSupport(intentClass);	
+		
+		//this method belongs to either bundle or intent.
+		for (String methodSig : unknownBundleSrcMethods) {
+			if (bKlass.declaresMethod(methodSig)) {
+				writeToBundleOrIntent(bKlass.getMethod(methodSig), bKlass);
+			} else {
+				writeToBundleOrIntent(iKlass.getMethod(methodSig), bKlass);
+			}		
+		}	
+	}
+	
+	private static void writeToBundleOrIntent(SootMethod unknownMeth, SootClass bKlass) {
+
+		Body body = unknownMeth.retrieveActiveBody();
+		Chain<Unit> units = body.getUnits();
+		Iterator<Unit> uit = units.snapshotIterator();
+		while(uit.hasNext()) {
+			Stmt stmt = (Stmt) uit.next();					
+			if(stmt.containsFieldRef() && (stmt.getUseBoxes().get(0) instanceof JimpleLocalBox)) {
+				//field box:=[JimpleLocalBox($r3), LinkedRValueBox(r2)]
+				if (stmt.getUseBoxes().size() < 2) continue;
+				ValueBox extrasBox = stmt.getUseBoxes().get(0);
+				ValueBox argBox = stmt.getUseBoxes().get(1);
+					
+				//for all fields in bundle.
+				for (SootMethod instumentedMeth : bKlass.getMethods()) {
+					if (instumentedMeth.getSignature().contains("put_")) {
+
+						InvokeStmt putExtraStmt = Jimple.v().newInvokeStmt(
+							Jimple.v().newVirtualInvokeExpr((Local)extrasBox.getValue(),
+								instumentedMeth.makeRef(), (Local)argBox.getValue()));
+						units.insertAfter(putExtraStmt, stmt);
+					}
+
+				}			
+			
+			}
+			
+		}
 	}
 	
 	/* Output the related information of the register which can't be handled by intro-proc reaching def. */

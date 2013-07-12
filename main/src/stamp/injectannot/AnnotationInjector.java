@@ -63,6 +63,11 @@ public class AnnotationInjector extends JavaAnalysis
 					v.visit(klass);
 				}
 			}
+			
+			if ("true".equals(icdfFlag)) {
+                //at the very end we need to add load/store stmt to put/getUnknown to reason unknown src
+			    InterComponentInstrument.injectUnknownSrc();
+			}
 
 			writer.close();
 		}catch(Exception e){
