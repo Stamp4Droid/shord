@@ -64,6 +64,8 @@
 		  description="Chord analyses that will prepare the output relations"/>
     <prop-default property="stamp.printrels" default=""
 		  description="relations to print out after the analysis finishes"/>
+    <prop-default property="stamp.print.allclasses" default="true"
+		  description="whether to dump out all processed jimple files"/>
 
     <!-- Prepare the selected analysis backend. -->
     <runtarget target="-prepare-backend-${stamp.backend}"/>
