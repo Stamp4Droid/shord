@@ -266,7 +266,7 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 			writeUnknownToBundle(body, stmt, (Local)bundleObj.getValue(), (Local)ie.getArg(1));
 		}
 				
-		units.remove(stmt);
+		if (bundleKeyList.size() > 0) units.remove(stmt);	
 	}
 	
 	/** 
@@ -315,7 +315,7 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 
 		//Remove this will reduce the false alarm like deviceId=>intent, but potentially buggy,
 		//e.g, what if I assign current expr to an new intent object?
-		units.remove(stmt);	
+		if (bundleKeyList.size() > 0) units.remove(stmt);	
 		
 	}
 	
@@ -351,7 +351,7 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 			units.insertAfter(invokeAssign, stmt);
 		}
 
-		units.remove(stmt);	
+		if (bundleKeyList.size() > 0) units.remove(stmt);	
 	}
 	
 	/** 
@@ -402,7 +402,7 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 			units.insertAfter(invokeAssign, stmt);
 		}
 
-		units.remove(stmt);	
+		if (bundleKeyList.size() > 0) units.remove(stmt);	
 
 	}
 	
