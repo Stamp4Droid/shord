@@ -242,7 +242,8 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 	  **/
 	private void look4BundleSetter(Body body, Stmt stmt) {
 		Chain<Unit> units = body.getUnits();
-		InvokeExpr ie = stmt.getInvokeExpr();																
+		InvokeExpr ie = stmt.getInvokeExpr();	
+		if (ie.getUseBoxes().size() < 2) return;															
 		ImmediateBox bundleLoc = (ImmediateBox) ie.getUseBoxes().get(1);
 		Value putStringArg = bundleLoc.getValue();
 		JimpleLocalBox bundleObj = (JimpleLocalBox) ie.getUseBoxes().get(0);
@@ -273,7 +274,8 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 	  **/
 	private void look4IntentSetter(Body body, Stmt stmt) {
 		Chain<Unit> units = body.getUnits();
-		InvokeExpr ie = stmt.getInvokeExpr();	
+		InvokeExpr ie = stmt.getInvokeExpr();
+		if (ie.getUseBoxes().size() < 2) return;	
 		ImmediateBox bundleLoc = (ImmediateBox) ie.getUseBoxes().get(1);
 		Value putStringArg = bundleLoc.getValue();		
 		JimpleLocalBox intentObj = (JimpleLocalBox) ie.getUseBoxes().get(0);
@@ -322,7 +324,8 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 	  **/
 	private void look4BundleGetter(Body body, Stmt stmt) {
 		Chain<Unit> units = body.getUnits();
-		InvokeExpr ie = stmt.getInvokeExpr();																
+		InvokeExpr ie = stmt.getInvokeExpr();	
+		if (ie.getUseBoxes().size() < 2) return;															
 		ImmediateBox bundleLoc = (ImmediateBox) ie.getUseBoxes().get(1);
 		Value putStringArg = bundleLoc.getValue();
 		ArrayList<String> bundleKeyList = readKeysFromTag(stmt, putStringArg);
@@ -356,7 +359,8 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 	  **/
 	private void look4IntentGetter(Body body, Stmt stmt) {
 		Chain<Unit> units = body.getUnits();
-		InvokeExpr ie = stmt.getInvokeExpr();	
+		InvokeExpr ie = stmt.getInvokeExpr();
+		if (ie.getUseBoxes().size() < 2) return;
 		ImmediateBox bundleLoc = (ImmediateBox) ie.getUseBoxes().get(1);
 		Value putStringArg = bundleLoc.getValue();
 		ArrayList<String> bundleKeyList = readKeysFromTag(stmt, putStringArg);
@@ -483,7 +487,7 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		InvokeExpr ie = stmt.getInvokeExpr();	
 		String methodRefStr = ie.getMethodRef().toString();
 		
-		if (methodRefStr.matches("^<android.content.Intent: .* get.*") && !methodRefStr.contains("getExtras()>")) {
+		if (methodRefStr.matches("^<android.content.Intent: .* get.*Extra.*") && !methodRefStr.contains("getExtras()>")) {
 	        look4IntentGetter(body, stmt);	
 		}
 		
