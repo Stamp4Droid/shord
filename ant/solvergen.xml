@@ -5,6 +5,8 @@
     <!-- Compile SolverGen analysis. -->
     <property name="stamp.solvergen.analysis" value="s-k-h-al"/>
     <runtarget target="make-cfl-solver"/>
+    <require-prop property="stamp.solvergen.terminals.listfile"
+		  description="file listing all the terminals used by the analysis"/>
 
     <!-- Prepare SolverGen I/O directories. -->
     <mkdir dir="${stamp.out.dir}/input"/>
@@ -16,8 +18,12 @@
 
     <!-- Set backend-specific system properties. -->
     <!-- Facts Dumper options -->
-    <property name="stamp.dumper.templatesdir"
+    <property name="stamp.dumper.templates.dir"
 	      location="${stamp.dir}/solvergen/input"/>
+    <load-strings property="stamp.dumper.templates.list"
+		  file="${stamp.solvergen.terminals.listfile}">
+      <replaceregex pattern="^(.+)$" replace="\1.dat"/>
+    </load-strings>
     <property name="stamp.dumper.outdir"
 	      location="${stamp.out.dir}/input"/>
     <property name="stamp.dumper.accrange.printindex" value="false"/>
@@ -34,7 +40,8 @@
 
     <!-- Register backend-specific system properties. -->
     <propertyset id="stamp.analyses.main.sysprops">
-      <propertyref name="stamp.dumper.templatesdir"/>
+      <propertyref name="stamp.dumper.templates.dir"/>
+      <propertyref name="stamp.dumper.templates.list"/>
       <propertyref name="stamp.dumper.outdir"/>
       <propertyref name="stamp.dumper.accrange.printindex"/>
       <propertyref name="stamp.solvergen.workdir"/>
@@ -83,12 +90,16 @@
 		 destdir="${stamp.out.dir}" oldext="cfg" newext="cpp"/>
     <property name="stamp.solvergen.executable"
 	      location="${stamp.out.dir}/${stamp.solvergen.analysis}"/>
+    <tempfile property="stamp.solvergen.terminals.listfile" createfile="false"
+	      deleteonexit="true"/>
+
 
     <!-- Produce CFL Solver code from the input grammar. -->
     <exec executable="python" spawn="false" failonerror="true">
       <arg file="${stamp.dir}/solvergen/cfg_parser.py"/>
       <arg file="${stamp.solvergen.analysis.cfg}"/>
       <arg file="${stamp.out.dir}"/>
+      <arg file="${stamp.solvergen.terminals.listfile}"/>
     </exec>
 
     <!-- Compile and link the analysis code with the CFL Solver engine. -->

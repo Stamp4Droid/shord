@@ -124,3 +124,11 @@ class CodePrinter(FinalAttrs):
 
 def to_c_bool(py_bool):
     return 'true' if py_bool else 'false'
+
+def all_same(elems):
+    if elems == []:
+        return True
+    for e in elems[1:]:
+        if e != elems[0]:
+            return False
+    return True
