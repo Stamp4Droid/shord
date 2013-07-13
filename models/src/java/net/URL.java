@@ -53,4 +53,9 @@ class URL
 	{ 
 		return null;
 	}
+
+	@STAMP(flows={@Flow(from="this",to="!this"),@Flow(from="this",to="!INTERNET"),@Flow(from="this",to="@return")})
+    public final java.io.InputStream openStream() throws java.io.IOException {
+		return new StampURLInputStream();
+    }
 }
