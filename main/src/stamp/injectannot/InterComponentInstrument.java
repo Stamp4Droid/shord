@@ -250,14 +250,15 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		Value putStringArg = bundleLoc.getValue();
 		JimpleLocalBox bundleObj = (JimpleLocalBox) ie.getUseBoxes().get(0);
 		ArrayList<String> bundleKeyList = readKeysFromTag(stmt, putStringArg);
+		Type keyType = getInstrumentType(ie.getMethod().getParameterType(1));
 		
 		for (String bundleKey : bundleKeyList) {
 			//need to add getter/setter of bundlekey to Bundle.class!
-			instrumentBundle(bundleKey);		
+			instrumentBundle(bundleKey, keyType);
 
 			SootMethod toCall = Scene.v().getMethod(
 				"<" + this.bundleClass + ": void put_"
-					+ bundleKey + "(java.lang.Object)>");
+					+ bundleKey + "("+keyType.toString()+")>");
 
 			// System.out.println("tocall = " + toCall );
 			InvokeStmt invokeSetter = Jimple.v().newInvokeStmt(
@@ -265,7 +266,7 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 					(Local) bundleObj.getValue(),
 						toCall.makeRef(), ie.getArg(1)));
 			units.insertAfter(invokeSetter, stmt);
-			writeUnknownToBundle(body, stmt, (Local)bundleObj.getValue(), (Local)ie.getArg(1));
+			// writeUnknownToBundle(body, stmt, (Local)bundleObj.getValue(), (Local)ie.getArg(1));
 		}
 				
 		if (bundleKeyList.size() > 0) units.remove(stmt);	
@@ -285,10 +286,11 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		Value putStringArg = bundleLoc.getValue();		
 		JimpleLocalBox intentObj = (JimpleLocalBox) ie.getUseBoxes().get(0);
 		ArrayList<String> bundleKeyList = readKeysFromTag(stmt, putStringArg);
+		Type keyType = getInstrumentType(ie.getMethod().getParameterType(1));
 		
 		for (String bundleKey : bundleKeyList) {
 			//need to add getter/setter of bundlekey to Bundle.class!
-			instrumentBundle(bundleKey);
+			instrumentBundle(bundleKey, keyType);
 		    
 			SootMethod getExtrasCall = Scene.v().getMethod(
 				"<" + this.intentClass + ": "+this.bundleClass+" getExtras()>");
@@ -307,14 +309,14 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 			//invoke extra.put_deviceId()
 			SootMethod putExtrasCall = Scene.v().getMethod(
 				"<" + this.bundleClass + ": void put_"
-					+ bundleKey + "(java.lang.Object)>");
+					+ bundleKey + "("+keyType.toString()+")>");
 			
 			InvokeStmt putExtraStmt = Jimple.v().newInvokeStmt(
 				Jimple.v().newVirtualInvokeExpr(extrasLocal,
 					putExtrasCall.makeRef(), ie.getArg(1)));
 			units.insertAfter(putExtraStmt, stmt);
 			//write value to unknown field.
-			writeUnknownToBundle(body, stmt, extrasLocal, (Local)ie.getArg(1));
+			// writeUnknownToBundle(body, stmt, extrasLocal, (Local)ie.getArg(1));
 			
 		}
 
@@ -337,14 +339,14 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		Value putStringArg = bundleLoc.getValue();
 		ArrayList<String> bundleKeyList = readKeysFromTag(stmt, putStringArg);
 		JimpleLocalBox bundleObj = (JimpleLocalBox) ie.getUseBoxes().get(0);
+		Type keyType = getInstrumentType(ie.getMethod().getReturnType());
 			
 		for (String bundleKey : bundleKeyList) {
-			instrumentBundle(bundleKey);	
+			instrumentBundle(bundleKey, keyType);	
 			// invoke
 			SootMethod toCall = Scene.v().getMethod(
 				"<" + this.bundleClass
-					+ ": java.lang.Object get_" + bundleKey
-						+ "()>");
+					+ ": "+keyType.toString()+" get_" + bundleKey + "()>");
 
 			VirtualInvokeExpr invoke = 
 				Jimple.v().newVirtualInvokeExpr(
@@ -372,9 +374,11 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		Value putStringArg = bundleLoc.getValue();
 		ArrayList<String> bundleKeyList = readKeysFromTag(stmt, putStringArg);
 		JimpleLocalBox intentObj = (JimpleLocalBox) ie.getUseBoxes().get(0);
+		Type keyType = getInstrumentType(ie.getMethod().getReturnType());
+		
 	
 		for (String bundleKey : bundleKeyList) {
-			instrumentBundle(bundleKey);					
+			instrumentBundle(bundleKey, keyType);	
 		    
 			SootMethod getExtrasCall = Scene.v().getMethod(
 				"<" + this.intentClass + ": "+this.bundleClass+" getExtras()>");
@@ -391,7 +395,7 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 			units.insertBefore(assign2Extras, stmt);
 
 			SootMethod getObjCall = Scene.v().getMethod("<" + this.bundleClass 
-				+ ": java.lang.Object get_" + bundleKey + "()>");
+				+ ": "+keyType.toString()+" get_" + bundleKey + "()>");
 
 			VirtualInvokeExpr invokeGetStr = 
 				Jimple.v().newVirtualInvokeExpr(
@@ -662,9 +666,20 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 
 	}
 	
+	private Type getInstrumentType(Type keyType) {
+		String[] primitiveArray = {"int", "double", "byte", "short", "long", "boolean", "char"};
+        ArrayList<String> list = new ArrayList<String>();
+        for( int i=0; i < primitiveArray.length; i++){
+            list.add(primitiveArray[i]);
+        }
+		
+		if (!list.contains(keyType.toString())) keyType = RefType.v("java.lang.Object");
+		return keyType;
+	}
+	
 	/* Inject field + getter/setter to Bundle.class based on
 	 * the bundleId collected from app. */
-	private void instrumentBundle(String bundleKey) {
+	private void instrumentBundle(String bundleKey, Type keyType) {
 		//Look up for the Bundle sootclass at first. What if i can't get the bundle?
 		SootClass klass = Program.g().scene().loadClassAndSupport(bundleClass);
 
@@ -673,16 +688,18 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 			System.out.println("already found the key**, return.");
 			return;
 		}
+		
+        keyType = getInstrumentType(keyType);
 		// add key field, e.g, "public Object deviceId;"
 		SootField keyField = new SootField(bundleKey,
-			RefType.v("java.lang.Object"), Modifier.PRIVATE);
+			keyType, Modifier.PRIVATE);
 
 		klass.addField(keyField);
 
 		keyField = klass.getFieldByName(bundleKey);
 		// getter, e.g, "public Object get_deviceId() {return deviceId; }",
 		SootMethod m_getter = new SootMethod("get_" + bundleKey,
-			Arrays.asList(), RefType.v("java.lang.Object"),
+			Arrays.asList(), keyType,
 				Modifier.PUBLIC);
 		// stmt
 		JimpleBody body = Jimple.v().newBody(m_getter);
@@ -713,7 +730,7 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 
 		// setter, e.g,  "public void put_deviceId(Object v) {deviceId = v; }",
 		SootMethod m_setter = new SootMethod("put_" + bundleKey,
-			Arrays.asList(RefType.v("java.lang.Object")), VoidType.v(),
+			Arrays.asList(keyType), VoidType.v(),
 				Modifier.PUBLIC);
 		body = Jimple.v().newBody(m_setter);
 		m_setter.setActiveBody(body);
@@ -732,7 +749,7 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		body.getLocals().add(paramLocal);
 		// add "l0 = @parameter0"
 		soot.jimple.ParameterRef paramRef = soot.jimple.Jimple.v()
-			.newParameterRef(RefType.v("java.lang.Object"), 0);
+			.newParameterRef(keyType, 0);
 		soot.jimple.Stmt idStmt = soot.jimple.Jimple.v().newIdentityStmt(
 			paramLocal, paramRef);
 		body.getUnits().add(idStmt);
@@ -751,58 +768,151 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 
 	}
 	
-	/* To make it sound even parts of the bundle key is unknown, 
-	 * invoke put_xxx in all corresponding bundle/intent method.
-	 * unknownBundleSrcMethods will record all the previous unknown method.
-	 */
+	/** (1) get_XXX method return value of field XXX. done.
+	  * (2) put_XXX method stores the value into field XXX and the unknown
+	  * field that is type-compatible
+	  * (3) put method stores the value into field unknown and all XXX fields
+	  * that are type compatible
+	  * (4) get method gets the value of the field unknown only */
 	public static void injectUnknownSrc() {
 		
 		String bundleClass = "android.os.Bundle";
 		String intentClass = "android.content.Intent";
-		
 		//load bundle.java
 		SootClass bKlass = Program.g().scene().loadClassAndSupport(bundleClass);
-		SootClass iKlass = Program.g().scene().loadClassAndSupport(intentClass);	
+		SootClass iKlass = Program.g().scene().loadClassAndSupport(intentClass);			
+		Body body;
+		Chain<Unit> units;
+		Iterator<Unit> uit;
+		Stmt stmt;
 		
-		//this method belongs to either bundle or intent.
-		for (String methodSig : unknownBundleSrcMethods) {
-			if (bKlass.declaresMethod(methodSig)) {
-				writeToBundleOrIntent(bKlass.getMethod(methodSig), bKlass);
-			} else {
-				writeToBundleOrIntent(iKlass.getMethod(methodSig), bKlass);
-			}		
+		//for all put_XXX methods
+		for (SootMethod instumentedMeth : bKlass.getMethods()) {
+			if (instumentedMeth.getName().contains("put_")) {
+				
+				body = instumentedMeth.retrieveActiveBody();
+				units = body.getUnits();
+				uit = units.snapshotIterator();
+				while(uit.hasNext()) {
+					stmt = (Stmt) uit.next();	
+					if(stmt.containsFieldRef()) {
+						if (stmt.getUseBoxes().size() < 2) continue;
+						ValueBox extrasBox = stmt.getUseBoxes().get(0);
+						ValueBox argBox = stmt.getUseBoxes().get(1);
+						
+						for (SootField instumentedField : bKlass.getFields()) {
+				            if (instumentedField.getName().contains("unknown") &&
+							    instumentedField.getType().equals(instumentedMeth.getParameterType(0))){
+							
+								FieldRef instFieldRef = Jimple.v()
+									.newInstanceFieldRef((Local)extrasBox.getValue(), instumentedField.makeRef());
+
+								AssignStmt assign = soot.jimple.Jimple.v()
+									.newAssignStmt(instFieldRef, (Local)argBox.getValue());
+								units.insertAfter(assign, stmt);
+						        
+				            }
+						}	
+						
+					}
+				}
+						
+			}
+
 		}	
+		
+		//for all putXX methods in bundle.
+		for (SootMethod orgMeth : bKlass.getMethods()) {
+			if (orgMeth.toString().matches("^<android.os.Bundle: void put.*") && 
+			    !orgMeth.getName().contains("put_") && !orgMeth.getName().contains("putAll")) {
+				
+				body = orgMeth.retrieveActiveBody();
+				units = body.getUnits();
+				uit = units.snapshotIterator();
+				while(uit.hasNext()) {
+					stmt = (Stmt) uit.next();	
+					if(stmt.containsFieldRef()) {
+						if (stmt.getUseBoxes().size() < 2) continue;
+						ValueBox extrasBox = stmt.getUseBoxes().get(0);
+						ValueBox argBox = stmt.getUseBoxes().get(1);
+						
+						for (SootField instumentedField : bKlass.getFields()) {
+							
+				            if (!instumentedField.getName().contains("unknown") && 
+							    !instumentedField.getName().contains("EMPTY") &&
+							    !instumentedField.getName().contains("CREATOR") &&
+							     checkType(instumentedField.getType(), orgMeth.getParameterType(1)) ) {
+	
+								FieldRef instFieldRef = Jimple.v()
+									.newInstanceFieldRef((Local)extrasBox.getValue(), instumentedField.makeRef());
+								
+								AssignStmt assign = soot.jimple.Jimple.v()
+									.newAssignStmt(instFieldRef, (Local)argBox.getValue());
+								units.insertAfter(assign, stmt);
+						        
+				            }
+						}	
+						
+					}
+				}
+				
+			}
+		}	
+			
+		//for all putXX methods in intent.
+		for (SootMethod orgIntentMeth : iKlass.getMethods()) {
+			if (orgIntentMeth.toString().matches("^<android.content.Intent: android.content.Intent put.*") && 
+			     (orgIntentMeth.getParameterCount() > 1) ) {
+					 
+				body = orgIntentMeth.retrieveActiveBody();
+				units = body.getUnits();
+				uit = units.snapshotIterator();
+				while(uit.hasNext()) {
+					stmt = (Stmt) uit.next();	
+					if(stmt.containsFieldRef()) {
+						if (stmt.getUseBoxes().size() < 2) continue;
+						ValueBox extrasBox = stmt.getUseBoxes().get(0);
+						ValueBox argBox = stmt.getUseBoxes().get(1);
+						
+						for (SootField instumentedField : bKlass.getFields()) {
+							
+				            if (!instumentedField.getName().contains("unknown") && 
+							    !instumentedField.getName().contains("EMPTY") &&
+							    !instumentedField.getName().contains("CREATOR") &&
+							     checkType(instumentedField.getType(), orgIntentMeth.getParameterType(1)) ) {
+	
+								FieldRef instFieldRef = Jimple.v()
+									.newInstanceFieldRef((Local)extrasBox.getValue(), instumentedField.makeRef());
+								
+								AssignStmt assign = soot.jimple.Jimple.v()
+									.newAssignStmt(instFieldRef, (Local)argBox.getValue());
+								units.insertAfter(assign, stmt);
+						        
+				            }
+						}	
+						
+					}
+				}
+				
+			}
+		}	
+
 	}
 	
-	private static void writeToBundleOrIntent(SootMethod unknownMeth, SootClass bKlass) {
-
-		Body body = unknownMeth.retrieveActiveBody();
-		Chain<Unit> units = body.getUnits();
-		Iterator<Unit> uit = units.snapshotIterator();
-		while(uit.hasNext()) {
-			Stmt stmt = (Stmt) uit.next();					
-			if(stmt.containsFieldRef() && (stmt.getUseBoxes().get(0) instanceof JimpleLocalBox)) {
-				//field box:=[JimpleLocalBox($r3), LinkedRValueBox(r2)]
-				if (stmt.getUseBoxes().size() < 2) continue;
-				ValueBox extrasBox = stmt.getUseBoxes().get(0);
-				ValueBox argBox = stmt.getUseBoxes().get(1);
-					
-				//for all fields in bundle.
-				for (SootMethod instumentedMeth : bKlass.getMethods()) {
-					if (instumentedMeth.getSignature().contains("put_")) {
-
-						InvokeStmt putExtraStmt = Jimple.v().newInvokeStmt(
-							Jimple.v().newVirtualInvokeExpr((Local)extrasBox.getValue(),
-								instumentedMeth.makeRef(), (Local)argBox.getValue()));
-						units.insertAfter(putExtraStmt, stmt);
-					}
-
-				}			
-			
-			}
-			
-		}
+	private static boolean checkType(Type t1, Type t2) {
+		String t1Name = t1.toString();
+		String t2Name = t2.toString();	
+		String[] primitiveArray = {"int", "double", "byte", "short", "long", "boolean", "char"};
+        ArrayList<String> list = new ArrayList<String>();
+        for( int i=0; i < primitiveArray.length; i++){
+            list.add(primitiveArray[i]);
+        }
+	
+		if (list.contains(t2Name)) return t1Name.equals(t2Name);
+		else return t1Name.equals("java.lang.Object");
+		
 	}
+
 	
 	/* Output the related information of the register which can't be handled by intro-proc reaching def. */
 	private void reportUnknownRegister(Stmt stmt, Value v) {
