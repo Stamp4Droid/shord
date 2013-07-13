@@ -861,16 +861,17 @@ class Grammar(util.FinalAttrs):
                                          index_char is not None)
         return (symbol, index_char)
 
-def parse(fin, fout):
+def parse(grammar_in, code_out, terminals_out):
     """
-    Read a grammar specification from @a fin and print out the corresponding
-    solver code to @a fout.
+    Read a grammar specification and generate the corresponding solver code.
 
-    @param [in] fin A File-like object to read from.
-    @param [out] fout A File-like object to write to.
+    @param [in] grammar_in A File-like object to read the @Grammar from.
+    @param [out] code_out A File-like object to write the generated code to.
+    @param [out] terminals_out If this File-like object is not @e None, use it
+           to print out a list of the terminal @Symbol%s in the input @Grammar.
     """
     grammar = Grammar()
-    pr = util.CodePrinter(fout)
+    pr = util.CodePrinter(code_out)
 
     pr.write('#include <assert.h>')
     pr.write('#include <list>')
@@ -880,7 +881,7 @@ def parse(fin, fout):
     pr.write('')
 
     pr.write('/* Original Grammar:')
-    for line in fin:
+    for line in grammar_in:
         grammar.parse_line(line)
         pr.write(line, False)
     grammar.verify_grammar()
@@ -1084,19 +1085,26 @@ def parse(fin, fout):
     pr.write('}')
     pr.write('}')
 
+    if terminals_out is not None:
+        for s in grammar.symbols:
+            if s.is_terminal():
+                terminals_out.write('%s\n' % s)
+
 # TODO: More user-friendly error output than assertion failure
 # TODO: More structured way to synthesize code: specialized C-code synthesis
 #       class, or put base program text in a large triple-quoted string and
 #       leave %s's for places to fill in.
 
 ## Help message describing the calling convention for this script.
-usage_string = """Usage: %s <input-file> [<output-dir>]
+usage_string = """Usage: %s <input-file> [<output-dir> [<terminals-file>]]
 Produce CFL-Reachability solver code for a Context-Free Grammar.
 <input-file> must contain a grammar specification (see the main project docs
 for details), and have a .cfg extension.
 Output is printed to a file inside <output-dir> with the same name as
 <input-file>, but with the .cfg extension stripped.
 If no output directory is given, print generated code to stdout.
+If <terminals-file> is specified, write a list of the terminal symbols used in
+this grammar to that file.
 """
 
 def _main():
@@ -1105,14 +1113,18 @@ def _main():
         script_name = os.path.basename(__file__)
         sys.stderr.write(usage_string % script_name)
         exit(1)
-    with open(sys.argv[1], 'r') as fin:
+    with open(sys.argv[1], 'r') as grammar_in:
         if len(sys.argv) >= 3:
             base_outfile = os.path.basename(os.path.splitext(sys.argv[1])[0])
             outfile = os.path.join(sys.argv[2], base_outfile + '.cpp')
-            with open(outfile, 'w') as fout:
-                parse(fin, fout)
+            with open(outfile, 'w') as code_out:
+                if len(sys.argv) >= 4:
+                    with open(sys.argv[3], 'w') as terminals_out:
+                        parse(grammar_in, code_out, terminals_out)
+                else:
+                    parse(grammar_in, code_out, None)
         else:
-            parse(fin, sys.stdout)
+            parse(grammar_in, sys.stdout, None)
 
 if __name__ == '__main__':
     _main()
