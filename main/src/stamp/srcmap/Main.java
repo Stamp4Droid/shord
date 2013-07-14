@@ -11,20 +11,27 @@ public class Main
 	private static String[] classpathEntries;
 	private static String[] srcpathEntries;
 	private static File srcMapDir;
+	private static String modelsPath;
+	private static String stubsPath;
+
 
 	public static void process(String srcRootPath, File javaFile) throws IOException
 	{
 		
-        //add by yu.
-		File modelsDir = new File("../src");	
-		File stubDir = new File("gen");	
+        //add by yu. only for android sdk.
+		File modelFile = new File("dummy");
+		if (modelsPath != null) {
+			File modelsDir = new File(modelsPath);	
+			File stubDir = new File(stubsPath);	
 		
-		String stubPath = stubDir.getAbsolutePath() + File.separator;
-		//Get the information of model file.
-		String modelFilePath = javaFile.getAbsolutePath().substring(stubPath.length());
-		File modelFile = new File(modelsDir, modelFilePath);
+			String stubPath = stubDir.getAbsolutePath() + File.separator;
+			//Get the information of model file.
+			String modelFilePath = javaFile.getAbsolutePath().substring(stubPath.length());
+		    modelFile = new File(modelsDir, modelFilePath);
 		
-        if (modelFile.lastModified() < javaFile.lastModified()) return;
+	        if (modelFile.lastModified() < javaFile.lastModified()) return;
+		}
+
 		
 		ASTParser parser = ASTParser.newParser(AST.JLS4);
 		parser.setResolveBindings(true);
@@ -59,7 +66,7 @@ public class Main
 			infoFile.delete();
 		}
 		//reduce the modified time so that it can be proccessed by next step.
-        javaFile.setLastModified(modelFile.lastModified() -1000L);
+        if (modelsPath != null) javaFile.setLastModified(modelFile.lastModified() -1000L);
 	}
 
 	public static char[] toCharArray(String filePath) throws IOException
@@ -115,6 +122,10 @@ public class Main
 	*/
 	public static void main(String[] args) throws Exception 
 	{
+		if (args.length == 4) { ///for sdk
+			modelsPath = args[3];
+			stubsPath = args[0];
+		}
 		String srcPath = args[0];
 		String[] paths = srcPath.split(":");
 		srcpathEntries = new String[paths.length];
@@ -134,9 +145,9 @@ public class Main
 		for(String p : classpathEntries)
 			System.out.println("classpath: " + p);
 		
-		if(args.length > 3){
-			//fourth arg is for testing purpose only
-			File f = new File(args[3]);
+		if(args.length > 4){
+			//fifth arg is for testing purpose only
+			File f = new File(args[4]);
 			if(!f.getName().endsWith(".java"))
 				throw new RuntimeException("expected a Java file. Got " + f);
 			process(srcpathEntries[0], f);

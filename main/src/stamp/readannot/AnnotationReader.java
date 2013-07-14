@@ -26,6 +26,8 @@ public class AnnotationReader extends ASTVisitor
     private String[] classpathEntries;
     private String[] srcpathEntries;
 	private PrintWriter writer;
+	private static String modelsPath;
+	private static String stubsPath;
 
 	public AnnotationReader(String[] srcpathEntries, String[] classpathEntries) throws IOException
 	{
@@ -68,11 +70,10 @@ public class AnnotationReader extends ASTVisitor
 				
 				if(fname.endsWith(".java") && fname.indexOf('#') < 0) {
 					try{
-						//add by yu. this method is also shared by app, so filter it by "gen".
-						//maybe not a safe condition.
+						//add by yu. this method is also shared by app.
 						if (!processingApp){
-							File modelsDir = new File("../src");	
-							File stubDir = new File("gen");	
+							File modelsDir = new File(modelsPath);	
+							File stubDir = new File(stubsPath);	
 							String stubPath = stubDir.getAbsolutePath() + File.separator;
 							String modelFilePath = file.getAbsolutePath().substring(stubPath.length());
 							File modelFile = new File(modelsDir, modelFilePath);
@@ -283,12 +284,15 @@ public class AnnotationReader extends ASTVisitor
 	
 	public static void main(String[] args) throws Exception
     {
+		stubsPath = args[0];
+		modelsPath = args[2];
+		
 		for(String arg : args)
 			System.out.println(arg);
 
 		String androidJar = null;
-		if(args.length == 3) 
-			androidJar = args[2];
+		if(args.length == 4) 
+			androidJar = args[3];
 		
 		new AnnotationReader(args[0].split(":"), args[1].split(":")).process(androidJar);
     }

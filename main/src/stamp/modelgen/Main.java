@@ -43,6 +43,7 @@ public class Main
 
 		File stubsDir = new File(args[0]);
 		File modelsDir = new File(args[1]);
+		File bakDir = new File(args[2]);
 		
 		modelsPath = modelsDir.getAbsolutePath() + File.separator;
 
@@ -68,7 +69,8 @@ public class Main
 				}
 			
 				//Should pass the original version.
-				File orgStubFile = new File(stubFile.getAbsolutePath().replace("gen", "bak"));
+				File orgStubFile = new File(bakDir, modelFilePath);
+				
 				if (orgStubFile.exists()) stubFile = orgStubFile;
 				
 				process(modelFile, stubFile);

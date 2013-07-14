@@ -54,20 +54,20 @@
 				<then>
 					<clean-models apilevel="api-@{apilevel}"/>
 			
-					<!-- this is where (e.g., api-16) we will store all artifacts-->			
+					<!-- this is where (e.g., api-16) we will store all artifacts-->
 					<mkdir dir="api-@{apilevel}"/>
 
-					<untar src="android-@{version}-stubs.tgz" 
+					<untar src="android-@{version}-stubs.tgz"
 						   dest="api-@{apilevel}/gen"
 						   compression="gzip"/>
-				    <untar src="googleapis-stubs.tgz" 
+				    <untar src="googleapis-stubs.tgz"
 						   dest="api-@{apilevel}/gen"
 						   compression="gzip"/>
 				    <!-- Extract the unchanged files to bak folder -->
 				    <untar src="android-@{version}-stubs.tgz" 
 						   dest="api-@{apilevel}/bak"
 							   compression="gzip"/>
-					<untar src="googleapis-stubs.tgz" 
+					<untar src="googleapis-stubs.tgz"
 						   dest="api-@{apilevel}/bak"
 						   compression="gzip"/>
 				</then>
@@ -87,6 +87,7 @@
 			  </classpath>
 			  <arg value="gen"/>
 			  <arg value="../src"/>
+			  <arg value="bak"/>
 			</java>
 			
 			<!-- generate the list of stubs -->
@@ -122,6 +123,7 @@
 			  <arg value="gen"/>
 			  <arg value="${stamp.dir}/bin/stamp.annotations.jar"/>
 			  <arg value="srcmap"/>
+			  <arg value="../src"/>
 			</java>
 			
 			<!-- read annotations -->
@@ -139,6 +141,7 @@
 			  </classpath>
 			  <arg value="gen"/>
 			  <arg value="${stamp.dir}/bin/stamp.annotations.jar"/>
+			  <arg value="../src"/>
 			</java>
 			
 			<!-- compile the generated models -->
