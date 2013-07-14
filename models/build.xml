@@ -106,8 +106,8 @@
 			  <arg value="gen"/>
 			</java-->
 			
-			<!-- TODO: following two steps should be done in one pass for efficiency-->
 			<!-- source map -->
+			<!-- read annotations -->
 			<java classname="stamp.srcmap.Main"
 				  maxmemory="${stamp.maxheap}"
 				  fork="true"
@@ -123,25 +123,6 @@
 			  <arg value="gen"/>
 			  <arg value="${stamp.dir}/bin/stamp.annotations.jar"/>
 			  <arg value="srcmap"/>
-			  <arg value="../src"/>
-			</java>
-			
-			<!-- read annotations -->
-			<java classname="stamp.readannot.AnnotationReader"
-				  maxmemory="${stamp.maxheap}"
-				  fork="true"
-				  dir="api-@{apilevel}"
-				  failonerror="true">
-			  <jvmarg value="-ea"/>
-			  <classpath>
-				<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
-				<fileset dir="${stamp.dir}/lib">
-				  <include name="**/*.jar"/>
-				</fileset>
-			  </classpath>
-			  <arg value="gen"/>
-			  <arg value="${stamp.dir}/bin/stamp.annotations.jar"/>
-			  <arg value="../src"/>
 			</java>
 			
 			<!-- compile the generated models -->
