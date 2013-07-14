@@ -40,7 +40,7 @@ public class AnnotationReader extends ASTVisitor
 			File srcDir = new File(srcDirPath);
 			if(!srcDir.isDirectory())
 				continue;
-			processDir(srcDir);
+			processDir(srcDir, androidDir != null);
 		}
 		writer.close();
 	}
@@ -58,11 +58,11 @@ public class AnnotationReader extends ASTVisitor
 		reader.close();
 	}
 
-	private void processDir(File dir) throws Exception
+	private void processDir(File dir, boolean processingApp) throws Exception
 	{
 		for(File file : dir.listFiles()) {
 			if(file.isDirectory()) 
-				processDir(file);
+				processDir(file, processingApp);
 			else{
 				String fname = file.getName();	
 				
@@ -70,7 +70,7 @@ public class AnnotationReader extends ASTVisitor
 					try{
 						//add by yu. this method is also shared by app, so filter it by "gen".
 						//maybe not a safe condition.
-						if (file.getAbsolutePath().contains(File.separator+"gen"+File.separator)){
+						if (!processingApp){
 							File modelsDir = new File("../src");	
 							File stubDir = new File("gen");	
 							String stubPath = stubDir.getAbsolutePath() + File.separator;
