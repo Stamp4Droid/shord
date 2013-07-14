@@ -20,22 +20,6 @@ public class Main
 	private static List<String> modelFiles = new ArrayList();
 	private static PrintWriter log;
 
-	/*
-    public Main(File modelFile, File stubFile) throws Exception 
-	{
-		log = new PrintWriter(new FileWriter("log.txt",true));
-		
-		if(!stubFile.exists()){
-			//it is OK to add a new class that does not
-			//correspond to any stub class.
-			dump(patchedStubFile, getCU(modelFile));
-		}
-		else {
-			process(modelFile, stubFile);
-		}
-		log.close();
-    }
-	*/
 
 	public static void main(String[] args) throws Exception
 	{
@@ -51,40 +35,28 @@ public class Main
 		for(String modelFilePath : modelFiles){
 			//System.out.println("processing " + modelFilePath); 
 			File modelFile = new File(modelsDir, modelFilePath);
-			File stubFile = new File(stubsDir, modelFilePath);
+			File patchedFile = new File(stubsDir, modelFilePath);
+			File bakFile = new File(bakDir, modelFilePath);
 
-			if(!stubFile.exists() ){
+			//add by yu. check last modified time.
+			if (modelFile.lastModified() < patchedFile.lastModified()) continue;
+
+			if(!bakFile.exists() ){
 				//it is OK to add a new class that does not
 				//correspond to any stub class.
-				dump(stubFile, getCU(modelFile));
+				dump(patchedFile, getCU(modelFile));
 			}
 			else {
-				//add by yu. check last modified time.
-		        if (modelFile.lastModified() < stubFile.lastModified()) continue;
-				
-				//Is the model file belongs to stamp?
-				if (stubFile.getAbsolutePath().contains("edu" + File.separator + "stanford")) {
-					dump(stubFile, getCU(modelFile));
-					continue;
-				}
-			
-				//Should pass the original version.
-				File orgStubFile = new File(bakDir, modelFilePath);
-				
-				if (orgStubFile.exists()) stubFile = orgStubFile;
-				
-				process(modelFile, stubFile);
-				//reduce the modified time so that it can be proccessed by next step.
-		        stubFile.setLastModified(modelFile.lastModified() - 1000L);
+				process(modelFile, bakFile, patchedFile);
 			}
 		}
 		log.close();
 	}
 
-	private static void process(File modelFile, File stubFile) throws Exception
+	private static void process(File modelFile, File bakFile, File patchedFile) throws Exception
 	{
-		System.out.println("patching " + stubFile);
-		CompilationUnit stubCU = getCU(stubFile);
+		System.out.println("patching " + bakFile);
+		CompilationUnit stubCU = getCU(bakFile);
  		CompilationUnit modelCU = getCU(modelFile);
 
 		List<TypeDeclaration> stubTypes = stubCU.getTypes();
@@ -95,7 +67,7 @@ public class Main
 
 		addImports(stubCU, modelCU.getImports(), hasStampAnnotation);
 		
-		dump(stubFile, stubCU);
+		dump(patchedFile, stubCU);
 	}
 
 	private static boolean patch(List stubMembers, List modelMembers)

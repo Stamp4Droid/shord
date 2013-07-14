@@ -11,27 +11,18 @@ public class Main
 	private static String[] classpathEntries;
 	private static String[] srcpathEntries;
 	private static File srcMapDir;
-	private static String modelsPath;
-	private static String stubsPath;
-
+	static PrintWriter writer;
 
 	public static void process(String srcRootPath, File javaFile) throws IOException
 	{
-		
-        //add by yu. only for android sdk.
-		File modelFile = new File("dummy");
-		if (modelsPath != null) {
-			File modelsDir = new File(modelsPath);	
-			File stubDir = new File(stubsPath);	
-		
-			String stubPath = stubDir.getAbsolutePath() + File.separator;
-			//Get the information of model file.
-			String modelFilePath = javaFile.getAbsolutePath().substring(stubPath.length());
-		    modelFile = new File(modelsDir, modelFilePath);
-		
-	        if (modelFile.lastModified() < javaFile.lastModified()) return;
-		}
+		String canonicalPath = javaFile.getCanonicalPath();
+		String relSrcFilePath = canonicalPath.substring(srcRootPath.length()+1);
+		File infoFile = new File(srcMapDir, relSrcFilePath.replace(".java", ".xml"));
 
+		if(javaFile.lastModified() < infoFile.lastModified()) 
+			return;
+
+		infoFile.getParentFile().mkdirs();
 		
 		ASTParser parser = ASTParser.newParser(AST.JLS4);
 		parser.setResolveBindings(true);
@@ -42,31 +33,22 @@ public class Main
 		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_6);
 		options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_6);
 		parser.setCompilerOptions(options);
-
 		parser.setEnvironment(classpathEntries, srcpathEntries, null, true);
-		
-		String canonicalPath = javaFile.getCanonicalPath();
-		System.out.println(canonicalPath);
+		System.out.println("generating srcmap file for "+canonicalPath);
 		parser.setUnitName(canonicalPath);		
 		parser.setSource(toCharArray(canonicalPath));
 
 		CompilationUnit cu = (CompilationUnit) parser.createAST(null);
-
-		String relSrcFilePath = canonicalPath.substring(srcRootPath.length()+1);
-		File infoFile = new File(srcMapDir, relSrcFilePath.replace(".java", ".xml"));
-		
-		infoFile.getParentFile().mkdirs();
-
 		ChordAdapter visitor = new ChordAdapter(cu, infoFile);
+		AnnotationReader annotReader = new AnnotationReader();
 		try{
 			cu.accept(visitor);
+			cu.accept(annotReader);
 			visitor.finish();
 		}catch(Exception e){
 			System.out.println("Failed to generate srcmap file for "+relSrcFilePath);
 			infoFile.delete();
 		}
-		//reduce the modified time so that it can be proccessed by next step.
-        if (modelsPath != null) javaFile.setLastModified(modelFile.lastModified() -1000L);
 	}
 
 	public static char[] toCharArray(String filePath) throws IOException
@@ -122,10 +104,6 @@ public class Main
 	*/
 	public static void main(String[] args) throws Exception 
 	{
-		if (args.length == 4) { ///for sdk
-			modelsPath = args[3];
-			stubsPath = args[0];
-		}
 		String srcPath = args[0];
 		String[] paths = srcPath.split(":");
 		srcpathEntries = new String[paths.length];
@@ -144,22 +122,21 @@ public class Main
 			System.out.println("srcpath: " + p);
 		for(String p : classpathEntries)
 			System.out.println("classpath: " + p);
-		
-		if(args.length > 4){
-			//fifth arg is for testing purpose only
-			File f = new File(args[4]);
-			if(!f.getName().endsWith(".java"))
-				throw new RuntimeException("expected a Java file. Got " + f);
-			process(srcpathEntries[0], f);
-		} else {
-			try{
-				for(String srcRootPath : srcpathEntries)
-					processDir(srcRootPath, new File(srcRootPath));
-			}catch(Exception e){
-				e.printStackTrace();
-				throw new Error(e);
-			}
+
+		String androidDir = null;
+		if(args.length > 3) 
+			androidDir = args[3];
+		openWriter(androidDir);
+
+		try{
+			for(String srcRootPath : srcpathEntries)
+				processDir(srcRootPath, new File(srcRootPath));
+		}catch(Exception e){
+			e.printStackTrace();
+			throw new Error(e);
 		}
+
+		writer.close();
 	}	
 
 	private static void processDir(String srcRootPath, File dir) throws Exception
@@ -176,5 +153,22 @@ public class Main
 			}
 		}
 	}
+	
+	private static void openWriter(String dirName) throws IOException
+	{
+		if(dirName == null){
+			//processing android classes
+			//open in append mode
+			writer = new PrintWriter(new FileWriter("stamp_annotations.txt", true));
+			return;
+		} 
 
+		writer = new PrintWriter(new FileWriter("stamp_annotations.txt"));
+		BufferedReader reader = new BufferedReader(new FileReader(new File(dirName, "stamp_annotations.txt")));
+		String line;
+		while((line = reader.readLine()) != null){
+			writer.println(line);
+		}
+		reader.close();
+	}
 }
