@@ -41,9 +41,9 @@ public class AnnotationReader extends ASTVisitor
 					else if(name.equals("to"))
 						to = ((StringLiteral) mvp1.getValue()).getLiteralValue();
 				}
-				Main.writer.println(chordSig + " " + 
-									processEndPoint(from, nameToIndex) + " " + 
-									processEndPoint(to, nameToIndex));
+				Main.writeAnnot(chordSig + " " + 
+								processEndPoint(from, nameToIndex) + " " + 
+								processEndPoint(to, nameToIndex));
 			}
 		}		
 		return true;
