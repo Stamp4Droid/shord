@@ -250,6 +250,10 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		Value putStringArg = bundleLoc.getValue();
 		JimpleLocalBox bundleObj = (JimpleLocalBox) ie.getUseBoxes().get(0);
 		ArrayList<String> bundleKeyList = readKeysFromTag(stmt, putStringArg);
+		if (ie.getMethod().getParameterCount() < 2) {
+			System.out.println("WARN:Could not analyze: " + stmt);
+			return;
+		}
 		Type keyType = getInstrumentType(ie.getMethod().getParameterType(1));
 		
 		for (String bundleKey : bundleKeyList) {
@@ -286,6 +290,12 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		Value putStringArg = bundleLoc.getValue();		
 		JimpleLocalBox intentObj = (JimpleLocalBox) ie.getUseBoxes().get(0);
 		ArrayList<String> bundleKeyList = readKeysFromTag(stmt, putStringArg);
+		//FIXME:Can not handler putExtra(bundle) or putExtra(intent)!
+		if (ie.getMethod().getParameterCount() < 2) {
+			System.out.println("WARN:Could not analyze: " + stmt);
+			return;
+		}
+		
 		Type keyType = getInstrumentType(ie.getMethod().getParameterType(1));
 		
 		for (String bundleKey : bundleKeyList) {
@@ -554,6 +564,12 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		}
 		
 		if (tgtComptName.equals("")) {
+			// System.out.println("Can we do better.........** query dynamic analysis.");
+			// 		    List<ParamInfo> paramList =  queryArgumentValues(SootMethod caller, stmt, int argNum);
+			// for(ParamInfo info : paramList) {
+			// 	System.out.println("Analysis result......" + info);
+			// }
+														
 			reportUnknownRegister(stmt, arg);
 			return;
 		}
