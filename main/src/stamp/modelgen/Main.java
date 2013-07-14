@@ -48,16 +48,33 @@ public class Main
 
 		listFiles(modelsDir);
 		for(String modelFilePath : modelFiles){
-			//System.out.println("processing " + modelFilePath);
+			//System.out.println("processing " + modelFilePath); 
 			File modelFile = new File(modelsDir, modelFilePath);
 			File stubFile = new File(stubsDir, modelFilePath);
-			if(!stubFile.exists()){
+
+			if(!stubFile.exists() ){
 				//it is OK to add a new class that does not
 				//correspond to any stub class.
 				dump(stubFile, getCU(modelFile));
 			}
-			else
+			else {
+				//add by yu. check last modified time.
+		        if (modelFile.lastModified() < stubFile.lastModified()) continue;
+				
+				//Is the model file belongs to stamp?
+				if (stubFile.getAbsolutePath().contains("edu" + File.separator + "stanford")) {
+					dump(stubFile, getCU(modelFile));
+					continue;
+				}
+			
+				//Should pass the original version.
+				File orgStubFile = new File(stubFile.getAbsolutePath().replace("gen", "bak"));
+				if (orgStubFile.exists()) stubFile = orgStubFile;
+				
 				process(modelFile, stubFile);
+				//reduce the modified time so that it can be proccessed by next step.
+		        stubFile.setLastModified(modelFile.lastModified() - 1000L);
+			}
 		}
 		log.close();
 	}
@@ -71,15 +88,17 @@ public class Main
 		List<TypeDeclaration> stubTypes = stubCU.getTypes();
 		List<TypeDeclaration> modelTypes = modelCU.getTypes();
 
-		boolean hasStampAnnotation = patch(stubTypes, modelTypes);
+
+		boolean hasStampAnnotation = patch(stubTypes, modelTypes);		
 
 		addImports(stubCU, modelCU.getImports(), hasStampAnnotation);
-
+		
 		dump(stubFile, stubCU);
 	}
 
 	private static boolean patch(List stubMembers, List modelMembers)
 	{
+		
 		Map<String, TypeDeclaration> stubTypeNameToDecl = new HashMap();
         for(Object bodyDecl : stubMembers){
 			if(bodyDecl instanceof TypeDeclaration){
@@ -108,6 +127,7 @@ public class Main
 				}
 			}
 		}
+		
 		return hasStampAnnotation;
 	}
 
@@ -190,6 +210,7 @@ public class Main
 		
 		Map<String,BodyDeclaration> methSigToStubMethod = new HashMap();
 		List<BodyDeclaration> stubMembers = stubType.getMembers();
+		
 		if(stubMembers != null){
 			for(BodyDeclaration stubMember : stubMembers){
 				if(stubMember instanceof MethodDeclaration || 

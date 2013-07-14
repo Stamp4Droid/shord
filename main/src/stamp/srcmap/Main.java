@@ -14,6 +14,18 @@ public class Main
 
 	public static void process(String srcRootPath, File javaFile) throws IOException
 	{
+		
+        //add by yu.
+		File modelsDir = new File("../src");	
+		File stubDir = new File("gen");	
+		
+		String stubPath = stubDir.getAbsolutePath() + File.separator;
+		//Get the information of model file.
+		String modelFilePath = javaFile.getAbsolutePath().substring(stubPath.length());
+		File modelFile = new File(modelsDir, modelFilePath);
+		
+        if (modelFile.lastModified() < javaFile.lastModified()) return;
+		
 		ASTParser parser = ASTParser.newParser(AST.JLS4);
 		parser.setResolveBindings(true);
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
@@ -25,7 +37,7 @@ public class Main
 		parser.setCompilerOptions(options);
 
 		parser.setEnvironment(classpathEntries, srcpathEntries, null, true);
-
+		
 		String canonicalPath = javaFile.getCanonicalPath();
 		System.out.println(canonicalPath);
 		parser.setUnitName(canonicalPath);		
@@ -35,6 +47,7 @@ public class Main
 
 		String relSrcFilePath = canonicalPath.substring(srcRootPath.length()+1);
 		File infoFile = new File(srcMapDir, relSrcFilePath.replace(".java", ".xml"));
+		
 		infoFile.getParentFile().mkdirs();
 
 		ChordAdapter visitor = new ChordAdapter(cu, infoFile);
@@ -45,6 +58,8 @@ public class Main
 			System.out.println("Failed to generate srcmap file for "+relSrcFilePath);
 			infoFile.delete();
 		}
+		//reduce the modified time so that it can be proccessed by next step.
+        javaFile.setLastModified(modelFile.lastModified() -1000L);
 	}
 
 	public static char[] toCharArray(String filePath) throws IOException

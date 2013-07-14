@@ -64,11 +64,26 @@ public class AnnotationReader extends ASTVisitor
 			if(file.isDirectory()) 
 				processDir(file);
 			else{
-				String fname = file.getName();
+				String fname = file.getName();	
+				
 				if(fname.endsWith(".java") && fname.indexOf('#') < 0) {
-					System.out.println("processing "+fname);
 					try{
+						//add by yu. this method is also shared by app, so filter it by "gen".
+						//maybe not a safe condition.
+						if (file.getAbsolutePath().contains(File.separator+"gen"+File.separator)){
+							File modelsDir = new File("../src");	
+							File stubDir = new File("gen");	
+							String stubPath = stubDir.getAbsolutePath() + File.separator;
+							String modelFilePath = file.getAbsolutePath().substring(stubPath.length());
+							File modelFile = new File(modelsDir, modelFilePath);
+							
+							if (modelFile.lastModified() < file.lastModified()) continue;
+						}		
+						
+						System.out.println("processing "+fname);
 						processFile(file);
+						//record last modifed time.
+						file.setLastModified(System.currentTimeMillis());
 					}catch(Exception e){
 						System.out.println("\nException occurred while reading annotations of "+fname);
 						throw new Error(e);
