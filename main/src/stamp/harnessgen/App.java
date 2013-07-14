@@ -120,6 +120,9 @@ public class App
 			char c = method.method.getPrototype().getReturnType().getTypeDescriptor().charAt(0);
 			if(c != 'V') //must be void type
 				continue;
+			if(method.method.getPrototype().getParameters() == null){
+				continue;
+			}
 			List<TypeIdItem> paramTypes = method.method.getPrototype().getParameters().getTypes();
 			if(paramTypes.size() != 1)
 				continue;
