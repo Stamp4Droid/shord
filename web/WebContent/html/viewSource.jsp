@@ -1,4 +1,4 @@
-<%@ page import="stamp.reporting.FileManager"%>
+<%@ page import="stamp.reporting.FileManager,stamp.droidrecordweb.DroidrecordProxyWeb"%>
 <%
 	String filepath = request.getParameter("filepath");
 	boolean isModel = request.getParameter("isModel").equals("true");
@@ -10,7 +10,8 @@
 		String srcPath = (String)session.getAttribute("srcPath");
 		String outPath = (String)session.getAttribute("outPath");
 		String libPath = (String)session.getAttribute("libPath");
-		manager = new FileManager(rootPath, outPath, libPath, srcPath);
+        DroidrecordProxyWeb dr = (DroidrecordProxyWeb)session.getAttribute("droidrecord");
+    	manager = new FileManager(rootPath, outPath, libPath, srcPath, dr);
 		session.setAttribute("manager", manager);
 	}
 	

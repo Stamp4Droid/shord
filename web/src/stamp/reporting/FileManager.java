@@ -9,6 +9,8 @@ import javax.xml.parsers.*;
 import org.w3c.dom.*;
 import org.xml.sax.*;
 
+import stamp.droidrecordweb.DroidrecordProxyWeb;
+
 public class FileManager
 {
     // path data
@@ -23,11 +25,16 @@ public class FileManager
     private HashMap<String,String> filePathToAnnotatedSource = new HashMap();
     private HashMap<String,String> modelFilePathToAnnotatedSource = new HashMap();
 
+    private DroidrecordProxyWeb droidrecord;
 
-    public FileManager(String rootPath, String outPath, String libPath, String srcPath) throws IOException 
+    public FileManager(String rootPath, String outPath, String libPath, 
+                       String srcPath, 
+                       DroidrecordProxyWeb droidrecord) throws IOException 
 	{
 		this.rootPath = rootPath;
 		this.outPath = outPath;
+        
+        this.droidrecord = droidrecord;
 		
 		List<String> srcpathEntries = new ArrayList();
 		for(String sd : srcPath.split(":")){
@@ -56,7 +63,7 @@ public class FileManager
 		if(isModel){
 			File file = new File(rootPath+"/models/src", filePath);
 			if(file.exists()){
-				SourceProcessor sp = new SourceProcessor(file);
+				SourceProcessor sp = new SourceProcessor(file, droidrecord);
 				String annotatedSource = sp.getSourceWithAnnotations();
 				modelFilePathToAnnotatedSource.put(filePath, annotatedSource);
 			}
@@ -92,7 +99,7 @@ public class FileManager
 		String fname = filePath.substring(0, filePath.length()-4).concat("xml");
 		File srcMapFile = new File(srcMapDirPath+"/"+fname);
 
-		SourceProcessor sp = new SourceProcessor(file, srcMapFile, taintedInfoFile, allReachableFile, reachedFile, filePath);
+		SourceProcessor sp = new SourceProcessor(file, droidrecord, srcMapFile, taintedInfoFile, allReachableFile, reachedFile, filePath);
 		String annotatedSource = sp.getSourceWithAnnotations();
 		//System.out.println("FILEPATH: "+filePath+"\n"+annotatedSource);
 		//filePathToSourceData.put(filePath, data);

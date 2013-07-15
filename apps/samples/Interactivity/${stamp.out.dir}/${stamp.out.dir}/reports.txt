@@ -1,0 +1,1 @@
+Source-to-sink Flows /home/ubuntu/stamp-shord/apps/samples/Interactivity/${stamp.out.dir}/${stamp.out.dir}/results/SrcSinkFlow.xml

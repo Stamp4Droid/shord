@@ -1,0 +1,60 @@
+public class edu.stanford.stamp.harness.ApplicationDriver extends java.lang.Object
+{
+    static java.util.List callbacks;
+    private static edu.stanford.stamp.harness.ApplicationDriver instance;
+
+    private void <init>()
+    {
+        edu.stanford.stamp.harness.ApplicationDriver r0;
+
+        r0 := @this: edu.stanford.stamp.harness.ApplicationDriver;
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+        return;
+    }
+
+    public static edu.stanford.stamp.harness.ApplicationDriver getInstance()
+    {
+        edu.stanford.stamp.harness.ApplicationDriver $r0;
+
+        $r0 = <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver instance>;
+        return $r0;
+    }
+
+    public static void registerCallback(edu.stanford.stamp.harness.Callback)
+    {
+        edu.stanford.stamp.harness.Callback r0;
+        java.util.List $r1;
+
+        r0 := @parameter0: edu.stanford.stamp.harness.Callback;
+        $r1 = <edu.stanford.stamp.harness.ApplicationDriver: java.util.List callbacks>;
+        interfaceinvoke $r1.<java.util.List: boolean add(java.lang.Object)>(r0);
+        return;
+    }
+
+    public static void callCallbacks()
+    {
+        java.util.List $r0;
+        java.lang.Object $r1;
+        edu.stanford.stamp.harness.Callback $r2;
+
+        $r0 = <edu.stanford.stamp.harness.ApplicationDriver: java.util.List callbacks>;
+        $r1 = interfaceinvoke $r0.<java.util.List: java.lang.Object get(int)>(0);
+        $r2 = (edu.stanford.stamp.harness.Callback) $r1;
+        virtualinvoke $r2.<edu.stanford.stamp.harness.Callback: void run()>();
+        return;
+    }
+
+    static void <clinit>()
+    {
+        java.util.ArrayList $r0;
+        edu.stanford.stamp.harness.ApplicationDriver $r1;
+
+        $r0 = new java.util.ArrayList;
+        specialinvoke $r0.<java.util.ArrayList: void <init>()>();
+        <edu.stanford.stamp.harness.ApplicationDriver: java.util.List callbacks> = $r0;
+        $r1 = new edu.stanford.stamp.harness.ApplicationDriver;
+        specialinvoke $r1.<edu.stanford.stamp.harness.ApplicationDriver: void <init>()>();
+        <edu.stanford.stamp.harness.ApplicationDriver: edu.stanford.stamp.harness.ApplicationDriver instance> = $r1;
+        return;
+    }
+}

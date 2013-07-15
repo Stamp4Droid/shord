@@ -63,6 +63,8 @@ appPath=${app.dir}
 outPath=${stamp.out.dir}
 srcPath=${stamp.src.path}:${stamp.gen.path}:${driver.dir}
 libPath=${stamp.lib.jars}
+stamp.droidrecord.logfile.template=${stamp.droidrecord.logfile.template}
+stamp.droidrecord.logfile.bin=${stamp.droidrecord.logfile.bin}
 	</echo>
 
     <!-- Launch browser. -->

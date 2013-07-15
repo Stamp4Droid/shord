@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="fuelux">
 	<head>
-	<%@ page import="java.io.*,java.util.*,stamp.reporting.QueryResults"%>
+	<%@ page import="java.io.*,java.util.*,stamp.reporting.QueryResults,stamp.droidrecordweb.DroidrecordProxyWeb"%>
   <%
 	if(!session.isNew()){
 		session.invalidate();
@@ -21,12 +21,16 @@
      String appPath = props.getProperty("appPath");
      String srcPath = props.getProperty("srcPath");
      String libPath = props.getProperty("libPath");
+     String dr_log_template = props.getProperty("stamp.droidrecord.logfile.template");
+     String dr_log_bin = props.getProperty("stamp.droidrecord.logfile.template");
+     DroidrecordProxyWeb droidrecord = new DroidrecordProxyWeb(dr_log_template, dr_log_bin);
 
      session.setAttribute("rootPath", rootPath);
      session.setAttribute("appPath", appPath);
      session.setAttribute("outPath", outPath);
      session.setAttribute("srcPath", srcPath);
      session.setAttribute("libPath", libPath);
+     session.setAttribute("droidrecord", droidrecord);
 
      System.out.println("srcPath = "+srcPath);
      

@@ -10,6 +10,9 @@ import org.w3c.dom.*;
 import org.xml.sax.*;
 import org.apache.commons.lang3.StringEscapeUtils;
 
+import edu.stanford.droidrecord.logreader.CoverageReport;
+import stamp.droidrecordweb.DroidrecordProxyWeb;
+
 /* 
    @author Osbert Bastani
    @author Saswat Anand
@@ -60,14 +63,23 @@ public class SourceProcessor
 	
     public static class LineBegin extends Insertion {
 		private int lineNum;
+        private DroidrecordProxyWeb droidrecord;
 
-		public LineBegin(int position, int lineNum) {
+		public LineBegin(int position, int lineNum, DroidrecordProxyWeb droidrecord) {
 			super(position, -8);
 			this.lineNum = lineNum;
+            this.droidrecord = droidrecord;
 		}
 
 	@Override public String toString() {
-	    return "<a id='"+lineNum+"' name='"+lineNum+"'>";
+        String coveredClass = "src-ln-not-covered";
+        if(droidrecord.isAvailable()) {
+            CoverageReport coverage = droidrecord.getCoverage();
+            if(coverage != null && false/*TODO*/) {
+                coveredClass = "src-ln-covered";
+            }
+        }
+	    return "<span id='"+lineNum+"' class='"+coveredClass+"' name='"+lineNum+"'>";
 	}
     }
 
@@ -77,7 +89,7 @@ public class SourceProcessor
 	}
 
 	@Override public String toString() {
-	    return "</a>";
+	    return "</span>";
 	}
     }
 
@@ -187,7 +199,7 @@ public class SourceProcessor
     private String source;
     private List<Insertion> insertions = new ArrayList<Insertion>();
 
-	public SourceProcessor(File sourceFile) throws Exception
+	public SourceProcessor(File sourceFile, DroidrecordProxyWeb droidrecord) throws Exception
 	{
 		// read file and add line insertions
 		BufferedReader br = new BufferedReader(new FileReader(sourceFile));
@@ -196,7 +208,7 @@ public class SourceProcessor
 		int lineNum = 1;
 		int pos=0;
 		while((line = br.readLine()) != null) {
-			//insertions.add(new LineBegin(pos, lineNum));
+			insertions.add(new LineBegin(pos, lineNum, droidrecord));
 			
 			for(int i=0; i<line.length(); i++) {
 				switch(line.charAt(i)) {
@@ -214,7 +226,7 @@ public class SourceProcessor
 				}
 			}
 			
-			//insertions.add(new LineEnd(pos+line.length()));
+			insertions.add(new LineEnd(pos+line.length()));
 			
 			sourceBuilder.append(line+"\n");
 			
@@ -225,10 +237,11 @@ public class SourceProcessor
 		this.source = sourceBuilder.toString();
 	}
 
-    public SourceProcessor(File sourceFile, File srcMapFile, File taintedInfo, File allReachableInfo,
+    public SourceProcessor(File sourceFile, DroidrecordProxyWeb droidrecord, 
+                           File srcMapFile, File taintedInfo, File allReachableInfo,
 						   File runtimeReachedMethods, String filePath) throws Exception 
 	{
-		this(sourceFile);
+		this(sourceFile, droidrecord);
 		
 		Set<String> reachableSigs = new HashSet<String>();
 		// find reachable methods defined in this source file
