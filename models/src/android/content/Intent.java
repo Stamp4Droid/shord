@@ -4,7 +4,7 @@ class Intent
 {
 	//add by yu.
 	private static android.os.Bundle extras = new android.os.Bundle();
-	
+
 	public  Intent(java.lang.String action, android.net.Uri uri) 
 	{ 
 		setData(uri);
@@ -374,5 +374,4 @@ class Intent
 		extras.unknown = value;
 		return this;
 	}
-
 }
