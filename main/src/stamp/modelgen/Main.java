@@ -44,6 +44,7 @@ public class Main
 			if(!bakFile.exists() ){
 				//it is OK to add a new class that does not
 				//correspond to any stub class.
+				System.out.println("copying " + modelFile);
 				dump(patchedFile, getCU(modelFile));
 			}
 			else {
