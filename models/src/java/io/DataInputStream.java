@@ -3,7 +3,7 @@ class DataInputStream
     @STAMP(flows = {@Flow(from="in",to="this")})
 	public  DataInputStream(java.io.InputStream in) { super((java.io.InputStream)null); }
 
-    @STAMP(flows = {@Flow(from="$DATAINPUTSTREAM",to="@return")})
+    @STAMP(flows = {@Flow(from="this",to="@return")})
 	private byte taintByte() { return (byte) 0; }
 
     @STAMP(flows = {@Flow(from="this",to="buffer")})
