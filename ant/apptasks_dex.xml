@@ -12,13 +12,6 @@
 
 
   <target name="-analyze-apk">
-	<unjar src="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"
-		   dest="${stamp.out.dir}">
-	  <patternset>
-		<include name="stamp_annotations.txt"/>
-	  </patternset>
-	</unjar>
-
 	<!-- Run android-apktool to decompile the manifest and resource xml files -->
 	<java classname="brut.apktool.Main"
 		  maxmemory="${stamp.maxheap}"
