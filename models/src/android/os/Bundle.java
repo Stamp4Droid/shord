@@ -424,6 +424,14 @@ class Bundle
 
 	@STAMP(flows={@Flow(from="$SMS",to="@return")})
 	private byte[] smsByteArray() {
-		return new byte[1];
+		byte[] bytes = new byte[1];
+		bytes[0] = smsByte();
+		return bytes;
 	}
+
+	@STAMP(flows={@Flow(from="$SMS",to="@return")})
+	private byte smsByte() {
+		return 0;
+	}
+
 }
