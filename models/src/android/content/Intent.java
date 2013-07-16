@@ -4,10 +4,10 @@ class Intent
 {
 	//add by yu.
 	private static android.os.Bundle extras = new android.os.Bundle();
-	
+
+	@STAMP(flows = {@Flow(from="uri",to="!INTENT.Uri")})
 	public  Intent(java.lang.String action, android.net.Uri uri) 
 	{ 
-		setData(uri);
 	}
 
 	@STAMP(flows={@Flow(from="$getExtras",to="@return")})
@@ -16,15 +16,15 @@ class Intent
 		return extras;
 	}
 	
-	@STAMP(flows = {@Flow(from="data",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="data",to="!INTENT.Uri")})
 	public  android.content.Intent setData(android.net.Uri data) 
 	{ 
 		return this;
 	}
 
+	@STAMP(flows = {@Flow(from="data",to="!INTENT.Uri")})
 	public  android.content.Intent setDataAndType(android.net.Uri data, java.lang.String type) 
 	{ 
-		setData(data);
 		return this;
 	}
 
@@ -374,5 +374,4 @@ class Intent
 		extras.unknown = value;
 		return this;
 	}
-
 }

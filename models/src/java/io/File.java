@@ -80,5 +80,9 @@ class File
 		fs[0] = this;
 		return fs;
 	}	
-	
+
+	@STAMP(flows={@Flow(from="this",to="@return")})	
+	public  java.lang.String toString() { 
+		return new String();
+	}
 }

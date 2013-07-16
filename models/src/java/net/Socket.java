@@ -48,7 +48,7 @@ class Socket
 	@STAMP(flows={@Flow(from="!SOCKET",to="@return")})
     public java.io.OutputStream getOutputStream() throws java.io.IOException 
 	{
-		return new StampOutputStream();
+		return new java.io.StampOutputStream();
     }
 
 }
