@@ -41,6 +41,19 @@ class Bundle
 	}
 	
 	//getter..
+	
+	@STAMP(flows={@Flow(from="this",to="@return")})
+	public java.lang.Object get_pdus() 
+	{ 
+		return this.pdus;
+	}
+	
+	@STAMP(flows={@Flow(from="value",to="this")})
+	public  void put_pdus(java.lang.Object value) 
+	{ 
+		this.pdus = value;
+		this.unknown = value;
+	}
 		
 	@STAMP(flows={@Flow(from="this",to="@return")})
 	public java.lang.String getString(java.lang.String key) 
