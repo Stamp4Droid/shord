@@ -12,13 +12,6 @@
 
 
   <target name="-analyze-apk">
-	<unjar src="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"
-		   dest="${stamp.out.dir}">
-	  <patternset>
-		<include name="stamp_annotations.txt"/>
-	  </patternset>
-	</unjar>
-
 	<!-- Run android-apktool to decompile the manifest and resource xml files -->
 	<java classname="brut.apktool.Main"
 		  maxmemory="${stamp.maxheap}"
@@ -64,6 +57,8 @@
 		  description="Chord analyses that will prepare the output relations"/>
     <prop-default property="stamp.printrels" default=""
 		  description="relations to print out after the analysis finishes"/>
+    <prop-default property="stamp.print.allclasses" default="true"
+		  description="whether to dump out all processed jimple files"/>
 
     <!-- Prepare the selected analysis backend. -->
     <runtarget target="-prepare-backend-${stamp.backend}"/>
@@ -75,7 +70,7 @@
     <!-- Configure remaining Chord settings. -->
     <property name="stamp.analyses"
 	      value="${stamp.analyses.pre},${stamp.analyses.main},${stamp.analyses.post}"/>
-    
+
     <!-- Conditionally set-up DroidRecord properties -->
     <if>
       <isset property="stamp.droidrecord.logfile.template"/>
@@ -117,6 +112,7 @@
 	  <sysproperty key="stamp.icdf" value="${stamp.icdf}"/>
       <sysproperty key="stamp.droidrecord.logfile.template" value="${stamp.droidrecord.logfile.template}"/>
       <sysproperty key="stamp.droidrecord.logfile.bin" value="${stamp.droidrecord.logfile.bin}"/>
+	  <sysproperty key="stamp.print.allclasses" value="${stamp.print.allclasses}"/>
       <syspropertyset refid="stamp.analyses.main.sysprops"/>
       <classpath>
 		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>

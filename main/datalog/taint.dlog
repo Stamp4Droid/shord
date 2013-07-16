@@ -50,9 +50,8 @@ MmethPrimRet(m:M,z:Z,u:U)     input
 
 ### output relations ###
 
-label(o:C,l:L) output          # o is labeled with l
+labelRef(c:C,v:V,l:L) output   # (c,v) is labeled with l
 labelPrim(c:C,u:U,l:L) output  # (c,u) is labeled with l
-
 flow(src:L,sink:L) output
 
 ### intermediate relations ###
@@ -71,6 +70,7 @@ flowPrimRef(u:U,v:V)
 flowRefPrim(u:V,v:U)
 flowPrimPrim(u:U,v:U)
 
+label(o:C,l:L)            # o is labeled with l
 labelPrimFld(o:C,f:F,l:L) # prim fld f of object o is labeled l
 labelPrimFldStat(f:F,l:L) # static field f of primitive type has label l
 
@@ -106,26 +106,27 @@ flowPrimPrim(u,v) :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,u), MmethPrimArg(m,z
 # (backward) escape flow
 
 sink(c,u,l) :- CM(c,m), MV(m,u), varLabel(u,l), SinkLabel(l).
-sink(c,u,l) :- flowRefRef(u,v), pt(c,v,o), label(o,l), SinkLabel(l).
+sink(c,u,l) :- flowRefRef(u,v), labelRef(c,v,l), SinkLabel(l).
 sink(c,u,l) :- flowRefPrim(u,v), labelPrim(c,v,l), SinkLabel(l).
 
 sinkPrim(c,u,l) :- CM(c,m), MU(m,u), varLabelPrim(u,l), SinkLabel(l).
-sinkPrim(c,u,l) :- flowPrimRef(u,v), pt(c,v,o), label(o,l), SinkLabel(l).
+sinkPrim(c,u,l) :- flowPrimRef(u,v), labelRef(c,v,l), SinkLabel(l).
 sinkPrim(c,u,l) :- flowPrimPrim(u,v), labelPrim(c,v,l), SinkLabel(l).
 
 # complete flow
 
-flow(src,sink) :- sink(c,u,sink), pt(c,u,o), label(o,src), SrcLabel(src).
+flow(src,sink) :- sink(c,u,sink), labelRef(c,u,src), SrcLabel(src).
 flow(src,sink) :- sinkPrim(c,u,sink), labelPrim(c,u,src), SrcLabel(src).
 
 # (forward) label flow
 
-label(o,l)  :- varLabel(v,l), CM(c,m), MV(m,v), pt(c,v,o).
-label(o2,l) :- transferRefRef(u,v), pt(c,u,o1), label(o1,l), pt(c,v,o2).
-label(o,l)  :- transferPrimRef(u,v), labelPrim(c,u,l), pt(c,v,o).
+label(o,l)      :- varLabel(v,l), CM(c,m), MV(m,v), pt(c,v,o).
+label(o,l)      :- transferRefRef(u,v), labelRef(c,u,l), pt(c,v,o).
+label(o,l)      :- transferPrimRef(u,v), labelPrim(c,u,l), pt(c,v,o).
+labelRef(c,v,l) :- pt(c,v,o), label(o,l).
 
 labelPrim(c,v,l) :- varLabelPrim(v,l), CM(c,m), MU(m,v).
-labelPrim(c,v,l) :- transferRefPrim(u,v), pt(c,u,o1), label(o1,l).
+labelPrim(c,v,l) :- transferRefPrim(u,v), labelRef(c,u,l).
 labelPrim(c,v,l) :- transferPrimPrim(u,v), labelPrim(c,u,l).
 
 labelPrim(c,v,l) :- AssignPrim(v,u), labelPrim(c,u,l).

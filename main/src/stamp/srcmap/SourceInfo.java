@@ -17,7 +17,7 @@ import soot.tagkit.LineNumberTag;
 import soot.tagkit.SourceLineNumberTag;
 
 import shord.analyses.ContainerTag;
-
+import shord.program.Program;
 
 /**
  * @author Saswat Anand 
@@ -62,7 +62,7 @@ public class SourceInfo
 
 	public static String javaLocStr(Stmt stmt)
 	{		
-		SootMethod method = containerMethod(stmt);
+		SootMethod method = Program.containerMethod(stmt);
 		SootClass klass = method.getDeclaringClass();
 		for(Tag tag : klass.getTags()){
 			if(tag instanceof SourceFileTag){
@@ -111,15 +111,6 @@ public class SourceInfo
 			}
 		}
 		return 0;
-	}
-	
-	public static SootMethod containerMethod(Stmt stmt)
-	{		
-		for(Tag tag : stmt.getTags()){
-			if(tag instanceof ContainerTag)
-				return ((ContainerTag) tag).method;
-		}
-		return null;
 	}
 
     public static RegisterMap buildRegMapFor(SootMethod meth)
@@ -212,7 +203,7 @@ public class SourceInfo
 	
 	public static String srcInvkExprFor(Stmt invkQuad)
 	{
-		SootMethod caller = containerMethod(invkQuad);
+		SootMethod caller = Program.containerMethod(invkQuad);
 		MethodInfo mi = methodInfo(caller);
 		if(mi == null)
 			return null;

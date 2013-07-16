@@ -133,22 +133,41 @@ class Handler
 	    msg.arg1 = arg1;
 	    msg.arg2 = arg2;
 	    msg.obj = obj;
+		msg.handler = this;
 	    return msg;
 	}
 	
-	public final  android.os.Message obtainMessage(int what, int arg1, int arg2) {
-	    return this.obtainMessage(what, arg1, arg2, null);
+	public final  android.os.Message obtainMessage(int what, int arg1, int arg2) 
+	{
+	    android.os.Message msg = new android.os.Message();
+	    msg.what = what;
+	    msg.arg1 = arg1;
+	    msg.arg2 = arg2;
+		msg.handler = this;
+	    return msg;
 	}
 	
-	public final  android.os.Message obtainMessage(int what, java.lang.Object obj) {
-	    return this.obtainMessage(what, 0, 0, obj);
+	public final  android.os.Message obtainMessage(int what, java.lang.Object obj) 
+	{
+	    android.os.Message msg = new android.os.Message();
+	    msg.what = what;
+	    msg.obj = obj;
+		msg.handler = this;
+		return msg;
 	}
 	
-	public final  android.os.Message obtainMessage(int what) {
-	    return this.obtainMessage(what, 0, 0, null);
+	public final  android.os.Message obtainMessage(int what) 
+	{
+		android.os.Message msg = new android.os.Message();
+	    msg.what = what;
+		msg.handler = this;
+	    return msg;
 	}
 
-	public final  android.os.Message obtainMessage() {
-		return this.obtainMessage(0, 0, 0, null);
+	public final  android.os.Message obtainMessage() 
+	{
+		android.os.Message msg = new android.os.Message();
+		msg.handler = this;
+		return msg;
 	}
 }

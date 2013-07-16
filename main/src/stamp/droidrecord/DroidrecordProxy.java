@@ -2,6 +2,7 @@ package stamp.droidrecord;
 
 import edu.stanford.droidrecord.logreader.EventLogStream;
 import edu.stanford.droidrecord.logreader.BinLogReader;
+import java.io.File;
 
 public class DroidrecordProxy {
     
@@ -14,7 +15,9 @@ public class DroidrecordProxy {
     private DroidrecordProxy() {
         String templateLogFile = System.getProperty("stamp.droidrecord.logfile.template");
         binLogFile = System.getProperty("stamp.droidrecord.logfile.bin");
-        if(templateLogFile.equals("") || binLogFile.equals("")) {
+        if(templateLogFile.equals("") || binLogFile.equals("") || 
+            !(new File(templateLogFile)).exists() ||
+            !(new File(binLogFile)).exists()) {
             available = false;
         } else {
             logReader = new BinLogReader(templateLogFile);
