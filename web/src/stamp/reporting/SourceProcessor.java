@@ -200,9 +200,12 @@ public class SourceProcessor
                         paramsData.append("\",");
                     }
                     if(method.getArguments().size() > 0) {
-                        paramsData.append("\"");
-                        paramsData.append(method.getArguments().get(method.getArguments().size()-1));
-                        paramsData.append("\"");
+                        String ptype = method.getArguments().get(method.getArguments().size()-1);
+                        if(!ptype.equals("")) {
+                            paramsData.append("\"");
+                            paramsData.append(ptype);
+                            paramsData.append("\"");
+                        }
                     }
                     paramsData.append("],");
                     paramsData.append("\"parameterValues\":[");

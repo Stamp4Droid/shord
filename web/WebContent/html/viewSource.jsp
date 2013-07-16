@@ -17,5 +17,5 @@
 	
 	String program = manager.getAnnotatedSource(filepath, isModel);
 %>
-<script type="text/javascript" src="/stamp/scripts/viewSource.js" ></script>
+<link href="/stamp/css/viewSource.css" rel="stylesheet" />
 <%=program%>

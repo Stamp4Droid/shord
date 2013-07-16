@@ -130,6 +130,7 @@
 		<script src="/stamp/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
 		<script src="/stamp/fuelux/loader.js" type="text/javascript"></script>
 		<script src="/stamp/scripts/prettify.js" type="text/javascript"></script>
+		<script src="/stamp/scripts/viewSource.js" type="text/javascript"></script>
 		
 		<script>
 		$('#codetabs').hide();
@@ -209,6 +210,13 @@
 			var tabNameToId = new Object();
 			var idToHighlightedLine = new Object();
 			var totalFilesOpened = 0;
+			
+			function rightBarAddDynamicData(drDataParams)
+			{
+			    var data = jQuery.parseJSON(atob(drDataParams));
+			    var html = ViewSource.droidrecordDataToTable(data, false);
+			    $("#rightbar div.droidrecord-runtime-parameters").html(html);
+			}
 		
 			function showCode(response, href)
 			{
@@ -244,10 +252,36 @@
 			    		  var chordSig = $(this).attr("data-chordsig");
 			    		  var filePath = $(this).attr("data-filePath");
 			    		  var lineNum = $(this).attr("data-lineNum");
+			    		  var drDataParams = $(this).find(".invocationExpression")[0].attr("data-droidrecord-params");
 			    		  $('#rightbar').load('/stamp/html/imList.jsp',
-			    		            {chordSig: chordSig, type: 'invk', filePath: filePath, lineNum: lineNum})
+			    		    {chordSig: chordSig, type: 'invk', filePath: filePath, lineNum: lineNum}, 
+			    		    function () { rightBarAddDynamicData(drDataParams); })
 			    		});
-			    }	
+			    }
+			    
+			    $(".invocationExpression").popover({ 
+                        trigger : "hover",
+                        position: "bottom", 
+                        html : true,
+                        title : function () {
+                            return jQuery.parseJSON(atob($(this).attr("data-droidrecord-params"))).methodName;
+                        }, 
+                        content : function() {
+                            var data = jQuery.parseJSON(atob($(this).attr("data-droidrecord-params")));
+                            return ViewSource.droidrecordDataToTable(data, true);
+                        }
+                    });
+    
+                $(".invocationExpression").on("click",  function(event){
+                    var preinvk = $(this).find("span[name=PreInvocation]");
+                    var chordSig = $(preinvk).attr("data-chordsig");
+		            var filePath = $(preinvk).attr("data-filePath");
+		            var lineNum = $(preinvk).attr("data-lineNum");
+			    	var drDataParams = $(this).attr("data-droidrecord-params");
+		            $('#rightbar').load('/stamp/html/imList.jsp',
+		                {chordSig: chordSig, type: 'invk', filePath: filePath, lineNum: lineNum}, 
+			    		function () { rightBarAddDynamicData(drDataParams); })
+		            });
 
 				var typeRefs = $('#'+href).find("[name=TypeRef]");
 			    for(var i=0; i<typeRefs.length; ++i) {

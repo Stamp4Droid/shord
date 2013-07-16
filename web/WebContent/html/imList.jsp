@@ -20,11 +20,11 @@
         	session.setAttribute("qcg", qcg);
         }
 
-        QueryObservedParams qop = (QueryObservedParams) session.getAttribute("qop");
+        /*QueryObservedParams qop = (QueryObservedParams) session.getAttribute("qop");
         if(qop == null){
         	qop = new QueryObservedParams(outPath + "/results/observedparams.xml");
         	session.setAttribute("qop", qop);
-        }
+        }*/
 
 
 		if(type == null){
@@ -87,6 +87,7 @@
 
 	%>
 			<span class="label label-info">Runtime parameters</span>
+			<div class="droidrecord-runtime-parameters">
 	<%
 			SortedMap<Integer, ParameterValueSet> params = new TreeMap<Integer, ParameterValueSet>();
 			if(qop != null){
@@ -115,6 +116,7 @@
 			}
     	}// end of else
    	%>
+			</div>
 	
 	<script>
 		$('a[id^="SrcLoc"]').on("click",  function(event){
