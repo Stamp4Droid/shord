@@ -9,16 +9,22 @@ import javax.xml.parsers.*;
 import org.w3c.dom.*;
 import org.xml.sax.*;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.codec.binary.Base64;
 
 import edu.stanford.droidrecord.logreader.CoverageReport;
+import edu.stanford.droidrecord.logreader.analysis.CallArgumentValueAnalysis;
+import edu.stanford.droidrecord.logreader.events.info.ParamInfo;
+import edu.stanford.droidrecord.logreader.events.info.MethodInfo;
 import stamp.droidrecordweb.DroidrecordProxyWeb;
 
 /* 
    @author Osbert Bastani
    @author Saswat Anand
+   @author Lazaro Clapp
 */
 public class SourceProcessor 
 {
+
     public static abstract class Insertion implements Comparable<Insertion> {
 		// -1: beginning, 0: middle, 1: ending
 		private int position;
@@ -74,26 +80,26 @@ public class SourceProcessor
 			this.lineNum = lineNum;
 		}
 
-	@Override public String toString() {
-        String coveredClass = "src-ln-not-covered";
-        if(droidrecord.isAvailable() && methodSig != null) {
-            CoverageReport coverage = droidrecord.getCoverage();
-            if(coverage != null && coverage.isCoveredLocation(methodSig, lineNum)) {
-                coveredClass = "src-ln-covered";
+	    @Override public String toString() {
+            String coveredClass = "src-ln-not-covered";
+            if(droidrecord.isAvailable() && methodSig != null) {
+                CoverageReport coverage = droidrecord.getCoverage();
+                if(coverage != null && coverage.isCoveredLocation(methodSig, lineNum)) {
+                    coveredClass = "src-ln-covered";
+                }
             }
-        }
-	    return "<span id='"+lineNum+"' class='"+coveredClass+"' name='"+lineNum+"'>";
-	}
+	        return "<span id='"+lineNum+"' class='"+coveredClass+"' name='"+lineNum+"'>";
+	    }
     }
 
     public static class LineEnd extends Insertion {
-	public LineEnd(int position) {
-	    super(position, 8);
-	}
+	    public LineEnd(int position) {
+	        super(position, 8);
+	    }
 
-	@Override public String toString() {
-	    return "</span>";
-	}
+	    @Override public String toString() {
+	        return "</span>";
+	    }
     }
 
     public static class PreMethodName extends Insertion 
@@ -125,7 +131,7 @@ public class SourceProcessor
 		}
 		
 		@Override public String toString() {
-			return "<span data-chordsig='"+StringEscapeUtils.escapeHtml4(chordSig)+"' data-reachable='"+reachable+"' reached='"+reached+"' name='MethodName'>";
+			return "<span data-chordsig='"+StringEscapeUtils.escapeHtml4(chordSig)+"' data-reachable='"+reachable+"' reached='"+reached+"' reached='"+reached+"' name='MethodName'>";
 		}
     }
 
@@ -153,24 +159,115 @@ public class SourceProcessor
 			return "</span>";
 		}
     }
+    public static class InvocationExpressionBegin extends Insertion {
+        private DroidrecordProxyWeb droidrecord;
+        private String methodSig;
+        private int lineNum;
+        private String calleeMethodSig;
+        
+		public InvocationExpressionBegin(int position, DroidrecordProxyWeb droidrecord,
+		                 String methodSig, int lineNum, String calleeMethodSig) {
+			super(position, -8);
+            this.droidrecord = droidrecord;
+			this.methodSig = methodSig;
+			this.lineNum = lineNum;
+			this.calleeMethodSig = calleeMethodSig;
+		}
+		
+		private String escape(String s) {
+            s = s.replace("\\","\\\\");
+            s = s.replace("\"","\\\"");
+            s = s.replace("\'","\\\'");
+            return s;
+		}
+
+	    @Override public String toString() {
+	        StringBuilder paramsData = new StringBuilder();
+	        String paramsDataStr = "";
+            if(droidrecord.isAvailable() && methodSig != null) {
+                CallArgumentValueAnalysis cava = droidrecord.getCallArgumentValueAnalysis();
+                if(cava.isReady()) {
+                    List<List<ParamInfo>> params = cava.queryArgumentValues(calleeMethodSig, methodSig, lineNum);
+                    MethodInfo method = MethodInfo.parse(calleeMethodSig);
+                    paramsData.append("{");
+                    paramsData.append("\"methodName\":\"");
+                    paramsData.append(method.getName());
+                    paramsData.append("\",");
+                    paramsData.append("\"parameterTypes\":[");
+                    for(int i = 0; i < method.getArguments().size()-1; i++) {
+                        paramsData.append("\"");
+                        paramsData.append(method.getArguments().get(i));
+                        paramsData.append("\",");
+                    }
+                    if(method.getArguments().size() > 0) {
+                        paramsData.append("\"");
+                        paramsData.append(method.getArguments().get(method.getArguments().size()-1));
+                        paramsData.append("\"");
+                    }
+                    paramsData.append("],");
+                    paramsData.append("\"parameterValues\":[");
+                    boolean addComa = false;
+                    Set<String> seenParamChoices = new HashSet<String>();
+                    for(List<ParamInfo> l : params) {
+                        String jsonInvkParams = "[";
+                        for(int i = 0; i < l.size()-1; i++) {
+                            jsonInvkParams += "\"" + escape(l.get(i).toSimpleString()) + "\",";
+                        }
+                        if(l.size() > 0) {
+                            jsonInvkParams += "\"" + escape(l.get(l.size()-1).toSimpleString()) + "\"";
+                        }
+                        jsonInvkParams += "]";
+                        if(seenParamChoices.contains(jsonInvkParams)) continue;
+                        if(addComa) paramsData.append(",");
+                        addComa = true;
+                        paramsData.append(jsonInvkParams);
+                    }
+                    paramsData.append("]");
+                    paramsData.append("}");
+                }
+                paramsDataStr = paramsData.toString();
+            }
+            try {
+                paramsDataStr = new String(Base64.encodeBase64(paramsDataStr.getBytes("UTF-8")));
+            } catch(UnsupportedEncodingException e) {
+                throw new Error(e);
+            }
+	        String entity = "<span class='invocationExpression' ";
+	        entity += "data-droidrecord-params='"+paramsDataStr;
+	        entity += "' data-droidrecord-callee='"+StringEscapeUtils.escapeHtml4(calleeMethodSig);
+	        entity += "' data-droidrecord-caller='"+StringEscapeUtils.escapeHtml4(methodSig);
+	        entity += "' data-droidrecord-line='"+lineNum;
+	        entity += "'>";
+	        return entity;
+	    }
+    }
 
     // this is actually post invocation now
     public static class PreInvocation extends Insertion {
-	private String chordSig;
-	private String filePath;
-	private int lineNum;
+	    private String chordSig;
+	    private String filePath;
+	    private int lineNum;
 	
-	public PreInvocation(int position, String chordSig, String filePath, int lineNum) {
-	    super(position, 4);
-	    this.chordSig = chordSig;
-	    this.filePath = filePath;
-	    this.lineNum = lineNum;
-	}
+	    public PreInvocation(int position, String chordSig, String filePath, int lineNum) {
+	        super(position, 4);
+	        this.chordSig = chordSig;
+	        this.filePath = filePath;
+	        this.lineNum = lineNum;
+	    }
+	    @Override public String toString() {
+	        return "<span data-chordsig='"+StringEscapeUtils.escapeHtml4(chordSig)+"' name='PreInvocation' data-filePath='"+this.filePath+"' data-lineNum='"+this.lineNum+"'></span>";
+	        //return "<span id='PreInvocation"+StringEscapeUtils.escapeHTML(chordSig)+"' name='PreInvocation'></span>";
+	    }
+    }
 
-	@Override public String toString() {
-	    return "<span data-chordsig='"+StringEscapeUtils.escapeHtml4(chordSig)+"' name='PreInvocation' data-filePath='"+this.filePath+"' data-lineNum='"+this.lineNum+"'></span>";
-	    //return "<span id='PreInvocation"+StringEscapeUtils.escapeHTML(chordSig)+"' name='PreInvocation'></span>";
-	}
+    public static class InvocationExpressionEnd extends Insertion {
+	    public InvocationExpressionEnd(int position) {
+	        super(position, 8);
+	    }
+
+	    @Override public String toString() {
+	        return "</span>";
+	    }
     }
     
     public static class KeySpanStart extends Insertion {
@@ -375,7 +472,11 @@ public class SourceProcessor
 				int length = Integer.valueOf(node.getAttribute("length"));
 				String chordSig = node.getAttribute("chordsig");
 				int invocationLineNum = Integer.valueOf(node.getAttribute("line"));
+				String methodSig = getContainingMethodForLine(invocationLineNum);
+				String calleeMethodSig = DroidrecordProxyWeb.chordToSootMethodSignature(chordSig);
+				insertions.add(new InvocationExpressionBegin(start, droidrecord, methodSig, invocationLineNum, calleeMethodSig));
 				insertions.add(new PreInvocation(start+length, chordSig, filePath, invocationLineNum));
+				insertions.add(new InvocationExpressionEnd(start+length));
 			}
 
 			nodes = (NodeList)xpath.evaluate("//method", document, XPathConstants.NODESET);
@@ -388,7 +489,7 @@ public class SourceProcessor
 				int end = Integer.valueOf(node.getAttribute("endpos"));
 				boolean reachable = reachableSigs.contains(chordSig);
 				boolean reached = reachedSigs.contains(chordSig);
-
+                
 				insertions.add(new MethodNameStart(start, chordSig, reachable, reached));
 				insertions.add(new SpanEnd(end));	
 			}
