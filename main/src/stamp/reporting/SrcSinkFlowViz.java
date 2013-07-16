@@ -57,13 +57,15 @@ public class SrcSinkFlowViz extends XMLVizReport
 
 						Category mc = c;
 						String[] context = tokens[3].split("@");
+						String progress = "";
 						for (String s : context) {
 							String[] methTokens = s.split(":");
 							assert methTokens.length == 3;
 							mc = mc.makeOrGetSubCat(methTokens[2]);
-							if (!seenLocs.contains(s)) {
+							progress += s;
+							if (!seenLocs.contains(progress)) {
 								mc.addRawValue(methTokens[2], methTokens[0], methTokens[1], "method", "");
-								seenLocs.add(s);
+								seenLocs.add(progress);
 							}
 						}
 						mc.newTuple().addRawValue(tokens[2], tokens[0], tokens[1], "method", "")
