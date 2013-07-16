@@ -465,14 +465,9 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 			//FIXME: what if we have multiple defboxes?
 			// assert (stmt.getDefBoxes().size > 0);
 			if (stmt.getDefBoxes().size() == 0) {
-<<<<<<< HEAD
-				reportUnknownRegister(stmt, extrasLocal);
-				return result;
-=======
-				//reportUnknownRegister(stmt, extrasLocal);
+                //reportUnknownRegister(stmt, extrasLocal);
                 _tmp_reportUnknownRegisterDynInfo(stmt, extrasLocal, 1);
-				return;
->>>>>>> Initial support for coverage UI integration
+				return result;
 			}
 				
 			VariableBox orgCallSite = (VariableBox)stmt.getDefBoxes().get(0);
