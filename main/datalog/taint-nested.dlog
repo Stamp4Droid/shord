@@ -169,4 +169,4 @@ labelPrim(c,y,l)      :- LoadStatPrim(y,f), labelPrimFldStat(f,l), MU(m,y), CM(c
 labelPrim(d,u,l)      :- labelPrim(c,v,l), paramPrim(u,v,i), CC(c,d), CI(d,i).
 labelPrim(c,u,l)      :- labelPrim(d,v,l), returnPrim(u,v,i), CI(d,i), CC(c,d).
 # nested tainting
-labelPrimFld(o,_,l)   :- label(o,l).
+labelPrim(c,y,l)      :- LoadPrim(y,x,f), label(o,l), pt(c,x,o).
