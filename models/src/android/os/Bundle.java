@@ -51,7 +51,7 @@ class Bundle
 	@STAMP(flows={@Flow(from="value",to="this")})
 	public  void put_pdus(java.lang.Object value) 
 	{ 
-		this.pdus = value;
+		this.pdus = (byte[][]) value;
 		this.unknown = value;
 	}
 		
