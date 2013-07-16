@@ -7,7 +7,7 @@
 	  depends="-check-everythinguptodate"
 	  unless="${everythinguptodate}">
     <ant antfile="${stamp.dir}/web/build.xml" target="deploy"
-		 inheritAll="false" useNativeBasedir="true"/>
+	 inheritAll="false" useNativeBasedir="true"/>
     <tstamp>
       <format property="logtime" pattern="yyyy.MM.dd : HH:mm:ss z"/>
     </tstamp>
@@ -16,6 +16,13 @@
 
   <target name="-build-comps"
           depends="-safe-build-droidrecord" unless="release">
+    <mkdir dir="${stamp.dir}/main/gen"/>
+    <xjc schema="${stamp.dir}/solvergen/paths.xsd" package="stamp.paths.raw"
+	 destdir="${stamp.dir}/main/gen" readonly="true">
+      <produces dir="${stamp.dir}/main/gen/stamp/paths/raw"
+		includes="**/*.java"/>
+      <classpath refid="stamp.build.classpath"/>
+    </xjc>
     <!--ant antfile="${stamp.dir}/chord/build.xml"
 	 inheritAll="false" useNativeBasedir="true"/-->
     <ant antfile="${stamp.dir}/annotations/build.xml" target="jar"
@@ -49,6 +56,7 @@
 
   <target name="-clean-tool"
           depends="-safe-clean-droidrecord">
+    <delete dir="${stamp.dir}/main/gen"/>
     <ant antfile="${stamp.dir}/main/build.xml" target="clean"
 	 inheritAll="false" useNativeBasedir="true"/>
     <ant antfile="${stamp.dir}/scanner/build.xml" target="clean"

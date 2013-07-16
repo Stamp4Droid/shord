@@ -205,12 +205,13 @@ TAB_SIZE               = 8
 
 ALIASES                = "Symbol=@link cfg_parser::Symbol Symbol@endlink" \
                          "Literal=@link cfg_parser::Literal Literal@endlink" \
-                         "Production=@link cfg_parser::Production Production@endlink" \
+                         "RegularProduction=@link cfg_parser::RegularProduction RegularProduction@endlink" \
                          "Kind=@link EDGE_KIND Kind@endlink" \
                          "Index=@link INDEX Index@endlink" \
                          "Indices=@link INDEX Indices@endlink" \
                          "ReverseProduction=@link cfg_parser::ReverseProduction ReverseProduction@endlink" \
                          "Counter=@link COUNTER Counter@endlink" \
+                         "Grammar=@link cfg_parser::Grammar Grammar@endlink" \
                          "SymbolStore=@link cfg_parser::SymbolStore SymbolStore@endlink"
 
 # This tag can be used to specify a number of word-keyword mappings (TCL only). 

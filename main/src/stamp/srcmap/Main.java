@@ -11,9 +11,20 @@ public class Main
 	private static String[] classpathEntries;
 	private static String[] srcpathEntries;
 	private static File srcMapDir;
+	private static PrintWriter writer;
+	private static Set<String> oldAnnots = new HashSet();
 
 	public static void process(String srcRootPath, File javaFile) throws IOException
 	{
+		String canonicalPath = javaFile.getCanonicalPath();
+		String relSrcFilePath = canonicalPath.substring(srcRootPath.length()+1);
+		File infoFile = new File(srcMapDir, relSrcFilePath.replace(".java", ".xml"));
+
+		if(javaFile.lastModified() < infoFile.lastModified()) 
+			return;
+
+		infoFile.getParentFile().mkdirs();
+		
 		ASTParser parser = ASTParser.newParser(AST.JLS4);
 		parser.setResolveBindings(true);
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
@@ -23,23 +34,17 @@ public class Main
 		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_6);
 		options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_6);
 		parser.setCompilerOptions(options);
-
 		parser.setEnvironment(classpathEntries, srcpathEntries, null, true);
-
-		String canonicalPath = javaFile.getCanonicalPath();
-		System.out.println(canonicalPath);
+		System.out.println("generating srcmap file for "+canonicalPath);
 		parser.setUnitName(canonicalPath);		
 		parser.setSource(toCharArray(canonicalPath));
 
 		CompilationUnit cu = (CompilationUnit) parser.createAST(null);
-
-		String relSrcFilePath = canonicalPath.substring(srcRootPath.length()+1);
-		File infoFile = new File(srcMapDir, relSrcFilePath.replace(".java", ".xml"));
-		infoFile.getParentFile().mkdirs();
-
 		ChordAdapter visitor = new ChordAdapter(cu, infoFile);
+		AnnotationReader annotReader = new AnnotationReader();
 		try{
 			cu.accept(visitor);
+			cu.accept(annotReader);
 			visitor.finish();
 		}catch(Exception e){
 			System.out.println("Failed to generate srcmap file for "+relSrcFilePath);
@@ -118,22 +123,21 @@ public class Main
 			System.out.println("srcpath: " + p);
 		for(String p : classpathEntries)
 			System.out.println("classpath: " + p);
-		
-		if(args.length > 3){
-			//fourth arg is for testing purpose only
-			File f = new File(args[3]);
-			if(!f.getName().endsWith(".java"))
-				throw new RuntimeException("expected a Java file. Got " + f);
-			process(srcpathEntries[0], f);
-		} else {
-			try{
-				for(String srcRootPath : srcpathEntries)
-					processDir(srcRootPath, new File(srcRootPath));
-			}catch(Exception e){
-				e.printStackTrace();
-				throw new Error(e);
-			}
+
+		String androidDir = null;
+		if(args.length > 3) 
+			androidDir = args[3];
+		openWriter(androidDir);
+
+		try{
+			for(String srcRootPath : srcpathEntries)
+				processDir(srcRootPath, new File(srcRootPath));
+		}catch(Exception e){
+			e.printStackTrace();
+			throw new Error(e);
 		}
+
+		writer.close();
 	}	
 
 	private static void processDir(String srcRootPath, File dir) throws Exception
@@ -150,5 +154,37 @@ public class Main
 			}
 		}
 	}
-
+	
+	private static void openWriter(String dirName) throws IOException
+	{
+		if(dirName == null){
+			//processing android classes
+			//open in append mode
+			File f = new File("stamp_annotations.txt");
+			if(f.exists()){
+				BufferedReader reader = new BufferedReader(new FileReader(f));
+				String line;
+				while((line = reader.readLine()) != null){
+					oldAnnots.add(line);
+				}
+				reader.close();
+			}
+			writer = new PrintWriter(new FileWriter(f, true));
+		} else {
+			writer = new PrintWriter(new FileWriter("stamp_annotations.txt"));
+			BufferedReader reader = new BufferedReader(new FileReader(new File(dirName, "stamp_annotations.txt")));
+			String line;
+			while((line = reader.readLine()) != null){
+				writer.println(line);
+			}
+			reader.close();
+		}
+	}
+	
+	static void writeAnnot(String annot)
+	{
+		if(oldAnnots.contains(annot))
+			return;
+		writer.println(annot);
+	}
 }

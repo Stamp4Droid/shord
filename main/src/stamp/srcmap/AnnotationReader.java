@@ -1,4 +1,4 @@
-package stamp.readannot;
+package stamp.srcmap;
 
 import java.io.*;
 import java.util.*;
@@ -11,96 +11,6 @@ import org.eclipse.jdt.core.dom.*;
 */
 public class AnnotationReader extends ASTVisitor
 {
-	public static char[] toCharArray(String filePath) throws IOException 
-	{
-		File file = new File(filePath);
-		BufferedReader reader = new BufferedReader(new FileReader(file));
-		String line;
-		StringBuilder content = new StringBuilder();
-		while((line = reader.readLine()) != null) {
-			content.append(line+"\n");
-		}
-		return content.toString().toCharArray();
-    }
-
-    private String[] classpathEntries;
-    private String[] srcpathEntries;
-	private PrintWriter writer;
-
-	public AnnotationReader(String[] srcpathEntries, String[] classpathEntries) throws IOException
-	{
-		this.srcpathEntries = srcpathEntries;
-		this.classpathEntries = classpathEntries;
-	}
-
-	private void process(String androidDir) throws Exception
-	{
-		openWriter(androidDir);
-		for(String srcDirPath : srcpathEntries){
-			File srcDir = new File(srcDirPath);
-			if(!srcDir.isDirectory())
-				continue;
-			processDir(srcDir);
-		}
-		writer.close();
-	}
-	
-	private void openWriter(String dirName) throws IOException
-	{
-		this.writer = new PrintWriter(new FileWriter("stamp_annotations.txt"));
-		if(dirName == null)
-			return;
-		BufferedReader reader = new BufferedReader(new FileReader(new File(dirName, "stamp_annotations.txt")));
-		String line;
-		while((line = reader.readLine()) != null){
-			writer.println(line);
-		}
-		reader.close();
-	}
-
-	private void processDir(File dir) throws Exception
-	{
-		for(File file : dir.listFiles()) {
-			if(file.isDirectory()) 
-				processDir(file);
-			else{
-				String fname = file.getName();
-				if(fname.endsWith(".java") && fname.indexOf('#') < 0) {
-					System.out.println("processing "+fname);
-					try{
-						processFile(file);
-					}catch(Exception e){
-						System.out.println("\nException occurred while reading annotations of "+fname);
-						throw new Error(e);
-					}
-				}
-			}
-		}
-	}
-
-    private void processFile(File javaFile) throws Exception 
-	{
-		// set up the parser
-		ASTParser parser = ASTParser.newParser(AST.JLS4);
-		parser.setResolveBindings(true);
-		parser.setKind(ASTParser.K_COMPILATION_UNIT);
-		
-		Map options = JavaCore.getOptions();
-		options.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_1_5);
-		options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_5);
-		options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_5);
-		parser.setCompilerOptions(options);
-		
-		parser.setEnvironment(this.classpathEntries, this.srcpathEntries, null, true);
-		
-		String canonicalPath = javaFile.getCanonicalPath();
-		parser.setUnitName(canonicalPath);
-		parser.setSource(toCharArray(canonicalPath));
-		
-		CompilationUnit cu = (CompilationUnit) parser.createAST(null);
-		cu.accept(this);		
-    }
-
 	public boolean visit(MethodDeclaration node) 
 	{		
 		// get annotation position
@@ -131,9 +41,9 @@ public class AnnotationReader extends ASTVisitor
 					else if(name.equals("to"))
 						to = ((StringLiteral) mvp1.getValue()).getLiteralValue();
 				}
-				writer.println(chordSig + " " + 
-							   processEndPoint(from, nameToIndex) + " " + 
-							   processEndPoint(to, nameToIndex));
+				Main.writeAnnot(chordSig + " " + 
+								processEndPoint(from, nameToIndex) + " " + 
+								processEndPoint(to, nameToIndex));
 			}
 		}		
 		return true;
@@ -265,17 +175,4 @@ public class AnnotationReader extends ASTVisitor
 		}
 		return type.getBinaryName().replace('.', '/');
 	}
-	
-	public static void main(String[] args) throws Exception
-    {
-		for(String arg : args)
-			System.out.println(arg);
-
-		String androidJar = null;
-		if(args.length == 3) 
-			androidJar = args[2];
-		
-		new AnnotationReader(args[0].split(":"), args[1].split(":")).process(androidJar);
-    }
-
 }

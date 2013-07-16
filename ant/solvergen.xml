@@ -5,6 +5,8 @@
     <!-- Compile SolverGen analysis. -->
     <property name="stamp.solvergen.analysis" value="s-k-h-al"/>
     <runtarget target="make-cfl-solver"/>
+    <require-prop property="stamp.solvergen.terminals.listfile"
+		  description="file listing all the terminals used by the analysis"/>
 
     <!-- Prepare SolverGen I/O directories. -->
     <mkdir dir="${stamp.out.dir}/input"/>
@@ -16,8 +18,12 @@
 
     <!-- Set backend-specific system properties. -->
     <!-- Facts Dumper options -->
-    <property name="stamp.dumper.templatesdir"
+    <property name="stamp.dumper.templates.dir"
 	      location="${stamp.dir}/solvergen/input"/>
+    <load-strings property="stamp.dumper.templates.list"
+		  file="${stamp.solvergen.terminals.listfile}">
+      <replaceregex pattern="^(.+)$" replace="\1.dat"/>
+    </load-strings>
     <property name="stamp.dumper.outdir"
 	      location="${stamp.out.dir}/input"/>
     <property name="stamp.dumper.accrange.printindex" value="false"/>
@@ -31,16 +37,24 @@
 	      location="${stamp.out.dir}/output"/>
     <property name="stamp.datparser.templatesdir"
 	      location="${stamp.dir}/solvergen/output"/>
+    <!-- Paths Adapter options -->
+    <require-prop property="stamp.paths.schema"
+		  description="schema file used to validate SolverGen paths XML file"/>
+    <property name="stamp.paths.file"
+	      location="${stamp.out.dir}/output/Src2Sink.paths.xml"/>
 
     <!-- Register backend-specific system properties. -->
     <propertyset id="stamp.analyses.main.sysprops">
-      <propertyref name="stamp.dumper.templatesdir"/>
+      <propertyref name="stamp.dumper.templates.dir"/>
+      <propertyref name="stamp.dumper.templates.list"/>
       <propertyref name="stamp.dumper.outdir"/>
       <propertyref name="stamp.dumper.accrange.printindex"/>
       <propertyref name="stamp.solvergen.workdir"/>
       <propertyref name="stamp.solvergen.executable"/>
       <propertyref name="stamp.datparser.indir"/>
       <propertyref name="stamp.datparser.templatesdir"/>
+      <propertyref name="stamp.paths.schema"/>
+      <propertyref name="stamp.paths.file"/>
     </propertyset>
   </target>
 
@@ -54,8 +68,10 @@
 		  description="whether to store debugging symbols in the generated solver"/>
     <prop-default property="stamp.solvergen.profiling" default="false"
 		  description="whether to enable profiling output for the generated solver"/>
-    <prop-default property="stamp.solvergen.pathrecord" default="false"
-		  description="whether to enable path recording in the generated solver"/>
+    <prop-default property="stamp.solvergen.pathrecord" default="true"
+		  description="whether to record child edge information during solver execution, to help in calculating paths"/>
+    <prop-default property="stamp.solvergen.assertions" default="true"
+		  description="whether to enable assertions in the generated solver (STRONGLY RECOMMENDED)"/>
 
     <!-- Set compiler flags. -->
     <prop-ite property="stamp.solvergen.logging.flag"
@@ -68,6 +84,9 @@
     <prop-ite property="stamp.solvergen.pathrecord.flag"
 	      condition="${stamp.solvergen.pathrecord}"
 	      then="-DPATH_RECORDING" else=""/>
+    <prop-ite property="stamp.solvergen.assertions.flag"
+	      condition="${stamp.solvergen.assertions}"
+	      then="" else="-DNDEBUG"/>
 
     <!-- Locate relevant files. -->
     <property name="stamp.solvergen.analysis.cfg"
@@ -78,12 +97,16 @@
 		 destdir="${stamp.out.dir}" oldext="cfg" newext="cpp"/>
     <property name="stamp.solvergen.executable"
 	      location="${stamp.out.dir}/${stamp.solvergen.analysis}"/>
+    <tempfile property="stamp.solvergen.terminals.listfile" createfile="false"
+	      deleteonexit="true"/>
+
 
     <!-- Produce CFL Solver code from the input grammar. -->
     <exec executable="python" spawn="false" failonerror="true">
       <arg file="${stamp.dir}/solvergen/cfg_parser.py"/>
       <arg file="${stamp.solvergen.analysis.cfg}"/>
       <arg file="${stamp.out.dir}"/>
+      <arg file="${stamp.solvergen.terminals.listfile}"/>
     </exec>
 
     <!-- Compile and link the analysis code with the CFL Solver engine. -->
@@ -94,6 +117,7 @@
       <arg line="${stamp.solvergen.debug.flag}"/>
       <arg line="${stamp.solvergen.profiling.flag}"/>
       <arg line="${stamp.solvergen.pathrecord.flag}"/>
+      <arg line="${stamp.solvergen.assertions.flag}"/>
       <arg value="-o"/><arg file="${stamp.solvergen.executable}"/>
       <arg value="-I"/><arg file="${stamp.dir}/solvergen"/>
       <arg file="${stamp.dir}/solvergen/engine.cpp"/>

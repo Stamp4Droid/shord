@@ -40,22 +40,38 @@
 			<!--uptodate srcfile="fake_stubs.txt" targetfile="fake_stubs_old.txt"/-->
 	      </and>
 		</condition>
+	    <condition property="dir.exists">
+	      <available file="api-@{apilevel}/gen" type="dir"/>
+	    </condition>
 		
 		<if>
 		  <not><isset property="patchuptodate-@{apilevel}"/></not>
 		  <then>
-			<!-- models have changed since recent build. so rebuild.-->
-			<clean-models apilevel="api-@{apilevel}"/>
+			<!-- models have changed since recent build. so rebuild.
+		         We don't have to unzip the .tgz file every time we modify model. -->
+			<if>
+				<not><isset property="dir.exists"/></not>
+				<then>
+					<clean-models apilevel="api-@{apilevel}"/>
 			
-			<!-- this is where (e.g., api-16) we will store all artifacts-->
-			<mkdir dir="api-@{apilevel}"/>
+					<!-- this is where (e.g., api-16) we will store all artifacts-->
+					<mkdir dir="api-@{apilevel}"/>
 
-			<untar src="android-@{version}-stubs.tgz" 
-				   dest="api-@{apilevel}/gen"
-				   compression="gzip"/>
-			<untar src="googleapis-stubs.tgz" 
-				   dest="api-@{apilevel}/gen"
-				   compression="gzip"/>
+					<untar src="android-@{version}-stubs.tgz"
+						   dest="api-@{apilevel}/gen"
+						   compression="gzip"/>
+				    <untar src="googleapis-stubs.tgz"
+						   dest="api-@{apilevel}/gen"
+						   compression="gzip"/>
+				    <!-- Extract the unchanged files to bak folder -->
+				    <untar src="android-@{version}-stubs.tgz" 
+						   dest="api-@{apilevel}/bak"
+							   compression="gzip"/>
+					<untar src="googleapis-stubs.tgz"
+						   dest="api-@{apilevel}/bak"
+						   compression="gzip"/>
+				</then>
+			</if>
 
 			<!-- TODO: following two steps should be done in one pass for efficiency-->
 			<!--copy file="fake_stubs.txt" tofile="fake_stubs_old.txt"/-->
@@ -71,6 +87,7 @@
 			  </classpath>
 			  <arg value="gen"/>
 			  <arg value="../src"/>
+			  <arg value="bak"/>
 			</java>
 			
 			<!-- generate the list of stubs -->
@@ -89,8 +106,8 @@
 			  <arg value="gen"/>
 			</java-->
 			
-			<!-- TODO: following two steps should be done in one pass for efficiency-->
 			<!-- source map -->
+			<!-- read annotations -->
 			<java classname="stamp.srcmap.Main"
 				  maxmemory="${stamp.maxheap}"
 				  fork="true"
@@ -106,23 +123,6 @@
 			  <arg value="gen"/>
 			  <arg value="${stamp.dir}/bin/stamp.annotations.jar"/>
 			  <arg value="srcmap"/>
-			</java>
-			
-			<!-- read annotations -->
-			<java classname="stamp.readannot.AnnotationReader"
-				  maxmemory="${stamp.maxheap}"
-				  fork="true"
-				  dir="api-@{apilevel}"
-				  failonerror="true">
-			  <jvmarg value="-ea"/>
-			  <classpath>
-				<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
-				<fileset dir="${stamp.dir}/lib">
-				  <include name="**/*.jar"/>
-				</fileset>
-			  </classpath>
-			  <arg value="gen"/>
-			  <arg value="${stamp.dir}/bin/stamp.annotations.jar"/>
 			</java>
 			
 			<!-- compile the generated models -->
