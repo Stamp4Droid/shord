@@ -6,7 +6,9 @@
   <target name="compile">
     <mkdir dir="classes"/>
     <javac debug="true" debuglevel="source,lines,vars" includeAntRuntime="false"
-           srcdir="src" destdir="classes">
+           destdir="classes">
+      <src path="src"/>
+      <src path="gen"/>
       <classpath>
         <fileset dir="${stamp.dir}/lib">
           <include name="**/*.jar"/>
