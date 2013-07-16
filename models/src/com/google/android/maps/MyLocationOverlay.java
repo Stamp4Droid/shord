@@ -1,3 +1,5 @@
+import edu.stanford.stamp.harness.ApplicationDriver;
+
 class MyLocationOverlay
 {
 	@STAMP(flows={@Flow(from="$LOCATION",to="@return")})
@@ -11,4 +13,15 @@ class MyLocationOverlay
 	{
         return new android.location.Location((String) null);		
 	}
+
+	public synchronized boolean runOnFirstFix(final java.lang.Runnable param1) {
+		ApplicationDriver.getInstance().registerCallback(new edu.stanford.stamp.harness.Callback() {
+				public void run() {
+					param1.run();
+				}
+			});
+		return true;
+    }
+
+
 }
