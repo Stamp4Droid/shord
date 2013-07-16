@@ -3,6 +3,7 @@ package stamp.droidrecordweb;
 import edu.stanford.droidrecord.logreader.BinLogReader;
 import edu.stanford.droidrecord.logreader.CoverageReport;
 import edu.stanford.droidrecord.logreader.EventLogStream;
+import edu.stanford.droidrecord.logreader.events.util.ParseUtil;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,10 +36,14 @@ public class DroidrecordProxyWeb {
     public CoverageReport getCoverage() {
         if(!isAvailable()) {
             throw new Error("Droidrecord log not available!");
-        } else if(catchedCoverage != null){
-            return catchedCoverage;
+        } else if(catchedCoverage == null){
+            logReader.parseLog(binLogFile).readAll();
+            catchedCoverage = logReader.getCumulativeCoverageReport();;
         }
-        logReader.parseLog(binLogFile).readAll();
-        return logReader.getCumulativeCoverageReport();
+        return catchedCoverage;
+    }
+    
+    public static String chordToSootMethodSignature(String s) {
+        return ParseUtil.chordToSootMethodSignature(s);
     }
 }

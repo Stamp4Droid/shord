@@ -165,6 +165,10 @@ public class ChordAdapter extends ASTVisitor
 	public boolean visit(Initializer node)
 	{
 		int lineNum = cu.getLineNumber(node.getStartPosition());
+		Block body = node.getBody();
+        int bodyLen = body.getLength();
+        int bodyStartLn = cu.getLineNumber(body.getStartPosition());
+        int bodyEndLn = cu.getLineNumber(body.getStartPosition() + bodyLen);
 		ASTNode parent = node.getParent();
 		ITypeBinding containerType = null;
 		if(parent instanceof AbstractTypeDeclaration){
@@ -181,6 +185,8 @@ public class ChordAdapter extends ASTVisitor
 		writer.println("<method");
 		writer.println(" chordsig=\""+escapeXml(chordSig)+"\"");
 		writer.println(" line=\""+lineNum+"\"");
+    	writer.println(" bodyStartLn=\""+bodyStartLn+"\"");
+		writer.println(" bodyEndLn=\""+bodyEndLn+"\"");
 		writer.println(">");
 		return true;
 	}

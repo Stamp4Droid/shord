@@ -64,18 +64,21 @@ public class SourceProcessor
     public static class LineBegin extends Insertion {
 		private int lineNum;
         private DroidrecordProxyWeb droidrecord;
+        private String methodSig;
 
-		public LineBegin(int position, int lineNum, DroidrecordProxyWeb droidrecord) {
+		public LineBegin(int position, DroidrecordProxyWeb droidrecord,
+		                 String methodSig, int lineNum) {
 			super(position, -8);
-			this.lineNum = lineNum;
             this.droidrecord = droidrecord;
+			this.methodSig = methodSig;
+			this.lineNum = lineNum;
 		}
 
 	@Override public String toString() {
         String coveredClass = "src-ln-not-covered";
-        if(droidrecord.isAvailable()) {
+        if(droidrecord.isAvailable() && methodSig != null) {
             CoverageReport coverage = droidrecord.getCoverage();
-            if(coverage != null && false/*TODO*/) {
+            if(coverage != null && coverage.isCoveredLocation(methodSig, lineNum)) {
                 coveredClass = "src-ln-covered";
             }
         }
@@ -198,9 +201,60 @@ public class SourceProcessor
 
     private String source;
     private List<Insertion> insertions = new ArrayList<Insertion>();
+    
+    private Map<Integer, String> lineToMethodMap;
+    public String getContainingMethodForLine(int lineNum)
+    {
+        return lineToMethodMap.get(lineNum);
+    }
+    
+    private void populateLineToMethodMap(File srcMapFile) throws Exception {
+        System.out.println("srcMapFile : " + srcMapFile);
+        DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		Document document = builder.parse(srcMapFile);
+		XPath xpath = XPathFactory.newInstance().newXPath();
+		String query = "//method";
+		System.out.println("SourceProcessor.methodNodes: "+ query);
+		NodeList nodes = (NodeList) xpath.evaluate(query, document, XPathConstants.NODESET);
+		int n = nodes.getLength();
+		Map<Integer, String> startLnToMethod = new HashMap<Integer, String>();
+		Map<Integer, String> endLnToMethod = new HashMap<Integer, String>();
+		int lastLn = 0;
+		for(int i = 0; i < n; i++){
+		    String methodSig = ((Element) nodes.item(i)).getAttribute("chordsig");
+		    methodSig = DroidrecordProxyWeb.chordToSootMethodSignature(methodSig);
+		    Integer bodyStartLn = new Integer(((Element) nodes.item(i)).getAttribute("bodyStartLn"));
+			startLnToMethod.put(bodyStartLn, methodSig);
+			Integer bodyEndLn = new Integer(((Element) nodes.item(i)).getAttribute("bodyEndLn"));
+			endLnToMethod.put(bodyEndLn, methodSig);
+			if(bodyEndLn > lastLn) lastLn = bodyEndLn;
+		    //System.out.println(String.format("Detected method: %s [%d,%d]", methodSig, bodyStartLn, bodyEndLn));
+		}
+		Stack<String> currentMethodStack = new Stack<String>();
+		String currentMethod = null;
+		for(int i = 0; i < lastLn; i++) {
+		    if(startLnToMethod.get(i) != null) {
+		        currentMethodStack.push(currentMethod);
+		        currentMethod = startLnToMethod.get(i);
+		    }
+		    if(endLnToMethod.get(i) != null) {
+		        assert currentMethod.equals(endLnToMethod.get(i));
+		        currentMethod = currentMethodStack.pop();
+		    }
+		    if(currentMethod != null) {
+		        lineToMethodMap.put(i, currentMethod);
+		    }
+		    //System.out.println(String.format("Line: %d ===> Method: %s", i, currentMethod));
+		}
+    }
 
-	public SourceProcessor(File sourceFile, DroidrecordProxyWeb droidrecord) throws Exception
+	public SourceProcessor(File sourceFile, DroidrecordProxyWeb droidrecord, File srcMapFile) throws Exception
 	{
+	    lineToMethodMap = new HashMap<Integer, String>();
+	    if(srcMapFile != null) {
+	        populateLineToMethodMap(srcMapFile);
+	    }
+	    
 		// read file and add line insertions
 		BufferedReader br = new BufferedReader(new FileReader(sourceFile));
 		StringBuilder sourceBuilder = new StringBuilder();
@@ -208,7 +262,8 @@ public class SourceProcessor
 		int lineNum = 1;
 		int pos=0;
 		while((line = br.readLine()) != null) {
-			insertions.add(new LineBegin(pos, lineNum, droidrecord));
+		    String methodSig = getContainingMethodForLine(lineNum);
+			insertions.add(new LineBegin(pos, droidrecord, methodSig, lineNum));
 			
 			for(int i=0; i<line.length(); i++) {
 				switch(line.charAt(i)) {
@@ -236,12 +291,17 @@ public class SourceProcessor
 		br.close();
 		this.source = sourceBuilder.toString();
 	}
+	
+	public SourceProcessor(File sourceFile, DroidrecordProxyWeb droidrecord) throws Exception
+	{
+	    this(sourceFile, droidrecord, null);
+	}
 
     public SourceProcessor(File sourceFile, DroidrecordProxyWeb droidrecord, 
                            File srcMapFile, File taintedInfo, File allReachableInfo,
 						   File runtimeReachedMethods, String filePath) throws Exception 
 	{
-		this(sourceFile, droidrecord);
+		this(sourceFile, droidrecord, srcMapFile);
 		
 		Set<String> reachableSigs = new HashSet<String>();
 		// find reachable methods defined in this source file

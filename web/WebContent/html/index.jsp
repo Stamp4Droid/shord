@@ -22,7 +22,7 @@
      String srcPath = props.getProperty("srcPath");
      String libPath = props.getProperty("libPath");
      String dr_log_template = props.getProperty("stamp.droidrecord.logfile.template");
-     String dr_log_bin = props.getProperty("stamp.droidrecord.logfile.template");
+     String dr_log_bin = props.getProperty("stamp.droidrecord.logfile.bin");
      DroidrecordProxyWeb droidrecord = new DroidrecordProxyWeb(dr_log_template, dr_log_bin);
 
      session.setAttribute("rootPath", rootPath);
@@ -94,6 +94,9 @@
 				border-radius: 4px 4px 4px 4px;
 			}
      		
+     		.src-ln-covered {
+                background-color: rgba(255,255,0,0.2);
+            }
   		</style>
   		
 		<link href="/stamp/fuelux/css/fuelux-responsive.min.css" rel="stylesheet" />
