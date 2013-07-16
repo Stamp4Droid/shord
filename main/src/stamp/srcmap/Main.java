@@ -11,7 +11,8 @@ public class Main
 	private static String[] classpathEntries;
 	private static String[] srcpathEntries;
 	private static File srcMapDir;
-	static PrintWriter writer;
+	private static PrintWriter writer;
+	private static Set<String> oldAnnots = new HashSet();
 
 	public static void process(String srcRootPath, File javaFile) throws IOException
 	{
@@ -159,16 +160,31 @@ public class Main
 		if(dirName == null){
 			//processing android classes
 			//open in append mode
-			writer = new PrintWriter(new FileWriter("stamp_annotations.txt", true));
-			return;
-		} 
-
-		writer = new PrintWriter(new FileWriter("stamp_annotations.txt"));
-		BufferedReader reader = new BufferedReader(new FileReader(new File(dirName, "stamp_annotations.txt")));
-		String line;
-		while((line = reader.readLine()) != null){
-			writer.println(line);
+			File f = new File("stamp_annotations.txt");
+			if(f.exists()){
+				BufferedReader reader = new BufferedReader(new FileReader(f));
+				String line;
+				while((line = reader.readLine()) != null){
+					oldAnnots.add(line);
+				}
+				reader.close();
+			}
+			writer = new PrintWriter(new FileWriter(f, true));
+		} else {
+			writer = new PrintWriter(new FileWriter("stamp_annotations.txt"));
+			BufferedReader reader = new BufferedReader(new FileReader(new File(dirName, "stamp_annotations.txt")));
+			String line;
+			while((line = reader.readLine()) != null){
+				writer.println(line);
+			}
+			reader.close();
 		}
-		reader.close();
+	}
+	
+	static void writeAnnot(String annot)
+	{
+		if(oldAnnots.contains(annot))
+			return;
+		writer.println(annot);
 	}
 }

@@ -27,7 +27,18 @@ class Bundle
 	
 	/* general unknown object. For all reference type. */
 	public java.lang.Object unknown;
-	
+
+	/* specific to system events */
+
+	/* SMS */
+	public byte[][] pdus;
+
+    public Bundle() {
+		byte[][] smsData = new byte[1][];
+		smsData[0] = smsByteArray();
+		this.pdus = smsData;
+		this.unknown = smsData;
+	}
 	
 	//getter..
 		
@@ -411,5 +422,16 @@ class Bundle
 		this.unknown = value;
 	}
 
+	@STAMP(flows={@Flow(from="$SMS",to="@return")})
+	private byte[] smsByteArray() {
+		byte[] bytes = new byte[1];
+		bytes[0] = smsByte();
+		return bytes;
+	}
+
+	@STAMP(flows={@Flow(from="$SMS",to="@return")})
+	private byte smsByte() {
+		return 0;
+	}
 
 }
