@@ -7,7 +7,7 @@
 	  depends="-check-everythinguptodate"
 	  unless="${everythinguptodate}">
     <ant antfile="${stamp.dir}/web/build.xml" target="deploy"
-		 inheritAll="false" useNativeBasedir="true"/>
+	 inheritAll="false" useNativeBasedir="true"/>
     <tstamp>
       <format property="logtime" pattern="yyyy.MM.dd : HH:mm:ss z"/>
     </tstamp>

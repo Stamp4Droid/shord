@@ -9,7 +9,7 @@
            srcdir="src" destdir="classes">
       <classpath>
         <fileset dir="${stamp.dir}/lib">
-          <include name="*.jar"/>		  
+          <include name="**/*.jar"/>
         </fileset>
       </classpath>
     </javac>

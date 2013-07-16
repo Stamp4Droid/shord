@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="STAMP" default="help">
 
+  <!-- Locate main STAMP directory. -->
   <dirname property="stamp.ant.dir" file="${ant.file}"/>
   <property name="stamp.dir" location="${stamp.ant.dir}/.."/>
 
@@ -9,9 +10,15 @@
   <property file="${stamp.dir}/local.config"/>
   <property file="${stamp.dir}/stamp.config"/>
 
-  <property name="web.dir" location="${stamp.dir}/web"/>
-  <property name="stamp.tomcat.bindir" value="${stamp.dir}/tomcat/bin"/>
+  <!-- Import third-party Ant tasks. -->
+  <taskdef resource="net/sf/antcontrib/antcontrib.properties"
+	   classpath="${stamp.dir}/lib/ant-contrib.jar"/>
 
+  <!-- Set project-wide options. -->
+  <property name="web.dir" location="${stamp.dir}/web"/>
+  <property name="stamp.tomcat.bindir" location="${stamp.dir}/tomcat/bin"/>
+
+  <!-- Import sub-build scripts. -->
   <import file="macros.xml"/>
   <import file="apptasks.xml"/>
   <import file="tooltasks.xml"/>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="STAMP-Macros" default="help">
 
-  <taskdef resource="net/sf/antcontrib/antcontrib.properties"
-	   classpath="${stamp.dir}/lib/ant-contrib.jar"/>
-
   <macrodef name="require-prop">
     <!-- Fail if a property is not defined. -->
     <attribute name="property"/>
