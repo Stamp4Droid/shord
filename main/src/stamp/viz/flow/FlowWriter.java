@@ -23,6 +23,7 @@ import shord.analyses.RetVarNode;
 import shord.analyses.ThisVarNode;
 import shord.analyses.VarNode;
 import shord.project.ClassicProject;
+import shord.program.Program;
 import soot.jimple.Stmt;
 import soot.Local;
 import soot.SootMethod;
@@ -170,7 +171,7 @@ public class FlowWriter {
 				System.out.println(c.toString());
 				for (int i = 0; i < elems.length; ++i) {
 					Stmt stm = (Stmt)elems[i];
-					SootMethod method = SourceInfo.containerMethod(stm);
+					SootMethod method = Program.containerMethod(stm);
 
 					String sourceFileName = method == null ? "" : SourceInfo.filePath(method.getDeclaringClass());
 					int methodLineNum = SourceInfo.methodLineNum(method);
