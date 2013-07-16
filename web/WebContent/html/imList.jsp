@@ -20,11 +20,11 @@
         	session.setAttribute("qcg", qcg);
         }
 
-        /*QueryObservedParams qop = (QueryObservedParams) session.getAttribute("qop");
+        QueryObservedParams qop = (QueryObservedParams) session.getAttribute("qop");
         if(qop == null){
         	qop = new QueryObservedParams(outPath + "/results/observedparams.xml");
         	session.setAttribute("qop", qop);
-        }*/
+        }
 
 
 		if(type == null){
