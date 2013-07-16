@@ -130,14 +130,13 @@ public class Tuple
 
 	//TODO: remove? Added to facilitate hack for Flow Viz
 	public final Tuple addRawValue(String label, String srcFile, String lineNum, String type, String chordSig) {
-		str = (str != null ? str : "") +
-			"\t<value"+
+		str = "\t<value"+
 			(srcFile == null ? "" : (" srcFile=\""+srcFile+"\" lineNum=\""+lineNum+"\"")) +
 			(chordSig == null ? "" : (" chordsig=\""+StringEscapeUtils.escapeXml(chordSig)+"\""))+
 			(type == null ? "" : (" type=\""+type+"\"")) +
 			">\n" 
 		    + "\t\t<label><![CDATA["+label+"]]></label>\n"
-		    + "\t</value>\n";
+		    + "\t</value>\n" + (str != null ? str : "");
 		return this;
 	}
 

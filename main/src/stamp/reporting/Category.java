@@ -11,7 +11,7 @@ import soot.SootMethod;
 **/
 public class Category extends Tuple
 {
-	protected Map<Object,Category> subCategories = new HashMap();
+	protected Map<Object,Category> subCategories = new LinkedHashMap();
 	protected List<Tuple> tuples = new ArrayList();
 	protected String type;
 
@@ -51,6 +51,23 @@ public class Category extends Tuple
 		
 		for(Category c : sortSubCats())
 			c.write(writer);
+
+		writer.println("</category>");
+	}
+
+
+	public void writeInsertionOrder(PrintWriter writer)
+	{
+		if(type != null)
+			writer.println("<category type=\""+type+"\">");
+		else
+			writer.println("<category>");
+		writer.println(str);
+		for(Tuple t : tuples)
+			t.write(writer);
+		
+		for(Category c : subCategories.values())
+			c.writeInsertionOrder(writer);
 
 		writer.println("</category>");
 	}

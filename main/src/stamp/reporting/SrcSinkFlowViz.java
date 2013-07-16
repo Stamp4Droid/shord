@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
@@ -43,7 +45,7 @@ public class SrcSinkFlowViz extends XMLVizReport
 			while (brdr.ready()) {
 				String filename = brdr.readLine();
 
-				HashMap<String, SootClass> classes = new HashMap<String, SootClass>();
+				Set<String> seenLocs = new HashSet();
 				Category c = makeOrGetPkgCat(new SootClass(filename));
 
 				try {
@@ -54,10 +56,15 @@ public class SrcSinkFlowViz extends XMLVizReport
 						if (tokens[0].charAt(0) == '<') continue;
 
 						Category mc = c;
-						String[] context = tokens[3].split("\\.");
+						String[] context = tokens[3].split("@");
 						for (String s : context) {
-							mc = mc.makeOrGetSubCat(s);
-							mc.addRawValue(s, "EMPTY", "EMPTY", "method", "");
+							String[] methTokens = s.split(":");
+							assert methTokens.length == 3;
+							mc = mc.makeOrGetSubCat(methTokens[2]);
+							if (!seenLocs.contains(s)) {
+								mc.addRawValue(methTokens[2], methTokens[0], methTokens[1], "method", "");
+								seenLocs.add(s);
+							}
 						}
 						mc.newTuple().addRawValue(tokens[2], tokens[0], tokens[1], "method", "")
 							.addValue("Label: " + tokens[2]);

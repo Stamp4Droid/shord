@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import shord.analyses.Ctxt;
 import shord.analyses.DomC;
@@ -168,7 +169,18 @@ public class FlowWriter {
 				Unit[] elems = c.getElems();
 				System.out.println(c.toString());
 				for (int i = 0; i < elems.length; ++i) {
-					newTokens.add(SourceInfo.containerMethod((Stmt)elems[i]).getName());
+					Stmt stm = (Stmt)elems[i];
+					SootMethod method = SourceInfo.containerMethod(stm);
+
+					String sourceFileName = method == null ? "" : SourceInfo.filePath(method.getDeclaringClass());
+					int methodLineNum = SourceInfo.methodLineNum(method);
+					if (methodLineNum < 0) {
+						methodLineNum = 0;
+					}
+
+					String methStr = sourceFileName + ":" + methodLineNum + ":" +method.getName();
+
+					newTokens.add(methStr);
 				}
 			}
 			return newTokens.toArray(tokens);
@@ -188,7 +200,7 @@ public class FlowWriter {
 		boolean runSeen = false;
 		for (int i = tokens.length - 1; i > 2; --i) {
 			sb.append(tokens[i]);
-			if (i != 3) sb.append(".");
+			if (i != 3) sb.append("@");
 			/*
 			if (tokens[i].equals("run")) {
 				if (!runSeen) {
@@ -734,6 +746,8 @@ public class FlowWriter {
 		Set<String> terminals = new HashSet<String>();
 		terminals.add("FlowsTo");
 
+		Set<String> filenames = new TreeSet();
+
 		for(Edge edge : g.getEdges("Src2Sink")) {
 			String[] sourceTokens = toTokens(edge.from.getName());
 			String source = sourceTokens[1].substring(1);
@@ -741,11 +755,19 @@ public class FlowWriter {
 			String[] sinkTokens = toTokens(edge.to.getName());
 			String sink = sinkTokens[1].substring(1);
 
-			PrintWriter pw = new PrintWriter(new File("cfl/" + source + "2" + sink + ".out.test"));
+			String filename = source + "2" + sink;
+			PrintWriter pw = new PrintWriter(new File("cfl/" + filename + ".out"));
 			FlowObject fo = new MethodCompressedFlowObject(g.getPath(edge), g);
 			pw.println(new HTMLObject.SpanObject(fo.getString(true)).toString());
 			//pw.println(new AliasCompressedFlowObject(g.getPath(edge, terminals), g).toString());
 			pw.close();
+			filenames.add(filename);
 		}
+
+		PrintWriter pwr = new PrintWriter(new File("cfl/Src2SinkFiles.out"));
+		for (String name : filenames) {
+			pwr.println(name);
+		}
+		pwr.close();
 	}
 }
