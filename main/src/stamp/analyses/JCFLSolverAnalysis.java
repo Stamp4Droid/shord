@@ -2,26 +2,52 @@ package stamp.analyses;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
-import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
-import shord.project.analyses.ProgramRel;
-import stamp.jcflsolver.Edge;
-import stamp.jcflsolver.FactsWriter;
-import stamp.jcflsolver.Graph;
-import stamp.jcflsolver.Util.MultivalueMap;
-import stamp.jcflsolver.Util.Pair;
-import stamp.jcflsolver.grammars.E12;
-import stamp.viz.flow.FlowWriter;
+import stamp.missingmodels.grammars.E12;
+import stamp.missingmodels.util.Relation;
+import stamp.missingmodels.util.Relation.IndexRelation;
+import stamp.missingmodels.util.Relation.StubIndexRelation;
+import stamp.missingmodels.util.StubLookup;
+import stamp.missingmodels.util.StubLookup.StubLookupKey;
+import stamp.missingmodels.util.StubLookup.StubLookupValue;
+import stamp.missingmodels.util.Util.MultivalueMap;
+import stamp.missingmodels.util.jcflsolver.EdgeData;
+import stamp.missingmodels.util.jcflsolver.FactsWriter;
+import stamp.missingmodels.util.jcflsolver.Graph;
+import stamp.missingmodels.viz.flow.FlowWriter;
 import chord.project.Chord;
 
-@Chord(name = "jcflsolver") public class JCFLSolverAnalysis extends JavaAnalysis {
+/*
+ * An analysis that runs the JCFLSolver to do the taint analysis.
+ * 
+ * DOMAIN INFORMATION:
+ * 
+ * a) Shord domains:
+ * variables = V.dom = Register
+ * methods = M.dom = jq_Method
+ * sources/sinks = SRC.dom/SINK.dom = String
+ * contexts = C.dom = Ctxt
+ * invocation quads = I.dom = Quad
+ * method arg number = Z.dom = Integer
+ * integers = K.dom = Integer
+ * 
+ * b) Stamp domains:
+ * labels (sources + sinks) = L.dom = String
+ */
 
-	//*** CODE FOR RELATION TO EDGE SYMBOL LOOKUPS ***//
+@Chord(name = "jcflsolver")
+public class JCFLSolverAnalysis extends JavaAnalysis {
+
+	/*
+	 * The set of all relations used by the various grammars.
+	 */
 	private static final MultivalueMap<String,Relation> relations = new MultivalueMap<String,Relation>();
 	static {
+		/*
+		 * The following are points-to analysis information.
+		 */
 		// ref assign
 		relations.add("cs_refAssign", new IndexRelation("AssignCtxt", "V", 2, 0, "V", 1, 0));
 		relations.add("cs_refAssign", new IndexRelation("LoadStatCtxt", "F", 2, null, "V", 1, 0));
@@ -49,8 +75,14 @@ import chord.project.Chord;
 		relations.add("cs_primAssignArg", new IndexRelation("AssignArgPrimCtxt", "U", 3, 2, "U", 1, 0));
 		relations.add("cs_primAssignRet", new IndexRelation("AssignRetPrimCtxt", "U", 3, 2, "U", 1, 0));
 
-		// Flows To relation
+		/*
+		 * The following is the points-to relation, computed by BDDBDDB.
+		 */
 		relations.add("flowsTo", new IndexRelation("pt", "C", 2, null, "V", 1, 0));
+		
+		/*
+		 * The following are taint information.
+		 */
 
 		// ref taint flow
 		relations.add("cs_srcRefFlow", new IndexRelation("SrcArgFlowCtxt", "L", 1, null, "V", 2, 0));
@@ -81,305 +113,58 @@ import chord.project.Chord;
 		relations.add("cs_primRefFlowStub", new StubIndexRelation("ArgPrimArgTransferCtxtStub", "U", 1, 0, "V", 2, 0, 3, 4, 5));
 		relations.add("cs_primRefFlowStub", new StubIndexRelation("ArgPrimRetTransferCtxtStub", "U", 1, 0, "V", 2, 0, 3, 4));
 
-		// Phantom flows to relation
+		/*
+		 * The following are phantom point-to relations.
+		 */
 		//relations.add("flowsTo", new PhantomIndexRelation("cs_ptPhantom", 2, "V", 1, 0, "V", 3, 4));
 
-		//*** FOR SOURCE/SINK INFERENCE PURPOSES ONLY ***//
-
-		// ref stub source/sink taint flow
 		/*
-	relations.add("cs_srcFlowStub", new StubIndexRelation("cfl_cs_srcArgFlowStub", "M", 2, 3, "V", 1, 0, 2, 3));
-	relations.add("cs_srcFlowStub", new StubIndexRelation("cfl_cs_srcRetFlowStub", "M", 2, null, "V", 1, 0, 2));
-
-	relations.add("cs_sinkFlowStub", new StubIndexRelation("cfl_cs_sinkFlowStub", "V", 1, 0, "M", 2, 3, 2, 3));
-
-	// prim stub source/sink taint flow
-	relations.add("cs_primSrcFlowStub", new StubIndexRelation("cfl_cs_primSrcFlowStub", "M", 2, null, "U", 1, 0, 2));
-	relations.add("cs_primSinkFlowStub", new StubIndexRelation("cfl_cs_primSinkFlowStub", "U", 1, 0, "M", 2, 3, 2, 3));
-
-	// ref source/sink taint flow
-	relations.add("cs_srcRefFlowNew", new StubIndexRelation("cfl_cs_fullSrcArgFlow_new", "M", 3, 4, "V", 2, 0, 3, 4));
-	relations.add("cs_srcRefFlowNew", new StubIndexRelation("cfl_cs_fullSrcRetFlow_new", "M", 3, null, "V", 2, 0, 3));
-
-	relations.add("cs_refSinkFlowNew", new StubIndexRelation("cfl_cs_fullSinkFlow_new", "V", 1, 0, "M", 3, 4, 3, 4));
-
-	// prim source/sink taint flow
-	relations.add("cs_srcPrimFlowNew", new StubIndexRelation("cfl_cs_primFullSrcFlow_new", "M", 3, null, "U", 2, 0, 3));
-	relations.add("cs_primSinkFlowNew", new StubIndexRelation("cfl_cs_primFullSinkFlow_new", "U", 1, 0, "M", 3, 4, 3, 4));
+		 * The following are for source/sink inference purposes.
 		 */
 
-		//*** END ***//
+		/*
+		// ref stub source/sink taint flow
+		relations.add("cs_srcFlowStub", new StubIndexRelation("cfl_cs_srcArgFlowStub", "M", 2, 3, "V", 1, 0, 2, 3));
+		relations.add("cs_srcFlowStub", new StubIndexRelation("cfl_cs_srcRetFlowStub", "M", 2, null, "V", 1, 0, 2));
+
+		relations.add("cs_sinkFlowStub", new StubIndexRelation("cfl_cs_sinkFlowStub", "V", 1, 0, "M", 2, 3, 2, 3));
+
+		// prim stub source/sink taint flow
+		relations.add("cs_primSrcFlowStub", new StubIndexRelation("cfl_cs_primSrcFlowStub", "M", 2, null, "U", 1, 0, 2));
+		relations.add("cs_primSinkFlowStub", new StubIndexRelation("cfl_cs_primSinkFlowStub", "U", 1, 0, "M", 2, 3, 2, 3));
+
+		// ref source/sink taint flow
+		relations.add("cs_srcRefFlowNew", new StubIndexRelation("cfl_cs_fullSrcArgFlow_new", "M", 3, 4, "V", 2, 0, 3, 4));
+		relations.add("cs_srcRefFlowNew", new StubIndexRelation("cfl_cs_fullSrcRetFlow_new", "M", 3, null, "V", 2, 0, 3));
+
+		relations.add("cs_refSinkFlowNew", new StubIndexRelation("cfl_cs_fullSinkFlow_new", "V", 1, 0, "M", 3, 4, 3, 4));
+
+		// prim source/sink taint flow
+		relations.add("cs_srcPrimFlowNew", new StubIndexRelation("cfl_cs_primFullSrcFlow_new", "M", 3, null, "U", 2, 0, 3));
+		relations.add("cs_primSinkFlowNew", new StubIndexRelation("cfl_cs_primFullSinkFlow_new", "U", 1, 0, "M", 3, 4, 3, 4));
+		*/
 	}
 
-	public static class IndexRelation extends Relation {
-		protected final int firstVarIndex;
-		protected final int firstCtxtIndex;
-
-		protected final int secondVarIndex;
-		protected final int secondCtxtIndex;
-
-		protected final int labelIndex;
-
-		protected final String firstVarType;
-		protected final String secondVarType;
-
-		protected final String relationName;
-
-		protected final boolean hasFirstCtxt;
-		protected final boolean hasSecondCtxt;
-		protected final boolean hasLabel;
-
-		public IndexRelation(String relationName, String firstVarType, int firstVarIndex, Integer firstCtxtIndex, String secondVarType, int secondVarIndex, Integer secondCtxtIndex, Integer labelIndex) {
-			this.relationName = relationName;
-
-			this.hasFirstCtxt = firstCtxtIndex != null;
-			this.hasSecondCtxt = secondCtxtIndex != null;
-			this.hasLabel = labelIndex != null;
-
-			this.firstVarIndex = firstVarIndex;
-			this.firstCtxtIndex = this.hasFirstCtxt ? firstCtxtIndex : 0;
-
-			this.secondVarIndex = secondVarIndex;
-			this.secondCtxtIndex = this.hasSecondCtxt ? secondCtxtIndex : 0;
-
-			this.labelIndex = this.hasLabel ? labelIndex : 0;
-
-			this.firstVarType = firstVarType;
-			this.secondVarType = secondVarType;
-		}
-
-		public IndexRelation(String relationName, String firstVarType, int firstVarIndex, Integer firstCtxtIndex, String secondVarType, int secondVarIndex, Integer secondCtxtIndex) {
-			this(relationName, firstVarType, firstVarIndex, firstCtxtIndex, secondVarType, secondVarIndex, secondCtxtIndex, null);
-		}
-
-		@Override protected String getRelationName() {
-			return this.relationName;
-		}
-
-		@Override protected String getSourceFromTuple(int[] tuple) {
-			try {
-				return firstVarType + Integer.toString(tuple[firstVarIndex]) + (hasFirstCtxt ? "_" + Integer.toString(tuple[firstCtxtIndex]) : "");
-			} catch(Exception e) {
-				throw new RuntimeException("Error parsing relation " + getRelationName() + "!");
-			}
-		}
-
-		@Override protected String getSinkFromTuple(int[] tuple) {
-			try {
-				return secondVarType + Integer.toString(tuple[secondVarIndex]) + (hasSecondCtxt ? "_" + Integer.toString(tuple[secondCtxtIndex]) : "");
-			} catch(Exception e) {
-				throw new RuntimeException("Error parsing relation " + getRelationName() + "!");
-			}
-		}
-
-		@Override protected int getLabelFromTuple(int[] tuple) {
-			try {
-				return tuple[labelIndex];
-			} catch(Exception e) {
-				throw new RuntimeException("Error parsing relation " + getRelationName() + "!");
-			}
-		}
-
-		@Override protected boolean hasLabel() {
-			return hasLabel;
-		}
-
-		@Override protected boolean isStub() {
-			return false;
-		}
-
-		@Override protected StubLookupValue getStubLookupValueFromTuple(int[] tuple) {
-			return null;
-		}
-
-		@Override protected boolean filter(int[] tuple) {
-			return true;
-		}
-	}
-
-	public static class PhantomIndexRelation extends IndexRelation {
-		private final int methodIndex;
-
-		public PhantomIndexRelation(String relationName, int methodIndex, String firstVarType, int firstVarIndex, int firstCtxtIndex, String secondVarType, int secondVarIndex, Integer secondCtxtIndex) {
-			super(relationName, firstVarType, firstVarIndex, firstCtxtIndex, secondVarType, secondVarIndex, secondCtxtIndex, null);
-			this.methodIndex = methodIndex;
-		}
-
-		@Override protected String getSourceFromTuple(int[] tuple) {
-			String source = super.getSourceFromTuple(tuple);
-			return "M" + tuple[this.methodIndex] + "_" + source;
-		}
-	}
-
-	public static class StubIndexRelation extends IndexRelation {
-		private int methodIndex;
-		private Integer firstArgIndex;
-		private Integer secondArgIndex;
-
-		public StubIndexRelation(String relationName, String firstVarType, int firstVarIndex, Integer firstCtxtIndex, String secondVarType, int secondVarIndex, Integer secondCtxtIndex, Integer labelIndex, int methodIndex, Integer firstArgIndex, Integer secondArgIndex) {
-			super(relationName, firstVarType, firstVarIndex, firstCtxtIndex, secondVarType, secondVarIndex, secondCtxtIndex, labelIndex);
-			this.methodIndex = methodIndex;
-			this.firstArgIndex = firstArgIndex;
-			this.secondArgIndex = secondArgIndex;
-		}
-
-		public StubIndexRelation(String relationName, String firstVarType, int firstVarIndex, Integer firstCtxtIndex, String secondVarType, int secondVarIndex, Integer secondCtxtIndex, int methodIndex, Integer firstArgIndex, Integer secondArgIndex) {
-			this(relationName, firstVarType, firstVarIndex, firstCtxtIndex, secondVarType, secondVarIndex, secondCtxtIndex, null, methodIndex, firstArgIndex, secondArgIndex);
-		}
-
-		public StubIndexRelation(String relationName, String firstVarType, int firstVarIndex, Integer firstCtxtIndex, String secondVarType, int secondVarIndex, Integer secondCtxtIndex, int methodIndex, Integer argIndex) {
-			this(relationName, firstVarType, firstVarIndex, firstCtxtIndex, secondVarType, secondVarIndex, secondCtxtIndex, null, methodIndex, argIndex, null);
-		}
-
-		public StubIndexRelation(String relationName, String firstVarType, int firstVarIndex, Integer firstCtxtIndex, String secondVarType, int secondVarIndex, Integer secondCtxtIndex, int methodIndex) {
-			this(relationName, firstVarType, firstVarIndex, firstCtxtIndex, secondVarType, secondVarIndex, secondCtxtIndex, null, methodIndex, null, null);
-		}
-
-		@Override protected boolean isStub() {
-			return true;
-		}
-
-		@Override protected StubLookupValue getStubLookupValueFromTuple(int[] tuple) {
-			Integer firstArg = this.firstArgIndex == null ? null : tuple[this.firstArgIndex];
-			Integer secondArg = this.secondArgIndex == null ? null : tuple[this.secondArgIndex];
-			return new StubLookupValue(this.getRelationName(), tuple[this.methodIndex], firstArg, secondArg);
-		}
-
-		@Override protected boolean filter(int[] tuple) {
-			return true;
-		}
-	}
-
-	public static abstract class Relation {
-		protected abstract String getRelationName();
-
-		protected abstract String getSourceFromTuple(int[] tuple);
-		protected abstract String getSinkFromTuple(int[] tuple);
-
-		protected abstract boolean hasLabel();
-		protected abstract int getLabelFromTuple(int[] tuple);
-
-		protected abstract boolean isStub();
-		protected abstract StubLookupValue getStubLookupValueFromTuple(int[] tuple);
-		protected abstract boolean filter(int[] tuple);
-
-		protected StubLookupKey getStubLookupKeyFromTuple(int[] tuple, String edgeName) {
-			return new StubLookupKey(edgeName, this.getSourceFromTuple(tuple), this.getSinkFromTuple(tuple));
-		}
-
-		public void addEdges(String edgeName, Graph g) {
-			int kind = g.symbolToKind(edgeName);
-			short weight = g.kindToWeight(kind);
-
-			final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt(getRelationName());
-			rel.load();
-			Iterable<int[]> res = rel.getAryNIntTuples();
-
-			for(int[] tuple : res) {
-				if(this.filter(tuple)) {
-					String sourceName = getSourceFromTuple(tuple);
-					String sinkName = getSinkFromTuple(tuple);
-
-					if(hasLabel()) {
-						g.addWeightedInputEdge(sourceName, sinkName, kind, getLabelFromTuple(tuple), weight);
-					} else {
-						g.addWeightedInputEdge(sourceName, sinkName, kind, weight);
-					}
-
-					if(isStub()) {
-						stubInfoLookup.put(this.getStubLookupKeyFromTuple(tuple, edgeName), this.getStubLookupValueFromTuple(tuple));
-					}
-				}
-			}
-
-			rel.close();
-		}
-	}
-
-	//*** CODE FOR STUB METHOD LOOKUPS ***//
-	public static class StubLookupKey {
-		public final String symbol;
-		public final String source;
-		public final String sink;
-
-		public StubLookupKey(String symbol, String source, String sink) {
-			this.symbol = symbol;
-			this.source = source;
-			this.sink = sink;
-		}
-
-		@Override public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + symbol.hashCode();
-			result = prime * result + source.hashCode();
-			result = prime * result + sink.hashCode();
-			return result;
-		}
-
-		@Override public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			StubLookupKey other = (StubLookupKey) obj;
-			return symbol.equals(other.symbol)
-					&& source.equals(other.source)
-					&& sink.equals(other.sink);
-		}
-	}
-
-	public static class StubLookupValue {
-		public final String relationName;
-		public final int method;
-		public final Integer firstArg;
-		public final Integer secondArg;	
-
-		public StubLookupValue(String relationName, int method, Integer firstArg, Integer secondArg) {
-			this.relationName = relationName;
-			this.method = method;
-			this.firstArg = firstArg;
-			this.secondArg = secondArg;
-		}
-
-		public StubLookupValue(String relationName, int method, Integer arg) {
-			this(relationName, method, arg, null);
-		}
-
-		public StubLookupValue(String relationName, int method) {
-			this(relationName, method, null, null);
-		}
-	}
-
-	private static Map<StubLookupKey,StubLookupValue> stubInfoLookup = new HashMap<StubLookupKey,StubLookupValue>();
+	/*
+	 * The following code is for building and performing stub lookups.
+	 */
+	private static StubLookup stubLookup = new StubLookup();
 	public static StubLookupValue getStub(StubLookupKey key) {
-		return stubInfoLookup.get(key);
+		return stubLookup.get(key);
 	}
 
 	public static Map<StubLookupKey,StubLookupValue> getAllStubs() {
-		return stubInfoLookup;
+		return stubLookup;
 	}
 
-	//*** CODE FOR SRC2SINK FLOW LOOKUPS ***//
-	private static Map<Pair<Integer,Integer>,Integer> src2sink = new HashMap<Pair<Integer,Integer>,Integer>();
-	public static Map<Pair<Integer,Integer>,Integer> getSrc2Sink() {
-		return src2sink;
+	public static StubLookupValue lookup(EdgeData edge, boolean forward) {
+		StubLookupKey key = new StubLookupKey(edge.symbol, edge.from, edge.to);
+		return JCFLSolverAnalysis.getStub(key);
 	}
 
-	// TODO: currently only printing true source-sink flows (not inferred ones)
-	public void fillSrc2Sink(Graph g) {
-		for(Edge edge : g.getEdges("Src2Sink")) {
-			//if(edge.from.getName().startsWith("L") && edge.to.getName().startsWith("L")) {
-				int source = Integer.parseInt(edge.from.getName().replaceAll("[a-zA-Z]", ""));
-				int sink = Integer.parseInt(edge.to.getName().replaceAll("[a-zA-Z]", ""));
-				src2sink.put(new Pair<Integer,Integer>(source, sink), (int)edge.weight);
-			//}
-		}
-	}
-
-	//*** CODE FOR ANALYSIS ***/
+	/*
+	 * The following code is for running the JCFLSolver analysis.
+	 */
 	private void fillTerminalEdges(Graph g) {
 		for(int k=0; k<g.numKinds(); k++) {
 			if(g.isTerminal(k)) {
@@ -387,31 +172,16 @@ import chord.project.Chord;
 					System.out.println("No edges found for relation " + g.kindToSymbol(k) + "...");
 				}
 				for(Relation rel : relations.get(g.kindToSymbol(k))) {
-					rel.addEdges(g.kindToSymbol(k), g);
+					rel.addEdges(g.kindToSymbol(k), g, stubLookup);
 				}
 			}
 		}
 	}
-
+	
 	@Override public void run() {
-
-		// ** INPUTS **
-		// variables = V.dom = Register
-		// methods = M.dom = jq_Method
-		// sources/sinks = SRC.dom/SINK.dom = String
-		// contexts = C.dom = Ctxt
-		// invocation quads = I.dom = Quad
-		// method arg number = Z.dom = Integer
-		// integers = K.dom = Integer
-
-		// sources = SRC.dom = String
-		// sinks = SINK.dom = String
-
 		Graph g = new E12();
 		fillTerminalEdges(g);
 		g.algo.process();
-
-		fillSrc2Sink(g);
 
 		File resultsDir = new File(System.getProperty("stamp.out.dir") + File.separator + "cfl");
 		resultsDir.mkdirs();
