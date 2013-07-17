@@ -1,6 +1,7 @@
 class URL
 {
-	@STAMP(flows={@Flow(from="!INTERNET",to="this"),@Flow(from="spec",to="this")})
+	//@STAMP(flows={@Flow(from="!INTERNET",to="this"),@Flow(from="spec",to="this")})
+	@STAMP(flows={@Flow(from="spec",to="this")})
 	public  URL(java.lang.String spec) throws java.net.MalformedURLException 
 	{
 	}
