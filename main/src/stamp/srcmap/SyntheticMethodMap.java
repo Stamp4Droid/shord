@@ -68,7 +68,7 @@ public class SyntheticMethodMap
 
 	private static SootMethod performMapping(SootMethod synthMeth)
 	{
-		if(synthMeth.isConcrete())
+		if(!synthMeth.isConcrete())
 			return null;
 		
 		SootMethod srcMeth = null;

@@ -31,6 +31,19 @@ class ContextWrapper
 		return new Intent();
 	}
 
+    public boolean bindService(android.content.Intent service, android.content.ServiceConnection conn, int flags) 
+	{
+		final android.content.ServiceConnection c = conn;
+		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
+			registerCallback(new edu.stanford.stamp.harness.Callback(){
+					public void run() {
+						c.onServiceConnected(null, null);
+						c.onServiceDisconnected(null);
+					}
+				}); 
+		return true;
+    }
+
 	public  android.content.Context getApplicationContext() 
 	{ 
 		return this;

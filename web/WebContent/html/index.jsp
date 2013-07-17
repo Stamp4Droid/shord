@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="fuelux">
 	<head>
-	<%@ page import="java.io.*,java.util.*,stamp.reporting.QueryResults"%>
+	<%@ page import="java.io.*,java.util.*,stamp.reporting.QueryResults,stamp.droidrecordweb.DroidrecordProxyWeb"%>
   <%
 	if(!session.isNew()){
 		session.invalidate();
@@ -21,12 +21,16 @@
      String appPath = props.getProperty("appPath");
      String srcPath = props.getProperty("srcPath");
      String libPath = props.getProperty("libPath");
+     String dr_log_template = props.getProperty("stamp.droidrecord.logfile.template");
+     String dr_log_bin = props.getProperty("stamp.droidrecord.logfile.bin");
+     DroidrecordProxyWeb droidrecord = new DroidrecordProxyWeb(dr_log_template, dr_log_bin);
 
      session.setAttribute("rootPath", rootPath);
      session.setAttribute("appPath", appPath);
      session.setAttribute("outPath", outPath);
      session.setAttribute("srcPath", srcPath);
      session.setAttribute("libPath", libPath);
+     session.setAttribute("droidrecord", droidrecord);
 
      System.out.println("srcPath = "+srcPath);
      
@@ -90,6 +94,9 @@
 				border-radius: 4px 4px 4px 4px;
 			}
      		
+     		.src-ln-covered {
+                background-color: rgba(255,255,0,0.2);
+            }
   		</style>
   		
 		<link href="/stamp/fuelux/css/fuelux-responsive.min.css" rel="stylesheet" />
@@ -123,6 +130,7 @@
 		<script src="/stamp/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
 		<script src="/stamp/fuelux/loader.js" type="text/javascript"></script>
 		<script src="/stamp/scripts/prettify.js" type="text/javascript"></script>
+		<script src="/stamp/scripts/viewSource.js" type="text/javascript"></script>
 		
 		<script>
 		$('#codetabs').hide();
@@ -202,6 +210,13 @@
 			var tabNameToId = new Object();
 			var idToHighlightedLine = new Object();
 			var totalFilesOpened = 0;
+			
+			function rightBarAddDynamicData(drDataParams)
+			{
+			    var data = jQuery.parseJSON(atob(drDataParams));
+			    var html = ViewSource.droidrecordDataToTable(data, false);
+			    $("#rightbar div.droidrecord-runtime-parameters").html(html);
+			}
 		
 			function showCode(response, href)
 			{
@@ -237,10 +252,62 @@
 			    		  var chordSig = $(this).attr("data-chordsig");
 			    		  var filePath = $(this).attr("data-filePath");
 			    		  var lineNum = $(this).attr("data-lineNum");
+			    		  var drDataParams = $(this).find(".invocationExpression")[0].attr("data-droidrecord-params");
 			    		  $('#rightbar').load('/stamp/html/imList.jsp',
-			    		            {chordSig: chordSig, type: 'invk', filePath: filePath, lineNum: lineNum})
+			    		    {chordSig: chordSig, type: 'invk', filePath: filePath, lineNum: lineNum}, 
+			    		    function () { rightBarAddDynamicData(drDataParams); })
 			    		});
-			    }	
+			    }
+			    
+			    function popoverAutoPlacement() {
+			        var numVisiblePopOvers = $(".popover").size() % 4;
+                    if(numVisiblePopOvers == 0) {
+                        return 'bottom';
+                    } else if(numVisiblePopOvers == 1) {
+                        return 'top';
+                    } else if(numVisiblePopOvers == 2) {
+                        return 'left';
+                    } else {
+                        return 'right';
+                    } 
+			    }
+			    
+			    $(".invocationExpression").popover({ 
+                        trigger : "hover",
+                        placement : popoverAutoPlacement, 
+                        html : true,
+                        title : function () {
+                            return jQuery.parseJSON(atob($(this).attr("data-droidrecord-params"))).methodName;
+                        }, 
+                        content : function() {
+                            var data = jQuery.parseJSON(atob($(this).attr("data-droidrecord-params")));
+                            return ViewSource.droidrecordDataToTable(data, true);
+                        }
+                    });
+			    
+			    $(".srcSinkSpan").popover({ 
+                        trigger : "hover",
+                        placement : popoverAutoPlacement, 
+                        html : true,
+                        title : function () {
+                            return ""/*$(this).find("span[name=taintedVariable]").text()*/;
+                        }, 
+                        content : function() {
+                            var data = jQuery.parseJSON(atob($(this).attr("data-stamp-srcsink")));
+                            return ViewSource.formatStampSrcSinkInfo(data);
+                        }
+                    });
+    
+                $(".invocationExpression[data-droidrecord-params!=\"\"]").on("click",  function(event){
+                    var preinvk = $(this).find("span[name=PreInvocation]");
+                    var chordSig = $(preinvk).attr("data-chordsig");
+		            var filePath = $(preinvk).attr("data-filePath");
+		            var lineNum = $(preinvk).attr("data-lineNum");
+			    	var drDataParams = $(this).attr("data-droidrecord-params");
+		            $('#rightbar').load('/stamp/html/imList.jsp',
+		                {chordSig: chordSig, type: 'invk', filePath: filePath, lineNum: lineNum}, 
+			    		function () { rightBarAddDynamicData(drDataParams); })
+		            });
 
 				var typeRefs = $('#'+href).find("[name=TypeRef]");
 			    for(var i=0; i<typeRefs.length; ++i) {

@@ -5,6 +5,7 @@ import shord.project.ClassicProject;
 import shord.program.Program;
 import shord.project.analyses.JavaAnalysis;
 import java.io.*;
+import stamp.util.PropertyHelper;
 
 /**
  * @author Saswat Anand
@@ -66,7 +67,8 @@ public class Postmortem extends JavaAnalysis
 			throw new Error(e);
 		}
 		
-		boolean printClasses = !System.getProperty("stamp.print.allclasses", "false").equals("false");
+		boolean printClasses =
+			PropertyHelper.getBoolProp("stamp.print.allclasses");
 		System.out.println("stamp.print.allclasses = "+printClasses);
 		if(printClasses)
 			Program.g().printAllClasses();

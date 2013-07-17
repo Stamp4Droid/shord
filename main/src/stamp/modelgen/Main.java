@@ -20,22 +20,6 @@ public class Main
 	private static List<String> modelFiles = new ArrayList();
 	private static PrintWriter log;
 
-	/*
-    public Main(File modelFile, File stubFile) throws Exception 
-	{
-		log = new PrintWriter(new FileWriter("log.txt",true));
-		
-		if(!stubFile.exists()){
-			//it is OK to add a new class that does not
-			//correspond to any stub class.
-			dump(patchedStubFile, getCU(modelFile));
-		}
-		else {
-			process(modelFile, stubFile);
-		}
-		log.close();
-    }
-	*/
 
 	public static void main(String[] args) throws Exception
 	{
@@ -43,43 +27,53 @@ public class Main
 
 		File stubsDir = new File(args[0]);
 		File modelsDir = new File(args[1]);
+		File bakDir = new File(args[2]);
 		
 		modelsPath = modelsDir.getAbsolutePath() + File.separator;
 
 		listFiles(modelsDir);
 		for(String modelFilePath : modelFiles){
-			//System.out.println("processing " + modelFilePath);
+			//System.out.println("processing " + modelFilePath); 
 			File modelFile = new File(modelsDir, modelFilePath);
-			File stubFile = new File(stubsDir, modelFilePath);
-			if(!stubFile.exists()){
+			File patchedFile = new File(stubsDir, modelFilePath);
+			File bakFile = new File(bakDir, modelFilePath);
+
+			//add by yu. check last modified time.
+			if (modelFile.lastModified() < patchedFile.lastModified()) continue;
+
+			if(!bakFile.exists() ){
 				//it is OK to add a new class that does not
 				//correspond to any stub class.
-				dump(stubFile, getCU(modelFile));
+				System.out.println("copying " + modelFile);
+				dump(patchedFile, getCU(modelFile));
 			}
-			else
-				process(modelFile, stubFile);
+			else {
+				process(modelFile, bakFile, patchedFile);
+			}
 		}
 		log.close();
 	}
 
-	private static void process(File modelFile, File stubFile) throws Exception
+	private static void process(File modelFile, File bakFile, File patchedFile) throws Exception
 	{
-		System.out.println("patching " + stubFile);
-		CompilationUnit stubCU = getCU(stubFile);
+		System.out.println("patching " + bakFile);
+		CompilationUnit stubCU = getCU(bakFile);
  		CompilationUnit modelCU = getCU(modelFile);
 
 		List<TypeDeclaration> stubTypes = stubCU.getTypes();
 		List<TypeDeclaration> modelTypes = modelCU.getTypes();
 
-		boolean hasStampAnnotation = patch(stubTypes, modelTypes);
+
+		boolean hasStampAnnotation = patch(stubTypes, modelTypes);		
 
 		addImports(stubCU, modelCU.getImports(), hasStampAnnotation);
-
-		dump(stubFile, stubCU);
+		
+		dump(patchedFile, stubCU);
 	}
 
 	private static boolean patch(List stubMembers, List modelMembers)
 	{
+		
 		Map<String, TypeDeclaration> stubTypeNameToDecl = new HashMap();
         for(Object bodyDecl : stubMembers){
 			if(bodyDecl instanceof TypeDeclaration){
@@ -108,6 +102,7 @@ public class Main
 				}
 			}
 		}
+		
 		return hasStampAnnotation;
 	}
 
@@ -190,6 +185,7 @@ public class Main
 		
 		Map<String,BodyDeclaration> methSigToStubMethod = new HashMap();
 		List<BodyDeclaration> stubMembers = stubType.getMembers();
+		
 		if(stubMembers != null){
 			for(BodyDeclaration stubMember : stubMembers){
 				if(stubMember instanceof MethodDeclaration || 

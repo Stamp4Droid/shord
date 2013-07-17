@@ -5,15 +5,19 @@ class ByteArrayOutputStream
 
 	@STAMP(flows = {@Flow(from="this",to="@return")})
 	    public synchronized byte[] toByteArray() { return new byte[1];}
+
 	@STAMP(flows = {@Flow(from="this",to="@return")})
 	public java.lang.String toString() { return new String(); }
+
 	@STAMP(flows = {@Flow(from="this",to="@return")})
 	public java.lang.String toString(int hibyte) { return new String(); }
+
 	@STAMP(flows = {@Flow(from="this",to="@return")})
 	public java.lang.String toString(java.lang.String enc) throws java.io.UnsupportedEncodingException { return new String(); }
 
 	@STAMP(flows = {@Flow(from="buffer",to="this")})
 	public synchronized void write(byte[] buffer, int offset, int len) {}
+
 	@STAMP(flows = {@Flow(from="oneByte",to="this")})
 	public synchronized void write(int oneByte) {}
 

@@ -27,6 +27,6 @@ public class StampURLConnection extends HttpURLConnection
 	@STAMP(flows={@Flow(from="this",to="@return")})
 	public  java.io.OutputStream getOutputStream() throws java.io.IOException 
 	{ 
-		return new StampURLOutputStream();
+		return new java.io.StampOutputStream();
 	}
 }

@@ -15,4 +15,6 @@ class InputStream
 		return 0; 
 	}
 
+    @STAMP(flows = {@Flow(from="this",to="@return")})
+	public abstract  int read() throws java.io.IOException;
 }

@@ -26,11 +26,14 @@ public class ParseLayout
 
 			DocumentBuilder builder =
 				DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			Document document = builder.parse(layoutFile);
-			
+			Reader reader =
+				new InputStreamReader(new FileInputStream(layoutFile),
+									  "Cp1252");
+			Document document = builder.parse(new InputSource(reader));
+
 			XPath xpath = XPathFactory.newInstance().newXPath();
 			xpath.setNamespaceContext(new PersonalNamespaceContext());
-			
+
 			NodeList nodes = (NodeList)
 				xpath.evaluate("//*[@onClick]", document, XPathConstants.NODESET);
 

@@ -1070,7 +1070,7 @@ Derivation derivation_double(Edge *left_edge, bool left_reverse,
  *     n0 --B--> n1
  *
  * When trying to recover the full `A`-path from `n0` to `n1`, we might try to
- * follow the first @Production, i.e. `A :: B`, which leads us to consider the
+ * follow the first production, i.e. `A :: B`, which leads us to consider the
  * `B`-path from `n0` to `n1`. There is a valid Derivation for the
  * corresponding Edge (namely, that it was generated from the Edge
  * `n0 --A--> n1`), but we can't use it in the construction of the path, since

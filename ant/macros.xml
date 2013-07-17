@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="STAMP-Macros" default="help">
 
-  <taskdef resource="net/sf/antcontrib/antcontrib.properties"
-	   classpath="${stamp.dir}/lib/ant-contrib.jar"/>
-
   <macrodef name="require-prop">
     <!-- Fail if a property is not defined. -->
     <attribute name="property"/>
@@ -116,4 +113,24 @@
 		location="${@{property}.dir}/${@{property}.base}${@{property}.suffix}"/>
     </sequential>
   </macrodef>
+
+  <macrodef name="load-strings">
+    <!-- Read all whitespace-separated strings from a file and store them in a
+	 property as a path. Can optionally declare one or more string filters
+	 as nested elements, to be applied to each string. -->
+    <attribute name="property"/>
+    <attribute name="file"/>
+    <element name="filters" optional="true" implicit="true"/>
+    <sequential>
+      <loadfile srcfile="@{file}" property="@{property}">
+	<filterchain>
+    	  <tokenfilter delimOutput="${path.separator}">
+    	    <stringtokenizer/>
+	    <filters/>
+    	  </tokenfilter>
+	</filterchain>
+      </loadfile>
+    </sequential>
+  </macrodef>
+
 </project>

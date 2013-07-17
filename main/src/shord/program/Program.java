@@ -4,12 +4,16 @@ import soot.*;
 import soot.options.Options;
 import soot.util.Chain;
 import soot.util.ArrayNumberer;
+import soot.jimple.Stmt;
 import soot.jimple.toolkits.callgraph.ReachableMethods;
 import soot.jimple.toolkits.pointer.DumbPointerAnalysis;
 import soot.jimple.toolkits.callgraph.CallGraphBuilder;
+import soot.tagkit.Tag;
 
 import java.util.*;
 import java.io.*;
+
+import shord.analyses.ContainerTag;
 
 public class Program
 {
@@ -117,6 +121,18 @@ public class Program
 	{
 		return mainMethod;
 	}
-	
-    
+
+	public static SootMethod containerMethod(Stmt stmt)
+	{
+		for(Tag tag : stmt.getTags()){
+			if(tag instanceof ContainerTag)
+				return ((ContainerTag) tag).method;
+		}
+		return null;
+	}
+
+	public static String unitToString(Unit u) {
+		SootMethod m = (u instanceof Stmt) ? containerMethod((Stmt) u) : null;
+		return (m == null) ? u.toString() : u + "@" + m;
+	}
 }

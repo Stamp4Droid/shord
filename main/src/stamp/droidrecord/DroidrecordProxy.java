@@ -1,7 +1,8 @@
 package stamp.droidrecord;
 
-import edu.stanford.droidrecord.logreader.EventLogStream;
 import edu.stanford.droidrecord.logreader.BinLogReader;
+import edu.stanford.droidrecord.logreader.CoverageReport;
+import edu.stanford.droidrecord.logreader.EventLogStream;
 import java.io.File;
 
 public class DroidrecordProxy {
@@ -11,6 +12,8 @@ public class DroidrecordProxy {
     private boolean available;
     private BinLogReader logReader = null;
     private String binLogFile;
+    
+    private CoverageReport catchedCoverage = null;
 
     private DroidrecordProxy() {
         String templateLogFile = System.getProperty("stamp.droidrecord.logfile.template");
@@ -42,5 +45,15 @@ public class DroidrecordProxy {
         }
         EventLogStream els = logReader.parseLog(binLogFile);
         return new StampCallArgumentValueAnalysis(els);
+    }
+    
+    public CoverageReport getCoverage() {
+        if(!isAvailable()) {
+            throw new Error("Droidrecord log not available!");
+        } else if(catchedCoverage != null){
+            return catchedCoverage;
+        }
+        logReader.parseLog(binLogFile).readAll();
+        return logReader.getCumulativeCoverageReport();
     }
 }

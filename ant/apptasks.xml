@@ -27,6 +27,14 @@
       <then>
 		<property name="stamp.input.type" value="apk"/>
 		<property name="apk" value="${app.loc}"/>
+
+		<unjar src="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"
+			   dest="${stamp.out.dir}">
+		  <patternset>
+			<include name="stamp_annotations.txt"/>
+		  </patternset>
+		</unjar>
+
 		<antcall target="-analyze-apk"/>
       </then>
 	  <else>
@@ -55,6 +63,8 @@ appPath=${app.dir}
 outPath=${stamp.out.dir}
 srcPath=${stamp.src.path}:${stamp.gen.path}:${driver.dir}
 libPath=${stamp.lib.jars}
+stamp.droidrecord.logfile.template=${stamp.droidrecord.logfile.template}
+stamp.droidrecord.logfile.bin=${stamp.droidrecord.logfile.bin}
 	</echo>
 
     <!-- Launch browser. -->
@@ -124,28 +134,12 @@ libPath=${stamp.lib.jars}
       <arg file="${stamp.src.path}"/>
     </java>
 
-    <!-- Read annotations from source code and store them in stamp_annotations.txt .-->
-    <java classname="stamp.readannot.AnnotationReader"
-	  maxmemory="${stamp.maxheap}"
-	  dir="${stamp.out.dir}"
-	  fork="true"
-	  failonerror="true">
-      <jvmarg value="-ea"/>
-      <classpath>
-		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
-		<fileset dir="${stamp.dir}/lib">
-		  <include name="**/*.jar"/>
-		</fileset>
-      </classpath>
-      <arg value="${stamp.src.path}"/>
-      <arg value="${stamp.lib.jars}:${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"/>
-      <arg value="${stamp.dir}/models/api-${apilevel}"/>
-    </java>
-
     <!-- Construct source map. -->
+    <!-- Read annotations from source code and store them in stamp_annotations.txt .-->
+	<echo>app.dir=${app.dir}</echo>
     <java classname="stamp.srcmap.Main"
 	  maxmemory="${stamp.maxheap}"
-	  dir="${app.dir}"
+	  dir="${stamp.out.dir}"
 	  fork="true"
 	  failonerror="true">
       <jvmarg value="-ea"/>
@@ -158,6 +152,7 @@ libPath=${stamp.lib.jars}
       <arg value="${stamp.src.path}:${stamp.gen.path}"/>
       <arg value="${stamp.lib.jars}:${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"/>
       <arg value="${stamp.out.dir}/srcmap"/>
+      <arg value="${stamp.dir}/models/api-${apilevel}"/>
     </java>
 	
 	<property name="apk" value="${stamp.apk.path}"/>

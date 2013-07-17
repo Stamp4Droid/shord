@@ -12,7 +12,7 @@ class ArrayList<E>
 	@STAMP(flows = {@Flow(from="object",to="this")})
     public  void add(int index, E object)
 	{
-		add(object);
+		this.f = object;
 	}
 
 	@STAMP(flows = {@Flow(from="this",to="@return")})

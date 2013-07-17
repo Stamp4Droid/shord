@@ -1,5 +1,6 @@
 package stamp.reporting;
 
+import shord.program.Program;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 
@@ -61,7 +62,7 @@ public class IM extends XMLReport
 				invkExpr = SourceInfo.javaLocStr(stmt);
 
 			tuple.addValueWithSig(invkExpr,
-								  SourceInfo.containerMethod(stmt).getDeclaringClass(),
+								  Program.containerMethod(stmt).getDeclaringClass(),
 								  String.valueOf(SourceInfo.stmtLineNum(stmt)),
 								  "invk",
 								  SourceInfo.chordSigFor(stmt.getInvokeExpr().getMethod()));

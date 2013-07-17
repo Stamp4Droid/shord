@@ -39,8 +39,15 @@ public class FileHelper {
 		return new File(todir, new File(fname).getName()).toString();
 	}
 
-	public static List<String> splitPath(String path) {
-		return StringHelper.split(path, File.pathSeparator);
+	public static Set<String> splitPath(String path) {
+		List<String> parts = StringHelper.split(path, File.pathSeparator);
+		Set<String> nonEmptyParts = new HashSet<String>();
+		for (String p : parts) {
+			if (!p.equals("")) {
+				nonEmptyParts.add(p);
+			}
+		}
+		return nonEmptyParts;
 	}
 
 	public static Set<String> listRegularFiles(String dir, String reqdExt) {

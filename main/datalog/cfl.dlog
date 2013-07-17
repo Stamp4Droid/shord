@@ -13,8 +13,13 @@
 .include "I.dom"
 .include "L.dom"
 .include "H.dom"
+.include "T.dom"
 
-.bddvarorder Z0xZ1_M0_C0xC1xC2_V0xV1_U0xU1_H0xF0_I0_L0xL1
+.bddvarorder Z0xZ1_M0_C0xC1xC2_V0xV1_T0_U0xU1_H0xF0_I0_L0xL1
+
+###################
+# INPUT RELATIONS
+###################
 
 # reference flow inputs
 Assign(v:V,u:V)     input   # v = u
@@ -31,7 +36,7 @@ AssignPrim(v:U,u:U)      input    # v = u
 LoadPrim(y:U,x:V,f:F)    input    # y = x.f
 StorePrim(u:V,f:F,v:U)   input    # u.f = v
 LoadStatPrim(y:U,f:F)    input    # y = f
-StoreStatPrim(f:F,v:U)  input    # f = v
+StoreStatPrim(f:F,v:U)   input    # f = v
 paramPrim(u:U,v:U,i:I)   input    # u is the formal parameter, v is actual arg, i is invocation stmt
 returnPrim(u:U,v:U,i:I)  input    # u is the lhs at callsite, v is the return var, i is invocation stm
 
@@ -49,18 +54,25 @@ MmethRet(m:M,z:Z,v:V)     input
 MmethPrimArg(m:M,z:Z,u:U) input
 MmethPrimRet(m:M,z:Z,u:U) input
 
+# type information
+VT(v:V,t:T)       input
+HTFilter(h:H,t:T) input
+
 # stub information
 Stub(m:M) input
 
 # annotations
-SrcLabel(l:L)  input
-SinkLabel(l:L) input
-
+SrcLabel(l:L)                 input
+SinkLabel(l:L)                input
 LabelRet(l:L,m:M)             input
 LabelArg(l:L,m:M,z:Z)         input
 ArgRetTransfer(m:M,z:Z)       input
 ArgArgTransfer(m:M,z0:Z,z1:Z) input
 ArgArgFlow(m:M,z0:Z,z1:Z)     input
+
+###################
+# OUTPUT RELATIONS
+###################
 
 # reference flows
 AssignCtxt(c:C,v:V,u:V)        output # v = u in context c
@@ -80,6 +92,10 @@ LoadStatPrimCtxt(c:C,y:U,f:F)      output # y = f in context c
 StoreStatPrimCtxt(c:C,f:F,v:U)     output # f = v in context c
 AssignArgPrimCtxt(c:C,u:U,d:C,v:U) output # u is the formal parameter in context c, v is actual arg in context d
 AssignRetPrimCtxt(c:C,u:U,d:C,v:U) output # u is the lhs at callsite in context c, v is the return var in context d
+
+# type filters
+VTCtxt(c:C,v:V,t:T) output
+OTFilter(o:C,t:T)   output
 
 # annotations
 SrcArgFlowCtxt(c:C,l:L,v:V)     output
@@ -139,6 +155,10 @@ LoadStatPrimCtxt(c,y,f)    :- LoadStatPrim(y,f), MU(m,y), CM(c,m).
 StoreStatPrimCtxt(c,f,v)   :- StoreStatPrim(f,v), MU(m,v), CM(c,m).
 AssignArgPrimCtxt(d,u,c,v) :- paramPrim(u,v,i), MU(m,v), CM(c,m), CC(c,d), CI(d,i).
 AssignRetPrimCtxt(c,u,d,v) :- returnPrim(u,v,i), MU(m,u), CM(c,m), CC(c,d), CI(d,i).
+
+# type filters
+VTCtxt(c,v,t) :- VT(v,t), CM(c,m), MV(m,v).
+OTFilter(o,t) :- CH(o,h), HTFilter(h,t).
 
 # annotations
 SrcArgFlowCtxt(c,l,v)     :- SrcLabel(l), LabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).
