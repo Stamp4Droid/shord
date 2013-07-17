@@ -124,17 +124,19 @@ sinkPrim(c,u,l) :- labelPrimIntro(c,u,l), SinkLabel(l).
 sinkPrim(c,u,l) :- flowPrimRef(u,v), labelRef(c,v,l), SinkLabel(l).
 sinkPrim(c,u,l) :- flowPrimPrim(u,v), labelPrim(c,v,l), SinkLabel(l).
 
-# passthrough entry: behaves like nested escaping
+# abstract object passthrough entry
+# base cases
 transferObjRef(o,c,v)   :- transferRefRef(u,v), pt(c,u,o).
-transferObjRef(o2,c,v)  :- transferObjRef(o1,c,v), fpt(o1,_,o2).
 transferObjPrim(o,c,v)  :- transferRefPrim(u,v), pt(c,u,o).
+# nested entry: behaves like nested escaping
+transferObjRef(o2,c,v)  :- transferObjRef(o1,c,v), fpt(o1,_,o2).
 transferObjPrim(o2,c,v) :- transferObjPrim(o1,c,v), fpt(o1,_,o2).
 
 # complete flow
 # basic connection of source flow and escaping
 flow(src,sink) :- sink(o,sink), label(o,src), SrcLabel(src).
 flow(src,sink) :- sinkPrim(c,u,sink), labelPrim(c,u,src), SrcLabel(src).
-# additional case of nested escaping
+# nested escaping
 flow(src,sink) :- sink(o,sink), labelPrimFld(o,_,src), SrcLabel(src).
 
 # (forward) label flow
@@ -157,9 +159,6 @@ labelRef(c,v,l) :- pt(c,v,o), label(o,l).
 # label introduction
 labelPrimIntro(c,v,l) :- varLabelPrim(v,l), CM(c,m), MU(m,v).
 labelPrim(c,v,l)      :- labelPrimIntro(c,v,l).
-# passthrough handling
-labelPrim(c,v,l)      :- label(o,l), transferObjPrim(o,c,v).
-labelPrim(c,v,l)      :- labelPrim(c,u,l), transferPrimPrim(u,v).
 # label propagation
 labelPrim(c,v,l)      :- AssignPrim(v,u), labelPrim(c,u,l).
 labelPrimFld(o,f,l)   :- labelPrim(c,v,l), StorePrim(u,f,v), pt(c,u,o).
@@ -168,5 +167,8 @@ labelPrimFldStat(f,l) :- StoreStatPrim(f,v), labelPrim(_,v,l).
 labelPrim(c,y,l)      :- LoadStatPrim(y,f), labelPrimFldStat(f,l), MU(m,y), CM(c,m).
 labelPrim(d,u,l)      :- labelPrim(c,v,l), paramPrim(u,v,i), CC(c,d), CI(d,i).
 labelPrim(c,u,l)      :- labelPrim(d,v,l), returnPrim(u,v,i), CI(d,i), CC(c,d).
+# passthrough handling
+labelPrim(c,v,l)      :- label(o,l), transferObjPrim(o,c,v).
+labelPrim(c,v,l)      :- labelPrim(c,u,l), transferPrimPrim(u,v).
 # nested tainting
-labelPrim(c,y,l)      :- LoadPrim(y,x,_), label(o,l), pt(c,x,o).
+labelPrim(c,y,l)      :- LoadPrim(y,x,_), labelRef(c,x,l).
