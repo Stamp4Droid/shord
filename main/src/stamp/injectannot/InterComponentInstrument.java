@@ -264,6 +264,8 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		Value putStringArg = bundleLoc.getValue();
 		JimpleLocalBox bundleObj = (JimpleLocalBox) ie.getUseBoxes().get(0);
 		ArrayList<String> bundleKeyList = readKeysFromTag(stmt, putStringArg);
+		if (bundleKeyList.size() == 0) return result;	
+		
 		if (ie.getMethod().getParameterCount() < 2) {
 			System.out.println("WARN:Could not analyze: " + stmt);
 			return result;
@@ -312,6 +314,8 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		Value putStringArg = bundleLoc.getValue();		
 		JimpleLocalBox intentObj = (JimpleLocalBox) ie.getUseBoxes().get(0);
 		ArrayList<String> bundleKeyList = readKeysFromTag(stmt, putStringArg);
+		if (bundleKeyList.size() == 0) return result;	
+	
 		//FIXME:Can not handler putExtra(bundle) or putExtra(intent)!
 		if (ie.getMethod().getParameterCount() < 2) {
 			System.out.println("WARN:Could not analyze: " + stmt);
@@ -319,6 +323,14 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		}
 		
 		Type keyType = getInstrumentType(ie.getMethod().getParameterType(1));
+		SootClass iKlass = Program.g().scene().getSootClass(intentClass);
+    	SootField extrasField = iKlass.getFieldByName("extras");
+		Local extrasLocal = Jimple.v().newLocal("r_Extras", extrasField.getType()); 
+		body.getLocals().add(extrasLocal);
+		AssignStmt assign2Extras = soot.jimple.Jimple.v().newAssignStmt(
+						extrasLocal, Jimple.v().newStaticFieldRef(extrasField.makeRef()));
+		units.insertBefore(assign2Extras, stmt);
+
 		
 		for (String bundleKey : bundleKeyList) {
 			
@@ -328,20 +340,6 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 			
 			//need to add getter/setter of bundlekey to Bundle.class!
 			instrumentBundle(bundleKey, keyType);
-    
-			SootMethod getExtrasCall = Scene.v().getMethod(
-				"<" + this.intentClass + ": "+this.bundleClass+" getExtras()>");
-			
-			//invoke intent.getExtras()
-			VirtualInvokeExpr getExtrasExpr = 
-				Jimple.v().newVirtualInvokeExpr(
-					(Local) intentObj.getValue(),
-						getExtrasCall.makeRef(), Arrays.asList(new Value[] {}));
-			
-			Local extrasLocal = Jimple.v().newLocal("r_Extras", RefType.v(this.bundleClass)); 
-			body.getLocals().add(extrasLocal);
-			AssignStmt assign2Extras = Jimple.v().newAssignStmt(extrasLocal, getExtrasExpr);
-			units.insertBefore(assign2Extras, stmt);
 			
 			//invoke extra.put_deviceId()
 			SootMethod putExtrasCall = Scene.v().getMethod(
@@ -349,7 +347,8 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 					+ bundleKey + "("+keyType.toString()+")>");
 			
 			InvokeStmt putExtraStmt = Jimple.v().newInvokeStmt(
-				Jimple.v().newVirtualInvokeExpr(extrasLocal,
+				Jimple.v().newVirtualInvokeExpr(
+					extrasLocal,
 					putExtrasCall.makeRef(), ie.getArg(1)));
 			units.insertAfter(putExtraStmt, stmt);
 			//write value to unknown field.
@@ -378,6 +377,8 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		ImmediateBox bundleLoc = (ImmediateBox) ie.getUseBoxes().get(1);
 		Value putStringArg = bundleLoc.getValue();
 		ArrayList<String> bundleKeyList = readKeysFromTag(stmt, putStringArg);
+		if (bundleKeyList.size() == 0) return result;	
+		
 		JimpleLocalBox bundleObj = (JimpleLocalBox) ie.getUseBoxes().get(0);
 		Type keyType = getInstrumentType(ie.getMethod().getReturnType());
 			
@@ -426,40 +427,37 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		ImmediateBox bundleLoc = (ImmediateBox) ie.getUseBoxes().get(1);
 		Value putStringArg = bundleLoc.getValue();
 		ArrayList<String> bundleKeyList = readKeysFromTag(stmt, putStringArg);
+		if (bundleKeyList.size() == 0) return result;	
+		
 		JimpleLocalBox intentObj = (JimpleLocalBox) ie.getUseBoxes().get(0);
 		Type keyType = getInstrumentType(ie.getMethod().getReturnType());
+		
+		SootClass iKlass = Program.g().scene().getSootClass(intentClass);
+    	SootField extrasField = iKlass.getFieldByName("extras");
+		Local extrasLocal = Jimple.v().newLocal("r_Extras", extrasField.getType()); 
+		body.getLocals().add(extrasLocal);
+		AssignStmt assign2Extras = soot.jimple.Jimple.v().newAssignStmt(
+						extrasLocal, Jimple.v().newStaticFieldRef(extrasField.makeRef()));
+		units.insertBefore(assign2Extras, stmt);
 		
 		for (String bundleKey : bundleKeyList) {
 			//modify bundle key.  key_type, for primitive.
 			if (!keyType.toString().equals("java.lang.Object")) 
 				bundleKey = bundleKey + "_" +keyType.toString();
 			instrumentBundle(bundleKey, keyType);	
-		    
-			SootMethod getExtrasCall = Scene.v().getMethod(
-				"<" + this.intentClass + ": "+this.bundleClass+" getExtras()>");
-			
-			//invoke intent.getExtras()
-			VirtualInvokeExpr getExtrasExpr = 
-				Jimple.v().newVirtualInvokeExpr(
-					(Local) intentObj.getValue(),
-						getExtrasCall.makeRef(), Arrays.asList(new Value[] {}));
-			
-			Local extrasLocal = Jimple.v().newLocal("r_Extras", RefType.v(this.bundleClass)); 
-			body.getLocals().add(extrasLocal);
-			AssignStmt assign2Extras = Jimple.v().newAssignStmt(extrasLocal, getExtrasExpr);
-			units.insertBefore(assign2Extras, stmt);
 
 			SootMethod getObjCall = Scene.v().getMethod("<" + this.bundleClass 
 				+ ": "+keyType.toString()+" get_" + bundleKey + "()>");
 
 			VirtualInvokeExpr invokeGetStr = 
 				Jimple.v().newVirtualInvokeExpr(
-					extrasLocal, getObjCall.makeRef(), Arrays.asList(new Value[] {}));
+					 extrasLocal, 
+						 getObjCall.makeRef(), Arrays.asList(new Value[] {}));
 			
 			//FIXME: what if we have multiple defboxes?
 			// assert (stmt.getDefBoxes().size > 0);
 			if (stmt.getDefBoxes().size() == 0) {
-				reportUnknownRegister(stmt, extrasLocal);
+				// reportUnknownRegister(stmt, extrasLocal);
 				return result;
 			}
 				
@@ -539,6 +537,7 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 					if (asst.getRightOp() instanceof StringConstant) {
 						strVal = (StringConstant) asst.getRightOp();
 						String bundleKey = strVal.value;
+						bundleKey = bundleKey.replaceAll("[\\s]+", "_");
 						reachingDef.add(bundleKey);			
 					} else { //may be function call or private field from inter-proc.
 						reportUnknownRegister(stmt, arg);			
