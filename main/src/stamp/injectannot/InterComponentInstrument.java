@@ -393,8 +393,7 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 			if (!keyType.toString().equals("java.lang.Object")) 
 				bundleKey = bundleKey + "_" +keyType.toString();
 			
-			instrumentBundle(bundleKey, keyType);	
-
+			instrumentBundle(bundleKey, keyType);
 			// invoke
 			SootMethod toCall = Scene.v().getMethod(
 				"<" + this.bundleClass
@@ -463,12 +462,9 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 			//FIXME: what if we have multiple defboxes?
 			// assert (stmt.getDefBoxes().size > 0);
 			if (stmt.getDefBoxes().size() == 0) {
-<<<<<<< HEAD
 				// reportUnknownRegister(stmt, extrasLocal);
-=======
-                //reportUnknownRegister(stmt, extrasLocal);
                 _tmp_reportUnknownRegisterDynInfo(stmt, extrasLocal, 1);
->>>>>>> c04fe7917a2f819cd694c3cc1860b8e8b79ef99d
+
 				return result;
 			}
 				
