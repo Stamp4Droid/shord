@@ -11,6 +11,7 @@ local.config
 *.apk.d
 *.ap_
 *.ap_.d
+*.jimple
 .project
 .classpath
 .settings 

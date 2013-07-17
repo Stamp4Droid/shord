@@ -1,5 +1,0 @@
-public interface  android.view.ViewTreeObserver$OnTouchModeChangeListener extends java.lang.Object
-{
-
-    public abstract void onTouchModeChanged(boolean);
-}

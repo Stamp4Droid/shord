@@ -1,5 +1,0 @@
-public interface  android.content.DialogInterface$OnDismissListener extends java.lang.Object
-{
-
-    public abstract void onDismiss(android.content.DialogInterface);
-}
