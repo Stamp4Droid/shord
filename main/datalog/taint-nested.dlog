@@ -150,6 +150,8 @@ label(o2,l)     :- label(o1,l), transferObjRef(o1,c,v), pt(c,v,o2).
 label(o,l)      :- labelPrim(c,u,l), transferPrimRef(u,v), pt(c,v,o).
 # nested tainting
 label(o2,l)     :- label(o1,l), fpt(o1,_,o2).
+# nested passthrough entry
+label(o2,l)     :- labelPrimFld(o1,_,l), transferObjRef(o1,c,v), pt(c,v,o2).
 
 # reference-type variables
 # labels are tracked on the abstract objects, this is only for convenience
@@ -172,3 +174,5 @@ labelPrim(c,v,l)      :- label(o,l), transferObjPrim(o,c,v).
 labelPrim(c,v,l)      :- labelPrim(c,u,l), transferPrimPrim(u,v).
 # nested tainting
 labelPrim(c,y,l)      :- LoadPrim(y,x,_), labelRef(c,x,l).
+# nested passthrough entry
+labelPrim(c,v,l)      :- labelPrimFld(o,_,l), transferObjPrim(o,c,v).
