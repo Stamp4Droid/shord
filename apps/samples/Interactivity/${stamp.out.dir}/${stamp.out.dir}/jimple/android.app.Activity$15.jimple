@@ -1,0 +1,27 @@
+class android.app.Activity$15 extends edu.stanford.stamp.harness.Callback
+{
+    final android.app.Activity this$0;
+
+    void <init>(android.app.Activity)
+    {
+        android.app.Activity$15 r0;
+        android.app.Activity r1;
+
+        r0 := @this: android.app.Activity$15;
+        r1 := @parameter0: android.app.Activity;
+        r0.<android.app.Activity$15: android.app.Activity this$0> = r1;
+        specialinvoke r0.<edu.stanford.stamp.harness.Callback: void <init>()>();
+        return;
+    }
+
+    public void run()
+    {
+        android.app.Activity$15 r0;
+        android.app.Activity $r1;
+
+        r0 := @this: android.app.Activity$15;
+        $r1 = r0.<android.app.Activity$15: android.app.Activity this$0>;
+        virtualinvoke $r1.<android.app.Activity: java.lang.CharSequence onCreateDescription()>();
+        return;
+    }
+}

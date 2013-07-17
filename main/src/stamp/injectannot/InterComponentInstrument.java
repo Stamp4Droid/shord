@@ -64,6 +64,10 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 	
     private StampCallArgumentValueAnalysis cavAnalysis = null;
 	
+    private static HashSet<String> unknownBundleSrcMethods = new HashSet<String>();
+    
+    private SootMethod currentMethod;
+    
     public InterComponentInstrument()
     {
         DroidrecordProxy droidrecord = stamp.droidrecord.DroidrecordProxy.g();
@@ -128,7 +132,8 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 	
     private void visitMethod(SootMethod method)
     {
-		
+		this.currentMethod = method;
+        
 		if(!method.isConcrete())
 			return;
 		
@@ -230,7 +235,8 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 						tgtComptName = tgtComptName.replace(File.separatorChar, '.');
 					///Check whether exist such class.
 					if ( !Program.g().scene().containsClass(tgtComptName)) {
-						reportUnknownRegister(stmt, ie.getArg(0));
+						//reportUnknownRegister(stmt, ie.getArg(0));
+                        _tmp_reportUnknownRegisterDynInfo(stmt, ie.getArg(0), 1);
 						return;
 					}
 				
@@ -457,7 +463,12 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 			//FIXME: what if we have multiple defboxes?
 			// assert (stmt.getDefBoxes().size > 0);
 			if (stmt.getDefBoxes().size() == 0) {
+<<<<<<< HEAD
 				// reportUnknownRegister(stmt, extrasLocal);
+=======
+                //reportUnknownRegister(stmt, extrasLocal);
+                _tmp_reportUnknownRegisterDynInfo(stmt, extrasLocal, 1);
+>>>>>>> c04fe7917a2f819cd694c3cc1860b8e8b79ef99d
 				return result;
 			}
 				
@@ -540,7 +551,8 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 						bundleKey = bundleKey.replaceAll("[\\s]+", "_");
 						reachingDef.add(bundleKey);			
 					} else { //may be function call or private field from inter-proc.
-						reportUnknownRegister(stmt, arg);			
+						//reportUnknownRegister(stmt, arg);
+                        _tmp_reportUnknownRegisterDynInfo(stmt, arg, 2);
 					}
 				} 
 			}
@@ -620,15 +632,16 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 			// for(ParamInfo info : paramList) {
 			// 	System.out.println("Analysis result......" + info);
 			// }
-														
-			reportUnknownRegister(stmt, arg);
+			//reportUnknownRegister(stmt, arg);
+            _tmp_reportUnknownRegisterDynInfo(stmt, arg, 2);
 			return;
 		}
 		
 		tgtComptName = tgtComptName.replace(File.separatorChar, '.');
 		///Check whether exist such class.
 		if ( !Program.g().scene().containsClass(tgtComptName)) {
-            reportUnknownRegister(stmt, arg);
+            //reportUnknownRegister(stmt, arg);
+            _tmp_reportUnknownRegisterDynInfo(stmt, arg, 2);
 			return;
 		}
 				
@@ -1002,5 +1015,14 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		// System.out.println("ERROR:Current class: " + this.rootClass + " || Statement: " + stmt + 
 		// 	 "|| reachingDef: " + stmt.getTags());
 	}
+    
+    private void _tmp_reportUnknownRegisterDynInfo(Stmt stmt, Value v, int argNum) {
+        reportUnknownRegister(stmt, v);
+        List<ParamInfo> dynvals = queryArgumentValues(this.currentMethod, stmt, argNum);
+        System.out.println("Method: " + this.currentMethod + "\tArg: #" + argNum);
+        System.out.print("Dynamic Values: [ ");
+        for(ParamInfo p : dynvals) System.out.print(p.toString() + ", ");
+        System.out.println("]");
+    }
     
 }

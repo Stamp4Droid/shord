@@ -1,0 +1,106 @@
+public final class android.telephony.SmsManager extends java.lang.Object
+{
+    public static final int STATUS_ON_ICC_FREE;
+    public static final int STATUS_ON_ICC_READ;
+    public static final int STATUS_ON_ICC_UNREAD;
+    public static final int STATUS_ON_ICC_SENT;
+    public static final int STATUS_ON_ICC_UNSENT;
+    public static final int RESULT_ERROR_GENERIC_FAILURE;
+    public static final int RESULT_ERROR_RADIO_OFF;
+    public static final int RESULT_ERROR_NULL_PDU;
+    public static final int RESULT_ERROR_NO_SERVICE;
+    private static android.telephony.SmsManager smsManager;
+
+    void <init>()
+    {
+        android.telephony.SmsManager r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.telephony.SmsManager;
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void sendTextMessage(java.lang.String, java.lang.String, java.lang.String, android.app.PendingIntent, android.app.PendingIntent)
+    {
+        android.telephony.SmsManager r0;
+        java.lang.String r1, r2, r3;
+        android.app.PendingIntent r4, r5;
+
+        r0 := @this: android.telephony.SmsManager;
+        r1 := @parameter0: java.lang.String;
+        r2 := @parameter1: java.lang.String;
+        r3 := @parameter2: java.lang.String;
+        r4 := @parameter3: android.app.PendingIntent;
+        r5 := @parameter4: android.app.PendingIntent;
+        return;
+    }
+
+    public java.util.ArrayList divideMessage(java.lang.String)
+    {
+        android.telephony.SmsManager r0;
+        java.lang.String r1;
+        java.util.ArrayList $r2, r3;
+
+        r0 := @this: android.telephony.SmsManager;
+        r1 := @parameter0: java.lang.String;
+        $r2 = new java.util.ArrayList;
+        specialinvoke $r2.<java.util.ArrayList: void <init>()>();
+        r3 = $r2;
+        virtualinvoke r3.<java.util.ArrayList: boolean add(java.lang.Object)>(r1);
+        return r3;
+    }
+
+    public void sendMultipartTextMessage(java.lang.String, java.lang.String, java.util.ArrayList, java.util.ArrayList, java.util.ArrayList)
+    {
+        android.telephony.SmsManager r0;
+        java.lang.String r1, r2;
+        java.util.ArrayList r3, r4, r5;
+
+        r0 := @this: android.telephony.SmsManager;
+        r1 := @parameter0: java.lang.String;
+        r2 := @parameter1: java.lang.String;
+        r3 := @parameter2: java.util.ArrayList;
+        r4 := @parameter3: java.util.ArrayList;
+        r5 := @parameter4: java.util.ArrayList;
+        return;
+    }
+
+    public void sendDataMessage(java.lang.String, java.lang.String, short, byte[], android.app.PendingIntent, android.app.PendingIntent)
+    {
+        android.telephony.SmsManager r0;
+        java.lang.String r1, r2;
+        short s0;
+        byte[] r3;
+        android.app.PendingIntent r4, r5;
+
+        r0 := @this: android.telephony.SmsManager;
+        r1 := @parameter0: java.lang.String;
+        r2 := @parameter1: java.lang.String;
+        s0 := @parameter2: short;
+        r3 := @parameter3: byte[];
+        r4 := @parameter4: android.app.PendingIntent;
+        r5 := @parameter5: android.app.PendingIntent;
+        return;
+    }
+
+    public static android.telephony.SmsManager getDefault()
+    {
+        android.telephony.SmsManager $r0;
+
+        $r0 = <android.telephony.SmsManager: android.telephony.SmsManager smsManager>;
+        return $r0;
+    }
+
+    static void <clinit>()
+    {
+        android.telephony.SmsManager $r0;
+
+        $r0 = new android.telephony.SmsManager;
+        specialinvoke $r0.<android.telephony.SmsManager: void <init>()>();
+        <android.telephony.SmsManager: android.telephony.SmsManager smsManager> = $r0;
+        return;
+    }
+}

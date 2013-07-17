@@ -87,6 +87,7 @@
 
 	%>
 			<span class="label label-info">Runtime parameters</span>
+			<div class="droidrecord-runtime-parameters">
 	<%
 			SortedMap<Integer, ParameterValueSet> params = new TreeMap<Integer, ParameterValueSet>();
 			if(qop != null){
@@ -115,6 +116,7 @@
 			}
     	}// end of else
    	%>
+			</div>
 	
 	<script>
 		$('a[id^="SrcLoc"]').on("click",  function(event){
