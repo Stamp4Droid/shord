@@ -1,0 +1,35 @@
+class android.location.LocationManager$1 extends edu.stanford.stamp.harness.Callback
+{
+    final android.location.LocationListener val$listener;
+    final android.location.LocationManager this$0;
+
+    void <init>(android.location.LocationManager, android.location.LocationListener)
+    {
+        android.location.LocationManager$1 r0;
+        android.location.LocationManager r1;
+        android.location.LocationListener r2;
+
+        r0 := @this: android.location.LocationManager$1;
+        r1 := @parameter0: android.location.LocationManager;
+        r2 := @parameter1: android.location.LocationListener;
+        r0.<android.location.LocationManager$1: android.location.LocationManager this$0> = r1;
+        r0.<android.location.LocationManager$1: android.location.LocationListener val$listener> = r2;
+        specialinvoke r0.<edu.stanford.stamp.harness.Callback: void <init>()>();
+        return;
+    }
+
+    public void run()
+    {
+        android.location.LocationManager$1 r0;
+        android.location.LocationListener $r1;
+        android.location.LocationManager $r2;
+        android.location.Location $r3;
+
+        r0 := @this: android.location.LocationManager$1;
+        $r1 = r0.<android.location.LocationManager$1: android.location.LocationListener val$listener>;
+        $r2 = r0.<android.location.LocationManager$1: android.location.LocationManager this$0>;
+        $r3 = staticinvoke <android.location.LocationManager: android.location.Location access$000(android.location.LocationManager)>($r2);
+        interfaceinvoke $r1.<android.location.LocationListener: void onLocationChanged(android.location.Location)>($r3);
+        return;
+    }
+}

@@ -1,0 +1,45 @@
+public final class android.content.Loader$ForceLoadContentObserver extends android.database.ContentObserver
+{
+    final android.content.Loader this$0;
+
+    public void <init>(android.content.Loader)
+    {
+        android.content.Loader$ForceLoadContentObserver r0;
+        android.content.Loader r1;
+        android.os.Handler $r2;
+        java.lang.RuntimeException $r3;
+
+        r0 := @this: android.content.Loader$ForceLoadContentObserver;
+        r1 := @parameter0: android.content.Loader;
+        r0.<android.content.Loader$ForceLoadContentObserver: android.content.Loader this$0> = r1;
+        $r2 = (android.os.Handler) null;
+        specialinvoke r0.<android.database.ContentObserver: void <init>(android.os.Handler)>($r2);
+        $r3 = new java.lang.RuntimeException;
+        specialinvoke $r3.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r3;
+    }
+
+    public boolean deliverSelfNotifications()
+    {
+        android.content.Loader$ForceLoadContentObserver r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.content.Loader$ForceLoadContentObserver;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public void onChange(boolean)
+    {
+        android.content.Loader$ForceLoadContentObserver r0;
+        boolean z0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.content.Loader$ForceLoadContentObserver;
+        z0 := @parameter0: boolean;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+}

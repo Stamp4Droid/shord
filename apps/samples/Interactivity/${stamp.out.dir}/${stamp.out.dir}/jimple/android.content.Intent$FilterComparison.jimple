@@ -1,0 +1,52 @@
+public final class android.content.Intent$FilterComparison extends java.lang.Object
+{
+
+    public void <init>(android.content.Intent)
+    {
+        android.content.Intent$FilterComparison r0;
+        android.content.Intent r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.content.Intent$FilterComparison;
+        r1 := @parameter0: android.content.Intent;
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public android.content.Intent getIntent()
+    {
+        android.content.Intent$FilterComparison r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.content.Intent$FilterComparison;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+
+    public boolean equals(java.lang.Object)
+    {
+        android.content.Intent$FilterComparison r0;
+        java.lang.Object r1;
+        java.lang.RuntimeException $r2;
+
+        r0 := @this: android.content.Intent$FilterComparison;
+        r1 := @parameter0: java.lang.Object;
+        $r2 = new java.lang.RuntimeException;
+        specialinvoke $r2.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r2;
+    }
+
+    public int hashCode()
+    {
+        android.content.Intent$FilterComparison r0;
+        java.lang.RuntimeException $r1;
+
+        r0 := @this: android.content.Intent$FilterComparison;
+        $r1 = new java.lang.RuntimeException;
+        specialinvoke $r1.<java.lang.RuntimeException: void <init>(java.lang.String)>("Stub!");
+        throw $r1;
+    }
+}
