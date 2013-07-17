@@ -259,9 +259,22 @@
 			    		});
 			    }
 			    
+			    function popoverAutoPlacement() {
+			        var numVisiblePopOvers = $(".popover").size() % 4;
+                    if(numVisiblePopOvers == 0) {
+                        return 'bottom';
+                    } else if(numVisiblePopOvers == 1) {
+                        return 'top';
+                    } else if(numVisiblePopOvers == 2) {
+                        return 'left';
+                    } else {
+                        return 'right';
+                    } 
+			    }
+			    
 			    $(".invocationExpression").popover({ 
                         trigger : "hover",
-                        position: "bottom", 
+                        placement : popoverAutoPlacement, 
                         html : true,
                         title : function () {
                             return jQuery.parseJSON(atob($(this).attr("data-droidrecord-params"))).methodName;
@@ -271,8 +284,21 @@
                             return ViewSource.droidrecordDataToTable(data, true);
                         }
                     });
+			    
+			    $(".srcSinkSpan").popover({ 
+                        trigger : "hover",
+                        placement : popoverAutoPlacement, 
+                        html : true,
+                        title : function () {
+                            return ""/*$(this).find("span[name=taintedVariable]").text()*/;
+                        }, 
+                        content : function() {
+                            var data = jQuery.parseJSON(atob($(this).attr("data-stamp-srcsink")));
+                            return ViewSource.formatStampSrcSinkInfo(data);
+                        }
+                    });
     
-                $(".invocationExpression").on("click",  function(event){
+                $(".invocationExpression[data-droidrecord-params!=\"\"]").on("click",  function(event){
                     var preinvk = $(this).find("span[name=PreInvocation]");
                     var chordSig = $(preinvk).attr("data-chordsig");
 		            var filePath = $(preinvk).attr("data-filePath");

@@ -101,5 +101,26 @@ var ViewSource = (function ()
         return html;
     }
     
+    
+    module.formatStampSrcSinkInfo = function(data)
+    {
+        var html = "";
+        if(data.sources.length != 0) {
+            html += "<b>Sources:</b><ul>";
+            for(s in data.sources) {
+                html += "<li>" + data.sources[s] + "</li>"
+            }
+            html += "</ul>";
+        }
+        if(data.sinks.length != 0) {
+            html += "<b>Sinks:</b><ul>";
+            for(s in data.sinks) {
+                html += "<li>" + data.sinks[s] + "</li>"
+            }
+            html += "</ul>";
+        }
+        return html;
+    }
+    
     return module;
 }());  

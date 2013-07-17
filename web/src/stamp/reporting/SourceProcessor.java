@@ -188,47 +188,49 @@ public class SourceProcessor
                 CallArgumentValueAnalysis cava = droidrecord.getCallArgumentValueAnalysis();
                 if(cava.isReady()) {
                     List<List<ParamInfo>> params = cava.queryArgumentValues(calleeMethodSig, methodSig, lineNum);
-                    MethodInfo method = MethodInfo.parse(calleeMethodSig);
-                    paramsData.append("{");
-                    paramsData.append("\"methodName\":\"");
-                    paramsData.append(method.getName());
-                    paramsData.append("\",");
-                    paramsData.append("\"parameterTypes\":[");
-                    for(int i = 0; i < method.getArguments().size()-1; i++) {
-                        paramsData.append("\"");
-                        paramsData.append(method.getArguments().get(i));
+                    if(params.size() != 0) { 
+                        MethodInfo method = MethodInfo.parse(calleeMethodSig);
+                        paramsData.append("{");
+                        paramsData.append("\"methodName\":\"");
+                        paramsData.append(method.getName());
                         paramsData.append("\",");
-                    }
-                    if(method.getArguments().size() > 0) {
-                        String ptype = method.getArguments().get(method.getArguments().size()-1);
-                        if(!ptype.equals("")) {
+                        paramsData.append("\"parameterTypes\":[");
+                        for(int i = 0; i < method.getArguments().size()-1; i++) {
                             paramsData.append("\"");
-                            paramsData.append(ptype);
-                            paramsData.append("\"");
+                            paramsData.append(method.getArguments().get(i));
+                            paramsData.append("\",");
                         }
+                        if(method.getArguments().size() > 0) {
+                            String ptype = method.getArguments().get(method.getArguments().size()-1);
+                            if(!ptype.equals("")) {
+                                paramsData.append("\"");
+                                paramsData.append(ptype);
+                                paramsData.append("\"");
+                            }
+                        }
+                        paramsData.append("],");
+                        paramsData.append("\"parameterValues\":[");
+                        boolean addComa = false;
+                        Set<String> seenParamChoices = new HashSet<String>();
+                        for(List<ParamInfo> l : params) {
+                            String jsonInvkParams = "[";
+                            for(int i = 0; i < l.size()-1; i++) {
+                                jsonInvkParams += "\"" + escape(l.get(i).toSimpleString()) + "\",";
+                            }
+                            if(l.size() > 0) {
+                                jsonInvkParams += "\"" + escape(l.get(l.size()-1).toSimpleString()) + "\"";
+                            }
+                            jsonInvkParams += "]";
+                            if(seenParamChoices.contains(jsonInvkParams)) continue;
+                            if(addComa) paramsData.append(",");
+                            addComa = true;
+                            paramsData.append(jsonInvkParams);
+                        }
+                        paramsData.append("]");
+                        paramsData.append("}");
+                        paramsDataStr = paramsData.toString();
                     }
-                    paramsData.append("],");
-                    paramsData.append("\"parameterValues\":[");
-                    boolean addComa = false;
-                    Set<String> seenParamChoices = new HashSet<String>();
-                    for(List<ParamInfo> l : params) {
-                        String jsonInvkParams = "[";
-                        for(int i = 0; i < l.size()-1; i++) {
-                            jsonInvkParams += "\"" + escape(l.get(i).toSimpleString()) + "\",";
-                        }
-                        if(l.size() > 0) {
-                            jsonInvkParams += "\"" + escape(l.get(l.size()-1).toSimpleString()) + "\"";
-                        }
-                        jsonInvkParams += "]";
-                        if(seenParamChoices.contains(jsonInvkParams)) continue;
-                        if(addComa) paramsData.append(",");
-                        addComa = true;
-                        paramsData.append(jsonInvkParams);
-                    }
-                    paramsData.append("]");
-                    paramsData.append("}");
                 }
-                paramsDataStr = paramsData.toString();
             }
             try {
                 paramsDataStr = new String(Base64.encodeBase64(paramsDataStr.getBytes("UTF-8")));
@@ -273,30 +275,106 @@ public class SourceProcessor
 	    }
     }
     
+    public static class SrcSinkSpanStart extends Insertion {
+	    private Set<String> sources;
+	    private Set<String> sinks;
+
+	    public SrcSinkSpanStart(int position, Set<String> sources, Set<String> sinks) {
+	        super(position, 6);
+	        this.sources = sources;
+	        this.sinks = sinks;
+	    }
+
+	    @Override public String toString() {
+	        StringBuilder srcSinkData = new StringBuilder();
+	        String srcSinkDataStr;
+	        srcSinkData.append("{");
+            srcSinkData.append("\"sources\":[");
+            boolean addComa = false;
+            for(String s : sources) {
+                if(addComa) srcSinkData.append(",");
+                srcSinkData.append("\"" + s + "\"");
+                addComa = true;
+            }
+            srcSinkData.append("],");
+            srcSinkData.append("\"sinks\":[");
+            addComa = false;
+            for(String s : sinks) {
+                if(addComa) srcSinkData.append(",");
+                srcSinkData.append("\"" + s + "\"");
+                addComa = true;
+            }
+            srcSinkData.append("]}");
+	        try {
+                srcSinkDataStr = new String(Base64.encodeBase64(srcSinkData.toString().getBytes("UTF-8")));
+            } catch(UnsupportedEncodingException e) {
+                throw new Error(e);
+            }
+	        return "<span class='srcSinkSpan' data-stamp-srcsink='"+srcSinkDataStr+"'>";
+	    }
+    }
+    
     public static class KeySpanStart extends Insertion {
-	private String key;
+	    private String key;
 
-	public KeySpanStart(int position, String key) {
-	    super(position, 6);
-	    this.key = key;
-	}
+	    public KeySpanStart(int position, String key) {
+	        super(position, 6);
+	        this.key = key;
+	    }
 
-	@Override public String toString() {
-	    return "<span id='"+key+getPosition()+"' name='"+key+"'>";
-	}
+	    @Override public String toString() {
+	        return "<span id='"+key+getPosition()+"' name='"+key+"'>";
+	    }
     }
 
     public static class EscapeStart extends Insertion {
-	private String sequence;
+	    private String sequence;
 
-	public EscapeStart(int position, String sequence) {
-	    super(position, -12);
-	    this.sequence = sequence;
-	}
+	    public EscapeStart(int position, String sequence) {
+	        super(position, -12);
+	        this.sequence = sequence;
+	    }
 
-	@Override public String toString() {
-	    return this.sequence;
-	}
+	    @Override public String toString() {
+	        return this.sequence;
+	    }
+    }
+    
+    public static class TaintedVariableRecord {
+        private final int startPos;
+        private final int endPos;
+        private final Set<String> sources;
+        private final Set<String> sinks;
+        
+        public int getStart() { return startPos; }
+        public int getEnd() { return endPos; }
+        
+        public TaintedVariableRecord(int startPos, int endPos) {
+            System.out.println("Created TaintedVariableRecord " + startPos + " " + endPos);
+            this.startPos = startPos;
+            this.endPos = endPos;
+            this.sources = new HashSet<String>();
+            this.sinks = new HashSet<String>();
+        }
+        
+        public void addSource(String s) {
+            System.out.println("Added source " + s + " to " + startPos + " " + endPos);
+            sources.add(s);
+        }
+        
+        public void addSink(String s) {
+            System.out.println("Added sink " + s + " to " + startPos + " " + endPos);
+            sinks.add(s);
+        }
+        
+        public void makeInsertions(List<Insertion> insertions) {
+            System.out.println("Inserted TaintedVariableRecord " + startPos + " " + endPos);
+		    insertions.add(new SrcSinkSpanStart(startPos, sources, sinks));
+			insertions.add(new KeySpanStart(startPos, "taintedVariable"));
+			insertions.add(new SpanEnd(endPos));
+			insertions.add(new SpanEnd(endPos));
+        }
+        
     }
 
     private String source;
@@ -514,17 +592,47 @@ public class SourceProcessor
 			Document document = builder.parse(taintedInfo);
 			XPath xpath = XPathFactory.newInstance().newXPath();
 
-			String query = "//category[@type=\"method\"]/tuple/value[@srcFile=\""+filePath+"\"]/highlight";			
+			String query = "//category[@type=\"method\"]/tuple/value[@srcFile=\""+filePath+"\"]/highlight[@key=\"taintedVariable\"]";			
 			System.out.println("Tainted vars query: "+query);
 			NodeList nodes = (NodeList)xpath.evaluate(query, document, XPathConstants.NODESET);
 			
+			Map<Integer, List<TaintedVariableRecord>> taintedVars = new HashMap<Integer, List<TaintedVariableRecord>>();
+            System.out.println("HERE 1");
 			for(int i=0; i<nodes.getLength(); i++) {
 				Element node = (Element)nodes.item(i);
 				int start = Integer.valueOf(node.getAttribute("startpos"));
 				int end = start+Integer.valueOf(node.getAttribute("length"));
-				String key = node.getAttribute("key");
-				insertions.add(new KeySpanStart(start, key));
-				insertions.add(new SpanEnd(end));
+				if(!taintedVars.containsKey(start)) {
+				    taintedVars.put(start, new ArrayList<TaintedVariableRecord>());
+				}
+				TaintedVariableRecord currentTVR = null;
+				for(TaintedVariableRecord tvr : taintedVars.get(start)) {
+				    if(tvr.getEnd() == end) {
+				        currentTVR = tvr;
+				    }
+				}
+				if(currentTVR == null) {
+				    currentTVR = new TaintedVariableRecord(start, end);
+				    taintedVars.get(start).add(currentTVR);
+				}
+				String srcSinkQuery = "../../value/label/text()";
+				NodeList subnodes = (NodeList)xpath.evaluate(srcSinkQuery, node, XPathConstants.NODESET);
+				for(int j=0; j<nodes.getLength(); j++) {
+				    Node subnode = subnodes.item(j);
+				    if(subnode == null || subnode.getNodeType() != Node.CDATA_SECTION_NODE) continue;
+				    String s = subnode.getNodeValue();
+				    if(s == null) continue;
+				    if(s.startsWith("$")) {
+				        currentTVR.addSource(s);
+				    } else if(s.startsWith("!")) {
+				        currentTVR.addSink(s);
+				    }
+				}
+			}
+			for(List<TaintedVariableRecord> l : taintedVars.values()) {
+			    for(TaintedVariableRecord tvr : l) {
+			        tvr.makeInsertions(insertions);
+			    }
 			}
 		}
     }
