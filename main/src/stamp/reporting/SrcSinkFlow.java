@@ -37,16 +37,18 @@ public class SrcSinkFlow extends XMLReport {
 	}
 	*/
 
-	Iterable<Pair<String,String>> res = relSrcSinkFlow.getAry2ValTuples();
-	for(Pair<String,String> pair : res) {
-	    String source = pair.val0;
-	    String sink = pair.val1;
-	    newTuple()
-			.addValue(source)
-			.addValue(sink);
-		
-	}
-	
+	//Note: As of 7.9.2013, the first block below is used for non-jcfl stuff. The second block is 
+	//required instead for Osbert's JCFL flow stuff. They are mutually exclusive. 
+		Iterable<Pair<String,String>> res = relSrcSinkFlow.getAry2ValTuples();
+		for(Pair<String,String> pair : res) {
+		    String source = pair.val0;
+		    String sink = pair.val1;
+		    newTuple()
+				.addValue(source)
+				.addValue(sink);
+			
+		}
+
 	/*
 	  Map<stamp.jcflsolver.Util.Pair<Integer, Integer>, Integer> src2sink = JCFLSolverAnalysis.getSrc2Sink();
 	  DomL dom = (DomL)ClassicProject.g().getTrgt("L");
@@ -61,7 +63,6 @@ public class SrcSinkFlow extends XMLReport {
 	}
 	
 	relSrcSinkFlow.close();
+    */
     }
-	*/
-	}
 }
