@@ -24,8 +24,8 @@ MmethArg(m:M,z:Z,v:V) input
 MmethPrimArg(m:M,z:Z,u:U) input
 
 # Flow information
-labelRef(c:C,v:V,l:L) input
-labelPrim(c:C,u:U,l:L) input
+labelRef(c:C,v:V,d:C,l:L) input
+labelPrim(c:C,u:U,d:C,l:L) input
 
 # Method annotations
 SrcLabel(l:L) input
@@ -45,7 +45,7 @@ out_reachableM(m:M) output
 # Taint flow information
 out_taintedRefVar(l:L,v:V) output
 out_taintedPrimVar(l:L,v:U) output
-# flow(src:L,sink:L) will be used directly
+# flow(c:C,src:L,d:C,sink:L) will be used directly
 
 # Annotations on reachable methods
 out_taintSrc(src:L,m:M) output
@@ -58,8 +58,8 @@ out_taintedStub(m:M) output
 
 out_reachableM(m) :- CM(_,m).
 
-out_taintedPrimVar(l,v) :- labelPrim(_,v,l).
-out_taintedRefVar(l,v) :- labelRef(_,v,l).
+out_taintedPrimVar(l,v) :- labelPrim(_,v,_,l).
+out_taintedRefVar(l,v) :- labelRef(_,v,_,l).
 
 out_taintSrc(l,m) :- chaIM(_,m), LabelRet(l,m), SrcLabel(l).
 out_taintSrc(l,m) :- chaIM(_,m), LabelArg(l,m,_), SrcLabel(l).

@@ -98,6 +98,9 @@ VTCtxt(c:C,v:V,t:T) output
 OTFilter(o:C,t:T)   output
 
 # annotations
+SrcLabelCtxt(c:C,l:L)  output
+SinkLabelCtxt(c:C,l:L) output
+
 SrcArgFlowCtxt(c:C,l:L,v:V)     output
 SrcRetFlowCtxt(c:C,l:L,v:V)     output
 ArgSinkFlowCtxt(c:C,v:V,l:L)    output
@@ -161,6 +164,11 @@ VTCtxt(c,v,t) :- VT(v,t), CM(c,m), MV(m,v).
 OTFilter(o,t) :- CH(o,h), HTFilter(h,t).
 
 # annotations
+SrcLabelCtxt(c,l)  :- LabelRet(l,m),   CM(c,m), SrcLabel(l).
+SrcLabelCtxt(c,l)  :- LabelArg(l,m,_), CM(c,m), SrcLabel(l).
+SinkLabelCtxt(c,l) :- LabelRet(l,m),   CM(c,m), SinkLabel(l).
+SinkLabelCtxt(c,l) :- LabelArg(l,m,_), CM(c,m), SinkLabel(l).
+
 SrcArgFlowCtxt(c,l,v)     :- SrcLabel(l), LabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).
 SrcRetFlowCtxt(c,l,v)     :- SrcLabel(l), LabelRet(l,m), MmethRet(m,_,v), CM(c,m).
 ArgSinkFlowCtxt(c,v,l)    :- SinkLabel(l), LabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).

@@ -125,8 +125,11 @@ public class PathsAdapter {
 			int f = getSingleDomIndex(rawNode);
 			return new StatFldPoint(((DomF) doms.get("F")).get(f));
 		case 'l':
-			int l = getSingleDomIndex(rawNode);
-			return new LabelPoint(((DomL) doms.get("L")).get(l));
+			Pair<Integer,Integer> lc = getTwoDomIndices(rawNode);
+			int l = lc.getX().intValue();
+			int c_l = lc.getY().intValue();
+			return new CtxtLabelPoint(((DomC) doms.get("C")).get(c_l),
+									  ((DomL) doms.get("L")).get(l));
 		default:
 			throw new RuntimeException("Invalid node name: " + rawNode);
 		}

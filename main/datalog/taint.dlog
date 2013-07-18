@@ -50,9 +50,9 @@ MmethPrimRet(m:M,z:Z,u:U)     input
 
 ### output relations ###
 
-labelRef(c:C,v:V,l:L) output   # (c,v) is labeled with l
-labelPrim(c:C,u:U,l:L) output  # (c,u) is labeled with l
-flow(src:L,sink:L) output
+labelRef(c:C,v:V,d:C,l:L) output   # (c,v) is labeled with (d,l)
+labelPrim(c:C,u:U,d:C,l:L) output  # (c,u) is labeled with (d,l)
+flow(c:C,src:L,d:C,sink:L) output
 
 ### intermediate relations ###
 
@@ -70,12 +70,12 @@ flowPrimRef(u:U,v:V)
 flowRefPrim(u:V,v:U)
 flowPrimPrim(u:U,v:U)
 
-label(o:C,l:L)            # o is labeled with l
-labelPrimFld(o:C,f:F,l:L) # prim fld f of object o is labeled l
-labelPrimFldStat(f:F,l:L) # static field f of primitive type has label l
+label(o:C,d:C,l:L)            # o is labeled with (d,l)
+labelPrimFld(o:C,f:F,d:C,l:L) # prim fld f of object o is labeled (d,l)
+labelPrimFldStat(f:F,d:C,l:L) # static field f of primitive type has label (d,l)
 
-sink(c:C,u:V,l:L)         # (c,u) is labeled with sink label l
-sinkPrim(c:C,u:U,l:L)     # (c,u) is labeled with sink label l
+sink(c:C,u:V,d:C,l:L)         # (c,u) is labeled with sink label (d,l)
+sinkPrim(c:C,u:U,d:C,l:L)     # (c,u) is labeled with sink label (d,l)
 
 ###################
 #          RULES
@@ -105,35 +105,35 @@ flowPrimPrim(u,v) :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,u), MmethPrimArg(m,z
 
 # (backward) escape flow
 
-sink(c,u,l) :- CM(c,m), MV(m,u), varLabel(u,l), SinkLabel(l).
-sink(c,u,l) :- flowRefRef(u,v), labelRef(c,v,l), SinkLabel(l).
-sink(c,u,l) :- flowRefPrim(u,v), labelPrim(c,v,l), SinkLabel(l).
+sink(c,u,d,l) :- CM(c,m), MV(m,u), varLabel(u,l), SinkLabel(l), c = d.
+sink(c,u,d,l) :- flowRefRef(u,v), labelRef(c,v,d,l), SinkLabel(l).
+sink(c,u,d,l) :- flowRefPrim(u,v), labelPrim(c,v,d,l), SinkLabel(l).
 
-sinkPrim(c,u,l) :- CM(c,m), MU(m,u), varLabelPrim(u,l), SinkLabel(l).
-sinkPrim(c,u,l) :- flowPrimRef(u,v), labelRef(c,v,l), SinkLabel(l).
-sinkPrim(c,u,l) :- flowPrimPrim(u,v), labelPrim(c,v,l), SinkLabel(l).
+sinkPrim(c,u,d,l) :- CM(c,m), MU(m,u), varLabelPrim(u,l), SinkLabel(l), c = d.
+sinkPrim(c,u,d,l) :- flowPrimRef(u,v), labelRef(c,v,d,l), SinkLabel(l).
+sinkPrim(c,u,d,l) :- flowPrimPrim(u,v), labelPrim(c,v,d,l), SinkLabel(l).
 
 # complete flow
 
-flow(src,sink) :- sink(c,u,sink), labelRef(c,u,src), SrcLabel(src).
-flow(src,sink) :- sinkPrim(c,u,sink), labelPrim(c,u,src), SrcLabel(src).
+flow(c,src,e,sink) :- sink(d,u,e,sink), labelRef(d,u,c,src), SrcLabel(src).
+flow(c,src,e,sink) :- sinkPrim(d,u,e,sink), labelPrim(d,u,c,src), SrcLabel(src).
 
 # (forward) label flow
 
-label(o,l)      :- varLabel(v,l), CM(c,m), MV(m,v), pt(c,v,o).
-label(o,l)      :- transferRefRef(u,v), labelRef(c,u,l), pt(c,v,o).
-label(o,l)      :- transferPrimRef(u,v), labelPrim(c,u,l), pt(c,v,o).
-labelRef(c,v,l) :- pt(c,v,o), label(o,l).
+label(o,c,l)      :- varLabel(v,l), CM(c,m), MV(m,v), pt(c,v,o).
+label(o,d,l)      :- transferRefRef(u,v), labelRef(c,u,d,l), pt(c,v,o).
+label(o,d,l)      :- transferPrimRef(u,v), labelPrim(c,u,d,l), pt(c,v,o).
+labelRef(c,v,d,l) :- pt(c,v,o), label(o,d,l).
 
-labelPrim(c,v,l) :- varLabelPrim(v,l), CM(c,m), MU(m,v).
-labelPrim(c,v,l) :- transferRefPrim(u,v), labelRef(c,u,l).
-labelPrim(c,v,l) :- transferPrimPrim(u,v), labelPrim(c,u,l).
+labelPrim(c,v,d,l) :- varLabelPrim(v,l), CM(c,m), MU(m,v), c = d.
+labelPrim(c,v,d,l) :- transferRefPrim(u,v), labelRef(c,u,d,l).
+labelPrim(c,v,d,l) :- transferPrimPrim(u,v), labelPrim(c,u,d,l).
 
-labelPrim(c,v,l) :- AssignPrim(v,u), labelPrim(c,u,l).
-labelPrimFld(o,f,l) :- labelPrim(c,v,l), StorePrim(u,f,v), pt(c,u,o).
-labelPrim(c,y,l) :- LoadPrim(y,x,f), labelPrimFld(o,f,l), pt(c,x,o).
-labelPrimFldStat(f,l) :- StoreStatPrim(f,v), labelPrim(_,v,l).
-labelPrim(c,y,l) :- LoadStatPrim(y,f), labelPrimFldStat(f,l), MU(m,y), CM(c,m).
+labelPrim(c,v,d,l)      :- AssignPrim(v,u), labelPrim(c,u,d,l).
+labelPrimFld(o,f,d,l)   :- labelPrim(c,v,d,l), StorePrim(u,f,v), pt(c,u,o).
+labelPrim(c,y,d,l)      :- LoadPrim(y,x,f), labelPrimFld(o,f,d,l), pt(c,x,o).
+labelPrimFldStat(f,d,l) :- StoreStatPrim(f,v), labelPrim(_,v,d,l).
+labelPrim(c,y,d,l)      :- LoadStatPrim(y,f), labelPrimFldStat(f,d,l), MU(m,y), CM(c,m).
 
-labelPrim(d,u,l) :- labelPrim(c,v,l), paramPrim(u,v,i), CC(c,d), CI(d,i).
-labelPrim(c,u,l) :- labelPrim(d,v,l), returnPrim(u,v,i), CI(d,i), CC(c,d).
+labelPrim(d,u,e,l) :- labelPrim(c,v,e,l), paramPrim(u,v,i), CC(c,d), CI(d,i).
+labelPrim(c,u,e,l) :- labelPrim(d,v,e,l), returnPrim(u,v,i), CI(d,i), CC(c,d).

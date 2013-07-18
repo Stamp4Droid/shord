@@ -1,1 +1,1 @@
-l<%L> u<%U>_<%C>:labelPrim(%C,%U,%L)
+l<%L>_<%D> u<%U>_<%C>:labelPrim(%C,%U,%D,%L)
