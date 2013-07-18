@@ -129,11 +129,12 @@ flow(src,sink) :- sinkPrim(c,u,sink), labelPrim(c,u,src), SrcLabel(src).
 # (forward) label flow
  
 transferObjObj(o1,o2) :- transferRefRef(u,v), pt(c,u,o1), pt(c,v,o2).
-transferObjObj(o2,o3) :- transferObjObj(o1,o3), fpt(o1,_,o2). 
+transferObjObj(o2,o3) :- transferObjObj(o1,o3), fpt(o1,0,o2). 
+transferObjObj(o1,o2) :- transferObjObj(o1,o3), fpt(o3,0,o2). 
 
 label(o,l)      :- varLabel(v,l), CM(c,m), MV(m,v), pt(c,v,o).
 label(o2,l)     :- transferObjObj(o1,o2), label(o1,l).
-label(o2,l)     :- transferObjObj(o1,o2), labelPrimFld(o1,_,l).
+label(o2,l)     :- transferObjObj(o1,o2), labelPrimFld(o1,0,l).
 label(o,l)      :- transferPrimRef(u,v), labelPrim(c,u,l), pt(c,v,o).
 labelRef(c,v,l) :- pt(c,v,o), label(o,l).
 
