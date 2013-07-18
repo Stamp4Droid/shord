@@ -76,7 +76,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		files.add(new StubInputsFile(g, s));
 		files.addAll(FlowWriter.viz(g, s));
 		try {
-			FileManager manager = new FileManager(outputDir, scratchDir, false);
+			FileManager manager = new FileManager(outputDir, scratchDir, true);
 			for(StampFile file : files) {
 				manager.write(file);
 			}

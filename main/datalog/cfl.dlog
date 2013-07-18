@@ -99,17 +99,24 @@ OTFilter(o:C,t:T)   output
 
 # annotations
 SrcArgFlowCtxt(c:C,l:L,v:V)     output
+SinklArgFlowCtxt(c:C,l:L,v:V)	output
 SrcRetFlowCtxt(c:C,l:L,v:V)     output
+SinklRetFlowCtxt(c:C,l:L,v:V)  	output
 ArgSinkFlowCtxt(c:C,v:V,l:L)    output
-RetSinkFlowCtxt(c:C,v:V,l:L)    output
 
 ArgArgTransferCtxt(c:C,v:V,u:V) output
 ArgRetTransferCtxt(c:C,v:V,u:V) output
 
-# SrcArgPrimFlowCtxt(c:C,l:L,v:U) is invalid
 SrcRetPrimFlowCtxt(c:C,l:L,v:U)         output
+SinklRetPrimFlowCtxt(c:C,l:L,v:U)	output
 ArgSinkPrimFlowCtxt(c:C,v:U,l:L)        output
-RetSinkPrimFlowCtxt(c:C,v:U,l:L) 	output
+
+# The other 3 possible combinations are invalid:
+# - SrcArgPrimFlowCtxt(c:C,l:L,v:U)
+# - RetSinkFlowCtxt(c:C,v:V,l:L)
+# - RetSinkPrimFlowCtxt(c:C,v:U,l:L)
+# Pass-by-value disallows taint flowing to a primitive-type argument.
+# Taint can't flow from the return to the sink
 
 ArgPrimArgTransferCtxt(c:C,v:U,u:V)     output
 ArgPrimRetTransferCtxt(c:C,v:U,u:V)     output
@@ -164,17 +171,18 @@ VTCtxt(c,v,t) :- VT(v,t), CM(c,m), MV(m,v).
 OTFilter(o,t) :- CH(o,h), HTFilter(h,t).
 
 # annotations
-SrcArgFlowCtxt(c,l,v)     :- SrcLabel(l), LabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).
-SrcRetFlowCtxt(c,l,v)     :- SrcLabel(l), LabelRet(l,m), MmethRet(m,_,v), CM(c,m).
-ArgSinkFlowCtxt(c,v,l)    :- SinkLabel(l), LabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).
-RetSinkFlowCtxt(c,v,l)    :- SinkLabel(l), LabelRet(l,m), MmethRet(m,_,v), CM(c,m).
+SrcArgFlowCtxt(c,l,v)       :- SrcLabel(l), LabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).
+SinklArgFlowCtxt(c,l,v)     :- SinkLabel(l), LabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).
+SrcRetFlowCtxt(c,l,v)       :- SrcLabel(l), LabelRet(l,m), MmethRet(m,_,v), CM(c,m).
+SinklRetFlowCtxt(c,l,v)     :- SinkLabel(l), LabelRet(l,m), MmethRet(m,_,v), CM(c,m).
+ArgSinkFlowCtxt(c,v,l)      :- SinkLabel(l), LabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).
 
-ArgArgTransferCtxt(c,v,u) :- ArgArgTransfer(m,z0,z1), MmethArg(m,z0,v), MmethArg(m,z1,u), CM(c,m).
-ArgRetTransferCtxt(c,v,u) :- ArgRetTransfer(m,z), MmethArg(m,z,v), MmethRet(m,_,u), CM(c,m).
+ArgArgTransferCtxt(c,v,u)   :- ArgArgTransfer(m,z0,z1), MmethArg(m,z0,v), MmethArg(m,z1,u), CM(c,m).
+ArgRetTransferCtxt(c,v,u)   :- ArgRetTransfer(m,z), MmethArg(m,z,v), MmethRet(m,_,u), CM(c,m).
 
-SrcRetPrimFlowCtxt(c,l,v)  :- SrcLabel(l), LabelRet(l,m), MmethPrimRet(m,_,v), CM(c,m).
-ArgSinkPrimFlowCtxt(c,v,l) :- SinkLabel(l), LabelArg(l,m,z), MmethPrimArg(m,z,v), CM(c,m).
-RetSinkPrimFlowCtxt(c,v,l) :- SinkLabel(l), LabelRet(l,m), MmethPrimRet(m,_,v), CM(c,m).
+SrcRetPrimFlowCtxt(c,l,v)   :- SrcLabel(l), LabelRet(l,m), MmethPrimRet(m,_,v), CM(c,m).
+SinklRetPrimFlowCtxt(c,l,v) :- SinkLabel(l), LabelRet(l,m), MmethPrimRet(m,_,v), CM(c,m).
+ArgSinkPrimFlowCtxt(c,v,l)  :- SinkLabel(l), LabelArg(l,m,z), MmethPrimArg(m,z,v), CM(c,m).
 
 ArgPrimArgTransferCtxt(c,v,u)     :- ArgArgTransfer(m,z0,z1), MmethPrimArg(m,z0,v), MmethArg(m,z1,u), CM(c,m).
 ArgPrimRetTransferCtxt(c,v,u)     :- ArgRetTransfer(m,z), MmethPrimArg(m,z,v), MmethRet(m,_,u), CM(c,m).
