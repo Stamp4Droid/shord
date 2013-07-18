@@ -13,13 +13,14 @@ import shord.project.analyses.JavaAnalysis;
 public class PathsPrinterAnalysis extends JavaAnalysis {
 	@Override
 	public void run() {
+		PrintWriter pw = new PrintWriter(new File("solvergenpaths.out"));
 		for (Path p : PathsAdapter.getPaths()) {
-			System.out.println(p.start + " --> " + p.end);
+			pw.println(p.start + " --> " + p.end);
 			for (Step s : p.steps) {
-				System.out.println((s.reverse ? "<-" : "--" ) + s.symbol +
+				pw.println((s.reverse ? "<-" : "--" ) + s.symbol +
 								   (s.reverse ? "-- " : "-> " ) + s.target);
 			}
-			System.out.println();
+			pw.println();
 		}
 	}
 }
