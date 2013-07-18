@@ -17,7 +17,8 @@
 
 ### input relations ###
 
-pt(c:C,v:V,o:C)  input # (c,v) points-to o
+pt(c:C,v:V,o:C)    input # (c,v) points-to o
+fpt(o1:C,f:F,o2:C) input
 
 MU(m:M,u:U)              input    # u is a prim type variable in m
 MV(m:M,v:V)              input    # v is a ref type variable in m
@@ -65,6 +66,8 @@ transferPrimRef(u:U,v:V)
 transferRefPrim(u:V,v:U)
 transferPrimPrim(u:U,v:U)
 
+transferObjObj(o1:C,o2:C)
+
 flowRefRef(u:V,v:V)
 flowPrimRef(u:U,v:V)
 flowRefPrim(u:V,v:U)
@@ -73,6 +76,7 @@ flowPrimPrim(u:U,v:U)
 label(o:C,l:L)            # o is labeled with l
 labelPrimFld(o:C,f:F,l:L) # prim fld f of object o is labeled l
 labelPrimFldStat(f:F,l:L) # static field f of primitive type has label l
+sinkObj(o:C,l:L)
 
 sink(c:C,u:V,l:L)         # (c,u) is labeled with sink label l
 sinkPrim(c:C,u:U,l:L)     # (c,u) is labeled with sink label l
@@ -109,19 +113,27 @@ sink(c,u,l) :- CM(c,m), MV(m,u), varLabel(u,l), SinkLabel(l).
 sink(c,u,l) :- flowRefRef(u,v), labelRef(c,v,l), SinkLabel(l).
 sink(c,u,l) :- flowRefPrim(u,v), labelPrim(c,v,l), SinkLabel(l).
 
+sinkObj(o,sink)  :- sink(c,u,sink), pt(c,u,o).
+sinkObj(o2,sink) :- sinkObj(o1,sink), fpt(o1,_,o2).
+
 sinkPrim(c,u,l) :- CM(c,m), MU(m,u), varLabelPrim(u,l), SinkLabel(l).
 sinkPrim(c,u,l) :- flowPrimRef(u,v), labelRef(c,v,l), SinkLabel(l).
 sinkPrim(c,u,l) :- flowPrimPrim(u,v), labelPrim(c,v,l), SinkLabel(l).
 
 # complete flow
 
-flow(src,sink) :- sink(c,u,sink), labelRef(c,u,src), SrcLabel(src).
+flow(src,sink) :- sinkObj(o,sink), label(o,src), SrcLabel(src).
+flow(src,sink) :- sinkObj(o,sink), labelPrimFld(o,_,src), SrcLabel(src).
 flow(src,sink) :- sinkPrim(c,u,sink), labelPrim(c,u,src), SrcLabel(src).
 
 # (forward) label flow
+ 
+transferObjObj(o1,o2) :- transferRefRef(u,v), pt(c,u,o1), pt(c,v,o2).
+transferObjObj(o2,o3) :- transferObjObj(o1,o3), fpt(o1,_,o2). 
 
 label(o,l)      :- varLabel(v,l), CM(c,m), MV(m,v), pt(c,v,o).
-label(o,l)      :- transferRefRef(u,v), labelRef(c,u,l), pt(c,v,o).
+label(o2,l)     :- transferObjObj(o1,o2), label(o1,l).
+label(o2,l)     :- transferObjObj(o1,o2), labelPrimFld(o1,_,l).
 label(o,l)      :- transferPrimRef(u,v), labelPrim(c,u,l), pt(c,v,o).
 labelRef(c,v,l) :- pt(c,v,o), label(o,l).
 
