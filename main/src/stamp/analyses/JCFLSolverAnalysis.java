@@ -42,23 +42,15 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		}
 	}
 	
-	private static Graph g = null;
-	private static StubLookup s = null;
+	private static Graph g = new E12();
+	private static StubLookup s = new StubLookup();
 	
 	public static Graph g() {
-		if(g == null) {
-			throw new RuntimeException("JCFLSolver analysis not yet run!");
-		} else {
-			return g;
-		}
+	    return g;
 	}
 	
 	public static StubLookup s() {
-		if(s == null) {
-			throw new RuntimeException("JCFLSolver analysis not yet run!");
-		} else {
-			return s;
-		}
+	    return s;
 	}
 	
 	@Override public void run() {
