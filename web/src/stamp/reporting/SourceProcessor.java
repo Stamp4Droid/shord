@@ -225,6 +225,7 @@ public class SourceProcessor
                             if(addComa) paramsData.append(",");
                             addComa = true;
                             paramsData.append(jsonInvkParams);
+                            seenParamChoices.add(jsonInvkParams);
                         }
                         paramsData.append("]");
                         paramsData.append("}");
