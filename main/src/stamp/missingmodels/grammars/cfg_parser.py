@@ -566,8 +566,8 @@ def parse(fin, fout, className):
     @param [out] fout A File-like object to write to.
     """
     parser = CFGParser()
-    fout.write('package stamp.jcflsolver.grammars;\n')
-    fout.write('import stamp.jcflsolver.*;\n')
+    fout.write('package stamp.missingmodels.grammars;\n')
+    fout.write('import stamp.missingmodels.util.jcflsolver.*;\n')
     fout.write('\n')
 
     fout.write('/* Original Grammar:\n')
