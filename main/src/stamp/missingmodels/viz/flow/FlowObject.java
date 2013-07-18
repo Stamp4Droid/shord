@@ -5,25 +5,34 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import stamp.missingmodels.util.ConversionUtils;
+import stamp.missingmodels.util.StubLookup;
+import stamp.missingmodels.util.StubLookup.StubLookupKey;
+import stamp.missingmodels.util.StubLookup.StubLookupValue;
 import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.jcflsolver.Edge;
+import stamp.missingmodels.util.jcflsolver.EdgeData;
 import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.missingmodels.viz.html.HTMLObject;
 import stamp.missingmodels.viz.html.HTMLObject.DivObject;
+import stamp.srcmap.SourceInfo;
 
 public abstract class FlowObject extends DivObject {
+	
 	private int index;
 	private Graph g;
+	private StubLookup s;
 	private List<Pair<Edge,Boolean>> path;
 	private boolean subpath;
 
-	public FlowObject(List<Pair<Edge,Boolean>> path, Graph g) {
-		this(path, g, false);
+	public FlowObject(List<Pair<Edge,Boolean>> path, Graph g, StubLookup s) {
+		this(path, g, s, false);
 	}
 
-	public FlowObject(List<Pair<Edge,Boolean>> path, Graph g, boolean subpath) {
+	public FlowObject(List<Pair<Edge,Boolean>> path, Graph g, StubLookup s, boolean subpath) {
 		this.path = path;
 		this.g = g;
+		this.s = s;
 
 		if(this.path.size() == 0) return;
 
@@ -61,6 +70,10 @@ public abstract class FlowObject extends DivObject {
 	public Graph getGraph() {
 		return this.g;
 	}
+	
+	public StubLookup getStubLookup() {
+		return this.s;
+	}
 
 	private int countUnmatched() {
 		int pre = 0;
@@ -85,6 +98,25 @@ public abstract class FlowObject extends DivObject {
 
 	public boolean useAlternate(int startIndex, int endIndex) {
 		return this.isStart(startIndex) && this.isEnd(endIndex);
+	}
+
+	public String parseEdge(EdgeData edge, boolean forward) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(edge.toString(forward));
+	
+		StubLookupValue info = this.s.get(new StubLookupKey(edge.symbol, edge.from, edge.to));
+		if(info == null) {
+			return sb.toString();
+		}
+	
+		String sourceFileName = SourceInfo.filePath(info.method.getDeclaringClass());
+		int methodLineNum = SourceInfo.methodLineNum(info.method);
+	
+		// TODO: make this print more than just the method name
+		String methStr = " <a onclick=\"showSource('" + sourceFileName + "','false','" + methodLineNum + "')\">" + "[" + info.method.getName() + "]</a>";
+		sb.append(methStr);
+	
+		return sb.toString();
 	}
 
 	public HTMLObject process(boolean start) {
@@ -122,7 +154,7 @@ public abstract class FlowObject extends DivObject {
 							boolean forward = pair.getY();
 
 							if(!subpath || index < path.size()-1) {
-								d.addObject(new SpanObject(FlowWriter.getNodeInfo(edge.getData(this.g).getTo(forward))));
+								d.addObject(new SpanObject(ConversionUtils.getNodeInfo(edge.getData(this.g).getTo(forward))));
 								d.addBreak();
 							}
 							this.index++;
@@ -136,11 +168,11 @@ public abstract class FlowObject extends DivObject {
 				boolean forward = pair.getY();
 
 				if(this.index == 0 && !subpath) {
-					d.addObject(new SpanObject(FlowWriter.getNodeInfo(edge.getData(this.g).getFrom(forward))));
+					d.addObject(new SpanObject(ConversionUtils.getNodeInfo(edge.getData(this.g).getFrom(forward))));
 					d.addBreak();
 				}
 
-				SpanObject span = new SpanObject("&nbsp;| " + FlowWriter.parseEdge(edge.getData(this.g), forward));
+				SpanObject span = new SpanObject("&nbsp;| " + this.parseEdge(edge.getData(this.g), forward));
 				if(edge.weight > 0) {
 					span.putStyle("color", "red");
 				}
@@ -152,7 +184,7 @@ public abstract class FlowObject extends DivObject {
 				}
 
 				if(!subpath || index < path.size()-1) {
-					d.addObject(new SpanObject(FlowWriter.getNodeInfo(edge.getData(this.g).getTo(forward))));
+					d.addObject(new SpanObject(ConversionUtils.getNodeInfo(edge.getData(this.g).getTo(forward))));
 					d.addBreak();
 				}
 
@@ -213,12 +245,12 @@ public abstract class FlowObject extends DivObject {
 			endSymbols.add("cs_refAssignRet");
 		}
 
-		public MethodCompressedFlowObject(List<Pair<Edge,Boolean>> path, Graph g, boolean subpath) {
-			super(path, g, subpath);
+		public MethodCompressedFlowObject(List<Pair<Edge,Boolean>> path, Graph g, StubLookup s, boolean subpath) {
+			super(path, g, s, subpath);
 		}
 
-		public MethodCompressedFlowObject(List<Pair<Edge,Boolean>> path, Graph g) {
-			super(path, g);
+		public MethodCompressedFlowObject(List<Pair<Edge,Boolean>> path, Graph g, StubLookup s) {
+			super(path, g, s);
 		}
 
 		@Override public String getMainLabel() {
@@ -270,12 +302,12 @@ public abstract class FlowObject extends DivObject {
 			symbols.add("cs_primAssignRet");
 		}
 
-		public AliasCompressedFlowObject(List<Pair<Edge,Boolean>> path, Graph g, boolean subpath) {
-			super(path, g, subpath);
+		public AliasCompressedFlowObject(List<Pair<Edge,Boolean>> path, Graph g, StubLookup s, boolean subpath) {
+			super(path, g, s, subpath);
 		}
 
-		public AliasCompressedFlowObject(List<Pair<Edge,Boolean>> path, Graph g) {
-			super(path, g);
+		public AliasCompressedFlowObject(List<Pair<Edge,Boolean>> path, Graph g, StubLookup s) {
+			super(path, g, s);
 		}
 
 		@Override public boolean useAlternate(int startIndex, int endIndex) {
@@ -322,7 +354,7 @@ public abstract class FlowObject extends DivObject {
 				for(int i=startIndex; i<=endIndex; i++) {
 					aliasList.addAll(super.getGraph().getPath(super.getEdge(i).getX(), super.getEdge(i).getY()));
 				}
-				return new AliasCompressedFlowObject(aliasList, super.getGraph(), true);
+				return new AliasCompressedFlowObject(aliasList, super.getGraph(), super.getStubLookup(), true);
 			}
 		}
 	}

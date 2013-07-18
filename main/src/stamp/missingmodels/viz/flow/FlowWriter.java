@@ -1,271 +1,226 @@
 package stamp.missingmodels.viz.flow;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import shord.analyses.DomC;
-import shord.analyses.DomU;
-import shord.analyses.DomV;
-import shord.analyses.LocalVarNode;
-import shord.analyses.ParamVarNode;
-import shord.analyses.RetVarNode;
-import shord.analyses.ThisVarNode;
-import shord.analyses.VarNode;
-import shord.project.ClassicProject;
-import soot.Local;
-import soot.SootMethod;
-import stamp.analyses.DomL;
-import stamp.analyses.JCFLSolverAnalysis;
+import stamp.missingmodels.util.ConversionUtils;
+import stamp.missingmodels.util.FileManager.FileType;
+import stamp.missingmodels.util.FileManager.StampFile;
+import stamp.missingmodels.util.StubLookup;
 import stamp.missingmodels.util.StubLookup.StubLookupKey;
 import stamp.missingmodels.util.StubLookup.StubLookupValue;
 import stamp.missingmodels.util.Util.Counter;
+import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.jcflsolver.Edge;
 import stamp.missingmodels.util.jcflsolver.EdgeData;
 import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.missingmodels.viz.flow.FlowObject.AliasCompressedFlowObject;
-import stamp.srcmap.Expr;
-import stamp.srcmap.RegisterMap;
-import stamp.srcmap.SourceInfo;
 
+/*
+ * Collection of StampFile generators to print various
+ * outputs for the JCFLSolver analysis.
+ * 
+ * @author Osbert Bastani
+ */
 public class FlowWriter {
 	/*
-	 * This function tokenizes graph node names in one of two ways:
-	 * a) "V1_2" -> ["V", 1, 2]
-	 * b) "L1" -> ["L", 1]
+	 * Outputs a list of all the stubs used in a src2sink flow.
 	 */
-	private static String[] tokenizeNodeName(String node) {
-		String[] result;
-		String dom = node.replaceAll("[^a-zA-Z]", "");
-		if(!node.startsWith(dom)) {
-			throw new RuntimeException("Invalid node name " + node + "!");
+	public static class AllStubsFile implements StampFile {
+		private final StubLookup s;
+
+		public AllStubsFile(StubLookup s) {
+			this.s = s;
 		}
-		if(node.contains("_")) {
-			result = new String[3];
-			String[] tokens = node.split("_");
-			if(tokens.length != 2) {
-				System.out.println("Invalid node name " + node + "!");
+
+		@Override
+		public String getName() {
+			return "AllStubs.txt";
+		}
+
+		@Override
+		public FileType getType() {
+			return FileType.OUTPUT;
+		}
+
+		@Override
+		public String getContent() {
+			StringBuilder sb = new StringBuilder();
+			Set<String> printedStubs = new HashSet<String>();
+			for(Map.Entry<StubLookupKey,StubLookupValue> entry : this.s.entrySet()) {
+				StubLookupKey key = entry.getKey();
+				StubLookupValue info = entry.getValue();
+				if(key.source.startsWith("M") && !printedStubs.contains(key.source)) {
+					sb.append(key.source + " " + info.method.toString()).append("\n");
+					printedStubs.add(key.source);
+				}
+				if(key.sink.startsWith("M") && !printedStubs.contains(key.sink)) {
+					sb.append(key.sink + " " + info.method.toString()).append("\n");
+					printedStubs.add(key.sink);
+				}
 			}
-			result[1] = tokens[0].substring(dom.length());
-			result[2] = tokens[1];
-		} else {
-			result = new String[2];
-			result[1] = node.substring(dom.length());
-		}
-		result[0] = dom;
-		return result;
-	}
-
-	/*
-	 * A cache of register maps.
-	 */
-	private static Map<String,RegisterMap> registerMaps = new HashMap<String,RegisterMap>();
-	
-	/*
-	 * Returns a register map, caching them as they are requested.
-	 */
-	private static RegisterMap getRegisterMap(SootMethod method) {
-		RegisterMap registerMap = registerMaps.get(method.toString());
-		if(registerMap == null) {
-			registerMap = SourceInfo.buildRegMapFor(method);
-			registerMaps.put(method.toString(), registerMap);
-		}
-		return registerMap;
-	}
-
-	/*
-	 * Returns source information about the node.
-	 * a) If the node name is in DomL (starts with L), then
-	 * maps "L1" -> ["L", label].
-	 * b) If the node name is in DomV (starts with V), then
-	 * returns [hyper link to containing method, hyper link
-	 * to variable, contextId]. 
-	 * c) If the node name is in DomU, then similar to (b).
-	 * d) In any other case, just returns the given string in
-	 * a length one array.
-	 * NOTE: if source information for the variable can't be
-	 * found, then the variableId is returned in place of
-	 * the second hyper link.
-	 */
-	private static String[] getNodeInfoHelper(String node) {
-		try {
-			// STEP 1: tokenize the node name
-			String[] tokens = tokenizeNodeName(node);
-
-			// STEP 2: parse labels, reference variables, and primitive variables 
-			if(tokens[0].equals("L")) {
-				// STEP 2a: if it is a label, then get the string
-				DomL dom = (DomL)ClassicProject.g().getTrgt("L");
-				tokens[1] = dom.toUniqueString(Integer.parseInt(tokens[1]));
-			} else if(tokens[0].equals("V") || tokens[0].equals("U")) {
-				// STEP 2b: if it is a variable, then get the variable and method information
-				
-				// get the register from the domain
-				VarNode register;
-				if(tokens[0].equals("V")) {
-					DomV dom = (DomV)ClassicProject.g().getTrgt(tokens[0].toUpperCase());
-					register = dom.get(Integer.parseInt(tokens[1]));
-				} else {
-					DomU dom = (DomU)ClassicProject.g().getTrgt(tokens[0].toUpperCase());
-					register = dom.get(Integer.parseInt(tokens[1]));
-				}
-
-				// look up the method and local from the register
-				SootMethod method = null;
-				Local local = null;
-				if(register instanceof LocalVarNode) {
-					LocalVarNode localRegister = (LocalVarNode)register;
-					local = localRegister.local;
-					method = localRegister.meth;
-				} else if(register instanceof ThisVarNode) {
-					ThisVarNode thisRegister = (ThisVarNode)register;
-					method = thisRegister.method;
-				} else if(register instanceof ParamVarNode) {
-					ParamVarNode paramRegister = (ParamVarNode)register;
-					method = paramRegister.method;
-				} else if(register instanceof RetVarNode) {
-					RetVarNode retRegister = (RetVarNode)register;
-					method = retRegister.method;
-				}
-
-				// HTML hyper link to the method
-				String sourceFileName = method == null ? "" : SourceInfo.filePath(method.getDeclaringClass());
-				int methodLineNum = SourceInfo.methodLineNum(method);
-
-				String methStr = "<a onclick=\"showSource('" + sourceFileName + "','false','" + methodLineNum + "')\">" + "[" + method.getName() + "]</a> ";
-
-				// HTML hyper link to the register
-				RegisterMap regMap = getRegisterMap(method);
-				Set<Expr> locations = regMap.srcLocsFor(local);
-				Integer registerLineNum = null;
-				String text = null;
-				if(locations != null) {
-					for(Expr location : locations) {
-						if(location.start() >= 0 && location.length() >= 0 && location.text() != null) {
-							registerLineNum = location.line();
-							text = location.text();
-							break;
-						}
-					}
-				}
-
-				// store the links in the tokens and return
-				if(registerLineNum != null) {
-					tokens[0] = methStr;
-					tokens[1] = "<a onclick=\"showSource('" + sourceFileName + "','false','" + registerLineNum + "')\">" + text + "</a>";
-				} else {
-					tokens[0] = methStr+tokens[0];
-				}
-
-				// if the context exists, get the context
-				/*
-				if(tokens.length == 3) {
-					DomC domC = (DomC)ClassicProject.g().getTrgt("C");
-					tokens[2] = domC.toUniqueString(Integer.parseInt(tokens[2]));
-				}
-				*/
-			}
-			return tokens;
-		} catch(Exception e) {
-			String[] tokens = {node};
-			return tokens;
+			return sb.toString();
 		}
 	}
 
 	/*
-	 * Gets the node info and concatenates into a String.
+	 * Output a list of all stub models included in the analysis.
 	 */
-	public static String getNodeInfo(String node) {
-		String[] tokens = getNodeInfoHelper(node);
-		return tokens[0] + (tokens.length >= 2 ? tokens[1] : ""); /*+ (tokens.length == 3 ? "_" + tokens[2] : "")*/
+	public static class StubModelsFile implements StampFile {
+		private final StubLookup s;
+
+		public StubModelsFile(StubLookup s) {
+			this.s = s;
+		}
+
+		@Override
+		public String getName() {
+			return "StubModels.txt";
+		}
+		@Override
+		public FileType getType() {
+			return FileType.OUTPUT;
+		}
+
+		@Override
+		public String getContent() {
+			StringBuilder sb = new StringBuilder();
+			for(Map.Entry<StubLookupKey,StubLookupValue> entry : this.s.entrySet()) {
+				StubLookupKey key = entry.getKey();
+				StubLookupValue info = entry.getValue();
+				sb.append(key.symbol + "," + key.source + "," + key.sink + " " + info.toString()).append("\n");
+			}
+			return sb.toString();
+		}
 	}
 
-	public static void printAllStubs() throws IOException {
-		PrintWriter pw = new PrintWriter(new File("cfl/Stubs.out"));
-		/*
-		for(StubLookupValue stub : JCFLSolverAnalysis.getAllStubs().values()) {
-	    	if(!printedStubs.contains(stub.method)) {
-				StubInfo info = new StubInfo(stub);
-				pw.println(stub.method + " " + info.method.toString());
-				printedStubs.add(stub.method);
-	    	}
-		}
-		 */
-		Set<String> printedStubs = new HashSet<String>();
-		for(Map.Entry<StubLookupKey,StubLookupValue> entry : JCFLSolverAnalysis.getAllStubs().entrySet()) {
-			StubLookupKey key = entry.getKey();
-			StubLookupValue info = entry.getValue();
-			if(key.source.startsWith("M") && !printedStubs.contains(key.source)) {
-				pw.println(key.source + " " + info.method.toString());
-				printedStubs.add(key.source);
-			}
-			if(key.sink.startsWith("M") && !printedStubs.contains(key.sink)) {
-				pw.println(key.sink + " " + info.method.toString());
-				printedStubs.add(key.sink);
-			}
-		}
-		pw.close();
-
-		pw = new PrintWriter("cfl/StubModels.out");
-		for(Map.Entry<StubLookupKey,StubLookupValue> entry : JCFLSolverAnalysis.getAllStubs().entrySet()) {
-			StubLookupKey key = entry.getKey();
-			StubLookupValue info = entry.getValue();
-			pw.println(key.symbol + "," + key.source + "," + key.sink + " " + info.toString());
-		}
-		pw.close();
-	}
-
-	public static void printStubInputs(Graph g, File outputDir) throws IOException {
-		PrintWriter pw = new PrintWriter(new File("cfl/Src2SinkStubs.out"));
-		Counter<String> keys = new Counter<String>();
-
+	/*
+	 * Retrieves the positive weight edges from the src2sink edges.
+	 */
+	private static MultivalueMap<Edge,Pair<Edge,Boolean>> getPositiveWeightEdges(Graph g) {
+		MultivalueMap<Edge,Pair<Edge,Boolean>> positiveWeightEdges = new MultivalueMap<Edge,Pair<Edge,Boolean>>();
 		for(Edge edge : g.getEdges("Src2Sink")) {
-			pw.println(edge.from.getName() + " -> " + edge.to.getName());
-
-			String[] sourceTokens = getNodeInfoHelper(edge.from.getName());
-			String source = sourceTokens[1];
-
-			String[] sinkTokens = getNodeInfoHelper(edge.to.getName());
-			String sink = sinkTokens[1];
-			pw.println(source + " -> " + sink);
-
+			positiveWeightEdges.ensure(edge);
 			List<Pair<Edge,Boolean>> path = g.getPath(edge);
 			for(Pair<Edge,Boolean> pair : path) {
-				EdgeData data = pair.getX().getData(g);
-				boolean forward = pair.getY();
+				if(pair.getX().weight > 0) {
+					positiveWeightEdges.add(edge, pair);
+				}
+			}
+		}
+		return positiveWeightEdges;
+	}
 
-				if(data.weight > 0) {
-					StubLookupValue info = JCFLSolverAnalysis.lookup(data, forward);
+	/*
+	 * For each src2sink edge in the graph, prints a list of all the
+	 * stub models that are used in the edge.
+	 */
+	public static class StubInputsFile implements StampFile {
+		private final Graph g;
+		private final StubLookup s;
+
+		public StubInputsFile(Graph g, StubLookup s) {
+			this.g = g;
+			this.s = s;
+		}
+
+		@Override
+		public String getName() {
+			return "StubInputs.txt";
+		}
+
+		@Override
+		public FileType getType() {
+			return FileType.OUTPUT;
+		}
+
+		@Override
+		public String getContent() {
+			StringBuilder sb = new StringBuilder();
+			MultivalueMap<Edge,Pair<Edge,Boolean>> positiveWeightEdges = getPositiveWeightEdges(this.g);
+			for(Edge edge : positiveWeightEdges.keySet()) {
+				String source = ConversionUtils.getNodeInfoTokens(edge.from.getName())[1];
+				String sink = ConversionUtils.getNodeInfoTokens(edge.to.getName())[1];
+				sb.append(source + " -> " + sink).append("\n");
+
+				for(Pair<Edge,Boolean> pair : positiveWeightEdges.get(edge)) {
+					EdgeData data = pair.getX().getData(this.g);
+					boolean forward = pair.getY();
+					
+					StubLookupValue info = s.get(new StubLookupKey(data.symbol, data.from, data.to));
 					String line;
 					if(info != null) {
 						line = data.toString(forward) + ": " + info.toString();
 					} else {
 						line = data.toString(forward) + ": " + "NOT_FOUND";
 					}
-					//keys.increment(new StubLookupKey(data.symbol, data.from, data.to));
-					keys.increment(line);
-					pw.println(line);
+					sb.append(line).append("\n");
 				}
 			}
-			pw.println();
+			sb.append("\n");
+			return sb.toString();
 		}
-		pw.close();
-
-		pw = new PrintWriter(new File("cfl/Src2SinkAllStubs.out"));
-		for(String key: keys.sortedKeySet()) {
-			pw.println(key + " " + keys.getCount(key));
-		}
-		pw.close();
 	}
+	
+	/*
+	 * Prints a list of all stub models used in src2sink edges,
+	 * including the number of times that they are used.
+	 */
+	public static class AllStubInputsFile implements StampFile {
+		private final Graph g;
+		private final StubLookup s;
 
-	public static void printFlowViz(Graph g) {
+		public AllStubInputsFile(Graph g, StubLookup s) {
+			this.g = g;
+			this.s = s;
+		}
+
+		@Override
+		public String getName() {
+			return "AllStubInputs.txt";
+		}
+
+		@Override
+		public FileType getType() {
+			return FileType.OUTPUT;
+		}
+
+		@Override
+		public String getContent() {
+			StringBuilder sb = new StringBuilder();
+			Counter<String> keys = new Counter<String>();
+			MultivalueMap<Edge,Pair<Edge,Boolean>> positiveWeightEdges = getPositiveWeightEdges(this.g);
+			for(Edge edge : positiveWeightEdges.keySet()) {
+				for(Pair<Edge,Boolean> pair : positiveWeightEdges.get(edge)) {
+					EdgeData data = pair.getX().getData(this.g);
+					boolean forward = pair.getY();
+					
+					StubLookupValue info = s.get(new StubLookupKey(data.symbol, data.from, data.to));
+					String line;
+					if(info != null) {
+						line = data.toString(forward) + ": " + info.toString();
+					} else {
+						line = data.toString(forward) + ": " + "NOT_FOUND";
+					}
+					keys.increment(line);
+				}
+			}
+			for(String key: keys.sortedKeySet()) {
+				sb.append(key + " " + keys.getCount(key)).append("\n");
+			}
+			sb.append("\n");
+			return sb.toString();
+		}
+	}
+	
+	/*
+	 * Returns a dot file visualizing the flow graph.
+	 */
+	public static StampFile getFlowGraphViz(Graph g, StubLookup s) {
 		List<Pair<String,String>> edges = new ArrayList<Pair<String,String>>();
 		Set<String> sources = new HashSet<String>();
 		Set<String> sinks = new HashSet<String>();
@@ -275,11 +230,11 @@ public class FlowWriter {
 			if(path.size() >= 2) {
 				Pair<Edge,Boolean> source = path.get(0);
 				EdgeData sourceData = source.getX().getData(g);
-				StubLookupValue sourceInfo = JCFLSolverAnalysis.lookup(sourceData, source.getY());
+				StubLookupValue sourceInfo = s.get(new StubLookupKey(sourceData.symbol, sourceData.from, sourceData.to));
 
 				Pair<Edge,Boolean> sink = path.get(path.size()-1);
 				EdgeData sinkData = sink.getX().getData(g);
-				StubLookupValue sinkInfo = JCFLSolverAnalysis.lookup(sinkData, sink.getY());
+				StubLookupValue sinkInfo = s.get(new StubLookupKey(sinkData.symbol, sinkData.from, sinkData.to));
 
 				edges.add(new Pair<String,String>(sourceData.from, sinkData.to));
 
@@ -289,52 +244,50 @@ public class FlowWriter {
 				if(sinkData.symbol.equals("cs_refSinkFlowNew") || sinkData.symbol.equals("cs_primSinkFlowNew")) {
 					sinks.add(sinkData.to);
 				}
-				/*
+				
 				if(sourceInfo != null && sinkInfo != null) {
-		    		//edges.add(new Pair<String,String>(sourceInfo.toString(), sinkInfo.toString()));
+		    		edges.add(new Pair<String,String>(sourceInfo.toString(), sinkInfo.toString()));
 				} else {
 		    		System.out.println("ERROR: Src2Sink path length too short!");
 				}
-				*/
 			}
 		}
-		FlowGraphViz.viz.viz(new FlowGraphViz.FlowGraph(edges, sources, sinks));
+		return FlowGraphViz.viz.viz(new FlowGraphViz.FlowGraph(edges, sources, sinks));
 	}
 
-	public static String parseEdge(EdgeData edge, boolean forward) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(edge.toString(forward));
-
-		StubLookupValue info = JCFLSolverAnalysis.lookup(edge, forward);
-		if(info == null) {
-			return sb.toString();
-		}
-
-		String sourceFileName = SourceInfo.filePath(info.method.getDeclaringClass());
-		int methodLineNum = SourceInfo.methodLineNum(info.method);
-
-		// TODO: make this print more than just the method name
-		String methStr = " <a onclick=\"showSource('" + sourceFileName + "','false','" + methodLineNum + "')\">" + "[" + info.method.getName() + "]</a>";
-		sb.append(methStr);
-
-		return sb.toString();
-	}
-
-	public static void viz(Graph g, File outputDir) throws IOException {
-		Set<String> terminals = new HashSet<String>();
+	/*
+	 * Returns a list of files that are the HTML objects for the visualization.
+	 */
+	public static Set<StampFile> viz(final Graph g, final StubLookup s) {
+		Set<StampFile> files = new HashSet<StampFile>();
+		final Set<String> terminals = new HashSet<String>();
 		terminals.add("FlowsTo");
+		for(final Edge edge : g.getEdges("Src2Sink")) {
+			String[] sourceTokens = ConversionUtils.getNodeInfoTokens(edge.from.getName());
+			final String source = sourceTokens[1].substring(1);
 
-		for(Edge edge : g.getEdges("Src2Sink")) {
-			String[] sourceTokens = getNodeInfoHelper(edge.from.getName());
-			String source = sourceTokens[1].substring(1);
+			String[] sinkTokens = ConversionUtils.getNodeInfoTokens(edge.to.getName());
+			final String sink = sinkTokens[1].substring(1);
 
-			String[] sinkTokens = getNodeInfoHelper(edge.to.getName());
-			String sink = sinkTokens[1].substring(1);
+			files.add(new StampFile() {
+				@Override
+				public String getName() {
+					return source + "2" + sink + ".out";
+				}
 
-			PrintWriter pw = new PrintWriter(new File("cfl/" + source + "2" + sink + ".out"));
-			//pw.println(new MethodCompressedFlowObject(g.getPath(edge), g).toString());
-			pw.println(new AliasCompressedFlowObject(g.getPath(edge, terminals), g).toString());
-			pw.close();
+				@Override
+				public FileType getType() {
+					return FileType.OUTPUT;
+				}
+
+				@Override
+				public String getContent() {
+					//return new MethodCompressedFlowObject(g.getPath(edge), g, s).toString();
+					return new AliasCompressedFlowObject(g.getPath(edge, terminals), g, s).toString();
+				}
+				
+			});
 		}
+		return files;
 	}
 }

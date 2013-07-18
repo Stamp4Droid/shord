@@ -25,7 +25,7 @@ public class FlowGraphViz extends Viz<FlowGraph> {
 		super(filename);
 	}
 
-	public static final FlowGraphViz viz = new FlowGraphViz("flowViz");
+	public static final FlowGraphViz viz = new FlowGraphViz("FlowGraph");
 	@Override public DotObject vizDot(FlowGraph g) {
 		DotObject dot = new DotObject("viz");
 		for(String source : g.sources) {
