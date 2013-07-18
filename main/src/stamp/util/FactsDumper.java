@@ -3,9 +3,9 @@ package stamp.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import chord.util.IndexMap;
 import shord.project.analyses.ProgramDom;
 import shord.project.analyses.ProgramRel;
+import chord.util.IndexMap;
 
 /**
  * Processor for the Chord facts dumping template language.

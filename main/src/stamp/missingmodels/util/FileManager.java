@@ -1,8 +1,6 @@
 package stamp.missingmodels.util;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
@@ -99,15 +97,13 @@ public class FileManager implements Serializable {
 	}
 	
 	/*
-	 * Returns a buffered reader corresponding to the
-	 * given file.
+	 * Returns the corresponding file.
 	 * 
 	 * @param file: The file to be read.
 	 * @param type: The file type.
 	 */
-	public BufferedReader read(StampFile stampFile) throws IOException {
-		File file = new File(this.getDirectory(stampFile.getType()), stampFile.getName());
-		return new BufferedReader(new FileReader(file));
+	public File getFile(StampFile stampFile) throws IOException {
+		return new File(this.getDirectory(stampFile.getType()), stampFile.getName());
 	}
 	
 	/*

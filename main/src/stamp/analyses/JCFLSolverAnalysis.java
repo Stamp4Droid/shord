@@ -9,11 +9,12 @@ import shord.project.analyses.JavaAnalysis;
 import stamp.missingmodels.grammars.E12;
 import stamp.missingmodels.util.ConversionUtils;
 import stamp.missingmodels.util.FileManager;
+import stamp.missingmodels.util.FileManager.FileType;
 import stamp.missingmodels.util.FileManager.StampFile;
 import stamp.missingmodels.util.Relation;
 import stamp.missingmodels.util.StubLookup;
-import stamp.missingmodels.util.jcflsolver.FactsWriter;
 import stamp.missingmodels.util.jcflsolver.Graph;
+import stamp.missingmodels.util.viz.jcflsolver.JCFLRelationFile;
 import stamp.missingmodels.viz.flow.FlowWriter;
 import stamp.missingmodels.viz.flow.FlowWriter.AllStubInputsFile;
 import stamp.missingmodels.viz.flow.FlowWriter.StubInputsFile;
@@ -41,22 +42,40 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		}
 	}
 	
+	private static Graph g = null;
+	private static StubLookup s = null;
+	
+	public static Graph g() {
+		if(g == null) {
+			throw new RuntimeException("JCFLSolver analysis not yet run!");
+		} else {
+			return g;
+		}
+	}
+	
+	public static StubLookup s() {
+		if(s == null) {
+			throw new RuntimeException("JCFLSolver analysis not yet run!");
+		} else {
+			return s;
+		}
+	}
+	
 	@Override public void run() {
-		Graph g = new E12();
-		StubLookup s = new StubLookup();
+		g = new E12();
+		s = new StubLookup();
 		fillTerminalEdges(g, s);
 		g.algo.process();
 
 		File outputDir = new File(System.getProperty("stamp.out.dir") + File.separator + "cfl");
-		outputDir.mkdirs();
 		File scratchDir = new File(System.getProperty("stamp.out.dir") + File.separator + "cfl");
 		
 		Set<StampFile> files = new HashSet<StampFile>();
+		files.add(new JCFLRelationFile(FileType.OUTPUT, g, "Src2Sink", true));
 		files.add(new AllStubInputsFile(g, s));
 		files.add(new StubInputsFile(g, s));
 		files.addAll(FlowWriter.viz(g, s));
 		try {
-			FactsWriter.write(g, outputDir, true);
 			FileManager manager = new FileManager(outputDir, scratchDir, false);
 			for(StampFile file : files) {
 				manager.write(file);

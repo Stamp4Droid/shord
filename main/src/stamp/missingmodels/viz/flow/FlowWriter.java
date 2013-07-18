@@ -101,7 +101,7 @@ public class FlowWriter {
 	/*
 	 * Retrieves the positive weight edges from the src2sink edges.
 	 */
-	private static MultivalueMap<Edge,Pair<Edge,Boolean>> getPositiveWeightEdges(Graph g) {
+	public static MultivalueMap<Edge,Pair<Edge,Boolean>> getPositiveWeightEdges(Graph g) {
 		MultivalueMap<Edge,Pair<Edge,Boolean>> positiveWeightEdges = new MultivalueMap<Edge,Pair<Edge,Boolean>>();
 		for(Edge edge : g.getEdges("Src2Sink")) {
 			positiveWeightEdges.ensure(edge);

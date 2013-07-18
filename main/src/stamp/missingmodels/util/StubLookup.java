@@ -84,9 +84,13 @@ public class StubLookup extends HashMap<StubLookupKey,StubLookupValue> {
 			this(relationName, methodId, null, null);
 		}
 
-		@Override public String toString() {
+		@Override
+		public String toString() {
 			return this.relationName + ":" + this.method.toString() + "[" + this.firstArg + "][" + this.secondArg + "]";
 		}
+		
+		public String toStringShort() {
+			return this.relationName + "[" + this.firstArg + "][" + this.secondArg + "]";
+		}
 	}
-
 }
