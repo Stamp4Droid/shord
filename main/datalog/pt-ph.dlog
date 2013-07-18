@@ -34,7 +34,7 @@ CI(c:C,i:I) input         # stmt i is the top element in the k-limited callstack
 CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
 
 # Phantom inputs
-phAlloc(v:V) input # v is the return of some stub method
+phAlloc(v:V,c:C) input # v is the return of some stub method
 
 ## INTERMEDIATE RELATIONS =====================================================
 
