@@ -28,7 +28,7 @@ public class FileManager implements Serializable {
 	 * A basic data structure for generating file content,
 	 * to be used as input to the file manager.
 	 */
-	public static abstract class StampFile {
+	public static interface StampFile {
 		/*
 		 * Returns the file name (not including the scratch
 		 * or output directory portion of the path).
