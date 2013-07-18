@@ -2,6 +2,7 @@
 <project name="STAMP-DroidRecord">
 
     <property name="stamp.droidrecord.cmd.readlog" value="${stamp.dir}/droidrecord/droidrecord-readlog" />
+    <property name="stamp.dynamic.device.arg" value="" />
   
     <target name="-android-project-update">
       <exec executable="android"
