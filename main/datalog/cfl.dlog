@@ -135,6 +135,9 @@ ArgPrimRetTransferCtxtStub(c:C,v:U,u:V,m:M,z:Z)       output
 ArgRetPrimTransferCtxtStub(c:C,v:V,u:U,m:M,z:Z)       output
 ArgPrimRetPrimTransferCtxtStub(c:C,v:U,u:U,m:M,z:Z)   output
 
+# phantom allocations
+#phAlloc(v:V,c:C)  output
+
 ###################
 #    RULES
 ###################
@@ -191,3 +194,6 @@ ArgPrimArgTransferCtxtStub(c,v,u,m,z1,z2) :- Stub(m), MmethPrimArg(m,z1,v), Mmet
 ArgPrimRetTransferCtxtStub(c,v,u,m,z)     :- Stub(m), MmethPrimArg(m,z,v), MmethRet(m,_,u), CM(c,m).
 ArgRetPrimTransferCtxtStub(c,v,u,m,z)     :- Stub(m), MmethArg(m,z,v), MmethPrimRet(m,_,u), CM(c,m).
 ArgPrimRetPrimTransferCtxtStub(c,v,u,m,z) :- Stub(m), MmethPrimArg(m,z,v), MmethPrimRet(m,_,u), CM(c,m).
+
+# phantom allocations
+#phAlloc(v,c) :- Stub(m), CM(c,m), MmethRet(m,_,v).

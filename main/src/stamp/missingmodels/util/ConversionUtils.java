@@ -87,6 +87,11 @@ public class ConversionUtils {
 		relations.add("flowsTo", new IndexRelation("pt", "C", 2, null, "V", 1, 0));
 		
 		/*
+		 * The following are phantom points-to relations.
+		 */
+		//relations.add("flowsTo", new IndexRelation("phpt", "V", 3, 2, "V", 1, 0));
+		
+		/*
 		 * The following are taint information.
 		 */
 
@@ -118,11 +123,6 @@ public class ConversionUtils {
 		// cross stub taint flow
 		relations.add("cs_primRefFlowStub", new StubIndexRelation("ArgPrimArgTransferCtxtStub", "U", 1, 0, "V", 2, 0, 3, 4, 5));
 		relations.add("cs_primRefFlowStub", new StubIndexRelation("ArgPrimRetTransferCtxtStub", "U", 1, 0, "V", 2, 0, 3, 4));
-
-		/*
-		 * The following are phantom point-to relations.
-		 */
-		//relations.add("flowsTo", new PhantomIndexRelation("cs_ptPhantom", 2, "V", 1, 0, "V", 3, 4));
 
 		/*
 		 * The following are for source/sink inference purposes.

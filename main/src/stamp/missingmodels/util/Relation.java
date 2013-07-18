@@ -219,20 +219,6 @@ public abstract class Relation {
 		}
 	}
 
-	public static class PhantomIndexRelation extends IndexRelation {
-		private final int methodIndex;
-
-		public PhantomIndexRelation(String relationName, int methodIndex, String firstVarType, int firstVarIndex, int firstCtxtIndex, String secondVarType, int secondVarIndex, Integer secondCtxtIndex) {
-			super(relationName, firstVarType, firstVarIndex, firstCtxtIndex, secondVarType, secondVarIndex, secondCtxtIndex, null);
-			this.methodIndex = methodIndex;
-		}
-
-		@Override protected String getSourceFromTuple(int[] tuple) {
-			String source = super.getSourceFromTuple(tuple);
-			return "M" + tuple[this.methodIndex] + "_" + source;
-		}
-	}
-
 	public static class StubIndexRelation extends IndexRelation {
 		private int methodIndex;
 		private Integer firstArgIndex;
