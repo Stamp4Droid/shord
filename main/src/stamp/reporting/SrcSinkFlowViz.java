@@ -24,21 +24,6 @@ public class SrcSinkFlowViz extends XMLVizReport
 
     public void generate()
 	{
-		/*
-		final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt("out_taintSrc");
-		rel.load();
-
-		Iterable<Pair<String,SootMethod>> res = rel.getAry2ValTuples();
-		for(Pair<String,SootMethod> pair : res) {
-			SootMethod srcMethod = pair.val1;
-			makeOrGetSubCat(srcMethod.getDeclaringClass()).newTuple()
-				.addValue(srcMethod)
-				.addValue("Label: "+pair.val0);
-		}
-
-		rel.close();
-		*/
-
 		try {
 			BufferedReader brdr = new BufferedReader(new FileReader("cfl/Src2SinkFiles.out"));
 
