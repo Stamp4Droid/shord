@@ -117,12 +117,15 @@ public class SrcSinkFlowViz extends XMLVizReport
 		for (Path p : PathsAdapter.getPaths()) {
 			Category mc = makeOrGetPkgCat(new SootClass(p.start + " --> " + p.end));
 			Set<String> seenLocs = new HashSet();
+
 			for (Step s : p.steps) {
-				Category c = mc;
-				if (s.target instanceof CtxtVarPoint || s.target instanceof CtxtObjPoint) {
+				if (s.target instanceof CtxtVarPoint) {
 					String progress = "";
-					for (Unit u : ((CtxtObjPoint)s.target).ctxt.getElems()) {
-						Stmt stm  = (Stmt)u;
+					Unit[] elems = ((CtxtObjPoint)s.target).ctxt.getElems();
+					Category c = mc;
+					System.out.println(s.target);
+					for (int i = elems.length - 1; i >= 0; --i) {
+						Stmt stm  = (Stmt)elems[i];
 						SootMethod method = Program.containerMethod(stm);
 
 						String sourceFileName = (method == null) ? "" : SourceInfo.filePath(method.getDeclaringClass());
@@ -131,55 +134,53 @@ public class SrcSinkFlowViz extends XMLVizReport
 							methodLineNum = 0;
 						}
 						String methName = method.getName();
+						System.out.println(methName);
 
 						c = c.makeOrGetSubCat(methName);
 
-						progress += stm.toString();
+						progress += methName;
+						System.out.println(progress);
 
 						if (!seenLocs.contains(progress)) {
 							c.addRawValue(methName, sourceFileName, ""+methodLineNum, "method", "");
 							seenLocs.add(progress);
 						}
 					}
+
 					if (s.target instanceof CtxtVarPoint) {
 						VarNode v = ((CtxtVarPoint)s.target).var;
-						Local local = null;
 						SootMethod method = null;
-						if(v instanceof LocalVarNode) {
+						if (v instanceof LocalVarNode) {
 							LocalVarNode localRegister = (LocalVarNode)v;
-							local = localRegister.local;
 							method = localRegister.meth;
-						} else if(v instanceof ThisVarNode) {
+						} else if (v instanceof ThisVarNode) {
 							ThisVarNode thisRegister = (ThisVarNode)v;
 							method = thisRegister.method;
-						} else if(v instanceof ParamVarNode) {
+						} else if (v instanceof ParamVarNode) {
 							ParamVarNode paramRegister = (ParamVarNode)v;
 							method = paramRegister.method;
-						} else if(v instanceof RetVarNode) {
+						} else if (v instanceof RetVarNode) {
 							RetVarNode retRegister = (RetVarNode)v;
 							method = retRegister.method;
 						} 
 
-						// link the method
 						if (method == null)
 							continue;
 						String sourceFileName = SourceInfo.filePath(method.getDeclaringClass());
 						int methodLineNum = SourceInfo.methodLineNum(method);
 
-						String methStr = sourceFileName + " " + methodLineNum + " " +method.getName() + " ";
+						progress += method.getName();
+						if (!seenLocs.contains(progress)) {
+							c.newTuple().addRawValue(method.getName(), sourceFileName, ""+methodLineNum, "method", "")
+								.addValue("Label: " + s.symbol);
+							seenLocs.add(progress);
+						}
 
-						//tokens[2] is method name
-						//tokens [1] is line # of method
-						//tokens[0] is source file
-
-						c.newTuple().addRawValue(method.getName(), sourceFileName, ""+methodLineNum, "method", "")
-							.addValue("Label: " + s.symbol + " " + v.toString());
-
-					} else if (s.target instanceof CtxtObjPoint) {
+					} /*else if (s.target instanceof CtxtObjPoint) {
 						c.newTuple().addRawValue("Obj", "", "0", "method", "")
 							.addValue("Label: " + "CtxtObj");
 
-					}
+					}*/
 				}
 				//System.out.println((s.reverse ? "<-" : "--" ) + s.symbol +
 				//				   (s.reverse ? "-- " : "-> " ) + s.target);
