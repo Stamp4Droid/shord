@@ -76,38 +76,6 @@ public class SrcSinkFlowViz extends XMLVizReport
 		}
 		*/
 
-		/*
-		//This code should work with Manolis' solvergen stuff
-		try {
-			BufferedReader br = new BufferedReader(new FileReader("solvergen/solvergenpaths.out"));
-
-			System.out.println("SOLVERGENPATHS");
-			String line = null;
-			while ((line = br.readLine()) != null) {
-				Category c = null;
-				if (line.length() == 0) {
-					//Empty line; delim between flows
-					c = null;
-
-				} else if (line.charAt(0) == '$') {
-					//should indicate first line of new flow, format $SRC-->!SINK
-					c = makeOrGetPkgCat(new SootClass(line));
-
-				} else {
-					//edge of the path
-					String[] tokens = line.split("^--|^<-|-> \\[|-- \\[|\\]:");
-					System.out.println(Arrays.toString(tokens));
-				}
-
-			}
-			System.out.println("SOLVERGENPATHSEND");
-
-		} catch (Exception e) {
-			System.err.println("Error reading solvergen/solvergenpaths.out");
-			e.printStackTrace();
-		}
-		*/
-
 		final ProgramRel relSrcSinkFlow = (ProgramRel)ClassicProject.g().getTrgt("flow");
 
 		relSrcSinkFlow.load();
@@ -136,7 +104,7 @@ public class SrcSinkFlowViz extends XMLVizReport
 						String methName = method.getName();
 						System.out.println(methName);
 
-						c = c.makeOrGetSubCat(methName);
+						c = c.makeOrGetSubCat(method);
 
 						progress += methName;
 						System.out.println(progress);
