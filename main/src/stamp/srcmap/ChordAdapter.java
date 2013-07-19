@@ -123,6 +123,10 @@ public class ChordAdapter extends ASTVisitor
 		int startPos = node.getName().getStartPosition();
 		int endPos = startPos+node.getName().getLength();
 		int lineNum = cu.getLineNumber(startPos);
+        Block body = node.getBody();
+		int bodyLen = body == null ? 0 : body.getLength();
+        int bodyStartLn = body == null ? 0 : cu.getLineNumber(body.getStartPosition());
+        int bodyEndLn = body == null ? 0 : cu.getLineNumber(body.getStartPosition() + bodyLen);
 		String chordSig = chordSigFor(node);
 		String className = chordSig.substring(chordSig.indexOf('@')+1);
 		String sig = sigFor(node);
@@ -132,6 +136,8 @@ public class ChordAdapter extends ASTVisitor
 		writer.println(" line=\""+lineNum+"\"");
 		writer.println(" startpos=\""+startPos+"\"");
 		writer.println(" endpos=\""+endPos+"\"");
+    	writer.println(" bodyStartLn=\""+bodyStartLn+"\"");
+		writer.println(" bodyEndLn=\""+bodyEndLn+"\"");
 		writer.println(">");
 		Set<String> aliasDescs = new HashSet();
 		String methDesc = chordSig.substring(chordSig.indexOf(':')+1, chordSig.indexOf('@'));
@@ -159,6 +165,10 @@ public class ChordAdapter extends ASTVisitor
 	public boolean visit(Initializer node)
 	{
 		int lineNum = cu.getLineNumber(node.getStartPosition());
+		Block body = node.getBody();
+        int bodyLen = body.getLength();
+        int bodyStartLn = cu.getLineNumber(body.getStartPosition());
+        int bodyEndLn = cu.getLineNumber(body.getStartPosition() + bodyLen);
 		ASTNode parent = node.getParent();
 		ITypeBinding containerType = null;
 		if(parent instanceof AbstractTypeDeclaration){
@@ -175,6 +185,8 @@ public class ChordAdapter extends ASTVisitor
 		writer.println("<method");
 		writer.println(" chordsig=\""+escapeXml(chordSig)+"\"");
 		writer.println(" line=\""+lineNum+"\"");
+    	writer.println(" bodyStartLn=\""+bodyStartLn+"\"");
+		writer.println(" bodyEndLn=\""+bodyEndLn+"\"");
 		writer.println(">");
 		return true;
 	}

@@ -1,3 +1,3 @@
 @DUMP:SrcRetPrimFlowCtxt(%C,%L,%U):l%L u%U_%C@
 @DUMP:ArgSinkPrimFlowCtxt(%C,%U,%L):l%L u%U_%C@
-@DUMP:RetSinkPrimFlowCtxt(%C,%U,%L):l%L u%U_%C@
+@DUMP:SinklRetPrimFlowCtxt(%C,%L,%U):l%L u%U_%C@

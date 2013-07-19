@@ -39,12 +39,19 @@
     </java>
   </target>
 
-  <target name="runall" depends="build">
+  <target name="runall-apks" depends="build">
 	<apply executable="${stamp.dir}/stamp">
 	  <arg value="analyze"/>
-	  <fileset dir="${stamp.apk.dir}">
+	  <fileset dir="${stamp.allapps.dir}">
 		<include name="**/*.apk"/>
 	  </fileset>
+	</apply>
+  </target>
+
+  <target name="runall-srcs" depends="build">
+	<apply executable="${stamp.dir}/stamp">
+	  <arg value="analyze"/>
+	  <dirset dir="${stamp.allapps.dir}" includes="*"/>
 	</apply>
   </target>
 

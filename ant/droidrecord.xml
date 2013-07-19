@@ -2,6 +2,7 @@
 <project name="STAMP-DroidRecord">
 
     <property name="stamp.droidrecord.cmd.readlog" value="${stamp.dir}/droidrecord/droidrecord-readlog" />
+    <property name="stamp.dynamic.device.arg" value="" />
   
     <target name="-android-project-update">
       <exec executable="android"
@@ -68,6 +69,7 @@
     <ant antfile="${stamp.dir}/droidrecord/build.xml"
 	 inheritAll="false" useNativeBasedir="true"/>
     <copy file="${stamp.dir}/droidrecord/jars/droidrecord_reader.jar" toFile="${stamp.dir}/lib/droidrecord_reader.jar"/>
+    <copy file="${stamp.dir}/droidrecord/jars/droidrecord_reader.jar" toFile="${stamp.dir}/web/lib/droidrecord_reader.jar"/>
   </target>
 
   <target name="dynanalyze"

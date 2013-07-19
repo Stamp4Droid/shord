@@ -800,12 +800,12 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		DomF domF = (DomF) ClassicProject.g().getTrgt("F");
 		Program program = Program.g();
+		domF.add(ArrayElement.v()); //first add array elem so that it gets index 0
 		for(SootClass klass : program.getClasses()){
 			for(SootField field : klass.getFields()){
 				domF.add(field);
 			}
 		}
-		domF.add(ArrayElement.v());
 		domF.save();
 	}
 	

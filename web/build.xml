@@ -28,6 +28,8 @@
 	   srcdir="src" destdir="classes">
       <classpath>
 		<pathelement location="lib/commons-lang3-3.1.jar"/>
+		<pathelement location="lib/commons-codec-1.8.jar"/>
+    	<pathelement location="lib/droidrecord_reader.jar"/>
 		<pathelement location="${tomcat.dir}/lib/servlet-api.jar"/>
 		<pathelement location="${tomcat.dir}/lib/catalina.jar"/>
 		<pathelement location="${tomcat.dir}/lib/tomcat-coyote.jar"/>
