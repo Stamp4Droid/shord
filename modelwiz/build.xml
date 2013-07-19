@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="ModelWiz" default="jar">
   <property name="stamp.dir" location=".."/>
-  <property name="jarname" value="${stamp.dir}/modelwiz/stamp.modelwiz.jar"/>
+  <property name="jarname" value="${stamp.dir}/bin/stamp.modelwiz.jar"/>
 
   <target name="compile">
     <mkdir dir="classes"/>
