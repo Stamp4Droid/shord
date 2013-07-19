@@ -93,7 +93,7 @@ public class SrcSinkFlowViz extends XMLVizReport
 				for (Step s : p.steps) {
 					if (s.target instanceof CtxtVarPoint) {
 						String progress = "";
-						Unit[] elems = ((CtxtObjPoint)s.target).ctxt.getElems();
+						Unit[] elems = ((CtxtVarPoint)s.target).ctxt.getElems();
 						Category c = mc;
 						System.out.println(s.target);
 						for (int i = elems.length - 1; i >= 0; --i) {
@@ -164,7 +164,7 @@ public class SrcSinkFlowViz extends XMLVizReport
 				}
 			}
 		} catch (Exception e) {
-			System.err.println("Problem prodicing FlowViz report");
+			System.err.println("Problem producing FlowViz report");
 			e.printStackTrace();
 		}
 	}
