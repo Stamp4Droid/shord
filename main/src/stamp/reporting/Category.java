@@ -29,6 +29,32 @@ public class Category extends Tuple
 			type = "method";
 	}
 
+	public Category lastSubCat() {
+		ArrayList<Object> al = new ArrayList<Object>(subCategories.keySet());
+		return subCategories.get(al.get(al.size()-1));
+	}
+
+	public Object lastSubCatKey() {
+		ArrayList<Object> al = new ArrayList<Object>(subCategories.keySet());
+		return al.get(al.size()-1);
+	}
+
+
+	public Category findSubCat(Object key) {
+		if (subCategories.isEmpty()) {
+			return null;
+		}
+
+		ArrayList<Object> al = new ArrayList<Object>(subCategories.keySet());
+		Object obj = al.get(al.size()-1);
+		Category c = subCategories.get(obj);
+		if (key.equals(obj)) {
+			return this;
+		} 
+		return c.findSubCat(key);
+	}
+
+
 	public Category makeOrGetSubCat(Object key)
 	{
 		Category sc = subCategories.get(key);
@@ -37,6 +63,29 @@ public class Category extends Tuple
 			subCategories.put(key, sc);
 		}
 		return sc;
+	}
+
+	/**
+	 * Place ane existing subcategory. In a Category. Use with care.
+	 */
+	/*pkgpvt*/ void putSubCat(Object key, Category subCat) {
+		subCategories.put(key, subCat);
+	}
+
+	/**
+	 * Add a supercategory of key above subcategory sub. Sub
+	 * Should be a subcategory of this.
+	 */
+	public Category makeOrGetSupCat(Object sub, Object key) {
+		Category oldCat = subCategories.remove(sub);
+		if (oldCat == null) {
+			return null;
+		}
+
+		Category newCat = new Category(key);
+		newCat.putSubCat(sub, oldCat);
+		subCategories.put(key, newCat);
+		return newCat;
 	}
 	
 	public void write(PrintWriter writer)
