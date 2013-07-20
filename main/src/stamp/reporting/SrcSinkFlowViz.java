@@ -27,7 +27,7 @@ public class SrcSinkFlowViz extends XMLVizReport
 {
 	public SrcSinkFlowViz()
 	{
-		super("Flow Viz");
+		super("Flow Path Vizualization");
 	}
 
     public void generate()
