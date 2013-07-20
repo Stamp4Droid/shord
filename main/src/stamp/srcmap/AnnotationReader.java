@@ -11,6 +11,13 @@ import org.eclipse.jdt.core.dom.*;
 */
 public class AnnotationReader extends ASTVisitor
 {
+	private String file;
+
+	public AnnotationReader(String file)
+	{
+		this.file = file;
+	}
+
 	public boolean visit(MethodDeclaration node) 
 	{		
 		// get annotation position
@@ -41,22 +48,27 @@ public class AnnotationReader extends ASTVisitor
 					else if(name.equals("to"))
 						to = ((StringLiteral) mvp1.getValue()).getLiteralValue();
 				}
-				Main.writeAnnot(chordSig + " " + 
-								processEndPoint(from, nameToIndex) + " " + 
-								processEndPoint(to, nameToIndex));
+				try{
+					Main.writeAnnot(chordSig + " " + 
+									processEndPoint(from, nameToIndex) + " " + 
+									processEndPoint(to, nameToIndex));
+				}catch(InvalidEndPointException e){
+					throw new Error("Error occurred while processing "+file+"\n. Invalid Annotation on method " + node + ". "+e.getMessage());
+				}
 			}
 		}		
 		return true;
     }
 
-	private String processEndPoint(String endPoint, Map<String,Integer> nameToIndex)
+	private String processEndPoint(String endPoint, Map<String,Integer> nameToIndex) throws InvalidEndPointException
 	{
 		char c = endPoint.charAt(0);
 		if(c == '$'){
 			return endPoint; //e.g., $getDeviceId
 		} else if(c == '!'){
 			String t = endPoint.substring(1);
-			checkSanity(t);
+			if(isInteger(t))
+				throw new InvalidEndPointException("labels are expected to be non-integers", endPoint);
 			Integer paramIndex = nameToIndex.get(t);
 			if(paramIndex != null)
 				return '?'+paramIndex.toString(); //! followed by param name
@@ -64,18 +76,21 @@ public class AnnotationReader extends ASTVisitor
 				return endPoint; // e.g., !Internet
 		} else {
 			Integer paramIndex = nameToIndex.get(endPoint); //endPoint must be a param name
-			return paramIndex.toString();
+			if(paramIndex == null)
+				throw new InvalidEndPointException("endPoint isnt a param name", endPoint);
+			else
+				return paramIndex.toString();
 		}
 	}
 
-	private void checkSanity(String s) 
+	private boolean isInteger(String s) 
 	{
 		try { 
 			Integer.parseInt(s); 
 		} catch(NumberFormatException e) { 
-			return; 
+			return false;
 		}
-		throw new Error("labels are expected to be non-integers: "+s);
+		return true;
 	}
 
 	private String process(MethodDeclaration node, Map<String,Integer> nameToIndex)
@@ -174,5 +189,12 @@ public class AnnotationReader extends ASTVisitor
 			return toChordRefType(declKlass).concat("$").concat(cname);
 		}
 		return type.getBinaryName().replace('.', '/');
+	}
+	
+	static class InvalidEndPointException extends Exception
+	{
+		InvalidEndPointException(String message, String endPoint){
+			super(message + ". Endpoint = "+endPoint);
+		}
 	}
 }
