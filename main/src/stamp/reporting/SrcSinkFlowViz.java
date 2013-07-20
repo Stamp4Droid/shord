@@ -60,6 +60,10 @@ public class SrcSinkFlowViz extends XMLVizReport
 							Stmt stm  = (Stmt)elems[1];
 							SootMethod method = Program.containerMethod(stm);
 
+							if (SourceInfo.isFrameworkClass(method.getDeclaringClass()) && (c==null || c.equals(mc))) {
+								continue;
+							}
+							
 							c = c.makeOrGetSupCat(Program.containerMethod((Stmt)elems[0]), method);
 
 
@@ -72,6 +76,7 @@ public class SrcSinkFlowViz extends XMLVizReport
 								methodLineNum = 0;
 							}
 							String methName = method.getName();
+
 
 							if (c == null) {
 								System.out.println("Found Empty Ctxt "+s.toString());
@@ -102,6 +107,10 @@ public class SrcSinkFlowViz extends XMLVizReport
 									methodLineNum = 0;
 								}
 								String methName = method.getName();
+
+								if (SourceInfo.isFrameworkClass(method.getDeclaringClass()) && c.equals(mc)) {
+									continue;
+								}
 
 								c = c.makeOrGetSubCat(method);
 
