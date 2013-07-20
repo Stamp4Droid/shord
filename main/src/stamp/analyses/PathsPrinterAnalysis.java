@@ -25,14 +25,18 @@ public class PathsPrinterAnalysis extends JavaAnalysis {
 			dir.mkdir();
 			PrintWriter pw = new PrintWriter(new File(SOLVERGEN_DIR + "/" +SOLVERGEN_FILENAME));
 
+			pw.println("SIZE" + PathsAdapter.getPaths().size());
 			for (Path p : PathsAdapter.getPaths()) {
 				pw.println(p.start + " --> " + p.end);
 				for (Step s : p.steps) {
+					System.err.println((s.reverse ? "<-" : "--" ) + s.symbol +
+									   (s.reverse ? "-- " : "-> " ) + s.target);
 					pw.println((s.reverse ? "<-" : "--" ) + s.symbol +
 									   (s.reverse ? "-- " : "-> " ) + s.target);
 				}
-				pw.println();
+				pw.println("");
 			}
+			pw.close();
 
 		} catch (Exception e) {
 			System.err.println("problem writing solvergenpaths.out");
