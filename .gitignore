@@ -14,11 +14,19 @@ local.config
 *.jimple
 .project
 .classpath
-.settings 
+.settings
 timestamp.txt
-stamp.app.properties
 
-# Package Files #
+apps/*/*/bin
+apps/*/*/build.xml
+apps/*/*/custom_rules.xml
+apps/*/*/gen
+apps/*/*/libs/stamp.annotations.jar
+apps/*/*/local.properties
+apps/*/*/proguard-project.txt
+apps/*/*/project.properties
+apps/*/*/stamp.app.properties
+
 *.war
 *.ear
 
