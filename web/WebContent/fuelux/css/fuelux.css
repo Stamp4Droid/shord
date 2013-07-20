@@ -6671,6 +6671,7 @@ textarea.span1,
 .fuelux .tree .tree-item .tree-item-name {
   position: absolute;
   left: 29px;
+  white-space: nowrap;
 }
 
 .fuelux .tree .tree-item .tree-dot {
