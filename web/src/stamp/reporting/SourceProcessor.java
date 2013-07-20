@@ -351,7 +351,7 @@ public class SourceProcessor
         public int getEnd() { return endPos; }
         
         public TaintedVariableRecord(int startPos, int endPos) {
-            System.out.println("Created TaintedVariableRecord " + startPos + " " + endPos);
+            //System.out.println("Created TaintedVariableRecord " + startPos + " " + endPos);
             this.startPos = startPos;
             this.endPos = endPos;
             this.sources = new HashSet<String>();
@@ -359,17 +359,17 @@ public class SourceProcessor
         }
         
         public void addSource(String s) {
-            System.out.println("Added source " + s + " to " + startPos + " " + endPos);
+            //System.out.println("Added source " + s + " to " + startPos + " " + endPos);
             sources.add(s);
         }
         
         public void addSink(String s) {
-            System.out.println("Added sink " + s + " to " + startPos + " " + endPos);
+            //System.out.println("Added sink " + s + " to " + startPos + " " + endPos);
             sinks.add(s);
         }
         
         public void makeInsertions(List<Insertion> insertions) {
-            System.out.println("Inserted TaintedVariableRecord " + startPos + " " + endPos);
+            //System.out.println("Inserted TaintedVariableRecord " + startPos + " " + endPos);
 		    insertions.add(new SrcSinkSpanStart(startPos, sources, sinks));
 			insertions.add(new KeySpanStart(startPos, "taintedVariable"));
 			insertions.add(new SpanEnd(endPos));
@@ -490,12 +490,12 @@ public class SourceProcessor
 			XPath xpath = XPathFactory.newInstance().newXPath();
 
 			String query = "//tuple/value[@type=\"method\" and @srcFile=\""+filePath+"\"]";
-			System.out.println("SourceProcessor.reachableM: "+ query);
+			//System.out.println("SourceProcessor.reachableM: "+ query);
 			NodeList nodes = (NodeList) xpath.evaluate(query, document, XPathConstants.NODESET);
 			int n = nodes.getLength();
 			for(int i = 0; i < n; i++){
 				String chordSig = ((Element) nodes.item(i)).getAttribute("chordsig");
-				chordSig = StringEscapeUtils.unescapeXml(chordSig); System.out.println("reachableMethod: "+chordSig);
+				chordSig = StringEscapeUtils.unescapeXml(chordSig); //System.out.println("reachableMethod: "+chordSig);
 				reachableSigs.add(chordSig);
 			}
 		}
@@ -598,7 +598,7 @@ public class SourceProcessor
 			NodeList nodes = (NodeList)xpath.evaluate(query, document, XPathConstants.NODESET);
 			
 			Map<Integer, List<TaintedVariableRecord>> taintedVars = new HashMap<Integer, List<TaintedVariableRecord>>();
-            System.out.println("HERE 1");
+            //System.out.println("HERE 1");
 			for(int i=0; i<nodes.getLength(); i++) {
 				Element node = (Element)nodes.item(i);
 				int start = Integer.valueOf(node.getAttribute("startpos"));
@@ -616,18 +616,14 @@ public class SourceProcessor
 				    currentTVR = new TaintedVariableRecord(start, end);
 				    taintedVars.get(start).add(currentTVR);
 				}
-				String srcSinkQuery = "../../value/label/text()";
+				String srcSinkQuery = "ancestor::category";
 				NodeList subnodes = (NodeList)xpath.evaluate(srcSinkQuery, node, XPathConstants.NODESET);
-				for(int j=0; j<nodes.getLength(); j++) {
-				    Node subnode = subnodes.item(j);
-				    if(subnode == null || subnode.getNodeType() != Node.CDATA_SECTION_NODE) continue;
-				    String s = subnode.getNodeValue();
-				    if(s == null) continue;
-				    if(s.startsWith("$")) {
-				        currentTVR.addSource(s);
-				    } else if(s.startsWith("!")) {
-				        currentTVR.addSink(s);
-				    }
+				String s = Common.getLabel(Common.getFirstChildByTagName((Element) subnodes.item(0), "value"));
+				//System.out.println("subnodes.size = "+subnodes.getLength() + " "+s);
+				if(s.startsWith("$")) {
+					currentTVR.addSource(s);
+				} else if(s.startsWith("!")) {
+					currentTVR.addSink(s);
 				}
 			}
 			for(List<TaintedVariableRecord> l : taintedVars.values()) {
