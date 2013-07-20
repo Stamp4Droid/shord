@@ -2,12 +2,12 @@ package java.lang;
 
 class Boolean {
 
-    @STAMP(flows = { @Flow(from = "this", to = "return") })
+    @STAMP(flows = { @Flow(from = "this", to = "@return") })
     public boolean booleanValue() {
         return true;
     }
 
-    @STAMP(flows = { @Flow(from = "this", to = "return") })
+    @STAMP(flows = { @Flow(from = "this", to = "@return") })
     public int hashCode() {
         return 1231;
     }

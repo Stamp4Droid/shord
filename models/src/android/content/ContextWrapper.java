@@ -50,7 +50,7 @@ class ContextWrapper
 		return this;
 	}
 
-	@STAMP(flows = {@Flow(from="!Activity",to="intents"),@Flow(from="!Activity",to="options")})
+	@STAMP(flows = {@Flow(from="!Activity",to="intent"),@Flow(from="!Activity",to="options")})
 	public void startActivity(android.content.Intent intent, android.os.Bundle options) {
     }
 

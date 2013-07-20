@@ -16,7 +16,7 @@ class StringWriter {
     public void write(java.lang.String str, int offset, int count) {
     }
 
-    @STAMP(flows = { @Flow(from = "this", to = "return") })
+    @STAMP(flows = { @Flow(from = "this", to = "@return") })
     public java.lang.StringBuffer getBuffer() {
         return new StringBuffer();
     }

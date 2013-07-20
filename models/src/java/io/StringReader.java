@@ -6,7 +6,7 @@ class StringReader {
     public StringReader(java.lang.String str) {
     }
 
-    @STAMP(flows = { @Flow(from = "this", to = "return") })
+    @STAMP(flows = { @Flow(from = "this", to = "@return") })
     public int read() throws java.io.IOException {
         return 0;
     }

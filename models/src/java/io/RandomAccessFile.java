@@ -10,12 +10,12 @@ class RandomAccessFile {
     public RandomAccessFile(java.lang.String fileName, java.lang.String mode) throws java.io.FileNotFoundException {
     }
 
-    @STAMP(flows = { @Flow(from = "this", to = "return") })
+    @STAMP(flows = { @Flow(from = "this", to = "@return") })
     public final java.io.FileDescriptor getFD() throws java.io.IOException {
         return new FileDescriptor();
     }
 
-    @STAMP(flows = { @Flow(from = "this", to = "return") })
+    @STAMP(flows = { @Flow(from = "this", to = "@return") })
     public int read() throws java.io.IOException {
         return 0;
     }
@@ -30,7 +30,7 @@ class RandomAccessFile {
         return 0;
     }
 
-    @STAMP(flows = { @Flow(from = "this", to = "return") })
+    @STAMP(flows = { @Flow(from = "this", to = "@return") })
     public final boolean readBoolean() throws java.io.IOException {
         return true;
     }
