@@ -35,21 +35,23 @@ public class Main
 		options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_6);
 		parser.setCompilerOptions(options);
 		parser.setEnvironment(classpathEntries, srcpathEntries, null, true);
-		System.out.println("generating srcmap file for "+canonicalPath);
 		parser.setUnitName(canonicalPath);		
 		parser.setSource(toCharArray(canonicalPath));
 
 		CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+
+		System.out.println("generating srcmap file for "+canonicalPath);
 		ChordAdapter visitor = new ChordAdapter(cu, infoFile);
-		AnnotationReader annotReader = new AnnotationReader();
 		try{
 			cu.accept(visitor);
-			cu.accept(annotReader);
 			visitor.finish();
 		}catch(Exception e){
 			System.out.println("Failed to generate srcmap file for "+relSrcFilePath);
 			infoFile.delete();
 		}
+
+		AnnotationReader annotReader = new AnnotationReader(canonicalPath);		
+		cu.accept(annotReader);
 	}
 
 	public static char[] toCharArray(String filePath) throws IOException

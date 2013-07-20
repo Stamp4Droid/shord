@@ -7,7 +7,7 @@ class SipProfile {
         return new String();
     }
 
-    @STAMP(flows = { @Flow(from = "$Sip.profile", to = "return") })
+    @STAMP(flows = { @Flow(from = "$Sip.profile", to = "@return") })
     public java.lang.String getUserName() {
         return new String();
     }

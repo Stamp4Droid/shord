@@ -10,7 +10,7 @@ class Location {
         return 13.0;
     }
 
-    @STAMP(flows = { @Flow(from = "this", to = "return"), @Flow(from = "dest", to = "@return") })
+    @STAMP(flows = { @Flow(from = "this", to = "@return"), @Flow(from = "dest", to = "@return") })
     public float distanceTo(android.location.Location dest) {
         return 0.0f;
     }

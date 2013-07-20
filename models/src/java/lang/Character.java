@@ -42,7 +42,7 @@ class Character {
         return new char[0];
     }
 
-    @STAMP(flows = { @Flow(from = "this", to = "return") })
+    @STAMP(flows = { @Flow(from = "this", to = "@return") })
     public char charValue() {
         return 'a';
     }
