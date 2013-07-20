@@ -14,5 +14,9 @@ class Location {
     public float distanceTo(android.location.Location dest) {
         return 0.0f;
     }
+	
+    public java.lang.String toString() {
+		return new String();
+    }
 }
 

@@ -5,24 +5,29 @@ class Intent
 	//add by yu.
 	private static android.os.Bundle extras = new android.os.Bundle();
 
-	@STAMP(flows = {@Flow(from="uri",to="!INTENT.Uri")})
+	@STAMP(flows = {@Flow(from="!ImplicitIntent",to="this")})
+    public android.content.Intent setAction(java.lang.String action) {
+		return this;
+    }
+
+	@STAMP(flows = {@Flow(from="!ImplicitIntent",to="this"),@Flow(from="uri",to="!this")})
 	public  Intent(java.lang.String action, android.net.Uri uri) 
 	{ 
 	}
 
-	@STAMP(flows={@Flow(from="$getExtras",to="@return")})
+	@STAMP(flows={@Flow(from="$getExtras",to="@return"),@Flow(from="this",to="@return")})
 	public  android.os.Bundle getExtras() 
 	{ 
 		return extras;
 	}
 	
-	@STAMP(flows = {@Flow(from="data",to="!INTENT.Uri")})
+	@STAMP(flows = {@Flow(from="data",to="!this")})
 	public  android.content.Intent setData(android.net.Uri data) 
 	{ 
 		return this;
 	}
 
-	@STAMP(flows = {@Flow(from="data",to="!INTENT.Uri")})
+	@STAMP(flows = {@Flow(from="data",to="!this")})
 	public  android.content.Intent setDataAndType(android.net.Uri data, java.lang.String type) 
 	{ 
 		return this;
@@ -182,7 +187,7 @@ class Intent
     }
 
     ///Setter
-	@STAMP(flows = {@Flow(from="extras",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="extras",to="!this")})
 	public  android.content.Intent putExtras(android.os.Bundle extras) 
 	{ 
 		//FIXME: copy content of bundle to current bundle, how to model it?
@@ -190,186 +195,186 @@ class Intent
 		return this;
 	}
 
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, boolean value) 
 	{ 
 		extras.unknown_boolean = value;
 		return this;
 	}
 
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, byte value) 
 	{ 
 		extras.unknown_byte = value;
 		return this;
 	}
 
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, char value) 
 	{ 
 		extras.unknown_char = value;
 		return this;
 	}
 
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, short value) 
 	{ 
 		extras.unknown_short = value;
 		return this;
 	}
 
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, int value) 
 	{ 
 		extras.unknown_int = value;
 		return this;
 	}
 
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, long value) 
 	{ 
 		extras.unknown_long = value;
 		return this;
 	}
 
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, float value) 
 	{ 
 		extras.unknown_float = value;
 		return this;
 	}
 
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, double value) 
 	{ 
 		extras.unknown_double = value;
 		return this;
 	}
 
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, java.lang.String value) 
 	{ 
 		extras.unknown = value;
 		return this;
 	}
 
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, java.lang.CharSequence value) 
 	{ 
 		extras.unknown = value;
 		return this;
 	}
 
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, android.os.Parcelable value) 
 	{ 
 		extras.unknown = value;
 		return this;
 	}
 
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, android.os.Parcelable[] value) 
 	{ 
 		extras.unknown = value;
 		return this;
 	}
 	
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, java.io.Serializable value) 
 	{ 
 		extras.unknown = value;
 		return this;
 	}
 	
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, boolean[] value) 
 	{ 
 		extras.unknown = value;
 		return this;
 	}
 	
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, byte[] value) 
 	{ 
 		extras.unknown = value;
 		return this;
 	}
 	
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, short[] value) 
 	{ 
 		extras.unknown = value;
 		return this;
 	}
 	
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, char[] value) 
 	{ 
 		extras.unknown = value;
 		return this;
 	}
 	
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, int[] value) 
 	{ 
 		extras.unknown = value;
 		return this;
 	}
 	
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, long[] value) 
 	{ 
 		extras.unknown = value;
 		return this;
 	}
 	
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, float[] value) 
 	{ 
 		extras.unknown = value;
 		return this;
 	}
 	
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, double[] value) 
 	{ 
 		extras.unknown = value;
 		return this;
 	}
 	
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, java.lang.String[] value) 
 	{ 
 		extras.unknown = value;
 		return this;
 	}
 	
-	@STAMP(flows = {@Flow(from="value",to="!INTENT")})
+	@STAMP(flows = {@Flow(from="value",to="!this")})
 	public  android.content.Intent putExtra(java.lang.String name, java.lang.CharSequence[] value) 
 	{ 
 		extras.unknown = value;
 		return this;
 	}
 	
-	@STAMP(flows={@Flow(from="value",to="!INTENT")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public android.content.Intent putParcelableArrayListExtra(java.lang.String key, java.util.ArrayList<? extends android.os.Parcelable> value) {
 		extras.unknown = value;
 		return this;
 	}
 	
-	@STAMP(flows={@Flow(from="value",to="!INTENT")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public android.content.Intent putIntegerArrayListExtra(java.lang.String key, java.util.ArrayList<java.lang.Integer> value) {
 		extras.unknown = value;
 		return this;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="!INTENT")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public android.content.Intent putStringArrayListExtra(java.lang.String key, java.util.ArrayList<java.lang.String> value) {
 		extras.unknown = value;
 		return this;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="!INTENT")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public android.content.Intent putCharSequenceArrayListExtra(java.lang.String key, java.util.ArrayList<java.lang.CharSequence> value) {
 		extras.unknown = value;
 		return this;
