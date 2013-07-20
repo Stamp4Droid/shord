@@ -100,7 +100,7 @@ public class SrcSinkFlowViz extends XMLVizReport
 						System.out.println(s.target);
 
 						//NOTE TODO: CURRENTLY ASSUMES K = 2, not WLOG exactly...
-						if (Program.containerMethod((Stmt)elems[0]).equals(lastStackBtm)) {
+						if (elems.length > 0 && Program.containerMethod((Stmt)elems[0]).equals(lastStackBtm)) {
 							Stmt stm  = (Stmt)elems[1];
 							SootMethod method = Program.containerMethod(stm);
 
@@ -125,9 +125,11 @@ public class SrcSinkFlowViz extends XMLVizReport
 							c.addRawValue(methName, sourceFileName, ""+methodLineNum, "method", "");
 							seenLocs.add(progress);
 						} else {
-							c = c.findSubCat(Program.containerMethod((Stmt)elems[elems.length-1]));
-							if (c == null) {
-								c = mc;
+							if (elems.length >0) {
+								c = c.findSubCat(Program.containerMethod((Stmt)elems[elems.length-1]));
+								if (c == null) {
+									c = mc;
+								}
 							}
 
 							for (int i = elems.length - 1; i >= 0; --i) {
@@ -191,8 +193,13 @@ public class SrcSinkFlowViz extends XMLVizReport
 
 							}*/
 						}
-						lastStackBtm = Program.containerMethod((Stmt)elems[elems.length-1]);
-						lastStackTop = Program.containerMethod((Stmt)elems[0]);
+						if (elems.length > 0) {
+							lastStackBtm = Program.containerMethod((Stmt)elems[elems.length-1]);
+							lastStackTop = Program.containerMethod((Stmt)elems[0]);
+						} else {
+							lastStackBtm = null;
+							lastStackTop = null;
+						}
 					}
 					//System.out.println((s.reverse ? "<-" : "--" ) + s.symbol +
 					//				   (s.reverse ? "-- " : "-> " ) + s.target);
