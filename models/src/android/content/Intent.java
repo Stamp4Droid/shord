@@ -5,12 +5,7 @@ class Intent
 	//add by yu.
 	private static android.os.Bundle extras = new android.os.Bundle();
 
-	@STAMP(flows = {@Flow(from="!ImplicitIntent",to="this")})
-    public android.content.Intent setAction(java.lang.String action) {
-		return this;
-    }
-
-	@STAMP(flows = {@Flow(from="!ImplicitIntent",to="this"),@Flow(from="uri",to="!this")})
+	@STAMP(flows = {@Flow(from="uri",to="!this")})
 	public  Intent(java.lang.String action, android.net.Uri uri) 
 	{ 
 	}
