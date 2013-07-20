@@ -94,4 +94,7 @@ class ContextWrapper
     public void sendStickyBroadcast(android.content.Intent intent) {
     }
 
+    public android.content.pm.PackageManager getPackageManager() {
+		return new android.test.mock.MockPackageManager();
+    }        
 }
