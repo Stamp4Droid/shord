@@ -32,50 +32,6 @@ public class SrcSinkFlowViz extends XMLVizReport
 
     public void generate()
 	{
-		/*
-		//This code is for Osbert's JCFL solver stuff. Will fail if JCFL doesn't come through.
-		try {
-			BufferedReader brdr = new BufferedReader(new FileReader("cfl/Src2SinkFiles.out"));
-
-			while (brdr.ready()) {
-				String filename = brdr.readLine();
-
-				Set<String> seenLocs = new HashSet();
-				Category c = makeOrGetPkgCat(new SootClass(filename));
-
-				try {
-					BufferedReader br = new BufferedReader(new FileReader("cfl/"+filename +".out"));
-					String line;
-					while ((line = br.readLine()) != null) {
-						String[] tokens = line.split(" ");
-						if (tokens[0].charAt(0) == '<') continue;
-
-						Category mc = c;
-						String[] context = tokens[3].split("@");
-						String progress = "";
-						for (String s : context) {
-							String[] methTokens = s.split(":");
-							assert methTokens.length == 3;
-							mc = mc.makeOrGetSubCat(methTokens[2]);
-							progress += s;
-							if (!seenLocs.contains(progress)) {
-								mc.addRawValue(methTokens[2], methTokens[0], methTokens[1], "method", "");
-								seenLocs.add(progress);
-							}
-						}
-						mc.newTuple().addRawValue(tokens[2], tokens[0], tokens[1], "method", "")
-							.addValue("Label: " + tokens[2]);
-					}
-
-				} catch (Exception e) {
-					System.err.println("No Flow Viz Intermediate File Found");
-				}
-			}
-		} catch (Exception e) {
-			System.err.println("Failed to open cfl/Src2SinkFiles.out");
-		}
-		*/
-
 		try {
 			final ProgramRel relSrcSinkFlow = (ProgramRel)ClassicProject.g().getTrgt("flow");
 
@@ -107,7 +63,7 @@ public class SrcSinkFlowViz extends XMLVizReport
 							c = c.makeOrGetSupCat(Program.containerMethod((Stmt)elems[0]), method);
 
 
-							System.out.println("STEAMBOAT "+Program.containerMethod((Stmt)elems[0]).getName()
+							System.out.println("Adding SuperCat "+Program.containerMethod((Stmt)elems[0]).getName()
 								+" "+method.getName());
 
 							String sourceFileName = (method == null) ? "" : SourceInfo.filePath(method.getDeclaringClass());
@@ -118,7 +74,11 @@ public class SrcSinkFlowViz extends XMLVizReport
 							String methName = method.getName();
 
 							if (c == null) {
-								System.err.println("TRACTOR "+s.toString());
+								System.out.println("Found Empty Ctxt "+s.toString());
+
+								lastStackBtm = null;
+								lastStackTop = null;
+
 								continue;
 							}
 
@@ -182,12 +142,13 @@ public class SrcSinkFlowViz extends XMLVizReport
 
 								progress += method.getNumber();
 								if (!seenLocs.contains(progress)) {
-									c.newTuple().addRawValue(method.getName(), sourceFileName, ""+methodLineNum, "method", "")
-										.addValue("Label: " + s.symbol);
+									c = c.makeOrGetSubCat(method);
+									c.addRawValue(method.getName(), sourceFileName, ""+methodLineNum, "method", "");
 									seenLocs.add(progress);
 								}
 
-							} /*else if (s.target instanceof CtxtObjPoint) {
+							} 
+							/*else if (s.target instanceof CtxtObjPoint) {
 								c.newTuple().addRawValue("Obj", "", "0", "method", "")
 									.addValue("Label: " + "CtxtObj");
 
@@ -201,9 +162,6 @@ public class SrcSinkFlowViz extends XMLVizReport
 							lastStackTop = null;
 						}
 					}
-					//System.out.println((s.reverse ? "<-" : "--" ) + s.symbol +
-					//				   (s.reverse ? "-- " : "-> " ) + s.target);
-				//System.out.println();
 				}
 			}
 		} catch (Exception e) {
