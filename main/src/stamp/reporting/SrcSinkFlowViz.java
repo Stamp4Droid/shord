@@ -42,7 +42,7 @@ public class SrcSinkFlowViz extends XMLVizReport
 			int count = 0;
 			for (Path p : PathsAdapter.getPaths()) {
 				count += 1;
-				String flowname = count + ") "+p.start + " --> " + p.end;
+				String flowname = count + ") "+((CtxtLabelPoint)p.start).label + " --> " + ((CtxtLabelPoint)p.end).label;
 				Category mc = makeOrGetPkgCat(new SootClass(flowname.replace('.','_')));
 				Set<String> seenLocs = new HashSet();
 
