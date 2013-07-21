@@ -58,4 +58,19 @@ class URL
     public final java.io.InputStream openStream() throws java.io.IOException {
 		return new StampURLInputStream();
     }
+
+	@STAMP(flows={@Flow(from="this",to="@return")})
+    public java.lang.String getFile() {
+        return new String();
+    }
+
+	@STAMP(flows={@Flow(from="this",to="@return")})
+    public java.lang.String getPath() {
+        return new String();
+    }
+
+	@STAMP(flows={@Flow(from="this",to="@return")})
+    public java.lang.String getQuery() {
+        return new String();
+    }
 }
