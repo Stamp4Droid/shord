@@ -141,10 +141,10 @@ transferObjPrim(o2,c,v) :- transferObjPrim(o1,c,v), fpt(o1,_,o2).
 
 # complete flow
 
-# basic connection of source flow and escaping
+# basic connection of tainting and escaping
 flow(c,src,e,sink) :- sink(o,e,sink), label(o,c,src), SrcLabel(src).
 flow(c,src,e,sink) :- sinkPrim(d,u,e,sink), labelPrim(d,u,c,src), SrcLabel(src).
-# nested escaping
+# nested escaping (regular and conditional)
 flow(c,src,e,sink) :- sink(o,e,sink), labelPrimFld(o,_,c,src), SrcLabel(src).
 
 # (forward) label flow
