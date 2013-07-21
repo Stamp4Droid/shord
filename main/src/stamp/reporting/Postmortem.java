@@ -25,6 +25,7 @@ public class Postmortem extends JavaAnalysis
 			SrcFlow.class
 			,ArgSinkFlow.class
 			,SrcSinkFlow.class
+			,SrcSinkFlowViz.class
 			////,ReachableStub.class,
 			,TaintedStub.class
 			////,InvkNone.class,
@@ -33,6 +34,8 @@ public class Postmortem extends JavaAnalysis
 			,PotentialCallbacks.class
 			,AllReachable.class
 			,FileNames.class
+			,MissingModels.class
+			,AllMissingModels.class
 		};
 
 		Class[] apkReports = new Class[]{

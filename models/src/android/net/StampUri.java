@@ -1,10 +1,15 @@
 package android.net;
 
+import edu.stanford.stamp.annotation.STAMP;
+import edu.stanford.stamp.annotation.Flow;
+
 /*
   created this class because android.net.Uri is abstract
  */
 public class StampUri extends Uri
 {
+	public StampUri(){}
+
     public StampUri(String s) { throw new RuntimeException("Stub!"); }
 
     public boolean isHierarchical()
@@ -43,87 +48,84 @@ public class StampUri extends Uri
 
     public   java.lang.String getEncodedAuthority()
     {
-	throw new RuntimeException("Stub!");
+		throw new RuntimeException("Stub!");
     }
 
+	@STAMP(flows={@Flow(from="this",to="@return")})
     public   java.lang.String getUserInfo()
     {
-	throw new RuntimeException("Stub!");
+		return new String();
     }
 
+	@STAMP(flows={@Flow(from="this",to="@return")})
     public   java.lang.String getEncodedUserInfo()
     {
-	throw new RuntimeException("Stub!");
+		return new String();
     }
 
     public   java.lang.String getHost()
     {
-	throw new RuntimeException("Stub!");
+		throw new RuntimeException("Stub!");
     }
 
     public   int getPort()
     {
-	throw new RuntimeException("Stub!");
+		throw new RuntimeException("Stub!");
     }
 
+	@STAMP(flows={@Flow(from="this",to="@return")})
     public   java.lang.String getPath()
     {
-	throw new RuntimeException("Stub!");
+		return new String();
     }
 
+	@STAMP(flows={@Flow(from="this",to="@return")})
     public   java.lang.String getEncodedPath()
     {
-	throw new RuntimeException("Stub!");
+		return new String();
     }
 
+	@STAMP(flows={@Flow(from="this",to="@return")})
     public   java.lang.String getQuery()
     {
-	throw new RuntimeException("Stub!");
+		return new String();
     }
 
+	@STAMP(flows={@Flow(from="this",to="@return")})
     public   java.lang.String getEncodedQuery()
     {
-	throw new RuntimeException("Stub!");
+		return new String();
     }
 
+	@STAMP(flows={@Flow(from="this",to="@return")})
     public   java.lang.String getFragment()
     {
-	throw new RuntimeException("Stub!");
+		return new String();
     }
 
+	@STAMP(flows={@Flow(from="this",to="@return")})
     public   java.lang.String getEncodedFragment()
     {
-	throw new RuntimeException("Stub!");
+		return new String();
     }
+
 
     public   java.util.List<java.lang.String> getPathSegments()
     {
-	throw new RuntimeException("Stub!");
+		java.util.List<java.lang.String> ret = new java.util.ArrayList<java.lang.String>();
+		ret.add(getLastPathSegment());
+		return ret;
     }
 
+	@STAMP(flows={@Flow(from="this",to="@return")})
     public   java.lang.String getLastPathSegment()
     {
-	throw new RuntimeException("Stub!");
-    }
-
-    public  boolean equals(java.lang.Object o) 
-    { 
-	throw new RuntimeException("Stub!"); 
-    }
-
-    public  int hashCode() 
-    { 
-		throw new RuntimeException("Stub!"); 
+		return new String();
     }
 
     public  int compareTo(android.net.Uri other) 
     { 
 		throw new RuntimeException("Stub!"); 
-    }
-
-    public   java.lang.String toString()
-    {
-		throw new RuntimeException("Stub!");
     }
 
     public   android.net.Uri.Builder buildUpon()
@@ -139,5 +141,9 @@ public class StampUri extends Uri
 	public int describeContents()
 	{
 		throw new RuntimeException("Stub!");
+	}
+	
+	public String toString(){
+		return new String();
 	}
 }

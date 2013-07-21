@@ -779,6 +779,7 @@ public class PAGBuilder extends JavaAnalysis
 		Iterator<SootMethod> mIt = program.getMethods();
 		while(mIt.hasNext()){
 			SootMethod m = mIt.next();
+			growZIfNeeded(m.getParameterCount());
 			if(isStub(m)){
 				//System.out.println("stub: "+ m);
 				stubMethods.add(m);
@@ -800,12 +801,12 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		DomF domF = (DomF) ClassicProject.g().getTrgt("F");
 		Program program = Program.g();
+		domF.add(ArrayElement.v()); //first add array elem so that it gets index 0
 		for(SootClass klass : program.getClasses()){
 			for(SootField field : klass.getFields()){
 				domF.add(field);
 			}
 		}
-		domF.add(ArrayElement.v());
 		domF.save();
 	}
 	
@@ -821,13 +822,14 @@ public class PAGBuilder extends JavaAnalysis
 		
 	void populateDomains(List<MethodPAGBuilder> mpagBuilders)
 	{
+		domZ = (DomZ) ClassicProject.g().getTrgt("Z");
+
 		populateMethods();
 		populateFields();
 		populateTypes();
 
 		domH = (DomH) ClassicProject.g().getTrgt("H");
 		domV = (DomV) ClassicProject.g().getTrgt("V");
-		domZ = (DomZ) ClassicProject.g().getTrgt("Z");
 		domI = (DomI) ClassicProject.g().getTrgt("I");
 		domU = (DomU) ClassicProject.g().getTrgt("U");
 

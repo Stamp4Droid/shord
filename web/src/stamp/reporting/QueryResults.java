@@ -87,14 +87,14 @@ public class QueryResults
 				builder.append(",");
 		}
 		String ret = builder.append("]").toString();
-		System.out.println(ret);
+		//System.out.println(ret);
 		return ret;
 	}
 	
 	public Element queryForElement(String fileName, String id)
 	{
 	    String query = formQuery(id);
-		System.out.println("QueryResults.queryForElement = "+query+" "+id);
+		//System.out.println("QueryResults.queryForElement = "+query+" "+id);
 		Document doc = fileNameToDoc.get(fileName);
 		if(doc == null){
 			//first time querying on this file

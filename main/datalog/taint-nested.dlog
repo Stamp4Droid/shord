@@ -1,4 +1,10 @@
 # Taint analysis, with support for nested taint
+# - nested tainting: all fields
+# - nested escaping: all fields
+# - nested passthrough entry: all fields
+# - nested passthrough exit: all fields
+# - TODO: conditional escaping trigger entry: no nesting support
+# - nested conditional escaping: all fields
 
 # CONFIGURATION ===============================================================
 
@@ -64,13 +70,14 @@ transferRefRef(u:V,v:V)
 transferPrimRef(u:U,v:V)
 transferRefPrim(u:V,v:U)
 transferPrimPrim(u:U,v:U)
-transferObjRef(o:C,c:C,v:V)
-transferObjPrim(o:C,c:C,u:U)
 
 flowRefRef(u:V,v:V)
 flowPrimRef(u:U,v:V)
 flowRefPrim(u:V,v:U)
 flowPrimPrim(u:U,v:U)
+
+transferObjRef(o:C,c:C,v:V)
+transferObjPrim(o:C,c:C,u:U)
 
 labelIntro(o:C,d:C,l:L)         # (d,l) is introduced into the program at object o
 label(o:C,d:C,l:L)              # o is labeled with (d,l)
@@ -111,10 +118,9 @@ flowPrimPrim(u,v) :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,u), MmethPrimArg(m,z
 # base escaping objects
 sink(o,d,l)  :- labelIntro(o,d,l), SinkLabel(l).
 # conditional escaping
-# TODO: should we have nested escaping rules for conditional escaping as well?
 sink(o,d,l)  :- pt(c,u,o), flowRefRef(u,v), labelRef(c,v,d,l), SinkLabel(l).
 sink(o,d,l)  :- pt(c,u,o), flowRefPrim(u,v), labelPrim(c,v,d,l), SinkLabel(l).
-# nested escaping
+# nested escaping (regular and conditional)
 sink(o2,d,l) :- sink(o1,d,l), fpt(o1,_,o2).
 
 # primitive-type variables/fields
@@ -124,7 +130,8 @@ sinkPrim(c,u,d,l) :- labelPrimIntro(c,u,d,l), SinkLabel(l).
 sinkPrim(c,u,d,l) :- flowPrimRef(u,v), labelRef(c,v,d,l), SinkLabel(l).
 sinkPrim(c,u,d,l) :- flowPrimPrim(u,v), labelPrim(c,v,d,l), SinkLabel(l).
 
-# abstract object passthrough entry
+# passthroughs
+
 # base cases
 transferObjRef(o,c,v)   :- transferRefRef(u,v), pt(c,u,o).
 transferObjPrim(o,c,v)  :- transferRefPrim(u,v), pt(c,u,o).
@@ -133,6 +140,7 @@ transferObjRef(o2,c,v)  :- transferObjRef(o1,c,v), fpt(o1,_,o2).
 transferObjPrim(o2,c,v) :- transferObjPrim(o1,c,v), fpt(o1,_,o2).
 
 # complete flow
+
 # basic connection of source flow and escaping
 flow(c,src,e,sink) :- sink(o,e,sink), label(o,c,src), SrcLabel(src).
 flow(c,src,e,sink) :- sinkPrim(d,u,e,sink), labelPrim(d,u,c,src), SrcLabel(src).

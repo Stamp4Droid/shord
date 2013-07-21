@@ -40,6 +40,9 @@ public class SrcSinkFlow extends XMLReport {
 	}
 	*/
 
+	//Note: As of 7.9.2013, the first block below is used for non-jcfl stuff. The second block is
+	//required instead for Osbert's JCFL flow stuff. They are mutually exclusive.
+
 	// Get all source-to-sink flows, regardless of context. To achieve this, we
 	// project on the two context columns.
 	RelView flowsView = relCtxtFlows.getView();
@@ -65,7 +68,7 @@ public class SrcSinkFlow extends XMLReport {
 			.addValue(sink)
 			.addValue(Integer.toString(numFlows));
 	}
-	
+
 	/*
 	  Map<stamp.jcflsolver.Util.Pair<Integer, Integer>, Integer> src2sink = JCFLSolverAnalysis.getSrc2Sink();
 	  DomL dom = (DomL)ClassicProject.g().getTrgt("L");
@@ -78,9 +81,8 @@ public class SrcSinkFlow extends XMLReport {
 				.addValue(Integer.toString(entry.getValue()));
 		//}
 	}
-	
+
 	relSrcSinkFlow.close();
+    */
     }
-	*/
-	}
 }

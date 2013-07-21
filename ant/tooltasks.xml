@@ -33,6 +33,8 @@
 	 inheritAll="false" useNativeBasedir="true"/>
     <ant antfile="${stamp.dir}/scanner/build.xml" target="jar"
 	 inheritAll="false" useNativeBasedir="true"/>
+    <ant antfile="${stamp.dir}/modelwiz/build.xml" target="jar"
+	 inheritAll="false" useNativeBasedir="true"/>
     <ant antfile="${stamp.dir}/web/build.xml" target="compile"
 	 inheritAll="false" useNativeBasedir="true"/>
     <!--ant antfile="${stamp.dir}/cfl/jcflsolver/build.xml" target="jar"
@@ -46,6 +48,7 @@
       <srcfiles dir="${stamp.dir}/bin" includes="stamp.annotations.jar"/>
       <srcfiles dir="${stamp.dir}/bin" includes="stamp.main.jar"/>
       <srcfiles dir="${stamp.dir}/bin" includes="stamp.scanner.jar"/>
+      <srcfiles dir="${stamp.dir}/bin" includes="stamp.modelwiz.jar"/>
       <srcfiles dir="${stamp.dir}/web" includes="classes/**/*.class"/>
       <srcfiles dir="${stamp.dir}/web" includes="WebContent/**/*"/>
       <srcfiles dir="${stamp.dir}/bin" includes="stamp.models.jar"/>
@@ -60,6 +63,8 @@
     <ant antfile="${stamp.dir}/main/build.xml" target="clean"
 	 inheritAll="false" useNativeBasedir="true"/>
     <ant antfile="${stamp.dir}/scanner/build.xml" target="clean"
+	 inheritAll="false" useNativeBasedir="true"/>
+    <ant antfile="${stamp.dir}/modelwiz/build.xml" target="clean"
 	 inheritAll="false" useNativeBasedir="true"/>
     <ant antfile="${stamp.dir}/models/build.xml" target="clean"
 	 inheritAll="false" useNativeBasedir="true"/>

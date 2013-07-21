@@ -31,17 +31,17 @@ class FileOutputStream
 		return new FileDescriptor();
 	}
 
-	@STAMP(flows = {@Flow(from="b",to="!FILE")})
+	@STAMP(flows = {@Flow(from="b",to="!this")})
 	public void write(byte[] b, int off, int len) throws java.io.IOException
 	{
 	} 
 
-	@STAMP(flows = {@Flow(from="b",to="!FILE")})
+	@STAMP(flows = {@Flow(from="b",to="!this")})
 	public void write(byte[] b) throws java.io.IOException
 	{
 	} 
 
-	@STAMP(flows = {@Flow(from="oneByte",to="!FILE")})
+	@STAMP(flows = {@Flow(from="oneByte",to="!this")})
 	public  void write(int oneByte) throws java.io.IOException 
 	{ 
 	}

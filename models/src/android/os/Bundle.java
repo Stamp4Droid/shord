@@ -48,7 +48,7 @@ class Bundle
 		return this.pdus;
 	}
 	
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
 	public  void put_pdus(java.lang.Object value) 
 	{ 
 		this.pdus = (byte[][]) value;
@@ -281,156 +281,156 @@ class Bundle
 	
 	//Setter.....
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
 	public  void putBoolean(java.lang.String key, boolean value) 
 	{ 
 		this.unknown_boolean = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
 	public  void putByte(java.lang.String key, byte value) 
 	{ 
 		this.unknown_byte = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
 	public  void putChar(java.lang.String key, char value) 
 	{ 
 		this.unknown_char = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
 	public  void putShort(java.lang.String key, short value) 
 	{
 		this.unknown_short = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
 	public  void putInt(java.lang.String key, int value) 
 	{
 		this.unknown_int = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
 	public  void putLong(java.lang.String key, long value) 
 	{
 		this.unknown_long = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
 	public  void putFloat(java.lang.String key, float value) 
 	{
 		this.unknown_float = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
 	public  void putDouble(java.lang.String key, double value) 
 	{
 		this.unknown_double = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
 	public  void putString(java.lang.String key, java.lang.String value) 
 	{ 
 		this.unknown = value;
 	}
 	
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public void putCharSequence(java.lang.String key, java.lang.CharSequence value) {
 			this.unknown = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public void putParcelable(java.lang.String key, android.os.Parcelable value) {
 		this.unknown = value;
 	}
 	
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
 	public void putParcelableArray(java.lang.String key, android.os.Parcelable[] value) {
 		this.unknown = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public void putParcelableArrayList(java.lang.String key, java.util.ArrayList<? extends android.os.Parcelable> value) {
 		this.unknown = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public void putSparseParcelableArray(java.lang.String key, android.util.SparseArray<? extends android.os.Parcelable> value) {
 		this.unknown = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public void putIntegerArrayList(java.lang.String key, java.util.ArrayList<java.lang.Integer> value) {
 		this.unknown = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public void putStringArrayList(java.lang.String key, java.util.ArrayList<java.lang.String> value) {
 		this.unknown = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public void putCharSequenceArrayList(java.lang.String key, java.util.ArrayList<java.lang.CharSequence> value) {
 		this.unknown = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public void putSerializable(java.lang.String key, java.io.Serializable value) {
 		this.unknown = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public void putBooleanArray(java.lang.String key, boolean[] value) {
     		this.unknown = value;
 	}
     
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public void putByteArray(java.lang.String key, byte[] value) {
 		this.unknown = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public void putShortArray(java.lang.String key, short[] value) {
 		this.unknown = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public void putCharArray(java.lang.String key, char[] value) {
 		this.unknown = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public void putIntArray(java.lang.String key, int[] value) {
 		this.unknown = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public void putLongArray(java.lang.String key, long[] value) {
 		this.unknown = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public void putFloatArray(java.lang.String key, float[] value) {
 		this.unknown = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public void putDoubleArray(java.lang.String key, double[] value) {
 		this.unknown = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public void putStringArray(java.lang.String key, java.lang.String[] value) {
 		this.unknown = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public void putCharSequenceArray(java.lang.String key, java.lang.CharSequence[] value) {
 		this.unknown = value;
 	}
 
-	@STAMP(flows={@Flow(from="value",to="this")})
+	@STAMP(flows={@Flow(from="value",to="!this")})
     public void putBundle(java.lang.String key, android.os.Bundle value) {
 		this.unknown = value;
 	}

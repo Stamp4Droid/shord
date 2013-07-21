@@ -11,7 +11,7 @@ class GeoPoint
   public int getLongitudeE6() { return 13000000; }
 
   @STAMP(flows={@Flow(from="this",to="@return")})
-  public java.lang.String toString() { return ""; }
+  public java.lang.String toString() { return new String(); }
 
   @STAMP(flows={@Flow(from="this",to="@return")})
   public int hashCode() { return 424242; }

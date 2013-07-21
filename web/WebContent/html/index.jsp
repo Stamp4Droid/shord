@@ -72,7 +72,7 @@
 				padding-bottom: 20px;
     		}
     		
-     		.source-view {height:680px; overflow:auto; resize:auto;}
+     		.source-view {height:80vh; overflow:auto; resize:auto;}
      		.right-view {overflow:auto; }
      		
      		.fuelux .nav-tabs > li > a {
@@ -214,6 +214,7 @@
 			function rightBarAddDynamicData(drDataParams)
 			{
 			    var data = jQuery.parseJSON(atob(drDataParams));
+			    if(data == null) return;
 			    var html = ViewSource.droidrecordDataToTable(data, false);
 			    $("#rightbar div.droidrecord-runtime-parameters").html(html);
 			}
@@ -252,7 +253,11 @@
 			    		  var chordSig = $(this).attr("data-chordsig");
 			    		  var filePath = $(this).attr("data-filePath");
 			    		  var lineNum = $(this).attr("data-lineNum");
-			    		  var drDataParams = $(this).find(".invocationExpression")[0].attr("data-droidrecord-params");
+			    		  var drDataParams = ""
+			    		  var invocationExpression = $(this).find(".invocationExpression")[0];
+			    		  if(invocationExpression != null) {
+			    		    drDataParams = invocationExpression.attr("data-droidrecord-params");
+			    		  }
 			    		  $('#rightbar').load('/stamp/html/imList.jsp',
 			    		    {chordSig: chordSig, type: 'invk', filePath: filePath, lineNum: lineNum}, 
 			    		    function () { rightBarAddDynamicData(drDataParams); })
@@ -272,21 +277,22 @@
                     } 
 			    }
 			    
-			    $(".invocationExpression").popover({ 
-                        trigger : "hover",
+			    $(".invocationExpression").popover({
                         placement : popoverAutoPlacement, 
                         html : true,
                         title : function () {
-                            return jQuery.parseJSON(atob($(this).attr("data-droidrecord-params"))).methodName;
+                            var data = jQuery.parseJSON(atob($(this).attr("data-droidrecord-params")));
+                            if(data == null) return "";
+                            return data.methodName;
                         }, 
                         content : function() {
                             var data = jQuery.parseJSON(atob($(this).attr("data-droidrecord-params")));
+			                if(data == null) return;
                             return ViewSource.droidrecordDataToTable(data, true);
                         }
                     });
 			    
-			    $(".srcSinkSpan").popover({ 
-                        trigger : "hover",
+			    $(".srcSinkSpan").popover({
                         placement : popoverAutoPlacement, 
                         html : true,
                         title : function () {
@@ -296,6 +302,24 @@
                             var data = jQuery.parseJSON(atob($(this).attr("data-stamp-srcsink")));
                             return ViewSource.formatStampSrcSinkInfo(data);
                         }
+                    });
+    
+                $(".invocationExpression[data-droidrecord-params!=\"\"]").on("mouseenter",  function(event){
+                    $(this).popover('show');
+                    });
+    
+                $(".invocationExpression[data-droidrecord-params!=\"\"]").on("mouseleave",  function(event){
+                    $(this).popover('hide');
+                    });
+    
+                $(".srcSinkSpan").on("mouseenter",  function(event){
+                    var srcSinkPopoverCount = $(".srcSinkSpan .popover").size();
+                    if(srcSinkPopoverCount > 0) return;
+                    $(this).popover('show');
+                    });
+    
+                $(".srcSinkSpan").on("mouseleave",  function(event){
+                    $(this).popover('hide');
                     });
     
                 $(".invocationExpression[data-droidrecord-params!=\"\"]").on("click",  function(event){

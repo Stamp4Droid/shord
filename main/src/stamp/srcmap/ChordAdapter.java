@@ -124,9 +124,9 @@ public class ChordAdapter extends ASTVisitor
 		int endPos = startPos+node.getName().getLength();
 		int lineNum = cu.getLineNumber(startPos);
         Block body = node.getBody();
-        int bodyLen = body.getLength();
-        int bodyStartLn = cu.getLineNumber(body.getStartPosition());
-        int bodyEndLn = cu.getLineNumber(body.getStartPosition() + bodyLen);
+		int bodyLen = body == null ? 0 : body.getLength();
+        int bodyStartLn = body == null ? 0 : cu.getLineNumber(body.getStartPosition());
+        int bodyEndLn = body == null ? 0 : cu.getLineNumber(body.getStartPosition() + bodyLen);
 		String chordSig = chordSigFor(node);
 		String className = chordSig.substring(chordSig.indexOf('@')+1);
 		String sig = sigFor(node);
