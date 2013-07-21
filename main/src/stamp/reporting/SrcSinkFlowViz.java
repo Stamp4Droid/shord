@@ -48,6 +48,7 @@ public class SrcSinkFlowViz extends XMLVizReport
 
 				SootMethod lastStackBtm = null;
 				SootMethod lastStackTop = null;
+				boolean broken = false;
 				for (Step s : p.steps) {
 					if (s.target instanceof CtxtVarPoint) {
 						String progress = "";
@@ -93,7 +94,16 @@ public class SrcSinkFlowViz extends XMLVizReport
 							if (elems.length >0) {
 								c = c.findSubCat(Program.containerMethod((Stmt)elems[elems.length-1]));
 								if (c == null) {
-									c = mc;
+									if (broken) {
+										Object key = mc.lastSubCatKey();
+										if (key instanceof SootClass && ((SootClass)key).getName().equals("Broken Stack")) {
+											c = mc.makeOrGetSubCat(mc.lastSubCatKey());
+										} else {
+											c = mc.makeOrGetSubCat(new SootClass("Broken Stack"));
+										}
+									} else {
+										c = mc;
+									}
 								}
 							}
 
@@ -108,11 +118,15 @@ public class SrcSinkFlowViz extends XMLVizReport
 								}
 								String methName = method.getName();
 
-								if (SourceInfo.isFrameworkClass(method.getDeclaringClass()) && c.equals(mc)) {
+								if (SourceInfo.isFrameworkClass(method.getDeclaringClass()) && (c.equals(mc) || broken)) {
 									continue;
 								}
 
 								c = c.makeOrGetSubCat(method);
+
+								if (broken) {
+									broken = false;
+								}
 
 								progress += method.getNumber();
 
@@ -120,6 +134,14 @@ public class SrcSinkFlowViz extends XMLVizReport
 									c.addRawValue(methName, sourceFileName, ""+methodLineNum, "method", "");
 									seenLocs.add(progress);
 								}
+							}
+
+							if (elems.length == 0 && !broken) {
+								System.out.println("Stack broken by " + s.target.toString());
+								broken = true;
+								lastStackBtm = null;
+								lastStackTop = null;
+
 							}
 
 
