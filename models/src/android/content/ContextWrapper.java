@@ -97,4 +97,8 @@ class ContextWrapper
     public android.content.pm.PackageManager getPackageManager() {
 		return new android.test.mock.MockPackageManager();
     }        
+
+	public  android.content.SharedPreferences getSharedPreferences(java.lang.String name, int mode) { 
+		return new android.content.StampSharedPreferences();
+	}
 }
