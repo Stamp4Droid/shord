@@ -5,6 +5,8 @@ import edu.stanford.stamp.harness.Callback;
 
 public class StampSharedPreferences implements SharedPreferences
 {
+	public static final StampSharedPreferences INSTANCE = new StampSharedPreferences();
+
 	static String stamp_string = null;
 	static java.util.Set<String> stamp_stringSet = null;
 	static int stamp_int = 0;

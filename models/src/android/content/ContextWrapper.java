@@ -99,6 +99,6 @@ class ContextWrapper
     }        
 
 	public  android.content.SharedPreferences getSharedPreferences(java.lang.String name, int mode) { 
-		return new android.content.StampSharedPreferences();
+		return android.content.StampSharedPreferences.INSTANCE;
 	}
 }
