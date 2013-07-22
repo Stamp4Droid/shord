@@ -3,7 +3,7 @@ package stamp.droidrecordweb;
 import edu.stanford.droidrecord.logreader.BinLogReader;
 import edu.stanford.droidrecord.logreader.CoverageReport;
 import edu.stanford.droidrecord.logreader.EventLogStream;
-import edu.stanford.droidrecord.logreader.analysis.CallArgumentValueAnalysis;
+import edu.stanford.droidrecord.logreader.analysis.CallValueAnalysis;
 import edu.stanford.droidrecord.logreader.events.util.ParseUtil;
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class DroidrecordProxyWeb {
     private List<String> binLogFiles;
     
     private CoverageReport catchedCoverage = null;
-    private CallArgumentValueAnalysis catchedCAVAnalysis = null;
+    private CallValueAnalysis catchedCVAnalysis = null;
     
     private void getBinLogFiles(String binLogFile) {
         // Go from dir/droidrecord.log.bin to gathering all 
@@ -78,18 +78,22 @@ public class DroidrecordProxyWeb {
         return catchedCoverage;
     }
     
-    public CallArgumentValueAnalysis getCallArgumentValueAnalysis() {
+    public CallValueAnalysis getCallValueAnalysis() {
         if(!isAvailable()) {
             throw new Error("Droidrecord log not available!");
-        } else if(catchedCAVAnalysis == null){
-            catchedCAVAnalysis = new CallArgumentValueAnalysis(
+        } else if(catchedCVAnalysis == null){
+            catchedCVAnalysis = new CallValueAnalysis(
                 logReader.parseLogs(binLogFiles));
-            catchedCAVAnalysis.run();
+            catchedCVAnalysis.run();
         }
-        return catchedCAVAnalysis;
+        return catchedCVAnalysis;
     }
     
     public static String chordToSootMethodSignature(String s) {
         return ParseUtil.chordToSootMethodSignature(s);
+    }
+    
+    public static String chordToSootMethodSubSignature(String s) {
+        return ParseUtil.chordToSootMethodSubSignature(s);
     }
 }

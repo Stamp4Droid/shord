@@ -50,31 +50,57 @@ var ViewSource = (function ()
     // 'Public' function
     module.droidrecordDataToTable = function(data, isPopover)
     {
-        if(data.parameterValues.length === 0) return "";
+        if(data.calls.length === 0) return "";
         
-        var numArgs = data.parameterValues[0].length;
+        var numArgs = data.calls[0].params.length;
         
         var html = "<table class=\"droidrecord-parameter-info-table ";
         if(isPopover) html += "droidrecord-parameter-info-table-popover";
         else html += "droidrecord-parameter-info-table-rightbar";
         html += "\">";
         html += "<tr>";
+        var numCols = numArgs;
+        var htmlClass;
         var columnCounter = 0;
-        if(numArgs == (data.parameterTypes.length + 1)) {
-            if(numArgs == 1) {
-                html += "<th class=\"table-leftmost table-rightmost\">this</th>";
+        if(data.calls[0].returnValue !== undefined && 
+           !(data.calls[0].returnValue.type == "other" &&
+             data.calls[0].returnValue.value == "VOID_TYPE")) {
+            htmlClass = "";
+            numCols++;
+            if(columnCounter === 0) {
+                htmlClass += "table-leftmost ";
+            } 
+            if(columnCounter == (numCols-1)) {
+                htmlClass += "table-rightmost ";
+            }
+            if(htmlClass !== "") {
+                html += "<th class=\""+htmlClass+"\">return</th>";
             } else {
-                html += "<th class=\"table-leftmost\">this</th>";
+                html += "<th>return</th>";
             }
             columnCounter++;
         }
-        var htmlClass;
+        if(numArgs == (data.parameterTypes.length + 1)) {
+            htmlClass = "";
+            if(columnCounter === 0) {
+                htmlClass += "table-leftmost ";
+            } 
+            if(columnCounter == (numCols-1)) {
+                htmlClass += "table-rightmost ";
+            }
+            if(htmlClass !== "") {
+                html += "<th class=\""+htmlClass+"\">this</th>";
+            } else {
+                html += "<th>this</th>";
+            }
+            columnCounter++;
+        }
         for(var ptype in data.parameterTypes) {
             htmlClass = "";
             if(columnCounter === 0) {
                 htmlClass += "table-leftmost ";
             } 
-            if(columnCounter == (numArgs-1)) {
+            if(columnCounter == (numCols-1)) {
                 htmlClass += "table-rightmost ";
             }
             if(htmlClass !== "") {
@@ -86,15 +112,24 @@ var ViewSource = (function ()
             html += prettyprintParamType(data.parameterTypes[ptype], isPopover) + "</th>";
         }
         html += "</tr>";
-        for(var pvals in data.parameterValues) {
+        for(var call in data.calls) {
+            var pvals = data.calls[call].params;
+            var returnV = data.calls[call].returnValue;
             html += "<tr>";
             columnCounter = 0;
-            for(var pval in data.parameterValues[pvals]) {
+            if(returnV === undefined) {
+                html += "<td class=\"table-leftmost\">unknown</td>";
+                columnCounter++;
+            } else if(returnV.type != "other" || returnV.value != "VOID_TYPE") {
+                html += "<td class=\"table-leftmost\">" + prettyprintParam(returnV, isPopover) + "</td>";
+                columnCounter++;
+            }
+            for(var pval in pvals) {
                 htmlClass = "";
                 if(columnCounter === 0) {
                     htmlClass += "table-leftmost ";
                 } 
-                if(columnCounter == (numArgs-1)) {
+                if(columnCounter == (numCols-1)) {
                     htmlClass += "table-rightmost ";
                 }
                 if(htmlClass !== "") {
@@ -103,7 +138,7 @@ var ViewSource = (function ()
                     html += "<td>";
                 }
                 columnCounter++;
-                html += prettyprintParam(data.parameterValues[pvals][pval], isPopover) + "</td>";
+                html += prettyprintParam(data.calls[call].params[pval], isPopover) + "</td>";
             }
             html += "</tr>";
         }
