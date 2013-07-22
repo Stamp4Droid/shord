@@ -71,7 +71,7 @@
 					 url="${tomcat.manager}"
 					 path="/stamp"
 					 update="true"
-					 localWar="${warname}"/>
+					 localWar="${stamp.dir}/web/${warname}"/>
   </target>
 
   <target name="clean">
