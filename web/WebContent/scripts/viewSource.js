@@ -1,6 +1,6 @@
 var ViewSource = (function ()  
 {
-    var module = {}
+    var module = {};
 
     function hashtocolor(num)
     {
@@ -10,117 +10,163 @@ var ViewSource = (function ()
         return Math.abs(num % 16777215).toString(16);
     }
     
-    function prettyprintParam(param, isPopover)
+    function prettyprintParamType(param_type, isPopover)
     {
         if(isPopover) {
-            var l = param.split(".");
-            param = l[l.length-1];
-        }
-        l = param.split(":");
-        if(l.length == 1) {
-            if(param == "NULL_TYPE") {
-                param = "null";
-            } else if(param.substr(param.length-1,param.length) == "\"" &&
-                      param.substr(0,1) != "\"") {
-                param = "\"" + param;
-            }
-            return param;
-        }
-        if(l[1] == 0) return "null"
-        color = hashtocolor(l[1]);
-        var span = "<span style=\"color:#" + color + ";\">" + l[0] + "<span>";
-        if(isPopover) {
-            return span;
+            var l = param_type.split(".");
+            return l[l.length-1];
         } else {
-            return "<a class=\"droidrecord-obj-param-link\" title=\"Object ID: "+l[1]+"\" " +
-                   "style=\"color:#" + color + ";\">" + span + "</a>";
+            return param_type;
+        }
+    }
+    
+    function prettyprintParam(param, isPopover)
+    {
+        if(param.klass === undefined) {
+            // Not an object-like param:
+            if(param.type == "other" && param.value == "NULL_TYPE") {
+               return "null"; 
+            } else if(isPopover && param.type == "string" && 
+                      param.value.length > 30) {
+                return param.value.substr(0, 27) + "...";
+            } else {
+                return param.value;
+            }
+        }
+        
+        // Object-like param
+        if(param.id === 0) return "null";
+        var color = hashtocolor(param.id);
+        
+        if(isPopover) {
+            var l = param.klass.split(".");
+            return "<span style=\"color:#" + color + ";\">"+l[l.length-1]+"<span>";
+        } else {
+            return "<a class=\"droidrecord-obj-param-link\" title=\"Object ID: "+param.id+"\" " +
+                   "style=\"color:#" + color + ";\">" + param.klass + "</a>";
         }
     }
     
     // 'Public' function
     module.droidrecordDataToTable = function(data, isPopover)
     {
-        if(data.parameterValues.length == 0) return "";
-        else {
-            numArgs = data.parameterValues[0].length;
-        }
+        if(data.calls.length === 0) return "";
+        
+        var numArgs = data.calls[0].params.length;
+        
         var html = "<table class=\"droidrecord-parameter-info-table ";
         if(isPopover) html += "droidrecord-parameter-info-table-popover";
         else html += "droidrecord-parameter-info-table-rightbar";
         html += "\">";
         html += "<tr>";
-        columnCounter = 0;
-        if(numArgs == (data.parameterTypes.length + 1)) {
-            if(numArgs == 1) {
-                html += "<th class=\"table-leftmost table-rightmost\">this</th>";
+        var numCols = numArgs;
+        var htmlClass;
+        var columnCounter = 0;
+        if(data.calls[0].returnValue !== undefined && 
+           !(data.calls[0].returnValue.type == "other" &&
+             data.calls[0].returnValue.value == "VOID_TYPE")) {
+            htmlClass = "";
+            numCols++;
+            if(columnCounter === 0) {
+                htmlClass += "table-leftmost ";
+            } 
+            if(columnCounter == (numCols-1)) {
+                htmlClass += "table-rightmost ";
+            }
+            if(htmlClass !== "") {
+                html += "<th class=\""+htmlClass+"\">return</th>";
             } else {
-                html += "<th class=\"table-leftmost\">this</th>";
+                html += "<th>return</th>";
             }
             columnCounter++;
         }
-        for(ptype in data.parameterTypes) {
-            htmlClass = ""
-            if(columnCounter == 0) {
+        if(numArgs == (data.parameterTypes.length + 1)) {
+            htmlClass = "";
+            if(columnCounter === 0) {
                 htmlClass += "table-leftmost ";
             } 
-            if(columnCounter == (numArgs-1)) {
+            if(columnCounter == (numCols-1)) {
                 htmlClass += "table-rightmost ";
             }
-            if(htmlClass != "") {
+            if(htmlClass !== "") {
+                html += "<th class=\""+htmlClass+"\">this</th>";
+            } else {
+                html += "<th>this</th>";
+            }
+            columnCounter++;
+        }
+        for(var ptype in data.parameterTypes) {
+            htmlClass = "";
+            if(columnCounter === 0) {
+                htmlClass += "table-leftmost ";
+            } 
+            if(columnCounter == (numCols-1)) {
+                htmlClass += "table-rightmost ";
+            }
+            if(htmlClass !== "") {
                 html += "<th class=\""+htmlClass+"\">";
             } else {
                 html += "<th>";
             }
             columnCounter++;
-            html += prettyprintParam(data.parameterTypes[ptype], isPopover) + "</th>";
+            html += prettyprintParamType(data.parameterTypes[ptype], isPopover) + "</th>";
         }
         html += "</tr>";
-        for(pvals in data.parameterValues) {
+        for(var call in data.calls) {
+            var pvals = data.calls[call].params;
+            var returnV = data.calls[call].returnValue;
             html += "<tr>";
             columnCounter = 0;
-            for(pval in data.parameterValues[pvals]) {
+            if(returnV === undefined) {
+                html += "<td class=\"table-leftmost\">unknown</td>";
+                columnCounter++;
+            } else if(returnV.type != "other" || returnV.value != "VOID_TYPE") {
+                html += "<td class=\"table-leftmost\">" + prettyprintParam(returnV, isPopover) + "</td>";
+                columnCounter++;
+            }
+            for(var pval in pvals) {
                 htmlClass = "";
-                if(columnCounter == 0) {
+                if(columnCounter === 0) {
                     htmlClass += "table-leftmost ";
                 } 
-                if(columnCounter == (numArgs-1)) {
+                if(columnCounter == (numCols-1)) {
                     htmlClass += "table-rightmost ";
                 }
-                if(htmlClass != "") {
+                if(htmlClass !== "") {
                     html += "<td class=\""+htmlClass+"\">";
                 } else {
                     html += "<td>";
                 }
                 columnCounter++;
-                html += prettyprintParam(data.parameterValues[pvals][pval], isPopover) + "</td>";
+                html += prettyprintParam(data.calls[call].params[pval], isPopover) + "</td>";
             }
             html += "</tr>";
         }
         html += "</table>";
         //console.log(html)
         return html;
-    }
+    };
     
     
     module.formatStampSrcSinkInfo = function(data)
     {
         var html = "";
-        if(data.sources.length != 0) {
+        if(data.sources.length !== 0) {
             html += "<b>Sources:</b><ul>";
-            for(s in data.sources) {
-                html += "<li>" + data.sources[s] + "</li>"
+            for(var s in data.sources) {
+                html += "<li>" + data.sources[s] + "</li>";
             }
             html += "</ul>";
         }
-        if(data.sinks.length != 0) {
+        if(data.sinks.length !== 0) {
             html += "<b>Sinks:</b><ul>";
-            for(s in data.sinks) {
-                html += "<li>" + data.sinks[s] + "</li>"
+            for(var s1 in data.sinks) {
+                html += "<li>" + data.sinks[s1] + "</li>";
             }
             html += "</ul>";
         }
         return html;
-    }
+    };
     
     return module;
 }());  

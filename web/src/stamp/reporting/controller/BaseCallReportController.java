@@ -356,16 +356,16 @@ public class BaseCallReportController
 		    List<Element> invocPEs = getChildrenByTagName(invocParamsE, "record");
 		    int modifier;
 		    if(parameters.size() == invocPEs.size()) 
-		        modifier = 0; // static method
-		    else if(parameters.size() == (invocPEs.size() - 1)) 
-		        modifier = 1;
+		        modifier = 0; 
+		    else if((parameters.size()-1) == invocPEs.size()) 
+		        modifier = 1; // static method
 		    else 
-		        throw new RuntimeException("Invalid invocations record.");
-		    for(int j = 0; j < parameters.size(); j++)
+		        throw new RuntimeException("Invalid invocations record: ");
+		    for(int j = 0; j < invocPEs.size(); j++)
 		    {
-		        String value = invocPEs.get(j + modifier).getAttribute("value");
+		        String value = invocPEs.get(j).getAttribute("value");
 		        value = value.substring(value.indexOf(":") + 1);
-		        parameters.get(j).addValue(value);
+		        parameters.get(j + modifier).addValue(value);
 		    }
 		    
 		    invocations.add(
