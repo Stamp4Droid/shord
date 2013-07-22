@@ -10,6 +10,7 @@ import org.w3c.dom.*;
 import org.xml.sax.*;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.codec.binary.Base64;
+import org.json.simple.JSONValue;
 
 import edu.stanford.droidrecord.logreader.CoverageReport;
 import edu.stanford.droidrecord.logreader.analysis.CallArgumentValueAnalysis;
@@ -173,63 +174,43 @@ public class SourceProcessor
 			this.lineNum = lineNum;
 			this.calleeMethodSig = calleeMethodSig;
 		}
-		
-		private String escape(String s) {
-            s = s.replace("\\","\\\\");
-            s = s.replace("\"","\\\"");
-            s = s.replace("\'","\\\'");
-            return s;
-		}
 
 	    @Override public String toString() {
-	        StringBuilder paramsData = new StringBuilder();
 	        String paramsDataStr = "";
             if(droidrecord.isAvailable() && methodSig != null) {
                 CallArgumentValueAnalysis cava = droidrecord.getCallArgumentValueAnalysis();
                 if(cava.isReady()) {
                     List<List<ParamInfo>> params = cava.queryArgumentValues(calleeMethodSig, methodSig, lineNum);
-                    if(params.size() != 0) { 
+                    if(params.size() != 0) {
+                        Map jsonObj = new LinkedHashMap();
                         MethodInfo method = MethodInfo.parse(calleeMethodSig);
-                        paramsData.append("{");
-                        paramsData.append("\"methodName\":\"");
-                        paramsData.append(method.getName());
-                        paramsData.append("\",");
-                        paramsData.append("\"parameterTypes\":[");
-                        for(int i = 0; i < method.getArguments().size()-1; i++) {
-                            paramsData.append("\"");
-                            paramsData.append(method.getArguments().get(i));
-                            paramsData.append("\",");
-                        }
-                        if(method.getArguments().size() > 0) {
-                            String ptype = method.getArguments().get(method.getArguments().size()-1);
-                            if(!ptype.equals("")) {
-                                paramsData.append("\"");
-                                paramsData.append(ptype);
-                                paramsData.append("\"");
-                            }
-                        }
-                        paramsData.append("],");
-                        paramsData.append("\"parameterValues\":[");
-                        boolean addComa = false;
+                        jsonObj.put("methodName", method.getName());
+                        jsonObj.put("parameterTypes", method.getArguments());
+                        LinkedList list = new LinkedList();
                         Set<String> seenParamChoices = new HashSet<String>();
                         for(List<ParamInfo> l : params) {
-                            String jsonInvkParams = "[";
-                            for(int i = 0; i < l.size()-1; i++) {
-                                jsonInvkParams += "\"" + escape(l.get(i).toSimpleString()) + "\",";
+                            String jsonInvkParams = "";
+                            LinkedList paramList = new LinkedList();
+                            for(int i = 0; i < l.size(); i++) {
+                                ParamInfo pi = l.get(i);
+                                Map paramMap = new LinkedHashMap();
+                                paramMap.put("type", pi.getType());
+                                if(pi.isObjectLikeType()) {
+                                    paramMap.put("klass", pi.getKlass());
+                                    paramMap.put("id", pi.getId());
+                                } else {
+                                    paramMap.put("value", pi.getValue());
+                                }
+                                String s = pi.toSimpleString();
+                                jsonInvkParams += s;
+                                paramList.add(paramMap);
                             }
-                            if(l.size() > 0) {
-                                jsonInvkParams += "\"" + escape(l.get(l.size()-1).toSimpleString()) + "\"";
-                            }
-                            jsonInvkParams += "]";
                             if(seenParamChoices.contains(jsonInvkParams)) continue;
-                            if(addComa) paramsData.append(",");
-                            addComa = true;
-                            paramsData.append(jsonInvkParams);
+                            list.add(paramList);
                             seenParamChoices.add(jsonInvkParams);
                         }
-                        paramsData.append("]");
-                        paramsData.append("}");
-                        paramsDataStr = paramsData.toString();
+                        jsonObj.put("parameterValues", list);
+                        paramsDataStr = JSONValue.toJSONString(jsonObj);
                     }
                 }
             }
