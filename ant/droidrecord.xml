@@ -163,18 +163,18 @@
     <exec executable="adb"
       spawn="false"
 	  failonerror="true">
-      <arg line="${stamp.dynamic.device.arg} pull sdcard/droidrecord.log.bin ${stamp.droidrecord.logfile.bin}"/>
+      <arg line="${stamp.dynamic.device.arg} pull sdcard/droidrecord/ ${stamp.droidrecord.logdir}"/>
     </exec>
     <move file="${app.loc}/droidrecord.log.template" toFile="${stamp.droidrecord.logfile.template}"/>
-    <exec executable="${stamp.droidrecord.cmd.readlog}"
+    <exec executable="sh"
       spawn="false"
       failonerror="true">
-      <arg line="${stamp.droidrecord.logfile.template} ${stamp.droidrecord.logfile.bin} --lib android.support.v4 -o ${stamp.droidrecord.logfile.text}"/>
+      <arg line='-c "${stamp.droidrecord.cmd.readlog} ${stamp.droidrecord.logfile.template} ${stamp.droidrecord.logfile.bin}* --lib android.support.v4 -o ${stamp.droidrecord.logfile.text}"'/>
     </exec>
     <exec executable="adb"
 	  spawn="false"
 	  failonerror="true">
-      <arg line="${stamp.dynamic.device.arg} shell rm /sdcard/droidrecord.*"/>
+      <arg line="${stamp.dynamic.device.arg} shell rm -R /sdcard/droidrecord"/>
     </exec>
   </target>
 
