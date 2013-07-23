@@ -60,60 +60,70 @@ void main_loop(Edge *base) {
     /* To correctly process an edge, we have to check all the relevant
        productions (where its symbol appears in the RHS). */
     Edge *other;
+    OutEdgeIterator *out_iter;
+    InEdgeIterator *in_iter;
     switch (base->kind) {
     case 0: /* Flow */
 	/* Flow + assign => Flow */
-	other = get_out_edges(base->to, 1);
-	for (; other != NULL; other = next_out_edge(other)) {
-	    add_edge(base->from, other->to, 0, INDEX_NONE);
+	out_iter = get_out_edge_iterator(base->to, 1);
+	while ((other = next_out_edge(out_iter)) != NULL) {
+	    add_edge(base->from, other->to, 0, INDEX_NONE,
+		     base, false, other, false);
 	}
 	/* Flow + Temp1 => Flow */
-	other = get_out_edges(base->to, 4);
-	for (; other != NULL; other = next_out_edge(other)) {
-	    add_edge(base->from, other->to, 0, INDEX_NONE);
+	out_iter = get_out_edge_iterator(base->to, 4);
+	while((other = next_out_edge(out_iter)) != NULL) {
+	    add_edge(base->from, other->to, 0, INDEX_NONE,
+		     base, false, other, false);
 	}
 	/* Flow + ret[i] => Temp2[i] */
-	other = get_out_edges(base->to, 3);
-	for (; other != NULL; other = next_out_edge(other)) {
-	    add_edge(base->from, other->to, 5, other->index);
+	out_iter = get_out_edge_iterator(base->to, 3);
+	while((other = next_out_edge(out_iter)) != NULL) {
+	    add_edge(base->from, other->to, 5, other->index,
+		     base, false, other, false);
 	}
 	break;
     case 1: /* assign */
 	/* Flow + assign => Flow */
-	other = get_in_edges(base->from, 0);
-	for (; other != NULL; other = next_in_edge(other)) {
-	    add_edge(other->from, base->to, 0, INDEX_NONE);
+	in_iter = get_in_edge_iterator(base->from, 0);
+	while((other = next_in_edge(in_iter)) != NULL) {
+	    add_edge(other->from, base->to, 0, INDEX_NONE,
+		     other, false, base, false);
 	}
 	break;
     case 2: /* param */
 	/* param[i] + Temp2[i] => Temp1 */
-	other = get_out_edges(base->to, 5);
-	for (; other != NULL; other = next_out_edge(other)) {
+	out_iter = get_out_edge_iterator(base->to, 5);
+	while((other = next_out_edge(out_iter)) != NULL) {
 	    if (base->index == other->index) {
-		add_edge(base->from, other->to, 4, INDEX_NONE);
+		add_edge(base->from, other->to, 4, INDEX_NONE,
+			 base, false, other, false);
 	    }
 	}
 	break;
     case 3: /* ret */
 	/* Flow + ret[i] => Temp2[i] */
-	other = get_in_edges(base->from, 0);
-	for (; other != NULL; other = next_in_edge(other)) {
-	    add_edge(other->from, base->to, 5, base->index);
+	in_iter = get_in_edge_iterator(base->from, 0);
+	while((other = next_in_edge(in_iter)) != NULL) {
+	    add_edge(other->from, base->to, 5, base->index,
+		     other, false, base, false);
 	}
 	break;
     case 4: /* Temp1 */
 	/* Flow + Temp1 => Flow */
-	other = get_in_edges(base->from, 0);
-	for (; other != NULL; other = next_in_edge(other)) {
-	    add_edge(other->from, base->to, 0, INDEX_NONE);
+	in_iter = get_in_edge_iterator(base->from, 0);
+	while((other = next_in_edge(in_iter)) != NULL) {
+	    add_edge(other->from, base->to, 0, INDEX_NONE,
+		     other, false, base, false);
 	}
 	break;
     case 5: /* Temp2 */
 	/* param[i] + Temp2[i] => Temp1 */
-	other = get_in_edges(base->from, 2);
-	for (; other != NULL; other = next_in_edge(other)) {
+	in_iter = get_in_edge_iterator(base->from, 2);
+	while((other = next_in_edge(in_iter)) != NULL) {
 	    if (base->index == other->index) {
-		add_edge(other->from, base->to, 4, INDEX_NONE);
+		add_edge(other->from, base->to, 4, INDEX_NONE,
+			 other, false, base, false);
 	    }
 	}
 	break;
@@ -166,6 +176,8 @@ const char *kind2symbol(EDGE_KIND kind) {
 std::list<Derivation> all_derivations(Edge *e) {
     Edge *l, *r;
     std::list<Derivation> derivs;
+    OutEdgeIterator *l_out_iter, *r_out_iter;
+    InEdgeIterator *l_in_iter;
     switch (e->kind) {
     case 0: /* Flow */
 	/* - => Flow */
@@ -173,28 +185,28 @@ std::list<Derivation> all_derivations(Edge *e) {
 	    derivs.push_back(derivation_empty());
 	}
 	/* Flow + assign => Flow */
-	l = get_out_edges(e->from, 0);
-	for (; l != NULL; l = next_out_edge(l)) {
-	    r = get_out_edges_to_target(l->to, e->to, 1);
-	    for (; r != NULL; r = next_out_edge(r)) {
+	l_out_iter = get_out_edge_iterator(e->from, 0);
+	while ((l = next_out_edge(l_out_iter)) != NULL) {
+	    r_out_iter = get_out_edge_iterator_to_target(l->to, e->to, 1);
+	    while ((r = next_out_edge(r_out_iter)) != NULL) {
 		derivs.push_back(derivation_double(l, false, r, false));
 	    }
 	}
 	/* Flow + Temp1 => Flow */
-	l = get_out_edges(e->from, 0);
-	for (; l != NULL; l = next_out_edge(l)) {
-	    r = get_out_edges_to_target(l->to, e->to, 4);
-	    for (; r != NULL; r = next_out_edge(r)) {
+	l_out_iter = get_out_edge_iterator(e->from, 0);
+	while ((l = next_out_edge(l_out_iter)) != NULL) {
+	    r_out_iter = get_out_edge_iterator_to_target(l->to, e->to, 4);
+	    while ((r = next_out_edge(r_out_iter)) != NULL) {
 		derivs.push_back(derivation_double(l, false, r, false));
 	    }
 	}
 	break;
     case 4: /* Temp1 */
 	/* param[i] + Temp2[i] => Temp1 */
-	l = get_out_edges(e->from, 2);
-	for (; l != NULL; l = next_out_edge(l)) {
-	    r = get_out_edges_to_target(l->to, e->to, 5);
-	    for (; r != NULL; r = next_out_edge(r)) {
+	l_out_iter = get_out_edge_iterator(e->from, 2);
+	while ((l = next_out_edge(l_out_iter)) != NULL) {
+	    r_out_iter = get_out_edge_iterator_to_target(l->to, e->to, 5);
+	    while ((r = next_out_edge(r_out_iter)) != NULL) {
 		if (l->index == r->index) {
 		    derivs.push_back(derivation_double(l, false, r, false));
 		}
@@ -203,10 +215,10 @@ std::list<Derivation> all_derivations(Edge *e) {
 	break;
     case 5: /* Temp2 */
 	/* Flow + ret[i] => Temp2[i] */
-	l = get_out_edges(e->from, 0);
-	for (; l != NULL; l = next_out_edge(l)) {
-	    r = get_out_edges_to_target(l->to, e->to, 3);
-	    for (; r != NULL; r = next_out_edge(r)) {
+	l_out_iter = get_out_edge_iterator(e->from, 0);
+	while ((l = next_out_edge(l_out_iter)) != NULL) {
+	    r_out_iter = get_out_edge_iterator_to_target(l->to, e->to, 3);
+	    while ((r = next_out_edge(r_out_iter)) != NULL) {
 		if (r->index == e->index) {
 		    derivs.push_back(derivation_double(l, false, r, false));
 		}
@@ -225,5 +237,24 @@ unsigned int num_paths_to_print(EDGE_KIND kind) {
 	return 10;
     default:
 	return 0;
+    }
+}
+
+PATH_LENGTH static_min_length(EDGE_KIND kind) {
+    switch (kind) {
+    case 0: /* Flow */
+	return 0;
+    case 1: /* assign */
+	return 1;
+    case 2: /* param */
+	return 1;
+    case 3: /* ret */
+	return 1;
+    case 4: /* Temp1 */
+	return 2;
+    case 5: /* Temp2 */
+	return 1;
+    default:
+	assert(false);
     }
 }

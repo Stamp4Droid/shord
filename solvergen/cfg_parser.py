@@ -968,6 +968,8 @@ def parse(grammar_in, code_out, terminals_out):
 
     pr.write('void main_loop(Edge *base) {')
     pr.write('Edge *other;')
+    pr.write('OutEdgeIterator *out_iter;')
+    pr.write('InEdgeIterator *in_iter;')
     # TODO: Could cache base->index
     pr.write('switch (base->kind) {')
     for base_symbol in grammar.symbols:
@@ -999,14 +1001,14 @@ def parse(grammar_in, code_out, terminals_out):
                 search_tgt = (None if search_tgt_endp is None
                               else 'base->' + search_tgt_endp)
                 reqd_kind = rp.reqd.symbol.kind
-                pr.write('other = get_%s_edges%s(%s%s, %s);'
-                         % (search_dir,
+                pr.write('%s_iter = get_%s_edge_iterator%s(%s%s, %s);'
+                         % (search_dir, search_dir,
                             '' if search_tgt is None else '_to_target',
                             search_src,
                             '' if search_tgt is None else (', ' + search_tgt),
                             reqd_kind))
-                pr.write('for (; other != NULL; other = next_%s_edge(other)) {'
-                         % search_dir)
+                pr.write('while ((other = next_%s_edge(%s_iter)) != NULL) {'
+                         % (search_dir, search_dir))
                 if rp.must_check_for_common_index():
                     pr.write('if (base->index == other->index) {')
                     pr.write(add_edge_stmt)
@@ -1022,6 +1024,8 @@ def parse(grammar_in, code_out, terminals_out):
     pr.write('std::list<Derivation> all_derivations(Edge *e) {')
     pr.write('Edge *l, *r;')
     pr.write('std::list<Derivation> derivs;')
+    pr.write('OutEdgeIterator *l_out_iter, *r_out_iter;')
+    pr.write('InEdgeIterator *l_in_iter;')
     pr.write('switch (e->kind) {')
     for e_symbol in grammar.prods:
         pr.write('case %s: /* %s */' % (e_symbol.kind, e_symbol))
@@ -1036,13 +1040,14 @@ def parse(grammar_in, code_out, terminals_out):
             out_dir = p.outer_search_direction()
             out_src = p.outer_search_source()
             out_tgt = p.outer_search_target()
-            pr.write('l = get_%s_edges%s(%s%s, %s);'
-                     % (out_dir,
+            pr.write('l_%s_iter = get_%s_edge_iterator%s(%s%s, %s);'
+                     % (out_dir, out_dir,
                         '_to_target' if out_tgt is not None else '',
                         out_src,
                         (', ' + out_tgt) if out_tgt is not None else '',
                         p.left.symbol.kind))
-            pr.write('for (; l != NULL; l = next_%s_edge(l)) {' % out_dir)
+            pr.write('while ((l = next_%s_edge(l_%s_iter)) != NULL) {'
+                     % (out_dir, out_dir))
             out_cond = p.outer_condition()
             if out_cond is not None:
                 pr.write('if (%s) {' % out_cond)
@@ -1052,10 +1057,11 @@ def parse(grammar_in, code_out, terminals_out):
                          % util.to_c_bool(p.left.reversed))
             else:
                 # double production
-                pr.write('r = get_out_edges_to_target(%s, %s, %s);'
-                         % (p.inner_search_source(), p.inner_search_target(),
-                            p.right.symbol.kind))
-                pr.write('for (; r != NULL; r = next_out_edge(r)) {')
+                pr.write('r_out_iter = get_out_edge_iterator_to_target' +
+                         ('(%s, %s, %s);' % (p.inner_search_source(),
+                                             p.inner_search_target(),
+                                             p.right.symbol.kind)))
+                pr.write('while ((r = next_out_edge(r_out_iter)) != NULL) {')
                 in_cond = p.inner_condition()
                 if in_cond is not None:
                     pr.write('if (%s) {' % in_cond)
