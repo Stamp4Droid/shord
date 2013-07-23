@@ -57,7 +57,7 @@ public class SrcSinkFlowViz extends XMLVizReport
 
 						//NOTE TODO: CURRENTLY ASSUMES K = 2, not WLOG exactly...
 						if (elems.length > 0 && Program.containerMethod((Stmt)elems[0]).equals(lastStackBtm)) {
-							Stmt stm  = (Stmt)elems[1];
+							Stmt stm  = (Stmt)elems[elems.length-1];
 							SootMethod method = Program.containerMethod(stm);
 
 							if (SourceInfo.isFrameworkClass(method.getDeclaringClass()) && (c==null || c.equals(mc))) {
