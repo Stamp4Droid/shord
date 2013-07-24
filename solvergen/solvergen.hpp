@@ -256,7 +256,9 @@ typedef struct {
     Edge *tail;
 } EdgeWorklist;
 
-// possible way that we could have produced an edge
+/**
+ * Structure describing a possible way to produce an Edge.
+ */
 typedef struct {
     Edge *left_edge;
     Edge *right_edge;

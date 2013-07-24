@@ -755,12 +755,14 @@ class Grammar(util.FinalAttrs):
         #  @Symbol.
         self.rev_prods = util.OrderedMultiDict()
 
-    def verify_grammar(self):
+    def finalize(self):
         for s in self.symbols:
             if not s.is_terminal() and self.prods.get(s) == []:
                 assert False, "Non-terminal %s can never be produced" % s
+        self._calc_min_lengths()
+        # TODO: Also disable parse_line().
 
-    def calc_min_lengths(self):
+    def _calc_min_lengths(self):
         for symbol in self.symbols:
             # TODO: Arbitrary value for "infinite length"
             symbol.min_length = 1 if symbol.is_terminal() else 10000
@@ -884,7 +886,7 @@ def parse(grammar_in, code_out, terminals_out):
     for line in grammar_in:
         grammar.parse_line(line)
         pr.write(line, False)
-    grammar.verify_grammar()
+    grammar.finalize()
     pr.write('*/')
     pr.write('')
 
@@ -898,7 +900,6 @@ def parse(grammar_in, code_out, terminals_out):
     pr.write('*/')
     pr.write('')
 
-    grammar.calc_min_lengths()
     pr.write('PATH_LENGTH static_min_length(EDGE_KIND kind) {')
     pr.write('switch (kind) {')
     for s in grammar.symbols:
