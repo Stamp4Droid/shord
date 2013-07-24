@@ -20,10 +20,11 @@ public class SrcFlow extends XMLReport
 
 		Iterable<Pair<String,SootMethod>> res = rel.getAry2ValTuples();
 		for(Pair<String,SootMethod> pair : res) {
+			String label = pair.val0;
+			Category labelCat = makeOrGetSubCat(label);
 			SootMethod srcMethod = pair.val1;
-			makeOrGetPkgCat(srcMethod.getDeclaringClass()).newTuple()
-				.addValue(srcMethod)
-				.addValue("Label: "+pair.val0);
+			labelCat.makeOrGetPkgCat(srcMethod).newTuple();
+			//	.addValue("");
 		}
 
 		rel.close();

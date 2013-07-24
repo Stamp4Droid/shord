@@ -19,10 +19,11 @@ public class ArgSinkFlow extends XMLReport
 
 		Iterable<Pair<String,SootMethod>> res = rel.getAry2ValTuples();
 		for(Pair<String,SootMethod> pair : res) {
+			String label = pair.val0;
+			Category labelCat = makeOrGetSubCat(label);
+
 			SootMethod sinkMethod = pair.val1;
-			makeOrGetPkgCat(sinkMethod.getDeclaringClass()).newTuple()
-				.addValue(sinkMethod)
-				.addValue("Label: "+pair.val0);
+			makeOrGetPkgCat(sinkMethod).newTuple();
 		}
 
 		rel.close();
