@@ -330,10 +330,11 @@ class NormalProduction(util.FinalAttrs):
 
         @return Whether this call updated the estimate for the result @Symbol.
         """
-        # TODO: The length of any supporting (parallel) paths is simply added
-        # to that of the main path.
-        newlen = ((0 if self.left is None else self.left.symbol.min_length) +
-                  (0 if self.right is None else self.right.symbol.min_length))
+        # The length of any supporting (parallel) paths is ignored.
+        left_len = 0 if self.left is None else self.left.symbol.min_length
+        right_len = (0 if self.right is None or self.parallel
+                     else self.right.symbol.min_length)
+        newlen = left_len + right_len
         if newlen < self.result.min_length:
             self.result.min_length = newlen
             return True
@@ -382,10 +383,9 @@ class NormalProduction(util.FinalAttrs):
         return None
 
     def inner_search_source(self):
-        assert self.left is not None and self.right is not None
-        if self.parallel:
-            return 'e->to' if self.right.reversed else 'e->from'
-        elif self.right.reversed:
+        assert (self.left is not None and self.right is not None
+                and not self.parallel)
+        if self.right.reversed:
             return 'e->to'
         elif self.left.reversed:
             return 'l->from'
@@ -393,10 +393,9 @@ class NormalProduction(util.FinalAttrs):
             return 'l->to'
 
     def inner_search_target(self):
-        assert self.left is not None and self.right is not None
-        if self.parallel:
-            return 'e->from' if self.right.reversed else 'e->to'
-        elif not self.right.reversed:
+        assert (self.left is not None and self.right is not None
+                and not self.parallel)
+        if not self.right.reversed:
             return 'e->to'
         elif self.left.reversed:
             return 'l->from'
@@ -404,7 +403,8 @@ class NormalProduction(util.FinalAttrs):
             return 'l->to'
 
     def inner_condition(self):
-        assert self.left is not None and self.right is not None
+        assert (self.left is not None and self.right is not None
+                and not self.parallel)
         if not self.right.indexed:
             return None
         elif self.left.indexed:
@@ -698,9 +698,9 @@ class ReverseProduction(util.FinalAttrs):
         elif self.base_pos == Position.SECOND:
             return 'base'
         elif self.base_pos == Position.PARALLEL_MAIN:
-            return 'other'
+            return 'NULL'
         elif self.base_pos == Position.PARALLEL_SUPPORT:
-            return 'base'
+            return 'NULL'
         else:
             assert False
 
@@ -714,9 +714,9 @@ class ReverseProduction(util.FinalAttrs):
         elif self.base_pos == Position.SECOND:
             return self.base.reversed
         elif self.base_pos == Position.PARALLEL_MAIN:
-            return self.reqd.reversed
+            return False
         elif self.base_pos == Position.PARALLEL_SUPPORT:
-            return self.base.reversed
+            return False
         else:
             assert False
 
@@ -1052,8 +1052,8 @@ def parse(grammar_in, code_out, terminals_out):
             out_cond = p.outer_condition()
             if out_cond is not None:
                 pr.write('if (%s) {' % out_cond)
-            if p.right is None:
-                # single production
+            if p.right is None or p.parallel:
+                # single or parallel production
                 pr.write('derivs.push_back(derivation_single(l, %s));'
                          % util.to_c_bool(p.left.reversed))
             else:
