@@ -26,6 +26,7 @@ apps/*/*/local.properties
 apps/*/*/proguard-project.txt
 apps/*/*/project.properties
 apps/*/*/stamp.app.properties
+apps/*/*/stamp-url.txt
 
 *.war
 *.ear

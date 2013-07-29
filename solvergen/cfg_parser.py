@@ -330,10 +330,11 @@ class NormalProduction(util.FinalAttrs):
 
         @return Whether this call updated the estimate for the result @Symbol.
         """
-        # TODO: The length of any supporting (parallel) paths is simply added
-        # to that of the main path.
-        newlen = ((0 if self.left is None else self.left.symbol.min_length) +
-                  (0 if self.right is None else self.right.symbol.min_length))
+        # The length of any supporting (parallel) paths is ignored.
+        left_len = 0 if self.left is None else self.left.symbol.min_length
+        right_len = (0 if self.right is None or self.parallel
+                     else self.right.symbol.min_length)
+        newlen = left_len + right_len
         if newlen < self.result.min_length:
             self.result.min_length = newlen
             return True
@@ -382,10 +383,9 @@ class NormalProduction(util.FinalAttrs):
         return None
 
     def inner_search_source(self):
-        assert self.left is not None and self.right is not None
-        if self.parallel:
-            return 'e->to' if self.right.reversed else 'e->from'
-        elif self.right.reversed:
+        assert (self.left is not None and self.right is not None
+                and not self.parallel)
+        if self.right.reversed:
             return 'e->to'
         elif self.left.reversed:
             return 'l->from'
@@ -393,10 +393,9 @@ class NormalProduction(util.FinalAttrs):
             return 'l->to'
 
     def inner_search_target(self):
-        assert self.left is not None and self.right is not None
-        if self.parallel:
-            return 'e->from' if self.right.reversed else 'e->to'
-        elif not self.right.reversed:
+        assert (self.left is not None and self.right is not None
+                and not self.parallel)
+        if not self.right.reversed:
             return 'e->to'
         elif self.left.reversed:
             return 'l->from'
@@ -404,7 +403,8 @@ class NormalProduction(util.FinalAttrs):
             return 'l->to'
 
     def inner_condition(self):
-        assert self.left is not None and self.right is not None
+        assert (self.left is not None and self.right is not None
+                and not self.parallel)
         if not self.right.indexed:
             return None
         elif self.left.indexed:
@@ -698,9 +698,9 @@ class ReverseProduction(util.FinalAttrs):
         elif self.base_pos == Position.SECOND:
             return 'base'
         elif self.base_pos == Position.PARALLEL_MAIN:
-            return 'other'
+            return 'NULL'
         elif self.base_pos == Position.PARALLEL_SUPPORT:
-            return 'base'
+            return 'NULL'
         else:
             assert False
 
@@ -714,9 +714,9 @@ class ReverseProduction(util.FinalAttrs):
         elif self.base_pos == Position.SECOND:
             return self.base.reversed
         elif self.base_pos == Position.PARALLEL_MAIN:
-            return self.reqd.reversed
+            return False
         elif self.base_pos == Position.PARALLEL_SUPPORT:
-            return self.base.reversed
+            return False
         else:
             assert False
 
@@ -755,12 +755,14 @@ class Grammar(util.FinalAttrs):
         #  @Symbol.
         self.rev_prods = util.OrderedMultiDict()
 
-    def verify_grammar(self):
+    def finalize(self):
         for s in self.symbols:
             if not s.is_terminal() and self.prods.get(s) == []:
                 assert False, "Non-terminal %s can never be produced" % s
+        self._calc_min_lengths()
+        # TODO: Also disable parse_line().
 
-    def calc_min_lengths(self):
+    def _calc_min_lengths(self):
         for symbol in self.symbols:
             # TODO: Arbitrary value for "infinite length"
             symbol.min_length = 1 if symbol.is_terminal() else 10000
@@ -884,7 +886,7 @@ def parse(grammar_in, code_out, terminals_out):
     for line in grammar_in:
         grammar.parse_line(line)
         pr.write(line, False)
-    grammar.verify_grammar()
+    grammar.finalize()
     pr.write('*/')
     pr.write('')
 
@@ -898,7 +900,6 @@ def parse(grammar_in, code_out, terminals_out):
     pr.write('*/')
     pr.write('')
 
-    grammar.calc_min_lengths()
     pr.write('PATH_LENGTH static_min_length(EDGE_KIND kind) {')
     pr.write('switch (kind) {')
     for s in grammar.symbols:
@@ -968,6 +969,8 @@ def parse(grammar_in, code_out, terminals_out):
 
     pr.write('void main_loop(Edge *base) {')
     pr.write('Edge *other;')
+    pr.write('OutEdgeIterator *out_iter;')
+    pr.write('InEdgeIterator *in_iter;')
     # TODO: Could cache base->index
     pr.write('switch (base->kind) {')
     for base_symbol in grammar.symbols:
@@ -999,14 +1002,14 @@ def parse(grammar_in, code_out, terminals_out):
                 search_tgt = (None if search_tgt_endp is None
                               else 'base->' + search_tgt_endp)
                 reqd_kind = rp.reqd.symbol.kind
-                pr.write('other = get_%s_edges%s(%s%s, %s);'
-                         % (search_dir,
+                pr.write('%s_iter = get_%s_edge_iterator%s(%s%s, %s);'
+                         % (search_dir, search_dir,
                             '' if search_tgt is None else '_to_target',
                             search_src,
                             '' if search_tgt is None else (', ' + search_tgt),
                             reqd_kind))
-                pr.write('for (; other != NULL; other = next_%s_edge(other)) {'
-                         % search_dir)
+                pr.write('while ((other = next_%s_edge(%s_iter)) != NULL) {'
+                         % (search_dir, search_dir))
                 if rp.must_check_for_common_index():
                     pr.write('if (base->index == other->index) {')
                     pr.write(add_edge_stmt)
@@ -1022,6 +1025,8 @@ def parse(grammar_in, code_out, terminals_out):
     pr.write('std::list<Derivation> all_derivations(Edge *e) {')
     pr.write('Edge *l, *r;')
     pr.write('std::list<Derivation> derivs;')
+    pr.write('OutEdgeIterator *l_out_iter, *r_out_iter;')
+    pr.write('InEdgeIterator *l_in_iter;')
     pr.write('switch (e->kind) {')
     for e_symbol in grammar.prods:
         pr.write('case %s: /* %s */' % (e_symbol.kind, e_symbol))
@@ -1036,26 +1041,28 @@ def parse(grammar_in, code_out, terminals_out):
             out_dir = p.outer_search_direction()
             out_src = p.outer_search_source()
             out_tgt = p.outer_search_target()
-            pr.write('l = get_%s_edges%s(%s%s, %s);'
-                     % (out_dir,
+            pr.write('l_%s_iter = get_%s_edge_iterator%s(%s%s, %s);'
+                     % (out_dir, out_dir,
                         '_to_target' if out_tgt is not None else '',
                         out_src,
                         (', ' + out_tgt) if out_tgt is not None else '',
                         p.left.symbol.kind))
-            pr.write('for (; l != NULL; l = next_%s_edge(l)) {' % out_dir)
+            pr.write('while ((l = next_%s_edge(l_%s_iter)) != NULL) {'
+                     % (out_dir, out_dir))
             out_cond = p.outer_condition()
             if out_cond is not None:
                 pr.write('if (%s) {' % out_cond)
-            if p.right is None:
-                # single production
+            if p.right is None or p.parallel:
+                # single or parallel production
                 pr.write('derivs.push_back(derivation_single(l, %s));'
                          % util.to_c_bool(p.left.reversed))
             else:
                 # double production
-                pr.write('r = get_out_edges_to_target(%s, %s, %s);'
-                         % (p.inner_search_source(), p.inner_search_target(),
-                            p.right.symbol.kind))
-                pr.write('for (; r != NULL; r = next_out_edge(r)) {')
+                pr.write('r_out_iter = get_out_edge_iterator_to_target' +
+                         ('(%s, %s, %s);' % (p.inner_search_source(),
+                                             p.inner_search_target(),
+                                             p.right.symbol.kind)))
+                pr.write('while ((r = next_out_edge(r_out_iter)) != NULL) {')
                 in_cond = p.inner_condition()
                 if in_cond is not None:
                     pr.write('if (%s) {' % in_cond)

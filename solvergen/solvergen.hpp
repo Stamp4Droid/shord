@@ -161,10 +161,6 @@ typedef struct Edge {
 
 /**
  * A hashtable-backed set of Edge%s, indexed by target Node.
- *
- * There can be up to one live iterator per OutEdgeSet at any point in time. An
- * OutEdgeSet cannot be modified while there exists a live iterator over it;
- * the iterator must first be advanced to the end of the set.
  */
 typedef struct {
     /**
@@ -176,29 +172,57 @@ typedef struct {
      */
     unsigned int num_buckets;
     /**
+     * The number of OutEdgeIterator%s that are currently live on this
+     * OutEdgeSet.
+     *
+     * An OutEdgeSet cannot be modified while there exists a live iterator over
+     * it; the iterator must first be advanced to the end of the set.
+     */
+    unsigned int live_iters;
+    /**
      * The actual collection of Edge%s in this OutEdgeSet. Implemented as a
      * hashtable, with unordered linked lists for collision handling.
      */
     Edge **table;
-    /**
-     * The bucket that the live iterator is currently on. Is equal to
-     * OutEdgeSet::num_buckets if no live iterator exists over this OutEdgeSet.
-     */
-    unsigned int iter_bucket;
-    /**
-     * When set to a value different from @e NODE_NONE, the live iterator will
-     * only return Edge%s targeting that Node. Is equal to @e NODE_NONE if the
-     * current iterator is not constrained to a specific target, or if no live
-     * iterator exists over this OutEdgeSet.
-     */
-    NODE_REF iter_tgt_node;
-    /**
-     * The Edge in the overflow list of OutEdgeSet::iter_bucket that the live
-     * iterator is currently on. Is @e NULL if no live iterator exists over
-     * this OutEdgeSet.
-     */
-    Edge *iter_list_ptr;
 } OutEdgeSet;
+
+/**
+ * An iterator over the set of outgoing Edge%s of a Node.
+ */
+typedef struct {
+    /**
+     * The OutEdgeSet that we are iterating on.
+     */
+    OutEdgeSet *set;
+    /**
+     * The bucket of OutEdgeIterator::set that this OutEdgeIterator is
+     * currently on.
+     */
+    unsigned int bucket;
+    /**
+     * When set to a value different from @e NODE_NONE, the iterator will only
+     * return Edge%s targeting that Node.
+     */
+    NODE_REF tgt_node;
+    /**
+     * The Edge in the overflow list of OutEdgeIterator::set that we are
+     * currently on.
+     */
+    Edge *list_ptr;
+} OutEdgeIterator;
+
+/**
+ * An iterator over the set of incoming Edge%s of a Node.
+ *
+ * Incoming Edge%s are stored in linked lists, so we only need to record our
+ * position in the list.
+ */
+typedef struct {
+    /**
+     * The Edge that this InEdgeIterator is currenly on.
+     */
+    Edge *curr_edge;
+} InEdgeIterator;
 
 /**
  * A node of the input graph.
@@ -232,7 +256,9 @@ typedef struct {
     Edge *tail;
 } EdgeWorklist;
 
-// possible way that we could have produced an edge
+/**
+ * Structure describing a possible way to produce an Edge.
+ */
 typedef struct {
     Edge *left_edge;
     Edge *right_edge;
@@ -473,11 +499,13 @@ typedef unsigned long COUNTER;
 
 void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	      Edge *l_edge, bool l_rev, Edge *r_edge, bool r_rev);
-Edge *get_out_edges(NODE_REF from, EDGE_KIND kind);
-Edge *get_out_edges_to_target(NODE_REF from, NODE_REF to, EDGE_KIND kind);
-Edge *next_out_edge(Edge *e);
-Edge *get_in_edges(NODE_REF to, EDGE_KIND kind);
-Edge *next_in_edge(Edge *e);
+
+OutEdgeIterator *get_out_edge_iterator(NODE_REF from, EDGE_KIND kind);
+OutEdgeIterator *get_out_edge_iterator_to_target(NODE_REF from, NODE_REF to,
+						 EDGE_KIND kind);
+Edge *next_out_edge(OutEdgeIterator *iter);
+InEdgeIterator *get_in_edge_iterator(NODE_REF to, EDGE_KIND kind);
+Edge *next_in_edge(InEdgeIterator *iter);
 
 Derivation derivation_empty();
 Derivation derivation_single(Edge *e, bool reverse);

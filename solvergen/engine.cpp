@@ -539,115 +539,187 @@ unsigned int out_edge_set_get_bucket(NODE_REF key, unsigned int num_buckets) {
     return key & (num_buckets - 1);
 }
 
-/* EDGE SET ITERATOR OPERATIONS ============================================ */
+/* OUTGOING EDGE ITERATOR HANDLING ========================================= */
 
 /**
- * Check whether an OutEdgeSet currently has a live iterator over it.
+ * Create an OutEdgeIterator with the given attributes.
  */
-bool has_live_iterator(OutEdgeSet *set) {
-    if (set->iter_bucket < set->num_buckets) {
-	assert(set->iter_list_ptr != NULL);
-	return true;
-    }
-    assert(set->iter_bucket == set->num_buckets);
-    assert(set->iter_tgt_node == NODE_NONE);
-    assert(set->iter_list_ptr == NULL);
-    return false;
+OutEdgeIterator* out_edge_iterator_alloc(OutEdgeSet *set, NODE_REF tgt_node) {
+    OutEdgeIterator *iter = STRICT_ALLOC(1, OutEdgeIterator);
+    unsigned int bucket = (tgt_node == NODE_NONE) ? 0
+	: out_edge_set_get_bucket(tgt_node, set->num_buckets);
+    iter->set = set;
+    iter->bucket = bucket;
+    iter->tgt_node = tgt_node;
+    iter->list_ptr = set->table[bucket];
+    (set->live_iters)++;
+    return iter;
 }
 
 /**
- * Advance the internal iterator of @a set to the first Edge residing at or
- * after @a bucket. If no such Edge exists, advance the iterator past the end
- * of the set. Only applies for unconstrained iterators.
- *
- * @return The Edge at the iterator's new position, or @e NULL if there are no
- * such Edge%s.
+ * Free @e iter, and update the live iterator count on @a iter<!-- -->'s
+ * OutEdgeIterator::set. This function should not be used directly by client
+ * code.
  */
-Edge *out_edge_set_iterator_move_to(OutEdgeSet *set, unsigned int bucket) {
+void out_edge_iterator_free(OutEdgeIterator *iter) {
+    OutEdgeSet *set = iter->set;
+    assert(set->live_iters > 0);
+    (set->live_iters)--;
+    STRICT_FREE(iter, 1);
+}
+
+/**
+ * Return an iterator over the entire set of outgoing Edge%s of @Kind @a kind,
+ * for source Node @a from. Use next_out_edge() to advance the iterator.
+ */
+OutEdgeIterator *get_out_edge_iterator(NODE_REF from, EDGE_KIND kind) {
+    OutEdgeSet *set = nodes[from].out[kind];
+    if (set == NULL) {
+	return NULL;
+    }
+    return out_edge_iterator_alloc(set, NODE_NONE);
+}
+
+/**
+ * Return an iterator over the set of Edge%s of @Kind @a kind originating from
+ * Node @a from and targeting Node @a to. Use next_out_edge() to advance the
+ * iterator.
+ */
+OutEdgeIterator *get_out_edge_iterator_to_target(NODE_REF from, NODE_REF to,
+						 EDGE_KIND kind) {
+    OutEdgeSet *set = nodes[from].out[kind];
+    if (set == NULL) {
+	return NULL;
+    }
+    return out_edge_iterator_alloc(set, to);
+}
+
+/**
+ * Check whether an OutEdgeSet currently has one or more live OutEdgeIterator%s
+ * on it.
+ */
+constexpr bool has_live_iterator(OutEdgeSet *set) {
+    return set->live_iters > 0;
+}
+
+/**
+ * Advance @a iter to the first Edge residing at or after @a bucket in
+ * @a iter's OutEdgeIterator::set. If no such Edge exists, @a iter is
+ * deallocated (and thus should not be reused). Only applies for unconstrained
+ * OutEdgeIterator%s.
+ *
+ * @return The Edge at @e iter<!-- -->'s new position, or @e NULL if there are
+ * no such Edge%s, in which case @a iter is now invalid.
+ */
+Edge *out_edge_iterator_advance_bucket(OutEdgeIterator *iter) {
+    assert(iter->tgt_node == NODE_NONE);
+    const OutEdgeSet *set = iter->set;
+    unsigned int bucket = iter->bucket + 1;
     assert(bucket <= set->num_buckets);
-    assert(set->iter_tgt_node == NODE_NONE);
-    Edge *list_ptr = NULL;
     for (; bucket < set->num_buckets; bucket++) {
-	list_ptr = set->table[bucket];
-	if (list_ptr != NULL) {
-	    break;
+	Edge *e = set->table[bucket];
+	if (e != NULL) {
+	    iter->bucket = bucket;
+	    iter->list_ptr = e->out_next;
+	    return e;
 	}
     }
-    set->iter_bucket = bucket;
-    set->iter_list_ptr = list_ptr;
-    return list_ptr;
+    // We've reached the end of the table without finding a non-empty bucket.
+    out_edge_iterator_free(iter);
+    return NULL;
 }
 
 /**
- * Initialize an unconstrained iterator over @a set. The iterator is set to
- * point to the first element of @a set.
+ * Advance @a iter to the next outgoing Edge in the iterated Node. If no such
+ * Edge exists, @a iter is deallocated (and thus should not be reused).
  *
- * There can't already be a live iterator over @a set.
- *
- * @return The Edge at the iterator's new position, or @e NULL if @a set is
- * empty.
+ * @return The Edge at @e iter<!-- -->'s new position, or @e NULL if there are
+ * no such Edge%s, in which case @a iter is now invalid.
  */
-Edge *out_edge_set_first(OutEdgeSet *set) {
-    assert(!has_live_iterator(set));
-    // Leave set->iter_tgt_node to NODE_NONE.
-    return out_edge_set_iterator_move_to(set, 0);
-}
+Edge *next_out_edge(OutEdgeIterator *iter) {
+    if (iter == NULL) {
+	// The iterator returned for an empty set is NULL.
+	return NULL;
+    }
 
-/**
- * Initialize a constrained iterator over @a set. The iterator is set to
- * point to the first Edge in @a set that targets @a target.
- *
- * There can't already be a live iterator over @a set.
- *
- * @return The Edge at the iterator's new position, or @e NULL if there are no
- * such Edge%s.
- */
-Edge *out_edge_set_first_to_target(OutEdgeSet *set, NODE_REF target) {
-    assert(!has_live_iterator(set));
-    const unsigned int bucket =
-	out_edge_set_get_bucket(target, set->num_buckets);
-    Edge *e = set->table[bucket];
-    while (e != NULL && e->to != target) {
+    const NODE_REF tgt_node = iter->tgt_node;
+    const bool constrained = (tgt_node != NODE_NONE);
+    Edge *e = iter->list_ptr;
+    // If the iterator is constrained to a specific target node, iterate until
+    // the end of the bucket, or the first instance of an Edge with the desired
+    // target.
+    while (constrained && e != NULL && e->to != tgt_node) {
 	e = e->out_next;
     }
-    if (e != NULL) {
-	set->iter_bucket = bucket;
-	set->iter_tgt_node = target;
-	set->iter_list_ptr = e;
+
+    if (e == NULL) {
+	// We've reached the end of the current overflow list without finding
+	// an acceptable Edge.
+	if (constrained) {
+	    // We don't need to search any other bucket (the current bucket is
+	    // the only one that contains Edges to that target), so we
+	    // immediatelly invalidate the iterator.
+	    out_edge_iterator_free(iter);
+	    return NULL;
+	}
+	// Continue searching on the following buckets.
+	return out_edge_iterator_advance_bucket(iter);
     }
-    // If there's no edge with the specific target, don't even initialize the
-    // iterator.
+
+    // We are currently on an acceptable Edge, return it and move the iterator
+    // to the next Edge.
+    iter->list_ptr = e->out_next;
     return e;
 }
 
+/* INCOMING EDGE ITERATOR HANDLING ========================================= */
+
 /**
- * Advance the internal iterator of @a set to the next Edge.
- *
- * @return The Edge at the iterator's new position, or @e NULL if there are no
- * more Edge%s.
+ * Allocate space for a new InEdgeIterator. The iterator is returned in an
+ * invalid state, therefore this function should not be used directly by client
+ * code.
  */
-Edge *out_edge_set_next(OutEdgeSet *set) {
-    assert(has_live_iterator(set));
-    const bool constrained = (set->iter_tgt_node != NODE_NONE);
-    Edge *e = set->iter_list_ptr;
-    do {
-	// If the iterator is constrained to a specific target node, iterate
-	// until the end of the bucket, or the first instance of an Edge with
-	// the desired target.
-	e = e->out_next;
-    } while (constrained && e != NULL && e->to != set->iter_tgt_node);
+InEdgeIterator *in_edge_iterator_alloc() {
+    InEdgeIterator *iter = STRICT_ALLOC(1, InEdgeIterator);
+    iter->curr_edge = NULL;
+    return iter;
+}
+
+/**
+ * Free the memory used by @a iter.  This function should not be used directly
+ * by client code.
+ */
+void in_edge_iterator_free(InEdgeIterator *iter) {
+    STRICT_FREE(iter, 1);
+}
+
+/**
+ * Return an iterator over the set of incoming Edge%s of @Kind @a kind, for
+ * target Node @a to. Use next_in_edge() to advance the iterator.
+ */
+InEdgeIterator *get_in_edge_iterator(NODE_REF to, EDGE_KIND kind) {
+    InEdgeIterator *iter = in_edge_iterator_alloc();
+    iter->curr_edge = nodes[to].in[kind];
+    return iter;
+}
+
+/**
+ * Advance @a iter to the next incoming Edge on the iterated Node. If no such
+ * Edge exists, @a iter is deallocated (and thus should not be reused).
+ *
+ * @return The Edge at @e iter<!-- -->'s previous position, or @e NULL if
+ * @e iter has reached the end of the linked list, in which case @a iter is now
+ * invalid.
+ */
+Edge *next_in_edge(InEdgeIterator *iter) {
+    Edge *e = iter->curr_edge;
     if (e == NULL) {
-	// We've reached the end of the current bucket. If we're constrained to
-	// a specific target node, then we don't need to search any other
-	// bucket (the current bucket is the only one that contains Edges to
-	// that target), so we immediatelly invalidate the iterator.
-	unsigned int next_bucket =
-	    constrained ? set->num_buckets : set->iter_bucket + 1;
-	// Also erase the constraint, if any.
-	set->iter_tgt_node = NODE_NONE;
-	return out_edge_set_iterator_move_to(set, next_bucket);
+	in_edge_iterator_free(iter);
+    } else {
+	// The incoming Edge%s are stored in linked lists, so we simply move
+	// forward in the list.
+	iter->curr_edge = e->in_next;
     }
-    set->iter_list_ptr = e;
     return e;
 }
 
@@ -661,10 +733,8 @@ OutEdgeSet *out_edge_set_new() {
     OutEdgeSet *set = STRICT_ALLOC(1, OutEdgeSet);
     set->size = 0;
     set->num_buckets = OUT_EDGE_SET_INIT_NUM_BUCKETS;
+    set->live_iters = 0;
     set->table = out_edge_table_alloc(set->num_buckets);
-    set->iter_bucket = set->num_buckets;
-    set->iter_tgt_node = NODE_NONE;
-    set->iter_list_ptr = NULL;
     return set;
 }
 
@@ -680,23 +750,21 @@ void out_edge_set_grow(OutEdgeSet *set) {
        shift instead of multiplication. */
     unsigned int new_num_buckets = set->num_buckets << 1;
     Edge **new_table = out_edge_table_alloc(new_num_buckets);
-    Edge *e = out_edge_set_first(set);
-    do {
-	/* UGLY: The pointer to the next element in the overflow list,
-	   'out_next', is part of the Edge struct, so when we transfer the Edge
-	   to the new table, we invalidate the structure of the old table. By
-	   skipping over an element before we transfer it, we make sure the
-	   iterator won't have trouble traversing the old table. */
-	Edge *temp = e;
-	e = out_edge_set_next(set);
+    OutEdgeIterator *iter = out_edge_iterator_alloc(set, NODE_NONE);
+    Edge *e;
+    while ((e = next_out_edge(iter)) != NULL) {
+	// CAUTION: The pointer to the next element in the overflow list,
+	// 'out_next', is part of the Edge struct, so when we transfer an Edge
+	// to a new table, we invalidate the structure of the old one. This
+	// code relies on the behavior OutEdgeIterator: the only way to get to
+	// the next Edge is to advance the iterator past that Edge.
 	unsigned int new_bucket =
-	    out_edge_set_get_bucket(temp->to, new_num_buckets);
-	out_edge_table_add(new_table, new_bucket, temp);
-    } while (e != NULL);
+	    out_edge_set_get_bucket(e->to, new_num_buckets);
+	out_edge_table_add(new_table, new_bucket, e);
+    }
     STRICT_FREE(set->table, set->num_buckets);
     set->num_buckets = new_num_buckets;
     set->table = new_table;
-    set->iter_bucket = new_num_buckets;
 }
 
 /**
@@ -767,63 +835,6 @@ void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	graph_add(e);
 	worklist_insert(e);
     }
-}
-
-/**
- * Return an iterator over the entire set of outgoing Edge%s of @Kind @a kind,
- * for source Node @a from. Use next_out_edge() to advance the iterator.
- * Returns @e NULL in the case of the empty set.
- */
-Edge *get_out_edges(NODE_REF from, EDGE_KIND kind) {
-    OutEdgeSet *set = nodes[from].out[kind];
-    if (set == NULL) {
-	return NULL;
-    }
-    return out_edge_set_first(set);
-}
-
-/**
- * Return an iterator over the set of Edge%s of @Kind @a kind originating from
- * Node @a from and targeting Node @a target. Use next_out_edge() to advance
- * the iterator. Returns @e NULL if there are no such Edge%s.
- */
-Edge *get_out_edges_to_target(NODE_REF from, NODE_REF to, EDGE_KIND kind) {
-    OutEdgeSet *set = nodes[from].out[kind];
-    if (set == NULL) {
-	return NULL;
-    }
-    return out_edge_set_first_to_target(set, to);
-}
-
-/**
- * Advance an iterator returned by get_out_edges(). Returns @e NULL when we
- * reach the end of the iteration range.
- */
-Edge *next_out_edge(Edge *e) {
-    OutEdgeSet *set = nodes[e->from].out[e->kind];
-    assert(set != NULL);
-    return out_edge_set_next(set);
-}
-
-/**
- * Return an iterator over the set of incoming Edge%s of @Kind @a kind, for
- * target Node @a to. Use next_in_edge() to advance the iterator. Returns
- * @e NULL in the case of the empty set.
- */
-Edge *get_in_edges(NODE_REF to, EDGE_KIND kind) {
-    /* The incoming Edge%s are stored in linked lists, so we simply return
-       the head of the list. */
-    return nodes[to].in[kind];
-}
-
-/**
- * Advance an iterator returned by get_in_edges(). Returns @e NULL when we reach
- * the end of the set.
- */
-Edge *next_in_edge(Edge *e) {
-    /* The incoming Edge%s are stored in linked lists, so we simply move
-       forward in the list. */
-    return e->in_next;
 }
 
 /* INPUT & OUTPUT ========================================================== */
@@ -981,8 +992,9 @@ void print_results() {
 	    const char *src_name = node2name(n);
 	    /* TODO: Iterate over in_edges, so we avoid paying the overhead of
 	       traversing the out_edges hashtable. */
-	    Edge *e = get_out_edges(n, k);
-	    for (; e != NULL; e = next_out_edge(e)) {
+	    OutEdgeIterator *iter = get_out_edge_iterator(n, k);
+	    Edge *e;
+	    while ((e = next_out_edge(iter)) != NULL) {
 		const char *tgt_name = node2name(e->to);
 		if (parametric) {
 		    char idx_buf[32];
@@ -1366,6 +1378,7 @@ std::list<PartialPath*> recover_paths(Step *top_step,
     while (paths_found < num_paths && !queue.empty()) {
 	PartialPath *p = queue.top();
 	queue.pop();
+
 	if (partial_path_is_complete(p)) {
 	    // p is a complete path for the input edge, and it should be the
 	    // shortest remaining one.
@@ -1493,12 +1506,9 @@ void print_paths_for_kind(EDGE_KIND k, unsigned int num_paths) {
 
     for (NODE_REF n = 0; n < num_nodes(); n++) {
 	const char *tgt_name = node2name(n);
-	// HACK: The reason we're using incoming iterators is because we'll be
-	// iterating on the OutEdgeSet inside the loop body, and the current
-	// implementation of OutEdgeSet iterators allows only a single
-	// live iterator per node and kind.
-	Edge *e = get_in_edges(n, k);
-	for (; e != NULL; e = next_in_edge(e)) {
+	InEdgeIterator *iter = get_in_edge_iterator(n, k);
+	Edge *e;
+	while ((e = next_in_edge(iter)) != NULL) {
 	    const char *src_name = node2name(e->from);
 	    // TODO: Quote input strings before printing to XML.
 	    fprintf(f, "<edge from='%s' to='%s'>\n", src_name, tgt_name);
@@ -1559,8 +1569,9 @@ void print_edge_counts(bool terminal) {
 	DECL_COUNTER(edge_count, 0);
 	DECL_COUNTER(index_count, 0);
 	for (NODE_REF n = 0; n < num_nodes(); n++) {
-	    Edge *e = get_in_edges(n, k);
-	    for (; e != NULL; e = next_in_edge(e)) {
+	    InEdgeIterator *iter = get_in_edge_iterator(n, k);
+	    Edge *e;
+	    while ((e = next_in_edge(iter)) != NULL) {
 		edge_count++;
 		total_edge_count++;
 		if (parametric) {

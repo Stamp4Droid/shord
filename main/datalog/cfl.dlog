@@ -78,7 +78,9 @@ ArgArgFlow(m:M,z0:Z,z1:Z)     input
 AssignCtxt(c:C,v:V,u:V)        output # v = u in context c
 AllocCtxt(c:C,v:V,o:C)	       output # v is the lhs of the new stmt h in context c
 LoadCtxt(c:C,y:V,x:V,f:F)      output # y = x.f in context c
+ArrLoadCtxt(c:C,y:V,x:V)       output # y = x[*] in context c
 StoreCtxt(c:C,u:V,f:F,v:V)     output # u.f = v in context c
+ArrStoreCtxt(c:C,u:V,v:V)      output # u[*] = v in context c
 LoadStatCtxt(c:C,y:V,f:F)      output # y = f in context c
 StoreStatCtxt(c:C,f:F,v:V)     output # f = v in context c
 AssignArgCtxt(c:C,u:V,d:C,v:V) output # u is the formal parameter in context c, v is actual arg in context d
@@ -87,7 +89,9 @@ AssignRetCtxt(c:C,u:V,d:C,v:V) output # u is the lhs at callsite in context c, v
 # primitive & cross flows
 AssignPrimCtxt(c:C,v:U,u:U)        output # v = u in context c
 LoadPrimCtxt(c:C,y:U,x:V,f:F)      output # y = x.f in context c
+ArrLoadPrimCtxt(c:C,y:U,x:V)       output # y = x[*] in context c
 StorePrimCtxt(c:C,u:V,f:F,v:U)     output # u.f = v in context c
+ArrStorePrimCtxt(c:C,u:V,v:U)      output # u[*] = v in context c
 LoadStatPrimCtxt(c:C,y:U,f:F)      output # y = f in context c
 StoreStatPrimCtxt(c:C,f:F,v:U)     output # f = v in context c
 AssignArgPrimCtxt(c:C,u:U,d:C,v:U) output # u is the formal parameter in context c, v is actual arg in context d
@@ -98,6 +102,9 @@ VTCtxt(c:C,v:V,t:T) output
 OTFilter(o:C,t:T)   output
 
 # annotations
+SrcLabelCtxt(c:C,l:L)  output
+SinkLabelCtxt(c:C,l:L) output
+
 SrcArgFlowCtxt(c:C,l:L,v:V)     output
 SinklArgFlowCtxt(c:C,l:L,v:V)	output
 SrcRetFlowCtxt(c:C,l:L,v:V)     output
@@ -152,7 +159,9 @@ phAlloc(v:V,c:C)  output
 AssignCtxt(c,v,u)          :- Assign(v,u), MV(m,v), CM(c,m).
 AllocCtxt(c,v,o)           :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
 LoadCtxt(c,y,x,f)          :- Load(y,x,f), MV(m,y), CM(c,m).
+ArrLoadCtxt(c,y,x)         :- LoadCtxt(c,y,x,0).
 StoreCtxt(c,u,f,v)         :- Store(u,f,v), MV(m,v), CM(c,m).
+ArrStoreCtxt(c,u,v)        :- StoreCtxt(c,u,0,v).
 LoadStatCtxt(c,y,f)        :- LoadStat(y,f), MV(m,y), CM(c,m).
 StoreStatCtxt(c,f,v)       :- StoreStat(f,v), MV(m,v), CM(c,m).
 AssignArgCtxt(d,u,c,v)     :- param(u,v,i), MV(m,v), CM(c,m), CC(c,d), CI(d,i).
@@ -160,7 +169,9 @@ AssignRetCtxt(c,u,d,v)     :- return(u,v,i), MV(m,u), CM(c,m), CC(c,d), CI(d,i).
 
 AssignPrimCtxt(c,v,u)      :- AssignPrim(v,u), MU(m,v), CM(c,m).
 LoadPrimCtxt(c,y,x,f)      :- LoadPrim(y,x,f), MV(m,x), CM(c,m).
+ArrLoadPrimCtxt(c,y,x)     :- LoadPrimCtxt(c,y,x,0).
 StorePrimCtxt(c,u,f,v)     :- StorePrim(u,f,v), MV(m,u), CM(c,m).
+ArrStorePrimCtxt(c,u,v)    :- StorePrimCtxt(c,u,0,v).
 LoadStatPrimCtxt(c,y,f)    :- LoadStatPrim(y,f), MU(m,y), CM(c,m).
 StoreStatPrimCtxt(c,f,v)   :- StoreStatPrim(f,v), MU(m,v), CM(c,m).
 AssignArgPrimCtxt(d,u,c,v) :- paramPrim(u,v,i), MU(m,v), CM(c,m), CC(c,d), CI(d,i).
@@ -171,6 +182,11 @@ VTCtxt(c,v,t) :- VT(v,t), CM(c,m), MV(m,v).
 OTFilter(o,t) :- CH(o,h), HTFilter(h,t).
 
 # annotations
+SrcLabelCtxt(c,l)  :- LabelRet(l,m),   CM(c,m), SrcLabel(l).
+SrcLabelCtxt(c,l)  :- LabelArg(l,m,_), CM(c,m), SrcLabel(l).
+SinkLabelCtxt(c,l) :- LabelRet(l,m),   CM(c,m), SinkLabel(l).
+SinkLabelCtxt(c,l) :- LabelArg(l,m,_), CM(c,m), SinkLabel(l).
+
 SrcArgFlowCtxt(c,l,v)       :- SrcLabel(l), LabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).
 SinklArgFlowCtxt(c,l,v)     :- SinkLabel(l), LabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).
 SrcRetFlowCtxt(c,l,v)       :- SrcLabel(l), LabelRet(l,m), MmethRet(m,_,v), CM(c,m).
