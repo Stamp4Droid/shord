@@ -20,6 +20,7 @@ import edu.stanford.droidrecord.logreader.events.info.ParamInfo;
 
 import stamp.droidrecord.DroidrecordProxy;
 import stamp.droidrecord.StampCallArgumentValueAnalysis;
+import stamp.analyses.ReachingDefsAnalysis;
 
 /**
  * Visitor class for instrumenting the app code befere they are fed to chord. 
@@ -95,41 +96,6 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 			visitMethod(method);
     }
 	
-	/* 
-	 * Reaching definition for each method body. Result will be put into tag
-	 * field for each statement. 
-	 * Currently cann't deal with e.g, setComponent(new ComponentName("pkgName", "className"))
-	 */
-	private void runReachingDef(Body body)
-	{
-		///reaching def begin.
-		UnitGraph g = new ExceptionalUnitGraph(body);
-		//support transitive closure.
-		LocalDefs sld = new IntraLocalDefs(g, new SimpleLiveLocals(g));
-		
-		Iterator it = body.getUnits().iterator();
-		while (it.hasNext()){
-			Stmt s = (Stmt)it.next();
-			//System.out.println("stmt: "+s);
-			Iterator usesIt = s.getUseBoxes().iterator();
-			while (usesIt.hasNext()){
-				ValueBox vbox = (ValueBox)usesIt.next();
-				if (vbox.getValue() instanceof Local) {
-					Local l = (Local)vbox.getValue();
-					//System.out.println("local: "+l);
-					Iterator<Unit> rDefsIt = sld.getDefsOfAt(l, s).iterator();
-					while (rDefsIt.hasNext()){
-						Stmt next = (Stmt)rDefsIt.next();
-						String info = l+" has reaching def: "+next.toString();
-						s.addTag(new LinkTag(info, next, body.getMethod().getDeclaringClass().getName(), 
-							     "Reaching Defs"));
-					}
-				}
-			}
-		}
-		//end 
-	}
-	
     private void visitMethod(SootMethod method)
     {
 		this.currentMethod = method;
@@ -140,7 +106,8 @@ public class InterComponentInstrument extends AnnotationInjector.Visitor
 		Body body = method.retrieveActiveBody();
 		
 		//run reaching def for each body, should combine with dynamic analysis result.
-        this.runReachingDef(body);
+        //this.runReachingDef(body);
+        ReachingDefsAnalysis.runReachingDef(body);
 		
 		Chain<Local> locals = body.getLocals();
 		Chain<Unit> units = body.getUnits();

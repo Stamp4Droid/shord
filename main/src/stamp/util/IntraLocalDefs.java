@@ -1,4 +1,4 @@
-package stamp.injectannot;
+package stamp.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;

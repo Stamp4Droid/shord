@@ -8,7 +8,7 @@ import soot.tagkit.Tag;
 import soot.toolkits.graph.*;
 import soot.toolkits.scalar.*;
 import java.util.*;
-import stamp.injectannot.IntraLocalDefs;
+import stamp.util.IntraLocalDefs;
 
 /*
  * An analysis that runs intra-proc reachingDef.
