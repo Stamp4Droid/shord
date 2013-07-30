@@ -8,6 +8,8 @@ import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import stamp.analyses.DomL;
 import stamp.analyses.JCFLSolverAnalysis;
+import shord.analyses.Ctxt;
+
 import chord.bddbddb.Rel.RelView;
 import chord.util.tuple.object.Trio;
 import chord.util.tuple.object.Pair;
@@ -43,6 +45,17 @@ public class SrcSinkFlow extends XMLReport {
 	//Note: As of 7.9.2013, the first block below is used for non-jcfl stuff. The second block is
 	//required instead for Osbert's JCFL flow stuff. They are mutually exclusive.
 
+
+	Iterable<Pair<Pair<String,Ctxt>,Pair<String,Ctxt>>> res = relCtxtFlows.getAry2ValTuples();
+	for(Pair<Pair<String,Ctxt>,Pair<String,Ctxt>> pair : res) {
+	    String source = pair.val0.val0;
+	    String sink = pair.val1.val0;
+	    newTuple()
+		.addValue(source)
+		.addValue(sink);
+	}
+
+	/*
 	// Get all source-to-sink flows, regardless of context. To achieve this, we
 	// project on the two context columns.
 	RelView flowsView = relCtxtFlows.getView();
@@ -68,6 +81,7 @@ public class SrcSinkFlow extends XMLReport {
 			.addValue(sink)
 			.addValue(Integer.toString(numFlows));
 	}
+	*/
 
 	/*
 	  Map<stamp.jcflsolver.Util.Pair<Integer, Integer>, Integer> src2sink = JCFLSolverAnalysis.getSrc2Sink();
@@ -81,8 +95,9 @@ public class SrcSinkFlow extends XMLReport {
 				.addValue(Integer.toString(entry.getValue()));
 		//}
 	}
-
-	relSrcSinkFlow.close();
     */
+
+	relCtxtFlows.close();
+
     }
 }

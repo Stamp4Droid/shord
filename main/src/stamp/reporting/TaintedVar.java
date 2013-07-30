@@ -8,6 +8,7 @@ import soot.SootClass;
 import soot.SootMethod;
 import shord.analyses.VarNode;
 import shord.analyses.LocalVarNode;
+import shord.analyses.Ctxt;
 import soot.Local;
 
 import java.util.*;
@@ -62,11 +63,11 @@ public class TaintedVar extends XMLReport
 		final ProgramRel relRef = (ProgramRel) ClassicProject.g().getTrgt("out_taintedRefVar");
 		relRef.load();
 
-		Iterable<Pair<String,VarNode>> res1 = relRef.getAry2ValTuples();
-		for(Pair<String,VarNode> pair : res1) {
+		Iterable<Pair<Pair<String,Ctxt>,VarNode>> res1 = relRef.getAry2ValTuples();
+		for(Pair<Pair<String,Ctxt>,VarNode> pair : res1) {
 			if (!(pair.val1 instanceof LocalVarNode)) continue;
 
-			String label = pair.val0;
+			String label = pair.val0.val0;
 			VarNode var = pair.val1;
 
 			Map<SootMethod,Set<VarNode>> taintedVars = labelToTaintedVars.get(label);
@@ -88,11 +89,11 @@ public class TaintedVar extends XMLReport
 		final ProgramRel relPrim = (ProgramRel) ClassicProject.g().getTrgt("out_taintedPrimVar");
 		relPrim.load();
 
-		Iterable<Pair<String,VarNode>> res2 = relPrim.getAry2ValTuples();
-		for(Pair<String,VarNode> pair : res2) {
+		Iterable<Pair<Pair<String,Ctxt>,VarNode>> res2 = relPrim.getAry2ValTuples();
+		for(Pair<Pair<String,Ctxt>,VarNode> pair : res2) {
 			if (!(pair.val1 instanceof LocalVarNode)) continue;
 
-			String label = pair.val0;
+			String label = pair.val0.val0;
 			VarNode var = pair.val1;
 
 			Map<SootMethod,Set<VarNode>> taintedVars = labelToTaintedVars.get(label);
