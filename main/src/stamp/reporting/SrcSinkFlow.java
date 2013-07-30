@@ -10,6 +10,8 @@ import stamp.analyses.DomL;
 import stamp.analyses.JCFLSolverAnalysis;
 import shord.analyses.Ctxt;
 
+import soot.Unit;
+
 import chord.bddbddb.Rel.RelView;
 import chord.util.tuple.object.Trio;
 import chord.util.tuple.object.Pair;
@@ -47,12 +49,30 @@ public class SrcSinkFlow extends XMLReport {
 
 
 	Iterable<Pair<Pair<String,Ctxt>,Pair<String,Ctxt>>> res = relCtxtFlows.getAry2ValTuples();
+	int count = 0;
 	for(Pair<Pair<String,Ctxt>,Pair<String,Ctxt>> pair : res) {
+		count++;
 	    String source = pair.val0.val0;
+		Ctxt sourceCtxt = pair.val0.val1;
 	    String sink = pair.val1.val0;
-	    newTuple()
-		.addValue(source)
-		.addValue(sink);
+		Ctxt sinkCtxt = pair.val1.val1;
+
+		if(Postmortem.processingSrc){
+			newTuple()
+				.addValue(source)
+				.addValue(sink);
+		} else {
+			Category flowCat = makeOrGetSubCat(source + " -> " + sink);
+			Category ctxtFlowCat = flowCat.makeOrGetSubCat("Flow "+count);
+			Tuple srcTuple = ctxtFlowCat.newTuple();//makeOrGetSubCat("context");
+			srcTuple.setAttr("source", source);
+			for(Unit unit : sourceCtxt.getElems())
+				srcTuple.addValue(unit.toString());
+			Tuple sinkTuple = ctxtFlowCat.newTuple();//makeOrGetSubCat(sink).makeOrGetSubCat("context");
+			sinkTuple.setAttr("sink", sink);
+			for(Unit unit : sinkCtxt.getElems())
+				sinkTuple.addValue(unit.toString());
+		}
 	}
 
 	/*
