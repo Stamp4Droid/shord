@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import shord.project.analyses.JavaAnalysis;
-import stamp.missingmodels.grammars.C11;
+import stamp.missingmodels.grammars.C12;
 import stamp.missingmodels.util.ConversionUtils;
 import stamp.missingmodels.util.FileManager;
 import stamp.missingmodels.util.FileManager.FileType;
@@ -44,7 +44,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		}
 	}
 	
-	private static Graph g = new C11();
+	private static Graph g = new C12();
 	private static StubLookup s = new StubLookup();
 	
 	public static Graph g() {
