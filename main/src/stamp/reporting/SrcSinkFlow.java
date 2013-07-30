@@ -1,11 +1,16 @@
 package stamp.reporting;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import stamp.analyses.DomL;
 import stamp.analyses.JCFLSolverAnalysis;
+import shord.analyses.Ctxt;
+
+import chord.bddbddb.Rel.RelView;
 import chord.util.tuple.object.Trio;
 import chord.util.tuple.object.Pair;
 
@@ -19,10 +24,10 @@ public class SrcSinkFlow extends XMLReport {
     }
 
     public void generate() {
-	final ProgramRel relSrcSinkFlow = (ProgramRel)ClassicProject.g().getTrgt("flow");
+	final ProgramRel relCtxtFlows = (ProgramRel)ClassicProject.g().getTrgt("flow");
 	//final ProgramRel relSrcSinkFlow = (ProgramRel)ClassicProject.g().getTrgt("JSrcSinkFlow");
 
-	relSrcSinkFlow.load();
+	relCtxtFlows.load();
 
 	/*
 	Iterable<Trio<String,String,Integer>> res = relSrcSinkFlow.getAry3ValTuples();
@@ -37,17 +42,46 @@ public class SrcSinkFlow extends XMLReport {
 	}
 	*/
 
-	//Note: As of 7.9.2013, the first block below is used for non-jcfl stuff. The second block is 
-	//required instead for Osbert's JCFL flow stuff. They are mutually exclusive. 
-		Iterable<Pair<String,String>> res = relSrcSinkFlow.getAry2ValTuples();
-		for(Pair<String,String> pair : res) {
-		    String source = pair.val0;
-		    String sink = pair.val1;
-		    newTuple()
-				.addValue(source)
-				.addValue(sink);
-			
+	//Note: As of 7.9.2013, the first block below is used for non-jcfl stuff. The second block is
+	//required instead for Osbert's JCFL flow stuff. They are mutually exclusive.
+
+
+	Iterable<Pair<Pair<String,Ctxt>,Pair<String,Ctxt>>> res = relCtxtFlows.getAry2ValTuples();
+	for(Pair<Pair<String,Ctxt>,Pair<String,Ctxt>> pair : res) {
+	    String source = pair.val0.val0;
+	    String sink = pair.val1.val0;
+	    newTuple()
+		.addValue(source)
+		.addValue(sink);
+	}
+
+	/*
+	// Get all source-to-sink flows, regardless of context. To achieve this, we
+	// project on the two context columns.
+	RelView flowsView = relCtxtFlows.getView();
+	flowsView.delete(2);
+	flowsView.delete(0);
+	Iterable<Pair<String,String>> flows = flowsView.getAry2ValTuples();
+	Set<Pair<String,String>> seen = new HashSet<Pair<String,String>>();
+	for (Pair<String,String> f : flows) {
+		// Projection doesn't actually remove duplicates, so we have to skip
+		// those manually.
+		if (!seen.add(f)) {
+			continue;
 		}
+	    String source = f.val0;
+	    String sink = f.val1;
+		// Collect all context-aware flows between two specific endpoints.
+		RelView ctxtFlowsSelection = relCtxtFlows.getView();
+		ctxtFlowsSelection.selectAndDelete(3, sink);
+		ctxtFlowsSelection.selectAndDelete(1, source);
+		int numFlows = ctxtFlowsSelection.size();
+	    newTuple()
+			.addValue(source)
+			.addValue(sink)
+			.addValue(Integer.toString(numFlows));
+	}
+	*/
 
 	/*
 	  Map<stamp.jcflsolver.Util.Pair<Integer, Integer>, Integer> src2sink = JCFLSolverAnalysis.getSrc2Sink();
@@ -61,8 +95,9 @@ public class SrcSinkFlow extends XMLReport {
 				.addValue(Integer.toString(entry.getValue()));
 		//}
 	}
-	
-	relSrcSinkFlow.close();
     */
+
+	relCtxtFlows.close();
+
     }
 }

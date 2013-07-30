@@ -10,9 +10,11 @@ import org.w3c.dom.*;
 import org.xml.sax.*;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.codec.binary.Base64;
+import org.json.simple.JSONValue;
 
 import edu.stanford.droidrecord.logreader.CoverageReport;
-import edu.stanford.droidrecord.logreader.analysis.CallArgumentValueAnalysis;
+import edu.stanford.droidrecord.logreader.analysis.CallValueAnalysis;
+import edu.stanford.droidrecord.logreader.analysis.CallValueAnalysis.CallValueResult;
 import edu.stanford.droidrecord.logreader.events.info.ParamInfo;
 import edu.stanford.droidrecord.logreader.events.info.MethodInfo;
 import stamp.droidrecordweb.DroidrecordProxyWeb;
@@ -163,73 +165,68 @@ public class SourceProcessor
         private DroidrecordProxyWeb droidrecord;
         private String methodSig;
         private int lineNum;
-        private String calleeMethodSig;
+        private String calleeMethodSubSig;
         
 		public InvocationExpressionBegin(int position, DroidrecordProxyWeb droidrecord,
-		                 String methodSig, int lineNum, String calleeMethodSig) {
+		                 String methodSig, int lineNum, String calleeMethodSubSig) {
 			super(position, -8);
             this.droidrecord = droidrecord;
 			this.methodSig = methodSig;
 			this.lineNum = lineNum;
-			this.calleeMethodSig = calleeMethodSig;
-		}
-		
-		private String escape(String s) {
-            s = s.replace("\\","\\\\");
-            s = s.replace("\"","\\\"");
-            s = s.replace("\'","\\\'");
-            return s;
+			this.calleeMethodSubSig = calleeMethodSubSig;
 		}
 
 	    @Override public String toString() {
-	        StringBuilder paramsData = new StringBuilder();
 	        String paramsDataStr = "";
             if(droidrecord.isAvailable() && methodSig != null) {
-                CallArgumentValueAnalysis cava = droidrecord.getCallArgumentValueAnalysis();
-                if(cava.isReady()) {
-                    List<List<ParamInfo>> params = cava.queryArgumentValues(calleeMethodSig, methodSig, lineNum);
-                    if(params.size() != 0) { 
-                        MethodInfo method = MethodInfo.parse(calleeMethodSig);
-                        paramsData.append("{");
-                        paramsData.append("\"methodName\":\"");
-                        paramsData.append(method.getName());
-                        paramsData.append("\",");
-                        paramsData.append("\"parameterTypes\":[");
-                        for(int i = 0; i < method.getArguments().size()-1; i++) {
-                            paramsData.append("\"");
-                            paramsData.append(method.getArguments().get(i));
-                            paramsData.append("\",");
-                        }
-                        if(method.getArguments().size() > 0) {
-                            String ptype = method.getArguments().get(method.getArguments().size()-1);
-                            if(!ptype.equals("")) {
-                                paramsData.append("\"");
-                                paramsData.append(ptype);
-                                paramsData.append("\"");
-                            }
-                        }
-                        paramsData.append("],");
-                        paramsData.append("\"parameterValues\":[");
-                        boolean addComa = false;
+                CallValueAnalysis cva = droidrecord.getCallValueAnalysis();
+                if(cva.isReady()) {
+                    List<CallValueResult> cinfo = 
+                        cva.queryCallInfo(calleeMethodSubSig, 
+                                          methodSig, lineNum);
+                    if(cinfo.size() != 0) {
+                        Map jsonObj = new LinkedHashMap();
+                        MethodInfo method = cinfo.get(0).getMethod();
+                        jsonObj.put("methodName", method.getName());
+                        jsonObj.put("parameterTypes", method.getArguments());
+                        LinkedList list = new LinkedList();
                         Set<String> seenParamChoices = new HashSet<String>();
-                        for(List<ParamInfo> l : params) {
-                            String jsonInvkParams = "[";
-                            for(int i = 0; i < l.size()-1; i++) {
-                                jsonInvkParams += "\"" + escape(l.get(i).toSimpleString()) + "\",";
+                        for(CallValueResult cvr : cinfo) {
+                            String jsonInvkParams = "";
+                            Map callMap = new LinkedHashMap();
+                            LinkedList paramList = new LinkedList();
+                            for(ParamInfo pi : cvr.getArguments()) {
+                                Map paramMap = new LinkedHashMap();
+                                paramMap.put("type", pi.getType());
+                                if(pi.isObjectLikeType()) {
+                                    paramMap.put("klass", pi.getKlass());
+                                    paramMap.put("id", pi.getId());
+                                } else {
+                                    paramMap.put("value", pi.getValue());
+                                }
+                                jsonInvkParams += pi.toSimpleString();
+                                paramList.add(paramMap);
                             }
-                            if(l.size() > 0) {
-                                jsonInvkParams += "\"" + escape(l.get(l.size()-1).toSimpleString()) + "\"";
+                            callMap.put("params",paramList);
+                            ParamInfo returnVal = cvr.getReturnValue();
+                            if(returnVal != null) {
+                                Map paramMap = new LinkedHashMap();
+                                paramMap.put("type", returnVal.getType());
+                                if(returnVal.isObjectLikeType()) {
+                                    paramMap.put("klass", returnVal.getKlass());
+                                    paramMap.put("id", returnVal.getId());
+                                } else {
+                                    paramMap.put("value", returnVal.getValue());
+                                }
+                                jsonInvkParams += returnVal.toSimpleString();
+                                callMap.put("returnValue", paramMap);
                             }
-                            jsonInvkParams += "]";
                             if(seenParamChoices.contains(jsonInvkParams)) continue;
-                            if(addComa) paramsData.append(",");
-                            addComa = true;
-                            paramsData.append(jsonInvkParams);
+                            list.add(callMap);
                             seenParamChoices.add(jsonInvkParams);
                         }
-                        paramsData.append("]");
-                        paramsData.append("}");
-                        paramsDataStr = paramsData.toString();
+                        jsonObj.put("calls", list);
+                        paramsDataStr = JSONValue.toJSONString(jsonObj);
                     }
                 }
             }
@@ -240,7 +237,7 @@ public class SourceProcessor
             }
 	        String entity = "<span class='invocationExpression' ";
 	        entity += "data-droidrecord-params='"+paramsDataStr;
-	        entity += "' data-droidrecord-callee='"+StringEscapeUtils.escapeHtml4(calleeMethodSig);
+	        entity += "' data-droidrecord-callee-sub='"+StringEscapeUtils.escapeHtml4(calleeMethodSubSig);
 	        entity += "' data-droidrecord-caller='"+StringEscapeUtils.escapeHtml4(methodSig);
 	        entity += "' data-droidrecord-line='"+lineNum;
 	        entity += "'>";
@@ -555,8 +552,8 @@ public class SourceProcessor
 				String chordSig = node.getAttribute("chordsig");
 				int invocationLineNum = Integer.valueOf(node.getAttribute("line"));
 				String methodSig = getContainingMethodForLine(invocationLineNum);
-				String calleeMethodSig = DroidrecordProxyWeb.chordToSootMethodSignature(chordSig);
-				insertions.add(new InvocationExpressionBegin(start, droidrecord, methodSig, invocationLineNum, calleeMethodSig));
+				String callMethodSubSig = DroidrecordProxyWeb.chordToSootMethodSubSignature(chordSig);
+				insertions.add(new InvocationExpressionBegin(start, droidrecord, methodSig, invocationLineNum, callMethodSubSig));
 				insertions.add(new PreInvocation(start+length, chordSig, filePath, invocationLineNum));
 				insertions.add(new InvocationExpressionEnd(start+length));
 			}

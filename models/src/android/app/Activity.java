@@ -117,4 +117,13 @@ public class Activity
 	    this.onCreateDialog(id);
 	}
 
+    public final void runOnUiThread(final java.lang.Runnable action) {
+		ApplicationDriver.getInstance().
+			registerCallback(new Callback(){
+					public void run() {
+						action.run();
+					}
+				});
+    }
+
 }

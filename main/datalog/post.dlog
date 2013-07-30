@@ -10,8 +10,9 @@
 .include "U.dom"
 .include "I.dom"
 .include "L.dom"
+.include "CL.dom"
 
-.bddvarorder Z0_M0_C0xC1_V0_U0_I0_L0
+.bddvarorder Z0_M0_C0xC1_V0_U0_I0_L0_CL0
 
 ## INPUT RELATIONS ============================================================
 
@@ -24,8 +25,8 @@ MmethArg(m:M,z:Z,v:V) input
 MmethPrimArg(m:M,z:Z,u:U) input
 
 # Flow information
-labelRef(c:C,v:V,l:L) input
-labelPrim(c:C,u:U,l:L) input
+labelRef(c:C,v:V,l:CL) input
+labelPrim(c:C,u:U,l:CL) input
 
 # Method annotations
 SrcLabel(l:L) input
@@ -43,9 +44,9 @@ Stub(m:M) input
 out_reachableM(m:M) output
 
 # Taint flow information
-out_taintedRefVar(l:L,v:V) output
-out_taintedPrimVar(l:L,v:U) output
-# flow(src:L,sink:L) will be used directly
+out_taintedRefVar(l:CL,v:V) output
+out_taintedPrimVar(l:CL,v:U) output
+# flow(src:CL,sink:CL) will be used directly
 
 # Annotations on reachable methods
 out_taintSrc(src:L,m:M) output
