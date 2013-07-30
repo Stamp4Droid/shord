@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import shord.project.analyses.JavaAnalysis;
-import stamp.missingmodels.grammars.E12;
+import stamp.missingmodels.grammars.C11;
 import stamp.missingmodels.util.ConversionUtils;
 import stamp.missingmodels.util.FileManager;
 import stamp.missingmodels.util.FileManager.FileType;
@@ -42,7 +42,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		}
 	}
 	
-	private static Graph g = new E12();
+	private static Graph g = new C11();
 	private static StubLookup s = new StubLookup();
 	
 	public static Graph g() {
@@ -52,12 +52,19 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 	public static StubLookup s() {
 	    return s;
 	}
+
+	public static void printRelCounts(Graph g) {
+		System.out.println("Printing final relation counts...");
+		for(int k=0; k<g.numKinds(); k++) {
+			System.out.println(g.kindToSymbol(k) + ": " + g.getEdges(k).size());
+		}
+	}
 	
 	@Override public void run() {
-		g = new E12();
-		s = new StubLookup();
 		fillTerminalEdges(g, s);
 		g.algo.process();
+
+		printRelCounts(g);
 
 		File outputDir = new File(System.getProperty("stamp.out.dir") + File.separator + "cfl");
 		File scratchDir = new File(System.getProperty("stamp.out.dir") + File.separator + "cfl");
