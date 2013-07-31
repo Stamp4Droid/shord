@@ -1,1 +1,1 @@
-l<%L>_<%D> v<%V>_<%C>:labelRef(%C,%V,%D,%L)
+l<%L> v<%V>_<%C>:labelRef(%C,%V,%L)

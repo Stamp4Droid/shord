@@ -14,13 +14,14 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Schema;
 import org.xml.sax.SAXException;
 
+import shord.analyses.Ctxt;
 import shord.analyses.DomC;
 import shord.analyses.DomF;
 import shord.analyses.DomV;
 import shord.analyses.DomU;
-import stamp.analyses.DomL;
+import stamp.analyses.DomCL;
 import stamp.util.DomMap;
-import stamp.util.Pair;
+import chord.util.tuple.object.Pair;
 import stamp.util.PropertyHelper;
 import stamp.util.StringHelper;
 
@@ -108,14 +109,14 @@ public class PathsAdapter {
 		switch (tag) {
 		case 'v':
 			Pair<Integer,Integer> vc = getTwoDomIndices(rawNode);
-			int v = vc.getX().intValue();
-			int c_v = vc.getY().intValue();
+			int v = vc.val0.intValue();
+			int c_v = vc.val1.intValue();
 			return new CtxtVarPoint(((DomC) doms.get("C")).get(c_v),
 									((DomV) doms.get("V")).get(v));
 		case 'u':
 			Pair<Integer,Integer> uc = getTwoDomIndices(rawNode);
-			int u = uc.getX().intValue();
-			int c_u = uc.getY().intValue();
+			int u = uc.val0.intValue();
+			int c_u = uc.val1.intValue();
 			return new CtxtVarPoint(((DomC) doms.get("C")).get(c_u),
 									((DomU) doms.get("U")).get(u));
 		case 'o':
@@ -125,11 +126,9 @@ public class PathsAdapter {
 			int f = getSingleDomIndex(rawNode);
 			return new StatFldPoint(((DomF) doms.get("F")).get(f));
 		case 'l':
-			Pair<Integer,Integer> lc = getTwoDomIndices(rawNode);
-			int l = lc.getX().intValue();
-			int c_l = lc.getY().intValue();
-			return new CtxtLabelPoint(((DomC) doms.get("C")).get(c_l),
-									  ((DomL) doms.get("L")).get(l));
+			int cl = getSingleDomIndex(rawNode);
+			Pair<String,Ctxt> ctxtLabel = ((DomCL) doms.get("CL")).get(cl);
+			return new CtxtLabelPoint(ctxtLabel.val1, ctxtLabel.val0);
 		default:
 			throw new RuntimeException("Invalid node name: " + rawNode);
 		}

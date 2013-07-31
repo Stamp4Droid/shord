@@ -1,1 +1,1 @@
-l<%SRC>_<%C> l<%SINK>_<%D>:flow(%C,%SRC,%D,%SINK)
+l<%SRC> l<%SINK>:flow(%SRC,%SINK)
