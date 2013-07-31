@@ -1,8 +1,5 @@
-package java.io;
-
-
-public class PrintStream {
-	
+public class PrintStream 
+{
 	@STAMP(flows = {@Flow(from="out",to="this")})
 	public  PrintStream(java.io.OutputStream out) { super(out);  }
 

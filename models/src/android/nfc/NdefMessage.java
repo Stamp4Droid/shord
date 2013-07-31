@@ -1,11 +1,6 @@
-package android.npc;
-
-public class NdefMessage {
-
+class NdefMessage 
+{
     @STAMP(flows={@Flow(from="data",to="this")})
-    public NdefMessage(byte[] data) {
-
-    }
-
+    public NdefMessage(byte[] data) {}
 }
 

@@ -1,8 +1,7 @@
-package java.io;
-
-
-class Writer {
-
+class Writer 
+{
+	@STAMP(flows = {@Flow(from="buf",to="!this")})
+	public abstract  void write(char[] buf, int offset, int count) throws java.io.IOException;
 
 	@STAMP(flows = {@Flow(from="buf",to="!this")})
     public void write(char[] buf) throws java.io.IOException {
