@@ -45,8 +45,8 @@ CC(c:C,d:C) input # there exists i s.t. c++[i] = d
 CCL(c:C,cl:CL) input 
 LCL(l:L,cl:CL) input
 
-SrcLabel(l:L)  input
-SinkLabel(l:L) input
+sinkCtxtLabel(l:CL) input
+srcCtxtLabel(l:CL) input
 
 LabelRet(l:L,m:M)             input
 LabelArg(l:L,m:M,z:Z)         input
@@ -69,9 +69,6 @@ flow(src:CL,sink:CL) output
 
 varLabel(v:V,l:L)
 varLabelPrim(v:U,l:L)
-
-sinkCtxtLabel(l:CL)
-srcCtxtLabel(l:CL)
 
 transferRefRef(u:V,v:V)
 transferPrimRef(u:U,v:V)
@@ -106,9 +103,6 @@ varLabel(v,l)     :- LabelRet(l,m), MmethRet(m,_,v).
 varLabel(v,l)     :- LabelArg(l,m,z), MmethArg(m,z,v).
 varLabelPrim(v,l) :- LabelRet(l,m), MmethPrimRet(m,_,v).
 varLabelPrim(v,l) :- LabelArg(l,m,z), MmethPrimArg(m,z,v).
-
-sinkCtxtLabel(cl) :- LCL(l,cl), SinkLabel(l).
-srcCtxtLabel(cl) :- LCL(l,cl), SrcLabel(l).
 
 transferRefRef(u,v)   :- ArgArgTransfer(m,z0,z1), MmethArg(m,z0,u), MmethArg(m,z1,v).
 transferRefPrim(u,v)  :- ArgArgTransfer(m,z0,z1), MmethArg(m,z0,u), MmethPrimArg(m,z1,v).
