@@ -9,6 +9,7 @@ import shord.project.analyses.ProgramRel;
 import stamp.analyses.DomL;
 import stamp.analyses.JCFLSolverAnalysis;
 import shord.analyses.Ctxt;
+import shord.program.Program;
 
 import soot.Unit;
 
@@ -67,11 +68,11 @@ public class SrcSinkFlow extends XMLReport {
 			Tuple srcTuple = ctxtFlowCat.newTuple();//makeOrGetSubCat("context");
 			srcTuple.setAttr("source", source);
 			for(Unit unit : sourceCtxt.getElems())
-				srcTuple.addValue(unit.toString());
+				srcTuple.addValue(Program.unitToString(unit));
 			Tuple sinkTuple = ctxtFlowCat.newTuple();//makeOrGetSubCat(sink).makeOrGetSubCat("context");
 			sinkTuple.setAttr("sink", sink);
 			for(Unit unit : sinkCtxt.getElems())
-				sinkTuple.addValue(unit.toString());
+				sinkTuple.addValue(Program.unitToString(unit));
 		}
 	}
 

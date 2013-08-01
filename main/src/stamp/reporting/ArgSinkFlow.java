@@ -23,7 +23,7 @@ public class ArgSinkFlow extends XMLReport
 			Category labelCat = makeOrGetSubCat(label);
 
 			SootMethod sinkMethod = pair.val1;
-			makeOrGetPkgCat(sinkMethod).newTuple();
+			labelCat.newTuple().addValue(sinkMethod);
 		}
 
 		rel.close();
