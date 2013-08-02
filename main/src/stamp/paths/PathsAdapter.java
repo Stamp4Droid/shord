@@ -111,14 +111,14 @@ public class PathsAdapter {
 		throws TranslationException{
 		List<Path> paths = new ArrayList<Path>();
 
-		for (stamp.paths.raw.Edge rawEdge : rawPaths.getEdge()) {
+		for (stamp.paths.raw.Edge rawEdge : rawPaths.getEdges()) {
 			Point start = rawNodeToPoint(rawEdge.getFrom());
 			Point end = rawNodeToPoint(rawEdge.getTo());
-			for (stamp.paths.raw.Path rawPath : rawEdge.getPath()) {
-				stamp.paths.raw.Step topRawStep = rawPath.getStep();
+			for (stamp.paths.raw.Path rawPath : rawEdge.getPaths()) {
+				stamp.paths.raw.Step topRawStep = rawPath.getTopStep();
 
 				List<Step> steps = new ArrayList<Step>();
-				for (stamp.paths.raw.Step s : topRawStep.getStep()) {
+				for (stamp.paths.raw.Step s : topRawStep.getSubSteps()) {
 					// The sub-steps of the top step should be completely flat.
 					assert(rawStepIsTerminal(s));
 					String tgtNode = s.isReverse() ? s.getFrom() : s.getTo();
@@ -139,16 +139,16 @@ public class PathsAdapter {
 
 	private void flattenRawPaths(stamp.paths.raw.Paths rawPaths,
 								 boolean fully) {
-		for (stamp.paths.raw.Edge rawEdge : rawPaths.getEdge()) {
-			for (stamp.paths.raw.Path rawPath : rawEdge.getPath()) {
-				stamp.paths.raw.Step topRawStep = rawPath.getStep();
+		for (stamp.paths.raw.Edge rawEdge : rawPaths.getEdges()) {
+			for (stamp.paths.raw.Path rawPath : rawEdge.getPaths()) {
+				stamp.paths.raw.Step topRawStep = rawPath.getTopStep();
 				flattenRawSubSteps(topRawStep, fully);
 			}
 		}
 	}
 
 	private void flattenRawSubSteps(stamp.paths.raw.Step step, boolean fully) {
-		List<stamp.paths.raw.Step> subSteps = step.getStep();
+		List<stamp.paths.raw.Step> subSteps = step.getSubSteps();
 		List<stamp.paths.raw.Step> flatSubSteps =
 			new ArrayList<stamp.paths.raw.Step>();
 
@@ -167,9 +167,9 @@ public class PathsAdapter {
 				if (ss.isReverse()) {
 					// If the step to skip was traversed in reverse, we need to
 					// reverse the order in which we record its sub-steps.
-					reverseRawStepsList(ss.getStep());
+					reverseRawStepsList(ss.getSubSteps());
 				}
-				flatSubSteps.addAll(ss.getStep());
+				flatSubSteps.addAll(ss.getSubSteps());
 			}
 		}
 
@@ -204,15 +204,15 @@ public class PathsAdapter {
 	private void translateNodeNames(stamp.paths.raw.Paths rawPaths,
 									boolean useShortNames)
 		throws TranslationException {
-		for (stamp.paths.raw.Edge rawEdge : rawPaths.getEdge()) {
+		for (stamp.paths.raw.Edge rawEdge : rawPaths.getEdges()) {
 			Point from = rawNodeToPoint(rawEdge.getFrom());
 			rawEdge.setFrom(useShortNames ? from.toShortString()
 							: from.toString());
 			Point to = rawNodeToPoint(rawEdge.getTo());
 			rawEdge.setTo(useShortNames ? to.toShortString() : to.toString());
 
-			for (stamp.paths.raw.Path rawPath : rawEdge.getPath()) {
-				stamp.paths.raw.Step topRawStep = rawPath.getStep();
+			for (stamp.paths.raw.Path rawPath : rawEdge.getPaths()) {
+				stamp.paths.raw.Step topRawStep = rawPath.getTopStep();
 				translateNodeNames(topRawStep, useShortNames);
 			}
 		}
@@ -229,7 +229,7 @@ public class PathsAdapter {
 		Point to = rawNodeToPoint(rawStep.getTo());
 		rawStep.setTo(useShortNames ? to.toShortString() : to.toString());
 
-		for (stamp.paths.raw.Step ss : rawStep.getStep()) {
+		for (stamp.paths.raw.Step ss : rawStep.getSubSteps()) {
 			translateNodeNames(ss, useShortNames);
 		}
 	}
