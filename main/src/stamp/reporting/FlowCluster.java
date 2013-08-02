@@ -4,11 +4,15 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collection;
+import java.util.List;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import shord.analyses.Ctxt;
 import shord.analyses.VarNode;
+
+import stamp.util.Partition;
 
 import chord.util.tuple.object.Trio;
 import chord.util.tuple.object.Pair;
@@ -20,6 +24,7 @@ public class FlowCluster
 {
 	private static final Map<Pair<String,Ctxt>,Set<Pair<VarNode,Ctxt>>> labelToBucket = new HashMap();
 	private static final Map<Pair<Pair<String,Ctxt>,Pair<String,Ctxt>>,Set<Pair<VarNode,Ctxt>>> flowToBucket = new HashMap();
+	private static final double threshhold = Double.parseDouble(System.getProperty("stamp.flowcluster.threshhold", "0.9"));
 
 	static void cluster()
 	{
@@ -29,14 +34,27 @@ public class FlowCluster
 		
 		Object[] flows = flowToBucket.keySet().toArray();
 		int numFlows = flows.length;
+
+		Partition<Integer> part = new Partition();
+		for(int i = 0; i < numFlows; i++){
+			part.makeSet(i);
+		}
+
 		for(int i = 0; i < numFlows; i++){
 			Pair<Pair<String,Ctxt>,Pair<String,Ctxt>> f1 = (Pair<Pair<String,Ctxt>,Pair<String,Ctxt>>) flows[i];
 			for(int j = i+1; j < numFlows; j++){
 				Pair<Pair<String,Ctxt>,Pair<String,Ctxt>> f2 = (Pair<Pair<String,Ctxt>,Pair<String,Ctxt>>) flows[j];
 				double ochiaiIndex = ochiai(flowToBucket.get(f1), flowToBucket.get(f2));
 				System.out.println("ochiai("+i+", "+j+") = "+ ochiaiIndex);
+				if(ochiaiIndex > threshhold){
+					part.union(part.find(i), part.find(j));
+				}
 			}
 		}
+
+		Collection<List<Integer>> clusters = part.allPartitions();
+		System.out.println("No. of flows = "+numFlows+". No. of clusters = "+clusters.size());
+
 		System.out.println("End clustering");
 	}
 
