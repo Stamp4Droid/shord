@@ -23,6 +23,16 @@ import soot.Unit;
 import stamp.paths.*;
 import stamp.srcmap.SourceInfo;
 
+/**
+ * Generates a an xml report that represents flows
+ * as callstacks of depth K given in the analysis.
+ * An attempt is made to (conservatively) link 
+ * contexts together so the full callstack is shown.
+ * Top-level methods that belong to the harness/framework
+ * are not included. 
+ *
+ * @author brycecr
+ */
 public class SrcSinkFlowViz extends XMLVizReport
 {
 	public SrcSinkFlowViz()
@@ -101,12 +111,20 @@ public class SrcSinkFlowViz extends XMLVizReport
 								Stmt stm  = (Stmt)elems[i];
 								SootMethod method = Program.containerMethod(stm);
 
-								String sourceFileName = (method == null) ? "" : SourceInfo.filePath(method.getDeclaringClass());
+								String methName = method.getName();
 								int methodLineNum = SourceInfo.methodLineNum(method);
 								if (methodLineNum < 0) {
 									methodLineNum = 0;
 								}
-								String methName = method.getName();
+
+								if (i < elems.length-1) {
+									stm = (Stmt)elems[i+1];
+									method = Program.containerMethod(stm);
+									methodLineNum = stmtLineNum(stm);
+								}
+
+								String sourceFileName = (method == null) ? "" : SourceInfo.filePath(method.getDeclaringClass());
+								
 
 								if (SourceInfo.isFrameworkClass(method.getDeclaringClass()) && c.equals(mc)) {
 									continue;
