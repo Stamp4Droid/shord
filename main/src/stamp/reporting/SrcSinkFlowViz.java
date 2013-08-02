@@ -111,6 +111,10 @@ public class SrcSinkFlowViz extends XMLVizReport
 								Stmt stm  = (Stmt)elems[i];
 								SootMethod method = Program.containerMethod(stm);
 
+								if (SourceInfo.isFrameworkClass(method.getDeclaringClass()) && c.equals(mc)) {
+									continue;
+								}
+
 								String methName = method.getName();
 								int methodLineNum = SourceInfo.methodLineNum(method);
 								if (methodLineNum < 0) {
@@ -120,15 +124,10 @@ public class SrcSinkFlowViz extends XMLVizReport
 								if (i < elems.length-1) {
 									stm = (Stmt)elems[i+1];
 									method = Program.containerMethod(stm);
-									methodLineNum = stmtLineNum(stm);
+									methodLineNum = SourceInfo.stmtLineNum(stm);
 								}
 
 								String sourceFileName = (method == null) ? "" : SourceInfo.filePath(method.getDeclaringClass());
-								
-
-								if (SourceInfo.isFrameworkClass(method.getDeclaringClass()) && c.equals(mc)) {
-									continue;
-								}
 
 								c = c.makeOrGetSubCat(method);
 
@@ -191,6 +190,13 @@ public class SrcSinkFlowViz extends XMLVizReport
 					}
 				}
 			}
+		} catch (IllegalStateException ise) {
+			// The hope is that this will be caught here if the error is simply that
+			// no path solver was run. Try to provide some intelligable feeback...
+			makeOrGetSubCat("Error: No Path Solver Found");
+			System.out.println("No path solver found so no path visualization could be generated.");
+			System.out.println("To visualize paths run with -Dstamp.backend=solvergen");
+
 		} catch (Exception e) {
 			System.err.println("Problem producing FlowViz report");
 			e.printStackTrace();
