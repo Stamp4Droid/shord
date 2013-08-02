@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import shord.project.analyses.JavaAnalysis;
-import stamp.missingmodels.grammars.E12;
+import stamp.missingmodels.grammars.C12;
 import stamp.missingmodels.util.ConversionUtils;
 import stamp.missingmodels.util.FileManager;
 import stamp.missingmodels.util.FileManager.FileType;
@@ -19,6 +19,8 @@ import stamp.missingmodels.viz.flow.FlowWriter;
 import stamp.missingmodels.viz.flow.FlowWriter.AllStubInputsFile;
 import stamp.missingmodels.viz.flow.FlowWriter.StubInputsFile;
 import chord.project.Chord;
+
+import stamp.missingmodels.util.Relation.IndexRelation;
 
 /*
  * An analysis that runs the JCFLSolver to do the taint analysis.
@@ -42,7 +44,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		}
 	}
 	
-	private static Graph g = new E12();
+	private static Graph g = new C12();
 	private static StubLookup s = new StubLookup();
 	
 	public static Graph g() {
@@ -52,17 +54,36 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 	public static StubLookup s() {
 	    return s;
 	}
+
+	public static void printRelCounts(Graph g) {
+		System.out.println("Printing final relation counts...");
+		for(int k=0; k<g.numKinds(); k++) {
+			System.out.println(g.kindToSymbol(k) + ": " + g.getEdges(k).size());
+		}
+	}
 	
 	@Override public void run() {
-		g = new E12();
-		s = new StubLookup();
 		fillTerminalEdges(g, s);
-		g.algo.process();
+		Relation rel = new IndexRelation("MV", "M", 0, null, "V", 1, null);
+		rel.addEdges("mv", g, s);
+		rel = new IndexRelation("MU", "M", 0, null, "U", 1, null);
+		rel.addEdges("mu", g, s);
+
+		//g.algo.process();
+
+		printRelCounts(g);
 
 		File outputDir = new File(System.getProperty("stamp.out.dir") + File.separator + "cfl");
 		File scratchDir = new File(System.getProperty("stamp.out.dir") + File.separator + "cfl");
 		
 		Set<StampFile> files = new HashSet<StampFile>();
+		for(int i=0; i<g.numKinds(); i++) {
+			if(g.isTerminal(i)) {
+				files.add(new JCFLRelationFile(FileType.OUTPUT, g, g.kindToSymbol(i), false));
+			}
+		}
+		files.add(new JCFLRelationFile(FileType.OUTPUT, g, "mv", false));
+		files.add(new JCFLRelationFile(FileType.OUTPUT, g, "mu", false));
 		files.add(new JCFLRelationFile(FileType.OUTPUT, g, "Src2Sink", true));
 		files.add(new AllStubInputsFile(g, s));
 		files.add(new StubInputsFile(g, s));

@@ -19,4 +19,9 @@ public class CtxtVarPoint implements Point {
 	public String toString() {
 		return ctxt.toString() + ":" + var.toString();
 	}
+
+	@Override
+	public String toShortString() {
+		return var.toString();
+	}
 }

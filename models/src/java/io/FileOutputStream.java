@@ -15,12 +15,12 @@ class FileOutputStream
 	{ 
 	}
 
-	@STAMP(flows = {@Flow(from="path",to="this")})
+	@STAMP(flows = {@Flow(from="!FILE",to="this"), @Flow(from="path",to="this")})
 	public  FileOutputStream(java.lang.String path) throws java.io.FileNotFoundException 
 	{ 
 	}
 
-	@STAMP(flows = {@Flow(from="path",to="this")})
+	@STAMP(flows = {@Flow(from="!FILE",to="this"), @Flow(from="path",to="this")})
 	public  FileOutputStream(java.lang.String path, boolean append) throws java.io.FileNotFoundException 
 	{ 
 	}

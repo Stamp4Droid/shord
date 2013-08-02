@@ -16,6 +16,7 @@ public class Postmortem extends JavaAnalysis
 {
 	public static final String reportsTxtFilePath = System.getProperty("stamp.out.dir")+"/reports.txt";
 	public static final String resultsDir = System.getProperty("stamp.out.dir")+"/results";
+	public static final boolean processingSrc = System.getProperty("stamp.input.type", "src").equals("src");
 
     public void run()
 	{
@@ -50,7 +51,7 @@ public class Postmortem extends JavaAnalysis
 
 		try{
 			PrintWriter reportsTxtWriter = new PrintWriter(new FileWriter(new File(reportsTxtFilePath)));
-			Class[] reports = System.getProperty("stamp.input.type", "src").equals("src") ? srcReports : apkReports;
+			Class[] reports = processingSrc ? srcReports : apkReports;
 			for(Class reportClass : reports){
 				XMLReport report = report = (XMLReport) reportClass.newInstance();
 				

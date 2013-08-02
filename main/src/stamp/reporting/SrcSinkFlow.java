@@ -8,6 +8,11 @@ import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import stamp.analyses.DomL;
 import stamp.analyses.JCFLSolverAnalysis;
+import shord.analyses.Ctxt;
+import shord.program.Program;
+
+import soot.Unit;
+
 import chord.bddbddb.Rel.RelView;
 import chord.util.tuple.object.Trio;
 import chord.util.tuple.object.Pair;
@@ -43,6 +48,35 @@ public class SrcSinkFlow extends XMLReport {
 	//Note: As of 7.9.2013, the first block below is used for non-jcfl stuff. The second block is
 	//required instead for Osbert's JCFL flow stuff. They are mutually exclusive.
 
+
+	Iterable<Pair<Pair<String,Ctxt>,Pair<String,Ctxt>>> res = relCtxtFlows.getAry2ValTuples();
+	int count = 0;
+	for(Pair<Pair<String,Ctxt>,Pair<String,Ctxt>> pair : res) {
+		count++;
+	    String source = pair.val0.val0;
+		Ctxt sourceCtxt = pair.val0.val1;
+	    String sink = pair.val1.val0;
+		Ctxt sinkCtxt = pair.val1.val1;
+
+		if(Postmortem.processingSrc){
+			newTuple()
+				.addValue(source)
+				.addValue(sink);
+		} else {
+			Category flowCat = makeOrGetSubCat(source + " -> " + sink);
+			Category ctxtFlowCat = flowCat.makeOrGetSubCat("Flow "+count);
+			Tuple srcTuple = ctxtFlowCat.newTuple();//makeOrGetSubCat("context");
+			srcTuple.setAttr("source", source);
+			for(Unit unit : sourceCtxt.getElems())
+				srcTuple.addValue(Program.unitToString(unit));
+			Tuple sinkTuple = ctxtFlowCat.newTuple();//makeOrGetSubCat(sink).makeOrGetSubCat("context");
+			sinkTuple.setAttr("sink", sink);
+			for(Unit unit : sinkCtxt.getElems())
+				sinkTuple.addValue(Program.unitToString(unit));
+		}
+	}
+
+	/*
 	// Get all source-to-sink flows, regardless of context. To achieve this, we
 	// project on the two context columns.
 	RelView flowsView = relCtxtFlows.getView();
@@ -68,6 +102,7 @@ public class SrcSinkFlow extends XMLReport {
 			.addValue(sink)
 			.addValue(Integer.toString(numFlows));
 	}
+	*/
 
 	/*
 	  Map<stamp.jcflsolver.Util.Pair<Integer, Integer>, Integer> src2sink = JCFLSolverAnalysis.getSrc2Sink();
@@ -81,8 +116,9 @@ public class SrcSinkFlow extends XMLReport {
 				.addValue(Integer.toString(entry.getValue()));
 		//}
 	}
-
-	relSrcSinkFlow.close();
     */
+
+	relCtxtFlows.close();
+
     }
 }

@@ -23,8 +23,7 @@ public class SrcFlow extends XMLReport
 			String label = pair.val0;
 			Category labelCat = makeOrGetSubCat(label);
 			SootMethod srcMethod = pair.val1;
-			labelCat.makeOrGetPkgCat(srcMethod).newTuple();
-			//	.addValue("");
+			labelCat.newTuple().addValue(srcMethod);
 		}
 
 		rel.close();

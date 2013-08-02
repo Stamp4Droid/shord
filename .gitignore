@@ -41,3 +41,5 @@ main/gen/
 tomcat/logs/*
 tomcat/work/Catalina/localhost/*
 tomcat/webapps/*
+
+web/web.xml

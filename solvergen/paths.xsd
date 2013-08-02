@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	   elementFormDefault="qualified">
+<xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+	   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	   elementFormDefault="qualified"
+	   jxb:version="2.1">
 
 <xs:simpleType name="symbolName">
   <xs:restriction base="xs:string">
@@ -10,14 +12,20 @@
 
 <xs:simpleType name="nodeName">
   <xs:restriction base="xs:string">
-    <xs:pattern value="v[0-9]+_[0-9]+|u[0-9]+_[0-9]+|l[0-9]+_[0-9]+|o[0-9]+|f[0-9]+"/>
+    <xs:pattern value="v[0-9]+_[0-9]+|u[0-9]+_[0-9]+|l[0-9]+|o[0-9]+|f[0-9]+"/>
   </xs:restriction>
 </xs:simpleType>
 
 <xs:element name="step">
   <xs:complexType>
     <xs:sequence>
-      <xs:element ref="step" minOccurs="0" maxOccurs="2"/>
+      <xs:element ref="step" minOccurs="0" maxOccurs="2">
+        <xs:annotation>
+          <xs:appinfo>
+            <jxb:property name="subSteps"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
     <xs:attribute name="reverse" type="xs:boolean" use="required"/>
     <xs:attribute name="symbol" type="symbolName" use="required"/>
@@ -30,7 +38,13 @@
 <xs:element name="path">
   <xs:complexType>
     <xs:sequence>
-      <xs:element ref="step"/>
+      <xs:element ref="step">
+        <xs:annotation>
+          <xs:appinfo>
+            <jxb:property name="topStep"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
 </xs:element>
@@ -38,7 +52,13 @@
 <xs:element name="edge">
   <xs:complexType>
     <xs:sequence>
-      <xs:element ref="path" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:element ref="path" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo>
+            <jxb:property name="paths"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
     <xs:attribute name="from" type="nodeName" use="required"/>
     <xs:attribute name="to" type="nodeName" use="required"/>
@@ -48,7 +68,13 @@
 <xs:element name="paths">
   <xs:complexType>
     <xs:sequence>
-      <xs:element ref="edge" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="edge" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:appinfo>
+            <jxb:property name="edges"/>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
 </xs:element>
