@@ -193,11 +193,12 @@ public class SrcSinkFlowViz extends XMLVizReport
 		} catch (IllegalStateException ise) {
 			// The hope is that this will be caught here if the error is simply that
 			// no path solver was run. Try to provide some intelligable feeback...
-			makeOrGetSubCat("Error: No Path Solver Found");
+			makeOrGetSubCat("Error: No Path Solver Found"); // TODO: slightly undesireable because creates empty + drop-down
 			System.out.println("No path solver found so no path visualization could be generated.");
 			System.out.println("To visualize paths run with -Dstamp.backend=solvergen");
 
 		} catch (Exception e) {
+			//Something else went wrong...
 			System.err.println("Problem producing FlowViz report");
 			e.printStackTrace();
 		}
