@@ -30,9 +30,6 @@ public class AnnotationInjector extends JavaAnalysis
 	private Class[] visitorClasses = new Class[]{
 		ContentProviderAnnotation.class
 		,NativeMethodAnnotation.class
-		,HttpRequestAnnotation.class
-		,SmsDestAnnotation.class
-		,SocketAnnotation.class
 	};
 
 	private PrintWriter writer;
