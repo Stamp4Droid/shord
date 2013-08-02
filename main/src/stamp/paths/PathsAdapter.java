@@ -1,13 +1,15 @@
 package stamp.paths;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.UnmarshalException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.helpers.DefaultValidationEventHandler;
 import javax.xml.validation.SchemaFactory;
@@ -27,30 +29,102 @@ import stamp.util.StringHelper;
 
 public class PathsAdapter {
 	private final DomMap doms = new DomMap();
+	private final JAXBContext jc;
+	private final Schema schema;
 
-	private PathsAdapter() {}
-
-	public static List<Path> getPaths() {
-		String schemaFile = PropertyHelper.getProperty("stamp.paths.schema");
-		String pathsFile = PropertyHelper.getProperty("stamp.paths.file");
-		return new PathsAdapter().getPaths(schemaFile, pathsFile);
+	public PathsAdapter(String schemaFile) throws TranslationException {
+		try {
+			// Feed JAXB the package where schema-generated classes live.
+			jc = JAXBContext.newInstance("stamp.paths.raw");
+			// Specify a schema file, to validate the paths XML file against.
+			// This should be the same schema that generated the classes in the
+			// above package.
+			SchemaFactory sf =
+				SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
+			schema = sf.newSchema(new File(schemaFile));
+		} catch (JAXBException exc) {
+			throw new TranslationException(exc);
+		} catch (SAXException exc) {
+			throw new TranslationException(exc);
+		}
 	}
 
-	private List<Path> getPaths(String schemaFile, String pathsFile) {
-		stamp.paths.raw.Paths rawPaths;
+	public List<Path> getFlatPaths(String rawPathsFile)
+		throws TranslationException {
 		try {
-			rawPaths = getRawPaths(schemaFile, pathsFile);
-		} catch (Exception exc) {
-			throw new RuntimeException(exc);
+			stamp.paths.raw.Paths rawPaths = readRawPaths(rawPathsFile);
+			flattenRawPaths(rawPaths, true);
+			return convertPaths(rawPaths);
+		} catch (JAXBException exc) {
+			throw new TranslationException(exc);
 		}
+	}
+
+	public void normalizeRawPaths(String rawPathsFile,
+								  String normalPathsFile)
+		throws TranslationException  {
+		try {
+			stamp.paths.raw.Paths rawPaths = readRawPaths(rawPathsFile);
+			flattenRawPaths(rawPaths, false);
+			translateNodeNames(rawPaths, true);
+			writeRawPaths(rawPaths, normalPathsFile);
+		} catch (JAXBException exc) {
+			throw new TranslationException(exc);
+		} catch (FileNotFoundException exc) {
+			throw new TranslationException(exc);
+		}
+	}
+
+	public static class TranslationException extends Exception {
+		public TranslationException(String msg) {
+			super(msg);
+		}
+
+		public TranslationException(Throwable cause) {
+			super(cause);
+		}
+	}
+
+	private stamp.paths.raw.Paths readRawPaths(String inFile)
+		throws JAXBException {
+		Unmarshaller u = jc.createUnmarshaller();
+		u.setSchema(schema);
+		// Fail at the first validation error.
+		u.setEventHandler(new DefaultValidationEventHandler());
+		return (stamp.paths.raw.Paths) u.unmarshal(new File(inFile));
+	}
+
+	private void writeRawPaths(stamp.paths.raw.Paths rawPaths, String outFile)
+		throws FileNotFoundException, JAXBException {
+        Marshaller m = jc.createMarshaller();
+		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		// TODO: We don't validate the rawPaths tree, because the calling code
+		// alters the tree in such a way that it no longer adheres to some of
+		// the non-structural constraints in the schema.
+        //m.setSchema(schema);
+		//m.setEventHandler(new DefaultValidationEventHandler());
+        m.marshal(rawPaths, new FileOutputStream(outFile));
+	}
+
+	// Expects rawPaths to be fully flat.
+	private List<Path> convertPaths(stamp.paths.raw.Paths rawPaths)
+		throws TranslationException{
 		List<Path> paths = new ArrayList<Path>();
 
 		for (stamp.paths.raw.Edge rawEdge : rawPaths.getEdge()) {
 			Point start = rawNodeToPoint(rawEdge.getFrom());
 			Point end = rawNodeToPoint(rawEdge.getTo());
 			for (stamp.paths.raw.Path rawPath : rawEdge.getPath()) {
+				stamp.paths.raw.Step topRawStep = rawPath.getStep();
+
 				List<Step> steps = new ArrayList<Step>();
-				flattenSteps(rawPath.getStep(), steps, false);
+				for (stamp.paths.raw.Step s : topRawStep.getStep()) {
+					// The sub-steps of the top step should be completely flat.
+					assert(rawStepIsTerminal(s));
+					String tgtNode = s.isReverse() ? s.getFrom() : s.getTo();
+					steps.add(new Step(s.getSymbol(), s.isReverse(),
+									   rawNodeToPoint(tgtNode)));
+				}
 				paths.add(new Path(start, end, steps));
 			}
 		}
@@ -59,52 +133,111 @@ public class PathsAdapter {
 		return paths;
 	}
 
-	private stamp.paths.raw.Paths getRawPaths(String schemaFile,
-											  String pathsFile)
-		throws SAXException, UnmarshalException, JAXBException {
-		// Feed JAXB the package where schema-generated classes live.
-		JAXBContext jc = JAXBContext.newInstance("stamp.paths.raw");
-		Unmarshaller u = jc.createUnmarshaller();
-		// Specify a schema file, to validate the paths XML file against. This
-		// should be the same schema that generated the classes in the above
-		// package.
-		SchemaFactory sf = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
-		Schema schema = sf.newSchema(new File(schemaFile));
-		u.setSchema(schema);
-		// Fail at the first validation error.
-		u.setEventHandler(new DefaultValidationEventHandler());
-		return (stamp.paths.raw.Paths) u.unmarshal(new File(pathsFile));
-	}
+	// TODO: The following methods modify raw Paths in-place, and conceptually
+	// belong in the classes of stamp.paths.raw, but we'd need to edit the JAXB
+	// binding scheme to add them.
 
-	private void flattenSteps(stamp.paths.raw.Step rawStep,
-							  List<Step> flatSteps, boolean parentReverse) {
-		boolean inReverse = rawStep.isReverse() ^ parentReverse;
-		List<stamp.paths.raw.Step> rawSubSteps = rawStep.getStep();
-
-		if (rawSubSteps.isEmpty()) {
-			// This covers both terminal steps and empty productions.
-			// TODO: Also require that the symbol be terminal.
-			// This information is already being retrieved in FactsDumper, we
-			// should just cache it.
-			String tgtNode = inReverse ? rawStep.getFrom() : rawStep.getTo();
-			Point tgtPoint = rawNodeToPoint(tgtNode);
-			flatSteps.add(new Step(rawStep.getSymbol(), inReverse, tgtPoint));
-			return;
-		}
-
-		// If this Edge was traversed in reverse, we also need to reverse the
-		// order in which we visit its sub-Edges.
-		// TODO: We could simply use a reverse iterator instead of reversing
-		// the list, but these step lists are tiny anyway.
-		if (inReverse) {
-			Collections.reverse(rawSubSteps);
-		}
-		for (stamp.paths.raw.Step s : rawSubSteps) {
-			flattenSteps(s, flatSteps, inReverse);
+	private void flattenRawPaths(stamp.paths.raw.Paths rawPaths,
+								 boolean fully) {
+		for (stamp.paths.raw.Edge rawEdge : rawPaths.getEdge()) {
+			for (stamp.paths.raw.Path rawPath : rawEdge.getPath()) {
+				stamp.paths.raw.Step topRawStep = rawPath.getStep();
+				flattenRawSubSteps(topRawStep, fully);
+			}
 		}
 	}
 
-	private Point rawNodeToPoint(String rawNode) {
+	private void flattenRawSubSteps(stamp.paths.raw.Step step, boolean fully) {
+		List<stamp.paths.raw.Step> subSteps = step.getStep();
+		List<stamp.paths.raw.Step> flatSubSteps =
+			new ArrayList<stamp.paths.raw.Step>();
+
+		for (stamp.paths.raw.Step ss : subSteps) {
+			flattenRawSubSteps(ss, fully);
+			if (rawStepIsTerminal(ss) ||
+				!fully && !rawStepIsIntermediate(ss)) {
+				// Steps corresponding to non-temporary symbols are normally
+				// retained.
+				// TODO: Could also skip some non-terminals that don't offer
+				// much information, e.g. in the case of transitive rules.
+				flatSubSteps.add(ss);
+			} else {
+				// We skip this step, and instead record its sub-steps
+				// directly.
+				if (ss.isReverse()) {
+					// If the step to skip was traversed in reverse, we need to
+					// reverse the order in which we record its sub-steps.
+					reverseRawStepsList(ss.getStep());
+				}
+				flatSubSteps.addAll(ss.getStep());
+			}
+		}
+
+		// Replace the original sub-steps list with the flattened one.
+		// TODO: The JAXB-generated class for raw Steps doesn't allow us to
+		// simply swap out its sub-steps list for another. We instead have to
+		// make a copy of the flattened list.
+		subSteps.clear();
+		subSteps.addAll(flatSubSteps);
+	}
+
+	private boolean rawStepIsIntermediate(stamp.paths.raw.Step step) {
+		// TODO: Should get this information from the output of the CFG parser.
+		return step.getSymbol().startsWith("%");
+	}
+
+	private boolean rawStepIsTerminal(stamp.paths.raw.Step step) {
+		// TODO: Should get this information from the output of the CFG parser.
+		char firstLetter = step.getSymbol().charAt(0);
+		return firstLetter >= 'a' && firstLetter <= 'z';
+	}
+
+	private void reverseRawStepsList(List<stamp.paths.raw.Step> rawSteps) {
+		// Reverse the order that we traverse the sub-steps.
+		Collections.reverse(rawSteps);
+		// Also switch the 'reverse' modifier on each of the sub-steps.
+		for (stamp.paths.raw.Step s : rawSteps) {
+			s.setReverse(!s.isReverse());
+		}
+	}
+
+	private void translateNodeNames(stamp.paths.raw.Paths rawPaths,
+									boolean useShortNames)
+		throws TranslationException {
+		for (stamp.paths.raw.Edge rawEdge : rawPaths.getEdge()) {
+			Point from = rawNodeToPoint(rawEdge.getFrom());
+			rawEdge.setFrom(useShortNames ? from.toShortString()
+							: from.toString());
+			Point to = rawNodeToPoint(rawEdge.getTo());
+			rawEdge.setTo(useShortNames ? to.toShortString() : to.toString());
+
+			for (stamp.paths.raw.Path rawPath : rawEdge.getPath()) {
+				stamp.paths.raw.Step topRawStep = rawPath.getStep();
+				translateNodeNames(topRawStep, useShortNames);
+			}
+		}
+
+		doms.clear();
+	}
+
+	private void translateNodeNames(stamp.paths.raw.Step rawStep,
+									boolean useShortNames)
+		throws TranslationException {
+		Point from = rawNodeToPoint(rawStep.getFrom());
+		rawStep.setFrom(useShortNames ? from.toShortString()
+						: from.toString());
+		Point to = rawNodeToPoint(rawStep.getTo());
+		rawStep.setTo(useShortNames ? to.toShortString() : to.toString());
+
+		for (stamp.paths.raw.Step ss : rawStep.getStep()) {
+			translateNodeNames(ss, useShortNames);
+		}
+	}
+
+	// TODO: In the following, we have hardcoded information regarding the node
+	// naming scheme.
+
+	private Point rawNodeToPoint(String rawNode) throws TranslationException {
 		char tag = rawNode.charAt(0);
 		switch (tag) {
 		case 'v':
@@ -130,7 +263,7 @@ public class PathsAdapter {
 			Pair<String,Ctxt> ctxtLabel = ((DomCL) doms.get("CL")).get(cl);
 			return new CtxtLabelPoint(ctxtLabel.val1, ctxtLabel.val0);
 		default:
-			throw new RuntimeException("Invalid node name: " + rawNode);
+			throw new TranslationException("Invalid node name: " + rawNode);
 		}
 	}
 
@@ -138,10 +271,11 @@ public class PathsAdapter {
 		return Integer.parseInt(rawNode.substring(1));
 	}
 
-	private static Pair<Integer,Integer> getTwoDomIndices(String rawNode) {
+	private static Pair<Integer,Integer> getTwoDomIndices(String rawNode)
+		throws TranslationException {
 		List<String> indexStrs = StringHelper.split(rawNode.substring(1), "_");
 		if (indexStrs.size() != 2) {
-			throw new RuntimeException("Invalid node name: " + rawNode);
+			throw new TranslationException("Invalid node name: " + rawNode);
 		}
 		return new Pair<Integer,Integer>(new Integer(indexStrs.get(0)),
 										 new Integer(indexStrs.get(1)));

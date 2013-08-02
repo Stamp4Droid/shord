@@ -40,8 +40,12 @@
     <!-- Paths Adapter options -->
     <require-prop property="stamp.paths.schema"
 		  description="schema file used to validate SolverGen paths XML file"/>
-    <property name="stamp.paths.file"
+    <property name="stamp.paths.raw"
 	      location="${stamp.out.dir}/output/Src2Sink.paths.xml"/>
+    <property name="stamp.paths.normal"
+	      location="${stamp.out.dir}/output/Src2Sink.paths.normal.xml"/>
+    <property name="stamp.paths.flat"
+	      location="${stamp.out.dir}/output/Src2Sink.paths.flat.txt"/>
 
     <!-- Register backend-specific system properties. -->
     <propertyset id="stamp.analyses.main.sysprops">
@@ -54,7 +58,9 @@
       <propertyref name="stamp.datparser.indir"/>
       <propertyref name="stamp.datparser.templatesdir"/>
       <propertyref name="stamp.paths.schema"/>
-      <propertyref name="stamp.paths.file"/>
+      <propertyref name="stamp.paths.raw"/>
+      <propertyref name="stamp.paths.normal"/>
+      <propertyref name="stamp.paths.flat"/>
     </propertyset>
   </target>
 
@@ -99,7 +105,6 @@
 	      location="${stamp.out.dir}/${stamp.solvergen.analysis}"/>
     <tempfile property="stamp.solvergen.terminals.listfile" createfile="false"
 	      deleteonexit="true"/>
-
 
     <!-- Produce CFL Solver code from the input grammar. -->
     <exec executable="python" spawn="false" failonerror="true">

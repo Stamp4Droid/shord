@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import shord.analyses.*;
@@ -22,6 +23,7 @@ import soot.Unit;
 
 import stamp.paths.*;
 import stamp.srcmap.SourceInfo;
+import stamp.util.PropertyHelper;
 
 public class SrcSinkFlowViz extends XMLVizReport
 {
@@ -39,8 +41,15 @@ public class SrcSinkFlowViz extends XMLVizReport
 
 			System.out.println("SOLVERGENPATHS");
 
+			String schemaFile =
+				PropertyHelper.getProperty("stamp.paths.schema");
+			String rawPathsFile =
+				PropertyHelper.getProperty("stamp.paths.raw");
+			List<Path> paths =
+				new PathsAdapter(schemaFile).getFlatPaths(rawPathsFile);
+
 			int count = 0;
-			for (Path p : PathsAdapter.getPaths()) {
+			for (Path p : paths) {
 				count += 1;
 				String flowname = count + ") "+((CtxtLabelPoint)p.start).label + " --> " + ((CtxtLabelPoint)p.end).label;
 				Category mc = makeOrGetPkgCat(new SootClass(flowname.replace('.','_')));

@@ -11,7 +11,13 @@ public class CtxtLabelPoint implements Point {
 		this.label = label;
 	}
 
+	@Override
 	public String toString() {
 		return ctxt.toString() + ":" + label;
+	}
+
+	@Override
+	public String toShortString() {
+		return label;
 	}
 }

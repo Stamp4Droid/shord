@@ -10,7 +10,13 @@ public class StatFldPoint implements Point {
 		this.field = field;
 	}
 
+	@Override
 	public String toString() {
 		return field.toString();
+	}
+
+	@Override
+	public String toShortString() {
+		return toString();
 	}
 }
