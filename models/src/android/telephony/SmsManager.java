@@ -1,6 +1,6 @@
 class SmsManager
 {
-	@STAMP(flows={@Flow(from="text",to="!sendTextMessage")})
+	@STAMP(flows={@Flow(from="text",to="!sendTextMessage"), @Flow(from="text",to="!destinationAddress")})
 	public  void sendTextMessage(java.lang.String destinationAddress, java.lang.String scAddress, java.lang.String text, android.app.PendingIntent sentIntent, android.app.PendingIntent deliveryIntent) 
 	{ 
 	}
@@ -12,12 +12,12 @@ class SmsManager
 		return result;
 	}
 
-	@STAMP(flows={@Flow(from="parts",to="!sendMultipartTextMessage")})
+	@STAMP(flows={@Flow(from="parts",to="!sendMultipartTextMessage"),@Flow(from="parts",to="!destinationAddress")})
 	public  void sendMultipartTextMessage(java.lang.String destinationAddress, java.lang.String scAddress, java.util.ArrayList<java.lang.String> parts, java.util.ArrayList<android.app.PendingIntent> sentIntents, java.util.ArrayList<android.app.PendingIntent> deliveryIntents) 
 	{ 
 	}
 
-	@STAMP(flows={@Flow(from="data",to="!sendDataMessage")})
+	@STAMP(flows={@Flow(from="data",to="!sendDataMessage"), @Flow(from="data",to="!destinationAddress")})
 	public  void sendDataMessage(java.lang.String destinationAddress, java.lang.String scAddress, short destinationPort, byte[] data, android.app.PendingIntent sentIntent, android.app.PendingIntent deliveryIntent) 
 	{ 
 	}
