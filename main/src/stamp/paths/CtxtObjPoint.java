@@ -15,7 +15,7 @@ public class CtxtObjPoint implements Point {
 
 	@Override
 	public String toString() {
-		return ctxt.toString();
+		return ctxt.toString(true);
 	}
 
 	@Override

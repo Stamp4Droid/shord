@@ -70,19 +70,30 @@ public class Ctxt implements Serializable
         return true;
     }
 	
-	public String toString()
-	{
+	public String toString() {
+		return toString(false);
+	}
+
+	public String toString(boolean asCtxtObj) {
 		StringBuilder builder = new StringBuilder("[");
 		boolean first = true;
-        for (Unit inst : elems) {
-			if(!first)
+		// If this is a contextified abstract object, skip the first element,
+		// i.e. the allocation statement that identifies the object.
+        for (int i = asCtxtObj ? 1 : 0; i < elems.length; i++) {
+			Unit inst = elems[i];
+			if(!first) {
 				builder.append(',');
-			else
+			} else {
 				first = false;
+			}
 			builder.append(inst == null ? "null"
 						   : Program.unitToString(inst));
 		}
 		builder.append(']');
+		if (asCtxtObj) {
+			builder.append(':');
+			builder.append(Program.unitToString(elems[0]));
+		}
 		return builder.toString();
 	}
 }
