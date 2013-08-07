@@ -458,7 +458,9 @@ NODE_REF name2node(const char *name) {
 /**
  * Create an Edge with the given attributes.
  *
- * The new Edge is not added to the graph or the ::worklist.
+ * The new Edge is not added to the graph or the ::worklist, and there is no
+ * way to do so from client code. Thus, this function should only be used to
+ * construct temporary Edge%s; otherwise use ::add_edge().
  */
 Edge *edge_new(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	       Edge *l_edge, bool l_rev, Edge *r_edge, bool r_rev) {
@@ -574,6 +576,7 @@ void out_edge_iterator_free(OutEdgeIterator *iter) {
  * for source Node @a from. Use next_out_edge() to advance the iterator.
  */
 OutEdgeIterator *get_out_edge_iterator(NODE_REF from, EDGE_KIND kind) {
+    assert(!is_lazy(kind));
     OutEdgeSet *set = nodes[from].out[kind];
     if (set == NULL) {
 	return NULL;
@@ -588,6 +591,7 @@ OutEdgeIterator *get_out_edge_iterator(NODE_REF from, EDGE_KIND kind) {
  */
 OutEdgeIterator *get_out_edge_iterator_to_target(NODE_REF from, NODE_REF to,
 						 EDGE_KIND kind) {
+    assert(!is_lazy(kind));
     OutEdgeSet *set = nodes[from].out[kind];
     if (set == NULL) {
 	return NULL;
@@ -673,6 +677,41 @@ Edge *next_out_edge(OutEdgeIterator *iter) {
     return e;
 }
 
+LazyOutEdgeIterator *lazy_out_edge_iterator_alloc() {
+    LazyOutEdgeIterator *iter = STRICT_ALLOC(1, LazyOutEdgeIterator);
+    iter->last = NULL;
+    iter->edges = NULL;
+    return iter;
+}
+
+void lazy_out_edge_iterator_free(LazyOutEdgeIterator *iter) {
+    delete iter->edges;
+    STRICT_FREE(iter, 1);
+}
+
+LazyOutEdgeIterator *get_lazy_out_edge_iterator_to_target(NODE_REF from,
+							  NODE_REF to,
+							  EDGE_KIND kind) {
+    assert(is_lazy(kind));
+    LazyOutEdgeIterator *iter = lazy_out_edge_iterator_alloc();
+    iter->edges = all_lazy_edges(from, to, kind);
+    return iter;
+}
+
+Edge *next_lazy_out_edge(LazyOutEdgeIterator *iter) {
+    if (iter->last != NULL) {
+	STRICT_FREE(iter->last, 1);
+    }
+    if (iter->edges->empty()) {
+	lazy_out_edge_iterator_free(iter);
+	return NULL;
+    } else {
+	iter->last = iter->edges->front();
+	iter->edges->pop_front();
+	return iter->last;
+    }
+}
+
 /* INCOMING EDGE ITERATOR HANDLING ========================================= */
 
 /**
@@ -699,6 +738,7 @@ void in_edge_iterator_free(InEdgeIterator *iter) {
  * target Node @a to. Use next_in_edge() to advance the iterator.
  */
 InEdgeIterator *get_in_edge_iterator(NODE_REF to, EDGE_KIND kind) {
+    assert(!is_lazy(kind));
     InEdgeIterator *iter = in_edge_iterator_alloc();
     iter->curr_edge = nodes[to].in[kind];
     return iter;
@@ -975,7 +1015,7 @@ void parse_input_files(PARSING_MODE mode) {
 void print_results() {
     /* Print out non-terminal edges. */
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
-	if (is_terminal(k)) {
+	if (is_lazy(k) || is_terminal(k)) {
 	    continue;
 	}
 	bool parametric = is_parametric(k);
@@ -1531,6 +1571,10 @@ void print_paths_for_kind(EDGE_KIND k, unsigned int num_paths) {
 
 void print_paths() {
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
+	if (is_lazy(k)) {
+	    // TODO: Also check that no edges have been produced.
+	    continue;
+	}
 	unsigned int num_paths = num_paths_to_print(k);
 	if (num_paths > 0) {
 	    print_paths_for_kind(k, num_paths);
@@ -1563,7 +1607,7 @@ void print_edge_counts(bool terminal) {
     DECL_COUNTER(total_edge_count, 0);
     DECL_COUNTER(total_index_count, 0);
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
-	if (is_terminal(k) ^ terminal) {
+	if (is_lazy(k) || is_terminal(k) ^ terminal) {
 	    continue;
 	}
 	bool parametric = is_parametric(k);
@@ -1705,7 +1749,7 @@ int main() {
     DECL_COUNTER(solving_start, CURRENT_TIME());
     /* Process empty productions. */
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
-	if (has_empty_prod(k)) {
+	if (has_empty_prod(k) && !is_lazy(k)) {
 	    for (NODE_REF n = 0; n < num_nodes(); n++) {
 		add_edge(n, n, k, INDEX_NONE, NULL, false, NULL, false);
 	    }

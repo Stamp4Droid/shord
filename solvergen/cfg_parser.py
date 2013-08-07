@@ -63,6 +63,11 @@ The accepted format for the input grammar is as follows:
   - `.paths <symbol> <num-paths>`: Instructs the generated solver to print out
     the selected number of witness paths for each of the Edge%s of the
     selected non-terminal @Symbol in the final graph.
+  - `.lazy <symbol>`: Instructs the generated solver to avoid pre-computing the
+    Edge%s for the selected non-terminal @Symbol, and instead calculate them on
+    demand. Currently only supported for non-terminals appearing solely on the
+    right side of parallel @Production%s, and generated directly from
+    terminals.
 
 Example of a valid grammar specification:
 
@@ -164,6 +169,7 @@ class Symbol(util.FinalAttrs):
         ## Whether Edge%s of this @Symbol are parameterized by @Indices.
         self.parametric = parametric
         self.min_length = None
+        self._lazy = False
         self._num_paths = 0
         self._mutables = ['min_length']
 
@@ -174,6 +180,19 @@ class Symbol(util.FinalAttrs):
         Terminal @Symbol names start with lowercase characters.
         """
         return self.name[0] in string.ascii_lowercase
+
+    def is_lazy(self):
+        """
+        Check whether Edge%s for this @Symbol are calculated lazily.
+        """
+        return self._lazy
+
+    def make_lazy(self):
+        """
+        Require that Edge%s for this @Symbol be calculated lazily.
+        """
+        assert not self.is_terminal()
+        self._lazy = True
 
     def num_paths(self):
         """
@@ -372,6 +391,10 @@ class NormalProduction(util.FinalAttrs):
             rev_r = ReverseProduction(self.result, self.right, self.left, rpos)
             return [rev_l, rev_r]
 
+    def only_terminals(self):
+        return ((self.left is None or self.left.symbol.is_terminal()) and
+                (self.right is None or self.right.symbol.is_terminal()))
+
     def outer_search_direction(self):
         assert self.left is not None
         if self.right is None or self.parallel:
@@ -390,9 +413,9 @@ class NormalProduction(util.FinalAttrs):
             return 'from' if self.left.reversed else 'to'
         return None
 
-    def outer_condition(self):
+    def outer_condition(self, emit_derivs):
         assert self.left is not None
-        if self.left.indexed and self.result.parametric:
+        if emit_derivs and self.left.indexed and self.result.parametric:
             return 'l->index == e->index'
         return None
 
@@ -416,7 +439,7 @@ class NormalProduction(util.FinalAttrs):
         else:
             return 'l->to'
 
-    def inner_condition(self):
+    def inner_condition(self, emit_derivs):
         assert (self.left is not None and self.right is not None
                 and not self.parallel)
         if not self.right.indexed:
@@ -424,7 +447,23 @@ class NormalProduction(util.FinalAttrs):
         elif self.left.indexed:
             return 'l->index == r->index'
         assert self.result.parametric
-        return 'r->index == e->index'
+        if emit_derivs:
+            return 'r->index == e->index'
+        else:
+            return None
+
+    def result_index(self):
+        if not self.result.parametric:
+            return 'INDEX_NONE'
+        assert self.left is not None
+        if self.right is None:
+            assert self.left.indexed
+            return 'l->index'
+        elif self.left.indexed:
+            return 'l->index'
+        else:
+            assert self.right.indexed
+            return 'r->index'
 
     def __str__(self):
         conj = ' // ' if self.parallel else ' '
@@ -777,6 +816,17 @@ class Grammar(util.FinalAttrs):
         for s in self.symbols:
             if not s.is_terminal() and self.prods.get(s) == []:
                 assert False, "Non-terminal %s can never be produced" % s
+            if s.is_lazy():
+                for rp in self.rev_prods.get(s):
+                    assert rp.base_pos == Position.PARALLEL_SUPPORT, \
+                        "Lazy symbol %s appears in disallowed position" % s
+                for p in self.prods.get(s):
+                    assert p.only_terminals(), \
+                        "Lazy symbol %s constructed from non-terminals" % s
+                    assert not p.parallel, \
+                        "Lazy symbol %s constructed from parallel rule" % s
+                assert s.num_paths() == 0, \
+                        "Can't print paths for lazy symbol %s " % s
         self._calc_min_lengths()
         # TODO: Also disable parse_line().
 
@@ -829,6 +879,11 @@ class Grammar(util.FinalAttrs):
             assert symbol is not None, \
                 "Symbol %s not declared (yet)" % params[0]
             symbol.set_num_paths(int(params[1]))
+        elif directive == 'lazy' and len(params) == 1:
+            symbol = self.symbols.find_symbol(params[0])
+            assert symbol is not None, \
+                "Symbol %s not declared (yet)" % params[0]
+            symbol.make_lazy()
         else:
             assert False, "Unknown directive: %s/%s" % (directive, len(params))
 
@@ -990,11 +1045,22 @@ def parse(grammar_in, code_out, terminals_out):
     pr.write('}')
     pr.write('')
 
+    pr.write('bool is_lazy(EDGE_KIND kind) {')
+    pr.write('switch (kind) {')
+    for s in grammar.symbols:
+        if s.is_lazy():
+            pr.write('case %s: return true; /* %s */' % (s.kind, s))
+    pr.write('default: return false;')
+    pr.write('}')
+    pr.write('}')
+    pr.write('')
+
     pr.write('void main_loop(Edge *base) {')
     pr.write('Edge *other;')
     # TODO: Local iterator variables may go unused: use per-case variables,
     # enclosed in {} blocks.
     pr.write('OutEdgeIterator *out_iter;')
+    pr.write('LazyOutEdgeIterator *lazy_out_iter;')
     pr.write('InEdgeIterator *in_iter;')
     # TODO: Could cache base->index
     pr.write('switch (base->kind) {')
@@ -1004,7 +1070,15 @@ def parse(grammar_in, code_out, terminals_out):
             # This symbol doesn't appear on the RHS of any production.
             continue
         pr.write('case %s: /* %s */' % (base_symbol.kind, base_symbol))
+        if base_symbol.is_lazy():
+            # Lazy edges should never get produced, and thus never enter the
+            # worklist.
+            pr.write('assert(false);')
+            continue
         for rp in rev_prods:
+            if rp.result.is_lazy():
+                # Skip productions that generate lazy symbols.
+                continue
             pr.write('/* %s */' % rp)
             res_src = rp.result_source()
             res_tgt = rp.result_target()
@@ -1015,26 +1089,31 @@ def parse(grammar_in, code_out, terminals_out):
             r_rev = util.to_c_bool(rp.right_reverse())
             res_idx = ('%s->index' % rp.result_index_source()
                        if rp.result.parametric else 'INDEX_NONE')
+            # TODO: We don't have to worry about what information to record for
+            # lazy constituent edges, because those edges are only allowed on
+            # the supporting position of parallel productions, where producing
+            # edges are not recorded anyway.
             add_edge_stmt = ('add_edge(%s, %s, %s, %s, %s, %s, %s, %s);'
                              % (res_src, res_tgt, res_kind, res_idx,
                                 l_edge, l_rev, r_edge, r_rev))
             if rp.reqd is None:
                 pr.write(add_edge_stmt)
             else:
+                lazy_mod = 'lazy_' if rp.reqd.symbol.is_lazy() else ''
                 search_src = 'base->' + rp.search_source_endp()
                 search_dir = rp.search_direction()
                 search_tgt_endp = rp.search_target_endp()
                 search_tgt = (None if search_tgt_endp is None
                               else 'base->' + search_tgt_endp)
                 reqd_kind = rp.reqd.symbol.kind
-                pr.write('%s_iter = get_%s_edge_iterator%s(%s%s, %s);'
-                         % (search_dir, search_dir,
+                pr.write('%s%s_iter = get_%s%s_edge_iterator%s(%s%s, %s);'
+                         % (lazy_mod, search_dir, lazy_mod, search_dir,
                             '' if search_tgt is None else '_to_target',
                             search_src,
                             '' if search_tgt is None else (', ' + search_tgt),
                             reqd_kind))
-                pr.write('while ((other = next_%s_edge(%s_iter)) != NULL) {'
-                         % (search_dir, search_dir))
+                pr.write('while ((other = next_%s%s_edge(%s%s_iter)) != NULL) {'
+                         % (lazy_mod, search_dir, lazy_mod, search_dir))
                 if rp.must_check_for_common_index():
                     pr.write('if (base->index == other->index) {')
                     pr.write(add_edge_stmt)
@@ -1047,25 +1126,65 @@ def parse(grammar_in, code_out, terminals_out):
     pr.write('}')
     pr.write('')
 
-    pr.write('std::list<Derivation> all_derivations(Edge *e) {')
-    pr.write('NODE_REF from = e->from;')
-    pr.write('NODE_REF to = e->to;')
-    pr.write('EDGE_KIND kind = e->kind;')
+    emit_derivs_or_lazy_edges(grammar, pr, True)
+
+    emit_derivs_or_lazy_edges(grammar, pr, False)
+
+    if terminals_out is not None:
+        for s in grammar.symbols:
+            if s.is_terminal():
+                terminals_out.write('%s\n' % s)
+
+def emit_derivs_or_lazy_edges(grammar, pr, emit_derivs):
+    if emit_derivs:
+        pr.write('std::list<Derivation> all_derivations(Edge *e) {')
+        pr.write('std::list<Derivation> derivs;')
+        pr.write('NODE_REF from = e->from;')
+        pr.write('NODE_REF to = e->to;')
+        pr.write('EDGE_KIND kind = e->kind;')
+    else:
+        pr.write('std::list<Edge *> *all_lazy_edges(NODE_REF from, ' +
+                 'NODE_REF to, EDGE_KIND kind) {')
+        pr.write('auto edges = new std::list<Edge *>();')
+        # TODO: This 'new' circumvents the allocation limit imposed by
+        # strict_alloc().
     pr.write('Edge *l, *r;')
     # TODO: Local iterator variables may go unused: use per-case variables,
     # enclosed in {} blocks.
-    pr.write('std::list<Derivation> derivs;')
+    # TODO: Lazy edges are only allowed on the supporting position of parallel
+    # productions, which is not used during path reconstruction, so we don't
+    # have to consider that case when emitting all_derivations.
+    # TODO: Similarly, only terminals are allowed in rules producing lazy
+    # edges, and terminals can't be lazy, so we don't have to consider that
+    # case when emitting all_lazy_edges.
+    # TODO: For lazy edge construction, if there's only one edge that could be
+    # produced, we can stop the search immediatelly once we first construct it.
+    # In that case, we must make sure we deallocate the iterators. With the
+    # current set-up it's possible to produce multiple copies of the same Edge
+    # on the output list, which can cause a blow-up in the case of nested lazy
+    # edges (which we currently don't support).
     pr.write('OutEdgeIterator *l_out_iter, *r_out_iter;')
     pr.write('InEdgeIterator *l_in_iter;')
     pr.write('switch (kind) {')
     for e_symbol in grammar.prods:
         pr.write('case %s: /* %s */' % (e_symbol.kind, e_symbol))
+        if e_symbol.is_lazy() ^ (not emit_derivs):
+            # Derivation re-construction should never be requested for lazy
+            # edges, because none are ever produced.
+            # Conversely, only lazy symbols should be passed to all_lazy_edges.
+            pr.write('assert(false);')
+            continue
         for p in grammar.prods.get(e_symbol):
             pr.write('/* %s */' % p)
+            e_idx = p.result_index()
             if p.left is None:
                 # Empty production
                 pr.write('if (from == to) {')
-                pr.write('derivs.push_back(derivation_empty());')
+                if emit_derivs:
+                    pr.write('derivs.push_back(derivation_empty());')
+                else:
+                    pr.write('edges->push_back(edge_new(from, to, kind, ' +
+                             '%s, NULL, false, NULL, false));' % e_idx)
                 pr.write('}')
                 continue
             l_rev = util.to_c_bool(p.left.reversed)
@@ -1080,12 +1199,12 @@ def parse(grammar_in, code_out, terminals_out):
                         p.left.symbol.kind))
             pr.write('while ((l = next_%s_edge(l_%s_iter)) != NULL) {'
                      % (out_dir, out_dir))
-            out_cond = p.outer_condition()
+            out_cond = p.outer_condition(emit_derivs)
             if out_cond is not None:
                 pr.write('if (%s) {' % out_cond)
             if p.right is None or p.parallel:
                 # single or parallel production
-                pr.write('derivs.push_back(derivation_single(l, %s));' % l_rev)
+                if emit_derivs:
                     # BUG: No index check happens for parallel rules, so for a
                     # rule like `A :: x[i] // y[i]` we may return a source edge
                     # with a wrong index. To fix this, we'd need to iterate
@@ -1093,6 +1212,14 @@ def parse(grammar_in, code_out, terminals_out):
                     # throw it away (this invalidates our previous hypothesis
                     # that supporting parallel edges are completely ignored
                     # during path reconstruction).
+                    pr.write('derivs.push_back(derivation_single(l, %s));'
+                             % l_rev)
+                else:
+                    # TODO: Parallel productions for lazy edges are currently
+                    # unsupported.
+                    assert not p.parallel
+                    pr.write('edges->push_back(edge_new(from, to, kind, ' +
+                             '%s, l, %s, NULL, false));' % (e_idx, l_rev))
             else:
                 # double production
                 r_rev = util.to_c_bool(p.right.reversed)
@@ -1101,11 +1228,15 @@ def parse(grammar_in, code_out, terminals_out):
                                              p.inner_search_target(),
                                              p.right.symbol.kind)))
                 pr.write('while ((r = next_out_edge(r_out_iter)) != NULL) {')
-                in_cond = p.inner_condition()
+                in_cond = p.inner_condition(emit_derivs)
                 if in_cond is not None:
                     pr.write('if (%s) {' % in_cond)
-                pr.write('derivs.push_back(derivation_double(l, %s, r, %s));'
-                         % (l_rev, r_rev))
+                if emit_derivs:
+                    pr.write('derivs.push_back(derivation_double' +
+                             '(l, %s, r, %s));' % (l_rev, r_rev))
+                else:
+                    pr.write('edges->push_back(edge_new(from, to, kind, ' +
+                             '%s, l, %s, r, %s));' % (e_idx, l_rev, r_rev))
                 if in_cond is not None:
                     pr.write('}')
                 pr.write('}')
@@ -1116,14 +1247,12 @@ def parse(grammar_in, code_out, terminals_out):
     pr.write('default:')
     pr.write('assert(false);')
     pr.write('}')
-    pr.write('return derivs;')
+    if emit_derivs:
+        pr.write('return derivs;')
+    else:
+        pr.write('return edges;')
     pr.write('}')
     pr.write('')
-
-    if terminals_out is not None:
-        for s in grammar.symbols:
-            if s.is_terminal():
-                terminals_out.write('%s\n' % s)
 
 # TODO: More user-friendly error output than assertion failure
 # TODO: More structured way to synthesize code: specialized C-code synthesis

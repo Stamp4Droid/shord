@@ -187,6 +187,22 @@ typedef struct {
 } OutEdgeSet;
 
 /**
+ * An iterator over the set of outgoing Edge%s of a Node, constructed on
+ * demand.
+ */
+typedef struct {
+    /**
+     * The last Edge returned by this @LazyOutEdgeIterator. Will get
+     * deallocated on the next access.
+     */
+    Edge *last;
+    /**
+     * The Edge%s left to return.
+     */
+    std::list<Edge *> *edges;
+} LazyOutEdgeIterator;
+
+/**
  * An iterator over the set of outgoing Edge%s of a Node.
  */
 typedef struct {
@@ -497,6 +513,8 @@ typedef unsigned long COUNTER;
 		(num) * sizeof(std::remove_pointer<decltype(ptr)>::type));\
 } while (false)
 
+Edge *edge_new(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
+	       Edge *l_edge, bool l_rev, Edge *r_edge, bool r_rev);
 void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	      Edge *l_edge, bool l_rev, Edge *r_edge, bool r_rev);
 
@@ -504,6 +522,11 @@ OutEdgeIterator *get_out_edge_iterator(NODE_REF from, EDGE_KIND kind);
 OutEdgeIterator *get_out_edge_iterator_to_target(NODE_REF from, NODE_REF to,
 						 EDGE_KIND kind);
 Edge *next_out_edge(OutEdgeIterator *iter);
+LazyOutEdgeIterator *get_lazy_out_edge_iterator_to_target(NODE_REF from,
+							  NODE_REF to,
+							  EDGE_KIND kind);
+
+Edge *next_lazy_out_edge(LazyOutEdgeIterator *iter);
 InEdgeIterator *get_in_edge_iterator(NODE_REF to, EDGE_KIND kind);
 Edge *next_in_edge(InEdgeIterator *iter);
 
@@ -566,6 +589,10 @@ std::list<Derivation> all_derivations(Edge *edge);
 unsigned int num_paths_to_print(EDGE_KIND kind);
 
 PATH_LENGTH static_min_length(EDGE_KIND kind);
+
+bool is_lazy(EDGE_KIND kind);
+
+std::list<Edge *> *all_lazy_edges(NODE_REF from, NODE_REF to, EDGE_KIND kind);
 
 /**
  * @}

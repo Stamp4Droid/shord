@@ -258,3 +258,11 @@ PATH_LENGTH static_min_length(EDGE_KIND kind) {
 	assert(false);
     }
 }
+
+bool is_lazy(EDGE_KIND kind) {
+    return false; /* No symbol in this grammar is lazy. */
+}
+
+std::list<Edge *> *all_lazy_edges(NODE_REF from, NODE_REF to, EDGE_KIND kind) {
+    assert(false); /* No symbol in this grammar is lazy. */
+}
