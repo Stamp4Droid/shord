@@ -163,11 +163,9 @@ class Symbol(util.FinalAttrs):
         self.kind = kind
         ## Whether Edge%s of this @Symbol are parameterized by @Indices.
         self.parametric = parametric
-        ## The number of paths we wish the solver to print for each Edge of
-        #  this @Symbol.
-        self.num_paths = 0
         self.min_length = None
-        self._mutables = ['num_paths', 'min_length']
+        self._num_paths = 0
+        self._mutables = ['min_length']
 
     def is_terminal(self):
         """
@@ -176,6 +174,22 @@ class Symbol(util.FinalAttrs):
         Terminal @Symbol names start with lowercase characters.
         """
         return self.name[0] in string.ascii_lowercase
+
+    def num_paths(self):
+        """
+        Return the number of paths we wish the solver to print for each Edge of
+        this @Symbol.
+        """
+        return self._num_paths
+
+    def set_num_paths(self, num_paths):
+        """
+        Set the number of paths we wish the solver to print for each Edge of
+        this @Symbol.
+        """
+        assert not self.is_terminal(), \
+            "Paths can only be printed for non-terminals"
+        self._num_paths = num_paths
 
     def __key__(self):
         return self.kind
@@ -367,13 +381,13 @@ class NormalProduction(util.FinalAttrs):
     def outer_search_source(self):
         assert self.left is not None
         if self.right is None or self.parallel:
-            return 'e->to' if self.left.reversed else 'e->from'
-        return 'e->from'
+            return 'to' if self.left.reversed else 'from'
+        return 'from'
 
     def outer_search_target(self):
         assert self.left is not None
         if self.right is None or self.parallel:
-            return 'e->from' if self.left.reversed else 'e->to'
+            return 'from' if self.left.reversed else 'to'
         return None
 
     def outer_condition(self):
@@ -386,7 +400,7 @@ class NormalProduction(util.FinalAttrs):
         assert (self.left is not None and self.right is not None
                 and not self.parallel)
         if self.right.reversed:
-            return 'e->to'
+            return 'to'
         elif self.left.reversed:
             return 'l->from'
         else:
@@ -396,7 +410,7 @@ class NormalProduction(util.FinalAttrs):
         assert (self.left is not None and self.right is not None
                 and not self.parallel)
         if not self.right.reversed:
-            return 'e->to'
+            return 'to'
         elif self.left.reversed:
             return 'l->from'
         else:
@@ -409,8 +423,8 @@ class NormalProduction(util.FinalAttrs):
             return None
         elif self.left.indexed:
             return 'l->index == r->index'
-        else:
-            return 'r->index == e->index'
+        assert self.result.parametric
+        return 'r->index == e->index'
 
     def __str__(self):
         conj = ' // ' if self.parallel else ' '
@@ -751,11 +765,15 @@ class Grammar(util.FinalAttrs):
         ## All the @NormalProduction%s encountered so far, grouped by result
         #  @Symbol.
         self.prods = util.OrderedMultiDict()
-        ## All the @ReverseProduction%s encountered so far, grouped by result
+        ## All the @ReverseProduction%s encountered so far, grouped by base
         #  @Symbol.
         self.rev_prods = util.OrderedMultiDict()
 
     def finalize(self):
+        """
+        Run final sanity checks and calculations, which require all
+        @Production%s to be present.
+        """
         for s in self.symbols:
             if not s.is_terminal() and self.prods.get(s) == []:
                 assert False, "Non-terminal %s can never be produced" % s
@@ -810,9 +828,7 @@ class Grammar(util.FinalAttrs):
             symbol = self.symbols.find_symbol(params[0])
             assert symbol is not None, \
                 "Symbol %s not declared (yet)" % params[0]
-            assert not symbol.is_terminal(), \
-                "Paths can only be printed for non-terminals"
-            symbol.num_paths = int(params[1])
+            symbol.set_num_paths(int(params[1]))
         else:
             assert False, "Unknown directive: %s/%s" % (directive, len(params))
 
@@ -903,7 +919,7 @@ def parse(grammar_in, code_out, terminals_out):
     pr.write('PATH_LENGTH static_min_length(EDGE_KIND kind) {')
     pr.write('switch (kind) {')
     for s in grammar.symbols:
-        pr.write('case %s: return %s;' % (s.kind, s.min_length))
+        pr.write('case %s: return %s; /* %s */' % (s.kind, s.min_length, s))
     pr.write('default: assert(false);')
     pr.write('}')
     pr.write('}')
@@ -913,10 +929,8 @@ def parse(grammar_in, code_out, terminals_out):
     pr.write('switch (kind) {')
     for s in grammar.symbols:
         if s.is_terminal():
-            pr.write('case %s:' % s.kind)
-    pr.write('return true;')
-    pr.write('default:')
-    pr.write('return false;')
+            pr.write('case %s: return true; /* %s */' % (s.kind, s))
+    pr.write('default: return false;')
     pr.write('}')
     pr.write('}')
     pr.write('')
@@ -925,10 +939,8 @@ def parse(grammar_in, code_out, terminals_out):
     pr.write('switch (kind) {')
     for s in grammar.symbols:
         if s.parametric:
-            pr.write('case %s:' % s.kind)
-    pr.write('return true;')
-    pr.write('default:')
-    pr.write('return false;')
+            pr.write('case %s: return true; /* %s */' % (s.kind, s))
+    pr.write('default: return false;')
     pr.write('}')
     pr.write('}')
     pr.write('')
@@ -967,8 +979,21 @@ def parse(grammar_in, code_out, terminals_out):
     pr.write('}')
     pr.write('')
 
+    pr.write('unsigned int num_paths_to_print(EDGE_KIND kind) {')
+    pr.write('switch (kind) {')
+    for s in grammar.symbols:
+        if s.num_paths() > 0:
+            pr.write('case %s: return %s; /* %s */'
+                     % (s.kind, s.num_paths(), s))
+    pr.write('default: return 0;')
+    pr.write('}')
+    pr.write('}')
+    pr.write('')
+
     pr.write('void main_loop(Edge *base) {')
     pr.write('Edge *other;')
+    # TODO: Local iterator variables may go unused: use per-case variables,
+    # enclosed in {} blocks.
     pr.write('OutEdgeIterator *out_iter;')
     pr.write('InEdgeIterator *in_iter;')
     # TODO: Could cache base->index
@@ -1023,21 +1048,27 @@ def parse(grammar_in, code_out, terminals_out):
     pr.write('')
 
     pr.write('std::list<Derivation> all_derivations(Edge *e) {')
+    pr.write('NODE_REF from = e->from;')
+    pr.write('NODE_REF to = e->to;')
+    pr.write('EDGE_KIND kind = e->kind;')
     pr.write('Edge *l, *r;')
+    # TODO: Local iterator variables may go unused: use per-case variables,
+    # enclosed in {} blocks.
     pr.write('std::list<Derivation> derivs;')
     pr.write('OutEdgeIterator *l_out_iter, *r_out_iter;')
     pr.write('InEdgeIterator *l_in_iter;')
-    pr.write('switch (e->kind) {')
+    pr.write('switch (kind) {')
     for e_symbol in grammar.prods:
         pr.write('case %s: /* %s */' % (e_symbol.kind, e_symbol))
         for p in grammar.prods.get(e_symbol):
             pr.write('/* %s */' % p)
             if p.left is None:
                 # Empty production
-                pr.write('if (e->from == e->to) {')
+                pr.write('if (from == to) {')
                 pr.write('derivs.push_back(derivation_empty());')
                 pr.write('}')
                 continue
+            l_rev = util.to_c_bool(p.left.reversed)
             out_dir = p.outer_search_direction()
             out_src = p.outer_search_source()
             out_tgt = p.outer_search_target()
@@ -1054,10 +1085,17 @@ def parse(grammar_in, code_out, terminals_out):
                 pr.write('if (%s) {' % out_cond)
             if p.right is None or p.parallel:
                 # single or parallel production
-                pr.write('derivs.push_back(derivation_single(l, %s));'
-                         % util.to_c_bool(p.left.reversed))
+                pr.write('derivs.push_back(derivation_single(l, %s));' % l_rev)
+                    # BUG: No index check happens for parallel rules, so for a
+                    # rule like `A :: x[i] // y[i]` we may return a source edge
+                    # with a wrong index. To fix this, we'd need to iterate
+                    # over all possible r-edges to find a witness one, but then
+                    # throw it away (this invalidates our previous hypothesis
+                    # that supporting parallel edges are completely ignored
+                    # during path reconstruction).
             else:
                 # double production
+                r_rev = util.to_c_bool(p.right.reversed)
                 pr.write('r_out_iter = get_out_edge_iterator_to_target' +
                          ('(%s, %s, %s);' % (p.inner_search_source(),
                                              p.inner_search_target(),
@@ -1067,8 +1105,7 @@ def parse(grammar_in, code_out, terminals_out):
                 if in_cond is not None:
                     pr.write('if (%s) {' % in_cond)
                 pr.write('derivs.push_back(derivation_double(l, %s, r, %s));'
-                         % (util.to_c_bool(p.left.reversed),
-                            util.to_c_bool(p.right.reversed)))
+                         % (l_rev, r_rev))
                 if in_cond is not None:
                     pr.write('}')
                 pr.write('}')
@@ -1082,15 +1119,6 @@ def parse(grammar_in, code_out, terminals_out):
     pr.write('return derivs;')
     pr.write('}')
     pr.write('')
-
-    pr.write('unsigned int num_paths_to_print(EDGE_KIND kind) {')
-    pr.write('switch (kind) {')
-    for s in grammar.symbols:
-        if s.num_paths > 0:
-            pr.write('case %s: return %s;' % (s.kind, s.num_paths))
-    pr.write('default: return 0;')
-    pr.write('}')
-    pr.write('}')
 
     if terminals_out is not None:
         for s in grammar.symbols:

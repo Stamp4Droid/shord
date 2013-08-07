@@ -58,6 +58,7 @@ size_t allocated = 0;
 void *strict_alloc(size_t num_bytes) {
     void *ptr;
     allocated += num_bytes;
+    // TODO: Could use setrlimit for memory limiting (this is Linux-specific).
     if (allocated > MAX_MEMORY || (ptr = malloc(num_bytes)) == NULL) {
 	fprintf(stderr, "Out of memory\n");
 	exit(1);

@@ -105,6 +105,7 @@ class CodePrinter(FinalAttrs):
     """
     A helper class for pretty-printing C code.
     """
+    # TODO: Should rename functions to 'emit'.
 
     def __init__(self, out):
         """
