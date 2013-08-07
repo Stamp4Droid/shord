@@ -3,7 +3,7 @@
 
   <target name="-prepare-backend-solvergen">
     <!-- Compile SolverGen analysis. -->
-    <property name="stamp.solvergen.analysis" value="s-k-h-call"/>
+    <property name="stamp.solvergen.analysis" value="s-k-ht-call"/>
     <runtarget target="make-cfl-solver"/>
     <require-prop property="stamp.solvergen.terminals.listfile"
 		  description="file listing all the terminals used by the analysis"/>
