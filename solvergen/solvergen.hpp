@@ -6,7 +6,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <type_traits>
 
 /**
  * @mainpage
@@ -76,7 +75,7 @@ typedef unsigned char CHOICE;
  * bytes. Attempting to allocate memory beyond this limit will result in a
  * program exit.
  */
-#define MAX_MEMORY 8589934592 /* 8GB */
+#define MAX_MEMORY 10737418240 /* 10GB */
 
 /* DATA STRUCTURES ========================================================= */
 
@@ -506,15 +505,6 @@ typedef unsigned long COUNTER;
  * execution if the allocation fails.
  */
 #define STRICT_ALLOC(num, type) ((type*) strict_alloc((num) * sizeof(type)))
-
-/**
- * Free the memory pointed to by @a ptr, assuming it's a pointer to an array of
- * @e num objects of its declared type.
- */
-#define STRICT_FREE(ptr, num) do {\
-    strict_free((ptr),\
-		(num) * sizeof(std::remove_pointer<decltype(ptr)>::type));\
-} while (false)
 
 Edge *edge_new(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	       Edge *l_edge, bool l_rev, Edge *r_edge, bool r_rev);

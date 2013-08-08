@@ -1146,8 +1146,6 @@ def emit_derivs_or_lazy_edges(grammar, pr, emit_derivs):
         pr.write('std::list<Edge *> *all_lazy_edges(NODE_REF from, ' +
                  'NODE_REF to, EDGE_KIND kind) {')
         pr.write('auto edges = new std::list<Edge *>();')
-        # TODO: This 'new' circumvents the allocation limit imposed by
-        # strict_alloc().
     pr.write('Edge *l, *r;')
     # TODO: Local iterator variables may go unused: use per-case variables,
     # enclosed in {} blocks.

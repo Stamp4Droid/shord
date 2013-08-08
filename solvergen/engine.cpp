@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/resource.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -66,33 +67,38 @@ void report_error(bool fatal, bool system_error, const char *fmt, ...) {
     }
 }
 
+/**
+ * Initialize the memory manager. This function should be called prior to any
+ * dynamic memory allocation.
+ */
+void mem_manager_init() {
+    struct rlimit rlp;
+    rlp.rlim_cur = MAX_MEMORY;
+    rlp.rlim_max = MAX_MEMORY;
+    if (setrlimit(RLIMIT_AS, &rlp) != 0) {
+	SYS_ERR("Unable to set memory limit\n");
+    }
+}
 
 /**
  * Underlying implementation of @ref STRICT_ALLOC.
  */
 void *strict_alloc(size_t num_bytes) {
     void *ptr;
-    allocated += num_bytes;
-    // TODO: Could use setrlimit for memory limiting (this is Linux-specific).
-    if (allocated > MAX_MEMORY || (ptr = malloc(num_bytes)) == NULL) {
+    if ((ptr = malloc(num_bytes)) == NULL) {
 	SYS_ERR("Out of memory\n");
     }
     return ptr;
 }
 
 /**
- * Underlying implementation of @ref STRICT_FREE.
+ * Return the maximum amount of memory this process has ever held at any one
+ * time (in bytes).
  */
-void strict_free(void *ptr, size_t num_bytes) {
-    allocated -= num_bytes;
-    free(ptr);
-}
-
-/**
- * Return the number of bytes allocated on the heap so far.
- */
-size_t allocated_memory() {
-    return allocated;
+long allocated_memory() {
+    struct rusage usage;
+    getrusage(RUSAGE_SELF, &usage);
+    return usage.ru_maxrss;
 }
 
 /* BASE TYPE OPERATIONS ==================================================== */
@@ -242,9 +248,9 @@ const char **string_queue_to_array(StringQueue *q) {
 	str_arr[next_idx++] = cell->value;
 	StringCell *temp = cell;
 	cell = cell->next;
-	STRICT_FREE(temp, 1);
+	free(temp);
     }
-    STRICT_FREE(q, 1);
+    free(q);
     return str_arr;
 }
 
@@ -582,7 +588,7 @@ void out_edge_iterator_free(OutEdgeIterator *iter) {
     OutEdgeSet *set = iter->set;
     assert(set->live_iters > 0);
     (set->live_iters)--;
-    STRICT_FREE(iter, 1);
+    free(iter);
 }
 
 /**
@@ -700,7 +706,7 @@ LazyOutEdgeIterator *lazy_out_edge_iterator_alloc() {
 
 void lazy_out_edge_iterator_free(LazyOutEdgeIterator *iter) {
     delete iter->edges;
-    STRICT_FREE(iter, 1);
+    free(iter);
 }
 
 LazyOutEdgeIterator *get_lazy_out_edge_iterator_to_target(NODE_REF from,
@@ -714,7 +720,7 @@ LazyOutEdgeIterator *get_lazy_out_edge_iterator_to_target(NODE_REF from,
 
 Edge *next_lazy_out_edge(LazyOutEdgeIterator *iter) {
     if (iter->last != NULL) {
-	STRICT_FREE(iter->last, 1);
+	free(iter->last);
     }
     if (iter->edges->empty()) {
 	lazy_out_edge_iterator_free(iter);
@@ -744,7 +750,7 @@ InEdgeIterator *in_edge_iterator_alloc() {
  * by client code.
  */
 void in_edge_iterator_free(InEdgeIterator *iter) {
-    STRICT_FREE(iter, 1);
+    free(iter);
 }
 
 /**
@@ -817,7 +823,7 @@ void out_edge_set_grow(OutEdgeSet *set) {
 	    out_edge_set_get_bucket(e->to, new_num_buckets);
 	out_edge_table_add(new_table, new_bucket, e);
     }
-    STRICT_FREE(set->table, set->num_buckets);
+    free(set->table);
     set->num_buckets = new_num_buckets;
     set->table = new_table;
 }
@@ -885,7 +891,7 @@ void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	      Edge *l_edge, bool l_rev, Edge *r_edge, bool r_rev) {
     Edge *e = edge_new(from, to, kind, index, l_edge, l_rev, r_edge, r_rev);
     if (graph_contains(e)) {
-	STRICT_FREE(e, 1);
+	free(e);
     } else {
 	graph_add(e);
 	worklist_insert(e);
@@ -1450,7 +1456,7 @@ std::list<PartialPath*> recover_paths(Step *top_step,
 	    queue.push(ext_p);
 	}
 	// The previous path is no longer needed, and can be free'd.
-	STRICT_FREE(p, 1);
+	free(p);
     }
 
     // We should find at least one path, the one which actually produced the
@@ -1745,6 +1751,7 @@ void stop_profiler() {
  * generated non-terminal Edge%s.
  */
 int main() {
+    mem_manager_init();
     LOGGING_INIT();
 
     DECL_COUNTER(loading_start, CURRENT_TIME());
