@@ -121,6 +121,10 @@ public class SrcSinkFlowViz extends XMLVizReport
 									methodLineNum = 0;
 								}
 
+								c = c.makeOrGetSubCat(method);
+
+								progress += method.getNumber();
+
 								if (i < elems.length-1) {
 									stm = (Stmt)elems[i+1];
 									method = Program.containerMethod(stm);
@@ -129,9 +133,6 @@ public class SrcSinkFlowViz extends XMLVizReport
 
 								String sourceFileName = (method == null) ? "" : SourceInfo.filePath(method.getDeclaringClass());
 
-								c = c.makeOrGetSubCat(method);
-
-								progress += method.getNumber();
 
 								if (!seenLocs.contains(progress)) {
 									c.addRawValue(methName, sourceFileName, ""+methodLineNum, "method", "");
