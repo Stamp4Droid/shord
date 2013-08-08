@@ -14,7 +14,7 @@ import shord.analyses.VarNode;
 import shord.project.ClassicProject;
 import soot.Local;
 import soot.SootMethod;
-import stamp.analyses.DomL;
+import stamp.analyses.DomCL;
 import stamp.missingmodels.util.Relation.IndexRelation;
 import stamp.missingmodels.util.Relation.StubIndexRelation;
 import stamp.missingmodels.util.Util.MultivalueMap;
@@ -96,15 +96,15 @@ public class ConversionUtils {
 		 */
 
 		// ref taint flow
-		relations.add("cs_srcRefFlow", new IndexRelation("SrcArgFlowCtxt", "L", 1, null, "V", 2, 0));
-		relations.add("cs_srcRefFlow", new IndexRelation("SrcRetFlowCtxt", "L", 1, null, "V", 2, 0));
-		relations.add("cs_refSinkFlow", new IndexRelation("ArgSinkFlowCtxt", "V", 1, 0, "L", 2, null));
+		relations.add("cs_srcRefFlow", new IndexRelation("SrcArgFlowCtxt", "CL", 1, null, "V", 2, 0));
+		relations.add("cs_srcRefFlow", new IndexRelation("SrcRetFlowCtxt", "CL", 1, null, "V", 2, 0));
+		relations.add("cs_refSinkFlow", new IndexRelation("ArgSinkFlowCtxt", "V", 1, 0, "CL", 2, null));
 		relations.add("cs_refRefFlow", new IndexRelation("ArgArgTransferCtxt", "V", 1, 0, "V", 2, 0));
 		relations.add("cs_refRefFlow", new IndexRelation("ArgRetTransferCtxt", "V", 1, 0, "V", 2, 0));
 
 		// prim taint flow
-		relations.add("cs_srcPrimFlow", new IndexRelation("SrcRetPrimFlowCtxt", "L", 1, null, "U", 2, 0));
-		relations.add("cs_primSinkFlow", new IndexRelation("ArgSinkPrimFlowCtxt", "U", 1, 0, "L", 2, null));
+		relations.add("cs_srcPrimFlow", new IndexRelation("SrcRetPrimFlowCtxt", "CL", 1, null, "U", 2, 0));
+		relations.add("cs_primSinkFlow", new IndexRelation("ArgSinkPrimFlowCtxt", "U", 1, 0, "CL", 2, null));
 		relations.add("cs_primPrimFlow", new IndexRelation("ArgPrimRetPrimTransferCtxt", "U", 1, 0, "U", 2, 0));
 
 		// cross taint flow
@@ -174,8 +174,8 @@ public class ConversionUtils {
 
 	/*
 	 * Returns source information about the node.
-	 * a) If the node name is in DomL (starts with L), then
-	 * maps "L1" -> ["L", label].
+	 * a) If the node name is in DomCL (starts with CL), then
+	 * maps "CL1" -> ["CL", 1].
 	 * b) If the node name is in DomV (starts with V), then
 	 * returns [hyper link to containing method, hyper link
 	 * to variable, contextId]. 
@@ -190,13 +190,14 @@ public class ConversionUtils {
 		try {
 			// STEP 1: tokenize the node name
 			String[] tokens = tokenizeNodeName(node);
-	
-			// STEP 2: parse labels, reference variables, and primitive variables 
-			if(tokens[0].equals("L")) {
+			
+			// STEP 2: parse labels, reference variables, and primitive variables
+			if(tokens[0].equals("CL")) {
 				// STEP 2a: if it is a label, then get the string
-				DomL dom = (DomL)ClassicProject.g().getTrgt("L");
-				tokens[1] = dom.toUniqueString(Integer.parseInt(tokens[1]));
+				DomCL dom = (DomCL)ClassicProject.g().getTrgt("CL");
+				tokens[1] = dom.get(Integer.parseInt(tokens[1])).val0;
 			} else if(tokens[0].equals("V") || tokens[0].equals("U")) {
+				System.out.println("here3");
 				// STEP 2b: if it is a variable, then get the variable and method information
 				
 				// get the register from the domain
@@ -266,6 +267,8 @@ public class ConversionUtils {
 			}
 			return tokens;
 		} catch(Exception e) {
+			System.out.println("Error parsing node \"" + node + "\"!");
+			e.printStackTrace();
 			String[] tokens = {node};
 			return tokens;
 		}
@@ -286,7 +289,7 @@ public class ConversionUtils {
 	/*
 	 * This function tokenizes graph node names in one of two ways:
 	 * a) "V1_2" -> ["V", 1, 2]
-	 * b) "L1" -> ["L", 1]
+	 * b) "CL1" -> ["CL", 1]
 	 */
 	private static String[] tokenizeNodeName(String node) {
 		String[] result;
