@@ -5,6 +5,7 @@
 #include <queue>
 #include <signal.h>
 #include <stack>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -45,12 +46,26 @@ EdgeWorklist worklist;
  */
 DECL_COUNTER(iteration, 0);
 
-/**
- * The number of bytes allocated so far on the heap.
- */
-size_t allocated = 0;
+/* MEMORY & ERROR MANAGEMENT =============================================== */
 
-/* MEMORY MANAGEMENT ======================================================= */
+/**
+ * Underlying implementation of error-reporting macros.
+ */
+void report_error(bool fatal, bool system_error, const char *fmt, ...) {
+    int saved_errno = errno;
+    fflush(stdout);
+    va_list argp;
+    va_start(argp, fmt);
+    vfprintf(stderr, fmt, argp);
+    va_end(argp);
+    if (system_error) {
+	fprintf(stderr, "Reason: %s\n", strerror(saved_errno));
+    }
+    if (fatal) {
+	exit(EXIT_FAILURE);
+    }
+}
+
 
 /**
  * Underlying implementation of @ref STRICT_ALLOC.
@@ -60,8 +75,7 @@ void *strict_alloc(size_t num_bytes) {
     allocated += num_bytes;
     // TODO: Could use setrlimit for memory limiting (this is Linux-specific).
     if (allocated > MAX_MEMORY || (ptr = malloc(num_bytes)) == NULL) {
-	fprintf(stderr, "Out of memory\n");
-	exit(1);
+	SYS_ERR("Out of memory\n");
     }
     return ptr;
 }
@@ -953,8 +967,7 @@ void parse_input_files(PARSING_MODE mode) {
 		 EDGE_SET_FORMAT);
 	FILE *f = fopen(fname, "r");
 	if (f == NULL) {
-	    ERROR("Can't open input file: %s\n", fname);
-	    exit(1);
+	    SYS_ERR("Can't open input file: %s\n", fname);
 	}
 	while (true) {
 	    char src_buf[256], tgt_buf[256], idx_buf[32];
@@ -966,11 +979,13 @@ void parse_input_files(PARSING_MODE mode) {
 	    } else {
 		num_scanned = fscanf(f, "%s %s", src_buf, tgt_buf);
 	    }
-	    if (errno != 0 || (num_scanned != exp_num_scanned
-			       && num_scanned != EOF)) {
+	    if (errno != 0) {
 		fclose(f);
-		ERROR("Error while parsing file: %s\n", fname);
-		exit(1);
+		SYS_ERR("Error while parsing file: %s\n", fname);
+	    }
+	    if (num_scanned != exp_num_scanned && num_scanned != EOF) {
+		fclose(f);
+		APP_ERR("Error while parsing file: %s\n", fname);
 	    }
 	    if (num_scanned == EOF) {
 		fclose(f);
@@ -988,9 +1003,8 @@ void parse_input_files(PARSING_MODE mode) {
 		if (parametric) {
 		    INDEX index = index_parse(idx_buf);
 		    if (index == INDEX_NONE) {
-			ERROR("Invalid index: '%s'\n", idx_buf);
 			fclose(f);
-			exit(1);
+			APP_ERR("Invalid index: '%s'\n", idx_buf);
 		    }
 		    add_edge(src_node, tgt_node, k, index,
 			     NULL, false, NULL, false);
@@ -1026,8 +1040,7 @@ void print_results() {
 		 EDGE_SET_FORMAT);
 	FILE *f = fopen(fname, "w");
 	if (f == NULL) {
-	    ERROR("Can't open output file: %s\n", fname);
-	    exit(1);
+	    SYS_ERR("Can't open output file: %s\n", fname);
 	}
 	for (NODE_REF n = 0; n < num_nodes(); n++) {
 	    const char *src_name = node2name(n);
@@ -1056,8 +1069,7 @@ void print_results() {
     snprintf(fname, sizeof(fname), "%s/%s", OUTPUT_DIR, NODE_LISTING);
     FILE *f = fopen(fname, "w");
     if (f == NULL) {
-	ERROR("Can't open output file: %s\n", fname);
-	exit(1);
+	SYS_ERR("Can't open output file: %s\n", fname);
     }
     for (NODE_REF n = 0; n < num_nodes(); n++) {
 	fprintf(f, "%s\n", node2name(n));
@@ -1540,8 +1552,7 @@ void print_paths_for_kind(EDGE_KIND k, unsigned int num_paths) {
 	     PATHS_FORMAT);
     FILE *f = fopen(fname, "w");
     if (f == NULL) {
-	ERROR("Can't open output file: %s\n", fname);
-	exit(1);
+	SYS_ERR("Can't open output file: %s\n", fname);
     }
     fprintf(f, "<paths>\n");
 
@@ -1681,7 +1692,7 @@ void start_profiler() {
 	   profiler has had enough time to finish initialization. */
 	execlp("perf", "perf", "stat", "-p", pid_arg, (char *) NULL);
 	/* Will only reach here if exec fails. */
-	ERROR("Profiler spawn failed\n");
+	SYS_WARN("Profiler spawn failed\n");
     }
 }
 

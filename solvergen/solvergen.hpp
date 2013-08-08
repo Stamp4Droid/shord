@@ -424,11 +424,14 @@ typedef struct {
  * @{
  */
 
-/**
- * Log a message to @e stderr. The parameters of this macro behave like the
- * parameters of printf().
- */
-#define ERROR(...) fprintf(stderr, __VA_ARGS__)
+/** Report an app-specific error with a formatted message, then exit. */
+#define APP_ERR(...) report_error(true, false, __VA_ARGS__)
+/** Report an app-specific error with a formatted message. */
+#define APP_WARN(...) report_error(false, false, __VA_ARGS__)
+/** Report a system error with a formatted message, then exit. */
+#define SYS_ERR(...) report_error(true, true, __VA_ARGS__)
+/** Report a system error with a formatted message. */
+#define SYS_WARN(...) report_error(false, true, __VA_ARGS__)
 
 /**
  * A numeric counter, used for keeping statistics during a solver run.
