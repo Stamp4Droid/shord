@@ -35,6 +35,10 @@ import stamp.srcmap.SourceInfo;
  */
 public class SrcSinkFlowViz extends XMLVizReport
 {
+    protected enum StepActionType {
+        SAME, DROP, POP, BROKEN, OTHER
+    }
+
 	public SrcSinkFlowViz()
 	{
 		super("Flow Path Vizualization");
@@ -49,11 +53,71 @@ public class SrcSinkFlowViz extends XMLVizReport
 
 			System.out.println("SOLVERGENPATHS");
 
-			int count = 0;
+            ArrayList<Tree<SootMethod>> flows = new ArrayList<Tree<SootMethod>>();
+
+			int count = 0; //just counts for the sake of numbering. Will be phased out in future versions
 			for (Path p : PathsAdapter.getPaths()) {
 				count += 1;
-				String flowname = count + ") "+((CtxtLabelPoint)p.start).label + " --> " + ((CtxtLabelPoint)p.end).label;
-				Category mc = makeOrGetPkgCat(new SootClass(flowname.replace('.','_')));
+                String startLabel = ((CtxtLabelPoint)p.start).label;
+                String endLabel = ((CtxtLabelPoint)p.end).label;
+				String flowname = count + ") "+ startLabel + " --> " + endLabel;
+
+                Tree<SootMethod> t = new Tree<SootMethod>(flowname);
+                Node<SootMethod> lastNode = t.getRoot();
+    
+                for (Step s : p.steps) {
+                    //TODO: init?!? need to add while set of ctxt at once
+                    switch(getStepActionType(s, lastNode, t)) {
+                        case SAME:
+                            //getAuxInfo
+                            lastNode = t.getParent(lastNode).addChild(new Node<SootMethod>(/* the method */));
+                            break;
+                        case DROP:
+                            //getAuxInfo
+                            lastNode = lastNode.addChild(new Node<SootMethod>(/* the method */));
+                            break;
+                        case POP:
+                            //getAuxInfo
+                            Node<SootMethod> grandFather = t.getParent(t.getParent(lastNode));
+                            Node<SootMethod> greatGrandFather = t.getParent(grandFather);
+                            if (greatGrandFather == t.getRoot()) {
+                                greatgrandFather.replaceChild(/* replace previous top with new top method */);
+                            }
+                            //grandfather shouldn't be root or anything like that
+                            //if stuff
+                            lastNode = grandfather.addChild(/* stmt method */);
+                            break;
+                        case BROKEN:
+                            //getAuxInfo
+                            lastNode = t.getRoot().addChild(/* add whole context */);
+                            break;
+                        case OTHER:
+                        default:
+                            throw new Excpetion("Unrecognized StepActionType in SrcSinkFlowViz generate");
+                    }
+                }
+            }
+
+		} catch (IllegalStateException ise) {
+			// The hope is that this will be caught here if the error is simply that
+			// no path solver was run. Try to provide some intelligable feeback...
+			makeOrGetSubCat("Error: No Path Solver Found"); // TODO: undesireable b/c creates empty + drop-down
+			System.out.println("No path solver found so no path visualization could be generated.");
+			System.out.println("To visualize paths run with -Dstamp.backend=solvergen");
+
+		} catch (Exception e) {
+			//Something else went wrong...
+			System.err.println("Problem producing FlowViz report");
+			e.printStackTrace();
+		}
+	}
+
+    private StepActionType getStepActionType(Step s, Node<SootMethod> lastNode, Tree t) {
+
+    }
+}
+                
+/*
 				Set<String> seenLocs = new HashSet();
 
 				SootMethod lastStackBtm = null;
@@ -175,11 +239,6 @@ public class SrcSinkFlowViz extends XMLVizReport
 								}
 
 							} 
-							/*else if (s.target instanceof CtxtObjPoint) {
-								c.newTuple().addRawValue("Obj", "", "0", "method", "")
-									.addValue("Label: " + "CtxtObj");
-
-							}*/
 						}
 						if (elems.length > 0) {
 							lastStackBtm = Program.containerMethod((Stmt)elems[elems.length-1]);
@@ -205,3 +264,4 @@ public class SrcSinkFlowViz extends XMLVizReport
 		}
 	}
 }
+*/
