@@ -1,7 +1,7 @@
 package stamp.missingmodels.viz.dot;
 
 import stamp.missingmodels.util.FileManager.FileType;
-import stamp.missingmodels.util.FileManager.StampFile;
+import stamp.missingmodels.util.FileManager.StampOutputFile;
 
 public abstract class Viz<X> {
 	private int vizCount = 0;
@@ -14,8 +14,8 @@ public abstract class Viz<X> {
 	//public abstract JSONObject vizJSON(X x);
 	public abstract DotObject vizDot(X x);
 
-	public StampFile viz(final X x) {
-		return new StampFile() {
+	public StampOutputFile viz(final X x) {
+		return new StampOutputFile() {
 			@Override
 			public String getName() {
 				return filename + (vizCount++) + ".dot";

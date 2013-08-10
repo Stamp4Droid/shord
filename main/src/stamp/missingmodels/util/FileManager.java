@@ -1,6 +1,8 @@
 package stamp.missingmodels.util;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
@@ -19,12 +21,12 @@ public class FileManager implements Serializable {
 	 * either scratch files or output files.
 	 */
 	public static enum FileType {
-		SCRATCH, OUTPUT;		
+		PERMANENT, OUTPUT, SCRATCH;		
 	}
-	
+
 	/*
-	 * A basic data structure for generating file content,
-	 * to be used as input to the file manager.
+	 * A basic data structure for files, to be used as input
+	 * to the file manager.
 	 */
 	public static interface StampFile {
 		/*
@@ -40,8 +42,14 @@ public class FileManager implements Serializable {
 		 * 
 		 * @return: The file type.
 		 */
-		public abstract FileType getType();
-		
+		public abstract FileType getType();		
+	}
+	
+	/*
+	 * A basic data structure for generating file content,
+	 * to be used as input to the file manager.
+	 */
+	public static interface StampOutputFile extends StampFile {
 		/*
 		 * Returns the content to be written to the file.
 		 * 
@@ -49,9 +57,28 @@ public class FileManager implements Serializable {
 		 */
 		public abstract String getContent();
 	}
+	
+	/*
+	 * A basic data structure for inputting objects from
+	 * a file, to be used as input to the file manager.
+	 * 
+	 * @param T The object associated to the file.
+	 */
+	public static interface StampInputFile<T> extends StampFile {
+		/*
+		 * Returns an object based on the given file.
+		 * 
+		 * @param br: A buffered reader from which to read input.
+		 * @return: The object associated to the inputted file
+		 * content.
+		 */
+		public abstract T getObject(BufferedReader br) throws IOException;
+		
+	}
 
-	private final File scratchDirectory;
+	private final File permanentDirectory;
 	private final File outputDirectory;
+	private final File scratchDirectory;
 	
 	/*
 	 * The generic constructor. If useScratch is false, then it
@@ -62,17 +89,19 @@ public class FileManager implements Serializable {
 	 * @param useScratch: Whether or not to use the existing
 	 * scratch directory.
 	 */
-	public FileManager(File outputDirectory, File scratchDirectory, boolean useScratch) throws IOException {
+	public FileManager(File permanentDirectory, File outputDirectory, File scratchDirectory, boolean useScratch) throws IOException {
 		// STEP 1: delete the scratch directory if needed, and
 		// ensure that the directories exist.
 		if(!useScratch) {
 			scratchDirectory.delete();
 		}
 		
-		scratchDirectory.mkdirs();
+		permanentDirectory.mkdirs();
 		outputDirectory.mkdirs();
+		scratchDirectory.mkdirs();
 		
 		// STEP 2: set the fields.
+		this.permanentDirectory = permanentDirectory;
 		this.outputDirectory = outputDirectory;
 		this.scratchDirectory = scratchDirectory;
 	}
@@ -87,10 +116,12 @@ public class FileManager implements Serializable {
 	 */
 	public File getDirectory(FileType type) {
 		switch(type) {
-		case SCRATCH:
-			return this.scratchDirectory;
+		case PERMANENT:
+			return this.permanentDirectory;
 		case OUTPUT:
 			return this.outputDirectory;
+		case SCRATCH:
+			return this.scratchDirectory;
 		default:
 			return null;					
 		}
@@ -107,13 +138,26 @@ public class FileManager implements Serializable {
 	}
 	
 	/*
+	 * Reads the contents of the stamp file and
+	 * returns the associated object.
+	 * 
+	 * @param file: The content to be written.
+	 * @param type: The file type. 
+	 * @return: The object associated with the file.
+	 */	
+	public <T> T read(StampInputFile<T> stampFile) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(this.getFile(stampFile)));
+		return stampFile.getObject(br);
+	}
+	
+	/*
 	 * Writes the contents of the stamp file to the
 	 * appropriate directory.
 	 * 
 	 * @param file: The content to be written.
 	 * @param type: The file type. 
 	 */
-	public void write(StampFile stampFile) throws IOException {
+	public void write(StampOutputFile stampFile) throws IOException {
 		File file = new File(this.getDirectory(stampFile.getType()), stampFile.getName());
 		PrintWriter printWriter = new PrintWriter(file);
 		printWriter.println(stampFile.getContent());

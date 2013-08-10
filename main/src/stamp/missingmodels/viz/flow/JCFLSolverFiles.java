@@ -1,5 +1,7 @@
 package stamp.missingmodels.viz.flow;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -8,7 +10,8 @@ import java.util.Set;
 
 import stamp.missingmodels.util.ConversionUtils;
 import stamp.missingmodels.util.FileManager.FileType;
-import stamp.missingmodels.util.FileManager.StampFile;
+import stamp.missingmodels.util.FileManager.StampInputFile;
+import stamp.missingmodels.util.FileManager.StampOutputFile;
 import stamp.missingmodels.util.StubLookup;
 import stamp.missingmodels.util.StubLookup.StubLookupKey;
 import stamp.missingmodels.util.StubLookup.StubLookupValue;
@@ -28,11 +31,11 @@ import stamp.missingmodels.viz.flow.FlowObject.AliasCompressedFlowObject;
  * 
  * @author Osbert Bastani
  */
-public class FlowWriter {
+public class JCFLSolverFiles {
 	/*
 	 * Outputs a list of all the stubs used in a src2sink flow.
 	 */
-	public static class AllStubsFile implements StampFile {
+	public static class AllStubsFile implements StampOutputFile {
 		private final StubLookup s;
 
 		public AllStubsFile(StubLookup s) {
@@ -72,7 +75,7 @@ public class FlowWriter {
 	/*
 	 * Output a list of all stub models included in the analysis.
 	 */
-	public static class StubModelsFile implements StampFile {
+	public static class StubModelsFile implements StampOutputFile {
 		private final StubLookup s;
 
 		public StubModelsFile(StubLookup s) {
@@ -104,7 +107,7 @@ public class FlowWriter {
 	 * For each src2sink edge in the graph, prints a list of all the
 	 * stub models that are used in the edge.
 	 */
-	public static class StubInputsFile implements StampFile {
+	public static class StubInputsFile implements StampOutputFile {
 		private final Graph g;
 		private final StubLookup s;
 
@@ -135,7 +138,7 @@ public class FlowWriter {
 				for(Pair<Edge,Boolean> pair : positiveWeightEdges.get(edge)) {
 					EdgeData data = pair.getX().getData(this.g);
 					boolean forward = pair.getY();
-					
+
 					StubLookupValue info = s.get(new StubLookupKey(data.symbol, data.from, data.to));
 					String line;
 					if(info != null) {
@@ -150,12 +153,12 @@ public class FlowWriter {
 			return sb.toString();
 		}
 	}
-	
+
 	/*
 	 * Prints a list of all stub models used in src2sink edges,
 	 * including the number of times that they are used.
 	 */
-	public static class AllStubInputsFile implements StampFile {
+	public static class AllStubInputsFile implements StampOutputFile {
 		private final Graph g;
 		private final StubLookup s;
 
@@ -183,7 +186,7 @@ public class FlowWriter {
 				for(Pair<Edge,Boolean> pair : positiveWeightEdges.get(edge)) {
 					EdgeData data = pair.getX().getData(this.g);
 					boolean forward = pair.getY();
-					
+
 					StubLookupValue info = s.get(new StubLookupKey(data.symbol, data.from, data.to));
 					String line;
 					if(info != null) {
@@ -201,41 +204,11 @@ public class FlowWriter {
 			return sb.toString();
 		}
 	}
-	
-	/*
-	 * Prints a stub model set.
-	 */
-	public static class StubModelSetFile implements StampFile {
-		private final StubModelSet m;
 
-		public StubModelSetFile(StubModelSet m) {
-			this.m = m;
-		}
-
-		@Override
-		public String getName() {
-			return "StubModelSet.txt";
-		}
-
-		@Override
-		public FileType getType() {
-			return FileType.OUTPUT;
-		}
-
-		@Override
-		public String getContent() {
-			StringBuilder sb = new StringBuilder();
-			for(Map.Entry<StubModel, Integer> entry : this.m.entrySet()) {
-				sb.append(entry.getKey().toString() + "#" + entry.getValue().toString()).append("\n");
-			}
-			return sb.toString();
-		}
-	}
-	
 	/*
 	 * Returns a dot file visualizing the flow graph.
 	 */
-	public static StampFile getFlowGraphViz(Graph g, StubLookup s) {
+	public static StampOutputFile getFlowGraphViz(Graph g, StubLookup s) {
 		List<Pair<String,String>> edges = new ArrayList<Pair<String,String>>();
 		Set<String> sources = new HashSet<String>();
 		Set<String> sinks = new HashSet<String>();
@@ -259,11 +232,11 @@ public class FlowWriter {
 				if(sinkData.symbol.equals("cs_refSinkFlowNew") || sinkData.symbol.equals("cs_primSinkFlowNew")) {
 					sinks.add(sinkData.to);
 				}
-				
+
 				if(sourceInfo != null && sinkInfo != null) {
-		    		edges.add(new Pair<String,String>(sourceInfo.toString(), sinkInfo.toString()));
+					edges.add(new Pair<String,String>(sourceInfo.toString(), sinkInfo.toString()));
 				} else {
-		    		System.out.println("ERROR: Src2Sink path length too short!");
+					System.out.println("ERROR: Src2Sink path length too short!");
 				}
 			}
 		}
@@ -273,8 +246,8 @@ public class FlowWriter {
 	/*
 	 * Returns a list of files that are the HTML objects for the visualization.
 	 */
-	public static Set<StampFile> viz(final Graph g, final StubLookup s) {
-		Set<StampFile> files = new HashSet<StampFile>();
+	public static Set<StampOutputFile> viz(final Graph g, final StubLookup s) {
+		Set<StampOutputFile> files = new HashSet<StampOutputFile>();
 		final Set<String> terminals = new HashSet<String>();
 		terminals.add("FlowsTo");
 		for(final Edge edge : g.getEdges("Src2Sink")) {
@@ -284,7 +257,7 @@ public class FlowWriter {
 			String[] sinkTokens = ConversionUtils.getNodeInfoTokens(edge.to.getName());
 			final String sink = sinkTokens[1].substring(1);
 
-			files.add(new StampFile() {
+			files.add(new StampOutputFile() {
 				@Override
 				public String getName() {
 					return source + "2" + sink + ".out";
@@ -300,9 +273,76 @@ public class FlowWriter {
 					//return new MethodCompressedFlowObject(g.getPath(edge), g, s).toString();
 					return new AliasCompressedFlowObject(g.getPath(edge, terminals), g, s).toString();
 				}
-				
+
 			});
 		}
 		return files;
+	}
+
+	/*
+	 * Prints a stub model set.
+	 */
+	public static class StubModelSetOutputFile implements StampOutputFile {
+		private final StubModelSet m;
+
+		public StubModelSetOutputFile(StubModelSet m) {
+			this.m = m;
+		}
+
+		@Override
+		public String getName() {
+			return "StubModelSet.txt";
+		}
+
+		@Override
+		public FileType getType() {
+			return FileType.OUTPUT;
+		}
+
+		@Override
+		public String getContent() {
+			StringBuilder sb = new StringBuilder();
+			for(Map.Entry<StubModel, Integer> entry : this.m.entrySet()) {
+				sb.append(entry.getKey().toString() + "#" + entry.getValue().toString()).append("\n");
+			}
+			return sb.toString();
+		}
+	}
+
+	/*
+	 * Reads in a stub model set.
+	 */
+	public static class StubModelSetInputFile implements StampInputFile<StubModelSet> {
+		@Override
+		public String getName() {
+			return "StubModelSet.txt";
+		}
+
+		@Override
+		public FileType getType() {
+			return FileType.PERMANENT;
+		}
+
+		@Override
+		public StubModelSet getObject(BufferedReader br) throws IOException {
+			StubModelSet m = new StubModelSet();
+			String line;
+			while((line = br.readLine()) != null) {
+				if(line.equals("")) {
+					continue;
+				}
+				String[] tokens = line.split("#");
+				if(tokens.length != 2) {
+					throw new RuntimeException("Error parsing stub model " + line + ", not the right number of tokens!");
+				}
+				try {
+					m.put(new StubModel(tokens[0]), Integer.parseInt(tokens[1]));
+				} catch(NumberFormatException e) {
+					e.printStackTrace();
+					throw new RuntimeException("Error parsing stub model " + line + ", number format exception!");
+				}
+			}
+			return m;
+		}
 	}
 }

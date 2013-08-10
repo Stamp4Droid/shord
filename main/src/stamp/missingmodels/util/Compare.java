@@ -1,13 +1,12 @@
 package stamp.missingmodels.util;
 
-import java.io.*;
-
 /*
  * Translates from the Chord method signature to the Soot method signature.
  * @author Saswat Anand
  * @author Osbert Bastani
  */
 public class Compare {
+	/*
 	public static void main(String[] args) throws IOException {
 		String line;
 		BufferedReader reader = new BufferedReader(new FileReader(args[0]));
@@ -19,6 +18,7 @@ public class Compare {
 		reader.close();
 		writer.close();
 	}
+	*/
 
 	public static String[] getTokens(String modelSig) {
 		String[] result = new String[3];

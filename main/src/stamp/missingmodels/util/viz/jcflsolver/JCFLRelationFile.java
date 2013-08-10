@@ -9,7 +9,7 @@ import java.util.Set;
 
 import stamp.missingmodels.util.FileManager;
 import stamp.missingmodels.util.FileManager.FileType;
-import stamp.missingmodels.util.FileManager.StampFile;
+import stamp.missingmodels.util.FileManager.StampOutputFile;
 import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.jcflsolver.Edge;
 import stamp.missingmodels.util.jcflsolver.EdgeData;
@@ -17,7 +17,7 @@ import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.missingmodels.util.jcflsolver.LabeledEdge;
 import stamp.missingmodels.util.jcflsolver.Node;
 
-public class JCFLRelationFile implements StampFile {
+public class JCFLRelationFile implements StampOutputFile {
 	private final Graph g;
 	private final String symbol;
 	private final FileType fileType;
