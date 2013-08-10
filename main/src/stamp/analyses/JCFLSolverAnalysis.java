@@ -13,11 +13,12 @@ import stamp.missingmodels.util.FileManager.FileType;
 import stamp.missingmodels.util.FileManager.StampFile;
 import stamp.missingmodels.util.Relation;
 import stamp.missingmodels.util.StubLookup;
+import stamp.missingmodels.util.StubLookup.StubModelSet;
 import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.missingmodels.util.viz.jcflsolver.JCFLRelationFile;
-import stamp.missingmodels.viz.flow.FlowWriter;
 import stamp.missingmodels.viz.flow.FlowWriter.AllStubInputsFile;
 import stamp.missingmodels.viz.flow.FlowWriter.StubInputsFile;
+import stamp.missingmodels.viz.flow.FlowWriter.StubModelSetFile;
 import chord.project.Chord;
 
 /*
@@ -29,14 +30,14 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 	/*
 	 * The following code is for running the JCFLSolver analysis.
 	 */
-	private void fillTerminalEdges(Graph g, StubLookup stubLookup) {
+	private void fillTerminalEdges(Graph g, StubLookup stubLookup, StubModelSet stubModelSet) {
 		for(int k=0; k<g.numKinds(); k++) {
 			if(g.isTerminal(k)) {
 				if(ConversionUtils.getChordRelationsFor(g.kindToSymbol(k)).isEmpty()) {
 					System.out.println("No edges found for relation " + g.kindToSymbol(k) + "...");
 				}
 				for(Relation rel : ConversionUtils.getChordRelationsFor(g.kindToSymbol(k))) {
-					rel.addEdges(g.kindToSymbol(k), g, stubLookup);
+					rel.addEdges(g.kindToSymbol(k), g, stubLookup, stubModelSet);
 				}
 			}
 		}
@@ -44,6 +45,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 	
 	private static Graph g = new E12();
 	private static StubLookup s = new StubLookup();
+	private static StubModelSet m = new StubModelSet();
 	
 	public static Graph g() {
 	    return g;
@@ -61,7 +63,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 	}
 	
 	@Override public void run() {
-		fillTerminalEdges(g, s);
+		fillTerminalEdges(g, s, m);
 		g.algo.process();
 
 		printRelCounts(g);
@@ -78,6 +80,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		files.add(new JCFLRelationFile(FileType.OUTPUT, g, "Src2Sink", true));
 		files.add(new AllStubInputsFile(g, s));
 		files.add(new StubInputsFile(g, s));
+		files.add(new StubModelSetFile(new StubModelSet(g, s)));
 		//files.addAll(FlowWriter.viz(g, s));
 		try {
 			FileManager manager = new FileManager(outputDir, scratchDir, true);

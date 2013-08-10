@@ -24,7 +24,7 @@ public class MissingModels extends XMLReport {
 		Graph g = JCFLSolverAnalysis.g();
 		StubLookup s = JCFLSolverAnalysis.s();
 		
-		MultivalueMap<Edge,Pair<Edge,Boolean>> positiveWeightEdges = FlowWriter.getPositiveWeightEdges(JCFLSolverAnalysis.g());
+		MultivalueMap<Edge,Pair<Edge,Boolean>> positiveWeightEdges = JCFLSolverAnalysis.g().getPositiveWeightEdges("Src2Sink");
 		for(Edge edge : positiveWeightEdges.keySet()) {
 			String source = ConversionUtils.getNodeInfoTokens(edge.from.getName())[1];
 			String sink = ConversionUtils.getNodeInfoTokens(edge.to.getName())[1];

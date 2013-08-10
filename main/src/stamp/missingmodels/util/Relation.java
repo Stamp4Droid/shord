@@ -4,6 +4,7 @@ import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.util.StubLookup.StubLookupKey;
 import stamp.missingmodels.util.StubLookup.StubLookupValue;
+import stamp.missingmodels.util.StubLookup.StubModelSet;
 import stamp.missingmodels.util.jcflsolver.Graph;
 
 /*
@@ -78,9 +79,10 @@ public abstract class Relation {
 	 * 
 	 * @param tuple: The Shord tuple being converted to a graph edge.
 	 * @return: True if the tuple should be added, false if the tuple
+	 * @param stubModelSet: A set of models to filter by.
 	 * should be discarded.
 	 */
-	protected abstract boolean filter(int[] tuple);
+	protected abstract boolean filter(int[] tuple, StubModelSet stubModelSet);
 
 	/*
 	 * Returns the stub lookup key corresponding to the tuple. By default,
@@ -100,8 +102,10 @@ public abstract class Relation {
 	 * 
 	 * @param edgename: The name of the edge in the graph.
 	 * @param g: The graph to which we are adding the edges.
+	 * @param stubLookup: The lookup to which to add the methods.
+	 * @param stubModelSet: Argument for the filter. 
 	 */
-	public void addEdges(String edgeName, Graph g, StubLookup stubLookup) {
+	public void addEdges(String edgeName, Graph g, StubLookup stubLookup, StubModelSet stubModelSet) {
 		// STEP 0: Get some basic information about the kind of edge we are adding.
 		int kind = g.symbolToKind(edgeName);
 		short weight = g.kindToWeight(kind);
@@ -113,7 +117,7 @@ public abstract class Relation {
 
 		// STEP 2: Iterate over relation and add to the graph.
 		for(int[] tuple : res) {
-			if(this.filter(tuple)) {
+			if(this.filter(tuple, stubModelSet)) {
 				String sourceName = getSourceFromTuple(tuple);
 				String sinkName = getSinkFromTuple(tuple);
 
@@ -214,7 +218,7 @@ public abstract class Relation {
 			return null;
 		}
 
-		@Override protected boolean filter(int[] tuple) {
+		@Override protected boolean filter(int[] tuple, StubModelSet stubModelSet) {
 			return true;
 		}
 	}
@@ -253,8 +257,8 @@ public abstract class Relation {
 			return new StubLookupValue(this.getRelationName(), tuple[this.methodIndex], firstArg, secondArg);
 		}
 
-		@Override protected boolean filter(int[] tuple) {
-			return true;
+		@Override protected boolean filter(int[] tuple, StubModelSet stubModelSet) {
+			return stubModelSet.get(this.getStubLookupValueFromTuple(tuple)) != 2;
 		}
 	}
 }

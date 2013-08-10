@@ -13,7 +13,6 @@ import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.jcflsolver.Edge;
 import stamp.missingmodels.util.jcflsolver.EdgeData;
 import stamp.missingmodels.util.jcflsolver.Graph;
-import stamp.missingmodels.viz.flow.FlowWriter;
 
 /*
  * @author Osbert Bastani
@@ -29,7 +28,7 @@ public class AllMissingModels extends XMLReport {
 		Counter<String> keys = new Counter<String>();
 		Map<String,StubLookupValue> values = new HashMap<String,StubLookupValue>(); 
 		
-		MultivalueMap<Edge,Pair<Edge,Boolean>> positiveWeightEdges = FlowWriter.getPositiveWeightEdges(JCFLSolverAnalysis.g());
+		MultivalueMap<Edge,Pair<Edge,Boolean>> positiveWeightEdges = JCFLSolverAnalysis.g().getPositiveWeightEdges("Src2Sink");
 		for(Edge edge : positiveWeightEdges.keySet()) {
 			for(Pair<Edge,Boolean> pair : positiveWeightEdges.get(edge)) {
 				EdgeData data = pair.getX().getData(g);

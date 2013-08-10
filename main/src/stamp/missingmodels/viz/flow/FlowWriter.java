@@ -12,6 +12,8 @@ import stamp.missingmodels.util.FileManager.StampFile;
 import stamp.missingmodels.util.StubLookup;
 import stamp.missingmodels.util.StubLookup.StubLookupKey;
 import stamp.missingmodels.util.StubLookup.StubLookupValue;
+import stamp.missingmodels.util.StubLookup.StubModel;
+import stamp.missingmodels.util.StubLookup.StubModelSet;
 import stamp.missingmodels.util.Util.Counter;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.Util.Pair;
@@ -99,23 +101,6 @@ public class FlowWriter {
 	}
 
 	/*
-	 * Retrieves the positive weight edges from the src2sink edges.
-	 */
-	public static MultivalueMap<Edge,Pair<Edge,Boolean>> getPositiveWeightEdges(Graph g) {
-		MultivalueMap<Edge,Pair<Edge,Boolean>> positiveWeightEdges = new MultivalueMap<Edge,Pair<Edge,Boolean>>();
-		for(Edge edge : g.getEdges("Src2Sink")) {
-			positiveWeightEdges.ensure(edge);
-			List<Pair<Edge,Boolean>> path = g.getPath(edge);
-			for(Pair<Edge,Boolean> pair : path) {
-				if(pair.getX().weight > 0) {
-					positiveWeightEdges.add(edge, pair);
-				}
-			}
-		}
-		return positiveWeightEdges;
-	}
-
-	/*
 	 * For each src2sink edge in the graph, prints a list of all the
 	 * stub models that are used in the edge.
 	 */
@@ -141,7 +126,7 @@ public class FlowWriter {
 		@Override
 		public String getContent() {
 			StringBuilder sb = new StringBuilder();
-			MultivalueMap<Edge,Pair<Edge,Boolean>> positiveWeightEdges = getPositiveWeightEdges(this.g);
+			MultivalueMap<Edge,Pair<Edge,Boolean>> positiveWeightEdges = this.g.getPositiveWeightEdges("Src2Sink");
 			for(Edge edge : positiveWeightEdges.keySet()) {
 				String source = ConversionUtils.getNodeInfoTokens(edge.from.getName())[1];
 				String sink = ConversionUtils.getNodeInfoTokens(edge.to.getName())[1];
@@ -193,7 +178,7 @@ public class FlowWriter {
 		public String getContent() {
 			StringBuilder sb = new StringBuilder();
 			Counter<String> keys = new Counter<String>();
-			MultivalueMap<Edge,Pair<Edge,Boolean>> positiveWeightEdges = getPositiveWeightEdges(this.g);
+			MultivalueMap<Edge,Pair<Edge,Boolean>> positiveWeightEdges = this.g.getPositiveWeightEdges("Src2Sink");
 			for(Edge edge : positiveWeightEdges.keySet()) {
 				for(Pair<Edge,Boolean> pair : positiveWeightEdges.get(edge)) {
 					EdgeData data = pair.getX().getData(this.g);
@@ -213,6 +198,36 @@ public class FlowWriter {
 				sb.append(key + " " + keys.getCount(key)).append("\n");
 			}
 			sb.append("\n");
+			return sb.toString();
+		}
+	}
+	
+	/*
+	 * Prints a stub model set.
+	 */
+	public static class StubModelSetFile implements StampFile {
+		private final StubModelSet m;
+
+		public StubModelSetFile(StubModelSet m) {
+			this.m = m;
+		}
+
+		@Override
+		public String getName() {
+			return "StubModelSet.txt";
+		}
+
+		@Override
+		public FileType getType() {
+			return FileType.OUTPUT;
+		}
+
+		@Override
+		public String getContent() {
+			StringBuilder sb = new StringBuilder();
+			for(Map.Entry<StubModel, Integer> entry : this.m.entrySet()) {
+				sb.append(entry.getKey().toString() + " " + entry.getValue().toString());
+			}
 			return sb.toString();
 		}
 	}
