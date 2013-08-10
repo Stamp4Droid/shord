@@ -74,7 +74,6 @@ public class IcdfAnnotation extends AnnotationInjector.Visitor
                     methSig.equals("<android.app.Activity: void startActivity(android.content.Intent)>")
                     || methSig.equals("<android.content.ContextWrapper: void sendBroadcast(android.content.Intent)>")
                     //shall we mark bindservice?|| methSig.equals("<android.content.ContextWrapper: boolean bindService(android.content.Intent,android.content.ServiceConnection,int)>") 
-                    || methSig.equals("<android.app.Activity: void startActivities(android.content.Intent[])>")
                     || methSig.equals("<android.content.ContextWrapper: android.content.ComponentName startService(android.content.Intent)>")
                     || methSig.equals("<android.content.ContextWrapper: void sendBroadcast(android.content.Intent,java.lang.String)>")
                     || methSig.equals("<android.content.ContextWrapper: void sendStickyBroadcast(android.content.Intent)>")
