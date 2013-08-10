@@ -105,6 +105,8 @@ public class StubLookup extends HashMap<StubLookupKey,StubLookupValue> {
 	 * Represents a stub model. 
 	 */
 	public static class StubModel {
+		private static final char SEPARATOR = ';';
+		
 		public final String relationName;
 		public final String methodName;
 		public final Integer firstArg;
@@ -182,7 +184,7 @@ public class StubLookup extends HashMap<StubLookupKey,StubLookupValue> {
 		@Override public String toString() {
 			String firstArgStr = this.firstArg == null ? "null" : this.firstArg.toString();
 			String secondArgStr = this.secondArg == null ? "null" : this.secondArg.toString();
-			return "(" + this.relationName + "," + this.methodName + "," + firstArgStr + "," + secondArgStr + ")";
+			return "{" + this.relationName + SEPARATOR + this.methodName + SEPARATOR + firstArgStr + SEPARATOR + secondArgStr + "}";
 		}
 	}
 	
