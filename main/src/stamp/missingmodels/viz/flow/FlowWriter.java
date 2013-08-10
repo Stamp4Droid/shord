@@ -226,7 +226,7 @@ public class FlowWriter {
 		public String getContent() {
 			StringBuilder sb = new StringBuilder();
 			for(Map.Entry<StubModel, Integer> entry : this.m.entrySet()) {
-				sb.append(entry.getKey().toString() + " " + entry.getValue().toString());
+				sb.append(entry.getKey().toString() + " " + entry.getValue().toString()).append("\n");
 			}
 			return sb.toString();
 		}
