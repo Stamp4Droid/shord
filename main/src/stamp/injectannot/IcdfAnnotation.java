@@ -113,6 +113,7 @@ public class IcdfAnnotation extends AnnotationInjector.Visitor
                     || methSig.equals("<android.content.Intent: android.content.Intent setType(java.lang.String)>")
                     || methSig.equals("<android.content.Intent: android.content.Intent setDataAndType(android.net.Uri,java.lang.String)>")
                     || methSig.equals("<android.net.Uri: android.net.Uri parse(java.lang.String)>")
+                    //|| methSig.equals("<android.net.Uri: android.net.Uri parse(java.lang.String)>")
                     || methSig.equals("<android.content.Intent: void <init>(java.lang.String,android.net.Uri)>")
                     || methSig.equals("<android.content.Intent: void <init>(java.lang.String)>")
                     ) {
