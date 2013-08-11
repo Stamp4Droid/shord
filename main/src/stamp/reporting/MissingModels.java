@@ -10,7 +10,6 @@ import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.jcflsolver.Edge;
 import stamp.missingmodels.util.jcflsolver.EdgeData;
 import stamp.missingmodels.util.jcflsolver.Graph;
-import stamp.missingmodels.viz.flow.JCFLSolverFiles;
 
 /*
  * @author Osbert Bastani

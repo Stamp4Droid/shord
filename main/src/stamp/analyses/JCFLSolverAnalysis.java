@@ -65,7 +65,8 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 	
 	@Override public void run() {
 		// STEP 0: Set up the file manager.
-		File permanentDir = new File(System.getProperty("stamp.out.dir") + "../../temp/" + File.separator + "cfl");
+		System.out.println("STAMP OUTPUT DIRECTORY: " + System.getProperty("stamp.out.dir"));
+		File permanentDir = new File(System.getProperty("stamp.out.dir") + "/../../temp/");
 		File outputDir = new File(System.getProperty("stamp.out.dir") + File.separator + "cfl");
 		File scratchDir = new File(System.getProperty("stamp.out.dir") + File.separator + "cfl");
 

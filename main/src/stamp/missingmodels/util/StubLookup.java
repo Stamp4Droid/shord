@@ -105,7 +105,7 @@ public class StubLookup extends HashMap<StubLookupKey,StubLookupValue> {
 	 * Represents a stub model. 
 	 */
 	public static class StubModel {
-		private static final char SEPARATOR = ';';
+		private static final String SEPARATOR = ";";
 		
 		public final String relationName;
 		public final String methodName;
@@ -127,7 +127,7 @@ public class StubLookup extends HashMap<StubLookupKey,StubLookupValue> {
 		}
 		
 		public StubModel(String representation) {
-			String[] tokens = representation.substring(1, representation.length()-1).split(",");
+			String[] tokens = representation.substring(1, representation.length()-1).split(SEPARATOR);
 			this.relationName = tokens[0];
 			this.methodName = tokens[1];
 			this.firstArg = tokens[2].equals("null") ? null : Integer.parseInt(tokens[2]);
