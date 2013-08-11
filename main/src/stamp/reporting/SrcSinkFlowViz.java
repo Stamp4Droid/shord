@@ -46,6 +46,7 @@ public class SrcSinkFlowViz extends XMLVizReport
 
     public void generate()
 	{
+
 		try {
 			final ProgramRel relSrcSinkFlow = (ProgramRel)ClassicProject.g().getTrgt("flow");
 
@@ -54,30 +55,35 @@ public class SrcSinkFlowViz extends XMLVizReport
 			System.out.println("SOLVERGENPATHS");
 
             ArrayList<Tree<SootMethod>> flows = new ArrayList<Tree<SootMethod>>();
+            Map<SootMethod, ArrayList<CallSite> callSites = new HashMap<SootMethod, ArrayDeque<CallSite>>();
 
 			int count = 0; //just counts for the sake of numbering. Will be phased out in future versions
 			for (Path p : PathsAdapter.getPaths()) {
 				count += 1;
-                String startLabel = ((CtxtLabelPoint)p.start).label;
-                String endLabel = ((CtxtLabelPoint)p.end).label;
+                CtxtLabelPoint start = (CtxtLabelPoint)p.start;
+                CtxtLabelPoint end = (CtxtLabelPoint)p.end;
+                String startLabel = start.label;
+                String endLabel = end.label;
 				String flowname = count + ") "+ startLabel + " --> " + endLabel;
 
                 Tree<SootMethod> t = new Tree<SootMethod>(flowname);
                 Node<SootMethod> lastNode = t.getRoot();
+
+                //TODO init?? Does this work?
+                //Add ctxt for label
+                //System.err.println(/* context */);
     
                 for (Step s : p.steps) {
                     //TODO: init?!? need to add while set of ctxt at once
                     switch(getStepActionType(s, lastNode, t)) {
+                        CallSite cs = logCallSites(s, callSites);
                         case SAME:
-                            //getAuxInfo
                             lastNode = t.getParent(lastNode).addChild(new Node<SootMethod>(/* the method */));
                             break;
                         case DROP:
-                            //getAuxInfo
                             lastNode = lastNode.addChild(new Node<SootMethod>(/* the method */));
                             break;
                         case POP:
-                            //getAuxInfo
                             Node<SootMethod> grandFather = t.getParent(t.getParent(lastNode));
                             Node<SootMethod> greatGrandFather = t.getParent(grandFather);
                             if (greatGrandFather == t.getRoot()) {
@@ -88,7 +94,6 @@ public class SrcSinkFlowViz extends XMLVizReport
                             lastNode = grandfather.addChild(/* stmt method */);
                             break;
                         case BROKEN:
-                            //getAuxInfo
                             lastNode = t.getRoot().addChild(/* add whole context */);
                             break;
                         case OTHER:
@@ -112,8 +117,56 @@ public class SrcSinkFlowViz extends XMLVizReport
 		}
 	}
 
-    private StepActionType getStepActionType(Step s, Node<SootMethod> lastNode, Tree t) {
 
+    private StepActionType getStepActionType(Step s, Node<SootMethod> lastNode, Tree t) {
+    }
+
+    private CallSite logCallSites(Step s) {
+        
+        CtxtVarPoint point = (CtxtVarPoint)s.target;
+        Unit[] context = point.ctxt;
+
+        for (int i = 0; i < context.length; ++i) {
+            Stmt smt = (Stmt)context[i];
+        
+        }
+
+        CallSite cs = new CallSite();
+    }
+
+    private method getMethod() {
+        VarNode v = ((CtxtVarPoint)s.target).var;
+        SootMethod method = null;
+
+        if (v instanceof LocalVarNode) {
+            LocalVarNode localRegister = (LocalVarNode)v;
+            method = localRegister.meth;
+        } else if (v instanceof ThisVarNode) {
+            ThisVarNode thisRegister = (ThisVarNode)v;
+            method = thisRegister.method;
+        } else if (v instanceof ParamVarNode) {
+            ParamVarNode paramRegister = (ParamVarNode)v;
+            method = paramRegister.method;
+        } else if (v instanceof RetVarNode) {
+            RetVarNode retRegister = (RetVarNode)v;
+            method = retRegister.method;
+        } 
+
+        return method;
+    }
+
+    class CallSite {
+        String className;
+        String srcFilePath;
+        int lineNumber;
+        String methodName;
+
+        public CallSite(String cn, String sfp, int ln, String mn) {
+            className = cn;
+            srcFilePath = sfp;
+            lineNumber = ln;
+            methodName = mn;
+        }
     }
 }
                 
