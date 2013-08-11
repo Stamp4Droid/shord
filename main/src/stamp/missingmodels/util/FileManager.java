@@ -93,7 +93,7 @@ public class FileManager implements Serializable {
 		// STEP 1: delete the scratch directory if needed, and
 		// ensure that the directories exist.
 		if(!useScratch) {
-			scratchDirectory.delete();
+			//scratchDirectory.delete();
 		}
 		
 		permanentDirectory.mkdirs();

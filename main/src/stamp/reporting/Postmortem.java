@@ -39,7 +39,7 @@ public class Postmortem extends JavaAnalysis
 			,AllMissingModels.class
 		};
 
-		Class[] apkReports = new Class[]{
+		Class[] apkReports = new	 Class[]{
 			SrcSinkFlow.class
 		};
 

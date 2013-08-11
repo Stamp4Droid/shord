@@ -44,8 +44,8 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		}
 	}
 	
-	private static Graph g;
-	private static StubLookup s;
+	private static Graph g = new E12();
+	private static StubLookup s = new StubLookup();;;
 	private static StubModelSet m;
 	
 	public static Graph g() {
@@ -78,8 +78,6 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		}
 		
 		// STEP 1: Set up the graph, stub lookup, and load the stub model set if applicable.
-		g = new E12();
-		s = new StubLookup();
 		try {
 			m = manager.read(new StubModelSetInputFile());
 		} catch (IOException e) {
