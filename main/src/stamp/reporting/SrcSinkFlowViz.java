@@ -75,9 +75,9 @@ public class SrcSinkFlowViz extends XMLVizReport
                 //System.err.println(/* context */);
 
                 for (Step s : p.steps) {
-                    switch(getStepActionType(s, lastNode, t)) {
+                    SootMethod method = getMethod(s);
+                    switch(getStepActionType(method, s, lastNode, t)) {
                         logCallSites(s, callSites);
-                        SootMethod method = getMethod(s);
                         case SAME:
                             // could have consecutive exact callstack repeat
                             if (!lastNode.getData().equals(method)) {
@@ -139,7 +139,32 @@ public class SrcSinkFlowViz extends XMLVizReport
         }
     }
 
-    private StepActionType getStepActionType(Step s, Node<SootMethod> lastNode, Tree t) {
+
+    /**
+     * Returns the "StepActionType" of the Step s.
+     * In other words, returns the code for how the callgraph tree
+     * will be modified by s. See @StepActionType for information
+     * on return types.
+     */
+    private StepActionType getStepActionType(SootMethod method, Step s, Node<SootMethod> lastNode, Tree t) {
+         
+        // Throughout these we follow a minimal detection which, to my knowledge, ought to suffice.
+        // However, it may be wiser in order to be certain we report the correct type and catch edge
+        // cases to check that all conditions for each type apply
+        
+        if (lastNode.getData().equals(method)) {
+            return DROP;
+
+        } else if (t.getParent(lastNode).getData().equals(method)) {
+            return SAME;
+
+        } else if (t.getParent(t.getParent(lastNode)).getData().equals(method)) {
+
+        } else if (lastNode.isRoot() /* other condition? */ ) {
+            return BROKEN;
+        }
+        
+        return OTHER;
     }
 
     /**
