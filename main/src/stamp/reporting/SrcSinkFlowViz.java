@@ -78,7 +78,9 @@ public class SrcSinkFlowViz extends XMLVizReport
                     switch(getStepActionType(s, lastNode, t)) {
                         CallSite cs = logCallSites(s, callSites);
                         case SAME:
-                            lastNode = t.getParent(lastNode).addChild(new Node<SootMethod>(/* the method */));
+                            if (!lastNode.getData().equals(/* the method */) {
+                                lastNode = t.getParent(lastNode).addChild(new Node<SootMethod>(/* the method */));
+                            }
                             break;
                         case DROP:
                             lastNode = lastNode.addChild(new Node<SootMethod>(/* the method */));
@@ -121,20 +123,58 @@ public class SrcSinkFlowViz extends XMLVizReport
     private StepActionType getStepActionType(Step s, Node<SootMethod> lastNode, Tree t) {
     }
 
-    private CallSite logCallSites(Step s) {
+    /**
+     * Save take variable and context information
+     * find the associated source line, file, and class
+     * (i.e. the CallSite object) and save that into
+     * the map pamameter
+     */
+    private void logCallSites(Step s) {
         
         CtxtVarPoint point = (CtxtVarPoint)s.target;
         Unit[] context = point.ctxt;
 
-        for (int i = 0; i < context.length; ++i) {
-            Stmt smt = (Stmt)context[i];
-        
-        }
+        for (int i = 0; i < context.length-1; ++i) {
+            Stmt stm = (Stmt)context[i];
+            SootMethod method = getMethod(stm);
+            // We could filter methods here (i.e. framework), 
+            // but might make sense to do it
+            // instead while generating the XML report itself
 
-        CallSite cs = new CallSite();
+            // Is this too general? Maybe we should handle these
+            // statements differently based on their type?
+            if (method == null) {
+                continue;
+            }
+        }
     }
 
-    private method getMethod() {
+    
+    private CallSite generateCallSite(SootMethod method) {
+
+            SootClass declaringClass = method.getDeclaringClass());
+
+            // Create callsite 
+            String methName = method.getName();
+            int methodLineNum = SourceInfo.methodLineNum(method);
+            String className = SourceInfo.srcClassName(declaringClass);
+            String srcFilePath = SourceInfo.filePath();
+            /* Some weird gui behavior associated with line number -1 so...
+                ...This may be useful
+			if (methodLineNum < 0) {
+				methodLineNum = 0;
+			}
+            */
+
+            CallSite cs = new CallSite(methName, className, lineNumber, srcFilePath);
+            return cs;
+    }
+
+    /**
+     * Returns the method object associated with the 
+     * CtxtVarNode of the parameter step
+     */
+    private SootMethod getMethod(Step s) {
         VarNode v = ((CtxtVarPoint)s.target).var;
         SootMethod method = null;
 
@@ -155,166 +195,182 @@ public class SrcSinkFlowViz extends XMLVizReport
         return method;
     }
 
+    /**
+     * Returns the method object associated with the 
+     * method that contains the statement parameter
+     */
+    private SootMethod getMethod(Stmt stm) {
+        return Program.containerMethod(stm);
+    }
+
+    /**
+     * A class representing the data needed to represent a callsite
+     * in terms of data necessary for the frontend to locate and highlight
+     * the correct location in the correct source file.
+     * The method name identifier may not be strictly necessary and is more
+     * of an identifier. As far as the class is concerned, any parameter
+     * to the contstructor may be null
+     */
     class CallSite {
         String className;
         String srcFilePath;
         int lineNumber;
         String methodName;
 
-        public CallSite(String cn, String sfp, int ln, String mn) {
-            className = cn;
-            srcFilePath = sfp;
-            lineNumber = ln;
-            methodName = mn;
+        public CallSite(String methodName, String className, int lineNumber, String srcFilePath) {
+            this.methodName = methodName;
+            this.className = className;
+            this.srcFilePath = srcFilePath;
+            this.lineNumber = lineNumber
         }
     }
 }
                 
 /*
-				Set<String> seenLocs = new HashSet();
+Set<String> seenLocs = new HashSet();
 
-				SootMethod lastStackBtm = null;
-				SootMethod lastStackTop = null;
-				for (Step s : p.steps) {
-					if (s.target instanceof CtxtVarPoint) {
-						String progress = "";
-						Unit[] elems = ((CtxtVarPoint)s.target).ctxt.getElems();
-						Category c = mc;
-						System.out.println(s.target);
+SootMethod lastStackBtm = null;
+SootMethod lastStackTop = null;
+for (Step s : p.steps) {
+if (s.target instanceof CtxtVarPoint) {
+	String progress = "";
+	Unit[] elems = ((CtxtVarPoint)s.target).ctxt.getElems();
+	Category c = mc;
+	System.out.println(s.target);
 
-						//NOTE TODO: CURRENTLY ASSUMES K = 2, not WLOG exactly...
-						if (elems.length > 0 && Program.containerMethod((Stmt)elems[0]).equals(lastStackBtm)) {
-							Stmt stm  = (Stmt)elems[elems.length-1];
-							SootMethod method = Program.containerMethod(stm);
+	//NOTE TODO: CURRENTLY ASSUMES K = 2, not WLOG exactly...
+	if (elems.length > 0 && Program.containerMethod((Stmt)elems[0]).equals(lastStackBtm)) {
+		Stmt stm  = (Stmt)elems[elems.length-1];
+		SootMethod method = Program.containerMethod(stm);
 
-							if (SourceInfo.isFrameworkClass(method.getDeclaringClass()) && (c==null || c.equals(mc))) {
-								continue;
-							}
-							
-							c = c.makeOrGetSupCat(Program.containerMethod((Stmt)elems[0]), method);
-
-
-							System.out.println("Adding SuperCat "+Program.containerMethod((Stmt)elems[0]).getName()
-								+" "+method.getName());
-
-							String sourceFileName = (method == null) ? "" : SourceInfo.filePath(method.getDeclaringClass());
-							int methodLineNum = SourceInfo.methodLineNum(method);
-							if (methodLineNum < 0) {
-								methodLineNum = 0;
-							}
-							String methName = method.getName();
-
-
-							if (c == null) {
-								System.out.println("Found Empty Ctxt "+s.toString());
-
-								lastStackBtm = null;
-								lastStackTop = null;
-
-								continue;
-							}
-
-							c.addRawValue(methName, sourceFileName, ""+methodLineNum, "method", "");
-							seenLocs.add(progress);
-						} else {
-							if (elems.length >0) {
-								c = c.findSubCat(Program.containerMethod((Stmt)elems[elems.length-1]));
-								if (c == null) {
-									c = mc;
-								}
-							}
-
-							for (int i = elems.length - 1; i >= 0; --i) {
-								Stmt stm  = (Stmt)elems[i];
-								SootMethod method = Program.containerMethod(stm);
-
-								if (SourceInfo.isFrameworkClass(method.getDeclaringClass()) && c.equals(mc)) {
-									continue;
-								}
-
-								String methName = method.getName();
-								int methodLineNum = SourceInfo.methodLineNum(method);
-								if (methodLineNum < 0) {
-									methodLineNum = 0;
-								}
-
-								c = c.makeOrGetSubCat(method);
-
-								progress += method.getNumber();
-
-								if (i < elems.length-1) {
-									stm = (Stmt)elems[i+1];
-									method = Program.containerMethod(stm);
-									methodLineNum = SourceInfo.stmtLineNum(stm);
-								}
-
-								String sourceFileName = (method == null) ? "" : SourceInfo.filePath(method.getDeclaringClass());
-
-
-								if (!seenLocs.contains(progress)) {
-									c.addRawValue(methName, sourceFileName, ""+methodLineNum, "method", "");
-									seenLocs.add(progress);
-								}
-							}
-
-
-							if (s.target instanceof CtxtVarPoint) {
-								VarNode v = ((CtxtVarPoint)s.target).var;
-								SootMethod method = null;
-								if (v instanceof LocalVarNode) {
-									LocalVarNode localRegister = (LocalVarNode)v;
-									method = localRegister.meth;
-								} else if (v instanceof ThisVarNode) {
-									ThisVarNode thisRegister = (ThisVarNode)v;
-									method = thisRegister.method;
-								} else if (v instanceof ParamVarNode) {
-									ParamVarNode paramRegister = (ParamVarNode)v;
-									method = paramRegister.method;
-								} else if (v instanceof RetVarNode) {
-									RetVarNode retRegister = (RetVarNode)v;
-									method = retRegister.method;
-								} 
-
-								if (method == null)
-									continue;
-								String sourceFileName = SourceInfo.filePath(method.getDeclaringClass());
-								int methodLineNum = SourceInfo.methodLineNum(method);
-								if (methodLineNum < 0) {
-									methodLineNum = 0;
-								}
-								String methName = method.getName();
-
-								progress += method.getNumber();
-								if (!seenLocs.contains(progress)) {
-									c = c.makeOrGetSubCat(method);
-									c.addRawValue(method.getName(), sourceFileName, ""+methodLineNum, "method", "");
-									seenLocs.add(progress);
-								}
-
-							} 
-						}
-						if (elems.length > 0) {
-							lastStackBtm = Program.containerMethod((Stmt)elems[elems.length-1]);
-							lastStackTop = Program.containerMethod((Stmt)elems[0]);
-						} else {
-							lastStackBtm = null;
-							lastStackTop = null;
-						}
-					}
-				}
-			}
-		} catch (IllegalStateException ise) {
-			// The hope is that this will be caught here if the error is simply that
-			// no path solver was run. Try to provide some intelligable feeback...
-			makeOrGetSubCat("Error: No Path Solver Found"); // TODO: slightly undesireable because creates empty + drop-down
-			System.out.println("No path solver found so no path visualization could be generated.");
-			System.out.println("To visualize paths run with -Dstamp.backend=solvergen");
-
-		} catch (Exception e) {
-			//Something else went wrong...
-			System.err.println("Problem producing FlowViz report");
-			e.printStackTrace();
+		if (SourceInfo.isFrameworkClass(method.getDeclaringClass()) && (c==null || c.equals(mc))) {
+			continue;
 		}
+		
+		c = c.makeOrGetSupCat(Program.containerMethod((Stmt)elems[0]), method);
+
+
+		System.out.println("Adding SuperCat "+Program.containerMethod((Stmt)elems[0]).getName()
+		+" "+method.getName());
+
+		String sourceFileName = (method == null) ? "" : SourceInfo.filePath(method.getDeclaringClass());
+		int methodLineNum = SourceInfo.methodLineNum(method);
+		if (methodLineNum < 0) {
+			methodLineNum = 0;
+		}
+		String methName = method.getName();
+
+
+		if (c == null) {
+			System.out.println("Found Empty Ctxt "+s.toString());
+
+			lastStackBtm = null;
+			lastStackTop = null;
+
+			continue;
+		}
+
+		c.addRawValue(methName, sourceFileName, ""+methodLineNum, "method", "");
+		seenLocs.add(progress);
+	} else {
+		if (elems.length >0) {
+			c = c.findSubCat(Program.containerMethod((Stmt)elems[elems.length-1]));
+			if (c == null) {
+				c = mc;
+			}
+		}
+
+		for (int i = elems.length - 1; i >= 0; --i) {
+			Stmt stm  = (Stmt)elems[i];
+			SootMethod method = Program.containerMethod(stm);
+
+			if (SourceInfo.isFrameworkClass(method.getDeclaringClass()) && c.equals(mc)) {
+				continue;
+			}
+
+			String methName = method.getName();
+			int methodLineNum = SourceInfo.methodLineNum(method);
+			if (methodLineNum < 0) {
+				methodLineNum = 0;
+			}
+
+			c = c.makeOrGetSubCat(method);
+
+			progress += method.getNumber();
+
+			if (i < elems.length-1) {
+				stm = (Stmt)elems[i+1];
+				method = Program.containerMethod(stm);
+				methodLineNum = SourceInfo.stmtLineNum(stm);
+			}
+
+			String sourceFileName = (method == null) ? "" : SourceInfo.filePath(method.getDeclaringClass());
+
+
+			if (!seenLocs.contains(progress)) {
+				c.addRawValue(methName, sourceFileName, ""+methodLineNum, "method", "");
+				seenLocs.add(progress);
+			}
+		}
+
+
+		if (s.target instanceof CtxtVarPoint) {
+			VarNode v = ((CtxtVarPoint)s.target).var;
+			SootMethod method = null;
+			if (v instanceof LocalVarNode) {
+				LocalVarNode localRegister = (LocalVarNode)v;
+				method = localRegister.meth;
+			} else if (v instanceof ThisVarNode) {
+				ThisVarNode thisRegister = (ThisVarNode)v;
+				method = thisRegister.method;
+			} else if (v instanceof ParamVarNode) {
+				ParamVarNode paramRegister = (ParamVarNode)v;
+				method = paramRegister.method;
+			} else if (v instanceof RetVarNode) {
+				RetVarNode retRegister = (RetVarNode)v;
+				method = retRegister.method;
+			} 
+
+			if (method == null)
+				continue;
+			String sourceFileName = SourceInfo.filePath(method.getDeclaringClass());
+			int methodLineNum = SourceInfo.methodLineNum(method);
+			if (methodLineNum < 0) {
+				methodLineNum = 0;
+			}
+			String methName = method.getName();
+
+			progress += method.getNumber();
+			if (!seenLocs.contains(progress)) {
+				c = c.makeOrGetSubCat(method);
+				c.addRawValue(method.getName(), sourceFileName, ""+methodLineNum, "method", "");
+				seenLocs.add(progress);
+			}
+
+		} 
 	}
+	if (elems.length > 0) {
+		lastStackBtm = Program.containerMethod((Stmt)elems[elems.length-1]);
+		lastStackTop = Program.containerMethod((Stmt)elems[0]);
+	} else {
+		lastStackBtm = null;
+		lastStackTop = null;
+	}
+}
+}
+}
+} catch (IllegalStateException ise) {
+// The hope is that this will be caught here if the error is simply that
+// no path solver was run. Try to provide some intelligable feeback...
+makeOrGetSubCat("Error: No Path Solver Found"); // TODO: slightly undesireable because creates empty + drop-down
+System.out.println("No path solver found so no path visualization could be generated.");
+System.out.println("To visualize paths run with -Dstamp.backend=solvergen");
+
+} catch (Exception e) {
+//Something else went wrong...
+System.err.println("Problem producing FlowViz report");
+e.printStackTrace();
+}
+}
 }
 */
