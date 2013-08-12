@@ -150,24 +150,33 @@ public class SrcSinkFlowViz extends XMLVizReport
     }
 
     
-    private CallSite generateCallSite(SootMethod method) {
+    private CallSite generateCallSite(SootMethod method, Stmt caller) {
 
-            SootClass declaringClass = method.getDeclaringClass());
+            try {
+                    String locStr = javaLocStr(caller);
+                    String[] locStrTokens = locStr.split(':');
+                    assert locStrTokens.length >= 1;
+                    
+                    // Create callsite 
+                    String methName = method.getName();
+                    int lineNumber = (locStrTokens.length > 1) ? locStrTokens[1] : 0;
+                    String className = SourceInfo.srcClassName(declaringClass);
+                    String srcFilePath = locStrTokens[0];
+                    /* Some weird gui behavior associated with line number -1 so...
+                        ...This may be useful
+                    if (methodLineNum < 0) {
+                        methodLineNum = 0;
+                    }
+                    */
 
-            // Create callsite 
-            String methName = method.getName();
-            int methodLineNum = SourceInfo.methodLineNum(method);
-            String className = SourceInfo.srcClassName(declaringClass);
-            String srcFilePath = SourceInfo.filePath();
-            /* Some weird gui behavior associated with line number -1 so...
-                ...This may be useful
-			if (methodLineNum < 0) {
-				methodLineNum = 0;
-			}
-            */
+                    CallSite cs = new CallSite(methName, className, lineNumber, srcFilePath);
+                    return cs;
 
-            CallSite cs = new CallSite(methName, className, lineNumber, srcFilePath);
-            return cs;
+            } catch (NumberFormatException nfe) {
+                System.err.println("Line number format was incorrect for callsite. Expecting "
+                                    + "[srcFilePath]:[line number] (no brackets)");
+                nfe.printStackTrace();
+            }
     }
 
     /**
