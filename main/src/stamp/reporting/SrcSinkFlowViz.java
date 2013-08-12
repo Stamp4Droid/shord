@@ -19,6 +19,7 @@ import soot.Local;
 import soot.SootClass;
 import soot.SootMethod;
 import soot.Unit;
+import soot.VoidType;
 
 import stamp.paths.*;
 import stamp.srcmap.SourceInfo;
@@ -54,7 +55,7 @@ public class SrcSinkFlowViz extends XMLVizReport
 
             System.out.println("SOLVERGENPATHS");
 
-            ArrayList<Tree<SootMethod>> flows = new ArrayList<Tree<SootMethod>>();
+            ArrayDeque<Tree<SootMethod>> flows = new ArrayList<Tree<SootMethod>>();
             Map<SootMethod, ArrayList<CallSite> callSites = new HashMap<SootMethod, ArrayDeque<CallSite>>();
 
             int count = 0; //just counts for the sake of numbering. Will be phased out in future versions
@@ -74,33 +75,34 @@ public class SrcSinkFlowViz extends XMLVizReport
                 //System.err.println(/* context */);
 
                 for (Step s : p.steps) {
-                    //TODO: init?!? need to add while set of ctxt at once
                     switch(getStepActionType(s, lastNode, t)) {
-                        CallSite cs = logCallSites(s, callSites);
+                        logCallSites(s, callSites);
+                        SootMethod method = getMethod(s);
                         case SAME:
-                        if (!lastNode.getData().equals(/* the method */) {
-                                lastNode = t.getParent(lastNode).addChild(new Node<SootMethod>(/* the method */));
-                                }
-                                break;
-                                case DROP:
-                                lastNode = lastNode.addChild(new Node<SootMethod>(/* the method */));
-                                break;
-                                case POP:
-                                Node<SootMethod> grandFather = t.getParent(t.getParent(lastNode));
-                                Node<SootMethod> greatGrandFather = t.getParent(grandFather);
-                                if (greatGrandFather == t.getRoot()) {
-                                greatgrandFather.replaceChild(/* replace previous top with new top method */);
-                                }
-                                //grandfather shouldn't be root or anything like that
-                                //if stuff
-                                lastNode = grandfather.addChild(/* stmt method */);
-                                break;
-                                case BROKEN:
-                                lastNode = t.getRoot().addChild(/* add whole context */);
-                                break;
-                                case OTHER:
-                                default:
-                                throw new Excpetion("Unrecognized StepActionType in SrcSinkFlowViz generate");
+                            // could have consecutive exact callstack repeat
+                            if (!lastNode.getData().equals(method)) {
+                                lastNode = t.getParent(lastNode).addChild(new Node<SootMethod>(method));
+                            }
+                            break;
+                        case DROP:
+                            lastNode = lastNode.addChild(new Node<SootMethod>(method));
+                            break;
+                        case POP:
+                            Node<SootMethod> grandFather = t.getParent(t.getParent(lastNode));
+                            Node<SootMethod> greatGrandFather = t.getParent(grandFather);
+                            if (greatGrandFather == t.getRoot()) {
+                                greatgrandFather.replaceChild(topCtxtMethod(s));
+                            }
+                            //grandfather shouldn't be root or anything like that
+                            //if stuff
+                            lastNode = grandfather.addChild(method);
+                            break;
+                        case BROKEN:
+                            lastNode = t.getRoot().addChild(/* add whole context */);
+                            break;
+                        case OTHER:
+                        default:
+                            throw new Excpetion("Unrecognized StepActionType in SrcSinkFlowViz generate");
                     }
                 }
             }
@@ -119,6 +121,23 @@ public class SrcSinkFlowViz extends XMLVizReport
         }
     }
 
+    /**
+     * Returns the method object for the top (outermost)
+     * context level associated with the parameter Step 
+     */
+    private SootMethod getTopCtxtMethod(Step s) {
+        CtxtVarPoint point = (CtxtVarPoint)s.target;
+
+        if (point.ctxt.length > 1) {
+            SootMethod method = getMethod((Stmt)point.ctxt[point.ctxt.length-1]);
+            if (method == null) {
+                return new SootMethod("No Method", new List(), new VoidType()); // TODO check is this OK?
+            }
+        } else {
+            // Ought to happen rarely or not at all...
+            return getMethod(s);
+        }
+    }
 
     private StepActionType getStepActionType(Step s, Node<SootMethod> lastNode, Tree t) {
     }
@@ -129,14 +148,19 @@ public class SrcSinkFlowViz extends XMLVizReport
      * (i.e. the CallSite object) and save that into
      * the map pamameter
      */
-    private void logCallSites(Step s) {
+    private void logCallSites(Step s, Map<SootMethod, ArrayDeque<CallSite> callSites) {
 
         CtxtVarPoint point = (CtxtVarPoint)s.target;
         Unit[] context = point.ctxt;
+        SootMethod method = getMethod(s);
+        Stmt stm = null;
 
-        for (int i = 0; i < context.length-1; ++i) {
-            Stmt stm = (Stmt)context[i];
-            SootMethod method = getMethod(stm);
+        for (int i = -1; i < context.length; ++i) {
+            // First iteration uses step target variable inited above
+            if (i >= 0) {
+                stm = (Stmt)context[i];
+                method = getMethod(stm);
+            }
             // We could filter methods here (i.e. framework), 
             // but might make sense to do it
             // instead while generating the XML report itself
@@ -145,6 +169,16 @@ public class SrcSinkFlowViz extends XMLVizReport
             // statements differently based on their type?
             if (method == null) {
                 continue;
+            }
+
+            // We add callsite for all but the topmost context
+            // level, because we don't know the context for that
+            if (i < context.length - 1) {
+                CallSite cs = generateCallSite(method, (Stmt)context[i+1]);
+                if (!callSites.containsKey(method)) {
+                    callSites.put(method, new ArrayDeque<CallSite>());
+                }
+                callSites.get(method).addLast(cs);
             }
         }
     }
@@ -163,10 +197,7 @@ public class SrcSinkFlowViz extends XMLVizReport
             String className = SourceInfo.srcClassName(declaringClass);
             String srcFilePath = locStrTokens[0];
             /* Some weird gui behavior associated with line number -1 so...
-               ...This may be useful
-               if (methodLineNum < 0) {
-               methodLineNum = 0;
-               }
+               ...This may be useful: if (methodLineNum < 0) {methodLineNum = 0;}
              */
 
             CallSite cs = new CallSite(methName, className, lineNumber, srcFilePath);
