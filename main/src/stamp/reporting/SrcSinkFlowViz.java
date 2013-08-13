@@ -107,6 +107,8 @@ public class SrcSinkFlowViz extends XMLVizReport
                 }
             }
 
+        generateReport(t, callSites);
+
         } catch (IllegalStateException ise) {
             // The hope is that this will be caught here if the error is simply that
             // no path solver was run. Try to provide some intelligable feeback...
@@ -118,6 +120,24 @@ public class SrcSinkFlowViz extends XMLVizReport
             //Something else went wrong...
             System.err.println("Problem producing FlowViz report");
             e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Frome the callgraph tree and map of methods to callsites
+     * provided as parameters, generates the XML report
+     */
+    protected generateReport(Tree t, Map<SootMethod, ArrayDeque<CallSite> callSites) {
+
+        Category c = makeOrGetSubCat(t.getRoot().getData());
+
+        Iterator<SootMethod> itr = t.iterator();
+        
+        while (itr.hasNext()) {
+            SootMethod meth = itr.next();
+            makeOrGetSubCat(item.getData());
+            //add classinfo data
         }
     }
 
