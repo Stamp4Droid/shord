@@ -136,14 +136,21 @@ public class SrcSinkFlowViz extends XMLVizReport
         
         Deque<Category> stack = new ArrayDeque<Category>();
         while (itr.hasNext()) {
-            if (!itr.hasMoreChildren()) {
-                assert itr.hasNext();
-                c = stack.pop();
-                
-            
-            }
+            int oldDepth = itr.getDepth();
             SootMethod meth = itr.next();
-            c = makeOrGetSubCat(item.getData());
+            int newDepth = itr.getDepth();
+            if (oldDepth < newDepth) {
+                assert newDepth - oldDepth == 1;
+                c = c.makeOrGetSubCat(item.getData());
+                stack.push(c);
+            } else if (oldDepth > newDepth) {
+                int del = oldDepth - newDepth;
+                for (; del > 0; del--) {
+                    c = stack.pop();
+                }
+            } else {
+                c.makeOrGetSubCat(item.getData);
+            }
             //add classinfo data
         }
     }
