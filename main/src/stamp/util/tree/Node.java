@@ -47,6 +47,10 @@ public class Node<T> {
         return children;
     }
 
+    public boolean hasChildren() {
+        return getChildren() == null;
+    }
+
     public Node<T> addChild(Node<T> newchild) {
         if (children == null) {
             children = new ArrayList<Node<T>>();

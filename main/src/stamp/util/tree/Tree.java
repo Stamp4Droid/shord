@@ -34,10 +34,32 @@ public class Tree<T> {
         if (parent == null) {
             return getRoot();
         }
-        //} else {
-        //	return null;
-        //}
         return null;
+    }
+
+    public Node<T> getSuccessor(Node<T> node, int[] depthDelta) {
+
+        //if (isInTree(child)) { //TODO: implement this part and throw
+        //			 //exception on fail
+        int depthChange = 0;
+
+        while (!isRoot(node)) {
+            Node<T> parent = this.getParent(node);
+            ArrayList<Node<T>> siblings = this.getParent(node).getChildren();
+            int ind = siblings.indexOf(node);
+            if (ind == -1) {
+                return null;
+            } else if (ind == siblings.size() - 1) {
+                depthChange -= 1;
+                node = parent;
+                continue;
+            } else {
+                return siblings.get(ind + 1);
+            }
+        }
+
+        depthDelta[0] = depthChange;
+        return getRoot();
     }
 
     public Iterator<T> iterator() {
@@ -46,15 +68,12 @@ public class Tree<T> {
 
     class TreeIterator<T> implements Iterator {
     
-        Node<T> currentNode = null;
-        NodeIterator<Node<T>> currentItr = null;
+        protected Node<T> currentNode = null;
+        protected NodeIterator<Node<T>> currentItr = null;
+        protected int depth = 0; //track depth so clients know when level is changed
 
         public TreeIterator<T>() {
             currentNode = getRoot();
-            while (currentNode.hasChildren()) {
-                currentNode = currentNode.getChildren().get(0);
-            }
-            currentNode = getParent(currentNode);
             currentItr = currentNode.iterator();
         }
     
@@ -65,6 +84,37 @@ public class Tree<T> {
         
         @implement
         public T next() {
+            if (!hasNext()) {
+                return null; //TODO should throw exception?
+            }
+
+            Node<T> nextNode;
+            if (currentItr.hasNext()) {
+                nextNode = currentItr.next();
+            } else {
+                // we need to know by how many levels we popped
+                int[] depthDelta = new int[1];
+                depthDelta[0] = 0; 
+
+                nextNode = Outer.this.getSuccessor(currentNode, depthDelta);
+                depth += depthDelta[0] - 1; //we always lose at least 1 level
+            }
+
+            if (nextNode.hasChildren()) {
+                currentNode = nextNode;
+                currentItr = currentNode.iterator();
+                depth += 1;
+            }
+
+            return nextNode;
+        }
+
+        public int getDepth() {
+            return depth;
+        }
+
+            
+/*
             if (!hasNext()) {
                 return null; //TODO should throw exception?
             }
@@ -87,6 +137,7 @@ public class Tree<T> {
         public boolean hasMoreChildren() {
             return (currentItr != null && currentItr.hasNext());
         }
+*/
 
         // Does not implement remove
     }
