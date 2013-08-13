@@ -55,6 +55,11 @@ public class Node<T> {
         return newchild;
     }
 
+    public Node<T> addChild(T newData) {
+        Node<T> newChild = new Node<T>(newData, this);
+        return addChild(newChild);
+    }
+
     public void addParent(Node<T> newparent) throws InvalidNodeOpException {
         if (parent == null) {
             parent = newparent;
