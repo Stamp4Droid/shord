@@ -85,7 +85,7 @@ public class Tree<T> {
         }
 
         public boolean hasMoreChildren() {
-            return (currentItr != null
+            return (currentItr != null && currentItr.hasNext());
         }
 
         // Does not implement remove

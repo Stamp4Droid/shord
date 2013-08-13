@@ -134,9 +134,16 @@ public class SrcSinkFlowViz extends XMLVizReport
 
         Iterator<SootMethod> itr = t.iterator();
         
+        Deque<Category> stack = new ArrayDeque<Category>();
         while (itr.hasNext()) {
+            if (!itr.hasMoreChildren()) {
+                assert itr.hasNext();
+                c = stack.pop();
+                
+            
+            }
             SootMethod meth = itr.next();
-            makeOrGetSubCat(item.getData());
+            c = makeOrGetSubCat(item.getData());
             //add classinfo data
         }
     }
