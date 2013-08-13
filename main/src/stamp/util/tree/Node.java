@@ -8,9 +8,9 @@ import java.util.ArrayList;
  */
 public class Node<T> {
 
-    protected ArrayList<Node<T>> children = new ArrayList<Node<T>>();
+    protected ArrayList<Node<T>> children = null;
     protected Node<T> parent = null;
-    protected T data;
+    protected T data = null;
 
     public Node(T id) {
         data = id;
@@ -44,11 +44,13 @@ public class Node<T> {
      * @return ArrayList of children of this node
      */
     public ArrayList<Node<T>> getChildren() {
-        assert children != null;
         return children;
     }
 
     public Node<T> addChild(Node<T> newchild) {
+        if (children == null) {
+            children = new ArrayList<Node<T>>();
+        }
         children.add(newchild);
         return newchild;
     }
@@ -66,10 +68,35 @@ public class Node<T> {
         return data;
     }
 
+    public boolean hasChildren() {
+        return children == null || children.size() == 0;
+    }
+
     private static class InvalidNodeOpException extends Exception {
 
         public InvalidNodeOpException(String str) {
             super(str);
         }
+    }
+
+    class NodeIterator<Node<T>> implements Iterator {
+
+        Iterator<Node<T>> itr = null;
+    
+        public NodeIterator<Node<T>>() {
+            itr = children.iterator();
+        }
+
+        @implement
+        public boolean hasNext() {
+            return itr.hasNext();
+        }
+    
+        @implement
+        public Node<T> next() {
+            return itr.next();
+        }
+
+        //Does not implement remove, currently
     }
 }

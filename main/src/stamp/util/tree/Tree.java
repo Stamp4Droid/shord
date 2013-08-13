@@ -20,6 +20,10 @@ public class Tree<T> {
         return root.getData().equals(data);
     }
 
+    public boolean isRoot(Node<T> node) {
+        return node != null && isRoot(node.getData());
+    }
+
     public Node<T> getParent(Node<T> child) {
         if (child == null) {
             return null;
@@ -36,25 +40,54 @@ public class Tree<T> {
         return null;
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public Iterator<T> iterator() {
+        return new TreeIterator<T>();
     }
 
     class TreeIterator<T> implements Iterator {
     
+        Node<T> currentNode = null;
+        NodeIterator<Node<T>> currentItr = null;
+
+        public TreeIterator<T>() {
+            currentNode = getRoot();
+            while (currentNode.hasChildren()) {
+                currentNode = currentNode.getChildren().get(0);
+            }
+            currentNode = getParent(currentNode);
+            currentItr = currentNode.iterator();
+        }
+    
         @implement
         public boolean hasNext() {
-
+            return !(currentItr == null || ((!currentItr.hasNext()) && isRoot(currentNode)));
         }
         
         @implement
         public T next() {
+            if (!hasNext()) {
+                return null; //TODO should throw exception?
+            }
 
+            assert currentItr == null; // should be checked by hasNext
+
+            if (currentItr.hasNext()) {
+                return currentItr.next().getData();
+            } else {
+                currentNode = getParent(currentNode);
+                currentItr = currentNode.iterator();
+                if (!hasNext()) {
+                    return null; //TODO should throw exception?
+                } else {
+                    return currentItr.next().getData();
+                }
+            }
         }
-        
+
+        public boolean hasMoreChildren() {
+            return (currentItr != null
+        }
+
         // Does not implement remove
     }
 }
