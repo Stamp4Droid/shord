@@ -96,8 +96,8 @@ public class SrcSinkFlowViz extends XMLVizReport
                         case POP:
                             Node<SootMethod> grandFather = t.getParent(t.getParent(lastNode));
                             Node<SootMethod> greatGrandFather = t.getParent(grandFather);
-                            if (greatGrandFather == t.getRoot()) {
-                                greatGrandFather.replaceChild(getTopCtxtMethod(s));
+                            if (t.isRoot(greatGrandFather)) {
+                                greatGrandFather.replaceChild(grandFather, getTopCtxtMethod(s));
                             }
                             //grandfather shouldn't be root or anything like that
                             //if stuff
@@ -177,10 +177,9 @@ public class SrcSinkFlowViz extends XMLVizReport
             if (method == null) {
                 return new SootMethod("No Method", Collections.<Type>emptyList(), VoidType.v()); // TODO check is this OK?
             }
-        } else {
-            // Ought to happen rarely or not at all...
-            return getMethod(s);
-        }
+        } 
+        // Ought to happen rarely or not at all...
+        return getMethod(s);
     }
 
 
@@ -277,6 +276,7 @@ public class SrcSinkFlowViz extends XMLVizReport
             System.err.println("Line number format was incorrect for callsite. Expecting "
                     + "[srcFilePath]:[line number] (no brackets)");
             nfe.printStackTrace();
+            return null;
         }
     }
 
