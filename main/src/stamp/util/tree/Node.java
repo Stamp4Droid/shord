@@ -46,6 +46,27 @@ public class Node<T> {
         return parent;
     }
 
+    protected void setParent(Node<T> newParent) {
+        parent = newParent;
+    }
+
+    public void replaceChild(Node<T> toReplace, T replacement) {
+        Node<T> newNode = new Node<T>(replacement, this);
+
+        if (children == null) {
+            return;
+        }
+
+        int ind = children.indexOf(toReplace);
+        if (ind == -1) {
+            return; // TODO throw exception?
+        }
+
+        children.set(ind, newNode);
+        newNode.addChild(toReplace);
+        toReplace.setParent(newNode);
+    }
+
     /**
      * @return ArrayList of children of this node
      */
