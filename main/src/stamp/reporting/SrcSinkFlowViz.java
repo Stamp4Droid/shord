@@ -1,12 +1,12 @@
 package stamp.reporting;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.File;
-import java.util.Arrays;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Deque;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Iterator;
+import java.util.Map;
 
 import shord.analyses.*;
 import shord.program.Program;
@@ -18,11 +18,13 @@ import soot.jimple.Stmt;
 import soot.Local;
 import soot.SootClass;
 import soot.SootMethod;
+import soot.Type;
 import soot.Unit;
 import soot.VoidType;
 
 import stamp.paths.*;
 import stamp.srcmap.SourceInfo;
+import stamp.util.tree.*;
 
 /**
  * Generates a an xml report that represents flows
@@ -37,7 +39,11 @@ import stamp.srcmap.SourceInfo;
 public class SrcSinkFlowViz extends XMLVizReport
 {
     protected enum StepActionType {
-        SAME, DROP, POP, BROKEN, OTHER
+        SAME, // same parent context as last method added
+        DROP, // new method called by last step's method
+        POP, // new method at level of last context's caller
+        BROKEN, // no context overlap with last; also initial step
+        OTHER // self-explanatory
     }
 
     public SrcSinkFlowViz()
@@ -55,8 +61,8 @@ public class SrcSinkFlowViz extends XMLVizReport
 
             System.out.println("SOLVERGENPATHS");
 
-            ArrayDeque<Tree<SootMethod>> flows = new ArrayList<Tree<SootMethod>>();
-            Map<SootMethod, ArrayList<CallSite> callSites = new HashMap<SootMethod, ArrayDeque<CallSite>>();
+            ArrayList<Tree<SootMethod>> flows = new ArrayList<Tree<SootMethod>>();
+            Map<SootMethod, ArrayDeque<CallSite>> callSites = new HashMap<SootMethod, ArrayDeque<CallSite>>();
 
             int count = 0; //just counts for the sake of numbering. Will be phased out in future versions
             for (Path p : PathsAdapter.getPaths()) {
@@ -76,8 +82,8 @@ public class SrcSinkFlowViz extends XMLVizReport
 
                 for (Step s : p.steps) {
                     SootMethod method = getMethod(s);
+                    logCallSites(s, callSites);
                     switch(getStepActionType(method, s, lastNode, t)) {
-                        logCallSites(s, callSites);
                         case SAME:
                             // could have consecutive exact callstack repeat
                             if (!lastNode.getData().equals(method)) {
@@ -91,23 +97,24 @@ public class SrcSinkFlowViz extends XMLVizReport
                             Node<SootMethod> grandFather = t.getParent(t.getParent(lastNode));
                             Node<SootMethod> greatGrandFather = t.getParent(grandFather);
                             if (greatGrandFather == t.getRoot()) {
-                                greatgrandFather.replaceChild(topCtxtMethod(s));
+                                greatGrandFather.replaceChild(getTopCtxtMethod(s));
                             }
                             //grandfather shouldn't be root or anything like that
                             //if stuff
-                            lastNode = grandfather.addChild(method);
+                            lastNode = grandFather.addChild(method);
                             break;
                         case BROKEN:
-                            lastNode = t.getRoot().addChild(/* add whole context */);
+                            lastNode = t.getRoot().addChild(getMethod(s));
                             break;
                         case OTHER:
                         default:
-                            throw new Excpetion("Unrecognized StepActionType in SrcSinkFlowViz generate");
+                            throw new Exception("Unrecognized StepActionType in SrcSinkFlowViz generate");
                     }
                 }
+                flows.add(t);
             }
 
-        generateReport(t, callSites);
+        generateReport(flows, callSites);
 
         } catch (IllegalStateException ise) {
             // The hope is that this will be caught here if the error is simply that
@@ -128,30 +135,32 @@ public class SrcSinkFlowViz extends XMLVizReport
      * Frome the callgraph tree and map of methods to callsites
      * provided as parameters, generates the XML report
      */
-    protected generateReport(Tree t, Map<SootMethod, ArrayDeque<CallSite> callSites) {
+    protected void generateReport(ArrayList<Tree<SootMethod>> flows, Map<SootMethod, ArrayDeque<CallSite>> callSites) {
 
-        Category c = makeOrGetSubCat(t.getRoot().getData());
 
-        Iterator<SootMethod> itr = t.iterator();
-        
-        Deque<Category> stack = new ArrayDeque<Category>();
-        while (itr.hasNext()) {
-            int oldDepth = itr.getDepth();
-            SootMethod meth = itr.next();
-            int newDepth = itr.getDepth();
-            if (oldDepth < newDepth) {
-                assert newDepth - oldDepth == 1;
-                c = c.makeOrGetSubCat(item.getData());
-                stack.push(c);
-            } else if (oldDepth > newDepth) {
-                int del = oldDepth - newDepth;
-                for (; del > 0; del--) {
-                    c = stack.pop();
+        for (Tree<SootMethod> t : flows) {
+            Category c = makeOrGetSubCat(t.getLabel());
+            Tree<SootMethod>.TreeIterator itr = t.iterator();
+            
+            Deque<Category> stack = new ArrayDeque<Category>();
+            while (itr.hasNext()) {
+                int oldDepth = itr.getDepth();
+                SootMethod meth = itr.next();
+                int newDepth = itr.getDepth();
+                if (oldDepth < newDepth) {
+                    assert newDepth - oldDepth == 1;
+                    c = c.makeOrGetSubCat(meth);
+                    stack.push(c);
+                } else if (oldDepth > newDepth) {
+                    int del = oldDepth - newDepth;
+                    for (; del > 0; del--) {
+                        c = stack.pop();
+                    }
+                } else {
+                    c.makeOrGetSubCat(meth);
                 }
-            } else {
-                c.makeOrGetSubCat(item.getData);
+                //add classinfo data
             }
-            //add classinfo data
         }
     }
 
@@ -161,11 +170,12 @@ public class SrcSinkFlowViz extends XMLVizReport
      */
     private SootMethod getTopCtxtMethod(Step s) {
         CtxtVarPoint point = (CtxtVarPoint)s.target;
+        Unit[] ctxt = point.ctxt.getElems();
 
-        if (point.ctxt.length > 1) {
-            SootMethod method = getMethod((Stmt)point.ctxt[point.ctxt.length-1]);
+        if (ctxt.length > 1) {
+            SootMethod method = getMethod((Stmt)ctxt[ctxt.length-1]);
             if (method == null) {
-                return new SootMethod("No Method", new List(), new VoidType()); // TODO check is this OK?
+                return new SootMethod("No Method", Collections.<Type>emptyList(), VoidType.v()); // TODO check is this OK?
             }
         } else {
             // Ought to happen rarely or not at all...
@@ -187,18 +197,19 @@ public class SrcSinkFlowViz extends XMLVizReport
         // cases to check that all conditions for each type apply
         
         if (lastNode.getData().equals(method)) {
-            return DROP;
+            return StepActionType.DROP;
 
         } else if (t.getParent(lastNode).getData().equals(method)) {
-            return SAME;
+            return StepActionType.SAME;
 
         } else if (t.getParent(t.getParent(lastNode)).getData().equals(method)) {
+            return StepActionType.POP;
 
-        } else if (lastNode.isRoot() /* other condition? */ ) {
-            return BROKEN;
+        } else if (t.isRoot(lastNode) /* other condition? */ ) {
+            return StepActionType.BROKEN;
         }
         
-        return OTHER;
+        return StepActionType.OTHER;
     }
 
     /**
@@ -207,10 +218,10 @@ public class SrcSinkFlowViz extends XMLVizReport
      * (i.e. the CallSite object) and save that into
      * the map pamameter
      */
-    private void logCallSites(Step s, Map<SootMethod, ArrayDeque<CallSite> callSites) {
+    private void logCallSites(Step s, Map<SootMethod, ArrayDeque<CallSite>> callSites) {
 
         CtxtVarPoint point = (CtxtVarPoint)s.target;
-        Unit[] context = point.ctxt;
+        Unit[] context = point.ctxt.getElems();
         SootMethod method = getMethod(s);
         Stmt stm = null;
 
@@ -246,14 +257,14 @@ public class SrcSinkFlowViz extends XMLVizReport
     private CallSite generateCallSite(SootMethod method, Stmt caller) {
 
         try {
-            String locStr = javaLocStr(caller);
-            String[] locStrTokens = locStr.split(':');
+            String locStr = SourceInfo.javaLocStr(caller);
+            String[] locStrTokens = locStr.split(":");
             assert locStrTokens.length >= 1;
 
             // Create callsite 
             String methName = method.getName();
-            int lineNumber = (locStrTokens.length > 1) ? locStrTokens[1] : 0;
-            String className = SourceInfo.srcClassName(declaringClass);
+            int lineNumber = (locStrTokens.length > 1) ? Integer.parseInt(locStrTokens[1]) : 0;
+            String className = SourceInfo.srcClassName(caller);
             String srcFilePath = locStrTokens[0];
             /* Some weird gui behavior associated with line number -1 so...
                ...This may be useful: if (methodLineNum < 0) {methodLineNum = 0;}
@@ -320,7 +331,7 @@ public class SrcSinkFlowViz extends XMLVizReport
             this.methodName = methodName;
             this.className = className;
             this.srcFilePath = srcFilePath;
-            this.lineNumber = lineNumber
+            this.lineNumber = lineNumber;
         }
     }
 }
