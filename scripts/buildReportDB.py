@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import xml.etree.ElementTree as Et
-import networkx as nx
+#import networkx as nx
 import subprocess
 import argparse
 import numpy
@@ -279,41 +279,41 @@ def readSinkClassXML(xmlf):
     return sinkClassDict
 
 
-"""Build graph representation of relationships between apps"""
-def buildAppMap(flowHash):
+# """Build graph representation of relationships between apps"""
+# def buildAppMap(flowHash):
 
-    numApps = len(flowHash)
-    print "Analyzed results from " + str(numApps) + " apps"
+#     numApps = len(flowHash)
+#     print "Analyzed results from " + str(numApps) + " apps"
 
-    icount = 0;
-    jcount = 0;
-    G=nx.Graph()
+#     icount = 0;
+#     jcount = 0;
+#     G=nx.Graph()
 
-    # Add nodes
-    for i in flowHash.keys():
-        G.add_node(i)
+#     # Add nodes
+#     for i in flowHash.keys():
+#         G.add_node(i)
 
-    # Add edges
-    for i in flowHash.keys():
-        for j in flowHash.keys():
-            if not i == j:
-                printv(str(i) + " (" + str(len(flowHash[i])) + " flows) vs. " + str(j) + " (" + str(len(flowHash[j])) + " flows)", 1)
+#     # Add edges
+#     for i in flowHash.keys():
+#         for j in flowHash.keys():
+#             if not i == j:
+#                 printv(str(i) + " (" + str(len(flowHash[i])) + " flows) vs. " + str(j) + " (" + str(len(flowHash[j])) + " flows)", 1)
                 
-                if flowHash[i].intersection(flowHash[j]):
-                    appDiff = flowHash[i].symmetric_difference(flowHash[j])
-                    inter = flowHash[i].intersection(flowHash[j])
-                    printv("Sym-diff: " + str(len(appDiff)) + " Intersection: " + str(len(inter)), 2)
-                    if len(inter) > 0:
-                        G.add_edge(str(i),str(j),weight=len(inter))
-                elif flowHash[i].isdisjoint(flowHash[j]):
-                    printv("--disjoint\n" ,2)
-                else:
-                    printv("--error", 2)
+#                 if flowHash[i].intersection(flowHash[j]):
+#                     appDiff = flowHash[i].symmetric_difference(flowHash[j])
+#                     inter = flowHash[i].intersection(flowHash[j])
+#                     printv("Sym-diff: " + str(len(appDiff)) + " Intersection: " + str(len(inter)), 2)
+#                     if len(inter) > 0:
+#                         G.add_edge(str(i),str(j),weight=len(inter))
+#                 elif flowHash[i].isdisjoint(flowHash[j]):
+#                     printv("--disjoint\n" ,2)
+#                 else:
+#                     printv("--error", 2)
 
-            icount+= 1;
-            jcount+= 1;
+#             icount+= 1;
+#             jcount+= 1;
 
-    nx.write_gexf(G,"test.gexf")
+#     nx.write_gexf(G,"test.gexf")
 
 
 """ Store source sink flow pairs into DFA results table"""
@@ -357,10 +357,10 @@ if __name__ == "__main__":
                 processAPK(apps[k][0] + k)
 
     flowHash = {}
-    # Map relationships between apps
-    if not resultsDir is None:
-        flowHash = getFlows(resultsDir)
-        buildAppMap(flowHash)
+    # # Map relationships between apps
+    # if not resultsDir is None:
+    #     flowHash = getFlows(resultsDir)
+    #     buildAppMap(flowHash)
 
     # Classify results and store in a database
     if not reportAPKs is None:
