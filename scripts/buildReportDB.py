@@ -4,7 +4,7 @@ import xml.etree.ElementTree as Et
 #import networkx as nx
 import subprocess
 import argparse
-import numpy
+#import numpy
 import sys
 import os
 from loadDB import *
