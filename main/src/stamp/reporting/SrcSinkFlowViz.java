@@ -73,7 +73,7 @@ public class SrcSinkFlowViz extends XMLVizReport
                 String endLabel = end.label;
                 String flowname = count + ") "+ startLabel + " --> " + endLabel;
 
-                Tree<SootMethod> t = new Tree<SootMethod>(flowname);
+                Tree<SootMethod> t = new Tree<SootMethod>(new SootMethod(flowname, Collections.<Type>emptyList(), VoidType.v()));
                 Node<SootMethod> lastNode = t.getRoot();
 
                 //TODO init?? Does this work?
@@ -81,19 +81,27 @@ public class SrcSinkFlowViz extends XMLVizReport
                 //System.err.println(/* context */);
 
                 for (Step s : p.steps) {
-                    SootMethod method = getMethod(s);
+                    System.err.println("PRINT LASTNODE: " + lastNode);
+                    if (!(s.target instanceof CtxtVarPoint)) {
+                        continue;
+                    }
+                    SootMethod method = getBottomCtxtMethod(s);
                     logCallSites(s, callSites);
+                    System.err.print(((CtxtPoint)s.target).ctxt);
                     switch(getStepActionType(method, s, lastNode, t)) {
                         case SAME:
+                        System.err.println("case SAME:");
                             // could have consecutive exact callstack repeat
                             if (!lastNode.getData().equals(method)) {
-                                lastNode = t.getParent(lastNode).addChild(new Node<SootMethod>(method));
+                               lastNode = t.getParent(lastNode).addChild(new Node<SootMethod>(method));
                             }
                             break;
                         case DROP:
+                        System.err.println("case DROP:");
                             lastNode = lastNode.addChild(new Node<SootMethod>(method));
                             break;
                         case POP:
+                        System.err.println("case POP:");
                             Node<SootMethod> grandFather = t.getParent(t.getParent(lastNode));
                             Node<SootMethod> greatGrandFather = t.getParent(grandFather);
                             if (t.isRoot(greatGrandFather)) {
@@ -104,7 +112,9 @@ public class SrcSinkFlowViz extends XMLVizReport
                             lastNode = grandFather.addChild(method);
                             break;
                         case BROKEN:
-                            lastNode = t.getRoot().addChild(getMethod(s));
+                        System.err.println("case BROKEN:");
+                            lastNode = addCtxt(t, s);
+                            lastNode = lastNode.addChild(getMethod(s));
                             break;
                         case OTHER:
                         default:
@@ -131,6 +141,18 @@ public class SrcSinkFlowViz extends XMLVizReport
 
     }
 
+    public Node<SootMethod> addCtxt(Tree<SootMethod> t, Step s) {
+        Unit[] context = ((CtxtPoint)s.target).ctxt.getElems();
+        Node<SootMethod> lastNode = t.getRoot();
+       
+        for (Unit u : context) {
+            Stmt stm = (Stmt)u;
+            lastNode = lastNode.addChild(getMethod(stm));
+        }
+
+        return lastNode;
+    }
+
     /**
      * Frome the callgraph tree and map of methods to callsites
      * provided as parameters, generates the XML report
@@ -139,7 +161,7 @@ public class SrcSinkFlowViz extends XMLVizReport
 
 
         for (Tree<SootMethod> t : flows) {
-            Category c = makeOrGetSubCat(t.getLabel());
+            Category c = makeOrGetSubCat(t.getRoot().getData().getName());
             Tree<SootMethod>.TreeIterator itr = t.iterator();
             
             Deque<Category> stack = new ArrayDeque<Category>();
@@ -169,7 +191,7 @@ public class SrcSinkFlowViz extends XMLVizReport
      * context level associated with the parameter Step 
      */
     private SootMethod getTopCtxtMethod(Step s) {
-        CtxtVarPoint point = (CtxtVarPoint)s.target;
+        CtxtPoint point = (CtxtPoint)s.target;
         Unit[] ctxt = point.ctxt.getElems();
 
         if (ctxt.length > 1) {
@@ -177,6 +199,26 @@ public class SrcSinkFlowViz extends XMLVizReport
             if (method == null) {
                 return new SootMethod("No Method", Collections.<Type>emptyList(), VoidType.v()); // TODO check is this OK?
             }
+            return method;
+        } 
+        // Ought to happen rarely or not at all...
+        return getMethod(s);
+    }
+
+    /**
+     * Returns the method object for the top (outermost)
+     * context level associated with the parameter Step 
+     */
+    private SootMethod getBottomCtxtMethod(Step s) {
+        CtxtPoint point = (CtxtPoint)s.target;
+        Unit[] ctxt = point.ctxt.getElems();
+
+        if (ctxt.length >= 1) {
+            SootMethod method = getMethod((Stmt)ctxt[0]);
+            if (method == null) {
+                return new SootMethod("No Method", Collections.<Type>emptyList(), VoidType.v()); // TODO check is this OK?
+            }
+            return method;
         } 
         // Ought to happen rarely or not at all...
         return getMethod(s);
@@ -194,21 +236,20 @@ public class SrcSinkFlowViz extends XMLVizReport
         // Throughout these we follow a minimal detection which, to my knowledge, ought to suffice.
         // However, it may be wiser in order to be certain we report the correct type and catch edge
         // cases to check that all conditions for each type apply
-        
-        if (lastNode.getData().equals(method)) {
-            return StepActionType.DROP;
+        System.err.println("LASTNODE" + lastNode.getData().getName());
+        System.err.println("NEWMETH" + method.getName());
 
+        if (t.isRoot(lastNode) /* other condition? */ ) {
+            return StepActionType.BROKEN;
+        } else if (lastNode.getData().equals(method)) {
+            return StepActionType.DROP;
         } else if (t.getParent(lastNode).getData().equals(method)) {
             return StepActionType.SAME;
-
         } else if (t.getParent(t.getParent(lastNode)).getData().equals(method)) {
             return StepActionType.POP;
+        }         
 
-        } else if (t.isRoot(lastNode) /* other condition? */ ) {
-            return StepActionType.BROKEN;
-        }
-        
-        return StepActionType.OTHER;
+        return StepActionType.BROKEN;
     }
 
     /**
@@ -218,8 +259,7 @@ public class SrcSinkFlowViz extends XMLVizReport
      * the map pamameter
      */
     private void logCallSites(Step s, Map<SootMethod, ArrayDeque<CallSite>> callSites) {
-
-        CtxtVarPoint point = (CtxtVarPoint)s.target;
+        CtxtPoint point = (CtxtPoint)s.target;
         Unit[] context = point.ctxt.getElems();
         SootMethod method = getMethod(s);
         Stmt stm = null;
@@ -282,7 +322,7 @@ public class SrcSinkFlowViz extends XMLVizReport
 
     /**
      * Returns the method object associated with the 
-     * CtxtVarNode of the parameter step
+     * CtxtPoint of the parameter step
      */
     private SootMethod getMethod(Step s) {
         VarNode v = ((CtxtVarPoint)s.target).var;
@@ -335,152 +375,3 @@ public class SrcSinkFlowViz extends XMLVizReport
         }
     }
 }
-
-/*
-   Set<String> seenLocs = new HashSet();
-
-   SootMethod lastStackBtm = null;
-   SootMethod lastStackTop = null;
-   for (Step s : p.steps) {
-   if (s.target instanceof CtxtVarPoint) {
-   String progress = "";
-   Unit[] elems = ((CtxtVarPoint)s.target).ctxt.getElems();
-   Category c = mc;
-   System.out.println(s.target);
-
-//NOTE TODO: CURRENTLY ASSUMES K = 2, not WLOG exactly...
-if (elems.length > 0 && Program.containerMethod((Stmt)elems[0]).equals(lastStackBtm)) {
-Stmt stm  = (Stmt)elems[elems.length-1];
-SootMethod method = Program.containerMethod(stm);
-
-if (SourceInfo.isFrameworkClass(method.getDeclaringClass()) && (c==null || c.equals(mc))) {
-continue;
-}
-
-c = c.makeOrGetSupCat(Program.containerMethod((Stmt)elems[0]), method);
-
-
-System.out.println("Adding SuperCat "+Program.containerMethod((Stmt)elems[0]).getName()
-+" "+method.getName());
-
-String sourceFileName = (method == null) ? "" : SourceInfo.filePath(method.getDeclaringClass());
-int methodLineNum = SourceInfo.methodLineNum(method);
-if (methodLineNum < 0) {
-methodLineNum = 0;
-}
-String methName = method.getName();
-
-
-if (c == null) {
-System.out.println("Found Empty Ctxt "+s.toString());
-
-lastStackBtm = null;
-lastStackTop = null;
-
-continue;
-}
-
-c.addRawValue(methName, sourceFileName, ""+methodLineNum, "method", "");
-seenLocs.add(progress);
-} else {
-if (elems.length >0) {
-c = c.findSubCat(Program.containerMethod((Stmt)elems[elems.length-1]));
-if (c == null) {
-c = mc;
-}
-}
-
-for (int i = elems.length - 1; i >= 0; --i) {
-Stmt stm  = (Stmt)elems[i];
-SootMethod method = Program.containerMethod(stm);
-
-if (SourceInfo.isFrameworkClass(method.getDeclaringClass()) && c.equals(mc)) {
-continue;
-}
-
-String methName = method.getName();
-int methodLineNum = SourceInfo.methodLineNum(method);
-if (methodLineNum < 0) {
-methodLineNum = 0;
-}
-
-c = c.makeOrGetSubCat(method);
-
-progress += method.getNumber();
-
-if (i < elems.length-1) {
-    stm = (Stmt)elems[i+1];
-    method = Program.containerMethod(stm);
-    methodLineNum = SourceInfo.stmtLineNum(stm);
-}
-
-String sourceFileName = (method == null) ? "" : SourceInfo.filePath(method.getDeclaringClass());
-
-
-if (!seenLocs.contains(progress)) {
-    c.addRawValue(methName, sourceFileName, ""+methodLineNum, "method", "");
-    seenLocs.add(progress);
-}
-}
-
-
-if (s.target instanceof CtxtVarPoint) {
-    VarNode v = ((CtxtVarPoint)s.target).var;
-    SootMethod method = null;
-    if (v instanceof LocalVarNode) {
-        LocalVarNode localRegister = (LocalVarNode)v;
-        method = localRegister.meth;
-    } else if (v instanceof ThisVarNode) {
-        ThisVarNode thisRegister = (ThisVarNode)v;
-        method = thisRegister.method;
-    } else if (v instanceof ParamVarNode) {
-        ParamVarNode paramRegister = (ParamVarNode)v;
-        method = paramRegister.method;
-    } else if (v instanceof RetVarNode) {
-        RetVarNode retRegister = (RetVarNode)v;
-        method = retRegister.method;
-    } 
-
-    if (method == null)
-        continue;
-    String sourceFileName = SourceInfo.filePath(method.getDeclaringClass());
-    int methodLineNum = SourceInfo.methodLineNum(method);
-    if (methodLineNum < 0) {
-        methodLineNum = 0;
-    }
-    String methName = method.getName();
-
-    progress += method.getNumber();
-    if (!seenLocs.contains(progress)) {
-        c = c.makeOrGetSubCat(method);
-        c.addRawValue(method.getName(), sourceFileName, ""+methodLineNum, "method", "");
-        seenLocs.add(progress);
-    }
-
-} 
-}
-if (elems.length > 0) {
-    lastStackBtm = Program.containerMethod((Stmt)elems[elems.length-1]);
-    lastStackTop = Program.containerMethod((Stmt)elems[0]);
-} else {
-    lastStackBtm = null;
-    lastStackTop = null;
-}
-}
-}
-}
-} catch (IllegalStateException ise) {
-    // The hope is that this will be caught here if the error is simply that
-    // no path solver was run. Try to provide some intelligable feeback...
-    makeOrGetSubCat("Error: No Path Solver Found"); // TODO: slightly undesireable because creates empty + drop-down
-    System.out.println("No path solver found so no path visualization could be generated.");
-    System.out.println("To visualize paths run with -Dstamp.backend=solvergen");
-
-} catch (Exception e) {
-    //Something else went wrong...
-    System.err.println("Problem producing FlowViz report");
-    e.printStackTrace();
-}
-}
-}
-*/
