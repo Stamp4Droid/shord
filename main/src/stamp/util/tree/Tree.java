@@ -16,6 +16,7 @@ public class Tree<T> {
 
     public Tree(String l) {
         root = new Node<T>();
+        root.setParent(root);
         label = l;
     }
 
@@ -32,12 +33,8 @@ public class Tree<T> {
         return root;
     }
 
-    public boolean isRoot(T data) {
-        return root.getData().equals(data);
-    }
-
     public boolean isRoot(Node<T> node) {
-        return node != null && isRoot(node.getData());
+        return node != null && root.equals(node);
     }
 
     public Node<T> getParent(Node<T> child) {
@@ -50,7 +47,7 @@ public class Tree<T> {
         if (parent == null) {
             return getRoot();
         }
-        return null;
+        return parent;
     }
 
     public Node<T> getSuccessor(Node<T> node, int[] depthDelta) {
@@ -130,33 +127,5 @@ public class Tree<T> {
         public int getDepth() {
             return depth;
         }
-
-            
-/*
-            if (!hasNext()) {
-                return null; //TODO should throw exception?
-            }
-
-            assert currentItr == null; // should be checked by hasNext
-
-            if (currentItr.hasNext()) {
-                return currentItr.next().getData();
-            } else {
-                currentNode = getParent(currentNode);
-                currentItr = currentNode.iterator();
-                if (!hasNext()) {
-                    return null; //TODO should throw exception?
-                } else {
-                    return currentItr.next().getData();
-                }
-            }
-        }
-
-        public boolean hasMoreChildren() {
-            return (currentItr != null && currentItr.hasNext());
-        }
-*/
-
-        // Does not implement remove
     }
 }
