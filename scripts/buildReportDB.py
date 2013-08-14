@@ -320,7 +320,7 @@ def buildAppMap(flowHash):
 def storeDFAResults(dbPath,flowData):
     conn = createDFATable(dbPath)
     insertDFATable(conn,flowData)
-    selectDFATable(conn)
+    #selectDFATable(conn)
 
 
 if __name__ == "__main__":
