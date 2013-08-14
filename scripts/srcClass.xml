@@ -1,60 +1,60 @@
 <root>
-  <src class="Personal Data">$accounts</src>
-  <src class="Personal Data">$accounts.name</src>
-  <src class="Personal Data">$audio</src>
-  <src class="Personal Data">$browser</src>
-  <src class="Personal Data">$browser.bookmarks</src>
-  <src class="Personal Data">$calllog</src>
-  <src class="Personal Data">$calendar</src>
-  <src class="Personal Data">$camera.picture</src>
-  <src class="Personal Data">$contacts</src>
-  <src class="Personal Data">$content://com.android.calendar/calendars</src>
-  <src class="Personal Data">$content://com.android.calendar/events</src>
-  <src class="Personal Data">$content://com.android.contacts/contacts/</src>
-  <src class="Personal Data">$content://com.android.contacts/data</src>
-  <src class="Personal Data">$content://com.android.contacts/data/phones</src>
-  <src class="Personal Data">$content://calendar/events</src>
-  <src class="Personal Data">$content://calendar/calendars</src>
-  <src class="Personal Data">$content://contacts/people</src>
-  <src class="Personal Data">$content://mms</src>
-  <src class="Personal Data">$content://mms/part</src>
-  <src class="Personal Data">$content://sms</src>
-  <src class="Personal Data">$content://sms/sent</src>
-  <src class="Personal Data">$content://sms/inbox</src>
-  <src class="Personal Data">$content://call_log/calls</src>
-  <src class="Personal Data">$incomingcallnumber</src>
-  <src class="Personal Data">$media</src>
-  <src class="Phone Info">$content://telephony/carriers</src>
-  <src class="Phone Info">$content://telephony/carriers/preferapn</src>
-  <src class="Phone Info">$cdma_network_id</src>
-  <src class="Phone Info">$cmda_system_id</src>
-  <src class="Phone Info">$getline1number</src>
-  <src class="Phone Info">$getnetworkcountryiso</src>
-  <src class="Phone Info">$getsimserialnumber</src>
-  <src class="Phone Info">$getsubscriberid</src>
-  <src class="Phone Info">$getvoicemailnumber</src>
-  <src class="Phone Info">$networkoperator</src>
-  <src class="Phone Info">$networkoperatorname</src>
-  <src class="Phone Info">$simcountryiso</src>
-  <src class="Phone Info">$simoperatorname</src>  
-  <src class="Phone Info" priority="high">$getdeviceid</src>
-  <src class="Location">$cdma_Location</src>
-  <src class="Location">$getlongitude</src>
-  <src class="Location">$location</src>
-  <src class="Location">$getlatitude</src>
-  <src class="Location">$fine_Location</src>
-  <src class="System Data" priority="med">$process.inputstream</src>
-  <src class="System Data" priority="med">$systemproperties.get</src>
-  <src class="System Data" priority="low">$getdevicesoftwareversion</src>
-  <src class="System Data" priority="high">$fileinputstream</src>
-  <src class="System Data" priority="med">$process.errorstream</src>
-  <src class="System Data" priority="high">$externalstorage</src>
-  <src class="System Data" priority="low">$context.getstring</src>
-  <src class="System Data" priority="low">$wifimanager.getdhcpinfo</src>
-  <src class="System Data" priority="low">$process.exitvalue</src>
-  <src class="System Data" priority="high">$datainputstream</src>
-  <src class="System Data" priority="high">$filesystem</src>
-  <src class="System Data" priority="high">$file</src>
-  <src class="Internal">$getextras</src>
-  <src class="Internal">$content_provider</src>
+  <src class="PII" id="1" priority="high">$accounts</src>
+  <src class="PII" id="2" priority="high">$accounts.name</src>
+  <src class="PII" id="3" priority="high">$audio</src>
+  <src class="PII" id="4" priority="high">$browser</src>
+  <src class="PII" id="5" priority="high">$browser.bookmarks</src>
+  <src class="PII" id="6" priority="high">$calllog</src>
+  <src class="PII" id="7" priority="high">$calendar</src>
+  <src class="PII" id="8" priority="high">$camera.picture</src>
+  <src class="PII" id="9" priority="high">$contacts</src>
+  <src class="PII" id="10" priority="high">$content://com.android.calendar/calendars</src>
+  <src class="PII" id="11" priority="high">$content://com.android.calendar/events</src>
+  <src class="PII" id="12" priority="high">$content://com.android.contacts/contacts/</src>
+  <src class="PII" id="13" priority="high">$content://com.android.contacts/data</src>
+  <src class="PII" id="14" priority="high">$content://com.android.contacts/data/phones</src>
+  <src class="PII" id="15" priority="high">$content://calendar/events</src>
+  <src class="PII" id="16" priority="high">$content://calendar/calendars</src>
+  <src class="PII" id="17" priority="high">$content://contacts/people</src>
+  <src class="PII" id="18" priority="high">$content://mms</src>
+  <src class="PII" id="19" priority="high">$content://mms/part</src>
+  <src class="PII" id="20" priority="high">$content://sms</src>
+  <src class="PII" id="21" priority="high">$content://sms/sent</src>
+  <src class="PII" id="22" priority="high">$content://sms/inbox</src>
+  <src class="PII" id="23" priority="high">$content://call_log/calls</src>
+  <src class="PII" id="24" priority="high">$incomingcallnumber</src>
+  <src class="PII" id="25" priority="high">$media</src>
+  <src class="Phone Info" id="26">$content://telephony/carriers</src>
+  <src class="Phone Info" id="27">$content://telephony/carriers/preferapn</src>
+  <src class="Phone Info" id="28">$cdma_network_id</src>
+  <src class="Phone Info" id="29">$cmda_system_id</src>
+  <src class="Phone Info" id="30" priority="high">$getline1number</src>
+  <src class="Phone Info" id="31">$getnetworkcountryiso</src>
+  <src class="Phone Info" id="32" priority="high">$getsimserialnumber</src>
+  <src class="Phone Info" id="33">$getsubscriberid</src>
+  <src class="Phone Info" id="34">$getvoicemailnumber</src>
+  <src class="Phone Info" id="35">$networkoperator</src>
+  <src class="Phone Info" id="36">$networkoperatorname</src>
+  <src class="Phone Info" id="37">$simcountryiso</src>
+  <src class="Phone Info" id="38">$simoperatorname</src>  
+  <src class="Phone Info" id="39" priority="high">$getdeviceid</src>
+  <src class="Location" id="40">$cdma_Location</src>
+  <src class="Location" id="41" priority="high">$getlongitude</src>
+  <src class="Location" id="42" priority="high">$location</src>
+  <src class="Location" id="43" priority="high">$getlatitude</src>
+  <src class="Location" id="44" priority="high">$fine_Location</src>
+  <src class="System Data" id="45" priority="med">$process.inputstream</src>
+  <src class="System Data" id="46" priority="med">$systemproperties.get</src>
+  <src class="System Data" id="47" priority="low">$getdevicesoftwareversion</src>
+  <src class="System Data" id="48" priority="high">$fileinputstream</src>
+  <src class="System Data" id="49" priority="med">$process.errorstream</src>
+  <src class="System Data" id="50" priority="high">$externalstorage</src>
+  <src class="System Data" id="51" priority="low">$context.getstring</src>
+  <src class="System Data" id="52" priority="low">$wifimanager.getdhcpinfo</src>
+  <src class="System Data" id="53" priority="low">$process.exitvalue</src>
+  <src class="System Data" id="54" priority="high">$datainputstream</src>
+  <src class="System Data" id="55" priority="high">$filesystem</src>
+  <src class="System Data" id="56" priority="high">$file</src>
+  <src class="Internal" id="57" priority="low">$getextras</src>
+  <src class="Internal" id="58" priority="low">$content_provider</src>
 </root>
