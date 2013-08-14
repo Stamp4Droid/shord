@@ -1,15 +1,31 @@
-package tree;
+package stamp.util.tree;
+
+import java.lang.UnsupportedOperationException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
+ * 
  *
  * @author brycecr
  */
 public class Tree<T> {
 
     protected Node<T> root;
+    protected final String label;
+
+    public Tree(String l) {
+        root = new Node<T>();
+        label = l;
+    }
 
     public Tree(T treename) {
         root = new Node<T>(treename);
+        label = "AnonTree: root";
+    }
+
+    public String getLabel() {
+        return label;
     }
 
     public Node<T> getRoot() {
@@ -62,27 +78,25 @@ public class Tree<T> {
         return getRoot();
     }
 
-    public Iterator<T> iterator() {
-        return new TreeIterator<T>();
+    public TreeIterator iterator() {
+        return new TreeIterator();
     }
 
-    class TreeIterator<T> implements Iterator {
+    public class TreeIterator implements Iterator<T> {
     
         protected Node<T> currentNode = null;
-        protected NodeIterator<Node<T>> currentItr = null;
+        protected Node<T>.NodeIterator currentItr = null;
         protected int depth = 0; //track depth so clients know when level is changed
 
-        public TreeIterator<T>() {
+        public TreeIterator() {
             currentNode = getRoot();
             currentItr = currentNode.iterator();
         }
     
-        @implement
         public boolean hasNext() {
             return !(currentItr == null || ((!currentItr.hasNext()) && isRoot(currentNode)));
         }
         
-        @implement
         public T next() {
             if (!hasNext()) {
                 return null; //TODO should throw exception?
@@ -96,7 +110,7 @@ public class Tree<T> {
                 int[] depthDelta = new int[1];
                 depthDelta[0] = 0; 
 
-                nextNode = Outer.this.getSuccessor(currentNode, depthDelta);
+                nextNode = getSuccessor(currentNode, depthDelta);
                 depth += depthDelta[0] - 1; //we always lose at least 1 level
             }
 
@@ -106,7 +120,11 @@ public class Tree<T> {
                 depth += 1;
             }
 
-            return nextNode;
+            return nextNode.getData();
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
         }
 
         public int getDepth() {

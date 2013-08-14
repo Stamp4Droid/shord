@@ -1,6 +1,9 @@
-package tree;
+package stamp.util.tree;
+
+import java.lang.UnsupportedOperationException;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -11,6 +14,9 @@ public class Node<T> {
     protected ArrayList<Node<T>> children = null;
     protected Node<T> parent = null;
     protected T data = null;
+
+    public Node() {
+    }
 
     public Node(T id) {
         data = id;
@@ -47,10 +53,6 @@ public class Node<T> {
         return children;
     }
 
-    public boolean hasChildren() {
-        return getChildren() == null;
-    }
-
     public Node<T> addChild(Node<T> newchild) {
         if (children == null) {
             children = new ArrayList<Node<T>>();
@@ -64,11 +66,11 @@ public class Node<T> {
         return addChild(newChild);
     }
 
-    public void addParent(Node<T> newparent) throws InvalidNodeOpException {
+    public void addParent(Node<T> newparent) throws UnsupportedOperationException {
         if (parent == null) {
             parent = newparent;
         } else {
-            throw new InvalidNodeOpException("Tree: Adding new "
+            throw new UnsupportedOperationException("Tree: Adding new "
                     + "parent to Node with non-null parent.");
         }
     }
@@ -81,29 +83,28 @@ public class Node<T> {
         return children == null || children.size() == 0;
     }
 
-    private static class InvalidNodeOpException extends Exception {
-
-        public InvalidNodeOpException(String str) {
-            super(str);
-        }
+    public NodeIterator iterator() {
+        return new NodeIterator();
     }
 
-    class NodeIterator<Node<T>> implements Iterator {
+    class NodeIterator implements Iterator<Node<T>> {
 
         Iterator<Node<T>> itr = null;
     
-        public NodeIterator<Node<T>>() {
+        public NodeIterator() {
             itr = children.iterator();
         }
 
-        @implement
         public boolean hasNext() {
             return itr.hasNext();
         }
     
-        @implement
         public Node<T> next() {
             return itr.next();
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
         }
 
         //Does not implement remove, currently
