@@ -21,6 +21,9 @@ import soot.toolkits.scalar.*;
 import java.util.*;
 import stamp.analyses.StringLocalDefs;
 import stamp.analyses.ReachingDefsAnalysis;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
 /**
   * attach param values to smsnumber.
@@ -29,6 +32,8 @@ public class SmsDestAnnotation extends AnnotationInjector.Visitor
 {
 
     private final Map<String,SootMethod> srcLabelToLabelMethod = new HashMap();
+
+    private final Map<String,String> methodSig = new HashMap();
 
     private SootClass klass;
     private int newLocalCount;
@@ -39,6 +44,19 @@ public class SmsDestAnnotation extends AnnotationInjector.Visitor
 
     public SmsDestAnnotation()
     {
+        String sigLoc = System.getProperty("stamp.dir") + "/models/soot_methods.txt";
+        try {
+            FileInputStream in = new FileInputStream(sigLoc);
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String strLine;
+
+            while ((strLine = br.readLine()) != null) {
+                String[] sigArray = strLine.split("#");
+                methodSig.put(sigArray[0], sigArray[1] + "#" + sigArray[2]);
+            }
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
 	protected void visit(SootClass klass)
@@ -57,6 +75,10 @@ public class SmsDestAnnotation extends AnnotationInjector.Visitor
             return;
 
         Body body = method.retrieveActiveBody();
+        //run String analysis.
+        UnitGraph g = new ExceptionalUnitGraph(body);
+        StringLocalDefs sld = new StringLocalDefs(g, new SimpleLiveLocals(g));
+        ReachingDefsAnalysis.runReachingDef(body);
 
         Chain<Local> locals = body.getLocals();
         Chain<Unit> units = body.getUnits();
@@ -68,127 +90,61 @@ public class SmsDestAnnotation extends AnnotationInjector.Visitor
             if(stmt.containsInvokeExpr()){
                 InvokeExpr ie = stmt.getInvokeExpr();
                 String methodRefStr = ie.getMethodRef().toString();
+                String argAndSink = methodSig.get(ie.getMethod().getSignature());
 
-                if (methodRefStr.contains("sendTextMessage")) {
-                    UnitGraph g = new ExceptionalUnitGraph(body);
-                    StringLocalDefs sld = new StringLocalDefs(g, new SimpleLiveLocals(g));
-                    //ReachingDefsAnalysis.runReachingDef(body);
+                if (argAndSink != null) {
+                    int argNum = Integer.parseInt(argAndSink.split("#")[0]);
+                    String sinkStr = argAndSink.split("#")[1];
 
                     Map<Value, Set<String>> valueMap = sld.getDefsOfAt(null, stmt);
-                    //System.out.println("Begin to query...." + ie.getArg(0) + valueMap.get(ie.getArg(0)));
-                    if (valueMap.get(ie.getArg(0)) != null) {
-                        //System.out.println("i get it...." + valueMap.get(ie.getArg(0)));
-                        StringConstant arg = StringConstant.v(valueMap.get(ie.getArg(0)).toString());
-                        Local newArg = insertLabelIfNecessary(arg, locals, units, stmt);
+                    if (valueMap.get(ie.getArg(argNum)) != null) {
+                        StringConstant arg = StringConstant.v(valueMap.get(ie.getArg(argNum)).toString());
+                        System.out.println("String analysis: " + " | stmt: " + stmt + " | tags: " + stmt.getTags() 
+                                        + " | string value: " + arg + " |Class: " + this.klass 
+                                        + " |Method: " + method + " | body: " + body);
+
+                        Local newArg = insertLabelIfNecessary(arg, locals, units, stmt, sinkStr, argNum);
                         if(newArg != null){
-                            ie.setArg(2, newArg);
+                            ie.setArg(argNum, newArg);
                         }
+                    } else {
+                       System.out.println("String analysis(missed): " + " | stmt: " + stmt + " | tags: " + stmt.getTags() 
+                                        + " | string Map: " + valueMap+ " |Class: " + this.klass + " |Method: " 
+                                        + method  +  " | body: " + body);
                     }
                 }
-
-               if (methodRefStr.contains("sendMultipartTextMessage")) {
-                    /*UnitGraph g = new ExceptionalUnitGraph(body);
-                    StringLocalDefs sld = new StringLocalDefs(g, new SimpleLiveLocals(g));
-
-                    Map<Value, Set<String>> valueMap = sld.getDefsOfAt(null, stmt);
-                    if (valueMap.get(ie.getArg(0)) != null) {
-                        StringConstant arg = StringConstant.v(valueMap.get(ie.getArg(0)).toString());
-                        //FIXME: ugly.
-                        Local newArg = insertMultiLabelIfNecessary(arg, locals, units, stmt);
-                        if(newArg != null){
-                            ie.setArg(2, newArg);
-                        }
-                    }*/
-               }
-
-               if (methodRefStr.contains("sendDataMessage")) {
-                   //TODO
-               }
 
             }
         }
     }
-    private Local insertMultiLabelIfNecessary(StringConstant strConst, Chain<Local> locals, Chain<Unit> units, Unit currentStmt)
+
+    private Local insertLabelIfNecessary(StringConstant strConst, Chain<Local> locals, Chain<Unit> units, 
+                                         Unit currentStmt, String sinkStr, int argNum)
     {
         String str = strConst.value;
 
-        SootMethod meth = getOrCreateMultiLabelMethodFor(str);
-        Local temp = Jimple.v().newLocal("stamp$stamp$tmp"+newLocalCount++, 
-        RefType.v("java.util.ArrayList"));
-        locals.add(temp);
-        Stmt stmt = (Stmt) currentStmt;
-        InvokeExpr ie = stmt.getInvokeExpr();
-
-        Stmt toInsert = Jimple.v().newAssignStmt(temp, Jimple.v().newStaticInvokeExpr(meth.makeRef(), ie.getArg(2)));
-        units.insertBefore(toInsert, currentStmt);
-        return temp;
-    }
-
-
-    private SootMethod getOrCreateMultiLabelMethodFor(String label)
-    {
-        SootMethod meth = srcLabelToLabelMethod.get(label);
-        if(meth == null){
-            RefType stringType = RefType.v("java.util.ArrayList");
-            List paramTypes = Arrays.asList(new Type[]{stringType});
-            String methName = "stamp$stamp$"+srcLabelToLabelMethod.size();
-            meth = new SootMethod(methName, paramTypes, stringType, Modifier.STATIC | Modifier.PRIVATE);
-            klass.addMethod(meth);
-            srcLabelToLabelMethod.put(label, meth);
-
-            JimpleBody body = Jimple.v().newBody(meth);
-            meth.setActiveBody(body);
-
-            Local param = Jimple.v().newLocal("l0", stringType);
-            body.getLocals().add(param);
-
-            Chain units = body.getUnits();
-            units.add(Jimple.v().newIdentityStmt(param, 
-            Jimple.v().newParameterRef(stringType, 0)));
-
-            Local ret = Jimple.v().newLocal("l1", stringType);
-            body.getLocals().add(ret);
-            units.add(Jimple.v().newAssignStmt(ret,
-            Jimple.v().newNewExpr(stringType)));
-
-            SootMethodRef mref = Scene.v().getMethod("<java.util.ArrayList: void <init>()>").makeRef();
-            units.add(Jimple.v().newInvokeStmt(Jimple.v().newSpecialInvokeExpr(ret, mref, param)));
-
-            units.add(Jimple.v().newReturnStmt(ret));
-
-            System.out.println("%%% "+meth.getSignature());
-            label = "smsdest(" +label+ ")";
-            writeAnnotation(methName+":(Ljava/lang/String;)Ljava/lang/String;@"+klass.getName(), "!"+label, "-1");
-        }
-
-        return meth;
-    }
-
-
-    private Local insertLabelIfNecessary(StringConstant strConst, Chain<Local> locals, Chain<Unit> units, Unit currentStmt)
-    {
-        String str = strConst.value;
-
-        SootMethod meth = getOrCreateLabelMethodFor(str);
+        SootMethod meth = getOrCreateLabelMethodFor(str, sinkStr);
         Local temp = Jimple.v().newLocal("stamp$stamp$tmp"+newLocalCount++, 
         RefType.v("java.lang.String"));
         locals.add(temp);
         Stmt stmt = (Stmt) currentStmt;
         InvokeExpr ie = stmt.getInvokeExpr();
 
-        Stmt toInsert = Jimple.v().newAssignStmt(temp, Jimple.v().newStaticInvokeExpr(meth.makeRef(), ie.getArg(2)));
+        Stmt toInsert = Jimple.v().newAssignStmt(temp, Jimple.v().newStaticInvokeExpr(meth.makeRef(), ie.getArg(argNum)));
         units.insertBefore(toInsert, currentStmt);
         return temp;
     }
 
 
-    private SootMethod getOrCreateLabelMethodFor(String label)
+    private SootMethod getOrCreateLabelMethodFor(String label, String sinkStr)
     {
+        String methName = "stamp$stamp$annotate" + newLocalCount++;
         SootMethod meth = srcLabelToLabelMethod.get(label);
+        //if ( klass.declaresMethodByName(methName) ) {
         if(meth == null){
             RefType stringType = RefType.v("java.lang.String");
             List paramTypes = Arrays.asList(new Type[]{stringType});
-            String methName = "stamp$stamp$"+srcLabelToLabelMethod.size();
+            ///String methName = "stamp$stamp$annotate";
             meth = new SootMethod(methName, paramTypes, stringType, Modifier.STATIC | Modifier.PRIVATE);
             klass.addMethod(meth);
             srcLabelToLabelMethod.put(label, meth);
@@ -214,10 +170,20 @@ public class SmsDestAnnotation extends AnnotationInjector.Visitor
             units.add(Jimple.v().newReturnStmt(ret));
 
             System.out.println("%%% "+meth.getSignature());
-            label = "smsdest(" +label+ ")";
-            writeAnnotation(methName+":(Ljava/lang/String;)Ljava/lang/String;@"+klass.getName(), "!"+label, "-1");
-            //writeAnnotation(methName+":(Ljava/lang/String;)Ljava/lang/String;@"+klass.getName(), "1", "!"+label);
+            label = "strvalue(" +label+ ")";
+            if ("*".equals(sinkStr)) {
+                writeAnnotation(methName+":(Ljava/lang/String;)Ljava/lang/String;@"+klass.getName(), "$"+label, "-1");
+                writeAnnotation(methName+":(Ljava/lang/String;)Ljava/lang/String;@"+klass.getName(), "!"+label, "-1");
+            } else {
+                writeAnnotation(methName+":(Ljava/lang/String;)Ljava/lang/String;@"+klass.getName(), sinkStr+label, "-1");
+            }
+
         }
+       /* else {
+            System.out.println("methodname..." + methName);
+            meth = klass.getMethodByName(methName);
+        }
+        */
 
         return meth;
     }
