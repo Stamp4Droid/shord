@@ -1,0 +1,17 @@
+<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>#0#!
+<org.apache.http.client.methods.HttpGet: void <init>(java.lang.String)>#0#!
+<android.telephony.SmsManager: void sendMultipartTextMessage(java.lang.String,java.lang.String,java.util.ArrayList,java.util.ArrayList,java.util.ArrayList)>#0#!
+<java.net.Socket: void <init>(java.lang.String,int)>#0#!
+<java.net.URLEncoder: java.lang.String encode(java.lang.String,java.lang.String)>#0#!
+<java.net.URLDecoder: java.lang.String decode(java.lang.String,java.lang.String)>#0#!
+<android.util.Log: int e(java.lang.String,java.lang.String)>#0#!
+<android.media.MediaRecorder: void setOutputFile(java.lang.String)>#0#!
+<java.io.File: void <init>(java.lang.String,java.lang.String)>#0#*
+<java.io.File: void <init>(java.lang.String)>#0#*
+<java.net.URL: void <init>(java.lang.String)>#0#!
+<java.net.InetAddress: java.net.InetAddress getByName(java.lang.String)>#0#!
+<java.io.FileOutputStream: void <init>(java.lang.String)>#0#*
+<android.app.Activity: void dump(java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[])>#0#!
+<android.content.ContextWrapper: java.io.FileInputStream openFileInput(java.lang.String)>#0#$
+<android.content.ContextWrapper: java.io.FileOutputStream openFileOutput(java.lang.String,int)>#0#!
+<android.support.v4.app.LoaderManagerImpl$LoaderInfo: void dump(java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[])>#0#!

@@ -95,8 +95,6 @@ public class StringLocalDefs {
 				if (!(v instanceof Local))
 					continue;
 				HashSet analysisResult = (HashSet) analysis.getFlowBefore(u);
-				//System.out.println("check unit...." + u);
-				//System.out.println("check defs...." + defsOf((Local) v));
 				for (Unit unit : defsOf((Local) v)) {
 					// JIdentityStmt, JAssignStmt and what else?
 					if (analysisResult.contains(unit)) {
@@ -116,9 +114,6 @@ public class StringLocalDefs {
 								al.put(lhs, valueList.getFiniteStrings());
 								
 							} else {// add to map directly.
-								/*if (actualValue.get(lhs) != null) // old?
-									valueList = valueList.union(actualValue
-											.get(lhs));*/
 
 								if (rhs instanceof StringConstant) {
 									valueList = BasicAutomata
@@ -129,28 +124,39 @@ public class StringLocalDefs {
 									if (exprStr.contains("java.lang.StringBuilder append(") ||
                                         exprStr.contains("java.lang.StringBuffer append(") ||
                                         exprStr.contains("java.lang.String concat(") ) {
-
+                                         
 										Value argStr = expr.getArg(0);
 										ValueBox caller = (ValueBox)expr.getUseBoxes().get(0);
 										Automaton fstAuto = actualValue.get(caller.getValue());
 										Automaton secAuto = actualValue.get(argStr);
+
 										if (caller instanceof StringConstant)
 											fstAuto = BasicAutomata.makeString(((StringConstant) caller).value);
 										if (argStr instanceof StringConstant)
 											secAuto = BasicAutomata.makeString(((StringConstant) argStr).value);
 									
                                         if (fstAuto != null && secAuto != null)
-										    valueList = fstAuto.concatenate(secAuto);
+                                            //if (fstAuto.getFiniteStrings().toString().equals("[*]"))
+										        //valueList = secAuto;
+                                            if (secAuto.getFiniteStrings().toString().equals("[*]") 
+                                                   && fstAuto.getFiniteStrings().toString().equals("[*]"))
+										        valueList = fstAuto;
+                                            else
+										        valueList = fstAuto.concatenate(secAuto);
                                         else if(fstAuto == null) 
 										    valueList = secAuto;
                                         else if(secAuto == null) 
 										    valueList = fstAuto;
 
-									} 
+									} else if(expr.toString()
+                                        .contains("<java.lang.StringBuilder: java.lang.String toString()>")) {
+                                        ValueBox caller = (ValueBox)expr.getUseBoxes().get(0);
+                                        if (actualValue.get(caller.getValue()) != null) 
+                                            valueList =  actualValue.get(caller.getValue());
+                                    }
 
 								} else if (rhs instanceof JStaticInvokeExpr) {
 									JStaticInvokeExpr expr = (JStaticInvokeExpr) rhs;
-									//staticinvoke <java.lang.String: java.lang.String valueOf(java.lang.Object)>(r1)
 									if (expr.toString().contains(
 											"java.lang.String valueOf(")) {
 										valueList = actualValue.get(expr.getArg(0));
@@ -166,9 +172,11 @@ public class StringLocalDefs {
 									}
 
 								} else {									
+                                    //System.out.println("DEAD value: " + u);
 									valueList = BasicAutomata.makeString("*");
 								}
-								al.put(lhs, valueList.getFiniteStrings());
+                                if(valueList != null)
+								    al.put(lhs, valueList.getFiniteStrings());
 							}
 							actualValue.put(lhs, valueList);
 						} else if (unit instanceof JIdentityStmt) {// add to map
@@ -177,19 +185,17 @@ public class StringLocalDefs {
 							//valueList = BasicAutomata.makeAnyString();
 							valueList = BasicAutomata.makeString("*");
 							// old?
-							if (actualValue.get(idStmt.getLeftOp()) != null)
+							if (actualValue.get(idStmt.getLeftOp()) != null){
+								al.put(idStmt.getLeftOp(), valueList.getFiniteStrings());
 								valueList = actualValue.get(idStmt.getLeftOp());
-
-							// FIXME
-							/*
-							 * valueList.add(idStmt.getRightOp());
-							 * actualValue.put(idStmt.getLeftOp(), valueList);
-							 * al.add(unit);
-							 */
+                            }else { 
+								al.put(idStmt.getLeftOp(), valueList.getFiniteStrings());
+							    actualValue.put(idStmt.getLeftOp(), valueList);
+                            }
+                                
 
 						} else {
-							System.out.println("unknown expr.......");
-							// al.add(unit);
+							System.out.println("ERROR unknown expr......." + u);
 						}
 					}
 				}
@@ -201,17 +207,31 @@ public class StringLocalDefs {
 
 						ValueBox vbox = (ValueBox) u.getUseBoxes().get(0);
 						Value rhs_sp = specInvoke.getInvokeExpr().getArg(0);
+
+                        if (rhs_sp instanceof StringConstant) {
+                            StringConstant spString = (StringConstant) rhs_sp;
+                            valueList = BasicAutomata.makeString(spString.value);
+                            al.put(vbox.getValue(), valueList.getFiniteStrings());
+                            actualValue.put(vbox.getValue(), valueList);
+                        }
+
 						if (actualValue.get(rhs_sp) != null) {
 							valueList = actualValue.get(rhs_sp);
-
-							al.put(vbox.getValue(),
-									valueList.getFiniteStrings());
+							al.put(vbox.getValue(), valueList.getFiniteStrings());
 							actualValue.put(vbox.getValue(), valueList);
 							answer.put(u, al);
 							continue;
 						}
 
-					}
+					} else if (invokeStr.contains("<java.lang.StringBuilder: void <init>()>") ){
+                        //$r37.<java.lang.StringBuilder: void <init>()>()
+						ValueBox vbox = (ValueBox) u.getUseBoxes().get(0);
+                        //empty string.
+                        valueList = BasicAutomata.makeString("");
+                        al.put(vbox.getValue(), valueList.getFiniteStrings());
+                        actualValue.put(vbox.getValue(), valueList);
+
+                    }
 				}
 				answer.put(u, al);
 			}

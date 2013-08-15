@@ -102,8 +102,8 @@ public class IcdfAnnotation extends AnnotationInjector.Visitor
 
                     boolean isImplicit = sld.checkImplicit(stmt);
                     //Output intent results.
-                    System.out.println("Implicit intent?" + isImplicit + "# Class: " + this.klass + "# Method: " 
-                                        + method + "# Stmt: " + stmt);
+                    System.out.println("Implicit intent = " + isImplicit + "# Class: " + this.klass + "# Method: " 
+                                        + method + "# Stmt: " + stmt + "\n");
                 }
                 ///param values for setAction, setCategory and those related APIs.
                 if (
@@ -117,8 +117,8 @@ public class IcdfAnnotation extends AnnotationInjector.Visitor
                     || methSig.equals("<android.content.Intent: void <init>(java.lang.String)>")
                     ) {
                     //Output intent filter, target info.
-                    System.out.println("Intent filter:" + " Class:" + this.klass + " Method:" + method 
-                                        + " Stmt:" + stmt + " Defs:" + stmt.getTags());
+                    System.out.println("Intent filter(action,category,type) = " + " Class:" + this.klass + " Method:" + method 
+                                        + " Stmt:" + stmt + " Defs:" + stmt.getTags() + "\n");
 
                 }
 
