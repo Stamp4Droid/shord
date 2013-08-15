@@ -158,34 +158,50 @@ public class SrcSinkFlowViz extends XMLVizReport
      * provided as parameters, generates the XML report
      */
     protected void generateReport(ArrayList<Tree<SootMethod>> flows, Map<SootMethod, ArrayDeque<CallSite>> callSites) {
-
-
         for (Tree<SootMethod> t : flows) {
             Category c = makeOrGetSubCat(t.getRoot().getData().getName());
             Tree<SootMethod>.TreeIterator itr = t.iterator();
             
             Deque<Category> stack = new ArrayDeque<Category>();
             while (itr.hasNext()) {
-                System.err.println("Len "+stack.size()+" thing "+stack.peek());
                 int oldDepth = itr.getDepth();
                 SootMethod meth = itr.next();
                 int newDepth = itr.getDepth();
-                if (oldDepth < newDepth) {
+
+                System.out.println("ITEM: " + meth.getName() +" OldD: "+oldDepth+" NewD: "+newDepth);
+
+                if (filter(meth)) {
+                    continue;
+
+                } else if (oldDepth < newDepth) {
                     assert newDepth - oldDepth == 1;
-                    c = c.makeOrGetSubCat(meth);
                     stack.push(c);
+                    c = c.makeOrGetSubCat(meth);
+
                 } else if (oldDepth > newDepth) {
                     int del = oldDepth - newDepth;
+                    System.out.println("Del: " + del);
                     for (; del > 0; del--) {
                         c = stack.pop();
                     }
-                    c = c.makeOrGetSubCat(meth);
+                    c = stack.peek();
+                    if (c == null) { // end condition FIXME (hack)
+                        break;
+                    }
+                    c.makeOrGetSubCat(meth);
+
                 } else {
                     c.makeOrGetSubCat(meth);
+
                 }
                 //add classinfo data
             }
         }
+    }
+
+    protected boolean filter(SootMethod method) {
+        return false;
+        //return SourceInfo.isFrameworkClass(method.getDeclaringClass());
     }
 
     /**

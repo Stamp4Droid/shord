@@ -101,7 +101,7 @@ public class Node<T> {
     }
 
     public boolean hasChildren() {
-        return children == null || children.size() == 0;
+        return !(children == null || children.size() == 0);
     }
 
     public NodeIterator iterator() {
@@ -114,6 +114,12 @@ public class Node<T> {
     
         public NodeIterator() {
             itr = children.iterator();
+            System.err.println("LENGTH: "+children.size());
+            System.err.println("CONTENTS");
+            for (Node<T> n : children) {
+                System.err.println(n.getData());
+            }
+            System.err.println("EMDCONTENTS");
         }
 
         public boolean hasNext() {

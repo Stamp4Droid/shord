@@ -56,6 +56,9 @@ public class Tree<T> {
         //			 //exception on fail
         int depthChange = 0;
 
+        System.out.println("***GetSuccessor***");
+        System.out.println("Node " + node.getData());
+
         while (!isRoot(node)) {
             Node<T> parent = this.getParent(node);
             ArrayList<Node<T>> siblings = this.getParent(node).getChildren();
@@ -67,6 +70,8 @@ public class Tree<T> {
                 node = parent;
                 continue;
             } else {
+                depthDelta[0] = depthChange;
+                System.out.println("BROTHERHOOD");
                 return siblings.get(ind + 1);
             }
         }
@@ -91,7 +96,7 @@ public class Tree<T> {
         }
     
         public boolean hasNext() {
-            return !(currentItr == null || ((!currentItr.hasNext()) && isRoot(currentNode)));
+            return !(isRoot(currentNode) && (currentItr == null || !currentItr.hasNext()));
         }
         
         public T next() {
@@ -100,7 +105,14 @@ public class Tree<T> {
             }
 
             Node<T> nextNode;
-            if (currentItr.hasNext()) {
+
+            if (currentNode.hasChildren()) {
+                currentItr = currentNode.iterator();
+                assert currentItr.hasNext();
+                nextNode = currentItr.next();
+                currentNode = nextNode;
+                depth += 1;
+            } else if (currentItr != null && currentItr.hasNext()) {
                 nextNode = currentItr.next();
             } else {
                 // we need to know by how many levels we popped
@@ -108,13 +120,9 @@ public class Tree<T> {
                 depthDelta[0] = 0; 
 
                 nextNode = getSuccessor(currentNode, depthDelta);
-                depth += depthDelta[0] - 1; //we always lose at least 1 level
-            }
-
-            if (nextNode.hasChildren()) {
                 currentNode = nextNode;
-                currentItr = currentNode.iterator();
-                depth += 1;
+                currentItr = null;
+                depth += depthDelta[0]; //we always lose at least 1 level
             }
 
             return nextNode.getData();
