@@ -166,6 +166,7 @@ public class SrcSinkFlowViz extends XMLVizReport
             
             Deque<Category> stack = new ArrayDeque<Category>();
             while (itr.hasNext()) {
+                System.err.println("Len "+stack.size()+" thing "+stack.peek());
                 int oldDepth = itr.getDepth();
                 SootMethod meth = itr.next();
                 int newDepth = itr.getDepth();
@@ -178,6 +179,7 @@ public class SrcSinkFlowViz extends XMLVizReport
                     for (; del > 0; del--) {
                         c = stack.pop();
                     }
+                    c = c.makeOrGetSubCat(meth);
                 } else {
                     c.makeOrGetSubCat(meth);
                 }
@@ -241,10 +243,10 @@ public class SrcSinkFlowViz extends XMLVizReport
 
         if (t.isRoot(lastNode) /* other condition? */ ) {
             return StepActionType.BROKEN;
-        } else if (lastNode.getData().equals(method)) {
-            return StepActionType.DROP;
         } else if (t.getParent(lastNode).getData().equals(method)) {
             return StepActionType.SAME;
+        } else if (lastNode.getData().equals(method)) {
+            return StepActionType.DROP;
         } else if (t.getParent(t.getParent(lastNode)).getData().equals(method)) {
             return StepActionType.POP;
         }         
