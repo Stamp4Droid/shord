@@ -38,6 +38,10 @@ public class Tree<T> {
         return node != null && root.equals(node);
     }
 
+    public boolean isRoot(T dat) {
+        return getRoot().getData() != null && getRoot().getData().equals(dat);
+    }
+
     public Node<T> getParent(Node<T> child) {
         if (child == null) {
             return null;
