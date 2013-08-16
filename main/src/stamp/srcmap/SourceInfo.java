@@ -76,6 +76,12 @@ public class SourceInfo
 		}
 		return null;
 	}
+
+    public static String srcClassName(Stmt stmt) {
+		SootMethod method = Program.containerMethod(stmt);
+		SootClass klass = method.getDeclaringClass();
+        return srcClassName(klass);
+    }
 	
 	public static boolean isFrameworkClass(SootClass klass)
 	{

@@ -14,7 +14,7 @@
 
     <!-- Register backend-specific analyses. -->
     <property name="stamp.analyses.main"
-	      value="cfl-dlog,facts-dumper-java,cfl-solver-runner-java,dat-rel-parser-java"/>
+	      value="cfl-dlog,facts-dumper-java,cfl-solver-runner-java,dat-rel-parser-java,paths-printer-java"/>
 
     <!-- Set backend-specific system properties. -->
     <!-- Facts Dumper options -->
@@ -115,7 +115,7 @@
     </exec>
 
     <!-- Compile and link the analysis code with the CFL Solver engine. -->
-    <exec executable="g++" dir="${stamp.out.dir}"
+    <exec executable="g++-mp-4.8" dir="${stamp.out.dir}"
 	  spawn="false" failonerror="true">
       <arg line="-std=c++11 -Wall -Wextra -pedantic -O2"/>
       <arg line="${stamp.solvergen.logging.flag}"/>

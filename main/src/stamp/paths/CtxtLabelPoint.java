@@ -2,12 +2,11 @@ package stamp.paths;
 
 import shord.analyses.Ctxt;
 
-public class CtxtLabelPoint implements Point {
-	public final Ctxt ctxt;
+public class CtxtLabelPoint extends CtxtPoint {
 	public final String label;
 
 	public CtxtLabelPoint(Ctxt ctxt, String label) {
-		this.ctxt = ctxt;
+		super(ctxt);
 		this.label = label;
 	}
 
