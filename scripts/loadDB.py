@@ -1,6 +1,5 @@
 import sqlite3
 
-
 def connectDFATable(path):
     conn = sqlite3.connect(path + "app-reports.db")
     return conn
@@ -17,6 +16,8 @@ def createDFATable(path):
 def insertDFATable(conn, dfa_data):
     cursor = conn.cursor()
 
+    if not dfa_data:
+        return False 
     appName = str(dfa_data[0][0])
 
     # Test for old analysis results and get analysis count
