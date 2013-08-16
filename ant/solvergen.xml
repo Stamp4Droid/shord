@@ -18,10 +18,16 @@
     <!-- Facts Dumper options -->
     <property name="stamp.dumper.templates.dir"
 	      location="${stamp.dir}/solvergen/input"/>
-    <load-strings property="stamp.dumper.templates.list"
+    <load-strings property="stamp.dumper.templates.list.1"
 		  file="${stamp.solvergen.terms.listfile}">
       <replaceregex pattern="^(.+)$" replace="\1.dat"/>
     </load-strings>
+    <load-strings property="stamp.dumper.templates.list.2"
+		  file="${stamp.solvergen.rels.listfile}">
+      <replaceregex pattern="^(.+)$" replace="\1.rel"/>
+    </load-strings>
+    <property name="stamp.dumper.templates.list"
+	      value="${stamp.dumper.templates.list.1}${path.separator}${stamp.dumper.templates.list.2}"/>
     <property name="stamp.dumper.outdir"
 	      location="${stamp.out.dir}/input"/>
     <property name="stamp.dumper.accrange.printindex" value="false"/>
@@ -111,9 +117,13 @@
 	      location="${stamp.out.dir}/${stamp.solvergen.analysis}"/>
     <property name="stamp.solvergen.terms.listfile"
 	      location="${stamp.out.dir}/${stamp.solvergen.analysis}.terms.dat"/>
+    <property name="stamp.solvergen.rels.listfile"
+	      location="${stamp.out.dir}/${stamp.solvergen.analysis}.rels.dat"/>
     <require-file file="${stamp.solvergen.analysis.cpp}"/>
     <require-file file="${stamp.solvergen.executable}"/>
     <require-file file="${stamp.solvergen.terms.listfile}"/>
+    <require-file file="${stamp.solvergen.rels.listfile}"/>
+
     <!-- Compile and link the analysis code with the CFL Solver engine. -->
     <exec executable="g++" dir="${stamp.out.dir}"
 	  spawn="false" failonerror="true">

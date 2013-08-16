@@ -228,6 +228,9 @@ def all_same(elems):
             return False
     return True
 
+def all_different(elems):
+    return len(elems) == len(set(elems))
+
 def idx2char(idx):
     assert idx >= 0 and idx < 26
     return chr(ord('a') + idx)

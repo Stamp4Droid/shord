@@ -1,20 +1,24 @@
 #include <assert.h>
 #include <errno.h>
+#include <fstream>
 #include <list>
 #include <locale.h>
 #include <queue>
 #include <signal.h>
+#include <sstream>
 #include <stack>
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string>
 #include <string.h>
 #include <sys/resource.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <utility>
 #include <vector>
 
 #include "solvergen.hpp"
@@ -34,6 +38,12 @@ NodeNameMap node_names;
 
 /** The Edge worklist used by the fixpoint calculation. */
 EdgeWorklist worklist;
+
+/**
+ * All the indices on the @Relation%s used by the @Grammar, indexed by
+ * @Relation reference number and target column.
+ */
+RelationIndex **rel_indices;
 
 /**
  * A global counter for the number of iterations the solver loop has executed
@@ -465,6 +475,44 @@ NODE_REF name2node(const char *name) {
     NODE_REF node = node_name_trie_find(node_names.trie, name);
     assert(node != NODE_NONE);
     return node;
+}
+
+/* RELATION HANDLING ======================================================= */
+
+/**
+ * Initialize all possible indices on the declared @Relation%s. The indices
+ * start out empty.
+ */
+void rels_init() {
+    rel_indices = new RelationIndex *[num_rels()];
+    for (int i = 0; i < num_rels(); i++) {
+	// TODO: We only handle relations of arity 3.
+	assert(rel_arity(i) == 3);
+	rel_indices[i] = new RelationIndex[3];
+    }
+}
+
+/**
+ * Add a tuple to the @Relation identified by reference number @a ref. The
+ * values of the tuple's fields must be specified in column order.
+ */
+// TODO: Duplicate entries are silently ignored.
+// TODO: We don't necessarily need all 3 indices; can get this information
+// from the grammar.
+void rel_record(RELATION_REF ref, INDEX val_0, INDEX val_1, INDEX val_2) {
+    rel_indices[ref][0].add(std::make_pair(val_1, val_2), val_0);
+    rel_indices[ref][1].add(std::make_pair(val_0, val_2), val_1);
+    rel_indices[ref][2].add(std::make_pair(val_0, val_1), val_2);
+}
+
+/**
+ * Peform a selection on all the columns of a @Relation except @a proj_col, and
+ * return all values appearing in that column. The values used in the selection
+ * must be specified in column order.
+ */
+const std::set<INDEX>& rel_select(RELATION_REF ref, ARITY proj_col,
+				  INDEX val_a, INDEX val_b) {
+    return rel_indices[ref][proj_col].get(std::make_pair(val_a, val_b));
 }
 
 /* EDGE OPERATIONS ========================================================= */
@@ -918,6 +966,15 @@ void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 #define EDGE_SET_FORMAT "dat"
 
 /**
+ * The file extension for @Relation files.
+ *
+ * The basename for these files must be the same as the @Relation they
+ * represent. Each line must contain exactly one tuple of @Indices from the
+ * @Relation, represented as a whitespace-separated list of numbers.
+ */
+#define RELATION_FORMAT "rel"
+
+/**
  * The file extension for path listing files.
  *
  * The basename for these files is the same as the @Symbol whose paths they
@@ -1014,6 +1071,41 @@ void parse_input_files(PARSING_MODE mode) {
 		}
 		break;
 	    }
+	}
+    }
+}
+
+/**
+ * Parse in the @Relation%s used in the @Grammar.
+ *
+ * For each @Relation declared in the input grammar, find the corresponding
+ * @ref RELATION_FORMAT file in subdir @ref INPUT_DIR and read in its tuples.
+ */
+void parse_rels() {
+    // TODO: Could share some of this code with input facts parsing.
+    for (RELATION_REF r = 0; r < num_rels(); r++) {
+	assert(rel_arity(r) == 3);
+	std::ostringstream ss;
+	ss << INPUT_DIR << "/" << ref2rel(r) << "." << RELATION_FORMAT;
+	const char *fname = ss.str().c_str();
+	std::ifstream fin(fname);
+	if (!fin) {
+	    SYS_ERR("Can't open input file: %s\n", fname);
+	}
+	std::string line;
+	while (std::getline(fin, line)) {
+	    std::istringstream iss(line);
+	    INDEX val_0, val_1, val_2;
+	    if (!(iss >> val_0 >> val_1 >> val_2)) {
+		APP_ERR("Tuple too short or parsing error: %s\n", fname);
+	    }
+	    if (!iss.eof()) {
+		APP_ERR("Tuple too long or trailing whitespace: %s\n", fname);
+	    }
+	    rel_record(r, val_0, val_1, val_2);
+	}
+	if (!fin.eof()) {
+	    SYS_ERR("Error while parsing file: %s\n", fname);
 	}
     }
 }
@@ -1755,6 +1847,8 @@ int main() {
     LOG("Nodes: %'u\n", num_nodes());
     worklist_init();
     parse_input_files(RECORD_EDGES);
+    rels_init();
+    parse_rels();
     LOG("Loading completed in %'lu ms\n", CURRENT_TIME() - loading_start);
 
     START_PROFILER();

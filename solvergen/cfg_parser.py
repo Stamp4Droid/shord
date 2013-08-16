@@ -56,6 +56,16 @@ The accepted format for the input grammar is as follows:
   specific @Symbol. Any production can only generate a specific @Index for an
   indexed @Symbol, i.e. `[*]` cannot appear at the LHS of a production (this
   corresponds to "unsafe" rules in Datalog).
+- An indexed production can additionally involve a @Relation, which controls
+  how the @Indices on the Edge%s are matched. Instead of trigerring a match
+  when all constituent Edge%s have the same @Index, a production with an
+  associated @Relation @e rel will only trigger for those combinations of
+  @Indices that are members of @e rel. A production can be associated with a
+  relation @e rel by adding the directive `.rel(i,j,k)` at the end, where @e i,
+  @e j and @e k are all the @Indices on the production's @Symbol%s. In contrast
+  to regular productions, the @Indices on the @Symbol%s of relation-carrying
+  productions must be different. All the @Index parameters on a relation
+  directive must be distinct.
 - Special directives can be added to the grammar. These are declared using the
   syntax `.<directive> <params> ...`, and must be placed alone in a line.
   Directives break preceding productions. The following directives are
@@ -239,17 +249,59 @@ class Literal(util.FinalAttrs):
                    ('[%s]' % util.idx2char(self.index)))
         return ('_' if self.reversed else '') + str(self.symbol) + idx_str
 
+class RelationStore(util.UniqueNameMap):
+    """
+    A container for all @Relation%s encountered in the input grammar.
+    """
+
+    def managed_class(self):
+        return Relation
+
+class Relation(util.FinalAttrs):
+    """
+    A relation describing the combinations of @Indices that are allowed to
+    trigger a production.
+    """
+
+    def __init__(self, name, ref, arity):
+        """
+        Objects of this class are managed by the cfg_parser::RelationStore
+        class. Do not call this constructor directly, use
+        cfg_parser::RelationStore::get() instead.
+        """
+        assert arity == 3, "Only 3-parameter relations allowed"
+        ## The @Relation<!-- -->'s string in the input grammar.
+        self.name = name
+        ## A unique number assigned to this @Relation by its manager class.
+        self.ref = ref
+        ## The @Relation<!-- -->'s arity (number of parameters).
+        self.arity = arity
+
+    def __key__(self):
+        return (self.name, self.arity)
+
+    def __eq__(self, other):
+        return type(other) == Relation and self.__key__() == other.__key__()
+
+    def __str__(self):
+        params_str = ','.join([util.idx2char(i) for i in range(0, self.arity)])
+        return '%s(%s)' % (self.name, params_str)
+
 class RegularProduction(util.FinalAttrs):
     """
     A regular (non-parallel) production of the input @Grammar.
     """
 
-    def __init__(self, result, used):
-        RegularProduction._check_production(result, used)
+    def __init__(self, result, used, relation):
+        RegularProduction._check_production(result, used, relation)
         ## The @Result on the LHS of this @RegularProduction.
         self.result = result
         ## An ordered list of the @Literal%s on the RHS of this production.
         self.used = used
+        ## The @Relation describing how the @Indices on the RHS of this
+        #  production are to be matched. Is @e None if there is no such
+        #  @Relation.
+        self.relation = relation
 
     def split(self, store):
         """
@@ -269,11 +321,17 @@ class RegularProduction(util.FinalAttrs):
         """
         num_used = len(self.used)
         if num_used == 0:
-            return [NormalProduction(self.result, None, None)]
+            return [NormalProduction(self.result, None, None,
+                                     False, self.relation)]
         elif num_used == 1:
-            return [NormalProduction(self.result, self.used[0], None)]
+            return [NormalProduction(self.result, self.used[0], None,
+                                     False, self.relation)]
         elif num_used == 2:
-            return [NormalProduction(self.result, self.used[0], self.used[1])]
+            return [NormalProduction(self.result, self.used[0], self.used[1],
+                                     False, self.relation)]
+        # TODO: Longer productions cannot (currently) carry relations, so we
+        # can ignore this complication in the splitting algorithm below.
+        assert self.relation is None
         r_used = self.used[1:]
         num_temps = len(self.used) - 2
         temp_parametric = [True for _ in range(0, num_temps)]
@@ -300,17 +358,27 @@ class RegularProduction(util.FinalAttrs):
                          for s in temp_symbols]
         l_used = [self.used[0]] + temp_literals
         results = temp_results + [self.result]
-        return [NormalProduction(r, ls, rs)
+        return [NormalProduction(r, ls, rs, False, self.relation)
                 for (r, ls, rs) in zip(results, l_used, r_used)]
 
     @staticmethod
-    def _check_production(result, used):
+    def _check_production(result, used, relation):
         """
         Test that a production with the given properties is valid.
         """
         indices = [e.index for e in [result] + used if e.index is not None]
         assert indices == [] or len(indices) >= 2, \
             "At least two indexed elements required per production"
+        if relation is None:
+            assert all([i == 0 for i in indices]), \
+                "Non-zero index on non-relation carrying production"
+        else:
+            assert len(used) == 2, \
+                "Only binary productions are allowed to carry relations"
+            assert result.indexed(), \
+                "The result of a relation-carrying production must be indexed"
+            assert sorted(indices) == range(0, relation.arity), \
+                "Duplicate index, index out-of-bounds or missing index"
 
 class NormalProduction(util.FinalAttrs):
     """
@@ -318,12 +386,12 @@ class NormalProduction(util.FinalAttrs):
     the RHS.
     """
 
-    def __init__(self, result, left, right, parallel=False):
+    def __init__(self, result, left, right, parallel, relation):
         assert not(left is None and right is not None)
         assert not(right is None and parallel)
         used = (([] if left is None else [left]) +
                 ([] if right is None else [right]))
-        RegularProduction._check_production(result, used)
+        RegularProduction._check_production(result, used, relation)
         ## The @Result on the LHS of this @NormalProduction.
         self.result = result
         ## The first of up to 2 @Literal%s on the RHS. Is @e None for empty
@@ -334,6 +402,10 @@ class NormalProduction(util.FinalAttrs):
         self.right = right
         ## Whether this is a parallel production rather than a regular one.
         self.parallel = parallel
+        ## The @Relation describing how the @Indices on the RHS of this
+        #  production are to be matched. Is @e None if there is no such
+        #  @Relation.
+        self.relation = relation
 
     def _update_result_min_length(self):
         """
@@ -360,15 +432,19 @@ class NormalProduction(util.FinalAttrs):
         @NormalProduction.
         """
         if self.left is None:
-            return [ReverseProduction(self.result, None)]
+            return [ReverseProduction(self.result, None, None,
+                                      Position.FIRST, self.relation)]
         elif self.right is None:
-            return [ReverseProduction(self.result, self.left)]
+            return [ReverseProduction(self.result, self.left, None,
+                                      Position.FIRST, self.relation)]
         else:
             lpos = Position.PARALLEL_MAIN if self.parallel else Position.FIRST
             rpos = (Position.PARALLEL_SUPPORT if self.parallel
                     else Position.SECOND)
-            rev_l = ReverseProduction(self.result, self.left, self.right, lpos)
-            rev_r = ReverseProduction(self.result, self.right, self.left, rpos)
+            rev_l = ReverseProduction(self.result, self.left, self.right,
+                                      lpos, self.relation)
+            rev_r = ReverseProduction(self.result, self.right, self.left,
+                                      rpos, self.relation)
             return [rev_l, rev_r]
 
     def only_terminals(self):
@@ -395,7 +471,8 @@ class NormalProduction(util.FinalAttrs):
 
     def outer_condition(self, emit_derivs):
         assert self.left is not None
-        if emit_derivs and self.left.indexed() and self.result.indexed():
+        if (emit_derivs and self.left.indexed() and self.result.indexed()
+            and self.relation is None):
             return 'l->index == e->index'
         return None
 
@@ -419,9 +496,25 @@ class NormalProduction(util.FinalAttrs):
         else:
             return 'l->to'
 
+    def inner_loop_header(self):
+        if self.relation is None:
+            return None
+        assert self.left is not None and self.left.indexed()
+        assert self.right is not None and self.right.indexed()
+        assert self.result.indexed()
+        # We need to feed the selection parameters in column order.
+        if self.left.index < self.right.index:
+            (edge_1, edge_2) = ('l', 'r')
+        else:
+            (edge_1, edge_2) = ('r', 'l')
+        return ('INDEX i : rel_select(%s, %s, %s->index, %s->index)'
+                % (self.relation.ref, self.result.index, edge_1, edge_2))
+
     def inner_condition(self, emit_derivs):
         assert (self.left is not None and self.right is not None
                 and not self.parallel)
+        if self.relation is not None:
+            return 'i == e->index' if emit_derivs else None
         if not self.right.indexed():
             return None
         elif self.left.indexed():
@@ -436,6 +529,10 @@ class NormalProduction(util.FinalAttrs):
         if not self.result.indexed():
             return 'INDEX_NONE'
         assert self.left is not None
+        if self.relation is not None:
+            assert self.left.indexed()
+            assert self.right is not None and self.right.indexed()
+            return 'i'
         if self.right is None:
             assert self.left.indexed()
             return 'l->index'
@@ -450,7 +547,8 @@ class NormalProduction(util.FinalAttrs):
         rhs = ('-' if self.left is None
                else str(self.left) if self.right is None
                else str(self.left) + conj + str(self.right))
-        return str(self.result) + ' :: ' + rhs
+        suffix = '' if self.relation is None else (' .%s' % self.relation)
+        return str(self.result) + ' :: ' + rhs + suffix
 
 class Position(util.FinalAttrs):
     """
@@ -503,14 +601,14 @@ class ReverseProduction(util.FinalAttrs):
     @Symbol `B`.
     """
 
-    def __init__(self, result, base, reqd=None, base_pos=Position.FIRST):
+    def __init__(self, result, base, reqd, base_pos, relation):
         assert not(base is None and reqd is not None), \
             "Empty productions can't take a required literal"
         assert not(reqd is None and base_pos != Position.FIRST)
         assert Position.valid_position(base_pos)
         used = (([] if base is None else [base]) +
                 ([] if reqd is None else [reqd]))
-        RegularProduction._check_production(result, used)
+        RegularProduction._check_production(result, used, relation)
         ## The @Result of this @ReverseProduction.
         self.result = result
         ## The @Literal we assume to be present. Is @e None if this corresponds
@@ -522,6 +620,9 @@ class ReverseProduction(util.FinalAttrs):
         ## What position the base @Literal has in the corresponding
         #  @NormalProduction.
         self.base_pos = base_pos
+        ## The @Relation describing how the @Indices on the combined Edge%s
+        #  are to be matched. Is @e None if there is no such @Relation.
+        self.relation = relation
 
     def _check_need_to_search(self):
         assert self.base is not None, \
@@ -665,6 +766,10 @@ class ReverseProduction(util.FinalAttrs):
         if not self.result.indexed():
             return 'INDEX_NONE'
         assert self.base is not None
+        if self.relation is not None:
+            assert self.base.indexed()
+            assert self.reqd is not None and self.reqd.indexed()
+            return 'i'
         if self.reqd is None:
             assert self.base.indexed()
             return 'base->index'
@@ -674,6 +779,20 @@ class ReverseProduction(util.FinalAttrs):
             assert self.reqd.indexed()
             return 'other->index'
 
+    def loop_header(self):
+        if self.relation is None:
+            return None
+        assert self.base is not None and self.base.indexed()
+        assert self.reqd is not None and self.reqd.indexed()
+        assert self.result.indexed()
+        # We need to feed the selection parameters in column order.
+        if self.base.index < self.reqd.index:
+            (edge_1, edge_2) = ('base', 'other')
+        else:
+            (edge_1, edge_2) = ('other', 'base')
+        return ('INDEX i : rel_select(%s, %s, %s->index, %s->index)'
+                % (self.relation.ref, self.result.index, edge_1, edge_2))
+
     def must_check_for_common_index(self):
         """
         Whether we need to add an additional @Index compatibility check for the
@@ -681,7 +800,8 @@ class ReverseProduction(util.FinalAttrs):
 
         In our running example, we do.
         """
-        return self.base.indexed() and self.reqd.indexed()
+        return (self.relation is None and self.base.indexed() and
+                self.reqd.indexed())
 
     def left_edge(self):
         if self.base is None:
@@ -761,7 +881,8 @@ class ReverseProduction(util.FinalAttrs):
             need = ' + (%s // *)' % self.reqd
         else:
             assert False
-        return have + need + ' => ' + str(self.result)
+        also = '' if self.relation is None else (' && %s' % self.relation)
+        return have + need + also + ' => ' + str(self.result)
 
 class Grammar(util.FinalAttrs):
     """
@@ -772,9 +893,14 @@ class Grammar(util.FinalAttrs):
     def __init__(self):
         self._lhs_symbol = None
         self._lhs_idx_char = None
+        self._relation = None
+        self._param_chars = None
         ## All the @Symbol%s encountered so far, stored in a specialized
         #  @SymbolStore container.
         self.symbols = SymbolStore()
+        ## All the @Relations%s encountered so far, stored in a specialized
+        #  @RelationStore container.
+        self.rels = RelationStore()
         ## All the @NormalProduction%s encountered so far, grouped by result
         #  @Symbol.
         self.prods = util.OrderedMultiDict()
@@ -861,6 +987,8 @@ class Grammar(util.FinalAttrs):
             assert False, "Unknown directive: %s/%s" % (directive, len(params))
 
     def _parse_production(self, toks):
+        if toks != [] and self._parse_relation(toks[-1]):
+            toks = toks[:-1]
         assert toks != [], "Empty production not marked with '-'"
         used = []
         all_chars = [self._lhs_idx_char]
@@ -873,20 +1001,24 @@ class Grammar(util.FinalAttrs):
                 (lit, i) = self._parse_literal(t)
                 used.append(lit)
                 all_chars.append(i)
-        assert util.all_same([i for i in all_chars if i is not None]), \
-            "Production contains more than one distinct indices"
+        if self._relation is None:
+            assert util.all_same([i for i in all_chars if i is not None]), \
+                "Relation-less production with multiple distinct indices"
         result = Result(self._lhs_symbol, self._char2idx(self._lhs_idx_char))
         if parallel:
             assert len(used) == 2
-            prods = [NormalProduction(result, used[0], used[1], True)]
+            prods = [NormalProduction(result, used[0], used[1],
+                                      True, self._relation)]
         else:
-            full_prod = RegularProduction(result, used)
+            full_prod = RegularProduction(result, used, self._relation)
             prods = full_prod.split(self.symbols)
         for p in prods:
             self.prods.append(p.result.symbol, p)
             for rp in p.get_rev_prods():
                 base_symbol = None if rp.base is None else rp.base.symbol
                 self.rev_prods.append(base_symbol, rp)
+        self._relation = None
+        self._param_chars = None
 
     def _parse_literal(self, str):
         matcher = re.match(r'^(_?)([a-zA-Z]\w*)(?:\[([a-zA-Z\*])\])?$', str)
@@ -913,10 +1045,29 @@ class Grammar(util.FinalAttrs):
     def _series_in_progress(self):
         return self._lhs_symbol is not None
 
-    def _char2idx(self, idx_char):
-        return None if idx_char is None else 0
+    def _parse_relation(self, str):
+        matcher = re.match(r'^\.(\w+)\(((?:[a-zA-Z](?:,[a-zA-Z])*)?)\)$', str)
+        if matcher is None:
+            return False
+        param_chars = matcher.group(2).split(',')
+        assert util.all_different(param_chars), \
+            "Duplicate parameter on relation declaration: %s" % str
+        assert self._lhs_idx_char is not None, \
+            "Relation-carrying production with unindexed LHS"
+        assert self._lhs_idx_char in param_chars, \
+            "Index on LHS not present in relation parameters"
+        self._relation = self.rels.get(matcher.group(1), len(param_chars))
+        self._param_chars = param_chars
+        return True
 
-def parse(grammar_in, code_out, terms_out):
+    def _char2idx(self, idx_char):
+        return (None if idx_char is None else
+                0 if self._relation is None else
+                # This will throw an error if idx_char is not present as a
+                # parameter of the relation.
+                self._param_chars.index(idx_char))
+
+def parse(grammar_in, code_out, terms_out, rels_out):
     """
     Read a grammar specification and generate the corresponding solver code.
     Accepts File-like objects for its input and output parameters.
@@ -1030,6 +1181,36 @@ def parse(grammar_in, code_out, terms_out):
     pr.write('}')
     pr.write('')
 
+    pr.write('RELATION_REF num_rels() {')
+    pr.write('return %s;' % grammar.rels.size())
+    pr.write('}')
+    pr.write('')
+
+    pr.write('RELATION_REF rel2ref(const char *rel) {')
+    for r in grammar.rels:
+        pr.write('if (strcmp(rel, "%s") == 0) return %s;' % (r.name, r.ref))
+    pr.write('assert(false);')
+    pr.write('}')
+    pr.write('')
+
+    pr.write('const char *ref2rel(RELATION_REF ref) {')
+    pr.write('switch (ref) {')
+    for r in grammar.rels:
+        pr.write('case %s: return "%s";' % (r.ref, r.name))
+    pr.write('default: assert(false);')
+    pr.write('}')
+    pr.write('}')
+    pr.write('')
+
+    pr.write('ARITY rel_arity(RELATION_REF ref) {')
+    pr.write('switch (ref) {')
+    for r in grammar.rels:
+        pr.write('case %s: return %s; /* %s */' % (r.ref, r.arity, r.name))
+    pr.write('default: assert(false);')
+    pr.write('}')
+    pr.write('}')
+    pr.write('')
+
     pr.write('void main_loop(Edge *base) {')
     pr.write('Edge *other;')
     # TODO: Local iterator variables may go unused: use per-case variables,
@@ -1088,12 +1269,17 @@ def parse(grammar_in, code_out, terms_out):
                             reqd_kind))
                 pr.write('while ((other = next_%s%s_edge(%s%s_iter)) != NULL) {'
                          % (lazy_mod, search_dir, lazy_mod, search_dir))
+                loop_header = rp.loop_header()
+                if loop_header is not None:
+                    pr.write('for (%s) {' % loop_header)
                 if rp.must_check_for_common_index():
                     pr.write('if (base->index == other->index) {')
                     pr.write(add_edge_stmt)
                     pr.write('}')
                 else:
                     pr.write(add_edge_stmt)
+                if loop_header is not None:
+                    pr.write('}')
                 pr.write('}')
         pr.write('break;')
     pr.write('}')
@@ -1108,6 +1294,10 @@ def parse(grammar_in, code_out, terms_out):
         for s in grammar.symbols:
             if s.is_terminal():
                 terms_out.write('%s\n' % s)
+
+    if rels_out is not None:
+        for r in grammar.rels:
+            rels_out.write('%s\n' % r.name)
 
 def emit_derivs_or_lazy_edges(grammar, pr, emit_derivs):
     if emit_derivs:
@@ -1202,6 +1392,9 @@ def emit_derivs_or_lazy_edges(grammar, pr, emit_derivs):
                                              p.inner_search_target(),
                                              p.right.symbol.kind)))
                 pr.write('while ((r = next_out_edge(r_out_iter)) != NULL) {')
+                in_loop_header = p.inner_loop_header()
+                if in_loop_header is not None:
+                    pr.write('for (%s) {' % in_loop_header)
                 in_cond = p.inner_condition(emit_derivs)
                 if in_cond is not None:
                     pr.write('if (%s) {' % in_cond)
@@ -1212,6 +1405,8 @@ def emit_derivs_or_lazy_edges(grammar, pr, emit_derivs):
                     pr.write('edges->push_back(edge_new(from, to, kind, ' +
                              '%s, l, %s, r, %s));' % (e_idx, l_rev, r_rev))
                 if in_cond is not None:
+                    pr.write('}')
+                if in_loop_header is not None:
                     pr.write('}')
                 pr.write('}')
             if out_cond is not None:
@@ -1238,6 +1433,7 @@ def emit_derivs_or_lazy_edges(grammar, pr, emit_derivs):
 ## Help message describing the calling convention for this script.
 usage_string = """Usage: %s <input-file> [<output-dir>]
 Produce CFL-Reachability solver code for a Context-Free Grammar.
+
 <input-file> must contain a grammar specification (see the main project docs
 for details), and have a .cfg extension.
 
@@ -1247,6 +1443,7 @@ If <output-dir> is provided, and assuming that <input-file> is foo.cfg, then
 nothing is printed on stdout, and the following files are created:
 - foo.cpp: the generated code
 - foo.terms.dat: all terminal symbols of the grammar, one per line
+- foo.rels.dat: all relations used in the grammar, one per line
 """
 
 if __name__ == '__main__':
@@ -1264,8 +1461,10 @@ if __name__ == '__main__':
             grammar = os.path.basename(os.path.splitext(sys.argv[1])[0])
             code_out_name = os.path.join(outdir, grammar + '.cpp')
             terms_out_name = os.path.join(outdir, grammar + '.terms.dat')
+            rels_out_name = os.path.join(outdir, grammar + '.rels.dat')
             with open(code_out_name, 'w') as code_out:
                 with open(terms_out_name, 'w') as terms_out:
-                    parse(grammar_in, code_out, terms_out)
+                    with open(rels_out_name, 'w') as rels_out:
+                        parse(grammar_in, code_out, terms_out, rels_out)
         else:
-            parse(grammar_in, sys.stdout, None)
+            parse(grammar_in, sys.stdout, None, None)

@@ -266,3 +266,19 @@ bool is_lazy(EDGE_KIND kind) {
 std::list<Edge *> *all_lazy_edges(NODE_REF from, NODE_REF to, EDGE_KIND kind) {
     assert(false); /* No symbol in this grammar is lazy. */
 }
+
+RELATION_REF num_rels() {
+    return 0;
+}
+
+RELATION_REF rel2ref(const char *rel) {
+    assert(false);
+}
+
+const char *ref2rel(RELATION_REF ref) {
+    assert(false);
+}
+
+ARITY rel_arity(RELATION_REF ref) {
+    assert(false);
+}

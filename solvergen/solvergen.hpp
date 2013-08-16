@@ -3,9 +3,12 @@
 
 #include <limits.h>
 #include <list>
+#include <map>
+#include <set>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <utility>
 
 /**
  * @mainpage
@@ -74,6 +77,12 @@ typedef unsigned int PATH_LENGTH;
  * some Edge.
  */
 typedef unsigned char CHOICE;
+
+/** An integer identifying some @Relation in the input @Grammar. */
+typedef unsigned char RELATION_REF;
+
+/** The arity of some @Relation in the input @Grammar. */
+typedef unsigned char ARITY;
 
 /**
  * The maximum amount of memory that the solver will allocate on the heap, in
@@ -243,6 +252,44 @@ typedef struct {
      */
     Edge *curr_edge;
 } InEdgeIterator;
+
+/**
+ * An index over a @Relation. Provides efficient access to the subset of tuples
+ * that have specific values on all but one columns. Each RelationIndex
+ * corresponds to a specific choice of columns.
+ *
+ * Currently only supports @Relation%s of arity `3`.
+ */
+class RelationIndex {
+public:
+    /** A selection over all but one of a @Relation<!-- -->'s columns. */
+    typedef std::pair<INDEX,INDEX> Selection;
+
+private:
+    // TODO: Not trivial to use unordered_map: no hash function is declared by
+    // default for pairs/tuples.
+    std::map<Selection, std::set<INDEX>> index;
+
+public:
+    /**
+     * Record a tuple of the @Relation being indexed. The tuple is passed in
+     * as a combination of a selection on all other columns, plus the value
+     * that the remaining, targeted column takes.
+     */
+    void add(const Selection &sel, INDEX val) {
+	index[sel].insert(val);
+    }
+
+    /**
+     * Return all values that the targeted column takes for the selected values
+     * on all other columns. In relational algebra terms, this corresponds to a
+     * selection on all other columns, followed by a projection on the targeted
+     * column.
+     */
+    const std::set<INDEX>& get(const Selection &sel) {
+	return index[sel];
+    }
+};
 
 /**
  * A node of the input graph.
@@ -523,10 +570,12 @@ Edge *next_out_edge(OutEdgeIterator *iter);
 LazyOutEdgeIterator *get_lazy_out_edge_iterator_to_target(NODE_REF from,
 							  NODE_REF to,
 							  EDGE_KIND kind);
-
 Edge *next_lazy_out_edge(LazyOutEdgeIterator *iter);
 InEdgeIterator *get_in_edge_iterator(NODE_REF to, EDGE_KIND kind);
 Edge *next_in_edge(InEdgeIterator *iter);
+
+const std::set<INDEX>& rel_select(RELATION_REF ref, ARITY proj_col,
+				  INDEX val_a, INDEX val_b);
 
 Derivation derivation_empty();
 Derivation derivation_single(Edge *e, bool reverse);
@@ -608,6 +657,18 @@ bool is_lazy(EDGE_KIND kind);
  * Edge%s of lazily-generated @Symbol%s.
  */
 std::list<Edge *> *all_lazy_edges(NODE_REF from, NODE_REF to, EDGE_KIND kind);
+
+/** Return the total number of @Relation%s declared in the input grammar. */
+RELATION_REF num_rels();
+
+/** Get the reference number associated with a @Relation. */
+RELATION_REF rel2ref(const char *rel);
+
+/** Return the name of the @Relation with reference number @a ref. */
+const char *ref2rel(RELATION_REF ref);
+
+/** Return the arity of the @Relation with reference number @a ref. */
+ARITY rel_arity(RELATION_REF ref);
 
 /**
  * @}
