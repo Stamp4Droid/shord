@@ -85,20 +85,23 @@ public class SrcSinkFlowViz extends XMLVizReport
                     if (!(s.target instanceof CtxtVarPoint)) {
                         continue;
                     }
-                    SootMethod method = getBottomCtxtMethod(s);
+                    SootMethod parentMethod = getBottomCtxtMethod(s);
+                    SootMethod method = getMethod(s);
                     logCallSites(s, callSites);
                     System.err.print(((CtxtPoint)s.target).ctxt);
-                    switch(getStepActionType(method, s, lastNode, t)) {
+                    if (method == null) 
+                        System.err.println("THAT METHOD IS NULL");
+                    switch(getStepActionType(parentMethod, s, lastNode, t)) {
                         case SAME:
                         System.err.println("case SAME:");
                             // could have consecutive exact callstack repeat
-                            if (!lastNode.getData().equals(method)) {
-                               lastNode = t.getParent(lastNode).addChild(new Node<SootMethod>(method));
+                            if (!lastNode.getData().equals(method) && method != null) {
+                               lastNode = t.getParent(lastNode).addChild(method);
                             }
                             break;
                         case DROP:
                         System.err.println("case DROP:");
-                            lastNode = lastNode.addChild(new Node<SootMethod>(method));
+                            lastNode = lastNode.addChild(method);
                             break;
                         case POP:
                         System.err.println("case POP:");
@@ -145,8 +148,8 @@ public class SrcSinkFlowViz extends XMLVizReport
         Unit[] context = ((CtxtPoint)s.target).ctxt.getElems();
         Node<SootMethod> lastNode = t.getRoot();
        
-        for (Unit u : context) {
-            Stmt stm = (Stmt)u;
+        for (int i = context.length - 1; i >= 0; --i) {
+            Stmt stm = (Stmt)context[i];
             lastNode = lastNode.addChild(getMethod(stm));
         }
 
@@ -254,7 +257,9 @@ public class SrcSinkFlowViz extends XMLVizReport
         // Throughout these we follow a minimal detection which, to my knowledge, ought to suffice.
         // However, it may be wiser in order to be certain we report the correct type and catch edge
         // cases to check that all conditions for each type apply
-        System.err.println("LASTNODE" + lastNode.getData().getName());
+        System.err.println("NODE" + lastNode.getData().getName());
+        System.err.println("PARENT" + ((Node<SootMethod>)t.getParent(lastNode)).getData().getName());
+        System.err.println("GRANDPARENT" + ((Node<SootMethod>)t.getParent(t.getParent(lastNode))).getData().getName());
         System.err.println("NEWMETH" + method.getName());
 
         if (t.isRoot(lastNode) /* other condition? */ ) {

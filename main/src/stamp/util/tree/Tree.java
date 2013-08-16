@@ -22,6 +22,7 @@ public class Tree<T> {
 
     public Tree(T treename) {
         root = new Node<T>(treename);
+        root.setParent(root);
         label = "AnonTree: root";
     }
 
@@ -50,20 +51,22 @@ public class Tree<T> {
         return parent;
     }
 
+    public Node<T> getSuccessor(Node<T> node) {
+        return getSuccessor(node, new int[1]);
+    }
+
     public Node<T> getSuccessor(Node<T> node, int[] depthDelta) {
 
         //if (isInTree(child)) { //TODO: implement this part and throw
         //			 //exception on fail
         int depthChange = 0;
 
-        System.out.println("***GetSuccessor***");
-        System.out.println("Node " + node.getData());
-
         while (!isRoot(node)) {
             Node<T> parent = this.getParent(node);
-            ArrayList<Node<T>> siblings = this.getParent(node).getChildren();
+            ArrayList<Node<T>> siblings = parent.getChildren();
             int ind = siblings.indexOf(node);
             if (ind == -1) {
+                System.err.println("Node not found in getSuccessor");
                 return null;
             } else if (ind == siblings.size() - 1) {
                 depthChange -= 1;
@@ -71,7 +74,6 @@ public class Tree<T> {
                 continue;
             } else {
                 depthDelta[0] = depthChange;
-                System.out.println("BROTHERHOOD");
                 return siblings.get(ind + 1);
             }
         }
@@ -96,7 +98,7 @@ public class Tree<T> {
         }
     
         public boolean hasNext() {
-            return !(isRoot(currentNode) && (currentItr == null || !currentItr.hasNext()));
+            return getSuccessor(currentNode) != null || !(isRoot(currentNode) && (currentItr == null || !currentItr.hasNext()));
         }
         
         public T next() {
