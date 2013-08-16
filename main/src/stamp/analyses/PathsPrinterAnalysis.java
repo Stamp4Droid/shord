@@ -23,7 +23,8 @@ import soot.Unit;
 	name = "paths-printer-java"
 )
 public class PathsPrinterAnalysis extends JavaAnalysis {
-	List<Unit> stack = new ArrayList<Unit>(); // the partial stack, bottom is on the left
+	// the partial stack, bottom is on the left
+	List<Unit> stack = new ArrayList<Unit>();
 	PrintWriter pw = null;
 
 	@Override

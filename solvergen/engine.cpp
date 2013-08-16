@@ -1,6 +1,6 @@
 #include <assert.h>
-#include <list>
 #include <errno.h>
+#include <list>
 #include <locale.h>
 #include <queue>
 #include <signal.h>
@@ -26,19 +26,13 @@
 
 /* GLOBAL VARIABLES ======================================================== */
 
-/**
- * An array containing all the Node%s of the input graph.
- */
+/** An array containing all the Node%s of the input graph. */
 Node *nodes;
 
-/**
- * A mapping between Node%s and their names.
- */
+/** A mapping between Node%s and their names. */
 NodeNameMap node_names;
 
-/**
- * The Edge worklist used by the fixpoint calculation.
- */
+/** The Edge worklist used by the fixpoint calculation. */
 EdgeWorklist worklist;
 
 /**
@@ -916,10 +910,10 @@ void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
  * The file extension for both input and output Edge set files.
  *
  * The basename for these files must be the same as the @Symbol they represent.
- * They must only contain lines of the form `source sink index`, where
- * @e source and @e sink are arbitrary string names for the nodes, and @e index
- * is either a single number, or `*`, which means "any index". Each line
- * corresponds to a separate Edge.
+ * They must only contain lines of the form `source sink`, where @e source and
+ * @e sink are arbitrary string names for the nodes. If the @Symbol is indexed,
+ * the line format instead becomes `source sink index`, where @e index is a
+ * number. Each line corresponds to a separate Edge.
  */
 #define EDGE_SET_FORMAT "dat"
 

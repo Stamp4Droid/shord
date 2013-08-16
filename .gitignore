@@ -37,6 +37,7 @@ bin/api-*/*
 models/api-*/*
 stamp_output/*
 main/gen/
+solvergen/doc/
 
 tomcat/logs/*
 tomcat/work/Catalina/localhost/*

@@ -41,7 +41,7 @@ The accepted format for the input grammar is as follows:
   the first blank line, or at the start of another `::` declaration (there is
   no dedicated end-of-production mark). The same non-terminal may be associated
   with any number of `::` declarations.
-- Any instance of a @Symbol in a production be prefixed with `_` to signify
+- Any instance of a @Symbol in a production can be prefixed with `_` to signify
   that the corresponding Edge should be traversed in reverse during the
   CFL-Reachability computation.
 - The Edge%s associated with a @Symbol may additionally be parameterized with
@@ -66,8 +66,7 @@ The accepted format for the input grammar is as follows:
   - `.lazy <symbol>`: Instructs the generated solver to avoid pre-computing the
     Edge%s for the selected non-terminal @Symbol, and instead calculate them on
     demand. Currently only supported for non-terminals appearing solely on the
-    right side of parallel @Production%s, and generated directly from
-    terminals.
+    right side of parallel productions, and generated directly from terminals.
 
 Example of a valid grammar specification:
 
@@ -76,46 +75,14 @@ Example of a valid grammar specification:
     A[i] :: foo[i] S _S bar[*]
 """
 
-class SymbolStore(util.FinalAttrs):
+class SymbolStore(util.UniqueNameMap):
     """
     A container for @Symbol%s encountered in the input grammar.
     """
 
     def __init__(self):
+        super(SymbolStore, self).__init__()
         self._num_temps = 0
-        self._num_symbols = 0
-        self._symbol_list = []
-        self._symbol_dict = {}
-
-    def __make_symbol(self, name, parametric):
-        symbol = Symbol(name, self._num_symbols, parametric)
-        self._num_symbols += 1
-        self._symbol_list.append(symbol)
-        self._symbol_dict[name] = symbol
-        return symbol
-
-    def find_symbol(self, name):
-        """
-        Return the @Symbol with the specified @a name, if it exists, otherwise
-        return @e None.
-        """
-        return self._symbol_dict.get(name)
-
-    def get_symbol(self, name, parametric):
-        """
-        Return the @Symbol with the specified @a name and properties. Create
-        the @Symbol if it doesn't already exist.
-        """
-        symbol = self.find_symbol(name)
-        if symbol is not None:
-            assert symbol.parametric == parametric, \
-                "Symbol %s encountered both with and without " % name + \
-                "index expression"
-        else:
-            assert SymbolStore.valid_user_name(name), \
-                "Invalid user-defined symbol: %s" % name
-            symbol = self.__make_symbol(name, parametric)
-        return symbol
 
     def make_temporary(self, parametric):
         """
@@ -124,29 +91,15 @@ class SymbolStore(util.FinalAttrs):
         """
         temp_name = '%' + str(self._num_temps)
         self._num_temps += 1
-        return self.__make_symbol(temp_name, parametric)
+        # We don't use the public interface, to bypass the name check.
+        symbol = self._make(temp_name, parametric)
+        self._add(temp_name, symbol)
+        return symbol
 
-    def __iter__(self):
-        """
-        Iterate over all @Symbol%s encountered so far, sorted by their @Kind.
-        """
-        for s in self._symbol_list:
-            yield s
+    def managed_class(self):
+        return Symbol
 
-    def kind2symbol(self, kind):
-        """
-        Get the @Symbol corresponding to some @Kind.
-        """
-        return self._symbol_list[kind]
-
-    def num_symbols(self):
-        """
-        Get the number of distinct @Symbol%s encountered so far.
-        """
-        return self._num_symbols
-
-    @staticmethod
-    def valid_user_name(name):
+    def valid_name(self, name):
         """
         Check if @a name is a valid name for a user-defined @Symbol.
         """
@@ -159,12 +112,13 @@ class Symbol(util.FinalAttrs):
 
     def __init__(self, name, kind, parametric):
         """
-        Do not call this function directly; use
-        cfg_parser::SymbolStore::get_symbol() instead.
+        Objects of this class are managed by the cfg_parser::SymbolStore class.
+        Do not call this constructor directly, use
+        cfg_parser::SymbolStore::get() instead.
         """
         ## The @Symbol<!-- -->'s string in the input grammar.
         self.name = name
-        ## A unique number associated with this @Symbol.
+        ## A unique number assigned to this @Symbol by its manager class.
         self.kind = kind
         ## Whether Edge%s of this @Symbol are parameterized by @Indices.
         self.parametric = parametric
@@ -211,7 +165,7 @@ class Symbol(util.FinalAttrs):
         self._num_paths = num_paths
 
     def __key__(self):
-        return self.kind
+        return (self.name, self.parametric)
 
     def __eq__(self, other):
         return type(other) == Symbol and self.__key__() == other.__key__()
@@ -231,7 +185,7 @@ class Symbol(util.FinalAttrs):
 
 class Literal(util.FinalAttrs):
     """
-    An instance of some @Symbol in the RHS of a production.
+    An instance of some @Symbol on the RHS of a production.
 
     May optionally contain a 'reverse' modifier and/or an @Index expression.
     """
@@ -267,8 +221,7 @@ class RegularProduction(util.FinalAttrs):
         RegularProduction._check_production(result, used)
         ## The @Symbol on the LHS of this @RegularProduction.
         self.result = result
-        ## An ordered list of the @Literal%s on the RHS of this
-        #  @RegularProduction.
+        ## An ordered list of the @Literal%s on the RHS of this production.
         self.used = used
 
     def split(self, store):
@@ -323,8 +276,7 @@ class RegularProduction(util.FinalAttrs):
     @staticmethod
     def _check_production(result, used):
         """
-        Test that a production of @Literal @a result using the sequence of
-        @Literal%s in @a used is valid.
+        Test that a production with the given properties is valid.
         """
         assert not result.is_terminal(), "Can't produce non-terminals"
         indexed_elements = ([result] if result.parametric else []) + \
@@ -533,19 +485,17 @@ class ReverseProduction(util.FinalAttrs):
         RegularProduction._check_production(result, used)
         ## The @Symbol generated by this @ReverseProduction.
         self.result = result
-        ## The @Literal we assume to be present.
-        #
-        #  Is @e None if this corresponds to an empty production.
+        ## The @Literal we assume to be present. Is @e None if this corresponds
+        #  to an empty production.
         self.base = base
-        ## The additional @Literal we need to complete the production.
-        #
-        #  Is @e None if this corresponds to a single-element production.
+        ## The additional @Literal we need to complete the production. Is
+        #  @e None if this corresponds to a single-element production.
         self.reqd = reqd
         ## What position the base @Literal has in the corresponding
         #  @NormalProduction.
         self.base_pos = base_pos
 
-    def __check_need_to_search(self):
+    def _check_need_to_search(self):
         assert self.base is not None, \
             "No need to search for empty productions"
         assert self.reqd is not None, \
@@ -562,7 +512,7 @@ class ReverseProduction(util.FinalAttrs):
 
         In our running example, we need to search on the source Node.
         """
-        self.__check_need_to_search()
+        self._check_need_to_search()
         if self.base_pos == Position.FIRST:
             return 'from' if self.base.reversed else 'to'
         elif self.base_pos == Position.SECOND:
@@ -582,7 +532,7 @@ class ReverseProduction(util.FinalAttrs):
 
         In our running example, we need to search within the incoming Edge%s.
         """
-        self.__check_need_to_search()
+        self._check_need_to_search()
         if self.base_pos == Position.FIRST:
             return 'in' if self.reqd.reversed else 'out'
         elif self.base_pos == Position.SECOND:
@@ -603,7 +553,7 @@ class ReverseProduction(util.FinalAttrs):
         In our running example, there is no such endpoint we can constrain our
         search to
         """
-        self.__check_need_to_search()
+        self._check_need_to_search()
         if self.base_pos == Position.FIRST:
             return None
         elif self.base_pos == Position.SECOND:
@@ -675,30 +625,26 @@ class ReverseProduction(util.FinalAttrs):
             assert False
         return edge + '->' + endpoint
 
-    def result_index_source(self):
+    def result_index(self):
         """
-        Whose @Index we should set on any Edge produced by this
+        What @Index we should set on any Edge produced by this
         @ReverseProduction.
 
         In our running example, the @Indices on the combined Edge%s must match,
         so we can copy from either one of them. We arbitrarily choose to copy
         from the base Edge.
         """
-        assert self.result.parametric
+        if not self.result.parametric:
+            return 'INDEX_NONE'
+        assert self.base is not None
         if self.reqd is None:
             assert self.base.indexed
-            return 'base'
+            return 'base->index'
+        elif self.base.indexed:
+            return 'base->index'
         else:
-            base_idx = self.base.indexed
-            reqd_idx = self.reqd.indexed
-            if not base_idx and reqd_idx:
-                return 'other'
-            elif base_idx and not reqd_idx:
-                return 'base'
-            elif base_idx and reqd_idx:
-                return 'base'
-            else:
-                assert False
+            assert self.reqd.indexed
+            return 'other->index'
 
     def must_check_for_common_index(self):
         """
@@ -796,8 +742,8 @@ class Grammar(util.FinalAttrs):
     """
 
     def __init__(self):
-        self._lhs = None
-        self._lhs_index_char = None
+        self._lhs_symbol = None
+        self._lhs_idx_char = None
         ## All the @Symbol%s encountered so far, stored in a specialized
         #  @SymbolStore container.
         self.symbols = SymbolStore()
@@ -810,8 +756,8 @@ class Grammar(util.FinalAttrs):
 
     def finalize(self):
         """
-        Run final sanity checks and calculations, which require all
-        @Production%s to be present.
+        Run final sanity checks and calculations, which require all productions
+        to be present.
         """
         for s in self.symbols:
             if not s.is_terminal() and self.prods.get(s) == []:
@@ -826,7 +772,7 @@ class Grammar(util.FinalAttrs):
                     assert not p.parallel, \
                         "Lazy symbol %s constructed from parallel rule" % s
                 assert s.num_paths() == 0, \
-                        "Can't print paths for lazy symbol %s " % s
+                    "Can't print paths for lazy symbol %s " % s
         self._calc_min_lengths()
         # TODO: Also disable parse_line().
 
@@ -850,98 +796,97 @@ class Grammar(util.FinalAttrs):
         toks = line_wo_comment.split()
         if toks == [] or toks[0].startswith("."):
             # This is a special, non-production line, so we interrupt any
-            # ongoing productions.
-            self._lhs = None
-            self._lhs_index_char = None
+            # ongoing series of productions.
+            self._end_series()
             if toks != []:
-                self.__parse_directive(toks[0][1:], toks[1:])
+                self._parse_directive(toks[0][1:], toks[1:])
             return
         # This line contains one or more production definitions.
         if toks[0] == '|':
             # This line continues a series of productions.
-            assert self._lhs is not None, "| without preceding production"
+            assert self._series_in_progress(), "| without preceding production"
             toks = toks[1:]
         elif len(toks) >= 2 and toks[1] == '::':
-            # This line starts a new production.
-            (self._lhs, self._lhs_index_char) = self.__parse_lhs(toks[0])
+            # This line starts a new series of productions.
+            self._begin_series(toks[0])
             toks = toks[2:]
         else:
             assert False, "Malformed production"
         while '|' in toks:
             split_pos = toks.index('|')
-            self.__parse_production(toks[:split_pos])
+            self._parse_production(toks[:split_pos])
             toks = toks[split_pos+1:]
-        self.__parse_production(toks)
+        self._parse_production(toks)
 
-    def __parse_directive(self, directive, params):
+    def _parse_directive(self, directive, params):
         if directive == 'paths' and len(params) == 2:
-            symbol = self.symbols.find_symbol(params[0])
+            symbol = self.symbols.find(params[0])
             assert symbol is not None, \
                 "Symbol %s not declared (yet)" % params[0]
             symbol.set_num_paths(int(params[1]))
         elif directive == 'lazy' and len(params) == 1:
-            symbol = self.symbols.find_symbol(params[0])
+            symbol = self.symbols.find(params[0])
             assert symbol is not None, \
                 "Symbol %s not declared (yet)" % params[0]
             symbol.make_lazy()
         else:
             assert False, "Unknown directive: %s/%s" % (directive, len(params))
 
-    def __parse_production(self, toks):
+    def _parse_production(self, toks):
         assert toks != [], "Empty production not marked with '-'"
         used = []
-        indices = []
+        all_chars = [self._lhs_idx_char]
         parallel = False
         if toks != ['-']:
             if len(toks) == 3 and toks[1] == '//':
                 parallel = True
                 toks = [toks[0], toks[2]]
-            indices.append(self._lhs_index_char)
             for t in toks:
-                (lit, i) = self.__parse_literal(t)
+                (lit, i) = self._parse_literal(t)
                 used.append(lit)
-                indices.append(i)
-        assert util.all_same([i for i in indices if i is not None]), \
+                all_chars.append(i)
+        assert util.all_same([i for i in all_chars if i is not None]), \
             "Production contains more than one distinct indices"
         if parallel:
             assert len(used) == 2
-            prods = [NormalProduction(self._lhs, used[0], used[1], True)]
+            prods = [NormalProduction(self._lhs_symbol, used[0], used[1], True)]
         else:
-            prods = RegularProduction(self._lhs, used).split(self.symbols)
+            prods = RegularProduction(self._lhs_symbol, used).split(self.symbols)
         for p in prods:
             self.prods.append(p.result, p)
             for rp in p.get_rev_prods():
                 base_symbol = None if rp.base is None else rp.base.symbol
                 self.rev_prods.append(base_symbol, rp)
 
-    def __parse_literal(self, str):
+    def _parse_literal(self, str):
         matcher = re.match(r'^(_?)([a-zA-Z]\w*)(?:\[([a-zA-Z\*])\])?$', str)
         assert matcher is not None, "Malformed literal: %s" % str
         reversed = matcher.group(1) != ''
-        index_char = matcher.group(3)
-        symbol = self.symbols.get_symbol(matcher.group(2),
-                                         index_char is not None)
-        if index_char == '*':
-            index_char = None
-        indexed = index_char is not None
-        return (Literal(symbol, indexed, reversed), index_char)
+        idx_char = matcher.group(3)
+        symbol = self.symbols.get(matcher.group(2), idx_char is not None)
+        if idx_char == '*':
+            idx_char = None
+        indexed = idx_char is not None
+        return (Literal(symbol, indexed, reversed), idx_char)
 
-    def __parse_lhs(self, str):
+    def _begin_series(self, str):
         matcher = re.match(r'^([a-zA-Z]\w*)(?:\[([a-zA-Z])\])?$', str)
         assert matcher is not None, "Malformed production LHS: %s" % str
-        index_char = matcher.group(2)
-        symbol = self.symbols.get_symbol(matcher.group(1),
-                                         index_char is not None)
-        return (symbol, index_char)
+        self._lhs_symbol = self.symbols.get(matcher.group(1),
+                                            matcher.group(2) is not None)
+        self._lhs_idx_char = matcher.group(2)
 
-def parse(grammar_in, code_out, terminals_out):
+    def _end_series(self):
+        self._lhs_symbol = None
+        self._lhs_idx_char = None
+
+    def _series_in_progress(self):
+        return self._lhs_symbol is not None
+
+def parse(grammar_in, code_out, terms_out):
     """
     Read a grammar specification and generate the corresponding solver code.
-
-    @param [in] grammar_in A File-like object to read the @Grammar from.
-    @param [out] code_out A File-like object to write the generated code to.
-    @param [out] terminals_out If this File-like object is not @e None, use it
-           to print out a list of the terminal @Symbol%s in the input @Grammar.
+    Accepts File-like objects for its input and output parameters.
     """
     grammar = Grammar()
     pr = util.CodePrinter(code_out)
@@ -1003,18 +948,15 @@ def parse(grammar_in, code_out, terminals_out):
     pr.write('bool has_empty_prod(EDGE_KIND kind) {')
     empty_prod_symbols = [r.result for r in grammar.rev_prods.get(None)]
     pr.write('switch (kind) {')
-    if empty_prod_symbols != []:
-        for s in empty_prod_symbols:
-            pr.write('case %s: /* %s */' % (s.kind, s))
-        pr.write('return true;')
-    pr.write('default:')
-    pr.write('return false;')
+    for s in set(empty_prod_symbols):
+        pr.write('case %s: return true; /* %s */' % (s.kind, s))
+    pr.write('default: return false;')
     pr.write('}')
     pr.write('}')
     pr.write('')
 
     pr.write('EDGE_KIND num_kinds() {')
-    pr.write('return %s;' % grammar.symbols.num_symbols())
+    pr.write('return %s;' % grammar.symbols.size())
     pr.write('}')
     pr.write('')
 
@@ -1087,8 +1029,7 @@ def parse(grammar_in, code_out, terminals_out):
             l_rev = util.to_c_bool(rp.left_reverse())
             r_edge = rp.right_edge()
             r_rev = util.to_c_bool(rp.right_reverse())
-            res_idx = ('%s->index' % rp.result_index_source()
-                       if rp.result.parametric else 'INDEX_NONE')
+            res_idx = rp.result_index()
             # TODO: We don't have to worry about what information to record for
             # lazy constituent edges, because those edges are only allowed on
             # the supporting position of parallel productions, where producing
@@ -1130,10 +1071,10 @@ def parse(grammar_in, code_out, terminals_out):
 
     emit_derivs_or_lazy_edges(grammar, pr, False)
 
-    if terminals_out is not None:
+    if terms_out is not None:
         for s in grammar.symbols:
             if s.is_terminal():
-                terminals_out.write('%s\n' % s)
+                terms_out.write('%s\n' % s)
 
 def emit_derivs_or_lazy_edges(grammar, pr, emit_derivs):
     if emit_derivs:
@@ -1164,7 +1105,9 @@ def emit_derivs_or_lazy_edges(grammar, pr, emit_derivs):
     pr.write('OutEdgeIterator *l_out_iter, *r_out_iter;')
     pr.write('InEdgeIterator *l_in_iter;')
     pr.write('switch (kind) {')
-    for e_symbol in grammar.prods:
+    for e_symbol in grammar.symbols:
+        if e_symbol.is_terminal():
+            continue
         pr.write('case %s: /* %s */' % (e_symbol.kind, e_symbol))
         if e_symbol.is_lazy() ^ (not emit_derivs):
             # Derivation re-construction should never be requested for lazy
@@ -1252,10 +1195,12 @@ def emit_derivs_or_lazy_edges(grammar, pr, emit_derivs):
     pr.write('}')
     pr.write('')
 
-# TODO: More user-friendly error output than assertion failure
+# TODO: More user-friendly error output than assertion failure. Should use
+# assertions only for the internal sanity checks, and do something different
+# for input errors.
 # TODO: More structured way to synthesize code: specialized C-code synthesis
-#       class, or put base program text in a large triple-quoted string and
-#       leave %s's for places to fill in.
+# class, or put base program text in a large triple-quoted string and leave
+# %s's for places to fill in.
 
 ## Help message describing the calling convention for this script.
 usage_string = """Usage: %s <input-file> [<output-dir> [<terminals-file>]]
@@ -1269,7 +1214,7 @@ If <terminals-file> is specified, write a list of the terminal symbols used in
 this grammar to that file.
 """
 
-def _main():
+if __name__ == '__main__':
     if (len(sys.argv) < 2 or sys.argv[1] == '-h' or sys.argv[1] == '--help' or
         os.path.splitext(sys.argv[1])[1] != '.cfg'):
         script_name = os.path.basename(__file__)
@@ -1287,6 +1232,3 @@ def _main():
                     parse(grammar_in, code_out, None)
         else:
             parse(grammar_in, sys.stdout, None)
-
-if __name__ == '__main__':
-    _main()

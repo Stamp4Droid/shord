@@ -53,7 +53,7 @@
 /* Actually, the reference types should be wide enough to hold the count of all
    the corresponding values, i.e. one more than the maximum value. */
 
-/** An integer identifying some @Symbol in the input grammar. */
+/** An integer identifying some @Symbol in the input @Grammar. */
 typedef unsigned char EDGE_KIND;
 
 /** An integer used to parameterize Edge%s of the same @Symbol. */
@@ -66,8 +66,13 @@ typedef unsigned int NODE_REF;
 /** A NODE_REF value reserved for representing "none". */
 #define NODE_NONE UINT_MAX
 
+/** The length of some Edge<!-- -->'s witness path. */
 typedef unsigned int PATH_LENGTH;
 
+/**
+ * An integer identifying a selection among multiple possible Derivation%s of
+ * some Edge.
+ */
 typedef unsigned char CHOICE;
 
 /**
@@ -191,8 +196,8 @@ typedef struct {
  */
 typedef struct {
     /**
-     * The last Edge returned by this @LazyOutEdgeIterator. Will get
-     * deallocated on the next access.
+     * The last Edge returned by this LazyOutEdgeIterator. Will get deallocated
+     * on the next access.
      */
     Edge *last;
     /**
@@ -547,6 +552,10 @@ Derivation derivation_double(Edge *left_edge, bool left_reverse,
  */
 bool is_terminal(EDGE_KIND kind);
 
+/**
+ * Return @e true iff @a kind represents a parametric @Symbol in the input
+ * grammar.
+ */
 bool is_parametric(EDGE_KIND kind);
 
 /**
@@ -567,24 +576,37 @@ void main_loop(Edge *base);
  */
 EDGE_KIND num_kinds();
 
-/**
- * Get the Edge @Kind associated with a @Symbol of the input grammar.
- */
+/** Get the Edge @Kind associated with a @Symbol of the input grammar. */
 EDGE_KIND symbol2kind(const char *symbol);
 
-/**
- * Get the grammar @Symbol corresponding to some Edge @Kind.
- */
+/** Get the grammar @Symbol corresponding to some Edge @Kind. */
 const char *kind2symbol(EDGE_KIND kind);
 
+/** Return all possible ways that an Edge could have been produced. */
 std::list<Derivation> all_derivations(Edge *edge);
 
+/**
+ * Return the number of paths to print for each Edge of @Kind @a kind in the
+ * final graph.
+ */
 unsigned int num_paths_to_print(EDGE_KIND kind);
 
+/**
+ * Return an over-approximation for the minimum length of any witness path for
+ * an Edge of @Kind @a kind.
+ */
 PATH_LENGTH static_min_length(EDGE_KIND kind);
 
+/**
+ * Return whether Edge%s of a particular @Symbol have been specified as being
+ * produced on demand.
+ */
 bool is_lazy(EDGE_KIND kind);
 
+/**
+ * Generate on-the-fly all Edge%s with the given features. Only appropriate for
+ * Edge%s of lazily-generated @Symbol%s.
+ */
 std::list<Edge *> *all_lazy_edges(NODE_REF from, NODE_REF to, EDGE_KIND kind);
 
 /**

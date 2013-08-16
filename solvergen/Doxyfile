@@ -212,7 +212,8 @@ ALIASES                = "Symbol=@link cfg_parser::Symbol Symbol@endlink" \
                          "ReverseProduction=@link cfg_parser::ReverseProduction ReverseProduction@endlink" \
                          "Counter=@link COUNTER Counter@endlink" \
                          "Grammar=@link cfg_parser::Grammar Grammar@endlink" \
-                         "SymbolStore=@link cfg_parser::SymbolStore SymbolStore@endlink"
+                         "SymbolStore=@link cfg_parser::SymbolStore SymbolStore@endlink" \
+                         "NormalProduction=@link cfg_parser::NormalProduction NormalProduction@endlink"
 
 # This tag can be used to specify a number of word-keyword mappings (TCL only). 
 # A mapping has the form "name=value". For example adding 
@@ -275,7 +276,7 @@ MARKDOWN_SUPPORT       = YES
 # func(std::string) {}). This also makes the inheritance and collaboration 
 # diagrams that involve STL classes more complete and accurate.
 
-BUILTIN_STL_SUPPORT    = NO
+BUILTIN_STL_SUPPORT    = YES
 
 # If you use Microsoft's C++/CLI language, you should set this option to YES to 
 # enable parsing support.
@@ -389,7 +390,7 @@ EXTRACT_PACKAGE        = NO
 # If the EXTRACT_STATIC tag is set to YES all static members of a file 
 # will be included in the documentation.
 
-EXTRACT_STATIC         = NO
+EXTRACT_STATIC         = YES
 
 # If the EXTRACT_LOCAL_CLASSES tag is set to YES classes (and structs) 
 # defined locally in source files will be included in the documentation. 
