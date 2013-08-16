@@ -176,12 +176,33 @@ class Symbol(util.FinalAttrs):
     def __str__(self):
         return self.name
 
-    def as_lhs(self):
+class Result(util.FinalAttrs):
+    """
+    An instance of some @Symbol on the LHS of a production.
+    """
+
+    def __init__(self, symbol, index):
+        assert not symbol.is_terminal(), "Can't produce non-terminals"
+        assert (index is None) ^ symbol.parametric, \
+            "Indexing mismatch on LHS of production for %s" % symbol
+        ## The @Symbol represented by this @Result.
+        self.symbol = symbol
+        ## The @Index carried by this @Result, as a 0-based position in the
+        #  containing production's @Relation. Is @e None for non-parametric
+        #  @Symbol%s, and @e 0 for the @Result of indexed productions that
+        #  don't carry a @Relation.
+        self.index = index
+
+    def indexed(self):
         """
-        Print this @Symbol as it should appear on the LHS of the string
-        representation of a production.
+        Check whether this @Result carries a non-wildcard @Index expression.
         """
-        return self.name + ('[i]' if self.parametric else '')
+        return self.index is not None
+
+    def __str__(self):
+        idx_str = ('' if not self.indexed() else
+                   ('[%s]' % util.idx2char(self.index)))
+        return str(self.symbol) + idx_str
 
 class Literal(util.FinalAttrs):
     """
@@ -190,27 +211,33 @@ class Literal(util.FinalAttrs):
     May optionally contain a 'reverse' modifier and/or an @Index expression.
     """
 
-    def __init__(self, symbol, indexed, reversed=False):
+    def __init__(self, symbol, index, reversed=False):
+        assert index is None or symbol.parametric, \
+            "Index modifier on non-parametric symbol %s" % symbol
         ## The @Symbol represented by this @Literal.
         self.symbol = symbol
-        ## Whether this @Literal contains an @Index expression.
+        ## The @Index carried by this @Literal, as a 0-based position in the
+        #  containing production's @Relation. Is @e None for non-indexed
+        #  @Literal%s, and @e 0 for all indexed @Literal%s of productions that
+        #  don't carry a @Relation.
         #
         #  Parametric @Symbol%s with a `[*]` index expression are considered to
         #  be non-indexed.
-        #
-        #  We don't have to store the actual index character, since all the
-        #  indexed @Literal%s in the same production must use the same
-        #  character anyway.
-        self.indexed = indexed
-        assert not indexed or symbol.parametric, \
-            "Index modifier on non-parametric symbol %s" % symbol
+        self.index = index
         ## Whether this @Literal has a 'reverse' modifier.
         self.reversed = reversed
 
+    def indexed(self):
+        """
+        Check whether this @Literal carries a non-wildcard @Index expression.
+        """
+        return self.index is not None
+
     def __str__(self):
-        return (('_' if self.reversed else '') + str(self.symbol) +
-                ('' if not self.symbol.parametric else
-                 '[i]' if self.indexed else '[*]'))
+        idx_str = ('' if not self.symbol.parametric else
+                   '[*]' if not self.indexed() else
+                   ('[%s]' % util.idx2char(self.index)))
+        return ('_' if self.reversed else '') + str(self.symbol) + idx_str
 
 class RegularProduction(util.FinalAttrs):
     """
@@ -219,7 +246,7 @@ class RegularProduction(util.FinalAttrs):
 
     def __init__(self, result, used):
         RegularProduction._check_production(result, used)
-        ## The @Symbol on the LHS of this @RegularProduction.
+        ## The @Result on the LHS of this @RegularProduction.
         self.result = result
         ## An ordered list of the @Literal%s on the RHS of this production.
         self.used = used
@@ -254,22 +281,25 @@ class RegularProduction(util.FinalAttrs):
         # between the first and the last indexed literals in the original
         # production (the result of the production counts as the rightmost
         # literal for this purpose).
-        if not self.result.parametric:
+        if not self.result.indexed():
             for i in range(num_temps-1, -1, -1):
-                if r_used[i+1].indexed:
+                if r_used[i+1].indexed():
                     break
                 else:
                     temp_parametric[i] = False
-        if not self.used[0].indexed:
+        if not self.used[0].indexed():
             for i in range(0, num_temps):
-                if r_used[i].indexed:
+                if r_used[i].indexed():
                     break
                 else:
                     temp_parametric[i] = False
         temp_symbols = [store.make_temporary(p) for p in temp_parametric]
-        temp_literals = [Literal(s, s.parametric) for s in temp_symbols]
+        temp_results = [Result(s, 0 if s.parametric else None)
+                        for s in temp_symbols]
+        temp_literals = [Literal(s, 0 if s.parametric else None)
+                         for s in temp_symbols]
         l_used = [self.used[0]] + temp_literals
-        results = temp_symbols + [self.result]
+        results = temp_results + [self.result]
         return [NormalProduction(r, ls, rs)
                 for (r, ls, rs) in zip(results, l_used, r_used)]
 
@@ -278,10 +308,8 @@ class RegularProduction(util.FinalAttrs):
         """
         Test that a production with the given properties is valid.
         """
-        assert not result.is_terminal(), "Can't produce non-terminals"
-        indexed_elements = ([result] if result.parametric else []) + \
-            [s for s in used if s.indexed]
-        assert indexed_elements == [] or len(indexed_elements) >= 2, \
+        indices = [e.index for e in [result] + used if e.index is not None]
+        assert indices == [] or len(indices) >= 2, \
             "At least two indexed elements required per production"
 
 class NormalProduction(util.FinalAttrs):
@@ -296,7 +324,7 @@ class NormalProduction(util.FinalAttrs):
         used = (([] if left is None else [left]) +
                 ([] if right is None else [right]))
         RegularProduction._check_production(result, used)
-        ## The @Symbol on the LHS of this @NormalProduction.
+        ## The @Result on the LHS of this @NormalProduction.
         self.result = result
         ## The first of up to 2 @Literal%s on the RHS. Is @e None for empty
         #  @NormalProduction%s.
@@ -320,8 +348,8 @@ class NormalProduction(util.FinalAttrs):
         right_len = (0 if self.right is None or self.parallel
                      else self.right.symbol.min_length)
         newlen = left_len + right_len
-        if newlen < self.result.min_length:
-            self.result.min_length = newlen
+        if newlen < self.result.symbol.min_length:
+            self.result.symbol.min_length = newlen
             return True
         else:
             return False
@@ -367,7 +395,7 @@ class NormalProduction(util.FinalAttrs):
 
     def outer_condition(self, emit_derivs):
         assert self.left is not None
-        if emit_derivs and self.left.indexed and self.result.parametric:
+        if emit_derivs and self.left.indexed() and self.result.indexed():
             return 'l->index == e->index'
         return None
 
@@ -394,27 +422,27 @@ class NormalProduction(util.FinalAttrs):
     def inner_condition(self, emit_derivs):
         assert (self.left is not None and self.right is not None
                 and not self.parallel)
-        if not self.right.indexed:
+        if not self.right.indexed():
             return None
-        elif self.left.indexed:
+        elif self.left.indexed():
             return 'l->index == r->index'
-        assert self.result.parametric
+        assert self.result.indexed()
         if emit_derivs:
             return 'r->index == e->index'
         else:
             return None
 
     def result_index(self):
-        if not self.result.parametric:
+        if not self.result.indexed():
             return 'INDEX_NONE'
         assert self.left is not None
         if self.right is None:
-            assert self.left.indexed
+            assert self.left.indexed()
             return 'l->index'
-        elif self.left.indexed:
+        elif self.left.indexed():
             return 'l->index'
         else:
-            assert self.right.indexed
+            assert self.right.indexed()
             return 'r->index'
 
     def __str__(self):
@@ -422,7 +450,7 @@ class NormalProduction(util.FinalAttrs):
         rhs = ('-' if self.left is None
                else str(self.left) if self.right is None
                else str(self.left) + conj + str(self.right))
-        return self.result.as_lhs() + ' :: ' + rhs
+        return str(self.result) + ' :: ' + rhs
 
 class Position(util.FinalAttrs):
     """
@@ -483,7 +511,7 @@ class ReverseProduction(util.FinalAttrs):
         used = (([] if base is None else [base]) +
                 ([] if reqd is None else [reqd]))
         RegularProduction._check_production(result, used)
-        ## The @Symbol generated by this @ReverseProduction.
+        ## The @Result of this @ReverseProduction.
         self.result = result
         ## The @Literal we assume to be present. Is @e None if this corresponds
         #  to an empty production.
@@ -634,16 +662,16 @@ class ReverseProduction(util.FinalAttrs):
         so we can copy from either one of them. We arbitrarily choose to copy
         from the base Edge.
         """
-        if not self.result.parametric:
+        if not self.result.indexed():
             return 'INDEX_NONE'
         assert self.base is not None
         if self.reqd is None:
-            assert self.base.indexed
+            assert self.base.indexed()
             return 'base->index'
-        elif self.base.indexed:
+        elif self.base.indexed():
             return 'base->index'
         else:
-            assert self.reqd.indexed
+            assert self.reqd.indexed()
             return 'other->index'
 
     def must_check_for_common_index(self):
@@ -653,7 +681,7 @@ class ReverseProduction(util.FinalAttrs):
 
         In our running example, we do.
         """
-        return (self.base.indexed and self.reqd.indexed)
+        return self.base.indexed() and self.reqd.indexed()
 
     def left_edge(self):
         if self.base is None:
@@ -733,7 +761,7 @@ class ReverseProduction(util.FinalAttrs):
             need = ' + (%s // *)' % self.reqd
         else:
             assert False
-        return have + need + ' => ' + self.result.as_lhs()
+        return have + need + ' => ' + str(self.result)
 
 class Grammar(util.FinalAttrs):
     """
@@ -847,13 +875,15 @@ class Grammar(util.FinalAttrs):
                 all_chars.append(i)
         assert util.all_same([i for i in all_chars if i is not None]), \
             "Production contains more than one distinct indices"
+        result = Result(self._lhs_symbol, self._char2idx(self._lhs_idx_char))
         if parallel:
             assert len(used) == 2
-            prods = [NormalProduction(self._lhs_symbol, used[0], used[1], True)]
+            prods = [NormalProduction(result, used[0], used[1], True)]
         else:
-            prods = RegularProduction(self._lhs_symbol, used).split(self.symbols)
+            full_prod = RegularProduction(result, used)
+            prods = full_prod.split(self.symbols)
         for p in prods:
-            self.prods.append(p.result, p)
+            self.prods.append(p.result.symbol, p)
             for rp in p.get_rev_prods():
                 base_symbol = None if rp.base is None else rp.base.symbol
                 self.rev_prods.append(base_symbol, rp)
@@ -866,8 +896,8 @@ class Grammar(util.FinalAttrs):
         symbol = self.symbols.get(matcher.group(2), idx_char is not None)
         if idx_char == '*':
             idx_char = None
-        indexed = idx_char is not None
-        return (Literal(symbol, indexed, reversed), idx_char)
+        index = self._char2idx(idx_char)
+        return (Literal(symbol, index, reversed), idx_char)
 
     def _begin_series(self, str):
         matcher = re.match(r'^([a-zA-Z]\w*)(?:\[([a-zA-Z])\])?$', str)
@@ -882,6 +912,9 @@ class Grammar(util.FinalAttrs):
 
     def _series_in_progress(self):
         return self._lhs_symbol is not None
+
+    def _char2idx(self, idx_char):
+        return None if idx_char is None else 0
 
 def parse(grammar_in, code_out, terms_out):
     """
@@ -946,7 +979,7 @@ def parse(grammar_in, code_out, terms_out):
     pr.write('')
 
     pr.write('bool has_empty_prod(EDGE_KIND kind) {')
-    empty_prod_symbols = [r.result for r in grammar.rev_prods.get(None)]
+    empty_prod_symbols = [r.result.symbol for r in grammar.rev_prods.get(None)]
     pr.write('switch (kind) {')
     for s in set(empty_prod_symbols):
         pr.write('case %s: return true; /* %s */' % (s.kind, s))
@@ -1018,13 +1051,13 @@ def parse(grammar_in, code_out, terms_out):
             pr.write('assert(false);')
             continue
         for rp in rev_prods:
-            if rp.result.is_lazy():
+            if rp.result.symbol.is_lazy():
                 # Skip productions that generate lazy symbols.
                 continue
             pr.write('/* %s */' % rp)
             res_src = rp.result_source()
             res_tgt = rp.result_target()
-            res_kind = rp.result.kind
+            res_kind = rp.result.symbol.kind
             l_edge = rp.left_edge()
             l_rev = util.to_c_bool(rp.left_reverse())
             r_edge = rp.right_edge()

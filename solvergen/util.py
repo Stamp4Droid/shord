@@ -227,3 +227,7 @@ def all_same(elems):
         if e != elems[0]:
             return False
     return True
+
+def idx2char(idx):
+    assert idx >= 0 and idx < 26
+    return chr(ord('a') + idx)
