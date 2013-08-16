@@ -120,7 +120,6 @@
     <property name="stamp.solvergen.rels.listfile"
 	      location="${stamp.out.dir}/${stamp.solvergen.analysis}.rels.dat"/>
     <require-file file="${stamp.solvergen.analysis.cpp}"/>
-    <require-file file="${stamp.solvergen.executable}"/>
     <require-file file="${stamp.solvergen.terms.listfile}"/>
     <require-file file="${stamp.solvergen.rels.listfile}"/>
 

@@ -215,7 +215,8 @@ ALIASES                = "Symbol=@link cfg_parser::Symbol Symbol@endlink" \
                          "SymbolStore=@link cfg_parser::SymbolStore SymbolStore@endlink" \
                          "Relation=@link cfg_parser::Relation Relation@endlink" \
                          "Result=@link cfg_parser::Result Result@endlink" \
-                         "NormalProduction=@link cfg_parser::NormalProduction NormalProduction@endlink"
+                         "NormalProduction=@link cfg_parser::NormalProduction NormalProduction@endlink" \
+                         "RelationStore=@link cfg_parser::RelationStore RelationStore@endlink"
 
 # This tag can be used to specify a number of word-keyword mappings (TCL only). 
 # A mapping has the form "name=value". For example adding 

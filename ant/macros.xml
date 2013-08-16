@@ -130,6 +130,9 @@
     	  </tokenfilter>
 	</filterchain>
       </loadfile>
+      <!-- Ant will leave the property unset if loadfile returns no matches, so
+	   we have to manually set it to the empty string. -->
+      <property name="@{property}" value=""/>
     </sequential>
   </macrodef>
 

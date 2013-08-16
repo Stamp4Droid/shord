@@ -898,7 +898,7 @@ class Grammar(util.FinalAttrs):
         ## All the @Symbol%s encountered so far, stored in a specialized
         #  @SymbolStore container.
         self.symbols = SymbolStore()
-        ## All the @Relations%s encountered so far, stored in a specialized
+        ## All the @Relation%s encountered so far, stored in a specialized
         #  @RelationStore container.
         self.rels = RelationStore()
         ## All the @NormalProduction%s encountered so far, grouped by result
