@@ -1203,32 +1203,36 @@ def emit_derivs_or_lazy_edges(grammar, pr, emit_derivs):
 # %s's for places to fill in.
 
 ## Help message describing the calling convention for this script.
-usage_string = """Usage: %s <input-file> [<output-dir> [<terminals-file>]]
+usage_string = """Usage: %s <input-file> [<output-dir>]
 Produce CFL-Reachability solver code for a Context-Free Grammar.
 <input-file> must contain a grammar specification (see the main project docs
 for details), and have a .cfg extension.
-Output is printed to a file inside <output-dir> with the same name as
-<input-file>, but with the .cfg extension stripped.
-If no output directory is given, print generated code to stdout.
-If <terminals-file> is specified, write a list of the terminal symbols used in
-this grammar to that file.
+
+If <output-dir> is not provided, print generated code to stdout.
+
+If <output-dir> is provided, and assuming that <input-file> is foo.cfg, then
+nothing is printed on stdout, and the following files are created:
+- foo.cpp: the generated code
+- foo.terms.dat: all terminal symbols of the grammar, one per line
 """
 
 if __name__ == '__main__':
-    if (len(sys.argv) < 2 or sys.argv[1] == '-h' or sys.argv[1] == '--help' or
-        os.path.splitext(sys.argv[1])[1] != '.cfg'):
+    if (len(sys.argv) < 2 or
+        sys.argv[1] == '-h' or sys.argv[1] == '--help' or
+        os.path.splitext(sys.argv[1])[1] != '.cfg' or
+        len(sys.argv) >= 3 and (not os.path.exists(sys.argv[2]) or
+                                not os.path.isdir(sys.argv[2]))):
         script_name = os.path.basename(__file__)
         sys.stderr.write(usage_string % script_name)
         exit(1)
     with open(sys.argv[1], 'r') as grammar_in:
         if len(sys.argv) >= 3:
-            base_outfile = os.path.basename(os.path.splitext(sys.argv[1])[0])
-            outfile = os.path.join(sys.argv[2], base_outfile + '.cpp')
-            with open(outfile, 'w') as code_out:
-                if len(sys.argv) >= 4:
-                    with open(sys.argv[3], 'w') as terminals_out:
-                        parse(grammar_in, code_out, terminals_out)
-                else:
-                    parse(grammar_in, code_out, None)
+            outdir = sys.argv[2]
+            grammar = os.path.basename(os.path.splitext(sys.argv[1])[0])
+            code_out_name = os.path.join(outdir, grammar + '.cpp')
+            terms_out_name = os.path.join(outdir, grammar + '.terms.dat')
+            with open(code_out_name, 'w') as code_out:
+                with open(terms_out_name, 'w') as terms_out:
+                    parse(grammar_in, code_out, terms_out)
         else:
             parse(grammar_in, sys.stdout, None)

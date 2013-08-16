@@ -5,8 +5,6 @@
     <!-- Compile SolverGen analysis. -->
     <property name="stamp.solvergen.analysis" value="s-k-ht-call"/>
     <runtarget target="make-cfl-solver"/>
-    <require-prop property="stamp.solvergen.terminals.listfile"
-		  description="file listing all the terminals used by the analysis"/>
 
     <!-- Prepare SolverGen I/O directories. -->
     <mkdir dir="${stamp.out.dir}/input"/>
@@ -21,7 +19,7 @@
     <property name="stamp.dumper.templates.dir"
 	      location="${stamp.dir}/solvergen/input"/>
     <load-strings property="stamp.dumper.templates.list"
-		  file="${stamp.solvergen.terminals.listfile}">
+		  file="${stamp.solvergen.terms.listfile}">
       <replaceregex pattern="^(.+)$" replace="\1.dat"/>
     </load-strings>
     <property name="stamp.dumper.outdir"
@@ -94,26 +92,28 @@
 	      condition="${stamp.solvergen.assertions}"
 	      then="" else="-DNDEBUG"/>
 
-    <!-- Locate relevant files. -->
+    <!-- Locate input files. -->
     <property name="stamp.solvergen.analysis.cfg"
 	      location="${stamp.dir}/solvergen/analyses/${stamp.solvergen.analysis}.cfg"/>
     <require-file file="${stamp.solvergen.analysis.cfg}"/>
-    <replace-ext property="stamp.solvergen.analysis.cpp"
-		 file="${stamp.solvergen.analysis.cfg}"
-		 destdir="${stamp.out.dir}" oldext="cfg" newext="cpp"/>
-    <property name="stamp.solvergen.executable"
-	      location="${stamp.out.dir}/${stamp.solvergen.analysis}"/>
-    <tempfile property="stamp.solvergen.terminals.listfile" createfile="false"
-	      deleteonexit="true"/>
 
     <!-- Produce CFL Solver code from the input grammar. -->
     <exec executable="python" spawn="false" failonerror="true">
       <arg file="${stamp.dir}/solvergen/cfg_parser.py"/>
       <arg file="${stamp.solvergen.analysis.cfg}"/>
       <arg file="${stamp.out.dir}"/>
-      <arg file="${stamp.solvergen.terminals.listfile}"/>
     </exec>
 
+    <!-- Locate output files. -->
+    <property name="stamp.solvergen.analysis.cpp"
+	      location="${stamp.out.dir}/${stamp.solvergen.analysis}.cpp"/>
+    <property name="stamp.solvergen.executable"
+	      location="${stamp.out.dir}/${stamp.solvergen.analysis}"/>
+    <property name="stamp.solvergen.terms.listfile"
+	      location="${stamp.out.dir}/${stamp.solvergen.analysis}.terms.dat"/>
+    <require-file file="${stamp.solvergen.analysis.cpp}"/>
+    <require-file file="${stamp.solvergen.executable}"/>
+    <require-file file="${stamp.solvergen.terms.listfile}"/>
     <!-- Compile and link the analysis code with the CFL Solver engine. -->
     <exec executable="g++" dir="${stamp.out.dir}"
 	  spawn="false" failonerror="true">
