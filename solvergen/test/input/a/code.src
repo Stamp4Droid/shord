@@ -1,5 +1,3 @@
-# Sample code corresponding to the sample facts in test/input/*.dat
-
 main(x):
   y = x
   y = foo(x) // 1
