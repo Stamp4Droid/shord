@@ -63,9 +63,7 @@
       <fail message="File @{file} doesn't exist">
 	<condition>
 	  <not>
-	    <resourceexists>
-	      <file file="@{file}"/>
-	    </resourceexists>
+	    <available file="@{file}"/>
 	  </not>
 	</condition>
       </fail>

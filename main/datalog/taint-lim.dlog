@@ -118,7 +118,7 @@ flow(src,sink) :- sink(o,sink), labelPrimFld(o,_,src), srcCtxtLabel(src).
 
 # abstract objects
 # label introduction
-labelDirIn(o,c,l)  :- varLabel(c,v,l), pt(c,v,o).
+labelDirIn(o,l)    :- varLabel(c,v,l), pt(c,v,o).
 # nested tainting
 labelRecIn(o,l)    :- labelDirIn(o,l).
 labelRecIn(o2,l)   :- labelRecIn(o1,l), fpt(o1,_,o2).

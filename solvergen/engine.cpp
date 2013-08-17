@@ -1609,7 +1609,7 @@ void print_step(Step *step, std::stack<CHOICE> &choices, FILE *f) {
 void print_path(PartialPath *path, Step *top_step, FILE *f) {
     assert(partial_path_is_complete(path));
     assert(top_step->next_sibling == NULL);
-    fprintf(f, "<path length='%u'>\n", path->min_length);
+    fprintf(f, "<path>\n");
     std::stack<CHOICE> choices = choice_sequence_unwind(path->choices);
     print_step(top_step, choices, f);
     // All choices should have been exhausted.
