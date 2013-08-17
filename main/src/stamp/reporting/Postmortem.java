@@ -26,7 +26,8 @@ public class Postmortem extends JavaAnalysis
 			SrcFlow.class
 			,ArgSinkFlow.class
 			,SrcSinkFlow.class
-			,SrcSinkFlowViz.class
+			// Temporarily disabled: the paths interface is currently broken.
+			//,SrcSinkFlowViz.class
 			////,ReachableStub.class,
 			,TaintedStub.class
 			////,InvkNone.class,

@@ -10,17 +10,15 @@
 
 # name=taint-lim-dlog
 
-.include "Z.dom"
 .include "M.dom"
 .include "C.dom"
 .include "V.dom"
 .include "U.dom"
 .include "F.dom"
 .include "I.dom"
-.include "L.dom"
 .include "CL.dom"
 
-.bddvarorder L0_Z0xZ1_M0_CL0xCL1_C0xC1_V0xV1_U0xU1_F0_I0
+.bddvarorder M0_CL0xCL1_C0xC1_V0xV1_U0xU1_F0_I0
 
 # INPUT RELATIONS =============================================================
 
@@ -32,53 +30,37 @@ LoadPrim(y:U,x:V,f:F)   input # y = x.f
 StorePrim(u:V,f:F,v:U)  input # u.f = v
 LoadStatPrim(y:U,f:F)   input # y = f
 StoreStatPrim(f:F,v:U)  input # f = v
-
 paramPrim(u:U,v:U,i:I)  input # u: formal param, v: actual arg, i: invocation stmt
 returnPrim(u:U,v:U,i:I) input # u: lhs at callsite, v: return var, i: invocation stmt
 
 MU(m:M,u:U) input # u is a prim type variable in m
-MV(m:M,v:V) input # v is a ref type variable in m
 CM(c:C,m:M) input # c is a context of method m
 CI(c:C,i:I) input # stmt i is the top element in the k-limited callstack c
 CC(c:C,d:C) input # there exists i s.t. c++[i] = d
 
-CCL(c:C,cl:CL) input 
-LCL(l:L,cl:CL) input
-
 sinkCtxtLabel(l:CL) input
-srcCtxtLabel(l:CL) input
+srcCtxtLabel(l:CL)  input
 
-LabelRet(l:L,m:M)             input
-LabelArg(l:L,m:M,z:Z)         input
-ArgRetTransfer(m:M,z:Z)       input
-ArgArgTransfer(m:M,z0:Z,z1:Z) input
-ArgArgFlow(m:M,z0:Z,z1:Z)     input
+varLabel(c:C,v:V,l:CL)     input
+varLabelPrim(c:C,v:U,l:CL) input
 
-MmethArg(m:M,z:Z,v:V)     input
-MmethRet(m:M,z:Z,v:V)     input
-MmethPrimArg(m:M,z:Z,u:U) input
-MmethPrimRet(m:M,z:Z,u:U) input
+transferRefRef(u:V,v:V)   input
+transferPrimRef(u:U,v:V)  input
+transferRefPrim(u:V,v:U)  input
+transferPrimPrim(u:U,v:U) input
+
+flowRefRef(u:V,v:V)   input
+flowPrimRef(u:U,v:V)  input
+flowRefPrim(u:V,v:U)  input
+flowPrimPrim(u:U,v:U) input
 
 # OUTPUT RELATIONS ============================================================
 
 labelRef(c:C,v:V,l:CL)  output # (c,v) is labeled with l
 labelPrim(c:C,u:U,l:CL) output # (c,u) is labeled with l
-flow(src:CL,sink:CL) output
+flow(src:CL,sink:CL)    output
 
 # INTERMEDIATE RELATIONS ======================================================
-
-varLabel(v:V,l:L)
-varLabelPrim(v:U,l:L)
-
-transferRefRef(u:V,v:V)
-transferPrimRef(u:U,v:V)
-transferRefPrim(u:V,v:U)
-transferPrimPrim(u:U,v:U)
-
-flowRefRef(u:V,v:V)
-flowPrimRef(u:U,v:V)
-flowRefPrim(u:V,v:U)
-flowPrimPrim(u:U,v:U)
 
 transferObjRef(o:C,c:C,v:V)
 transferObjPrim(o:C,c:C,u:U)
@@ -96,28 +78,6 @@ sink(o:C,l:CL)               # o escapes into sink l
 sinkPrim(c:C,u:U,l:CL)       # (c,u) escapes into sink l
 
 # RULES =======================================================================
-
-# translation of annotation facts
-
-varLabel(v,l)     :- LabelRet(l,m), MmethRet(m,_,v).
-varLabel(v,l)     :- LabelArg(l,m,z), MmethArg(m,z,v).
-varLabelPrim(v,l) :- LabelRet(l,m), MmethPrimRet(m,_,v).
-varLabelPrim(v,l) :- LabelArg(l,m,z), MmethPrimArg(m,z,v).
-
-transferRefRef(u,v)   :- ArgArgTransfer(m,z0,z1), MmethArg(m,z0,u), MmethArg(m,z1,v).
-transferRefPrim(u,v)  :- ArgArgTransfer(m,z0,z1), MmethArg(m,z0,u), MmethPrimArg(m,z1,v).
-transferPrimRef(u,v)  :- ArgArgTransfer(m,z0,z1), MmethPrimArg(m,z0,u), MmethArg(m,z1,v).
-transferPrimPrim(u,v) :- ArgArgTransfer(m,z0,z1), MmethPrimArg(m,z0,u), MmethPrimArg(m,z1,v).
-
-transferRefRef(u,v)   :- ArgRetTransfer(m,z), MmethArg(m,z,u), MmethRet(m,_,v).
-transferRefPrim(u,v)  :- ArgRetTransfer(m,z), MmethArg(m,z,u), MmethPrimRet(m,_,v).
-transferPrimRef(u,v)  :- ArgRetTransfer(m,z), MmethPrimArg(m,z,u), MmethRet(m,_,v).
-transferPrimPrim(u,v) :- ArgRetTransfer(m,z), MmethPrimArg(m,z,u), MmethPrimRet(m,_,v).
-
-flowRefRef(u,v)   :- ArgArgFlow(m,z0,z1), MmethArg(m,z0,u), MmethArg(m,z1,v).
-flowRefPrim(u,v)  :- ArgArgFlow(m,z0,z1), MmethArg(m,z0,u), MmethPrimArg(m,z1,v).
-flowPrimRef(u,v)  :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,u), MmethArg(m,z1,v).
-flowPrimPrim(u,v) :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,u), MmethPrimArg(m,z1,v).
 
 # (backward) escape flow
 
@@ -158,7 +118,7 @@ flow(src,sink) :- sink(o,sink), labelPrimFld(o,_,src), srcCtxtLabel(src).
 
 # abstract objects
 # label introduction
-labelDirIn(o,cl)    :- varLabel(v,l), MV(m,v), CM(c,m), pt(c,v,o), CCL(c,cl), LCL(l,cl).
+labelDirIn(o,c,l)  :- varLabel(c,v,l), pt(c,v,o).
 # nested tainting
 labelRecIn(o,l)    :- labelDirIn(o,l).
 labelRecIn(o2,l)   :- labelRecIn(o1,l), fpt(o1,_,o2).
@@ -178,7 +138,7 @@ labelRef(c,v,l) :- pt(c,v,o), label(o,l).
 
 # primitive-type variables/fields
 # label introduction
-labelPrimIntro(c,v,cl) :- varLabelPrim(v,l), CM(c,m), MU(m,v), LCL(l,cl), CCL(c,cl).
+labelPrimIntro(c,v,l) :- varLabelPrim(c,v,l).
 labelPrim(c,v,l)      :- labelPrimIntro(c,v,l).
 # label propagation
 labelPrim(c,v,l)      :- AssignPrim(v,u), labelPrim(c,u,l).

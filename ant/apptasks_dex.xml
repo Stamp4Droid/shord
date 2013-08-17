@@ -4,12 +4,11 @@
   <target name="-prepare-backend-chord">
     <!-- Register backend-specific analyses. -->
     <property name="stamp.analyses.main"
-	      value="typefilter-dlog,pt-dlog,taint-lim-dlog"/>
+	      value="pt-dlog,taint-lim-dlog"/>
     <!-- Register backend-specific system properties (none required for this
          backend). -->
     <propertyset id="stamp.analyses.main.sysprops"/>
   </target>
-
 
   <target name="-analyze-apk">
 	<!-- Run android-apktool to decompile the manifest and resource xml files -->

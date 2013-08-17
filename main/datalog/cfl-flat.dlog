@@ -1,0 +1,58 @@
+# Relations used by the exposion-less version of the CFL solver.
+
+# CONFIGURATION ===============================================================
+
+# name=cfl-flat-dlog
+
+.include "M.dom"
+.include "C.dom"
+.include "V.dom"
+.include "U.dom"
+.include "H.dom"
+.include "F.dom"
+.include "I.dom"
+
+.bddvarorder M0_C0xC1_V0xV1_U0xU1_H0xF0_I0
+
+# INPUT RELATIONS =============================================================
+
+MU(m:M,u:U) input
+MV(m:M,v:V) input
+
+CM(c:C,m:M) input
+CH(o:C,h:H) input
+CI(c:C,i:I) input
+CC(c:C,d:C) input
+
+Alloc(v:V,h:H) input
+
+Load(v:V,b:V,f:F)      input
+Store(b:V,f:F,v:V)     input
+LoadPrim(u:U,b:V,f:F)  input
+StorePrim(b:V,f:F,u:U) input
+
+# OUTPUT RELATIONS ============================================================
+
+CIC(c:C,i:I,d:C) output
+CV(c:C,v:V)      output
+CU(c:C,u:U)      output
+
+AllocCtxt(c:C,v:V,o:C) output
+
+ArrLoad(v:V,b:V)      output # v = b[*]
+ArrStore(b:V,v:V)     output # b[*] = v
+ArrLoadPrim(u:U,b:V)  output # u = b[*]
+ArrStorePrim(b:V,u:U) output # b[*] = u
+
+# RULES =======================================================================
+
+CIC(c,i,d) :- CC(c,d), CI(d,i).
+CV(c,v)    :- MV(m,v), CM(c,m).
+CU(c,u)    :- MU(m,u), CM(c,m).
+
+AllocCtxt(c,v,o) :- Alloc(v,h), CV(c,v), CC(c,o), CH(o,h).
+
+ArrLoad(v,b)      :- Load(v,b,0).
+ArrStore(b,v)     :- Store(b,0,v).
+ArrLoadPrim(u,b)  :- LoadPrim(u,b,0).
+ArrStorePrim(b,u) :- StorePrim(b,0,u).

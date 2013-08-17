@@ -1,1 +1,1 @@
-@DUMP:StoreCtxt(%C,%B,%F,%R):v%R_%C v%B_%C %F@
+@DUMP:Store(%B,%F,%R):v%R v%B %F@

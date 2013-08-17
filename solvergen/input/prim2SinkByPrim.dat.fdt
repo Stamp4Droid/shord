@@ -1,1 +1,1 @@
-@DUMP:ArgPrimArgPrimFlowCtxt(%C,%U1,%U2):u%U1_%C u%U2_%C@
+@DUMP:flowPrimPrim(%U1,%U2):u%U1 u%U2@

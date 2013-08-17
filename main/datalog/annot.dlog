@@ -1,0 +1,78 @@
+# Translation of annotation facts
+
+# CONFIGURATION ===============================================================
+
+# name=annot-dlog
+
+.include "Z.dom"
+.include "M.dom"
+.include "C.dom"
+.include "V.dom"
+.include "U.dom"
+.include "L.dom"
+.include "CL.dom"
+
+.bddvarorder L0_Z0xZ1_M0_CL0xCL1_C0xC1_V0xV1_U0xU1
+
+# INPUT RELATIONS =============================================================
+
+MmethArg(m:M,z:Z,v:V)     input
+MmethRet(m:M,z:Z,v:V)     input
+MmethPrimArg(m:M,z:Z,u:U) input
+MmethPrimRet(m:M,z:Z,u:U) input
+
+CM(c:C,m:M) input
+
+LabelRet(l:L,m:M)             input
+LabelArg(l:L,m:M,z:Z)         input
+ArgRetTransfer(m:M,z:Z)       input
+ArgArgTransfer(m:M,z0:Z,z1:Z) input
+ArgArgFlow(m:M,z0:Z,z1:Z)     input
+
+SrcLabel(l:L)  input
+SinkLabel(l:L) input
+CCL(c:C,cl:CL) input
+LCL(l:L,cl:CL) input
+
+# OUTPUT RELATIONS ============================================================
+
+srcCtxtLabel(l:CL)  output
+sinkCtxtLabel(l:CL) output
+
+varLabel(c:C,v:V,l:CL)     output
+varLabelPrim(c:C,u:U,l:CL) output
+
+transferRefRef(u:V,v:V)   output
+transferPrimRef(u:U,v:V)  output
+transferRefPrim(u:V,v:U)  output
+transferPrimPrim(u:U,v:U) output
+
+flowRefRef(u:V,v:V)   output
+flowPrimRef(u:U,v:V)  output
+flowRefPrim(u:V,v:U)  output
+flowPrimPrim(u:U,v:U) output
+
+# RULES =======================================================================
+
+srcCtxtLabel(cl)  :- LCL(l,cl), SrcLabel(l).
+sinkCtxtLabel(cl) :- LCL(l,cl), SinkLabel(l).
+
+varLabel(c,v,cl)     :- LabelRet(l,m), MmethRet(m,_,v), CM(c,m), CCL(c,cl), LCL(l,cl).
+varLabel(c,v,cl)     :- LabelArg(l,m,z), MmethArg(m,z,v), CM(c,m), CCL(c,cl), LCL(l,cl).
+varLabelPrim(c,v,cl) :- LabelRet(l,m), MmethPrimRet(m,_,v), CM(c,m), CCL(c,cl), LCL(l,cl).
+varLabelPrim(c,v,cl) :- LabelArg(l,m,z), MmethPrimArg(m,z,v), CM(c,m), CCL(c,cl), LCL(l,cl).
+
+transferRefRef(u,v)   :- ArgArgTransfer(m,z0,z1), MmethArg(m,z0,u), MmethArg(m,z1,v).
+transferRefPrim(u,v)  :- ArgArgTransfer(m,z0,z1), MmethArg(m,z0,u), MmethPrimArg(m,z1,v).
+transferPrimRef(u,v)  :- ArgArgTransfer(m,z0,z1), MmethPrimArg(m,z0,u), MmethArg(m,z1,v).
+transferPrimPrim(u,v) :- ArgArgTransfer(m,z0,z1), MmethPrimArg(m,z0,u), MmethPrimArg(m,z1,v).
+
+transferRefRef(u,v)   :- ArgRetTransfer(m,z), MmethArg(m,z,u), MmethRet(m,_,v).
+transferRefPrim(u,v)  :- ArgRetTransfer(m,z), MmethArg(m,z,u), MmethPrimRet(m,_,v).
+transferPrimRef(u,v)  :- ArgRetTransfer(m,z), MmethPrimArg(m,z,u), MmethRet(m,_,v).
+transferPrimPrim(u,v) :- ArgRetTransfer(m,z), MmethPrimArg(m,z,u), MmethPrimRet(m,_,v).
+
+flowRefRef(u,v)   :- ArgArgFlow(m,z0,z1), MmethArg(m,z0,u), MmethArg(m,z1,v).
+flowRefPrim(u,v)  :- ArgArgFlow(m,z0,z1), MmethArg(m,z0,u), MmethPrimArg(m,z1,v).
+flowPrimRef(u,v)  :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,u), MmethArg(m,z1,v).
+flowPrimPrim(u,v) :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,u), MmethPrimArg(m,z1,v).

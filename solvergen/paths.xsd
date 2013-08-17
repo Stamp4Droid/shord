@@ -12,7 +12,7 @@
 
 <xs:simpleType name="nodeName">
   <xs:restriction base="xs:string">
-    <xs:pattern value="v[0-9]+_[0-9]+|u[0-9]+_[0-9]+|l[0-9]+|o[0-9]+|f[0-9]+"/>
+    <xs:pattern value="v[0-9]+|u[0-9]+|l[0-9]+|o[0-9]+|f[0-9]+"/>
   </xs:restriction>
 </xs:simpleType>
 

@@ -1,4 +1,1 @@
-@DUMP:SrcArgFlowCtxt(%C,%L,%V):l%L v%V_%C@
-@DUMP:SrcRetFlowCtxt(%C,%L,%V):l%L v%V_%C@
-@DUMP:ArgSinkFlowCtxt(%C,%V,%L):l%L v%V_%C@
-@DUMP:SinklRetFlowCtxt(%C,%L,%V):l%L v%V_%C@
+@DUMP:varLabel(%C,%V,%L):l%L v%V %C@
