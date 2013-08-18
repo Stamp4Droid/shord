@@ -4,6 +4,7 @@
 #include <list>
 #include <locale.h>
 #include <queue>
+#include <set>
 #include <signal.h>
 #include <sstream>
 #include <stack>
@@ -1718,10 +1719,13 @@ void print_edge_counts(bool terminal) {
 	DECL_COUNTER(index_count, 0);
 	for (NODE_REF n = 0; n < num_nodes(); n++) {
 	    InEdgeIterator *iter = get_in_edge_iterator(n, k);
+	    std::set<NODE_REF> sources;
 	    Edge *e;
 	    while ((e = next_in_edge(iter)) != NULL) {
-		edge_count++;
-		total_edge_count++;
+		if (sources.insert(e->from).second) {
+		    edge_count++;
+		    total_edge_count++;
+		}
 		if (parametric) {
 		    index_count++;
 		    total_index_count++;
