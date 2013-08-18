@@ -1,6 +1,6 @@
---- s-k-the-call.cpp	2013-08-17 15:13:05.305206625 -0700
-+++ edited.cpp	2013-08-17 14:30:39.217152506 -0700
-@@ -789,18 +789,22 @@
+--- s-k-the-call.cpp	2013-08-18 13:59:43.525712814 -0700
++++ edited.cpp	2013-08-18 14:07:48.501723124 -0700
+@@ -801,18 +801,22 @@
      /* FlowsTo[*] + (InstFldFT[a] *) => %2[a] */
      in_iter = get_in_edge_iterator(base->from, 7);
      while ((other = next_in_edge(in_iter)) != NULL) {
@@ -27,7 +27,7 @@
        }
      }
      /* FlowsTo[a] + (* arrStoreRef) => %4[a] */
-@@ -880,7 +884,8 @@
+@@ -892,7 +896,8 @@
      /* FlowsTo[*] + (Label2PrimFld[a] *) => %10[a] */
      in_iter = get_in_edge_iterator(base->from, 43);
      while ((other = next_in_edge(in_iter)) != NULL) {
@@ -37,7 +37,7 @@
      }
      /* FlowsTo[a] + (LabelObjIn *) => %11[a] */
      in_iter = get_in_edge_iterator(base->from, 26);
-@@ -895,8 +900,10 @@
+@@ -907,8 +912,10 @@
      /* _FlowsTo[a] + (%13[a] *) => Label2PrimFld[a] */
      in_iter = get_in_edge_iterator(base->to, 51);
      while ((other = next_in_edge(in_iter)) != NULL) {
@@ -50,7 +50,7 @@
        }
      }
      /* _FlowsTo[a] + (%14[a] *) => Label2PrimArrEl */
-@@ -972,7 +979,8 @@
+@@ -984,7 +991,8 @@
      /* InstFldFT[a] + (* FlowsTo[*]) => %2[a] */
      out_iter = get_out_edge_iterator(base->to, 0);
      while ((other = next_out_edge(out_iter)) != NULL) {
@@ -60,7 +60,7 @@
      }
      /* _InstFldFT[*] + (LabelObjIn *) => LabelObjIn */
      in_iter = get_in_edge_iterator(base->to, 26);
-@@ -989,36 +997,45 @@
+@@ -1001,36 +1009,45 @@
      /* loadRef[a] + (%2[a] *) => FlowsTo[a] */
      in_iter = get_in_edge_iterator(base->from, 9);
      while ((other = next_in_edge(in_iter)) != NULL) {
@@ -115,7 +115,7 @@
    case 12: /* ArrElemFT */
      /* ArrElemFT + (* Obj2Ref[a]) => Obj2Ref[a] */
      out_iter = get_out_edge_iterator(base->to, 20);
-@@ -1287,7 +1304,8 @@
+@@ -1294,7 +1311,8 @@
      /* Label2Prim[a] + (* storePrim[*]) => %13[a] */
      out_iter = get_out_edge_iterator(base->to, 50);
      while ((other = next_out_edge(out_iter)) != NULL) {
@@ -125,7 +125,7 @@
      }
      /* Label2Prim[a] + (* arrStorePrim) => %14[a] */
      out_iter = get_out_edge_iterator(base->to, 52);
-@@ -1394,7 +1412,8 @@
+@@ -1401,7 +1419,8 @@
      /* Label2PrimFld[a] + (* FlowsTo[*]) => %10[a] */
      out_iter = get_out_edge_iterator(base->to, 0);
      while ((other = next_out_edge(out_iter)) != NULL) {
@@ -135,7 +135,7 @@
      }
      /* Label2PrimFld[*] + (srcLabel *) => %23 */
      in_iter = get_in_edge_iterator(base->from, 69);
-@@ -1406,8 +1425,10 @@
+@@ -1413,8 +1432,10 @@
      /* loadPrim[a] + (%10[a] *) => Label2Prim[a] */
      in_iter = get_in_edge_iterator(base->from, 45);
      while ((other = next_in_edge(in_iter)) != NULL) {
@@ -148,7 +148,7 @@
        }
      }
      /* loadPrim[*] + (%11[a] *) => Label2Prim[a] */
-@@ -1416,15 +1437,18 @@
+@@ -1423,15 +1444,18 @@
        add_edge(other->from, base->to, 32, other->index, other, false, base, false);
      }
      break;
@@ -170,7 +170,7 @@
    case 46: /* %11 */
      /* %11[a] + (* loadPrim[*]) => Label2Prim[a] */
      out_iter = get_out_edge_iterator(base->to, 44);
-@@ -1457,18 +1481,22 @@
+@@ -1464,18 +1488,22 @@
      /* storePrim[*] + (Label2Prim[a] *) => %13[a] */
      in_iter = get_in_edge_iterator(base->from, 32);
      while ((other = next_in_edge(in_iter)) != NULL) {
@@ -197,7 +197,7 @@
    case 52: /* arrStorePrim */
      /* arrStorePrim + (Label2Prim[a] *) => %14[a] */
      in_iter = get_in_edge_iterator(base->from, 32);
-@@ -1697,10 +1725,12 @@
+@@ -1706,10 +1734,12 @@
      /* FlowsTo[a] :: %2[a] loadRef[a] */
      l_out_iter = get_out_edge_iterator(from, 9);
      while ((l = next_out_edge(l_out_iter)) != NULL) {
@@ -212,7 +212,7 @@
              derivs.push_back(derivation_double(l, false, r, false));
            }
          }
-@@ -1738,40 +1768,52 @@
+@@ -1747,40 +1777,52 @@
      /* InstFldFT[a] :: %3[a] _FlowsTo[a] */
      l_out_iter = get_out_edge_iterator(from, 11);
      while ((l = next_out_edge(l_out_iter)) != NULL) {
@@ -273,7 +273,7 @@
    case 12: /* ArrElemFT */
      /* ArrElemFT :: %4[a] _FlowsTo[a] */
      l_out_iter = get_out_edge_iterator(from, 14);
-@@ -2051,10 +2093,12 @@
+@@ -2062,10 +2104,12 @@
      /* Label2Prim[a] :: %10[a] loadPrim[a] */
      l_out_iter = get_out_edge_iterator(from, 45);
      while ((l = next_out_edge(l_out_iter)) != NULL) {
@@ -288,7 +288,7 @@
              derivs.push_back(derivation_double(l, false, r, false));
            }
          }
-@@ -2147,28 +2191,35 @@
+@@ -2158,28 +2202,35 @@
      /* Label2PrimFld[a] :: %13[a] _FlowsTo[a] */
      l_out_iter = get_out_edge_iterator(from, 51);
      while ((l = next_out_edge(l_out_iter)) != NULL) {
@@ -329,7 +329,7 @@
    case 46: /* %11 */
      /* %11[a] :: LabelObjIn FlowsTo[a] */
      l_out_iter = get_out_edge_iterator(from, 26);
-@@ -2193,18 +2244,23 @@
+@@ -2204,18 +2255,23 @@
        }
      }
      break;

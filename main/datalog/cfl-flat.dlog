@@ -11,8 +11,9 @@
 .include "H.dom"
 .include "F.dom"
 .include "I.dom"
+.include "T.dom"
 
-.bddvarorder M0_C0xC1_V0xV1_U0xU1_H0xF0_I0
+.bddvarorder M0_C0xC1_V0xV1_T0_U0xU1_H0xF0_I0
 
 # INPUT RELATIONS =============================================================
 
@@ -24,7 +25,8 @@ CH(o:C,h:H) input
 CI(c:C,i:I) input
 CC(c:C,d:C) input
 
-Alloc(v:V,h:H) input
+Alloc(v:V,h:H)    input
+HTFilter(h:H,t:T) input
 
 Load(v:V,b:V,f:F)      input
 Store(b:V,f:F,v:V)     input
@@ -38,6 +40,7 @@ CV(c:C,v:V)      output
 CU(c:C,u:U)      output
 
 AllocCtxt(c:C,v:V,o:C) output
+OTFilter(o:C,t:T)      output
 
 ArrLoad(v:V,b:V)      output # v = b[*]
 ArrStore(b:V,v:V)     output # b[*] = v
@@ -51,6 +54,7 @@ CV(c,v)    :- MV(m,v), CM(c,m).
 CU(c,u)    :- MU(m,u), CM(c,m).
 
 AllocCtxt(c,v,o) :- Alloc(v,h), CV(c,v), CC(c,o), CH(o,h).
+OTFilter(o,t)    :- CH(o,h), HTFilter(h,t).
 
 ArrLoad(v,b)      :- Load(v,b,0).
 ArrStore(b,v)     :- Store(b,0,v).

@@ -1,1 +1,2 @@
-@DUMP:typeFilter(%V,%O):o%O v%V@
+@DUMP:OTFilter(%O,%T):o%O t%T@
+@DUMP:VT(%V,%T):t%T v%V@
