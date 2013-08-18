@@ -101,6 +101,8 @@
     <!-- Locate input files. -->
     <property name="stamp.solvergen.analysis.cfg"
 	      location="${stamp.dir}/solvergen/analyses/${stamp.solvergen.analysis}.cfg"/>
+    <property name="stamp.solvergen.analysis.patch"
+	      location="${stamp.dir}/solvergen/analyses/${stamp.solvergen.analysis}.patch"/>
     <require-file file="${stamp.solvergen.analysis.cfg}"/>
 
     <!-- Produce CFL Solver code from the input grammar. -->
@@ -122,6 +124,16 @@
     <require-file file="${stamp.solvergen.analysis.cpp}"/>
     <require-file file="${stamp.solvergen.terms.listfile}"/>
     <require-file file="${stamp.solvergen.rels.listfile}"/>
+
+    <!-- Patch the generated code, if a patch file exists. -->
+    <if>
+      <available file="${stamp.solvergen.analysis.patch}"/>
+      <then>
+	<patch patchfile="${stamp.solvergen.analysis.patch}"
+	       originalfile="${stamp.solvergen.analysis.cpp}"
+	       failonerror="true"/>
+      </then>
+    </if>
 
     <!-- Compile and link the analysis code with the CFL Solver engine. -->
     <exec executable="g++" dir="${stamp.out.dir}"
