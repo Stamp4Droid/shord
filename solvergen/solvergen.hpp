@@ -475,14 +475,29 @@ typedef struct {
  * @{
  */
 
-/** Report an app-specific error with a formatted message, then exit. */
-#define APP_ERR(...) report_error(true, false, __VA_ARGS__)
-/** Report an app-specific error with a formatted message. */
-#define APP_WARN(...) report_error(false, false, __VA_ARGS__)
-/** Report a system error with a formatted message, then exit. */
-#define SYS_ERR(...) report_error(true, true, __VA_ARGS__)
-/** Report a system error with a formatted message. */
-#define SYS_WARN(...) report_error(false, true, __VA_ARGS__)
+/** The severity level of a log message. */
+enum class Severity {ERROR, WARNING, INFO};
+
+/**
+ * Report an app-specific error, then exit. Accepts a variable number of
+ * string-convertible values.
+ */
+#define APP_ERR(...) report(Severity::ERROR, false, __VA_ARGS__)
+/**
+ * Report an app-specific error without exiting. Accepts a variable number of
+ * string-convertible values.
+ */
+#define APP_WARN(...) report(Severity::WARNING, false, __VA_ARGS__)
+/**
+ * Report a system error, then exit. Accepts a variable number of
+ * string-convertible values.
+ */
+#define SYS_ERR(...) report(Severity::ERROR, true, __VA_ARGS__)
+/**
+ * Report a system error without exiting. Accepts a variable number of
+ * string-convertible values.
+ */
+#define SYS_WARN(...) report(Severity::WARNING, true, __VA_ARGS__)
 
 /**
  * A numeric counter, used for keeping statistics during a solver run.
@@ -498,14 +513,14 @@ typedef unsigned long COUNTER;
 #define LOGGING_INIT() logging_init()
 
 /**
- * Log a message to @e stdout. The parameters of this macro behave like the
- * parameters of printf(). Values of @Counter%s are accessible inside
+ * Log a message to standard output. Accepts a variable number of
+ * string-convertible values. Values of @Counter%s are accessible inside
  * invocations of this macro.
  *
  * Anything inside this macro will be compiled away if logging is disabled, so
  * you shouldn't pass in any side-effecting expressions.
  */
-#define LOG(...) printf(__VA_ARGS__)
+#define LOG(...) report(Severity::INFO, false, __VA_ARGS__)
 
 /**
  * Declare a local @Counter-type variable, @a NAME, in the current block and

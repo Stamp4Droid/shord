@@ -1,8 +1,10 @@
 #include <assert.h>
 #include <errno.h>
 #include <fstream>
+#include <iomanip>
+#include <iostream>
 #include <list>
-#include <locale.h>
+#include <locale>
 #include <queue>
 #include <set>
 #include <signal.h>
@@ -55,20 +57,59 @@ DECL_COUNTER(iteration, 0);
 /* MEMORY & ERROR MANAGEMENT =============================================== */
 
 /**
- * Underlying implementation of error-reporting macros.
+ * Underlying implementation of logging and error-reporting macros (base case).
  */
-void report_error(bool fatal, bool system_error, const char *fmt, ...) {
-    int saved_errno = errno;
-    fflush(stdout);
-    va_list argp;
-    va_start(argp, fmt);
-    vfprintf(stderr, fmt, argp);
-    va_end(argp);
-    if (system_error) {
-	fprintf(stderr, "Reason: %s\n", strerror(saved_errno));
+void report_impl(Severity lvl, int error_no) {
+    switch (lvl) {
+    case Severity::ERROR:
+    case Severity::WARNING:
+	std::cerr << std::endl;
+	if (error_no != 0) {
+	    std::cerr << "Reason: " << strerror(error_no) << std::endl;
+	}
+	if (lvl == Severity::ERROR) {
+	    exit(EXIT_FAILURE);
+	}
+	break;
+    case Severity::INFO:
+	std::cout << std::endl;
+	break;
     }
-    if (fatal) {
-	exit(EXIT_FAILURE);
+}
+
+/**
+ * Underlying implementation of logging and error-reporting macros (recursive
+ * case).
+ */
+template<typename First, typename... Rest>
+void report_impl(Severity lvl, int error_no, First first, Rest... rest) {
+    switch (lvl) {
+    case Severity::ERROR:
+    case Severity::WARNING:
+	std::cerr << first;
+	break;
+    case Severity::INFO:
+	std::cout << first;
+	break;
+    }
+    report(lvl, error_no, rest...);
+}
+
+/**
+ * Underlying implementation of logging and error-reporting macros.
+ */
+template<typename... ArgTypes>
+void report(Severity lvl, bool is_system, ArgTypes... args) {
+    int saved_errno = errno;
+    switch (lvl) {
+    case Severity::ERROR:
+    case Severity::WARNING:
+	std::cout.flush();
+	report_impl(lvl, is_system ? saved_errno : 0, args...);
+	break;
+    case Severity::INFO:
+	report_impl(lvl, 0, args...);
+	break;
     }
 }
 
@@ -81,7 +122,7 @@ void mem_manager_init() {
     rlp.rlim_cur = MAX_MEMORY;
     rlp.rlim_max = MAX_MEMORY;
     if (setrlimit(RLIMIT_AS, &rlp) != 0) {
-	SYS_ERR("Unable to set memory limit\n");
+	SYS_ERR("Unable to set memory limit");
     }
 }
 
@@ -91,7 +132,7 @@ void mem_manager_init() {
 void *strict_alloc(size_t num_bytes) {
     void *ptr;
     if ((ptr = malloc(num_bytes)) == NULL) {
-	SYS_ERR("Out of memory\n");
+	SYS_ERR("Out of memory");
     }
     return ptr;
 }
@@ -1025,7 +1066,7 @@ void parse_input_files(PARSING_MODE mode) {
 		 EDGE_SET_FORMAT);
 	FILE *f = fopen(fname, "r");
 	if (f == NULL) {
-	    SYS_ERR("Can't open input file: %s\n", fname);
+	    SYS_ERR("Can't open input file: ", fname);
 	}
 	while (true) {
 	    char src_buf[256], tgt_buf[256], idx_buf[32];
@@ -1039,11 +1080,11 @@ void parse_input_files(PARSING_MODE mode) {
 	    }
 	    if (errno != 0) {
 		fclose(f);
-		SYS_ERR("Error while parsing file: %s\n", fname);
+		SYS_ERR("Error while parsing file: ", fname);
 	    }
 	    if (num_scanned != exp_num_scanned && num_scanned != EOF) {
 		fclose(f);
-		APP_ERR("Error while parsing file: %s\n", fname);
+		APP_ERR("Error while parsing file: ", fname);
 	    }
 	    if (num_scanned == EOF) {
 		fclose(f);
@@ -1062,7 +1103,7 @@ void parse_input_files(PARSING_MODE mode) {
 		    INDEX index = index_parse(idx_buf);
 		    if (index == INDEX_NONE) {
 			fclose(f);
-			APP_ERR("Invalid index: '%s'\n", idx_buf);
+			APP_ERR("Invalid index: ", idx_buf);
 		    }
 		    add_edge(src_node, tgt_node, k, index,
 			     NULL, false, NULL, false);
@@ -1091,22 +1132,22 @@ void parse_rels() {
 	const char *fname = ss.str().c_str();
 	std::ifstream fin(fname);
 	if (!fin) {
-	    SYS_ERR("Can't open input file: %s\n", fname);
+	    SYS_ERR("Can't open input file: ", fname);
 	}
 	std::string line;
 	while (std::getline(fin, line)) {
 	    std::istringstream iss(line);
 	    INDEX val_0, val_1, val_2;
 	    if (!(iss >> val_0 >> val_1 >> val_2)) {
-		APP_ERR("Tuple too short or parsing error: %s\n", fname);
+		APP_ERR("Tuple too short or parsing error: ", fname);
 	    }
 	    if (!iss.eof()) {
-		APP_ERR("Tuple too long or trailing whitespace: %s\n", fname);
+		APP_ERR("Tuple too long or trailing whitespace: ", fname);
 	    }
 	    rel_record(r, val_0, val_1, val_2);
 	}
 	if (!fin.eof()) {
-	    SYS_ERR("Error while parsing file: %s\n", fname);
+	    SYS_ERR("Error while parsing file: ", fname);
 	}
     }
 }
@@ -1133,7 +1174,7 @@ void print_results() {
 		 EDGE_SET_FORMAT);
 	FILE *f = fopen(fname, "w");
 	if (f == NULL) {
-	    SYS_ERR("Can't open output file: %s\n", fname);
+	    SYS_ERR("Can't open output file: ", fname);
 	}
 	for (NODE_REF n = 0; n < num_nodes(); n++) {
 	    const char *src_name = node2name(n);
@@ -1162,7 +1203,7 @@ void print_results() {
     snprintf(fname, sizeof(fname), "%s/%s", OUTPUT_DIR, NODE_LISTING);
     FILE *f = fopen(fname, "w");
     if (f == NULL) {
-	SYS_ERR("Can't open output file: %s\n", fname);
+	SYS_ERR("Can't open output file: ", fname);
     }
     for (NODE_REF n = 0; n < num_nodes(); n++) {
 	fprintf(f, "%s\n", node2name(n));
@@ -1645,7 +1686,7 @@ void print_paths_for_kind(EDGE_KIND k, unsigned int num_paths) {
 	     PATHS_FORMAT);
     FILE *f = fopen(fname, "w");
     if (f == NULL) {
-	SYS_ERR("Can't open output file: %s\n", fname);
+	SYS_ERR("Can't open output file: ", fname);
     }
     fprintf(f, "<paths>\n");
 
@@ -1698,7 +1739,8 @@ void print_paths() {
  * Underlying implementation of @ref LOGGING_INIT.
  */
 void logging_init() {
-    setlocale(LC_NUMERIC, "");
+    // This should print large numbers according to the user's default locale.
+    std::cout.imbue(std::locale(""));
 }
 
 /**
@@ -1733,25 +1775,27 @@ void print_edge_counts(bool terminal) {
 	    }
 	}
 	if (parametric) {
-	    LOG("%15s: %'12lu edges, %'12lu indices\n", kind2symbol(k),
-		edge_count, index_count);
+	    LOG(std::setw(15), kind2symbol(k), ": ",
+		std::setw(12), edge_count, " edges",
+		std::setw(12), index_count, " indices");
 	} else {
-	    LOG("%15s: %'12lu edges\n", kind2symbol(k), edge_count);
+	    LOG(std::setw(15), kind2symbol(k), ": ",
+		std::setw(12), edge_count, " edges");
 	}
     }
-    LOG("%'lu edges in total\n", total_edge_count);
-    LOG("%'lu indices in total\n", total_index_count);
+    LOG("Total edges: ", total_edge_count);
+    LOG("Total indices: ", total_index_count);
 }
 
 /**
  * Underlying implementation of @ref PRINT_STATS.
  */
 void print_stats() {
-    LOG("Terminals:\n");
+    LOG("Terminals:");
     print_edge_counts(true);
-    LOG("Non-terminals:\n");
+    LOG("Non-terminals:");
     print_edge_counts(false);
-    LOG("Memory usage: %'lu bytes\n", allocated_memory());
+    LOG("Memory usage: ", allocated_memory(), " bytes");
 }
 
 /**
@@ -1778,7 +1822,7 @@ pid_t profiler_pid;
  * Underlying implementation of @ref START_PROFILER.
  */
 void start_profiler() {
-    LOG("Starting profiler\n");
+    LOG("Starting profiler");
     char pid_arg[10];
     /* TODO: PID arg buffer may be too small. */
     snprintf(pid_arg, sizeof(pid_arg), "%u", getpid());
@@ -1788,7 +1832,7 @@ void start_profiler() {
 	   profiler has had enough time to finish initialization. */
 	execlp("perf", "perf", "stat", "-p", pid_arg, (char *) NULL);
 	/* Will only reach here if exec fails. */
-	SYS_WARN("Profiler spawn failed\n");
+	SYS_WARN("Profiler spawn failed");
     }
 }
 
@@ -1796,7 +1840,7 @@ void start_profiler() {
  * Underlying implementation of @ref STOP_PROFILER.
  */
 void stop_profiler() {
-    LOG("Stopping profiler\n");
+    LOG("Stopping profiler");
     kill(profiler_pid, SIGINT);
     waitpid(profiler_pid, NULL, 0);
 }
@@ -1848,12 +1892,12 @@ int main() {
     nodes_init();
     parse_input_files(RECORD_NODES);
     finalize_nodes();
-    LOG("Nodes: %'u\n", num_nodes());
+    LOG("Nodes: ", num_nodes());
     worklist_init();
     parse_input_files(RECORD_EDGES);
     rels_init();
     parse_rels();
-    LOG("Loading completed in %'lu ms\n", CURRENT_TIME() - loading_start);
+    LOG("Loading completed in ", CURRENT_TIME() - loading_start, " ms");
 
     START_PROFILER();
     DECL_COUNTER(solving_start, CURRENT_TIME());
@@ -1871,13 +1915,13 @@ int main() {
 	Edge *base = worklist_pop();
 	main_loop(base);
     }
-    LOG("Fixpoint reached after %'lu iterations\n", iteration);
-    LOG("Solving completed in %'lu ms\n", CURRENT_TIME() - solving_start);
+    LOG("Fixpoint reached after ", iteration, " iterations");
+    LOG("Solving completed in ", CURRENT_TIME() - solving_start, " ms");
     STOP_PROFILER();
 
     DECL_COUNTER(printing_start, CURRENT_TIME());
     PRINT_STATS();
     print_results();
     print_paths();
-    LOG("Printing completed in %'lu ms\n", CURRENT_TIME() - printing_start);
+    LOG("Printing completed in ", CURRENT_TIME() - printing_start, " ms");
 }
