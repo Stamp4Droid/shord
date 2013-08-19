@@ -9,6 +9,7 @@ To be able to build and run the STAMP tools, prepare your system as follows
 
 * install required packages:
     * Apache ant version >= 1.8 (package 'ant')
+    * sqlite3 version >= 3  
     * Python version V, where 2.7 <= V < 3.0 (package 'python')
     * Java JDK version 1.6 (package 'openjdk-6-jdk' or 'sun-java6-jdk')
     * g++ version 1.7 (optional, for the SolverGen backend)

@@ -122,18 +122,21 @@
 		<pathelement location="${stamp.dir}/lib/stamp.chord.jar"/>
         <pathelement location="${stamp.dir}/lib/automaton.jar"/>
     	<pathelement location="${stamp.dir}/lib/droidrecord_reader.jar"/>
+        <pathelement location="${stamp.dir}/lib/json-20090211.jar"/>
       </classpath>
     </java>
 
 	<!-- run the postprocessing python script-->
 	<exec executable="python" failonerror="true">
-	  <arg value="${stamp.dir}/scripts/testApkJar.py"/>
+	  <arg value="${stamp.dir}/scripts/buildReportDB.py"/>
 	  <arg value="-c"/>
 	  <arg value="${stamp.dir}/scripts/srcClass.xml"/>
 	  <arg value="-k"/>
 	  <arg value="${stamp.dir}/scripts/sinkClass.xml"/>
 	  <arg value="-r"/>
 	  <arg value="${stamp.out.dir}/results"/>
+	  <arg value="-o"/>
+	  <arg value="${stamp.dir}/stamp_output"/>
 	</exec>
 
   </target>

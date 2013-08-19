@@ -31,6 +31,7 @@
 		<pathelement location="lib/commons-codec-1.8.jar"/>
     	<pathelement location="lib/json-simple-1.1.1.jar"/>
     	<pathelement location="lib/droidrecord_reader.jar"/>
+        <pathelement location="lib/json-20090211.jar"/>
 		<pathelement location="${tomcat.dir}/lib/servlet-api.jar"/>
 		<pathelement location="${tomcat.dir}/lib/catalina.jar"/>
 		<pathelement location="${tomcat.dir}/lib/tomcat-coyote.jar"/>
