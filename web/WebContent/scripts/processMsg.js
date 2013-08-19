@@ -71,7 +71,7 @@ function processMessage(message){
     if(message.data == "Hello!")
     	return;
 
-    //alert(message.data);
+    alert(message.data);
 
     // Parse message 
     var tokens = message.data.split("::");
