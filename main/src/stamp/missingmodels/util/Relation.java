@@ -4,7 +4,6 @@ import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.util.StubLookup.StubLookupKey;
 import stamp.missingmodels.util.StubLookup.StubLookupValue;
-import stamp.missingmodels.util.StubLookup.StubModelSet;
 import stamp.missingmodels.util.jcflsolver.Graph;
 
 /*

@@ -5,15 +5,15 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import shord.missingmodels.analysis.JCFLSolverRunner;
+import shord.missingmodels.analysis.JCFLSolverRunner.JCFLSolverStubs;
 import shord.project.analyses.JavaAnalysis;
 import stamp.missingmodels.grammars.E12;
-import stamp.missingmodels.util.ConversionUtils;
 import stamp.missingmodels.util.FileManager;
 import stamp.missingmodels.util.FileManager.FileType;
 import stamp.missingmodels.util.FileManager.StampOutputFile;
-import stamp.missingmodels.util.Relation;
 import stamp.missingmodels.util.StubLookup;
-import stamp.missingmodels.util.StubLookup.StubModelSet;
+import stamp.missingmodels.util.StubModelSet;
 import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.missingmodels.util.viz.jcflsolver.JCFLRelationFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.AllStubInputsFile;
@@ -27,33 +27,17 @@ import chord.project.Chord;
  */
 
 @Chord(name = "jcflsolver")
-public class JCFLSolverAnalysis extends JavaAnalysis {
-	/*
-	 * The following code is for running the JCFLSolver analysis.
-	 */
-	private void fillTerminalEdges(Graph g, StubLookup stubLookup, StubModelSet stubModelSet) {
-		for(int k=0; k<g.numKinds(); k++) {
-			if(g.isTerminal(k)) {
-				if(ConversionUtils.getChordRelationsFor(g.kindToSymbol(k)).isEmpty()) {
-					System.out.println("No edges found for relation " + g.kindToSymbol(k) + "...");
-				}
-				for(Relation rel : ConversionUtils.getChordRelationsFor(g.kindToSymbol(k))) {
-					rel.addEdges(g.kindToSymbol(k), g, stubLookup, stubModelSet);
-				}
-			}
-		}
-	}
-	
-	private static Graph g = new E12();
-	private static StubLookup s = new StubLookup();;;
-	private static StubModelSet m;
+public class JCFLSolverAnalysis extends JavaAnalysis {	
+	private static JCFLSolverRunner j;
 	
 	public static Graph g() {
-	    return g;
+		if(j == null) return null;
+	    return j.g();
 	}
 	
 	public static StubLookup s() {
-	    return s;
+		if(j == null) return null;
+	    return j.s();
 	}
 
 	public static void printRelCounts(Graph g) {
@@ -78,32 +62,40 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 			throw new RuntimeException("Failed to set up the file manager!");
 		}
 		
-		// STEP 1: Set up the graph, stub lookup, and load the stub model set if applicable.
+		// STEP 1: Set up the graph and load the stub model set if applicable.
+		StubModelSet m = new StubModelSet();
 		try {
-			m = manager.read(new StubModelSetInputFile());
+			//m = manager.read(new StubModelSetInputFile("StubModelSet012.txt"));
+			//m = manager.read(new StubModelSetInputFile("StubModelSet018.txt"));
+			//m = manager.read(new StubModelSetInputFile("StubModelSet0ac.txt"));
+			//m = manager.read(new StubModelSetInputFile("StubModelSet101.txt"));
+			//m = manager.read(new StubModelSetInputFile("StubModelSet197.txt"));
+			//m = manager.read(new StubModelSetInputFile("StubModelSet1c2.txt"));
+			//m = manager.read(new StubModelSetInputFile("StubModelSet24f.txt"));
+			//m = manager.read(new StubModelSetInputFile("StubModelSet2ef.txt"));
+			m = manager.read(new StubModelSetInputFile("StubModelSet.txt"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			m = new StubModelSet();
 		}
 		
-		// STEP 2: Fill the edges into the graph and run the algorithm.
-		fillTerminalEdges(g, s, m);
-		g.algo.process();
+		//j = new JCFLSolverSingle(new E12(), m);
+		j = new JCFLSolverStubs(E12.class, m);
 
 		// STEP 3: Output some results
-		printRelCounts(g);
+		printRelCounts(j.g());
 		
 		Set<StampOutputFile> files = new HashSet<StampOutputFile>();
-		for(int i=0; i<g.numKinds(); i++) {
-			if(g.isTerminal(i)) {
-				files.add(new JCFLRelationFile(FileType.OUTPUT, g, g.kindToSymbol(i), false));
+		for(int i=0; i<j.g().numKinds(); i++) {
+			if(j.g().isTerminal(i)) {
+				files.add(new JCFLRelationFile(FileType.OUTPUT, j.g(), j.g().kindToSymbol(i), false));
 			}
 		}
-		files.add(new JCFLRelationFile(FileType.OUTPUT, g, "Src2Sink", true));
-		files.add(new AllStubInputsFile(g, s));
-		files.add(new StubInputsFile(g, s));
-		files.add(new StubModelSetOutputFile(new StubModelSet(g, s)));
-		//files.addAll(FlowWriter.viz(g, s));
+		files.add(new JCFLRelationFile(FileType.OUTPUT, j.g(), "Src2Sink", true));
+		files.add(new AllStubInputsFile(j.g(), j.s()));
+		files.add(new StubInputsFile(j.g(), j.s()));
+		files.add(new StubModelSetOutputFile(new StubModelSet(j.g(), j.s())));
+		//files.addAll(FlowWriter.viz(j.g, j.s));
 		try {
 			for(StampOutputFile file : files) {
 				manager.write(file);

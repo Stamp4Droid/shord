@@ -15,8 +15,8 @@ import stamp.missingmodels.util.FileManager.StampOutputFile;
 import stamp.missingmodels.util.StubLookup;
 import stamp.missingmodels.util.StubLookup.StubLookupKey;
 import stamp.missingmodels.util.StubLookup.StubLookupValue;
-import stamp.missingmodels.util.StubLookup.StubModel;
-import stamp.missingmodels.util.StubLookup.StubModelSet;
+import stamp.missingmodels.util.StubModelSet;
+import stamp.missingmodels.util.StubModelSet.StubModel;
 import stamp.missingmodels.util.Util.Counter;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.Util.Pair;
@@ -313,9 +313,15 @@ public class JCFLSolverFiles {
 	 * Reads in a stub model set.
 	 */
 	public static class StubModelSetInputFile implements StampInputFile<StubModelSet> {
+		private final String filename;
+		
+		public StubModelSetInputFile(String filename) {
+			this.filename = filename;
+		}
+		
 		@Override
 		public String getName() {
-			return "StubModelSet.txt";
+			return this.filename;
 		}
 
 		@Override
