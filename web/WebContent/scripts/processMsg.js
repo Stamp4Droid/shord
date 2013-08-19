@@ -65,6 +65,55 @@ function processWarnings(message){
     }
 }
 
+function processFlow(flow) {
+    alert("HERE");
+    alert(flow.flowClass);
+    alert(flow.srcName);
+    alert(flow.sinkName);
+
+    //for (flow in flows) {
+        newentry = '<tr><td>"+flow.srcLabel+"</td><td><i class="icon-arrow-right"></i></td><td>"+flow.sinkLabel+"</td><td><span class="label label-important">"+flow.modifier+"</span></td> \
+                    <td><i class="icon-search"></i></td> \
+                    <td><i class="icon-ok"></i></td> \
+                    <td><i class="icon-ban-circle"></i></td> \
+                    </tr> ';
+
+        flowC = flow.flowClass;
+
+        if (flowC === "privacy") {
+            $("#privacy-rpt").append(newentry);
+
+        } else if (flowC === "integrity") {
+            $("integrity-rpt").append(newentry);
+
+        } else if (flowC === "other") {
+            // handle other
+
+        } else if (flowC === "") {
+            // handle null 
+
+        } else if (flowC === "location") {
+
+            //what is location anyway?? Placeholder
+            $("#privacy-rpt").append(newentry);
+
+        } else {
+            // handle something weird 
+            console.log("unknown flow class" + flowC);
+        }
+
+        /*  
+            // other reports in overview.html that may need adding
+            } else if (flowC === "lowrisk") {
+
+            } else if (flowC === "warn") {
+
+            } else if (flowC === "coverage") {
+
+            }   
+        */  
+    //}   
+}   
 
 // Process messages from server
 function processMessage(message){
@@ -73,6 +122,8 @@ function processMessage(message){
 
     alert(message.data);
 
+    console.log(message.data);
+
     // Parse message 
     var tokens = message.data.split("::");
     var action = tokens[0];
@@ -80,6 +131,9 @@ function processMessage(message){
     var apkName = tkns[0] + ".apk";
     var apkId = tokens[1];
     var rowElem, labElem, flowXML;
+
+    alert(action);
+
 
     if(action == "Flow") {
         flowXML = tokens[2];
@@ -99,14 +153,21 @@ function processMessage(message){
     // Process based on message type
     if(action == "BEGIN")
         labElem.addClass('label-info').text("Analyzing");
-    else if(action == "END")
+    else if(action == "END") {
         labElem.removeClass('label-info').addClass('label-success').text("Finished");
-    else if(action == "ERROR")
+        alert("WHADUUP");
+        // is it JSON? probably need action flag for this; we lost the flow one
+        flow = $.parseJSON(message.data);
+        processFlow(flow);
+    } else if(action == "ERROR")
         labElem.removeClass('label-info').addClass('label-important').text("Error");
-    else if(action == "Flow"){
-	processFlows(flowXML,apkName);
-    } else if(action == "WARN") {
-	processWarnings(message);
+    else if(action == "WARN") 
+        processWarnings(message);
+    else if (action === "Flow") {
+        alert("WHADUUP");
+        // is it JSON? probably need action flag for this; we lost the flow one
+        flow = $.parseJSON(flowXML);
+        processFlow(flow);
     }
 }
 

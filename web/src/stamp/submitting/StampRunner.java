@@ -229,7 +229,7 @@ public class StampRunner extends Thread
 	    /* Send classified flow data */
 	    JSONObject flowData = getFlowResults(stampDir + "/stamp_output/app-reports.db", apkName);
 	    try{
-	    	updater.update(flowData.toString(2));
+	    	updater.update("Flow::"+apkId+"::"+flowData.toString(2));
 	    }catch(IOException ioe){
 	    	throw new Error(ioe);
 	    }catch(JSONException e) {
