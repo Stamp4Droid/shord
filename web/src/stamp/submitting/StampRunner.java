@@ -12,6 +12,15 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.util.HashMap;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+// import org.json.JSONObject;
+// import org.json.JSONException;
+
 public class StampRunner extends Thread
 {
 	private final String stampDir;
@@ -86,6 +95,55 @@ public class StampRunner extends Thread
 	return warnClassMap;
     }
 
+    /*
+      Read flow database and convert results into JSON Object
+     */
+
+    // private JSONObject getFlowResults(String db, String apkName) {
+    // 	Class.forName("org.sqlite.JDBC");
+
+    // 	JSONObject json = new JSONObject();
+
+    // 	Connection connection = null;
+    // 	try {
+    // 	    // create a database connection
+    // 	    connection = DriverManager.getConnection("jdbc:sqlite:" + db);
+    // 	    Statement statement = connection.createStatement();
+    // 	    statement.setQueryTimeout(30);  // set timeout to 30 sec.
+
+    // 	    /* XXX should be prepared statement */
+    // 	    ResultSet rs = statement.executeQuery("select * from flows where appName =\"" + apkName + "\"");
+
+    // 	    while(rs.next()) {
+
+    // 		try {
+    // 		    json.put("resultsType","flow");
+    // 		    json.put("flowKey", rs.getInt("flowKey"));
+    // 		    json.put("appName", rs.getString("appName"));
+    // 		    json.put("sourceLabel", rs.getString("sourceLabel"));
+    // 		    json.put("sinkLabel", rs.getString("sinkLabel"));
+    // 		    json.put("flowClass", rs.getString("flowClass"));
+    // 		    json.put("analysisCounter", rs.getString("analysisCounter"));
+    // 		    json.put("approvedStatus", rs.getString("approvedStatus"));
+
+    // 		} catch (JSONException e) {
+    // 		    System.err.println(e.getMessage());
+    // 		}
+    // 	    }
+    // 	} catch(SQLException e) {
+    // 	    System.err.println(e.getMessage());
+    // 	} finally {
+    // 	    try {
+    // 		if(connection != null)
+    // 		    connection.close();
+    // 	    } catch(SQLException e) {
+    // 		// connection close failed.
+    // 		System.err.println(e);
+    // 	    }
+    // 	}
+    // 	return json;
+    // }
+
     /* 
        Push flows and warnings to client
 
@@ -101,7 +159,7 @@ public class StampRunner extends Thread
 	if(updater != null) {
 	    String apkDir = stampDir+"/stamp_output/"+apkName;
 	    String resultsPath = apkDir + "/results/";
-	    File cFlowsFile = new File(resultsPath + "classifiedFlows.xml");
+	    //File cFlowsFile = new File(resultsPath + "classifiedFlows.xml");
 	    File logFile = new File(apkDir+"/chord_output/log.txt");
 
 	    HashMap<String,String> warnClassMap = getWarningClassMap(stampDir);
@@ -154,39 +212,16 @@ public class StampRunner extends Thread
 		    throw new Error(ioe);
 		}
 	    }
-	    
+
 	    /* Send classified flow data */
-	    if (cFlowsFile.exists()){
-		try {
-		    StringBuilder fileContents = new StringBuilder((int)cFlowsFile.length());
-		    
-		    Scanner scanner = new Scanner(cFlowsFile);
-		    String lineSeparator = System.getProperty("line.separator");
-		
-		    try {
-			while(scanner.hasNextLine()) {
-			    fileContents.append(scanner.nextLine() + lineSeparator);
-			}
-		    } finally {
-			scanner.close();
-		    }
-		    
-		    try{
-			updater.update("Flow::"+apkId+"::"+fileContents.toString());
-		    }catch(IOException ioe){
-			throw new Error(ioe);
-		    }
-		}catch(FileNotFoundException e) {
-		    throw new Error(e);
-		}
-	    } else {
-		try{
-		    updater.update("NoFlows::"+apkId);
-		}catch(IOException ioe){
-		    throw new Error(ioe);
-		}
-	    }
+	    // JSONObject flowData = getFlowResults(stampDir + "/stamp_output/app-reports.db", apkName);
+	    // try{
+	    // 	updater.update(flowData.toString(2));
+	    // }catch(IOException ioe){
+	    // 	throw new Error(ioe);
+	    // }
 	}
+
 	return;
     }
 	
