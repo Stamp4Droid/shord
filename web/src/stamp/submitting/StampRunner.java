@@ -18,8 +18,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-// import org.json.JSONObject;
-// import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 public class StampRunner extends Thread
 {
@@ -99,50 +99,63 @@ public class StampRunner extends Thread
       Read flow database and convert results into JSON Object
      */
 
-    // private JSONObject getFlowResults(String db, String apkName) {
-    // 	Class.forName("org.sqlite.JDBC");
+    private JSONObject getFlowResults(String db, String apkName) {
 
-    // 	JSONObject json = new JSONObject();
+	System.out.println("In getFlowResults");
 
-    // 	Connection connection = null;
-    // 	try {
-    // 	    // create a database connection
-    // 	    connection = DriverManager.getConnection("jdbc:sqlite:" + db);
-    // 	    Statement statement = connection.createStatement();
-    // 	    statement.setQueryTimeout(30);  // set timeout to 30 sec.
+	try {
+	    Class.forName("org.sqlite.JDBC");
 
-    // 	    /* XXX should be prepared statement */
-    // 	    ResultSet rs = statement.executeQuery("select * from flows where appName =\"" + apkName + "\"");
+	} catch (ClassNotFoundException e) {
+	    System.err.println(e);
+	}
 
-    // 	    while(rs.next()) {
+    	JSONObject json = new JSONObject();
 
-    // 		try {
-    // 		    json.put("resultsType","flow");
-    // 		    json.put("flowKey", rs.getInt("flowKey"));
-    // 		    json.put("appName", rs.getString("appName"));
-    // 		    json.put("sourceLabel", rs.getString("sourceLabel"));
-    // 		    json.put("sinkLabel", rs.getString("sinkLabel"));
-    // 		    json.put("flowClass", rs.getString("flowClass"));
-    // 		    json.put("analysisCounter", rs.getString("analysisCounter"));
-    // 		    json.put("approvedStatus", rs.getString("approvedStatus"));
+    	Connection connection = null;
+    	try {
+    	    // create a database connection
+    	    connection = DriverManager.getConnection("jdbc:sqlite:" + db);
+    	    Statement statement = connection.createStatement();
+    	    statement.setQueryTimeout(30);  // set timeout to 30 sec.
 
-    // 		} catch (JSONException e) {
-    // 		    System.err.println(e.getMessage());
-    // 		}
-    // 	    }
-    // 	} catch(SQLException e) {
-    // 	    System.err.println(e.getMessage());
-    // 	} finally {
-    // 	    try {
-    // 		if(connection != null)
-    // 		    connection.close();
-    // 	    } catch(SQLException e) {
-    // 		// connection close failed.
-    // 		System.err.println(e);
-    // 	    }
-    // 	}
-    // 	return json;
-    // }
+
+	    apkName = apkName.replaceAll(".apk", "");
+
+    	    /* XXX should be prepared statement */
+    	    ResultSet rs = statement.executeQuery("select * from flows where appName =\"" + apkName + "\"");
+
+
+
+    	    while(rs.next()) {
+
+    		try {
+    		    json.put("resultsType","flow");
+    		    json.put("flowKey", rs.getInt("flowKey"));
+    		    json.put("appName", rs.getString("appName"));
+    		    json.put("sourceLabel", rs.getString("sourceLabel"));
+    		    json.put("sinkLabel", rs.getString("sinkLabel"));
+    		    json.put("flowClass", rs.getString("flowClass"));
+    		    json.put("analysisCounter", rs.getString("analysisCounter"));
+    		    json.put("approvedStatus", rs.getString("approvedStatus"));
+
+    		} catch (JSONException e) {
+    		    System.err.println(e.getMessage());
+    		}
+    	    }
+    	} catch(SQLException e) {
+    	    System.err.println(e.getMessage());
+    	} finally {
+    	    try {
+    		if(connection != null)
+    		    connection.close();
+    	    } catch(SQLException e) {
+    		// connection close failed.
+    		System.err.println(e);
+    	    }
+    	}
+    	return json;
+    }
 
     /* 
        Push flows and warnings to client
@@ -214,12 +227,14 @@ public class StampRunner extends Thread
 	    }
 
 	    /* Send classified flow data */
-	    // JSONObject flowData = getFlowResults(stampDir + "/stamp_output/app-reports.db", apkName);
-	    // try{
-	    // 	updater.update(flowData.toString(2));
-	    // }catch(IOException ioe){
-	    // 	throw new Error(ioe);
-	    // }
+	    JSONObject flowData = getFlowResults(stampDir + "/stamp_output/app-reports.db", apkName);
+	    try{
+	    	updater.update(flowData.toString(2));
+	    }catch(IOException ioe){
+	    	throw new Error(ioe);
+	    }catch(JSONException e) {
+	    	throw new Error(e);
+	    }
 	}
 
 	return;
