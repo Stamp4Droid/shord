@@ -65,8 +65,9 @@ function processWarnings(message){
     }
 }
 
-function processFlow(flow) {
-    alert("begin processFlow");
+// Process JSON flows
+function processFlowJSON(flow) {
+    console.log("begin processFlow");
 
     $.each(flow, function(i, item) {
 
@@ -78,9 +79,9 @@ function processFlow(flow) {
 
         flowC = item.flowClass;
 
-	if (flowC === "ondevice") {
-            $("#lowrisk-rpt").append(newentry);
-	} else if (flowC !== "ondevice") {
+        if (flowC === "ondevice") {
+                $("#lowrisk-rpt").append(newentry);
+        } else if (flowC !== "ondevice") {
             $("#privacy-rpt").append(newentry);
             $("#conf-rpt").append(newentry);
 
@@ -89,20 +90,16 @@ function processFlow(flow) {
 
         } else if (flowC === "other") {
             // handle other
-
-        } else if (flowC === "") {
+        } else if (flowC === "NoClass") {
+        } else if (flowC === "NoClass" || flowC === "") {
             // handle null 
-
         } else if (flowC === "location") {
-
             //what is location anyway?? Placeholder
             $("#privacy-rpt").append(newentry);
-
         } else {
             // handle something weird 
             console.log("unknown flow class" + flowC);
         }
-
     });
 
         /*  
@@ -118,12 +115,17 @@ function processFlow(flow) {
     //}   
 }   
 
+
 // Process messages from server
 function processMessage(message){
+
+    function newAccordionGroup(apkName) {
+        return "<div class=\"accordion-group\"><div class=\"accordion-heading\"><a class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#accordionFlows\" href=\"#collapse" + apkName + "\">" + apkName + " Flows</a></div><div id=\"collapse" + apkName + "\" class=\"accordion-body collapse in\"><div class=\"accordion-inner\"><table class=\"table table-condensed table-hover \" id=\"flows" + apkName + "\"></table></div></div></div>";
+    }
+
+
     if(message.data == "Hello!")
     	return;
-
-    alert(message.data);
 
     console.log(message.data);
 
@@ -133,20 +135,16 @@ function processMessage(message){
     var tkns = tokens[1].split('.apk');
     var apkName = tkns[0] + ".apk";
     var apkId = tokens[1];
-    var rowElem, labElem, flowXML;
-
-    alert(action);
-
+    var rowElem, labElem, flowJSON;
 
     if(action == "Flow") {
-        flowXML = tokens[2];
+        flowJSON = tokens[2];
     } else {
-        if (action != "WARN") {
-            if (action == "BEGIN") {
-                $('#accordionFlows').append("<div class=\"accordion-group\"><div class=\"accordion-heading\"><a class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#accordionFlows\" href=\"#collapse" + apkName + "\">" + apkName + " Flows</a></div><div id=\"collapse" + apkName + "\" class=\"accordion-body collapse in\"><div class=\"accordion-inner\"><table class=\"table table-condensed table-hover \" id=\"flows" + apkName + "\"></table></div></div></div>");
 
-		$('#warnings').append("<tr><td colspan=\"2\"><h5>" + apkName + " Warnings</h5></td></tr>");
-            }
+        // Create new apk status box
+        if (action == "BEGIN") {
+            $('#accordionFlows').append(newAccordionGroup(apkName));
+            $('#warnings').append("<tr><td colspan=\"2\"><h5>" + apkName + " Warnings</h5></td></tr>");
         }
 
         rowElem = apkIdToRow[apkId];
@@ -154,23 +152,18 @@ function processMessage(message){
     }
 
     // Process based on message type
-    if(action == "BEGIN")
+    if(action === "BEGIN")
         labElem.addClass('label-info').text("Analyzing");
-    else if(action == "END") {
+    else if(action === "END") {
         labElem.removeClass('label-info').addClass('label-success').text("Finished");
-        alert("WHADUUP");
-        // is it JSON? probably need action flag for this; we lost the flow one
-        flow = $.parseJSON(message.data);
-        processFlow(flow);
-    } else if(action == "ERROR")
+    } else if(action === "ERROR")
         labElem.removeClass('label-info').addClass('label-important').text("Error");
-    else if(action == "WARN") 
+    else if(action === "WARN") 
         processWarnings(message);
     else if (action === "Flow") {
-        alert("WHADUUP");
         // is it JSON? probably need action flag for this; we lost the flow one
-        flow = $.parseJSON(flowXML);
-        processFlow(flow);
+        flow = $.parseJSON(flowJSON);
+        processFlowJSON(flow);
     }
 }
 
