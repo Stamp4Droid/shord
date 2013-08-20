@@ -90,7 +90,6 @@ function processFlowJSON(flow) {
 
         } else if (flowC === "other") {
             // handle other
-        } else if (flowC === "NoClass") {
         } else if (flowC === "NoClass" || flowC === "") {
             // handle null 
         } else if (flowC === "location") {
@@ -137,8 +136,10 @@ function processMessage(message){
     var apkId = tokens[1];
     var rowElem, labElem, flowJSON;
 
+    // get JSON data
     if(action == "Flow") {
         flowJSON = tokens[2];
+
     } else {
 
         // Create new apk status box
@@ -151,13 +152,16 @@ function processMessage(message){
         labElem = rowElem.find('.label');
     }
 
-    // Process based on message type
+    // Process based on message type. The first three simply 
+    // adjust the analysis status box
+    // WARN and Flow are handled more specifically 
     if(action === "BEGIN")
         labElem.addClass('label-info').text("Analyzing");
     else if(action === "END") {
         labElem.removeClass('label-info').addClass('label-success').text("Finished");
     } else if(action === "ERROR")
         labElem.removeClass('label-info').addClass('label-important').text("Error");
+
     else if(action === "WARN") 
         processWarnings(message);
     else if (action === "Flow") {
