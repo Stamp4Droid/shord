@@ -18,8 +18,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
+
 
 public class StampRunner extends Thread
 {
@@ -99,7 +101,7 @@ public class StampRunner extends Thread
       Read flow database and convert results into JSON Object
      */
 
-    private JSONObject getFlowResults(String db, String apkName) {
+    private JSONArray getFlowResults(String db, String apkName) {
 
 	System.out.println("In getFlowResults");
 
@@ -110,24 +112,24 @@ public class StampRunner extends Thread
 	    System.err.println(e);
 	}
 
-    	JSONObject json = new JSONObject();
-
+	JSONArray jarr = new JSONArray();
     	Connection connection = null;
+
     	try {
     	    // create a database connection
     	    connection = DriverManager.getConnection("jdbc:sqlite:" + db);
     	    Statement statement = connection.createStatement();
     	    statement.setQueryTimeout(30);  // set timeout to 30 sec.
 
-
+	    /* XXX add better input validation and processing */
 	    apkName = apkName.replaceAll(".apk", "");
 
     	    /* XXX should be prepared statement */
     	    ResultSet rs = statement.executeQuery("select * from flows where appName =\"" + apkName + "\"");
 
-
-
     	    while(rs.next()) {
+
+		JSONObject json = new JSONObject();
 
     		try {
     		    json.put("resultsType","flow");
@@ -139,6 +141,7 @@ public class StampRunner extends Thread
     		    json.put("analysisCounter", rs.getString("analysisCounter"));
     		    json.put("approvedStatus", rs.getString("approvedStatus"));
 
+		    jarr.put(json);
     		} catch (JSONException e) {
     		    System.err.println(e.getMessage());
     		}
@@ -154,7 +157,7 @@ public class StampRunner extends Thread
     		System.err.println(e);
     	    }
     	}
-    	return json;
+    	return jarr;
     }
 
     /* 
@@ -227,7 +230,7 @@ public class StampRunner extends Thread
 	    }
 
 	    /* Send classified flow data */
-	    JSONObject flowData = getFlowResults(stampDir + "/stamp_output/app-reports.db", apkName);
+	    JSONArray flowData = getFlowResults(stampDir + "/stamp_output/app-reports.db", apkName);
 	    try{
 	    	updater.update("Flow::"+apkId+"::"+flowData.toString(2));
 	    }catch(IOException ioe){
