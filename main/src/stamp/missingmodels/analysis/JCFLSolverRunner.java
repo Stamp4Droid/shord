@@ -1,10 +1,11 @@
 package stamp.missingmodels.analysis;
 
+import stamp.missingmodels.analysis.Experiment.ProposedStubModelSet;
 import stamp.missingmodels.util.ConversionUtils;
 import stamp.missingmodels.util.Relation;
 import stamp.missingmodels.util.StubLookup;
-import stamp.missingmodels.util.StubModelSet;
 import stamp.missingmodels.util.StubLookup.StubLookupKey;
+import stamp.missingmodels.util.StubModelSet;
 import stamp.missingmodels.util.StubModelSet.StubModel;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.Util.Pair;
@@ -22,7 +23,10 @@ public abstract class JCFLSolverRunner {
 	public abstract StubModelSet m(); // input models, just for reference
 	
 	// methods for running experiments
-	public abstract StubModelSet getProposedModels();
+	public abstract ProposedStubModelSet getProposedModels(int round);
+	public ProposedStubModelSet getProposedModels() {
+		return this.getProposedModels(Experiment.ProposedStubModelSet.DEFAULT_ROUND);
+	}
 	
 	/*
 	 * Returns set of models such that if all are true, then the
@@ -61,18 +65,14 @@ public abstract class JCFLSolverRunner {
 			}
 		}
 		
-		public StubModelSet getProposedModels() {
-			return getProposedModels(Experiment.ProposedStubModelSet.DEFAULT_ROUND);
-		}
-
 		// proposals are true (1)
-		public StubModelSet getProposedModels(int round) {
-			StubModelSet proposals = new StubModelSet();
+		public ProposedStubModelSet getProposedModels(int round) {
+			ProposedStubModelSet proposals = new ProposedStubModelSet();
 			MultivalueMap<Edge,Pair<Edge,Boolean>> positiveWeightEdges = this.g.getPositiveWeightEdges("Src2Sink");
 			for(Edge edge : positiveWeightEdges.keySet()) {
 				for(Pair<Edge,Boolean> pair : positiveWeightEdges.get(edge)) {
-					EdgeData data = pair.getX().getData(this.g);					
-					proposals.put(new StubModel(this.s.get(new StubLookupKey(data.symbol, data.from, data.to))), 1);
+					EdgeData data = pair.getX().getData(this.g);
+					proposals.put(new StubModel(this.s.get(new StubLookupKey(data.symbol, data.from, data.to))), 0, 1, round);
 				}
 			}
 			return proposals;
@@ -137,8 +137,11 @@ public abstract class JCFLSolverRunner {
 		 * Proposals are false (2).
 		 * @see stamp.missingmodels.analysis.JCFLSolverRunner#getProposedModels()
 		 */
-		public StubModelSet getProposedModels() {
-			return this.allProposed;
+		public ProposedStubModelSet getProposedModels(int round) {
+			ProposedStubModelSet proposed = new ProposedStubModelSet();
+			proposed.setDefaultValue(2);
+			proposed.putAll(this.allProposed);
+			return proposed;
 		}
 
 		private void runHelper() {
@@ -156,7 +159,7 @@ public abstract class JCFLSolverRunner {
 				// add the current proposed models to all proposed and total
 				curProposed = this.j.getProposedModels();
 				total.putAllToValue(curProposed, 2);
-				this.allProposed.putAllToValue(curProposed, 2);
+				this.allProposed.putAll(curProposed);
 			} while(!curProposed.isEmpty());
 		}
 

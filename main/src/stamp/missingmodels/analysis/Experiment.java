@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import stamp.missingmodels.util.StubModelSet;
 import stamp.missingmodels.util.StubModelSet.StubModel;
@@ -14,7 +15,7 @@ public class Experiment {
 	private JCFLSolverRunner j;
 	private Class<? extends Graph> c;
 	
-	private List<StubModelSet> proposed = new ArrayList<StubModelSet>();
+	private List<ProposedStubModelSet> proposed = new ArrayList<ProposedStubModelSet>();
 	
 	/*
 	 * Returns the runner.
@@ -26,9 +27,9 @@ public class Experiment {
 	/*
 	 * Returns a list of all proposed models.
 	 */
-	public StubModelSet getAllProposedModels() {
-		StubModelSet allProposed = new StubModelSet();
-		for(StubModelSet m : this.proposed) {
+	public ProposedStubModelSet getAllProposedModels() {
+		ProposedStubModelSet allProposed = new ProposedStubModelSet();
+		for(ProposedStubModelSet m : this.proposed) {
 			allProposed.putAll(m);
 		}
 		return allProposed;
@@ -65,13 +66,14 @@ public class Experiment {
 		total.putAll(initialModels);
 		
 		// STEP 1: Iteratively run the solver and add models.
-		StubModelSet curProposed;
+		ProposedStubModelSet curProposed;
+		int round = 0;
 		do {
 			// STEP 1a: Run the analysis.
 			this.j.run(this.c, total);
 			
 			// STEP 1b: Get the proposed models
-			curProposed = this.j.getProposedModels();
+			curProposed = this.j.getProposedModels(round++);
 			
 			System.out.println(curProposed.size());
 			
@@ -127,6 +129,18 @@ public class Experiment {
 			return datum;
 		}
 		
+		public String getDataString(StubModel model) {
+			return this.toString(this.getData(model));
+		}
+		
+		public Set<Map.Entry<StubModel,T>> dataEntrySet() {
+			return this.data.entrySet();
+		}
+		
+		public void dataPutAll(Map<StubModel,T> data) {
+			this.data.putAll(data);
+		}
+		
 		@Override
 		public Integer put(StubModel key, Integer value) {
 			return this.put(key, value, this.defaultValue());
@@ -135,6 +149,19 @@ public class Experiment {
 		public Integer put(StubModel key, Integer value, T data) {
 			this.data.put(key, data);
 			return super.put(key, value);
+		}
+		
+		@Override
+		public void putAll(Map<? extends StubModel, ? extends Integer> map) {
+			super.putAll(map);
+			for(StubModel model : map.keySet()) {
+				this.data.put(model, this.defaultValue());
+			}
+		}
+
+		public void putAll(StubModelSetWithData<T> m) {
+			super.putAll(m);
+			this.dataPutAll(m.data);
 		}
 		
 		public abstract T defaultValue();
@@ -151,13 +178,19 @@ public class Experiment {
 		public static final int DEFAULT_ROUND = -1;
 		private static final long serialVersionUID = 4715908928086091234L;
 		
+		private int defaultProposedValue = 0;
+		
+		public void setDefaultValue(int defaultProposedValue) {
+			this.defaultProposedValue = defaultProposedValue;
+		}
+		
 		public Integer put(StubModel key, Integer value, int proposed, int round) {
 			return super.put(key, value, new Pair<Integer,Integer>(proposed, round));
 		}
 
 		@Override
 		public Pair<Integer,Integer> defaultValue() {
-			return new Pair<Integer,Integer>(0,-1);
+			return new Pair<Integer,Integer>(this.defaultProposedValue, DEFAULT_ROUND);
 		}
 
 		@Override

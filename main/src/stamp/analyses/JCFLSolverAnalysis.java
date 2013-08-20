@@ -16,12 +16,13 @@ import stamp.missingmodels.util.FileManager.FileType;
 import stamp.missingmodels.util.FileManager.StampOutputFile;
 import stamp.missingmodels.util.StubLookup;
 import stamp.missingmodels.util.StubModelSet;
+import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.missingmodels.util.viz.jcflsolver.JCFLRelationFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.AllStubInputsFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubInputsFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetInputFile;
-import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetOutputFile;
+import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetWithDataOutputFile;
 import chord.project.Chord;
 
 /*
@@ -67,6 +68,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		// STEP 1: Set up the graph and load the stub model set if applicable.
 		StubModelSet m;
 		try {
+			//m = manager.read(new StubModelSetWithDataInputFile<Pair<Integer,Integer>>("StubModelSet.txt", ProposedStubModelSet.class));
 			//m = manager.read(new StubModelSetInputFile("StubModelSet012.txt"));
 			//m = manager.read(new StubModelSetInputFile("StubModelSet018.txt"));
 			//m = manager.read(new StubModelSetInputFile("StubModelSet0ac.txt"));
@@ -99,7 +101,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		files.add(new JCFLRelationFile(FileType.OUTPUT, j.g(), "Src2Sink", true));
 		files.add(new AllStubInputsFile(j.g(), j.s()));
 		files.add(new StubInputsFile(j.g(), j.s()));
-		files.add(new StubModelSetOutputFile(experiment.getAllProposedModels()));
+		files.add(new StubModelSetWithDataOutputFile<Pair<Integer,Integer>>(experiment.getAllProposedModels()));
 		//files.addAll(FlowWriter.viz(j.g, j.s));
 		try {
 			for(StampOutputFile file : files) {
