@@ -34,7 +34,7 @@ public class StubModelSet extends HashMap<StubModel,Integer> {
 		return this.get(new StubModel(value));
 	}
 	
-	public void putAllValue(StubModelSet m, int value) {
+	public void putAllToValue(StubModelSet m, int value) {
 		for(StubModel model : m.keySet()) {
 			super.put(model, value);
 		}

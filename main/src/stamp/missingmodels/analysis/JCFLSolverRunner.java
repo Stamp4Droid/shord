@@ -60,9 +60,13 @@ public abstract class JCFLSolverRunner {
 				}
 			}
 		}
+		
+		public StubModelSet getProposedModels() {
+			return getProposedModels(Experiment.ProposedStubModelSet.DEFAULT_ROUND);
+		}
 
 		// proposals are true (1)
-		public StubModelSet getProposedModels() {
+		public StubModelSet getProposedModels(int round) {
 			StubModelSet proposals = new StubModelSet();
 			MultivalueMap<Edge,Pair<Edge,Boolean>> positiveWeightEdges = this.g.getPositiveWeightEdges("Src2Sink");
 			for(Edge edge : positiveWeightEdges.keySet()) {
@@ -151,8 +155,8 @@ public abstract class JCFLSolverRunner {
 				
 				// add the current proposed models to all proposed and total
 				curProposed = this.j.getProposedModels();
-				total.putAllValue(curProposed, 2);
-				this.allProposed.putAllValue(curProposed, 2);
+				total.putAllToValue(curProposed, 2);
+				this.allProposed.putAllToValue(curProposed, 2);
 			} while(!curProposed.isEmpty());
 		}
 

@@ -338,7 +338,8 @@ public class JCFLSolverFiles {
 					continue;
 				}
 				String[] tokens = line.split("#");
-				if(tokens.length != 2) {
+				// allow for some metadata
+				if(tokens.length < 2) {
 					throw new RuntimeException("Error parsing stub model " + line + ", not the right number of tokens!");
 				}
 				try {
