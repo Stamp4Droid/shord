@@ -66,22 +66,23 @@ function processWarnings(message){
 }
 
 function processFlow(flow) {
-    alert("HERE");
-    alert(flow.flowClass);
-    alert(flow.srcName);
-    alert(flow.sinkName);
+    alert("begin processFlow");
 
-    //for (flow in flows) {
-        newentry = '<tr><td>"+flow.srcLabel+"</td><td><i class="icon-arrow-right"></i></td><td>"+flow.sinkLabel+"</td><td><span class="label label-important">"+flow.modifier+"</span></td> \
-                    <td><i class="icon-search"></i></td> \
-                    <td><i class="icon-ok"></i></td> \
-                    <td><i class="icon-ban-circle"></i></td> \
-                    </tr> ';
+    $.each(flow, function(i, item) {
 
-        flowC = flow.flowClass;
+        newentry = "<tr><td>"+item.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+item.sinkLabel+"</td><td><span class=\"label label-important\">"+item.modifier+"</span></td> \
+<td><i class=\"icon-search\"></i></td> \
+<td><i class=\"icon-ok\"></i></td> \
+<td><i class=\"icon-ban-circle\"></i></td> \
+</tr> ";
 
-        if (flowC === "privacy") {
+        flowC = item.flowClass;
+
+	if (flowC === "ondevice") {
+            $("#lowrisk-rpt").append(newentry);
+	} else if (flowC !== "ondevice") {
             $("#privacy-rpt").append(newentry);
+            $("#conf-rpt").append(newentry);
 
         } else if (flowC === "integrity") {
             $("integrity-rpt").append(newentry);
@@ -101,6 +102,8 @@ function processFlow(flow) {
             // handle something weird 
             console.log("unknown flow class" + flowC);
         }
+
+    });
 
         /*  
             // other reports in overview.html that may need adding
