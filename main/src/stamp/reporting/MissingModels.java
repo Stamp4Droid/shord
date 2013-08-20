@@ -20,6 +20,7 @@ public class MissingModels extends XMLReport {
 	}
 
 	public void generate() {
+        try {
 		Graph g = JCFLSolverAnalysis.g();
 		StubLookup s = JCFLSolverAnalysis.s();
 		
@@ -41,5 +42,9 @@ public class MissingModels extends XMLReport {
 				newTuple().addValue(source + " -> " + sink).addValue(info.method).addValue(line);
 			}
 		}
+        } catch (Exception e) {
+            System.err.println("Error in Missing Models Report Generation. Perhaps analysis was run without JCFL?");
+            e.printStackTrace();
+        }
 	}
 }
