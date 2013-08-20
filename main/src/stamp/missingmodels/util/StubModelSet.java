@@ -2,14 +2,8 @@ package stamp.missingmodels.util;
 
 import java.util.HashMap;
 
-import stamp.missingmodels.util.StubLookup.StubLookupKey;
 import stamp.missingmodels.util.StubLookup.StubLookupValue;
 import stamp.missingmodels.util.StubModelSet.StubModel;
-import stamp.missingmodels.util.Util.MultivalueMap;
-import stamp.missingmodels.util.Util.Pair;
-import stamp.missingmodels.util.jcflsolver.Edge;
-import stamp.missingmodels.util.jcflsolver.EdgeData;
-import stamp.missingmodels.util.jcflsolver.Graph;
 
 /*
  * A set of stub models, with their setting.
@@ -25,17 +19,7 @@ public class StubModelSet extends HashMap<StubModel,Integer> {
 	public StubModelSet() {
 		super();
 	}
-	
-	public StubModelSet(Graph g, StubLookup s) {
-		MultivalueMap<Edge,Pair<Edge,Boolean>> positiveWeightEdges = g.getPositiveWeightEdges("Src2Sink");
-		for(Edge edge : positiveWeightEdges.keySet()) {
-			for(Pair<Edge,Boolean> pair : positiveWeightEdges.get(edge)) {
-				EdgeData data = pair.getX().getData(g);					
-				this.put(new StubModel(s.get(new StubLookupKey(data.symbol, data.from, data.to))), 0);
-			}
-		}
-	}
-	
+
 	@Override
 	public Integer get(Object stubModel) {
 		Integer value = super.get(stubModel);
