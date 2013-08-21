@@ -82,32 +82,31 @@ function processFlowJSON(flow) {
 	if (item.analysisCounter === maxC) {
 
             newentry = "<tr><td>"+item.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+item.sinkLabel+"</td><td><span class=\"label label-important\">"+item.modifier+"</span></td> \
-<td><i class=\"icon-search\"></i></td> \
-<td><i class=\"icon-ok\"></i></td> \
-<td><i class=\"icon-ban-circle\"></i></td> \
+<td><i onClick=\"function(e) {debugger;}\" class=\"icon-search\"></i></td> \
+<td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ok\"></i></td> \
+<td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ban-circle\"></i></td> \
 </tr> ";
 
             var flowC = item.flowClass;
 
             if (flowC === "ondevice") {
                 $("#lowrisk-rpt").append(newentry);
-            } else if (flowC !== "ondevice") {
+            } else if (flowC === "privacy") {
 		$("#privacy-rpt").append(newentry);
+            } else if (flowC === "conf") {
 		$("#conf-rpt").append(newentry);
-
             } else if (flowC === "integrity") {
 		$("integrity-rpt").append(newentry);
-
             } else if (flowC === "other") {
-		// handle other
+                $("#lowrisk-rpt").append(newentry);
+            } else if (flowC === "internal") {
+                $("#lowrisk-rpt").append(newentry);
             } else if (flowC === "NoClass") {
+                $("#lowrisk-rpt").append(newentry);
             } else if (flowC === "NoClass" || flowC === "") {
-		// handle null 
-            } else if (flowC === "location") {
-		//what is location anyway?? Placeholder
-		$("#privacy-rpt").append(newentry);
+                $("#lowrisk-rpt").append(newentry);
             } else {
-		// handle something weird 
+                $("#lowrisk-rpt").append(newentry);
 		console.log("unknown flow class" + flowC);
             }
 
