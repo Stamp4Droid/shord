@@ -182,9 +182,6 @@ public class SrcSinkFlowViz extends XMLVizReport
                 SootMethod meth = itr.next();
                 int newDepth = itr.getDepth();
 
-                System.out.println("ITEM: " + meth.getName() +" OldD: "+oldDepth+" NewD: "+newDepth);
-
-
                 if (filter(meth, stack.size(), t)) {
                     continue;
                 } else if (oldDepth < newDepth) { // DROP down
@@ -203,7 +200,7 @@ public class SrcSinkFlowViz extends XMLVizReport
                     if (c == null) { // end condition FIXME (hack)
                         break;
                     }
-                    c.makeOrGetSubCat(meth);
+                    c = c.makeOrGetSubCat(meth);
 
                 } else { // stay SAME
                     c.makeOrGetSubCat(meth);

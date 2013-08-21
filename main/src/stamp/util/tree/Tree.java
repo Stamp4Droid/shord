@@ -98,8 +98,6 @@ public class Tree<T> {
             T entry = itr.next();
             int depth = itr.getDepth();
 
-
-            System.out.println("Depth: "+depth);
             for (int i = 0; i < depth; ++i) {
                 builder.append("----");
             }
