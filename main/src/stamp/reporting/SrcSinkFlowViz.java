@@ -170,7 +170,9 @@ public class SrcSinkFlowViz extends XMLVizReport
      * provided as parameters, generates the XML report
      */
     protected void generateReport(ArrayList<Tree<SootMethod>> flows, Map<SootMethod, ArrayDeque<CallSite>> callSites) {
+        System.out.println("Generating viz report");
         for (Tree<SootMethod> t : flows) {
+            System.out.println(t.toString());
             Category c = makeOrGetSubCat(t.getRoot().getData().getName());
             Tree<SootMethod>.TreeIterator itr = t.iterator();
             
@@ -285,6 +287,7 @@ public class SrcSinkFlowViz extends XMLVizReport
         }         
 
         return StepActionType.BROKEN;
+        /* return OTHER? */
     }
 
     /**
