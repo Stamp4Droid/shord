@@ -82,7 +82,10 @@ public abstract class JCFLSolverRunner {
 			// STEP 0: Set up the fields.
 			try {
 				this.g = c.newInstance();
-			} catch (InstantiationException | IllegalAccessException e) {
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+				throw new RuntimeException("Error creating graph: " + c.toString() + "!");
+			} catch (IllegalAccessException e) {
 				e.printStackTrace();
 				throw new RuntimeException("Error creating graph: " + c.toString() + "!");
 			}

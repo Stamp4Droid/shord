@@ -106,7 +106,10 @@ public class Experiment {
 		try {
 			this.j = cj.newInstance();
 			this.c = c;
-		} catch (InstantiationException | IllegalAccessException e) {
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Error initializing jcfl runner: " + c.toString());
+		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 			throw new RuntimeException("Error initializing jcfl runner: " + c.toString());
 		}
