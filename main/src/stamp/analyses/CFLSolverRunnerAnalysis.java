@@ -18,6 +18,6 @@ public class CFLSolverRunnerAnalysis extends JavaAnalysis {
 		String executable =
 			PropertyHelper.getProperty("stamp.solvergen.executable");
 		long startTime = Calendar.getInstance().getTimeInMillis();
-		ShellProcessRunner.run(new String[]{executable}, workDir, false);
+		ShellProcessRunner.run(new String[]{executable}, workDir, true);
 	}
 }
