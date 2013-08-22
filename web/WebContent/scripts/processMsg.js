@@ -67,37 +67,57 @@ function processWarnings(message){
 
 // Process JSON flows
 function processFlowJSON(flow) {
+
+    function newTableEntry(entry) {
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-important\">"+entry.modifier+"</span></td> \ <td><i onClick=\"function(e) {debugger;}\" class=\"icon-search\"></i></td> \ <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
+    }
+
     console.log("begin processFlow");
 
+    var maxC = -1;
     $.each(flow, function(i, item) {
+	if (parseInt(item.analysisCounter) > maxC) {
+	    maxC = item.analysisCounter;
+	}
+    });
 
-        newentry = "<tr><td>"+item.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+item.sinkLabel+"</td><td><span class=\"label label-important\">"+item.modifier+"</span></td> \
-<td><i class=\"icon-search\"></i></td> \
-<td><i class=\"icon-ok\"></i></td> \
-<td><i class=\"icon-ban-circle\"></i></td> \
-</tr> ";
+    console.log("Max analysisCounter:" + maxC);
+	   
+    $.each(flow, function(i, item) {
+        if (item.analysisCounter === maxC) {
 
-        flowC = item.flowClass;
+            var newentry = newTableEntry(item);
+            var flowC = item.flowClass;
 
-        if (flowC === "ondevice") {
+            if (flowC === "ondevice") {
                 $("#lowrisk-rpt").append(newentry);
-        } else if (flowC !== "ondevice") {
-            $("#privacy-rpt").append(newentry);
-            $("#conf-rpt").append(newentry);
 
-        } else if (flowC === "integrity") {
-            $("integrity-rpt").append(newentry);
+            } else if (flowC === "privacy") {
+                $("#privacy-rpt").append(newentry);
 
-        } else if (flowC === "other") {
-            // handle other
-        } else if (flowC === "NoClass" || flowC === "") {
-            // handle null 
-        } else if (flowC === "location") {
-            //what is location anyway?? Placeholder
-            $("#privacy-rpt").append(newentry);
-        } else {
-            // handle something weird 
-            console.log("unknown flow class" + flowC);
+            } else if (flowC === "conf") {
+                $("#conf-rpt").append(newentry);
+
+            } else if (flowC === "integrity") {
+                $("integrity-rpt").append(newentry);
+
+            } else if (flowC === "internal") {
+                $("#lowrisk-rpt").append(newentry);
+
+            } else if (flowC === "other") {
+                $("#lowrisk-rpt").append(newentry);
+
+
+            } else if (flowC === "NoClass" || flowC === "") {
+                // explicit no class. Treat as low-risk.
+                $("#lowrisk-rpt").append(newentry);
+
+            } else {
+                // unknown flowClass. Treat as low-risk.
+                $("#lowrisk-rpt").append(newentry);
+                console.log("unknown flow class" + flowC);
+            }
+
         }
     });
 
