@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import shord.analyses.*;
@@ -24,6 +25,7 @@ import soot.VoidType;
 
 import stamp.paths.*;
 import stamp.srcmap.SourceInfo;
+import stamp.util.PropertyHelper;
 import stamp.util.tree.*;
 
 /**
@@ -64,8 +66,12 @@ public class SrcSinkFlowViz extends XMLVizReport
             ArrayList<Tree<SootMethod>> flows = new ArrayList<Tree<SootMethod>>();
             Map<SootMethod, ArrayDeque<CallSite>> callSites = new HashMap<SootMethod, ArrayDeque<CallSite>>();
 
+            String schemaFile = PropertyHelper.getProperty("stamp.paths.schema");
+            String rawPathsFile = PropertyHelper.getProperty("stamp.paths.raw");
+            List<Path> paths = new PathsAdapter(schemaFile).getFlatPaths(rawPathsFile);
+
             int count = 0; //just counts for the sake of numbering. Will be phased out in future versions
-            for (Path p : PathsAdapter.getPaths()) {
+            for (Path p : paths) {
                 count += 1;
                 CtxtLabelPoint start = (CtxtLabelPoint)p.start;
                 CtxtLabelPoint end = (CtxtLabelPoint)p.end;
