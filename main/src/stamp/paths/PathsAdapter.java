@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import static javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
@@ -18,10 +19,17 @@ import org.xml.sax.SAXException;
 
 import shord.analyses.Ctxt;
 import shord.analyses.DomC;
+import shord.analyses.DomI;
 import shord.analyses.DomF;
 import shord.analyses.DomV;
 import shord.analyses.DomU;
 import stamp.analyses.DomCL;
+import stamp.paths.raw.BaseStep;
+import stamp.paths.raw.NonTerminalStep;
+import stamp.paths.raw.ObjectFactory;
+import stamp.paths.raw.PathsList;
+import stamp.paths.raw.TemporaryStep;
+import stamp.paths.raw.TerminalStep;
 import stamp.util.DomMap;
 import chord.util.tuple.object.Pair;
 import stamp.util.PropertyHelper;
@@ -52,7 +60,7 @@ public class PathsAdapter {
 	public List<Path> getFlatPaths(String rawPathsFile)
 		throws TranslationException {
 		try {
-			stamp.paths.raw.Paths rawPaths = readRawPaths(rawPathsFile);
+			PathsList rawPaths = readRawPaths(rawPathsFile);
 			flattenRawPaths(rawPaths, true);
 			return convertPaths(rawPaths);
 		} catch (JAXBException exc) {
@@ -64,7 +72,7 @@ public class PathsAdapter {
 								  String normalPathsFile)
 		throws TranslationException  {
 		try {
-			stamp.paths.raw.Paths rawPaths = readRawPaths(rawPathsFile);
+			PathsList rawPaths = readRawPaths(rawPathsFile);
 			flattenRawPaths(rawPaths, false);
 			translateNodeNames(rawPaths, true);
 			writeRawPaths(rawPaths, normalPathsFile);
@@ -85,16 +93,17 @@ public class PathsAdapter {
 		}
 	}
 
-	private stamp.paths.raw.Paths readRawPaths(String inFile)
-		throws JAXBException {
+	private PathsList readRawPaths(String inFile) throws JAXBException {
 		Unmarshaller u = jc.createUnmarshaller();
 		u.setSchema(schema);
 		// Fail at the first validation error.
 		u.setEventHandler(new DefaultValidationEventHandler());
-		return (stamp.paths.raw.Paths) u.unmarshal(new File(inFile));
+		JAXBElement<PathsList> root =
+			(JAXBElement<PathsList>) u.unmarshal(new File(inFile));
+		return root.getValue();
 	}
 
-	private void writeRawPaths(stamp.paths.raw.Paths rawPaths, String outFile)
+	private void writeRawPaths(PathsList rawPaths, String outFile)
 		throws FileNotFoundException, JAXBException {
         Marshaller m = jc.createMarshaller();
 		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -103,28 +112,29 @@ public class PathsAdapter {
 		// the non-structural constraints in the schema.
         //m.setSchema(schema);
 		//m.setEventHandler(new DefaultValidationEventHandler());
-        m.marshal(rawPaths, new FileOutputStream(outFile));
+        m.marshal(new ObjectFactory().createPaths(rawPaths),
+				  new FileOutputStream(outFile));
 	}
 
 	// Expects rawPaths to be fully flat.
-	private List<Path> convertPaths(stamp.paths.raw.Paths rawPaths)
-		throws TranslationException{
+	private List<Path> convertPaths(PathsList rawPaths)
+		throws TranslationException {
 		List<Path> paths = new ArrayList<Path>();
 
 		for (stamp.paths.raw.Edge rawEdge : rawPaths.getEdges()) {
 			Point start = rawNodeToPoint(rawEdge.getFrom());
 			Point end = rawNodeToPoint(rawEdge.getTo());
 			for (stamp.paths.raw.Path rawPath : rawEdge.getPaths()) {
-				stamp.paths.raw.Step topRawStep = rawPath.getTopStep();
 
 				List<Step> steps = new ArrayList<Step>();
-				for (stamp.paths.raw.Step s : topRawStep.getSubSteps()) {
-					// The sub-steps of the top step should be completely flat.
-					assert(rawStepIsTerminal(s));
-					String tgtNode = s.isReverse() ? s.getFrom() : s.getTo();
-					steps.add(new Step(s.getSymbol(), s.isReverse(),
-									   rawNodeToPoint(tgtNode)));
+				for (JAXBElement<? extends BaseStep> e :
+						 rawPath.getTopStep().getSubSteps()) {
+					BaseStep ss = e.getValue();
+					// The sub-steps of the top step should be completely flat,
+					// ergo this should be a terminal step.
+					steps.add(translateTerminalStep((TerminalStep) ss));
 				}
+
 				paths.add(new Path(start, end, steps));
 			}
 		}
@@ -133,76 +143,112 @@ public class PathsAdapter {
 		return paths;
 	}
 
-	// TODO: The following methods modify raw Paths in-place, and conceptually
-	// belong in the classes of stamp.paths.raw, but we'd need to edit the JAXB
-	// binding scheme to add them.
+	// TODO: Ideally, we would have a constructor on the cooked Step class that
+	// takes a compatible raw Step, but this would require the cooked Step
+	// class to be able to translate node names.
 
-	private void flattenRawPaths(stamp.paths.raw.Paths rawPaths,
-								 boolean fully) {
+	private Step translateTerminalStep(TerminalStep s)
+		throws TranslationException {
+		boolean reverse = s.isReverse();
+		String tgtNode = reverse ? s.getFrom() : s.getTo();
+		Point tgtPoint = rawNodeToPoint(tgtNode);
+
+		if (s instanceof stamp.paths.raw.IntraProceduralStep) {
+			return new IntraProceduralStep(reverse, tgtPoint);
+		} else if (s instanceof stamp.paths.raw.LoadStep) {
+			int f = ((stamp.paths.raw.LoadStep) s).getIndex().intValue();
+			return new LoadStep(reverse, tgtPoint,
+								((DomF) doms.get("F")).get(f));
+		} else if (s instanceof stamp.paths.raw.StoreStep) {
+			int f = ((stamp.paths.raw.StoreStep) s).getIndex().intValue();
+			return new StoreStep(reverse, tgtPoint,
+								 ((DomF) doms.get("F")).get(f));
+		} else if (s instanceof stamp.paths.raw.CallStep) {
+			int i = ((stamp.paths.raw.CallStep) s).getIndex().intValue();
+			return new CallStep(reverse, tgtPoint,
+								((DomI) doms.get("I")).get(i));
+		} else if (s instanceof stamp.paths.raw.ReturnStep) {
+			int i = ((stamp.paths.raw.ReturnStep) s).getIndex().intValue();
+			return new ReturnStep(reverse, tgtPoint,
+								  ((DomI) doms.get("I")).get(i));
+		} else if (s instanceof stamp.paths.raw.CtxtCrossingStep) {
+			int c =
+				((stamp.paths.raw.CtxtCrossingStep) s).getIndex().intValue();
+			return new CtxtCrossingStep(reverse, tgtPoint,
+										((DomC) doms.get("C")).get(c));
+		} else if (s instanceof stamp.paths.raw.CtxtSettingStep) {
+			int c =
+				((stamp.paths.raw.CtxtSettingStep) s).getIndex().intValue();
+			return new CtxtSettingStep(reverse, tgtPoint,
+									   ((DomC) doms.get("C")).get(c));
+		}
+
+		// Shouldn't reach here.
+		assert(false);
+		return null;
+	}
+
+	// TODO: The following methods modify raw PathsLists in-place, and
+	// conceptually belong in the classes of stamp.paths.raw, but we'd need to
+	// edit the JAXB binding scheme to add them.
+
+	private void flattenRawPaths(PathsList rawPaths, boolean fully) {
 		for (stamp.paths.raw.Edge rawEdge : rawPaths.getEdges()) {
 			for (stamp.paths.raw.Path rawPath : rawEdge.getPaths()) {
-				stamp.paths.raw.Step topRawStep = rawPath.getTopStep();
-				flattenRawSubSteps(topRawStep, fully);
+				flattenRawSubSteps(rawPath.getTopStep(), fully);
 			}
 		}
 	}
 
-	private void flattenRawSubSteps(stamp.paths.raw.Step step, boolean fully) {
-		List<stamp.paths.raw.Step> subSteps = step.getSubSteps();
-		List<stamp.paths.raw.Step> flatSubSteps =
-			new ArrayList<stamp.paths.raw.Step>();
+	private void flattenRawSubSteps(NonTerminalStep step, boolean fully) {
+		List<JAXBElement<? extends BaseStep>> flatSubSteps =
+			new ArrayList<JAXBElement<? extends BaseStep>>();
 
-		for (stamp.paths.raw.Step ss : subSteps) {
-			flattenRawSubSteps(ss, fully);
-			if (rawStepIsTerminal(ss) ||
-				!fully && !rawStepIsIntermediate(ss)) {
-				// Steps corresponding to non-temporary symbols are normally
-				// retained.
-				// TODO: Could also skip some non-terminals that don't offer
-				// much information, e.g. in the case of transitive rules.
-				flatSubSteps.add(ss);
-			} else {
-				// We skip this step, and instead record its sub-steps
-				// directly.
-				if (ss.isReverse()) {
-					// If the step to skip was traversed in reverse, we need to
-					// reverse the order in which we record its sub-steps.
-					reverseRawStepsList(ss.getSubSteps());
+		for (JAXBElement<? extends BaseStep> e : step.getSubSteps()) {
+			BaseStep ss = e.getValue();
+			if (ss instanceof NonTerminalStep) {
+				NonTerminalStep ntss = (NonTerminalStep) ss;
+				flattenRawSubSteps(ntss, fully);
+				if (fully || ntss instanceof TemporaryStep) {
+					// We skip this step, and instead record its sub-steps
+					// directly.
+					// TODO: Could also skip some non-terminals that don't
+					// offer much information, e.g. in the case of transitive
+					// rules.
+					if (ntss.isReverse()) {
+						// If the step to skip was traversed in reverse, we
+						// need to reverse the order in which we record its
+						// sub-steps.
+						reverseSubSteps(ntss);
+					}
+					flatSubSteps.addAll(ntss.getSubSteps());
+					continue;
 				}
-				flatSubSteps.addAll(ss.getSubSteps());
 			}
+			// Terminal steps and steps corresponding to non-intermediate
+			// symbols are normally retained.
+			flatSubSteps.add(e);
 		}
 
 		// Replace the original sub-steps list with the flattened one.
 		// TODO: The JAXB-generated class for raw Steps doesn't allow us to
 		// simply swap out its sub-steps list for another. We instead have to
 		// make a copy of the flattened list.
-		subSteps.clear();
-		subSteps.addAll(flatSubSteps);
+		step.getSubSteps().clear();
+		step.getSubSteps().addAll(flatSubSteps);
 	}
 
-	private boolean rawStepIsIntermediate(stamp.paths.raw.Step step) {
-		// TODO: Should get this information from the output of the CFG parser.
-		return step.getSymbol().startsWith("%");
-	}
-
-	private boolean rawStepIsTerminal(stamp.paths.raw.Step step) {
-		// TODO: Should get this information from the output of the CFG parser.
-		char firstLetter = step.getSymbol().charAt(0);
-		return firstLetter >= 'a' && firstLetter <= 'z';
-	}
-
-	private void reverseRawStepsList(List<stamp.paths.raw.Step> rawSteps) {
+	private void reverseSubSteps(NonTerminalStep rawStep) {
 		// Reverse the order that we traverse the sub-steps.
-		Collections.reverse(rawSteps);
+		Collections.reverse(rawStep.getSubSteps());
 		// Also switch the 'reverse' modifier on each of the sub-steps.
-		for (stamp.paths.raw.Step s : rawSteps) {
-			s.setReverse(!s.isReverse());
+		for (JAXBElement<? extends BaseStep> e : rawStep.getSubSteps()) {
+			BaseStep ss = e.getValue();
+			ss.setReverse(!ss.isReverse());
 		}
 	}
 
-	private void translateNodeNames(stamp.paths.raw.Paths rawPaths,
-									boolean useShortNames)
+	private void translateNodeNames(PathsList rawPaths, boolean useShortNames)
 		throws TranslationException {
 		for (stamp.paths.raw.Edge rawEdge : rawPaths.getEdges()) {
 			Point from = rawNodeToPoint(rawEdge.getFrom());
@@ -210,27 +256,31 @@ public class PathsAdapter {
 							: from.toString());
 			Point to = rawNodeToPoint(rawEdge.getTo());
 			rawEdge.setTo(useShortNames ? to.toShortString() : to.toString());
+			// TODO: The context is not added to the variables points.
 
 			for (stamp.paths.raw.Path rawPath : rawEdge.getPaths()) {
-				stamp.paths.raw.Step topRawStep = rawPath.getTopStep();
-				translateNodeNames(topRawStep, useShortNames);
+				translateNodeNames(rawPath.getTopStep(), useShortNames);
 			}
 		}
 
 		doms.clear();
 	}
 
-	private void translateNodeNames(stamp.paths.raw.Step rawStep,
-									boolean useShortNames)
+	private void translateNodeNames(BaseStep rawStep, boolean useShortNames)
 		throws TranslationException {
 		Point from = rawNodeToPoint(rawStep.getFrom());
 		rawStep.setFrom(useShortNames ? from.toShortString()
 						: from.toString());
 		Point to = rawNodeToPoint(rawStep.getTo());
 		rawStep.setTo(useShortNames ? to.toShortString() : to.toString());
+		// TODO: Indices are left untranslated.
+		// TODO: The context is not added to the variables points.
 
-		for (stamp.paths.raw.Step ss : rawStep.getSubSteps()) {
-			translateNodeNames(ss, useShortNames);
+		if (rawStep instanceof NonTerminalStep) {
+			NonTerminalStep ntStep = (NonTerminalStep) rawStep;
+			for (JAXBElement<? extends BaseStep> e : ntStep.getSubSteps()) {
+				translateNodeNames(e.getValue(), useShortNames);
+			}
 		}
 	}
 
@@ -241,17 +291,11 @@ public class PathsAdapter {
 		char tag = rawNode.charAt(0);
 		switch (tag) {
 		case 'v':
-			Pair<Integer,Integer> vc = getTwoDomIndices(rawNode);
-			int v = vc.val0.intValue();
-			int c_v = vc.val1.intValue();
-			return new CtxtVarPoint(((DomC) doms.get("C")).get(c_v),
-									((DomV) doms.get("V")).get(v));
+			int v = getSingleDomIndex(rawNode);
+			return new VarPoint(((DomV) doms.get("V")).get(v));
 		case 'u':
-			Pair<Integer,Integer> uc = getTwoDomIndices(rawNode);
-			int u = uc.val0.intValue();
-			int c_u = uc.val1.intValue();
-			return new CtxtVarPoint(((DomC) doms.get("C")).get(c_u),
-									((DomU) doms.get("U")).get(u));
+			int u = getSingleDomIndex(rawNode);
+			return new VarPoint(((DomU) doms.get("U")).get(u));
 		case 'o':
 			int o = getSingleDomIndex(rawNode);
 			return new CtxtObjPoint(((DomC) doms.get("C")).get(o));

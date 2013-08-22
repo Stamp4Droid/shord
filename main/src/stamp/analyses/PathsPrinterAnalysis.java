@@ -5,17 +5,22 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
+import stamp.paths.CallStep;
+import stamp.paths.CtxtCrossingStep;
 import stamp.paths.CtxtLabelPoint;
 import stamp.paths.CtxtObjPoint;
-import stamp.paths.CtxtVarPoint;
+import stamp.paths.CtxtSettingStep;
 import stamp.paths.Path;
 import stamp.paths.PathsAdapter;
 import stamp.paths.Point;
+import stamp.paths.ReturnStep;
 import stamp.paths.StatFldPoint;
 import stamp.paths.Step;
+import stamp.paths.VarPoint;
 import stamp.util.PropertyHelper;
 
 import chord.project.Chord;
+import shord.analyses.Ctxt;
 import shord.project.analyses.JavaAnalysis;
 import soot.Unit;
 
@@ -25,7 +30,6 @@ import soot.Unit;
 public class PathsPrinterAnalysis extends JavaAnalysis {
 	// the partial stack, bottom is on the left
 	List<Unit> stack = new ArrayList<Unit>();
-	PrintWriter pw = null;
 
 	@Override
 	public void run() {
@@ -40,20 +44,24 @@ public class PathsPrinterAnalysis extends JavaAnalysis {
 			adapter.normalizeRawPaths(rawPathsFile, normalPathsFile);
 
 			List<Path> paths = adapter.getFlatPaths(rawPathsFile);
-			pw = new PrintWriter(flatPathsFile);
+			PrintWriter pw = new PrintWriter(flatPathsFile);
 			pw.println("PATHS: " + paths.size());
 			pw.println();
 
 			for (Path p : paths) {
 				int breaks = 0;
-				initStack(p.start);
+				initStack(getElems(p.start));
 				pw.println(p.start + " --> " + p.end);
 				for (Step s : p.steps) {
-					if (!recordStep(s.symbol, s.target)) {
+					if (!recordStep(s)) {
+						pw.println(">>> BROKEN: <<<");
 						breaks++;
 					}
-					pw.println((s.reverse ? "<-" : "--" ) + s.symbol +
-							   (s.reverse ? "-- " : "-> " ) + s.target);
+					if (!recordTarget(s.target)) {
+						pw.println(">>> BROKEN: <<<");
+						breaks++;
+					}
+					pw.println((s.reverse ? "<-- " : "--> ") + s.target);
 				}
 				if (breaks > 0) {
 					pw.println("INVALID");
@@ -62,57 +70,121 @@ public class PathsPrinterAnalysis extends JavaAnalysis {
 			}
 
 			pw.close();
-			pw = null;
-		} catch(Exception exc) {
+		} catch (Exception exc) {
 			throw new RuntimeException(exc);
 		}
 	}
 
-	private void initStack(Point source) {
+	private void initStack(Unit[] elems) {
 		stack.clear();
-		boolean validMatch = recordStep(null, source);
+		boolean validMatch = matchStack(elems, 0);
 		assert(validMatch);
 	}
 
 	// TODO:
-	// - when moving in the stack, check that it's a call or return
-	// - also verify the direction
 	// - record more information when the stack breaks unexpectedly
-	// - this doesn't work in the presence of self-recursion (generally when
-	//   we allow moves that can cause a move to leave the stack unchanged)
-	//   we might accept a call to self as not affecting the call stack, and
-	//   similarly for the return (this wouldn't be a problem if we kept calls,
-	//   returns and assignments as separate symbols).
 	// - this functionality should be broken off into other classes
 	//   e.g. in PartialStack, Ctxt, and *Point classes
 	//   Ctxt, in particular, should contain the information of whether it's a
 	//   just a call stack or a contextified abstract object (as long as we're
 	//   sticking to kCFA-sensitivity)
 
-	private boolean recordStep(String symbol, Point target) {
-		Unit[] elems = null;
+	private boolean recordStep(Step step) {
+		boolean matched = true;
+		Unit[] elemsToSet = null;
 
-		// UGLY: This code should be moved into the different *Point classes
-		if (target instanceof CtxtLabelPoint) {
-			elems = ((CtxtLabelPoint) target).ctxt.getElems();
-		} else if (target instanceof CtxtObjPoint) {
-			Unit[] elemsObj = ((CtxtObjPoint) target).ctxt.getElems();
-			elems = Arrays.copyOfRange(elemsObj, 1, elemsObj.length);
-		} else if (target instanceof CtxtVarPoint) {
-			elems = ((CtxtVarPoint) target).ctxt.getElems();
-		} else if (target instanceof StatFldPoint) {
-			// Stores and loads to static fields break the stack.
-			stack.clear();
-			return true;
+		if (step instanceof CallStep) {
+			Unit invk = ((CallStep) step).invk;
+			if (step.reverse) {
+				// Handle as a return (stack pop): Verify that the invocation
+				// we're following is actually the one at the top of the stack,
+				// then remove it.
+				matched = matchStack(new Unit[]{invk}, 0);
+				if (matched && stack.size() > 0) {
+					stack.remove(0);
+				}
+			} else {
+				// Handle as a call (stack push): Simply add the followed
+				// invocation to the top of the stack.
+				stack.add(0, invk);
+			}
+		} else if (step instanceof ReturnStep) {
+			// Exactly opposite to above case.
+			Unit invk = ((ReturnStep) step).invk;
+			if (step.reverse) {
+				stack.add(0, invk);
+			} else {
+				matched = matchStack(new Unit[]{invk}, 0);
+				if (matched && stack.size() > 0) {
+					stack.remove(0);
+				}
+			}
+		} else if (step instanceof CtxtCrossingStep) {
+			// When this step was followed, it altered the depth of the stack
+			// that the solver could see, but that shouldn't create a stack
+			// break, i.e. the context it carries should be compatible with the
+			// current view of the stack.
+			Unit[] elems = ((CtxtCrossingStep) step).ctxt.getElems();
+			matched = matchStack(elems, 0);
+		} else if (step instanceof CtxtSettingStep) {
+			// When the solver followed the underlying edge for this step, it
+			// completely switched contexts.
+			Unit[] elems = ((CtxtSettingStep) step).ctxt.getElems();
+			if (step.reverse) {
+				// This step set the context at its target node, which
+				// corresponds to the point we're currently on (since this step
+				// is traversed in reverse). Therefore, the context on the step
+				// should be compatible with the one on the current point.
+				matched = matchStack(elems, 0);
+				// The context from which this edge originated could be
+				// arbitrary, so we need to reset our view of the stack.
+				elemsToSet = new Unit[0];
+			} else {
+				// We're moving to a new context, entirely dictated by the
+				// context on this step.
+				elemsToSet = elems;
+			}
 		} else {
-			assert(false);
+			// All other steps do not affect the context.
+			return true;
 		}
 
-		if (!matchStack(elems, 0) &&  // match an intra-procedural move
-			!matchStack(elems, 1) &&  // match a return (stack pop)
-			!matchStack(elems, -1)) { // match a call (stack push)
-			pw.println(">>> BROKEN: " + symbol + " <<<");
-			initStack(target);
+		if (!matched && elemsToSet == null) {
+			elemsToSet = new Unit[0];
+		}
+		if (elemsToSet != null) {
+			initStack(elemsToSet);
+		}
+		return matched;
+	}
+
+	private Unit[] getElems(Point p) {
+		// UGLY: This code should be moved into the different *Point classes
+
+		if (p instanceof CtxtLabelPoint) {
+			return ((CtxtLabelPoint) p).ctxt.getElems();
+		} else if (p instanceof CtxtObjPoint) {
+			// Skip the first statement, which corresponds to the abstract
+			// object's allocation.
+			Unit[] elemsObj = ((CtxtObjPoint) p).ctxt.getElems();
+			return Arrays.copyOfRange(elemsObj, 1, elemsObj.length);
+		} else if (p instanceof VarPoint) {
+			// This kind of point carries no context information.
+			return new Unit[0];
+		} else if (p instanceof StatFldPoint) {
+			// This kind of point carries no context information.
+			return new Unit[0];
+		}
+
+		// Shouldn't reach here.
+		assert(false);
+		return null;
+	}
+
+	private boolean recordTarget(Point target) {
+		Unit[] elems = getElems(target);
+		if (!matchStack(elems, 0)) {
+			initStack(elems);
 			return false;
 		}
 		return true;

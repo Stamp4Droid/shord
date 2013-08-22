@@ -1601,8 +1601,14 @@ std::list<PartialPath*> recover_paths(Step *top_step,
 /* PATH PRINTING =========================================================== */
 
 void print_step_open(Edge *edge, bool reverse, FILE *f) {
-    fprintf(f, "<step reverse='%s' symbol='%s' from='%s' to='%s'",
-	    reverse ? "true" : "false", kind2symbol(edge->kind),
+    if (is_terminal(edge->kind)) {
+	fprintf(f, "<%s", kind2symbol(edge->kind));
+    } else {
+	fprintf(f, "<%s symbol='%s'",
+		is_temporary(edge->kind) ? "TempStep" : "NTStep",
+		kind2symbol(edge->kind));
+    }
+    fprintf(f, " reverse='%s' from='%s' to='%s'", reverse ? "true" : "false",
 	    node2name(edge->from), node2name(edge->to));
     if (is_parametric(edge->kind)) {
 	char idx_buf[32];
@@ -1610,11 +1616,23 @@ void print_step_open(Edge *edge, bool reverse, FILE *f) {
 	index_print(edge->index, idx_buf, sizeof(idx_buf));
 	fprintf(f, " index='%s'", idx_buf);
     }
-    fprintf(f, ">\n");
+    if (is_terminal(edge->kind)) {
+	// Terminal steps can have no nested sub-steps, so we can close the tag
+	// at this point.
+	fprintf(f, "/>\n");
+    } else {
+	fprintf(f, ">\n");
+    }
 }
 
-void print_step_close(FILE *f) {
-    fprintf(f, "</step>\n");
+void print_step_close(Edge *edge, FILE *f) {
+    if (is_terminal(edge->kind)) {
+	// The tag has already been closed, nothing to do at this point.
+    } else if (is_temporary(edge->kind)) {
+	fprintf(f, "</TempStep>\n");
+    } else {
+	fprintf(f, "</NTStep>\n");
+    }
 }
 
 // Only takes complete paths (assumes trees are present).
@@ -1647,7 +1665,7 @@ void print_step(Step *step, std::stack<CHOICE> &choices, FILE *f) {
 	    print_step(s, choices, f);
 	}
     }
-    print_step_close(f);
+    print_step_close(step->edge, f);
 }
 
 void print_path(PartialPath *path, Step *top_step, FILE *f) {
@@ -1670,7 +1688,7 @@ void print_prerecorded_step(Edge *e, bool reverse, FILE *f) {
 	    print_prerecorded_step(e->r_edge, e->r_rev, f);
 	}
     }
-    print_step_close(f);
+    print_step_close(e, f);
 }
 
 void print_prerecorded_path(Edge *e, FILE *f) {

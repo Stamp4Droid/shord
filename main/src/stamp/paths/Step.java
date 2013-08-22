@@ -1,13 +1,12 @@
 package stamp.paths;
 
-public class Step {
-	public final String symbol;
+public abstract class Step {
 	public final boolean reverse;
 	public final Point target;
 
-	public Step(String symbol, boolean reverse, Point target) {
-		// TODO: Check that the symbol is terminal.
-		this.symbol = symbol;
+	public Step(boolean reverse, Point target) {
+		// TODO: Missing the actual symbol, instead the subtype of Step is used
+		// to infer the nature of the Step.
 		this.reverse = reverse;
 		this.target = target;
 	}

@@ -18,7 +18,7 @@
           depends="-safe-build-droidrecord" unless="release">
     <mkdir dir="${stamp.dir}/main/gen"/>
     <xjc schema="${stamp.dir}/solvergen/paths.xsd" package="stamp.paths.raw"
-	 destdir="${stamp.dir}/main/gen" readonly="true">
+	 destdir="${stamp.dir}/main/gen" readonly="true" target="2.0">
       <produces dir="${stamp.dir}/main/gen/stamp/paths/raw"
 		includes="**/*.java"/>
       <classpath refid="stamp.build.classpath"/>

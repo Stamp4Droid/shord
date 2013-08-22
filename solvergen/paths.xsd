@@ -4,79 +4,235 @@
 	   elementFormDefault="qualified"
 	   jxb:version="2.1">
 
-<xs:simpleType name="symbolName">
-  <xs:restriction base="xs:string">
-    <xs:pattern value="[a-zA-Z0-9%][_a-zA-Z0-9]*"/>
-  </xs:restriction>
-</xs:simpleType>
+<!-- SIMPLE TYPES ==========================================================-->
 
-<xs:simpleType name="nodeName">
-  <xs:restriction base="xs:string">
+<xs:simpleType name="NodeName">
+  <xs:restriction base="xs:token">
     <xs:pattern value="v[0-9]+|u[0-9]+|l[0-9]+|o[0-9]+|f[0-9]+"/>
   </xs:restriction>
 </xs:simpleType>
 
-<xs:element name="step">
-  <xs:complexType>
-    <xs:sequence>
-      <xs:element ref="step" minOccurs="0" maxOccurs="2">
-        <xs:annotation>
-          <xs:appinfo>
-            <jxb:property name="subSteps"/>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-    <xs:attribute name="reverse" type="xs:boolean" use="required"/>
-    <xs:attribute name="symbol" type="symbolName" use="required"/>
-    <xs:attribute name="from" type="nodeName" use="required"/>
-    <xs:attribute name="to" type="nodeName" use="required"/>
-    <xs:attribute name="index" type="xs:integer"/>
-  </xs:complexType>
-</xs:element>
+<xs:simpleType name="GrammarNTSymbol">
+  <xs:restriction base="xs:token">
+    <xs:enumeration value="ArrElemFT"/>
+    <xs:enumeration value="FTImm"/>
+    <xs:enumeration value="FlowsTo"/>
+    <xs:enumeration value="InstFldFT"/>
+    <xs:enumeration value="Label2Obj"/>
+    <xs:enumeration value="Label2Prim"/>
+    <xs:enumeration value="Label2PrimArrEl"/>
+    <xs:enumeration value="Label2PrimFld"/>
+    <xs:enumeration value="Label2Ref"/>
+    <xs:enumeration value="LabelObjIn"/>
+    <xs:enumeration value="Obj2Prim"/>
+    <xs:enumeration value="Obj2Ref"/>
+    <xs:enumeration value="Obj2Sink"/>
+    <xs:enumeration value="Prim2Sink"/>
+    <xs:enumeration value="Src2Sink"/>
+    <xs:enumeration value="XferObjOut"/>
+    <xs:enumeration value="T1"/>
+    <xs:enumeration value="T2"/>
+    <xs:enumeration value="T3"/>
+    <xs:enumeration value="T4"/>
+  </xs:restriction>
+</xs:simpleType>
 
-<xs:element name="path">
-  <xs:complexType>
-    <xs:sequence>
-      <xs:element ref="step">
-        <xs:annotation>
-          <xs:appinfo>
-            <jxb:property name="topStep"/>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-</xs:element>
+<xs:simpleType name="TemporarySymbol">
+  <xs:restriction base="xs:token">
+    <xs:pattern value="%[0-9]+"/>
+  </xs:restriction>
+</xs:simpleType>
 
-<xs:element name="edge">
-  <xs:complexType>
-    <xs:sequence>
-      <xs:element ref="path" minOccurs="1" maxOccurs="unbounded">
-        <xs:annotation>
-          <xs:appinfo>
-            <jxb:property name="paths"/>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-    <xs:attribute name="from" type="nodeName" use="required"/>
-    <xs:attribute name="to" type="nodeName" use="required"/>
-  </xs:complexType>
-</xs:element>
+<!-- BASE STEP TYPES =======================================================-->
 
-<xs:element name="paths">
-  <xs:complexType>
-    <xs:sequence>
-      <xs:element ref="edge" minOccurs="0" maxOccurs="unbounded">
-        <xs:annotation>
-          <xs:appinfo>
-            <jxb:property name="edges"/>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-</xs:element>
+<xs:complexType name="BaseStep" abstract="true">
+  <xs:attribute name="reverse" type="xs:boolean" use="required"/>
+  <xs:attribute name="from" type="NodeName" use="required"/>
+  <xs:attribute name="to" type="NodeName" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="MaybeIndexedStep" abstract="true">
+  <xs:complexContent>
+    <xs:extension base="BaseStep">
+      <xs:attribute name="index" type="xs:nonNegativeInteger"/>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<!-- Head of the 'step' substitution group, serves as a placeholder for any
+     kind of element that can appear as a sub-step of a non-terminal step. -->
+<xs:element name="step" type="BaseStep" abstract="true"/>
+
+<!-- TERMINAL STEP TYPES ===================================================-->
+
+<xs:complexType name="TerminalStep" abstract="true">
+  <xs:complexContent>
+    <xs:extension base="BaseStep"/>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="IndexedTerminalStep" abstract="true">
+  <xs:complexContent>
+    <xs:extension base="TerminalStep">
+      <xs:attribute name="index" type="xs:nonNegativeInteger" use="required"/>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<!-- More correctly, steps that stay within the same context. -->
+<xs:complexType name="IntraProceduralStep">
+  <xs:complexContent>
+    <xs:extension base="TerminalStep"/>
+  </xs:complexContent>
+</xs:complexType>
+<xs:element name="arrLoadPrim" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="arrStorePrim" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="arrStoreRef" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="asgnPrim" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="asgnRef" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="prim2Prim" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="prim2Ref" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="prim2SinkByPrim" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="prim2SinkByRef" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="ref2Prim" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="ref2Ref" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="ref2SinkByPrim" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="ref2SinkByRef" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="sinkLabel" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="srcLabel" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="statLoadPrim" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="statLoadRef" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="statStorePrim" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="statStoreRef" type="IntraProceduralStep" substitutionGroup="step"/>
+
+<xs:complexType name="CallStep">
+  <xs:complexContent>
+    <xs:extension base="IndexedTerminalStep"/>
+  </xs:complexContent>
+</xs:complexType>
+<xs:element name="paramPrim" type="CallStep" substitutionGroup="step"/>
+<xs:element name="paramRef" type="CallStep" substitutionGroup="step"/>
+
+<xs:complexType name="ReturnStep">
+  <xs:complexContent>
+    <xs:extension base="IndexedTerminalStep"/>
+  </xs:complexContent>
+</xs:complexType>
+<xs:element name="retPrim" type="ReturnStep" substitutionGroup="step"/>
+<xs:element name="retRef" type="ReturnStep" substitutionGroup="step"/>
+
+<!-- Steps (other than calls and returns) that cross to a new context. Still
+     expected to retain a consistent view of the stack. -->
+<xs:complexType name="CtxtCrossingStep">
+  <xs:complexContent>
+    <xs:extension base="IndexedTerminalStep"/>
+  </xs:complexContent>
+</xs:complexType>
+<xs:element name="label2Prim" type="CtxtCrossingStep" substitutionGroup="step"/>
+<xs:element name="label2Ref" type="CtxtCrossingStep" substitutionGroup="step"/>
+<xs:element name="new" type="CtxtCrossingStep" substitutionGroup="step"/>
+
+<!-- Steps that can arbitrarily set the context, even to otherwise invalid
+     states. -->
+<xs:complexType name="CtxtSettingStep">
+  <xs:complexContent>
+    <xs:extension base="IndexedTerminalStep"/>
+  </xs:complexContent>
+</xs:complexType>
+<xs:element name="varCtxt" type="CtxtSettingStep" substitutionGroup="step"/>
+
+<xs:complexType name="StoreStep">
+  <xs:complexContent>
+    <xs:extension base="IndexedTerminalStep"/>
+  </xs:complexContent>
+</xs:complexType>
+<xs:element name="storePrim" type="StoreStep" substitutionGroup="step"/>
+<xs:element name="storeRef" type="StoreStep" substitutionGroup="step"/>
+
+<xs:complexType name="LoadStep">
+  <xs:complexContent>
+    <xs:extension base="IndexedTerminalStep"/>
+  </xs:complexContent>
+</xs:complexType>
+<xs:element name="loadPrim" type="LoadStep" substitutionGroup="step"/>
+<xs:element name="loadRef" type="LoadStep" substitutionGroup="step"/>
+
+<!-- NON-TERMINAL STEP TYPES ===============================================-->
+
+<xs:complexType name="NonTerminalStep" abstract="true">
+  <xs:complexContent>
+    <xs:extension base="MaybeIndexedStep">
+      <xs:sequence>
+	<xs:element ref="step" minOccurs="0" maxOccurs="2">
+	  <xs:annotation>
+            <xs:appinfo>
+              <jxb:property name="subSteps"/>
+            </xs:appinfo>
+	  </xs:annotation>
+	</xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="GrammarNTStep">
+  <xs:complexContent>
+    <xs:extension base="NonTerminalStep">
+      <xs:attribute name="symbol" type="GrammarNTSymbol" use="required"/>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+<xs:element name="NTStep" type="GrammarNTStep" substitutionGroup="step"/>
+
+<xs:complexType name="TemporaryStep">
+  <xs:complexContent>
+    <xs:extension base="NonTerminalStep">
+      <xs:attribute name="symbol" type="TemporarySymbol" use="required"/>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+<xs:element name="TempStep" type="TemporaryStep" substitutionGroup="step"/>
+
+<!-- TOP-LEVEL ELEMENTS ====================================================-->
+
+<xs:complexType name="Path">
+  <xs:sequence>
+    <xs:element ref="NTStep">
+      <xs:annotation>
+        <xs:appinfo>
+          <jxb:property name="topStep"/>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Edge">
+  <xs:sequence>
+    <xs:element name="path" type="Path" minOccurs="1" maxOccurs="unbounded">
+      <xs:annotation>
+        <xs:appinfo>
+          <jxb:property name="paths"/>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+  </xs:sequence>
+  <xs:attribute name="from" type="NodeName" use="required"/>
+  <xs:attribute name="to" type="NodeName" use="required"/>
+</xs:complexType>
+
+<xs:complexType name="PathsList">
+  <xs:sequence>
+    <xs:element name="edge" type="Edge" minOccurs="0" maxOccurs="unbounded">
+      <xs:annotation>
+        <xs:appinfo>
+          <jxb:property name="edges"/>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:element name="paths" type="PathsList"/>
 
 </xs:schema>

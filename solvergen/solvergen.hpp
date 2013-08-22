@@ -668,6 +668,12 @@ PATH_LENGTH static_min_length(EDGE_KIND kind);
 bool is_lazy(EDGE_KIND kind);
 
 /**
+ * Check whether a particular @Symbol was introduced by the parser, and was not
+ * present in the original grammar.
+ */
+bool is_temporary(EDGE_KIND kind);
+
+/**
  * Generate on-the-fly all Edge%s with the given features. Only appropriate for
  * Edge%s of lazily-generated @Symbol%s.
  */

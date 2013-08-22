@@ -34,6 +34,7 @@ public class SrcSinkFlowViz extends XMLVizReport
 
     public void generate()
 	{
+		/*
 		try {
 			final ProgramRel relSrcSinkFlow = (ProgramRel)ClassicProject.g().getTrgt("flow");
 
@@ -166,11 +167,12 @@ public class SrcSinkFlowViz extends XMLVizReport
 								}
 
 							} 
-							/*else if (s.target instanceof CtxtObjPoint) {
-								c.newTuple().addRawValue("Obj", "", "0", "method", "")
-									.addValue("Label: " + "CtxtObj");
-
-							}*/
+							}
+							//else if (s.target instanceof CtxtObjPoint) {
+							//	c.newTuple().addRawValue("Obj", "", "0", "method", "")
+							//		.addValue("Label: " + "CtxtObj");
+							//
+							//}
 						}
 						if (elems.length > 0) {
 							lastStackBtm = Program.containerMethod((Stmt)elems[elems.length-1]);
@@ -186,5 +188,6 @@ public class SrcSinkFlowViz extends XMLVizReport
 			System.err.println("Problem producing FlowViz report");
 			e.printStackTrace();
 		}
+		*/
 	}
 }

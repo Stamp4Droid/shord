@@ -145,6 +145,14 @@ class Symbol(util.FinalAttrs):
         """
         return self.name[0] in string.ascii_lowercase
 
+    def is_temporary(self):
+        """
+        Check if this is an intermediate symbol introduced by the parser.
+
+        Intermediate @Symbol names start with a `%` character.
+        """
+        return self.name[0] == '%'
+
     def is_lazy(self):
         """
         Check whether Edge%s for this @Symbol are calculated lazily.
@@ -172,6 +180,8 @@ class Symbol(util.FinalAttrs):
         """
         assert not self.is_terminal(), \
             "Paths can only be printed for non-terminals"
+        assert not self.is_temporary(), \
+            "Paths cannot be printed for intermediate symbols"
         self._num_paths = num_paths
 
     def __key__(self):
@@ -1287,6 +1297,16 @@ def parse(grammar_in, code_out, terms_out, rels_out):
     pr.write('switch (kind) {')
     for s in grammar.symbols:
         if s.is_lazy():
+            pr.write('case %s: return true; /* %s */' % (s.kind, s))
+    pr.write('default: return false;')
+    pr.write('}')
+    pr.write('}')
+    pr.write('')
+
+    pr.write('bool is_temporary(EDGE_KIND kind) {')
+    pr.write('switch (kind) {')
+    for s in grammar.symbols:
+        if s.is_temporary():
             pr.write('case %s: return true; /* %s */' % (s.kind, s))
     pr.write('default: return false;')
     pr.write('}')

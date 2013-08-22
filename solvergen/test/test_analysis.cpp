@@ -263,6 +263,10 @@ bool is_lazy(EDGE_KIND kind) {
     return false; /* No symbol in this grammar is lazy. */
 }
 
+bool is_temporary(EDGE_KIND kind) {
+    return kind == 4 || kind == 5;
+}
+
 std::list<Edge *> *all_lazy_edges(NODE_REF from, NODE_REF to, EDGE_KIND kind) {
     assert(false); /* No symbol in this grammar is lazy. */
 }
