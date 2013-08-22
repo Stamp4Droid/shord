@@ -527,7 +527,8 @@ NODE_REF name2node(const char *name) {
  */
 void rels_init() {
     rel_indices = new RelationIndex *[num_rels()];
-    for (int i = 0; i < num_rels(); i++) {
+    for (int i = 1; i < num_rels(); i++) {
+	// HACK: Ignoring special relation #0.
 	// TODO: We only handle relations of arity 3.
 	assert(rel_arity(i) == 3);
 	rel_indices[i] = new RelationIndex[3];
@@ -1125,7 +1126,8 @@ void parse_input_files(PARSING_MODE mode) {
  */
 void parse_rels() {
     // TODO: Could share some of this code with input facts parsing.
-    for (RELATION_REF r = 0; r < num_rels(); r++) {
+    for (RELATION_REF r = 1; r < num_rels(); r++) {
+	// HACK: Ignoring special relation #0.
 	assert(rel_arity(r) == 3);
 	std::ostringstream ss;
 	ss << INPUT_DIR << "/" << ref2rel(r) << "." << RELATION_FORMAT;

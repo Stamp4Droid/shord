@@ -471,8 +471,27 @@ class NormalProduction(util.FinalAttrs):
 
     def outer_condition(self, emit_derivs):
         assert self.left is not None
-        if (emit_derivs and self.left.indexed() and self.result.indexed()
-            and self.relation is None):
+        if not emit_derivs:
+            return None
+        if self.relation is not None:
+            if self.relation.ref != 0:
+                return None
+            indices = (self.result.index, self.left.index, self.right.index)
+            if indices == (2,0,1):
+                return 'l->index == (e->index >> 14)'
+            elif indices == (2,1,0):
+                return 'l->index == (e->index & 0x3fff)'
+            elif indices == (0,2,1):
+                return 'e->index == (l->index >> 14)'
+            elif indices == (1,2,0):
+                return 'e->index == (l->index & 0x3fff)'
+            elif indices == (0,1,2):
+                return None
+            elif indices == (1,0,2):
+                return None
+            else:
+                assert False
+        if self.left.indexed() and self.result.indexed():
             return 'l->index == e->index'
         return None
 
@@ -502,6 +521,8 @@ class NormalProduction(util.FinalAttrs):
         assert self.left is not None and self.left.indexed()
         assert self.right is not None and self.right.indexed()
         assert self.result.indexed()
+        if self.relation.ref == 0:
+            return None
         # We need to feed the selection parameters in column order.
         if self.left.index < self.right.index:
             (edge_1, edge_2) = ('l', 'r')
@@ -514,7 +535,39 @@ class NormalProduction(util.FinalAttrs):
         assert (self.left is not None and self.right is not None
                 and not self.parallel)
         if self.relation is not None:
-            return 'i == e->index' if emit_derivs else None
+            if self.relation.ref != 0:
+                return 'i == e->index' if emit_derivs else None
+            indices = (self.result.index, self.left.index, self.right.index)
+            if indices == (2,0,1):
+                if emit_derivs:
+                    return 'r->index == (e->index & 0x3fff)'
+                else:
+                    return None
+            elif indices == (2,1,0):
+                if emit_derivs:
+                    return 'r->index == (e->index >> 14)'
+                else:
+                    return None
+            elif indices == (0,2,1):
+                return 'r->index == (l->index & 0x3fff)'
+            elif indices == (1,2,0):
+                return 'r->index == (l->index >> 14)'
+            elif indices == (0,1,2):
+                er_check = 'e->index == (r->index >> 14)'
+                lr_check = 'l->index == (r->index & 0x3fff)'
+                if emit_derivs:
+                    return er_check + ' && ' + lr_check
+                else:
+                    return lr_check
+            elif indices == (1,0,2):
+                er_check = 'e->index == (r->index & 0x3fff)'
+                lr_check = 'l->index == (r->index >> 14)'
+                if emit_derivs:
+                    return er_check + ' && ' + lr_check
+                else:
+                    return lr_check
+            else:
+                assert False
         if not self.right.indexed():
             return None
         elif self.left.indexed():
@@ -532,7 +585,23 @@ class NormalProduction(util.FinalAttrs):
         if self.relation is not None:
             assert self.left.indexed()
             assert self.right is not None and self.right.indexed()
-            return 'i'
+            if self.relation.ref != 0:
+                return 'i'
+            indices = (self.result.index, self.left.index, self.right.index)
+            if indices == (2,0,1):
+                return '(l->index << 14) | r->index'
+            elif indices == (2,1,0):
+                return '(r->index << 14) | l->index'
+            elif indices == (0,2,1):
+                return 'l->index >> 14'
+            elif indices == (1,2,0):
+                return 'l->index & 0x3fff'
+            elif indices == (0,1,2):
+                return 'r->index >> 14'
+            elif indices == (1,0,2):
+                return 'r->index & 0x3fff'
+            else:
+                assert False
         if self.right is None:
             assert self.left.indexed()
             return 'l->index'
@@ -769,7 +838,23 @@ class ReverseProduction(util.FinalAttrs):
         if self.relation is not None:
             assert self.base.indexed()
             assert self.reqd is not None and self.reqd.indexed()
-            return 'i'
+            if self.relation.ref != 0:
+                return 'i'
+            indices = (self.result.index, self.base.index, self.reqd.index)
+            if indices == (2,0,1):
+                return '(base->index << 14) | other->index'
+            elif indices == (2,1,0):
+                return '(other->index << 14) | base->index'
+            elif indices == (0,2,1):
+                return 'base->index >> 14'
+            elif indices == (1,2,0):
+                return 'base->index & 0x3fff'
+            elif indices == (0,1,2):
+                return 'other->index >> 14'
+            elif indices == (1,0,2):
+                return 'other->index & 0x3fff'
+            else:
+                assert False
         if self.reqd is None:
             assert self.base.indexed()
             return 'base->index'
@@ -785,6 +870,8 @@ class ReverseProduction(util.FinalAttrs):
         assert self.base is not None and self.base.indexed()
         assert self.reqd is not None and self.reqd.indexed()
         assert self.result.indexed()
+        if self.relation.ref == 0:
+            return None
         # We need to feed the selection parameters in column order.
         if self.base.index < self.reqd.index:
             (edge_1, edge_2) = ('base', 'other')
@@ -793,15 +880,35 @@ class ReverseProduction(util.FinalAttrs):
         return ('INDEX i : rel_select(%s, %s, %s->index, %s->index)'
                 % (self.relation.ref, self.result.index, edge_1, edge_2))
 
-    def must_check_for_common_index(self):
+    def condition(self):
         """
-        Whether we need to add an additional @Index compatibility check for the
-        two combined Edge%s.
+        Any additional @Index compatibility check we need to perform before we
+        record the combination of the Edge%s.
 
-        In our running example, we do.
+        In our running example, we need to check that they two Edge%s have the
+        same @Index.
         """
-        return (self.relation is None and self.base.indexed() and
-                self.reqd.indexed())
+        if self.relation is not None:
+            if self.relation.ref != 0:
+                return None
+            indices = (self.result.index, self.base.index, self.reqd.index)
+            if indices == (2,0,1):
+                return None
+            elif indices == (2,1,0):
+                return None
+            elif indices == (0,2,1):
+                return 'other->index == (base->index & 0x3fff)'
+            elif indices == (1,2,0):
+                return 'other->index == (base->index >> 14)'
+            elif indices == (0,1,2):
+                return 'base->index == (other->index & 0x3fff)'
+            elif indices == (1,0,2):
+                return 'base->index == (other->index >> 14)'
+            else:
+                assert False
+        if self.base.indexed() and self.reqd.indexed():
+            return 'base->index == other->index'
+        return None
 
     def left_edge(self):
         if self.base is None:
@@ -901,6 +1008,11 @@ class Grammar(util.FinalAttrs):
         ## All the @Relation%s encountered so far, stored in a specialized
         #  @RelationStore container.
         self.rels = RelationStore()
+        # HACK: Using a special 0-th relation for index concatenation.
+        # HACK: Currently cramming the two indices into one, using 18 bits for
+        # the first and 14 for the second; this may overflow the index.
+        # TODO: Implement correctly and document.
+        self.rels.get('concat', 3)
         ## All the @NormalProduction%s encountered so far, grouped by result
         #  @Symbol.
         self.prods = util.OrderedMultiDict()
@@ -1272,12 +1384,12 @@ def parse(grammar_in, code_out, terms_out, rels_out):
                 loop_header = rp.loop_header()
                 if loop_header is not None:
                     pr.write('for (%s) {' % loop_header)
-                if rp.must_check_for_common_index():
-                    pr.write('if (base->index == other->index) {')
-                    pr.write(add_edge_stmt)
+                cond = rp.condition()
+                if cond is not None:
+                    pr.write('if (%s) {' % cond)
+                pr.write(add_edge_stmt)
+                if cond is not None:
                     pr.write('}')
-                else:
-                    pr.write(add_edge_stmt)
                 if loop_header is not None:
                     pr.write('}')
                 pr.write('}')
@@ -1297,6 +1409,8 @@ def parse(grammar_in, code_out, terms_out, rels_out):
 
     if rels_out is not None:
         for r in grammar.rels:
+            if r.ref == 0:
+                continue
             rels_out.write('%s\n' % r.name)
 
 def emit_derivs_or_lazy_edges(grammar, pr, emit_derivs):
