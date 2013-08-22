@@ -38,6 +38,10 @@ public class Tree<T> {
         return node != null && root.equals(node);
     }
 
+    public boolean isRoot(T dat) {
+        return getRoot().getData() != null && getRoot().getData().equals(dat);
+    }
+
     public Node<T> getParent(Node<T> child) {
         if (child == null) {
             return null;
@@ -86,6 +90,32 @@ public class Tree<T> {
         return new TreeIterator();
     }
 
+    public String toString() {
+        TreeIterator itr = iterator();
+        StringBuilder builder = new StringBuilder();
+
+        while (itr.hasNext()) {
+            T entry = itr.next();
+            int depth = itr.getDepth();
+
+            for (int i = 0; i < depth; ++i) {
+                builder.append("----");
+            }
+
+            String str;
+            if (isRoot(entry)) {
+                str = "Root";
+            } else {
+                str = entry.toString();
+            }
+
+            builder.append(str);
+            builder.append('\n');
+        }
+
+        return builder.toString();
+    }
+
     public class TreeIterator implements Iterator<T> {
     
         protected Node<T> currentNode = null;
@@ -98,7 +128,8 @@ public class Tree<T> {
         }
     
         public boolean hasNext() {
-            return getSuccessor(currentNode) != null || !(isRoot(currentNode) && (currentItr == null || !currentItr.hasNext()));
+            return !(isRoot(getSuccessor(currentNode)) && isRoot(currentNode) 
+                && (currentItr == null || !currentItr.hasNext()));
         }
         
         public T next() {

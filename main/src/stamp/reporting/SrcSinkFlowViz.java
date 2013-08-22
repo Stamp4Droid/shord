@@ -89,24 +89,27 @@ public class SrcSinkFlowViz extends XMLVizReport
                     SootMethod method = getMethod(s);
                     logCallSites(s, callSites);
                     System.err.print(((CtxtPoint)s.target).ctxt);
-                    if (method == null) 
-                        System.err.println("THAT METHOD IS NULL");
+
                     switch(getStepActionType(parentMethod, s, lastNode, t)) {
+
                         case SAME:
-                        System.err.println("case SAME:");
+                            System.err.println("case SAME:");
                             // could have consecutive exact callstack repeat
                             if (!lastNode.getData().equals(method) && method != null) {
                                lastNode = t.getParent(lastNode).addChild(method);
                             }
                             break;
+
                         case DROP:
-                        System.err.println("case DROP:");
+                            System.err.println("case DROP:");
                             lastNode = lastNode.addChild(method);
                             break;
+
                         case POP:
-                        System.err.println("case POP:");
+                            System.err.println("case POP:");
                             Node<SootMethod> grandFather = t.getParent(t.getParent(lastNode));
                             Node<SootMethod> greatGrandFather = t.getParent(grandFather);
+
                             if (t.isRoot(greatGrandFather)) {
                                 greatGrandFather.replaceChild(grandFather, getTopCtxtMethod(s));
                             }
@@ -114,11 +117,13 @@ public class SrcSinkFlowViz extends XMLVizReport
                             //if stuff
                             lastNode = grandFather.addChild(method);
                             break;
+
                         case BROKEN:
-                        System.err.println("case BROKEN:");
+                            System.err.println("case BROKEN:");
                             lastNode = addCtxt(t, s);
                             lastNode = lastNode.addChild(getMethod(s));
                             break;
+
                         case OTHER:
                         default:
                             throw new Exception("Unrecognized StepActionType in SrcSinkFlowViz generate");
@@ -144,6 +149,10 @@ public class SrcSinkFlowViz extends XMLVizReport
 
     }
 
+    /**
+     * Add the entire context for the step s to the tree t
+     * @return the node for the bottom context method
+     */
     public Node<SootMethod> addCtxt(Tree<SootMethod> t, Step s) {
         Unit[] context = ((CtxtPoint)s.target).ctxt.getElems();
         Node<SootMethod> lastNode = t.getRoot();
@@ -161,7 +170,9 @@ public class SrcSinkFlowViz extends XMLVizReport
      * provided as parameters, generates the XML report
      */
     protected void generateReport(ArrayList<Tree<SootMethod>> flows, Map<SootMethod, ArrayDeque<CallSite>> callSites) {
+        System.out.println("Generating viz report");
         for (Tree<SootMethod> t : flows) {
+            System.out.println(t.toString());
             Category c = makeOrGetSubCat(t.getRoot().getData().getName());
             Tree<SootMethod>.TreeIterator itr = t.iterator();
             
@@ -171,29 +182,27 @@ public class SrcSinkFlowViz extends XMLVizReport
                 SootMethod meth = itr.next();
                 int newDepth = itr.getDepth();
 
-                System.out.println("ITEM: " + meth.getName() +" OldD: "+oldDepth+" NewD: "+newDepth);
-
-                if (filter(meth)) {
+                if (filter(meth, stack.size(), t)) {
                     continue;
-
-                } else if (oldDepth < newDepth) {
+                } else if (oldDepth < newDepth) { // DROP down
                     assert newDepth - oldDepth == 1;
                     stack.push(c);
                     c = c.makeOrGetSubCat(meth);
 
-                } else if (oldDepth > newDepth) {
+                
+                } else if (oldDepth > newDepth) { //POP up
                     int del = oldDepth - newDepth;
                     System.out.println("Del: " + del);
-                    for (; del > 0; del--) {
+                    for (; del > 0 && !stack.isEmpty(); del--) {
                         c = stack.pop();
                     }
                     c = stack.peek();
                     if (c == null) { // end condition FIXME (hack)
                         break;
                     }
-                    c.makeOrGetSubCat(meth);
+                    c = c.makeOrGetSubCat(meth);
 
-                } else {
+                } else { // stay SAME
                     c.makeOrGetSubCat(meth);
 
                 }
@@ -202,9 +211,11 @@ public class SrcSinkFlowViz extends XMLVizReport
         }
     }
 
-    protected boolean filter(SootMethod method) {
-        return false;
-        //return SourceInfo.isFrameworkClass(method.getDeclaringClass());
+    protected boolean filter(SootMethod method, int depth, Tree<SootMethod> t) {
+        if (t.isRoot(method)) {
+            return false;
+        }
+        return (SourceInfo.isFrameworkClass(method.getDeclaringClass()) && depth == 0);
     }
 
     /**
@@ -273,6 +284,7 @@ public class SrcSinkFlowViz extends XMLVizReport
         }         
 
         return StepActionType.BROKEN;
+        /* return OTHER? */
     }
 
     /**
@@ -316,6 +328,9 @@ public class SrcSinkFlowViz extends XMLVizReport
     }
 
 
+    /**
+     * Generates a callsite object for the method called by statement caller
+     */
     private CallSite generateCallSite(SootMethod method, Stmt caller) {
 
         try {
