@@ -212,16 +212,15 @@ def classifyFlows(app, flows, srcClassDict, sinkClassDict):
             srcClasswoPriority = str(srcC)
 
         sinkC = sinkClass(sinkClassDict, sink)
-
-        flowClass.append((app,src,srcClasswoPriority,sink,sinkC,srcClasswoPriority))
         
-        if sinkC == "offdevice":
+        if (srcClasswoPriority == "pii" or srcClasswoPriority == "location") and sinkC == "offdevice":
             flowC = "privacy"
-        elif srcClasswoPriority == 'untrusted' and sinkC == 'sensitiveAPI':
+        elif srcClasswoPriority == "untrusted" and sinkC == "sensitiveAPI":
             flowC = "integrity"
         else:
             flowC = "other"
 
+        flowClass.append((app,src,srcClasswoPriority,sink,sinkC,flowC))
 
     return flowClass
 

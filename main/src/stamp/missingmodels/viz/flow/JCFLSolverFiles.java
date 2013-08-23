@@ -412,7 +412,10 @@ public class JCFLSolverFiles {
 			StubModelSetWithData<T> m;
 			try {
 				m = this.stubModelSetClass.newInstance();
-			} catch (InstantiationException | IllegalAccessException e1) {
+			} catch (InstantiationException e1) {
+				e1.printStackTrace();
+				throw new RuntimeException("Error initializing stub model set with data: " + this.stubModelSetClass.toString());
+			} catch (IllegalAccessException e1) {
 				e1.printStackTrace();
 				throw new RuntimeException("Error initializing stub model set with data: " + this.stubModelSetClass.toString());
 			}

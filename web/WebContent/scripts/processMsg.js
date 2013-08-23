@@ -67,38 +67,57 @@ function processWarnings(message){
 
 // Process JSON flows
 function processFlowJSON(flow) {
+
+    function newTableEntry(entry) {
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-important\">"+entry.modifier+"</span></td> \ <td><i onClick=\"function(e) {debugger;}\" class=\"icon-search\"></i></td> \ <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
+    }
+
     console.log("begin processFlow");
 
+    var maxC = -1;
     $.each(flow, function(i, item) {
+	if (parseInt(item.analysisCounter) > maxC) {
+	    maxC = item.analysisCounter;
+	}
+    });
 
-        newentry = "<tr><td>"+item.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+item.sinkLabel+"</td><td><span class=\"label label-important\">"+item.modifier+"</span></td> \
-<td><i class=\"icon-search\"></i></td> \
-<td><i class=\"icon-ok\"></i></td> \
-<td><i class=\"icon-ban-circle\"></i></td> \
-</tr> ";
+    console.log("Max analysisCounter:" + maxC);
+	   
+    $.each(flow, function(i, item) {
+        if (item.analysisCounter === maxC) {
 
-        flowC = item.flowClass;
+            var newentry = newTableEntry(item);
+            var flowC = item.flowClass;
 
-        if (flowC === "ondevice") {
+            if (flowC === "ondevice") {
                 $("#lowrisk-rpt").append(newentry);
-        } else if (flowC !== "ondevice") {
-            $("#privacy-rpt").append(newentry);
-            $("#conf-rpt").append(newentry);
 
-        } else if (flowC === "integrity") {
-            $("integrity-rpt").append(newentry);
+            } else if (flowC === "privacy") {
+                $("#privacy-rpt").append(newentry);
 
-        } else if (flowC === "other") {
-            // handle other
-        } else if (flowC === "NoClass") {
-        } else if (flowC === "NoClass" || flowC === "") {
-            // handle null 
-        } else if (flowC === "location") {
-            //what is location anyway?? Placeholder
-            $("#privacy-rpt").append(newentry);
-        } else {
-            // handle something weird 
-            console.log("unknown flow class" + flowC);
+            } else if (flowC === "conf") {
+                $("#conf-rpt").append(newentry);
+
+            } else if (flowC === "integrity") {
+                $("integrity-rpt").append(newentry);
+
+            } else if (flowC === "internal") {
+                $("#lowrisk-rpt").append(newentry);
+
+            } else if (flowC === "other") {
+                $("#lowrisk-rpt").append(newentry);
+
+
+            } else if (flowC === "NoClass" || flowC === "") {
+                // explicit no class. Treat as low-risk.
+                $("#lowrisk-rpt").append(newentry);
+
+            } else {
+                // unknown flowClass. Treat as low-risk.
+                $("#lowrisk-rpt").append(newentry);
+                console.log("unknown flow class" + flowC);
+            }
+
         }
     });
 
@@ -137,8 +156,10 @@ function processMessage(message){
     var apkId = tokens[1];
     var rowElem, labElem, flowJSON;
 
+    // get JSON data
     if(action == "Flow") {
         flowJSON = tokens[2];
+
     } else {
 
         // Create new apk status box
@@ -151,13 +172,16 @@ function processMessage(message){
         labElem = rowElem.find('.label');
     }
 
-    // Process based on message type
+    // Process based on message type. The first three simply 
+    // adjust the analysis status box
+    // WARN and Flow are handled more specifically 
     if(action === "BEGIN")
         labElem.addClass('label-info').text("Analyzing");
     else if(action === "END") {
         labElem.removeClass('label-info').addClass('label-success').text("Finished");
     } else if(action === "ERROR")
         labElem.removeClass('label-info').addClass('label-important').text("Error");
+
     else if(action === "WARN") 
         processWarnings(message);
     else if (action === "Flow") {

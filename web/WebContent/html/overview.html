@@ -114,6 +114,10 @@
 		<tr></tr>
 	      </table>
 
+	      <table class="table table-condensed table-hover" colspan="4" id="coverage-rpt"><th>Static</th><th>Dynamic</th><th>Source</th><th>Sink</th>
+		<tr><td>100%</td><td>28%</td><td>63%</td><td>63%</td></tr>
+	      </table>
+
 	      <table class="table table-condensed table-hover" id="incident-summary"><th>Incidents</th><th>Risk Type</th>
 		<tr><td>5</td><td><a href="">Privacy Violations</a></td></tr> 
 		<tr><td>3</td><td><a href="">Confidentiality Risks</a></td></tr>
@@ -123,19 +127,22 @@
 	      </table>
 
 	      <table class="table table-condensed table-hover" id="privacy-rpt"><th colspan="7">Privacy - PII sent off device </th>
-	      	<tr><td>Device Identifier</td><td><i class="icon-arrow-right"></i></td><td>sendUDP(www.symc.com)</td>
+	      	<tr>
+		  <td>Device Identifier</td><td><i class="icon-arrow-right"></i></td><td>sendUDP(www.symc.com)</td>
 		  <td><span class="label label-important">Unencrypted</span></td>
 		  <td><i class="icon-search"></i></td>
 		  <td><i class="icon-ok"></i></td>
 		  <td><i class="icon-ban-circle"></i></td>
 		</tr>
-		<tr><td>content://contacts</td><td><i class="icon-arrow-right"></i></td><td>sendSocket(192.168.0.1)</td>
+		<tr>
+		  <td>content://contacts</td><td><i class="icon-arrow-right"></i></td><td>sendSocket(192.168.0.1)</td>
 		  <td><span class="label label-success">Encrypted</span></td>
 		  <td><i class="icon-search"></i></td>
 		  <td><i class="icon-ok"></i></td>
 		  <td><i class="icon-ban-circle"></i></td>
 		</tr>
-	      	<tr><td>content://sms</td><td><i class="icon-arrow-right"></i></td><td>HttpPOST(33.44.55.66)</td>
+	      	<tr>
+		  <td>content://sms</td><td><i class="icon-arrow-right"></i></td><td>HttpPOST(33.44.55.66)</td>
 		  <td><span class="label label-success">Hashed</span></td>
 		  <td><i class="icon-search"></i></td>
 		  <td><i class="icon-ok"></i></td>
@@ -144,11 +151,15 @@
 	      </table>
 
 	      <table class="table table-condensed table-hover" id="conf-rpt"><th colspan="7">Confidentiality - Unencrypted data sent off device</th>
-	      	<tr><td>content://sms</td><td><i class="icon-arrow-right"></i></td><td>HttpPOST(33.44.55.66)</td>
+	      	<tr>
+		  <td>content://sms</td><td><i class="icon-arrow-right"></i></td><td>HttpPOST(33.44.55.66)</td>
 		  <td><i class="icon-search"></td>
 		  <td><i class="icon-ok"></i></td>
 		  <td><i class="icon-ban-circle"></i></td></tr>
-	      	<tr><td>Device Identifier</td><td><i class="icon-arrow-right"></i></td><td>sendUDP(www.symc.com)</td>
+
+
+	      	<tr>
+		  <td>Device Identifier</td><td><i class="icon-arrow-right"></i></td><td>sendUDP(www.symc.com)</td>
 		  <td><i class="icon-search"></i></td>
 		  <td><i class="icon-ok"></i></td>
 		  <td><i class="icon-ban-circle"></i></td>
@@ -156,29 +167,32 @@
 	      </table>
 
 	      <table class="table table-condensed table-hover" id="integrity-rpt"><th colspan="5">Integrity - Untrusted data flowing to sensitive APIs</th>
-		<tr><td>3</td><td><a href="">Data Corruption</a></td>
+		<tr>
+		  <td>3</td><td><a href="">Data Corruption</a></td>
 		  <td><i class="icon-search"></i></td>		  
 		  <td><i class="icon-ok"></i></td>
 		  <td><i class="icon-ban-circle"></i></td>
 		</tr>
-		<tr><td>7</td><td><a href="">Data Injection</a></td>
+		<tr>
+		  <td>7</td><td><a href="">Data Injection</a></td>
 		  <td><i class="icon-search"></i></td>		  
 		  <td><i class="icon-ok"></i></td>
 		  <td><i class="icon-ban-circle"></i></td>
 		</tr>
-		<tr><td>11</td><td><a href="">Others</a></td>
+		<tr>
+		  <td>11</td><td><a href="">Others</a></td>
 		  <td><i class="icon-search"></i></td>		  
 		  <td><i class="icon-ok"></i></td>
 		  <td><i class="icon-ban-circle"></i></td>
 		</tr>
 	      </table>
 
-	      <table class="table table-condensed table-hover" id="lowrisk-rpt"><th colspan="5">Low Risk Dataflow - Data accessed, but remains on device</th>
-		<tr><td>2</td><td><a href="">On Device Flows</a></td>
-		  <td><i class="icon-search"></i></td>		  
-		  <td><i class="icon-ok"></i></td>
-		  <td><i class="icon-ban-circle"></i></td>
-		</tr>
+	      <table class="table table-condensed table-hover" id="lowrisk-rpt"><th colspan="7">Low Risk Dataflow - Data accessed and remaining on device</th>
+		<!-- <tr><td>2</td><td><a href="">On Device Flows</a></td> -->
+		<!--   <td><i class="icon-search"></i></td>		   -->
+		<!--   <td><i class="icon-ok"></i></td> -->
+		<!--   <td><i class="icon-ban-circle"></i></td> -->
+		<!-- </tr> -->
 	      </table>
 
 	      <table class="table table-condensed table-hover" id="warn-rpt"><th colspan="5">Analysis Warnings - Sources of unsoundness</th>
@@ -199,12 +213,7 @@
 		</tr>
 	      </table>
 
-	      <table class="table table-condensed table-hover" id="coverage-rpt"><th>Coverage</th><th>Analysis Type</th>
-		<tr><td>100%</td><td><a href="">Static data flow analysis (statement)</a></td></tr> 
-		<tr><td>28%</td><td><a href="">Statically Reachable Sources (Dynamic)</a></td></tr>
-		<tr><td>63%</td><td><a href="">Statically Reachable Sinks (Dynamic)</a></td></tr>
-		<tr><td>63%</td><td><a href="">Basic Blocks (Dynamic)</a></td></tr>
-	      </table>
+
 
 	    </div>
 	    <!-- <div class="accordion" id="accordionFlows"> -->
