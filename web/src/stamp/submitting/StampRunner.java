@@ -124,6 +124,57 @@ public class StampRunner extends Thread
 	    /* XXX add better input validation and processing */
 	    apkName = apkName.replaceAll(".apk", "");
 
+	    /* Select incident counts */
+    	    Statement statement1 = connection.createStatement();
+    	    statement1.setQueryTimeout(30);  // set timeout to 30 sec.
+    	    ResultSet privCount = statement1.executeQuery("select COUNT(*) from flows where appName =\"" + apkName + "\"" 
+							 + "and flowClass =\"privacy\"");
+	    JSONObject countReport = new JSONObject();
+	    /* Build incident count summary */
+	    while (privCount.next()) {
+		try {
+		    countReport.put("privacyCount", privCount.getInt("COUNT(*)"));
+    		} catch (JSONException e) {
+    		    System.err.println(e.getMessage());
+    		}
+	    }
+
+	    jarr.put(countReport);
+	    privCount.close();
+	    statement1.close();
+
+    	    Statement statement2 = connection.createStatement();
+    	    statement2.setQueryTimeout(30);  // set timeout to 30 sec.
+     	    ResultSet lowRiskCount = statement2.executeQuery("select count(*) from flows where appName =\"" + apkName + "\"" 
+	    						    + "and flowClass =\"other\"");
+
+	    JSONObject lrCountReport = new JSONObject();
+	    /* Build incident count summary */
+
+	    try {
+		lrCountReport.put("lowRiskCount", lowRiskCount.getInt("COUNT(*)"));
+	    } catch (JSONException e) {
+		System.err.println(e.getMessage());
+	    }
+
+
+	    jarr.put(lrCountReport);
+	    lowRiskCount.close();
+	    statement2.close();
+
+
+     	    // ResultSet confCount = statement.executeQuery("select count(*) from flows where appName =\"" + apkName + "\"" 
+	    // 						 + "and flowClass =\"conf\"");
+     	    // ResultSet integrityCount = statement.executeQuery("select count(*) from flows where appName =\"" + apkName + "\"" 
+	    // 						      + "and flowClass =\"integrity\"");
+
+     	    // ResultSet warningCount = statement.executeQuery("select count(*) from warnings where appName =\"" + apkName + "\"");
+
+	    // jarr.put("confCount", confCount);
+	    // jarr.put("integrityCount", integrityCount);
+	    // jarr.put("lowRiskCount", lowRiskCount);
+
+
     	    /* XXX should be prepared statement */
     	    ResultSet rs = statement.executeQuery("select * from flows where appName =\"" + apkName + "\"");
 
@@ -140,6 +191,7 @@ public class StampRunner extends Thread
     		    json.put("flowClass", rs.getString("flowClass"));
     		    json.put("analysisCounter", rs.getString("analysisCounter"));
     		    json.put("approvedStatus", rs.getString("approvedStatus"));
+    		    json.put("modifier", rs.getString("modifier"));
 
 		    jarr.put(json);
     		} catch (JSONException e) {
