@@ -80,7 +80,7 @@ public class Util {
 			this.x = x;
 			this.y = y;
 		}
-
+		
 		public X getX() {
 			return this.x;
 		}
@@ -91,7 +91,7 @@ public class Util {
 
 		@Override
 		public String toString() {
-			return "(" + this.x.toString() + "," + this.y.toString() + ")";
+			return "[" + this.x.toString() + "," + this.y.toString() + "]";
 		}
 
 		@Override

@@ -5,21 +5,24 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import shord.missingmodels.analysis.JCFLSolverRunner;
-import shord.missingmodels.analysis.JCFLSolverRunner.JCFLSolverStubs;
 import shord.project.analyses.JavaAnalysis;
+import stamp.missingmodels.analysis.Experiment;
+import stamp.missingmodels.analysis.JCFLSolverRunner;
+import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverSingle;
+import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverStubs;
 import stamp.missingmodels.grammars.E12;
 import stamp.missingmodels.util.FileManager;
 import stamp.missingmodels.util.FileManager.FileType;
 import stamp.missingmodels.util.FileManager.StampOutputFile;
 import stamp.missingmodels.util.StubLookup;
 import stamp.missingmodels.util.StubModelSet;
+import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.missingmodels.util.viz.jcflsolver.JCFLRelationFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.AllStubInputsFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubInputsFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetInputFile;
-import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetOutputFile;
+import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetWithDataOutputFile;
 import chord.project.Chord;
 
 /*
@@ -28,7 +31,7 @@ import chord.project.Chord;
 
 @Chord(name = "jcflsolver")
 public class JCFLSolverAnalysis extends JavaAnalysis {	
-	private static JCFLSolverRunner j;
+	private static JCFLSolverRunner j = new JCFLSolverStubs();
 	
 	public static Graph g() {
 		if(j == null) return null;
@@ -63,8 +66,9 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		}
 		
 		// STEP 1: Set up the graph and load the stub model set if applicable.
-		StubModelSet m = new StubModelSet();
+		StubModelSet m;
 		try {
+			//m = manager.read(new StubModelSetWithDataInputFile<Pair<Integer,Integer>>("StubModelSet.txt", ProposedStubModelSet.class));
 			//m = manager.read(new StubModelSetInputFile("StubModelSet012.txt"));
 			//m = manager.read(new StubModelSetInputFile("StubModelSet018.txt"));
 			//m = manager.read(new StubModelSetInputFile("StubModelSet0ac.txt"));
@@ -80,7 +84,10 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		}
 		
 		//j = new JCFLSolverSingle(new E12(), m);
-		j = new JCFLSolverStubs(E12.class, m);
+		//j.run(E12.class, m);
+		Experiment experiment = new Experiment(JCFLSolverSingle.class, E12.class);
+		experiment.run(m, m, 2);
+		j = experiment.j();
 
 		// STEP 3: Output some results
 		printRelCounts(j.g());
@@ -94,7 +101,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		files.add(new JCFLRelationFile(FileType.OUTPUT, j.g(), "Src2Sink", true));
 		files.add(new AllStubInputsFile(j.g(), j.s()));
 		files.add(new StubInputsFile(j.g(), j.s()));
-		files.add(new StubModelSetOutputFile(new StubModelSet(j.g(), j.s())));
+		files.add(new StubModelSetWithDataOutputFile<Pair<Integer,Integer>>(experiment.getAllProposedModels()));
 		//files.addAll(FlowWriter.viz(j.g, j.s));
 		try {
 			for(StampOutputFile file : files) {

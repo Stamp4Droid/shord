@@ -3,14 +3,12 @@ package stamp.paths;
 import shord.analyses.Ctxt;
 import shord.program.Program;
 
-public class CtxtObjPoint implements Point {
-	public final Ctxt ctxt;
+public class CtxtObjPoint extends CtxtPoint {
 
 	public CtxtObjPoint(Ctxt ctxt) {
 		// TODO: Check that it's a contextified object, rather than a call
 		// stack.
-		assert(ctxt.getElems().length > 0);
-		this.ctxt = ctxt;
+		super(ctxt);
 	}
 
 	@Override

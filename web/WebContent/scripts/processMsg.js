@@ -65,13 +65,97 @@ function processWarnings(message){
     }
 }
 
+// Process JSON flows
+function processFlowJSON(flow) {
+
+    function newPrivTableEntry(entry) {
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td> <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"function(e) {alert('hi');}\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
+    }
+
+    function newTableEntry(entry) {
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-success\">"+entry.modifier+"</span></td> \ <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
+    }
+
+    function newTableEntryUnencrypted(entry) {
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-important\">"+entry.modifier+"</span></td> \ <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
+    }
+
+    console.log("begin processFlow");
+
+    var maxC = -1;
+    var apkName = "";
+    var privacyCount = -1;
+    var lowRiskCount = -1;
+    var confCount = -1;
+    $.each(flow, function(i, item) {
+	if ('lowRiskCount' in item) {
+	    lowRiskCount = item.lowRiskCount;
+	}
+
+	if ('privacyCount' in item) {
+	    privacyCount = item.privacyCount;
+	}
+
+	if (parseInt(item.analysisCounter) > maxC) {
+	    maxC = item.analysisCounter;
+	    apkName = item.appName;
+	}
+    });
+
+
+    var headerRow = "<th>" + apkName +  " Risk Report &nbsp <a href=\"\"><i class=\"icon-download\"></a></i></th>";
+    $("#reportheader").append(headerRow);
+
+    console.log("Max analysisCounter:" + maxC);
+    console.log("LowRisk: " + lowRiskCount);
+    console.log("PrivacyRisk: " + privacyCount);
+	   
+    $.each(flow, function(i, item) {
+        if (item.analysisCounter === maxC) {
+
+	    var newentry;
+	    if (item.modifier === "encrypted") {
+		newentry = newTableEntry(item); 
+	    } else {
+		newentry = newTableEntryUnencrypted(item); 
+	    }
+
+            var flowC = item.flowClass;
+
+	    if (flowC === "privacy") {
+                $("#privacy-rpt").append(newPrivTableEntry(item));
+                $("#conf-rpt").append(newentry);
+            } else if (flowC === "integrity") {
+                $("integrity-rpt").append(newentry);
+            } else if (flowC === "other") {
+                $("#lowrisk-rpt").append(newentry);
+            } else if (flowC === "NoClass" || flowC === "") {
+                // explicit no class. Treat as low-risk.
+                $("#lowrisk-rpt").append(newentry);
+
+            } else {
+                // unknown flowClass. Treat as low-risk.
+                $("#lowrisk-rpt").append(newentry);
+                console.log("unknown flow class" + flowC);
+            }
+
+        }
+    });
+}   
+
 
 // Process messages from server
 function processMessage(message){
+
+    function newAccordionGroup(apkName) {
+        return "<div class=\"accordion-group\"><div class=\"accordion-heading\"><a class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#accordionFlows\" href=\"#collapse" + apkName + "\">" + apkName + " Flows</a></div><div id=\"collapse" + apkName + "\" class=\"accordion-body collapse in\"><div class=\"accordion-inner\"><table class=\"table table-condensed table-hover \" id=\"flows" + apkName + "\"></table></div></div></div>";
+    }
+
+
     if(message.data == "Hello!")
     	return;
 
-    alert(message.data);
+    console.log(message.data);
 
     // Parse message 
     var tokens = message.data.split("::");
@@ -79,34 +163,40 @@ function processMessage(message){
     var tkns = tokens[1].split('.apk');
     var apkName = tkns[0] + ".apk";
     var apkId = tokens[1];
-    var rowElem, labElem, flowXML;
+    var rowElem, labElem, flowJSON;
 
+    // get JSON data
     if(action == "Flow") {
-        flowXML = tokens[2];
-    } else {
-        if (action != "WARN") {
-            if (action == "BEGIN") {
-                $('#accordionFlows').append("<div class=\"accordion-group\"><div class=\"accordion-heading\"><a class=\"accordion-toggle\" data-toggle=\"collapse\" data-parent=\"#accordionFlows\" href=\"#collapse" + apkName + "\">" + apkName + " Flows</a></div><div id=\"collapse" + apkName + "\" class=\"accordion-body collapse in\"><div class=\"accordion-inner\"><table class=\"table table-condensed table-hover \" id=\"flows" + apkName + "\"></table></div></div></div>");
+        flowJSON = tokens[2];
 
-		$('#warnings').append("<tr><td colspan=\"2\"><h5>" + apkName + " Warnings</h5></td></tr>");
-            }
+    } else {
+
+        // Create new apk status box
+        if (action == "BEGIN") {
+            $('#accordionFlows').append(newAccordionGroup(apkName));
+            $('#warnings').append("<tr><td colspan=\"2\"><h5>" + apkName + " Warnings</h5></td></tr>");
         }
 
         rowElem = apkIdToRow[apkId];
         labElem = rowElem.find('.label');
     }
 
-    // Process based on message type
-    if(action == "BEGIN")
+    // Process based on message type. The first three simply 
+    // adjust the analysis status box
+    // WARN and Flow are handled more specifically 
+    if(action === "BEGIN")
         labElem.addClass('label-info').text("Analyzing");
-    else if(action == "END")
+    else if(action === "END") {
         labElem.removeClass('label-info').addClass('label-success').text("Finished");
-    else if(action == "ERROR")
+    } else if(action === "ERROR")
         labElem.removeClass('label-info').addClass('label-important').text("Error");
-    else if(action == "Flow"){
-	processFlows(flowXML,apkName);
-    } else if(action == "WARN") {
-	processWarnings(message);
+
+    else if(action === "WARN") 
+        processWarnings(message);
+    else if (action === "Flow") {
+        // is it JSON? probably need action flag for this; we lost the flow one
+        flow = $.parseJSON(flowJSON);
+        processFlowJSON(flow);
     }
 }
 

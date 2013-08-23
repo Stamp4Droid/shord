@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import stamp.missingmodels.analysis.Experiment.StubModelSetWithData;
 import stamp.missingmodels.util.ConversionUtils;
 import stamp.missingmodels.util.FileManager.FileType;
 import stamp.missingmodels.util.FileManager.StampInputFile;
@@ -338,11 +339,97 @@ public class JCFLSolverFiles {
 					continue;
 				}
 				String[] tokens = line.split("#");
-				if(tokens.length != 2) {
+				// allow for some metadata
+				if(tokens.length < 2) {
 					throw new RuntimeException("Error parsing stub model " + line + ", not the right number of tokens!");
 				}
 				try {
 					m.put(new StubModel(tokens[0]), Integer.parseInt(tokens[1]));
+				} catch(NumberFormatException e) {
+					e.printStackTrace();
+					throw new RuntimeException("Error parsing stub model " + line + ", number format exception!");
+				}
+			}
+			return m;
+		}
+	}
+
+	/*
+	 * Prints a stub model set.
+	 */
+	public static class StubModelSetWithDataOutputFile<T> implements StampOutputFile {
+		private final StubModelSetWithData<T> m;
+
+		public StubModelSetWithDataOutputFile(StubModelSetWithData<T> m) {
+			this.m = m;
+		}
+
+		@Override
+		public String getName() {
+			return "StubModelSet.txt";
+		}
+
+		@Override
+		public FileType getType() {
+			return FileType.OUTPUT;
+		}
+
+		@Override
+		public String getContent() {
+			StringBuilder sb = new StringBuilder();
+			for(Map.Entry<StubModel, Integer> entry : this.m.entrySet()) {
+				sb.append(entry.getKey().toString() + "#" + entry.getValue().toString() + "#" + this.m.getDataString(entry.getKey()) + "\n");
+			}
+			return sb.toString();
+		}
+	}
+
+	/*
+	 * Reads in a stub model set.
+	 */
+	public static class StubModelSetWithDataInputFile<T> implements StampInputFile<StubModelSetWithData<T>> {
+		private final String filename;
+		private final Class<? extends StubModelSetWithData<T>> stubModelSetClass;
+		
+		public StubModelSetWithDataInputFile(String filename, Class<? extends StubModelSetWithData<T>> stubModelSetClass) {
+			this.filename = filename;
+			this.stubModelSetClass = stubModelSetClass;
+		}
+		
+		@Override
+		public String getName() {
+			return this.filename;
+		}
+
+		@Override
+		public FileType getType() {
+			return FileType.PERMANENT;
+		}
+
+		@Override
+		public StubModelSetWithData<T> getObject(BufferedReader br) throws IOException {
+			StubModelSetWithData<T> m;
+			try {
+				m = this.stubModelSetClass.newInstance();
+			} catch (InstantiationException e1) {
+				e1.printStackTrace();
+				throw new RuntimeException("Error initializing stub model set with data: " + this.stubModelSetClass.toString());
+			} catch (IllegalAccessException e1) {
+				e1.printStackTrace();
+				throw new RuntimeException("Error initializing stub model set with data: " + this.stubModelSetClass.toString());
+			}
+			String line;
+			while((line = br.readLine()) != null) {
+				if(line.equals("")) {
+					continue;
+				}
+				String[] tokens = line.split("#");
+				// allow for some metadata
+				if(tokens.length < 3) {
+					throw new RuntimeException("Error parsing proposed stub model " + line + ", not the right number of tokens!");
+				}
+				try {
+					m.put(new StubModel(tokens[0]), Integer.parseInt(tokens[1]), m.parseData(tokens[2]));
 				} catch(NumberFormatException e) {
 					e.printStackTrace();
 					throw new RuntimeException("Error parsing stub model " + line + ", number format exception!");

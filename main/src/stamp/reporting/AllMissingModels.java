@@ -23,6 +23,7 @@ public class AllMissingModels extends XMLReport {
 	}
 
 	public void generate() {
+        try {
 		Graph g = JCFLSolverAnalysis.g();
 		StubLookup s = JCFLSolverAnalysis.s();
 		Counter<String> keys = new Counter<String>();
@@ -48,5 +49,9 @@ public class AllMissingModels extends XMLReport {
 		for(String line : keys.sortedKeySet()) {
 			newTuple().addValue(values.get(line).method).addValue(line).addValue("Count: " + Integer.toString(keys.getCount(line)));
 		}
+        } catch (Exception e) {
+            System.err.println("Exception in All Missing Models Generation. Maybe was run without JCFL?");
+            e.printStackTrace();
+        }
 	}
 }
