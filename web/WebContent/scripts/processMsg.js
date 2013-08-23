@@ -69,7 +69,7 @@ function processWarnings(message){
 function processFlowJSON(flow) {
 
     function newPrivTableEntry(entry) {
-        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td> <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td> <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"function(e) {alert('hi');}\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
     }
 
     function newTableEntry(entry) {
@@ -102,7 +102,13 @@ function processFlowJSON(flow) {
 	}
     });
 
+
+    var headerRow = "<th>" + apkName +  " Risk Report &nbsp <a href=\"\"><i class=\"icon-download\"></a></i></th>";
+    $("#reportheader").append(headerRow);
+
     console.log("Max analysisCounter:" + maxC);
+    console.log("LowRisk: " + lowRiskCount);
+    console.log("PrivacyRisk: " + privacyCount);
 	   
     $.each(flow, function(i, item) {
         if (item.analysisCounter === maxC) {
