@@ -16,6 +16,7 @@ import stamp.missingmodels.util.FileManager.FileType;
 import stamp.missingmodels.util.FileManager.StampOutputFile;
 import stamp.missingmodels.util.StubLookup;
 import stamp.missingmodels.util.StubModelSet;
+import stamp.missingmodels.util.StubModelSet.ModelType;
 import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.missingmodels.util.viz.jcflsolver.JCFLRelationFile;
@@ -86,7 +87,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		//j = new JCFLSolverSingle(new E12(), m);
 		//j.run(E12.class, m);
 		Experiment experiment = new Experiment(JCFLSolverSingle.class, E12.class);
-		experiment.run(m, m, 2);
+		experiment.run(m, m, ModelType.FALSE);
 		j = experiment.j();
 
 		// STEP 3: Output some results

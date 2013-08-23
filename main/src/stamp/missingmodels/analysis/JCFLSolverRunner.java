@@ -6,6 +6,7 @@ import stamp.missingmodels.util.Relation;
 import stamp.missingmodels.util.StubLookup;
 import stamp.missingmodels.util.StubLookup.StubLookupKey;
 import stamp.missingmodels.util.StubModelSet;
+import stamp.missingmodels.util.StubModelSet.ModelType;
 import stamp.missingmodels.util.StubModelSet.StubModel;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.Util.Pair;
@@ -72,7 +73,10 @@ public abstract class JCFLSolverRunner {
 			for(Edge edge : positiveWeightEdges.keySet()) {
 				for(Pair<Edge,Boolean> pair : positiveWeightEdges.get(edge)) {
 					EdgeData data = pair.getX().getData(this.g);
-					proposals.put(new StubModel(this.s.get(new StubLookupKey(data.symbol, data.from, data.to))), 0, 1, round);
+					StubModel model = new StubModel(this.s.get(new StubLookupKey(data.symbol, data.from, data.to)));
+					if(this.m.get(model) == ModelType.UNKNOWN) {
+						proposals.put(model, ModelType.UNKNOWN, 1, round);
+					}
 				}
 			}
 			return proposals;

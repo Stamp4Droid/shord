@@ -17,6 +17,7 @@ import stamp.missingmodels.util.StubLookup;
 import stamp.missingmodels.util.StubLookup.StubLookupKey;
 import stamp.missingmodels.util.StubLookup.StubLookupValue;
 import stamp.missingmodels.util.StubModelSet;
+import stamp.missingmodels.util.StubModelSet.ModelType;
 import stamp.missingmodels.util.StubModelSet.StubModel;
 import stamp.missingmodels.util.Util.Counter;
 import stamp.missingmodels.util.Util.MultivalueMap;
@@ -303,7 +304,7 @@ public class JCFLSolverFiles {
 		@Override
 		public String getContent() {
 			StringBuilder sb = new StringBuilder();
-			for(Map.Entry<StubModel, Integer> entry : this.m.entrySet()) {
+			for(Map.Entry<StubModel,ModelType> entry : this.m.entrySet()) {
 				sb.append(entry.getKey().toString() + "#" + entry.getValue().toString()).append("\n");
 			}
 			return sb.toString();
@@ -344,7 +345,7 @@ public class JCFLSolverFiles {
 					throw new RuntimeException("Error parsing stub model " + line + ", not the right number of tokens!");
 				}
 				try {
-					m.put(new StubModel(tokens[0]), Integer.parseInt(tokens[1]));
+					m.put(new StubModel(tokens[0]), ModelType.getModelType(Integer.parseInt(tokens[1])));
 				} catch(NumberFormatException e) {
 					e.printStackTrace();
 					throw new RuntimeException("Error parsing stub model " + line + ", number format exception!");
@@ -377,7 +378,7 @@ public class JCFLSolverFiles {
 		@Override
 		public String getContent() {
 			StringBuilder sb = new StringBuilder();
-			for(Map.Entry<StubModel, Integer> entry : this.m.entrySet()) {
+			for(Map.Entry<StubModel,ModelType> entry : this.m.entrySet()) {
 				sb.append(entry.getKey().toString() + "#" + entry.getValue().toString() + "#" + this.m.getDataString(entry.getKey()) + "\n");
 			}
 			return sb.toString();
@@ -426,7 +427,7 @@ public class JCFLSolverFiles {
 					throw new RuntimeException("Error parsing proposed stub model " + line + ", not the right number of tokens!");
 				}
 				try {
-					m.put(new StubModel(tokens[0]), Integer.parseInt(tokens[1]), m.parseData(tokens[2]));
+					m.put(new StubModel(tokens[0]), ModelType.getModelType(Integer.parseInt(tokens[1])), m.parseData(tokens[2]));
 				} catch(NumberFormatException e) {
 					e.printStackTrace();
 					throw new RuntimeException("Error parsing stub model " + line + ", number format exception!");

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import stamp.missingmodels.util.StubModelSet;
+import stamp.missingmodels.util.StubModelSet.ModelType;
 import stamp.missingmodels.util.StubModelSet.StubModel;
 import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.jcflsolver.Graph;
@@ -60,7 +61,7 @@ public class Experiment {
 	 * @param defaultModelValue If a model is not present, how
 	 * to treat it. Default is 0.
 	 */ 
-	public void run(StubModelSet groundTruthModels, StubModelSet initialModels, int defaultModelValue) {
+	public void run(StubModelSet groundTruthModels, StubModelSet initialModels, ModelType defaultModelValue) {
 		// STEP 0: Initilize the total set of models
 		StubModelSet total = new StubModelSet();
 		total.putAll(initialModels);
@@ -84,7 +85,7 @@ public class Experiment {
 			for(StubModel model : curProposed.keySet()) {
 				// For now, not containing a model is equivalent to its having value 0.
 				// TODO: Is there a situation where we would want to keep this separate?
-				if(groundTruthModels.get(model) != 0) {
+				if(groundTruthModels.get(model) != ModelType.UNKNOWN) {
 					total.put(model, groundTruthModels.get(model));
 				} else {
 					total.put(model, defaultModelValue);
@@ -94,7 +95,7 @@ public class Experiment {
 	}
 	
 	public void run(StubModelSet groundTruthModels, StubModelSet initialModels) {
-		run(groundTruthModels, initialModels, 0); 
+		run(groundTruthModels, initialModels, ModelType.UNKNOWN); 
 	}
 	
 	/*
@@ -142,17 +143,17 @@ public class Experiment {
 		}
 		
 		@Override
-		public Integer put(StubModel key, Integer value) {
+		public ModelType put(StubModel key, ModelType value) {
 			return this.put(key, value, this.defaultValue());
 		}
 		
-		public Integer put(StubModel key, Integer value, T data) {
+		public ModelType put(StubModel key, ModelType value, T data) {
 			this.data.put(key, data);
 			return super.put(key, value);
 		}
 		
 		@Override
-		public void putAll(Map<? extends StubModel, ? extends Integer> map) {
+		public void putAll(Map<? extends StubModel,? extends ModelType> map) {
 			super.putAll(map);
 			for(StubModel model : map.keySet()) {
 				this.data.put(model, this.defaultValue());
@@ -184,7 +185,7 @@ public class Experiment {
 			this.defaultProposedValue = defaultProposedValue;
 		}
 		
-		public Integer put(StubModel key, Integer value, int proposed, int round) {
+		public ModelType put(StubModel key, ModelType value, int proposed, int round) {
 			return super.put(key, value, new Pair<Integer,Integer>(proposed, round));
 		}
 
