@@ -195,7 +195,9 @@ def classifyContext(ctx, contextDict):
 def classifyFlows(app, flows, srcClassDict, sinkClassDict):
 
     flowClass = []
+    modifier = {}
 
+    # Classify flows
     for f in flows:
         src = f[0]
         sink = f[1]
@@ -212,17 +214,30 @@ def classifyFlows(app, flows, srcClassDict, sinkClassDict):
             srcClasswoPriority = str(srcC)
 
         sinkC = sinkClass(sinkClassDict, sink)
-        
-        if (srcClasswoPriority == "pii" or srcClasswoPriority == "location") and sinkC == "offdevice":
+
+        if sinkC == "offdevice":
             flowC = "privacy"
         elif srcClasswoPriority == "untrusted" and sinkC == "sensitiveAPI":
             flowC = "integrity"
+        elif sinkC =="cipher":
+            modifier[src] = "encrypted"
+            continue 
         else:
             flowC = "other"
 
         flowClass.append((app,src,srcClasswoPriority,sink,sinkC,flowC))
 
-    return flowClass
+    # Set modifiers
+
+    flowClassModifiers = []
+    for f in flowClass:
+        if f[1] in modifier.keys():
+            if modifier[f[1]] == "encrypted":
+                flowClassModifiers.append(f + ("encrypted",))
+        else:
+            flowClassModifiers.append(f + ("unencrypted",))
+
+    return flowClassModifiers
 
 
 """Output flows in XML format"""
