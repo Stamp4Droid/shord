@@ -100,8 +100,6 @@
 <xs:element name="ref2SinkByRef" type="IntraProceduralStep" substitutionGroup="step"/>
 <xs:element name="sinkLabel" type="IntraProceduralStep" substitutionGroup="step"/>
 <xs:element name="srcLabel" type="IntraProceduralStep" substitutionGroup="step"/>
-<xs:element name="statLoadPrim" type="IntraProceduralStep" substitutionGroup="step"/>
-<xs:element name="statLoadRef" type="IntraProceduralStep" substitutionGroup="step"/>
 <xs:element name="statStorePrim" type="IntraProceduralStep" substitutionGroup="step"/>
 <xs:element name="statStoreRef" type="IntraProceduralStep" substitutionGroup="step"/>
 
@@ -139,7 +137,8 @@
     <xs:extension base="IndexedTerminalStep"/>
   </xs:complexContent>
 </xs:complexType>
-<xs:element name="varCtxt" type="CtxtSettingStep" substitutionGroup="step"/>
+<xs:element name="statLoadPrim" type="CtxtSettingStep" substitutionGroup="step"/>
+<xs:element name="statLoadRef" type="CtxtSettingStep" substitutionGroup="step"/>
 
 <xs:complexType name="StoreStep">
   <xs:complexContent>

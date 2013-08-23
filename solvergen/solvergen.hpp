@@ -557,8 +557,6 @@ typedef unsigned long COUNTER;
  */
 #define STRICT_ALLOC(num, type) ((type*) strict_alloc((num) * sizeof(type)))
 
-Edge *edge_new(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
-	       Edge *l_edge, bool l_rev, Edge *r_edge, bool r_rev);
 void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	      Edge *l_edge, bool l_rev, Edge *r_edge, bool r_rev);
 

@@ -28,6 +28,9 @@ CC(c:C,d:C) input
 Alloc(v:V,h:H)    input
 HTFilter(h:H,t:T) input
 
+LoadStat(v:V,f:F)     input
+LoadStatPrim(u:U,f:F) input
+
 Load(v:V,b:V,f:F)      input
 Store(b:V,f:F,v:V)     input
 LoadPrim(u:U,b:V,f:F)  input
@@ -36,11 +39,12 @@ StorePrim(b:V,f:F,u:U) input
 # OUTPUT RELATIONS ============================================================
 
 CIC(c:C,i:I,d:C) output
-CV(c:C,v:V)      output
-CU(c:C,u:U)      output
 
 AllocCtxt(c:C,v:V,o:C) output
 OTFilter(o:C,t:T)      output
+
+LoadStatCtxt(c:C,v:V,f:F)     output
+LoadStatPrimCtxt(c:C,u:U,f:F) output
 
 ArrLoad(v:V,b:V)      output # v = b[*]
 ArrStore(b:V,v:V)     output # b[*] = v
@@ -50,11 +54,12 @@ ArrStorePrim(b:V,u:U) output # b[*] = u
 # RULES =======================================================================
 
 CIC(c,i,d) :- CC(c,d), CI(d,i).
-CV(c,v)    :- MV(m,v), CM(c,m).
-CU(c,u)    :- MU(m,u), CM(c,m).
 
-AllocCtxt(c,v,o) :- Alloc(v,h), CV(c,v), CC(c,o), CH(o,h).
+AllocCtxt(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
 OTFilter(o,t)    :- CH(o,h), HTFilter(h,t).
+
+LoadStatCtxt(c,v,f)     :- LoadStat(v,f), MV(m,v), CM(c,m).
+LoadStatPrimCtxt(c,u,f) :- LoadStatPrim(u,f), MU(m,u), CM(c,m).
 
 ArrLoad(v,b)      :- Load(v,b,0).
 ArrStore(b,v)     :- Store(b,0,v).
