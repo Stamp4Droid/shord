@@ -139,7 +139,7 @@ void *strict_alloc(size_t num_bytes) {
 
 /**
  * Return the maximum amount of memory this process has ever held at any one
- * time (in bytes).
+ * time (in kbytes).
  */
 long allocated_memory() {
     struct rusage usage;
@@ -681,7 +681,7 @@ void out_edge_iterator_free(OutEdgeIterator *iter) {
  * for source Node @a from. Use next_out_edge() to advance the iterator.
  */
 OutEdgeIterator *get_out_edge_iterator(NODE_REF from, EDGE_KIND kind) {
-    assert(!is_lazy(kind));
+    assert(!is_predicate(kind));
     OutEdgeSet *set = nodes[from].out[kind];
     if (set == NULL) {
 	return NULL;
@@ -696,7 +696,7 @@ OutEdgeIterator *get_out_edge_iterator(NODE_REF from, EDGE_KIND kind) {
  */
 OutEdgeIterator *get_out_edge_iterator_to_target(NODE_REF from, NODE_REF to,
 						 EDGE_KIND kind) {
-    assert(!is_lazy(kind));
+    assert(!is_predicate(kind));
     OutEdgeSet *set = nodes[from].out[kind];
     if (set == NULL) {
 	return NULL;
@@ -782,40 +782,6 @@ Edge *next_out_edge(OutEdgeIterator *iter) {
     return e;
 }
 
-LazyOutEdgeIterator *lazy_out_edge_iterator_alloc() {
-    LazyOutEdgeIterator *iter = STRICT_ALLOC(1, LazyOutEdgeIterator);
-    iter->last = NULL;
-    iter->edges = NULL;
-    return iter;
-}
-
-void lazy_out_edge_iterator_free(LazyOutEdgeIterator *iter) {
-    delete iter->edges;
-    free(iter);
-}
-
-LazyOutEdgeIterator *get_lazy_out_edge_iterator_to_target(NODE_REF from,
-							  NODE_REF to,
-							  EDGE_KIND kind) {
-    assert(is_lazy(kind));
-    LazyOutEdgeIterator *iter = lazy_out_edge_iterator_alloc();
-    iter->edges = all_lazy_edges(from, to, kind);
-    return iter;
-}
-
-Edge *next_lazy_out_edge(LazyOutEdgeIterator *iter) {
-    if (iter->last != NULL) {
-	free(iter->last);
-    }
-    if (iter->edges->empty()) {
-	lazy_out_edge_iterator_free(iter);
-	return NULL;
-    } else {
-	iter->last = iter->edges->front();
-	iter->edges->pop_front();
-	return iter->last;
-    }
-}
 
 /* INCOMING EDGE ITERATOR HANDLING ========================================= */
 
@@ -843,7 +809,7 @@ void in_edge_iterator_free(InEdgeIterator *iter) {
  * target Node @a to. Use next_in_edge() to advance the iterator.
  */
 InEdgeIterator *get_in_edge_iterator(NODE_REF to, EDGE_KIND kind) {
-    assert(!is_lazy(kind));
+    assert(!is_predicate(kind));
     InEdgeIterator *iter = in_edge_iterator_alloc();
     iter->curr_edge = nodes[to].in[kind];
     return iter;
@@ -1165,7 +1131,7 @@ void parse_rels() {
 void print_results() {
     /* Print out non-terminal edges. */
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
-	if (is_lazy(k) || is_terminal(k)) {
+	if (is_predicate(k) || is_terminal(k)) {
 	    continue;
 	}
 	bool parametric = is_parametric(k);
@@ -1736,7 +1702,7 @@ void print_paths_for_kind(EDGE_KIND k, unsigned int num_paths) {
 
 void print_paths() {
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
-	if (is_lazy(k)) {
+	if (is_predicate(k)) {
 	    // TODO: Also check that no edges have been produced.
 	    continue;
 	}
@@ -1770,10 +1736,11 @@ void logging_init() {
  * representing terminal @Symbol%s or non-terminals.
  */
 void print_edge_counts(bool terminal) {
+    // TODO: Could cache these counts.
     DECL_COUNTER(total_edge_count, 0);
     DECL_COUNTER(total_index_count, 0);
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
-	if (is_lazy(k) || is_terminal(k) ^ terminal) {
+	if (is_predicate(k) || is_terminal(k) ^ terminal) {
 	    continue;
 	}
 	bool parametric = is_parametric(k);
@@ -1815,7 +1782,7 @@ void print_stats() {
     print_edge_counts(true);
     LOG("Non-terminals:");
     print_edge_counts(false);
-    LOG("Memory usage: ", allocated_memory(), " bytes");
+    LOG("Memory usage: ", allocated_memory(), " kbytes");
 }
 
 /**
@@ -1923,8 +1890,9 @@ int main() {
     DECL_COUNTER(solving_start, CURRENT_TIME());
     /* Process empty productions. */
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
-	if (has_empty_prod(k) && !is_lazy(k)) {
+	if (has_empty_prod(k) && !is_predicate(k)) {
 	    for (NODE_REF n = 0; n < num_nodes(); n++) {
+		// We have disallowed predicates on empty productions.
 		add_edge(n, n, k, INDEX_NONE, NULL, false, NULL, false);
 	    }
 	}

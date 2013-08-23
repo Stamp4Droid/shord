@@ -200,22 +200,6 @@ typedef struct {
 } OutEdgeSet;
 
 /**
- * An iterator over the set of outgoing Edge%s of a Node, constructed on
- * demand.
- */
-typedef struct {
-    /**
-     * The last Edge returned by this LazyOutEdgeIterator. Will get deallocated
-     * on the next access.
-     */
-    Edge *last;
-    /**
-     * The Edge%s left to return.
-     */
-    std::list<Edge *> *edges;
-} LazyOutEdgeIterator;
-
-/**
  * An iterator over the set of outgoing Edge%s of a Node.
  */
 typedef struct {
@@ -582,10 +566,6 @@ OutEdgeIterator *get_out_edge_iterator(NODE_REF from, EDGE_KIND kind);
 OutEdgeIterator *get_out_edge_iterator_to_target(NODE_REF from, NODE_REF to,
 						 EDGE_KIND kind);
 Edge *next_out_edge(OutEdgeIterator *iter);
-LazyOutEdgeIterator *get_lazy_out_edge_iterator_to_target(NODE_REF from,
-							  NODE_REF to,
-							  EDGE_KIND kind);
-Edge *next_lazy_out_edge(LazyOutEdgeIterator *iter);
 InEdgeIterator *get_in_edge_iterator(NODE_REF to, EDGE_KIND kind);
 Edge *next_in_edge(InEdgeIterator *iter);
 
@@ -662,10 +642,9 @@ unsigned int num_paths_to_print(EDGE_KIND kind);
 PATH_LENGTH static_min_length(EDGE_KIND kind);
 
 /**
- * Return whether Edge%s of a particular @Symbol have been specified as being
- * produced on demand.
+ * Return whether a @Symbol is used as a predicate on a @Production.
  */
-bool is_lazy(EDGE_KIND kind);
+bool is_predicate(EDGE_KIND kind);
 
 /**
  * Check whether a particular @Symbol was introduced by the parser, and was not
@@ -674,10 +653,11 @@ bool is_lazy(EDGE_KIND kind);
 bool is_temporary(EDGE_KIND kind);
 
 /**
- * Generate on-the-fly all Edge%s with the given features. Only appropriate for
- * Edge%s of lazily-generated @Symbol%s.
+ * Check whether some Node is reachable from another through a path of a
+ * specific @Symbol and @Index. Only appropriate for @Symbol%s used as
+ * predicates.
  */
-std::list<Edge *> *all_lazy_edges(NODE_REF from, NODE_REF to, EDGE_KIND kind);
+bool reachable(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index);
 
 /** Return the total number of @Relation%s declared in the input grammar. */
 RELATION_REF num_rels();

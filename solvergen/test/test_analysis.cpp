@@ -177,7 +177,6 @@ std::list<Derivation> all_derivations(Edge *e) {
     Edge *l, *r;
     std::list<Derivation> derivs;
     OutEdgeIterator *l_out_iter, *r_out_iter;
-    InEdgeIterator *l_in_iter;
     switch (e->kind) {
     case 0: /* Flow */
 	/* - => Flow */
@@ -259,16 +258,51 @@ PATH_LENGTH static_min_length(EDGE_KIND kind) {
     }
 }
 
-bool is_lazy(EDGE_KIND kind) {
-    return false; /* No symbol in this grammar is lazy. */
+bool is_predicate(EDGE_KIND kind) {
+    return false; /* No predicates in this grammar. */
 }
 
 bool is_temporary(EDGE_KIND kind) {
     return kind == 4 || kind == 5;
 }
 
-std::list<Edge *> *all_lazy_edges(NODE_REF from, NODE_REF to, EDGE_KIND kind) {
-    assert(false); /* No symbol in this grammar is lazy. */
+bool reachable(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index) {
+    bool reached = false;
+    OutEdgeIterator *iter;
+    Edge *e;
+    switch (kind) {
+    case 0: /* Flow */
+	assert(false);
+    case 1: /* assign */
+	iter = get_out_edge_iterator_to_target(from, to, 1);
+	while ((e = next_out_edge(iter)) != NULL) {
+	    reached = true;
+	}
+	break;
+    case 2: /* param */
+	iter = get_out_edge_iterator_to_target(from, to, 2);
+	while ((e = next_out_edge(iter)) != NULL) {
+	    if (e->index == index) {
+		reached = true;
+	    }
+	}
+	break;
+    case 3: /* ret */
+	iter = get_out_edge_iterator_to_target(from, to, 3);
+	while ((e = next_out_edge(iter)) != NULL) {
+	    if (e->index == index) {
+		reached = true;
+	    }
+	}
+	break;
+    case 4: /* Temp1 */
+	assert(false);
+    case 5: /* Temp2 */
+	assert(false);
+    default:
+	assert(false);
+    }
+    return reached;
 }
 
 RELATION_REF num_rels() {
