@@ -68,46 +68,67 @@ function processWarnings(message){
 // Process JSON flows
 function processFlowJSON(flow) {
 
+    function newPrivTableEntry(entry) {
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td> <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"function(e) {alert('hi');}\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
+    }
+
     function newTableEntry(entry) {
-        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-important\">"+entry.modifier+"</span></td> \ <td><i onClick=\"function(e) {debugger;}\" class=\"icon-search\"></i></td> \ <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-success\">"+entry.modifier+"</span></td> \ <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
+    }
+
+    function newTableEntryUnencrypted(entry) {
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-important\">"+entry.modifier+"</span></td> \ <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
     }
 
     console.log("begin processFlow");
 
     var maxC = -1;
+    var apkName = "";
+    var privacyCount = -1;
+    var lowRiskCount = -1;
+    var confCount = -1;
     $.each(flow, function(i, item) {
+	if ('lowRiskCount' in item) {
+	    lowRiskCount = item.lowRiskCount;
+	}
+
+	if ('privacyCount' in item) {
+	    privacyCount = item.privacyCount;
+	}
+
 	if (parseInt(item.analysisCounter) > maxC) {
 	    maxC = item.analysisCounter;
+	    apkName = item.appName;
 	}
     });
 
+
+    var headerRow = "<th>" + apkName +  " Risk Report &nbsp <a href=\"\"><i class=\"icon-download\"></a></i></th>";
+    $("#reportheader").append(headerRow);
+
     console.log("Max analysisCounter:" + maxC);
+    console.log("LowRisk: " + lowRiskCount);
+    console.log("PrivacyRisk: " + privacyCount);
 	   
     $.each(flow, function(i, item) {
         if (item.analysisCounter === maxC) {
 
-            var newentry = newTableEntry(item);
+	    var newentry;
+	    if (item.modifier === "encrypted") {
+		newentry = newTableEntry(item); 
+	    } else {
+		newentry = newTableEntryUnencrypted(item); 
+	    }
+
             var flowC = item.flowClass;
 
-            if (flowC === "ondevice") {
-                $("#lowrisk-rpt").append(newentry);
-
-            } else if (flowC === "privacy") {
-                $("#privacy-rpt").append(newentry);
-
-            } else if (flowC === "conf") {
+	    if (flowC === "privacy") {
+                $("#privacy-rpt").append(newPrivTableEntry(item));
                 $("#conf-rpt").append(newentry);
-
             } else if (flowC === "integrity") {
                 $("integrity-rpt").append(newentry);
-
-            } else if (flowC === "internal") {
-                $("#lowrisk-rpt").append(newentry);
-
             } else if (flowC === "other") {
                 $("#lowrisk-rpt").append(newentry);
-
-
             } else if (flowC === "NoClass" || flowC === "") {
                 // explicit no class. Treat as low-risk.
                 $("#lowrisk-rpt").append(newentry);
@@ -120,18 +141,6 @@ function processFlowJSON(flow) {
 
         }
     });
-
-        /*  
-            // other reports in overview.html that may need adding
-            } else if (flowC === "lowrisk") {
-
-            } else if (flowC === "warn") {
-
-            } else if (flowC === "coverage") {
-
-            }   
-        */  
-    //}   
 }   
 
 

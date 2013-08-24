@@ -110,108 +110,73 @@
 	    <div class="span6">
 
 	      <table class="table table-condensed table-hover" id="reportheader">
-		<th>Risk Report for PrivacyLeakMain.apk &nbsp <a href=""><i class="icon-refresh"></a></i> &nbsp <a href=""><i class="icon-download"></a></i></th>
 		<tr></tr>
 	      </table>
 
-	      <table class="table table-condensed table-hover" colspan="4" id="coverage-rpt"><th>Static</th><th>Dynamic</th><th>Source</th><th>Sink</th>
-		<tr><td>100%</td><td>28%</td><td>63%</td><td>63%</td></tr>
-	      </table>
+	      <!-- <table class="table table-condensed table-hover" colspan="4" id="coverage-rpt"><th>Static</th><th>Dynamic</th><th>Source</th><th>Sink</th> -->
+	      <!-- 	<tr><td>100%</td><td>28%</td><td>63%</td><td>63%</td></tr> -->
+	      <!-- </table> -->
 
 	      <table class="table table-condensed table-hover" id="incident-summary"><th>Incidents</th><th>Risk Type</th>
-		<tr><td>5</td><td><a href="">Privacy Violations</a></td></tr> 
-		<tr><td>3</td><td><a href="">Confidentiality Risks</a></td></tr>
-		<tr><td>7</td><td><a href="">Integrity Risks</a></td></tr>
-		<tr><td>31</td><td><a href="">Low Risk</a></td></tr>
-		<tr><td>11</td><td><a href="">Analysis Warnings</a></td></tr>
+		<!-- <tr><td>5</td><td><a href="">Privacy Violations</a></td></tr>  -->
+		<!-- <tr><td>3</td><td><a href="">Confidentiality Risks</a></td></tr> -->
+		<!-- <tr><td>7</td><td><a href="">Integrity Risks</a></td></tr> -->
+		<!-- <tr><td>31</td><td><a href="">Low Risk</a></td></tr> -->
+		<!-- <tr><td>11</td><td><a href="">Analysis Warnings</a></td></tr> -->
 	      </table>
 
-	      <table class="table table-condensed table-hover" id="privacy-rpt"><th colspan="7">Privacy - PII sent off device </th>
-	      	<tr>
-		  <td>Device Identifier</td><td><i class="icon-arrow-right"></i></td><td>sendUDP(www.symc.com)</td>
-		  <td><span class="label label-important">Unencrypted</span></td>
-		  <td><i class="icon-search"></i></td>
-		  <td><i class="icon-ok"></i></td>
-		  <td><i class="icon-ban-circle"></i></td>
-		</tr>
-		<tr>
-		  <td>content://contacts</td><td><i class="icon-arrow-right"></i></td><td>sendSocket(192.168.0.1)</td>
-		  <td><span class="label label-success">Encrypted</span></td>
-		  <td><i class="icon-search"></i></td>
-		  <td><i class="icon-ok"></i></td>
-		  <td><i class="icon-ban-circle"></i></td>
-		</tr>
-	      	<tr>
-		  <td>content://sms</td><td><i class="icon-arrow-right"></i></td><td>HttpPOST(33.44.55.66)</td>
-		  <td><span class="label label-success">Hashed</span></td>
-		  <td><i class="icon-search"></i></td>
-		  <td><i class="icon-ok"></i></td>
-		  <td><i class="icon-ban-circle"></i></td>
-		</tr>
+	      <table class="table table-condensed table-hover" id="privacy-rpt"><th colspan="5">Privacy - Data sent off device </th>
 	      </table>
 
-	      <table class="table table-condensed table-hover" id="conf-rpt"><th colspan="7">Confidentiality - Unencrypted data sent off device</th>
-	      	<tr>
-		  <td>content://sms</td><td><i class="icon-arrow-right"></i></td><td>HttpPOST(33.44.55.66)</td>
-		  <td><i class="icon-search"></td>
-		  <td><i class="icon-ok"></i></td>
-		  <td><i class="icon-ban-circle"></i></td></tr>
-
-
-	      	<tr>
-		  <td>Device Identifier</td><td><i class="icon-arrow-right"></i></td><td>sendUDP(www.symc.com)</td>
-		  <td><i class="icon-search"></i></td>
-		  <td><i class="icon-ok"></i></td>
-		  <td><i class="icon-ban-circle"></i></td>
-		</tr>
+	      <table class="table table-condensed table-hover" id="conf-rpt"><th colspan="7">Confidentiality - Encryption status of data sent off device</th>
 	      </table>
 
-	      <table class="table table-condensed table-hover" id="integrity-rpt"><th colspan="5">Integrity - Untrusted data flowing to sensitive APIs</th>
-		<tr>
-		  <td>3</td><td><a href="">Data Corruption</a></td>
-		  <td><i class="icon-search"></i></td>		  
-		  <td><i class="icon-ok"></i></td>
-		  <td><i class="icon-ban-circle"></i></td>
-		</tr>
-		<tr>
-		  <td>7</td><td><a href="">Data Injection</a></td>
-		  <td><i class="icon-search"></i></td>		  
-		  <td><i class="icon-ok"></i></td>
-		  <td><i class="icon-ban-circle"></i></td>
-		</tr>
-		<tr>
-		  <td>11</td><td><a href="">Others</a></td>
-		  <td><i class="icon-search"></i></td>		  
-		  <td><i class="icon-ok"></i></td>
-		  <td><i class="icon-ban-circle"></i></td>
-		</tr>
+	      <!-- <table class="table table-condensed table-hover" id="integrity-rpt"><th colspan="5">Integrity - Untrusted data flowing to sensitive APIs</th> -->
+	      <!-- 	<tr> -->
+	      <!-- 	  <td>3</td><td><a href="">Data Corruption</a></td> -->
+	      <!-- 	  <td><i class="icon-search"></i></td>		   -->
+	      <!-- 	  <td><i class="icon-ok"></i></td> -->
+	      <!-- 	  <td><i class="icon-ban-circle"></i></td> -->
+	      <!-- 	</tr> -->
+	      <!-- 	<tr> -->
+	      <!-- 	  <td>7</td><td><a href="">Data Injection</a></td> -->
+	      <!-- 	  <td><i class="icon-search"></i></td>		   -->
+	      <!-- 	  <td><i class="icon-ok"></i></td> -->
+	      <!-- 	  <td><i class="icon-ban-circle"></i></td> -->
+	      <!-- 	</tr> -->
+	      <!-- 	<tr> -->
+	      <!-- 	  <td>11</td><td><a href="">Others</a></td> -->
+	      <!-- 	  <td><i class="icon-search"></i></td>		   -->
+	      <!-- 	  <td><i class="icon-ok"></i></td> -->
+	      <!-- 	  <td><i class="icon-ban-circle"></i></td> -->
+	      <!-- 	</tr> -->
+	      <!-- </table> -->
+
+	      <table class="table table-condensed table-hover" id="lowrisk-rpt"><th colspan="7">Low Risk - Data accessed and remaining on device</th>
+	      	<!-- <tr><td>2</td><td><a href="">On Device Flows</a></td> -->
+	      	<!--   <td><i class="icon-search"></i></td>		   -->
+	      	<!--   <td><i class="icon-ok"></i></td> -->
+	      	<!--   <td><i class="icon-ban-circle"></i></td> -->
+	      	<!-- </tr> -->
 	      </table>
 
-	      <table class="table table-condensed table-hover" id="lowrisk-rpt"><th colspan="7">Low Risk Dataflow - Data accessed and remaining on device</th>
-		<!-- <tr><td>2</td><td><a href="">On Device Flows</a></td> -->
-		<!--   <td><i class="icon-search"></i></td>		   -->
-		<!--   <td><i class="icon-ok"></i></td> -->
-		<!--   <td><i class="icon-ban-circle"></i></td> -->
-		<!-- </tr> -->
-	      </table>
-
-	      <table class="table table-condensed table-hover" id="warn-rpt"><th colspan="5">Analysis Warnings - Sources of unsoundness</th>
-	      	<tr><td>5</td><td><a href="">Dynamic Code Loading</a></td>
-		  <td><i class="icon-search"></i></td>		  
-		  <td><i class="icon-ok"></i></td>
-		  <td><i class="icon-ban-circle"></i></td>
-		</tr> 
-		<tr><td>3</td><td><a href="">Reflection</a></td>
-		  <td><i class="icon-search"></i></td>
-		  <td><i class="icon-ok"></i></td>
-		  <td><i class="icon-ban-circle"></i></td>
-		</tr>
-		<tr><td>2</td><td><a href="">Others</a></td>
-		  <td><i class="icon-search"></i></td>
-		  <td><i class="icon-ok"></i></td>
-		  <td><i class="icon-ban-circle"></i></td>
-		</tr>
-	      </table>
+	      <!-- <table class="table table-condensed table-hover" id="warn-rpt"><th colspan="5">Analysis Warnings - Sources of unsoundness</th> -->
+	      <!-- 	<tr><td>5</td><td><a href="">Dynamic Code Loading</a></td> -->
+	      <!-- 	  <td><i class="icon-search"></i></td>		   -->
+	      <!-- 	  <td><i class="icon-ok"></i></td> -->
+	      <!-- 	  <td><i class="icon-ban-circle"></i></td> -->
+	      <!-- 	</tr>  -->
+	      <!-- 	<tr><td>3</td><td><a href="">Reflection</a></td> -->
+	      <!-- 	  <td><i class="icon-search"></i></td> -->
+	      <!-- 	  <td><i class="icon-ok"></i></td> -->
+	      <!-- 	  <td><i class="icon-ban-circle"></i></td> -->
+	      <!-- 	</tr> -->
+	      <!-- 	<tr><td>2</td><td><a href="">Others</a></td> -->
+	      <!-- 	  <td><i class="icon-search"></i></td> -->
+	      <!-- 	  <td><i class="icon-ok"></i></td> -->
+	      <!-- 	  <td><i class="icon-ban-circle"></i></td> -->
+	      <!-- 	</tr> -->
+	      <!-- </table> -->
 
 
 
