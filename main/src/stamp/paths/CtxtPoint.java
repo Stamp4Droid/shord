@@ -1,11 +1,7 @@
 package stamp.paths;
 
-import shord.analyses.Ctxt;
+import soot.Unit;
 
-public abstract class CtxtPoint implements Point {
-    public final Ctxt ctxt;
-
-    public CtxtPoint(Ctxt ctxt) {
-    	this.ctxt = ctxt;
-    }
+public interface CtxtPoint extends Point {
+	public Unit[] getElems();
 }

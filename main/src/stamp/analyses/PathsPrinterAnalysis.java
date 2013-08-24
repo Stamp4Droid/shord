@@ -1,7 +1,6 @@
 package stamp.analyses;
 
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +8,7 @@ import stamp.paths.CallStep;
 import stamp.paths.CtxtCrossingStep;
 import stamp.paths.CtxtLabelPoint;
 import stamp.paths.CtxtObjPoint;
+import stamp.paths.CtxtPoint;
 import stamp.paths.CtxtSettingStep;
 import stamp.paths.Path;
 import stamp.paths.PathsAdapter;
@@ -159,26 +159,12 @@ public class PathsPrinterAnalysis extends JavaAnalysis {
 	}
 
 	private Unit[] getElems(Point p) {
-		// UGLY: This code should be moved into the different *Point classes
-
-		if (p instanceof CtxtLabelPoint) {
-			return ((CtxtLabelPoint) p).ctxt.getElems();
-		} else if (p instanceof CtxtObjPoint) {
-			// Skip the first statement, which corresponds to the abstract
-			// object's allocation.
-			Unit[] elemsObj = ((CtxtObjPoint) p).ctxt.getElems();
-			return Arrays.copyOfRange(elemsObj, 1, elemsObj.length);
-		} else if (p instanceof VarPoint) {
-			// This kind of point carries no context information.
-			return new Unit[0];
-		} else if (p instanceof StatFldPoint) {
-			// This kind of point carries no context information.
+		if (p instanceof CtxtPoint) {
+			return ((CtxtPoint) p).getElems();
+		} else {
+			// The other kinds of points carry no context information.
 			return new Unit[0];
 		}
-
-		// Shouldn't reach here.
-		assert(false);
-		return null;
 	}
 
 	private boolean recordTarget(Point target) {

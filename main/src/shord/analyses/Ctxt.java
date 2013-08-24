@@ -75,6 +75,10 @@ public class Ctxt implements Serializable
 	}
 
 	public String toString(boolean asCtxtObj) {
+		return toString(asCtxtObj, elems);
+	}
+
+	public static String toString(boolean asCtxtObj, Unit[] elems) {
 		StringBuilder builder = new StringBuilder("[");
 		boolean first = true;
 		// If this is a contextified abstract object, skip the first element,
