@@ -55,7 +55,7 @@ public class SrcSinkFlowViz extends XMLVizReport
 
     public void generate()
     {
-
+		/*
         try {
             final ProgramRel relSrcSinkFlow = (ProgramRel)ClassicProject.g().getTrgt("flow");
 
@@ -84,7 +84,7 @@ public class SrcSinkFlowViz extends XMLVizReport
 
                 //TODO init?? Does this work?
                 //Add ctxt for label
-                //System.err.println(/* context */);
+                //System.err.println(context);
 
                 for (Step s : p.steps) {
                     System.err.println("PRINT LASTNODE: " + lastNode);
@@ -152,13 +152,14 @@ public class SrcSinkFlowViz extends XMLVizReport
             System.err.println("Problem producing FlowViz report");
             e.printStackTrace();
         }
-
+		*/
     }
 
     /**
      * Add the entire context for the step s to the tree t
      * @return the node for the bottom context method
      */
+	/*
     public Node<SootMethod> addCtxt(Tree<SootMethod> t, Step s) {
         Unit[] context = ((CtxtPoint)s.target).ctxt.getElems();
         Node<SootMethod> lastNode = t.getRoot();
@@ -170,11 +171,13 @@ public class SrcSinkFlowViz extends XMLVizReport
 
         return lastNode;
     }
+	*/
 
     /**
      * Frome the callgraph tree and map of methods to callsites
      * provided as parameters, generates the XML report
      */
+	/*
     protected void generateReport(ArrayList<Tree<SootMethod>> flows, Map<SootMethod, ArrayDeque<CallSite>> callSites) {
         System.out.println("Generating viz report");
         for (Tree<SootMethod> t : flows) {
@@ -216,18 +219,22 @@ public class SrcSinkFlowViz extends XMLVizReport
             }
         }
     }
+	*/
 
+	/*
     protected boolean filter(SootMethod method, int depth, Tree<SootMethod> t) {
         if (t.isRoot(method)) {
             return false;
         }
         return (SourceInfo.isFrameworkClass(method.getDeclaringClass()) && depth == 0);
     }
+	*/
 
     /**
      * Returns the method object for the top (outermost)
      * context level associated with the parameter Step
      */
+	/*
     private SootMethod getTopCtxtMethod(Step s) {
         CtxtPoint point = (CtxtPoint)s.target;
         Unit[] ctxt = point.ctxt.getElems();
@@ -242,11 +249,13 @@ public class SrcSinkFlowViz extends XMLVizReport
         // Ought to happen rarely or not at all...
         return getMethod(s);
     }
+	*/
 
     /**
      * Returns the method object for the top (outermost)
      * context level associated with the parameter Step
      */
+	/*
     private SootMethod getBottomCtxtMethod(Step s) {
         CtxtPoint point = (CtxtPoint)s.target;
         Unit[] ctxt = point.ctxt.getElems();
@@ -261,7 +270,7 @@ public class SrcSinkFlowViz extends XMLVizReport
         // Ought to happen rarely or not at all...
         return getMethod(s);
     }
-
+	*/
 
     /**
      * Returns the "StepActionType" of the Step s.
@@ -269,6 +278,7 @@ public class SrcSinkFlowViz extends XMLVizReport
      * will be modified by s. See @StepActionType for information
      * on return types.
      */
+	/*
     private StepActionType getStepActionType(SootMethod method, Step s, Node<SootMethod> lastNode, Tree t) {
 
         // Throughout these we follow a minimal detection which, to my knowledge, ought to suffice.
@@ -279,7 +289,7 @@ public class SrcSinkFlowViz extends XMLVizReport
         System.err.println("GRANDPARENT" + ((Node<SootMethod>)t.getParent(t.getParent(lastNode))).getData().getName());
         System.err.println("NEWMETH" + method.getName());
 
-        if (t.isRoot(lastNode) /* other condition? */ ) {
+        if (t.isRoot(lastNode)) { // other condition?
             return StepActionType.BROKEN;
         } else if (t.getParent(lastNode).getData().equals(method)) {
             return StepActionType.SAME;
@@ -290,8 +300,9 @@ public class SrcSinkFlowViz extends XMLVizReport
         }
 
         return StepActionType.BROKEN;
-        /* return OTHER? */
+        // return OTHER?
     }
+	*/
 
     /**
      * Save take variable and context information
@@ -299,6 +310,7 @@ public class SrcSinkFlowViz extends XMLVizReport
      * (i.e. the CallSite object) and save that into
      * the map pamameter
      */
+	/*
     private void logCallSites(Step s, Map<SootMethod, ArrayDeque<CallSite>> callSites) {
         CtxtPoint point = (CtxtPoint)s.target;
         Unit[] context = point.ctxt.getElems();
@@ -332,11 +344,12 @@ public class SrcSinkFlowViz extends XMLVizReport
             }
         }
     }
-
+	*/
 
     /**
      * Generates a callsite object for the method called by statement caller
      */
+	/*
     private CallSite generateCallSite(SootMethod method, Stmt caller) {
 
         try {
@@ -349,9 +362,8 @@ public class SrcSinkFlowViz extends XMLVizReport
             int lineNumber = (locStrTokens.length > 1) ? Integer.parseInt(locStrTokens[1]) : 0;
             String className = SourceInfo.srcClassName(caller);
             String srcFilePath = locStrTokens[0];
-            /* Some weird gui behavior associated with line number -1 so...
-               ...This may be useful: if (methodLineNum < 0) {methodLineNum = 0;}
-             */
+            // Some weird gui behavior associated with line number -1 so...
+            // ...This may be useful: if (methodLineNum < 0) {methodLineNum = 0;}
 
             CallSite cs = new CallSite(methName, className, lineNumber, srcFilePath);
             return cs;
@@ -363,11 +375,13 @@ public class SrcSinkFlowViz extends XMLVizReport
             return null;
         }
     }
+	*/
 
     /**
      * Returns the method object associated with the
      * CtxtPoint of the parameter step
      */
+	/*
     private SootMethod getMethod(Step s) {
         VarNode v = ((CtxtVarPoint)s.target).var;
         SootMethod method = null;
@@ -388,14 +402,17 @@ public class SrcSinkFlowViz extends XMLVizReport
 
         return method;
     }
+	*/
 
     /**
      * Returns the method object associated with the
      * method that contains the statement parameter
      */
+	/*
     private SootMethod getMethod(Stmt stm) {
         return Program.containerMethod(stm);
     }
+	*/
 
     /**
      * A class representing the data needed to represent a callsite
@@ -405,6 +422,7 @@ public class SrcSinkFlowViz extends XMLVizReport
      * of an identifier. As far as the class is concerned, any parameter
      * to the contstructor may be null
      */
+	/*
     class CallSite {
         String className;
         String srcFilePath;
@@ -418,4 +436,5 @@ public class SrcSinkFlowViz extends XMLVizReport
             this.lineNumber = lineNumber;
         }
     }
+	*/
 }
