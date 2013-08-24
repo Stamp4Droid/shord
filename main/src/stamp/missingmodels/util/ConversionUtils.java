@@ -1,6 +1,8 @@
 package stamp.missingmodels.util;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,9 +17,11 @@ import shord.project.ClassicProject;
 import soot.Local;
 import soot.SootMethod;
 import stamp.analyses.DomCL;
+import stamp.missingmodels.analysis.JCFLSolverRunner.RelationAdder;
 import stamp.missingmodels.util.Relation.IndexRelation;
 import stamp.missingmodels.util.Relation.StubIndexRelation;
 import stamp.missingmodels.util.Util.MultivalueMap;
+import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.srcmap.Expr;
 import stamp.srcmap.RegisterMap;
 import stamp.srcmap.SourceInfo;
@@ -45,10 +49,35 @@ public class ConversionUtils {
 	 * b) Stamp domains:
 	 * labels (sources + sinks) = L.dom = String
 	 */
+	
+	/*
+	 * An implementation of the chord relation lookup interface.
+	 */
+	public static class ChordRelationAdder implements RelationAdder {
+		/*
+		 * Returns relations for which no Chord relation is found.
+		 */
+		@Override
+		public Collection<String> addEdges(Graph g, StubLookup s, StubModelSet m) {
+			Set<String> relationsNotFound = new HashSet<String>();
+			for(int k=0; k<g.numKinds(); k++) {
+				if(g.isTerminal(k)) {
+					Collection<Relation> relations = getChordRelationsFor(g.kindToSymbol(k));
+					if(relations.isEmpty()) {
+						relationsNotFound.add(g.kindToSymbol(k));
+					}
+					for(Relation rel : relations) {
+						rel.addEdges(g.kindToSymbol(k), g, s, m);
+					}
+				}
+			}
+			return relationsNotFound;
+		}
+	}
 
 	/*
 	 * The set of all relations used by the various grammars.
-	 */
+	 */	
 	private static final MultivalueMap<String,Relation> relations = new MultivalueMap<String,Relation>();
 	static {
 		/*
@@ -155,7 +184,7 @@ public class ConversionUtils {
 	 * Returns the Shord relations associated with a given
 	 * JCFLSolver relation. 
 	 */
-	public static Set<Relation> getChordRelationsFor(String relation) {
+	private static Set<Relation> getChordRelationsFor(String relation) {
 		return relations.get(relation);		
 	}
 

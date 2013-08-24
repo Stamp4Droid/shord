@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import stamp.missingmodels.analysis.JCFLSolverRunner.RelationAdder;
 import stamp.missingmodels.util.StubModelSet;
 import stamp.missingmodels.util.StubModelSet.ModelType;
 import stamp.missingmodels.util.StubModelSet.StubModel;
@@ -61,7 +62,7 @@ public class Experiment {
 	 * @param defaultModelValue If a model is not present, how
 	 * to treat it. Default is 0.
 	 */ 
-	public void run(StubModelSet groundTruthModels, StubModelSet initialModels, ModelType defaultModelValue) {
+	public void run(StubModelSet groundTruthModels, StubModelSet initialModels, RelationAdder relationLookup, ModelType defaultModelValue) {
 		// STEP 0: Initilize the total set of models
 		StubModelSet total = new StubModelSet();
 		total.putAll(initialModels);
@@ -71,7 +72,7 @@ public class Experiment {
 		int round = 0;
 		do {
 			// STEP 1a: Run the analysis.
-			this.j.run(this.c, total);
+			this.j.run(this.c, total, relationLookup);
 			
 			// STEP 1b: Get the proposed models
 			curProposed = this.j.getProposedModels(round++);
@@ -94,8 +95,8 @@ public class Experiment {
 		} while(!curProposed.isEmpty());
 	}
 	
-	public void run(StubModelSet groundTruthModels, StubModelSet initialModels) {
-		run(groundTruthModels, initialModels, ModelType.UNKNOWN); 
+	public void run(StubModelSet groundTruthModels, StubModelSet initialModels, RelationAdder relationLookup) {
+		run(groundTruthModels, initialModels, relationLookup, ModelType.UNKNOWN); 
 	}
 	
 	/*

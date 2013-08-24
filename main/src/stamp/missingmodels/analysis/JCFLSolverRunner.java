@@ -1,8 +1,8 @@
 package stamp.missingmodels.analysis;
 
+import java.util.Collection;
+
 import stamp.missingmodels.analysis.Experiment.ProposedStubModelSet;
-import stamp.missingmodels.util.ConversionUtils;
-import stamp.missingmodels.util.Relation;
 import stamp.missingmodels.util.StubLookup;
 import stamp.missingmodels.util.StubLookup.StubLookupKey;
 import stamp.missingmodels.util.StubModelSet;
@@ -15,8 +15,16 @@ import stamp.missingmodels.util.jcflsolver.EdgeData;
 import stamp.missingmodels.util.jcflsolver.Graph;
 
 public abstract class JCFLSolverRunner {
+	
+	/*
+	 * An interface to handle chord relation lookups.
+	 */
+	public interface RelationAdder {
+		public abstract Collection<String> addEdges(Graph g, StubLookup s, StubModelSet m);
+	}
+	
 	// initialize and run
-	public abstract void run(Class<? extends Graph> c, StubModelSet m);
+	public abstract void run(Class<? extends Graph> c, StubModelSet m, RelationAdder relationLookup);
 	
 	// basic getter methods
 	public abstract Graph g();
@@ -53,16 +61,9 @@ public abstract class JCFLSolverRunner {
 		/*
 		 * The following code is for running the JCFLSolver analysis.
 		 */
-		private void fillTerminalEdges() {
-			for(int k=0; k<this.g.numKinds(); k++) {
-				if(this.g.isTerminal(k)) {
-					if(ConversionUtils.getChordRelationsFor(this.g.kindToSymbol(k)).isEmpty()) {
-						System.out.println("No edges found for relation " + this.g.kindToSymbol(k) + "...");
-					}
-					for(Relation rel : ConversionUtils.getChordRelationsFor(this.g.kindToSymbol(k))) {
-						rel.addEdges(this.g.kindToSymbol(k), this.g, this.s, this.m);
-					}
-				}
+		private void fillTerminalEdges(RelationAdder relationLookup) {
+			for(String relationNotFound : relationLookup.addEdges(this.g, this.s, this.m)) {
+				System.out.println("No edges found for terminal relation " + relationNotFound + "!");
 			}
 		}
 		
@@ -82,7 +83,7 @@ public abstract class JCFLSolverRunner {
 			return proposals;
 		}
 
-		public void run(Class<? extends Graph> c, StubModelSet m) {
+		public void run(Class<? extends Graph> c, StubModelSet m, RelationAdder relationLookup) {
 			// STEP 0: Set up the fields.
 			try {
 				this.g = c.newInstance();
@@ -97,7 +98,7 @@ public abstract class JCFLSolverRunner {
 			this.m = m;
 
 			// STEP 1: Fill the edges in the graph.
-			this.fillTerminalEdges();
+			this.fillTerminalEdges(relationLookup);
 
 			// STEP 2: Run the algorithm.
 			this.g.algo.process();
@@ -151,7 +152,7 @@ public abstract class JCFLSolverRunner {
 			return proposed;
 		}
 
-		private void runHelper() {
+		private void runHelper(RelationAdder relationLookup) {
 			this.allProposed = new StubModelSet(); // proposed models
 			StubModelSet total = new StubModelSet(); // all models
 			total.putAll(this.m); // initialize to the given known models
@@ -161,7 +162,7 @@ public abstract class JCFLSolverRunner {
 			do {
 				// run the solver
 				this.j = new JCFLSolverSingle();
-				j.run(this.c, total);
+				j.run(this.c, total, relationLookup);
 				
 				// add the current proposed models to all proposed and total
 				curProposed = this.j.getProposedModels();
@@ -170,10 +171,10 @@ public abstract class JCFLSolverRunner {
 			} while(!curProposed.isEmpty());
 		}
 
-		public void run(Class<? extends Graph> c, StubModelSet m) {
+		public void run(Class<? extends Graph> c, StubModelSet m, RelationAdder relationLookup) {
 			this.c = c;
 			this.m = m;
-			runHelper();
+			runHelper(relationLookup);
 		}
 	}
 }

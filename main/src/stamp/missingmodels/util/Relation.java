@@ -4,6 +4,7 @@ import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.util.StubLookup.StubLookupKey;
 import stamp.missingmodels.util.StubLookup.StubLookupValue;
+import stamp.missingmodels.util.StubModelSet.ModelType;
 import stamp.missingmodels.util.jcflsolver.Graph;
 
 /*
@@ -257,7 +258,7 @@ public abstract class Relation {
 		}
 
 		@Override protected boolean filter(int[] tuple, StubModelSet stubModelSet) {
-			return stubModelSet.get(this.getStubLookupValueFromTuple(tuple)) != 2;
+			return stubModelSet.get(this.getStubLookupValueFromTuple(tuple)) != ModelType.FALSE;
 		}
 	}
 }
