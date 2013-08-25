@@ -781,6 +781,22 @@ class ReverseProduction(util.FinalAttrs):
             assert False
         return edge + '->' + endpoint
 
+    def assertion(self):
+        """
+        What assertion we should check before triggering this
+        @ReverseProduction, if any.
+        """
+        if (self.relation is not None and self.relation.ref == 0 and
+            self.result.index == 2):
+            indices = (self.base.index, self.reqd.index)
+            if indices == (0,1):
+                return 'base->index < 0x40000 && other->index < 0x4000'
+            elif indices == (1,0):
+                return 'other->index < 0x40000 && base->index < 0x4000'
+            else:
+                assert False
+        return None
+
     def result_index(self):
         """
         What @Index we should set on any Edge produced by this
@@ -957,7 +973,9 @@ class Grammar(util.FinalAttrs):
         self.rels = RelationStore()
         # HACK: Using a special 0-th relation for index concatenation.
         # HACK: Currently cramming the two indices into one, using 18 bits for
-        # the first and 14 for the second; this may overflow the index.
+        # the first and 14 for the second; this may overflow the index. We've
+        # added assertion checks, to make sure we're notified when that
+        # happens.
         # TODO: Implement correctly and document.
         self.rels.get('concat', 3)
         ## All the @NormalProduction%s encountered so far, grouped by result
@@ -1333,6 +1351,9 @@ def parse(grammar_in, code_out, terms_out, rels_out):
                 pred_idx = res_idx if rp.predicate.parametric else 'INDEX_NONE'
                 pr.write('if (reachable(%s, %s, %s, %s)) {'
                          % (res_src, res_tgt, rp.predicate.kind, pred_idx))
+            asrt = rp.assertion()
+            if asrt is not None:
+                pr.write('assert(%s);' % asrt)
             pr.write('add_edge(%s, %s, %s, %s, %s, %s, %s, %s);'
                      % (res_src, res_tgt, res_kind, res_idx,
                         l_edge, l_rev, r_edge, r_rev))
