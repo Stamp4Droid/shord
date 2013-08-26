@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * 
+ * A simple minimal tree implementation. This is designed
+ * to support the callgraph creation in SrcSinkFlowViz class
+ * and so is supports functionality that is important there
+ * and little more. 
  *
  * @author brycecr
  */
@@ -116,6 +119,15 @@ public class Tree<T> {
         return builder.toString();
     }
 
+    /**
+     * Iterator for trees. Notice that next() returns a T, not
+     * Node<T>. Tree is traversed depth-first (first) and in order of
+     * insertion (FIFO) (second). The final node is the Root.
+     *
+     * Iterating while maintianing knowledge of depth requires calling getDepth()
+     * after every call to next.
+     *
+     */
     public class TreeIterator implements Iterator<T> {
     
         protected Node<T> currentNode = null;
@@ -132,6 +144,10 @@ public class Tree<T> {
                 && (currentItr == null || !currentItr.hasNext()));
         }
         
+        /**
+         * Returns the data object of type T of the next node to be traversed.
+         * Traversal order is depth-first and FIFO second.
+         */
         public T next() {
             if (!hasNext()) {
                 return null; //TODO should throw exception?
