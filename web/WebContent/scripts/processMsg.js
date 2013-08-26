@@ -69,15 +69,15 @@ function processWarnings(message){
 function processFlowJSON(flow) {
 
     function newPrivTableEntry(entry) {
-        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td> <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"function(e) {alert('hi');}\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td> <td><i  onClick=\"window.alert('Accepted')\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"window.alert('Reject')\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
     }
 
     function newTableEntry(entry) {
-        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-success\">"+entry.modifier+"</span></td> \ <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-success\">"+entry.modifier+"</span></td> \ <td><i  onClick=\"\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
     }
 
     function newTableEntryUnencrypted(entry) {
-        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-important\">"+entry.modifier+"</span></td> \ <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"function(e) {debugger;}\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-important\">"+entry.modifier+"</span></td> \ <td><i  onClick=\"\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
     }
 
     console.log("begin processFlow");
