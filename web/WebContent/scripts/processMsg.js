@@ -102,14 +102,34 @@ function processFlowJSON(flow) {
 	}
     });
 
-
+    // Report header
     var headerRow = "<th>" + apkName +  " Risk Report &nbsp <a href=\"\"><i class=\"icon-download\"></a></i></th>";
     $("#reportheader").append(headerRow);
 
     console.log("Max analysisCounter:" + maxC);
-    console.log("LowRisk: " + lowRiskCount);
-    console.log("PrivacyRisk: " + privacyCount);
-	   
+
+    // Incident counts
+    $("#incident-summary").append("<th>Incidents</th><th>Risk Type</th>");
+    $("#incident-summary").append("<tr><td>Privacy Risks</td></td><td>" + privacyCount + "</td></tr>");
+    $("#incident-summary").append("<tr><td>Confidentiality Risks</td></td><td>" + privacyCount + "</td></tr>");
+    $("#incident-summary").append("<tr><td>Low Risk</td></td><td>" + lowRiskCount + "</td></tr>");
+    $("#incident-summary").append("<tr><td>Warnings</td></td><td>" + "X" + "</td></tr>");
+    
+
+    // Section headers
+    $("#privacy-rpt").append("<th colspan=\"5\">Privacy - Data sent off device </th>");
+    $("#conf-rpt").append("<th colspan=\"7\">Confidentiality - Encryption status of data sent off device</th>");
+
+
+    if (privacyCount == 0) {
+	$("#privacy-rpt").append("<th colspan=\"5\">No Privacy Risks Detected! </th>");
+	$("#conf-rpt").append("<th colspan=\"5\">No Confidentiality Risks Detected! </th>");
+    }
+
+    if (lowRiskCount != 0) {
+	$("#lowrisk-rpt").append("<th colspan=\"7\">Low Risk - Data accessed and remaining on device</th>")
+    }
+			  
     $.each(flow, function(i, item) {
         if (item.analysisCounter === maxC) {
 
