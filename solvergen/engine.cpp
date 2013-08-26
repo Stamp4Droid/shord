@@ -40,7 +40,7 @@ Node *nodes;
 NodeNameMap node_names;
 
 /** The Edge worklist used by the fixpoint calculation. */
-EdgeWorklist worklist;
+WorkList<Edge *> worklist;
 
 /**
  * All the indices on the @Relation%s used by the @Grammar, indexed by
@@ -188,51 +188,42 @@ void node_ref_set_if_none(NODE_REF *ref_ptr, NODE_REF new_value) {
 
 /* WORKLIST HANDLING ======================================================= */
 
-/**
- * Initialize an empty ::worklist.
- */
-void worklist_init() {
-    worklist.head = NULL;
-    worklist.tail = NULL;
-}
+template<typename T>
+WorkList<T>::Node::Node(T val, Node *next) : val(val), next(next) {}
 
-/**
- * Append an Edge to the end of the ::worklist.
- */
-void worklist_insert(Edge *e) {
-    /* Check that the edge is not already in the worklist. */
-    assert(e->worklist_next == NULL && worklist.tail != e);
-    if (worklist.tail == NULL) {
-	assert(worklist.head == NULL);
-	worklist.head = e;
-	worklist.tail = e;
+template<typename T>
+WorkList<T>::WorkList() : head(NULL), tail(NULL) {}
+
+template<typename T>
+void WorkList<T>::insert(T val) {
+    Node *temp = new Node(val, NULL);
+    if (tail == NULL) {
+	assert(head == NULL);
+	head = temp;
+	tail = temp;
     } else {
-	assert(worklist.tail->worklist_next == NULL);
-	worklist.tail->worklist_next = e;
-	worklist.tail = e;
+	assert(tail->next == NULL);
+	tail->next = temp;
+	tail = temp;
     }
 }
 
-/**
- * Remove the first Edge in the ::worklist. Assumes the ::worklist is not
- * empty.
- */
-Edge *worklist_pop() {
-    Edge *e = worklist.head;
-    worklist.head = e->worklist_next;
-    if (worklist.head == NULL) {
-	worklist.tail = NULL;
+template<typename T>
+T WorkList<T>::pop() {
+    Node *temp = head;
+    head = temp->next;
+    if (head == NULL) {
+	tail = NULL;
     }
-    e->worklist_next = NULL;
-    return e;
+    T val = temp->val;
+    delete temp;
+    return val;
 }
 
-/**
- * Check if the ::worklist is empty.
- */
-bool worklist_is_empty() {
-    bool is_empty = (worklist.head == NULL);
-    assert(!is_empty || worklist.tail == NULL);
+template<typename T>
+bool WorkList<T>::empty() {
+    bool is_empty = (head == NULL);
+    assert(!is_empty || tail == NULL);
     return is_empty;
 }
 
@@ -584,7 +575,6 @@ Edge *edge_new(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 #endif
     e->in_next = NULL;
     e->out_next = NULL;
-    e->worklist_next = NULL;
     return e;
 }
 
@@ -945,7 +935,7 @@ void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	free(e);
     } else {
 	graph_add(e);
-	worklist_insert(e);
+	worklist.insert(e);
     }
 }
 
@@ -1880,7 +1870,6 @@ int main() {
     parse_input_files(RECORD_NODES);
     finalize_nodes();
     LOG("Nodes: ", num_nodes());
-    worklist_init();
     parse_input_files(RECORD_EDGES);
     rels_init();
     parse_rels();
@@ -1898,9 +1887,9 @@ int main() {
 	}
     }
     /* Main loop. */
-    while (!worklist_is_empty()) {
+    while (!worklist.empty()) {
 	INC_COUNTER(iteration, 1);
-	Edge *base = worklist_pop();
+	Edge *base = worklist.pop();
 	main_loop(base);
     }
     LOG("Fixpoint reached after ", iteration, " iterations");

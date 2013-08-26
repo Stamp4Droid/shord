@@ -152,14 +152,6 @@ typedef struct Edge {
      * The next Edge in the outgoing Edge%s bucket that this Edge belongs to.
      */
     struct Edge *out_next;
-    /**
-     * A pointer to the next Edge in the ::worklist. Should not be used
-     * directly by the client code.
-     *
-     * Is `NULL` in two cases: If this Edge is the last one in the ::worklist,
-     * or if it's not in the ::worklist at all.
-     */
-    struct Edge *worklist_next;
 } Edge;
 
 /**
@@ -299,13 +291,38 @@ typedef struct {
 } Node;
 
 /**
- * A worklist of graph Edge%s, implemented as a linked list. The Edge%s in the
- * worklist are connected through the Edge::worklist_next pointer.
+ * A FIFO worklist, supporting efficient element additions to the back and
+ * removal from the front. Implemented using a singly linked list.
  */
-typedef struct {
-    Edge *head;
-    Edge *tail;
-} EdgeWorklist;
+template<typename T> class WorkList {
+private:
+    struct Node {
+	T val;
+	Node *next;
+	Node(T val, Node *next);
+    };
+    Node *head;
+    Node *tail;
+public:
+    /**
+     * Create an empty WorkList.
+     */
+    WorkList();
+    // TODO: destructor, which cleans up the list
+    /**
+     * Append @a val to the end of the WorkList.
+     */
+    void insert(T val);
+    /**
+     * Remove the first element of the WorkList and return it. Assumes the
+     * WorkList is not empty.
+     */
+    T pop();
+    /**
+     * Check if the WorkList is empty.
+     */
+    bool empty();
+};
 
 /**
  * Structure describing a possible way to produce an Edge.
