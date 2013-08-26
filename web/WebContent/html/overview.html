@@ -54,17 +54,17 @@
 		</li>
 	      </ul>
 
-	      <ul class="nav pull-left">
-		<li>
-		  <form id="fileupload" action="../fileUpload" method="POST" enctype="multipart/form-data">
-		    <span class="btn btn-warning fileinput-button">
-		      <i class="icon-plus icon-white"></i>
-		      <span>Map</span>
-		      <input type="file" name="files[]" multiple>
-		    </span>
-		  </form>
-		</li>
-	      </ul>
+	      <!-- <ul class="nav pull-left"> -->
+	      <!-- 	<li> -->
+	      <!-- 	  <form id="fileupload" action="../fileUpload" method="POST" enctype="multipart/form-data"> -->
+	      <!-- 	    <span class="btn btn-warning fileinput-button"> -->
+	      <!-- 	      <i class="icon-plus icon-white"></i> -->
+	      <!-- 	      <span>Map</span> -->
+	      <!-- 	      <input type="file" name="files[]" multiple> -->
+	      <!-- 	    </span> -->
+	      <!-- 	  </form> -->
+	      <!-- 	</li> -->
+	      <!-- </ul> -->
 
 	      <!-- <ul class="nav"> -->
 	      <!-- 	<\!-- Settings -\-> -->
@@ -107,7 +107,7 @@
 	    </div>
 
 	    <!-- Main content -->
-	    <div class="span6">
+	    <div class="span6" id="reportdiv">
 
 	      <table class="table table-condensed table-hover" id="reportheader">
 		<tr></tr>
@@ -117,18 +117,14 @@
 	      <!-- 	<tr><td>100%</td><td>28%</td><td>63%</td><td>63%</td></tr> -->
 	      <!-- </table> -->
 
-	      <table class="table table-condensed table-hover" id="incident-summary"><th>Incidents</th><th>Risk Type</th>
-		<!-- <tr><td>5</td><td><a href="">Privacy Violations</a></td></tr>  -->
-		<!-- <tr><td>3</td><td><a href="">Confidentiality Risks</a></td></tr> -->
-		<!-- <tr><td>7</td><td><a href="">Integrity Risks</a></td></tr> -->
-		<!-- <tr><td>31</td><td><a href="">Low Risk</a></td></tr> -->
-		<!-- <tr><td>11</td><td><a href="">Analysis Warnings</a></td></tr> -->
+	      <table class="table table-condensed table-hover" id="incident-summary">
 	      </table>
 
-	      <table class="table table-condensed table-hover" id="privacy-rpt"><th colspan="5">Privacy - Data sent off device </th>
+	      <table class="table table-condensed table-hover" id="privacy-rpt">
 	      </table>
 
-	      <table class="table table-condensed table-hover" id="conf-rpt"><th colspan="7">Confidentiality - Encryption status of data sent off device</th>
+	      <table class="table table-condensed table-hover" id="conf-rpt">
+
 	      </table>
 
 	      <!-- <table class="table table-condensed table-hover" id="integrity-rpt"><th colspan="5">Integrity - Untrusted data flowing to sensitive APIs</th> -->
@@ -152,7 +148,8 @@
 	      <!-- 	</tr> -->
 	      <!-- </table> -->
 
-	      <table class="table table-condensed table-hover" id="lowrisk-rpt"><th colspan="7">Low Risk - Data accessed and remaining on device</th>
+	      <table class="table table-condensed table-hover" id="lowrisk-rpt">
+
 	      	<!-- <tr><td>2</td><td><a href="">On Device Flows</a></td> -->
 	      	<!--   <td><i class="icon-search"></i></td>		   -->
 	      	<!--   <td><i class="icon-ok"></i></td> -->
