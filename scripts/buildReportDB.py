@@ -205,6 +205,7 @@ def classifyFlows(app, flows, srcClassDict, sinkClassDict):
         flowC = ""
         srcClasswoPriority = ""
         srcPriority = "low"
+        srcDesc = ""
 
         srcC = srcClass(srcClassDict, src)
         if isinstance(srcC, tuple):
@@ -225,7 +226,7 @@ def classifyFlows(app, flows, srcClassDict, sinkClassDict):
         else:
             flowC = "other"
 
-        flowClass.append((app,src,srcClasswoPriority,sink,sinkC,flowC))
+        flowClass.append((app,src.replace("$","").title(),srcClasswoPriority,sink.replace("!","").title(),sinkC,flowC))
 
     # Set modifiers
 
