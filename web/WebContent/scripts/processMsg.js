@@ -80,8 +80,6 @@ function processFlowJSON(flow) {
         return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-important\">"+entry.modifier+"</span></td> \ <td><i  onClick=\"\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
     }
 
-    console.log("begin processFlow");
-
     var maxC = -1;
     var apkName = "";
     var privacyCount = -1;
@@ -103,31 +101,32 @@ function processFlowJSON(flow) {
     });
 
     // Report header
-    var headerRow = "<th>" + apkName +  " Risk Report &nbsp <a href=\"\"><i class=\"icon-download\"></a></i></th>";
+    var headerRow = "<th><h3>" + apkName +  " Risk Report &nbsp</h3></th>";
     $("#reportheader").append(headerRow);
 
-    console.log("Max analysisCounter:" + maxC);
-
     // Incident counts
-    $("#incident-summary").append("<th>Incidents</th><th>Risk Type</th>");
-    $("#incident-summary").append("<tr><td>Privacy Risks</td></td><td>" + privacyCount + "</td></tr>");
-    $("#incident-summary").append("<tr><td>Confidentiality Risks</td></td><td>" + privacyCount + "</td></tr>");
-    $("#incident-summary").append("<tr><td>Low Risk</td></td><td>" + lowRiskCount + "</td></tr>");
-    $("#incident-summary").append("<tr><td>Warnings</td></td><td>" + "X" + "</td></tr>");
-    
+    $("#incident-summary").append("<th><h4>Risk Type</h4></th><th><h4>Incidents</h4></th>");
+    $("#incident-summary").append("<tr><td><h5>Privacy</h5></td></td><td>" + privacyCount + "</td></tr>");
+    $("#incident-summary").append("<tr><td><h5>Confidentiality</h5></td></td><td>" + privacyCount + "</td></tr>");
+    $("#incident-summary").append("<tr><td><h5>Integrity</h5></td></td><td>" + lowRiskCount + "</td></tr>");
+    //$("#incident-summary").append("<tr><td>Warnings</td></td><td>" + "X" + "</td></tr>");
 
     // Section headers
-    $("#privacy-rpt").append("<th colspan=\"5\">Privacy - Data sent off device </th>");
-    $("#conf-rpt").append("<th colspan=\"7\">Confidentiality - Encryption status of data sent off device</th>");
+    $("#privacy-rpt").append("<th colspan=\"5\"><h4>Privacy Report - Data sent off device</h4></th>");
+    $("#privacy-rpt").append("<tr><td><h4>Data</h4></td><td></td><td><h4>Destination</h4></td><td><h4>Approve</h4></td><td><h4>Reject</h4></td></tr>");
+    $("#conf-rpt").append("<th colspan=\"7\"><h4>Confidentiality Report - Data encryption status</h4></th>");
+    $("#conf-rpt").append("<tr><td><h4>Data</h4></td><td></td><td><h4>Destination</h4></td><td></td><td><h4>Approve</h4></td><td><h4>Reject</h4></td></tr>");
+
 
 
     if (privacyCount == 0) {
-	$("#privacy-rpt").append("<th colspan=\"5\">No Privacy Risks Detected! </th>");
-	$("#conf-rpt").append("<th colspan=\"5\">No Confidentiality Risks Detected! </th>");
+	$("#privacy-rpt").append("<tr colspan=\"7\"><h3>No Privacy Risks Detected!</h3></tr>");
+	$("#conf-rpt").append("<tr colspan=\"7\"><h3>No Confidentiality Risks Detected!</h3></tr>");
     }
 
     if (lowRiskCount != 0) {
-	$("#lowrisk-rpt").append("<th colspan=\"7\">Low Risk - Data accessed and remaining on device</th>")
+	$("#lowrisk-rpt").append("<th colspan=\"7\"><h4>Integrity Report - Data accessed by application</h4></th>")
+	$("#lowrisk-rpt").append("<tr><td><h4>Data</h4></td><td></td><td><h4>Destination</h4></td><td></td><td><h4>Approve</h4></td><td><h4>Reject</h4></td></tr>");
     }
 			  
     $.each(flow, function(i, item) {
@@ -193,7 +192,7 @@ function processMessage(message){
 
         // Create new apk status box
         if (action == "BEGIN") {
-            $('#accordionFlows').append(newAccordionGroup(apkName));
+
             $('#warnings').append("<tr><td colspan=\"2\"><h5>" + apkName + " Warnings</h5></td></tr>");
         }
 
