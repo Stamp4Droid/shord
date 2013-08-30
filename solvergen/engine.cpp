@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <deque>
 #include <errno.h>
 #include <fstream>
 #include <iomanip>
@@ -10,8 +11,6 @@
 #include <signal.h>
 #include <sstream>
 #include <stack>
-#include <stdarg.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
@@ -40,7 +39,7 @@ Node *nodes;
 NodeNameMap node_names;
 
 /** The Edge worklist used by the fixpoint calculation. */
-WorkList<Edge *> worklist;
+std::deque<Edge*> worklist;
 
 /**
  * All the indices on the @Relation%s used by the @Grammar, indexed by
@@ -184,47 +183,6 @@ void node_ref_set_if_none(NODE_REF *ref_ptr, NODE_REF new_value) {
     if (*ref_ptr == NODE_NONE) {
 	*ref_ptr = new_value;
     }
-}
-
-/* WORKLIST HANDLING ======================================================= */
-
-template<typename T>
-WorkList<T>::Node::Node(T val, Node *next) : val(val), next(next) {}
-
-template<typename T>
-WorkList<T>::WorkList() : head(NULL), tail(NULL) {}
-
-template<typename T>
-void WorkList<T>::insert(T val) {
-    Node *temp = new Node(val, NULL);
-    if (tail == NULL) {
-	assert(head == NULL);
-	head = temp;
-	tail = temp;
-    } else {
-	assert(tail->next == NULL);
-	tail->next = temp;
-	tail = temp;
-    }
-}
-
-template<typename T>
-T WorkList<T>::pop() {
-    Node *temp = head;
-    head = temp->next;
-    if (head == NULL) {
-	tail = NULL;
-    }
-    T val = temp->val;
-    delete temp;
-    return val;
-}
-
-template<typename T>
-bool WorkList<T>::empty() {
-    bool is_empty = (head == NULL);
-    assert(!is_empty || tail == NULL);
-    return is_empty;
 }
 
 /* STRING QUEUE HANDLING =================================================== */
@@ -463,7 +421,7 @@ void add_node(const char *name) {
 void finalize_nodes() {
     assert(!node_names.is_final);
     node_names.is_final = true;
-    /* Bake the names queue into an array. */
+    // Bake the names queue into an array.
     node_names.names.array = string_queue_to_array(node_names.names.queue);
     /* Initialize the input graph with the number of nodes we've inserted so
        far, and the number of kinds as returned by the grammar-generated
@@ -512,6 +470,14 @@ NODE_REF name2node(const char *name) {
 
 /* RELATION HANDLING ======================================================= */
 
+void RelationIndex::add(const Selection &sel, INDEX val) {
+    index[sel].insert(val);
+}
+
+const std::set<INDEX>& RelationIndex::get(const Selection &sel) {
+    return index[sel];
+}
+
 /**
  * Initialize all possible indices on the declared @Relation%s. The indices
  * start out empty.
@@ -539,11 +505,6 @@ void rel_record(RELATION_REF ref, INDEX val_0, INDEX val_1, INDEX val_2) {
     rel_indices[ref][2].add(std::make_pair(val_0, val_1), val_2);
 }
 
-/**
- * Peform a selection on all the columns of a @Relation except @a proj_col, and
- * return all values appearing in that column. The values used in the selection
- * must be specified in column order.
- */
 const std::set<INDEX>& rel_select(RELATION_REF ref, ARITY proj_col,
 				  INDEX val_a, INDEX val_b) {
     return rel_indices[ref][proj_col].get(std::make_pair(val_a, val_b));
@@ -935,7 +896,7 @@ void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	free(e);
     } else {
 	graph_add(e);
-	worklist.insert(e);
+	worklist.push_back(e);
     }
 }
 
@@ -990,7 +951,7 @@ void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 #define NODE_LISTING "Nodes.map"
 
 /** The mode of operation for parse_input_files(). */
-typedef enum {
+enum class ParsingMode {
     /** Record all encountered unique Node names. */
     RECORD_NODES,
     /**
@@ -1001,7 +962,7 @@ typedef enum {
      * passes.
      */
     RECORD_EDGES
-} PARSING_MODE;
+};
 
 /**
  * Parse in the input graph.
@@ -1010,7 +971,7 @@ typedef enum {
  * @ref EDGE_SET_FORMAT file in subdir @ref INPUT_DIR and process it according
  * to @a mode.
  */
-void parse_input_files(PARSING_MODE mode) {
+void parse_input_files(ParsingMode mode) {
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
 	if (!is_terminal(k)) {
 	    continue;
@@ -1049,11 +1010,11 @@ void parse_input_files(PARSING_MODE mode) {
 	    }
 	    NODE_REF src_node, tgt_node;
 	    switch (mode) {
-	    case RECORD_NODES:
+	    case ParsingMode::RECORD_NODES:
 		add_node(src_buf);
 		add_node(tgt_buf);
 		break;
-	    case RECORD_EDGES:
+	    case ParsingMode::RECORD_EDGES:
 		src_node = name2node(src_buf);
 		tgt_node = name2node(tgt_buf);
 		if (parametric) {
@@ -1097,6 +1058,8 @@ void parse_rels() {
 	    std::istringstream iss(line);
 	    INDEX val_0, val_1, val_2;
 	    if (!(iss >> val_0 >> val_1 >> val_2)) {
+		// TODO: This won't fail as expected in all cases, e.g. if one
+		// of the numbers is negative.
 		APP_ERR("Tuple too short or parsing error: ", fname);
 	    }
 	    if (!iss.eof()) {
@@ -1477,7 +1440,7 @@ std::list<PartialPath*> partial_path_split(const PartialPath *path) {
 	// so we immediatelly include them in the lower bound for the path's
 	// length.
 	ext->min_length = path->min_length - parent_min_length
-			+ step_sequence_estimate_length(sub_steps);
+	    + step_sequence_estimate_length(sub_steps);
 	ext->choices = choice_sequence_extend(path->choices, c);
 	// Whenever we pick up this path again, we will continue from the next
 	// non-terminal step.
@@ -1727,6 +1690,7 @@ void logging_init() {
  */
 void print_edge_counts(bool terminal) {
     // TODO: Could cache these counts.
+    // TODO: use INC_COUNTER in print_stats
     DECL_COUNTER(total_edge_count, 0);
     DECL_COUNTER(total_index_count, 0);
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
@@ -1867,10 +1831,10 @@ int main() {
 
     DECL_COUNTER(loading_start, CURRENT_TIME());
     nodes_init();
-    parse_input_files(RECORD_NODES);
+    parse_input_files(ParsingMode::RECORD_NODES);
     finalize_nodes();
     LOG("Nodes: ", num_nodes());
-    parse_input_files(RECORD_EDGES);
+    parse_input_files(ParsingMode::RECORD_EDGES);
     rels_init();
     parse_rels();
     LOG("Loading completed in ", CURRENT_TIME() - loading_start, " ms");
@@ -1889,7 +1853,8 @@ int main() {
     /* Main loop. */
     while (!worklist.empty()) {
 	INC_COUNTER(iteration, 1);
-	Edge *base = worklist.pop();
+	Edge *base = worklist.front();
+	worklist.pop_front();
 	main_loop(base);
     }
     LOG("Fixpoint reached after ", iteration, " iterations");

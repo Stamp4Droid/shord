@@ -5,7 +5,6 @@
 #include <list>
 #include <map>
 #include <set>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <utility>
@@ -240,37 +239,30 @@ class RelationIndex {
 public:
     /** A selection over all but one of a @Relation<!-- -->'s columns. */
     typedef std::pair<INDEX,INDEX> Selection;
-
 private:
     // TODO: Not trivial to use unordered_map: no hash function is declared by
     // default for pairs/tuples.
     std::map<Selection, std::set<INDEX>> index;
-
 public:
     /**
      * Record a tuple of the @Relation being indexed. The tuple is passed in
      * as a combination of a selection on all other columns, plus the value
      * that the remaining, targeted column takes.
      */
-    void add(const Selection &sel, INDEX val) {
-	index[sel].insert(val);
-    }
-
+    void add(const Selection &sel, INDEX val);
     /**
      * Return all values that the targeted column takes for the selected values
      * on all other columns. In relational algebra terms, this corresponds to a
      * selection on all other columns, followed by a projection on the targeted
      * column.
      */
-    const std::set<INDEX>& get(const Selection &sel) {
-	return index[sel];
-    }
+    const std::set<INDEX>& get(const Selection &sel);
 };
 
 /**
  * A node of the input graph.
  */
-typedef struct {
+struct Node {
     /**
      * All the incoming Edge%s of the Node, indexed by @Kind.
      *
@@ -288,40 +280,6 @@ typedef struct {
      * We initialize the sets lazily to conserve space.
      */
     OutEdgeSet **out;
-} Node;
-
-/**
- * A FIFO worklist, supporting efficient element additions to the back and
- * removal from the front. Implemented using a singly linked list.
- */
-template<typename T> class WorkList {
-private:
-    struct Node {
-	T val;
-	Node *next;
-	Node(T val, Node *next);
-    };
-    Node *head;
-    Node *tail;
-public:
-    /**
-     * Create an empty WorkList.
-     */
-    WorkList();
-    // TODO: destructor, which cleans up the list
-    /**
-     * Append @a val to the end of the WorkList.
-     */
-    void insert(T val);
-    /**
-     * Remove the first element of the WorkList and return it. Assumes the
-     * WorkList is not empty.
-     */
-    T pop();
-    /**
-     * Check if the WorkList is empty.
-     */
-    bool empty();
 };
 
 /**
@@ -574,6 +532,9 @@ typedef unsigned long COUNTER;
  */
 #define STRICT_ALLOC(num, type) ((type*) strict_alloc((num) * sizeof(type)))
 
+/**
+ * Add a new Edge to the graph and the ::worklist, unless it's already present.
+ */
 void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	      Edge *l_edge, bool l_rev, Edge *r_edge, bool r_rev);
 
@@ -584,6 +545,11 @@ Edge *next_out_edge(OutEdgeIterator *iter);
 InEdgeIterator *get_in_edge_iterator(NODE_REF to, EDGE_KIND kind);
 Edge *next_in_edge(InEdgeIterator *iter);
 
+/**
+ * Peform a selection on all the columns of a @Relation except @a proj_col, and
+ * return all values appearing in that column. The values used in the selection
+ * must be specified in column order.
+ */
 const std::set<INDEX>& rel_select(RELATION_REF ref, ARITY proj_col,
 				  INDEX val_a, INDEX val_b);
 
