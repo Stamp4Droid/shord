@@ -14,7 +14,7 @@ import chord.util.tuple.object.Pair;
 import chord.util.tuple.object.Trio;
 
 @Chord(name = "context-label-java",
-	   consumes = { "LabelArg", "LabelRet", "CM" },
+	   consumes = { "InLabelArg", "InLabelRet", "OutLabelArg", "OutLabelRet", "CM" },
 	   produces = { "CL", "CCL", "LCL" },
 	   namesOfTypes = { "CL" },
 	   types = { DomCL.class },
@@ -53,9 +53,9 @@ public class ContextLabelAnalysis extends JavaAnalysis
 		relLCL.save();
 	}
 
-	private void CL()
+	private void processLabelArg(String relName)
 	{
-		ProgramRel relLabelArg = (ProgramRel) ClassicProject.g().getTrgt("LabelArg");
+		ProgramRel relLabelArg = (ProgramRel) ClassicProject.g().getTrgt(relName);
 		relLabelArg.load();
 		Iterable<Trio<String,SootMethod,Integer>> it1 = relLabelArg.getAry3ValTuples();
 		for(Trio<String,SootMethod,Integer> trio : it1) {
@@ -67,8 +67,11 @@ public class ContextLabelAnalysis extends JavaAnalysis
 			}
 		}
 		relLabelArg.close();
+	}
 
-		ProgramRel relLabelRet = (ProgramRel) ClassicProject.g().getTrgt("LabelRet");
+	private void processLabelRet(String relName)
+	{
+		ProgramRel relLabelRet = (ProgramRel) ClassicProject.g().getTrgt(relName);
 		relLabelRet.load();
 		Iterable<Pair<String,SootMethod>> it2 = relLabelRet.getAry2ValTuples();
 		for(Pair<String,SootMethod> pair : it2) {
@@ -80,6 +83,15 @@ public class ContextLabelAnalysis extends JavaAnalysis
 			}
 		}
 		relLabelRet.close();
+	}
+
+	private void CL()
+	{
+		processLabelArg("InLabelArg");
+		processLabelArg("OutLabelArg");
+
+		processLabelRet("InLabelRet");
+		processLabelRet("OutLabelRet");
 
 		domCL.save();
 	}

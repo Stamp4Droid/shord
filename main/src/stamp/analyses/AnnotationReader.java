@@ -36,16 +36,19 @@ import chord.project.Chord;
 					"ArgArgTransfer", "ArgRetTransfer", 
 					"ArgArgFlow",
 					"SrcLabel", "SinkLabel",
-					"LabelArg", "LabelRet" },
+					"InLabelArg", "InLabelRet",
+					"OutLabelArg", "OutLabelRet" },
 	   namesOfTypes = { "L" },
 	   types = { DomL.class },
 	   namesOfSigns = { "ArgArgTransfer", "ArgRetTransfer", 
 						"ArgArgFlow",
 						"SrcLabel", "SinkLabel",
-						"LabelArg", "LabelRet" },
+						"InLabelArg", "InLabelRet",
+						"OutLabelArg", "OutLabelRet" },
 	   signs = { "M0,Z0,Z1:M0_Z0_Z1", "M0,Z0:M0_Z0", 
 				 "M0,Z0,Z1:M0_Z0_Z1",
 				 "L0:L0", "L0:L0",
+				 "L0,M0,Z0:L0_M0_Z0", "L0,M0:L0_M0",
 				 "L0,M0,Z0:L0_M0_Z0", "L0,M0:L0_M0" }
 	   )
 public class AnnotationReader extends JavaAnalysis
@@ -54,8 +57,10 @@ public class AnnotationReader extends JavaAnalysis
 	private ProgramRel relArgRetTransfer;
 	private ProgramRel relArgArgFlow;
 
-	private ProgramRel relLabelArg; 
-	private ProgramRel relLabelRet;
+	private ProgramRel relInLabelArg; 
+	private ProgramRel relInLabelRet;
+	private ProgramRel relOutLabelArg; 
+	private ProgramRel relOutLabelRet;
 
 	private HashMap<SootClass,List<SootClass>> classToSubtypes = new HashMap();
 
@@ -90,18 +95,24 @@ public class AnnotationReader extends JavaAnalysis
 		relSinkLabel.save();
 
 		//fill LabelArg and LabelRet
-		relLabelArg = (ProgramRel) ClassicProject.g().getTrgt("LabelArg");
-		relLabelRet = (ProgramRel) ClassicProject.g().getTrgt("LabelRet");
-		relLabelArg.zero();
-		relLabelRet.zero();		
+		relInLabelArg = (ProgramRel) ClassicProject.g().getTrgt("InLabelArg");
+		relInLabelRet = (ProgramRel) ClassicProject.g().getTrgt("InLabelRet");
+		relOutLabelArg = (ProgramRel) ClassicProject.g().getTrgt("OutLabelArg");
+		relOutLabelRet = (ProgramRel) ClassicProject.g().getTrgt("OutLabelRet");
+		relInLabelArg.zero();
+		relInLabelRet.zero();		
+		relOutLabelArg.zero();
+		relOutLabelRet.zero();		
 		while(!worklist.isEmpty()){
 			SootMethod meth = (SootMethod) worklist.remove(0);
 			String from = (String) worklist.remove(0);
 			String to = (String) worklist.remove(0);
 			addFlow(meth, from, to);
 		}
-		relLabelArg.save();
-		relLabelRet.save();
+		relInLabelArg.save();
+		relInLabelRet.save();
+		relOutLabelArg.save();
+		relOutLabelRet.save();
 	}
 
 	private void process(List<String> srcLabels, List<String> sinkLabels, List worklist)
@@ -184,11 +195,11 @@ public class AnnotationReader extends JavaAnalysis
 		if(from0 == '$' || from0 == '!') {
 			if(to.equals("-1")){
 				for(SootMethod m : meths)
-					relLabelRet.add(from, m);
+					relInLabelRet.add(from, m);
 			}
 			else{
 				for(SootMethod m : meths)
-					relLabelArg.add(from, m, Integer.valueOf(to));
+					relInLabelArg.add(from, m, Integer.valueOf(to));
 			}
 		} else {
 			Integer fromArgIndex = Integer.valueOf(from);
@@ -196,10 +207,10 @@ public class AnnotationReader extends JavaAnalysis
 			if(to0 == '!'){
 				if(from.equals("-1")){
 					for(SootMethod m : meths)
-						relLabelRet.add(to, m);
+						relOutLabelRet.add(to, m);
 				} else{
 					for(SootMethod m : meths)
-						relLabelArg.add(to, m, fromArgIndex);
+						relOutLabelArg.add(to, m, fromArgIndex);
 				}
 			} else if(to0 == '?'){
 				Integer toArgIndex = Integer.valueOf(to.substring(1));
