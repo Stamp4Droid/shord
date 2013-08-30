@@ -500,10 +500,8 @@ class NormalProduction(util.FinalAttrs):
             return 'from' if self.left.reversed else 'to'
         return None
 
-    def outer_condition(self, emit_derivs):
+    def outer_condition(self):
         assert self.left is not None
-        if not emit_derivs:
-            return None
         if self.relation is not None:
             if self.relation.ref != 0:
                 return None
@@ -560,22 +558,16 @@ class NormalProduction(util.FinalAttrs):
         return ('INDEX i : rel_select(%s, %s, %s->index, %s->index)'
                 % (self.relation.ref, self.result.index, edge_1, edge_2))
 
-    def inner_condition(self, emit_derivs):
+    def inner_condition(self):
         assert self.left is not None and self.right is not None
         if self.relation is not None:
             if self.relation.ref != 0:
-                return 'i == index' if emit_derivs else None
+                return 'i == index'
             indices = (self.result.index, self.left.index, self.right.index)
             if indices == (2,0,1):
-                if emit_derivs:
-                    return 'r->index == (index & 0x3fff)'
-                else:
-                    return None
+                return 'r->index == (index & 0x3fff)'
             elif indices == (2,1,0):
-                if emit_derivs:
-                    return 'r->index == (index >> 14)'
-                else:
-                    return None
+                return 'r->index == (index >> 14)'
             elif indices == (0,2,1):
                 return 'r->index == (l->index & 0x3fff)'
             elif indices == (1,2,0):
@@ -583,17 +575,11 @@ class NormalProduction(util.FinalAttrs):
             elif indices == (0,1,2):
                 er_check = 'index == (r->index >> 14)'
                 lr_check = 'l->index == (r->index & 0x3fff)'
-                if emit_derivs:
-                    return er_check + ' && ' + lr_check
-                else:
-                    return lr_check
+                return er_check + ' && ' + lr_check
             elif indices == (1,0,2):
                 er_check = 'index == (r->index & 0x3fff)'
                 lr_check = 'l->index == (r->index >> 14)'
-                if emit_derivs:
-                    return er_check + ' && ' + lr_check
-                else:
-                    return lr_check
+                return er_check + ' && ' + lr_check
             else:
                 assert False
         if not self.right.indexed():
@@ -601,10 +587,7 @@ class NormalProduction(util.FinalAttrs):
         elif self.left.indexed():
             return 'l->index == r->index'
         assert self.result.indexed()
-        if emit_derivs:
-            return 'r->index == index'
-        else:
-            return None
+        return 'r->index == index'
 
     def __str__(self):
         rhs = ('-' if self.left is None
