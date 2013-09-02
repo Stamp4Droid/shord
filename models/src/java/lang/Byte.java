@@ -34,5 +34,16 @@ class Byte {
     public static java.lang.Byte valueOf(byte b) {
         return new Byte((byte)0);
     }
+
+    @STAMP(flows = { @Flow(from = "this", to = "@return") })
+    public byte byteValue() {
+		return 0;
+    }
+
+    @STAMP(flows = { @Flow(from = "value", to = "@return") })
+	public static java.lang.String toString(byte value) {
+		return new String();
+    }
+
 }
 

@@ -11,6 +11,7 @@ public class StampURLConnection extends HttpURLConnection
 		super(url);
 	}
 
+	@STAMP(flows={@Flow(from="this",to="!this")})
 	public void connect() throws java.io.IOException
 	{
 	}
@@ -24,9 +25,15 @@ public class StampURLConnection extends HttpURLConnection
 		return false;
 	}
 
-	@STAMP(flows={@Flow(from="this",to="@return")})
+	@STAMP(flows={@Flow(from="this",to="@return"),@Flow(from="this",to="!this")})
 	public  java.io.OutputStream getOutputStream() throws java.io.IOException 
 	{ 
 		return new java.io.StampOutputStream();
+	}
+
+	@STAMP(flows={@Flow(from="this",to="@return"),@Flow(from="this",to="!this")})
+	public  java.io.InputStream getInputStream() throws java.io.IOException 
+	{ 
+		return new java.io.StampInputStream();
 	}
 }

@@ -30,13 +30,13 @@ class URL
 	{ 
 	}
 	
-	@STAMP(flows={@Flow(from="this",to="!this")})
+	@STAMP(flows={@Flow(from="this",to="@return")})
 	public  java.net.URLConnection openConnection() throws java.io.IOException 
 	{ 
 		return new StampURLConnection(this);
 	}
 
-	@STAMP(flows={@Flow(from="this",to="!this")})
+	@STAMP(flows={@Flow(from="this",to="@return")})
 	public  java.net.URLConnection openConnection(java.net.Proxy proxy) throws java.io.IOException 
 	{ 
 		return new StampURLConnection(this);
@@ -72,5 +72,15 @@ class URL
 	@STAMP(flows={@Flow(from="this",to="@return")})
     public java.lang.String getQuery() {
         return new String();
+    }
+
+	@STAMP(flows={@Flow(from="this",to="@return")})
+    public java.lang.String toString() {
+        return new String();
+    }
+	
+	@STAMP(flows={@Flow(from="this",to="@return")})
+	public java.net.URI toURI() throws java.net.URISyntaxException {
+		return new URI((String)null);
     }
 }

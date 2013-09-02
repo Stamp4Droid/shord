@@ -91,4 +91,13 @@ class StringBuilder
 
 	@STAMP(flows = {@Flow(from="this",to="@return")})
     public  java.lang.String toString() { return new String(); }
+
+    public java.lang.StringBuilder delete(int start, int end) {
+		return this;
+    }
+
+    public java.lang.StringBuilder deleteCharAt(int index) {
+		return this;
+    }
+
 }
