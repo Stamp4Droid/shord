@@ -11,6 +11,7 @@
 #include <signal.h>
 #include <sstream>
 #include <stack>
+#include <stdexcept>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
@@ -470,12 +471,18 @@ NODE_REF name2node(const char *name) {
 
 /* RELATION HANDLING ======================================================= */
 
+const std::set<INDEX> RelationIndex::EMPTY_INDEX_SET;
+
 void RelationIndex::add(const Selection &sel, INDEX val) {
-    index[sel].insert(val);
+    map[sel].insert(val);
 }
 
 const std::set<INDEX>& RelationIndex::get(const Selection &sel) {
-    return index[sel];
+    try {
+	return map.at(sel);
+    } catch (const std::out_of_range& oor) {
+	return EMPTY_INDEX_SET;
+    }
 }
 
 /**

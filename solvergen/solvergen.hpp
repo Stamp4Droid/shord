@@ -240,9 +240,16 @@ public:
     /** A selection over all but one of a @Relation<!-- -->'s columns. */
     typedef std::pair<INDEX,INDEX> Selection;
 private:
+    /**
+     * A dummy empty @Index set. Used in cases where a queried key is not
+     * present in the RelationIndex, to provide an empty iterator without
+     * polluting the map with useless default-initialized records.
+     */
+    static const std::set<INDEX> EMPTY_INDEX_SET;
+    /** The actual index. */
     // TODO: Not trivial to use unordered_map: no hash function is declared by
     // default for pairs/tuples.
-    std::map<Selection, std::set<INDEX>> index;
+    std::map<Selection, std::set<INDEX>> map;
 public:
     /**
      * Record a tuple of the @Relation being indexed. The tuple is passed in
