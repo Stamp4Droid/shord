@@ -44,6 +44,7 @@ public class SrcSinkFlowViz extends XMLVizReport
         SAME, // same parent context as last method added
         DROP, // new method called by last step's method
         POP, // new method at level of last context's caller
+        SKIP, // not a step with new context information
         BROKEN, // no context overlap with last; also initial step
         OTHER // self-explanatory
     }
@@ -92,8 +93,7 @@ public class SrcSinkFlowViz extends XMLVizReport
                     }
                     SootMethod parentMethod = getBottomCtxtMethod(s);
                     SootMethod method = getMethod(s);
-                    logCallSites(s, callSites);
-                    System.err.print(((CtxtPoint)s.target).getElems());
+                    //logCallSites(s, callSites);
 
                     switch(getStepActionType(parentMethod, s, lastNode, t)) {
 
@@ -129,6 +129,9 @@ public class SrcSinkFlowViz extends XMLVizReport
                             lastNode = lastNode.addChild(getMethod(s));
                             break;
 
+                        case SKIP:
+                            continue;
+
                         case OTHER:
                         default:
                             throw new Exception("Unrecognized StepActionType in SrcSinkFlowViz generate");
@@ -158,7 +161,7 @@ public class SrcSinkFlowViz extends XMLVizReport
      * @return the node for the bottom context method
      */
     public Node<SootMethod> addCtxt(Tree<SootMethod> t, Step s) {
-        Unit[] context = ((CtxtPoint)s.target).getElems();
+        Unit[] context = ((CtxtStep)s).getCtxt().getElems();
         Node<SootMethod> lastNode = t.getRoot();
 
         for (int i = context.length - 1; i >= 0; --i) {
@@ -183,7 +186,7 @@ public class SrcSinkFlowViz extends XMLVizReport
             Deque<Category> stack = new ArrayDeque<Category>();
             while (itr.hasNext()) {
                 int oldDepth = itr.getDepth();
-                SootMethod meth = itr.next();:
+                SootMethod meth = itr.next();
                 int newDepth = itr.getDepth();
 
                 if (filter(meth, stack.size(), t)) {
@@ -294,15 +297,12 @@ public class SrcSinkFlowViz extends XMLVizReport
         // Throughout these we follow a minimal detection which, to my knowledge, ought to suffice.
         // However, it may be wiser in order to be certain we report the correct type and catch edge
         // cases to check that all conditions for each type apply
-        System.err.println("NODE" + lastNode.getData().getName());
-        System.err.println("PARENT" + ((Node<SootMethod>)t.getParent(lastNode)).getData().getName());
-        System.err.println("GRANDPARENT" + ((Node<SootMethod>)t.getParent(t.getParent(lastNode))).getData().getName());
-        System.err.println("NEWMETH" + method.getName());
-
         if (s instanceof CallStep) {
             method = lastNode.getData();
         } else if (s instanceof ReturnStep) {
             method = lastNode.getParent().getData();
+        } else if (s instanceof IntraProceduralStep || s instanceof StoreStep || s instanceof LoadStep) {
+            return StepActionType.SKIP;
         }
 
         if (t.isRoot(lastNode)) { // other condition?
