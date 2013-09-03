@@ -2,24 +2,26 @@ class ByteBuffer
 {
     public ByteBuffer() {}
 
-	/*
-    @STAMP(flows = {@Flow(from="b",to="@return")})
-    public static java.nio.ByteBuffer put(byte b) {
-     	return new ByteBuffer();
+    public static java.nio.ByteBuffer allocate(int capacity) {
+		return new StampByteBuffer();
+    }
+
+    public static java.nio.ByteBuffer allocateDirect(int capacity) {
+		return new StampByteBuffer();
     }
 
     @STAMP(flows = {@Flow(from="array",to="@return")})
     public static java.nio.ByteBuffer wrap(byte[] array) 
     { 
-		return new ByteBuffer();
+		return new StampByteBuffer();
 	}
 
     @STAMP(flows = {@Flow(from="array",to="@return")})
     public static  java.nio.ByteBuffer wrap(byte[] array, int start, int byteCount) 
     {  
-		return new ByteBuffer();
+		return new StampByteBuffer();
 	}
-	*/
+	
     @STAMP(flows = {@Flow(from="this",to="@return")})
     public final  byte[] array() { return new byte[0]; }
 
@@ -50,6 +52,11 @@ class ByteBuffer
     @STAMP(flows = {@Flow(from="src",to="this")})
     public  java.nio.ByteBuffer put(java.nio.ByteBuffer src) 
     {  
+		return this;
+    }
+
+	public final java.nio.ByteBuffer order(java.nio.ByteOrder byteOrder) 
+	{
 		return this;
     }
 }
