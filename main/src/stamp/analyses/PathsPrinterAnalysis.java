@@ -61,7 +61,7 @@ public class PathsPrinterAnalysis extends JavaAnalysis {
 						pw.println(">>> BROKEN: <<<");
 						breaks++;
 					}
-					pw.println((s.reverse ? "<-- " : "--> ") + s.target);
+					pw.println(s.getClass().getCanonicalName() + " " + (s.reverse ? "<-- " : "--> ") + s.target);
 				}
 				if (breaks > 0) {
 					pw.println("INVALID");
