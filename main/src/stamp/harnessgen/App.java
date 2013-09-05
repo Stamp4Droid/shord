@@ -16,25 +16,10 @@ import soot.Modifier;
  **/
 public class App
 {
-	//protected final List<String> components = new ArrayList();
 	protected final Map<String,List<String>> components = new HashMap();
-	//protected final List<File> layoutFiles = new ArrayList();
-	//protected File manifestFile;
 
-
-	//public App(String classPath, String androidJar)
-	//{
-	//	this(null, classPath, androidJar);
-	//}
-
-	public App(/*File manifestFile,*/ String classPath, String androidJar, String outDir)
+	public App(String classPath, String androidJar, String outDir)
 	{
-		//computeClassNames(classPath, androidJar);
-		
-		//if(manifestFile == null)
-		//	this.manifestFile = getManifestFile(classPath);
-
-		//extractFiles(classPath);		
 		File layoutDir = new File(outDir, "res/layout");
 		File[] layoutFiles = layoutDir.listFiles(new FilenameFilter(){
 				public boolean accept(File dir, String name){
@@ -136,101 +121,4 @@ public class App
 		}		
 		return ret == null ? Collections.EMPTY_LIST : ret;
 	} 
-
-	/*
-	//extract it from the stamp.app.jar
-	private File getManifestFile(String classPath)
-	{		
-		try{
-			JarEntry entry = null;
-			JarFile jarFile = null;
-			
-			for(String cp : classPath.split(":")){
-				File f = new File(cp);
-				if(!(f.exists()))
-					continue;
-				
-				JarFile jf = new JarFile(f);
-				entry = jf.getJarEntry("AndroidManifest.xml");
-				if(entry != null){
-					jarFile = jf;
-					break;
-				}
-			}
-		
-			if(jarFile == null)
-				throw new Error("Did not find AndroidManifest.xml in classpath");
-		
-			InputStream in = jarFile.getInputStream(entry);			
-			File androidManifestFile = File.createTempFile("stamp_android_manifest", null, null);
-			androidManifestFile.deleteOnExit();
-			OutputStream out = new FileOutputStream(androidManifestFile);
-		
-			new AXMLPrinter().convert(in, out);
-		
-			return androidManifestFile;
-		} catch(IOException e){
-			throw new Error(e);
-		}
-	}
-	*/
-
-	/**
-	   extract AndroidManifest.xml and layout xml files from the apk
-	 */
-	/*
-	private void extractFiles(String classPath)
-	{
-		try{
-			for(String cp : classPath.split(":")){
-				File f = new File(cp);
-				if(!(f.exists()))
-					continue;
-
-				JarFile jf = new JarFile(f);
-				Enumeration<?> entries = jf.entries();
-                while (entries.hasMoreElements()) {
-                    JarEntry entry = (JarEntry) entries.nextElement();
-                    String entryName = entry.getName();
-					if(entryName.startsWith("res/layout/") && entryName.endsWith(".xml")){
-						layoutFiles.add(extractFile(entryName, jf, entry));
-					} else if(entryName.equals("AndroidManifest.xml")){
-						manifestFile = extractFile(entryName, jf, entry);
-					}
-                }
-			}
-		} catch(IOException e){
-			throw new Error(e);
-		}
-	}
-
-	private File extractFile(String entryName, JarFile jf, JarEntry entry) throws IOException
-	{
-		File tmpFile = File.createTempFile(entryName.replace('/','_'), null, null);
-		tmpFile.deleteOnExit();
-		new AXMLPrinter().convert(jf.getInputStream(entry), new FileOutputStream(tmpFile));
-		return tmpFile;
-	}
-
-	public Iterable<String> components()
-	{
-		return components;
-	}
-
-	public Set<String> xmlCallbacks()
-	{
-		return xmlCallbacks;
-	}
-
-	
-	
-	public String toString()
-	{
-		StringBuilder builder = new StringBuilder("[");
-		for(String s : components)
-			builder.append(s + ", ");
-		builder.append("]");
-		return builder.toString();
-	}
-	*/
 }
