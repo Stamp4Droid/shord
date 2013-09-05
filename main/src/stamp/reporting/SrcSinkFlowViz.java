@@ -87,13 +87,13 @@ public class SrcSinkFlowViz extends XMLVizReport
                 //System.err.println(context);
 
                 for (Step s : p.steps) {
-                    System.err.println("PRINT LASTNODE: " + lastNode);
                     if (!(s.target instanceof VarPoint)) {
                         continue;
                     }
                     SootMethod parentMethod = getBottomCtxtMethod(s);
                     SootMethod method = getMethod(s);
                     //logCallSites(s, callSites);
+                    System.err.println("LAST NODE: " + ((SootMethod)lastNode.getData()).getName() + ((SootMethod)lastNode.getData()).getNumber());
 
                     switch(getStepActionType(parentMethod, s, lastNode, t)) {
 
@@ -130,6 +130,7 @@ public class SrcSinkFlowViz extends XMLVizReport
                             break;
 
                         case SKIP:
+                            System.err.println("case SKIP:");
                             continue;
 
                         case OTHER:
@@ -297,13 +298,14 @@ public class SrcSinkFlowViz extends XMLVizReport
         // Throughout these we follow a minimal detection which, to my knowledge, ought to suffice.
         // However, it may be wiser in order to be certain we report the correct type and catch edge
         // cases to check that all conditions for each type apply
-        if (s instanceof CallStep) {
-            method = lastNode.getData();
-        } else if (s instanceof ReturnStep) {
-            method = lastNode.getParent().getData();
+        if ((s instanceof CallStep && !s.reverse) || (s instanceof ReturnStep && s.reverse)) {
+            return StepActionType.DROP;
+        } else if ((s instanceof ReturnStep && !s.reverse) || (s instanceof CallStep && s.reverse)) {
+            return StepActionType.POP;
         } else if (s instanceof IntraProceduralStep || s instanceof StoreStep || s instanceof LoadStep) {
             return StepActionType.SKIP;
         }
+
 
         if (t.isRoot(lastNode)) { // other condition?
             return StepActionType.BROKEN;
