@@ -74,24 +74,25 @@ public class Experiment {
 			// STEP 1a: Run the analysis.
 			this.j.run(this.c, total, relationLookup);
 			
-			// STEP 1b: Get the proposed models
+			// STEP 1b: Get the proposed models.
 			curProposed = this.j.getProposedModels(round++);
-			
-			System.out.println(curProposed.size());
-			
-			// STEP 1c: Add the proposed models to the list.
-			this.proposed.add(curProposed);
-			
-			// STEP 1d: Add the proposed models to the total set of models.
+
+			// STEP 1c: Set the proposed models to their ground truths, if available.
 			for(StubModel model : curProposed.keySet()) {
 				// For now, not containing a model is equivalent to its having value 0.
 				// TODO: Is there a situation where we would want to keep this separate?
 				if(groundTruthModels.get(model) != ModelType.UNKNOWN) {
-					total.put(model, groundTruthModels.get(model));
+					curProposed.put(model, groundTruthModels.get(model), curProposed.getData(model));
 				} else {
-					total.put(model, defaultModelValue);
+					curProposed.put(model, defaultModelValue, curProposed.getData(model));
 				}
 			}
+						
+			// STEP 1d: Add the proposed models to the total set of models.
+			total.putAll(curProposed);
+
+			// STEP 1e: Add the proposed models to the list.
+			this.proposed.add(curProposed);
 		} while(!curProposed.isEmpty());
 	}
 	
