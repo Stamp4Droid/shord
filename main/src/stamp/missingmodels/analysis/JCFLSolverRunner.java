@@ -75,6 +75,9 @@ public abstract class JCFLSolverRunner {
 				for(Pair<Edge,Boolean> pair : positiveWeightEdges.get(edge)) {
 					EdgeData data = pair.getX().getData(this.g);
 					StubModel model = new StubModel(this.s.get(new StubLookupKey(data.symbol, data.from, data.to)));
+					// IMPORTANT: Only return models that have unknown ground truth. We don't want to count
+					// models that are already assumed to be true, but still have weight 1, in the set
+					// of proposed models.
 					if(this.m.get(model) == ModelType.UNKNOWN) {
 						proposals.put(model, ModelType.UNKNOWN, 1, round);
 					}
@@ -165,6 +168,8 @@ public abstract class JCFLSolverRunner {
 				j.run(this.c, total, relationLookup);
 				
 				// add the current proposed models to all proposed and total
+				// (note that this won't include anything that has known ground
+				// truth, since this is true about j)
 				curProposed = this.j.getProposedModels();
 				total.putAllToValue(curProposed, 2);
 				this.allProposed.putAll(curProposed);

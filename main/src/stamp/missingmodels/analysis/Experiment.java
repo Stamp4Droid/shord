@@ -87,11 +87,19 @@ public class Experiment {
 					curProposed.put(model, defaultModelValue, curProposed.getData(model));
 				}
 			}
-						
-			// STEP 1d: Add the proposed models to the total set of models.
+
+			// STEP 1d: Remove models already proposed from the currently proposed models.
+			// Note that if we don't do this, and an unknown model is encountered, the
+			// experiment will loop infinitely, since the unknown model will remain in
+			// curProposed.
+			for(StubModel model : total.keySet()) {
+				curProposed.remove(model);
+			}
+			
+			// STEP 1e: Add the proposed models to the total set of models.
 			total.putAll(curProposed);
 
-			// STEP 1e: Add the proposed models to the list.
+			// STEP 1f: Add the proposed models to the list.
 			this.proposed.add(curProposed);
 		} while(!curProposed.isEmpty());
 	}

@@ -26,7 +26,6 @@ import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.missingmodels.util.viz.jcflsolver.JCFLRelationInputFile;
 import stamp.missingmodels.util.viz.jcflsolver.JCFLRelationOutputFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.AllStubInputsFile;
-import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubInputsFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetInputFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetOutputFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetWithDataOutputFile;
@@ -100,15 +99,6 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		// STEP 1: Set up the graph and load the stub model set if applicable.
 		StubModelSet m;
 		try {
-			//m = manager.read(new StubModelSetWithDataInputFile<Pair<Integer,Integer>>("StubModelSet.txt", ProposedStubModelSet.class));
-			//m = manager.read(new StubModelSetInputFile("StubModelSet012.txt"));
-			//m = manager.read(new StubModelSetInputFile("StubModelSet018.txt"));
-			//m = manager.read(new StubModelSetInputFile("StubModelSet0ac.txt"));
-			//m = manager.read(new StubModelSetInputFile("StubModelSet101.txt"));
-			//m = manager.read(new StubModelSetInputFile("StubModelSet197.txt"));
-			//m = manager.read(new StubModelSetInputFile("StubModelSet1c2.txt"));
-			//m = manager.read(new StubModelSetInputFile("StubModelSet24f.txt"));
-			//m = manager.read(new StubModelSetInputFile("StubModelSet2ef.txt"));
 			m = manager.read(new StubModelSetInputFile("StubModelSet.txt", FileType.PERMANENT));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -169,7 +159,8 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 	}
 	
 	public static void main(String[] args) {
-		FileManager manager = getFileManager("../stamp_output/_home_obastani_Documents_projects_stamp_stamptest_SymcApks_24feff7f70fc1f4369069d64a9998d43.apk/");
+		String appDirectory = "../stamp_output/_home_obastani_Documents_projects_stamp_stamptest_SymcApks_24feff7f70fc1f4369069d64a9998d43.apk/";
+		FileManager manager = getFileManager(appDirectory);
 		run(manager, new FileRelationAdder(manager));
 	}
 }
