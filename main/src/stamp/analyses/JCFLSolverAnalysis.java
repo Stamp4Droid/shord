@@ -28,6 +28,7 @@ import stamp.missingmodels.util.viz.jcflsolver.JCFLRelationOutputFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.AllStubInputsFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubInputsFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetInputFile;
+import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetOutputFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetWithDataOutputFile;
 import chord.project.Chord;
 
@@ -108,7 +109,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 			//m = manager.read(new StubModelSetInputFile("StubModelSet1c2.txt"));
 			//m = manager.read(new StubModelSetInputFile("StubModelSet24f.txt"));
 			//m = manager.read(new StubModelSetInputFile("StubModelSet2ef.txt"));
-			m = manager.read(new StubModelSetInputFile("StubModelSet.txt"));
+			m = manager.read(new StubModelSetInputFile("StubModelSet.txt", FileType.PERMANENT));
 		} catch (IOException e) {
 			e.printStackTrace();
 			m = new StubModelSet();
@@ -134,6 +135,8 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		//files.add(new StubInputsFile(j.g(), j.s()));
 		files.add(new StubModelSetWithDataOutputFile<Pair<Integer,Integer>>(experiment.getAllProposedModels()));
 		//files.addAll(FlowWriter.viz(j.g, j.s));
+		m.putAll(experiment.getAllProposedModels());
+		files.add(new StubModelSetOutputFile(m, "StubModelSet.txt", FileType.PERMANENT));
 		try {
 			for(StampOutputFile file : files) {
 				manager.write(file);

@@ -286,19 +286,27 @@ public class JCFLSolverFiles {
 	 */
 	public static class StubModelSetOutputFile implements StampOutputFile {
 		private final StubModelSet m;
+		private final String name;
+		private final FileType fileType;
 
-		public StubModelSetOutputFile(StubModelSet m) {
+		public StubModelSetOutputFile(StubModelSet m, String name, FileType fileType) {
 			this.m = m;
+			this.name = name;
+			this.fileType = fileType;
+		}
+		
+		public StubModelSetOutputFile(StubModelSet m) {
+			this(m, "StubModelSet.txt", FileType.OUTPUT);
 		}
 
 		@Override
 		public String getName() {
-			return "StubModelSet.txt";
+			return this.name;
 		}
 
 		@Override
 		public FileType getType() {
-			return FileType.OUTPUT;
+			return this.fileType;
 		}
 
 		@Override
@@ -316,9 +324,15 @@ public class JCFLSolverFiles {
 	 */
 	public static class StubModelSetInputFile implements StampInputFile<StubModelSet> {
 		private final String filename;
+		private final FileType fileType;
+		
+		public StubModelSetInputFile(String filename, FileType fileType) {
+			this.filename = filename;
+			this.fileType = fileType;
+		}
 		
 		public StubModelSetInputFile(String filename) {
-			this.filename = filename;
+			this(filename, FileType.PERMANENT);
 		}
 		
 		@Override
@@ -328,7 +342,7 @@ public class JCFLSolverFiles {
 
 		@Override
 		public FileType getType() {
-			return FileType.PERMANENT;
+			return this.fileType;
 		}
 
 		@Override
