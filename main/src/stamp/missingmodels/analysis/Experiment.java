@@ -60,9 +60,9 @@ public class Experiment {
 	 * @param groundTruthModels The ground truth stub models.
 	 * @param initialModels The set of models to use initially.
 	 * @param defaultModelValue If a model is not present, how
-	 * to treat it. Default is 0.
+	 * to treat it. Default is UNKNOWN.
 	 */ 
-	public void run(StubModelSet groundTruthModels, StubModelSet initialModels, RelationAdder relationLookup, ModelType defaultModelValue) {
+	public void run(StubModelSet groundTruthModels, StubModelSet initialModels, RelationAdder relationLookup, ModelType defaultModelType) {
 		// STEP 0: Initilize the total set of models
 		StubModelSet total = new StubModelSet();
 		total.putAll(initialModels);
@@ -78,13 +78,14 @@ public class Experiment {
 			curProposed = this.j.getProposedModels(round++);
 
 			// STEP 1c: Set the proposed models to their ground truths, if available.
+			// Otherwise, set them to unknown.
 			for(StubModel model : curProposed.keySet()) {
 				// For now, not containing a model is equivalent to its having value 0.
 				// TODO: Is there a situation where we would want to keep this separate?
 				if(groundTruthModels.get(model) != ModelType.UNKNOWN) {
 					curProposed.put(model, groundTruthModels.get(model), curProposed.getData(model));
 				} else {
-					curProposed.put(model, defaultModelValue, curProposed.getData(model));
+					curProposed.put(model, ModelType.UNKNOWN, curProposed.getData(model));
 				}
 			}
 
@@ -96,8 +97,15 @@ public class Experiment {
 				curProposed.remove(model);
 			}
 			
-			// STEP 1e: Add the proposed models to the total set of models.
-			total.putAll(curProposed);
+			// STEP 1e: Add the proposed models to the total set of models. Use the
+			// default value if necessary.
+			for(Map.Entry<StubModel,ModelType> entry : curProposed.entrySet()) {
+				if(curProposed.get(entry.getKey()) == ModelType.UNKNOWN){
+					total.put(entry.getKey(), defaultModelType);
+				} else {
+					total.put(entry.getKey(), entry.getValue());
+				}
+			}
 
 			// STEP 1f: Add the proposed models to the list.
 			this.proposed.add(curProposed);

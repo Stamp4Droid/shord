@@ -108,7 +108,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		//j = new JCFLSolverSingle(new E12(), m);
 		//j.run(E12.class, m);
 		Experiment experiment = new Experiment(JCFLSolverSingle.class, E12.class);
-		experiment.run(m, new StubModelSet(), relationAdder, ModelType.UNKNOWN);
+		experiment.run(m, new StubModelSet(), relationAdder, ModelType.FALSE);
 		j = experiment.j();
 
 		// STEP 3: Output some results
