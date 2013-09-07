@@ -9,6 +9,8 @@ import soot.Value;
 import soot.Unit;
 import soot.Body;
 import soot.Type;
+import soot.RefType;
+import soot.ArrayType;
 import soot.RefLikeType;
 import soot.PrimType;
 import soot.NullType;
@@ -49,6 +51,19 @@ public class LocalsClassifier
 	public LocalsClassifier(Body body)
 	{
 		method = body.getMethod();
+
+		for(Local l : body.getLocals()){
+			Type type = l.getType();
+			if(type instanceof PrimType)
+				addPrim(l);
+			else if(type instanceof RefType || type instanceof ArrayType)
+				addNonPrim(l);
+			else if(type instanceof NullType)
+				;
+			else 
+				System.out.println("untyped " + l + ": " + l.getType()+" in " +method);
+		}
+
 		for(Unit unit : body.getUnits()){
 			Stmt s = (Stmt) unit;
 			handleStmt(s);
@@ -57,7 +72,7 @@ public class LocalsClassifier
 		fixpoint(primLocals);
 		localToNeighbors = null;
 		
-		/*
+
 		int total, primCount, nonPrimCount, both, unclassified;
 		total = primCount = nonPrimCount = both = unclassified = 0;
 		for(Local l : body.getLocals()){
@@ -74,8 +89,8 @@ public class LocalsClassifier
 			} else
 				unclassified++;
 		}
-		System.out.println("LC: "+method + " t = "+total+" p = "+primCount+" n = "+nonPrimCount+" b = "+both+" u = "+unclassified);
 		if(unclassified != 0){
+			System.out.println("LC: "+method + " t = "+total+" p = "+primCount+" n = "+nonPrimCount+" b = "+both+" u = "+unclassified);
 			System.out.println("Unclassified: ");
 			for(Local l : body.getLocals()){
 				boolean prim = primLocals.contains(l);
@@ -85,7 +100,7 @@ public class LocalsClassifier
 			}
 			System.out.println("");
 			System.out.println(body.toString());
-			}*/
+			}
 	}
 
 	public Set<Local> primLocals()

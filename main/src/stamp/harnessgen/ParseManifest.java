@@ -44,12 +44,19 @@ public class ParseManifest
 				findComponents(xpath, document, others, compType);
 			}
 			
-			//backup agent
 			node = (Node)
 				xpath.evaluate("/manifest/application", document, XPathConstants.NODE);
+
+			//backup agent
 			Node backupAgent = node.getAttributes().getNamedItem("android:backupAgent");
 			if(backupAgent != null)
 				others.add(fixName(backupAgent.getNodeValue()));
+			
+			//application class
+			Node application = node.getAttributes().getNamedItem("android:name");
+			if(application != null)
+				others.add(fixName(application.getNodeValue()));
+
 		}catch(Exception e){
 			throw new Error(e);
 		}

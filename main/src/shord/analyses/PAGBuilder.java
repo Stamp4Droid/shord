@@ -652,8 +652,11 @@ public class PAGBuilder extends JavaAnalysis
 					Local l = (Local) leftOp;
 					if(nonPrimLocals.contains(l))
 						Load(nodeFor(l), nodeFor(base), field);
-					if(primLocals.contains(l))
+					if(primLocals.contains(l)) {
 						LoadPrim(nodeFor(l), nodeFor(base), field);
+						//implicit flow
+						AssignPrim(nodeFor(l), nodeFor((Immediate) ar.getIndex()));
+					}
 				}else{
 					//array write
 					assert leftOp == ar;
