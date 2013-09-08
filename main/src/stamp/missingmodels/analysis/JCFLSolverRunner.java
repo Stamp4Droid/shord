@@ -79,7 +79,7 @@ public abstract class JCFLSolverRunner {
 					// models that are already assumed to be true, but still have weight 1, in the set
 					// of proposed models.
 					if(this.m.get(model) == ModelType.UNKNOWN) {
-						proposals.put(model, ModelType.UNKNOWN, 1, round);
+						proposals.put(model, ModelType.UNKNOWN, ModelType.TRUE, round);
 					}
 				}
 			}
@@ -150,7 +150,7 @@ public abstract class JCFLSolverRunner {
 		 */
 		public ProposedStubModelSet getProposedModels(int round) {
 			ProposedStubModelSet proposed = new ProposedStubModelSet();
-			proposed.setDefaultValue(2);
+			proposed.setDefaultValue(ModelType.FALSE);
 			proposed.putAll(this.allProposed);
 			return proposed;
 		}

@@ -7,17 +7,52 @@ import java.util.Map;
 import java.util.Set;
 
 import stamp.missingmodels.analysis.JCFLSolverRunner.RelationAdder;
+import stamp.missingmodels.util.FileManager.FileType;
+import stamp.missingmodels.util.FileManager.StampOutputFile;
 import stamp.missingmodels.util.StubModelSet;
 import stamp.missingmodels.util.StubModelSet.ModelType;
 import stamp.missingmodels.util.StubModelSet.StubModel;
 import stamp.missingmodels.util.Util.Pair;
+import stamp.missingmodels.util.jcflsolver.Edge;
 import stamp.missingmodels.util.jcflsolver.Graph;
 
-public class Experiment {
+public class Experiment implements StampOutputFile {
 	private JCFLSolverRunner j;
 	private Class<? extends Graph> c;
 	
 	private List<ProposedStubModelSet> proposed = new ArrayList<ProposedStubModelSet>();
+
+	/*
+	 * Name of the experimental results file.
+	 * @see stamp.missingmodels.util.FileManager.StampFile#getName()
+	 */
+	@Override
+	public String getName() {
+		return "results.txt";
+	}
+
+	/*
+	 * File type of the experimental results file.
+	 * @see stamp.missingmodels.util.FileManager.StampFile#getType()
+	 */
+	@Override
+	public FileType getType() {
+		return FileType.OUTPUT;
+	}
+
+	/*
+	 * Content of the experimental results file.
+	 * @see stamp.missingmodels.util.FileManager.StampOutputFile#getContent()
+	 */
+	@Override
+	public String getContent() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Number of proposed models: ").append(this.getNumProposed()).append("\n");
+		sb.append("Number of rounds: ").append(this.getNumRounds()).append("\n");
+		sb.append("Accuracy: ").append(this.getAccuracy()).append("\n");
+		sb.append("Number of flows [before,after]: ").append(this.getNumFlows()).append("\n");
+		return sb.toString();
+	}
 	
 	/*
 	 * Returns the runner.
@@ -54,7 +89,37 @@ public class Experiment {
 	/*
 	 * Statistic 3: The accuracy.
 	 */
-	// TODO: here
+	public float getAccuracy() {
+		int totalCount = 0;
+		int correctCount = 0;
+		ProposedStubModelSet allProposed = this.getAllProposedModels();
+		for(Map.Entry<StubModel,ModelType> entry : allProposed.entrySet()) {
+			totalCount++;
+			if(entry.getValue() == allProposed.getData(entry.getKey()).getX()) {
+				correctCount++;
+			}
+		}
+		return (float)correctCount/totalCount;
+	}
+	
+	/*
+	 * Statistic 3: The number of flows before and after.
+	 */
+	public Pair<Integer,Integer> getNumFlows() {
+		// STEP 0: Get the graph edges.
+		List<Edge> edges = new ArrayList<Edge>(this.j.g().getEdges("Src2Sink"));
+		
+		// STEP 1: Count the edges.
+		int numZeroWeightEdges = 0;
+		for(Edge edge : edges) {
+			if(edge.weight == 0) {
+				numZeroWeightEdges++;
+			}
+		}
+		
+		// STEP 2: Return the result.
+		return new Pair<Integer,Integer>(numZeroWeightEdges, edges.size()); 
+	}
 
 	/*
 	 * @param groundTruthModels The ground truth stub models.
@@ -196,34 +261,34 @@ public class Experiment {
 	 * A stub model class where the data is (proposed,round).
 	 * Default proposed value is 0, default round value is -1.
 	 */
-	public static class ProposedStubModelSet extends StubModelSetWithData<Pair<Integer,Integer>> {
+	public static class ProposedStubModelSet extends StubModelSetWithData<Pair<ModelType,Integer>> {
 		public static final int DEFAULT_ROUND = -1;
 		private static final long serialVersionUID = 4715908928086091234L;
 		
-		private int defaultProposedValue = 0;
+		private ModelType defaultProposedValue = ModelType.UNKNOWN;
 		
-		public void setDefaultValue(int defaultProposedValue) {
+		public void setDefaultValue(ModelType defaultProposedValue) {
 			this.defaultProposedValue = defaultProposedValue;
 		}
 		
-		public ModelType put(StubModel key, ModelType value, int proposed, int round) {
-			return super.put(key, value, new Pair<Integer,Integer>(proposed, round));
+		public ModelType put(StubModel key, ModelType value, ModelType proposed, int round) {
+			return super.put(key, value, new Pair<ModelType,Integer>(proposed, round));
 		}
 
 		@Override
-		public Pair<Integer,Integer> defaultValue() {
-			return new Pair<Integer,Integer>(this.defaultProposedValue, DEFAULT_ROUND);
+		public Pair<ModelType,Integer> defaultValue() {
+			return new Pair<ModelType,Integer>(this.defaultProposedValue, DEFAULT_ROUND);
 		}
 
 		@Override
-		public String toString(Pair<Integer,Integer> data) {
+		public String toString(Pair<ModelType,Integer> data) {
 			return data.toString();
 		}
 
 		@Override
-		public Pair<Integer,Integer> parseData(String representation) {
+		public Pair<ModelType,Integer> parseData(String representation) {
 			String[] tokens = representation.substring(1, representation.length()-1).split(",");
-			return new Pair<Integer,Integer>(Integer.parseInt(tokens[0]), Integer.parseInt(tokens[1]));
+			return new Pair<ModelType,Integer>(ModelType.getModelType(Integer.parseInt(tokens[0])), Integer.parseInt(tokens[1]));
 		}
 	}
 }

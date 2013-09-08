@@ -123,10 +123,11 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		files.add(new JCFLRelationOutputFile(FileType.OUTPUT, j.g(), "Src2Sink", true));
 		files.add(new AllStubInputsFile(j.g(), j.s()));
 		//files.add(new StubInputsFile(j.g(), j.s()));
-		files.add(new StubModelSetWithDataOutputFile<Pair<Integer,Integer>>(experiment.getAllProposedModels()));
+		files.add(new StubModelSetWithDataOutputFile<Pair<ModelType,Integer>>(experiment.getAllProposedModels()));
 		//files.addAll(FlowWriter.viz(j.g, j.s));
 		m.putAll(experiment.getAllProposedModels());
 		files.add(new StubModelSetOutputFile(m, "StubModelSet.txt", FileType.PERMANENT));
+		files.add(experiment);
 		try {
 			for(StampOutputFile file : files) {
 				manager.write(file);
