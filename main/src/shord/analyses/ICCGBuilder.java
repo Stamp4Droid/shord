@@ -65,6 +65,9 @@ public class ICCGBuilder extends JavaAnalysis
 
     private SootClass klass;
 
+    //One ICCG per each app.
+    private static ICCG iccg = new ICCG();
+
     private Map<String, XmlNode> components = new HashMap<String, XmlNode>();
 
     void openRels()
@@ -91,16 +94,45 @@ public class ICCGBuilder extends JavaAnalysis
         String manifestDir = stampOutDir + "/apktool-out";
         File manifestFile = new File(manifestDir, "AndroidManifest.xml");
         new ParseManifest().extractComponents(manifestFile, components);
+
+        System.out.println("myparser:" + components);
+        //plot every node to graph + unknown.
+        Iterator iter = components.entrySet().iterator(); 
+        while (iter.hasNext()) { 
+            Map.Entry entry = (Map.Entry) iter.next(); 
+            String key = (String)entry.getKey(); 
+            XmlNode val = (XmlNode)entry.getValue(); 
+            System.out.println("nodeinfo:" + val.getName() +" "+ val.getType()+" " + val.getPermission()+ " " + val.getMain());
+            //ICCGNode iNode = new ICCGNode(val.getName().replace(".",""));
+            ICCGNode iNode = new ICCGNode(val.getName());
+            iNode.setMain(val.getMain());
+            //iNode.setPermission(val.getPermission());
+            if (val.getMain()) {
+                iNode.setShape("diamond");
+            } else if("activity".equals(val.getType())) {
+                iNode.setShape("ellipse");
+            } else if("service".equals(val.getType())) {
+                iNode.setShape("circle");
+            } else if("receiver".equals(val.getType())) {
+                iNode.setShape("triangle");
+            }
+            iccg.addNode(iNode);
+        } 
+
+    }
+
+    public static String getSignature() {
+        return iccg.getSignature();
     }
 
 
-protected void visit(SootClass klass)
-{
-this.klass = klass;
-Collection<SootMethod> methodsCopy = new ArrayList(klass.getMethods());
-for(SootMethod method : methodsCopy)
-    visitMethod(method);
-}
+	protected void visit(SootClass klass)
+    {
+        this.klass = klass;
+        Collection<SootMethod> methodsCopy = new ArrayList(klass.getMethods());
+        for(SootMethod method : methodsCopy)
+            visitMethod(method);
+    }
 
     private void fillCallback() {
 
@@ -111,6 +143,7 @@ for(SootMethod method : methodsCopy)
             for(SootMethod method : methodsCopy) {
                 if("void run()".equals(method.getSubSignature())) {
                    //android.os.Handler.Callback or edu.stanford.stamp.harness.Callback
+                    System.out.println("addCallbacks---" + method + subCallback);
                     relCallbacks.add(method);
                 }
 
@@ -121,12 +154,29 @@ for(SootMethod method : methodsCopy)
 	
     private void visitMethod(SootMethod method)
     {
-	if(!method.isConcrete())
-		return;
+        if(!method.isConcrete())
+            return;
 
-	if(components.get(this.klass.getName()) != null) 
-		relMC.add(method, this.klass.getType());
+        if(components.get(this.klass.getName()) != null) {
+            relMC.add(method, this.klass.getType());
+        }
 
+        /*Body body = method.retrieveActiveBody();
+        for(Unit unit : body.getUnits()) {
+            Stmt stmt = (Stmt)unit;
+            if(stmt.containsInvokeExpr()){
+                InvokeExpr ie = stmt.getInvokeExpr();
+
+                //i is a statement that registercallback.
+                //staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>               }
+                if(ie.toString().contains(
+                "staticinvoke <edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>")) {
+                    System.out.println("addMregI---" + method + "||" + ie );
+                    relMregI.add(method, stmt);
+                }
+
+            }
+        }*/
     }
 
     private HashMap<SootClass,List<SootClass>> classToSubtypes = new HashMap();
@@ -189,6 +239,7 @@ for(SootMethod method : methodsCopy)
                         "<edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>")) {
 			//FIX-ME: without this, we will have redundant edges.
                         if(m.getSignature().equals("<android.app.Activity: void <init>()>")) continue;
+                        System.out.println("addMregI---" + m + "||" + ie );
                         relMregI.add(m, stmt);
                     }
 
@@ -212,7 +263,6 @@ for(SootMethod method : methodsCopy)
             this.visit(klass);
         }
         saveRels();
-
         fh = null;
 
     }
