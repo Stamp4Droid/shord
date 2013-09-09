@@ -69,6 +69,7 @@
 			if(title.equals("Source-to-sink Flows")){
 			%>
 				<div id='<%="ResultTree"+j++%>' class='result-container'>
+                <form>
 					<%
 					String result = qr.querySrcSinkFlows(resultFileName);
 					if(result.trim().length() == 0){
@@ -94,7 +95,11 @@
 							sources.add(src);
 							sinks.add(sink);
 						%>	
-							<li><%=src%> <i class='icon-arrow-right'></i> <%=sink%> (<%=weight%>) <a href="#" id="showtab-<%=flowVizTabId%>">viz</a>
+                            <label class="checkbox">
+                                <input type="checkbox" id='<%="checkbox"+j%>'>
+                            	<li><%=src%> <i class='icon-arrow-right'></i> <%=sink%> (<%=weight%>) <a href="#" id="showtab-<%=flowVizTabId%>">viz</a></li>
+                            </label>
+                            <br />
 						<%
 						}
 						%>
@@ -102,6 +107,7 @@
 					<%
 					}
 					%>
+                </form>
 				</div>
 			<%
 			} else {
