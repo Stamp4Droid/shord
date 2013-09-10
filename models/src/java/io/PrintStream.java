@@ -82,6 +82,9 @@ public class PrintStream
 	@STAMP(flows = {@Flow(from="buf",to="!this")})
 	public  void write(char[] buf, int offset, int count) {  }
 
+	@STAMP(flows = {@Flow(from="buf",to="!this")})
+	public  void write(byte[] buf, int offset, int count) {  }
+
 	@STAMP(flows = {@Flow(from="oneChar",to="!this")})
 	public  void write(int oneChar) {  }
 
