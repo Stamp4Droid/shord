@@ -58,22 +58,21 @@ public class SrcSinkFlow extends XMLReport {
 	    String sink = pair.val1.val0;
 		Ctxt sinkCtxt = pair.val1.val1;
 
-		if(Postmortem.processingSrc){
-			newTuple()
-				.addValue(source)
-				.addValue(sink);
-		} else {
-			Category flowCat = makeOrGetSubCat(source + " -> " + sink);
-			Category ctxtFlowCat = flowCat.makeOrGetSubCat("Flow "+count);
-			Tuple srcTuple = ctxtFlowCat.newTuple();//makeOrGetSubCat("context");
-			srcTuple.setAttr("source", source);
-			for(Unit unit : sourceCtxt.getElems())
-				srcTuple.addValue(Program.unitToString(unit));
-			Tuple sinkTuple = ctxtFlowCat.newTuple();//makeOrGetSubCat(sink).makeOrGetSubCat("context");
-			sinkTuple.setAttr("sink", sink);
-			for(Unit unit : sinkCtxt.getElems())
-				sinkTuple.addValue(Program.unitToString(unit));
-		}
+	//	if(Postmortem.processingSrc){
+	//		newTuple()
+	//			.addValue(source)
+	//			.addValue(sink);
+	//	} else {
+        Category flowCat = makeOrGetSubCat(source + " -> " + sink);
+        Category ctxtFlowCat = flowCat.makeOrGetSubCat("Flow "+count);
+        Tuple srcTuple = ctxtFlowCat.newTuple();//makeOrGetSubCat("context");
+        srcTuple.setAttr("source", source);
+        for(Unit unit : sourceCtxt.getElems())
+            srcTuple.addValue(Program.unitToString(unit));
+        Tuple sinkTuple = ctxtFlowCat.newTuple();//makeOrGetSubCat(sink).makeOrGetSubCat("context");
+        sinkTuple.setAttr("sink", sink);
+        for(Unit unit : sinkCtxt.getElems())
+            sinkTuple.addValue(Program.unitToString(unit));
 	}
 
 	/*

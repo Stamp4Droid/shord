@@ -538,11 +538,11 @@
 			for(Map.Entry<String,String> entry : titleToFileName.entrySet()){
 				String title = entry.getKey();
 				String resultFileName = entry.getValue();
-				if(!title.equals("Source-to-sink Flows")){
+				//if(!title.equals("Source-to-sink Flows")){
 		    %>
 			        setupResultTree('ResultTree<%=j%>', '<%=resultFileName%>');
 			<%
-				}
+				//}
 				j++;
 			}
 			%>		
