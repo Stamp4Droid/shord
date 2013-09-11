@@ -533,12 +533,34 @@
                 });
 			}
 
+            /*
+             * Hack for unescaping HTML strings. From CMS on stackoverflow
+             * at http://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+             */
+            function htmlDecode(input){
+              var e = document.createElement('div');
+              e.innerHTML = input;
+              return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+            }
+
             function addSrcSinkFlowBehavior(id) {
 
                 function newTableEntry(sel) {
+                    var reEntry = /.*<.* (.*)>.*<.* (.*)>.*/;
+                    var line = htmlDecode(sel.info[0].name);
+                    console.log(line);
+        
+                    if (!reEntry.test(line)) {
+                        console.log("REGEX READ ERROR");
+                        return;
+                    }
+
+                    var matches = line.match(reEntry);
+
+                    // should be responsive to K to be general; assumes K = 2
                     var entry =  ['<tr>',
-                         '<td>Source</td>',
-                         '<td>Sink</td>',   
+                         '<td>'+matches[1]+'</td>',
+                         '<td>'+matches[2]+'</td>',   
                         '</tr>'].join('\n'); 
                     return entry;
                 }
