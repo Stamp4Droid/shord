@@ -112,7 +112,7 @@
 					<!--Sidebar content-->
 					<%@include file="leftbar.jsp" %>
 				</div>
-				<div class="span6">
+				<div class="span6" id="centerpane">
 					<ul class="nav nav-tabs" id="codetabs">
 					<!--span class="label label-info" id="filename">
 					</span>
@@ -532,6 +532,31 @@
                     }
                 });
 			}
+
+            function addSrcSinkFlowBehavior(id) {
+
+                function newTableEntry(sel) {
+                    var entry =  ['<tr>',
+                         '<td>Source</td>',
+                         '<td>Sink</td>',   
+                        '</tr>'].join('\n'); 
+                    return entry;
+                }
+
+
+                $('#' + id).on('selected', function(event, selection) {
+                    var table = ['<table class="table" >',
+                                    '<thead>',
+                                         '<th>Source</th>',
+                                         '<th>Sink</th>',   
+                                    '</thead>',
+                                    '<tbody>'];
+                    table.push(newTableEntry(selection));
+                    table.push('</tbody>');
+                    table.push('</table>');
+                    $('#centerpane').append(table.join('\n'));
+                });
+            }
 			
 			<%
 			j = 0;
@@ -542,6 +567,11 @@
 		    %>
 			        setupResultTree('ResultTree<%=j%>', '<%=resultFileName%>');
 			<%
+                if (title.equals("Source-to-sink Flows")) {
+            %>
+                    addSrcSinkFlowBehavior('ResultTree<%=j%>');
+			<%
+                }
 				//}
 				j++;
 			}
