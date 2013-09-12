@@ -3,7 +3,7 @@ package android.content;
 class Intent
 {
 	//add by yu.
-	private static android.os.Bundle extras = new android.os.Bundle();
+	private static android.os.Bundle extras = new android.os.Bundle(true);
 
 	@STAMP(flows = {@Flow(from="uri",to="!this")})
 	public  Intent(java.lang.String action, android.net.Uri uri) 
