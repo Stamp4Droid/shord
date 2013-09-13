@@ -75,5 +75,9 @@ class Character {
     public static int digit(int codePoint, int radix) {
         return 0;
     }
+
+    public static java.lang.Character valueOf(char c) {
+		return new Character(c);
+    }
 }
 

@@ -20,5 +20,25 @@ class StringWriter {
     public java.lang.StringBuffer getBuffer() {
         return new StringBuffer();
     }
+
+    @STAMP(flows = { @Flow(from = "this", to = "@return") })
+	public java.lang.String toString() {
+		return new String();
+    }
+
+    @STAMP(flows = { @Flow(from = "c", to = "this") })
+    public java.io.StringWriter append(char c) {
+		return this;
+    }
+
+    @STAMP(flows = { @Flow(from = "csq", to = "this") })
+    public java.io.StringWriter append(java.lang.CharSequence csq) {
+		return this;
+    }
+
+    @STAMP(flows = { @Flow(from = "csq", to = "this") })
+    public java.io.StringWriter append(java.lang.CharSequence csq, int start, int end) {
+		return this;
+    }
 }
 
