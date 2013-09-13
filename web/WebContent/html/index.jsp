@@ -595,26 +595,25 @@
                     });
 
                     var datasource = datasources[id];
-                    var contexts = [];
 
                     datasource.data($selected.parent().data(), function (items) {
                                     var dataarr = items.data;
+                                    var contexts = [];
                                     for (var i = 0; i < dataarr.length; ++i) {
                                         contexts.push(dataarr[i]);
                                     }
-                                });
 
-                    
-                    var table = ['<table class="table" >',
-                                    '<thead>',
-                                         '<th>Source</th>',
-                                         '<th>Sink</th>',   
-                                    '</thead>',
-                                    '<tbody>'];
-                    table.push(newTableEntries(contexts));
-                    table.push('</tbody>');
-                    table.push('</table>');
-                    $('#centerpane').append(table.join('\n'));
+                                    var table = ['<table class="table" >',
+                                                    '<thead>',
+                                                         '<th>Source</th>',
+                                                         '<th>Sink</th>',   
+                                                    '</thead>',
+                                                    '<tbody>'];
+                                    table.push(newTableEntries(contexts));
+                                    table.push('</tbody>');
+                                    table.push('</table>');
+                                    $('#centerpane').append(table.join('\n'));
+                                });
                 });
             }
 			
