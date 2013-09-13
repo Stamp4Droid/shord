@@ -505,9 +505,16 @@
 			    
 			    showContentTab(tabUniqueName, shortname, onTabLoad, onTabDisplay);
 			};
+
+            var datasources = {};
 			
 			function setupResultTree(resultTreeId, resultFileName) {
-			    $('#' + resultTreeId).tree({dataSource: new ResultDataSource(resultFileName)});
+                var datasource = new ResultDataSource(resultFileName);
+
+			    $('#' + resultTreeId).tree({dataSource: datasource});
+
+                datasources[resultTreeId] = datasource;
+
                 $('#' + resultTreeId).on('selected', function(event,selection){
                     var reportScript = selection.info[0].showReport;
                     if(typeof reportScript === "undefined")
@@ -545,35 +552,66 @@
 
             function addSrcSinkFlowBehavior(id) {
 
-                function newTableEntry(sel) {
-                    var reEntry = /.*<.* (.*)>.*<.* (.*)>.*/;
-                    var line = htmlDecode(sel.info[0].name);
-                    console.log(line);
-        
-                    if (!reEntry.test(line)) {
-                        console.log("REGEX READ ERROR");
+                function newTableEntries(clines) {
+
+                        if (clines.length < 2) {
+                            console.log("small lines");
+                            console.log(clines);
+                            console.log("end small lines");
+                            return;
+                        }
+                        var reEntry = /.*<.* (.*)>.*<.* (.*)>.*/;
+                        var line = htmlDecode(clines[0].name);
+
+                        if (!reEntry.test(line)) {
+                            console.log("REGEX READ ERROR");
+                            return;
+                        }
+
+                        var matches = line.match(reEntry);
+                        
+                        var entry =  ['<tr>',
+                                        '<td>'+matches[1]+'</td>',
+                                        '<td>'+"a"+'</td>',   
+                                      '</tr>',
+                                      '<tr>',
+                                        '<td>'+matches[2]+'</td>',
+                                        '<td>'+"b"+'</td>',
+                                      '</tr>'].join('\n'); 
+                        return entry;
+                
+                }
+
+                $('#'+id).on('selected', function(ev, selection) {
+                    var flow_regex = /Flow \d+/;
+                    if (!flow_regex.test(selection.info[0].name)) {
                         return;
                     }
 
-                    var matches = line.match(reEntry);
+                    var $selected = $(this).find('.tree-folder-name').filter ( function () {
+                        if ($(this).text() === selection.info[0].name) {
+                            return true;
+                        }
+                    });
 
-                    // should be responsive to K to be general; assumes K = 2
-                    var entry =  ['<tr>',
-                         '<td>'+matches[1]+'</td>',
-                         '<td>'+matches[2]+'</td>',   
-                        '</tr>'].join('\n'); 
-                    return entry;
-                }
+                    var datasource = datasources[id];
+                    var contexts = [];
 
+                    datasource.data($selected.parent().data(), function (items) {
+                                    var dataarr = items.data;
+                                    for (var i = 0; i < dataarr.length; ++i) {
+                                        contexts.push(dataarr[i]);
+                                    }
+                                });
 
-                $('#' + id).on('selected', function(event, selection) {
+                    
                     var table = ['<table class="table" >',
                                     '<thead>',
                                          '<th>Source</th>',
                                          '<th>Sink</th>',   
                                     '</thead>',
                                     '<tbody>'];
-                    table.push(newTableEntry(selection));
+                    table.push(newTableEntries(contexts));
                     table.push('</tbody>');
                     table.push('</table>');
                     $('#centerpane').append(table.join('\n'));
