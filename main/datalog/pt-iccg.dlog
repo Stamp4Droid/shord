@@ -1,5 +1,5 @@
 ##################
-# Points-to analysis
+# on-the-fly callgraph
 ##################
 
 # name=pt-iccg-dlog
@@ -10,43 +10,50 @@
 .include "Z.dom"
 .include "V.dom"
 .include "C.dom"
+.include "H.dom"
+.include "S.dom"
 
-.bddvarorder M0xM1_I0_T0_Z0_V0_C0xC1
+.bddvarorder M0xM1_I0_T0_Z0_V0_C0xC1_H0_S0
 
-IinvkArg(i:I,n:Z,v:V) input
-MmethArg(m:M,z:Z,v:V) input
-pt(c:C,v:V,o:C)    input
+IinvkArg(i:I,n:Z,v:V) input  # v is the nth args of the method m in invocation i.
+MmethArg(m:M,z:Z,v:V) input  # v is the zth args in method m 
+pt(c:C,v:V,o:C)    input  # in context c, v points to o.
 chaIM(i:I,m:M) input      # stmt i invokes method m.
 MI(m:M,i:I) input         # stmt i belongs to method m.
 MC(m:M,c:T) input         # m is a method declared in a
-Callbacks(m:M) input
-MregI(m:M,i:I) input
-CM(c:C,m:M) input      # c is a context of method m.
+Callbacks(m:M) input	  # m is a callback method.
+MregI(m:M,i:I) input 	  # m has an invocation i that register callback. 
+CM(c:C,m:M) input         # c is a context of method m.
 CI(c:C,i:I) input         # stmt i is the top element in the k-limited callstack c
-CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
+CC(c:C,d:C) input         # there exists i s.t. c++[i] = d, c is old ctx, d is new ctx. 
 
-#MM(m1:M,m2:M)         output  # m1 calls m2
-MM(k1:C,m1:M,k2:C,m2:M)         output  # m1 calls m2
-#CallerComp(m:M,c:T)   output  # m is a method declared in c
+CH(o:C,h:H) input         # context’ified abstract location o corresponds to new stmt h
+HT(h:H,t:T) input         # heap h point to Type t.
+
+StatIM(i:I,m:M) input     # i statically invokes m. 
+SpecIM(i:I,m:M) input     # i special invoke m. 
+VirtIM(i:I,m:M) input     # i virtually invokes m. 
+
+SubSig(m:M,s:S) input     # s is subsignature of m.
+Dispatch(t:T,s:S,m:M) input     # t.m has subsig s.
+
 CallerComp(m:M,c:C,o:T)   output  # m is a method declared in c
+
+DI(c:C,i:I) output  # invocation i has context c in method.
+DIC(d:C,i:I,c:C) output  # 
+CICM(d:C,i:I,c:C,m:M)   output  # i in cotext d calls method m in context c.
 
 ###################
 #    RULES
 ###################
 
-#MM(k1,m1,k2,m2) :- MI(m1,i), chaIM(i,m2), IinvkArg(i,0,a), pt(k1,a,k2).
-MM(k1,m1,k2,m2) :- MI(m1,i), chaIM(i,m2), CI(k2,i), CC(k1,k2). 
+DI(c,i) :- CM(c,m), MI(m,i).
+DIC(c,i,d) :- CI(d,i), CC(c,d).
+
+CICM(d,i,c,m) :- StatIM(i,m), DI(d,i), DIC(d,i,c).
+CICM(d,i,c,m) :- SpecIM(i,m), DI(d,i), DIC(d,i,c).
+CICM(d,i,c,m2) :- VirtIM(i,m1), IinvkArg(i,0,v), DI(d,i), pt(d,v,o), CH(o,h), HT(h,t), SubSig(m1,s), Dispatch(t,s,m2), DIC(d,i,c).
+
 CallerComp(m,k,c) :- MC(m,c), CM(k,m).
-CallerComp(m2,k2,c) :- CallerComp(m1,k1,c), MM(k1,m1,k2,m2).
+CallerComp(m2,k2,c) :- CallerComp(m1,k1,c), MI(m1,i), CICM(k1,i,k2,m2).
 CallerComp(cb,k2,c) :- Callbacks(cb), MmethArg(cb,0,p), pt(k2,p,o), pt(k1,a,o), CallerComp(m,k1,c), MregI(m,i), IinvkArg(i,0,a).
-
-#old version
-#MM(m1,m2) :- MI(m1,i), chaIM(i,m2).
-#CallerComp(m,c) :- MC(m,c).
-#CallerComp(m2,c) :- MM(m1,m2), CallerComp(m1,c).
-#CallerComp(cb,c) :- Callbacks(cb), MmethArg(cb,0,p), pt(_,p,o), pt(_,a,o), CallerComp(m,c), MregI(m,i), IinvkArg(i,0,a).
-
-
-#MM(m1,m2) :- MI(m1,i), chaIM(i,m2), MmethArg(m1,0,p), IinvkArg(i,1,a), pt(_,p,o), pt(_,a,o).
-#CallerComp(m2,c) :- CallerComp(m1,c), MI(m1,i), chaIM(i,m2), MmethArg(m2,0,p), IinvkArg(i,0,a), pt(_,p,o), pt(_,a,o).
-#CallerComp(cb,c) :- Callbacks(cb), MmethArg(cb,z,p), pt(_,p,o), pt(_,a,o), CallerComp(m,c), MregI(m,i), IinvkArg(i,z,a).

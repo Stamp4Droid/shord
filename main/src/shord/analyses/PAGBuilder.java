@@ -10,6 +10,7 @@ import soot.Value;
 import soot.Unit;
 import soot.Body;
 import soot.Type;
+import soot.RefType;
 import soot.RefLikeType;
 import soot.PrimType;
 import soot.VoidType;
@@ -27,6 +28,10 @@ import soot.jimple.AnyNewExpr;
 import soot.jimple.ThrowStmt;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InstanceInvokeExpr;
+import soot.jimple.StaticInvokeExpr;
+import soot.jimple.VirtualInvokeExpr;
+import soot.jimple.SpecialInvokeExpr;
+import soot.jimple.InterfaceInvokeExpr;
 import soot.jimple.CastExpr;
 import soot.jimple.FieldRef;
 import soot.jimple.InstanceFieldRef;
@@ -42,6 +47,7 @@ import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 import soot.tagkit.Tag;
 import soot.util.NumberedSet;
+import soot.util.NumberedString;
 
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
@@ -54,7 +60,7 @@ import chord.project.Chord;
 import java.util.*;
 
 @Chord(name="base-java", 
-	   produces={"M", "Z", "I", "H", "V", "T", "F", "U",
+	   produces={"M", "Z", "I", "H", "V", "T", "F", "U", "S",
 				 "Alloc", "Assign", 
 				 "Load", "Store", 
 				 "LoadStat", "StoreStat", 
@@ -69,9 +75,12 @@ import java.util.*;
 				 "LoadStatPrim", "StoreStatPrim",
 				 "MmethPrimArg", "MmethPrimRet", 
 				 "IinvkPrimRet", "IinvkPrimArg",
+				 "SpecIM", "StatIM",
+				 "VirtIM", "SubSig",
+				 "Dispatch",
 	             "Stub" },
-       namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U"},
-       types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class},
+       namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U", "S"},
+       types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class},
 	   namesOfSigns = { "Alloc", "Assign", 
 						"Load", "Store", 
 						"LoadStat", "StoreStat", 
@@ -86,6 +95,9 @@ import java.util.*;
 						"LoadStatPrim", "StoreStatPrim",
 						"MmethPrimArg", "MmethPrimRet", 
 						"IinvkPrimRet", "IinvkPrimArg",
+				                "SpecIM", "StatIM",
+				                "VirtIM", "SubSig",
+						"Dispatch",
                         "Stub" },
 	   signs = { "V0,H0:V0_H0", "V0,V1:V0xV1",
 				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
@@ -101,6 +113,9 @@ import java.util.*;
 				 "U0,F0:U0_F0", "F0,U0:U0_F0",
 				 "M0,Z0,U0:M0_U0_Z0", "M0,Z0,U0:M0_U0_Z0",
 				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0",
+				 "I0,M0:I0_M0", "I0,M0:I0_M0",
+				 "I0,M0:I0_M0", "M0,S0:M0_S0",
+				 "T0,S0,M0:T0_S0_M0",
                  "M0:M0" }
 	   )
 public class PAGBuilder extends JavaAnalysis
@@ -127,6 +142,12 @@ public class PAGBuilder extends JavaAnalysis
     private ProgramRel relMmethPrimRet;//(m:M,z:Z,u:U)
     private ProgramRel relIinvkPrimRet;//(i:I,n:Z,u:U)
     private ProgramRel relIinvkPrimArg;//(i:I,n:Z,u:U)
+
+	private ProgramRel relSpecIM;//(i:I,m:M)
+	private ProgramRel relStatIM;//(i:I,m:M)
+	private ProgramRel relVirtIM;//(i:I,m:M)
+	private ProgramRel relSubSig;//(m:M,s:S)
+	private ProgramRel relDispatch;//(t:T,s:S,m:M)
 
 	private ProgramRel relVT;
 	private ProgramRel relHT;
@@ -205,6 +226,17 @@ public class PAGBuilder extends JavaAnalysis
 		relIinvkPrimRet.zero();
 		relIinvkPrimArg = (ProgramRel) ClassicProject.g().getTrgt("IinvkPrimArg");
 		relIinvkPrimArg.zero();
+
+		relSpecIM = (ProgramRel) ClassicProject.g().getTrgt("SpecIM");
+		relSpecIM.zero();
+		relStatIM = (ProgramRel) ClassicProject.g().getTrgt("StatIM");
+		relStatIM.zero();
+		relVirtIM = (ProgramRel) ClassicProject.g().getTrgt("VirtIM");
+		relVirtIM.zero();
+		relSubSig = (ProgramRel) ClassicProject.g().getTrgt("SubSig");
+		relSubSig.zero();
+		relDispatch = (ProgramRel) ClassicProject.g().getTrgt("Dispatch");
+		relDispatch.zero();
 	}
 	
 	void saveRels()
@@ -238,6 +270,12 @@ public class PAGBuilder extends JavaAnalysis
 		relMmethPrimRet.save();
 		relIinvkPrimRet.save();
 		relIinvkPrimArg.save();
+
+		relSpecIM.save();
+		relStatIM.save();
+		relVirtIM.save();
+		relSubSig.save();
+		relDispatch.save();
 	}
 
 	void Alloc(LocalVarNode l, Stmt h)
@@ -577,6 +615,20 @@ public class PAGBuilder extends JavaAnalysis
 				relMI.add(method, s);
 				s.addTag(containerTag);
 
+
+		                if(ie instanceof SpecialInvokeExpr){
+					relSpecIM.add(s,callee);
+				}
+
+		                if(ie instanceof StaticInvokeExpr){
+					relStatIM.add(s,callee);
+				}
+
+		                if( (ie instanceof VirtualInvokeExpr) || (ie instanceof InterfaceInvokeExpr)){
+					//VirtualInvokeExpr vie = (VirtualInvokeExpr) ie;
+					relVirtIM.add(s,callee);
+				}
+
 				//handle receiver
 				int j = 0;
 				if(ie instanceof InstanceInvokeExpr){
@@ -799,6 +851,17 @@ public class PAGBuilder extends JavaAnalysis
 		}
 		relStub.save();
 	}
+
+	void populateMethodSigs()
+	{
+		DomS domS = (DomS) ClassicProject.g().getTrgt("S");
+		for(Iterator it = Scene.v().getSubSigNumberer().iterator(); it.hasNext();){
+			NumberedString s = (NumberedString)it.next();
+			domS.add(s.getString());
+		}
+		domS.save();
+
+	}
 	
 	void populateFields()
 	{
@@ -827,6 +890,7 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		domZ = (DomZ) ClassicProject.g().getTrgt("Z");
 
+		populateMethodSigs();
 		populateMethods();
 		populateFields();
 		populateTypes();
@@ -854,6 +918,73 @@ public class PAGBuilder extends JavaAnalysis
 		domI.save();
 		domU.save();
 	}
+
+
+	void buildDispatchMap() 
+	{
+        	Map<SootClass, Set<SootMethod>> dispatchMap = new HashMap<SootClass, Set<SootMethod>>();
+		Program program = Program.g();		
+		int totalCls = program.getClasses().size();
+
+		while(dispatchMap.size() < totalCls){//Not finish yet. 
+			for(SootClass cl : program.getClasses()) {
+
+				//no superclass?
+				if(!cl.hasSuperclass()){
+					Set methods = new HashSet<SootMethod>();
+					for(SootMethod m: cl.getMethods()){
+						if(!m.isConcrete()) continue;
+						methods.add(m);
+					}
+					dispatchMap.put(cl, methods);
+
+					continue;
+				}
+				//this is the right candidate.propagate the method from superclass.
+				if( dispatchMap.get(cl)==null && dispatchMap.get(cl.getSuperclass()) != null){
+
+					SootClass supercl = cl.getSuperclass();
+					Set<SootMethod> clMethods = new HashSet<SootMethod>();
+					for(SootMethod m: cl.getMethods()){
+						if(!m.isConcrete()) continue;
+						clMethods.add(m);
+					}
+					//propagate from superclass. 
+					for(SootMethod sm: dispatchMap.get(cl.getSuperclass())){
+						if(!sm.isConcrete()) continue;
+						if(sm.isPrivate()) continue;
+						//check whether exists the same subsignature in cl.
+						boolean isOveride = false;
+						for(SootMethod m: clMethods){
+							if(m.getSubSignature().equals(sm.getSubSignature())){
+								isOveride = true;
+								//System.out.println("override:" + cl + m + " || " + supercl + sm);
+								break;
+							}
+						}
+						if(!isOveride) clMethods.add(sm);
+					}
+
+					dispatchMap.put(cl, clMethods);
+				}
+			}
+			//System.out.println("mapsize:" + dispatchMap.size() + " VS " + totalCls);
+		}
+
+		//create dispatch tuple based on the map.
+		Iterator iter = dispatchMap.keySet().iterator();
+		while(iter.hasNext()){
+			SootClass clazz = (SootClass)iter.next();
+			Set cMeths = (Set)dispatchMap.get(clazz);
+			for(Object o: cMeths){
+                                SootMethod m = (SootMethod) o;
+		                relDispatch.add(clazz.getType(), m.getSubSignature(), m);
+
+			}
+		}
+
+	}
+
 
 	boolean isStub(SootMethod method)
 	{
@@ -895,12 +1026,24 @@ public class PAGBuilder extends JavaAnalysis
 		Immediate i = (Immediate) ((ThrowStmt) unit).getOp();
 		return i.equals(e) || i.equals(f);
 	}
+
+	void pass3()
+	{
+		Iterator<SootMethod> mIt = Program.g().getMethods();
+		while(mIt.hasNext()){
+			SootMethod m = mIt.next();
+			relSubSig.add(m, m.getSubSignature());
+		}
+	}
 	
 	void populateRelations(List<MethodPAGBuilder> mpagBuilders)
 	{
 		openRels();
 		for(MethodPAGBuilder mpagBuilder : mpagBuilders)
 			mpagBuilder.pass2();
+
+		pass3();
+	        buildDispatchMap();
 		saveRels();
 
 		populateCallgraph();
@@ -928,6 +1071,7 @@ public class PAGBuilder extends JavaAnalysis
 		List<MethodPAGBuilder> mpagBuilders = new ArrayList();
 		populateDomains(mpagBuilders);
 		populateRelations(mpagBuilders);
+
 		fh = null;
 	}
 }
