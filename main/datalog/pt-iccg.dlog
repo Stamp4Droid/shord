@@ -1,11 +1,6 @@
 ##################
-<<<<<<< HEAD
 # on-the-fly callgraph
-=======
-# Points-to analysis
->>>>>>> ICCG initialization.
 ##################
-
 # name=pt-iccg-dlog
 
 .include "M.dom"
