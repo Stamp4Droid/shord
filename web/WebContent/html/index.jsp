@@ -552,36 +552,60 @@
 
             function addSrcSinkFlowBehavior(id) {
 
+                function escTags(str) {
+                    var tagsToReplace = {
+                        '&': '&amp;',
+                        '<': '&lt;',
+                        '>': '&gt;'
+                    };
+
+                    
+
+                    function replaceTag(tag) {
+                        return tagsToReplace[tag] || tag;
+                    }
+
+                    return str.replace(/[&<>]/g, replaceTag);
+                }
+
+                /* Inner function to create each new table row */
                 function newTableEntries(clines) {
 
                         if (clines.length < 2) {
-                            console.log("small lines");
-                            console.log(clines);
-                            console.log("end small lines");
+                            console.log("Error: incomplete context");
                             return;
                         }
-                        var reEntry = /.*<.* (.*)>.*<.* (.*)>.*/;
-                        var line = htmlDecode(clines[0].name);
+                        var reSplit = /(.+),(.+)/;
+                        var reEntry = /.*<.* (\S+ .*)>.*<.* (\S+ .*)>.*/;
+                        var source = htmlDecode(clines[0].name);
+                        var sink = htmlDecode(clines[1].name);
 
-                        if (!reEntry.test(line)) {
-                            console.log("REGEX READ ERROR");
+                        if (!reSplit.test(source)) {
+                            console.log("Error: Regex failure on context parse");
                             return;
                         }
 
-                        var matches = line.match(reEntry);
-                        
-                        var entry =  ['<tr>',
-                                        '<td>'+matches[1]+'</td>',
-                                        '<td>'+"a"+'</td>',   
-                                      '</tr>',
-                                      '<tr>',
-                                        '<td>'+matches[2]+'</td>',
-                                        '<td>'+"b"+'</td>',
-                                      '</tr>'].join('\n'); 
-                        return entry;
+                        var source_ctxts = source.match(reSplit);
+                        var sink_ctxts = sink.match(reSplit);
+                        console.log("lengths source "+source_ctxts.length + " sink "+sink_ctxts.length);
+                        var entry = [];
+            
+                        for (var i = 1; i <= 2; ++i) {
+                            var sourcem = source_ctxts[i].match(reEntry);
+                            var sinkm = sink_ctxts[i].match(reEntry);
+                            
+                            for (var j = i; j <= 2; ++j) {
+                                entry.push('<tr>');
+                                entry.push('<td>'+escTags(sourcem[j])+'</td>');
+                                entry.push('<td>'+escTags(sinkm[j])+'</td>');
+                                entry.push('</tr>');
+                            }
+                        }
+                        return entry.join('\n');;
                 
                 }
 
+                // on selected callback. Fuel UX provides selection
                 $('#'+id).on('selected', function(ev, selection) {
                     var flow_regex = /Flow \d+/;
                     if (!flow_regex.test(selection.info[0].name)) {
