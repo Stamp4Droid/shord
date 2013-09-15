@@ -16,7 +16,22 @@ import java.util.*;
 */
 public class ParseLayout
 {
-	static void process(File layoutFile, Set<String> callbacks)
+	void process(File layoutDir, Set<String> callbacks, Set<String> guiElems)
+	{
+		File[] layoutFiles = layoutDir.listFiles(new FilenameFilter(){
+				public boolean accept(File dir, String name){
+					return name.endsWith(".xml");
+				}
+			});
+		if(layoutFiles != null){
+			for(File lf : layoutFiles){
+				//System.out.println("processing layout "+lf);
+				processLayout(lf, callbacks, guiElems);
+			}
+		}
+	}
+
+	private void processLayout(File layoutFile, Set<String> callbacks, Set<String> guiElems)
 	{
 		try{
 			File tmpFile = File.createTempFile("stamp_android_layout", null, null);
@@ -34,25 +49,45 @@ public class ParseLayout
 			XPath xpath = XPathFactory.newInstance().newXPath();
 			xpath.setNamespaceContext(new PersonalNamespaceContext());
 
-			NodeList nodes = (NodeList)
-				xpath.evaluate("//*[@onClick]", document, XPathConstants.NODESET);
-
-			for(int i = 0; i < nodes.getLength(); i++) {
-				//System.out.println("HELLO");
-				Node node = nodes.item(i);
-				NamedNodeMap nnm = node.getAttributes();
-				String name = null;
-				for(int j = 0; j < nnm.getLength(); j++){
-					Node n = nnm.item(j);
-					if(n.getNodeName().equals("android:onClick")){
-						callbacks.add(n.getNodeValue());
-						System.out.println("CALLBACK: "+n.getNodeValue());
-					}
-					//System.out.println(n.getNodeName() + " " + );
-				}
-			}
+			findCallbacks(document, xpath, callbacks);
+			
+			findGuiElems(document, xpath, guiElems);
 		}catch(Exception e){
 			throw new Error(e);
+		}
+	}
+
+	private void findGuiElems(Document document, XPath xpath, Set<String> guiElems) throws javax.xml.xpath.XPathExpressionException
+	{		
+		NodeList nodes = (NodeList)
+			xpath.evaluate("//*", document, XPathConstants.NODESET);
+		//System.out.println("nodes.size() = "+nodes.getLength());
+		for(int i = 0; i < nodes.getLength(); i++) {
+			//System.out.println("HELLO");
+			Node node = nodes.item(i);
+			//System.out.println("++++ "+node.getNodeName());
+			guiElems.add(node.getNodeName());
+		}
+	}
+	
+	private void findCallbacks(Document document, XPath xpath, Set<String> callbacks) throws javax.xml.xpath.XPathExpressionException
+	{
+		NodeList nodes = (NodeList)
+			xpath.evaluate("//*[@onClick]", document, XPathConstants.NODESET);
+		
+		for(int i = 0; i < nodes.getLength(); i++) {
+			//System.out.println("HELLO");
+			Node node = nodes.item(i);
+			NamedNodeMap nnm = node.getAttributes();
+			String name = null;
+			for(int j = 0; j < nnm.getLength(); j++){
+				Node n = nnm.item(j);
+				if(n.getNodeName().equals("android:onClick")){
+					callbacks.add(n.getNodeValue());
+					System.out.println("CALLBACK: "+n.getNodeValue());
+				}
+				//System.out.println(n.getNodeName() + " " + );
+			}
 		}
 	}
 }

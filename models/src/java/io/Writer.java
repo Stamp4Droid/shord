@@ -1,5 +1,9 @@
 class Writer 
 {
+	@STAMP(flows = {@Flow(from="oneChar",to="!this")})
+    public void write(int oneChar) throws java.io.IOException {
+    }
+
 	@STAMP(flows = {@Flow(from="buf",to="!this")})
 	public abstract  void write(char[] buf, int offset, int count) throws java.io.IOException;
 

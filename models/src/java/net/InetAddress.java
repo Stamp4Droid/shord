@@ -30,4 +30,9 @@ class InetAddress
 	{ 
 		return new String();
 	}
+
+	@STAMP(flows={@Flow(from="this",to="@return")})
+    public java.lang.String toString() {
+		return new String();
+    }
 }

@@ -17,7 +17,8 @@
 	<zipfileset dir="${stamp.dir}/bin" prefix="stamp/bin"/>
 	<zipfileset dir="${stamp.dir}/lib" prefix="stamp/lib"/>
 	<zipfileset dir="${stamp.dir}/ant" prefix="stamp/ant"/>
-	<zipfileset dir="${stamp.dir}/scripts" includes="testApkJar.py" prefix="stamp/scripts"/>
+	<zipfileset dir="${stamp.dir}/scripts" includes="loadDB.py" prefix="stamp/scripts"/>
+	<zipfileset dir="${stamp.dir}/scripts" includes="buildReportDB.py" prefix="stamp/scripts"/>
 	<zipfileset dir="${stamp.dir}/scripts" includes="sinkClass.xml" prefix="stamp/scripts"/>
 	<zipfileset dir="${stamp.dir}/scripts" includes="srcClass.xml" prefix="stamp/scripts"/>
   </zip>

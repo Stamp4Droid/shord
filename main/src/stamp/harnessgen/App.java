@@ -17,31 +17,25 @@ import soot.Modifier;
 public class App
 {
 	protected final Map<String,List<String>> components = new HashMap();
+	protected final Map<String,List<String>> customGUIs = new HashMap();
+
+	private final Set<String> activities = new HashSet();
+	private final Set<String> otherComps = new HashSet();
+	private final Set<String> xmlCallbacks = new HashSet();
+	private final Set<String> guiElems = new HashSet();
 
 	public App(String classPath, String androidJar, String outDir)
 	{
 		File layoutDir = new File(outDir, "res/layout");
-		File[] layoutFiles = layoutDir.listFiles(new FilenameFilter(){
-				public boolean accept(File dir, String name){
-					return name.endsWith(".xml");
-				}
-			});
-		Set<String> xmlCallbacks = new HashSet();
-		if(layoutFiles != null){
-			for(File lf : layoutFiles){
-				ParseLayout.process(lf, xmlCallbacks);
-			}
-		}
+		new ParseLayout().process(layoutDir, xmlCallbacks, guiElems);
 
-		Set<String> activities = new HashSet();
-		Set<String> otherComps = new HashSet();
 		File manifestFile = new File(outDir, "AndroidManifest.xml");				
 		new ParseManifest().process(manifestFile, activities, otherComps);
 
-		process(classPath, xmlCallbacks, activities, otherComps);
+		process(classPath);
 	}
 
-	private void process(String classPath, Set<String> xmlCallbacks, Set<String> activities, Set<String> otherComps)
+	private void process(String classPath)
 	{
 		try{
 			for(String cpElem : classPath.split(":")) {
@@ -51,23 +45,9 @@ public class App
 					continue;
 				}
 				if(cpElem.endsWith(".jar")){
-					/*
-					JarFile archive = new JarFile(f);
-					for (Enumeration entries = archive.entries(); entries.hasMoreElements();) {
-						JarEntry entry = (JarEntry) entries.nextElement();
-						String entryName = entry.getName();
-						int extensionIndex = entryName.lastIndexOf('.');
-						if (extensionIndex >= 0) {
-							String entryExtension = entryName.substring(extensionIndex);
-							if (".class".equals(entryExtension)) {
-								entryName = entryName.substring(0, extensionIndex);
-								entryName = entryName.replace('/', '.');
-								classes.add(entryName.replace('$', '.'));
-							}
-						}
-					}
-					*/
-				} else if(cpElem.endsWith(".apk")){
+					continue;
+				} 
+				if(cpElem.endsWith(".apk")){
 					DexFile dexFile = new DexFile(f);
 					for (ClassDefItem defItem : dexFile.ClassDefsSection.getItems()) {
 						String className = defItem.getClassType().getTypeDescriptor();
@@ -82,6 +62,8 @@ public class App
 							components.put(className, findCallbackMethods(defItem, xmlCallbacks));
 						else if(otherComps.contains(tmp))
 							components.put(className, Collections.EMPTY_LIST);
+						else if(guiElems.contains(tmp))
+							customGUIs.put(className, findConstructors(defItem));
 					}
 				} else 
 					assert false : cpElem;
@@ -121,4 +103,23 @@ public class App
 		}		
 		return ret == null ? Collections.EMPTY_LIST : ret;
 	} 
+	
+	private List<String> findConstructors(ClassDefItem classDef)
+	{
+		List<String> ret = new ArrayList();
+		//System.out.println("custom GUI "+classDef); 
+		ClassDataItem classData = classDef.getClassData();
+		for(ClassDataItem.EncodedMethod method : classData.getDirectMethods()) {
+			String name = method.method.getMethodName().getStringValue();
+			if(!name.equals("<init>"))
+				continue;
+			//if(!Modifier.isPublic(method.accessFlags))
+			//continue;
+			//System.out.println("sig: "+name+"*"+method.method.getShortMethodString());
+			ret.add(method.method.getShortMethodString());
+		}
+		return ret;
+	}
+
+	
 }

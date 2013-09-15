@@ -30,7 +30,7 @@ public class Symc
 		List<File> failedApps = new ArrayList();
 		for(File apkDir : apkDirs){
 			File resultsDir = new File(apkDir, "results");
-			File flowFile = new File(resultsDir, "classifiedFlows.xml");
+			File flowFile = new File(resultsDir, "SrcSinkFlow.xml");
 			if(!flowFile.exists()){
 				failedApps.add(apkDir);
 				continue;
@@ -42,7 +42,7 @@ public class Symc
 			System.out.println(apkName);
 			System.out.println(querySrcSinkFlows(flowFile));
 	    
-			ZipEntry e = new ZipEntry(apkName+"/classifiedFlows.xml");
+			ZipEntry e = new ZipEntry(apkName+"/SrcSinkFlow.xml");
 			out.putNextEntry(e);
 			
 			InputStream input = new BufferedInputStream(new FileInputStream(flowFile), 10240);

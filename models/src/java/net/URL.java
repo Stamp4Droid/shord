@@ -78,6 +78,11 @@ class URL
     public java.lang.String toString() {
         return new String();
     }
+
+	@STAMP(flows={@Flow(from="this",to="@return")})
+    public java.lang.String toExternalForm() {
+		return new String();
+    }
 	
 	@STAMP(flows={@Flow(from="this",to="@return")})
 	public java.net.URI toURI() throws java.net.URISyntaxException {
