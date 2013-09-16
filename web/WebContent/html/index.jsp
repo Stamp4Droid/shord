@@ -515,7 +515,7 @@
 
                 datasources[resultTreeId] = datasource;
 
-                $('#' + resultTreeId).on('selected', function(event,selection){
+                $('#' + resultTreeId).on('selected', function(ev, selection){
                     var reportScript = selection.info[0].showReport;
                     if(typeof reportScript === "undefined")
                     {
@@ -618,6 +618,13 @@
                         }
                     });
 
+                    console.log($selected.css('color'));
+                    if ($selected.css('color') === 'rgb(255, 0, 0)') {
+                        $selected.css('color', 'rgb(51,51,51)');
+                    } else {
+                        $selected.css('color', 'rgb(255, 0, 0)');
+                    }
+
                     var datasource = datasources[id];
 
                     datasource.data($selected.parent().data(), function (items) {
@@ -627,7 +634,11 @@
                                         contexts.push(dataarr[i]);
                                     }
 
-                                    var table = ['<table class="table" >',
+                                    if ($('#centerpane #flowctxttable').length > 0) {
+                                        $('#centerpane #flowctxttable').remove();
+                                    }
+
+                                    var table = ['<table class="table" id="flowctxttable">',
                                                     '<thead>',
                                                          '<th>Source</th>',
                                                          '<th>Sink</th>',   
