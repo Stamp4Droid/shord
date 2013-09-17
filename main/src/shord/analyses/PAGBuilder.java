@@ -466,16 +466,6 @@ public class PAGBuilder extends JavaAnalysis
 			this.isStub = stub;
 		}
 
-		SootMethod getMethod()
-		{
-			return method;
-		}
-
-		RetVarNode getRet()
-		{
-			return retVar;
-		}
-
 		private HashMap<SootClass,List<SootClass>> classToSubtypes = new HashMap();
 
 		List<SootClass> subTypesOf(SootClass cl)
@@ -665,6 +655,7 @@ public class PAGBuilder extends JavaAnalysis
 					relAlloc.add(retVar, sa);
 					relHT.add(sa, sa.getType());
 					relMH.add(method, sa);
+					relHTFilter.add(sa, sa.getType());
 				}
 				//return;
 			}
