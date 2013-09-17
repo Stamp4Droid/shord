@@ -141,6 +141,7 @@ public class Tuple
 		return this;
 	}
 
+
 	public final Tuple addValueWithHighlight(SootClass klass, Expr e)
 	{
 		String srcFile = SourceInfo.filePath(klass);
@@ -148,6 +149,21 @@ public class Tuple
 			"\t<value srcFile=\""+srcFile+
 			"\" lineNum=\""+e.line()+"\""+
 			" type=\"expr\""+
+			">\n" +
+			"\t\t<highlight key=\"taintedVariable\" startpos=\""+e.start()+"\" length=\""+e.length()+"\"/>\n" +
+			"\t\t<label><![CDATA["+e.text()+"]]></label>\n" +
+			"\t</value>\n";
+		return this;
+	}
+
+	public final Tuple addValueWithHighlight(SootClass klass, Expr e, String flows)
+	{
+		String srcFile = SourceInfo.filePath(klass);
+		str = (str != null ? str : "") +
+			"\t<value srcFile=\""+srcFile+
+			"\" lineNum=\""+e.line()+"\""+
+			" type=\"expr\""+
+			" flows=\""+flows+"\""+
 			">\n" +
 			"\t\t<highlight key=\"taintedVariable\" startpos=\""+e.start()+"\" length=\""+e.length()+"\"/>\n" +
 			"\t\t<label><![CDATA["+e.text()+"]]></label>\n" +
