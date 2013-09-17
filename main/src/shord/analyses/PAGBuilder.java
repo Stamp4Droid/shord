@@ -279,13 +279,12 @@ public class PAGBuilder extends JavaAnalysis
 	}
 
 
-	private Map<Unit, SiteAllocNode> unit2Node = new HashMap();
 
-	void Alloc(LocalVarNode l, Stmt h)
+	void Alloc(LocalVarNode l, AllocNode h)
 	{
 		assert l != null;
-		//relAlloc.add(l, h);
-		relAlloc.add(l, unit2Node.get(h));
+		relAlloc.add(l, h);
+		//relAlloc.add(l, unit2Node.get(h));
 	}
 
 	void Assign(VarNode l, VarNode r)
@@ -453,7 +452,7 @@ public class PAGBuilder extends JavaAnalysis
 		private Tag containerTag;
 		private Set<StubAllocNode> stubSet = new HashSet();
 		private boolean isStub;
-
+		private Map<Unit, SiteAllocNode> unit2Node = new HashMap();
 
 		MethodPAGBuilder(SootMethod method)
 		{
@@ -555,9 +554,8 @@ public class PAGBuilder extends JavaAnalysis
 						stubSet.add(n);
 					}
 				}
-	
-				//return;
-			}
+				return;
+			} 
 
 			localToVarNode = new HashMap();
 			Body body = method.retrieveActiveBody();
@@ -608,7 +606,6 @@ public class PAGBuilder extends JavaAnalysis
 
 		void pass2()
 		{
-
 			int i = 0;
 			if(thisVar != null){
 				MmethArg(method, i++, thisVar);
@@ -648,16 +645,25 @@ public class PAGBuilder extends JavaAnalysis
 
 			if(!method.isConcrete())
 				return;
+			
+			Collection allocNodes = isStub ? stubSet : unit2Node.values();
+			for(Object o : allocNodes){
+				AllocNode an = (AllocNode) o;
+				Type type = an.getType();
+
+				relHT.add(an, type);
+				relMH.add(method, an);
+
+				Iterator<Type> typesIt = Program.g().getTypes().iterator();
+				while(typesIt.hasNext()){
+					Type varType = typesIt.next();
+					if(canStore(type, varType))
+						relHTFilter.add(an, varType);
+				}
+			}
 
 			if(isStub) {
-
-				for(StubAllocNode sa: stubSet){
-					relAlloc.add(retVar, sa);
-					relHT.add(sa, sa.getType());
-					relMH.add(method, sa);
-					relHTFilter.add(sa, sa.getType());
-				}
-				//return;
+				return;
 			}
 
 			for(Map.Entry<Local,LocalVarNode> e : localToVarNode.entrySet()){
@@ -700,15 +706,15 @@ public class PAGBuilder extends JavaAnalysis
 				s.addTag(containerTag);
 
 
-		                if(ie instanceof SpecialInvokeExpr){
+				if(ie instanceof SpecialInvokeExpr){
 					relSpecIM.add(s,callee);
 				}
-
-		                if(ie instanceof StaticInvokeExpr){
+				
+				if(ie instanceof StaticInvokeExpr){
 					relStatIM.add(s,callee);
 				}
-
-		                if( (ie instanceof VirtualInvokeExpr) || (ie instanceof InterfaceInvokeExpr)){
+				
+				if( (ie instanceof VirtualInvokeExpr) || (ie instanceof InterfaceInvokeExpr)){
 					//VirtualInvokeExpr vie = (VirtualInvokeExpr) ie;
 					relVirtIM.add(s,callee);
 				}
@@ -808,24 +814,9 @@ public class PAGBuilder extends JavaAnalysis
 				Value rightOp = as.getRightOp();
 
 				if(rightOp instanceof AnyNewExpr){
-					Alloc(nodeFor((Local) leftOp), s);
-					///add by yufeng.
-					//relHT.add(s, rightOp.getType());
-					//relHT.add(new SiteAllocNode(s), rightOp.getType());
-					relHT.add(unit2Node.get(s), rightOp.getType());
-					//relMH.add(method, s);
-					relMH.add(method, unit2Node.get(s));
+					AllocNode an = unit2Node.get(s);
+					Alloc(nodeFor((Local) leftOp), an);
 					s.addTag(containerTag);
-					Iterator<Type> typesIt = Program.g().getTypes().iterator();
-					while(typesIt.hasNext()){
-						Type varType = typesIt.next();
-						//if(!(varType instanceof RefLikeType)
-						//	continue;
-						if(canStore(rightOp.getType(), varType))
-							relHTFilter.add(unit2Node.get(s), varType);
-							//add by yufeng.
-							//relHTFilter.add(s, varType);
-					}
 				} else if(rightOp instanceof CastExpr){
 					Type castType = ((CastExpr) rightOp).getCastType();
 					Immediate op = (Immediate) ((CastExpr) rightOp).getOp();
