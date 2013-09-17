@@ -3,6 +3,7 @@ package shord.analyses;
 import soot.Unit;
 import soot.Type;
 import soot.jimple.AssignStmt;
+import shord.program.Program;
 
 public class SiteAllocNode extends AllocNode
 {
@@ -22,7 +23,7 @@ public class SiteAllocNode extends AllocNode
 
 	public String toString()
 	{
-		return "siteAlloc@" + unit;
+		return "SiteAlloc$" + Program.unitToString(unit);
 	}
 	
 	public Type getType()
