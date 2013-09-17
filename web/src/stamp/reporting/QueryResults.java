@@ -45,7 +45,7 @@ public class QueryResults
 			File xmlResult = new File(fileName);
 			Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlResult);
 			XPath xpath = XPathFactory.newInstance().newXPath();
-			tuples = (NodeList) xpath.evaluate("/root/category", doc, XPathConstants.NODESET); 
+			tuples = (NodeList) xpath.evaluate("root/*/category", doc, XPathConstants.NODESET); 
 		}catch(Exception e){
 			throw new Error(e);
 		}
@@ -63,11 +63,7 @@ public class QueryResults
             //String sink = getLabel(vals.get(1));
             //builder.append(src).append('#').append(sink).append('#');
             builder.append(getLabel(vals.get(0))).append('#').append("two").append('#').append("three").append('#');
-            if(!first){
-                builder.append(',');
-            } else{
-                first = false;
-            }
+            builder.append(',');
 			//if(vals.size() != 2 && vals.size() != 3) {
 			//    throw new RuntimeException("unexpected " + vals.size());
 			//}
