@@ -87,8 +87,7 @@ public class Ctxt implements Serializable
 				first = false;
 			}
 			builder.append(inst == null ? "null"
-						   : inst.toString());
-						   //: Program.unitToString(inst));
+						   : inst instanceof Unit ? Program.unitToString((Unit) inst) : inst.toString());
 		}
 		builder.append(']');
 		if (asCtxtObj) {

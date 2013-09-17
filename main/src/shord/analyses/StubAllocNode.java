@@ -26,7 +26,7 @@ public class StubAllocNode extends AllocNode
 
 	public String toString()
 	{
-		return "StubAlloc@" + type + "@" + method;
+		return "StubAlloc$" + type + "@" + method;
 	}
 
 }

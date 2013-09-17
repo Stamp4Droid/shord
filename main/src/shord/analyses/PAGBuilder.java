@@ -280,7 +280,7 @@ public class PAGBuilder extends JavaAnalysis
 
 
 
-	void Alloc(LocalVarNode l, AllocNode h)
+	void Alloc(VarNode l, AllocNode h)
 	{
 		assert l != null;
 		relAlloc.add(l, h);
@@ -461,6 +461,7 @@ public class PAGBuilder extends JavaAnalysis
 
 		MethodPAGBuilder(SootMethod method, boolean stub)
 		{
+			System.out.println("XY "+method+" "+stub);
 			this.method = method;
 			this.isStub = stub;
 		}
@@ -552,6 +553,7 @@ public class PAGBuilder extends JavaAnalysis
 						StubAllocNode n = new StubAllocNode(st.getType(), method);
 						domH.add(n);
 						stubSet.add(n);
+						System.out.println("OO "+method+" "+n);
 					}
 				}
 				return;
@@ -647,13 +649,14 @@ public class PAGBuilder extends JavaAnalysis
 				return;
 			
 			Collection allocNodes = isStub ? stubSet : unit2Node.values();
+			System.out.println("PP "+method+" "+allocNodes.size());
 			for(Object o : allocNodes){
 				AllocNode an = (AllocNode) o;
 				Type type = an.getType();
 
 				relHT.add(an, type);
 				relMH.add(method, an);
-
+				
 				Iterator<Type> typesIt = Program.g().getTypes().iterator();
 				while(typesIt.hasNext()){
 					Type varType = typesIt.next();
@@ -663,6 +666,8 @@ public class PAGBuilder extends JavaAnalysis
 			}
 
 			if(isStub) {
+				for(StubAllocNode an : stubSet)
+					Alloc(retVar, an);
 				return;
 			}
 
@@ -915,8 +920,8 @@ public class PAGBuilder extends JavaAnalysis
 			SootMethod m = mIt.next();
 			growZIfNeeded(m.getParameterCount());
 			if(isStub(m)){
-				//System.out.println("stub: "+ m);
 				stubMethods.add(m);
+				System.out.println("stubZZ: "+ m + " "+stubMethods.contains(m));
 			}
 			domM.add(m);
 		}
