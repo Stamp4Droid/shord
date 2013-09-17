@@ -137,6 +137,7 @@
 		</script>
 		
 		<script>		
+			var numFlows = <%=numFlows%>;
 			function showTab(index){
 				for(j = 0; j < <%=tabCount%>; j++){
 					if(index == j){
@@ -210,6 +211,10 @@
 			var tabNameToId = new Object();
 			var idToHighlightedLine = new Object();
 			var totalFilesOpened = 0;
+			var flowSwitches = [];
+			for (var ii = 0; ii < numFlows; ++ii) {
+				flowSwitches.push(true);
+			}
 			
 			function rightBarAddDynamicData(drDataParams)
 			{
@@ -218,9 +223,20 @@
 			    var html = ViewSource.droidrecordDataToTable(data, false);
 			    $("#rightbar div.droidrecord-runtime-parameters").html(html);
 			}
+
+			function anyTaintedFlowShowing(taintedFlows) {
+				for (var i = 0; i < taintedFlows.length; ++i) {
+					if (flowSwitches.indexOf(taintedFlows[i]) >= 0) {
+						return true;
+					}
+				}
+				return false;
+			}
 		
 			function showCode(response, href)
 			{
+				console.log("THE HREF");
+				console.log(response);
 				var ppStr = prettyPrintOne(response, 'java', true);
 				$('#codetabcontents').append('<div class="tab-pane source-view" id="'+href+'">'+ppStr+'</div>');
 				
@@ -228,7 +244,11 @@
 				
 				var taintedVariables = $('#'+href).find("[name=taintedVariable]");
 			    for(var i=0; i<taintedVariables.length; ++i) {
-					taintedVariables[i].setAttribute("style", "background-color:#FFB2B2");
+			    	var flowString = taintedVariables[i].getAttribute("flows");
+			    	var taintedFlows = flowString.split(':');
+			    	if (flowString === 'null' || anyTaintedFlowShowing(taintedFlows)) {
+						taintedVariables[i].setAttribute("style", "background-color:#FFB2B2");
+					}
 			    }
 			    
 			    var methodNames = $('#'+href).find("span[name=MethodName]");
@@ -607,10 +627,12 @@
 
                 // on selected callback. Fuel UX provides selection
                 $('#'+id).on('selected', function(ev, selection) {
-                    var flow_regex = /Flow \d+/;
+                    var flow_regex = /Flow (\d+)/;
                     if (!flow_regex.test(selection.info[0].name)) {
                         return;
                     }
+                    var num = selection.info[0].name.match(flow_regex)[1];
+                    console.log("DEHNUM "+num);
 
                     var $selected = $(this).find('.tree-folder-name').filter ( function () {
                         if ($(this).text() === selection.info[0].name) {
@@ -618,12 +640,14 @@
                         }
                     });
 
-                    console.log($selected.css('color'));
                     if ($selected.css('color') === 'rgb(255, 0, 0)') {
                         $selected.css('color', 'rgb(51,51,51)');
+                        flowSwitches[num-1] = true;
                     } else {
                         $selected.css('color', 'rgb(255, 0, 0)');
+                        flowSwitches[num-1] = false;
                     }
+                    console.log(flowSwitches);
 
                     var datasource = datasources[id];
 
