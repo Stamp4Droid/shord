@@ -163,9 +163,12 @@ public class Tuple
 			"\t<value srcFile=\""+srcFile+
 			"\" lineNum=\""+e.line()+"\""+
 			" type=\"expr\""+
-			" flows=\""+flows+"\""+
 			">\n" +
-			"\t\t<highlight key=\"taintedVariable\" startpos=\""+e.start()+"\" length=\""+e.length()+"\"/>\n" +
+			"\t\t<highlight key=\"taintedVariable\""+
+			" startpos=\""+e.start()+"\""+
+			" length=\""+e.length()+"\""+
+			" flows=\""+flows+"\""+
+			"/>\n" +
 			"\t\t<label><![CDATA["+e.text()+"]]></label>\n" +
 			"\t</value>\n";
 		return this;

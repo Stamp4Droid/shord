@@ -241,9 +241,9 @@ public class TaintedVar extends XMLReport
 				varToFlows.put(var, str);
 			}
 			for (int n : flowNums) {
-				str = str + " " + n;
+				str = str + ":" + n;
 			}
-			str += " ";
+			str += ":";
 			if (!varToFlows.get(var).contains(str))
 				varToFlows.put(var, varToFlows.get(var)+str);
 

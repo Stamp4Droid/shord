@@ -314,14 +314,16 @@ public class SourceProcessor
     
     public static class KeySpanStart extends Insertion {
 	    private String key;
+	    private String flowNumbers;
 
-	    public KeySpanStart(int position, String key) {
+	    public KeySpanStart(int position, String key, String flowNumbers) {
 	        super(position, 6);
 	        this.key = key;
+	        this.flowNumbers = flowNumbers;
 	    }
 
 	    @Override public String toString() {
-	        return "<span id='"+key+getPosition()+"' name='"+key+"'>";
+	        return "<span id='"+key+getPosition()+"' name='"+key+"' flows='"+flowNumbers+"'>";
 	    }
     }
 
@@ -341,16 +343,18 @@ public class SourceProcessor
     public static class TaintedVariableRecord {
         private final int startPos;
         private final int endPos;
+        private final String flowNumbers;
         private final Set<String> sources;
         private final Set<String> sinks;
         
         public int getStart() { return startPos; }
         public int getEnd() { return endPos; }
         
-        public TaintedVariableRecord(int startPos, int endPos) {
+        public TaintedVariableRecord(int startPos, int endPos, String flowNumbers) {
             //System.out.println("Created TaintedVariableRecord " + startPos + " " + endPos);
             this.startPos = startPos;
             this.endPos = endPos;
+            this.flowNumbers = flowNumbers;
             this.sources = new HashSet<String>();
             this.sinks = new HashSet<String>();
         }
@@ -368,7 +372,7 @@ public class SourceProcessor
         public void makeInsertions(List<Insertion> insertions) {
             //System.out.println("Inserted TaintedVariableRecord " + startPos + " " + endPos);
 		    insertions.add(new SrcSinkSpanStart(startPos, sources, sinks));
-			insertions.add(new KeySpanStart(startPos, "taintedVariable"));
+			insertions.add(new KeySpanStart(startPos, "taintedVariable", flowNumbers));
 			insertions.add(new SpanEnd(endPos));
 			insertions.add(new SpanEnd(endPos));
         }
@@ -600,6 +604,8 @@ public class SourceProcessor
 				Element node = (Element)nodes.item(i);
 				int start = Integer.valueOf(node.getAttribute("startpos"));
 				int end = start+Integer.valueOf(node.getAttribute("length"));
+				String flows = node.getAttribute("flows");
+				System.err.println("FLOWS DUH " + node.hasAttribute("flows"));
 				if(!taintedVars.containsKey(start)) {
 				    taintedVars.put(start, new ArrayList<TaintedVariableRecord>());
 				}
@@ -610,7 +616,8 @@ public class SourceProcessor
 				    }
 				}
 				if(currentTVR == null) {
-				    currentTVR = new TaintedVariableRecord(start, end);
+				    currentTVR = new TaintedVariableRecord(start, end, flows);
+				    System.err.println("FLOWS MFER " + flows);
 				    taintedVars.get(start).add(currentTVR);
 				}
 				String srcSinkQuery = "ancestor::category";
