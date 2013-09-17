@@ -94,12 +94,12 @@ public class ContextsAnalysis extends JavaAnalysis
 		}
 		relMI.close();
 
-        DomH domH = (DomH) ClassicProject.g().getTrgt("H");
+        	DomH domH = (DomH) ClassicProject.g().getTrgt("H");
 		int numH = domH.size();
-        HtoM = new int[numH];
-	//add by yufeng
-        HtoQ = new AllocNode[numH];
-        //HtoQ = new Unit[numH];
+		HtoM = new int[numH];
+		//add by yufeng
+		HtoQ = new AllocNode[numH];
+		//HtoQ = new Unit[numH];
 		final ProgramRel relMH = (ProgramRel) ClassicProject.g().getTrgt("MH");		
 		relMH.load();
 		Iterable<Pair<SootMethod,AllocNode>> res1 = relMH.getAry2ValTuples();
@@ -108,8 +108,7 @@ public class ContextsAnalysis extends JavaAnalysis
 			//add by yufeng.
 			//Unit alloc = pair.val1;
 			AllocNode alloc = pair.val1;
-			if(alloc instanceof TypeAllocNode) continue;
-            int mIdx = domM.indexOf(meth);
+            		int mIdx = domM.indexOf(meth);
 			int hIdx = domH.indexOf(alloc);
 			HtoM[hIdx] = mIdx;
 			HtoQ[hIdx] = alloc;
@@ -118,11 +117,11 @@ public class ContextsAnalysis extends JavaAnalysis
 
 
 		Unit[] emptyElems = new Unit[0];
-        Ctxt epsilon = domC.setCtxt(emptyElems);
-        epsilonCtxtSet = new ArraySet<Ctxt>(1);
-        epsilonCtxtSet.add(epsilon);
+		Ctxt epsilon = domC.setCtxt(emptyElems);
+		epsilonCtxtSet = new ArraySet<Ctxt>(1);
+		epsilonCtxtSet.add(epsilon);
 
-        relIM = (ProgramRel) ClassicProject.g().getTrgt("chaIM");
+		relIM = (ProgramRel) ClassicProject.g().getTrgt("chaIM");
 		relIM.load();
 
 		doAnalysis();
@@ -168,24 +167,24 @@ public class ContextsAnalysis extends JavaAnalysis
 			//Unit alloc = HtoQ[hIdx];
 			AllocNode alloc = HtoQ[hIdx];
 			Set<Ctxt> ctxts = methToCtxts[mIdx];
-		if(ctxts == null) continue;
-			for (Ctxt oldCtxt : ctxts) {
-				//add by yufeng.
-				Object[] oldElems = oldCtxt.getElems();
-				Object[] newElems = combine(K, alloc, oldElems);
-				/*if(alloc instanceof SiteAllocNode) {
-					SiteAllocNode n = (SiteAllocNode)alloc;
-					Unit[] newElems = combine(K, n.getUnit(), oldElems);
+			if(ctxts == null) continue;
+				for (Ctxt oldCtxt : ctxts) {
+					//add by yufeng.
+					Object[] oldElems = oldCtxt.getElems();
+					Object[] newElems = combine(K, alloc, oldElems);
+					/*if(alloc instanceof SiteAllocNode) {
+						SiteAllocNode n = (SiteAllocNode)alloc;
+						Unit[] newElems = combine(K, n.getUnit(), oldElems);
+						Ctxt newCtxt = domC.setCtxt(newElems);
+						relCH.add(newCtxt, alloc);
+					}*/
 					Ctxt newCtxt = domC.setCtxt(newElems);
+					//relCC.add(oldCtxt, newCtxt);
+					//add by yufeng
 					relCH.add(newCtxt, alloc);
-				}*/
-				Ctxt newCtxt = domC.setCtxt(newElems);
-				//relCC.add(oldCtxt, newCtxt);
-				//add by yufeng
-				relCH.add(newCtxt, alloc);
-				//relCH.add(newCtxt, alloc);
+					//relCH.add(newCtxt, alloc);
+				}
 			}
-		}
 		//add <null,h> for h in TypeAllocSite.
 		/*
 		typeCtxt = domC.setCtxt(new Unit[0]);
@@ -371,7 +370,6 @@ public class ContextsAnalysis extends JavaAnalysis
         return view.getAry1ValTuples();
     }
 
-    //private Unit[] combine(int k, Unit inst, Unit[] elems)
     private Object[] combine(int k, Object inst, Object[] elems)
 	{
         int oldLen = elems.length;
@@ -387,10 +385,6 @@ public class ContextsAnalysis extends JavaAnalysis
 	// Update contexts for this method (callee)
 	private Set<Ctxt> getNewCtxts(int cleIdx)
 	{
-		//for stubmethod..
-		NumberedSet stubs = PAGBuilder.stubMethods;
-		SootMethod m = (SootMethod)domM.get(cleIdx);
-		if(stubs.contains(m)) return emptyCtxtSet;
 
         	final Set<Ctxt> newCtxts = new HashSet<Ctxt>();
 		TIntArrayList invks = methToClrSites[cleIdx]; // which call sites point to me

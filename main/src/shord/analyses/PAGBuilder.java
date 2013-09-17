@@ -171,9 +171,8 @@ public class PAGBuilder extends JavaAnalysis
 
 	void openRels()
 	{
-		//relAlloc = (ProgramRel) ClassicProject.g().getTrgt("Alloc");
-		//add by yufeng.
-		//relAlloc.zero();
+		relAlloc = (ProgramRel) ClassicProject.g().getTrgt("Alloc");
+		relAlloc.zero();
 		relAssign = (ProgramRel) ClassicProject.g().getTrgt("Assign");
 		relAssign.zero();
 		relLoad = (ProgramRel) ClassicProject.g().getTrgt("Load");
@@ -194,19 +193,19 @@ public class PAGBuilder extends JavaAnalysis
 		relIinvkArg = (ProgramRel) ClassicProject.g().getTrgt("IinvkArg");
 		relIinvkArg.zero();
 		relVT = (ProgramRel) ClassicProject.g().getTrgt("VT");
-        relVT.zero();
-	//	relHT = (ProgramRel) ClassicProject.g().getTrgt("HT");
-        //relHT.zero();
+        	relVT.zero();
+		relHT = (ProgramRel) ClassicProject.g().getTrgt("HT");
+        	relHT.zero();
 		relHTFilter = (ProgramRel) ClassicProject.g().getTrgt("HTFilter");
 		relHTFilter.zero();
 		relMI = (ProgramRel) ClassicProject.g().getTrgt("MI");
-        relMI.zero();
-		//relMH = (ProgramRel) ClassicProject.g().getTrgt("MH");
-        //relMH.zero();
+        	relMI.zero();
+		relMH = (ProgramRel) ClassicProject.g().getTrgt("MH");
+        	relMH.zero();
 		relMV = (ProgramRel) ClassicProject.g().getTrgt("MV");
-        relMV.zero();
+        	relMV.zero();
 		relMU = (ProgramRel) ClassicProject.g().getTrgt("MU");
-        relMU.zero();
+        	relMU.zero();
 
 		relAssignPrim = (ProgramRel) ClassicProject.g().getTrgt("AssignPrim");
 		relAssignPrim.zero();
@@ -279,14 +278,13 @@ public class PAGBuilder extends JavaAnalysis
 		relDispatch.save();
 	}
 
-	Map<Unit, SiteAllocNode> unit2Node = new HashMap();
+
+	private Map<Unit, SiteAllocNode> unit2Node = new HashMap();
 
 	void Alloc(LocalVarNode l, Stmt h)
 	{
 		assert l != null;
 		//relAlloc.add(l, h);
-		System.out.println("adding..." + h);
-		//relAlloc.add(l, new SiteAllocNode(h));
 		relAlloc.add(l, unit2Node.get(h));
 	}
 
@@ -453,10 +451,19 @@ public class PAGBuilder extends JavaAnalysis
 		private Set<Local> primLocals;
 		private Map<Stmt,CastVarNode> stmtToCastNode;
 		private Tag containerTag;
+		private Set<StubAllocNode> stubSet = new HashSet();
+		private boolean isStub;
+
 
 		MethodPAGBuilder(SootMethod method)
 		{
+			this(method, false);
+		}
+
+		MethodPAGBuilder(SootMethod method, boolean stub)
+		{
 			this.method = method;
+			this.isStub = stub;
 		}
 
 		SootMethod getMethod()
@@ -468,6 +475,44 @@ public class PAGBuilder extends JavaAnalysis
 		{
 			return retVar;
 		}
+
+		private HashMap<SootClass,List<SootClass>> classToSubtypes = new HashMap();
+
+		List<SootClass> subTypesOf(SootClass cl)
+		{
+			List<SootClass> subTypes = classToSubtypes.get(cl);
+			if(subTypes != null)
+				return subTypes;
+
+			classToSubtypes.put(cl, subTypes = new ArrayList());
+
+			subTypes.add(cl);
+
+			LinkedList<SootClass> worklist = new LinkedList<SootClass>();
+			HashSet<SootClass> workset = new HashSet<SootClass>();
+			FastHierarchy fh = Program.g().scene().getOrMakeFastHierarchy();
+
+			if(workset.add(cl)) worklist.add(cl);
+			while(!worklist.isEmpty()) {
+				cl = worklist.removeFirst();
+				if(cl.isInterface()) {
+					for(Iterator cIt = fh.getAllImplementersOfInterface(cl).iterator(); cIt.hasNext();) {
+						final SootClass c = (SootClass) cIt.next();
+						if(workset.add(c)) worklist.add(c);
+					}
+				} else {
+					if(cl.isConcrete()) {
+						subTypes.add(cl);
+					}
+					for(Iterator cIt = fh.getSubclassesOf(cl).iterator(); cIt.hasNext();) {
+						final SootClass c = (SootClass) cIt.next();
+						if(workset.add(c)) worklist.add(c);
+					}
+				}
+			}
+			return subTypes;
+		}
+
 		
 		void pass1()
 		{
@@ -509,6 +554,21 @@ public class PAGBuilder extends JavaAnalysis
 			if(!method.isConcrete())
 				return;
 
+			//for stub, we don't want to touch it's body.
+			if(isStub) {
+				//for each method's return types, we add it.
+				if((method.getReturnType() instanceof RefType)){
+					RefType t = (RefType)method.getReturnType();
+					for(SootClass st: subTypesOf(t.getSootClass())){
+						StubAllocNode n = new StubAllocNode(st.getType(), method);
+						domH.add(n);
+						stubSet.add(n);
+					}
+				}
+	
+				//return;
+			}
+
 			localToVarNode = new HashMap();
 			Body body = method.retrieveActiveBody();
 			LocalsClassifier lc = new LocalsClassifier(body);
@@ -537,7 +597,6 @@ public class PAGBuilder extends JavaAnalysis
 				} else if(s instanceof AssignStmt) {
 					Value rightOp = ((AssignStmt) s).getRightOp();
 					if(rightOp instanceof AnyNewExpr) {
-						System.out.println("adding H...." + s);
 						SiteAllocNode n = new SiteAllocNode(s);
 						domH.add(n);
 						unit2Node.put(s, n);
@@ -559,6 +618,7 @@ public class PAGBuilder extends JavaAnalysis
 
 		void pass2()
 		{
+
 			int i = 0;
 			if(thisVar != null){
 				MmethArg(method, i++, thisVar);
@@ -598,6 +658,17 @@ public class PAGBuilder extends JavaAnalysis
 
 			if(!method.isConcrete())
 				return;
+
+			if(isStub) {
+
+				for(StubAllocNode sa: stubSet){
+					relAlloc.add(retVar, sa);
+					relHT.add(sa, sa.getType());
+					relMH.add(method, sa);
+				}
+				//return;
+			}
+
 			for(Map.Entry<Local,LocalVarNode> e : localToVarNode.entrySet()){
 				LocalVarNode varNode = e.getValue();
 				if(nonPrimLocals.contains(e.getKey())){
@@ -906,7 +977,7 @@ public class PAGBuilder extends JavaAnalysis
 	void populateTypes()
 	{
 		DomT domT = (DomT) ClassicProject.g().getTrgt("T");
-		domH = (DomH) ClassicProject.g().getTrgt("H");
+		//domH = (DomH) ClassicProject.g().getTrgt("H");
 		Program program = Program.g();
         	Iterator<Type> typesIt = program.getTypes().iterator();
 		while(typesIt.hasNext()){
@@ -914,9 +985,9 @@ public class PAGBuilder extends JavaAnalysis
             		domT.add(t);
             		//domT.add(typesIt.next());
 			//add by yu
-			TypeAllocNode n = new TypeAllocNode(t);
-			type2Node.put(t, n);
-			domH.add(n);
+			//TypeAllocNode n = new StubAllocNode(t);
+			//type2Node.put(t, n);
+			//domH.add(n);
 		}
 		domT.save();
 	}
@@ -948,17 +1019,15 @@ public class PAGBuilder extends JavaAnalysis
 				if(stubMethods.contains(m))
 					continue;
 			}
-			MethodPAGBuilder mpagBuilder = new MethodPAGBuilder(m);
+			MethodPAGBuilder mpagBuilder = new MethodPAGBuilder(m, stubMethods.contains(m));
 			mpagBuilder.pass1();
 			mpagBuilders.add(mpagBuilder);
 
 		}
-		//System.out.println("debug: " + fh.getSubclassesOf(Program.g().scene().getSootClass("android.view.View")));
 
-		//openRels();
 		domH.save();
 		domZ.save();
-		for(Iterator it = stubMethods.iterator(); it.hasNext();){
+		/*for(Iterator it = stubMethods.iterator(); it.hasNext();){
 			SootMethod method = (SootMethod) it.next();
 			Type retType = method.getReturnType();
 			if(retType instanceof RefType){
@@ -966,13 +1035,13 @@ public class PAGBuilder extends JavaAnalysis
 				domV.add(retVar);
 				meth2Ret.put(method, retVar);
 			} 
-		}
+		}*/
 
 		domV.save();
 		domI.save();
 		domU.save();
 		//add by yu.
-                relAlloc = (ProgramRel) ClassicProject.g().getTrgt("Alloc");
+                /*relAlloc = (ProgramRel) ClassicProject.g().getTrgt("Alloc");
 		relAlloc.zero();
 
 		relHT = (ProgramRel) ClassicProject.g().getTrgt("HT");
@@ -992,7 +1061,7 @@ public class PAGBuilder extends JavaAnalysis
 					relMH.add(stub, type2Node.get(st.getType()));
 				}
 			}
-		}
+		}*/
 	}
 
 	void buildDispatchMap() 
@@ -1136,43 +1205,6 @@ public class PAGBuilder extends JavaAnalysis
         return fh.canStoreType(objType, varType);
     }
 
-
-	private HashMap<SootClass,List<SootClass>> classToSubtypes = new HashMap();
-
-	List<SootClass> subTypesOf(SootClass cl)
-	{
-		List<SootClass> subTypes = classToSubtypes.get(cl);
-		if(subTypes != null)
-			return subTypes;
-
-		classToSubtypes.put(cl, subTypes = new ArrayList());
-
-		subTypes.add(cl);
-
-		LinkedList<SootClass> worklist = new LinkedList<SootClass>();
-		HashSet<SootClass> workset = new HashSet<SootClass>();
-		FastHierarchy fh = Program.g().scene().getOrMakeFastHierarchy();
-
-		if(workset.add(cl)) worklist.add(cl);
-		while(!worklist.isEmpty()) {
-			cl = worklist.removeFirst();
-			if(cl.isInterface()) {
-				for(Iterator cIt = fh.getAllImplementersOfInterface(cl).iterator(); cIt.hasNext();) {
-					final SootClass c = (SootClass) cIt.next();
-					if(workset.add(c)) worklist.add(c);
-				}
-			} else {
-				if(cl.isConcrete()) {
-					subTypes.add(cl);
-				}
-				for(Iterator cIt = fh.getSubclassesOf(cl).iterator(); cIt.hasNext();) {
-					final SootClass c = (SootClass) cIt.next();
-					if(workset.add(c)) worklist.add(c);
-				}
-			}
-		}
-		return subTypes;
-	}
 
 
 	public void run()
