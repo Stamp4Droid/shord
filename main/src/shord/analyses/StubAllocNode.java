@@ -5,7 +5,6 @@ import soot.SootMethod;
 
 public class StubAllocNode extends AllocNode
 {
-
 	public final Type type;
 	public final SootMethod method;
 
@@ -17,20 +16,17 @@ public class StubAllocNode extends AllocNode
 
 	public Type getType()
 	{
-
 		return type;
 	}
 
 	public SootMethod getMethod()
 	{
-
 		return method;
 	}
 
-
 	public String toString()
 	{
-		return "stubAlloc@" + type + "@" + method;
+		return "StubAlloc@" + type + "@" + method;
 	}
 
 }

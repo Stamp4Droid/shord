@@ -1,8 +1,9 @@
 package shord.analyses;
 
 import soot.Unit;
+import soot.Type;
+import soot.jimple.AssignStmt;
 
-//public class SiteAllocNode extends AllocNode
 public class SiteAllocNode extends AllocNode
 {
 	///public final Unit unit;
@@ -23,5 +24,9 @@ public class SiteAllocNode extends AllocNode
 	{
 		return "siteAlloc@" + unit;
 	}
-
+	
+	public Type getType()
+	{
+		return ((AssignStmt) unit).getRightOp().getType();
+	}
 }
