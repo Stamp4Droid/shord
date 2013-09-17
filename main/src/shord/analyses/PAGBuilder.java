@@ -899,7 +899,8 @@ public class PAGBuilder extends JavaAnalysis
 				if(stubMethods.contains(tgt) || (src != null && stubMethods.contains(src)))
 					continue;
 			}
-			relChaIM.add(stmt, tgt);
+			if(!stubMethods.contains(src))
+				relChaIM.add(stmt, tgt);
 		}
 		relChaIM.save();
 	}
