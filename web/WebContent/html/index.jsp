@@ -644,7 +644,6 @@
                         return;
                     }
                     var num = selection.info[0].name.match(flow_regex)[1];
-                    console.log("DEHNUM "+num);
 
                     var $selected = $(this).find('.tree-folder-name').filter ( function () {
                         if ($(this).text() === selection.info[0].name) {
@@ -652,21 +651,24 @@
                         }
                     });
 
-                    if ($selected.css('color') === 'rgb(255, 0, 0)') {
+                    if ($selected.css('color') === 'rgb(180, 180, 180)') {
                         $selected.css('color', 'rgb(51,51,51)');
                         flowSwitches[num-1] = true;
+                        $('#srcsinkflowhelp').empty();
+                        $('#srcsinkflowhelp').append('Taint from Flow '+num+' now hightlighted.')
                     } else {
-                        $selected.css('color', 'rgb(255, 0, 0)');
+                        $selected.css('color', 'rgb(180, 180, 180)');
                         flowSwitches[num-1] = false;
+                        $('#srcsinkflowhelp').empty();
+                        $('#srcsinkflowhelp').append('Not highlighting taint from Flow '+num);
                     }
+
                     var $activeCodeTabs = $('li.active a');
                     console.log($activeCodeTabs);
                     for (var i = 0; i < $activeCodeTabs.length; ++i) {
                     	var attr = $activeCodeTabs[i].getAttribute('href');
                     	colorTaint(attr);
                     }
-
-
 
                     var datasource = datasources[id];
 
@@ -697,6 +699,8 @@
                                     $('#centerpane').append(table.join('\n'));
                                 });
                 });
+
+				$('#'+id).parent().append('<p class="muted"><em id="srcsinkflowhelp">Click a Flow name to show / hide </em></p>');
             }
 			
 			<%
