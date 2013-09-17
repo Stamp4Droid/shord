@@ -139,6 +139,10 @@
 		<script>		
 			var numFlows = <%=numFlows%>;
 			function showTab(index){
+				if ($('#centerpane #flowctxttable').length > 0) {
+					$('#centerpane #flowctxttable').remove();
+				}
+
 				for(j = 0; j < <%=tabCount%>; j++){
 					if(index == j){
 						$("#leftbartab-"+j).show();
@@ -226,11 +230,26 @@
 
 			function anyTaintedFlowShowing(taintedFlows) {
 				for (var i = 0; i < taintedFlows.length; ++i) {
-					if (flowSwitches.indexOf(taintedFlows[i]) >= 0) {
+					if (flowSwitches[taintedFlows[i]-1]) {
 						return true;
 					}
 				}
 				return false;
+			}
+
+			function colorTaint(href) {
+				href = href.replace('#','');
+				console.log("HERF IS "+href);
+				var taintedVariables = $('#'+href).find("[name=taintedVariable]");
+			    for(var i=0; i<taintedVariables.length; ++i) {
+			    	var flowString = taintedVariables[i].getAttribute("flows");
+			    	var taintedFlows = flowString.split(':');
+			    	if (flowString === 'null' || anyTaintedFlowShowing(taintedFlows)) {
+						taintedVariables[i].setAttribute("style", "background-color:#FFB2B2");
+					} else if (taintedVariables[i].hasAttribute('style')) {
+						taintedVariables[i].removeAttribute('style');
+					}
+			    }
 			}
 		
 			function showCode(response, href)
@@ -239,18 +258,11 @@
 				console.log(response);
 				var ppStr = prettyPrintOne(response, 'java', true);
 				$('#codetabcontents').append('<div class="tab-pane source-view" id="'+href+'">'+ppStr+'</div>');
+
+				colorTaint(href);
 				
 				$('#codetabs a:last').tab('show');
 				
-				var taintedVariables = $('#'+href).find("[name=taintedVariable]");
-			    for(var i=0; i<taintedVariables.length; ++i) {
-			    	var flowString = taintedVariables[i].getAttribute("flows");
-			    	var taintedFlows = flowString.split(':');
-			    	if (flowString === 'null' || anyTaintedFlowShowing(taintedFlows)) {
-						taintedVariables[i].setAttribute("style", "background-color:#FFB2B2");
-					}
-			    }
-			    
 			    var methodNames = $('#'+href).find("span[name=MethodName]");
 			    for(var i=0; i < methodNames.length; ++i) {
 			        $(methodNames[i]).after('<img src="/stamp/res/down.png" height="12" width="12" style="display:inline"></img>');
@@ -647,7 +659,14 @@
                         $selected.css('color', 'rgb(255, 0, 0)');
                         flowSwitches[num-1] = false;
                     }
-                    console.log(flowSwitches);
+                    var $activeCodeTabs = $('li.active a');
+                    console.log($activeCodeTabs);
+                    for (var i = 0; i < $activeCodeTabs.length; ++i) {
+                    	var attr = $activeCodeTabs[i].getAttribute('href');
+                    	colorTaint(attr);
+                    }
+
+
 
                     var datasource = datasources[id];
 
@@ -656,6 +675,10 @@
                                     var contexts = [];
                                     for (var i = 0; i < dataarr.length; ++i) {
                                         contexts.push(dataarr[i]);
+                                    }
+
+                                    if ($('li.active').length > 0) {
+                                    	return;
                                     }
 
                                     if ($('#centerpane #flowctxttable').length > 0) {
