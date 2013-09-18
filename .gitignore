@@ -12,6 +12,7 @@ local.config
 *.ap_
 *.ap_.d
 *.jimple
+.cproject
 .project
 .classpath
 .settings
