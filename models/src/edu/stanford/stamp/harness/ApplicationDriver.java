@@ -29,14 +29,15 @@ public class ApplicationDriver
 
 	public static void registerCallback(Callback cb)
 	{
-		callbacks.add(cb);
+		//callbacks.add(cb);
+		cb.run();
 	}
 
 	public static void callCallbacks()
 	{
 		//note: if analysis can distinguish between indices
 		//replace 0 with random int
-		callbacks.get(0).run();
+		//callbacks.get(0).run();
 	}
 }
 
