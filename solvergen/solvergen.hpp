@@ -1,12 +1,16 @@
 #ifndef SOLVERGEN_HPP
 #define SOLVERGEN_HPP
 
+#include <deque>
+#include <iterator>
 #include <limits.h>
 #include <list>
 #include <map>
 #include <set>
 #include <stdlib.h>
 #include <stdio.h>
+#include <vector>
+#include <unordered_map>
 #include <utility>
 
 /**
@@ -142,91 +146,266 @@ typedef struct Edge {
      */
     struct Edge *r_edge;
 #endif
-    /**
-     * The next Edge in the incoming Edge%s linked list that this Edge belongs
-     * to.
-     */
-    struct Edge *in_next;
-    /**
-     * The next Edge in the outgoing Edge%s bucket that this Edge belongs to.
-     */
-    struct Edge *out_next;
 } Edge;
 
 /**
- * The initial number of buckets for new OutEdgeSet%s. Must be a power of `2`.
+ * The set of all outgoing Edge%s to some Node, for a specific @Symbol.
+ * Implemented using a hashtable indexed by target Node.
  */
-#define OUT_EDGE_SET_INIT_NUM_BUCKETS 16
+class OutEdgeSet {
+public:
+    typedef std::unordered_multimap<NODE_REF,Edge*> Table;
+    typedef Table::const_iterator TableIterator;
+    class Iterator;
+    class View;
 
-/**
- * The load factor that, when exceeded, will trigger a resize of an OutEdgeSet.
- */
-#define OUT_EDGE_SET_MAX_LOAD_FACTOR 0.9
+    class Iterator : public std::iterator<std::forward_iterator_tag,Edge*> {
+	friend View;
+    private:
+	/**
+	 * The OutEdgeSet we are iterating on.
+	 */
+	OutEdgeSet* const set;
+	/**
+	 * The specific @Index that this Iterator is constrained on. Is equal
+	 * to @e INDEX_NONE if the iterated Edge%s are not parametric, or this
+	 * Iterator is unconstrained.
+	 */
+	const INDEX index;
+	/**
+	 * Our current position over the actual Edge container in the iterated
+	 * set.
+	 */
+	TableIterator iter;
+	/**
+	 * An iterator marking the end of our allowed range over the Edge
+	 * container of the iterated set.
+	 */
+	const TableIterator past_last;
+    private:
+	/**
+	 * Advance the wrapped iterator to the next valid Edge. If the wrapped
+	 * iterator is already on a valid Edge, it is not moved.
+	 */
+	void advance_iter();
+	/**
+	 * Initialize an Iterator over some View of an OutEdgeSet. This
+	 * increments the number of live iterators over that set.
+	 */
+	explicit Iterator(OutEdgeSet *set, INDEX index, TableIterator iter,
+			  TableIterator past_last);
+    public:
+	// TODO: Copy constructor and assignment disabled, to simplify
+	// reference counting of live iterators.
+	Iterator(const Iterator& other) = delete;
+	Iterator& operator=(const Iterator& other) = delete;
+	Iterator(Iterator&& other);
+	/**
+	 * Destroy this Iterator, decrementing the number of Iterator%s
+	 * currently live over the iterated set.
+	 */
+	~Iterator();
+	Edge *operator*() const;
+	Iterator& operator++();
+	bool operator==(const Iterator& other) const;
+	bool operator!=(const Iterator& other) const;
+    };
 
-/**
- * A hashtable-backed set of Edge%s, indexed by target Node.
- */
-typedef struct {
     /**
-     * The number of Edge%s currenty present in the OutEdgeSet.
+     * An iterable, unmodifiable view over an OutEdgeSet.
      */
-    unsigned int size;
+    // TODO: A View objet holds live iterators over the underlying table, but
+    // doesn't update the set's live_iters.
+    class View {
+	friend OutEdgeSet;
+    private:
+	/**
+	 * The OutEdgeSet that this View is based on.
+	 */
+	OutEdgeSet* const set;
+	/**
+	 * The specific @Index that this View is constrained on. Is equal to
+	 * @e INDEX_NONE if the iterated Edge%s are not parametric, or this
+	 * View is unconstrained.
+	 */
+	const INDEX index;
+	/**
+	 * An iterator over the underlying container of the parent OutEdgeSet,
+	 * pointing to the first element contained in this View.
+	 */
+	const TableIterator first;
+	/**
+	 * An iterator over the underlying container of the parent OutEdgeSet,
+	 * pointing one element past the last one contained in this View.
+	 */
+	const TableIterator past_last;
+    private:
+	/**
+	 * Create a View over OutEdgeSet @a set, according to the specified
+	 * constraints.
+	 *
+	 * @param [in] to The destination Node that this View will be
+	 * constrained to, ignored if set to @e NODE_NONE.
+	 * @param [in] index The @Index that this View will be constrained to,
+	 * ignored if set to @e INDEX_NONE.
+	 */
+	explicit View(OutEdgeSet *set, NODE_REF to, INDEX index);
+    public:
+	/**
+	 * Return an Iterator positioned at the first element contained in this
+	 * View.
+	 */
+	Iterator begin() const;
+	/**
+	 * Return an Iterator positioned after the last element contained in
+	 * this View.
+	 */
+	Iterator end() const;
+    };
+
+private:
+    friend Iterator;
+private:
     /**
-     * The number of buckets in this set's OutEdgeSet::table.
+     * The actual container of outgoing Edge%s, a hashtable-backed multimap,
+     * indexing Edge%s by destination Node.
      */
-    unsigned int num_buckets;
+    Table table;
     /**
-     * The number of OutEdgeIterator%s that are currently live on this
-     * OutEdgeSet.
-     *
-     * An OutEdgeSet cannot be modified while there exists a live iterator over
-     * it; the iterator must first be advanced to the end of the set.
+     * The number of Iterator%s that are currently live on this OutEdgeSet. The
+     * set cannot be modified while there exists a live Iterator over it.
      */
     unsigned int live_iters;
+public:
     /**
-     * The actual collection of Edge%s in this OutEdgeSet. Implemented as a
-     * hashtable, with unordered linked lists for collision handling.
+     * Create an empty OutEdgeSet, with an initial capacity of 0.
      */
-    Edge **table;
-} OutEdgeSet;
+    OutEdgeSet();
+    /**
+     * Add an Edge to this OutEdgeSet. Assumes the Edge is not already present
+     * in the set, and that there are no live Iterator%s over the set.
+     */
+    void add(Edge *e);
+    /**
+     * Create a View over this OutEdgeSet, with the specified constraints.
+     */
+    View view(NODE_REF to, INDEX index);
+};
 
 /**
- * An iterator over the set of outgoing Edge%s of a Node.
+ * The set of all incoming Edge%s to some Node, for a specific @Symbol.
+ * Implemented using an unsorted container.
  */
-typedef struct {
-    /**
-     * The OutEdgeSet that we are iterating on.
-     */
-    OutEdgeSet *set;
-    /**
-     * The bucket of OutEdgeIterator::set that this OutEdgeIterator is
-     * currently on.
-     */
-    unsigned int bucket;
-    /**
-     * When set to a value different from @e NODE_NONE, the iterator will only
-     * return Edge%s targeting that Node.
-     */
-    NODE_REF tgt_node;
-    /**
-     * The Edge in the overflow list of OutEdgeIterator::set that we are
-     * currently on.
-     */
-    Edge *list_ptr;
-} OutEdgeIterator;
+// TODO: Rewrite in a similar style to OutEdgeSet.
+class InEdgeSet {
+public:
+    class Iterator;
+    class View;
 
-/**
- * An iterator over the set of incoming Edge%s of a Node.
- *
- * Incoming Edge%s are stored in linked lists, so we only need to record our
- * position in the list.
- */
-typedef struct {
+    class Iterator : public std::iterator<std::forward_iterator_tag,Edge*> {
+	friend View;
+    private:
+	/**
+	 * The InEdgeSet we are iterating on.
+	 */
+	InEdgeSet* const set;
+	/**
+	 * The specific @Index that this Iterator is constrained on. Is equal
+	 * to @e INDEX_NONE if the iterated Edge%s are not parametric, or this
+	 * Iterator is unconstrained.
+	 */
+	const INDEX index;
+	/**
+	 * Our current position over the actual Edge container in the iterated
+	 * set.
+	 */
+	std::deque<Edge*>::const_iterator iter;
+    private:
+	/**
+	 * Advance the wrapped iterator to the next valid Edge. If the wrapped
+	 * iterator is already on a valid Edge, it is not moved.
+	 */
+	void advance_iter();
+	/**
+	 * Initialize an Iterator over some View of an InEdgeSet. This
+	 * increments the number of live iterators over that set.
+	 */
+	explicit Iterator(InEdgeSet *set, INDEX index, bool at_end);
+    public:
+	// TODO: Copy constructor and assignment disabled, to simplify
+	// reference counting of live iterators.
+	Iterator(const Iterator& other) = delete;
+	Iterator& operator=(const Iterator& other) = delete;
+	Iterator(Iterator&& other);
+	/**
+	 * Destroy this Iterator, decrementing the number of Iterator%s
+	 * currently live over the iterated set.
+	 */
+	~Iterator();
+	Edge *operator*() const;
+	Iterator& operator++();
+	bool operator==(const Iterator& other) const;
+	bool operator!=(const Iterator& other) const;
+    };
+
     /**
-     * The Edge that this InEdgeIterator is currenly on.
+     * An iterable, unmodifiable view of an InEdgeSet.
      */
-    Edge *curr_edge;
-} InEdgeIterator;
+    class View {
+	friend InEdgeSet;
+    private:
+	/**
+	 * The InEdgeSet that this View is based on.
+	 */
+	InEdgeSet* const set;
+	/**
+	 * The specific @Index that this View is constrained on. Is equal to
+	 * @e INDEX_NONE if the iterated Edge%s are not parametric, or this
+	 * View is unconstrained.
+	 */
+	const INDEX index;
+    private:
+	explicit View(InEdgeSet *set, INDEX index);
+    public:
+	/**
+	 * Return an Iterator positioned at the first element contained in this
+	 * View.
+	 */
+	Iterator begin() const;
+	/**
+	 * Return an Iterator positioned after the last element contained in
+	 * this View.
+	 */
+	Iterator end() const;
+    };
+
+private:
+    friend Iterator;
+private:
+    /**
+     * The actual container of incoming Edge%s.
+     */
+    std::deque<Edge*> edges;
+    /**
+     * The number of Iterator%s that are currently live on this InEdgeSet. An
+     * InEdgeSet cannot be modified while there exists a live iterator over it.
+     */
+    unsigned int live_iters;
+public:
+    /**
+     * Create an empty InEdgeSet.
+     */
+    InEdgeSet();
+    /**
+     * Add an Edge to this InEdgeSet. Assumes the Edge is not already present
+     * in the set, and that there are no live Iterator%s over the set.
+     */
+    void add(Edge *e);
+    /**
+     * Create a view over this InEdgeSet, with the specified constraints.
+     */
+    View view(INDEX index);
+};
 
 /**
  * An index over a @Relation. Provides efficient access to the subset of tuples
@@ -267,26 +446,53 @@ public:
 };
 
 /**
+ * A lightweight map data structure, implemented as an unsorted list of
+ * key-value pairs.
+ */
+template<typename K, typename V> class LightMap {
+public:
+    typedef typename std::vector<std::pair<K,V>>::size_type Size;
+private:
+    /**
+     * The actual contents of the LightMap.
+     */
+    std::vector<std::pair<K,V>> list;
+    /**
+     * Return the index of the first occurence of key @a k on LightMap::list.
+     * Returns an out-of-bounds value if @a k is not present in the LightMap.
+     */
+    Size index_of(K k) const;
+public:
+    /**
+     * Create an empty LightMap.
+     */
+    LightMap();
+    /**
+     * Check if the LightMap contains an entry for key @a k.
+     */
+    bool contains(K k) const;
+    /**
+     * Retrieve the value mapped to key @a k. If @a k is not present in the
+     * LightMap, it get inserted under a newly default-constructed value.
+     */
+    V& operator[](K k);
+};
+
+/**
  * A node of the input graph.
  */
 struct Node {
     /**
-     * All the incoming Edge%s of the Node, indexed by @Kind.
-     *
-     * Stored as an array of linked lists of Edge%s, with a separate list for
-     * each @Kind.
+     * All the incoming Edge%s of the Node, indexed by @Kind. Stored as a
+     * collection of InEdgeSet%s, with a separate InEdgeSet for each @Kind.
      */
-    Edge **in;
+    LightMap<EDGE_KIND,InEdgeSet> in;
     /**
      * All the outgoing Edge%s of the Node, indexed by @Kind and target Node.
-     *
-     * Stored as an array of hashtable-backed sets of Edge%s, with a separate
-     * OutEdgeSet for each @Kind. Edge%s on the same OutEdgeSet are indexed by
-     * target Node.
-     *
-     * We initialize the sets lazily to conserve space.
+     * Stored as a collection of OutEdgeSet%s, with a separate OutEdgeSet for
+     * each @Kind. Edge%s on the same OutEdgeSet are indexed by target Node.
      */
-    OutEdgeSet **out;
+    LightMap<EDGE_KIND,OutEdgeSet> out;
 };
 
 /**
@@ -334,97 +540,51 @@ typedef struct {
 } PartialPath;
 
 /**
- * An element in a linked list of strings.
- */
-typedef struct StringCell {
-    const char *value;
-    struct StringCell *next;
-} StringCell;
-
-/**
- * A FIFO queue of strings, implemented as a linked list.
- */
-typedef struct {
-    unsigned long length;
-    StringCell *head;
-    StringCell *tail;
-} StringQueue;
-
-/**
- * An element of a trie mapping Node names (strings) to Node%s.
- */
-typedef struct NodeNameTrieCell {
-    /** The character at this point in the trie. */
-    char character;
-    /**
-     * The Node corresponding to the name constructed by traversing the trie up
-     * to this point. Is equal to @e NODE_NONE if there is no Node with that
-     * name.
-     */
-    NODE_REF node;
-    /**
-     * The first cell on the next level of the trie (i.e., the level for the
-     * next character of the string).
-     */
-    struct NodeNameTrieCell *first_child;
-    /**
-     * The next cell on the same level of the trie. Cells on the same level are
-     * sorted lexicographically.
-     */
-    struct NodeNameTrieCell *next_sibling;
-} NodeNameTrieCell;
-
-/**
- * A trie mapping Node names (strings) to Node%s. This struct serves as the
- * root of the trie, which maps the empty string.
- *
- * Our trie implementation does not explicitly store the null-terminating byte
- * of strings.
- */
-typedef struct {
-    /**
-     * The Node corresponding to the empty string. Is equal to @e NODE_NONE if
-     * there is no Node with that name.
-     */
-    NODE_REF empty_name_node;
-    /**
-     * The first cell on the first level of the trie (i.e., the level for the
-     * first character of the string).
-     */
-    NodeNameTrieCell *first_child;
-} NodeNameTrie;
-
-/**
  * A mapping between Node%s and their names. This consists of two mappings, one
- * from Node%s to names (strings), implemented as a string array indexed by
- * NODE_REF%s, and one from names to Node%s, implemented as a trie.
+ * from Node%s to names (strings), and one from names to Node%s.
  *
  * We operate on this structure in two phases. In the insertion phase, Node
  * names are recorded and assigned NODE_REF%s sequentially (a single index is
  * assigned for each unique name). After finalization, no more insertions are
- * allowed, and the data structures are optimized for fast lookups.
-  */
-typedef struct {
+ * allowed, and the client code is allowed to perform look-ups in any
+ * direction.
+ */
+class NodeNameMap {
+private:
     /** Whether this structure has been finalized yet. */
     bool is_final;
-    /** The number of nodes added thus far. */
-    NODE_REF num_nodes;
-    union NODE_TO_NAME_MAPPING {
-	/**
-	 * A FIFO queue of Node names, used during the insertion phase, to
-	 * allow easy addition of new names.
-	 */
-	StringQueue *queue;
-	/**
-	 * An array of Node names indexed by their NODE_REF%s. Constructed
-	 * from NodeNameMap::NODE_TO_NAME_MAPPING::queue, after we are done
-	 * adding Node%s.
-	 */
-	const char **array;
-    } names; /**< The mapping from Node%s to their names. */
+    /** A vector of Node names, indexed by their NODE_REF%s. */
+    std::vector<std::string> vector;
     /** The mapping from names back to Node%s. */
-    NodeNameTrie *trie;
-} NodeNameMap;
+    std::map<std::string, NODE_REF> map;
+public:
+    NodeNameMap();
+    /**
+     * Record a Node of the specified name. Assigns a unique identifier to each
+     * distinct Node name.
+     */
+    void add(const char *name);
+    /**
+     * Signal the end of Node additions.
+     */
+    void finalize();
+    /**
+     * Return the total number of Node%s recorded. Can only be called after the
+     * container has been finalized.
+     */
+    NODE_REF size() const;
+    /**
+     * Get the name of the specified Node. Can only be called after the
+     * container has been finalized.
+     */
+    const std::string& name_of(NODE_REF node) const;
+    /**
+     * Get the Node for the specified name. Can only be called after the
+     * container has been finalized. Expects that the requested name has
+     * previously been recorded.
+     */
+    NODE_REF node_for(const char *name) const;
+};
 
 /* LOGGING FACILITIES ====================================================== */
 
@@ -545,12 +705,38 @@ typedef unsigned long COUNTER;
 void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	      Edge *l_edge, bool l_rev, Edge *r_edge, bool r_rev);
 
-OutEdgeIterator *get_out_edge_iterator(NODE_REF from, EDGE_KIND kind);
-OutEdgeIterator *get_out_edge_iterator_to_target(NODE_REF from, NODE_REF to,
-						 EDGE_KIND kind);
-Edge *next_out_edge(OutEdgeIterator *iter);
-InEdgeIterator *get_in_edge_iterator(NODE_REF to, EDGE_KIND kind);
-Edge *next_in_edge(InEdgeIterator *iter);
+/**
+ * Select from the set of incoming Edge%s to a target Node @a to, those of a
+ * specific @Symbol and @Index.
+ *
+ * @param [in] index The index to look for; ignored if set to @e INDEX_NONE.
+ */
+InEdgeSet::View edges_to(NODE_REF to, EDGE_KIND kind,
+			 INDEX index = INDEX_NONE);
+
+/**
+ * Select from the set of outgoing Edge%s from a source Node @a from, those of
+ * a specific @Symbol and @Index.
+ *
+ * @param [in] index The index to look for; ignored if set to @e INDEX_NONE.
+ */
+OutEdgeSet::View edges_from(NODE_REF from, EDGE_KIND kind,
+			    INDEX index = INDEX_NONE);
+
+/**
+ * Return the set of Edge%s of a specific @Symbol that lie between two
+ * specified endpoints.
+ */
+OutEdgeSet::View edges_between(NODE_REF from, NODE_REF to, EDGE_KIND kind);
+
+/**
+ * Search the graph for an Edge.
+ *
+ * @return The single Edge identified by the provided features, if there exists
+ * one, otherwise @e NULL.
+ */
+Edge *find_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind,
+		INDEX index = INDEX_NONE);
 
 /**
  * Peform a selection on all the columns of a @Relation except @a proj_col, and

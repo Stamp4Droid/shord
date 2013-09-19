@@ -483,10 +483,8 @@ class NormalProduction(util.FinalAttrs):
                 (self.right is None or self.right.symbol.is_terminal()))
 
     def outer_search_direction(self):
-        assert self.left is not None
-        if self.right is None:
-            return 'out'
-        return 'in' if self.left.reversed else 'out'
+        assert self.left is not None and self.right is not None
+        return 'to' if self.left.reversed else 'from'
 
     def outer_search_source(self):
         assert self.left is not None
@@ -500,20 +498,20 @@ class NormalProduction(util.FinalAttrs):
             return 'from' if self.left.reversed else 'to'
         return None
 
-    def outer_condition(self):
+    def outer_search_index(self):
         assert self.left is not None
         if self.relation is not None:
             if self.relation.ref != 0:
                 return None
             indices = (self.result.index, self.left.index, self.right.index)
             if indices == (2,0,1):
-                return 'l->index == (index >> 14)'
+                return 'index >> 14'
             elif indices == (2,1,0):
-                return 'l->index == (index & 0x3fff)'
+                return 'index & 0x3fff'
             elif indices == (0,2,1):
-                return 'index == (l->index >> 14)'
+                return None
             elif indices == (1,2,0):
-                return 'index == (l->index & 0x3fff)'
+                return None
             elif indices == (0,1,2):
                 return None
             elif indices == (1,0,2):
@@ -521,8 +519,28 @@ class NormalProduction(util.FinalAttrs):
             else:
                 assert False
         if self.left.indexed() and self.result.indexed():
-            return 'l->index == index'
+            return 'index'
         return None
+
+    def outer_condition(self):
+        assert self.left is not None
+        if self.relation is None or self.relation.ref != 0:
+            return None
+        indices = (self.result.index, self.left.index, self.right.index)
+        if indices == (2,0,1):
+            return None
+        elif indices == (2,1,0):
+            return None
+        elif indices == (0,2,1):
+            return 'index == (l->index >> 14)'
+        elif indices == (1,2,0):
+            return 'index == (l->index & 0x3fff)'
+        elif indices == (0,1,2):
+            return None
+        elif indices == (1,0,2):
+            return None
+        else:
+            assert False
 
     def inner_search_source(self):
         assert self.left is not None and self.right is not None
@@ -542,6 +560,34 @@ class NormalProduction(util.FinalAttrs):
         else:
             return 'l->to'
 
+    def inner_search_index(self):
+        assert self.left is not None and self.right is not None
+        if self.relation is not None:
+            if self.relation.ref != 0:
+                return None
+            indices = (self.result.index, self.left.index, self.right.index)
+            if indices == (2,0,1):
+                return 'index & 0x3fff'
+            elif indices == (2,1,0):
+                return 'index >> 14'
+            elif indices == (0,2,1):
+                return 'l->index & 0x3fff'
+            elif indices == (1,2,0):
+                return 'l->index >> 14'
+            elif indices == (0,1,2):
+                return None
+            elif indices == (1,0,2):
+                return None
+            else:
+                assert False
+        if not self.right.indexed():
+            return None
+        if self.left.indexed():
+            return 'l->index'
+        else:
+            assert self.result.indexed()
+            return 'index'
+
     def inner_loop_header(self):
         if self.relation is None:
             return None
@@ -560,34 +606,29 @@ class NormalProduction(util.FinalAttrs):
 
     def inner_condition(self):
         assert self.left is not None and self.right is not None
-        if self.relation is not None:
-            if self.relation.ref != 0:
-                return 'i == index'
-            indices = (self.result.index, self.left.index, self.right.index)
-            if indices == (2,0,1):
-                return 'r->index == (index & 0x3fff)'
-            elif indices == (2,1,0):
-                return 'r->index == (index >> 14)'
-            elif indices == (0,2,1):
-                return 'r->index == (l->index & 0x3fff)'
-            elif indices == (1,2,0):
-                return 'r->index == (l->index >> 14)'
-            elif indices == (0,1,2):
-                er_check = 'index == (r->index >> 14)'
-                lr_check = 'l->index == (r->index & 0x3fff)'
-                return er_check + ' && ' + lr_check
-            elif indices == (1,0,2):
-                er_check = 'index == (r->index & 0x3fff)'
-                lr_check = 'l->index == (r->index >> 14)'
-                return er_check + ' && ' + lr_check
-            else:
-                assert False
-        if not self.right.indexed():
+        if self.relation is None:
             return None
-        elif self.left.indexed():
-            return 'l->index == r->index'
-        assert self.result.indexed()
-        return 'r->index == index'
+        if self.relation.ref != 0:
+            return 'i == index'
+        indices = (self.result.index, self.left.index, self.right.index)
+        if indices == (2,0,1):
+            return None
+        elif indices == (2,1,0):
+            return None
+        elif indices == (0,2,1):
+            return None
+        elif indices == (1,2,0):
+            return None
+        elif indices == (0,1,2):
+            er_check = 'index == (r->index >> 14)'
+            lr_check = 'l->index == (r->index & 0x3fff)'
+            return er_check + ' && ' + lr_check
+        elif indices == (1,0,2):
+            er_check = 'index == (r->index & 0x3fff)'
+            lr_check = 'l->index == (r->index >> 14)'
+            return er_check + ' && ' + lr_check
+        else:
+            assert False
 
     def __str__(self):
         rhs = ('-' if self.left is None
@@ -710,11 +751,35 @@ class ReverseProduction(util.FinalAttrs):
         """
         self._check_need_to_search()
         if self.base_pos == Position.FIRST:
-            return 'in' if self.reqd.reversed else 'out'
+            return 'to' if self.reqd.reversed else 'from'
         elif self.base_pos == Position.SECOND:
-            return 'out' if self.reqd.reversed else 'in'
+            return 'from' if self.reqd.reversed else 'to'
         else:
             assert False
+
+    def search_index(self):
+        self._check_need_to_search()
+        if self.relation is not None:
+            if self.relation.ref != 0:
+                return None
+            indices = (self.result.index, self.base.index, self.reqd.index)
+            if indices == (2,0,1):
+                return None
+            elif indices == (2,1,0):
+                return None
+            elif indices == (0,2,1):
+                return 'base->index & 0x3fff'
+            elif indices == (1,2,0):
+                return 'base->index >> 14'
+            elif indices == (0,1,2):
+                return None
+            elif indices == (1,0,2):
+                return None
+            else:
+                assert False
+        if self.base.indexed() and self.reqd.indexed():
+            return 'base->index'
+        return None
 
     def result_source(self):
         """
@@ -841,31 +906,24 @@ class ReverseProduction(util.FinalAttrs):
         """
         Any additional @Index compatibility check we need to perform before we
         record the combination of the Edge%s.
-
-        In our running example, we need to check that they two Edge%s have the
-        same @Index.
         """
-        if self.relation is not None:
-            if self.relation.ref != 0:
-                return None
-            indices = (self.result.index, self.base.index, self.reqd.index)
-            if indices == (2,0,1):
-                return None
-            elif indices == (2,1,0):
-                return None
-            elif indices == (0,2,1):
-                return 'other->index == (base->index & 0x3fff)'
-            elif indices == (1,2,0):
-                return 'other->index == (base->index >> 14)'
-            elif indices == (0,1,2):
-                return 'base->index == (other->index & 0x3fff)'
-            elif indices == (1,0,2):
-                return 'base->index == (other->index >> 14)'
-            else:
-                assert False
-        if self.base.indexed() and self.reqd.indexed():
-            return 'base->index == other->index'
-        return None
+        if self.relation is None or self.relation.ref != 0:
+            return None
+        indices = (self.result.index, self.base.index, self.reqd.index)
+        if indices == (2,0,1):
+            return None
+        elif indices == (2,1,0):
+            return None
+        elif indices == (0,2,1):
+            return None
+        elif indices == (1,2,0):
+            return None
+        elif indices == (0,1,2):
+            return 'base->index == (other->index & 0x3fff)'
+        elif indices == (1,0,2):
+            return 'base->index == (other->index >> 14)'
+        else:
+            assert False
 
     def left_edge(self):
         if self.base is None:
@@ -1283,11 +1341,6 @@ def parse(grammar_in, code_out, terms_out, rels_out):
     pr.write('')
 
     pr.write('void main_loop(Edge *base) {')
-    pr.write('Edge *other;')
-    # TODO: Local iterator variables may go unused: use per-case variables,
-    # enclosed in {} blocks.
-    pr.write('OutEdgeIterator *out_iter;')
-    pr.write('InEdgeIterator *in_iter;')
     # TODO: Could cache base->index
     pr.write('switch (base->kind) {')
     for base_symbol in grammar.symbols:
@@ -1309,19 +1362,19 @@ def parse(grammar_in, code_out, terms_out, rels_out):
             res_src = rp.result_source()
             res_tgt = rp.result_target()
             res_kind = rp.result.symbol.kind
+            res_idx = rp.result_index()
             l_edge = rp.left_edge()
             l_rev = util.to_c_bool(rp.left_reverse())
             r_edge = rp.right_edge()
             r_rev = util.to_c_bool(rp.right_reverse())
-            res_idx = rp.result_index()
             if rp.reqd is not None:
                 search_src = 'base->' + rp.search_source_endp()
                 search_dir = rp.search_direction()
+                search_idx = rp.search_index()
                 reqd_kind = rp.reqd.symbol.kind
-                pr.write('%s_iter = get_%s_edge_iterator(%s, %s);'
-                         % (search_dir, search_dir, search_src, reqd_kind))
-                pr.write('while ((other = next_%s_edge(%s_iter)) != NULL) {'
-                         % (search_dir, search_dir))
+                pr.write('for (Edge *other : edges_%s(%s, %s%s)) {'
+                         % (search_dir, search_src, reqd_kind,
+                            '' if search_idx is None else (', %s' % search_idx)))
                 loop_header = rp.loop_header()
                 if loop_header is not None:
                     pr.write('for (%s) {' % loop_header)
@@ -1376,27 +1429,20 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
         pr.write('NODE_REF to = e->to;')
         pr.write('EDGE_KIND kind = e->kind;')
         pr.write('INDEX index = e->index;')
+        pr.write('Edge *l, *r;')
     else:
         pr.write('bool reachable(NODE_REF from, NODE_REF to, EDGE_KIND kind, '
                  + 'INDEX index) {')
         pr.write('assert(is_parametric(kind) ^ (index == INDEX_NONE));')
-        pr.write('bool reached = false;')
-    pr.write('Edge *l, *r;')
-    # TODO: Local iterator variables may go unused: use per-case variables,
-    # enclosed in {} blocks.
+        pr.write('Edge *r;')
     # TODO: Paths for predicate witness edges are not used during path
     # reconstruction, so we don't have to consider that case when emitting
     # all_derivations.
-    # TODO: We could stop the reachability search at the first hit, without
-    # exhausting the iterators, but we must make sure we deallocate them
-    # correctly.
     # When finding all derivations of an edge, we already know the edge has
     # passed any predicate checks, so we don't need to check those again.
     # Similarly, any rules producing predicate symbols are not allowed to
     # carry predicates themselves, so we don't need to emit predicate checks
     # for those either.
-    pr.write('OutEdgeIterator *l_out_iter, *r_out_iter;')
-    pr.write('InEdgeIterator *l_in_iter;')
     pr.write('switch (kind) {')
     for e_symbol in grammar.symbols:
         pr.write('case %s: /* %s */' % (e_symbol.kind, e_symbol))
@@ -1412,14 +1458,9 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
             continue
         if e_symbol.is_terminal():
             assert not emit_derivs
-            pr.write('l_out_iter = get_out_edge_iterator_to_target(from, to, '
-                     + '%s);' % e_symbol.kind)
-            pr.write('while ((l = next_out_edge(l_out_iter)) != NULL) {')
-            if e_symbol.parametric:
-                pr.write('if (l->index == index) {')
-            pr.write('reached = true;')
-            if e_symbol.parametric:
-                pr.write('}')
+            pr.write('if (find_edge(from, to, %s, index) != NULL) {'
+                     % e_symbol.kind)
+            pr.write('return true;')
             pr.write('}')
             pr.write('break;')
             continue
@@ -1431,22 +1472,23 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
                 if emit_derivs:
                     pr.write('derivs.push_back(derivation_empty());')
                 else:
-                    pr.write('reached = true;')
+                    pr.write('return true;')
                 pr.write('}')
                 continue
             l_rev = util.to_c_bool(p.left.reversed)
-            out_dir = p.outer_search_direction()
             out_src = p.outer_search_source()
             out_tgt = p.outer_search_target()
-            pr.write('l_%s_iter = get_%s_edge_iterator%s(%s%s, %s);'
-                     % (out_dir, out_dir,
-                        '_to_target' if out_tgt is not None else '',
-                        out_src,
-                        (', ' + out_tgt) if out_tgt is not None else '',
-                        p.left.symbol.kind))
-            pr.write('while ((l = next_%s_edge(l_%s_iter)) != NULL) {'
-                     % (out_dir, out_dir))
-            out_cond = p.outer_condition(emit_derivs)
+            out_idx = p.outer_search_index()
+            if out_tgt is None:
+                out_dir = p.outer_search_direction()
+                pr.write('for (Edge *l : edges_%s(%s, %s%s)) {'
+                         % (out_dir, out_src, p.left.symbol.kind,
+                            '' if out_idx is None else (', %s' % out_idx)))
+            else:
+                pr.write('if ((l = find_edge(%s, %s, %s%s)) != NULL) {'
+                         % (out_src, out_tgt, p.left.symbol.kind,
+                            '' if out_idx is None else (', %s' % out_idx)))
+            out_cond = p.outer_condition()
             if out_cond is not None:
                 pr.write('if (%s) {' % out_cond)
             if p.right is None:
@@ -1455,26 +1497,26 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
                     pr.write('derivs.push_back(derivation_single(l, %s));'
                              % l_rev)
                 else:
-                    pr.write('reached = true;')
+                    pr.write('return true;')
             else:
                 # double production
                 r_rev = util.to_c_bool(p.right.reversed)
-                pr.write('r_out_iter = get_out_edge_iterator_to_target' +
-                         ('(%s, %s, %s);' % (p.inner_search_source(),
-                                             p.inner_search_target(),
-                                             p.right.symbol.kind)))
-                pr.write('while ((r = next_out_edge(r_out_iter)) != NULL) {')
+                in_idx = p.inner_search_index()
+                pr.write('if ((r = find_edge(%s, %s, %s%s)) != NULL) {'
+                         % (p.inner_search_source(), p.inner_search_target(),
+                            p.right.symbol.kind,
+                           '' if in_idx is None else (', %s' % in_idx)))
                 in_loop_header = p.inner_loop_header()
                 if in_loop_header is not None:
                     pr.write('for (%s) {' % in_loop_header)
-                in_cond = p.inner_condition(emit_derivs)
+                in_cond = p.inner_condition()
                 if in_cond is not None:
                     pr.write('if (%s) {' % in_cond)
                 if emit_derivs:
                     pr.write('derivs.push_back(derivation_double' +
                              '(l, %s, r, %s));' % (l_rev, r_rev))
                 else:
-                    pr.write('reached = true;')
+                    pr.write('return true;')
                 if in_cond is not None:
                     pr.write('}')
                 if in_loop_header is not None:
@@ -1490,7 +1532,7 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
     if emit_derivs:
         pr.write('return derivs;')
     else:
-        pr.write('return reached;')
+        pr.write('return false;')
     pr.write('}')
     pr.write('')
 

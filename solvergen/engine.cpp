@@ -176,297 +176,76 @@ INDEX index_parse(const char *index_str) {
 
 /* TODO: index_equals */
 
-/**
- * Update the NODE_REF that @a ref_ptr points to, but only if its current value
- * is @e NODE_NONE.
- */
-void node_ref_set_if_none(NODE_REF *ref_ptr, NODE_REF new_value) {
-    if (*ref_ptr == NODE_NONE) {
-	*ref_ptr = new_value;
+/* GENERIC DATA STRUCTURES ================================================= */
+
+template<typename K, typename V>
+typename LightMap<K,V>::Size LightMap<K,V>::index_of(K k) const {
+    Size i;
+    for (i = 0; i < list.size(); i++) {
+	if (list[i].first == k) {
+	    break;
+	}
     }
+    return i;
 }
 
-/* STRING QUEUE HANDLING =================================================== */
+template<typename K, typename V>
+LightMap<K,V>::LightMap() {}
 
-/**
- * Copy @a str into a freshly allocated string. Allocates just enough memory
- * for the copied string.
- */
-char *string_copy(const char *str) {
-    char *copy = STRICT_ALLOC(strlen(str) + 1, char);
-    strcpy(copy, str);
-    return copy;
+template<typename K, typename V>
+bool LightMap<K,V>::contains(K k) const {
+    return index_of(k) < list.size();
 }
 
-/**
- * Initialize an empty StringQueue.
- */
-StringQueue *string_queue_new() {
-    StringQueue *q = STRICT_ALLOC(1, StringQueue);
-    q->length = 0;
-    q->head = NULL;
-    q->tail = NULL;
-    return q;
-}
-
-/**
- * Append a string to the end of the StringQueue. We don't store the input
- * string itself, but rather a fresh copy of it, so the client does not need to
- * worry about keeping that memory live.
- */
-void string_queue_insert(StringQueue *q, const char *str) {
-    StringCell *cell = STRICT_ALLOC(1, StringCell);
-    cell->value = string_copy(str);
-    cell->next = NULL;
-    if (q->tail == NULL) {
-	assert(q->head == NULL);
-	q->head = cell;
-	q->tail = cell;
-    } else {
-	assert(q->tail->next == NULL);
-	q->tail->next = cell;
-	q->tail = cell;
+template<typename K, typename V>
+V& LightMap<K,V>::operator[](K k) {
+    Size i = index_of(k);
+    if (i == list.size()) {
+	list.emplace_back(k, V());
     }
-    (q->length)++;
-}
-
-/**
- * Convert this StringQueue into an array of strings. The order of the strings
- * in the output array is the same as their original order in the queue. The
- * memory for the queue is deallocated, but the string contents are not
- * modified.
- */
-const char **string_queue_to_array(StringQueue *q) {
-    const char **str_arr = STRICT_ALLOC(q->length, const char *);
-    unsigned long next_idx = 0;
-    StringCell *cell = q->head;
-    while (cell != NULL) {
-	str_arr[next_idx++] = cell->value;
-	StringCell *temp = cell;
-	cell = cell->next;
-	free(temp);
-    }
-    free(q);
-    return str_arr;
-}
-
-/* TRIE OPERATIONS ========================================================= */
-
-/* TODO: The trie operations might be simpler if we include \0 as a
-   character. */
-
-/**
- * Allocate space for a new NodeNameTrieCell to hold the specified character.
- * The new cell does not contain a Node value, and is not connected to any
- * other cells.
- */
-NodeNameTrieCell *node_name_trie_cell_alloc(char character) {
-    NodeNameTrieCell *cell = STRICT_ALLOC(1, NodeNameTrieCell);
-    cell->character = character;
-    cell->node = NODE_NONE;
-    cell->first_child = NULL;
-    cell->next_sibling = NULL;
-    return cell;
-}
-
-/**
- * Create an empty name-to-Node trie.
- */
-NodeNameTrie *node_name_trie_new() {
-    NodeNameTrie *trie = STRICT_ALLOC(1, NodeNameTrie);
-    trie->empty_name_node = NODE_NONE;
-    trie->first_child = NULL;
-    return trie;
-}
-
-/**
- * Create a stick (unary trie) that maps @a node to the non-empty string
- * @e name.
- */
-NodeNameTrieCell *node_name_trie_make_stick(const char *name, NODE_REF node) {
-    assert(*name != '\0');
-    assert(node != NODE_NONE);
-    NodeNameTrieCell *stick = NULL;
-    NodeNameTrieCell *parent = NULL;
-    do {
-	NodeNameTrieCell *cell = node_name_trie_cell_alloc(*name);
-	if (stick == NULL) {
-	    stick = cell;
-	}
-	if (parent != NULL) {
-	    parent->first_child = cell;
-	}
-	parent = cell;
-	name++;
-    } while (*name != '\0');
-    parent->node = node;
-    return stick;
-}
-
-/**
- * Record @a new_node in @a trie under string @a name, if @a name is not
- * already associated with a value.
- *
- * @return The final value stored in @a trie under string @a name.
- */
-NODE_REF node_name_trie_set_if_none(NodeNameTrie *trie, const char *name,
-				    NODE_REF new_node) {
-    /* Handle the empty string: no need to traverse the trie. */
-    if (*name == '\0') {
-	node_ref_set_if_none(&(trie->empty_name_node), new_node);
-	return trie->empty_name_node;
-    }
-
-    /* Non-empty string: traverse the trie to find it. */
-    NodeNameTrieCell **parent_ptr = &(trie->first_child);
-    while (true) {
-	NodeNameTrieCell *cell = *parent_ptr;
-	NodeNameTrieCell *prev_sibling = NULL;
-	/* Search all the trie cells on the first level for the one holding the
-	   character at the beginning of the string. Cells on the same level of
-	   the trie are sorted by character, so we stop if we encounter a
-	   lexicographically larger character. */
-	while (cell != NULL && cell->character < *name) {
-	    prev_sibling = cell;
-	    cell = cell->next_sibling;
-	}
-	if (cell != NULL && cell->character == *name) {
-	    /* We stopped because we found the character we were looking for:
-	       proceed to the next character in the string. If we've processed
-	       the whole string, then we're done, otherwise we continue
-	       recursively on the trie rooted under the current cell. */
-	    name++;
-	    if (*name == '\0') {
-		node_ref_set_if_none(&(cell->node), new_node);
-		return cell->node;
-	    }
-	    parent_ptr = &(cell->first_child);
-	    continue;
-	}
-	/* Either we've reached the end of the level without finding our target
-	   character (cell == NULL), or we've encountered a larger character on
-	   the current level (cell->character > *name). Either way, the input
-	   string is not in the trie, and we have to insert it at this
-	   point. */
-	/* Non-existing cells implicitly store NODE_NONE, so we don't have to
-	   actually create a new cell to store the new Node if it's equal to
-	   NODE_NONE. */
-	if (new_node == NODE_NONE) {
-	    return NODE_NONE;
-	}
-	/* Where we connect the new subtree depends on whether we're at the
-	   head of this level (prev_sibling == NULL) or not (prev_sibling
-	   != NULL). In the first case, we set it as the first child of the
-	   previous level cell, otherwise we insert it right after the previous
-	   cell on the same level. */
-	NodeNameTrieCell *stick = node_name_trie_make_stick(name, new_node);
-	stick->next_sibling = cell;
-	if (prev_sibling == NULL) {
-	    *parent_ptr = stick;
-	} else {
-	    prev_sibling->next_sibling = stick;
-	}
-	return new_node;
-    }
-}
-
-/**
- * Add @a node to the @a trie, under string @a name.
- *
- * @return @e true if @a name is now associated with @a node (either because of
- * this operation, or because that was already the case), @e false if there was
- * already some different Node stored under that name.
- */
-bool node_name_trie_add(NodeNameTrie *trie, const char *name, NODE_REF node) {
-    assert(node != NODE_NONE);
-    return node_name_trie_set_if_none(trie, name, node) == node;
-}
-
-/**
- * Return the Node stored in @a trie under string @a name, or @e NODE_NONE if
- * that name is not present in @a trie.
- */
-NODE_REF node_name_trie_find(NodeNameTrie *trie, const char *name) {
-    return node_name_trie_set_if_none(trie, name, NODE_NONE);
+    return list[i].second;
 }
 
 /* NODES HANDLING ========================================================== */
 
-/**
- * Initialize the Node%s-names mapping.
- */
-void nodes_init() {
-    node_names.is_final = false;
-    node_names.num_nodes = 0;
-    node_names.names.queue = string_queue_new();
-    node_names.trie = node_name_trie_new();
-}
+NodeNameMap::NodeNameMap() : is_final(false) {}
 
-/**
- * Record a Node of the specified name. Assigns a unique identifier to each
- * distinct Node name.
- */
-void add_node(const char *name) {
-    assert(!node_names.is_final);
-    if (node_name_trie_add(node_names.trie, name, node_names.num_nodes)) {
-	node_names.num_nodes++;
-	string_queue_insert(node_names.names.queue, name);
+void NodeNameMap::add(const char *name_cstr) {
+    assert(!is_final);
+    std::string name(name_cstr);
+    if (map.insert(std::make_pair(name, vector.size())).second) {
+	vector.push_back(name);
+	// Make sure we haven't overflown NODE_REF.
+	assert(vector.size() < NODE_NONE);
     }
 }
 
-/**
- * Signal the end of Node additions. Now that we know the final number of
- * Node%s, we can finalize the Node-to-name mapping and initialize the input
- * graph.
- */
-void finalize_nodes() {
-    assert(!node_names.is_final);
-    node_names.is_final = true;
-    // Bake the names queue into an array.
-    node_names.names.array = string_queue_to_array(node_names.names.queue);
-    /* Initialize the input graph with the number of nodes we've inserted so
-       far, and the number of kinds as returned by the grammar-generated
-       code. */
-    nodes = STRICT_ALLOC(node_names.num_nodes, Node);
-    for (NODE_REF n = 0; n < node_names.num_nodes; n++) {
-	nodes[n].in = STRICT_ALLOC(num_kinds(), Edge *);
-	nodes[n].out = STRICT_ALLOC(num_kinds(), OutEdgeSet *);
-	for (EDGE_KIND k = 0; k < num_kinds(); k++) {
-	    nodes[n].in[k] = NULL;
-	    nodes[n].out[k] = NULL;
-	}
-    }
+void NodeNameMap::finalize() {
+    assert(!is_final);
+    is_final = true;
+}
+
+NODE_REF NodeNameMap::size() const {
+    assert(is_final);
+    return vector.size();
+}
+
+const std::string& NodeNameMap::name_of(NODE_REF node) const {
+    assert(is_final);
+    return vector.at(node);
+}
+
+NODE_REF NodeNameMap::node_for(const char *name) const {
+    assert(is_final);
+    return map.at(name);
 }
 
 /**
  * Get the number of Node%s in the input graph. Can only be called after the
  * Node%s container has been finalized.
  */
-NODE_REF num_nodes() {
-    assert(node_names.is_final);
-    return node_names.num_nodes;
-}
-
-/**
- * Get the name for the specified Node. Can only be called after the Node%s
- * container has been finalized.
- */
-const char *node2name(NODE_REF node) {
-    assert(node_names.is_final);
-    assert(node < node_names.num_nodes);
-    return node_names.names.array[node];
-}
-
-/**
- * Get the Node for the specified name. Can only be called after the Node%s
- * container has been finalized. Expects that the requested name had previously
- * been recorded.
- */
-NODE_REF name2node(const char *name) {
-    assert(node_names.is_final);
-    NODE_REF node = node_name_trie_find(node_names.trie, name);
-    assert(node != NODE_NONE);
-    return node;
+inline NODE_REF num_nodes() {
+    return node_names.size();
 }
 
 /* RELATION HANDLING ======================================================= */
@@ -541,8 +320,6 @@ Edge *edge_new(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
     e->r_edge = r_edge;
     e->r_rev = r_rev;
 #endif
-    e->in_next = NULL;
-    e->out_next = NULL;
     return e;
 }
 
@@ -554,357 +331,212 @@ bool edge_equals(Edge *a, Edge *b) {
 		      (a->kind == b->kind) && (a->index == b->index));
 }
 
-/* EDGE LIST TABLE OPERATIONS ============================================== */
+/* OUTGOING EDGE SET OPERATIONS ============================================ */
 
-/**
- * Allocate a new array of @a size linked lists of Edge%s. All the linked lists
- * start out empty.
- */
-Edge **out_edge_table_alloc(unsigned int size) {
-    Edge **table = STRICT_ALLOC(size, Edge *);
-    for (unsigned int i = 0; i < size; i++) {
-	table[i] = NULL;
-    }
-    return table;
-}
-
-/**
- * Insert Edge @a e to the linked list at position @a index in @a table. We
- * don't check whether @a index is within bounds, or whether @a e is already
- * present in the list.
- */
-void out_edge_table_add(Edge **table, unsigned int index, Edge *e) {
-    /* TODO: Could keep the overflow lists sorted, to make searching faster. */
-    e->out_next = table[index];
-    table[index] = e;
-}
-
-/**
- * Check if the linked list at position @a index in @a table contains an Edge
- * @a e.
- */
-bool out_edge_table_contains(Edge **table, unsigned int index, Edge *to_find) {
-    for (Edge *e = table[index]; e != NULL; e = e->out_next) {
-	if (edge_equals(e, to_find)) {
-	    return true;
+using OutIter = OutEdgeSet::Iterator;
+void OutIter::advance_iter() {
+    for (; iter != past_last; ++iter) {
+	if (index == INDEX_NONE || (*iter).second->index == index) {
+	    break;
 	}
     }
-    return false;
 }
 
-/**
- * Calculate the bucket in a @a num_buckets-wide OutEdgeSet where we should
- * insert an Edge with target Node @a key.
- */
-unsigned int out_edge_set_get_bucket(NODE_REF key, unsigned int num_buckets) {
-    /* TODO: We don't use any smart hash function, instead we use the NODE_REF
-       value itself (which is already an integer) to pick a bucket. */
-    /* Equivalent to key % num_buckets
-       The size of the hashtable is always a power of 2, so we can use bit
-       masking instead of modulus operations. */
-    return key & (num_buckets - 1);
+OutIter::Iterator(OutEdgeSet *set, INDEX index, TableIterator iter,
+		  TableIterator past_last)
+    : set(set), index(index), iter(iter), past_last(past_last) {
+    set->live_iters++;
+    advance_iter();
 }
 
-/* OUTGOING EDGE ITERATOR HANDLING ========================================= */
+OutIter::Iterator(OutIter&& other)
+    : OutIter(other.set, other.index, other.iter, other.past_last) {}
 
-/**
- * Create an OutEdgeIterator with the given attributes.
- */
-OutEdgeIterator* out_edge_iterator_alloc(OutEdgeSet *set, NODE_REF tgt_node) {
-    OutEdgeIterator *iter = STRICT_ALLOC(1, OutEdgeIterator);
-    unsigned int bucket = (tgt_node == NODE_NONE) ? 0
-	: out_edge_set_get_bucket(tgt_node, set->num_buckets);
-    iter->set = set;
-    iter->bucket = bucket;
-    iter->tgt_node = tgt_node;
-    iter->list_ptr = set->table[bucket];
-    (set->live_iters)++;
-    return iter;
+OutIter::~Iterator() {
+    set->live_iters--;
 }
 
-/**
- * Free @e iter, and update the live iterator count on @a iter<!-- -->'s
- * OutEdgeIterator::set. This function should not be used directly by client
- * code.
- */
-void out_edge_iterator_free(OutEdgeIterator *iter) {
-    OutEdgeSet *set = iter->set;
-    assert(set->live_iters > 0);
-    (set->live_iters)--;
-    free(iter);
+Edge *OutIter::operator*() const {
+    return (*iter).second;
 }
 
-/**
- * Return an iterator over the entire set of outgoing Edge%s of @Kind @a kind,
- * for source Node @a from. Use next_out_edge() to advance the iterator.
- */
-OutEdgeIterator *get_out_edge_iterator(NODE_REF from, EDGE_KIND kind) {
-    assert(!is_predicate(kind));
-    OutEdgeSet *set = nodes[from].out[kind];
-    if (set == NULL) {
-	return NULL;
-    }
-    return out_edge_iterator_alloc(set, NODE_NONE);
+OutIter& OutIter::operator++() {
+    ++iter;
+    advance_iter();
+    return *this;
 }
 
-/**
- * Return an iterator over the set of Edge%s of @Kind @a kind originating from
- * Node @a from and targeting Node @a to. Use next_out_edge() to advance the
- * iterator.
- */
-OutEdgeIterator *get_out_edge_iterator_to_target(NODE_REF from, NODE_REF to,
-						 EDGE_KIND kind) {
-    assert(!is_predicate(kind));
-    OutEdgeSet *set = nodes[from].out[kind];
-    if (set == NULL) {
-	return NULL;
-    }
-    return out_edge_iterator_alloc(set, to);
+bool OutIter::operator==(const OutIter& other) const {
+    return (set == other.set && index == other.index && iter == other.iter &&
+	    past_last == other.past_last);
 }
 
-/**
- * Check whether an OutEdgeSet currently has one or more live OutEdgeIterator%s
- * on it.
- */
-constexpr bool has_live_iterator(OutEdgeSet *set) {
-    return set->live_iters > 0;
+bool OutIter::operator!=(const OutIter& other) const {
+    return !(*this == other);
 }
 
-/**
- * Advance @a iter to the first Edge residing at or after @a bucket in
- * @a iter's OutEdgeIterator::set. If no such Edge exists, @a iter is
- * deallocated (and thus should not be reused). Only applies for unconstrained
- * OutEdgeIterator%s.
- *
- * @return The Edge at @e iter<!-- -->'s new position, or @e NULL if there are
- * no such Edge%s, in which case @a iter is now invalid.
- */
-Edge *out_edge_iterator_advance_bucket(OutEdgeIterator *iter) {
-    assert(iter->tgt_node == NODE_NONE);
-    const OutEdgeSet *set = iter->set;
-    unsigned int bucket = iter->bucket + 1;
-    assert(bucket <= set->num_buckets);
-    for (; bucket < set->num_buckets; bucket++) {
-	Edge *e = set->table[bucket];
-	if (e != NULL) {
-	    iter->bucket = bucket;
-	    iter->list_ptr = e->out_next;
-	    return e;
+OutEdgeSet::View::View(OutEdgeSet *set, NODE_REF to, INDEX index)
+    : set(set), index(index),
+      first(to == NODE_NONE ? set->table.cbegin() :
+	    set->table.equal_range(to).first),
+      past_last(to == NODE_NONE ? set->table.cend() :
+		set->table.equal_range(to).second) {}
+
+OutIter OutEdgeSet::View::begin() const {
+    return OutIter(set, index, first, past_last);
+}
+
+OutIter OutEdgeSet::View::end() const {
+    return OutIter(set, index, past_last, past_last);
+}
+
+OutEdgeSet::OutEdgeSet() : live_iters(0) {}
+
+void OutEdgeSet::add(Edge *e) {
+    assert(live_iters == 0);
+    table.insert(std::make_pair(e->to, e));
+}
+
+OutEdgeSet::View OutEdgeSet::view(NODE_REF to, INDEX index) {
+    return View(this, to, index);
+}
+
+/* INCOMING EDGE SET OPERATIONS ============================================ */
+
+using InIter = InEdgeSet::Iterator;
+
+void InIter::advance_iter() {
+    for (; iter != set->edges.cend(); ++iter) {
+	if (index == INDEX_NONE || (*iter)->index == index) {
+	    break;
 	}
     }
-    // We've reached the end of the table without finding a non-empty bucket.
-    out_edge_iterator_free(iter);
-    return NULL;
 }
 
-/**
- * Advance @a iter to the next outgoing Edge in the iterated Node. If no such
- * Edge exists, @a iter is deallocated (and thus should not be reused).
- *
- * @return The Edge at @e iter<!-- -->'s new position, or @e NULL if there are
- * no such Edge%s, in which case @a iter is now invalid.
- */
-Edge *next_out_edge(OutEdgeIterator *iter) {
-    if (iter == NULL) {
-	// The iterator returned for an empty set is NULL.
-	return NULL;
-    }
-
-    const NODE_REF tgt_node = iter->tgt_node;
-    const bool constrained = (tgt_node != NODE_NONE);
-    Edge *e = iter->list_ptr;
-    // If the iterator is constrained to a specific target node, iterate until
-    // the end of the bucket, or the first instance of an Edge with the desired
-    // target.
-    while (constrained && e != NULL && e->to != tgt_node) {
-	e = e->out_next;
-    }
-
-    if (e == NULL) {
-	// We've reached the end of the current overflow list without finding
-	// an acceptable Edge.
-	if (constrained) {
-	    // We don't need to search any other bucket (the current bucket is
-	    // the only one that contains Edges to that target), so we
-	    // immediatelly invalidate the iterator.
-	    out_edge_iterator_free(iter);
-	    return NULL;
-	}
-	// Continue searching on the following buckets.
-	return out_edge_iterator_advance_bucket(iter);
-    }
-
-    // We are currently on an acceptable Edge, return it and move the iterator
-    // to the next Edge.
-    iter->list_ptr = e->out_next;
-    return e;
+InIter::Iterator(InEdgeSet *set, INDEX index, bool at_end)
+    : set(set), index(index),
+      iter(at_end ? set->edges.cend() : set->edges.cbegin()) {
+    set->live_iters++;
+    advance_iter();
 }
 
-
-/* INCOMING EDGE ITERATOR HANDLING ========================================= */
-
-/**
- * Allocate space for a new InEdgeIterator. The iterator is returned in an
- * invalid state, therefore this function should not be used directly by client
- * code.
- */
-InEdgeIterator *in_edge_iterator_alloc() {
-    InEdgeIterator *iter = STRICT_ALLOC(1, InEdgeIterator);
-    iter->curr_edge = NULL;
-    return iter;
+InIter::Iterator(InIter&& other) : InIter(other.set, other.index, true) {
+    std::swap(iter, other.iter);
 }
 
-/**
- * Free the memory used by @a iter.  This function should not be used directly
- * by client code.
- */
-void in_edge_iterator_free(InEdgeIterator *iter) {
-    free(iter);
+InIter::~Iterator() {
+    set->live_iters--;
 }
 
-/**
- * Return an iterator over the set of incoming Edge%s of @Kind @a kind, for
- * target Node @a to. Use next_in_edge() to advance the iterator.
- */
-InEdgeIterator *get_in_edge_iterator(NODE_REF to, EDGE_KIND kind) {
-    assert(!is_predicate(kind));
-    InEdgeIterator *iter = in_edge_iterator_alloc();
-    iter->curr_edge = nodes[to].in[kind];
-    return iter;
+Edge *InIter::operator*() const {
+    return *iter;
 }
 
-/**
- * Advance @a iter to the next incoming Edge on the iterated Node. If no such
- * Edge exists, @a iter is deallocated (and thus should not be reused).
- *
- * @return The Edge at @e iter<!-- -->'s previous position, or @e NULL if
- * @e iter has reached the end of the linked list, in which case @a iter is now
- * invalid.
- */
-Edge *next_in_edge(InEdgeIterator *iter) {
-    Edge *e = iter->curr_edge;
-    if (e == NULL) {
-	in_edge_iterator_free(iter);
-    } else {
-	// The incoming Edge%s are stored in linked lists, so we simply move
-	// forward in the list.
-	iter->curr_edge = e->in_next;
-    }
-    return e;
+InIter& InIter::operator++() {
+    ++iter;
+    advance_iter();
+    return *this;
 }
 
-/* EDGE SET OPERATIONS ===================================================== */
-
-/**
- * Allocate an empty OutEdgeSet with @ref OUT_EDGE_SET_INIT_NUM_BUCKETS
- * buckets.
- */
-OutEdgeSet *out_edge_set_new() {
-    OutEdgeSet *set = STRICT_ALLOC(1, OutEdgeSet);
-    set->size = 0;
-    set->num_buckets = OUT_EDGE_SET_INIT_NUM_BUCKETS;
-    set->live_iters = 0;
-    set->table = out_edge_table_alloc(set->num_buckets);
-    return set;
+bool InIter::operator==(const InIter& other) const {
+    return set == other.set && index == other.index && iter == other.iter;
 }
 
-/**
- * Double the number of buckets in @a set and rehash all elements.
- *
- * Can't be called while there exists a live iterator over @a set.
- */
-void out_edge_set_grow(OutEdgeSet *set) {
-    assert(!has_live_iterator(set));
-    /* Equivalent to new_num_buckets = set->num_buckets * 2
-       The size of the hashtable is always a power of 2, so we can use left
-       shift instead of multiplication. */
-    unsigned int new_num_buckets = set->num_buckets << 1;
-    Edge **new_table = out_edge_table_alloc(new_num_buckets);
-    OutEdgeIterator *iter = out_edge_iterator_alloc(set, NODE_NONE);
-    Edge *e;
-    while ((e = next_out_edge(iter)) != NULL) {
-	// CAUTION: The pointer to the next element in the overflow list,
-	// 'out_next', is part of the Edge struct, so when we transfer an Edge
-	// to a new table, we invalidate the structure of the old one. This
-	// code relies on the behavior OutEdgeIterator: the only way to get to
-	// the next Edge is to advance the iterator past that Edge.
-	unsigned int new_bucket =
-	    out_edge_set_get_bucket(e->to, new_num_buckets);
-	out_edge_table_add(new_table, new_bucket, e);
-    }
-    free(set->table);
-    set->num_buckets = new_num_buckets;
-    set->table = new_table;
+bool InIter::operator!=(const InIter& other) const {
+    return !(*this == other);
 }
 
-/**
- * Add Edge @a e to @a set, expanding the table if its load factor exceeds
- * @ref OUT_EDGE_SET_MAX_LOAD_FACTOR.
- *
- * We don't check whether @a e is already present in @a set. This function
- * can't be called while there exists a live iterator over @a set.
- */
-void out_edge_set_add(OutEdgeSet *set, Edge *e) {
-    assert(!has_live_iterator(set));
-    (set->size)++;
-    float load_factor = (float) set->size / (float) set->num_buckets;
-    if (load_factor > OUT_EDGE_SET_MAX_LOAD_FACTOR) {
-	out_edge_set_grow(set);
-    }
-    unsigned int bucket = out_edge_set_get_bucket(e->to, set->num_buckets);
-    out_edge_table_add(set->table, bucket, e);
+InEdgeSet::View::View(InEdgeSet *set, INDEX index) : set(set), index(index) {}
+
+InIter InEdgeSet::View::begin() const {
+    return InIter(set, index, false);
 }
 
-/**
- * Check if an Edge is present in the @a set.
- */
-bool out_edge_set_contains(OutEdgeSet *set, Edge *e) {
-    unsigned int bucket = out_edge_set_get_bucket(e->to, set->num_buckets);
-    return out_edge_table_contains(set->table, bucket, e);
+InIter InEdgeSet::View::end() const {
+    return InIter(set, index, true);
+}
+
+InEdgeSet::InEdgeSet() : live_iters(0) {}
+
+void InEdgeSet::add(Edge *e) {
+    assert(live_iters == 0);
+    edges.push_back(e);
+}
+
+InEdgeSet::View InEdgeSet::view(INDEX index) {
+    return View(this, index);
 }
 
 /* GRAPH HANDLING ========================================================== */
 
 /**
- * Check if an Edge is present in the graph.
+ * Locate the appropriate InEdgeSet, if such a set has been allocated.
+ * Otherwise, return a reference to a dummy empty InEdgeSet.
  */
-bool graph_contains(Edge *e) {
-    /* We search on the set of outgoing edges of the source node. */
-    OutEdgeSet *set = nodes[e->from].out[e->kind];
-    if (set == NULL) {
-	return false;
+InEdgeSet& get_in_set(NODE_REF to, EDGE_KIND kind) {
+    // HACK: A dummy empty InEdgeSet, used to provide a zero-length iterator
+    // without breaking the View interface.
+    static InEdgeSet empty_in_set;
+    if (nodes[to].in.contains(kind)) {
+	return nodes[to].in[kind];
     }
-    return out_edge_set_contains(set, e);
+    return empty_in_set;
 }
 
 /**
- * Add an Edge to the graph.
- *
- * Assumes that an equivalent Edge is not already present in the graph.
+ * Locate the appropriate OutEdgeSet, if such a set has been allocated.
+ * Otherwise, return a reference to a dummy empty OutEdgeSet.
  */
-void graph_add(Edge *e) {
-    e->in_next = nodes[e->to].in[e->kind];
-    nodes[e->to].in[e->kind] = e;
-    OutEdgeSet *set = nodes[e->from].out[e->kind];
-    if (set == NULL) {
-	set = out_edge_set_new();
-	nodes[e->from].out[e->kind] = set;
+OutEdgeSet& get_out_set(NODE_REF from, EDGE_KIND kind) {
+    // HACK: A dummy empty OutEdgeSet, used to provide a zero-length iterator
+    // without breaking the View interface.
+    static OutEdgeSet empty_out_set;
+    if (nodes[from].out.contains(kind)) {
+	return nodes[from].out[kind];
     }
-    out_edge_set_add(set, e);
+    return empty_out_set;
 }
 
-/**
- * Add a new Edge to the graph, unless it's already present.
- */
+InEdgeSet::View edges_to(NODE_REF to, EDGE_KIND kind, INDEX index) {
+    assert(!is_predicate(kind));
+    assert(index == INDEX_NONE || is_parametric(kind));
+    return get_in_set(to, kind).view(index);
+}
+
+OutEdgeSet::View edges_from(NODE_REF from, EDGE_KIND kind, INDEX index) {
+    assert(!is_predicate(kind));
+    assert(index == INDEX_NONE || is_parametric(kind));
+    return get_out_set(from, kind).view(NODE_NONE, index);
+}
+
+OutEdgeSet::View edges_between(NODE_REF from, NODE_REF to, EDGE_KIND kind) {
+    assert(!is_predicate(kind));
+    return get_out_set(from, kind).view(to, INDEX_NONE);
+}
+
+Edge *find_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index) {
+    assert(!is_predicate(kind));
+    assert((index == INDEX_NONE) ^ is_parametric(kind));
+    // We search on the set of outgoing edges of the source node, because it's
+    // indexed on more dimensions.
+    for (Edge *e : get_out_set(from, kind).view(to, index)) {
+	// We stop at the first compatible Edge; the view can only contain one
+	// such element anyway.
+	// TODO: Could verify this, but we'd be performing useless work.
+	return e;
+    }
+    return NULL;
+}
+
 void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	      Edge *l_edge, bool l_rev, Edge *r_edge, bool r_rev) {
-    Edge *e = edge_new(from, to, kind, index, l_edge, l_rev, r_edge, r_rev);
-    if (graph_contains(e)) {
-	free(e);
-    } else {
-	graph_add(e);
-	worklist.push_back(e);
+    if (find_edge(from, to, kind, index) != NULL) {
+	return;
     }
+    Edge *e = edge_new(from, to, kind, index, l_edge, l_rev, r_edge, r_rev);
+    nodes[e->to].in[e->kind].add(e);
+    nodes[e->from].out[e->kind].add(e);
+    worklist.push_back(e);
 }
 
 /* INPUT & OUTPUT ========================================================== */
@@ -1018,12 +650,12 @@ void parse_input_files(ParsingMode mode) {
 	    NODE_REF src_node, tgt_node;
 	    switch (mode) {
 	    case ParsingMode::RECORD_NODES:
-		add_node(src_buf);
-		add_node(tgt_buf);
+		node_names.add(src_buf);
+		node_names.add(tgt_buf);
 		break;
 	    case ParsingMode::RECORD_EDGES:
-		src_node = name2node(src_buf);
-		tgt_node = name2node(tgt_buf);
+		src_node = node_names.node_for(src_buf);
+		tgt_node = node_names.node_for(tgt_buf);
 		if (parametric) {
 		    INDEX index = index_parse(idx_buf);
 		    if (index == INDEX_NONE) {
@@ -1105,13 +737,11 @@ void print_results() {
 	    SYS_ERR("Can't open output file: ", fname);
 	}
 	for (NODE_REF n = 0; n < num_nodes(); n++) {
-	    const char *src_name = node2name(n);
+	    const char *src_name = node_names.name_of(n).c_str();
 	    /* TODO: Iterate over in_edges, so we avoid paying the overhead of
 	       traversing the out_edges hashtable. */
-	    OutEdgeIterator *iter = get_out_edge_iterator(n, k);
-	    Edge *e;
-	    while ((e = next_out_edge(iter)) != NULL) {
-		const char *tgt_name = node2name(e->to);
+	    for (Edge *e : edges_from(n, k)) {
+		const char *tgt_name = node_names.name_of(e->to).c_str();
 		if (parametric) {
 		    char idx_buf[32];
 		    /* TODO: Check that printing is successful. */
@@ -1134,7 +764,7 @@ void print_results() {
 	SYS_ERR("Can't open output file: ", fname);
     }
     for (NODE_REF n = 0; n < num_nodes(); n++) {
-	fprintf(f, "%s\n", node2name(n));
+	fprintf(f, "%s\n", node_names.name_of(n).c_str());
     }
     fclose(f);
 }
@@ -1535,7 +1165,8 @@ void print_step_open(Edge *edge, bool reverse, FILE *f) {
 		kind2symbol(edge->kind));
     }
     fprintf(f, " reverse='%s' from='%s' to='%s'", reverse ? "true" : "false",
-	    node2name(edge->from), node2name(edge->to));
+	    node_names.name_of(edge->from).c_str(),
+	    node_names.name_of(edge->to).c_str());
     if (is_parametric(edge->kind)) {
 	char idx_buf[32];
 	// TODO: Check that printing is successful.
@@ -1637,11 +1268,9 @@ void print_paths_for_kind(EDGE_KIND k, unsigned int num_paths) {
     fprintf(f, "<paths>\n");
 
     for (NODE_REF n = 0; n < num_nodes(); n++) {
-	const char *tgt_name = node2name(n);
-	InEdgeIterator *iter = get_in_edge_iterator(n, k);
-	Edge *e;
-	while ((e = next_in_edge(iter)) != NULL) {
-	    const char *src_name = node2name(e->from);
+	const char *tgt_name = node_names.name_of(n).c_str();
+	for (Edge *e : edges_to(n, k)) {
+	    const char *src_name = node_names.name_of(e->from).c_str();
 	    // TODO: Quote input strings before printing to XML.
 	    fprintf(f, "<edge from='%s' to='%s'>\n", src_name, tgt_name);
 #ifdef PATH_RECORDING
@@ -1708,10 +1337,8 @@ void print_edge_counts(bool terminal) {
 	DECL_COUNTER(edge_count, 0);
 	DECL_COUNTER(index_count, 0);
 	for (NODE_REF n = 0; n < num_nodes(); n++) {
-	    InEdgeIterator *iter = get_in_edge_iterator(n, k);
 	    std::set<NODE_REF> sources;
-	    Edge *e;
-	    while ((e = next_in_edge(iter)) != NULL) {
+	    for (Edge *e : edges_to(n, k)) {
 		if (sources.insert(e->from).second) {
 		    edge_count++;
 		    total_edge_count++;
@@ -1837,9 +1464,9 @@ int main() {
     LOGGING_INIT();
 
     DECL_COUNTER(loading_start, CURRENT_TIME());
-    nodes_init();
     parse_input_files(ParsingMode::RECORD_NODES);
-    finalize_nodes();
+    node_names.finalize();
+    nodes = new Node[num_nodes()];
     LOG("Nodes: ", num_nodes());
     parse_input_files(ParsingMode::RECORD_EDGES);
     rels_init();
