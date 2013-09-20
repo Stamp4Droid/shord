@@ -8,10 +8,12 @@ import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import stamp.analyses.DomL;
 import stamp.analyses.JCFLSolverAnalysis;
+import stamp.srcmap.SourceInfo;
 import shord.analyses.Ctxt;
 import shord.program.Program;
 
 import soot.Unit;
+import soot.jimple.Stmt;
 
 import chord.bddbddb.Rel.RelView;
 import chord.util.tuple.object.Trio;
@@ -70,7 +72,15 @@ public class SrcSinkFlow extends XMLReport {
 
         StringBuilder builder = new StringBuilder();
         for(Unit unit : sourceCtxt.getElems()) {
-            builder.append(Program.unitToString(unit)).append(',');
+        	Stmt stmt = (Stmt)unit;
+        	String invkExpr = SourceInfo.srcInvkExprFor(stmt);
+        	if(invkExpr != null) {
+        		invkExpr = SourceInfo.javaLocStr(stmt) + " " + invkExpr;
+        	} else {
+        		invkExpr = SourceInfo.javaLocStr(stmt);
+        	}
+
+            builder.append(invkExpr).append('~').append(Program.unitToString(unit)).append(',');
         }
         srcTuple.addValue(builder.toString());
 
@@ -79,8 +89,17 @@ public class SrcSinkFlow extends XMLReport {
 
         builder = new StringBuilder();
         for(Unit unit : sinkCtxt.getElems()) {
-            builder.append(Program.unitToString(unit)).append(',');
+        	Stmt stmt = (Stmt)unit;
+        	String invkExpr = SourceInfo.srcInvkExprFor(stmt);
+        	if(invkExpr != null) {
+        		invkExpr = SourceInfo.javaLocStr(stmt) + " " + invkExpr;
+        	} else {
+        		invkExpr = SourceInfo.javaLocStr(stmt);
+        	}
+
+            builder.append(invkExpr).append('~').append(Program.unitToString(unit)).append(',');
         }
+
         sinkTuple.addValue(builder.toString());
 	}
 

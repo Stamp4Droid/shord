@@ -608,7 +608,7 @@
                             return;
                         }
                         var reSplit = /(.+),(.+)/;
-                        var reEntry = /.*<.* (\S+ .*)>.*<.* (\S+ .*)>.*/;
+                        var reEntry = /(.*)~.*<.* (\S+ .*)>.*<.* (\S+ .*)>.*/;
                         var source = htmlDecode(clines[0].name);
                         var sink = htmlDecode(clines[1].name);
 
@@ -660,7 +660,7 @@
                         $selected.css('color', 'rgb(180, 180, 180)');
                         flowSwitches[num-1] = false;
                         $('#srcsinkflowhelp').empty();
-                        $('#srcsinkflowhelp').append('Not highlighting taint from Flow '+num);
+                        $('#srcsinkflowhelp').append('Not hightlighted taint from Flow '+num);
                     }
 
                     var $activeCodeTabs = $('li.active a');
@@ -687,7 +687,7 @@
                                         $('#centerpane #flowctxttable').remove();
                                     }
 
-                                    var table = ['<table class="table" id="flowctxttable">',
+                                    var table = ['<table class="table table-condensed" id="flowctxttable" style="font-size: small">',
                                                     '<thead>',
                                                          '<th>Source</th>',
                                                          '<th>Sink</th>',   
