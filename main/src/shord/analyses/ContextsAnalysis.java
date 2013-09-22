@@ -42,7 +42,7 @@ public class ContextsAnalysis extends JavaAnalysis
     private static final Set<Ctxt> emptyCtxtSet = Collections.emptySet();
     private static final Set<SootMethod> emptyMethSet = Collections.emptySet();
 
-	public static int K = 3;
+	public static int K = 2;
 
     private Set<Ctxt>[] methToCtxts;
     private TIntArrayList[] methToClrSites;

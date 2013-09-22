@@ -461,7 +461,7 @@ public class PAGBuilder extends JavaAnalysis
 
 		MethodPAGBuilder(SootMethod method, boolean stub)
 		{
-			System.out.println("XY "+method+" "+stub);
+			//System.out.println("XY "+method+" "+stub);
 			this.method = method;
 			this.isStub = stub;
 		}
@@ -553,7 +553,7 @@ public class PAGBuilder extends JavaAnalysis
 						StubAllocNode n = new StubAllocNode(st.getType(), method);
 						domH.add(n);
 						stubSet.add(n);
-						System.out.println("OO "+method+" "+n);
+						//System.out.println("OO "+method+" "+n);
 					}
 				}
 				return;
@@ -649,7 +649,7 @@ public class PAGBuilder extends JavaAnalysis
 				return;
 			
 			Collection allocNodes = isStub ? stubSet : unit2Node.values();
-			System.out.println("PP "+method+" "+allocNodes.size());
+			//System.out.println("PP "+method+" "+allocNodes.size());
 			for(Object o : allocNodes){
 				AllocNode an = (AllocNode) o;
 				Type type = an.getType();
@@ -921,7 +921,7 @@ public class PAGBuilder extends JavaAnalysis
 			growZIfNeeded(m.getParameterCount());
 			if(isStub(m)){
 				stubMethods.add(m);
-				System.out.println("stubZZ: "+ m + " "+stubMethods.contains(m));
+				//System.out.println("stubZZ: "+ m + " "+stubMethods.contains(m));
 			}
 			domM.add(m);
 		}
