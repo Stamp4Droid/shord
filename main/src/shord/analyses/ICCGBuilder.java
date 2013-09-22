@@ -124,8 +124,26 @@ for(SootMethod method : methodsCopy)
 	if(!method.isConcrete())
 		return;
 
-	if(components.get(this.klass.getName()) != null) 
-		relMC.add(method, this.klass.getType());
+	if(components.get(this.klass.getName()) != null) {
+		String[] str = { "void onPostResume()",
+				"java.lang.CharSequence onCreateDescription()",
+				"void onRestoreInstanceState(android.os.Bundle)",
+				"void onPostCreate(android.os.Bundle)",
+				"void onStart()",
+				"void onCreate(android.os.Bundle)",
+				"void onUserLeaveHint()",
+				"void onResume()",
+				"void onStop()",
+				"void onPause()",
+				"void onRestart()",
+				"boolean onCreateThumbnail(android.graphics.Bitmap,android.graphics.Canvas)",
+				"void onNewIntent(android.content.Intent)",
+				"void onDestroy()",
+				"void onSaveInstanceState(android.os.Bundle)"};
+		List<String> circleList = Arrays.asList(str);
+		if(circleList.contains(method.getSubSignature()))
+			relMC.add(method, this.klass.getType());
+	}
 
     }
 

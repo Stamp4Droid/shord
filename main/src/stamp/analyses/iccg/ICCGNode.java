@@ -98,16 +98,9 @@ public class ICCGNode
         keys = name;
     }
 
-   /* public String toString() {
-        return comptName + "(" + "action:" + action + "category:" 
-              + category + "type:" + type + "keys:" + keys + ")";
-    }*/
-
-     public String toString() {
+    public String toString() {
         String str = comptName;
         if("unknown".equals(comptName) || "targetNotFound".equals(comptName)) return comptName;
-
-        System.out.println("nodepermission: " + comptName + permission);
 
         if (str.contains("$"))
             str = str.substring(0, str.indexOf("$"));
@@ -117,12 +110,9 @@ public class ICCGNode
         if(str.contains("."))
             str= str.substring(str.lastIndexOf(".")+1,str.length());
 
-        if(type.equals("receiver") && !"".equals(intentFilter))
+        if( intentFilter!=null && type.equals("receiver") && !"".equals(intentFilter))
             return str + "_" + intentFilter.replaceAll("\\.","") +"_" + type; 
 
-        //return comptName; 
-        //System.out.println("supername: " + str + "(" + type + ")"); 
-        //return str + "(" + type + ")"; 
         return str + "_" + type; 
     }
 

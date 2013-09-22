@@ -112,9 +112,9 @@ public class PostIccgBuilder extends JavaAnalysis
 			} else if("activity".equals(val.getType())) {
 				iNode.setShape("ellipse");
 			} else if("service".equals(val.getType())) {
-				iNode.setShape("circle");
+				iNode.setShape("box");
 			} else if("receiver".equals(val.getType())) {
-				iNode.setShape("triangle");
+				iNode.setShape("box");
 			}
 			iccg.addNode(iNode);
 		}
@@ -565,10 +565,10 @@ public class PostIccgBuilder extends JavaAnalysis
 
 	public void run()
 	{
-		Program program = Program.g();
+		//Program program = Program.g();
 		parsePermission();
-		program.buildCallGraph();
-		fh = Program.g().scene().getOrMakeFastHierarchy();
+		//program.buildCallGraph();
+		//fh = Program.g().scene().getOrMakeFastHierarchy();
 		NumberedSet fklasses = frameworkClasses();
 		openRels();
 		for(SootClass klass: Program.g().getClasses()){
@@ -578,7 +578,7 @@ public class PostIccgBuilder extends JavaAnalysis
 
 		//output dotty.
 		System.out.println(iccg.getSignature());
-		fh = null;
+		//fh = null;
 
 	}
 

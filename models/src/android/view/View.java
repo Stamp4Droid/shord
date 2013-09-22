@@ -30,61 +30,68 @@ class View
 
     public  void setOnFocusChangeListener(final android.view.View.OnFocusChangeListener l) 
 	{ 
-		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
+		l.onFocusChange(View.this, false);
+		/*edu.stanford.stamp.harness.ApplicationDriver.getInstance().
 			registerCallback(new edu.stanford.stamp.harness.Callback(){
 					public void run() {
 						l.onFocusChange(View.this, false);
 					}
-				});
+				});*/
 	}
 	
     // Callback classes and callback setter methods                                                                                                                            
     public  void setOnClickListener(final android.view.View.OnClickListener l) 
     { 
-        edu.stanford.stamp.harness.ApplicationDriver.getInstance().
-			registerCallback(new edu.stanford.stamp.harness.Callback(){
+	l.onClick(View.this);
+
+        /*edu.stanford.stamp.harness.applicationdriver.getinstance().
+			registercallback(new edu.stanford.stamp.harness.callback(){
 					public void run() {
-						l.onClick(View.this);
+						l.onclick(view.this);
 					}
-				});
+				});*/
     }
 	
     public  void setOnLongClickListener(final android.view.View.OnLongClickListener l) 
     { 
-		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
+		l.onLongClick(View.this);
+		/*edu.stanford.stamp.harness.ApplicationDriver.getInstance().
 			registerCallback(new edu.stanford.stamp.harness.Callback(){
 					public void run() {
 						l.onLongClick(View.this);
 					}
-				});
+				});*/
     }
 	
     public  void setOnCreateContextMenuListener(final android.view.View.OnCreateContextMenuListener l) 
 	{ 
-		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
+		l.onCreateContextMenu(null, View.this, null);
+		/*edu.stanford.stamp.harness.ApplicationDriver.getInstance().
 			registerCallback(new edu.stanford.stamp.harness.Callback(){
 					public void run() {
 						l.onCreateContextMenu(null, View.this, null);
 					}
-				});
+				});*/
 	}
 
     public  void setOnKeyListener(final android.view.View.OnKeyListener l) 
 	{ 
-		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
+		l.onKey(View.this, 0, null);
+		/*edu.stanford.stamp.harness.ApplicationDriver.getInstance().
 			registerCallback(new edu.stanford.stamp.harness.Callback(){
 					public void run() {
 						l.onKey(View.this, 0, null);
 					}
-				});
+				});*/
 	}
     public  void setOnTouchListener(final android.view.View.OnTouchListener l) 
 	{ 
-		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
+		l.onTouch(View.this, null);
+		/*edu.stanford.stamp.harness.ApplicationDriver.getInstance().
 			registerCallback(new edu.stanford.stamp.harness.Callback(){
 					public void run() {
 						l.onTouch(View.this, null);
 					}
-				});
+				});*/
 	}
 }

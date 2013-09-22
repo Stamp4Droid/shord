@@ -21,13 +21,14 @@ public class ICCG
     }
 
     public String getSignature() {
+
+	//first dump all the permission info.
         String sig = "digraph G { ";
 
         for (ICCGNode node:nodes) {
-            //String nodeName = node.getComptName();
+	    if(!"unknown".equals(node.getComptName()) && !"targetNotFound".equals(node.getComptName()) )
+	        System.out.println("nodepermission: " + node.getComptName() + node.getPermission());
             String nodeName = node.toString();
-            /*if(nodeName.contains("."))
-                nodeName = nodeName.substring(nodeName.lastIndexOf(".")+1,nodeName.length());*/
             sig += nodeName + "[shape=" + node.getShape()+"];";
         }
 
@@ -57,7 +58,6 @@ public class ICCG
             return;
         }
 
-        System.out.println("adding edge: " + eg);
         boolean flag = true;
         for(ICCGEdge e:edges) {
             //if(e.getSrc().equals(eg.getSrc()) && e.getTgt().equals(eg.getTgt())) {
