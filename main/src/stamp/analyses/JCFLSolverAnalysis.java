@@ -13,6 +13,7 @@ import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverSingle;
 import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverStubs;
 import stamp.missingmodels.analysis.JCFLSolverRunner.RelationAdder;
 import stamp.missingmodels.grammars.E12;
+import stamp.missingmodels.jimplesrcmapper.Printer;
 import stamp.missingmodels.util.ConversionUtils.ChordRelationAdder;
 import stamp.missingmodels.util.FileManager;
 import stamp.missingmodels.util.FileManager.FileType;
@@ -157,6 +158,9 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 	
 	@Override public void run() {
 		run(getFileManager(System.getProperty("stamp.out.dir")), new ChordRelationAdder());
+		
+		
+		Printer printer = new Printer();
 	}
 	
 	public static void main(String[] args) {
