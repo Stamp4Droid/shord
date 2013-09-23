@@ -26,7 +26,6 @@ package stamp.missingmodels.jimplesrcmapper;
  */
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -49,7 +48,6 @@ import soot.Scene;
 import soot.SootClass;
 import soot.SootField;
 import soot.SootMethod;
-import soot.SourceLocator;
 import soot.Trap;
 import soot.Type;
 import soot.Unit;
@@ -60,16 +58,19 @@ import soot.tagkit.Tag;
 import soot.toolkits.graph.UnitGraph;
 import soot.util.Chain;
 import soot.util.DeterministicHashMap;
-import soot.util.EscapedWriter;
 
 /**
 * Prints out a class and all its methods.
 */
 public class Printer {
 	
-    final private static char fileSeparator =
-        System.getProperty("file.separator").charAt(0);
-
+	
+	/** An adapter to visit while the code is printed */
+	private JimpleAdapter adapter = null;
+	public void setAdapter(JimpleAdapter adapter) {
+		this.adapter = adapter;
+	}	
+	
     public static final int USE_ABBREVIATIONS = 0x0001, ADD_JIMPLE_LN = 0x0010;
 
     public boolean useAbbreviations() {
@@ -101,18 +102,31 @@ public class Printer {
 	//G.v().out.println("jimple Ln Num: "+jimpleLnNum);
     }
     
-    public void printAll() throws IOException {
+    /**
+     * Prints all the files in the given output directory.
+     * Resets the escaped writer after each file.
+     */
+    private EscapedWriter escapedWriter = null;
+    public void printAll(String outputDir) throws IOException {
     	Iterator classes = Scene.v().getApplicationClasses().iterator();
 
         while( classes.hasNext() ) {
             SootClass cl = (SootClass) classes.next();
             
-            // Get the print writer for the file.
-            final int format = Options.v().output_format();
-            String fileName = SourceLocator.v().getFileNameFor(cl, format);
+            // Get file name.
+            StringBuffer b = new StringBuffer();
+            b.append(outputDir);
+            b.append(cl.getName());
+            b.append(".jimple");
+            String fileName = b.toString();
+            
+            // Get print writer for the file.
+            //final int format = Options.v().output_format();
+            //String fileName = SourceLocator.v().getFileNameFor(cl, format);
             new File(fileName).getParentFile().mkdirs();
             OutputStream streamOut = new FileOutputStream(fileName);
-            PrintWriter writerOut =  new PrintWriter(new EscapedWriter(new OutputStreamWriter(streamOut)));
+            this.escapedWriter = new EscapedWriter(new OutputStreamWriter(streamOut));
+            PrintWriter writerOut =  new PrintWriter(this.escapedWriter);
             
             // Print the class to the writer.
             printTo(cl, writerOut);
@@ -222,7 +236,15 @@ public class Printer {
                             out.println("*/");
                         }
                     }
-                    out.println("    " + f.getDeclaration() + ";");
+
+                    out.print("    ");
+                    // VISIT HERE (field declaration)
+                    if(this.adapter != null) {
+                    	this.adapter.visit(f, this.escapedWriter.getNumCharsWritten(), f.getDeclaration().length());
+                    }
+                    out.print(f.getDeclaration());
+                    out.println(";");
+                    
                     if (addJimpleLn()) {
                         setJimpleLnNum(addJimpleLnTags(getJimpleLnNum(), f));		
                     }
@@ -283,7 +305,11 @@ public class Printer {
                             }
                         }
                         
+                        // VISIT HERE (abstract method declaration)
                         out.print("    ");
+                        if(this.adapter != null) {
+                        	this.adapter.visit(method, this.escapedWriter.getNumCharsWritten(), method.getDeclaration().length());
+                        }
                         out.print(method.getDeclaration());
                         out.println(";");
                         incJimpleLnNum();
@@ -312,7 +338,12 @@ public class Printer {
 
         String decl = b.getMethod().getDeclaration();
 
-        out.println("    " + decl);
+        out.print("    ");
+        // VISIT HERE (method declaration)
+        if(this.adapter != null) {
+        	this.adapter.visit(b.getMethod(), escapedWriter.getNumCharsWritten(), decl.length());
+        }
+        out.println(decl);
         //incJimpleLnNum();
     
         // only print tags if not printing attributes in a file 
@@ -396,7 +427,12 @@ public class Printer {
             }
 
             up.startUnit(currentStmt);
+            // VISIT HERE (statement declaration)
+            int start = this.escapedWriter.getNumCharsWritten();
             currentStmt.toString(up);
+            if(this.adapter != null) {
+            	this.adapter.visit(currentStmt, start, this.escapedWriter.getNumCharsWritten() - start);
+            }
             up.endUnit(currentStmt);
 
             up.literal(";");
@@ -524,7 +560,12 @@ public class Printer {
                         if (k != 0)
                             up.literal( ", " );
 
+                        // VISIT HERE (local)
+                        int start = this.escapedWriter.getNumCharsWritten();
                         up.local( (Local) locals[k] );
+                        if(this.adapter != null) {
+                        	this.adapter.visit((Local)locals[k], start, this.escapedWriter.getNumCharsWritten() - start);
+                        }
                     }
 
                     up.literal(";");

@@ -159,8 +159,14 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 	@Override public void run() {
 		run(getFileManager(System.getProperty("stamp.out.dir")), new ChordRelationAdder());
 		
-		
-		Printer printer = new Printer();
+		try {
+			String stampDirectory = System.getProperty("stamp.out.dir");
+			File outputDir = new File(stampDirectory + File.separator + "cfl");
+			File scratchDir = new File(stampDirectory + File.separator + "/../../osbert/scratch/" + outputDir.getParentFile().getName());
+			new Printer().printAll(scratchDir.getCanonicalPath() + "/jimple/");
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String[] args) {
