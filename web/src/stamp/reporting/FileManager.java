@@ -10,6 +10,7 @@ import org.w3c.dom.*;
 import org.xml.sax.*;
 
 import stamp.droidrecordweb.DroidrecordProxyWeb;
+import stamp.reporting.processor.SourceProcessor;
 
 public class FileManager
 {

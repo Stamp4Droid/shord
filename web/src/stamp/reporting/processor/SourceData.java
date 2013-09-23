@@ -1,4 +1,4 @@
-package stamp.reporting;
+package stamp.reporting.processor;
 
 import java.util.*;
 import java.io.*;
