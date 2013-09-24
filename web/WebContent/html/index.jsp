@@ -572,6 +572,13 @@
                 });
 			}
 
+			function showSourceForContext(id) {
+
+
+
+
+			}
+
             /*
              * Hack for unescaping HTML strings. From CMS on stackoverflow
              * at http://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
@@ -628,8 +635,9 @@
                             
                             for (var j = i; j <= 2; ++j) {
                                 entry.push('<tr>');
-                                entry.push('<td>'+escTags(sourcem[j])+'</td>');
-                                entry.push('<td>'+escTags(sinkm[j])+'</td>');
+                                entry.push('<td>'+((j!=2)?'<p class="muted">'+escTags(sourcem[j])+'</p>':'')+escTags(sourcem[j+1])+'</td>');
+                                entry.push('<td>'+((j!=2)?'<p class="muted">'+escTags(sinkm[j])+'</p>':'')+escTags(sinkm[j+1])+'</td>');
+//                                entry.push('<td>'+escTags(sinkm[j+1])+'</td>');
                                 entry.push('</tr>');
                             }
                         }
