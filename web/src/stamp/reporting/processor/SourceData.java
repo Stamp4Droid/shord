@@ -1,7 +1,15 @@
 package stamp.reporting.processor;
 
-import java.util.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class SourceData extends HashMap<String,SourceData.MethodInfo> implements Serializable 
 {
@@ -86,8 +94,7 @@ public class SourceData extends HashMap<String,SourceData.MethodInfo> implements
 		return s;
     }
 
-    public void write(File f) throws IOException 
-	{
+    public void write(File f) throws IOException {
 		f.getParentFile().mkdirs();
 		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f));
 		out.writeObject(this);

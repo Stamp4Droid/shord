@@ -337,7 +337,7 @@ public class ChordAdapter extends ASTVisitor
 		return true;
 	}
 
-	public boolean visit(Assignment ass)
+	public boolean visit(Assignment as)
 	{
 		return true;
 		/*

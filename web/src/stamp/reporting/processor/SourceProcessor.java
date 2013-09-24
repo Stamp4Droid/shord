@@ -29,13 +29,11 @@ import stamp.reporting.Common;
 import stamp.reporting.processor.Insertion.EscapeStart;
 import stamp.reporting.processor.Insertion.InvocationExpressionBegin;
 import stamp.reporting.processor.Insertion.InvocationExpressionEnd;
-import stamp.reporting.processor.Insertion.KeySpanStart;
 import stamp.reporting.processor.Insertion.LineBegin;
 import stamp.reporting.processor.Insertion.LineEnd;
 import stamp.reporting.processor.Insertion.MethodNameStart;
 import stamp.reporting.processor.Insertion.PreInvocation;
 import stamp.reporting.processor.Insertion.SpanEnd;
-import stamp.reporting.processor.Insertion.SrcSinkSpanStart;
 import stamp.reporting.processor.Insertion.TypeRefStart;
 
 /*
@@ -44,49 +42,11 @@ import stamp.reporting.processor.Insertion.TypeRefStart;
  * @author Lazaro Clapp
  */
 public class SourceProcessor {
-	public static class TaintedVariableRecord {
-		private final int startPos;
-		private final int endPos;
-		private final Set<String> sources;
-		private final Set<String> sinks;
-
-		public int getStart() { return startPos; }
-		public int getEnd() { return endPos; }
-
-		public TaintedVariableRecord(int startPos, int endPos) {
-			//System.out.println("Created TaintedVariableRecord " + startPos + " " + endPos);
-			this.startPos = startPos;
-			this.endPos = endPos;
-			this.sources = new HashSet<String>();
-			this.sinks = new HashSet<String>();
-		}
-
-		public void addSource(String s) {
-			//System.out.println("Added source " + s + " to " + startPos + " " + endPos);
-			sources.add(s);
-		}
-
-		public void addSink(String s) {
-			//System.out.println("Added sink " + s + " to " + startPos + " " + endPos);
-			sinks.add(s);
-		}
-
-		public void makeInsertions(List<Insertion> insertions) {
-			//System.out.println("Inserted TaintedVariableRecord " + startPos + " " + endPos);
-			insertions.add(new SrcSinkSpanStart(startPos, sources, sinks));
-			insertions.add(new KeySpanStart(startPos, "taintedVariable"));
-			insertions.add(new SpanEnd(endPos));
-			insertions.add(new SpanEnd(endPos));
-		}
-
-	}
-
 	private String source;
 	private List<Insertion> insertions = new ArrayList<Insertion>();
 
 	private Map<Integer, String> lineToMethodMap;
-	public String getContainingMethodForLine(int lineNum)
-	{
+	public String getContainingMethodForLine(int lineNum) {
 		return lineToMethodMap.get(lineNum);
 	}
 
@@ -130,8 +90,7 @@ public class SourceProcessor {
 		}
 	}
 
-	public SourceProcessor(File sourceFile, DroidrecordProxyWeb droidrecord, File srcMapFile) throws Exception
-	{
+	public SourceProcessor(File sourceFile, DroidrecordProxyWeb droidrecord, File srcMapFile) throws Exception {
 		lineToMethodMap = new HashMap<Integer, String>();
 		if(srcMapFile != null) {
 			populateLineToMethodMap(srcMapFile);
@@ -174,8 +133,7 @@ public class SourceProcessor {
 		this.source = sourceBuilder.toString();
 	}
 
-	public SourceProcessor(File sourceFile, DroidrecordProxyWeb droidrecord) throws Exception
-	{
+	public SourceProcessor(File sourceFile, DroidrecordProxyWeb droidrecord) throws Exception {
 		this(sourceFile, droidrecord, null);
 	}
 

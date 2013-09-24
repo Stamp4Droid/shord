@@ -25,7 +25,11 @@ package stamp.missingmodels.jimplesrcmapper;
  * contributors.  (Soot is distributed at http://www.sable.mcgill.ca/soot)
  */
 
-import java.io.*;
+import java.io.FilterWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
 
 /** A FilterWriter which catches to-be-escaped characters (<code>\\unnnn</code>) in the
  * input and substitutes their escaped representation.  Used for Soot output. */
@@ -38,17 +42,35 @@ public class EscapedWriter extends FilterWriter
     
     /** Keeps track of position in the file. */
     private int numCharsWritten;
+    
+    /** Keeps track of the line number corresponding to each character. */
+    private Map<Integer,Integer> lineNumbers;
+    
+    /** Keeps track of the current line number. */
+    private int curLineNumber;
 
     /** Constructs an EscapedWriter around the given Writer. */
     public EscapedWriter(Writer fos)
     {
         super(fos);
         this.numCharsWritten = 0;
+        this.curLineNumber = 0;
+        this.lineNumbers = new HashMap<Integer,Integer>();
     }
     
     /** Returns the number of characters written. */
     public int getNumCharsWritten() {
     	return this.numCharsWritten;
+    }
+    
+    /** Returns the line number information. */
+    public Map<Integer,Integer> getLineNumberInfo() {
+    	return this.lineNumbers;
+    }
+    
+    /** Returns the current line number. */
+    public int getCurLineNumber() {
+    	return this.curLineNumber;
     }
 
     private final StringBuffer mini = new StringBuffer();
@@ -82,6 +104,12 @@ public class EscapedWriter extends FilterWriter
         mini.insert(0, "\\u");
         for (int i = 0; i < mini.length(); i++) {
             super.write(mini.charAt(i));
+            
+            // update meta information
+            this.lineNumbers.put(this.numCharsWritten, this.curLineNumber);
+            if(this.mini.charAt(i) == '\n') {
+            	this.curLineNumber++;
+            }
             this.numCharsWritten++;
         }
     }
