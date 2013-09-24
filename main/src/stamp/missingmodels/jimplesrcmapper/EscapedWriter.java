@@ -54,7 +54,7 @@ public class EscapedWriter extends FilterWriter
     {
         super(fos);
         this.numCharsWritten = 0;
-        this.curLineNumber = 0;
+        this.curLineNumber = 1;
         this.lineNumbers = new HashMap<Integer,Integer>();
     }
     
@@ -92,8 +92,15 @@ public class EscapedWriter extends FilterWriter
     /** Write a single character. */
     public void write(int ch) throws IOException
     {
-        if (ch >= 32 && ch <= 126 || ch == cr || ch == lf || ch == ' ')
-            { super.write(ch); this.numCharsWritten++; return; }
+        if (ch >= 32 && ch <= 126 || ch == cr || ch == lf || ch == ' ') {
+        	super.write(ch);
+            this.lineNumbers.put(this.numCharsWritten, this.curLineNumber);
+            if(ch == '\n') {
+            	this.curLineNumber++;
+            }
+            this.numCharsWritten++;
+            return;
+        }
         
         mini.setLength(0);
         mini.append(Integer.toHexString(ch));

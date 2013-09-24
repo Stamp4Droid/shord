@@ -7,12 +7,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import shord.project.analyses.JavaAnalysis;
+import soot.SootMethod;
 import stamp.missingmodels.analysis.Experiment;
 import stamp.missingmodels.analysis.JCFLSolverRunner;
 import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverSingle;
 import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverStubs;
 import stamp.missingmodels.analysis.JCFLSolverRunner.RelationAdder;
 import stamp.missingmodels.grammars.E12;
+import stamp.missingmodels.jimplesrcmapper.JimpleStructureExtractor;
 import stamp.missingmodels.jimplesrcmapper.Printer;
 import stamp.missingmodels.util.ConversionUtils.ChordRelationAdder;
 import stamp.missingmodels.util.FileManager;
@@ -163,7 +165,12 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 			String stampDirectory = System.getProperty("stamp.out.dir");
 			File outputDir = new File(stampDirectory + File.separator + "cfl");
 			File scratchDir = new File(stampDirectory + File.separator + "/../../osbert/scratch/" + outputDir.getParentFile().getName());
-			new Printer().printAll(scratchDir.getCanonicalPath() + "/jimple/");
+			JimpleStructureExtractor jse = new JimpleStructureExtractor();
+			new Printer(jse).printAll(scratchDir.getCanonicalPath() + "/jimple/");
+			for(SootMethod m : jse.getCodeStructureInfo().getMethods()) {
+				System.out.println(m.toString() + ": " + jse.getCodeStructureInfo().getMethodInfo(m).toString());
+			}
+			
 		} catch(IOException e) {
 			e.printStackTrace();
 		}

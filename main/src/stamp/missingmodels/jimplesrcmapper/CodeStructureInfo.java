@@ -1,6 +1,7 @@
 package stamp.missingmodels.jimplesrcmapper;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import soot.Local;
 import soot.SootClass;
@@ -36,6 +37,13 @@ public class CodeStructureInfo {
 			this.bodyEnd = -1;
 			this.bodyEndLineNum = -1;
 		}
+		
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder();
+			sb.append("lineNum=" + this.declarationLineNum);
+			return sb.toString();			
+		}
 	}
 	
 	public static class SimpleCodeStructure {
@@ -47,6 +55,13 @@ public class CodeStructureInfo {
 			this.lineNum = -1;
 			this.start = -1;
 			this.end = -1;
+		}
+		
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder();
+			sb.append("lineNum=" + this.lineNum);
+			return sb.toString();			
 		}
 	}
 	
@@ -91,20 +106,40 @@ public class CodeStructureInfo {
 		return this.fileInfo;
 	}
 	
+	public Set<SootClass> getClasses() {
+		return this.classInfo.keySet();
+	}
+	
 	public CodeStructure getClassInfo(SootClass cl) {
 		return this.classInfo.get(cl);
+	}
+	
+	public Set<SootMethod> getMethods() {
+		return this.methodInfo.keySet();
 	}
 	
 	public CodeStructure getMethodInfo(SootMethod m) {
 		return this.methodInfo.get(m);
 	}
 	
+	public Set<SootField> getFields() {
+		return this.fieldInfo.keySet();
+	}
+	
 	public SimpleCodeStructure getFieldInfo(SootField f) {
 		return this.fieldInfo.get(f);
 	}
 	
+	public Set<Local> getLocals() {
+		return this.localInfo.keySet();
+	}
+	
 	public SimpleCodeStructure getLocalInfo(Local local) {
 		return this.localInfo.get(local);
+	}
+	
+	public Set<Unit> getUnits() {
+		return this.unitInfo.keySet();
 	}
 	
 	public SimpleCodeStructure getUnitInfo(Unit unit) {

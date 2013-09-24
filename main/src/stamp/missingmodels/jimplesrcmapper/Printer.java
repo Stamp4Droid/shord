@@ -112,12 +112,12 @@ public class Printer {
 	 */
 	private EscapedWriter escapedWriter = null;
 	public void printAll(String outputDir) throws IOException {
+		System.out.println("ENTERING JIMPLE PRINTER");
 		if(!System.getProperty("line.separator").equals("\n")) {
 			throw new RuntimeException("Bad line separator!");
 		}
-		Iterator classes = Scene.v().getApplicationClasses().iterator();
-		while( classes.hasNext() ) {
-			SootClass cl = (SootClass) classes.next();
+		for(SootClass cl : Scene.v().getClasses()) {
+			System.out.println("PRINTING: " + cl.getName());
 
 			// Get file name.
 			StringBuffer b = new StringBuffer();
@@ -141,6 +141,7 @@ public class Printer {
 			writerOut.flush();
 			streamOut.close();
 		}
+		System.out.println("EXITING PRINTER");
 	}
 
 	public void printTo(SootClass cl, PrintWriter out) {
