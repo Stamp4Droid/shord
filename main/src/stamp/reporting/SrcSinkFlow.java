@@ -1,20 +1,11 @@
 package stamp.reporting;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
-import shord.project.ClassicProject;
-import shord.project.analyses.ProgramRel;
-import stamp.analyses.DomL;
-import stamp.analyses.JCFLSolverAnalysis;
 import shord.analyses.Ctxt;
 import shord.program.Program;
-
+import shord.project.ClassicProject;
+import shord.project.analyses.ProgramRel;
 import soot.Unit;
-
-import chord.bddbddb.Rel.RelView;
-import chord.util.tuple.object.Trio;
+import stamp.srcmap.SourceInfo;
 import chord.util.tuple.object.Pair;
 
 /*
@@ -22,8 +13,8 @@ import chord.util.tuple.object.Pair;
  * @author Osbert Bastani
  **/
 public class SrcSinkFlow extends XMLReport {
-    public SrcSinkFlow() {
-	super("Source-to-sink Flows");
+    public SrcSinkFlow(SourceInfo sourceInfo) {
+    	super("Source-to-sink Flows");
     }
 
     public void generate() {

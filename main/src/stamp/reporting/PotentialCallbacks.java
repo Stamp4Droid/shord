@@ -1,17 +1,19 @@
 package stamp.reporting;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import shord.program.Program;
+import shord.project.ClassicProject;
+import shord.project.analyses.ProgramRel;
+import soot.Modifier;
 import soot.SootClass;
 import soot.SootMethod;
-import soot.Modifier;
 import soot.util.NumberedString;
-
-import java.util.*;
-
-import shord.project.ClassicProject;
-import shord.program.Program;
-import shord.project.analyses.ProgramRel;
-
-import stamp.srcmap.SourceInfo;
 
 public class PotentialCallbacks extends XMLReport
 {
@@ -28,7 +30,7 @@ public class PotentialCallbacks extends XMLReport
 	{
         Program program = Program.g();
 		for(SootClass c : program.getClasses()) {
-			if(SourceInfo.isFrameworkClass(c))
+			if(this.sourceInfo.isFrameworkClass(c))
 				continue;
 			sigs = new HashSet();
 			sigToMethod = new HashMap();
@@ -81,7 +83,7 @@ public class PotentialCallbacks extends XMLReport
 			return;
 		SootClass superClass = klass.getSuperclass();
 
-		if(SourceInfo.isFrameworkClass(superClass)){
+		if(this.sourceInfo.isFrameworkClass(superClass)){
 			if(!superClass.getName().equals("java.lang.Object")) {
 				for(SootMethod superMeth : superClass.getMethods()){
 					if(!canBeOverriden(superMeth))
@@ -96,7 +98,7 @@ public class PotentialCallbacks extends XMLReport
 		findCallbacks(superClass);
 
 		for(SootClass iface : klass.getInterfaces()){
-			if(SourceInfo.isFrameworkClass(iface)){
+			if(this.sourceInfo.isFrameworkClass(iface)){
 				for(SootMethod superMeth : iface.getMethods()){
 					NumberedString superMethSig = superMeth.getNumberedSubSignature();
 					if(sigs.contains(superMethSig)){

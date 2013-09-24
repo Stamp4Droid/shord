@@ -1,31 +1,30 @@
 package stamp.reporting;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import stamp.srcmap.SourceInfo;
 
 /*
  * @author Saswat Anand
 **/
-public abstract class XMLReport extends Category
-{
+public abstract class XMLReport extends Category {
 	private String relName;
 	private String title;
 
-	protected XMLReport(String title)
-	{
-		super();
+	protected XMLReport(String title) {
 		this.title = title;
 		String className = this.getClass().getName();
 		this.relName = className.substring(className.lastIndexOf('.')+1);
 	}
 
-	public String getTitle()
-	{
+	public String getTitle() {
 		return title;
 	}
 
-	public String getCanonicalReportFilePath()
-	{ 
+	public String getCanonicalReportFilePath() { 
 		try{
 			File f = new File(Postmortem.resultsDir, relName+".xml");
 			return f.getCanonicalPath();
@@ -34,20 +33,18 @@ public abstract class XMLReport extends Category
 		}
 	}
 
-	public void write()
-	{
+	public void write() {
 		try{
 			PrintWriter writer = new PrintWriter(new FileWriter(new File(getCanonicalReportFilePath())));
 			generate();
 			write(writer);
 			writer.close();
-		}catch(IOException e){
+		} catch(IOException e){
 			throw new Error(e);
 		}
 	}
 
-	public void write(PrintWriter writer)
-	{
+	public void write(PrintWriter writer) {
 		writer.println("<root>");
 		writer.println("<title>"+title+"</title>");
 		for(Tuple t : tuples)

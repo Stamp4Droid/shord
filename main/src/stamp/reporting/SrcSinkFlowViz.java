@@ -5,28 +5,32 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import shord.analyses.*;
+import shord.analyses.LocalVarNode;
+import shord.analyses.ParamVarNode;
+import shord.analyses.RetVarNode;
+import shord.analyses.ThisVarNode;
+import shord.analyses.VarNode;
 import shord.program.Program;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-import chord.util.tuple.object.Pair;
-
-import soot.jimple.Stmt;
-import soot.Local;
-import soot.SootClass;
 import soot.SootMethod;
 import soot.Type;
 import soot.Unit;
 import soot.VoidType;
-
-import stamp.paths.*;
+import soot.jimple.Stmt;
+import stamp.paths.CtxtLabelPoint;
+import stamp.paths.CtxtPoint;
+import stamp.paths.CtxtVarPoint;
+import stamp.paths.Path;
+import stamp.paths.PathsAdapter;
+import stamp.paths.Step;
 import stamp.srcmap.SourceInfo;
 import stamp.util.PropertyHelper;
-import stamp.util.tree.*;
+import stamp.util.tree.Node;
+import stamp.util.tree.Tree;
 
 /**
  * Generates a an xml report that represents flows
@@ -38,8 +42,7 @@ import stamp.util.tree.*;
  *
  * @author brycecr
  */
-public class SrcSinkFlowViz extends XMLVizReport
-{
+public class SrcSinkFlowViz extends XMLVizReport {
     protected enum StepActionType {
         SAME, // same parent context as last method added
         DROP, // new method called by last step's method
@@ -48,13 +51,11 @@ public class SrcSinkFlowViz extends XMLVizReport
         OTHER // self-explanatory
     }
 
-    public SrcSinkFlowViz()
-    {
+    public SrcSinkFlowViz(SourceInfo sourceInfo) {
         super("Flow Path Vizualization");
     }
 
-    public void generate()
-    {
+    public void generate() {
 
         try {
             final ProgramRel relSrcSinkFlow = (ProgramRel)ClassicProject.g().getTrgt("flow");
@@ -221,7 +222,7 @@ public class SrcSinkFlowViz extends XMLVizReport
         if (t.isRoot(method)) {
             return false;
         }
-        return (SourceInfo.isFrameworkClass(method.getDeclaringClass()) && depth == 0);
+        return (this.sourceInfo.isFrameworkClass(method.getDeclaringClass()) && depth == 0);
     }
 
     /**
@@ -340,14 +341,14 @@ public class SrcSinkFlowViz extends XMLVizReport
     private CallSite generateCallSite(SootMethod method, Stmt caller) {
 
         try {
-            String locStr = SourceInfo.javaLocStr(caller);
+            String locStr = this.sourceInfo.javaLocStr(caller);
             String[] locStrTokens = locStr.split(":");
             assert locStrTokens.length >= 1;
 
             // Create callsite 
             String methName = method.getName();
             int lineNumber = (locStrTokens.length > 1) ? Integer.parseInt(locStrTokens[1]) : 0;
-            String className = SourceInfo.srcClassName(caller);
+            String className = this.sourceInfo.srcClassName(caller);
             String srcFilePath = locStrTokens[0];
             /* Some weird gui behavior associated with line number -1 so...
                ...This may be useful: if (methodLineNum < 0) {methodLineNum = 0;}

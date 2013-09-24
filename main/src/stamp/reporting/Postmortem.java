@@ -1,25 +1,25 @@
 package stamp.reporting;
 
-import chord.project.Chord;
-import shord.project.ClassicProject;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+
 import shord.program.Program;
 import shord.project.analyses.JavaAnalysis;
-import java.io.*;
 import stamp.util.PropertyHelper;
+import chord.project.Chord;
 
 /**
  * @author Saswat Anand
  * @author Osbert Bastani
  */
 @Chord(name = "post-java")
-public class Postmortem extends JavaAnalysis
-{
+public class Postmortem extends JavaAnalysis {
 	public static final String reportsTxtFilePath = System.getProperty("stamp.out.dir")+"/reports.txt";
 	public static final String resultsDir = System.getProperty("stamp.out.dir")+"/results";
 	public static final boolean processingSrc = System.getProperty("stamp.input.type", "src").equals("src");
 
-    public void run()
-	{
+    public void run() {
 		new File(resultsDir).mkdirs();
 
 		Class[] srcReports = new Class[]{
@@ -27,9 +27,9 @@ public class Postmortem extends JavaAnalysis
 			,ArgSinkFlow.class
 			,SrcSinkFlow.class
 			,SrcSinkFlowViz.class
-			////,ReachableStub.class,
+			//,ReachableStub.class,
 			,TaintedStub.class
-			////,InvkNone.class,
+			//,InvkNone.class,
 			,TaintedVar.class
 			,IM.class
 			,PotentialCallbacks.class
@@ -39,7 +39,7 @@ public class Postmortem extends JavaAnalysis
 			,AllMissingModels.class
 		};
 
-		Class[] apkReports = new	 Class[]{
+		Class[] apkReports = new Class[]{
 			SrcSinkFlow.class
 		};
 
@@ -52,7 +52,7 @@ public class Postmortem extends JavaAnalysis
 		try{
 			PrintWriter reportsTxtWriter = new PrintWriter(new FileWriter(new File(reportsTxtFilePath)));
 			Class[] reports = processingSrc ? srcReports : apkReports;
-			for(Class reportClass : reports){
+			for(Class reportClass : reports) {
 				XMLReport report = report = (XMLReport) reportClass.newInstance();
 				
 				boolean show = true;
@@ -60,14 +60,15 @@ public class Postmortem extends JavaAnalysis
 					if(reportClass.equals(dontShowReports[i]))
 						show = false;
 				}
-				if(show)
+				if(show) {
 					reportsTxtWriter.println(report.getTitle() + " " + report.getCanonicalReportFilePath());
+				}
 				
 				report.write();
 			}
 			
 			reportsTxtWriter.close();
-		}catch(Exception e){
+		} catch(Exception e){
 			throw new Error(e);
 		}
 		

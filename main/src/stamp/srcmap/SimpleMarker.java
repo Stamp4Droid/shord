@@ -1,11 +1,21 @@
 package stamp.srcmap;
 
-public class SimpleMarker extends Marker
-{
-	Expr operand;
+/**
+ * @author Saswat Anand
+ * @author Osbert Bastani
+ * 
+ * Marker representing an expression.
+ *
+ */
+public class SimpleMarker extends Marker {
+	private Expr operand;
 	
-	public Expr operand()
-	{
+	public SimpleMarker(int line, String chordSig, String markerType, Expr operand) {
+		super(line, chordSig, markerType);
+		this.operand = operand;
+	}
+
+	public Expr operand() {
 		return operand;
 	}
 }

@@ -1,33 +1,31 @@
 package stamp.reporting;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import shord.analyses.Ctxt;
+import shord.analyses.LocalVarNode;
+import shord.analyses.VarNode;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-import chord.util.tuple.object.Pair;
-
 import soot.SootClass;
 import soot.SootMethod;
-import shord.analyses.VarNode;
-import shord.analyses.LocalVarNode;
-import shord.analyses.Ctxt;
-import soot.Local;
-
-import java.util.*;
-import stamp.srcmap.SourceInfo;
-import stamp.srcmap.RegisterMap;
 import stamp.srcmap.Expr;
+import stamp.srcmap.RegisterMap;
+import stamp.srcmap.SourceInfo;
+import chord.util.tuple.object.Pair;
 
 /**
  * @author Saswat Anand
  */
-public class TaintedVar extends XMLReport
-{
-	public TaintedVar()
-	{
+public class TaintedVar extends XMLReport {
+	public TaintedVar(SourceInfo sourceInfo) {
 		super("Tainted Vars");
 	}
 
-    public void generate()
-	{
+    public void generate() {
 		Map<String,Map<SootMethod,Set<VarNode>>> labelToTaintedVars = labelToTaintedVars();
 
 		for(Map.Entry<String,Map<SootMethod,Set<VarNode>>> entry1 : labelToTaintedVars.entrySet()){
@@ -37,7 +35,7 @@ public class TaintedVar extends XMLReport
 			for(Map.Entry<SootMethod,Set<VarNode>> entry2 : taintedVars.entrySet()){
 				SootMethod meth = entry2.getKey();
 				SootClass klass = meth.getDeclaringClass();
-				RegisterMap regMap = SourceInfo.buildRegMapFor(meth);
+				RegisterMap regMap = this.sourceInfo.buildRegMapFor(meth);
 				Set<VarNode> vars = entry2.getValue();
 				Category methCat = labelCat.makeOrGetPkgCat(meth);
 				for(VarNode v : vars){
@@ -56,8 +54,7 @@ public class TaintedVar extends XMLReport
 		}
 	}
 
-	private Map<String,Map<SootMethod,Set<VarNode>>> labelToTaintedVars()
-	{
+	private Map<String,Map<SootMethod,Set<VarNode>>> labelToTaintedVars() {
 		Map<String,Map<SootMethod,Set<VarNode>>> labelToTaintedVars = new HashMap();
 
 		final ProgramRel relRef = (ProgramRel) ClassicProject.g().getTrgt("out_taintedRefVar");

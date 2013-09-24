@@ -196,8 +196,8 @@ public class ConversionUtils {
 	/*
 	 * Gets the node info and concatenates into a String.
 	 */
-	public static String getNodeInfo(String node) {
-		String[] tokens = getNodeInfoTokens(node);
+	public static String getNodeInfo(SourceInfo sourceInfo, String node) {
+		String[] tokens = getNodeInfoTokens(sourceInfo, node);
 		return tokens[0] + (tokens.length >= 2 ? tokens[1] : ""); /*+ (tokens.length == 3 ? "_" + tokens[2] : "")*/
 	}
 
@@ -215,7 +215,7 @@ public class ConversionUtils {
 	 * found, then the variableId is returned in place of
 	 * the second hyper link.
 	 */
-	public static String[] getNodeInfoTokens(String node) {
+	public static String[] getNodeInfoTokens(SourceInfo sourceInfo, String node) {
 		try {
 			// STEP 1: tokenize the node name
 			String[] tokens = tokenizeNodeName(node);
@@ -258,13 +258,13 @@ public class ConversionUtils {
 				}
 	
 				// HTML hyper link to the method
-				String sourceFileName = method == null ? "" : SourceInfo.filePath(method.getDeclaringClass());
-				int methodLineNum = SourceInfo.methodLineNum(method);
+				String sourceFileName = method == null ? "" : sourceInfo.filePath(method.getDeclaringClass());
+				int methodLineNum = sourceInfo.methodLineNum(method);
 	
 				String methStr = "<a onclick=\"showSource('" + sourceFileName + "','false','" + methodLineNum + "')\">" + "[" + method.getName() + "]</a> ";
 	
 				// HTML hyper link to the register
-				RegisterMap regMap = getRegisterMap(method);
+				RegisterMap regMap = getRegisterMap(sourceInfo, method);
 				Set<Expr> locations = regMap.srcLocsFor(local);
 				Integer registerLineNum = null;
 				String text = null;
@@ -306,10 +306,10 @@ public class ConversionUtils {
 	/*
 	 * Returns a register map, caching them as they are requested.
 	 */
-	private static RegisterMap getRegisterMap(SootMethod method) {
+	private static RegisterMap getRegisterMap(SourceInfo sourceInfo, SootMethod method) {
 		RegisterMap registerMap = registerMaps.get(method.toString());
 		if(registerMap == null) {
-			registerMap = SourceInfo.buildRegMapFor(method);
+			registerMap = sourceInfo.buildRegMapFor(method);
 			registerMaps.put(method.toString(), registerMap);
 		}
 		return registerMap;

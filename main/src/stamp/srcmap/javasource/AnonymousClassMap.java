@@ -1,4 +1,4 @@
-package stamp.srcmap;
+package stamp.srcmap.javasource;
 
 import shord.program.Program;
 
@@ -9,22 +9,25 @@ import soot.Value;
 import soot.jimple.Stmt;
 import soot.jimple.AssignStmt;
 import soot.jimple.NewExpr;
+import stamp.srcmap.SourceInfo;
 
 import java.util.*;
+
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
 import java.io.*;
 
-public class AnonymousClassMap
-{
-	private static Map<String,List<SootClass>> fNameToClasses = new HashMap();
-	private static Map<String,Set<String>> fNameToNonAnonymClasses = new HashMap();
-	private static Map<String,String> bcClNameToSrcClName = new HashMap();
+public class AnonymousClassMap {
+	private Map<String,List<SootClass>> fNameToClasses = new HashMap();
+	private Map<String,Set<String>> fNameToNonAnonymClasses = new HashMap();
+	private Map<String,String> bcClNameToSrcClName = new HashMap();
+	
+	private SourceInfo sourceInfo;
 
-	static void init()
-	{
+	protected AnonymousClassMap(SourceInfo sourceInfo) {
+		this.sourceInfo = sourceInfo;
 		for(SootClass klass : Program.g().getClasses()){
-			String srcFileName = SourceInfo.filePath(klass);
+			String srcFileName = sourceInfo.filePath(klass);
 			List<SootClass> classes = fNameToClasses.get(srcFileName);
 			if(classes == null){
 				classes = new ArrayList();
@@ -40,9 +43,8 @@ public class AnonymousClassMap
 				returns null when the source code file in not available or
 				klass is anonymous, but we could not map it
 	 */
-	static String srcClassName(SootClass klass)
-	{
-		String srcFileName = SourceInfo.filePath(klass);
+	protected String srcClassName(SootClass klass) {
+		String srcFileName = this.sourceInfo.filePath(klass);
 
 		Set<String> nonAnonymClasses = fNameToNonAnonymClasses.get(srcFileName);
 		if(nonAnonymClasses == null){
@@ -69,9 +71,8 @@ public class AnonymousClassMap
 	  @param nonAnonymousClasses is filled with names of named classes
 	  @param anonymousClasses is filled with (lineNum, concocted-name) for each anonoymous class
 	 */
-	public static void getAllDeclaredClasses(String srcFileName, Set<String> nonAnonymousClasses, Map<Integer,String> anonymousClasses)
-	{
-		File file = SourceInfo.srcMapFile(srcFileName);
+	public void getAllDeclaredClasses(String srcFileName, Set<String> nonAnonymousClasses, Map<Integer,String> anonymousClasses) {
+		File file = this.sourceInfo.srcMapFile(srcFileName);
 		assert file != null;
 
 		try{
@@ -98,10 +99,9 @@ public class AnonymousClassMap
 		}
 	}
 
-	private static Set<String> performMapping(String srcFileName)
-	{
-		if(!SourceInfo.hasSrcFile(srcFileName))
-			return Collections.EMPTY_SET;
+	private Set<String> performMapping(String srcFileName) {
+		if(!this.sourceInfo.hasSrcFile(srcFileName))
+			return Collections.emptySet();
 
 		Set<String> nonAnonymClasses = new HashSet();
 		Map<Integer,String> anonymClasses = new HashMap();			
@@ -113,8 +113,7 @@ public class AnonymousClassMap
 		return nonAnonymClasses;
 	}
 	
-	private static void performMapping(SootMethod meth, Map<Integer,String> anonymClasses)
-	{
+	private void performMapping(SootMethod meth, Map<Integer,String> anonymClasses) {
 		if(!meth.isConcrete())
 			return;
 
@@ -126,7 +125,7 @@ public class AnonymousClassMap
 			if(!(rightOp instanceof NewExpr))
 				continue;
 			String className = rightOp.getType().toString();
-			int lineNum = SourceInfo.stmtLineNum(stmt);
+			int lineNum = this.sourceInfo.stmtLineNum(stmt);
 
 			String anonymClassName = anonymClasses.get(lineNum);
 			if(anonymClassName == null)

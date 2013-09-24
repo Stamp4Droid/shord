@@ -2,20 +2,16 @@ package stamp.reporting;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
-
 import soot.SootMethod;
-
-import java.util.*;
+import stamp.srcmap.SourceInfo;
 
 public class TaintedStub extends XMLReport
 {
-    public TaintedStub()
-	{
+    public TaintedStub(SourceInfo sourceInfo) {
 		super("Tainted Stub Methods");
 	}
 
-    public void generate()
-	{
+    public void generate() {
 		final ProgramRel relTaintedStub = (ProgramRel)ClassicProject.g().getTrgt("out_taintedStub");
 		relTaintedStub.load();
 
