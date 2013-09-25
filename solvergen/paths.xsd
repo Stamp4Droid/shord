@@ -129,6 +129,8 @@
 <xs:element name="label2Prim" type="CtxtCrossingStep" substitutionGroup="step"/>
 <xs:element name="label2Ref" type="CtxtCrossingStep" substitutionGroup="step"/>
 <xs:element name="new" type="CtxtCrossingStep" substitutionGroup="step"/>
+<xs:element name="prim2Sink" type="CtxtCrossingStep" substitutionGroup="step"/>
+<xs:element name="ref2Sink" type="CtxtCrossingStep" substitutionGroup="step"/>
 
 <!-- Steps that can arbitrarily set the context, even to otherwise invalid
      states. -->

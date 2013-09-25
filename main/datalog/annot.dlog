@@ -23,8 +23,11 @@ MmethPrimRet(m:M,z:Z,u:U) input
 
 CM(c:C,m:M) input
 
-LabelRet(l:L,m:M)             input
-LabelArg(l:L,m:M,z:Z)         input
+InLabelRet(l:L,m:M)      input
+InLabelArg(l:L,m:M,z:Z)  input
+OutLabelRet(l:L,m:M)     input
+OutLabelArg(l:L,m:M,z:Z) input
+
 ArgRetTransfer(m:M,z:Z)       input
 ArgArgTransfer(m:M,z0:Z,z1:Z) input
 ArgArgFlow(m:M,z0:Z,z1:Z)     input
@@ -39,8 +42,10 @@ LCL(l:L,cl:CL) input
 srcCtxtLabel(l:CL)  output
 sinkCtxtLabel(l:CL) output
 
-varLabel(c:C,v:V,l:CL)     output
-varLabelPrim(c:C,u:U,l:CL) output
+varInLabel(c:C,v:V,l:CL)      output
+varOutLabel(c:C,v:V,l:CL)     output
+varInLabelPrim(c:C,u:U,l:CL)  output
+varOutLabelPrim(c:C,u:U,l:CL) output
 
 transferRefRef(u:V,v:V)   output
 transferPrimRef(u:U,v:V)  output
@@ -57,10 +62,16 @@ flowPrimPrim(u:U,v:U) output
 srcCtxtLabel(cl)  :- LCL(l,cl), SrcLabel(l).
 sinkCtxtLabel(cl) :- LCL(l,cl), SinkLabel(l).
 
-varLabel(c,v,cl)     :- LabelRet(l,m), MmethRet(m,_,v), CM(c,m), CCL(c,cl), LCL(l,cl).
-varLabel(c,v,cl)     :- LabelArg(l,m,z), MmethArg(m,z,v), CM(c,m), CCL(c,cl), LCL(l,cl).
-varLabelPrim(c,v,cl) :- LabelRet(l,m), MmethPrimRet(m,_,v), CM(c,m), CCL(c,cl), LCL(l,cl).
-varLabelPrim(c,v,cl) :- LabelArg(l,m,z), MmethPrimArg(m,z,v), CM(c,m), CCL(c,cl), LCL(l,cl).
+varInLabel(c,v,cl)      :- CCL(c,cl), LCL(l,cl), InLabelRet(l,m), MmethRet(m,_,v), CM(c,m).
+varInLabel(c,v,cl)      :- CCL(c,cl), LCL(l,cl), InLabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).
+varOutLabel(c,v,cl)     :- CCL(c,cl), LCL(l,cl), OutLabelRet(l,m), MmethRet(m,_,v), CM(c,m).
+varOutLabel(c,v,cl)     :- CCL(c,cl), LCL(l,cl), OutLabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).
+
+varInLabelPrim(c,u,cl)  :- CCL(c,cl), LCL(l,cl), InLabelRet(l,m), MmethPrimRet(m,_,u), CM(c,m).
+# Pass-by-value semantics means that we could never introduce a taint label to
+# a primitive-type argument, so we don't need to consider InLabelArg here.
+varOutLabelPrim(c,u,cl) :- CCL(c,cl), LCL(l,cl), OutLabelRet(l,m), MmethPrimRet(m,_,u), CM(c,m).
+varOutLabelPrim(c,u,cl) :- CCL(c,cl), LCL(l,cl), OutLabelArg(l,m,z), MmethPrimArg(m,z,u), CM(c,m).
 
 transferRefRef(u,v)   :- ArgArgTransfer(m,z0,z1), MmethArg(m,z0,u), MmethArg(m,z1,v).
 transferRefPrim(u,v)  :- ArgArgTransfer(m,z0,z1), MmethArg(m,z0,u), MmethPrimArg(m,z1,v).

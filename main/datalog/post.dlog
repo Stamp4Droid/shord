@@ -31,8 +31,10 @@ labelPrim(c:C,u:U,l:CL) input
 # Method annotations
 SrcLabel(l:L) input
 SinkLabel(l:L) input
-LabelRet(l:L,m:M) input
-LabelArg(l:L,m:M,z:Z) input
+InLabelRet(l:L,m:M) input
+InLabelArg(l:L,m:M,z:Z) input
+OutLabelRet(l:L,m:M) input
+OutLabelArg(l:L,m:M,z:Z) input
 
 # Stub facts
 Stub(m:M) input
@@ -62,9 +64,13 @@ out_reachableM(m) :- CM(_,m).
 out_taintedPrimVar(l,v) :- labelPrim(_,v,l).
 out_taintedRefVar(l,v) :- labelRef(_,v,l).
 
-out_taintSrc(l,m) :- chaIM(_,m), LabelRet(l,m), SrcLabel(l).
-out_taintSrc(l,m) :- chaIM(_,m), LabelArg(l,m,_), SrcLabel(l).
-out_taintSink(l,m) :- chaIM(_,m), LabelArg(l,m,_), SinkLabel(l).
+out_taintSrc(l,m) :- chaIM(_,m), InLabelRet(l,m), SrcLabel(l).
+out_taintSrc(l,m) :- chaIM(_,m), InLabelArg(l,m,_), SrcLabel(l).
+
+out_taintSink(l,m) :- chaIM(_,m), InLabelArg(l,m,_), SinkLabel(l).
+out_taintSink(l,m) :- chaIM(_,m), InLabelRet(l,m), SinkLabel(l).
+out_taintSink(l,m) :- chaIM(_,m), OutLabelRet(l,m).
+out_taintSink(l,m) :- chaIM(_,m), OutLabelArg(l,m,_).
 
 out_taintedStub(m) :- out_taintedRefVar(_,v), MmethArg(m,_,v), Stub(m).
 out_taintedStub(m) :- out_taintedPrimVar(_,v), MmethPrimArg(m,_,v), Stub(m).

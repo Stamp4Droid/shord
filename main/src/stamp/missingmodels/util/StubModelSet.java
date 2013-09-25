@@ -3,6 +3,7 @@ package stamp.missingmodels.util;
 import java.util.HashMap;
 
 import stamp.missingmodels.util.StubLookup.StubLookupValue;
+import stamp.missingmodels.util.StubModelSet.ModelType;
 import stamp.missingmodels.util.StubModelSet.StubModel;
 
 /*
@@ -13,28 +14,67 @@ import stamp.missingmodels.util.StubModelSet.StubModel;
  * 
  * Currently, we only reject false models.
  */
-public class StubModelSet extends HashMap<StubModel,Integer> {
+public class StubModelSet extends HashMap<StubModel,ModelType> {
 	private static final long serialVersionUID = -6501310257337445078L;
+	
+	public static enum ModelType {
+		UNKNOWN(0), TRUE(1), FALSE(2);
+		
+		private final int value;
+		ModelType(int value) {
+			this.value = value;
+		}
+		
+		public int toInt() {
+			return this.value;
+		}
+		
+		public static ModelType getModelType(int value) {
+			switch(value) {
+			case 0:
+				return UNKNOWN;
+			case 1:
+				return TRUE;
+			case 2:
+				return FALSE;
+			default:
+				return null;
+			}
+		}
+		
+		@Override
+		public String toString() {
+			return Integer.toString(this.value);
+		}
+	}
 	
 	public StubModelSet() {
 		super();
 	}
 
 	@Override
-	public Integer get(Object stubModel) {
-		Integer value = super.get(stubModel);
+	public ModelType get(Object stubModel) {
+		ModelType value = super.get(stubModel);
 		if(value == null) {
-			return 0;
+			return ModelType.UNKNOWN;
 		} else {
 			return value;
 		}
 	}
 	
-	public int get(StubLookupValue value) {
+	public ModelType get(StubLookupValue value) {
 		return this.get(new StubModel(value));
 	}
 	
+	public int getInt(StubLookupValue value) {
+		return this.get(new StubModel(value)).toInt();
+	}
+	
 	public void putAllToValue(StubModelSet m, int value) {
+		this.putAllToValue(m, ModelType.getModelType(value));
+	}
+	
+	public void putAllToValue(StubModelSet m, ModelType value) {
 		for(StubModel model : m.keySet()) {
 			super.put(model, value);
 		}

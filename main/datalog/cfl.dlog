@@ -64,11 +64,21 @@ srcCtxtLabel(l:CL)  input
 sinkCtxtLabel(l:CL) input
 
 # annotations
-LabelRet(l:L,m:M)             input
-LabelArg(l:L,m:M,z:Z)         input
+InLabelRet(l:L,m:M)           input
+OutLabelRet(l:L,m:M)          input
+InLabelArg(l:L,m:M,z:Z)       input
+OutLabelArg(l:L,m:M,z:Z)      input
 ArgRetTransfer(m:M,z:Z)       input
 ArgArgTransfer(m:M,z0:Z,z1:Z) input
 ArgArgFlow(m:M,z0:Z,z1:Z)     input
+
+###################
+# INTERMEDIATE RELATIONS
+###################
+
+# temporary label relation
+LabelRet(l:L,m:M)
+LabelArg(l:L,m:M,z:Z)
 
 ###################
 # OUTPUT RELATIONS
@@ -144,6 +154,11 @@ phAlloc(v:V,c:C)  output
 ###################
 #    RULES
 ###################
+
+LabelRet(l,m)   :- InLabelRet(l,m).
+LabelRet(l,m)   :- OutLabelRet(l,m).
+LabelArg(l,m,z) :- InLabelArg(l,m,z).
+LabelArg(l,m,z) :- OutLabelArg(l,m,z).
 
 AssignCtxt(c,v,u)          :- Assign(v,u), MV(m,v), CM(c,m).
 AllocCtxt(c,v,o)           :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).

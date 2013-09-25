@@ -28,7 +28,9 @@
 	</style>
 
 	<link href="/stamp/fuelux/css/fuelux-responsive.min.css" rel="stylesheet" />
-	<link rel="stylesheet" href="../fileupload/jquery.fileupload-ui.css">
+	<link href="../fileupload/jquery.fileupload-ui.css" rel="stylesheet">
+	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 	
   </head>	  
 
@@ -53,41 +55,17 @@
 		  </form>
 		</li>
 	      </ul>
-
-	      <ul class="nav pull-left">
-		<li>
-		  <form id="fileupload" action="../fileUpload" method="POST" enctype="multipart/form-data">
-		    <span class="btn btn-warning fileinput-button">
-		      <i class="icon-plus icon-white"></i>
-		      <span>Map</span>
-		      <input type="file" name="files[]" multiple>
-		    </span>
-		  </form>
-		</li>
-	      </ul>
-
+	      
 	      <!-- <ul class="nav"> -->
-	      <!-- 	<\!-- Settings -\-> -->
+	      <!-- 	<\!-- Help -\-> -->
 	      <!-- 	<li class="dropdown"> -->
-	      <!-- 	  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a> -->
+	      <!-- 	  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help <b class="caret"></b></a> -->
 	      <!-- 	  <ul class="dropdown-menu"> -->
-	      <!-- 	    <li><a onClick="toggleClass()">Toggle Class</a></li> -->
-	      <!-- 	    <li><a onClick="toggleFlows()">Toggle Flows</a></li> -->
-	      <!-- 	    <li><a onClick="toggleWarnings()">Toggle Warnings</a></li> -->
+	      <!-- 	    <\!-- <li><a href="/doc/stamp.html" target="_blank">Docs</a></li> -\-> -->
+	      <!-- 	    <li><a href="http://www.youtube.com/user/STAMPStanford" target="_blank">Video Tutorials</a></li> -->
 	      <!-- 	  </ul> -->
 	      <!-- 	</li> -->
 	      <!-- </ul> -->
-	      
-	      <ul class="nav">
-		<!-- Help -->
-		<li class="dropdown">
-		  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help <b class="caret"></b></a>
-		  <ul class="dropdown-menu">
-		    <!-- <li><a href="/doc/stamp.html" target="_blank">Docs</a></li> -->
-		    <li><a href="http://www.youtube.com/user/STAMPStanford" target="_blank">Video Tutorials</a></li>
-		  </ul>
-		</li>
-	      </ul>
 
 	    </div>
  	  </div>
@@ -107,82 +85,35 @@
 	    </div>
 
 	    <!-- Main content -->
-	    <div class="span6">
+	    <div class="span6" id="reportdiv">
+
+
+	      <div class="well well-transparent stacked">
+		<h1>Android App Risk Report</h1>
+		<h3>Automatically analyze Android apps for thousands of security, privacy, and compliance risks </h3>
+	      </div>
+
+
 
 	      <table class="table table-condensed table-hover" id="reportheader">
 		<tr></tr>
 	      </table>
 
-	      <!-- <table class="table table-condensed table-hover" colspan="4" id="coverage-rpt"><th>Static</th><th>Dynamic</th><th>Source</th><th>Sink</th> -->
-	      <!-- 	<tr><td>100%</td><td>28%</td><td>63%</td><td>63%</td></tr> -->
-	      <!-- </table> -->
-
-	      <table class="table table-condensed table-hover" id="incident-summary"><th>Incidents</th><th>Risk Type</th>
-		<!-- <tr><td>5</td><td><a href="">Privacy Violations</a></td></tr>  -->
-		<!-- <tr><td>3</td><td><a href="">Confidentiality Risks</a></td></tr> -->
-		<!-- <tr><td>7</td><td><a href="">Integrity Risks</a></td></tr> -->
-		<!-- <tr><td>31</td><td><a href="">Low Risk</a></td></tr> -->
-		<!-- <tr><td>11</td><td><a href="">Analysis Warnings</a></td></tr> -->
+	      <table class="table table-condensed table-hover" id="incident-summary">
 	      </table>
 
-	      <table class="table table-condensed table-hover" id="privacy-rpt"><th colspan="5">Privacy - Data sent off device </th>
+	      <table class="table table-condensed table-hover" id="privacy-rpt">
 	      </table>
 
-	      <table class="table table-condensed table-hover" id="conf-rpt"><th colspan="7">Confidentiality - Encryption status of data sent off device</th>
+	      <table class="table table-condensed table-hover" id="conf-rpt">
 	      </table>
 
-	      <!-- <table class="table table-condensed table-hover" id="integrity-rpt"><th colspan="5">Integrity - Untrusted data flowing to sensitive APIs</th> -->
-	      <!-- 	<tr> -->
-	      <!-- 	  <td>3</td><td><a href="">Data Corruption</a></td> -->
-	      <!-- 	  <td><i class="icon-search"></i></td>		   -->
-	      <!-- 	  <td><i class="icon-ok"></i></td> -->
-	      <!-- 	  <td><i class="icon-ban-circle"></i></td> -->
-	      <!-- 	</tr> -->
-	      <!-- 	<tr> -->
-	      <!-- 	  <td>7</td><td><a href="">Data Injection</a></td> -->
-	      <!-- 	  <td><i class="icon-search"></i></td>		   -->
-	      <!-- 	  <td><i class="icon-ok"></i></td> -->
-	      <!-- 	  <td><i class="icon-ban-circle"></i></td> -->
-	      <!-- 	</tr> -->
-	      <!-- 	<tr> -->
-	      <!-- 	  <td>11</td><td><a href="">Others</a></td> -->
-	      <!-- 	  <td><i class="icon-search"></i></td>		   -->
-	      <!-- 	  <td><i class="icon-ok"></i></td> -->
-	      <!-- 	  <td><i class="icon-ban-circle"></i></td> -->
-	      <!-- 	</tr> -->
-	      <!-- </table> -->
-
-	      <table class="table table-condensed table-hover" id="lowrisk-rpt"><th colspan="7">Low Risk - Data accessed and remaining on device</th>
-	      	<!-- <tr><td>2</td><td><a href="">On Device Flows</a></td> -->
-	      	<!--   <td><i class="icon-search"></i></td>		   -->
-	      	<!--   <td><i class="icon-ok"></i></td> -->
-	      	<!--   <td><i class="icon-ban-circle"></i></td> -->
-	      	<!-- </tr> -->
+	      <table class="table table-condensed table-hover" id="lowrisk-rpt">
 	      </table>
-
-	      <!-- <table class="table table-condensed table-hover" id="warn-rpt"><th colspan="5">Analysis Warnings - Sources of unsoundness</th> -->
-	      <!-- 	<tr><td>5</td><td><a href="">Dynamic Code Loading</a></td> -->
-	      <!-- 	  <td><i class="icon-search"></i></td>		   -->
-	      <!-- 	  <td><i class="icon-ok"></i></td> -->
-	      <!-- 	  <td><i class="icon-ban-circle"></i></td> -->
-	      <!-- 	</tr>  -->
-	      <!-- 	<tr><td>3</td><td><a href="">Reflection</a></td> -->
-	      <!-- 	  <td><i class="icon-search"></i></td> -->
-	      <!-- 	  <td><i class="icon-ok"></i></td> -->
-	      <!-- 	  <td><i class="icon-ban-circle"></i></td> -->
-	      <!-- 	</tr> -->
-	      <!-- 	<tr><td>2</td><td><a href="">Others</a></td> -->
-	      <!-- 	  <td><i class="icon-search"></i></td> -->
-	      <!-- 	  <td><i class="icon-ok"></i></td> -->
-	      <!-- 	  <td><i class="icon-ban-circle"></i></td> -->
-	      <!-- 	</tr> -->
-	      <!-- </table> -->
-
 
 
 	    </div>
-	    <!-- <div class="accordion" id="accordionFlows"> -->
-	      <!-- </div> -->
+
 
 	      <div class="span3 right-view" id="rightbar">
 

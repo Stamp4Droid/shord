@@ -1,1 +1,1 @@
-@DUMP:varLabelPrim(%C,%U,%L):l%L u%U %C@
+@DUMP:varInLabelPrim(%C,%U,%L):l%L u%U %C@

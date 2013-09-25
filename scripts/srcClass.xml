@@ -3,27 +3,27 @@
   <src class="PII" id="2" priority="high">$accounts.name</src>
   <src class="PII" id="3" priority="high">$audio</src>
   <src class="PII" id="4" priority="high">$browser</src>
-  <src class="PII" id="5" priority="high">$browser.bookmarks</src>
-  <src class="PII" id="6" priority="high">$calllog</src>
-  <src class="PII" id="7" priority="high">$calendar</src>
-  <src class="PII" id="8" priority="high">$camera.picture</src>
-  <src class="PII" id="9" priority="high">$contacts</src>
-  <src class="PII" id="10" priority="high">$content://com.android.calendar/calendars</src>
-  <src class="PII" id="11" priority="high">$content://com.android.calendar/events</src>
-  <src class="PII" id="12" priority="high">$content://com.android.contacts/contacts/</src>
-  <src class="PII" id="13" priority="high">$content://com.android.contacts/data</src>
-  <src class="PII" id="14" priority="high">$content://com.android.contacts/data/phones</src>
-  <src class="PII" id="15" priority="high">$content://calendar/events</src>
-  <src class="PII" id="16" priority="high">$content://calendar/calendars</src>
-  <src class="PII" id="17" priority="high">$content://contacts/people</src>
-  <src class="PII" id="18" priority="high">$content://mms</src>
-  <src class="PII" id="19" priority="high">$content://mms/part</src>
-  <src class="PII" id="20" priority="high">$content://sms</src>
-  <src class="PII" id="21" priority="high">$content://sms/sent</src>
-  <src class="PII" id="22" priority="high">$content://sms/inbox</src>
-  <src class="PII" id="23" priority="high">$content://call_log/calls</src>
-  <src class="PII" id="24" priority="high">$incomingcallnumber</src>
-  <src class="PII" id="25" priority="high">$media</src>
+  <src desc="Browsing History" class="PII" id="5" priority="high">$browser.bookmarks</src>
+  <src desc="Call Log" class="PII" id="6" priority="high">$calllog</src>
+  <src desc="Calendar Data" class="PII" id="7" priority="high">$calendar</src>
+  <src desc="Photos" class="PII" id="8" priority="high">$camera.picture</src>
+  <src desc="Contact Book Data" class="PII" id="9" priority="high">$contacts</src>
+  <src desc="Calendar Data" class="PII" id="10" priority="high">$content://com.android.calendar/calendars</src>
+  <src desc="Calendar Data" class="PII" id="11" priority="high">$content://com.android.calendar/events</src>
+  <src desc="Contact Book Data" class="PII" id="12" priority="high">$content://com.android.contacts/contacts/</src>
+  <src desc="Contact Book Data" class="PII" id="13" priority="high">$content://com.android.contacts/data</src>
+  <src desc="Contact Book Data" class="PII" id="14" priority="high">$content://com.android.contacts/data/phones</src>
+  <src desc="Calendar Data" class="PII" id="15" priority="high">$content://calendar/events</src>
+  <src desc="Calendar Data" class="PII" id="16" priority="high">$content://calendar/calendars</src>
+  <src desc="Contact Book Data" class="PII" id="17" priority="high">$content://contacts/people</src>
+  <src desc="Multimedia Message Data" class="PII" id="18" priority="high">$content://mms</src>
+  <src desc="Multimedia Message Data" class="PII" id="19" priority="high">$content://mms/part</src>
+  <src desc="SMS Messages" class="PII" id="20" priority="high">$content://sms</src>
+  <src desc="SMS Messages" class="PII" id="21" priority="high">$content://sms/sent</src>
+  <src desc="SMS Messages" class="PII" id="22" priority="high">$content://sms/inbox</src>
+  <src desc="Call Log" class="PII" id="23" priority="high">$content://call_log/calls</src>
+  <src desc="Call Log" class="PII" id="24" priority="high">$incomingcallnumber</src>
+  <src desc="Photos and Media" class="PII" id="25" priority="high">$media</src>
   <src class="Phone Info" id="26">$content://telephony/carriers</src>
   <src class="Phone Info" id="27">$content://telephony/carriers/preferapn</src>
   <src class="Phone Info" id="28">$cdma_network_id</src>

@@ -33,11 +33,15 @@ class Bundle
 	/* SMS */
 	public byte[][] pdus;
 
-    public Bundle() {
+	//called only from the model
+	public Bundle(boolean flag){
 		byte[][] smsData = new byte[1][];
 		smsData[0] = smsByteArray();
 		this.pdus = smsData;
 		this.unknown = smsData;
+	}
+
+    public Bundle() {
 	}
 	
 	//getter..
@@ -438,13 +442,6 @@ class Bundle
 	@STAMP(flows={@Flow(from="$SMS",to="@return")})
 	private byte[] smsByteArray() {
 		byte[] bytes = new byte[1];
-		bytes[0] = smsByte();
 		return bytes;
 	}
-
-	@STAMP(flows={@Flow(from="$SMS",to="@return")})
-	private byte smsByte() {
-		return 0;
-	}
-
 }

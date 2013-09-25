@@ -3,15 +3,10 @@ package stamp.analyses;
 import soot.Scene;
 import soot.SootClass;
 import soot.SootMethod;
-import soot.FastHierarchy;
-import soot.util.NumberedString;
 
 import java.util.List;
 import java.util.LinkedList;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.io.InputStream;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -36,16 +31,19 @@ import chord.project.Chord;
 					"ArgArgTransfer", "ArgRetTransfer", 
 					"ArgArgFlow",
 					"SrcLabel", "SinkLabel",
-					"LabelArg", "LabelRet" },
+					"InLabelArg", "InLabelRet",
+					"OutLabelArg", "OutLabelRet" },
 	   namesOfTypes = { "L" },
 	   types = { DomL.class },
 	   namesOfSigns = { "ArgArgTransfer", "ArgRetTransfer", 
 						"ArgArgFlow",
 						"SrcLabel", "SinkLabel",
-						"LabelArg", "LabelRet" },
+						"InLabelArg", "InLabelRet",
+						"OutLabelArg", "OutLabelRet" },
 	   signs = { "M0,Z0,Z1:M0_Z0_Z1", "M0,Z0:M0_Z0", 
 				 "M0,Z0,Z1:M0_Z0_Z1",
 				 "L0:L0", "L0:L0",
+				 "L0,M0,Z0:L0_M0_Z0", "L0,M0:L0_M0",
 				 "L0,M0,Z0:L0_M0_Z0", "L0,M0:L0_M0" }
 	   )
 public class AnnotationReader extends JavaAnalysis
@@ -54,10 +52,10 @@ public class AnnotationReader extends JavaAnalysis
 	private ProgramRel relArgRetTransfer;
 	private ProgramRel relArgArgFlow;
 
-	private ProgramRel relLabelArg; 
-	private ProgramRel relLabelRet;
-
-	private HashMap<SootClass,List<SootClass>> classToSubtypes = new HashMap();
+	private ProgramRel relInLabelArg; 
+	private ProgramRel relInLabelRet;
+	private ProgramRel relOutLabelArg; 
+	private ProgramRel relOutLabelRet;
 
 	public void run()
 	{		
@@ -90,18 +88,24 @@ public class AnnotationReader extends JavaAnalysis
 		relSinkLabel.save();
 
 		//fill LabelArg and LabelRet
-		relLabelArg = (ProgramRel) ClassicProject.g().getTrgt("LabelArg");
-		relLabelRet = (ProgramRel) ClassicProject.g().getTrgt("LabelRet");
-		relLabelArg.zero();
-		relLabelRet.zero();		
+		relInLabelArg = (ProgramRel) ClassicProject.g().getTrgt("InLabelArg");
+		relInLabelRet = (ProgramRel) ClassicProject.g().getTrgt("InLabelRet");
+		relOutLabelArg = (ProgramRel) ClassicProject.g().getTrgt("OutLabelArg");
+		relOutLabelRet = (ProgramRel) ClassicProject.g().getTrgt("OutLabelRet");
+		relInLabelArg.zero();
+		relInLabelRet.zero();		
+		relOutLabelArg.zero();
+		relOutLabelRet.zero();		
 		while(!worklist.isEmpty()){
 			SootMethod meth = (SootMethod) worklist.remove(0);
 			String from = (String) worklist.remove(0);
 			String to = (String) worklist.remove(0);
 			addFlow(meth, from, to);
 		}
-		relLabelArg.save();
-		relLabelRet.save();
+		relInLabelArg.save();
+		relInLabelRet.save();
+		relOutLabelArg.save();
+		relOutLabelRet.save();
 	}
 
 	private void process(List<String> srcLabels, List<String> sinkLabels, List worklist)
@@ -126,7 +130,7 @@ public class AnnotationReader extends JavaAnalysis
 				String className = chordMethodSig.substring(atSymbolIndex+1);
 				if(scene.containsClass(className)){
 					SootClass klass = scene.getSootClass(className);
-					String subsig = getSootSubsigFor(chordMethodSig.substring(0,atSymbolIndex));
+					String subsig = SootUtils.getSootSubsigFor(chordMethodSig.substring(0,atSymbolIndex));
 					SootMethod meth = klass.getMethod(subsig);
 					
 					if(domM.indexOf(meth) >= 0){
@@ -179,16 +183,16 @@ public class AnnotationReader extends JavaAnalysis
 	private void addFlow(SootMethod meth, String from, String to) //throws NumberFormatException
 	{
 		System.out.println("+++ " + meth + " " + from + " " + to);
-		List<SootMethod> meths = overridingMethodsFor(meth);
+		List<SootMethod> meths = SootUtils.overridingMethodsFor(meth);
 		char from0 = from.charAt(0);
 		if(from0 == '$' || from0 == '!') {
 			if(to.equals("-1")){
 				for(SootMethod m : meths)
-					relLabelRet.add(from, m);
+					relInLabelRet.add(from, m);
 			}
 			else{
 				for(SootMethod m : meths)
-					relLabelArg.add(from, m, Integer.valueOf(to));
+					relInLabelArg.add(from, m, Integer.valueOf(to));
 			}
 		} else {
 			Integer fromArgIndex = Integer.valueOf(from);
@@ -196,10 +200,10 @@ public class AnnotationReader extends JavaAnalysis
 			if(to0 == '!'){
 				if(from.equals("-1")){
 					for(SootMethod m : meths)
-						relLabelRet.add(to, m);
+						relOutLabelRet.add(to, m);
 				} else{
 					for(SootMethod m : meths)
-						relLabelArg.add(to, m, fromArgIndex);
+						relOutLabelArg.add(to, m, fromArgIndex);
 				}
 			} else if(to0 == '?'){
 				Integer toArgIndex = Integer.valueOf(to.substring(1));
@@ -214,114 +218,5 @@ public class AnnotationReader extends JavaAnalysis
 					relArgArgTransfer.add(m, fromArgIndex, toArgIndex);
 			}
 		}
-	}
-
-	List<SootMethod> overridingMethodsFor(SootMethod originalMethod)
-	{
-		List<SootClass> subTypes = subTypesOf(originalMethod.getDeclaringClass());
-		List<SootMethod> overridingMeths = new ArrayList();
-		NumberedString subsig = originalMethod.getNumberedSubSignature();
-		for(SootClass st : subTypes){
-			if(st.declaresMethod(subsig)){
-				overridingMeths.add(st.getMethod(subsig));
-			}
-		}
-		return overridingMeths;
-	}
-
-	List<SootClass> subTypesOf(SootClass cl)
-	{
-		List<SootClass> subTypes = classToSubtypes.get(cl);
-		if(subTypes != null) 
-			return subTypes;
-		
-		classToSubtypes.put(cl, subTypes = new ArrayList());
-
-		subTypes.add(cl);
-
-		LinkedList<SootClass> worklist = new LinkedList<SootClass>();
-		HashSet<SootClass> workset = new HashSet<SootClass>();
-		FastHierarchy fh = Program.g().scene().getOrMakeFastHierarchy();
-
-		if(workset.add(cl)) worklist.add(cl);
-		while(!worklist.isEmpty()) {
-			cl = worklist.removeFirst();
-			if(cl.isInterface()) {
-				for(Iterator cIt = fh.getAllImplementersOfInterface(cl).iterator(); cIt.hasNext();) {
-					final SootClass c = (SootClass) cIt.next();
-					if(workset.add(c)) worklist.add(c);
-				}
-			} else {
-				if(cl.isConcrete()) {
-					subTypes.add(cl);
-				}
-				for(Iterator cIt = fh.getSubclassesOf(cl).iterator(); cIt.hasNext();) {
-					final SootClass c = (SootClass) cIt.next();
-					if(workset.add(c)) worklist.add(c);
-				}
-			}
-		}
-		return subTypes;
-	}
-	
-	private String getSootSubsigFor(String chordSubsig)
-	{
-		String name = chordSubsig.substring(0, chordSubsig.indexOf(':'));
-		String retType = chordSubsig.substring(chordSubsig.indexOf(')')+1);
-		String paramTypes = chordSubsig.substring(chordSubsig.indexOf('(')+1, chordSubsig.indexOf(')'));
-		return parseDesc(retType) + " " + name + "(" + parseDesc(paramTypes) + ")";
-	}
-
-	static String parseDesc(String desc) 
-	{
-		StringBuilder params = new StringBuilder();
-		String param = null;
-		char c;
-		int arraylevel=0;
-		boolean didone = false;
-
-		int len = desc.length();
-		for (int i=0; i < len; i++) {
-			c = desc.charAt(i);
-			if (c =='B') {
-				param = "byte";
-			} else if (c =='C') {
-				param = "char";
-			} else if (c == 'D') {
-				param = "double";
-			} else if (c == 'F') {
-				param = "float";
-			} else if (c == 'I') {
-				param = "int";
-			} else if (c == 'J') {
-				param = "long";
-			} else if (c == 'S') {
-				param = "short";
-			} else if (c == 'Z') {
-				param = "boolean";
-			} else if (c == 'V') {
-				param = "void";
-			} else if (c == '[') {
-				arraylevel++;
-				continue;
-			} else if (c == 'L') {
-				int j;
-				j = desc.indexOf(';',i+1);
-				param = desc.substring(i+1,j);
-				// replace '/'s with '.'s
-				param = param.replace('/','.');
-				i = j;
-			} else
-				assert false;
-
-			if (didone) params.append(',');
-			params.append(param);
-			while (arraylevel>0) {
-				params.append("[]");
-				arraylevel--;
-			}
-			didone = true;
-		}
-		return params.toString();
 	}
 }
