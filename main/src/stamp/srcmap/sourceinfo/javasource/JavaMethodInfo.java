@@ -1,4 +1,4 @@
-package stamp.srcmap.javasource;
+package stamp.srcmap.sourceinfo.javasource;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,8 +12,8 @@ import org.w3c.dom.Node;
 import stamp.srcmap.Expr;
 import stamp.srcmap.InvkMarker;
 import stamp.srcmap.Marker;
-import stamp.srcmap.MethodInfo;
 import stamp.srcmap.SimpleMarker;
+import stamp.srcmap.sourceinfo.MethodInfo;
 
 /**
  * @author Saswat Anand 

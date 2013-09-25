@@ -15,7 +15,7 @@ import stamp.missingmodels.util.jcflsolver.EdgeData;
 import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.missingmodels.viz.html.HTMLObject;
 import stamp.missingmodels.viz.html.HTMLObject.DivObject;
-import stamp.srcmap.SourceInfo;
+import stamp.srcmap.sourceinfo.SourceInfo;
 
 public abstract class FlowObject extends DivObject {	
 	private int index;

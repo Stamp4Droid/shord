@@ -23,8 +23,8 @@ import stamp.missingmodels.util.Relation.StubIndexRelation;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.srcmap.Expr;
-import stamp.srcmap.RegisterMap;
-import stamp.srcmap.SourceInfo;
+import stamp.srcmap.sourceinfo.RegisterMap;
+import stamp.srcmap.sourceinfo.SourceInfo;
 
 /*
  * This class contains code to convert to and from the

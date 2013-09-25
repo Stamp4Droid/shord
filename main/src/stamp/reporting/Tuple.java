@@ -10,8 +10,8 @@ import soot.SootMethod;
 import soot.Unit;
 import soot.jimple.Stmt;
 import stamp.srcmap.Expr;
-import stamp.srcmap.SourceInfo;
 import stamp.srcmap.SourceInfoSingleton;
+import stamp.srcmap.sourceinfo.SourceInfo;
 
 /*
  * @author Saswat Anand

@@ -1,4 +1,4 @@
-package stamp.srcmap.javasource;
+package stamp.srcmap.sourceinfo.javasource;
 
 import shord.program.Program;
 
@@ -9,7 +9,7 @@ import soot.Value;
 import soot.jimple.Stmt;
 import soot.jimple.AssignStmt;
 import soot.jimple.NewExpr;
-import stamp.srcmap.SourceInfo;
+import stamp.srcmap.sourceinfo.SourceInfo;
 
 import java.util.*;
 

@@ -1,4 +1,4 @@
-package stamp.srcmap.javasource;
+package stamp.srcmap.sourceinfo.javasource;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,10 +27,10 @@ import soot.jimple.TableSwitchStmt;
 import stamp.srcmap.Expr;
 import stamp.srcmap.InvkMarker;
 import stamp.srcmap.Marker;
-import stamp.srcmap.MethodInfo;
-import stamp.srcmap.RegisterMap;
 import stamp.srcmap.SimpleMarker;
-import stamp.srcmap.SourceInfo;
+import stamp.srcmap.sourceinfo.MethodInfo;
+import stamp.srcmap.sourceinfo.RegisterMap;
+import stamp.srcmap.sourceinfo.SourceInfo;
 
 /**
  * @author Saswat Anand 

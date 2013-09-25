@@ -6,7 +6,7 @@ import soot.AbstractJasminClass;
 import soot.Unit;
 import soot.jimple.Stmt;
 
-import stamp.srcmap.SourceInfo;
+import stamp.srcmap.sourceinfo.SourceInfo;
 
 import java.util.*;
 

@@ -13,8 +13,8 @@ import shord.project.analyses.ProgramRel;
 import soot.SootClass;
 import soot.SootMethod;
 import stamp.srcmap.Expr;
-import stamp.srcmap.RegisterMap;
-import stamp.srcmap.SourceInfo;
+import stamp.srcmap.sourceinfo.RegisterMap;
+import stamp.srcmap.sourceinfo.SourceInfo;
 import chord.util.tuple.object.Pair;
 
 /**

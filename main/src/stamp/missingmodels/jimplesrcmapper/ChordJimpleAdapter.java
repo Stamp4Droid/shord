@@ -35,7 +35,7 @@ import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo.SimpleCodeStructure
 import stamp.srcmap.Expr;
 import stamp.srcmap.InvkMarker;
 import stamp.srcmap.SimpleMarker;
-import stamp.srcmap.SourceInfo;
+import stamp.srcmap.sourceinfo.SourceInfo;
 
 public class ChordJimpleAdapter extends JimpleVisitorWithStructure {
 	private final PrintWriter writer;

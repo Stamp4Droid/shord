@@ -27,7 +27,7 @@ import stamp.paths.CtxtVarPoint;
 import stamp.paths.Path;
 import stamp.paths.PathsAdapter;
 import stamp.paths.Step;
-import stamp.srcmap.SourceInfo;
+import stamp.srcmap.sourceinfo.SourceInfo;
 import stamp.util.PropertyHelper;
 import stamp.util.tree.Node;
 import stamp.util.tree.Tree;

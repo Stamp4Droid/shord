@@ -1,4 +1,4 @@
-package stamp.srcmap.javasource;
+package stamp.srcmap.sourceinfo.javasource;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import stamp.srcmap.ClassInfo;
+import stamp.srcmap.sourceinfo.ClassInfo;
 
 /**
  * @author Saswat Anand 

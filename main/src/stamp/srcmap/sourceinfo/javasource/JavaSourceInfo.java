@@ -1,4 +1,4 @@
-package stamp.srcmap.javasource;
+package stamp.srcmap.sourceinfo.javasource;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,12 +18,12 @@ import soot.tagkit.LineNumberTag;
 import soot.tagkit.SourceFileTag;
 import soot.tagkit.SourceLineNumberTag;
 import soot.tagkit.Tag;
-import stamp.srcmap.ClassInfo;
 import stamp.srcmap.InvkMarker;
 import stamp.srcmap.Marker;
-import stamp.srcmap.MethodInfo;
-import stamp.srcmap.RegisterMap;
-import stamp.srcmap.SourceInfo;
+import stamp.srcmap.sourceinfo.ClassInfo;
+import stamp.srcmap.sourceinfo.MethodInfo;
+import stamp.srcmap.sourceinfo.RegisterMap;
+import stamp.srcmap.sourceinfo.SourceInfo;
 
 /**
  * @author Saswat Anand 

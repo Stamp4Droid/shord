@@ -1,6 +1,8 @@
-package stamp.srcmap;
+package stamp.srcmap.sourceinfo;
 
 import java.util.List;
+
+import stamp.srcmap.Marker;
 
 /**
  * @author Saswat Anand 

@@ -1,6 +1,7 @@
 package stamp.srcmap;
 
-import stamp.srcmap.javasource.JavaSourceInfo;
+import stamp.srcmap.sourceinfo.SourceInfo;
+import stamp.srcmap.sourceinfo.javasource.JavaSourceInfo;
 
 public class SourceInfoSingleton {
 	public static enum SourceInfoType {

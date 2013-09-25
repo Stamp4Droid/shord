@@ -11,8 +11,8 @@ import soot.jimple.Stmt;
 
 import chord.util.tuple.object.Pair;
 
-import stamp.srcmap.SourceInfo;
 import stamp.srcmap.SyntheticMethodMap;
+import stamp.srcmap.sourceinfo.SourceInfo;
 
 import java.util.*;
 

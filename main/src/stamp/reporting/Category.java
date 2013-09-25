@@ -10,7 +10,7 @@ import java.util.Map;
 
 import soot.SootClass;
 import soot.SootMethod;
-import stamp.srcmap.SourceInfo;
+import stamp.srcmap.sourceinfo.SourceInfo;
 
 /*
  * @author Saswat Anand

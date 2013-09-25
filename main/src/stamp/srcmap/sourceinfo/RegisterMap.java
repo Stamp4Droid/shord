@@ -1,9 +1,10 @@
-package stamp.srcmap;
+package stamp.srcmap.sourceinfo;
 
 import java.util.Map;
 import java.util.Set;
 
 import soot.Local;
+import stamp.srcmap.Expr;
 
 /**
  * @author Saswat Anand 

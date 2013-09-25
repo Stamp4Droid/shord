@@ -1,4 +1,4 @@
-package stamp.srcmap;
+package stamp.srcmap.sourceinfo;
 
 import java.io.*;
 import java.util.*;

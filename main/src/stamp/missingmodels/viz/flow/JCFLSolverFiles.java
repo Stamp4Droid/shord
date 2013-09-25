@@ -26,7 +26,7 @@ import stamp.missingmodels.util.jcflsolver.Edge;
 import stamp.missingmodels.util.jcflsolver.EdgeData;
 import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.missingmodels.viz.flow.FlowObject.AliasCompressedFlowObject;
-import stamp.srcmap.SourceInfo;
+import stamp.srcmap.sourceinfo.SourceInfo;
 
 /*
  * Collection of StampFile generators to print various
