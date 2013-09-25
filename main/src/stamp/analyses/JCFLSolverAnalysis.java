@@ -21,6 +21,7 @@ import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverStubs;
 import stamp.missingmodels.analysis.JCFLSolverRunner.RelationAdder;
 import stamp.missingmodels.grammars.E12;
 import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo;
+import stamp.missingmodels.jimplesrcmapper.JavaToJimpleStructureConverter;
 import stamp.missingmodels.jimplesrcmapper.JimpleStructureExtractor;
 import stamp.missingmodels.jimplesrcmapper.Printer;
 import stamp.missingmodels.util.ConversionUtils.ChordRelationAdder;
@@ -189,6 +190,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 			}
 			
 			// CONVERT STRUCTURE TO XML OBJECT
+			JavaToJimpleStructureConverter jtj = new JavaToJimpleStructureConverter(codeInfo);
 
 			for(SootClass cl : Scene.v().getClasses()) {
 				System.out.println("READING: " + cl.getName());
@@ -223,6 +225,9 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 				b.append(cl.getName());
 				b.append(".xml");
 				String xmlOutputPath = b.toString();
+				
+				// CONVERT THE OBJECT
+				jtj.convert(object);
 								
 				// WRITE THE XML OBJECT
 				File objectOutputFile = new File(xmlOutputPath);
@@ -230,7 +235,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 				PrintWriter pw = new PrintWriter(new FileOutputStream(objectOutputFile));
 				pw.println(object.toString());
 				pw.close();
-			}			
+			}
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
