@@ -5,7 +5,6 @@ import shord.program.Program;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
 import soot.Unit;
-import stamp.srcmap.SourceInfo;
 import chord.util.tuple.object.Pair;
 
 /*
@@ -13,7 +12,7 @@ import chord.util.tuple.object.Pair;
  * @author Osbert Bastani
  **/
 public class SrcSinkFlow extends XMLReport {
-    public SrcSinkFlow(SourceInfo sourceInfo) {
+    public SrcSinkFlow() {
     	super("Source-to-sink Flows");
     }
 
