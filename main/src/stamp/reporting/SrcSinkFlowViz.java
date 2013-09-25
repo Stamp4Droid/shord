@@ -51,7 +51,7 @@ public class SrcSinkFlowViz extends XMLVizReport {
         OTHER // self-explanatory
     }
 
-    public SrcSinkFlowViz(SourceInfo sourceInfo) {
+    public SrcSinkFlowViz() {
         super("Flow Path Vizualization");
     }
 

@@ -21,7 +21,7 @@ import chord.util.tuple.object.Pair;
  * @author Saswat Anand
  */
 public class TaintedVar extends XMLReport {
-	public TaintedVar(SourceInfo sourceInfo) {
+	public TaintedVar() {
 		super("Tainted Vars");
 	}
 

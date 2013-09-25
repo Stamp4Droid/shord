@@ -7,7 +7,7 @@ import stamp.srcmap.SourceInfo;
 
 public class TaintedStub extends XMLReport
 {
-    public TaintedStub(SourceInfo sourceInfo) {
+    public TaintedStub() {
 		super("Tainted Stub Methods");
 	}
 
