@@ -6,27 +6,28 @@ import stamp.srcmap.sourceinfo.javasource.JavaSourceInfo;
 public class SourceInfoSingleton {
 	public static enum SourceInfoType {
 		JIMPLE, JAVA;
-
-		public SourceInfo getSourceInfo() {
-			switch(this) {
-			case JAVA:
-				return new JavaSourceInfo();
-			default:
-				throw new RuntimeException("Source info " + this.toString() + " not implemented!");
-			}
-		}
 	}
 
-	private static SourceInfo s = null;
+	private static JavaSourceInfo javaSourceInfo = null;
+	private static SourceInfoType sourceInfoType = SourceInfoType.JAVA;
 	
 	public static void setSourceInfoType(SourceInfoType type) {
-		s = type.getSourceInfo();
+		sourceInfoType = type;
+	}
+	
+	public static JavaSourceInfo getJavaSourceInfo() {
+		if(javaSourceInfo == null) {
+			javaSourceInfo = new JavaSourceInfo();
+		}
+		return javaSourceInfo;
 	}
 	
 	public static SourceInfo v() {
-		if(s == null) {
-			s = new JavaSourceInfo();
+		switch(sourceInfoType) {
+		case JAVA:
+			return getJavaSourceInfo();
+		default:
+			throw new RuntimeException("Source info " + sourceInfoType.toString() + " not implemented!");
 		}
-		return s;
 	}
 }

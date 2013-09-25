@@ -115,7 +115,8 @@ public class FileManager {
     }
 	
 	private void addJimple(String filePath, boolean isModel) throws Exception {
-		File jimpleFile = new File(outPath+"/jimple/"+filePath.substring(0, filePath.length()-4).concat("jimple").replace("/", "."));
+		String jimpleFilePath = filePath.substring(0, filePath.length()-4).concat("jimple").replace("/", ".");
+		File jimpleFile = new File(outPath+"/jimple/" + jimpleFilePath);
 		
 		System.out.println("DEBUG: " + filePath + " " + jimpleFile.getCanonicalPath());
 		
@@ -151,13 +152,16 @@ public class FileManager {
 		}
 
 		//SourceData data = srcVisitor.process(file);
-		File taintedInfoFile = new File(outPath+"/results/TaintedVar.xml");
-		File allReachableFile = new File(outPath+"/results/AllReachable.xml");
-		File reachedFile = new File(outPath+"/results/reachedmethods.xml");
+		File taintedInfoFile = new File(outPath+"/results/TaintedVar.xml"); // TODO: replace with jimple version
+		File allReachableFile = new File(outPath+"/results/AllReachable.xml"); // TODO: replace with jimple version
+		File reachedFile = new File(outPath+"/results/reachedmethods.xml"); // TODO: replace with jimple version
 
 		//replace .java with .xml
-		String fname = filePath.substring(0, filePath.length()-4).concat("xml");
-		File srcMapFile = new File(srcMapDirPath+"/"+fname);
+		//String fname = filePath.substring(0, filePath.length()-4).concat("xml");
+		String fname = jimpleFilePath.substring(0, jimpleFilePath.length()-6).concat("xml");
+		//File srcMapFile = new File(srcMapDirPath+"/"+fname);
+		File srcMapFile = new File(outPath+"/jimple/"+"/"+fname);
+		System.out.println("DEBUG: srcmap file now at " + srcMapFile.getCanonicalPath());
 
 		SourceProcessor sp = new SourceProcessor(jimpleFile, droidrecord, srcMapFile, taintedInfoFile, allReachableFile, reachedFile, filePath);
 		String annotatedSource = sp.getSourceWithAnnotations();

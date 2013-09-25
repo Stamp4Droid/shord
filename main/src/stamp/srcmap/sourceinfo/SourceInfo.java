@@ -38,4 +38,5 @@ public interface SourceInfo {
 	public abstract Map<String,List<String>> allAliasSigs(SootClass klass);
 	public abstract File srcMapFile(String srcFileName);
 	public abstract String srcInvkExprFor(Stmt invkQuad);
+	public abstract String srcClassName(SootClass declKlass);
 }

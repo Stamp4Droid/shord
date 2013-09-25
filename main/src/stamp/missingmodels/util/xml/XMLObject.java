@@ -12,9 +12,11 @@ import java.util.Map;
  * @author Osbert Bastani
  */
 public abstract class XMLObject implements Serializable {
-	private static final long serialVersionUID = -6914620814798273359L;
-	
+	private static final long serialVersionUID = 1L;
+		
+	/** The XML information for each node */
 	private final String name;
+	//private List<String> attributeKeys = new ArrayList<String>();
 	private Map<String,String> attributes = new HashMap<String,String>();
 	private boolean hasBody;
 
@@ -24,10 +26,25 @@ public abstract class XMLObject implements Serializable {
 	}
 
 	public void putAttribute(String key, String value) {
+		/*
+		if(attributes.keySet().contains(key)) {
+			this.attributeKeys.remove(key);
+		}
+		this.attributeKeys.add(key);
+		*/
 		this.attributes.put(key, value);
 	}
 	
+	public String getAttribute(String key) {
+		return this.attributes.get(key);
+	}
+	
 	public abstract String getInnerXML(int tabs);
+	public abstract List<XMLObject> getAllChildrenByName(String name);
+	
+	protected String getName() {
+		return this.name;
+	}
 	
 	@Override
 	public String toString() {
@@ -67,6 +84,8 @@ public abstract class XMLObject implements Serializable {
 	}
 	
 	public static class XMLContainerObject extends XMLObject {
+		private static final long serialVersionUID = 1L;
+		
 		private List<XMLObject> children = new ArrayList<XMLObject>();
 		
 		public XMLContainerObject(String name) {
@@ -75,6 +94,18 @@ public abstract class XMLObject implements Serializable {
 
 		public void addChild(XMLObject child) {
 			this.children.add(child);
+		}
+		
+		@Override
+		public List<XMLObject> getAllChildrenByName(String name) {
+			List<XMLObject> result = new ArrayList<XMLObject>();
+			for(XMLObject child : this.children) {
+				if(child.getName().equals(name)) {
+					result.add(child);
+				}
+				result.addAll(child.getAllChildrenByName(name));
+			}
+			return result;
 		}
 
 		@Override
@@ -88,6 +119,8 @@ public abstract class XMLObject implements Serializable {
 	}
 	
 	public static class XMLTextObject extends XMLObject {
+		private static final long serialVersionUID = 1L;
+		
 		private String innerXML = null;
 		
 		public XMLTextObject(String name) {
@@ -96,6 +129,11 @@ public abstract class XMLObject implements Serializable {
 
 		public void setInnerXML(String innerXML) {
 			this.innerXML = innerXML;
+		}
+
+		@Override
+		public List<XMLObject> getAllChildrenByName(String name) {
+			return new ArrayList<XMLObject>();
 		}
 
 		@Override
@@ -115,8 +153,15 @@ public abstract class XMLObject implements Serializable {
 	}
 	
 	public static class XMLEmptyObject extends XMLObject {
+		private static final long serialVersionUID = 1L;
+
 		public XMLEmptyObject(String name) {
 			super(name, false);
+		}
+
+		@Override
+		public List<XMLObject> getAllChildrenByName(String name) {
+			return new ArrayList<XMLObject>();
 		}
 
 		@Override

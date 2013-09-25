@@ -32,7 +32,7 @@ public class ChordJimpleAdapter extends JimpleVisitorWithStructure {
 	// See ChordAdapter.visit(TypeDeclaration)
 	@Override
 	public void visit(SootClass cl, CodeStructure classInfo) {
-		String chordSig = this.sourceInfo.chordTypeFor(cl.getType());
+		String chordSig = ""; // TODO URGENT
 		int lineNum = classInfo.declarationLineNum;
 		// update class info
 	}

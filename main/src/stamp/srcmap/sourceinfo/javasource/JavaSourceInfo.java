@@ -171,7 +171,7 @@ public class JavaSourceInfo implements SourceInfo {
 		return ci;
 	}
 
-	private String srcClassName(SootClass declKlass) {
+	public String srcClassName(SootClass declKlass) {
 		String srcClsName = this.anonymousClassMap.srcClassName(declKlass);
 		if(srcClsName != null)
 			return srcClsName;

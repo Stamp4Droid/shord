@@ -42,7 +42,7 @@ import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetInputFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetOutputFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetWithDataOutputFile;
 import stamp.srcmap.SourceInfoSingleton;
-import stamp.srcmap.sourceinfo.SourceInfo;
+import stamp.srcmap.sourceinfo.javasource.JavaSourceInfo;
 import chord.project.Chord;
 
 /*
@@ -185,18 +185,23 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 			
 			// GET STRUCTURE AND PRINT
 			CodeStructureInfo codeInfo = jse.getCodeStructureInfo();
+			System.out.println("PRINTING CLASS INFO:");
+			for(SootClass cl : codeInfo.getClasses()) {
+				System.out.println(cl.toString() + ": " + codeInfo.getClassInfo(cl).toString());
+			}
+			System.out.println("PRINTING METHOD INFO:");
 			for(SootMethod m : codeInfo.getMethods()) {
-				System.out.println(m.toString() + ": " +codeInfo.getMethodInfo(m).toString());
+				System.out.println(m.toString() + ": " + codeInfo.getMethodInfo(m).toString());
 			}
 			
 			// CONVERT STRUCTURE TO XML OBJECT
-			JavaToJimpleStructureConverter jtj = new JavaToJimpleStructureConverter(codeInfo);
+			JavaSourceInfo sourceInfo = SourceInfoSingleton.getJavaSourceInfo();
+			JavaToJimpleStructureConverter jtj = new JavaToJimpleStructureConverter(sourceInfo, codeInfo);
 
 			for(SootClass cl : Scene.v().getClasses()) {
 				System.out.println("READING: " + cl.getName());
 				
 				// GET THE XML OBJECT FILE PATH
-				SourceInfo sourceInfo = SourceInfoSingleton.v();
 				File objectFile;
 				try {
 					objectFile = new File(sourceInfo.srcMapFile(sourceInfo.filePath(cl)).getCanonicalPath().replace(".xml", ".obj"));
@@ -221,7 +226,8 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 				
 				// GET THE OUTPUT FILE PATH
 				StringBuffer b = new StringBuffer();
-				b.append(outputPath);
+				//b.append(outputPath);
+				b.append(stampDirectory + "/jimple/"); 
 				b.append(cl.getName());
 				b.append(".xml");
 				String xmlOutputPath = b.toString();
@@ -231,6 +237,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 								
 				// WRITE THE XML OBJECT
 				File objectOutputFile = new File(xmlOutputPath);
+				objectOutputFile.getParentFile().mkdirs();
 				System.out.println("PRINTING TO: " + objectOutputFile.getCanonicalPath());
 				PrintWriter pw = new PrintWriter(new FileOutputStream(objectOutputFile));
 				pw.println(object.toString());
