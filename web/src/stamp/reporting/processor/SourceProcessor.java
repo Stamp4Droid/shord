@@ -180,8 +180,6 @@ public class SourceProcessor {
 			}
 		}
 
-
-
 		// add invocation insertions
 		{
 			//System.out.println("srcMapFile: "+srcMapFile);

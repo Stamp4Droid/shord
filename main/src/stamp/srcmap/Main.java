@@ -1,10 +1,19 @@
 package stamp.srcmap;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
-import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 
 public class Main { 
 	private static String[] classpathEntries;
@@ -39,12 +48,13 @@ public class Main {
 		CompilationUnit cu = (CompilationUnit) parser.createAST(null);
 
 		System.out.println("generating srcmap file for "+canonicalPath);
-		ChordAdapter visitor = new ChordAdapter(cu, infoFile);
-		try{
+		ChordAdapterNew visitor = new ChordAdapterNew(cu, infoFile);
+		try {
 			cu.accept(visitor);
 			visitor.finish();
-		} catch(Exception e){
+		} catch(Exception e) {
 			System.out.println("Failed to generate srcmap file for "+relSrcFilePath);
+			e.printStackTrace();
 			infoFile.delete();
 		}
 
@@ -70,7 +80,6 @@ public class Main {
 		return ret;
 	}
 
-
 	public Main(File javaFile, File infoFile) throws IOException {
 		ASTParser parser = ASTParser.newParser(AST.JLS4);
 		parser.setResolveBindings(true);
@@ -92,7 +101,7 @@ public class Main {
 		CompilationUnit cu = (CompilationUnit) parser.createAST(null);
 
 		infoFile.getParentFile().mkdirs();
-		ChordAdapter visitor = new ChordAdapter(cu, infoFile);
+		ChordAdapterNew visitor = new ChordAdapterNew(cu, infoFile);
 		cu.accept(visitor);
 		visitor.finish();
 	}
@@ -177,8 +186,7 @@ public class Main {
 		}
 	}
 
-	static void writeAnnot(String annot)
-	{
+	static void writeAnnot(String annot) {
 		if(oldAnnots.contains(annot))
 			return;
 		writer.println(annot);

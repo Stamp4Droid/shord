@@ -15,5 +15,6 @@
 		session.setAttribute("manager", manager);
 	}
 	
-	String program = manager.getAnnotatedSource(filepath, isModel);
+	//String program = manager.getAnnotatedSource(filepath, isModel);
+	String program = manager.getAnnotatedJimple(filepath, isModel);
 %><link href="/stamp/css/viewSource.css" rel="stylesheet" /><%=program%>
