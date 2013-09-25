@@ -98,7 +98,7 @@ public class JavaClassInfo implements ClassInfo {
 	}
 
 	private static Element classElem(String className, File file) {
-		try{
+		try {
 			DocumentBuilder builder =
 				DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			Document doc = builder.parse(file);
@@ -112,7 +112,7 @@ public class JavaClassInfo implements ClassInfo {
 				if(sig.equals(className))
 					return classElem;
 			}
-		}catch(Exception e){
+		} catch(Exception e){
 			throw new Error(e);
 		}
 		return null;

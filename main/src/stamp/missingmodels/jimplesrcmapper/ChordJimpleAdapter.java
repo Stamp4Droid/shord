@@ -1,7 +1,5 @@
 package stamp.missingmodels.jimplesrcmapper;
 
-import static org.apache.commons.lang3.StringEscapeUtils.escapeXml;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -19,7 +17,6 @@ import soot.jimple.Stmt;
 import soot.jimple.TableSwitchStmt;
 import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo.CodeStructure;
 import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo.SimpleCodeStructure;
-import stamp.srcmap.sourceinfo.SourceInfo;
 import stamp.srcmap.sourceinfo.javasource.JavaSourceInfo;
 
 public class ChordJimpleAdapter extends JimpleVisitorWithStructure {

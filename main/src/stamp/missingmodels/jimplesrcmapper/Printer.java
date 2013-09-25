@@ -111,7 +111,7 @@ public class Printer {
 	 * Resets the escaped writer after each file.
 	 */
 	private EscapedWriter escapedWriter = null;
-	public void printAll(String outputDir) throws IOException {
+	public void printAll(String outputPath) throws IOException {
 		System.out.println("ENTERING JIMPLE PRINTER");
 		if(!System.getProperty("line.separator").equals("\n")) {
 			throw new RuntimeException("Bad line separator!");
@@ -121,7 +121,7 @@ public class Printer {
 
 			// Get file name.
 			StringBuffer b = new StringBuffer();
-			b.append(outputDir);
+			b.append(outputPath);
 			b.append(cl.getName());
 			b.append(".jimple");
 			String fileName = b.toString();

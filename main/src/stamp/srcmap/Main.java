@@ -2,9 +2,11 @@ package stamp.srcmap;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.Map;
@@ -14,6 +16,8 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+
+import stamp.missingmodels.util.xml.XMLObject.XMLContainerObject;
 
 public class Main { 
 	private static String[] classpathEntries;
@@ -48,18 +52,30 @@ public class Main {
 		CompilationUnit cu = (CompilationUnit) parser.createAST(null);
 
 		System.out.println("generating srcmap file for "+canonicalPath);
-		ChordAdapterNew visitor = new ChordAdapterNew(cu, infoFile);
+		ChordAdapterNew visitor = new ChordAdapterNew(cu);
 		try {
 			cu.accept(visitor);
-			visitor.finish();
+			visitor.writeXML(infoFile);
 		} catch(Exception e) {
 			System.out.println("Failed to generate srcmap file for "+relSrcFilePath);
 			e.printStackTrace();
 			infoFile.delete();
 		}
+		
+		try {
+			XMLContainerObject object = visitor.getXMLObject();
+			File objectFile = new File(srcMapDir, relSrcFilePath.replace(".java", ".obj"));
+			System.out.println("PRINTING XML OBJECT FOR " + javaFile.getName() + " TO " + objectFile.getCanonicalPath());
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(objectFile));
+			oos.writeObject(object);
+			oos.close();
+		} catch(IOException e) {
+			System.out.println("FAILED TO PRINT XML OBJECT FOR " + javaFile.getName() + "!");
+			e.printStackTrace();
+		}
 
 		AnnotationReader annotReader = new AnnotationReader(canonicalPath);		
-		cu.accept(annotReader);
+		cu.accept(annotReader);	
 	}
 
 	public static char[] toCharArray(String filePath) throws IOException {
@@ -101,9 +117,11 @@ public class Main {
 		CompilationUnit cu = (CompilationUnit) parser.createAST(null);
 
 		infoFile.getParentFile().mkdirs();
-		ChordAdapterNew visitor = new ChordAdapterNew(cu, infoFile);
+		/*
+		ChordAdapterNew visitor = new ChordAdapterNew(cu);
 		cu.accept(visitor);
-		visitor.finish();
+		visitor.writeXml(infoFile);
+		*/
 	}
 
 	/*

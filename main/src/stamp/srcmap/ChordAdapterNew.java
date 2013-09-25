@@ -53,7 +53,6 @@ import stamp.missingmodels.util.xml.XMLObject.XMLTextObject;
  */
 public class ChordAdapterNew extends ASTVisitor {
 	
-	private File outputFile;
 	private CompilationUnit cu;
 	
 	private Stack<XMLContainerObject> openObjects;
@@ -64,35 +63,38 @@ public class ChordAdapterNew extends ASTVisitor {
 		return this.openObjects.firstElement();
 	}
 	
-	public void addObject(XMLObject object) {
+	private void addObject(XMLObject object) {
 		this.openObjects.peek().addChild(object);
 	}
 	
-	public void startObject(XMLContainerObject object) {
+	private void startObject(XMLContainerObject object) {
 		this.openObjects.peek().addChild(object);
 		this.openObjects.push(object);
 	}
 	
-	public void endObject() {
+	private void endObject() {
 		this.openObjects.pop();
 	}
 
-	public ChordAdapterNew(CompilationUnit cu, File outputFile) {
-		this.outputFile = outputFile;
+	public ChordAdapterNew(CompilationUnit cu) {
 		this.openObjects = new Stack<XMLContainerObject>();
 		this.openObjects.push(new XMLContainerObject("root"));
 		this.cu = cu;
 	}
 	
-	public void finish() {
-		try {
-			PrintWriter writer = new PrintWriter(this.outputFile);
-			writer.println(this.openObjects.pop());
-			writer.close();
-			if(!this.openObjects.isEmpty()) {
-				System.out.println(this.openObjects.pop().toString());
-				throw new RuntimeException("Objects not properly closed!");
+	public void writeXML(File outputFile) {
+		if(!(this.openObjects.size() == 1)) {
+			if(this.openObjects.size() > 1) {
+				System.out.println(this.openObjects.peek().toString());
+			} else {
+				System.out.println("Empty!");
 			}
+			throw new RuntimeException("Objects not properly closed!");
+		}
+		try {
+			PrintWriter writer = new PrintWriter(outputFile);
+			writer.println(this.openObjects.peek());
+			writer.close();
 		} catch(IOException e) {
 			throw new Error(e);
 		}

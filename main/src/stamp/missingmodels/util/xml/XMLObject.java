@@ -1,5 +1,6 @@
 package stamp.missingmodels.util.xml;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +11,9 @@ import java.util.Map;
  * 
  * @author Osbert Bastani
  */
-public abstract class XMLObject {
+public abstract class XMLObject implements Serializable {
+	private static final long serialVersionUID = -6914620814798273359L;
+	
 	private final String name;
 	private Map<String,String> attributes = new HashMap<String,String>();
 	private boolean hasBody;

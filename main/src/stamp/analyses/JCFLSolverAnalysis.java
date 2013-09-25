@@ -1,12 +1,18 @@
 package stamp.analyses;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import shord.project.analyses.JavaAnalysis;
+import soot.Scene;
+import soot.SootClass;
 import soot.SootMethod;
 import stamp.missingmodels.analysis.Experiment;
 import stamp.missingmodels.analysis.JCFLSolverRunner;
@@ -14,6 +20,7 @@ import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverSingle;
 import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverStubs;
 import stamp.missingmodels.analysis.JCFLSolverRunner.RelationAdder;
 import stamp.missingmodels.grammars.E12;
+import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo;
 import stamp.missingmodels.jimplesrcmapper.JimpleStructureExtractor;
 import stamp.missingmodels.jimplesrcmapper.Printer;
 import stamp.missingmodels.util.ConversionUtils.ChordRelationAdder;
@@ -28,10 +35,13 @@ import stamp.missingmodels.util.jcflsolver.EdgeData;
 import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.missingmodels.util.viz.jcflsolver.JCFLRelationInputFile;
 import stamp.missingmodels.util.viz.jcflsolver.JCFLRelationOutputFile;
+import stamp.missingmodels.util.xml.XMLObject.XMLContainerObject;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.AllStubInputsFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetInputFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetOutputFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetWithDataOutputFile;
+import stamp.srcmap.SourceInfoSingleton;
+import stamp.srcmap.sourceinfo.SourceInfo;
 import chord.project.Chord;
 
 /*
@@ -162,15 +172,65 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		run(getFileManager(System.getProperty("stamp.out.dir")), new ChordRelationAdder());
 		
 		try {
+			// SET UP SCRATCH DIRECTORY
 			String stampDirectory = System.getProperty("stamp.out.dir");
 			File outputDir = new File(stampDirectory + File.separator + "cfl");
 			File scratchDir = new File(stampDirectory + File.separator + "/../../osbert/scratch/" + outputDir.getParentFile().getName());
+			String outputPath = scratchDir.getCanonicalPath() + "/jimple/";
+			
+			// PRINT JIMPLE
 			JimpleStructureExtractor jse = new JimpleStructureExtractor();
-			new Printer(jse).printAll(scratchDir.getCanonicalPath() + "/jimple/");
-			for(SootMethod m : jse.getCodeStructureInfo().getMethods()) {
-				System.out.println(m.toString() + ": " + jse.getCodeStructureInfo().getMethodInfo(m).toString());
+			new Printer(jse).printAll(outputPath);
+			
+			// GET STRUCTURE AND PRINT
+			CodeStructureInfo codeInfo = jse.getCodeStructureInfo();
+			for(SootMethod m : codeInfo.getMethods()) {
+				System.out.println(m.toString() + ": " +codeInfo.getMethodInfo(m).toString());
 			}
 			
+			// CONVERT STRUCTURE TO XML OBJECT
+
+			for(SootClass cl : Scene.v().getClasses()) {
+				System.out.println("READING: " + cl.getName());
+				
+				// GET THE XML OBJECT FILE PATH
+				SourceInfo sourceInfo = SourceInfoSingleton.v();
+				File objectFile;
+				try {
+					objectFile = new File(sourceInfo.srcMapFile(sourceInfo.filePath(cl)).getCanonicalPath().replace(".xml", ".obj"));
+				} catch(NullPointerException e) {
+					System.out.println("FAILED TO READ: " + cl.getName());
+					e.printStackTrace();
+					continue;
+				}
+				
+				// READ IN THE OBJECT
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(objectFile));
+				XMLContainerObject object;
+				try {
+					object = (XMLContainerObject)ois.readObject();
+				} catch(ClassNotFoundException e) {
+					System.out.println("FAILED TO READ: " + cl.getName());
+					e.printStackTrace();
+					continue;
+				} finally {
+					ois.close();
+				}
+				
+				// GET THE OUTPUT FILE PATH
+				StringBuffer b = new StringBuffer();
+				b.append(outputPath);
+				b.append(cl.getName());
+				b.append(".xml");
+				String xmlOutputPath = b.toString();
+								
+				// WRITE THE XML OBJECT
+				File objectOutputFile = new File(xmlOutputPath);
+				System.out.println("PRINTING TO: " + objectOutputFile.getCanonicalPath());
+				PrintWriter pw = new PrintWriter(new FileOutputStream(objectOutputFile));
+				pw.println(object.toString());
+				pw.close();
+			}			
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
