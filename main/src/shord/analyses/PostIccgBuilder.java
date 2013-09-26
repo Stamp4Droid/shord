@@ -128,12 +128,6 @@ public class PostIccgBuilder extends JavaAnalysis
 		notFoundNode.setShape("box");
 		iccg.addNode(notFoundNode);
 
-		SootClass listener = Scene.v().getSootClass("android.view.View.OnClickListener");
-		List<SootClass> listenerList = subTypesOf(listener);
-
-		SootClass callback = Scene.v().getSootClass("edu.stanford.stamp.harness.Callback");
-		List<SootClass> callbackList = subTypesOf(callback);
-
 	}
 
         /* Read the permission into a map.*/
@@ -420,42 +414,6 @@ public class PostIccgBuilder extends JavaAnalysis
 	}
 	}
 
-	private HashMap<SootClass,List<SootClass>> classToSubtypes = new HashMap();
-
-	List<SootClass> subTypesOf(SootClass cl)
-	{
-		List<SootClass> subTypes = classToSubtypes.get(cl);
-		if(subTypes != null)
-			return subTypes;
-
-		classToSubtypes.put(cl, subTypes = new ArrayList());
-
-		subTypes.add(cl);
-
-		LinkedList<SootClass> worklist = new LinkedList<SootClass>();
-		HashSet<SootClass> workset = new HashSet<SootClass>();
-		FastHierarchy fh = Program.g().scene().getOrMakeFastHierarchy();
-
-		if(workset.add(cl)) worklist.add(cl);
-		while(!worklist.isEmpty()) {
-			cl = worklist.removeFirst();
-			if(cl.isInterface()) {
-				for(Iterator cIt = fh.getAllImplementersOfInterface(cl).iterator(); cIt.hasNext();) {
-					final SootClass c = (SootClass) cIt.next();
-					if(workset.add(c)) worklist.add(c);
-				}
-			} else {
-				if(cl.isConcrete()) {
-					subTypes.add(cl);
-				}
-				for(Iterator cIt = fh.getSubclassesOf(cl).iterator(); cIt.hasNext();) {
-					final SootClass c = (SootClass) cIt.next();
-					if(workset.add(c)) worklist.add(c);
-				}
-			}
-		}
-		return subTypes;
-	}
 
 	/* Read the reaching def values of the regester.*/
 	private ArrayList<String> readKeysFromTag(Stmt stmt, Value arg) 

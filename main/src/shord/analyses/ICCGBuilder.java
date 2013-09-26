@@ -35,6 +35,7 @@ import shord.project.analyses.ProgramDom;
 import shord.project.ClassicProject;
 
 import chord.project.Chord;
+import stamp.analyses.SootUtils;
 
 import java.util.jar.*;
 import java.io.*;
@@ -91,31 +92,6 @@ public class ICCGBuilder extends JavaAnalysis
         String manifestDir = stampOutDir + "/apktool-out";
         File manifestFile = new File(manifestDir, "AndroidManifest.xml");
         new ParseManifest().extractComponents(manifestFile, components);
-
-        System.out.println("myparser:" + components);
-        //plot every node to graph + unknown.
-        Iterator iter = components.entrySet().iterator(); 
-        while (iter.hasNext()) { 
-            Map.Entry entry = (Map.Entry) iter.next(); 
-            String key = (String)entry.getKey(); 
-            XmlNode val = (XmlNode)entry.getValue(); 
-            System.out.println("nodeinfo:" + val.getName() +" "+ val.getType()+" " + val.getPermission()+ " " + val.getMain());
-            //ICCGNode iNode = new ICCGNode(val.getName().replace(".",""));
-            ICCGNode iNode = new ICCGNode(val.getName());
-            iNode.setMain(val.getMain());
-            //iNode.setPermission(val.getPermission());
-            if (val.getMain()) {
-                iNode.setShape("diamond");
-            } else if("activity".equals(val.getType())) {
-                iNode.setShape("ellipse");
-            } else if("service".equals(val.getType())) {
-                iNode.setShape("circle");
-            } else if("receiver".equals(val.getType())) {
-                iNode.setShape("triangle");
-            }
-            iccg.addNode(iNode);
-        } 
-
     }
 
 
@@ -130,7 +106,7 @@ for(SootMethod method : methodsCopy)
     private void fillCallback() {
 
         SootClass callback = Scene.v().getSootClass("edu.stanford.stamp.harness.Callback");
-        List<SootClass> callbackList = subTypesOf(callback);
+        List<SootClass> callbackList = SootUtils.subTypesOf(callback);
         for(SootClass subCallback:callbackList) {
             Collection<SootMethod> methodsCopy = new ArrayList(subCallback.getMethods());
             for(SootMethod method : methodsCopy) {
@@ -172,43 +148,6 @@ for(SootMethod method : methodsCopy)
 
     }
 
-    private HashMap<SootClass,List<SootClass>> classToSubtypes = new HashMap();
-
-    List<SootClass> subTypesOf(SootClass cl)
-    {
-        List<SootClass> subTypes = classToSubtypes.get(cl);
-        if(subTypes != null)
-            return subTypes;
-
-        classToSubtypes.put(cl, subTypes = new ArrayList());
-
-        subTypes.add(cl);
-
-        LinkedList<SootClass> worklist = new LinkedList<SootClass>();
-        HashSet<SootClass> workset = new HashSet<SootClass>();
-        FastHierarchy fh = Program.g().scene().getOrMakeFastHierarchy();
-
-        if(workset.add(cl)) worklist.add(cl);
-        while(!worklist.isEmpty()) {
-            cl = worklist.removeFirst();
-            if(cl.isInterface()) {
-                for(Iterator cIt = fh.getAllImplementersOfInterface(cl).iterator(); cIt.hasNext();) {
-                    final SootClass c = (SootClass) cIt.next();
-                    if(workset.add(c)) worklist.add(c);
-                }
-            } else {
-                if(cl.isConcrete()) {
-                    subTypes.add(cl);
-                }
-                for(Iterator cIt = fh.getSubclassesOf(cl).iterator(); cIt.hasNext();) {
-                    final SootClass c = (SootClass) cIt.next();
-                    if(workset.add(c)) worklist.add(c);
-                }
-            }
-        }
-        return subTypes;
-    }
-
     private void populateMregI() 
     {
         Iterator mIt = Program.g().scene().getReachableMethods().listener();
@@ -232,7 +171,6 @@ for(SootMethod method : methodsCopy)
                         "<edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>")) {
 			//FIX-ME: without this, we will have redundant edges.
                         if(m.getSignature().equals("<android.app.Activity: void <init>()>")) continue;
-                        System.out.println("addMregI---" + m + "||" + ie );
                         relMregI.add(m, stmt);
                     }
 
@@ -256,9 +194,11 @@ for(SootMethod method : methodsCopy)
             this.visit(klass);
         }
         saveRels();
+
         fh = null;
 
     }
 
 
 }
+

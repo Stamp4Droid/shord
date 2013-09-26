@@ -54,6 +54,7 @@ import shord.project.analyses.ProgramRel;
 import shord.project.analyses.ProgramDom;
 import shord.project.ClassicProject;
 import shord.program.Program;
+import stamp.analyses.SootUtils;
 
 import chord.project.Chord;
 
@@ -466,44 +467,6 @@ public class PAGBuilder extends JavaAnalysis
 			this.isStub = stub;
 		}
 
-		private HashMap<SootClass,List<SootClass>> classToSubtypes = new HashMap();
-
-		List<SootClass> subTypesOf(SootClass cl)
-		{
-			List<SootClass> subTypes = classToSubtypes.get(cl);
-			if(subTypes != null)
-				return subTypes;
-
-			classToSubtypes.put(cl, subTypes = new ArrayList());
-
-			subTypes.add(cl);
-
-			LinkedList<SootClass> worklist = new LinkedList<SootClass>();
-			HashSet<SootClass> workset = new HashSet<SootClass>();
-			FastHierarchy fh = Program.g().scene().getOrMakeFastHierarchy();
-
-			if(workset.add(cl)) worklist.add(cl);
-			while(!worklist.isEmpty()) {
-				cl = worklist.removeFirst();
-				if(cl.isInterface()) {
-					for(Iterator cIt = fh.getAllImplementersOfInterface(cl).iterator(); cIt.hasNext();) {
-						final SootClass c = (SootClass) cIt.next();
-						if(workset.add(c)) worklist.add(c);
-					}
-				} else {
-					if(cl.isConcrete()) {
-						subTypes.add(cl);
-					}
-					for(Iterator cIt = fh.getSubclassesOf(cl).iterator(); cIt.hasNext();) {
-						final SootClass c = (SootClass) cIt.next();
-						if(workset.add(c)) worklist.add(c);
-					}
-				}
-			}
-			return subTypes;
-		}
-
-		
 		void pass1()
 		{
 			growZIfNeeded(method.getParameterCount());
@@ -549,7 +512,7 @@ public class PAGBuilder extends JavaAnalysis
 				//for each method's return types, we add it.
 				if((method.getReturnType() instanceof RefType)){
 					RefType t = (RefType)method.getReturnType();
-					for(SootClass st: subTypesOf(t.getSootClass())){
+					for(SootClass st: SootUtils.subTypesOf(t.getSootClass())){
 						StubAllocNode n = new StubAllocNode(st.getType(), method);
 						domH.add(n);
 						stubSet.add(n);
@@ -1015,41 +978,9 @@ public class PAGBuilder extends JavaAnalysis
 
 		domH.save();
 		domZ.save();
-		/*for(Iterator it = stubMethods.iterator(); it.hasNext();){
-			SootMethod method = (SootMethod) it.next();
-			Type retType = method.getReturnType();
-			if(retType instanceof RefType){
-				RetVarNode retVar = new RetVarNode(method);
-				domV.add(retVar);
-				meth2Ret.put(method, retVar);
-			} 
-		}*/
-
 		domV.save();
 		domI.save();
 		domU.save();
-		//add by yu.
-                /*relAlloc = (ProgramRel) ClassicProject.g().getTrgt("Alloc");
-		relAlloc.zero();
-
-		relHT = (ProgramRel) ClassicProject.g().getTrgt("HT");
-		relHT.zero();
-		relMH = (ProgramRel) ClassicProject.g().getTrgt("MH");
-		relMH.zero();
-
-		for(Iterator it = stubMethods.iterator(); it.hasNext();){
-			SootMethod stub = (SootMethod) it.next();
-			if((stub.getReturnType() instanceof RefType)){
-				RefType t = (RefType)stub.getReturnType();
-				for(SootClass st: subTypesOf(t.getSootClass())){
-					relAlloc.add(meth2Ret.get(stub), type2Node.get(st.getType()));
-				        System.out.println("realstub:" + relHT + stub + "|||" + st.getType() + type2Node.get(st.getType()));
-					relHT.add(type2Node.get(st.getType()), st.getType());
-					//relHT.add(type2Node.get(st.getType()), t);
-					relMH.add(stub, type2Node.get(st.getType()));
-				}
-			}
-		}*/
 	}
 
 	void buildDispatchMap() 
