@@ -467,6 +467,7 @@ public class PAGBuilder extends JavaAnalysis
 			this.isStub = stub;
 		}
 
+
 		void pass1()
 		{
 			growZIfNeeded(method.getParameterCount());

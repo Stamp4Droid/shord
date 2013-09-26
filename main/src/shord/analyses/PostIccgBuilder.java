@@ -414,7 +414,6 @@ public class PostIccgBuilder extends JavaAnalysis
 	}
 	}
 
-
 	/* Read the reaching def values of the regester.*/
 	private ArrayList<String> readKeysFromTag(Stmt stmt, Value arg) 
 	{
