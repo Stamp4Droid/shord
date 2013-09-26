@@ -8,10 +8,10 @@ import soot.Unit;
 
 public class JimpleVisitor {
 	/** Visited before writing the class */
-	public void start(int pos, int lineNum) {}
+	public void start(SootClass cl, int pos, int lineNum) {}
 	
 	/** Visited after writing the class */
-	public void end(int pos, int lineNum) {}
+	public void end(SootClass cl, int pos, int lineNum) {}
 
 	/** Starts a class visit */
 	public void startVisit(SootClass cl, int pos, int lineNum) {}

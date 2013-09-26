@@ -17,14 +17,14 @@ public class JimpleStructureExtractor extends JimpleVisitor {
 	
 	/** Visited before writing the class */
 	@Override
-	public void start(int pos, int lineNum) {
+	public void start(SootClass cl, int pos, int lineNum) {
 		this.codeStructureInfo.fileInfo.start = pos;
 		this.codeStructureInfo.fileInfo.lineNum = lineNum;
 	}
 	
 	/** Visited after writing the class */
 	@Override
-	public void end(int pos, int lineNum) { this.codeStructureInfo.fileInfo.end = pos; }
+	public void end(SootClass cl, int pos, int lineNum) { this.codeStructureInfo.fileInfo.end = pos; }
 
 	/** Starts a class visit */
 	@Override

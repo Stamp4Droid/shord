@@ -26,6 +26,7 @@ package stamp.missingmodels.jimplesrcmapper;
  */
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -108,9 +109,7 @@ public class Printer {
 
 	/**
 	 * Prints all the files in the given output directory.
-	 * Resets the escaped writer after each file.
 	 */
-	private EscapedWriter escapedWriter = null;
 	public void printAll(String outputPath) throws IOException {
 		System.out.println("ENTERING JIMPLE PRINTER");
 		if(!System.getProperty("line.separator").equals("\n")) {
@@ -130,23 +129,39 @@ public class Printer {
 			//final int format = Options.v().output_format();
 			//String fileName = SourceLocator.v().getFileNameFor(cl, format);
 			new File(fileName).getParentFile().mkdirs();
-			OutputStream streamOut = new FileOutputStream(fileName);
-			this.escapedWriter = new EscapedWriter(new OutputStreamWriter(streamOut));
-			PrintWriter writerOut =  new PrintWriter(this.escapedWriter);
 
-			// Print the class to the writer.
-			printTo(cl, writerOut);
+			// Print the class to the file.
+			printTo(cl, new File(fileName));
 
-			// Clean up.
-			writerOut.flush();
-			streamOut.close();
 		}
 		System.out.println("EXITING PRINTER");
 	}
+	
+	public void printTo(SootClass cl, File file) throws IOException {
+		OutputStream streamOut = new FileOutputStream(file);
+		this.printTo(cl, streamOut);
+		streamOut.close();
+	}
+	
+	/**
+	 * Prints the file in the given output directory.
+	 * Resets the escaped writer after each file.
+	 */
+	private EscapedWriter escapedWriter = null;
+	public void printTo(SootClass cl, OutputStream streamOut) throws IOException {
+		this.escapedWriter = new EscapedWriter(new OutputStreamWriter(streamOut));
+		PrintWriter writerOut =  new PrintWriter(this.escapedWriter);
 
-	public void printTo(SootClass cl, PrintWriter out) {
+		// Print the class to the writer.
+		printTo(cl, writerOut);
+		
+		// Clean up.
+		writerOut.flush();
+	}
+
+	private void printTo(SootClass cl, PrintWriter out) {
 		/** START VISIT */
-		this.visitor.start(this.escapedWriter.getNumCharsWritten(), this.escapedWriter.getCurLineNumber());
+		this.visitor.start(cl, this.escapedWriter.getNumCharsWritten(), this.escapedWriter.getCurLineNumber());
 
 		/** START VISIT CLASS */
 		this.visitor.startVisit(cl, this.escapedWriter.getNumCharsWritten(), this.escapedWriter.getCurLineNumber());
@@ -354,6 +369,9 @@ public class Printer {
 
 		/** END VISIT CLASS */
 		this.visitor.endVisit(cl, this.escapedWriter.getNumCharsWritten(), this.escapedWriter.getCurLineNumber());
+		
+		/** END VISIT */
+		this.visitor.end(cl, this.escapedWriter.getNumCharsWritten(), this.escapedWriter.getCurLineNumber());
 	}
 
 	/**

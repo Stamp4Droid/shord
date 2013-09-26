@@ -10,10 +10,10 @@ import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo.SimpleCodeStructure
 
 public class JimpleVisitorWithStructure {
 	/** Visited before writing the class */
-	public void start(SimpleCodeStructure fileStructure) {}
+	public void start(SootClass cl, SimpleCodeStructure fileStructure) {}
 	
 	/** Visited after writing the class */
-	public void end() {}
+	public void end(SootClass cl) {}
 
 	/** Starts a class visit */
 	public void visit(SootClass cl, CodeStructure classStructure) {}
@@ -49,13 +49,13 @@ public class JimpleVisitorWithStructure {
 	public JimpleVisitor toJimpleVisitor(final CodeStructureInfo codeStructureInfo) {
 		return new JimpleVisitor() {
 			@Override
-			public void start(int pos, int lineNum) {
-				JimpleVisitorWithStructure.this.start(codeStructureInfo.getFileInfo());
+			public void start(SootClass cl, int pos, int lineNum) {
+				JimpleVisitorWithStructure.this.start(cl, codeStructureInfo.getFileInfo());
 			}
 			
 			@Override
-			public void end(int pos, int lineNum) {
-				JimpleVisitorWithStructure.this.end();
+			public void end(SootClass cl, int pos, int lineNum) {
+				JimpleVisitorWithStructure.this.end(cl);
 			}
 
 			@Override

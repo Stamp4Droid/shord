@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.common.io.NullOutputStream;
+
 import shord.project.analyses.JavaAnalysis;
 import soot.Scene;
 import soot.SootClass;
@@ -20,6 +22,7 @@ import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverSingle;
 import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverStubs;
 import stamp.missingmodels.analysis.JCFLSolverRunner.RelationAdder;
 import stamp.missingmodels.grammars.E12;
+import stamp.missingmodels.jimplesrcmapper.ChordJimpleAdapter;
 import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo;
 import stamp.missingmodels.jimplesrcmapper.JavaToJimpleStructureConverter;
 import stamp.missingmodels.jimplesrcmapper.JimpleStructureExtractor;
@@ -36,6 +39,7 @@ import stamp.missingmodels.util.jcflsolver.EdgeData;
 import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.missingmodels.util.viz.jcflsolver.JCFLRelationInputFile;
 import stamp.missingmodels.util.viz.jcflsolver.JCFLRelationOutputFile;
+import stamp.missingmodels.util.xml.XMLObject;
 import stamp.missingmodels.util.xml.XMLObject.XMLContainerObject;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.AllStubInputsFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetInputFile;
@@ -233,7 +237,12 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 				String xmlOutputPath = b.toString();
 				
 				// CONVERT THE OBJECT
-				jtj.convert(object);
+				//jtj.convert(object);
+				Collection<XMLObject> objects = new HashSet<XMLObject>(); objects.add(object);
+				ChordJimpleAdapter cja = new ChordJimpleAdapter(sourceInfo, objects);
+				Printer printer = new Printer(cja.toJimpleVisitor(codeInfo));
+				printer.printTo(cl, new NullOutputStream());
+				object = cja.getResults().get(cl);
 								
 				// WRITE THE XML OBJECT
 				File objectOutputFile = new File(xmlOutputPath);

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /*
  * A standard way of printing out XML files.
@@ -33,6 +34,10 @@ public abstract class XMLObject implements Serializable {
 		this.attributeKeys.add(key);
 		*/
 		this.attributes.put(key, value);
+	}
+	
+	public Set<String> getAttributeKeys() {
+		return this.attributes.keySet();
 	}
 	
 	public String getAttribute(String key) {

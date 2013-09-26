@@ -58,10 +58,13 @@ public class SourceProcessor {
 		String query = "//method";
 		System.out.println("SourceProcessor.methodNodes: "+ query);
 		NodeList nodes = (NodeList) xpath.evaluate(query, document, XPathConstants.NODESET);
+		System.out.println("DEBUG: Done processing query!");
 		int n = nodes.getLength();
+		System.out.println("Number of nodes found: " + n);
 		Map<Integer, String> startLnToMethod = new HashMap<Integer, String>();
 		Map<Integer, String> endLnToMethod = new HashMap<Integer, String>();
 		int lastLn = 0;
+		System.out.println("DEBUG: Filling in source information...");
 		for(int i = 0; i < n; i++){
 			String methodSig = ((Element) nodes.item(i)).getAttribute("chordsig");
 			methodSig = DroidrecordProxyWeb.chordToSootMethodSignature(methodSig);
@@ -72,8 +75,10 @@ public class SourceProcessor {
 			if(bodyEndLn > lastLn) lastLn = bodyEndLn;
 			//System.out.println(String.format("Detected method: %s [%d,%d]", methodSig, bodyStartLn, bodyEndLn));
 		}
+		System.out.println("DEBUG: Done filling in source information!");
 		Stack<String> currentMethodStack = new Stack<String>();
 		String currentMethod = null;
+		System.out.println("DEBUG: Building method stack...");
 		for(int i = 0; i < lastLn; i++) {
 			if(startLnToMethod.get(i) != null) {
 				currentMethodStack.push(currentMethod);
@@ -88,16 +93,21 @@ public class SourceProcessor {
 			}
 			//System.out.println(String.format("Line: %d ===> Method: %s", i, currentMethod));
 		}
+		System.out.println("DEBUG: Done building method stack!");
 	}
 
 	public SourceProcessor(File sourceFile, DroidrecordProxyWeb droidrecord, File srcMapFile) throws Exception {
 		lineToMethodMap = new HashMap<Integer, String>();
 		if(srcMapFile != null) {
+			System.out.println("DEBUG: Populating line to method map...");
 			populateLineToMethodMap(srcMapFile);
+			System.out.println("DEBUG: Done populating line to method map!");
 		}
 
 		// read file and add line insertions
+		System.out.println("DEBUG: Reading file at " + sourceFile.getCanonicalPath() + "...");
 		BufferedReader br = new BufferedReader(new FileReader(sourceFile));
+		System.out.println("DEBUG: Done reading file at " + sourceFile.getCanonicalPath() + "!");		
 		StringBuilder sourceBuilder = new StringBuilder();
 		String line;
 		int lineNum = 1;
@@ -131,6 +141,7 @@ public class SourceProcessor {
 		}
 		br.close();
 		this.source = sourceBuilder.toString();
+		System.out.println("DEBUG: Done processing source!");		
 	}
 
 	public SourceProcessor(File sourceFile, DroidrecordProxyWeb droidrecord) throws Exception {
