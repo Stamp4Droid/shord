@@ -153,6 +153,11 @@
     </exec>
     <ant antfile="${app.loc}/build.droidrecord.xml" target="debug"
 	 inheritAll="false" useNativeBasedir="true"/>
+	<exec executable="adb"
+      spawn="false"
+	  failonerror="true">
+      <arg line="${stamp.dynamic.device.arg} shell mkdir sdcard/droidrecord"/>
+    </exec>
     <ant antfile="${app.loc}/build.droidrecord.xml" target="installd"
 	 inheritAll="false" useNativeBasedir="true">
         <property name="adb.device.arg" value="${stamp.dynamic.device.arg}"/>
