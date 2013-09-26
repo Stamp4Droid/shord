@@ -23,7 +23,7 @@ import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo.CodeStructure;
 import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo.SimpleCodeStructure;
 import stamp.missingmodels.util.xml.XMLObject;
 import stamp.missingmodels.util.xml.XMLObject.XMLContainerObject;
-import stamp.srcmap.sourceinfo.javasource.JavaSourceInfo;
+import stamp.srcmap.sourceinfo.javainfo.JavaSourceInfo;
 
 public class ChordJimpleAdapter extends JimpleVisitorWithStructure {
 	/** Information about the Java source files */

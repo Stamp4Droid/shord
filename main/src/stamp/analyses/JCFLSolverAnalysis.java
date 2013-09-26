@@ -10,8 +10,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.google.common.io.NullOutputStream;
-
 import shord.project.analyses.JavaAnalysis;
 import soot.Scene;
 import soot.SootClass;
@@ -24,7 +22,6 @@ import stamp.missingmodels.analysis.JCFLSolverRunner.RelationAdder;
 import stamp.missingmodels.grammars.E12;
 import stamp.missingmodels.jimplesrcmapper.ChordJimpleAdapter;
 import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo;
-import stamp.missingmodels.jimplesrcmapper.JavaToJimpleStructureConverter;
 import stamp.missingmodels.jimplesrcmapper.JimpleStructureExtractor;
 import stamp.missingmodels.jimplesrcmapper.Printer;
 import stamp.missingmodels.util.ConversionUtils.ChordRelationAdder;
@@ -46,8 +43,10 @@ import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetInputFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetOutputFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetWithDataOutputFile;
 import stamp.srcmap.SourceInfoSingleton;
-import stamp.srcmap.sourceinfo.javasource.JavaSourceInfo;
+import stamp.srcmap.sourceinfo.javainfo.JavaSourceInfo;
 import chord.project.Chord;
+
+import com.google.common.io.NullOutputStream;
 
 /*
  * An analysis that runs the JCFLSolver to do the taint analysis.
@@ -200,7 +199,6 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 			
 			// CONVERT STRUCTURE TO XML OBJECT
 			JavaSourceInfo sourceInfo = SourceInfoSingleton.getJavaSourceInfo();
-			JavaToJimpleStructureConverter jtj = new JavaToJimpleStructureConverter(sourceInfo, codeInfo);
 
 			for(SootClass cl : Scene.v().getClasses()) {
 				System.out.println("READING: " + cl.getName());
@@ -237,7 +235,6 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 				String xmlOutputPath = b.toString();
 				
 				// CONVERT THE OBJECT
-				//jtj.convert(object);
 				Collection<XMLObject> objects = new HashSet<XMLObject>(); objects.add(object);
 				ChordJimpleAdapter cja = new ChordJimpleAdapter(sourceInfo, objects);
 				Printer printer = new Printer(cja.toJimpleVisitor(codeInfo));
