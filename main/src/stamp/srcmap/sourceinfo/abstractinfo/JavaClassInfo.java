@@ -1,4 +1,4 @@
-package stamp.srcmap.sourceinfo.javainfo;
+package stamp.srcmap.sourceinfo.abstractinfo;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,19 +25,14 @@ public class JavaClassInfo implements ClassInfo {
 	private String className;
 	private File file;
 	private int lineNum;
+	private Element classElem;
 
-	public static JavaClassInfo get(String className, File f) {
-		Element classElem = classElem(className, f);
-		if(classElem == null)
-			return null;
-		return new JavaClassInfo(className, f, classElem);
-	}
-
-	private JavaClassInfo(String className, File f, Element classElem) {
+	protected JavaClassInfo(String className, File f, Element classElem) {
 		//System.out.println("reading class info " + className + " " + f);
 		this.file = f;
 		this.className = className;
-		readInfo(classElem);
+		this.classElem = classElem;
+		readInfo();
 	}
 
 	/*
@@ -59,7 +54,7 @@ public class JavaClassInfo implements ClassInfo {
 		BasicMethodInfo bmi = methInfos.get(chordSig);
 		if(bmi == null)
 			return null;
-		return new JavaMethodInfo(chordSig, this);
+		return new JavaMethodInfo(chordSig, this.classElem);
 	}
 
 	public int lineNum(String chordMethSig) { 
@@ -97,32 +92,7 @@ public class JavaClassInfo implements ClassInfo {
 		return nodeList;
 	}
 
-	private static Element classElem(String className, File file) {
-		try {
-			DocumentBuilder builder =
-				DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			Document doc = builder.parse(file);
-			Element root = doc.getDocumentElement();
-			//System.out.println("matching " + className + " " + file);
-			NodeList classElems = root.getElementsByTagName("class");
-			int numClasses = classElems.getLength();
-			for(int i = 0; i < numClasses; i++){
-				Element classElem = (Element) classElems.item(i);
-				String sig = classElem.getAttribute("chordsig");
-				if(sig.equals(className))
-					return classElem;
-			}
-		} catch(Exception e){
-			throw new Error(e);
-		}
-		return null;
-	}
-	
-	protected Element classElem() {
-		return classElem(className, file);
-	}
-
-	private void readInfo(Element classElem) {
+	private void readInfo() {
 		String clsLineNum = classElem.getAttribute("line");
 		if(!clsLineNum.equals(""))
 			lineNum = Integer.parseInt(clsLineNum);

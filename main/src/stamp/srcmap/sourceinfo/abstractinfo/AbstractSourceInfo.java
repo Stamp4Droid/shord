@@ -1,8 +1,17 @@
 package stamp.srcmap.sourceinfo.abstractinfo;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import shord.program.Program;
 import soot.AbstractJasminClass;
@@ -24,19 +33,15 @@ import stamp.srcmap.sourceinfo.SourceInfo;
  * @author Osbert Bastani
  */
 public abstract class AbstractSourceInfo implements SourceInfo {
-	protected abstract ClassInfo classInfo(SootClass klass);
-
-	protected MethodInfo methodInfo(SootMethod meth) {
-		String methodSig = chordSigFor(meth);
-		ClassInfo ci = classInfo(meth.getDeclaringClass());
-		//System.out.println("methodInfo " + methodSig + " " + (ci == null));
-		MethodInfo mi = ci == null ? null : ci.methodInfo(methodSig);
-		return mi;
+	private Map<String,ClassInfo> classInfos = new HashMap<String,ClassInfo>();
+	private AnonymousClassMap anonymousClassMap;
+	
+	public AbstractSourceInfo() {		
+		this.anonymousClassMap = new AnonymousClassMap(this);
 	}
 	
-	@Override
 	public String filePath(SootClass klass) {		
-		for(Tag tag : klass.getTags()) {
+		for(Tag tag : klass.getTags()){
 			if(tag instanceof SourceFileTag){
 				String fileName = ((SourceFileTag) tag).getSourceFile();
 				return klass.getPackageName().replace('.','/')+"/"+fileName;
@@ -45,13 +50,12 @@ public abstract class AbstractSourceInfo implements SourceInfo {
 		return null;
 	}
 
-	@Override
-	public String javaLocStr(Stmt stmt) {	
+	public String javaLocStr(Stmt stmt) {		
 		SootMethod method = Program.containerMethod(stmt);
 		SootClass klass = method.getDeclaringClass();
-		for(Tag tag : klass.getTags()) {
-			if(tag instanceof SourceFileTag) {
-				String fileName = ((SourceFileTag)tag).getSourceFile();
+		for(Tag tag : klass.getTags()){
+			if(tag instanceof SourceFileTag){
+				String fileName = ((SourceFileTag) tag).getSourceFile();
 				int lineNum = stmtLineNum(stmt);
 				if(lineNum > 0)
 					return fileName+":"+lineNum;
@@ -62,14 +66,22 @@ public abstract class AbstractSourceInfo implements SourceInfo {
 		return null;
 	}
 
-	@Override
-	public String srcClassName(Stmt stmt) {
+    public String srcClassName(Stmt stmt) {
 		SootMethod method = Program.containerMethod(stmt);
 		SootClass klass = method.getDeclaringClass();
         return srcClassName(klass);
+    }
+	
+	public int classLineNum(SootClass klass) {
+		ClassInfo ci = classInfo(klass);
+		return ci == null ? -1 : ci.lineNum();
 	}
 
-	@Override
+    public int methodLineNum(SootMethod meth) {
+		ClassInfo ci = classInfo(meth.getDeclaringClass());
+		return ci == null ? -1 : ci.lineNum(chordSigFor(meth));
+    }
+
 	public String chordSigFor(SootMethod m) {
 		String className = srcClassName(m.getDeclaringClass());
 		return m.getName()
@@ -78,7 +90,6 @@ public abstract class AbstractSourceInfo implements SourceInfo {
 			+"@"+className;
 	}
 
-	@Override
 	public String chordSigFor(SootField f) {
 		String className = srcClassName(f.getDeclaringClass());
 		return f.getName()
@@ -86,25 +97,82 @@ public abstract class AbstractSourceInfo implements SourceInfo {
 			+AbstractJasminClass.jasminDescriptorOf(f.getType())
 			+"@"+className;
 	}
-
-	@Override
+	
 	public String chordTypeFor(Type type) {
 		return AbstractJasminClass.jasminDescriptorOf(type);
 	}
-
-	@Override
+	
 	public boolean hasSrcFile(String srcFileName) {
 		File file = srcMapFile(srcFileName);
 		return file != null;
 	}
+		
+	public Map<String,List<String>> allAliasSigs(SootClass klass) {
+		ClassInfo ci = classInfo(klass);
+		return ci == null ? Collections.EMPTY_MAP : ci.allAliasSigs();		
+	}	
+	
+	private ClassInfo classInfo(SootClass klass) {
+		String klassName = srcClassName(klass);
+		String srcFileName = filePath(klass);
+		ClassInfo ci = classInfos.get(klassName);
+		if(ci == null){
+			File file = srcMapFile(srcFileName);
+			//System.out.println("klass: "+klass+" srcFileName: "+srcFileName + " " + (file == null));
+			if(file == null)
+				return null;
+			ci = classInfo(klassName, file);
+			if(ci == null)
+				return null;
+			classInfos.put(klassName, ci);
+		}
+		return ci;
+	}
 
-	@Override
-	public Map<String, List<String>> allAliasSigs(SootClass klass) {
-		// TODO Auto-generated method stub
+	public String srcClassName(SootClass declKlass) {
+		String srcClsName = this.anonymousClassMap.srcClassName(declKlass);
+		if(srcClsName != null)
+			return srcClsName;
+		else
+			return declKlass.getName();
+	}
+
+	protected MethodInfo methodInfo(SootMethod meth) {
+		String methodSig = chordSigFor(meth);
+		ClassInfo ci = classInfo(meth.getDeclaringClass());
+		//System.out.println("methodInfo " + methodSig + " " + (ci == null));
+		MethodInfo mi = ci == null ? null : ci.methodInfo(methodSig);
+		return mi;
+	}
+
+	public static JavaClassInfo classInfo(String className, File f) {
+		Element classElem = classElem(className, f);
+		if(classElem == null)
+			return null;
+		return new JavaClassInfo(className, f, classElem);
+	}
+
+	private static Element classElem(String className, File file) {
+		try {
+			DocumentBuilder builder =
+				DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			Document doc = builder.parse(file);
+			Element root = doc.getDocumentElement();
+			//System.out.println("matching " + className + " " + file);
+			NodeList classElems = root.getElementsByTagName("class");
+			int numClasses = classElems.getLength();
+			for(int i = 0; i < numClasses; i++){
+				Element classElem = (Element) classElems.item(i);
+				String sig = classElem.getAttribute("chordsig");
+				if(sig.equals(className))
+					return classElem;
+			}
+		} catch(Exception e){
+			throw new Error(e);
+		}
 		return null;
-	}	 
-
-	@Override
+	}
+	
 	public String srcInvkExprFor(Stmt invkQuad) {
 		SootMethod caller = Program.containerMethod(invkQuad);
 		MethodInfo mi = methodInfo(caller);
@@ -131,22 +199,5 @@ public abstract class AbstractSourceInfo implements SourceInfo {
 		if(marker == null)
 			return null;
 		return ((InvkMarker) marker).text();
-	}
-
-	@Override
-	public String srcClassName(SootClass declKlass) {
-		return null;
-	}
-
-	@Override
-	public int classLineNum(SootClass klass) {
-		ClassInfo ci = classInfo(klass);
-		return ci == null ? -1 : ci.lineNum();
-	}
-
-	@Override
-	public int methodLineNum(SootMethod meth) {
-		ClassInfo ci = classInfo(meth.getDeclaringClass());
-		return ci == null ? -1 : ci.lineNum(chordSigFor(meth));
 	}
 }

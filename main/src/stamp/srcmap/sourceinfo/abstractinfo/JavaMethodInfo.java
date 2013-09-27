@@ -1,60 +1,30 @@
 package stamp.srcmap.sourceinfo.abstractinfo;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import stamp.srcmap.Expr;
 import stamp.srcmap.InvkMarker;
 import stamp.srcmap.Marker;
 import stamp.srcmap.SimpleMarker;
 import stamp.srcmap.sourceinfo.MethodInfo;
-import stamp.srcmap.sourceinfo.javainfo.JavaClassInfo;
 
 /**
- * @author Saswat Anand
- * @author Osbert Bastani 
+ * @author Saswat Anand 
  */
-public class AbstractMethodInfo implements MethodInfo {
+public class JavaMethodInfo implements MethodInfo {
 	private Map<Integer,List<Marker>> lineToMarkers = new HashMap();
 
-	AbstractMethodInfo(String chordMethSig, String className, File f) {
+	JavaMethodInfo(String chordMethSig, Element classElem) {
 		//System.out.println(">>begin building methodinfo for "+chordMethSig);
-		Element classElem = classElem(className, f);
 		readInfo(classElem, chordMethSig);
 		//System.out.println(">>end building methodinfo for "+chordMethSig);
-	}
-
-	private static Element classElem(String className, File file) {
-		try {
-			DocumentBuilder builder =
-				DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			Document doc = builder.parse(file);
-			Element root = doc.getDocumentElement();
-			//System.out.println("matching " + className + " " + file);
-			NodeList classElems = root.getElementsByTagName("class");
-			int numClasses = classElems.getLength();
-			for(int i = 0; i < numClasses; i++){
-				Element classElem = (Element) classElems.item(i);
-				String sig = classElem.getAttribute("chordsig");
-				if(sig.equals(className))
-					return classElem;
-			}
-		} catch(Exception e){
-			throw new Error(e);
-		}
-		return null;
 	}
 	
 	private Marker invokeExpr(Element ieElem) {

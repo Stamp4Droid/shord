@@ -1,4 +1,4 @@
-package stamp.srcmap.sourceinfo.javainfo;
+package stamp.srcmap.sourceinfo.abstractinfo;
 
 import shord.program.Program;
 
