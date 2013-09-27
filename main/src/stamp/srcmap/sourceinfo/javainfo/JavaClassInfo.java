@@ -2,7 +2,10 @@ package stamp.srcmap.sourceinfo.javainfo;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -12,12 +15,13 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import stamp.srcmap.sourceinfo.abstractinfo.AbstractClassInfo;
+import stamp.srcmap.sourceinfo.ClassInfo;
 
 /**
  * @author Saswat Anand 
  */
-public class JavaClassInfo extends AbstractClassInfo {
+public class JavaClassInfo implements ClassInfo {
+	private Map<String, BasicMethodInfo> methInfos = new HashMap<String, BasicMethodInfo>();	
 	private String className;
 	private File file;
 	private int lineNum;
@@ -52,10 +56,34 @@ public class JavaClassInfo extends AbstractClassInfo {
 	}
 
 	public JavaMethodInfo methodInfo(String chordSig) {
-		if(!super.hasMethodInfoFor(chordSig)) {
+		BasicMethodInfo bmi = methInfos.get(chordSig);
+		if(bmi == null)
 			return null;
+		return new JavaMethodInfo(chordSig, this);
+	}
+
+	public int lineNum(String chordMethSig) { 
+		BasicMethodInfo bmi = methInfos.get(chordMethSig);
+		return bmi == null ? -1 : bmi.lineNum;
+	}
+	
+	public List<String> aliasSigs(String chordMethSig) {
+		List<String> ret = methInfos.get(chordMethSig).aliasChordSigs;
+		return ret == null ? Collections.EMPTY_LIST : ret;
+	}
+	
+	public Map<String,List<String>> allAliasSigs() {
+		Map<String,List<String>> ret = new HashMap();
+		for(Map.Entry<String,BasicMethodInfo> bmiEntry : methInfos.entrySet()){
+			String chordSig = bmiEntry.getKey();
+			List<String> aliases = bmiEntry.getValue().aliasChordSigs;
+			if(aliases != null){
+				if(ret == null)
+					ret = new HashMap();
+				ret.put(chordSig, aliases);
+			}
 		}
-		return new JavaMethodInfo(chordSig, className, file);
+		return ret == null ? Collections.EMPTY_MAP : ret;
 	}
 
 	public static List<Element> getChildrenByTagName(Element parent, String name)  {
@@ -69,7 +97,7 @@ public class JavaClassInfo extends AbstractClassInfo {
 		return nodeList;
 	}
 
-	protected static Element classElem(String className, File file) {
+	private static Element classElem(String className, File file) {
 		try {
 			DocumentBuilder builder =
 				DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -103,19 +131,28 @@ public class JavaClassInfo extends AbstractClassInfo {
 
 		for(Element methElem : getChildrenByTagName(classElem, "method")){
 			String chordSig = methElem.getAttribute("chordsig");
+			BasicMethodInfo bmi = new BasicMethodInfo();
+			methInfos.put(chordSig, bmi);
 
 			//line num
-			String lineNumStr = methElem.getAttribute("line");
-			int lineNum = !lineNumStr.equals("") ? Integer.parseInt(lineNumStr) : -1;
-			
-			BasicMethodInfo bmi = new BasicMethodInfo(lineNum);
+			String lineNum = methElem.getAttribute("line");
+			bmi.lineNum = !lineNum.equals("") ? Integer.parseInt(lineNum) : -1;
 			
 			for(Element aliasElem : getChildrenByTagName(methElem, "alias")){
 				String aliasSig = aliasElem.getFirstChild().getNodeValue();
 				bmi.addAliasChordSig(aliasSig);
 			}
+		}
+	}
 
-			super.addMethodInfo(chordSig, bmi);
+	private static class BasicMethodInfo {
+		int lineNum = -1;
+		List<String> aliasChordSigs;
+		
+		void addAliasChordSig(String chordSig) {
+			if(aliasChordSigs == null)
+				aliasChordSigs = new ArrayList();
+			aliasChordSigs.add(chordSig);
 		}
 	}
 }

@@ -1,74 +1,57 @@
 package stamp.srcmap.sourceinfo.abstractinfo;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import stamp.srcmap.sourceinfo.ClassInfo;
+import stamp.srcmap.sourceinfo.MethodInfo;
+import stamp.srcmap.sourceinfo.javainfo.JavaMethodInfo;
 
 /**
  * @author Saswat Anand 
  */
-public abstract class AbstractClassInfo implements ClassInfo {
-	private Map<String, BasicMethodInfo> methodInfos = new HashMap<String, BasicMethodInfo>();
+public class AbstractClassInfo implements ClassInfo {
 
-	public static class BasicMethodInfo {
-		private int lineNum = -1;
-		private List<String> aliasChordSigs;
-		
-		public BasicMethodInfo(int lineNum) {
-			this.lineNum = lineNum;
-		}
-		
-		public int lineNum() {
-			return this.lineNum;
-		}
-		
-		public List<String> aliasChordSigs() {
-			return this.aliasChordSigs();
-		}
-		
-		public void addAliasChordSig(String chordSig) {
-			if(aliasChordSigs == null)
-				aliasChordSigs = new ArrayList<String>();
-			aliasChordSigs.add(chordSig);
-		}
-	}
-	
-	public void addMethodInfo(String chordSig, BasicMethodInfo methodInfo) {
-		this.methodInfos.put(chordSig, methodInfo);
-	}
-	
-	public boolean hasMethodInfoFor(String chordSig) {
-		return this.methodInfos.get(chordSig) != null;
+	@Override
+	public int lineNum() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
-	public int lineNum(String chordMethSig) { 
-		BasicMethodInfo bmi = this.methodInfos.get(chordMethSig);
-		return bmi == null ? -1 : bmi.lineNum;
+	public MethodInfo methodInfo(String chordSig) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
+
+	@Override
+	public int lineNum(String chordMethSig) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	@Override
 	public List<String> aliasSigs(String chordMethSig) {
-		List<String> ret = this.methodInfos.get(chordMethSig).aliasChordSigs;
-		return ret == null ? Collections.EMPTY_LIST : ret;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public Map<String,List<String>> allAliasSigs() {
-		Map<String,List<String>> ret = new HashMap();
-		for(Map.Entry<String,BasicMethodInfo> bmiEntry : this.methodInfos.entrySet()) {
-			String chordSig = bmiEntry.getKey();
-			List<String> aliases = bmiEntry.getValue().aliasChordSigs;
-			if(aliases != null){
-				if(ret == null)
-					ret = new HashMap();
-				ret.put(chordSig, aliases);
-			}
-		}
-		return ret == null ? Collections.EMPTY_MAP : ret;
+	public Map<String, List<String>> allAliasSigs() {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
 }
