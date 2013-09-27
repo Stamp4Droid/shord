@@ -152,9 +152,9 @@ public class FileManager {
 		}
 
 		//SourceData data = srcVisitor.process(file);
-		File taintedInfoFile = new File(outPath+"/results/TaintedVar.xml"); // TODO: replace with jimple version
-		File allReachableFile = new File(outPath+"/results/AllReachable.xml"); // TODO: replace with jimple version
-		File reachedFile = new File(outPath+"/results/reachedmethods.xml"); // TODO: replace with jimple version
+		File taintedInfoFile = new File(outPath+"/results/TaintedVar_jimple.xml");
+		File allReachableFile = new File(outPath+"/results/AllReachable_jimple.xml");
+		File reachedFile = new File(outPath+"/results/reachedmethods_jimple.xml");
 
 		//replace .java with .xml
 		//String fname = filePath.substring(0, filePath.length()-4).concat("xml");
