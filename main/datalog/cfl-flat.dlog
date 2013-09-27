@@ -13,7 +13,7 @@
 .include "I.dom"
 .include "T.dom"
 
-.bddvarorder M0_C0xC1_V0xV1_T0_U0xU1_H0xF0_I0
+.bddvarorder M0_C0xC1_V0xV1_T0_U0_H0xF0_I0
 
 # INPUT RELATIONS =============================================================
 

@@ -74,7 +74,7 @@
 		  description="CFL Solver analysis to process"/>
     <prop-default property="stamp.solvergen.logging" default="true"
 		  description="whether to enable logging in the generated solver"/>
-    <prop-default property="stamp.solvergen.debug" default="false"
+    <prop-default property="stamp.solvergen.debug" default="true"
 		  description="whether to store debugging symbols in the generated solver"/>
     <prop-default property="stamp.solvergen.profiling" default="false"
 		  description="whether to enable profiling output for the generated solver"/>
@@ -124,7 +124,7 @@
     <require-file file="${stamp.solvergen.rels.listfile}"/>
 
     <!-- Compile and link the analysis code with the CFL Solver engine. -->
-    <exec executable="g++" dir="${stamp.out.dir}"
+    <exec executable="g++-4.8" dir="${stamp.out.dir}"
 	  spawn="false" failonerror="true">
       <arg line="-std=c++11 -Wall -Wextra -pedantic -O2"/>
       <arg line="${stamp.solvergen.logging.flag}"/>

@@ -683,7 +683,7 @@ void parse_rels() {
 	assert(rel_arity(r) == 3);
 	std::ostringstream ss;
 	ss << INPUT_DIR << "/" << ref2rel(r) << "." << RELATION_FORMAT;
-	const char *fname = ss.str().c_str();
+	std::string fname = ss.str();
 	std::ifstream fin(fname);
 	if (!fin) {
 	    SYS_ERR("Can't open input file: ", fname);

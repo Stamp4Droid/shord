@@ -12,7 +12,7 @@
 .include "L.dom"
 .include "CL.dom"
 
-.bddvarorder L0_Z0xZ1_M0_CL0xCL1_C0xC1_V0xV1_U0xU1
+.bddvarorder L0_Z0xZ1_M0_CL0_C0_V0xV1_U0xU1
 
 # INPUT RELATIONS =============================================================
 

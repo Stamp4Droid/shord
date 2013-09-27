@@ -18,7 +18,7 @@
 .include "I.dom"
 .include "CL.dom"
 
-.bddvarorder M0_CL0xCL1_C0xC1_V0xV1_U0xU1_F0_I0
+.bddvarorder M0_CL0xCL1_C0xC1xC2_V0xV1_U0xU1_F0_I0
 
 # INPUT RELATIONS =============================================================
 
