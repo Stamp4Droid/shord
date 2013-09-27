@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <assert.h>
 #include <deque>
 #include <errno.h>
@@ -179,31 +180,38 @@ INDEX index_parse(const char *index_str) {
 /* GENERIC DATA STRUCTURES ================================================= */
 
 template<typename K, typename V>
-typename LightMap<K,V>::Size LightMap<K,V>::index_of(K k) const {
-    Size i;
-    for (i = 0; i < list.size(); i++) {
-	if (list[i].first == k) {
-	    break;
-	}
-    }
-    return i;
+V LightMap<K,V>::dummy;
+
+template<typename K, typename V>
+typename LightMap<K,V>::List::iterator LightMap<K,V>::find(K k) {
+    auto key_is_k = [k](const std::pair<K,V>& elem) {
+	return k == elem.first;
+    };
+    return std::find_if(list.begin(), list.end(), key_is_k);
 }
 
 template<typename K, typename V>
 LightMap<K,V>::LightMap() {}
 
 template<typename K, typename V>
-bool LightMap<K,V>::contains(K k) const {
-    return index_of(k) < list.size();
+V& LightMap<K,V>::const_get(K k) {
+    typename List::iterator pos = find(k);
+    if (pos == list.end()) {
+	return dummy;
+    } else {
+	return (*pos).second;
+    }
 }
 
 template<typename K, typename V>
 V& LightMap<K,V>::operator[](K k) {
-    Size i = index_of(k);
-    if (i == list.size()) {
-	list.emplace_back(k, V());
+    typename List::iterator pos = find(k);
+    if (pos == list.end()) {
+	list.emplace_front(k, V());
+	return list.front().second;
+    } else {
+	return (*pos).second;
     }
-    return list[i].second;
 }
 
 /* NODES HANDLING ========================================================== */
@@ -474,13 +482,7 @@ InEdgeSet::View InEdgeSet::view(INDEX index) {
  * Otherwise, return a reference to a dummy empty InEdgeSet.
  */
 InEdgeSet& get_in_set(NODE_REF to, EDGE_KIND kind) {
-    // HACK: A dummy empty InEdgeSet, used to provide a zero-length iterator
-    // without breaking the View interface.
-    static InEdgeSet empty_in_set;
-    if (nodes[to].in.contains(kind)) {
-	return nodes[to].in[kind];
-    }
-    return empty_in_set;
+    return nodes[to].in.const_get(kind);
 }
 
 /**
@@ -488,13 +490,7 @@ InEdgeSet& get_in_set(NODE_REF to, EDGE_KIND kind) {
  * Otherwise, return a reference to a dummy empty OutEdgeSet.
  */
 OutEdgeSet& get_out_set(NODE_REF from, EDGE_KIND kind) {
-    // HACK: A dummy empty OutEdgeSet, used to provide a zero-length iterator
-    // without breaking the View interface.
-    static OutEdgeSet empty_out_set;
-    if (nodes[from].out.contains(kind)) {
-	return nodes[from].out[kind];
-    }
-    return empty_out_set;
+    return nodes[from].out.const_get(kind);
 }
 
 InEdgeSet::View edges_to(NODE_REF to, EDGE_KIND kind, INDEX index) {

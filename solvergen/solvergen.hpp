@@ -2,6 +2,7 @@
 #define SOLVERGEN_HPP
 
 #include <deque>
+#include <forward_list>
 #include <iterator>
 #include <limits.h>
 #include <list>
@@ -450,27 +451,39 @@ public:
  * key-value pairs.
  */
 template<typename K, typename V> class LightMap {
-public:
-    typedef typename std::vector<std::pair<K,V>>::size_type Size;
 private:
+    typedef std::forward_list<std::pair<K,V>> List;
+private:
+    /**
+     * A dummy default-constructed value element, returned by ::dummy_get(K k)
+     * when the requested key is not present in the LightMap. This element will
+     * be shared among all such requests, and should thus not be modified.
+     *
+     * We use this on a higher layer, to provide a zero-length Edge iterator
+     * without breaking the View interface.
+     */
+    static V dummy;
     /**
      * The actual contents of the LightMap.
      */
-    std::vector<std::pair<K,V>> list;
+    List list;
+private:
     /**
-     * Return the index of the first occurence of key @a k on LightMap::list.
-     * Returns an out-of-bounds value if @a k is not present in the LightMap.
+     * Locate the first element with a given key. The returned iterator will be
+     * at one-past-the-end if the key is not present in the LightMap.
      */
-    Size index_of(K k) const;
+    typename List::iterator find(K k);
 public:
     /**
      * Create an empty LightMap.
      */
     LightMap();
     /**
-     * Check if the LightMap contains an entry for key @a k.
+     * Retrieve the value mapped to key @a k. If @a k is not present in the
+     * LightMap, a dummy default-constructed element is returned, which should
+     * not be modified.
      */
-    bool contains(K k) const;
+    V& const_get(K k);
     /**
      * Retrieve the value mapped to key @a k. If @a k is not present in the
      * LightMap, it get inserted under a newly default-constructed value.
