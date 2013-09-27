@@ -139,10 +139,6 @@
 		<script>		
 			var numFlows = <%=numFlows%>;
 			function showTab(index){
-				if ($('#centerpane #flowctxttable').length > 0) {
-					$('#centerpane #flowctxttable').remove();
-				}
-
 				for(j = 0; j < <%=tabCount%>; j++){
 					if(index == j){
 						$("#leftbartab-"+j).show();
@@ -251,9 +247,29 @@
 					}
 			    }
 			}
-		
+
+			function compactFlowCtxtTable($table) {
+				var $tds = $table.find('td');
+
+				for (var i = 0; i < $tds.length; ++i) {
+					var tex = $tds[i].innerHTML;
+					var a_regex = /.* (.+)$/;
+					var match = tex.match(a_regex);
+					$tds[i].empty();
+					$tds[i].append(match[0]);
+				}
+
+				return '';
+			}
+
 			function showCode(response, href)
 			{
+				var $flowtable = $('#centerpane #flowctxttable');
+				if ($flowtable.length > 0) {
+					$('#rightbar').append(compactFlowCtxtTable($flowtable));
+					$flowtable.remove();
+				}
+
 				console.log("THE HREF");
 				console.log(response);
 				var ppStr = prettyPrintOne(response, 'java', true);
@@ -691,8 +707,8 @@
                                     	return;
                                     }
 
-                                    if ($('#centerpane #flowctxttable').length > 0) {
-                                        $('#centerpane #flowctxttable').remove();
+                                    if ($('#flowctxttable').length > 0) {
+                                        $('#flowctxttable').remove();
                                     }
 
                                     var table = ['<table class="table table-condensed" id="flowctxttable" style="font-size: small">',
