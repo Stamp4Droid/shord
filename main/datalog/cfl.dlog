@@ -117,6 +117,12 @@ VTCtxt(c:C,v:V,t:T) output
 OTFilter(o:C,t:T)   output
 
 # annotations
+InLabelCtxt(c:C,l:CL,v:V)      output
+OutLabelCtxt(c:C,l:CL,v:V)     output
+
+InLabelPrimCtxt(c:C,l:CL,u:U)  output
+OutLabelPrimCtxt(c:C,l:CL,u:U) output
+
 SrcArgFlowCtxt(c:C,l:CL,v:V)   output
 SinklArgFlowCtxt(c:C,l:CL,v:V) output
 SrcRetFlowCtxt(c:C,l:CL,v:V)   output
@@ -199,6 +205,17 @@ VTCtxt(c,v,t) :- VT(v,t), CM(c,m), MV(m,v).
 OTFilter(o,t) :- CH(o,h), HTFilter(h,t).
 
 # annotations
+InLabelCtxt(c,cl,v)  :- CCL(c,cl), LCL(l,cl), InLabelRet(l,m), MmethRet(m,_,v), CM(c,m).
+InLabelCtxt(c,cl,v)  :- CCL(c,cl), LCL(l,cl), InLabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).
+OutLabelCtxt(c,cl,v) :- CCL(c,cl), LCL(l,cl), OutLabelRet(l,m), MmethRet(m,_,v), CM(c,m).
+OutLabelCtxt(c,cl,v) :- CCL(c,cl), LCL(l,cl), OutLabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).
+
+InLabelPrimCtxt(c,cl,u)  :- CCL(c,cl), LCL(l,cl), InLabelRet(l,m), MmethPrimRet(m,_,u), CM(c,m).
+# Pass-by-value semantics means that we could never introduce a taint label to
+# a primitive-type argument, so we don't need to consider InLabelArg here.
+OutLabelPrimCtxt(c,cl,u) :- CCL(c,cl), LCL(l,cl), OutLabelRet(l,m), MmethPrimRet(m,_,u), CM(c,m).
+OutLabelPrimCtxt(c,cl,u) :- CCL(c,cl), LCL(l,cl), OutLabelArg(l,m,z), MmethPrimArg(m,z,u), CM(c,m).
+
 SrcArgFlowCtxt(c,cl,v)   :- srcCtxtLabel(cl),  CCL(c,cl), LCL(l,cl), LabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).
 SinklArgFlowCtxt(c,cl,v) :- sinkCtxtLabel(cl), CCL(c,cl), LCL(l,cl), LabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).
 SrcRetFlowCtxt(c,cl,v)   :- srcCtxtLabel(cl),  CCL(c,cl), LCL(l,cl), LabelRet(l,m), MmethRet(m,_,v), CM(c,m).
