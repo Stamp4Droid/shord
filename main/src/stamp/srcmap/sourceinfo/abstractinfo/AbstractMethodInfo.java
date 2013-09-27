@@ -29,7 +29,7 @@ import stamp.srcmap.sourceinfo.javainfo.JavaClassInfo;
 public class AbstractMethodInfo implements MethodInfo {
 	private Map<Integer,List<Marker>> lineToMarkers = new HashMap();
 
-	AbstractMethodInfo(String chordMethSig, String className, File f) {
+	protected AbstractMethodInfo(String chordMethSig, String className, File f) {
 		//System.out.println(">>begin building methodinfo for "+chordMethSig);
 		Element classElem = classElem(className, f);
 		readInfo(classElem, chordMethSig);
