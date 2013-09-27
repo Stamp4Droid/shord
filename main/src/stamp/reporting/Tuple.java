@@ -24,6 +24,10 @@ public class Tuple {
 	public Tuple() {
 		this.sourceInfo = SourceInfoSingleton.v();
 	}
+	
+	public void setSourceInfo(SourceInfo sourceInfo) {
+		this.sourceInfo = sourceInfo;
+	}
 
 	public Tuple addValue(SootClass klass) 	{
 		String line = String.valueOf(sourceInfo.classLineNum(klass));

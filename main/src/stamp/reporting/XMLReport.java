@@ -24,18 +24,23 @@ public abstract class XMLReport extends Category {
 		return title;
 	}
 
-	public String getCanonicalReportFilePath() { 
+	public String getCanonicalReportFilePath(boolean jimple) { 
 		try{
-			File f = new File(Postmortem.resultsDir, relName+".xml");
+			File f;
+			if(jimple) {
+				f = new File(Postmortem.resultsDir, relName+"_jimple"+".xml");
+			} else {
+				f = new File(Postmortem.resultsDir, relName+".xml");
+			}
 			return f.getCanonicalPath();
 		}catch(IOException e){
 			throw new Error(e);
 		}
 	}
 
-	public void write() {
+	public void write(boolean jimple) {
 		try{
-			PrintWriter writer = new PrintWriter(new FileWriter(new File(getCanonicalReportFilePath())));
+			PrintWriter writer = new PrintWriter(new FileWriter(new File(getCanonicalReportFilePath(jimple))));
 			generate();
 			write(writer);
 			writer.close();

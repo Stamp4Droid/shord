@@ -1,8 +1,6 @@
-package stamp.srcmap.sourceinfo.javainfo;
+package stamp.srcmap.sourceinfo.jimpleinfo;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import soot.SootClass;
 import soot.jimple.Stmt;
@@ -14,11 +12,11 @@ import stamp.srcmap.sourceinfo.abstractinfo.AbstractSourceInfo;
 /**
  * @author Saswat Anand 
  */
-public class JavaSourceInfo extends AbstractSourceInfo {
+public class JimpleSourceInfo extends AbstractSourceInfo {
 	private File frameworkSrcDir;
-	private List<File> srcMapDirs = new ArrayList<File>();
+	private File srcMapDir;;
 
-	public JavaSourceInfo() {
+	public JimpleSourceInfo() {
 		File frameworkDir = new File(System.getProperty("stamp.framework.dir"));
 
 		frameworkSrcDir = new File(frameworkDir, "gen");
@@ -28,13 +26,12 @@ public class JavaSourceInfo extends AbstractSourceInfo {
 		File frameworkSrcMapDir = new File(frameworkDir, "srcmap");
 	 	if(!frameworkSrcMapDir.exists())
 			throw new RuntimeException("Framework dir " + frameworkSrcMapDir + " does not exist");
-		srcMapDirs.add(frameworkSrcMapDir);
+		//srcMapDirs.add(frameworkSrcMapDir);
 
 		String outDir = System.getProperty("stamp.out.dir");
-		File appSrcMapDir = new File(outDir+"/srcmap");
-		if(!appSrcMapDir.exists())
-			throw new RuntimeException("Framework dir " + appSrcMapDir + " does not exist");
-		srcMapDirs.add(appSrcMapDir);
+		srcMapDir = new File(outDir+"/jimple");
+		if(!srcMapDir.exists())
+			throw new RuntimeException("Framework dir " + srcMapDir + " does not exist");
 	}
 	
 	public boolean isFrameworkClass(SootClass klass) {
@@ -60,11 +57,11 @@ public class JavaSourceInfo extends AbstractSourceInfo {
 	}
 	
 	public File srcMapFile(String srcFileName) {
-		if(srcFileName != null){
-			for(File dir : srcMapDirs){
-				File f = new File(dir, srcFileName.replace(".java", ".xml"));
-				if(f.exists())
-					return f;
+		if(srcFileName != null) {
+			String jimpleFileName = srcFileName.replace(".java", ".jimple").replace("/", ".");
+			File f = new File(srcMapDir, jimpleFileName);
+			if(f.exists()) {
+				return f;
 			}
 		}
 		return null;

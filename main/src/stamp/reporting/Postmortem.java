@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 
 import shord.program.Program;
 import shord.project.analyses.JavaAnalysis;
+import stamp.srcmap.SourceInfoSingleton;
 import stamp.util.PropertyHelper;
 import chord.project.Chord;
 
@@ -52,19 +53,26 @@ public class Postmortem extends JavaAnalysis {
 		try{
 			PrintWriter reportsTxtWriter = new PrintWriter(new FileWriter(new File(reportsTxtFilePath)));
 			Class[] reports = processingSrc ? srcReports : apkReports;
-			for(Class reportClass : reports) {
-				XMLReport report = report = (XMLReport) reportClass.newInstance();
+
+			for(int j=0; j<2; j++) {
+				boolean jimple = (j == 0);
+				for(Class reportClass : reports) {
+					XMLReport report = (XMLReport) reportClass.newInstance();
+					if(jimple) {
+						report.setSourceInfo(SourceInfoSingleton.getJimpleSourceInfo());
+					}
+					
+					boolean show = true;
+					for(int i = 0; show && i < dontShowReports.length; i++){
+						if(reportClass.equals(dontShowReports[i]))
+							show = false;
+					}
+					if(show) {
+						reportsTxtWriter.println(report.getTitle() + " " + report.getCanonicalReportFilePath(jimple));
+					}
 				
-				boolean show = true;
-				for(int i = 0; show && i < dontShowReports.length; i++){
-					if(reportClass.equals(dontShowReports[i]))
-						show = false;
+					report.write(jimple);
 				}
-				if(show) {
-					reportsTxtWriter.println(report.getTitle() + " " + report.getCanonicalReportFilePath());
-				}
-				
-				report.write();
 			}
 			
 			reportsTxtWriter.close();

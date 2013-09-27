@@ -26,6 +26,7 @@ import stamp.srcmap.InvkMarker;
 import stamp.srcmap.Marker;
 import stamp.srcmap.sourceinfo.ClassInfo;
 import stamp.srcmap.sourceinfo.MethodInfo;
+import stamp.srcmap.sourceinfo.RegisterMap;
 import stamp.srcmap.sourceinfo.SourceInfo;
 
 /**
@@ -65,6 +66,10 @@ public abstract class AbstractSourceInfo implements SourceInfo {
 		}
 		return null;
 	}
+
+    public RegisterMap buildRegMapFor(SootMethod meth) {
+		return new DefaultRegisterMap(this, meth, methodInfo(meth));
+    }
 
     public String srcClassName(Stmt stmt) {
 		SootMethod method = Program.containerMethod(stmt);
