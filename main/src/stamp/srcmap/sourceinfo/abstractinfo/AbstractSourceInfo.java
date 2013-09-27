@@ -145,11 +145,11 @@ public abstract class AbstractSourceInfo implements SourceInfo {
 		return mi;
 	}
 
-	public static JavaClassInfo classInfo(String className, File f) {
+	public static DefaultClassInfo classInfo(String className, File f) {
 		Element classElem = classElem(className, f);
 		if(classElem == null)
 			return null;
-		return new JavaClassInfo(className, f, classElem);
+		return new DefaultClassInfo(className, f, classElem);
 	}
 
 	private static Element classElem(String className, File file) {

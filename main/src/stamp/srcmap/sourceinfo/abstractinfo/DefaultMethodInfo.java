@@ -18,10 +18,10 @@ import stamp.srcmap.sourceinfo.MethodInfo;
 /**
  * @author Saswat Anand 
  */
-public class JavaMethodInfo implements MethodInfo {
+public class DefaultMethodInfo implements MethodInfo {
 	private Map<Integer,List<Marker>> lineToMarkers = new HashMap();
 
-	JavaMethodInfo(String chordMethSig, Element classElem) {
+	DefaultMethodInfo(String chordMethSig, Element classElem) {
 		//System.out.println(">>begin building methodinfo for "+chordMethSig);
 		readInfo(classElem, chordMethSig);
 		//System.out.println(">>end building methodinfo for "+chordMethSig);
@@ -31,9 +31,9 @@ public class JavaMethodInfo implements MethodInfo {
 		InvkMarker ie = new InvkMarker(Integer.parseInt(ieElem.getAttribute("line")),
 				ieElem.getAttribute("chordsig"),
 				ieElem.getAttribute("type"),
-				JavaClassInfo.getChildrenByTagName(ieElem, "expr").get(0).getFirstChild().getNodeValue());
+				DefaultClassInfo.getChildrenByTagName(ieElem, "expr").get(0).getFirstChild().getNodeValue());
 
-		List<Element> params = JavaClassInfo.getChildrenByTagName(ieElem, "param");
+		List<Element> params = DefaultClassInfo.getChildrenByTagName(ieElem, "param");
 		//System.out.println("params.size() = " + params.size());
 		for(Element paramElem : params){
 			ie.addParam(this.expr(paramElem));
@@ -44,7 +44,7 @@ public class JavaMethodInfo implements MethodInfo {
 	}
 		
 	protected void readInfo(Element classElem, String chordMethSig) {
-		for(Element methElem : JavaClassInfo.getChildrenByTagName(classElem, "method")){
+		for(Element methElem : DefaultClassInfo.getChildrenByTagName(classElem, "method")){
 			if(chordMethSig.equals(methElem.getAttribute("chordsig"))){
 				process(methElem);
 				return;
@@ -105,7 +105,7 @@ public class JavaMethodInfo implements MethodInfo {
 		if(elem.hasAttribute("chordsig")) {
 			chordSig = elem.getAttribute("chordsig");
 		}
-		Element operandElem = JavaClassInfo.getChildrenByTagName(elem, "operand").get(0);
+		Element operandElem = DefaultClassInfo.getChildrenByTagName(elem, "operand").get(0);
 		SimpleMarker marker = new SimpleMarker(Integer.parseInt(elem.getAttribute("line")),
 				chordSig,
 				elem.getAttribute("type"),
@@ -121,7 +121,7 @@ public class JavaMethodInfo implements MethodInfo {
 		Expr expr = new Expr(Integer.parseInt(elem.getAttribute("start")),
 				Integer.parseInt(elem.getAttribute("length")),
 				Integer.parseInt(elem.getAttribute("line")),
-				JavaClassInfo.getChildrenByTagName(elem, "expr").get(0).getFirstChild().getNodeValue(),
+				DefaultClassInfo.getChildrenByTagName(elem, "expr").get(0).getFirstChild().getNodeValue(),
 				type);
 		return expr;
 	}

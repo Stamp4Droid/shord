@@ -20,14 +20,14 @@ import stamp.srcmap.sourceinfo.ClassInfo;
 /**
  * @author Saswat Anand 
  */
-public class JavaClassInfo implements ClassInfo {
+public class DefaultClassInfo implements ClassInfo {
 	private Map<String, BasicMethodInfo> methInfos = new HashMap<String, BasicMethodInfo>();	
 	private String className;
 	private File file;
 	private int lineNum;
 	private Element classElem;
 
-	protected JavaClassInfo(String className, File f, Element classElem) {
+	protected DefaultClassInfo(String className, File f, Element classElem) {
 		//System.out.println("reading class info " + className + " " + f);
 		this.file = f;
 		this.className = className;
@@ -50,11 +50,11 @@ public class JavaClassInfo implements ClassInfo {
 		return lineNum;
 	}
 
-	public JavaMethodInfo methodInfo(String chordSig) {
+	public DefaultMethodInfo methodInfo(String chordSig) {
 		BasicMethodInfo bmi = methInfos.get(chordSig);
 		if(bmi == null)
 			return null;
-		return new JavaMethodInfo(chordSig, this.classElem);
+		return new DefaultMethodInfo(chordSig, this.classElem);
 	}
 
 	public int lineNum(String chordMethSig) { 
