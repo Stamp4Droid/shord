@@ -6,14 +6,16 @@ import java.util.*;
 public class ClassIndexGenerator
 {
 	private File rootPath;
+	private File outPath;
 	private List<File> srcPaths;
 
-	public ClassIndexGenerator(String srcPath, String rootPath)
+	public ClassIndexGenerator(String srcPath, String rootPath, String outPath)
 	{
 		this.srcPaths = new ArrayList();
 		for(String dirName : srcPath.split(":"))
 			this.srcPaths.add(new File(dirName));
 		this.rootPath = new File(rootPath);
+		this.outPath = new File(outPath);
 		System.out.println("CallIndexGenerator "+srcPath+" "+rootPath);
 	}
 
@@ -90,6 +92,9 @@ public class ClassIndexGenerator
 			collect(dir, pkgName, subPkgs, javaFiles);
 		} else if(type.equals("framework")){
 			File dir = new File(rootPath, "models/api-16/gen");
+			collect(dir, pkgName, subPkgs, javaFiles);
+		} else if(type.equals("jimple")) {
+			File dir = new File(rootPath, "models/src");
 			collect(dir, pkgName, subPkgs, javaFiles);
 		}
 		

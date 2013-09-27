@@ -62,7 +62,7 @@
 		out.println(e.getMessage());
 	}
 
-	int tabCount = numFlows + titleToFileName.size() + 3 /* app, model, framework */;
+	int tabCount = numFlows + titleToFileName.size() + 4 /* app, model, framework, jimple */;
   %>	  	
 		<link href="/stamp/fuelux/css/fuelux.min.css" rel="stylesheet" />
 		
@@ -203,6 +203,7 @@
 		    $('#AppHierarchy').tree({dataSource: new ClassHierarchyDataSource("app")});
 		    $('#ModelsHierarchy').tree({dataSource: new ClassHierarchyDataSource("model")});
 		    $('#FrameworkHierarchy').tree({dataSource: new ClassHierarchyDataSource("framework")});
+		    $('#JimpleHierarchy').tree({dataSource: new ClassHierarchyDataSource("app")});
 		</script>
 		
 		<script>
@@ -345,7 +346,7 @@
 							var tokens = $.trim(response).split(",");
 							var filePath = tokens[0];
 							var lineNum = tokens[1];
-							showSource(filePath, 'false', lineNum);
+							showSource(filePath, 'false', lineNum, 'false');
 						});	
                     });
 			    }
@@ -422,7 +423,7 @@
                 onTabDisplay(href);
             };
 			
-			var showSource = function(selectedFile, isModelFlag, ln)
+			var showSource = function(selectedFile, isModelFlag, ln, useJimple)
 			{
 			    var tabTitle = selectedFile.substring(selectedFile.lastIndexOf('/')+1);
 			    var onTabLoad = function (href) {
@@ -431,7 +432,8 @@
                         url: "/stamp/html/viewSource.jsp",
                         data: {filepath: selectedFile, 
                             lineNum: ln, 
-                            isModel: isModelFlag}
+                            isModel: isModelFlag,
+			    useJimple: useJimple}
 	                }).done(function (response) {
                         showCode(response, href);
                         highlightLine(ln, href);
@@ -453,15 +455,19 @@
 			  
 		<script>
 			$('#AppHierarchy').on('selected', function(event,selection){
-				showSource(selection.info[0].file, 'false');
+				showSource(selection.info[0].file, 'false', undefined, 'false');
 			});
 
 			$('#ModelsHierarchy').on('selected', function(event,selection){
-				showSource(selection.info[0].file, 'true');
+				showSource(selection.info[0].file, 'true', undefined, 'false');
 			});
 
 			$('#FrameworkHierarchy').on('selected', function(event,selection){
-				showSource(selection.info[0].file, 'false');
+				showSource(selection.info[0].file, 'false', undefined, 'false');
+			});
+
+			$('#JimpleHierarchy').on('selected', function(event,selection){
+				showSource(selection.info[0].file, 'false', undefined, 'true');
 			});
 		</script>
 		
@@ -518,7 +524,7 @@
                             return;
                         if(typeof lineNum === "undefined")
                             return;
-                        showSource(file, 'false', lineNum);
+                        showSource(file, 'false', lineNum, 'false');
                     } 
 				    else 
 				    {

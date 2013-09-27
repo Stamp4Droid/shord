@@ -1,4 +1,4 @@
-package stamp.srcmap.sourceinfo.javasource;
+package stamp.srcmap.sourceinfo.abstractinfo;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -35,11 +35,11 @@ import stamp.srcmap.sourceinfo.SourceInfo;
 /**
  * @author Saswat Anand 
  */
-public class JavaRegisterMap implements RegisterMap {
+public class AbstractRegisterMap implements RegisterMap {
     private Map<Local,Set<Expr>> varToExprs;
     private SourceInfo sourceInfo;
 
-	public JavaRegisterMap(SourceInfo sourceInfo, SootMethod meth, MethodInfo mi) {
+	public AbstractRegisterMap(SourceInfo sourceInfo, SootMethod meth, MethodInfo mi) {
 		this.sourceInfo = sourceInfo;
 		if(meth.isConcrete() && mi != null){
 			//System.out.println("=== registermap " + meth);

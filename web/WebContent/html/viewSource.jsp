@@ -2,7 +2,13 @@
 <%
 	String filepath = request.getParameter("filepath");
 	boolean isModel = request.getParameter("isModel").equals("true");
-    String lineNum = request.getParameter("lineNum");
+	boolean useJimple;
+	if(request.getParameter("useJimple") == null) {
+	    useJimple = false;
+	} else {
+	    useJimple = request.getParameter("useJimple").equals("true");
+	}
+	String lineNum = request.getParameter("lineNum");
 
 	FileManager manager = (FileManager) session.getAttribute("manager");
 	if(manager == null){
@@ -15,6 +21,10 @@
 		session.setAttribute("manager", manager);
 	}
 	
-	//String program = manager.getAnnotatedSource(filepath, isModel);
-	String program = manager.getAnnotatedJimple(filepath, isModel);
+	String program;
+	if(useJimple) {	
+		program = manager.getAnnotatedJimple(filepath, isModel);
+	} else {
+	        program = manager.getAnnotatedSource(filepath, isModel);
+	}
 %><link href="/stamp/css/viewSource.css" rel="stylesheet" /><%=program%>

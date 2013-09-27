@@ -54,8 +54,16 @@
 	makeTree("FrameworkHierarchy", out);
 	%>
 </div>
+<div id="leftbartab-3">
+	<span class="label label-info">
+		Jimple Code
+	</span>
+	<%
+	makeTree("JimpleHierarchy", out);
+	%>
+</div>
 <%
-	i = 3; 
+	i = 4; 
 	int j = 0;
 	List<String> sources = new ArrayList<String>();	
 	List<String> sinks = new ArrayList<String>();
@@ -90,7 +98,7 @@
 							String sink = tokens[1];
 							String weight = tokens[2];
 							
-							int flowVizTabId = 3 + titleToFileName.entrySet().size() + sources.size();
+							int flowVizTabId = 4 + titleToFileName.entrySet().size() + sources.size();
 							sources.add(src);
 							sinks.add(sink);
 						%>	

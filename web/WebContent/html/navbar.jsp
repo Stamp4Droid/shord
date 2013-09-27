@@ -12,6 +12,7 @@
            				<li><a href="#" id="showtab-0">App</a></li>
            				<li><a href="#" id="showtab-1">Models</a></li>
            				<li><a href="#" id="showtab-2">Framework</a></li>
+           				<li><a href="#" id="showtab-3">Jimple</a></li>
            			</ul>
 				</li>
 			</ul>
@@ -22,7 +23,7 @@
            			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Analyze<b class="caret"></b></a>
            			<ul class="dropdown-menu">
 					<%
-						int i = 3;
+						int i = 4;
 						for(String title : titleToFileName.keySet()){
 					%>
 							<li><a href="#" id="showtab-<%=i%>"><%=title%></a></li>
