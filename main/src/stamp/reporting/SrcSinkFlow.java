@@ -14,6 +14,8 @@ import shord.program.Program;
 
 import soot.Unit;
 import soot.jimple.Stmt;
+import soot.SootClass;
+import soot.SootMethod;
 
 import chord.bddbddb.Rel.RelView;
 import chord.util.tuple.object.Trio;
@@ -73,14 +75,12 @@ public class SrcSinkFlow extends XMLReport {
         StringBuilder builder = new StringBuilder();
         for(Unit unit : sourceCtxt.getElems()) {
         	Stmt stmt = (Stmt)unit;
-        	String invkExpr = SourceInfo.srcInvkExprFor(stmt);
-        	if(invkExpr != null) {
-        		invkExpr = SourceInfo.javaLocStr(stmt) + " " + invkExpr;
-        	} else {
-        		invkExpr = SourceInfo.javaLocStr(stmt);
-        	}
 
-            builder.append(invkExpr).append('~').append(Program.unitToString(unit)).append(',');
+			SootMethod method = Program.containerMethod(stmt);
+			SootClass klass = method.getDeclaringClass();
+			String filename = SourceInfo.filePath(klass);
+
+            builder.append(filename).append('~').append(Program.unitToString(unit)).append(',');
         }
         srcTuple.addValue(builder.toString());
 
@@ -90,14 +90,12 @@ public class SrcSinkFlow extends XMLReport {
         builder = new StringBuilder();
         for(Unit unit : sinkCtxt.getElems()) {
         	Stmt stmt = (Stmt)unit;
-        	String invkExpr = SourceInfo.srcInvkExprFor(stmt);
-        	if(invkExpr != null) {
-        		invkExpr = SourceInfo.javaLocStr(stmt) + " " + invkExpr;
-        	} else {
-        		invkExpr = SourceInfo.javaLocStr(stmt);
-        	}
 
-            builder.append(invkExpr).append('~').append(Program.unitToString(unit)).append(',');
+			SootMethod method = Program.containerMethod(stmt);
+			SootClass klass = method.getDeclaringClass();
+			String filename = SourceInfo.filePath(klass);
+
+            builder.append(filename).append('~').append(Program.unitToString(unit)).append(',');
         }
 
         sinkTuple.addValue(builder.toString());
