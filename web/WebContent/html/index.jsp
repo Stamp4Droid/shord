@@ -251,22 +251,20 @@
 			function compactFlowCtxtTable($table) {
 				var $tds = $table.find('td');
 
-				for (var i = 0; i < $tds.length; ++i) {
-					var tex = $tds[i].innerHTML;
-					var a_regex = /.* (.+)$/;
-					var match = tex.match(a_regex);
-					$tds[i].empty();
-					$tds[i].append(match[0]);
-				}
-
-				return '';
+				$tds.each(function (index) {
+						var tex = $(this).text();
+						var a_regex = /.* (.+)\(.*\)$/;
+						var match = tex.match(a_regex);
+						$(this).html(match[1]);
+					});
 			}
 
 			function showCode(response, href)
 			{
 				var $flowtable = $('#centerpane #flowctxttable');
 				if ($flowtable.length > 0) {
-					$('#rightbar').append(compactFlowCtxtTable($flowtable));
+					compactFlowCtxtTable($flowtable);
+					$('#rightbar').append($flowtable[0].outerHTML);
 					$flowtable.remove();
 				}
 
@@ -651,9 +649,8 @@
                             
                             for (var j = i; j <= 2; ++j) {
                                 entry.push('<tr>');
-                                entry.push('<td>'+((j!=2)?'<p class="muted">'+escTags(sourcem[j])+'</p>':'')+escTags(sourcem[j+1])+'</td>');
-                                entry.push('<td>'+((j!=2)?'<p class="muted">'+escTags(sinkm[j])+'</p>':'')+escTags(sinkm[j+1])+'</td>');
-//                                entry.push('<td>'+escTags(sinkm[j+1])+'</td>');
+                                entry.push('<td'+((j!=2)?' source="'+escTags(sourcem[j])+'"':'')+'>'+escTags(sourcem[j+1])+'</td>');
+                                entry.push('<td'+((j!=2)?' source="'+escTags(sinkm[j])+'"':'')+'>'+escTags(sinkm[j+1])+'</td>');
                                 entry.push('</tr>');
                             }
                         }
