@@ -122,7 +122,9 @@
 					<div class="tab-content" id="codetabcontents">
 					</div>
 				</div>
-				<div class="span3 right-view" id="rightbar">
+				<div class="span3 right-view" id="rightside">
+					<div id="rightbar">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -264,8 +266,9 @@
 				var $flowtable = $('#centerpane #flowctxttable');
 				if ($flowtable.length > 0) {
 					compactFlowCtxtTable($flowtable);
-					$('#rightbar').append($flowtable[0].outerHTML);
+					$('#rightside').append($flowtable[0].outerHTML);
 					$flowtable.remove();
+					registerCellback();
 				}
 
 				console.log("THE HREF");
@@ -586,13 +589,6 @@
                 });
 			}
 
-			function showSourceForContext(id) {
-
-
-
-
-			}
-
             /*
              * Hack for unescaping HTML strings. From CMS on stackoverflow
              * at http://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
@@ -628,20 +624,32 @@
                             console.log("Error: incomplete context");
                             return;
                         }
+                        var ctxtSplit = /(.+)~~~(.+)/;
                         var reSplit = /(.+),(.+)/;
-                        var reEntry = /(.*)~.*<.* (\S+ .*)>.*<.* (\S+ .*)>.*/;
-                        var source = htmlDecode(clines[0].name);
-                        var sink = htmlDecode(clines[1].name);
+                        var reEntry = /.*<.* (\S+ .*)>.*<.* (\S+ .*)>.*/;
+                        var sourceline = htmlDecode(clines[0].name);
+                        var sinkline = htmlDecode(clines[1].name);
 
-                        if (!reSplit.test(source)) {
+                        if (!ctxtSplit.test(sourceline)) {
                             console.log("Error: Regex failure on context parse");
                             return;
                         }
 
-                        var source_ctxts = source.match(reSplit);
-                        var sink_ctxts = sink.match(reSplit);
+                        var source = sourceline.match(ctxtSplit);
+                        var sink = sinkline.match(ctxtSplit);
+
+                        if (!reSplit.test(source[1]) || !reSplit.test(sink[1])) {
+                            console.log("Error: Regex failure on context parse");
+                            return;
+                        }
+
+                        var source_ctxts = source[1].match(reSplit);
+                        var sink_ctxts = sink[1].match(reSplit);
                         console.log("lengths source "+source_ctxts.length + " sink "+sink_ctxts.length);
                         var entry = [];
+
+                        var source_files = source[2].split('~');
+                        var sink_files = sink[2].split('~');
             
                         for (var i = 1; i <= 2; ++i) {
                             var sourcem = source_ctxts[i].match(reEntry);
@@ -649,8 +657,8 @@
                             
                             for (var j = i; j <= 2; ++j) {
                                 entry.push('<tr>');
-                                entry.push('<td'+((j!=2)?' source="'+escTags(sourcem[j])+'"':'')+'>'+escTags(sourcem[j+1])+'</td>');
-                                entry.push('<td'+((j!=2)?' source="'+escTags(sinkm[j])+'"':'')+'>'+escTags(sinkm[j+1])+'</td>');
+                                entry.push('<td'+((source_files[j-1]!=='')?' source="'+source_files[j-1]+'"':'')+'>'+escTags(sourcem[j])+'</td>');
+                                entry.push('<td'+((sink_files[j-1]!=='')?' source="'+sink_files[j-1]+'"':'')+'>'+escTags(sinkm[j])+'</td>');
                                 entry.push('</tr>');
                             }
                         }
@@ -718,12 +726,26 @@
                                     table.push('</tbody>');
                                     table.push('</table>');
                                     $('#centerpane').append(table.join('\n'));
+                                    registerCellback();
+
                                 });
+
                 });
 
 				$('#'+id).parent().append('<p class="muted"><em id="srcsinkflowhelp">Click a Flow name to show / hide </em></p>');
             }
-			
+
+            function registerCellback() {
+	            var $cells = $('#flowctxttable td');
+	            $cells.click( function() {
+		            	var source_str = $(this).attr('source');
+		            	if (source_str !== '') {
+			            	var source_splits = source_str.split(' ');
+			            	showSource(source_splits[0],'false',source_splits[1]);
+		            	}
+	            	});
+            }
+
 			<%
 			j = 0;
 			for(Map.Entry<String,String> entry : titleToFileName.entrySet()){
