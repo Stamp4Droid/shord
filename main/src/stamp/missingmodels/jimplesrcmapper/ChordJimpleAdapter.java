@@ -13,8 +13,10 @@ import soot.Local;
 import soot.SootClass;
 import soot.SootMethod;
 import soot.Unit;
+import soot.Value;
 import soot.jimple.AssignStmt;
 import soot.jimple.IdentityStmt;
+import soot.jimple.InvokeExpr;
 import soot.jimple.LookupSwitchStmt;
 import soot.jimple.ReturnStmt;
 import soot.jimple.Stmt;
@@ -114,6 +116,7 @@ public class ChordJimpleAdapter extends JimpleVisitorWithStructure {
 	/** Visits the method declaration */
 	@Override
 	public void visit(SootMethod m, CodeStructure methodInfo) {
+		// TODO: get the parameters, etc.
 		XMLContainerObject newObject = new XMLContainerObject("method");
 		this.startObject(newObject);
 		
@@ -144,13 +147,21 @@ public class ChordJimpleAdapter extends JimpleVisitorWithStructure {
 	}
 	
 	/** Starts a method local variable declaration visit */
-	public void visit(Local local, SimpleCodeStructure localStructure) {}
+	public void visit(Local local, SimpleCodeStructure localStructure) {
+		// TODO: fill this in
+	}
 
 	/** Starts a unit graph statement visit */
 	public void visit(Unit stmt, SimpleCodeStructure unitStructure) {
+		// TODO: fill this in
 		if(stmt instanceof Stmt) {
 			Stmt s = (Stmt)stmt;
-			if(s.containsInvokeExpr()){
+			if(s.containsInvokeExpr()) {
+
+				InvokeExpr ie = s.getInvokeExpr();
+				for(Value value : ie.getArgs()) {
+					
+				}
 			} else if(s.containsFieldRef()){
 			} else if(s.containsArrayRef()) {
 			} else if(s instanceof AssignStmt) {
