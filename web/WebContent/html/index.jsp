@@ -346,7 +346,7 @@
 							var tokens = $.trim(response).split(",");
 							var filePath = tokens[0];
 							var lineNum = tokens[1];
-							showSource(filePath, 'false', lineNum, 'false');
+							showSource(filePath, 'false', lineNum, 'instIndex');
 						});	
                     });
 			    }
@@ -513,6 +513,10 @@
 			};
 			
 			function setupResultTree(resultTreeId, resultFileName) {
+			    useJimple = 'false';
+			    if(resultFileName.indexOf("jimple") != -1) {
+			        useJimple = 'true';
+			    }
 			    $('#' + resultTreeId).tree({dataSource: new ResultDataSource(resultFileName)});
                 $('#' + resultTreeId).on('selected', function(event,selection){
                     var reportScript = selection.info[0].showReport;
@@ -524,7 +528,7 @@
                             return;
                         if(typeof lineNum === "undefined")
                             return;
-                        showSource(file, 'false', lineNum, 'false');
+                        showSource(file, 'false', lineNum, useJimple);
                     } 
 				    else 
 				    {
