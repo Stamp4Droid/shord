@@ -2,12 +2,11 @@
 <%
 	String filepath = request.getParameter("filepath");
 	boolean isModel = request.getParameter("isModel").equals("true");
-	boolean useJimple;
-	if(request.getParameter("useJimple") == null) {
-	    useJimple = false;
-	} else {
+	boolean useJimple = false;;
+	if(request.getParameter("useJimple") != null) {
 	    useJimple = request.getParameter("useJimple").equals("true");
 	}
+	System.out.println("DEBUG: useJimple=" + request.getParameter("useJimple"));
 	String lineNum = request.getParameter("lineNum");
 
 	FileManager manager = (FileManager) session.getAttribute("manager");

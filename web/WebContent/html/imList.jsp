@@ -125,6 +125,6 @@
 			var index = srcLoc.indexOf('#');
 			var fileName = srcLoc.substring(0,index);
 			var lineNum = srcLoc.substring(index+1);
-			showSource(fileName, 'false', lineNum, 'false');
+			showSource(fileName, 'false', lineNum, 'instImList');
 		});
 	</script>

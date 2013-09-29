@@ -4,6 +4,7 @@ import java.io.File;
 
 import soot.SootClass;
 import soot.jimple.Stmt;
+import soot.tagkit.JimpleLineNumberTag;
 import soot.tagkit.LineNumberTag;
 import soot.tagkit.SourceLineNumberTag;
 import soot.tagkit.Tag;
@@ -47,8 +48,8 @@ public class JimpleSourceInfo extends AbstractSourceInfo {
 
 	public int stmtLineNum(Stmt s) {
 		for(Tag tag : s.getTags()){
-			if(tag instanceof SourceLineNumberTag){
-				return ((SourceLineNumberTag) tag).getLineNumber();
+			if(tag instanceof JimpleLineNumberTag){
+				return ((JimpleLineNumberTag) tag).getLineNumber();
 			} else if(tag instanceof LineNumberTag){
 				return ((LineNumberTag) tag).getLineNumber();
 			}
