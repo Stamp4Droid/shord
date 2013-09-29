@@ -1,8 +1,13 @@
 <%@ page import="stamp.reporting.FileManager,stamp.droidrecordweb.DroidrecordProxyWeb"%>
 <%
 	String filepath = request.getParameter("filepath");
-	boolean isModel = request.getParameter("isModel").equals("true");
-	boolean useJimple = false;;
+	boolean isModel = false;
+	if(request.getParameter("isModel") != null) {
+		isModel = request.getParameter("isModel").equals("true");
+	} else {
+		System.out.println("No flag 'isModel' set!");
+	}	
+	boolean useJimple = false;
 	if(request.getParameter("useJimple") != null) {
 	    useJimple = request.getParameter("useJimple").equals("true");
 	}

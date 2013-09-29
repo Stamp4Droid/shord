@@ -7,6 +7,7 @@ import java.util.List;
 import soot.SootClass;
 import soot.jimple.Stmt;
 import soot.tagkit.LineNumberTag;
+import soot.tagkit.SourceFileTag;
 import soot.tagkit.SourceLineNumberTag;
 import soot.tagkit.Tag;
 import stamp.srcmap.sourceinfo.abstractinfo.AbstractSourceInfo;
@@ -57,6 +58,16 @@ public class JavaSourceInfo extends AbstractSourceInfo {
 			}
 		}
 		return 0;
+	}
+	
+	public String filePath(SootClass klass) {		
+		for(Tag tag : klass.getTags()){
+			if(tag instanceof SourceFileTag){
+				String fileName = ((SourceFileTag) tag).getSourceFile();
+				return klass.getPackageName().replace('.','/')+"/"+fileName;
+			}
+		}
+		return null;
 	}
 	
 	public File srcMapFile(String srcFileName) {

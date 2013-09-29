@@ -35,14 +35,14 @@ public class JimplePrinterAnalysis extends JavaAnalysis {
 	@Override public void run() {
 		try {
 			// SET UP SCRATCH DIRECTORY
-			String stampDirectory = System.getProperty("stamp.out.dir");
-			File outputDir = new File(stampDirectory + File.separator + "cfl");
-			File scratchDir = new File(stampDirectory + File.separator + "/../../osbert/scratch/" + outputDir.getParentFile().getName());
-			String outputPath = scratchDir.getCanonicalPath() + "/jimple/";
+			String outDir = System.getProperty("stamp.out.dir");
+			//File outputDir = new File(stampDirectory + File.separator + "cfl");
+			//File scratchDir = new File(stampDirectory + File.separator + "/../../osbert/scratch/" + outputDir.getParentFile().getName());
+			//String outputPath = scratchDir.getCanonicalPath() + "/jimple/";
 
 			// PRINT JIMPLE
 			JimpleStructureExtractor jse = new JimpleStructureExtractor();
-			new Printer(jse).printAll(outputPath);
+			new Printer(jse).printAll(outDir + "/jimple/");
 
 			// GET STRUCTURE AND PRINT
 			CodeStructureInfo codeInfo = jse.getCodeStructureInfo();
@@ -84,11 +84,11 @@ public class JimplePrinterAnalysis extends JavaAnalysis {
 					ois.close();
 				}
 
-				// GET THE OUTPUT FILE PATH
+				// GET THE OUTPUT FILE PATH	
 				StringBuffer b = new StringBuffer();
 				//b.append(outputPath);
-				b.append(stampDirectory + "/jimple/"); 
-				b.append(cl.getName());
+				b.append(outDir + "/jimple/" + cl.getPackageName().replace('.', '/') + '/'); 
+				b.append(cl.getName());	
 				b.append(".xml");
 				String xmlOutputPath = b.toString();
 

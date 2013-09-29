@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import shord.program.Program;
 import shord.project.analyses.JavaAnalysis;
 import stamp.srcmap.SourceInfoSingleton;
+import stamp.srcmap.SourceInfoSingleton.SourceInfoType;
 import stamp.util.PropertyHelper;
 import chord.project.Chord;
 
@@ -59,7 +60,10 @@ public class Postmortem extends JavaAnalysis {
 				for(Class reportClass : reports) {
 					XMLReport report = (XMLReport) reportClass.newInstance();
 					if(jimple) {
-						report.setSourceInfo(SourceInfoSingleton.getJimpleSourceInfo());
+						//report.setSourceInfo(SourceInfoSingleton.getJimpleSourceInfo());
+						SourceInfoSingleton.setSourceInfoType(SourceInfoType.JIMPLE);
+					} else {
+						SourceInfoSingleton.setSourceInfoType(SourceInfoType.JAVA);
 					}
 					
 					boolean show = true;

@@ -26,7 +26,6 @@ package stamp.missingmodels.jimplesrcmapper;
  */
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -121,17 +120,23 @@ public class Printer {
 			// Get file name.
 			StringBuffer b = new StringBuffer();
 			b.append(outputPath);
+			b.append(cl.getPackageName().replace('.', '/') + '/');
+			File folder = new File(b.toString());
+			
+			b = new StringBuffer();
 			b.append(cl.getName());
 			b.append(".jimple");
-			String fileName = b.toString();
-
+			File file = new File(folder, b.toString());
+			
+			System.out.println("TO FILE: " + file.getCanonicalPath());
+			
 			// Get print writer for the file.
 			//final int format = Options.v().output_format();
 			//String fileName = SourceLocator.v().getFileNameFor(cl, format);
-			new File(fileName).getParentFile().mkdirs();
+			file.getParentFile().mkdirs();
 
 			// Print the class to the file.
-			printTo(cl, new File(fileName));
+			printTo(cl, file);
 
 		}
 		System.out.println("EXITING PRINTER");

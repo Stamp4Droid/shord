@@ -193,9 +193,13 @@ public class DefaultRegisterMap implements RegisterMap {
 				Local leftOp = (Local) is.getLeftOp();
 				Value rightOp = is.getRightOp();
 				if(rightOp instanceof ParameterRef){
-					int index = ((ParameterRef) rightOp).getIndex();
-					Expr expr = ((SimpleMarker) paramMarkers.get(index)).operand();
-					addSrcLoc(leftOp, expr);
+					try {
+						int index = ((ParameterRef) rightOp).getIndex();
+						Expr expr = ((SimpleMarker) paramMarkers.get(index)).operand();
+						addSrcLoc(leftOp, expr);
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
 				}
 			} else if(s instanceof TableSwitchStmt){
 				map(lineNum, ((TableSwitchStmt) s).getKey(), "switch", null);

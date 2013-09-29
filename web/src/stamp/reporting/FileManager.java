@@ -115,52 +115,20 @@ public class FileManager {
     }
 	
 	private void addJimple(String filePath, boolean isModel) throws Exception {
-		String jimpleFilePath = filePath.substring(0, filePath.length()-4).concat("jimple").replace("/", ".");
-		File jimpleFile = new File(outPath+"/jimple/" + jimpleFilePath);
+		String jimpleFilePath = filePath;
+		//String jimpleFilePath = filePath.substring(0, filePath.length()-4).concat("jimple").replace("/", ".");
+		File jimpleFile = new File(outPath + "/jimple/" + jimpleFilePath);
 		
 		System.out.println("DEBUG: " + filePath + " " + jimpleFile.getCanonicalPath());
-		
-		// get the srcmap directory
-		if(isModel) {
-			File file = new File(rootPath+"/models/src", filePath);
-			if(file.exists()){
-				SourceProcessor sp = new SourceProcessor(jimpleFile, droidrecord);
-				String annotatedSource = sp.getSourceWithAnnotations();
-				filePathToAnnotatedJimple.put(filePath, annotatedSource);
-			}
-			return;
-		} 
-
-		String srcMapDirPath = null;
-		File file = new File(rootPath+"/models/api-16/gen", filePath);
-		if(file.exists()) {
-			srcMapDirPath = rootPath+"/models/api-16/srcmap";
-		} else {
-			for(File sd : srcDirs){
-				file = new File(sd, filePath);
-				if(file.exists()){
-					srcMapDirPath = outPath+"/srcmap/";
-					break;
-				}
-			}
-		}
-
-		System.out.println("DEBUG: " + srcMapDirPath + " " + file.getCanonicalPath());
-		
-		if(srcMapDirPath == null) {
-			return;
-		}
 
 		//SourceData data = srcVisitor.process(file);
 		File taintedInfoFile = new File(outPath+"/results/TaintedVar_jimple.xml");
 		File allReachableFile = new File(outPath+"/results/AllReachable_jimple.xml");
 		File reachedFile = new File(outPath+"/results/reachedmethods_jimple.xml");
 
-		//replace .java with .xml
-		//String fname = filePath.substring(0, filePath.length()-4).concat("xml");
+		//replace .jimple with .xml
 		String fname = jimpleFilePath.substring(0, jimpleFilePath.length()-6).concat("xml");
-		//File srcMapFile = new File(srcMapDirPath+"/"+fname);
-		File srcMapFile = new File(outPath+"/jimple/"+"/"+fname);
+		File srcMapFile = new File(outPath + "/jimple/" + fname);
 		System.out.println("DEBUG: srcmap file now at " + srcMapFile.getCanonicalPath());
 
 		SourceProcessor sp = new SourceProcessor(jimpleFile, droidrecord, srcMapFile, taintedInfoFile, allReachableFile, reachedFile, filePath);

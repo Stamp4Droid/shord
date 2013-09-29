@@ -12,6 +12,7 @@ import soot.jimple.Stmt;
 import stamp.srcmap.Expr;
 import stamp.srcmap.SourceInfoSingleton;
 import stamp.srcmap.sourceinfo.SourceInfo;
+import stamp.srcmap.sourceinfo.jimpleinfo.JimpleSourceInfo;
 
 /*
  * @author Saswat Anand
@@ -25,9 +26,12 @@ public class Tuple {
 		this.sourceInfo = SourceInfoSingleton.v();
 	}
 	
-	public void setSourceInfo(SourceInfo sourceInfo) {
+	/*
+	public void setSourceInfo(SourceInfo sourceInfo) {	
 		this.sourceInfo = sourceInfo;
+		System.out.println("DEBUG: New tuple source info type " + (this.sourceInfo instanceof JimpleSourceInfo));	
 	}
+	*/
 
 	public Tuple addValue(SootClass klass) 	{
 		String line = String.valueOf(sourceInfo.classLineNum(klass));
@@ -114,6 +118,8 @@ public class Tuple {
 	
 	public final Tuple addValueWithSig(String label, SootClass klass, String lineNum, String type, String chordSig) {
 		String srcFile = sourceInfo.filePath(klass);
+		System.out.println("DEBUG: Tuple source info type 1 " + (sourceInfo instanceof JimpleSourceInfo));
+		System.out.println("DEBUG: Tuple source path " + srcFile);
 		str = (str != null ? str : "") +
 			"\t<value"+
 			(srcFile == null ? "" : (" srcFile=\""+srcFile+"\" lineNum=\""+lineNum+"\"")) +
@@ -139,6 +145,8 @@ public class Tuple {
 
 	public final Tuple addValueWithHighlight(SootClass klass, Expr e) {
 		String srcFile = sourceInfo.filePath(klass);
+		System.out.println("DEBUG: Tuple source info type 2 " + (sourceInfo instanceof JimpleSourceInfo));
+		System.out.println("DEBUG: Tuple source path " + srcFile);
 		str = (str != null ? str : "") +
 			"\t<value srcFile=\""+srcFile+
 			"\" lineNum=\""+e.line()+"\""+

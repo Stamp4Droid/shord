@@ -203,7 +203,7 @@
 		    $('#AppHierarchy').tree({dataSource: new ClassHierarchyDataSource("app")});
 		    $('#ModelsHierarchy').tree({dataSource: new ClassHierarchyDataSource("model")});
 		    $('#FrameworkHierarchy').tree({dataSource: new ClassHierarchyDataSource("framework")});
-		    $('#JimpleHierarchy').tree({dataSource: new ClassHierarchyDataSource("app")});
+		    $('#JimpleHierarchy').tree({dataSource: new ClassHierarchyDataSource("jimple")});
 		</script>
 		
 		<script>
@@ -514,10 +514,13 @@
 			
 			function setupResultTree(resultTreeId, resultFileName) {
 			    useJimple = 'false';
-			    if(resultFileName.indexOf("jimple") != -1) {
+			    if(resultFileName.indexOf('jimple') != -1) {
 			        useJimple = 'true';
 			    }
 			    $('#' + resultTreeId).tree({dataSource: new ResultDataSource(resultFileName)});
+
+			if(useJimple == 'true') {
+			//alert('true: ' + resultFileName);
                 $('#' + resultTreeId).on('selected', function(event,selection){
                     var reportScript = selection.info[0].showReport;
                     if(typeof reportScript === "undefined")
@@ -528,8 +531,8 @@
                             return;
                         if(typeof lineNum === "undefined")
                             return;
-                        showSource(file, 'false', lineNum, useJimple);
-                    } 
+                        showSource(file, 'false', lineNum, 'true');
+                    }
 				    else 
 				    {
                         var nodeID = selection.info[0].nodeId;
@@ -541,6 +544,32 @@
                         showReport(reportScript, resultFileName, nodeID, shortName);
                     }
                 });
+		} else {
+			//alert('false: ' + resultFileName);
+                $('#' + resultTreeId).on('selected', function(event,selection){
+                    var reportScript = selection.info[0].showReport;
+                    if(typeof reportScript === "undefined")
+                    {
+                        var file = selection.info[0].file;
+                        var lineNum = selection.info[0].lineNum;
+                        if(typeof file === "undefined")
+                            return;
+                        if(typeof lineNum === "undefined")
+                            return;
+                        showSource(file, 'false', lineNum, 'false');
+                    }
+				    else 
+				    {
+                        var nodeID = selection.info[0].nodeId;
+                        var shortName = selection.info[0].reportNodeShortName;
+                        if(typeof nodeID === "undefined")
+                            return;
+                        if(typeof shortName === "undefined")
+                            return;
+                        showReport(reportScript, resultFileName, nodeID, shortName);
+                    }
+                });
+			}
 			}
 			
 			<%

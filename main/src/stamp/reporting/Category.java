@@ -31,7 +31,7 @@ public class Category extends Tuple {
 		else if(key instanceof SootMethod)
 			type = "method";
 	}
-
+	
 	public Category lastSubCat() {
 		ArrayList<Object> al = new ArrayList<Object>(subCategories.keySet());
 		return subCategories.get(al.get(al.size()-1));
@@ -62,6 +62,7 @@ public class Category extends Tuple {
 		Category sc = subCategories.get(key);
 		if(sc == null){
 			sc = new Category(key);
+			//sc.setSourceInfo(this.sourceInfo);
 			subCategories.put(key, sc);
 		}
 		return sc;
@@ -85,6 +86,7 @@ public class Category extends Tuple {
 		}
 
 		Category newCat = new Category(key);
+		//newCat.setSourceInfo(this.sourceInfo);
 		newCat.putSubCat(sub, oldCat);
 		subCategories.put(key, newCat);
 		return newCat;
@@ -123,6 +125,7 @@ public class Category extends Tuple {
 	
 	public Tuple newTuple() {
 		Tuple tuple = new Tuple();
+		//tuple.setSourceInfo(this.sourceInfo);
 		return addTuple(tuple);
 	}
 	

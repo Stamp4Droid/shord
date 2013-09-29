@@ -40,16 +40,6 @@ public abstract class AbstractSourceInfo implements SourceInfo {
 	public AbstractSourceInfo() {		
 		this.anonymousClassMap = new AnonymousClassMap(this);
 	}
-	
-	public String filePath(SootClass klass) {		
-		for(Tag tag : klass.getTags()){
-			if(tag instanceof SourceFileTag){
-				String fileName = ((SourceFileTag) tag).getSourceFile();
-				return klass.getPackageName().replace('.','/')+"/"+fileName;
-			}
-		}
-		return null;
-	}
 
 	public String javaLocStr(Stmt stmt) {		
 		SootMethod method = Program.containerMethod(stmt);

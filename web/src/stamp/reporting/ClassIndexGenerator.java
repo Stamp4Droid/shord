@@ -35,6 +35,22 @@ public class ClassIndexGenerator
 		return false;
 	}
 
+	private boolean isJimpleDir(File dir)
+	{
+		for(File f : dir.listFiles()) {
+			if(f.isDirectory()){
+				if(isJimpleDir(f))
+					return true;
+			} else {
+				String fname = f.getName();
+				if(fname.endsWith(".jimple") && Character.isLetter(fname.charAt(0))) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private List<String> getString(String pkgName, TreeSet<String> subPkgs, TreeSet<String> javaFiles)
 	{
 		List<String> result = new ArrayList();
@@ -78,6 +94,33 @@ public class ClassIndexGenerator
 		}
 	}
 
+	private void collectJimple(File rootDir, String pkgName, TreeSet<String> subPkgs, TreeSet<String> jimpleFiles) 
+	{
+		File dir = rootDir;
+		if(pkgName != null)
+			dir = new File(dir, pkgName.replace('.','/'));
+		if(!dir.exists())
+			return;
+
+		System.out.println("dir: "+dir);
+		try {
+			for(File f : dir.listFiles()) {
+				if(f.isDirectory()){
+					if(isJimpleDir(f)){
+						subPkgs.add(f.getName());
+					}
+			   } else {
+				   String fname = f.getName();
+				   if(fname.endsWith(".jimple") && Character.isLetter(fname.charAt(0))) {
+					   jimpleFiles.add(fname);
+				   }
+			   }
+			}
+		} catch(Exception e) {
+			throw new Error(e);
+		}
+	}
+
 	public String generate(String type, String pkgName)
 	{
 		TreeSet<String> subPkgs = new TreeSet();
@@ -94,8 +137,8 @@ public class ClassIndexGenerator
 			File dir = new File(rootPath, "models/api-16/gen");
 			collect(dir, pkgName, subPkgs, javaFiles);
 		} else if(type.equals("jimple")) {
-			File dir = new File(rootPath, "models/src");
-			collect(dir, pkgName, subPkgs, javaFiles);
+			File dir = new File(outPath, "jimple");
+			collectJimple(dir, pkgName, subPkgs, javaFiles);
 		}
 		
 		List<String> result = getString(pkgName, subPkgs, javaFiles);

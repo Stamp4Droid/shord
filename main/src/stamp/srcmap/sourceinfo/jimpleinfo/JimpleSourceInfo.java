@@ -1,12 +1,13 @@
 package stamp.srcmap.sourceinfo.jimpleinfo;
 
 import java.io.File;
+import java.io.IOException;
 
 import soot.SootClass;
 import soot.jimple.Stmt;
 import soot.tagkit.JimpleLineNumberTag;
 import soot.tagkit.LineNumberTag;
-import soot.tagkit.SourceLineNumberTag;
+import soot.tagkit.SourceFileTag;
 import soot.tagkit.Tag;
 import stamp.srcmap.sourceinfo.abstractinfo.AbstractSourceInfo;
 
@@ -48,19 +49,30 @@ public class JimpleSourceInfo extends AbstractSourceInfo {
 
 	public int stmtLineNum(Stmt s) {
 		for(Tag tag : s.getTags()){
-			if(tag instanceof JimpleLineNumberTag){
+			if(tag instanceof JimpleLineNumberTag) {
 				return ((JimpleLineNumberTag) tag).getLineNumber();
-			} else if(tag instanceof LineNumberTag){
+			} else if(tag instanceof LineNumberTag) {
 				return ((LineNumberTag) tag).getLineNumber();
 			}
 		}
 		return 0;
 	}
 	
+	public String filePath(SootClass klass) {
+		System.out.println("DEBUG: Class name " + klass.getName() + ".jimple");
+		return klass.getPackageName().replace('.','/') + "/" + klass.getName() + ".jimple";
+	}
+	
 	public File srcMapFile(String srcFileName) {
 		if(srcFileName != null) {
-			String jimpleFileName = srcFileName.replace(".java", ".jimple").replace("/", ".");
+			String jimpleFileName = srcFileName.replace(".jimple", ".xml");
 			File f = new File(srcMapDir, jimpleFileName);
+			try {
+				System.out.println("DEBUG: Loading sourcemap file: " + f.getCanonicalPath());
+			} catch(IOException e) {
+				System.out.println("DEBUG: Failed to load sourcemap file: " + jimpleFileName);
+				e.printStackTrace();
+			}
 			if(f.exists()) {
 				return f;
 			}
