@@ -45,11 +45,11 @@ import java.io.*;
   **/
 
 @Chord(name="base-java-iccg",
-       produces={ "MC", "Callbacks", "MregI" },
+       produces={ "MC", "Callbacks", "MregI", "IntentTgt" },
        namesOfTypes = { "M", "T", "I"},
        types = { DomM.class, DomT.class, DomI.class},
-       namesOfSigns = { "MC", "Callbacks", "MregI" },
-       signs = { "M0,T0:M0_T0", "M0:M0", "M0,I0:M0_I0" }
+       namesOfSigns = { "MC", "Callbacks", "MregI", "IntentTgt" },
+       signs = { "M0,T0:M0_T0", "M0:M0", "M0,I0:M0_I0", "F0:F0" }
        )
 public class ICCGBuilder extends JavaAnalysis
 {
@@ -66,7 +66,7 @@ public class ICCGBuilder extends JavaAnalysis
 
     private SootClass klass;
 
-    private Map<String, XmlNode> components = new HashMap<String, XmlNode>();
+    public static Map<String, XmlNode> components = new HashMap<String, XmlNode>();
 
     void openRels()
     {
@@ -182,6 +182,16 @@ for(SootMethod method : methodsCopy)
 
     }
 
+	private void populateIntentTgt() 
+	{
+		ProgramRel relIntentTgtField = (ProgramRel) ClassicProject.g().getTrgt("IntentTgtField");
+        	relIntentTgtField.zero();
+		SootClass klass = Program.g().scene().getSootClass("android.content.Intent");
+		SootField nameField = klass.getFieldByName("name");
+		relIntentTgtField.add(nameField);
+		relIntentTgtField.save();
+	}
+
     public void run()
     {
         Program program = Program.g();
@@ -190,6 +200,8 @@ for(SootMethod method : methodsCopy)
         openRels();
         fillCallback();
         populateMregI();
+	populateIntentTgt();
+
         for(SootClass klass: Program.g().getClasses()){
             this.visit(klass);
         }

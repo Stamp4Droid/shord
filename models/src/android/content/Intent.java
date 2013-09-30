@@ -5,9 +5,39 @@ class Intent
 	//add by yu.
 	private static android.os.Bundle extras = new android.os.Bundle(true);
 
+	public java.lang.String name = new java.lang.String();
+
 	@STAMP(flows = {@Flow(from="uri",to="!this")})
 	public  Intent(java.lang.String action, android.net.Uri uri) 
 	{ 
+	}
+
+	public Intent(android.content.Context packageContext, java.lang.Class<?> cls) {
+		this.name = cls.name;
+	}
+
+	public Intent(java.lang.String action, android.net.Uri uri, android.content.Context packageContext, java.lang.Class<?> cls) {
+		this.name = cls.name;
+	}
+
+	public android.content.Intent setComponent(android.content.ComponentName component) {
+		this.name = component.name;
+		return this;
+	}
+
+	public android.content.Intent setClassName(android.content.Context packageContext, java.lang.String className) {
+		this.name = className;
+		return this;
+	}
+
+	public android.content.Intent setClassName(java.lang.String packageName, java.lang.String className) {
+		this.name = className;
+		return this;
+	}
+
+	public android.content.Intent setClass(android.content.Context packageContext, java.lang.Class<?> cls) {
+		this.name = cls.name;
+		return this;
 	}
 
 	@STAMP(flows={@Flow(from="$getExtras",to="@return"),@Flow(from="this",to="@return")})

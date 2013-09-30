@@ -20,6 +20,7 @@ import soot.UnknownType;
 import soot.FastHierarchy;
 import soot.PatchingChain;
 import soot.jimple.Constant;
+import soot.jimple.StringConstant;
 import soot.jimple.Stmt;
 import soot.jimple.AssignStmt;
 import soot.jimple.IdentityStmt;
@@ -78,7 +79,7 @@ import java.util.*;
 				 "IinvkPrimRet", "IinvkPrimArg",
 				 "SpecIM", "StatIM",
 				 "VirtIM", "SubSig",
-				 "Dispatch",
+				 "Dispatch", "Launch", "VH",
 	             "Stub" },
        namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U", "S"},
        types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class},
@@ -98,7 +99,7 @@ import java.util.*;
 						"IinvkPrimRet", "IinvkPrimArg",
 				                "SpecIM", "StatIM",
 				                "VirtIM", "SubSig",
-						"Dispatch",
+						"Dispatch", "Launch", "VH",
                         "Stub" },
 	   signs = { "V0,H0:V0_H0", "V0,V1:V0xV1",
 				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
@@ -116,7 +117,7 @@ import java.util.*;
 				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0",
 				 "I0,M0:I0_M0", "I0,M0:I0_M0",
 				 "I0,M0:I0_M0", "M0,S0:M0_S0",
-				 "T0,S0,M0:T0_S0_M0",
+				 "T0,S0,M0:T0_S0_M0", "V0,M0:V0_M0", "V0,H0:V0_H0",
                  "M0:M0" }
 	   )
 public class PAGBuilder extends JavaAnalysis
@@ -149,6 +150,8 @@ public class PAGBuilder extends JavaAnalysis
 	private ProgramRel relVirtIM;//(i:I,m:M)
 	private ProgramRel relSubSig;//(m:M,s:S)
 	private ProgramRel relDispatch;//(t:T,s:S,m:M)
+	private ProgramRel relLaunch;//(v:V,m:M)
+	private ProgramRel relVH;//(v:V,h:H)
 
 	private ProgramRel relVT;
 	private ProgramRel relHT;
@@ -238,6 +241,11 @@ public class PAGBuilder extends JavaAnalysis
 		relSubSig.zero();
 		relDispatch = (ProgramRel) ClassicProject.g().getTrgt("Dispatch");
 		relDispatch.zero();
+		relLaunch = (ProgramRel) ClassicProject.g().getTrgt("Launch");
+		relLaunch.zero();
+		relVH = (ProgramRel) ClassicProject.g().getTrgt("VH");
+		relVH.zero();
+
 	}
 	
 	void saveRels()
@@ -277,6 +285,8 @@ public class PAGBuilder extends JavaAnalysis
 		relVirtIM.save();
 		relSubSig.save();
 		relDispatch.save();
+		relLaunch.save();
+		relVH.save();
 	}
 
 
@@ -453,7 +463,8 @@ public class PAGBuilder extends JavaAnalysis
 		private Tag containerTag;
 		private Set<StubAllocNode> stubSet = new HashSet();
 		private boolean isStub;
-		private Map<Unit, SiteAllocNode> unit2Node = new HashMap();
+		private Map<Unit, AllocNode> unit2Node = new HashMap();
+		//private Map<Unit, SiteAllocNode> unit2Node = new HashMap();
 
 		MethodPAGBuilder(SootMethod method)
 		{
@@ -550,6 +561,16 @@ public class PAGBuilder extends JavaAnalysis
 					domI.add(s);
 				} else if(s instanceof AssignStmt) {
 					Value rightOp = ((AssignStmt) s).getRightOp();
+
+					if(rightOp instanceof StringConstant) {
+						String str = ((StringConstant)rightOp).value;
+						if(ICCGBuilder.components.get(str) != null){
+							StringConstNode n = new StringConstNode(s);
+							domH.add(n);
+							unit2Node.put(s, n);
+						}
+					}
+
 					if(rightOp instanceof AnyNewExpr) {
 						SiteAllocNode n = new SiteAllocNode(s);
 						domH.add(n);
@@ -715,6 +736,11 @@ public class PAGBuilder extends JavaAnalysis
 					else if(retType instanceof PrimType)
 						IinvkPrimRet(s, nodeFor(lhs));
 				}
+
+				String methSig = callee.getSignature();
+				if(methSig.equals("<android.app.Activity: void startActivity(android.content.Intent)>"))
+					relLaunch.add(nodeFor(((Immediate)ie.getArg(0))), method);
+	
 			} else if(s.containsFieldRef()){
 				AssignStmt as = (AssignStmt) s;
 				Value leftOp = as.getLeftOp();
@@ -781,6 +807,14 @@ public class PAGBuilder extends JavaAnalysis
 				AssignStmt as = (AssignStmt) s;
 				Value leftOp = as.getLeftOp();
 				Value rightOp = as.getRightOp();
+
+				if(rightOp instanceof StringConstant) {
+					String str = ((StringConstant)rightOp).value;
+					if(ICCGBuilder.components.get(str) != null){
+						relVH.add(nodeFor((Local) leftOp), unit2Node.get(s));
+						Alloc(nodeFor((Local) leftOp), unit2Node.get(s));
+					}
+				}
 
 				if(rightOp instanceof AnyNewExpr){
 					AllocNode an = unit2Node.get(s);
@@ -914,6 +948,7 @@ public class PAGBuilder extends JavaAnalysis
 	void populateFields()
 	{
 		DomF domF = (DomF) ClassicProject.g().getTrgt("F");
+	
 		Program program = Program.g();
 		domF.add(ArrayElement.v()); //first add array elem so that it gets index 0
 		for(SootClass klass : program.getClasses()){

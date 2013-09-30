@@ -11,12 +11,14 @@
 .include "C.dom"
 .include "H.dom"
 .include "S.dom"
+.include "F.dom"
 
-.bddvarorder M0xM1_I0_T0_Z0_V0_C0xC1_H0_S0
+.bddvarorder M0xM1_I0_Z0_V0_C0xC1_H0_S0_F0_T0
 
 IinvkArg(i:I,n:Z,v:V) input  # v is the nth args of the method m in invocation i.
 MmethArg(m:M,z:Z,v:V) input  # v is the zth args in method m 
 pt(c:C,v:V,o:C)    input  # in context c, v points to o.
+fpt(o1:C,f:F,o2:C) input
 chaIM(i:I,m:M) input      # stmt i invokes method m.
 MI(m:M,i:I) input         # stmt i belongs to method m.
 MC(m:M,c:T) input         # m is a method declared in a
@@ -35,12 +37,16 @@ VirtIM(i:I,m:M) input     # i virtually invokes m.
 
 SubSig(m:M,s:S) input     # s is subsignature of m.
 Dispatch(t:T,s:S,m:M) input     # t.m has subsig s.
+Launch(v:V,m:M) input
+IntentTgtField(f:F) input
+VH(v:V,h:H) input
 
 CallerComp(m:M,c:C,o:T)   output  # m is a method declared in c
 
 DI(c:C,i:I) output  # invocation i has context c in method.
 DIC(d:C,i:I,c:C) output  # 
 CICM(d:C,i:I,c:C,m:M)   output  # i in cotext d calls method m in context c.
+ICCG(s:T,t:H)  output
 
 ###################
 #    RULES
@@ -56,3 +62,8 @@ CICM(d,i,c,m2) :- VirtIM(i,m1), IinvkArg(i,0,v), DI(d,i), pt(d,v,o), CH(o,h), HT
 CallerComp(m,k,c) :- MC(m,c), CM(k,m).
 CallerComp(m2,k2,c) :- CallerComp(m1,k1,c), MI(m1,i), CICM(k1,i,k2,m2).
 CallerComp(cb,k2,c) :- Callbacks(cb), MmethArg(cb,0,p), pt(k2,p,o), pt(k1,a,o), CallerComp(m,k1,c), MregI(m,i), IinvkArg(i,0,a).
+
+ICCG(s,h) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), IntentTgtField(f), fpt(o,f,c), CH(c,h).
+#ICCG(s,h) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), IntentTgtField(f), fpt(o,f,c), pt(o,u,c), CH(c,h), VH(u,h).
+#ICCG(s,h) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), IntentTgtField(f), fpt(o,f,c), pt(o,u,c), VH(u,h).
+#ICCG(s,h) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), pt(k,u,o), CH(c,h), VH(u,h).
