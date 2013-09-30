@@ -708,15 +708,16 @@
                                         contexts.push(dataarr[i]);
                                     }
 
+                                    var id = 'centerpane';
                                     if ($('li.active').length > 0) {
-                                    	return;
+                                    	id = 'rightside';
                                     }
 
                                     if ($('#flowctxttable').length > 0) {
                                         $('#flowctxttable').remove();
                                     }
 
-                                    var table = ['<table class="table table-condensed" id="flowctxttable" style="font-size: small">',
+                                    var table = ['<table class="table table-condensed" id="flowctxttable" style="font-size: small; word-break: break-all; word-wrap: break-word">',
                                                     '<thead>',
                                                          '<th>Source</th>',
                                                          '<th>Sink</th>',   
@@ -725,7 +726,10 @@
                                     table.push(newTableEntries(contexts));
                                     table.push('</tbody>');
                                     table.push('</table>');
-                                    $('#centerpane').append(table.join('\n'));
+                                    $('#'+id).append(table.join('\n'));
+                                    if (id === 'rightside') {
+                                    	compactFlowCtxtTable($('#'+id+' #flowctxttable'));
+                                    }
                                     registerCellback();
 
                                 });
