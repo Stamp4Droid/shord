@@ -6,6 +6,8 @@ import java.util.*;
 
 import soot.SootClass;
 import soot.SootMethod;
+import soot.SootMethodRef;
+import soot.SootField;
 import soot.Scene;
 import soot.Modifier;
 import soot.VoidType;
@@ -20,6 +22,7 @@ import soot.jimple.Jimple;
 import soot.jimple.JasminClass;
 import soot.jimple.JimpleBody;
 import soot.jimple.NullConstant;
+import soot.jimple.StringConstant;
 import soot.jimple.IntConstant;
 import soot.util.Chain;
 import soot.util.JasminOutputStream;
@@ -40,18 +43,13 @@ public class Main
 		String classPath = args[1];
 		String androidJar = args[2];
 		String outDir = args[3];
-		App app;
-		//if(args.length > 3){
-		//	File androidManifestFile = new File(args[3]);
-		//	app = new App(androidManifestFile, classPath, androidJar);
-		//} else {
-		app = new App(classPath, androidJar, outDir);
-			//}
+		App app = new App(classPath, androidJar, outDir);
 
 		File driverDir = new File(driverDirName, "edu/stanford/stamp/harness");
 		driverDir.mkdirs();
 
 		Main main = new Main(androidJar);
+		main.addFields(app);
 		main.generateCode(app);
 		main.finish(new File(driverDir, "Main.class"));
 	}
@@ -74,6 +72,7 @@ public class Main
 		sClass = new SootClass("edu.stanford.stamp.harness.Main", Modifier.PUBLIC);
 		sClass.setSuperclass(Scene.v().getSootClass("java.lang.Object"));
 		Scene.v().addClass(sClass);
+		
 		SootMethod method = new SootMethod("main",
 								Arrays.asList(new Type[] {ArrayType.v(RefType.v("java.lang.String"), 1)}),
 								VoidType.v(), Modifier.PUBLIC | Modifier.STATIC);
@@ -110,12 +109,42 @@ public class Main
 		return Scene.v().getSootClass(className);
 	}
 
+	public static String componentFieldNameFor(String componentName)
+	{
+		return componentName.replace('.', '$');
+	}
+
+	private void addFields(App app)
+	{
+		SootMethod clinit = new SootMethod("<clinit>", Collections.EMPTY_LIST, VoidType.v(), Modifier.STATIC);
+		sClass.addMethod(clinit);
+		
+		Type classType = RefType.v("java.lang.Class");
+		SootMethodRef forNameMethod = Scene.v().getMethod("<java.lang.Class: java.lang.Class forName(java.lang.String)>").makeRef();
+
+		clinit.setActiveBody(Jimple.v().newBody(clinit));
+		Chain<Unit> stmts = clinit.getActiveBody().getUnits();
+		Chain<Local> ls = clinit.getActiveBody().getLocals();
+		int n = 0;
+
+		for(String comp : app.components.keySet()){
+			//add fields corresponding to components
+			SootField f = new SootField(componentFieldNameFor(comp), 
+										classType, 
+										Modifier.FINAL | Modifier.STATIC | Modifier.PUBLIC);
+			sClass.addField(f);
+
+			//initialize them in the clinit
+			Local l = Jimple.v().newLocal("c"+n++, classType);
+			ls.add(l);
+			stmts.add(Jimple.v().newAssignStmt(l, Jimple.v().newStaticInvokeExpr(forNameMethod, StringConstant.v(comp))));
+			stmts.add(Jimple.v().newAssignStmt(Jimple.v().newStaticFieldRef(f.makeRef()), l));
+		}
+		stmts.add(Jimple.v().newReturnVoidStmt());
+	}
+
 	private void generateCode(App app)
 	{
-		//SootClass viewClass = new SootClass("android.view.View", Modifier.PUBLIC);
-		//viewClass.setSuperclass(Scene.v().getSootClass("java.lang.Object"));
-		//Scene.v().addClass(viewClass);           
-
 		//new each component
 		count = 0;
 		for(Map.Entry<String,List<String>> entry : app.components.entrySet()){
