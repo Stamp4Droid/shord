@@ -21,31 +21,34 @@
 	  </else>
 	</if>
     <property name="driver.dir" location="${stamp.out.dir}/stamp-driver"/>
-	<!--echo>Analyze target running</echo-->
-	<if>
-	  <matches string="${app}" pattern="^.*\.apk$"/>
+    <!--echo>Analyze target running</echo-->
+    <if>
+      <matches string="${app}" pattern="^.*\.apk$"/>
       <then>
-		<property name="stamp.input.type" value="apk"/>
-		<property name="apk" value="${app.loc}"/>
+	<property name="stamp.input.type" value="apk"/>
+	<property name="apk" value="${app.loc}"/>
 
-		<unjar src="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"
-			   dest="${stamp.out.dir}">
-		  <patternset>
-			<include name="stamp_annotations.txt"/>
-		  </patternset>
-		</unjar>
+	<unjar src="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"
+	       dest="${stamp.out.dir}">
+	  <patternset>
+	    <include name="stamp_annotations.txt"/>
+	  </patternset>
+	</unjar>
 
-		<antcall target="-analyze-apk"/>
+	<antcall target="-analyze-apk"/>
       </then>
-	  <else>
-		<property name="stamp.input.type" value="src"/>
-		<antcall target="-analyze-src"/>
-	  </else>
+      <else>
+	<property name="stamp.input.type" value="src"/>
+	<antcall target="-analyze-src"/>
+      </else>
     </if>
+    <antcall target="-launch-gui"/>
   </target>
 
-  <target name="-analyze-src"
-		  depends="-build-app">
+  <target name="-analyze-src" depends="-build-app">
+  </target>
+
+  <target name="-launch-gui">
     <!-- Start Tomcat server. -->
     <exec executable="${stamp.tomcat.bindir}/startup.sh"
 		  spawn="false"
