@@ -1,13 +1,9 @@
 package stamp.analyses;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.PrintWriter;
-import java.util.Collection;
-import java.util.HashSet;
 
 import shord.project.analyses.JavaAnalysis;
 import soot.Scene;
@@ -18,9 +14,8 @@ import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo;
 import stamp.missingmodels.jimplesrcmapper.JimpleStructureExtractor;
 import stamp.missingmodels.jimplesrcmapper.Printer;
 import stamp.missingmodels.util.xml.XMLObject;
-import stamp.missingmodels.util.xml.XMLObject.XMLContainerObject;
 import stamp.srcmap.SourceInfoSingleton;
-import stamp.srcmap.sourceinfo.javainfo.JavaSourceInfo;
+import stamp.srcmap.sourceinfo.jimpleinfo.JimpleSourceInfo;
 import chord.project.Chord;
 
 import com.google.common.io.NullOutputStream;
@@ -56,12 +51,14 @@ public class JimplePrinterAnalysis extends JavaAnalysis {
 			}
 
 			// CONVERT STRUCTURE TO XML OBJECT
-			JavaSourceInfo sourceInfo = SourceInfoSingleton.getJavaSourceInfo();
+			//JavaSourceInfo sourceInfo = SourceInfoSingleton.getJavaSourceInfo();
+			JimpleSourceInfo sourceInfo = SourceInfoSingleton.getJimpleSourceInfo();
 
 			for(SootClass cl : Scene.v().getClasses()) {
 				System.out.println("READING: " + cl.getName());
 
 				// GET THE XML OBJECT FILE PATH
+				/*
 				File objectFile;
 				try {
 					objectFile = new File(sourceInfo.srcMapFile(sourceInfo.filePath(cl)).getCanonicalPath().replace(".xml", ".obj"));
@@ -83,6 +80,7 @@ public class JimplePrinterAnalysis extends JavaAnalysis {
 				} finally {
 					ois.close();
 				}
+				*/
 
 				// GET THE OUTPUT FILE PATH	
 				StringBuffer b = new StringBuffer();
@@ -93,11 +91,11 @@ public class JimplePrinterAnalysis extends JavaAnalysis {
 				String xmlOutputPath = b.toString();
 
 				// CONVERT THE OBJECT
-				Collection<XMLObject> objects = new HashSet<XMLObject>(); objects.add(object);
-				ChordJimpleAdapter cja = new ChordJimpleAdapter(sourceInfo, objects);
+				//Collection<XMLObject> objects = new HashSet<XMLObject>(); objects.add(object);
+				ChordJimpleAdapter cja = new ChordJimpleAdapter(sourceInfo/*, objects*/);
 				Printer printer = new Printer(cja.toJimpleVisitor(codeInfo));
 				printer.printTo(cl, new NullOutputStream());
-				object = cja.getResults().get(cl);
+				XMLObject object = cja.getResults().get(cl);
 
 				// WRITE THE XML OBJECT
 				File objectOutputFile = new File(xmlOutputPath);

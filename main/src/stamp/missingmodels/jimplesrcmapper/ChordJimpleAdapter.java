@@ -2,7 +2,6 @@ package stamp.missingmodels.jimplesrcmapper;
 
 import static org.apache.commons.lang3.StringEscapeUtils.escapeXml;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -23,16 +22,17 @@ import soot.jimple.Stmt;
 import soot.jimple.TableSwitchStmt;
 import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo.CodeStructure;
 import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo.SimpleCodeStructure;
-import stamp.missingmodels.util.xml.XMLObject;
 import stamp.missingmodels.util.xml.XMLObject.XMLContainerObject;
-import stamp.srcmap.sourceinfo.javainfo.JavaSourceInfo;
+import stamp.srcmap.SourceInfoSingleton;
+import stamp.srcmap.SourceInfoSingleton.SourceInfoType;
+import stamp.srcmap.sourceinfo.jimpleinfo.JimpleSourceInfo;
 
 public class ChordJimpleAdapter extends JimpleVisitorWithStructure {
 	/** Information about the Java source files */
-	private JavaSourceInfo sourceInfo;
+	private JimpleSourceInfo sourceInfo;
 	
 	/** The collection of XML objects generated from the Java source reader */
-	private Collection<XMLObject> objects;
+	//private Collection<XMLObject> objects;
 	
 	/** The current stack of objects in the XML tree */
 	private Stack<XMLContainerObject> openObjects;
@@ -40,9 +40,9 @@ public class ChordJimpleAdapter extends JimpleVisitorWithStructure {
 	/** Stores the XML objects generated for each soot class */
 	private Map<SootClass,XMLContainerObject> newObjects;
 	
-	public ChordJimpleAdapter(JavaSourceInfo sourceInfo, Collection<XMLObject> objects) {
+	public ChordJimpleAdapter(JimpleSourceInfo sourceInfo/*JavaSourceInfo sourceInfo, Collection<XMLObject> objects*/) {
 		this.sourceInfo = sourceInfo;
-		this.objects = objects;
+		//this.objects = objects;
 		this.newObjects = new HashMap<SootClass,XMLContainerObject>();
 	}
 	
@@ -92,6 +92,7 @@ public class ChordJimpleAdapter extends JimpleVisitorWithStructure {
 		this.startObject(newObject);
 		
 		String chordSig = StringEscapeUtils.escapeXml(this.sourceInfo.srcClassName(cl));
+		/*
 		for(XMLObject object : this.objects) {
 			for(XMLObject classObject : object.getAllChildrenByName("class")) {
 				if(classObject.getAttribute("chordsig").equals(chordSig)) {
@@ -102,6 +103,7 @@ public class ChordJimpleAdapter extends JimpleVisitorWithStructure {
 				}
 			}
 		}
+		*/
 		// guarantee that the node has a chord sig (causes crash if it doesn't)
 		newObject.putAttribute("chordsig", escapeXml(chordSig));
 		// remark: also needs linenum to avoid crash, but this is also needed to overwrite the java linenum with the jimple line num
@@ -121,6 +123,7 @@ public class ChordJimpleAdapter extends JimpleVisitorWithStructure {
 		this.startObject(newObject);
 		
 		String chordSig = StringEscapeUtils.escapeXml(this.sourceInfo.chordSigFor(m));
+		/*
 		for(XMLObject object : this.objects) {
 			for(XMLObject methodObject : object.getAllChildrenByName("method")) {
 				if(methodObject.getAttribute("chordsig").equals(chordSig)) {
@@ -131,6 +134,7 @@ public class ChordJimpleAdapter extends JimpleVisitorWithStructure {
 				}
 			}
 		}
+		*/
 		
 		// guarantee that the node has a chord sig (causes crash if it doesn't)
 		newObject.putAttribute("chordsig", chordSig);

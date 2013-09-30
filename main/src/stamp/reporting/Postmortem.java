@@ -58,13 +58,13 @@ public class Postmortem extends JavaAnalysis {
 			for(int j=0; j<2; j++) {
 				boolean jimple = (j == 0);
 				for(Class reportClass : reports) {
-					XMLReport report = (XMLReport) reportClass.newInstance();
-					if(jimple) {
+					if(jimple | !processingSrc) {
 						//report.setSourceInfo(SourceInfoSingleton.getJimpleSourceInfo());
 						SourceInfoSingleton.setSourceInfoType(SourceInfoType.JIMPLE);
 					} else {
 						SourceInfoSingleton.setSourceInfoType(SourceInfoType.JAVA);
 					}
+					XMLReport report = (XMLReport) reportClass.newInstance();
 					
 					boolean show = true;
 					for(int i = 0; show && i < dontShowReports.length; i++){
