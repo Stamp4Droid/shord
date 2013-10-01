@@ -45,10 +45,10 @@ import java.io.*;
   **/
 
 @Chord(name="base-java-iccg",
-       produces={ "MC", "Callbacks", "MregI", "IntentTgt" },
+       produces={ "MC", "Callbacks", "MregI", "IntentTgtField" },
        namesOfTypes = { "M", "T", "I"},
        types = { DomM.class, DomT.class, DomI.class},
-       namesOfSigns = { "MC", "Callbacks", "MregI", "IntentTgt" },
+       namesOfSigns = { "MC", "Callbacks", "MregI", "IntentTgtField" },
        signs = { "M0,T0:M0_T0", "M0:M0", "M0,I0:M0_I0", "F0:F0" }
        )
 public class ICCGBuilder extends JavaAnalysis
