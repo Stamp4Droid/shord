@@ -50,37 +50,10 @@ public class JimplePrinterAnalysis extends JavaAnalysis {
 				System.out.println(m.toString() + ": " + codeInfo.getMethodInfo(m).toString());
 			}
 
-			// CONVERT STRUCTURE TO XML OBJECT
-			//JavaSourceInfo sourceInfo = SourceInfoSingleton.getJavaSourceInfo();
 			JimpleSourceInfo sourceInfo = SourceInfoSingleton.getJimpleSourceInfo();
 
 			for(SootClass cl : Scene.v().getClasses()) {
 				System.out.println("READING: " + cl.getName());
-
-				// GET THE XML OBJECT FILE PATH
-				/*
-				File objectFile;
-				try {
-					objectFile = new File(sourceInfo.srcMapFile(sourceInfo.filePath(cl)).getCanonicalPath().replace(".xml", ".obj"));
-				} catch(NullPointerException e) {
-					System.out.println("FAILED TO READ: " + cl.getName());
-					e.printStackTrace();
-					continue;
-				}
-
-				// READ IN THE OBJECT
-				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(objectFile));
-				XMLContainerObject object;
-				try {
-					object = (XMLContainerObject)ois.readObject();
-				} catch(ClassNotFoundException e) {
-					System.out.println("FAILED TO READ: " + cl.getName());
-					e.printStackTrace();
-					continue;
-				} finally {
-					ois.close();
-				}
-				*/
 
 				// GET THE OUTPUT FILE PATH	
 				StringBuffer b = new StringBuffer();
@@ -90,9 +63,8 @@ public class JimplePrinterAnalysis extends JavaAnalysis {
 				b.append(".xml");
 				String xmlOutputPath = b.toString();
 
-				// CONVERT THE OBJECT
-				//Collection<XMLObject> objects = new HashSet<XMLObject>(); objects.add(object);
-				ChordJimpleAdapter cja = new ChordJimpleAdapter(sourceInfo/*, objects*/);
+				// CREATE THE OBJECT
+				ChordJimpleAdapter cja = new ChordJimpleAdapter(sourceInfo);
 				Printer printer = new Printer(cja.toJimpleVisitor(codeInfo));
 				printer.printTo(cl, new NullOutputStream());
 				XMLObject object = cja.getResults().get(cl);

@@ -23,16 +23,11 @@ import soot.jimple.TableSwitchStmt;
 import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo.CodeStructure;
 import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo.SimpleCodeStructure;
 import stamp.missingmodels.util.xml.XMLObject.XMLContainerObject;
-import stamp.srcmap.SourceInfoSingleton;
-import stamp.srcmap.SourceInfoSingleton.SourceInfoType;
 import stamp.srcmap.sourceinfo.jimpleinfo.JimpleSourceInfo;
 
 public class ChordJimpleAdapter extends JimpleVisitorWithStructure {
 	/** Information about the Java source files */
 	private JimpleSourceInfo sourceInfo;
-	
-	/** The collection of XML objects generated from the Java source reader */
-	//private Collection<XMLObject> objects;
 	
 	/** The current stack of objects in the XML tree */
 	private Stack<XMLContainerObject> openObjects;
@@ -40,7 +35,7 @@ public class ChordJimpleAdapter extends JimpleVisitorWithStructure {
 	/** Stores the XML objects generated for each soot class */
 	private Map<SootClass,XMLContainerObject> newObjects;
 	
-	public ChordJimpleAdapter(JimpleSourceInfo sourceInfo/*JavaSourceInfo sourceInfo, Collection<XMLObject> objects*/) {
+	public ChordJimpleAdapter(JimpleSourceInfo sourceInfo) {
 		this.sourceInfo = sourceInfo;
 		//this.objects = objects;
 		this.newObjects = new HashMap<SootClass,XMLContainerObject>();
@@ -92,18 +87,6 @@ public class ChordJimpleAdapter extends JimpleVisitorWithStructure {
 		this.startObject(newObject);
 		
 		String chordSig = StringEscapeUtils.escapeXml(this.sourceInfo.srcClassName(cl));
-		/*
-		for(XMLObject object : this.objects) {
-			for(XMLObject classObject : object.getAllChildrenByName("class")) {
-				if(classObject.getAttribute("chordsig").equals(chordSig)) {
-					System.out.println("PROCESSING CLASS: " + chordSig);
-					for(String key : classObject.getAttributeKeys()) {
-						newObject.putAttribute(key, classObject.getAttribute(key));
-					}
-				}
-			}
-		}
-		*/
 		// guarantee that the node has a chord sig (causes crash if it doesn't)
 		newObject.putAttribute("chordsig", escapeXml(chordSig));
 		// remark: also needs linenum to avoid crash, but this is also needed to overwrite the java linenum with the jimple line num
@@ -122,20 +105,7 @@ public class ChordJimpleAdapter extends JimpleVisitorWithStructure {
 		XMLContainerObject newObject = new XMLContainerObject("method");
 		this.startObject(newObject);
 		
-		String chordSig = StringEscapeUtils.escapeXml(this.sourceInfo.chordSigFor(m));
-		/*
-		for(XMLObject object : this.objects) {
-			for(XMLObject methodObject : object.getAllChildrenByName("method")) {
-				if(methodObject.getAttribute("chordsig").equals(chordSig)) {
-					System.out.println("PROCESSING METHOD: " + chordSig);
-					for(String key : methodObject.getAttributeKeys()) {
-						newObject.putAttribute(key, methodObject.getAttribute(key));
-					}
-				}
-			}
-		}
-		*/
-		
+		String chordSig = StringEscapeUtils.escapeXml(this.sourceInfo.chordSigFor(m));		
 		// guarantee that the node has a chord sig (causes crash if it doesn't)
 		newObject.putAttribute("chordsig", chordSig);
 		newObject.putAttribute("line", Integer.toString(methodInfo.declarationLineNum));
