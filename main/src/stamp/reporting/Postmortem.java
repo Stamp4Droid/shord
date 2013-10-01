@@ -20,11 +20,39 @@ public class Postmortem extends JavaAnalysis {
 	public static final String reportsTxtFilePath = System.getProperty("stamp.out.dir")+"/reports.txt";
 	public static final String resultsDir = System.getProperty("stamp.out.dir")+"/results";
 	public static final boolean processingSrc = System.getProperty("stamp.input.type", "src").equals("src");
+	
+	public static void processReports(Class[] allReports, Class[] dontShowReports, PrintWriter reportsTxtWriter, boolean jimple) throws InstantiationException, IllegalAccessException {
+		for(Class reportClass : allReports) {
+			if(jimple) {
+				//report.setSourceInfo(SourceInfoSingleton.getJimpleSourceInfo());
+				SourceInfoSingleton.setSourceInfoType(SourceInfoType.JIMPLE);
+			} else {
+				SourceInfoSingleton.setSourceInfoType(SourceInfoType.JAVA);
+			}
+			XMLReport report = (XMLReport) reportClass.newInstance();
+			
+			boolean show = true;
+			for(int i = 0; show && i < dontShowReports.length; i++){
+				if(reportClass.equals(dontShowReports[i]))
+					show = false;
+			}
+			if(show) {
+				if(jimple) {
+					reportsTxtWriter.println(report.getTitle() + " Jimple " + report.getCanonicalReportFilePath(jimple));
+				} else {
+					reportsTxtWriter.println(report.getTitle() + " " + report.getCanonicalReportFilePath(jimple));
+				}
+			}
+		
+			report.write(jimple);
+		}
+
+	}
 
     public void run() {
 		new File(resultsDir).mkdirs();
 
-		Class[] srcReports = new Class[]{
+		Class[] allReports = new Class[]{
 			SrcFlow.class
 			,ArgSinkFlow.class
 			,SrcSinkFlow.class
@@ -41,10 +69,6 @@ public class Postmortem extends JavaAnalysis {
 			,AllMissingModels.class
 		};
 
-		Class[] apkReports = new Class[]{
-			SrcSinkFlow.class
-		};
-
 		Class[] dontShowReports = new Class[]{
 			IM.class
 			,AllReachable.class
@@ -53,35 +77,11 @@ public class Postmortem extends JavaAnalysis {
 
 		try{
 			PrintWriter reportsTxtWriter = new PrintWriter(new FileWriter(new File(reportsTxtFilePath)));
-			Class[] reports = processingSrc ? srcReports : apkReports;
-
-			for(int j=0; j<2; j++) {
-				boolean jimple = (j == 0);
-				for(Class reportClass : reports) {
-					if(jimple | !processingSrc) {
-						//report.setSourceInfo(SourceInfoSingleton.getJimpleSourceInfo());
-						SourceInfoSingleton.setSourceInfoType(SourceInfoType.JIMPLE);
-					} else {
-						SourceInfoSingleton.setSourceInfoType(SourceInfoType.JAVA);
-					}
-					XMLReport report = (XMLReport) reportClass.newInstance();
-					
-					boolean show = true;
-					for(int i = 0; show && i < dontShowReports.length; i++){
-						if(reportClass.equals(dontShowReports[i]))
-							show = false;
-					}
-					if(show) {
-						if(jimple) {
-							reportsTxtWriter.println(report.getTitle() + " Jimple " + report.getCanonicalReportFilePath(jimple));
-						} else {
-							reportsTxtWriter.println(report.getTitle() + " " + report.getCanonicalReportFilePath(jimple));
-						}
-					}
-				
-					report.write(jimple);
-				}
+			
+			if(processingSrc) {
+				processReports(allReports, dontShowReports, reportsTxtWriter, false);
 			}
+			processReports(allReports, dontShowReports, reportsTxtWriter, true);
 			
 			reportsTxtWriter.close();
 		} catch(Exception e){
