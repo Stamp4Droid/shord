@@ -27,7 +27,7 @@ import com.google.common.io.NullOutputStream;
 @Chord(name = "jimpleprinter")
 public class JimplePrinterAnalysis extends JavaAnalysis {
 
-	@Override public void run() {
+	@Override public void run() {		
 		try {
 			// SET UP SCRATCH DIRECTORY
 			String outDir = System.getProperty("stamp.out.dir");

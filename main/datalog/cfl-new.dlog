@@ -14,7 +14,7 @@
 .include "L.dom"
 .include "CL.dom"
 
-.bddvarorder L0_Z0xZ1_M0_CL0xCL1_C0xC1_V0xV1_U0xU1_F0_I0
+.bddvarorder L0_Z0xZ1_M0_CL0xCL1_C0xC1xC2_V0xV1_U0xU1_F0_I0
 
 
 ###################
@@ -42,8 +42,8 @@ CC(c:C,d:C) input # there exists i s.t. c++[i] = d
 CCL(c:C,cl:CL) input 
 LCL(l:L,cl:CL) input
 
-sinkCtxtLabel(l:CL) input
 srcCtxtLabel(l:CL) input
+sinkCtxtLabel(l:CL) input
 
 InLabelRet(l:L,m:M)           input
 InLabelArg(l:L,m:M,z:Z)       input
@@ -100,9 +100,9 @@ PrimArg2RefArgT(v:U,u:V)
 # PrimArg2PrimArgT(v:U,u:U)
 
 Ref2RefT(v:V,u:V)
-# Ref2PrimT(v:V,u:U)
+Ref2PrimT(v:V,u:U)
 Prim2RefT(v:U,u:V)
-# Prim2PrimT(v:U,u:U)
+Prim2PrimT(v:U,u:U)
 
 # Arg-ret transfer
 
@@ -110,11 +110,6 @@ RefArg2RefRetT(v:V,u:V)
 RefArg2PrimRetT(v:V,u:U)
 PrimArg2RefRetT(v:U,u:V)
 PrimArg2PrimRetT(v:U,u:U)
-
-Ref2RefT(v:V,u:V)
-Ref2PrimT(v:V,u:U)
-Prim2RefT(v:U,u:V)
-Prim2PrimT(v:U,u:U)
 
 # Arg-arg flow (!)
 
@@ -132,28 +127,27 @@ Prim2PrimF(v:U,u:U)
 # INTERMEDIATE: OBJECT ANNOTATIONS
 ###################
 
-Obj2RefT(c:C,o:C,u:V)
-Obj2PrimT(c:C,o:C,u:U)
-Obj2RefT(c:C,o1:C,v:V)
-Obj2PrimT(c:C,o1:C,u:U)
+Obj2RefT(c:C,o:C,v:V)
+Obj2PrimT(c:C,o:C,v:U)
 
 Src2ObjT(c:C,cl:CL,o:C)
+Sink2ObjT(c:C,cl:CL,o:C)
 
 ###################
 # INTERMEDIATE: SINKF
 ###################
 
 # Sink_full-obf flow
-SinkF2Obj(c:C,cl:CL,o:C)
+SinkF2Obj(cl:CL,o:C)
 
 # Sink_full-prim flow
-SinkF2Prim(c,cl,u) :- SinkF2PrimF(c,cl,u).
+SinkF2Prim(c:C,cl:CL,v:U)
 
 ###################
 # INTERMEDIATE: SRC-SINK FLOW
 ###################
 
-Src2Sink(src:CL,sink:CL) output
+Src2Sink(src:CL,sink:CL)
 
 ###################
 # INTERMEDIATE: LABEL FLOW
@@ -178,6 +172,7 @@ StoreStatPrimCtxt(c:C,f:F,v:U)
 
 AssignPrimArgCtxt(c:C,v:U,d:C,u:U)
 AssignPrimRetCtxt(c:C,v:U,d:C,u:U)
+AssignPrimCtxt(c:C,v:U,d:C,u:U)
 
 # Src-prim flow
 
@@ -185,13 +180,19 @@ Src2Prim(c:C,cl:CL,v:U)
 Src2PrimFld(cl:CL,o:C,f:F)
 Src2PrimFldStat(cl:CL,f:F)
 
+# Sink-prim flow
+
+Sink2Prim(c:C,cl:CL,v:U)
+Sink2PrimFld(cl:CL,o:C,f:F)
+Sink2PrimFldStat(cl:CL,f:F)
+
 ###################
 # OUTPUT
 ###################
 
-labelRef(c:C,v:V,l:CL)  output # (c,v) is labeled with l
-labelPrim(c:C,u:U,l:CL) output # (c,u) is labeled with l
-flow(src:CL,sink:CL) output
+labelRef2(c:C,v:V,l:CL)  output # (c,v) is labeled with l
+labelPrim2(c:C,u:U,l:CL) output # (c,u) is labeled with l
+flow2(src:CL,sink:CL) output
 
 ###################
 # RULES: ANNOTATION
@@ -199,7 +200,7 @@ flow(src:CL,sink:CL) output
 
 # Src label
 
-Src2RefArgT(c,cl,v)   :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelArg(l,m,z), MmethArg(m,z,v), srcCtxtlabel(cl).
+Src2RefArgT(c,cl,v)   :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelArg(l,m,z), MmethArg(m,z,v), srcCtxtLabel(cl).
 Src2RefRetT(c,cl,v)   :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelRet(l,m), MmethRet(m,_,v), srcCtxtLabel(cl).
 # Src2PrimArgT(c,cl,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelArg(l,m,z), MmethPrimArg(m,z,v), srcCtxtLabel(cl).
 Src2PrimRetT(c,cl,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelRet(l,m), MmethPrimRet(m,_,v), srcCtxtLabel(cl).
@@ -211,7 +212,7 @@ Src2PrimT(c,cl,v)   :- Src2PrimRetT(c,cl,v).
 
 # Sink label
 
-Sink2RefArgT(c,cl,v)   :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelArg(l,m,z), MmethArg(m,z,v), sinkCtxtlabel(cl).
+Sink2RefArgT(c,cl,v)   :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelArg(l,m,z), MmethArg(m,z,v), sinkCtxtLabel(cl).
 Sink2RefRetT(c,cl,v)   :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelRet(l,m), MmethRet(m,_,v), sinkCtxtLabel(cl).
 # Sink2PrimArgT(c,cl,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelArg(l,m,z), MmethPrimArg(m,z,v), sinkCtxtLabel(cl).
 Sink2PrimRetT(c,cl,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelRet(l,m), MmethPrimRet(m,_,v), sinkCtxtLabel(cl).
@@ -276,10 +277,13 @@ Prim2PrimF(v,u) :- PrimArg2PrimArgF(v,u).
 Obj2RefT(c,o,u)   :- pt(c,v,o), Ref2RefT(v,u). # pt is backwards
 Obj2PrimT(c,o,u)  :- pt(c,v,o), Ref2PrimT(v,u). # pt is backwards
 Obj2RefT(c,o1,v)  :- fpt(o2,0,o1), Obj2RefT(c,o2,v). # fpt is backwards
-Obj2PrimT(c,o1,u) :- fpt(o2,0,o1), Obj2PrimT(c,o2,v). # fpt is backwards
+Obj2PrimT(c,o1,v) :- fpt(o2,0,o1), Obj2PrimT(c,o2,v). # fpt is backwards
 
 Src2ObjT(c,cl,o)  :- Src2RefT(c,cl,v), pt(c,v,o).
 Src2ObjT(c,cl,o2) :- Src2ObjT(c,cl,o1), fpt(o1,_,o2).
+
+Sink2ObjT(c,cl,o)  :- Sink2RefT(c,cl,v), pt(c,v,o).
+Sink2ObjT(c,cl,o2) :- Sink2ObjT(c,cl,o1), fpt(o1,_,o2).
 
 ###################
 # RULES: SINKF
@@ -287,15 +291,15 @@ Src2ObjT(c,cl,o2) :- Src2ObjT(c,cl,o1), fpt(o1,_,o2).
 
 # Sink_full-obf flow
 
-SinkF2Obj(c,cl,o)  :- SinkF2RefF(c,cl,v), pt(c,v,o).
-SinkF2Obj(c,cl,o2) :- Sink2Obj(cl,o1), pt(c,v,o1), Ref2RefF(u,v), pt(c,u,o2). # first pt, Ref2RefF are backwards
-SinkF2Obj(c,cl,o)  :- Sink2Prim(c,cl,v), Ref2PrimF(u,v), pt(c,u,o). # Ref2PrimF is backwards
-SinkF2Obj(c,cl,o2) :- SinkF2Obj(cl,o1), fpt(o1,_,o2).
+SinkF2Obj(cl,o)  :- SinkF2RefF(c,cl,v), pt(c,v,o).
+SinkF2Obj(cl,o2) :- Sink2Obj(cl,o1), pt(c,v,o1), Ref2RefF(u,v), pt(c,u,o2). # first pt, Ref2RefF are backwards
+SinkF2Obj(cl,o)  :- Sink2Prim(c,cl,v), Ref2PrimF(u,v), pt(c,u,o). # Ref2PrimF is backwards
+SinkF2Obj(cl,o2) :- SinkF2Obj(cl,o1), fpt(o1,_,o2).
 
 # Sink_full-prim flow
 
-SinkF2Prim(c,cl,u) :- SinkF2PrimF(c,cl,u).
-SinkF2Prim(c,cl,u) :- Sink2Obj(c,cl,o), pt(c,v,o), Prim2RefF(u,v). # pt, Prim2RefF are backwards
+SinkF2Prim(c,cl,v) :- SinkF2PrimF(c,cl,v).
+SinkF2Prim(c,cl,u) :- Sink2Obj(cl,o), pt(c,v,o), Prim2RefF(u,v). # pt, Prim2RefF are backwards
 SinkF2Prim(c,cl,u) :- Sink2Prim(c,cl,v), Prim2PrimF(u,v). # Prim2PrimF is backwards
 
 ###################
@@ -312,8 +316,8 @@ Src2Sink(src,sink) :- Src2PrimFld(src,o,_), SinkF2Obj(sink,o). # SinkF2Obj is ba
 
 # Src-obj flow
 
-Src2Obj(cl,o)   :- Src2ObjT(c,cl,o).
-Src2Obj(cl,o)   :- Src2ObjX(c,cl,o).
+Src2Obj(cl,o)   :- Src2ObjT(_,cl,o).
+Src2Obj(cl,o)   :- Src2ObjX(cl,o).
 
 Src2ObjX(cl,o2) :- Src2Obj(cl,o1), Obj2RefT(c,o1,v), pt(c,v,o2).
 Src2ObjX(cl,o)  :- Src2Prim(c,cl,v), Prim2RefT(v,u), pt(c,u,o).
@@ -322,7 +326,7 @@ Src2ObjX(cl,o2) :- Src2ObjX(cl,o1), fpt(o1,0,o2).
 
 # Sink-obj flow
 
-Sink2Obj(cl,o)   :- Sink2ObjT(cl,o).
+Sink2Obj(cl,o)   :- Sink2ObjT(_,cl,o).
 Sink2Obj(cl,o)   :- Sink2ObjX(cl,o).
 
 Sink2ObjX(cl,o2) :- Sink2Obj(cl,o1), Obj2RefT(c,o1,v), pt(c,v,o2).
@@ -332,24 +336,26 @@ Sink2ObjX(cl,o2) :- Sink2ObjX(cl,o1), fpt(o1,0,o2).
 
 # Helper
 
-LoadPrimCtxt(c,v,u,f)      :- LoadPrim(v,u,f), MV(m,v), CM(c,m).
+LoadPrimCtxt(c,v,u,f)      :- LoadPrim(v,u,f), MV(m,u), CM(c,m).
 LoadStatPrimCtxt(c,v,f)    :- LoadStatPrim(v,f), MU(m,v), CM(c,m).
 StorePrimCtxt(c,v,f,u)     :- StorePrim(v,f,u), MV(m,v), CM(c,m).
 StoreStatPrimCtxt(c,f,v)   :- StoreStatPrim(f,v), MU(m,v), CM(c,m).
 
 AssignPrimArgCtxt(c,v,d,u) :- paramPrim(v,u,i), MU(m,u), CM(d,m), CC(d,c), CI(c,i).
 AssignPrimRetCtxt(c,v,d,u) :- returnPrim(v,u,i), MU(m,v), CM(c,m), CC(c,d), CI(d,i).
+AssignPrimCtxt(c,v,d,u)    :- AssignPrimArgCtxt(c,v,d,u).
+AssignPrimCtxt(c,v,d,u)    :- AssignPrimRetCtxt(c,v,d,u).
 
 # Src-prim flow
 
 Src2Prim(c,cl,v) :- Src2PrimT(c,cl,v).
 Src2Prim(c,cl,u) :- Src2Prim(c,cl,v), AssignPrim(u,v). # AssignPrim is flipped
 Src2Prim(d,cl,u) :- Src2Prim(c,cl,v), AssignPrimCtxt(d,u,c,v). # AssignPrimCtxt is flipped
-Src2Prim(c,cl,v) :- Src2Obj(c,cl,o), Obj2PrimT(c,o,v).
+Src2Prim(c,cl,v) :- Src2Obj(cl,o), Obj2PrimT(c,o,v).
 Src2Prim(c,cl,u) :- Src2Prim(c,cl,v), Prim2PrimT(v,u).
 
 Src2Prim(c,cl,u) :- Src2ObjT(c,cl,o), pt(c,v,o), LoadPrimCtxt(c,u,v,_). # LoadPrimCtxt is flipped
-Src2Prim(c,cl,u) :- Src2ObjX(c,cl,o), pt(c,v,o), LoadPrimCtxt(c,u,v,0). # LoadPrimCtxt is flipped
+Src2Prim(c,cl,u) :- Src2ObjX(cl,o), pt(c,v,o), LoadPrimCtxt(c,u,v,0). # LoadPrimCtxt is flipped
 Src2Prim(c,cl,v) :- Src2PrimFld(cl,o,0), Obj2PrimT(c,o,v).
 
 Src2Prim(c,cl,u) :- Src2PrimFld(cl,o,f), pt(c,v,o), LoadPrimCtxt(c,u,v,f). # pt is backwards, LoadPrim is flipped
@@ -360,11 +366,30 @@ Src2Prim(c,cl,u) :- Src2PrimFldStat(cl,f), LoadStatPrimCtxt(c,u,f). # LoadStatPr
 Src2PrimFld(cl,o,f)   :- Src2Prim(c,cl,v), StorePrimCtxt(c,u,f,v), pt(c,u,o).
 Src2PrimFldStat(cl,f) :- Src2Prim(c,cl,v), StoreStatPrimCtxt(c,f,v). # StoreStatPrim is flipped
 
+# Sink-prim flow
+
+Sink2Prim(c,cl,v) :- Sink2PrimT(c,cl,v).
+Sink2Prim(c,cl,u) :- Sink2Prim(c,cl,v), AssignPrim(u,v). # AssignPrim is flipped
+Sink2Prim(d,cl,u) :- Sink2Prim(c,cl,v), AssignPrimCtxt(d,u,c,v). # AssignPrimCtxt is flipped
+Sink2Prim(c,cl,v) :- Sink2Obj(cl,o), Obj2PrimT(c,o,v).
+Sink2Prim(c,cl,u) :- Sink2Prim(c,cl,v), Prim2PrimT(v,u).
+
+Sink2Prim(c,cl,u) :- Sink2ObjT(c,cl,o), pt(c,v,o), LoadPrimCtxt(c,u,v,_). # LoadPrimCtxt is flipped
+Sink2Prim(c,cl,u) :- Sink2ObjX(cl,o), pt(c,v,o), LoadPrimCtxt(c,u,v,0). # LoadPrimCtxt is flipped
+Sink2Prim(c,cl,v) :- Sink2PrimFld(cl,o,0), Obj2PrimT(c,o,v).
+
+Sink2Prim(c,cl,u) :- Sink2PrimFld(cl,o,f), pt(c,v,o), LoadPrimCtxt(c,u,v,f). # pt is backwards, LoadPrim is flipped
+Sink2Prim(c,cl,u) :- Sink2PrimFldStat(cl,f), LoadStatPrimCtxt(c,u,f). # LoadStatPrimCtxt is flipped
+
+# Sink-prim_fld flow
+
+Sink2PrimFld(cl,o,f)   :- Sink2Prim(c,cl,v), StorePrimCtxt(c,u,f,v), pt(c,u,o).
+Sink2PrimFldStat(cl,f) :- Sink2Prim(c,cl,v), StoreStatPrimCtxt(c,f,v). # StoreStatPrim is flipped
 
 ###################
 # RULES: OUTPUT
 ###################
 
-labelRef(c,v,l)  :- Src2Obj(l,o), pt(c,v,o).
-labelPrim(c,u,l) :- Src2Prim(c,l,u).
-flow(src,sink)   :- Src2Sink(src,sink).
+labelRef2(c,v,l)  :- Src2Obj(l,o), pt(c,v,o).
+labelPrim2(c,u,l) :- Src2Prim(c,l,u).
+flow2(src,sink)   :- Src2Sink(src,sink).

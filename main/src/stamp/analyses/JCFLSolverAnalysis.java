@@ -19,6 +19,7 @@ import stamp.missingmodels.analysis.JCFLSolverRunner;
 import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverSingle;
 import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverStubs;
 import stamp.missingmodels.analysis.JCFLSolverRunner.RelationAdder;
+import stamp.missingmodels.analysis.StampRelationOutputFile;
 import stamp.missingmodels.grammars.E12;
 import stamp.missingmodels.jimplesrcmapper.ChordJimpleAdapter;
 import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo;
@@ -145,6 +146,8 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		m.putAll(experiment.getAllProposedModels());
 		files.add(new StubModelSetOutputFile(m, "StubModelSet.txt", FileType.PERMANENT));
 		files.add(experiment);
+		files.add(new StampRelationOutputFile("flow"));
+		files.add(new StampRelationOutputFile("flow2"));
 		try {
 			for(StampOutputFile file : files) {
 				manager.write(file);
