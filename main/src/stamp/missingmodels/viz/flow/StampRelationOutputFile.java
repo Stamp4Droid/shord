@@ -1,4 +1,9 @@
-package stamp.missingmodels.analysis;
+package stamp.missingmodels.viz.flow;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
@@ -28,7 +33,27 @@ public class StampRelationOutputFile implements StampOutputFile {
 		
 		final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt(this.relationName);
 		rel.load();
-		Iterable<int[]> res = rel.getAryNIntTuples();
+		List<int[]> res = new ArrayList<int[]>();
+		for(int[] tuple : rel.getAryNIntTuples()) {
+			res.add(tuple);
+		}
+		
+		Collections.sort(res, new Comparator<int[]>() {
+			@Override
+			public int compare(int[] arg0, int[] arg1) {
+				if(arg0.length != arg1.length) {
+					throw new RuntimeException("Error in comparator argument lengths: " + arg0.length + " vs. " + arg1.length + "!");
+				}
+				for(int i=0; i<arg0.length; i++) {
+					if(arg0[i] < arg1[i]) {
+						return -1;
+					} else if(arg0[i] > arg1[i]) {
+						return 1;
+					}
+				}
+				return 0;
+			}			
+		});
 		
 		for(int[] tuple : res) {
 			for(int i=0; i<tuple.length; i++) {
