@@ -21,6 +21,7 @@ import soot.FastHierarchy;
 import soot.PatchingChain;
 import soot.jimple.Constant;
 import soot.jimple.StringConstant;
+import soot.jimple.ClassConstant;
 import soot.jimple.Stmt;
 import soot.jimple.AssignStmt;
 import soot.jimple.IdentityStmt;
@@ -559,12 +560,13 @@ public class PAGBuilder extends JavaAnalysis
 					int numArgs = s.getInvokeExpr().getArgCount();
 					growZIfNeeded(numArgs);
 					domI.add(s);
+				
 				} else if(s instanceof AssignStmt) {
 					Value rightOp = ((AssignStmt) s).getRightOp();
 
 					if(rightOp instanceof StringConstant) {
 						String str = ((StringConstant)rightOp).value;
-						if(ICCGBuilder.components.get(str) != null){
+						if(ICCGBuilder.components.get(str.replaceAll("/",".")) != null){
 							StringConstNode n = new StringConstNode(s);
 							domH.add(n);
 							unit2Node.put(s, n);
@@ -725,6 +727,7 @@ public class PAGBuilder extends JavaAnalysis
 						IinvkArg(s, j, nodeFor(arg));
 					else if(argType instanceof PrimType)
 						IinvkPrimArg(s, j, nodeFor(arg));
+
 				}
 				
 				//return value
@@ -738,7 +741,8 @@ public class PAGBuilder extends JavaAnalysis
 				}
 
 				String methSig = callee.getSignature();
-				if(methSig.equals("<android.app.Activity: void startActivity(android.content.Intent)>"))
+				//if(methSig.equals("<android.app.Activity: void startActivity(android.content.Intent)>"))
+				if(ICCGBuilder.launchList.contains(methSig))
 					relLaunch.add(nodeFor(((Immediate)ie.getArg(0))), method);
 	
 			} else if(s.containsFieldRef()){
@@ -810,9 +814,18 @@ public class PAGBuilder extends JavaAnalysis
 
 				if(rightOp instanceof StringConstant) {
 					String str = ((StringConstant)rightOp).value;
-					if(ICCGBuilder.components.get(str) != null){
+					if(ICCGBuilder.components.get(str.replaceAll("/",".")) != null){
 						relVH.add(nodeFor((Local) leftOp), unit2Node.get(s));
 						Alloc(nodeFor((Local) leftOp), unit2Node.get(s));
+					}
+				}
+
+				if(rightOp instanceof ClassConstant) {
+					String str = ((ClassConstant)rightOp).value;
+					if(ICCGBuilder.components.get(str.replaceAll("/", ".")) != null){
+						SootClass clazz = Scene.v().getSootClass("edu.stanford.stamp.harness.Main");
+						SootField field = clazz.getFieldByName(str.replaceAll("/", "\\$"));
+						LoadStat(nodeFor((Local) leftOp), field);
 					}
 				}
 

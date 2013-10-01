@@ -54,19 +54,49 @@ import java.io.*;
 public class ICCGBuilder extends JavaAnalysis
 {
 
-    private ProgramRel relMC;
-    private ProgramRel relCallbacks;
-    private ProgramRel relMregI;
+	private ProgramRel relMC;
+	private ProgramRel relCallbacks;
+	private ProgramRel relMregI;
 
-    private int maxArgs = -1;
-    private FastHierarchy fh;
-    public static NumberedSet stubMethods;
+	private int maxArgs = -1;
+	private FastHierarchy fh;
+	public static NumberedSet stubMethods;
 
-    public static final boolean ignoreStubs = false;
+	public static final boolean ignoreStubs = false;
 
-    private SootClass klass;
+	private SootClass klass;
 
-    public static Map<String, XmlNode> components = new HashMap<String, XmlNode>();
+	public static Map<String, XmlNode> components = new HashMap<String, XmlNode>();
+
+
+	private static String[] launchArray = {
+	"<android.app.Activity: void startActivity(android.content.Intent)>",
+	"<android.content.ContextWrapper: void sendBroadcast(android.content.Intent)>",
+	//shall we mark bindservice?|| methSig.equals("<android.content.ContextWrapper: boolean bindService(android.content.Intent,android.content.ServiceConnection,int)>") 
+	"<android.content.ContextWrapper: android.content.ComponentName startService(android.content.Intent)>",
+	"<android.content.ContextWrapper: void sendBroadcast(android.content.Intent,java.lang.String)>",
+	"<android.content.ContextWrapper: void sendStickyBroadcast(android.content.Intent)>",
+	"<android.content.ContextWrapper: void sendOrderedBroadcast(android.content.Intent,java.lang.String)>",
+	"<android.content.ContextWrapper: void sendOrderedBroadcast(android.content.Intent,java.lang.String,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)>",
+	"<android.content.ContextWrapper: void sendStickyOrderedBroadcast(android.content.Intent,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)>",
+	"<android.content.Context: void sendBroadcast(android.content.Intent)>",
+	"<android.content.Context: android.content.ComponentName startService(android.content.Intent)>",
+	"<android.content.Context: void sendBroadcast(android.content.Intent,java.lang.String)>",
+	"<android.content.Context: void sendStickyBroadcast(android.content.Intent)>",
+	"<android.content.Context: void sendOrderedBroadcast(android.content.Intent,java.lang.String)>",
+	"<android.content.Context: void sendOrderedBroadcast(android.content.Intent,java.lang.String,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)>",
+	"<android.content.Context: void sendStickyOrderedBroadcast(android.content.Intent,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)>",
+	"<android.app.Activity: void startActivities(android.content.Intent[])>",
+	"<android.app.Activity: void startIntentSender(android.content.IntentSender,android.content.Intent,int,int,int)>",
+	"<android.app.Activity: void startActivityForResult(android.content.Intent,int)>",
+	"<android.app.Activity: boolean startActivityIfNeeded(android.content.Intent,int)>",
+	"<android.app.Activity: boolean startNextMatchingActivity(android.content.Intent)>",
+	"<android.app.Activity: void startActivityFromChild(android.app.Activity,android.content.Intent,int)>",
+	"<android.app.Activity: void startActivityFromFragment(android.app.Fragment,android.content.Intent,int)>",
+	"<android.app.Activity: void startIntentSenderForResult(android.content.IntentSender,int,android.content.Intent,int,int,int)>",
+	"<android.app.Activity: void startIntentSenderFromChild(android.app.Activity,android.content.IntentSender,int,android.content.Intent,int,int,int)>" };
+
+    public static List launchList = new ArrayList<String>(Arrays.asList(launchArray));
 
     void openRels()
     {

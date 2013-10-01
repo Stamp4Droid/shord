@@ -120,6 +120,7 @@ public class Main
 		sClass.addMethod(clinit);
 		
 		Type classType = RefType.v("java.lang.Class");
+		Type stringType = RefType.v("java.lang.String");
 		SootMethodRef forNameMethod = Scene.v().getMethod("<java.lang.Class: java.lang.Class forName(java.lang.String)>").makeRef();
 
 		clinit.setActiveBody(Jimple.v().newBody(clinit));
@@ -137,7 +138,12 @@ public class Main
 			//initialize them in the clinit
 			Local l = Jimple.v().newLocal("c"+n++, classType);
 			ls.add(l);
-			stmts.add(Jimple.v().newAssignStmt(l, Jimple.v().newStaticInvokeExpr(forNameMethod, StringConstant.v(comp))));
+			Local s = Jimple.v().newLocal("s"+n++, stringType);
+			ls.add(s);
+			stmts.add(Jimple.v().newAssignStmt(s, StringConstant.v(comp)));
+			//can't support stringconst as an argument now.
+			//stmts.add(Jimple.v().newAssignStmt(l, Jimple.v().newStaticInvokeExpr(forNameMethod, StringConstant.v(comp))));
+			stmts.add(Jimple.v().newAssignStmt(l, Jimple.v().newStaticInvokeExpr(forNameMethod, s)));
 			stmts.add(Jimple.v().newAssignStmt(Jimple.v().newStaticFieldRef(f.makeRef()), l));
 		}
 		stmts.add(Jimple.v().newReturnVoidStmt());

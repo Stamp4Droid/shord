@@ -5,7 +5,7 @@ class Intent
 	//add by yu.
 	private static android.os.Bundle extras = new android.os.Bundle(true);
 
-	public java.lang.String name = new java.lang.String();
+	public java.lang.String name; 
 
 	@STAMP(flows = {@Flow(from="uri",to="!this")})
 	public  Intent(java.lang.String action, android.net.Uri uri) 
