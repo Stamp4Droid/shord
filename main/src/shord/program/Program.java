@@ -62,7 +62,14 @@ public class Program
 
 			mainMethod = mainClass.getMethod(Scene.v().getSubSigNumberer().findOrAdd("void main(java.lang.String[])"));
 
-			Scene.v().setEntryPoints(Arrays.asList(new SootMethod[]{mainMethod}));
+			List entryPoints = new ArrayList();
+			entryPoints.add(mainMethod);
+
+			//workaround soot bug
+			if(mainClass.declaresMethodByName("<clinit>"))
+				entryPoints.add(mainClass.getMethodByName("<clinit>"));
+
+			Scene.v().setEntryPoints(entryPoints);
 			Scene.v().loadDynamicClasses();
         } catch (CompilationDeathException e) {
             if(e.getStatus()!=CompilationDeathException.COMPILATION_SUCCEEDED)
@@ -77,7 +84,6 @@ public class Program
 		//run CHA
 		CallGraphBuilder cg = new CallGraphBuilder(DumbPointerAnalysis.v());
 		cg.build();
-
 	}
 	
 	public void printAllClasses()
