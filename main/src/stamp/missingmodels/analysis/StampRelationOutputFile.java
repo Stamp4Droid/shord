@@ -14,7 +14,7 @@ public class StampRelationOutputFile implements StampOutputFile {
 	
 	@Override
 	public String getName() {
-		return this.relationName + ".rel";
+		return "relations/" + this.relationName + ".rel";
 	}
 
 	@Override

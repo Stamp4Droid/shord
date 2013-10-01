@@ -159,6 +159,7 @@ public class FileManager implements Serializable {
 	 */
 	public void write(StampOutputFile stampFile) throws IOException {
 		File file = new File(this.getDirectory(stampFile.getType()), stampFile.getName());
+		file.getParentFile().mkdirs();
 		PrintWriter printWriter = new PrintWriter(file);
 		printWriter.println(stampFile.getContent());
 		printWriter.close();

@@ -148,6 +148,10 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		files.add(experiment);
 		files.add(new StampRelationOutputFile("flow"));
 		files.add(new StampRelationOutputFile("flow2"));
+		files.add(new StampRelationOutputFile("labelRef"));
+		files.add(new StampRelationOutputFile("labelRef2"));
+		files.add(new StampRelationOutputFile("labelPrim"));
+		files.add(new StampRelationOutputFile("labelPrim2"));
 		try {
 			for(StampOutputFile file : files) {
 				manager.write(file);
