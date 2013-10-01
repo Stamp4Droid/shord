@@ -95,13 +95,13 @@ public class ICCGBuilder extends JavaAnalysis
     }
 
 
-protected void visit(SootClass klass)
-{
-this.klass = klass;
-Collection<SootMethod> methodsCopy = new ArrayList(klass.getMethods());
-for(SootMethod method : methodsCopy)
-    visitMethod(method);
-}
+	protected void visit(SootClass klass)
+	{
+		this.klass = klass;
+		Collection<SootMethod> methodsCopy = new ArrayList(klass.getMethods());
+		for(SootMethod method : methodsCopy)
+		    visitMethod(method);
+	}
 
     private void fillCallback() {
 

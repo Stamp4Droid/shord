@@ -77,6 +77,7 @@ public class Program
 		//run CHA
 		CallGraphBuilder cg = new CallGraphBuilder(DumbPointerAnalysis.v());
 		cg.build();
+
 	}
 	
 	public void printAllClasses()
