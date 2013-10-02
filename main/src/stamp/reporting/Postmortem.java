@@ -80,8 +80,9 @@ public class Postmortem extends JavaAnalysis {
 			
 			if(processingSrc) {
 				processReports(allReports, dontShowReports, reportsTxtWriter, false);
+			} else {
+				processReports(allReports, dontShowReports, reportsTxtWriter, true);
 			}
-			processReports(allReports, dontShowReports, reportsTxtWriter, true);
 			
 			reportsTxtWriter.close();
 		} catch(Exception e){
