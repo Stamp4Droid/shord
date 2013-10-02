@@ -101,4 +101,12 @@ class ContextWrapper
 	public  android.content.SharedPreferences getSharedPreferences(java.lang.String name, int mode) { 
 		return android.content.StampSharedPreferences.INSTANCE;
 	}
+
+    public java.io.FileInputStream openFileInput(java.lang.String name) throws java.io.FileNotFoundException {
+		return new java.io.FileInputStream(name);
+    }
+
+    public java.io.FileOutputStream openFileOutput(java.lang.String name, int mode) throws java.io.FileNotFoundException {
+		return new java.io.FileOutputStream(name);
+    }
 }
