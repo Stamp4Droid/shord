@@ -94,7 +94,9 @@ public class ICCGBuilder extends JavaAnalysis
 	"<android.app.Activity: void startActivityFromChild(android.app.Activity,android.content.Intent,int)>",
 	"<android.app.Activity: void startActivityFromFragment(android.app.Fragment,android.content.Intent,int)>",
 	"<android.app.Activity: void startIntentSenderForResult(android.content.IntentSender,int,android.content.Intent,int,int,int)>",
-	"<android.app.Activity: void startIntentSenderFromChild(android.app.Activity,android.content.IntentSender,int,android.content.Intent,int,int,int)>" };
+	"<android.app.Activity: void startIntentSenderFromChild(android.app.Activity,android.content.IntentSender,int,android.content.Intent,int,int,int)>",
+        "<android.widget.TabHost$TabSpec: android.widget.TabHost$TabSpec setContent(android.content.Intent)>"
+	};
 
     public static List launchList = new ArrayList<String>(Arrays.asList(launchArray));
 
@@ -176,7 +178,7 @@ public class ICCGBuilder extends JavaAnalysis
 				"void onDestroy()",
 				"void onSaveInstanceState(android.os.Bundle)"};
 		List<String> circleList = Arrays.asList(str);
-		if(circleList.contains(method.getSubSignature()))
+		//if(circleList.contains(method.getSubSignature()))
 			relMC.add(method, this.klass.getType());
 	}
 
