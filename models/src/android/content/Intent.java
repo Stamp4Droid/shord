@@ -6,10 +6,16 @@ class Intent
 	private static android.os.Bundle extras = new android.os.Bundle(true);
 
 	public java.lang.String name; 
+	public java.lang.String action; 
 
 	@STAMP(flows = {@Flow(from="uri",to="!this")})
 	public  Intent(java.lang.String action, android.net.Uri uri) 
 	{ 
+		this.action = action;
+	}
+
+	public Intent(java.lang.String action) {
+		this.action = action;
 	}
 
 	public Intent(android.content.Context packageContext, java.lang.Class<?> cls) {
@@ -18,6 +24,7 @@ class Intent
 
 	public Intent(java.lang.String action, android.net.Uri uri, android.content.Context packageContext, java.lang.Class<?> cls) {
 		this.name = cls.name;
+		this.action = action;
 	}
 
 	public android.content.Intent setComponent(android.content.ComponentName component) {
@@ -37,6 +44,11 @@ class Intent
 
 	public android.content.Intent setClass(android.content.Context packageContext, java.lang.Class<?> cls) {
 		this.name = cls.name;
+		return this;
+	}
+
+	public android.content.Intent setAction(java.lang.String action) {
+		this.action = action;
 		return this;
 	}
 

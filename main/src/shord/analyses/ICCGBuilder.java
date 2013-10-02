@@ -45,11 +45,11 @@ import java.io.*;
   **/
 
 @Chord(name="base-java-iccg",
-       produces={ "MC", "Callbacks", "MregI", "IntentTgtField" },
+       produces={ "MC", "Callbacks", "MregI", "IntentTgtField", "ActionField" },
        namesOfTypes = { "M", "T", "I"},
        types = { DomM.class, DomT.class, DomI.class},
-       namesOfSigns = { "MC", "Callbacks", "MregI", "IntentTgtField" },
-       signs = { "M0,T0:M0_T0", "M0:M0", "M0,I0:M0_I0", "F0:F0" }
+       namesOfSigns = { "MC", "Callbacks", "MregI", "IntentTgtField", "ActionField" },
+       signs = { "M0,T0:M0_T0", "M0:M0", "M0,I0:M0_I0", "F0:F0", "F0:F0" }
        )
 public class ICCGBuilder extends JavaAnalysis
 {
@@ -98,6 +98,8 @@ public class ICCGBuilder extends JavaAnalysis
 
     public static List launchList = new ArrayList<String>(Arrays.asList(launchArray));
 
+    public static String pkgName = ""; 
+
     void openRels()
     {
         relMC = (ProgramRel) ClassicProject.g().getTrgt("MC");
@@ -121,7 +123,9 @@ public class ICCGBuilder extends JavaAnalysis
         //parse manifest.xml
         String manifestDir = stampOutDir + "/apktool-out";
         File manifestFile = new File(manifestDir, "AndroidManifest.xml");
-        new ParseManifest().extractComponents(manifestFile, components);
+        ParseManifest pmf = new ParseManifest();
+        pmf.extractComponents(manifestFile, components);
+	pkgName = pmf.getPkgName();
     }
 
 
@@ -212,32 +216,40 @@ public class ICCGBuilder extends JavaAnalysis
 
     }
 
-	private void populateIntentTgt() 
+	//target name and action in intent object.
+	private void populateIntentActionTgt() 
 	{
 		ProgramRel relIntentTgtField = (ProgramRel) ClassicProject.g().getTrgt("IntentTgtField");
         	relIntentTgtField.zero();
+		ProgramRel relActionField = (ProgramRel) ClassicProject.g().getTrgt("ActionField");
+        	relActionField.zero();
+
 		SootClass klass = Program.g().scene().getSootClass("android.content.Intent");
 		SootField nameField = klass.getFieldByName("name");
+		SootField actionField = klass.getFieldByName("action");
 		relIntentTgtField.add(nameField);
 		relIntentTgtField.save();
+		relActionField.add(actionField);
+		relActionField.save();
+
 	}
 
     public void run()
     {
-        Program program = Program.g();
-        program.buildCallGraph();
-        fh = Program.g().scene().getOrMakeFastHierarchy();
+        //Program program = Program.g();
+        //program.buildCallGraph();
+        //fh = Program.g().scene().getOrMakeFastHierarchy();
         openRels();
         fillCallback();
         populateMregI();
-	populateIntentTgt();
+	populateIntentActionTgt();
 
         for(SootClass klass: Program.g().getClasses()){
             this.visit(klass);
         }
         saveRels();
 
-        fh = null;
+        //fh = null;
 
     }
 

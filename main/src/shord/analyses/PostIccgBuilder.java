@@ -74,6 +74,8 @@ public class PostIccgBuilder extends JavaAnalysis
 
 	private Map<String, XmlNode> components = new HashMap<String, XmlNode>();
 
+    	public static List actionList = new ArrayList();
+
 	private String pkgName = "";
 
 	Map<String, Set> pMap = new HashMap<String, Set>();

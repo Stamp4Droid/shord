@@ -13,7 +13,7 @@
 .include "S.dom"
 .include "F.dom"
 
-.bddvarorder M0xM1_I0_Z0_V0_C0xC1_H0_S0_F0_T0
+.bddvarorder M0xM1_I0_Z0_V0_C0xC1_H0_S0_F0_T0_T1
 
 IinvkArg(i:I,n:Z,v:V) input  # v is the nth args of the method m in invocation i.
 MmethArg(m:M,z:Z,v:V) input  # v is the zth args in method m 
@@ -39,6 +39,8 @@ SubSig(m:M,s:S) input     # s is subsignature of m.
 Dispatch(t:T,s:S,m:M) input     # t.m has subsig s.
 Launch(v:V,m:M) input
 IntentTgtField(f:F) input
+ActionField(f:F) input
+TgtAction(t:T,h:H) input
 VH(v:V,h:H) input
 
 CallerComp(m:M,c:C,o:T)   output  # m is a method declared in c
@@ -47,6 +49,7 @@ DI(c:C,i:I) output  # invocation i has context c in method.
 DIC(d:C,i:I,c:C) output  # 
 CICM(d:C,i:I,c:C,m:M)   output  # i in cotext d calls method m in context c.
 ICCG(s:T,t:H)  output
+ICCGImp(s:T,t:T)  output
 
 ###################
 #    RULES
@@ -63,7 +66,10 @@ CallerComp(m,k,c) :- MC(m,c), CM(k,m).
 CallerComp(m2,k2,c) :- CallerComp(m1,k1,c), MI(m1,i), CICM(k1,i,k2,m2).
 CallerComp(cb,k2,c) :- Callbacks(cb), MmethArg(cb,0,p), pt(k2,p,o), pt(k1,a,o), CallerComp(m,k1,c), MregI(m,i), IinvkArg(i,0,a).
 
+#explicit intent
 ICCG(s,h) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), IntentTgtField(f), fpt(o,f,c), CH(c,h).
 #ICCG(s,h) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), IntentTgtField(f), fpt(o,f,c), pt(o,u,c), CH(c,h), VH(u,h).
 #ICCG(s,h) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), IntentTgtField(f), fpt(o,f,c), pt(o,u,c), VH(u,h).
 #ICCG(s,h) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), pt(k,u,o), CH(c,h), VH(u,h).
+#implicit intent
+ICCGImp(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), ActionField(f), TgtAction(t,h), fpt(o,f,c), CH(c,h).

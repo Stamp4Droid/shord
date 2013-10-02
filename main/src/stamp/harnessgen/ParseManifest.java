@@ -172,8 +172,8 @@ public class ParseManifest
 			pkgName = node.getAttributes().getNamedItem("package").getNodeValue();
 			
 			findNodes(xpath, document, activities, "activity");
-            findNodes(xpath, document, activities, "service");
-            findNodes(xpath, document, activities, "receiver");
+		    findNodes(xpath, document, activities, "service");
+		    findNodes(xpath, document, activities, "receiver");
 
             ///add by yu
             NodeList mynodes = (NodeList)
@@ -187,7 +187,7 @@ public class ParseManifest
                     if(n.getNodeName().equals("android:name")){
                         name = n.getNodeValue();
 
-                        if ("android.intent.action.MAIN".equals(name)) {
+                        //if ("android.intent.action.MAIN".equals(name)) {
                             Node mainNode = mynode.getParentNode().getParentNode();
                             NamedNodeMap nnm1 = mainNode.getAttributes();
                             String actname = null;
@@ -197,12 +197,14 @@ public class ParseManifest
                                     actname = n1.getNodeValue();
                                     if (activities.get(fixName(actname)) != null)
                                         activities.get(fixName(actname)).setMain(true);
+
+                                    activities.get(fixName(actname)).addAction(name);
                                     break;
                                 }
                             }
                             
-                        }
-                        break;
+                        //}
+                        //break;
                     }
                     //System.out.println(n.getNodeName() + " " + );
                 }			
@@ -232,10 +234,11 @@ public class ParseManifest
                                 if (activities.get(fixName(actname)) != null)
                                     activities.get(fixName(actname)).setIntentFilter(name);
                                 //FIXME only one filter.
+                                activities.get(fixName(actname)).addAction(name);
                                 break;
                             }
                         }
-                        break;
+                        //break;
                     }
                     //System.out.println(n.getNodeName() + " " + );
                 }			
