@@ -130,8 +130,8 @@ Prim2PrimF(v:U,u:U)
 Obj2RefT(c:C,o:C,v:V)
 Obj2PrimT(c:C,o:C,v:U)
 
-Src2ObjT(c:C,cl:CL,o:C)
-Sink2ObjT(c:C,cl:CL,o:C)
+Src2ObjT(cl:CL,o:C)
+Sink2ObjT(cl:CL,o:C)
 
 ###################
 # INTERMEDIATE: SINKF
@@ -279,11 +279,11 @@ Obj2PrimT(c,o,u)  :- pt(c,v,o), Ref2PrimT(v,u). # pt is backwards
 Obj2RefT(c,o1,v)  :- fpt(o2,0,o1), Obj2RefT(c,o2,v). # fpt is backwards
 Obj2PrimT(c,o1,v) :- fpt(o2,0,o1), Obj2PrimT(c,o2,v). # fpt is backwards
 
-Src2ObjT(c,cl,o)  :- Src2RefT(c,cl,v), pt(c,v,o).
-Src2ObjT(c,cl,o2) :- Src2ObjT(c,cl,o1), fpt(o1,_,o2).
+Src2ObjT(cl,o)  :- Src2RefT(c,cl,v), pt(c,v,o).
+Src2ObjT(cl,o2) :- Src2ObjT(cl,o1), fpt(o1,_,o2).
 
-Sink2ObjT(c,cl,o)  :- Sink2RefT(c,cl,v), pt(c,v,o).
-Sink2ObjT(c,cl,o2) :- Sink2ObjT(c,cl,o1), fpt(o1,_,o2).
+Sink2ObjT(cl,o)  :- Sink2RefT(c,cl,v), pt(c,v,o).
+Sink2ObjT(cl,o2) :- Sink2ObjT(cl,o1), fpt(o1,_,o2).
 
 ###################
 # RULES: SINKF
@@ -316,7 +316,7 @@ Src2Sink(src,sink) :- Src2PrimFld(src,o,_), SinkF2Obj(sink,o). # SinkF2Obj is ba
 
 # Src-obj flow
 
-Src2Obj(cl,o)   :- Src2ObjT(_,cl,o).
+Src2Obj(cl,o)   :- Src2ObjT(cl,o).
 Src2Obj(cl,o)   :- Src2ObjX(cl,o).
 
 Src2ObjX(cl,o2) :- Src2Obj(cl,o1), Obj2RefT(c,o1,v), pt(c,v,o2).
@@ -326,7 +326,7 @@ Src2ObjX(cl,o2) :- Src2ObjX(cl,o1), fpt(o1,0,o2).
 
 # Sink-obj flow
 
-Sink2Obj(cl,o)   :- Sink2ObjT(_,cl,o).
+Sink2Obj(cl,o)   :- Sink2ObjT(cl,o).
 Sink2Obj(cl,o)   :- Sink2ObjX(cl,o).
 
 Sink2ObjX(cl,o2) :- Sink2Obj(cl,o1), Obj2RefT(c,o1,v), pt(c,v,o2).
@@ -357,7 +357,7 @@ Src2Prim(d,cl,u) :- Src2Prim(c,cl,v), AssignPrimCtxt(d,u,c,v). # AssignPrimCtxt 
 Src2Prim(c,cl,v) :- Src2Obj(cl,o), Obj2PrimT(c,o,v).
 Src2Prim(c,cl,u) :- Src2Prim(c,cl,v), Prim2PrimT(v,u).
 
-Src2Prim(c,cl,u) :- Src2ObjT(_,cl,o), pt(c,v,o), LoadPrimCtxt(c,u,v,_). # LoadPrimCtxt is flipped
+Src2Prim(c,cl,u) :- Src2ObjT(cl,o), pt(c,v,o), LoadPrimCtxt(c,u,v,_). # LoadPrimCtxt is flipped
 Src2Prim(c,cl,u) :- Src2ObjX(cl,o), pt(c,v,o), LoadPrimCtxt(c,u,v,0). # LoadPrimCtxt is flipped
 Src2Prim(c,cl,v) :- Src2PrimFld(cl,o,0), Obj2PrimT(c,o,v).
 
@@ -377,7 +377,7 @@ Sink2Prim(d,cl,u) :- Sink2Prim(c,cl,v), AssignPrimCtxt(d,u,c,v). # AssignPrimCtx
 Sink2Prim(c,cl,v) :- Sink2Obj(cl,o), Obj2PrimT(c,o,v).
 Sink2Prim(c,cl,u) :- Sink2Prim(c,cl,v), Prim2PrimT(v,u).
 
-Sink2Prim(c,cl,u) :- Sink2ObjT(_,cl,o), pt(c,v,o), LoadPrimCtxt(c,u,v,_). # LoadPrimCtxt is flipped
+Sink2Prim(c,cl,u) :- Sink2ObjT(cl,o), pt(c,v,o), LoadPrimCtxt(c,u,v,_). # LoadPrimCtxt is flipped
 Sink2Prim(c,cl,u) :- Sink2ObjX(cl,o), pt(c,v,o), LoadPrimCtxt(c,u,v,0). # LoadPrimCtxt is flipped
 Sink2Prim(c,cl,v) :- Sink2PrimFld(cl,o,0), Obj2PrimT(c,o,v).
 
