@@ -3,6 +3,23 @@ import stamp.missingmodels.util.jcflsolver.*;
 
 /* Original Grammar:
 ###################
+# CONFIGURATION
+###################
+
+.output LabelRef3
+.output LabelPrim3
+.output Flow3
+
+.weights refArg2RefArgTStub 1
+.weights refArg2RefRetTStub 1
+
+.weights primArg2RefArgTStub 1
+.weights primArg2RefRetTStub 1
+
+.weights refArg2PrimRetTStub 1
+.weights prim2PrimT 1 
+
+###################
 # INPUTS
 ###################
 
@@ -1626,17 +1643,29 @@ public void process(Edge base) {
 }
 
 public String[] outputRels() {
-    String[] rels = {};
+    String[] rels = {"LabelRef3", "LabelPrim3", "Flow3"};
     return rels;
 }
 
 public short kindToWeight(int kind) {
   switch (kind) {
+  case 7:
+    return (short)1;
+  case 28:
+    return (short)1;
+  case 29:
+    return (short)1;
+  case 30:
+    return (short)1;
+  case 31:
+    return (short)1;
+  case 32:
+    return (short)1;
   default:
     return (short)0;
   }
 }
 
-public boolean useReps() { return true; }
+public boolean useReps() { return false; }
 
 }
