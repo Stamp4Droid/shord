@@ -91,6 +91,7 @@ public class ICCGBuilder extends JavaAnalysis
 	"<android.app.Activity: void startActivityForResult(android.content.Intent,int)>",
 	"<android.app.Activity: boolean startActivityIfNeeded(android.content.Intent,int)>",
 	"<android.app.Activity: boolean startNextMatchingActivity(android.content.Intent)>",
+	"<android.content.Context: void startActivity(android.content.Intent)>",
 	"<android.app.Activity: void startActivityFromChild(android.app.Activity,android.content.Intent,int)>",
 	"<android.app.Activity: void startActivityFromFragment(android.app.Fragment,android.content.Intent,int)>",
 	"<android.app.Activity: void startIntentSenderForResult(android.content.IntentSender,int,android.content.Intent,int,int,int)>",

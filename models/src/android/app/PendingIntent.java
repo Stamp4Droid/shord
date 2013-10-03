@@ -6,7 +6,7 @@ class PendingIntent
 	{ 
 		pi = new android.app.StampActivityPendingIntent();
 		pi.intent = intent;
-		throw new RuntimeException("Stub!"); 
+		return new PendingIntent(); 
 	}
 
 	public static  android.app.PendingIntent getActivity(android.content.Context context, int requestCode, android.content.Intent intent, int flags, android.os.Bundle options) 
