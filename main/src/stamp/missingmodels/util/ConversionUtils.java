@@ -184,7 +184,7 @@ public class ConversionUtils {
 		 */
 		
 		// source annotations: src2RefT, src2PrimT
-		relations.add("src22RefT", new IndexRelation("Src2RefT", "CL", 1, null, "V", 2, 0));
+		relations.add("src2RefT", new IndexRelation("Src2RefT", "CL", 1, null, "V", 2, 0));
 		relations.add("src2PrimT", new IndexRelation("Src2PrimT", "CL", 1, null, "U", 2, 0));		
 		
 		// sink annotations: sink2RefT, sink2PrimT, sinkF2RefF, sinkF2PrimF
@@ -212,10 +212,11 @@ public class ConversionUtils {
 		// field: fpt
 		relations.add("fpt", new IndexRelation("fpt", "O", 0, null, "O", 2, null, 1));
 
-		// helper: assignPrimCtxt, assignPrimCCtxt, loadPrimCtxtArr
+		// helper: assignPrimCtxt, assignPrimCCtxt, loadPrimCtxtArr, storePrimCtxtArr
 		relations.add("assignPrimCtxt", new IndexRelation("AssignPrimCtxt", "U", 1, 0, "U", 2, 0));
 		relations.add("assignPrimCCtxt", new IndexRelation("AssignPrimCCtxt", "U", 1, 0, "U", 3, 2));
 		relations.add("loadPrimCtxtArr", new IndexRelation("LoadPrimCtxtArr", "U", 1, 0, "V", 2, 0));
+		relations.add("storePrimCtxtArr", new IndexRelation("StorePrimCtxtArr", "V", 1, 0, "U", 2, 0));
 
 		// field helper: loadPrimCtxt, loadStatPrimCtxt, storePrimCtxt, storeStatPrimCtxt
 		relations.add("loadPrimCtxt", new IndexRelation("LoadPrimCtxt", "U", 1, 0, "V", 2, 0, 3));
