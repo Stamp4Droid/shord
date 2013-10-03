@@ -69,6 +69,10 @@ public class Postmortem extends JavaAnalysis {
 			,AllMissingModels.class
 		};
 
+		Class[] apkReports = new	Class[]{
+				SrcSinkFlow.class
+		};
+
 		Class[] dontShowReports = new Class[]{
 			IM.class
 			,AllReachable.class
@@ -82,6 +86,7 @@ public class Postmortem extends JavaAnalysis {
 				processReports(allReports, dontShowReports, reportsTxtWriter, false);
 			} else {
 				processReports(allReports, dontShowReports, reportsTxtWriter, true);
+				processReports(apkReports, dontShowReports, reportsTxtWriter, false);
 			}
 			
 			reportsTxtWriter.close();
