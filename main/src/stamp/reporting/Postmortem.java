@@ -38,13 +38,13 @@ public class Postmortem extends JavaAnalysis {
 			}
 			if(show) {
 				if(jimple) {
-					reportsTxtWriter.println(report.getTitle() + " Jimple " + report.getCanonicalReportFilePath(jimple));
+					reportsTxtWriter.println(report.getTitle() + " " + report.getCanonicalReportFilePath());
 				} else {
-					reportsTxtWriter.println(report.getTitle() + " " + report.getCanonicalReportFilePath(jimple));
+					reportsTxtWriter.println(report.getTitle() + " " + report.getCanonicalReportFilePath());
 				}
 			}
 		
-			report.write(jimple);
+			report.write();
 		}
 
 	}
@@ -86,7 +86,6 @@ public class Postmortem extends JavaAnalysis {
 				processReports(allReports, dontShowReports, reportsTxtWriter, false);
 			} else {
 				processReports(allReports, dontShowReports, reportsTxtWriter, true);
-				processReports(apkReports, dontShowReports, reportsTxtWriter, false);
 			}
 			
 			reportsTxtWriter.close();
