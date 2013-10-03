@@ -170,9 +170,13 @@ LoadStatPrimCtxt(c:C,v:U,f:F)
 StorePrimCtxt(c:C,v:V,f:F,u:U)
 StoreStatPrimCtxt(c:C,f:F,v:U)
 
-AssignPrimArgCtxt(c:C,v:U,d:C,u:U)
-AssignPrimRetCtxt(c:C,v:U,d:C,u:U)
-AssignPrimCtxt(c:C,v:U,d:C,u:U)
+AssignPrimCtxt(c:C,v:U,u:U)
+AssignPrimArgCCtxt(c:C,v:U,d:C,u:U)
+AssignPrimRetCCtxt(c:C,v:U,d:C,u:U)
+AssignPrimCCtxt(c:C,v:U,d:C,u:U)
+
+fptArr(o1:C,o2:C)
+LoadPrimCtxtArr(c:C,v:U,u:V)
 
 # Src-prim flow
 
@@ -341,18 +345,22 @@ LoadStatPrimCtxt(c,v,f)    :- LoadStatPrim(v,f), MU(m,v), CM(c,m).
 StorePrimCtxt(c,v,f,u)     :- StorePrim(v,f,u), MV(m,v), CM(c,m).
 StoreStatPrimCtxt(c,f,v)   :- StoreStatPrim(f,v), MU(m,v), CM(c,m).
 
-#AssignPrimArgCtxt(c,v,d,u) :- paramPrim(v,u,i), MU(m,u), CM(d,m), CC(d,c), CI(c,i).
-#AssignPrimRetCtxt(c,v,d,u) :- returnPrim(v,u,i), MU(m,v), CM(c,m), CC(c,d), CI(d,i).
-AssignPrimArgCtxt(c,v,d,u) :- paramPrim(v,u,i), CC(d,c), CI(c,i).
-AssignPrimRetCtxt(c,v,d,u) :- returnPrim(v,u,i), CC(c,d), CI(d,i).
-AssignPrimCtxt(c,v,d,u)    :- AssignPrimArgCtxt(c,v,d,u).
-AssignPrimCtxt(c,v,d,u)    :- AssignPrimRetCtxt(c,v,d,u).
+AssignPrimCtxt(c,v,u)       :- AssignPrim(v,u), MU(m,v), CM(c,m).
+#AssignPrimArgCCtxt(c,v,d,u) :- paramPrim(v,u,i), MU(m,u), CM(d,m), CC(d,c), CI(c,i).
+#AssignPrimRetCCtxt(c,v,d,u) :- returnPrim(v,u,i), MU(m,v), CM(c,m), CC(c,d), CI(d,i).
+AssignPrimArgCCtxt(c,v,d,u) :- paramPrim(v,u,i), CC(d,c), CI(c,i).
+AssignPrimRetCCtxt(c,v,d,u) :- returnPrim(v,u,i), CC(c,d), CI(d,i).
+AssignPrimCCtxt(c,v,d,u)    :- AssignPrimArgCCtxt(c,v,d,u).
+AssignPrimCCtxt(c,v,d,u)    :- AssignPrimRetCCtxt(c,v,d,u).
+
+fptArr(o1,o2)          :- fpt(o1,0,o2).
+LoadPrimCtxtArr(c,v,u) :- LoadPrimCtxt(c,v,u,_).
 
 # Src-prim flow
 
 Src2Prim(c,cl,v) :- Src2PrimT(c,cl,v).
-Src2Prim(c,cl,u) :- Src2Prim(c,cl,v), AssignPrim(u,v). # AssignPrim is flipped
-Src2Prim(d,cl,u) :- Src2Prim(c,cl,v), AssignPrimCtxt(d,u,c,v). # AssignPrimCtxt is flipped
+Src2Prim(c,cl,u) :- Src2Prim(c,cl,v), AssignPrimCtxt(c,u,v). # AssignPrim is flipped
+Src2Prim(d,cl,u) :- Src2Prim(c,cl,v), AssignPrimCCtxt(d,u,c,v). # AssignPrimCtxt is flipped
 
 Src2Prim(c,cl,v) :- Src2Obj(cl,o), Obj2PrimT(c,o,v).
 Src2Prim(c,cl,u) :- Src2Prim(c,cl,v), Prim2PrimT(,cv,u).
@@ -372,8 +380,8 @@ Src2PrimFldStat(cl,f) :- Src2Prim(c,cl,v), StoreStatPrimCtxt(c,f,v). # StoreStat
 # Sink-prim flow
 
 Sink2Prim(c,cl,v) :- Sink2PrimT(c,cl,v).
-Sink2Prim(c,cl,u) :- Sink2Prim(c,cl,v), AssignPrim(u,v). # AssignPrim is flipped
-Sink2Prim(d,cl,u) :- Sink2Prim(c,cl,v), AssignPrimCtxt(d,u,c,v). # AssignPrimCtxt is flipped
+Sink2Prim(c,cl,u) :- Sink2Prim(c,cl,v), AssignPrimCtxt(c,u,v). # AssignPrim is flipped
+Sink2Prim(d,cl,u) :- Sink2Prim(c,cl,v), AssignPrimCCtxt(d,u,c,v). # AssignPrimCtxt is flipped
 Sink2Prim(c,cl,v) :- Sink2Obj(cl,o), Obj2PrimT(c,o,v).
 Sink2Prim(c,cl,u) :- Sink2Prim(c,cl,v), Prim2PrimT(c,v,u).
 

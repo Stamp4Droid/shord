@@ -178,6 +178,50 @@ public class ConversionUtils {
 		relations.add("cs_srcPrimFlowNew", new StubIndexRelation("cfl_cs_primFullSrcFlow_new", "M", 3, null, "U", 2, 0, 3));
 		relations.add("cs_primSinkFlowNew", new StubIndexRelation("cfl_cs_primFullSinkFlow_new", "U", 1, 0, "M", 3, 4, 3, 4));
 		*/
+		
+		/*
+		 * The following are relations for the new taint analysis.
+		 */
+		
+		// source annotations: src2RefT, src2PrimT
+		relations.add("src22RefT", new IndexRelation("Src2RefT", "CL", 1, null, "V", 2, 0));
+		relations.add("src2PrimT", new IndexRelation("Src2PrimT", "CL", 1, null, "U", 2, 0));		
+		
+		// sink annotations: sink2RefT, sink2PrimT, sinkF2RefF, sinkF2PrimF
+		relations.add("sink2RefT", new IndexRelation("Sink2RefT", "CL", 1, null, "V", 2, 0));
+		relations.add("sink2PrimT", new IndexRelation("Sink2PrimT", "CL", 1, null, "U", 2, 0));
+		relations.add("sinkF2RefF", new IndexRelation("SinkF2RefF", "CL", 1, null, "V", 2, 0));
+		relations.add("sinkF2PrimF", new IndexRelation("SinkF2PrimF", "CL", 1, null, "U", 2, 0));
+		
+		// transfer annotations: ref2RefT, ref2PrimT, prim2RefT, prim2PrimT
+		relations.add("ref2RefT", new IndexRelation("Ref2RefT", "V", 1, 0, "V", 2, 0));
+		relations.add("ref2PrimT", new IndexRelation("Ref2PrimT", "V", 1, 0, "U", 2, 0));
+		relations.add("prim2RefT", new IndexRelation("Prim2RefT", "U", 1, 0, "V", 2, 0));
+		relations.add("prim2PrimT", new IndexRelation("Prim2PrimT", "U", 1, 0, "U", 2, 0));
+		
+		// flow annotations: ref2RefF, ref2PrimF, prim2RefF, prim2PrimF
+		relations.add("ref2RefF", new IndexRelation("Ref2RefF", "V", 1, 0, "V", 2, 0));
+		relations.add("ref2PrimF", new IndexRelation("Ref2PrimF", "V", 1, 0, "U", 2, 0));
+		relations.add("prim2RefF", new IndexRelation("Prim2RefF", "U", 1, 0, "V", 2, 0));
+		relations.add("prim2PrimF", new IndexRelation("Prim2PrimF", "U", 1, 0, "U", 2, 0));
+		
+		// pt: pt, fptArr
+		relations.add("pt", new IndexRelation("pt", "V", 1, 0, "O", 2, null));
+		relations.add("fptArr", new IndexRelation("fptArr", "O", 0, null, "O", 1, null));
+		
+		// field: fpt
+		relations.add("fpt", new IndexRelation("fpt", "O", 0, null, "O", 2, null, 1));
+
+		// helper: assignPrimCtxt, assignPrimCCtxt, loadPrimCtxtArr
+		relations.add("assignPrimCtxt", new IndexRelation("AssignPrimCtxt", "U", 1, 0, "U", 2, 0));
+		relations.add("assignPrimCCtxt", new IndexRelation("AssignPrimCCtxt", "U", 1, 0, "U", 3, 2));
+		relations.add("loadPrimCtxtArr", new IndexRelation("LoadPrimCtxtArr", "U", 1, 0, "V", 2, 0));
+
+		// field helper: loadPrimCtxt, loadStatPrimCtxt, storePrimCtxt, storeStatPrimCtxt
+		relations.add("loadPrimCtxt", new IndexRelation("LoadPrimCtxt", "U", 1, 0, "V", 2, 0, 3));
+		relations.add("storePrimCtxt", new IndexRelation("StorePrimCtxt", "V", 1, 0, "U", 3, 0, 2));
+		relations.add("loadStatPrimCtxt", new IndexRelation("LoadStatPrimCtxt", "U", 1, 0, "F", 2, null));
+		relations.add("storeStatPrimCtxt", new IndexRelation("StoreStatPrimCtxt", "F", 1, null, "U", 2, 0));
 	}
 	
 	/*
