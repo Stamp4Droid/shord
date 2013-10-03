@@ -111,7 +111,9 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		//j = new JCFLSolverSingle(new E12(), m);
 		//j.run(E12.class, m);
 		//Experiment experiment = new Experiment(JCFLSolverSingle.class, E12.class);
-		Experiment experiment = new Experiment(JCFLSolverSingle.class, G.class);
+		File outputDir = manager.getDirectory(FileType.OUTPUT);
+		String appDir = outputDir.getParentFile().getName();
+		Experiment experiment = new Experiment(JCFLSolverSingle.class, G.class, appDir);
 		experiment.run(m, new StubModelSet(), relationAdder, ModelType.FALSE);
 		j = experiment.j();
 
