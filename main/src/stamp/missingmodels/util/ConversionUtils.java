@@ -223,6 +223,21 @@ public class ConversionUtils {
 		relations.add("storePrimCtxt", new IndexRelation("StorePrimCtxt", "V", 1, 0, "U", 3, 0, 2));
 		relations.add("loadStatPrimCtxt", new IndexRelation("LoadStatPrimCtxt", "U", 1, 0, "F", 2, null));
 		relations.add("storeStatPrimCtxt", new IndexRelation("StoreStatPrimCtxt", "F", 1, null, "U", 2, 0));
+
+		// ref stub taint flow
+		relations.add("refArg2RefArgTStub", new StubIndexRelation("RefArg2RefArgTStub", "V", 1, 0, "V", 2, 0, 3, 4, 5));
+		relations.add("refArg2RefRetTStub", new StubIndexRelation("RefArg2RefRetTStub", "V", 1, 0, "V", 2, 0, 3, 4));
+		
+		// cross stub taint flow
+		relations.add("primArg2RefArgTStub", new StubIndexRelation("PrimArg2RefArgTStub", "U", 1, 0, "V", 2, 0, 3, 4, 5));
+		relations.add("primArg2RefRetTStub", new StubIndexRelation("PrimArg2RefRetTStub", "U", 1, 0, "V", 2, 0, 3, 4));
+		
+		// prim stub taint flow
+		relations.add("refArg2PrimRetTStub", new StubIndexRelation("RefArg2PrimRetTStub", "V", 1, 0, "U", 2, 0, 3, 4));
+		relations.add("primArg2PrimRetTStub", new StubIndexRelation("PrimArg2PrimRetTStub", "U", 1, 0, "U", 2, 0, 3, 4));
+		
+		// phantom points to
+		relations.add("pt", new IndexRelation("phpt", "V", 1, 0, "V", 3, 2));
 	}
 	
 	/*

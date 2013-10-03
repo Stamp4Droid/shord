@@ -58,6 +58,9 @@ MmethRet(m:M,z:Z,v:V)     input
 MmethPrimArg(m:M,z:Z,u:U) input
 MmethPrimRet(m:M,z:Z,u:U) input
 
+# stub information
+Stub(m:M) input
+
 ###################
 # OUTPUT: ANNOTATIONS
 ###################
@@ -122,6 +125,27 @@ Ref2RefF(c:C,v:V,u:V) output
 Ref2PrimF(c:C,v:V,u:U) output
 Prim2RefF(c:C,v:U,u:V) output
 Prim2PrimF(c:C,v:U,u:U) output
+
+###################
+# OUTPUT: STUB ANNOTATIONS
+###################
+
+# stub annotations
+RefArg2RefArgTStub(c:C,v:V,u:V,m:M,z1:Z,z2:Z) output
+RefArg2RefRetTStub(c:C,v:V,u:V,m:M,z:Z) output
+
+PrimArg2RefArgTStub(c:C,v:U,u:V,m:M,z1:Z,z2:Z) output
+PrimArg2RefRetTStub(c:C,v:U,u:V,m:M,z:Z) output
+
+RefArg2PrimRetTStub(c:C,v:V,u:U,m:M,z:Z) output
+PrimArg2PrimRetTStub(c:C,v:U,u:U,m:M,z:Z) output
+
+###################
+# OUTPUT: PHANTOM ALLOCATIONS
+###################
+
+# phantom allocations
+phAlloc(v:V,c:C)  output
 
 ###################
 # OUTPUT: HELPER
@@ -276,6 +300,27 @@ Ref2RefF(c,v,u)   :- RefArg2RefArgF(c,v,u).
 Ref2PrimF(c,v,u)  :- RefArg2PrimArgF(c,v,u).
 Prim2RefF(c,v,u)  :- PrimArg2RefArgF(c,v,u).
 Prim2PrimF(c,v,u) :- PrimArg2PrimArgF(c,v,u).
+
+##################
+# RULES: STUB ANNOTATIONS
+##################
+
+# stub annotations
+RefArg2RefArgTStub(c,v,u,m,z1,z2)  :- Stub(m), MmethArg(m,z1,v), MmethArg(m,z2,u), z1 != z2, CM(c,m).
+RefArg2RefRetTStub(c,v,u,m,z)      :- Stub(m), MmethArg(m,z,v), MmethRet(m,_,u), CM(c,m).
+
+PrimArg2RefArgTStub(c,v,u,m,z1,z2) :- Stub(m), MmethPrimArg(m,z1,v), MmethArg(m,z2,u), CM(c,m).
+PrimArg2RefRetTStub(c,v,u,m,z)     :- Stub(m), MmethPrimArg(m,z,v), MmethRet(m,_,u), CM(c,m).
+
+RefArg2PrimRetTStub(c,v,u,m,z)     :- Stub(m), MmethArg(m,z,v), MmethPrimRet(m,_,u), CM(c,m).
+PrimArg2PrimRetTStub(c,v,u,m,z)    :- Stub(m), MmethPrimArg(m,z,v), MmethPrimRet(m,_,u), CM(c,m).
+
+##################
+# RULES: PHANTOM ALLOCATIONS
+##################
+
+# phantom allocations
+phAlloc(v,c) :- Stub(m), CM(c,m), MmethRet(m,_,v).
 
 ###################
 # RULES: OBJECT ANNOTATIONS
