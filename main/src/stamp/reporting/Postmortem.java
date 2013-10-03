@@ -37,11 +37,7 @@ public class Postmortem extends JavaAnalysis {
 					show = false;
 			}
 			if(show) {
-				if(jimple) {
-					reportsTxtWriter.println(report.getTitle() + " " + report.getCanonicalReportFilePath());
-				} else {
-					reportsTxtWriter.println(report.getTitle() + " " + report.getCanonicalReportFilePath());
-				}
+				reportsTxtWriter.println(report.getTitle() + " " + report.getCanonicalReportFilePath());
 			}
 		
 			report.write();
