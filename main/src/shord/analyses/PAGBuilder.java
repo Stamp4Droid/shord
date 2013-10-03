@@ -460,6 +460,7 @@ public class PAGBuilder extends JavaAnalysis
         maxArgs = newSize;
     }
 
+
 	class MethodPAGBuilder
 	{
 		private ThisVarNode thisVar;
@@ -473,7 +474,7 @@ public class PAGBuilder extends JavaAnalysis
 		private Tag containerTag;
 		private Set<StubAllocNode> stubSet = new HashSet();
 		private boolean isStub;
-		private boolean parseAction = false;
+	    private boolean parseAction = false;
 		private Map<Unit, AllocNode> unit2Node = new HashMap();
 		private Map<String, AllocNode> action2Node = new HashMap();
 		//private Map<Unit, SiteAllocNode> unit2Node = new HashMap();
@@ -782,10 +783,16 @@ public class PAGBuilder extends JavaAnalysis
 						IinvkPrimRet(s, nodeFor(lhs));
 				}
 
-				String methSig = callee.getSignature();
-				//if(methSig.equals("<android.app.Activity: void startActivity(android.content.Intent)>"))
-				if(ICCGBuilder.launchList.contains(methSig))
-					relLaunch.add(nodeFor(((Immediate)ie.getArg(0))), method);
+				//String methSig = callee.getSignature();
+				String methSubSig = callee.getSubSignature();
+				if(ICCGBuilder.launchList.contains(methSubSig)) {
+                    if(methSubSig.equals("void setResult(int,android.content.Intent)")){
+                        System.out.println("fuck...." + s + method);
+					    relLaunch.add(nodeFor(((Immediate)ie.getArg(1))), method);
+                    }else{
+					    relLaunch.add(nodeFor(((Immediate)ie.getArg(0))), method);
+                    }
+				}
 	
 			} else if(s.containsFieldRef()){
 				AssignStmt as = (AssignStmt) s;

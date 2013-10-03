@@ -69,7 +69,7 @@ public class ICCGBuilder extends JavaAnalysis
 	public static Map<String, XmlNode> components = new HashMap<String, XmlNode>();
 
 
-	private static String[] launchArray = {
+	/*private static String[] launchArray = {
 	"<android.app.Activity: void startActivity(android.content.Intent)>",
 	"<android.content.ContextWrapper: void sendBroadcast(android.content.Intent)>",
 	//shall we mark bindservice?|| methSig.equals("<android.content.ContextWrapper: boolean bindService(android.content.Intent,android.content.ServiceConnection,int)>") 
@@ -97,9 +97,42 @@ public class ICCGBuilder extends JavaAnalysis
 	"<android.app.Activity: void startIntentSenderForResult(android.content.IntentSender,int,android.content.Intent,int,int,int)>",
 	"<android.app.Activity: void startIntentSenderFromChild(android.app.Activity,android.content.IntentSender,int,android.content.Intent,int,int,int)>",
         "<android.widget.TabHost$TabSpec: android.widget.TabHost$TabSpec setContent(android.content.Intent)>"
+	};*/
+
+
+	private static String[] subLaunchArray = {
+	"void startActivity(android.content.Intent)",
+	"void sendBroadcast(android.content.Intent)",
+	"boolean bindService(android.content.Intent,android.content.ServiceConnection,int)",
+	"android.content.ComponentName startService(android.content.Intent)",
+	"void sendBroadcast(android.content.Intent,java.lang.String)",
+	"void sendStickyBroadcast(android.content.Intent)",
+	"void sendOrderedBroadcast(android.content.Intent,java.lang.String)",
+	"void sendOrderedBroadcast(android.content.Intent,java.lang.String,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)",
+	"void sendStickyOrderedBroadcast(android.content.Intent,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)",
+	"void sendBroadcast(android.content.Intent)",
+	"android.content.ComponentName startService(android.content.Intent)",
+	"void sendBroadcast(android.content.Intent,java.lang.String)",
+	"void sendStickyBroadcast(android.content.Intent)",
+	"void sendOrderedBroadcast(android.content.Intent,java.lang.String)",
+	"void sendOrderedBroadcast(android.content.Intent,java.lang.String,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)",
+	"void sendStickyOrderedBroadcast(android.content.Intent,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)",
+	"void startActivities(android.content.Intent[])",
+	"void startIntentSender(android.content.IntentSender,android.content.Intent,int,int,int)",
+	"void startActivityForResult(android.content.Intent,int)",
+	"boolean startActivityIfNeeded(android.content.Intent,int)",
+	"boolean startNextMatchingActivity(android.content.Intent)",
+	"void startActivity(android.content.Intent)",
+    "void setResult(int,android.content.Intent)",
+	"void startActivityFromChild(android.app.Activity,android.content.Intent,int)",
+	"void startActivityFromFragment(android.app.Fragment,android.content.Intent,int)",
+	"void startIntentSenderForResult(android.content.IntentSender,int,android.content.Intent,int,int,int)",
+	"void startIntentSenderFromChild(android.app.Activity,android.content.IntentSender,int,android.content.Intent,int,int,int)",
+    "android.widget.TabHost$TabSpec setContent(android.content.Intent)"
 	};
 
-    public static List launchList = new ArrayList<String>(Arrays.asList(launchArray));
+
+    public static List launchList = new ArrayList<String>(Arrays.asList(subLaunchArray));
 
     public static String pkgName = ""; 
 
