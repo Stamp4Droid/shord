@@ -122,9 +122,9 @@ public class FileManager {
 		System.out.println("DEBUG: " + filePath + " " + jimpleFile.getCanonicalPath());
 
 		//SourceData data = srcVisitor.process(file);
-		File taintedInfoFile = new File(outPath+"/results/TaintedVar_jimple.xml");
-		File allReachableFile = new File(outPath+"/results/AllReachable_jimple.xml");
-		File reachedFile = new File(outPath+"/results/reachedmethods_jimple.xml");
+		File taintedInfoFile = new File(outPath+"/results/TaintedVar.xml");
+		File allReachableFile = new File(outPath+"/results/AllReachable.xml");
+		File reachedFile = new File(outPath+"/results/reachedmethods.xml");
 
 		//replace .jimple with .xml
 		String fname = jimpleFilePath.substring(0, jimpleFilePath.length()-6).concat("xml");
