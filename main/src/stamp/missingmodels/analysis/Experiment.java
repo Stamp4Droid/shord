@@ -19,6 +19,7 @@ import stamp.missingmodels.util.jcflsolver.Graph;
 public class Experiment implements StampOutputFile {
 	private JCFLSolverRunner j;
 	private Class<? extends Graph> c;
+	private String appDirectory;
 	
 	private List<ProposedStubModelSet> proposed = new ArrayList<ProposedStubModelSet>();
 
@@ -47,6 +48,7 @@ public class Experiment implements StampOutputFile {
 	@Override
 	public String getContent() {
 		StringBuilder sb = new StringBuilder();
+		sb.append("Results file name: ").append(this.appDirectory).append("\n");
 		sb.append("Number of proposed models: ").append(this.getNumProposed()).append("\n");
 		sb.append("Number of rounds: ").append(this.getNumRounds()).append("\n");
 		sb.append("Accuracy: ").append(this.getAccuracy()).append("\n");
@@ -186,7 +188,7 @@ public class Experiment implements StampOutputFile {
 	 * @param cj The class of the runner to use to propose models.
 	 * @param cg The class of graph to use.
 	 */
-	public Experiment(Class<? extends JCFLSolverRunner> cj, Class<? extends Graph> c) {
+	public Experiment(Class<? extends JCFLSolverRunner> cj, Class<? extends Graph> c, String appDirectory) {
 		try {
 			this.j = cj.newInstance();
 			this.c = c;
@@ -197,6 +199,7 @@ public class Experiment implements StampOutputFile {
 			e.printStackTrace();
 			throw new RuntimeException("Error initializing jcfl runner: " + c.toString());
 		}
+		this.appDirectory = appDirectory;
 	}
 	
 	/*
