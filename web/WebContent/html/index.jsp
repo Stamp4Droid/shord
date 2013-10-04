@@ -666,6 +666,16 @@
                 
                 }
 
+                $('#'+id).on('opened', function () {
+	                    var $selected = $(this).find('.tree-folder-name').filter ( function () {
+	                    	var flow_regex = /Flow (\d+)/;
+		                    if ($(this).text() == '') {
+		                        return true;
+		                    }
+	                    });
+	                    $selected.parent().find('.icon-plus-sign').parent().html('<i class="icon-eye-open"></i>');
+                	});
+
                 // on selected callback. Fuel UX provides selection
                 $('#'+id).on('selected', function(ev, selection) {
                     var flow_regex = /Flow (\d+)/;
@@ -680,13 +690,15 @@
                         }
                     });
 
-                    if ($selected.css('color') === 'rgb(180, 180, 180)') {
-                        $selected.css('color', 'rgb(51,51,51)');
+                    var $icon = $selected.parent().find('i');
+
+                    if ($icon[0].className === 'icon-eye-close') {
+                        $icon.parent().html('<i class="icon-eye-open"></i>');
                         flowSwitches[num-1] = true;
                         $('#srcsinkflowhelp').empty();
                         $('#srcsinkflowhelp').append('Taint from Flow '+num+' now hightlighted.')
                     } else {
-                        $selected.css('color', 'rgb(180, 180, 180)');
+                        $icon.parent().html('<i class="icon-eye-close"></i>');
                         flowSwitches[num-1] = false;
                         $('#srcsinkflowhelp').empty();
                         $('#srcsinkflowhelp').append('Not hightlighted taint from Flow '+num);
