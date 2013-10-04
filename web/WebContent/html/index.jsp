@@ -674,77 +674,81 @@
 		                    }
 	                    });
 	                    $selected.parent().find('.icon-plus-sign').parent().html('<i class="icon-eye-open"></i>');
-
-
-	             var $thang = $('i.icon-eye-open, i.icon-eye-close');
-                $(this).on('click','i.icon-eye-open, i.icon-eye-close', function() {
-                	var $selected = $(this).parent().parent().find('.tree-folder-name');
-                	var name = $selected.text();
-                    var flow_regex = /Flow (\d+)/;
-                    if (!flow_regex.test(name)) {
-                        return;
-                    }
-                    var num = name.match(flow_regex)[1];
-
-                    if ($(this)[0].className === 'icon-eye-close') {
-                        $(this).parent().html('<i class="icon-eye-open"></i>');
-                        flowSwitches[num-1] = true;
-                        $('#srcsinkflowhelp').empty();
-                        $('#srcsinkflowhelp').append('Taint from Flow '+num+' now hightlighted.')
-                    } else {
-                        $(this).parent().html('<i class="icon-eye-close"></i>');
-                        flowSwitches[num-1] = false;
-                        $('#srcsinkflowhelp').empty();
-                        $('#srcsinkflowhelp').append('Not hightlighted taint from Flow '+num);
-                    }
-
-                    var $activeCodeTabs = $('li.active a');
-                    console.log($activeCodeTabs);
-                    for (var i = 0; i < $activeCodeTabs.length; ++i) {
-                    	var attr = $activeCodeTabs[i].getAttribute('href');
-                    	colorTaint(attr);
-                    }
-
-                    var datasource = datasources[id];
-
-                    datasource.data($selected.parent().data(), function (items) {
-                                    var dataarr = items.data;
-                                    var contexts = [];
-                                    for (var i = 0; i < dataarr.length; ++i) {
-                                        contexts.push(dataarr[i]);
-                                    }
-
-                                    var id = 'centerpane';
-                                    if ($('li.active').length > 0) {
-                                    	id = 'rightside';
-                                    }
-
-                                    if ($('#flowctxttable').length > 0) {
-                                        $('#flowctxttable').remove();
-                                    }
-
-                                    var table = ['<table class="table table-condensed" id="flowctxttable" style="font-size: small; word-break: break-all; word-wrap: break-word">',
-                                                    '<thead>',
-                                                         '<th>Source</th>',
-                                                         '<th>Sink</th>',   
-                                                    '</thead>',
-                                                    '<tbody>'];
-                                    table.push(newTableEntries(contexts));
-                                    table.push('</tbody>');
-                                    table.push('</table>');
-                                    $('#'+id).append(table.join('\n'));
-                                    if (id === 'rightside') {
-                                    	compactFlowCtxtTable($('#'+id+' #flowctxttable'));
-                                    }
-                                    registerCellback();
-
-                                });
-
                 });
-                	});
 
                 // on selected callback. Fuel UX provides selection
-                //$('#'+id).on('selected', function(ev, selection) {
+				$('#'+id).on('selected', function (ev, selection) {
+					var $selected = $(this).find('.tree-folder-name').filter ( function () {
+                        if ($(this).text() === selection.info[0].name) {
+                            return true;
+                        }
+                    });
+
+	                var $activeCodeTabs = $('li.active a');
+	                console.log($activeCodeTabs);
+	                for (var i = 0; i < $activeCodeTabs.length; ++i) {
+	                	var attr = $activeCodeTabs[i].getAttribute('href');
+	                	colorTaint(attr);
+	                }
+
+	                var datasource = datasources[id];
+
+	                datasource.data($selected.parent().data(), function (items) {
+	                                var dataarr = items.data;
+	                                var contexts = [];
+	                                for (var i = 0; i < dataarr.length; ++i) {
+	                                    contexts.push(dataarr[i]);
+	                                }
+
+	                                var id = 'centerpane';
+	                                if ($('li.active').length > 0) {
+	                                	id = 'rightside';
+	                                }
+
+	                                if ($('#flowctxttable').length > 0) {
+	                                    $('#flowctxttable').remove();
+	                                }
+
+	                                var table = ['<table class="table table-condensed" id="flowctxttable" style="font-size: small; word-break: break-all; word-wrap: break-word">',
+	                                                '<thead>',
+	                                                     '<th>Source</th>',
+	                                                     '<th>Sink</th>',   
+	                                                '</thead>',
+	                                                '<tbody>'];
+	                                table.push(newTableEntries(contexts));
+	                                table.push('</tbody>');
+	                                table.push('</table>');
+	                                $('#'+id).append(table.join('\n'));
+	                                if (id === 'rightside') {
+	                                	compactFlowCtxtTable($('#'+id+' #flowctxttable'));
+	                                }
+	                                registerCellback();
+
+	                            });
+
+	            	});
+
+                $('#'+id).on('click','i.icon-eye-open, i.icon-eye-close', function() {
+	                	var $selected = $(this).parent().parent().find('.tree-folder-name');
+	                	var name = $selected.text();
+	                    var flow_regex = /Flow (\d+)/;
+	                    if (!flow_regex.test(name)) {
+	                        return;
+	                    }
+	                    var num = name.match(flow_regex)[1];
+
+	                    if ($(this)[0].className === 'icon-eye-close') {
+	                        $(this).parent().html('<i class="icon-eye-open"></i>');
+	                        flowSwitches[num-1] = true;
+	                        $('#srcsinkflowhelp').empty();
+	                        $('#srcsinkflowhelp').append('Taint from Flow '+num+' now hightlighted.')
+	                    } else {
+	                        $(this).parent().html('<i class="icon-eye-close"></i>');
+	                        flowSwitches[num-1] = false;
+	                        $('#srcsinkflowhelp').empty();
+	                        $('#srcsinkflowhelp').append('Not hightlighted taint from Flow '+num);
+	                    }
+	                 });
 
 				$('#'+id).parent().append('<p class="muted"><em id="srcsinkflowhelp">Click a Flow name to show / hide </em></p>');
             }
