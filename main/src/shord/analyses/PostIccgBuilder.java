@@ -50,8 +50,8 @@ import chord.util.tuple.object.Quad;
        consumes={ "CallerComp", "CICM" },
        namesOfTypes = { "M", "T", "C", "I"},
        types = { DomM.class, DomT.class, DomC.class, DomI.class},
-       namesOfSigns = { "CalledComp", "CICM" },
-       signs = { "M0,C0,T0:M0_C0_T0", "C0,I0,C1,M0:C0_I0_C1_M0" }
+       namesOfSigns = { "CalledComp", "CICM", "ICCG", "ICCGImp" },
+       signs = { "M0,C0,T0:M0_C0_T0", "C0,I0,C1,M0:C0_I0_C1_M0", "T0,H0:T0_H0", "T0,T1:T0_T1" }
        )
 public class PostIccgBuilder extends JavaAnalysis
 {
@@ -522,22 +522,91 @@ public class PostIccgBuilder extends JavaAnalysis
 		else return klazz.getName(); 
 	}
 
+    //dump out ICCG.
+    public void dump() {
+	    ICCG iccg = new ICCG();
+
+        Iterator iter = components.entrySet().iterator();
+		while (iter.hasNext()) {
+			Map.Entry entry = (Map.Entry) iter.next();
+			String key = (String)entry.getKey();
+			XmlNode val = (XmlNode)entry.getValue();
+			String nodeName = val.getName();
+
+			if(nodeName.indexOf(".") == 0) nodeName = pkgName +  nodeName;
+			if(nodeName.indexOf(".") == -1) nodeName = pkgName + "." +  nodeName;
+
+			ICCGNode iNode = new ICCGNode(nodeName);
+			iNode.setMain(val.getMain());
+			iNode.setType(val.getType());
+			iNode.setIntentFilter(val.getIntentFilter());
+
+			if (val.getMain()) {
+				iNode.setShape("diamond");
+			} else if("activity".equals(val.getType())) {
+				iNode.setShape("ellipse");
+			} else if("service".equals(val.getType())) {
+				iNode.setShape("box");
+			} else if("receiver".equals(val.getType())) {
+				iNode.setShape("box");
+			}
+			iccg.addNode(iNode);
+		}
+
+        ProgramRel relICCG = (ProgramRel) ClassicProject.g().getTrgt("ICCG");
+		relICCG.load();
+        ProgramRel relICCGImp = (ProgramRel) ClassicProject.g().getTrgt("ICCGImp");
+		relICCGImp.load();
+
+		Iterable<Pair<Object,Object>> res1 = relICCG.getAry2ValTuples();
+		for(Pair<Object,Object> pair : res1) {
+            if(!(pair.val1 instanceof StringConstNode)) continue;
+			RefType t  = (RefType)pair.val0;
+			StringConstNode s = (StringConstNode)pair.val1;
+	        ICCGEdge iccgEdge = new ICCGEdge();
+            ICCGNode srcNode = iccg.getNode(t.getClassName());
+            ICCGNode tgtNode = iccg.getNode(s.getValue());
+
+            iccgEdge.setTgt(tgtNode);
+            iccgEdge.setSrc(srcNode);
+            iccg.addEdge(iccgEdge);
+
+		}
+
+		Iterable<Pair<Object,Object>> res2 = relICCGImp.getAry2ValTuples();
+		for(Pair<Object,Object> pair : res2) {
+			RefType t  = (RefType)pair.val0;
+			RefType s = (RefType)pair.val1;
+	        ICCGEdge iccgEdge = new ICCGEdge();
+            ICCGNode srcNode = iccg.getNode(t.getClassName());
+            ICCGNode tgtNode = iccg.getNode(s.getClassName());
+
+            iccgEdge.setTgt(tgtNode);
+            iccgEdge.setSrc(srcNode);
+            iccg.addEdge(iccgEdge);
+			iccgEdge.setAsynchronous(true);
+		}
+
+
+		relICCG.close();
+		relICCGImp.close();
+
+		System.out.println(iccg.getSignature());
+    }
+
 	public void run()
 	{
-		//Program program = Program.g();
-		parsePermission();
-		//program.buildCallGraph();
-		//fh = Program.g().scene().getOrMakeFastHierarchy();
+		/*parsePermission();
 		NumberedSet fklasses = frameworkClasses();
 		openRels();
 		for(SootClass klass: Program.g().getClasses()){
 			if(fklasses.contains(klass)) continue;
 			this.visit(klass);
-		}
+		}*/
 
 		//output dotty.
-		System.out.println(iccg.getSignature());
-		//fh = null;
+        dump();
+		//System.out.println(iccg.getSignature());
 
 	}
 

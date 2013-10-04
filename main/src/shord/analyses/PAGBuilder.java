@@ -741,18 +741,20 @@ public class PAGBuilder extends JavaAnalysis
 				s.addTag(containerTag);
 
 
-				if(ie instanceof SpecialInvokeExpr){
-					relSpecIM.add(s,callee);
-				}
-				
-				if(ie instanceof StaticInvokeExpr){
-					relStatIM.add(s,callee);
-				}
-				
-				if( (ie instanceof VirtualInvokeExpr) || (ie instanceof InterfaceInvokeExpr)){
-					//VirtualInvokeExpr vie = (VirtualInvokeExpr) ie;
-					relVirtIM.add(s,callee);
-				}
+		        DomM domM = (DomM) ClassicProject.g().getTrgt("M");
+                if(domM.contains(callee)){
+                    if(ie instanceof SpecialInvokeExpr){
+                        relSpecIM.add(s,callee);
+                    }
+                    
+                    if(ie instanceof StaticInvokeExpr){
+                        relStatIM.add(s,callee);
+                    }
+                    
+                    if( (ie instanceof VirtualInvokeExpr) || (ie instanceof InterfaceInvokeExpr)){
+                        relVirtIM.add(s,callee);
+                    }
+                }
 
 				//handle receiver
 				int j = 0;
@@ -787,7 +789,6 @@ public class PAGBuilder extends JavaAnalysis
 				String methSubSig = callee.getSubSignature();
 				if(ICCGBuilder.launchList.contains(methSubSig)) {
                     if(methSubSig.equals("void setResult(int,android.content.Intent)")){
-                        System.out.println("fuck...." + s + method);
 					    relLaunch.add(nodeFor(((Immediate)ie.getArg(1))), method);
                     }else{
 					    relLaunch.add(nodeFor(((Immediate)ie.getArg(0))), method);
@@ -1196,10 +1197,12 @@ public class PAGBuilder extends JavaAnalysis
 
 	void pass3()
 	{
+		DomM domM = (DomM) ClassicProject.g().getTrgt("M");
 		Iterator<SootMethod> mIt = Program.g().getMethods();
 		while(mIt.hasNext()){
 			SootMethod m = mIt.next();
-			relSubSig.add(m, m.getSubSignature());
+            if(domM.contains(m))
+			    relSubSig.add(m, m.getSubSignature());
 		}
 	}
 	
