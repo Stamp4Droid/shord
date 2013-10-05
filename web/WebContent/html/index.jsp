@@ -24,6 +24,9 @@
      String dr_log_template = props.getProperty("stamp.droidrecord.logfile.template");
      String dr_log_bin = props.getProperty("stamp.droidrecord.logfile.bin");
      DroidrecordProxyWeb droidrecord = new DroidrecordProxyWeb(dr_log_template, dr_log_bin);
+     System.out.println("DEBUG: " + outPath);
+     boolean useJimple = outPath.matches("^.*\\.apk$");
+     System.out.println("DEBUG: boolean useJimple = " + useJimple);
 
      session.setAttribute("rootPath", rootPath);
      session.setAttribute("appPath", appPath);
@@ -514,7 +517,8 @@
 			
 			function setupResultTree(resultTreeId, resultFileName) {
 			    useJimple = 'false';
-			    if(resultFileName.indexOf('jimple') != -1) {
+			    //if(resultFileName.indexOf('jimple') != -1) {
+			    if(<%=useJimple%>) {
 			        useJimple = 'true';
 			    }
 			    $('#' + resultTreeId).tree({dataSource: new ResultDataSource(resultFileName)});

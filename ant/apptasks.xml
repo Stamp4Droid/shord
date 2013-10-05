@@ -23,6 +23,7 @@
     <property name="driver.dir" location="${stamp.out.dir}/stamp-driver"/>
 	<!--echo>Analyze target running</echo-->
 	<if>
+	  <!-- NOTE: same heuristic used in index.jsp! -->
 	  <matches string="${app}" pattern="^.*\.apk$"/>
       <then>
 		<property name="stamp.input.type" value="apk"/>
