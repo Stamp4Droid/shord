@@ -192,29 +192,30 @@ public class ICCGBuilder extends JavaAnalysis
 	
     private void visitMethod(SootMethod method)
     {
-	if(!method.isConcrete())
-		return;
+        if(!method.isConcrete())
+            return;
 
-	if(components.get(this.klass.getName()) != null) {
-		String[] str = { "void onPostResume()",
-				"java.lang.CharSequence onCreateDescription()",
-				"void onRestoreInstanceState(android.os.Bundle)",
-				"void onPostCreate(android.os.Bundle)",
-				"void onStart()",
-				"void onCreate(android.os.Bundle)",
-				"void onUserLeaveHint()",
-				"void onResume()",
-				"void onStop()",
-				"void onPause()",
-				"void onRestart()",
-				"boolean onCreateThumbnail(android.graphics.Bitmap,android.graphics.Canvas)",
-				"void onNewIntent(android.content.Intent)",
-				"void onDestroy()",
-				"void onSaveInstanceState(android.os.Bundle)"};
-		List<String> circleList = Arrays.asList(str);
-		//if(circleList.contains(method.getSubSignature()))
-			relMC.add(method, this.klass.getType());
-	}
+        if(components.get(this.klass.getName()) != null) {
+            String[] str = { "void onPostResume()",
+                    "java.lang.CharSequence onCreateDescription()",
+                    "void onRestoreInstanceState(android.os.Bundle)",
+                    "void onPostCreate(android.os.Bundle)",
+                    "void onStart()",
+                    "void onCreate(android.os.Bundle)",
+                    "void onUserLeaveHint()",
+                    "void onResume()",
+                    "void onStop()",
+                    "void onPause()",
+                    "void onRestart()",
+                    "boolean onCreateThumbnail(android.graphics.Bitmap,android.graphics.Canvas)",
+                    "void onNewIntent(android.content.Intent)",
+                    "void onDestroy()",
+                    "void onSaveInstanceState(android.os.Bundle)"};
+            List<String> circleList = Arrays.asList(str);
+            //if(circleList.contains(method.getSubSignature()))
+            if(domM.contains(method))
+                relMC.add(method, this.klass.getType());
+        }
 
     }
 
@@ -256,9 +257,9 @@ public class ICCGBuilder extends JavaAnalysis
 	private void populateIntentActionTgt() 
 	{
 		ProgramRel relIntentTgtField = (ProgramRel) ClassicProject.g().getTrgt("IntentTgtField");
-        	relIntentTgtField.zero();
+        relIntentTgtField.zero();
 		ProgramRel relActionField = (ProgramRel) ClassicProject.g().getTrgt("ActionField");
-        	relActionField.zero();
+        relActionField.zero();
 
 		SootClass klass = Program.g().scene().getSootClass("android.content.Intent");
 		SootField nameField = klass.getFieldByName("name");
@@ -270,6 +271,9 @@ public class ICCGBuilder extends JavaAnalysis
 
 	}
 
+
+    private	DomM domM;
+
     public void run()
     {
         //Program program = Program.g();
@@ -278,7 +282,8 @@ public class ICCGBuilder extends JavaAnalysis
         openRels();
         fillCallback();
         populateMregI();
-	populateIntentActionTgt();
+        populateIntentActionTgt();
+        domM = (DomM) ClassicProject.g().getTrgt("M");
 
         for(SootClass klass: Program.g().getClasses()){
             this.visit(klass);

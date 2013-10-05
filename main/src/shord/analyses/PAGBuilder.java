@@ -880,8 +880,13 @@ public class PAGBuilder extends JavaAnalysis
 					String str = ((ClassConstant)rightOp).value;
 					if(ICCGBuilder.components.get(str.replaceAll("/", ".")) != null){
 						SootClass clazz = Scene.v().getSootClass("edu.stanford.stamp.harness.Main");
-						SootField field = clazz.getFieldByName(str.replaceAll("/", "\\$"));
-						LoadStat(nodeFor((Local) leftOp), field);
+                        String clazzName = str.replaceAll("/", "\\$");
+                        if(clazz.declaresFieldByName(clazzName)) {
+                            SootField field = clazz.getFieldByName(clazzName);
+                            LoadStat(nodeFor((Local) leftOp), field);
+                        } else {
+                            System.out.println("fatal error in harness..." + clazzName);
+                        }
 					}
 				}
 
@@ -1090,7 +1095,7 @@ public class PAGBuilder extends JavaAnalysis
 
 	void buildDispatchMap() 
 	{
-        	Map<SootClass, Set<SootMethod>> dispatchMap = new HashMap<SootClass, Set<SootMethod>>();
+        Map<SootClass, Set<SootMethod>> dispatchMap = new HashMap<SootClass, Set<SootMethod>>();
 		Program program = Program.g();		
 		int totalCls = program.getClasses().size();
 
@@ -1140,13 +1145,15 @@ public class PAGBuilder extends JavaAnalysis
 		}
 
 		//create dispatch tuple based on the map.
+		DomM domM = (DomM) ClassicProject.g().getTrgt("M");
 		Iterator iter = dispatchMap.keySet().iterator();
 		while(iter.hasNext()){
 			SootClass clazz = (SootClass)iter.next();
 			Set cMeths = (Set)dispatchMap.get(clazz);
 			for(Object o: cMeths){
-                                SootMethod m = (SootMethod) o;
-		                relDispatch.add(clazz.getType(), m.getSubSignature(), m);
+                if(!domM.contains(o)) continue;
+                SootMethod m = (SootMethod) o;
+                relDispatch.add(clazz.getType(), m.getSubSignature(), m);
 
 			}
 		}

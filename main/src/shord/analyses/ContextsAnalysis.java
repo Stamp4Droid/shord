@@ -208,6 +208,9 @@ public class ContextsAnalysis extends JavaAnalysis
 			int mIdx = ItoM[iIdx];
 			Unit invk = ItoQ[iIdx];
             Set<Ctxt> ctxts = methToCtxts[mIdx];
+             ///FIXME: why null?
+			if(ctxts == null) continue;
+
             for (Ctxt oldCtxt : ctxts) {
                 Object[] oldElems = oldCtxt.getElems();
                 Object[] newElems = combine(K, invk, oldElems);
@@ -224,6 +227,8 @@ public class ContextsAnalysis extends JavaAnalysis
 			//Unit alloc = HtoQ[hIdx];
 			AllocNode alloc = HtoQ[hIdx];
             Set<Ctxt> ctxts = methToCtxts[mIdx];
+            ///FIXME: why null?
+			if(ctxts == null) continue;
             for (Ctxt oldCtxt : ctxts) {
                 Object[] oldElems = oldCtxt.getElems();
                 Object[] newElems = combine(K, alloc, oldElems);
@@ -252,6 +257,8 @@ public class ContextsAnalysis extends JavaAnalysis
 			//Unit alloc = HtoQ[hIdx];
 			AllocNode alloc = HtoQ[hIdx];
             Set<Ctxt> ctxts = methToCtxts[mIdx];
+            ///FIXME: why null?
+			if(ctxts == null) continue;
             for (Ctxt oldCtxt : ctxts) {
                 Object[] oldElems = oldCtxt.getElems();
 		//if(alloc instanceof SiteAllocNode){
