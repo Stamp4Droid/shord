@@ -58,70 +58,120 @@ MmethRet(m:M,z:Z,v:V)     input
 MmethPrimArg(m:M,z:Z,u:U) input
 MmethPrimRet(m:M,z:Z,u:U) input
 
+# stub information
+Stub(m:M) input
+
 ###################
-# INTERMEDIATE: ANNOTATION
+# OUTPUT: ANNOTATIONS
 ###################
 
 # Src label
 
-Src2RefArgT(c:C,cl:CL,v:V)
-Src2RefRetT(c:C,cl:CL,v:V)
-# Src2PrimArgT(c:C,cl:CL,v:U)
-Src2PrimRetT(c:C,cl:CL,v:U)
+Src2RefArgT(c:C,cl:CL,v:V) output
+Src2RefRetT(c:C,cl:CL,v:V) output
+# Src2PrimArgT(c:C,cl:CL,v:U) output
+Src2PrimRetT(c:C,cl:CL,v:U) output
 
-Src2RefT(c:C,cl:CL,v:V)
-Src2PrimT(c:C,cl:CL,v:U)
+Src2RefT(c:C,cl:CL,v:V) output
+Src2PrimT(c:C,cl:CL,v:U) output
 
 # Sink label
 
-Sink2RefArgT(c:C,cl:CL,v:V)
-Sink2RefRetT(c:C,cl:CL,v:V)
-# Sink2PrimArgT(c:C,cl:CL,v:U)
-Sink2PrimRetT(c:C,cl:CL,v:U)
+Sink2RefArgT(c:C,cl:CL,v:V) output
+Sink2RefRetT(c:C,cl:CL,v:V) output
+# Sink2PrimArgT(c:C,cl:CL,v:U) output
+Sink2PrimRetT(c:C,cl:CL,v:U) output
 
-Sink2RefT(c:C,cl:CL,v:V)
-Sink2PrimT(c:C,cl:CL,v:U)
+Sink2RefT(c:C,cl:CL,v:V) output
+Sink2PrimT(c:C,cl:CL,v:U) output
 
 # Sink full label (out labels)
 
-SinkF2RefArgF(c:C,cl:CL,v:V)
-SinkF2RefRetF(c:C,cl:CL,v:V)
-# SinkF2PrimArgF(c:C,cl:CL,v:U)
-SinkF2PrimRetF(c:C,cl:CL,v:U)
+SinkF2RefArgF(c:C,cl:CL,v:V) output
+SinkF2RefRetF(c:C,cl:CL,v:V) output
+# SinkF2PrimArgF(c:C,cl:CL,v:U) output
+SinkF2PrimRetF(c:C,cl:CL,v:U) output
 
-SinkF2RefF(c:C,cl:CL,v:V)
-SinkF2PrimF(c:C,cl:CL,v:U)
+SinkF2RefF(c:C,cl:CL,v:V) output
+SinkF2PrimF(c:C,cl:CL,v:U) output
 
 # Arg-arg transfer
 
-RefArg2RefArgT(c:C,v:V,u:V)
-# RefArg2PrimArgT(c:C,v:V,u:U)
-PrimArg2RefArgT(c:C,v:U,u:V)
-# PrimArg2PrimArgT(c:C,v:U,u:U)
+RefArg2RefArgT(c:C,v:V,u:V) output
+# RefArg2PrimArgT(c:C,v:V,u:U) output
+PrimArg2RefArgT(c:C,v:U,u:V) output
+# PrimArg2PrimArgT(c:C,v:U,u:U) output
 
-Ref2RefT(c:C,v:V,u:V)
-Ref2PrimT(c:C,v:V,u:U)
-Prim2RefT(c:C,v:U,u:V)
-Prim2PrimT(c:C,v:U,u:U)
+Ref2RefT(c:C,v:V,u:V) output
+Ref2PrimT(c:C,v:V,u:U) output
+Prim2RefT(c:C,v:U,u:V) output
+Prim2PrimT(c:C,v:U,u:U) output
 
 # Arg-ret transfer
 
-RefArg2RefRetT(c:C,v:V,u:V)
-RefArg2PrimRetT(c:C,v:V,u:U)
-PrimArg2RefRetT(c:C,v:U,u:V)
-PrimArg2PrimRetT(c:C,v:U,u:U)
+RefArg2RefRetT(c:C,v:V,u:V) output
+RefArg2PrimRetT(c:C,v:V,u:U) output
+PrimArg2RefRetT(c:C,v:U,u:V) output
+PrimArg2PrimRetT(c:C,v:U,u:U) output
 
 # Arg-arg flow (!)
 
-RefArg2RefArgF(c:C,v:V,u:V)
-RefArg2PrimArgF(c:C,v:V,u:U)
-PrimArg2RefArgF(c:C,v:U,u:V)
-PrimArg2PrimArgF(c:C,v:U,u:U)
+RefArg2RefArgF(c:C,v:V,u:V) output
+RefArg2PrimArgF(c:C,v:V,u:U) output
+PrimArg2RefArgF(c:C,v:U,u:V) output
+PrimArg2PrimArgF(c:C,v:U,u:U) output
 
-Ref2RefF(c:C,v:V,u:V)
-Ref2PrimF(c:C,v:V,u:U)
-Prim2RefF(c:C,v:U,u:V)
-Prim2PrimF(c:C,v:U,u:U)
+Ref2RefF(c:C,v:V,u:V) output
+Ref2PrimF(c:C,v:V,u:U) output
+Prim2RefF(c:C,v:U,u:V) output
+Prim2PrimF(c:C,v:U,u:U) output
+
+###################
+# OUTPUT: STUB ANNOTATIONS
+###################
+
+# stub annotations
+RefArg2RefArgTStub(c:C,v:V,u:V,m:M,z1:Z,z2:Z) output
+RefArg2RefRetTStub(c:C,v:V,u:V,m:M,z:Z) output
+
+PrimArg2RefArgTStub(c:C,v:U,u:V,m:M,z1:Z,z2:Z) output
+PrimArg2RefRetTStub(c:C,v:U,u:V,m:M,z:Z) output
+
+RefArg2PrimRetTStub(c:C,v:V,u:U,m:M,z:Z) output
+PrimArg2PrimRetTStub(c:C,v:U,u:U,m:M,z:Z) output
+
+###################
+# OUTPUT: PHANTOM ALLOCATIONS
+###################
+
+# phantom allocations
+phAlloc(v:V,c:C)  output
+
+###################
+# OUTPUT: HELPER
+###################
+
+LoadPrimCtxt(c:C,v:U,u:V,f:F) output
+LoadStatPrimCtxt(c:C,v:U,f:F) output
+StorePrimCtxt(c:C,v:V,f:F,u:U) output
+StoreStatPrimCtxt(c:C,f:F,v:U) output
+
+AssignPrimCtxt(c:C,v:U,u:U) output
+AssignPrimArgCCtxt(c:C,v:U,d:C,u:U) output
+AssignPrimRetCCtxt(c:C,v:U,d:C,u:U) output
+AssignPrimCCtxt(c:C,v:U,d:C,u:U) output
+
+fptArr(o1:C,o2:C) output
+LoadPrimCtxtArr(c:C,v:U,u:V) output
+StorePrimCtxtArr(c:C,v:V,u:U) output
+
+###################
+# OUTPUT: RESULTS
+###################
+
+labelRef2(c:C,v:V,l:CL)  output # (c,v) is labeled with l
+labelPrim2(c:C,v:U,l:CL) output # (c,v) is labeled with l
+flow2(src:CL,sink:CL) output
 
 ###################
 # INTERMEDIATE: OBJECT ANNOTATIONS
@@ -163,17 +213,6 @@ Src2ObjX(cl:CL,o2:C)
 Sink2Obj(cl:CL,o:C)
 Sink2ObjX(cl:CL,o2:C)
 
-# Helper
-
-LoadPrimCtxt(c:C,v:U,u:V,f:F)
-LoadStatPrimCtxt(c:C,v:U,f:F)
-StorePrimCtxt(c:C,v:V,f:F,u:U)
-StoreStatPrimCtxt(c:C,f:F,v:U)
-
-AssignPrimArgCtxt(c:C,v:U,d:C,u:U)
-AssignPrimRetCtxt(c:C,v:U,d:C,u:U)
-AssignPrimCtxt(c:C,v:U,d:C,u:U)
-
 # Src-prim flow
 
 Src2Prim(c:C,cl:CL,v:U)
@@ -185,14 +224,6 @@ Src2PrimFldStat(cl:CL,f:F)
 Sink2Prim(c:C,cl:CL,v:U)
 Sink2PrimFld(cl:CL,o:C,f:F)
 Sink2PrimFldStat(cl:CL,f:F)
-
-###################
-# OUTPUT
-###################
-
-labelRef2(c:C,v:V,l:CL)  output # (c,v) is labeled with l
-labelPrim2(c:C,u:U,l:CL) output # (c,u) is labeled with l
-flow2(src:CL,sink:CL) output
 
 ###################
 # RULES: ANNOTATION
@@ -270,6 +301,27 @@ Ref2PrimF(c,v,u)  :- RefArg2PrimArgF(c,v,u).
 Prim2RefF(c,v,u)  :- PrimArg2RefArgF(c,v,u).
 Prim2PrimF(c,v,u) :- PrimArg2PrimArgF(c,v,u).
 
+##################
+# RULES: STUB ANNOTATIONS
+##################
+
+# stub annotations
+RefArg2RefArgTStub(c,v,u,m,z1,z2)  :- Stub(m), MmethArg(m,z1,v), MmethArg(m,z2,u), z1 != z2, CM(c,m).
+RefArg2RefRetTStub(c,v,u,m,z)      :- Stub(m), MmethArg(m,z,v), MmethRet(m,_,u), CM(c,m).
+
+PrimArg2RefArgTStub(c,v,u,m,z1,z2) :- Stub(m), MmethPrimArg(m,z1,v), MmethArg(m,z2,u), CM(c,m).
+PrimArg2RefRetTStub(c,v,u,m,z)     :- Stub(m), MmethPrimArg(m,z,v), MmethRet(m,_,u), CM(c,m).
+
+RefArg2PrimRetTStub(c,v,u,m,z)     :- Stub(m), MmethArg(m,z,v), MmethPrimRet(m,_,u), CM(c,m).
+PrimArg2PrimRetTStub(c,v,u,m,z)    :- Stub(m), MmethPrimArg(m,z,v), MmethPrimRet(m,_,u), CM(c,m).
+
+##################
+# RULES: PHANTOM ALLOCATIONS
+##################
+
+# phantom allocations
+phAlloc(v,c) :- Stub(m), CM(c,m), MmethRet(m,_,v).
+
 ###################
 # RULES: OBJECT ANNOTATIONS
 ###################
@@ -341,24 +393,27 @@ LoadStatPrimCtxt(c,v,f)    :- LoadStatPrim(v,f), MU(m,v), CM(c,m).
 StorePrimCtxt(c,v,f,u)     :- StorePrim(v,f,u), MV(m,v), CM(c,m).
 StoreStatPrimCtxt(c,f,v)   :- StoreStatPrim(f,v), MU(m,v), CM(c,m).
 
-#AssignPrimArgCtxt(c,v,d,u) :- paramPrim(v,u,i), MU(m,u), CM(d,m), CC(d,c), CI(c,i).
-#AssignPrimRetCtxt(c,v,d,u) :- returnPrim(v,u,i), MU(m,v), CM(c,m), CC(c,d), CI(d,i).
-AssignPrimArgCtxt(c,v,d,u) :- paramPrim(v,u,i), CC(d,c), CI(c,i).
-AssignPrimRetCtxt(c,v,d,u) :- returnPrim(v,u,i), CC(c,d), CI(d,i).
-AssignPrimCtxt(c,v,d,u)    :- AssignPrimArgCtxt(c,v,d,u).
-AssignPrimCtxt(c,v,d,u)    :- AssignPrimRetCtxt(c,v,d,u).
+AssignPrimCtxt(c,v,u)       :- AssignPrim(v,u), MU(m,v), CM(c,m).
+AssignPrimArgCCtxt(c,v,d,u) :- paramPrim(v,u,i), CC(d,c), CI(c,i).
+AssignPrimRetCCtxt(c,v,d,u) :- returnPrim(v,u,i), CC(c,d), CI(d,i).
+AssignPrimCCtxt(c,v,d,u)    :- AssignPrimArgCCtxt(c,v,d,u).
+AssignPrimCCtxt(c,v,d,u)    :- AssignPrimRetCCtxt(c,v,d,u).
+
+fptArr(o1,o2)           :- fpt(o1,0,o2).
+LoadPrimCtxtArr(c,v,u)  :- LoadPrimCtxt(c,v,u,0).
+StorePrimCtxtArr(c,v,u) :- StorePrimCtxt(c,v,0,u).
 
 # Src-prim flow
 
 Src2Prim(c,cl,v) :- Src2PrimT(c,cl,v).
-Src2Prim(c,cl,u) :- Src2Prim(c,cl,v), AssignPrim(u,v). # AssignPrim is flipped
-Src2Prim(d,cl,u) :- Src2Prim(c,cl,v), AssignPrimCtxt(d,u,c,v). # AssignPrimCtxt is flipped
+Src2Prim(c,cl,u) :- Src2Prim(c,cl,v), AssignPrimCtxt(c,u,v). # AssignPrim is flipped
+Src2Prim(d,cl,u) :- Src2Prim(c,cl,v), AssignPrimCCtxt(d,u,c,v). # AssignPrimCtxt is flipped
 
 Src2Prim(c,cl,v) :- Src2Obj(cl,o), Obj2PrimT(c,o,v).
-Src2Prim(c,cl,u) :- Src2Prim(c,cl,v), Prim2PrimT(,cv,u).
+Src2Prim(c,cl,u) :- Src2Prim(c,cl,v), Prim2PrimT(c,v,u).
 
-Src2Prim(c,cl,u) :- Src2ObjT(cl,o), pt(c,v,o), LoadPrimCtxt(c,u,v,_). # LoadPrimCtxt is flipped
-Src2Prim(c,cl,u) :- Src2ObjX(cl,o), pt(c,v,o), LoadPrimCtxt(c,u,v,0). # LoadPrimCtxt is flipped
+Src2Prim(c,cl,u) :- Src2ObjT(cl,o), pt(c,v,o), LoadPrimCtxt(c,u,v,_). # pt is backwards, LoadPrimCtxt is flipped
+Src2Prim(c,cl,u) :- Src2ObjX(cl,o), pt(c,v,o), LoadPrimCtxt(c,u,v,0). # pt is backwards, LoadPrimCtxt is flipped
 Src2Prim(c,cl,v) :- Src2PrimFld(cl,o,0), Obj2PrimT(c,o,v).
 
 Src2Prim(c,cl,u) :- Src2PrimFld(cl,o,f), pt(c,v,o), LoadPrimCtxt(c,u,v,f). # pt is backwards, LoadPrim is flipped
@@ -372,13 +427,14 @@ Src2PrimFldStat(cl,f) :- Src2Prim(c,cl,v), StoreStatPrimCtxt(c,f,v). # StoreStat
 # Sink-prim flow
 
 Sink2Prim(c,cl,v) :- Sink2PrimT(c,cl,v).
-Sink2Prim(c,cl,u) :- Sink2Prim(c,cl,v), AssignPrim(u,v). # AssignPrim is flipped
-Sink2Prim(d,cl,u) :- Sink2Prim(c,cl,v), AssignPrimCtxt(d,u,c,v). # AssignPrimCtxt is flipped
+Sink2Prim(c,cl,u) :- Sink2Prim(c,cl,v), AssignPrimCtxt(c,u,v). # AssignPrim is flipped
+Sink2Prim(d,cl,u) :- Sink2Prim(c,cl,v), AssignPrimCCtxt(d,u,c,v). # AssignPrimCtxt is flipped
+
 Sink2Prim(c,cl,v) :- Sink2Obj(cl,o), Obj2PrimT(c,o,v).
 Sink2Prim(c,cl,u) :- Sink2Prim(c,cl,v), Prim2PrimT(c,v,u).
 
-Sink2Prim(c,cl,u) :- Sink2ObjT(cl,o), pt(c,v,o), LoadPrimCtxt(c,u,v,_). # LoadPrimCtxt is flipped
-Sink2Prim(c,cl,u) :- Sink2ObjX(cl,o), pt(c,v,o), LoadPrimCtxt(c,u,v,0). # LoadPrimCtxt is flipped
+Sink2Prim(c,cl,u) :- Sink2ObjT(cl,o), pt(c,v,o), LoadPrimCtxt(c,u,v,_). # pt is backwards, LoadPrimCtxt is flipped
+Sink2Prim(c,cl,u) :- Sink2ObjX(cl,o), pt(c,v,o), LoadPrimCtxt(c,u,v,0). # pt is backwards, LoadPrimCtxt is flipped
 Sink2Prim(c,cl,v) :- Sink2PrimFld(cl,o,0), Obj2PrimT(c,o,v).
 
 Sink2Prim(c,cl,u) :- Sink2PrimFld(cl,o,f), pt(c,v,o), LoadPrimCtxt(c,u,v,f). # pt is backwards, LoadPrim is flipped

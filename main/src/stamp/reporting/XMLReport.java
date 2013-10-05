@@ -24,6 +24,15 @@ public abstract class XMLReport extends Category {
 		return title;
 	}
 
+	public String getCanonicalReportFilePath() { 
+		try{
+			File f = new File(Postmortem.resultsDir, relName+".xml");
+			return f.getCanonicalPath();
+		}catch(IOException e){
+			throw new Error(e);
+		}
+	}
+	/*
 	public String getCanonicalReportFilePath(boolean jimple) { 
 		try{
 			File f;
@@ -37,10 +46,11 @@ public abstract class XMLReport extends Category {
 			throw new Error(e);
 		}
 	}
+	*/
 
-	public void write(boolean jimple) {
+	public void write() {
 		try{
-			PrintWriter writer = new PrintWriter(new FileWriter(new File(getCanonicalReportFilePath(jimple))));
+			PrintWriter writer = new PrintWriter(new FileWriter(new File(getCanonicalReportFilePath())));
 			System.out.println("DEBUG: Generating XMLReport " + this.getTitle());
 			generate();
 			write(writer);

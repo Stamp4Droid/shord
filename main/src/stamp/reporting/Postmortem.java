@@ -37,14 +37,10 @@ public class Postmortem extends JavaAnalysis {
 					show = false;
 			}
 			if(show) {
-				if(jimple) {
-					reportsTxtWriter.println(report.getTitle() + " Jimple " + report.getCanonicalReportFilePath(jimple));
-				} else {
-					reportsTxtWriter.println(report.getTitle() + " " + report.getCanonicalReportFilePath(jimple));
-				}
+				reportsTxtWriter.println(report.getTitle() + " " + report.getCanonicalReportFilePath());
 			}
 		
-			report.write(jimple);
+			report.write();
 		}
 
 	}
@@ -67,6 +63,10 @@ public class Postmortem extends JavaAnalysis {
 			,FileNames.class
 			,MissingModels.class
 			,AllMissingModels.class
+		};
+
+		Class[] apkReports = new	Class[]{
+				SrcSinkFlow.class
 		};
 
 		Class[] dontShowReports = new Class[]{
