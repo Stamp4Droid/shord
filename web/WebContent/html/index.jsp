@@ -34,6 +34,7 @@
      session.setAttribute("srcPath", srcPath);
      session.setAttribute("libPath", libPath);
      session.setAttribute("droidrecord", droidrecord);
+     session.setAttribute("useJimple", useJimple);
 
      System.out.println("srcPath = "+srcPath);
      
@@ -349,7 +350,7 @@
 							var tokens = $.trim(response).split(",");
 							var filePath = tokens[0];
 							var lineNum = tokens[1];
-							showSource(filePath, 'false', lineNum, 'instIndex');
+							showSource(filePath, 'false', lineNum, <%=useJimple%>);
 						});	
                     });
 			    }
