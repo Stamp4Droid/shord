@@ -34,6 +34,7 @@
      session.setAttribute("srcPath", srcPath);
      session.setAttribute("libPath", libPath);
      session.setAttribute("droidrecord", droidrecord);
+     session.setAttribute("useJimple", useJimple);
 
      System.out.println("srcPath = "+srcPath);
      
