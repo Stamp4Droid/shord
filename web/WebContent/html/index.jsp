@@ -684,13 +684,6 @@
                         }
                     });
 
-	                var $activeCodeTabs = $('li.active a');
-	                console.log($activeCodeTabs);
-	                for (var i = 0; i < $activeCodeTabs.length; ++i) {
-	                	var attr = $activeCodeTabs[i].getAttribute('href');
-	                	colorTaint(attr);
-	                }
-
 	                var datasource = datasources[id];
 
 	                datasource.data($selected.parent().data(), function (items) {
@@ -729,6 +722,7 @@
 	            	});
 
                 $('#'+id).on('click','i.icon-eye-open, i.icon-eye-close', function() {
+
 	                	var $selected = $(this).parent().parent().find('.tree-folder-name');
 	                	var name = $selected.text();
 	                    var flow_regex = /Flow (\d+)/;
@@ -746,8 +740,17 @@
 	                        $(this).parent().html('<i class="icon-eye-close"></i>');
 	                        flowSwitches[num-1] = false;
 	                        $('#srcsinkflowhelp').empty();
-	                        $('#srcsinkflowhelp').append('Not hightlighted taint from Flow '+num);
+	                        $('#srcsinkflowhelp').append('Not hightlighting taint from Flow '+num);
 	                    }
+
+		                var $activeCodeTabs = $('li.active a');
+		                console.log($activeCodeTabs);
+		                for (var i = 0; i < $activeCodeTabs.length; ++i) {
+		                	var attr = $activeCodeTabs[i].getAttribute('href');
+		                	colorTaint(attr);
+		                }
+
+                	
 	                 });
 
 				$('#'+id).parent().append('<p class="muted"><em id="srcsinkflowhelp">Click a Flow name to show / hide </em></p>');
