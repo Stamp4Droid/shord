@@ -88,7 +88,8 @@ class OrderedMultiDict(MultiDict):
     A MultiDict variant where the values associated with each key are ordered
     by insertion time.
 
-    The underlying implementation uses a simple list as a container for values.
+    The underlying implementation uses a simple list as the container for
+    values.
     """
 
     def __init__(self):
@@ -99,6 +100,23 @@ class OrderedMultiDict(MultiDict):
 
     def append_to_container(self, list, value):
         list.append(value)
+
+class UniqueMultiDict(MultiDict):
+    """
+    A MultiDict variant where all values associated with a specific key are
+    distinct.
+
+    The underlying implementation uses a set as the container for values.
+    """
+
+    def __init__(self):
+        super(UniqueMultiDict, self).__init__()
+
+    def empty_container(self):
+        return set()
+
+    def append_to_container(self, set, value):
+        set.add(value)
 
 class UniqueNameMap(FinalAttrs):
     """
