@@ -72,6 +72,8 @@ typedef unsigned int INDEX;
 typedef unsigned int NODE_REF;
 /** A NODE_REF value reserved for representing "none". */
 #define NODE_NONE UINT_MAX
+/** Check if a NODE_REF is within bounds. */
+#define VALID_NODE_REF(n) ((n) < NODE_NONE)
 
 /** The length of some Edge<!-- -->'s witness path. */
 typedef unsigned int PATH_LENGTH;
@@ -100,7 +102,7 @@ typedef unsigned char ARITY;
 /**
  * An edge of the input graph.
  */
-typedef struct Edge {
+struct Edge {
     /** This edge's source Node. */
     NODE_REF from;
     /** This edge's destination Node. */
@@ -147,7 +149,7 @@ typedef struct Edge {
      */
     struct Edge *r_edge;
 #endif
-} Edge;
+};
 
 /**
  * The set of all outgoing Edge%s to some Node, for a specific @Symbol.
@@ -511,12 +513,12 @@ struct Node {
 /**
  * Structure describing a possible way to produce an Edge.
  */
-typedef struct {
+struct Derivation {
     Edge *left_edge;
     Edge *right_edge;
     bool left_reverse;
     bool right_reverse;
-} Derivation;
+};
 
 // Empty derivations have no Step associated with them: we must take special
 // care of them.
@@ -748,8 +750,7 @@ OutEdgeSet::View edges_between(NODE_REF from, NODE_REF to, EDGE_KIND kind);
  * @return The single Edge identified by the provided features, if there exists
  * one, otherwise @e NULL.
  */
-Edge *find_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind,
-		INDEX index = INDEX_NONE);
+Edge *find_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index);
 
 /**
  * Peform a selection on all the columns of a @Relation except @a proj_col, and

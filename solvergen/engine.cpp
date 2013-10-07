@@ -224,7 +224,7 @@ void NodeNameMap::add(const char *name_cstr) {
     if (map.insert(std::make_pair(name, vector.size())).second) {
 	vector.push_back(name);
 	// Make sure we haven't overflown NODE_REF.
-	assert(vector.size() < NODE_NONE);
+	assert(VALID_NODE_REF(vector.size()));
     }
 }
 
