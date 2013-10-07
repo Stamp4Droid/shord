@@ -605,7 +605,6 @@ public class SourceProcessor
 				int start = Integer.valueOf(node.getAttribute("startpos"));
 				int end = start+Integer.valueOf(node.getAttribute("length"));
 				String flows = node.getAttribute("flows");
-				System.err.println("FLOWS DUH " + node.hasAttribute("flows"));
 				if(!taintedVars.containsKey(start)) {
 				    taintedVars.put(start, new ArrayList<TaintedVariableRecord>());
 				}
@@ -617,7 +616,6 @@ public class SourceProcessor
 				}
 				if(currentTVR == null) {
 				    currentTVR = new TaintedVariableRecord(start, end, flows);
-				    System.err.println("FLOWS MFER " + flows);
 				    taintedVars.get(start).add(currentTVR);
 				}
 				String srcSinkQuery = "ancestor::category";
