@@ -1484,10 +1484,13 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
                 pr.write('for (Edge *l : edges_%s(%s, %s%s)) {'
                          % (out_dir, out_src, p.left.symbol.kind,
                             '' if out_idx is None else (', %s' % out_idx)))
+            elif out_idx is None and p.left.symbol.parametric:
+                pr.write('for (Edge *l : edges_between(%s, %s, %s)) {'
+                         % (out_src, out_tgt, p.left.symbol.kind))
             else:
-                pr.write('if ((l = find_edge(%s, %s, %s%s)) != NULL) {'
+                pr.write('if ((l = find_edge(%s, %s, %s, %s)) != NULL) {'
                          % (out_src, out_tgt, p.left.symbol.kind,
-                            '' if out_idx is None else (', %s' % out_idx)))
+                            'INDEX_NONE' if out_idx is None else out_idx))
             out_cond = p.outer_condition()
             if out_cond is not None:
                 pr.write('if (%s) {' % out_cond)
@@ -1501,11 +1504,16 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
             else:
                 # double production
                 r_rev = util.to_c_bool(p.right.reversed)
+                in_src = p.inner_search_source()
+                in_tgt = p.inner_search_target()
                 in_idx = p.inner_search_index()
-                pr.write('if ((r = find_edge(%s, %s, %s%s)) != NULL) {'
-                         % (p.inner_search_source(), p.inner_search_target(),
-                            p.right.symbol.kind,
-                           '' if in_idx is None else (', %s' % in_idx)))
+                if in_idx is None and p.right.symbol.parametric:
+                    pr.write('for (Edge *r : edges_between(%s, %s, %s)) {'
+                             % (in_src, in_tgt, p.right.symbol.kind))
+                else:
+                    pr.write('if ((r = find_edge(%s, %s, %s, %s)) != NULL) {'
+                             % (in_src, in_tgt, p.right.symbol.kind,
+                                'INDEX_NONE' if in_idx is None else in_idx))
                 in_loop_header = p.inner_loop_header()
                 if in_loop_header is not None:
                     pr.write('for (%s) {' % in_loop_header)
