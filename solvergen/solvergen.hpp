@@ -8,6 +8,7 @@
 #include <list>
 #include <map>
 #include <set>
+#include <stack>
 #include <stdlib.h>
 #include <stdio.h>
 #include <vector>
@@ -82,7 +83,11 @@ typedef unsigned int PATH_LENGTH;
  * An integer identifying a selection among multiple possible Derivation%s of
  * some Edge.
  */
-typedef unsigned char CHOICE;
+typedef unsigned char CHOICE_REF;
+/** A CHOICE_REF value reserved for representing "none". */
+#define CHOICE_NONE UCHAR_MAX
+/** Check if a CHOICE_REF is within bounds. */
+#define VALID_CHOICE_REF(c) ((c) < CHOICE_NONE)
 
 /** An integer identifying some @Relation in the input @Grammar. */
 typedef unsigned char RELATION_REF;
@@ -520,39 +525,135 @@ struct Derivation {
     bool right_reverse;
 };
 
-// Empty derivations have no Step associated with them: we must take special
-// care of them.
-// TODO: No support for freeing allocated memory. Should throw away subtrees
-// when we're done with them (e.g. through ref-counting).
-typedef struct Step {
-    bool is_reverse; // relative to the original Edge
-    bool is_expanded;
-    CHOICE num_choices;
-    Edge *edge;
-    struct Step *next_sibling; // next in the step sequence (level on the tree)
-    struct Step *parent;
-    // array of possible sub-step sequences
-    // - always NULL for terminals
-    //   TODO: check this
-    // - NULL or non-NULL for non-terminals, depending on whether they have any
-    //   possible expansions
-    struct Step **sub_step_seqs;
-} Step;
+/**
+ * A tree describing multiple ways of producing the Edge on the root. The top
+ * Edge and each sub-Edge recursively combined to form the top Edge are stored
+ * in Step nodes. Each node can have more than one disjoint sets of children,
+ * representing all the possible combinations that can produce it. The tree
+ * starts out as a single node, and can be filled-in by expanding one Step at a
+ * time.
+ */
+// TODO: No support for freeing allocated memory. The StepTree destructor
+// should recursively destroy the subtrees.
+// TODO: Unused subtrees are not deallocated; could do ref-counting.
+class StepTree {
+private:
 
-// TODO: No memory deallocation support
-typedef struct ChoiceSequence {
-    CHOICE last;
-    struct ChoiceSequence *prev;
-} ChoiceSequence;
+    // NULL stands for empty Path
+    // TODO: No memory deallocation support, should ref-count.
+    struct Path {
+	Path* const prefix;
+	const CHOICE_REF last;
+	explicit Path(Path *prefix, CHOICE_REF last);
+	static std::stack<CHOICE_REF> unwind(const Path *path);
+    };
 
-typedef struct {
-    PATH_LENGTH min_length; // includes all expanded terminals
-    ChoiceSequence *choices;
-    // caches the node on the tree that we'll continue from
-    // this is not necessary: we can derive it by following the choices
-    // can never point to an empty derivation: we must skip over those
-    Step *curr_step;
-} PartialPath;
+    class Step {
+    public:
+	Step* const parent;
+	Step* const next_sibling; // next in the step sequence (tree level)
+	Edge* const edge;
+	const bool reverse; // relative to the original Edge
+    private:
+	bool expanded;
+	bool closed;
+	// possible sub-step sequences, is empty for:
+	// - terminal steps
+	// - unexpanded non-terminal steps
+	// - expanded non-terminal steps with no possible expansions
+	std::vector<Step*> choices;
+    private:
+	void check_invariants() const;
+	explicit Step(Step *parent, Step *next_sibling, Edge *edge,
+		      bool reverse);
+	Step *make_sub_steps(const Derivation& deriv);
+	/**
+	 * Check if @a deriv could have produced the Edge for this Step.
+	 */
+	bool valid_derivation(const Derivation& deriv) const;
+    public:
+	explicit Step(Edge *top_edge);
+	bool is_terminal() const;
+	bool is_expanded() const;
+	bool is_closed() const;
+	bool valid_choice(CHOICE_REF c) const;
+	CHOICE_REF num_choices() const;
+	/**
+	 * Expand a Step by considering all Derivation%s that could have been
+	 * used to produce it.
+	 */
+	void expand();
+	/**
+	 * Close this Step and all its descendants, i.e. mark them so that any
+	 * Expander%s currently live on them are discarded.
+	 */
+	void close();
+	/**
+	 * Follow the specified expansion choice. Returns the head of the
+	 * corresponding sub-Step sequence. This may be NULL, in the case of
+	 * empty productions.
+	 */
+	Step *follow(CHOICE_REF choice) const;
+	/**
+	 * Estimate the total length of a Step sequence starting at this Step.
+	 */
+	PATH_LENGTH estimate_sequence_length() const;
+	void print(std::stack<CHOICE_REF>& path, FILE *f) const;
+    };
+
+    // can either be right before a choice, right after a choice, or at the end
+    class Expander {
+    private:
+	// the node of the tree that we're currently on, NULL if at end
+	Step *curr_step;
+	// if != CHOICE_NONE, we are implicitly at that sub-step of curr_step
+	CHOICE_REF choice;
+    public:
+	// TODO: Can't make these const, because priority_queue needs to use
+	// operator=.
+	PATH_LENGTH min_length; // includes all expanded terminals
+	// stack of choices that have lead us to this point
+	Path *path;
+    private:
+	void check_invariants() const;
+	explicit Expander(Step *curr_step, CHOICE_REF choice,
+			  PATH_LENGTH min_length, Path *path);
+    public:
+	explicit Expander(Step *top_step);
+	bool at_closed_step() const;
+	bool at_end() const;
+	bool at_choice() const;
+	/**
+	 * Move forward in the StepTree according to an in-order traversal, up
+	 * to the next non-terminal Step. If no such Step exists, the Expander
+	 * is placed at the end of the traversal.
+	 *
+	 * This operation is deterministic, because the tree can only split at
+	 * non-terminal Step%s. The Expander is modified in-place. Assumes that
+	 * no closed Step%s are encountered during the traversal. Closes any
+	 * non-deterministic Step%s it pops back to.
+	 */
+	void move_to_next_choice();
+	/**
+	 * Create one Expander for each possible Derivation at the current
+	 * point. Assumes we are currently processing a non-terminal Step.
+	 */
+	std::list<Expander> fork() const;
+	/**
+	 * Return true iff @a this Expander<!-- -->'s length estimate is worse
+	 * than @a other<!-- -->'s.
+	 */
+	bool operator<(const Expander& other) const;
+    };
+
+private:
+    Step root;
+public:
+    explicit StepTree(Edge *top_edge);
+    // Builds up a complete (shortest) path, expands tree as needed.
+    std::stack<CHOICE_REF> expand();
+    void print_path(const std::stack<CHOICE_REF>& path, FILE *f) const;
+};
 
 /**
  * A mapping between Node%s and their names. This consists of two mappings, one

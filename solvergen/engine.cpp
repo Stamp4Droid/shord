@@ -765,27 +765,6 @@ void print_results() {
     fclose(f);
 }
 
-/* CHOICE SEQUENCE HANDLING ================================================ */
-
-constexpr ChoiceSequence *choice_sequence_empty() {
-    return NULL;
-}
-
-ChoiceSequence *choice_sequence_extend(ChoiceSequence *prev, CHOICE last) {
-    ChoiceSequence *choice = STRICT_ALLOC(1, ChoiceSequence);
-    choice->last = last;
-    choice->prev = prev;
-    return choice;
-}
-
-std::stack<CHOICE> choice_sequence_unwind(const ChoiceSequence *seq_ptr) {
-    std::stack<CHOICE> choices;
-    for (; seq_ptr != NULL; seq_ptr = seq_ptr->prev) {
-	choices.push(seq_ptr->last);
-    }
-    return choices;
-}
-
 /* DERIVATION HANDLING ===================================================== */
 
 Derivation derivation_empty() {
@@ -801,35 +780,35 @@ Derivation derivation_double(Edge *left_edge, bool left_reverse,
     return Derivation({left_edge, right_edge, left_reverse, right_reverse});
 }
 
-/**
- * Check if @a deriv could have produced the Edge for @a step.
- *
- * We assume that @a deriv is a valid Derivation for @a step<!-- -->'s Edge,
- * but that is not enough to guarantee that @a deriv could have been used in
- * the construction of the entire path we are following. For example, consider
- * the following grammar:
- *
- *     A :: B | t
- *     B :: A
- *
- * And the following set of initial Edge%s:
- *
- *     n0 --t--> n1
- *
- * By applying the grammar on the above set of Edge%s, the following
- * non-terminal Edge%s are produced:
- *
- *     n0 --A--> n1
- *     n0 --B--> n1
- *
- * When trying to recover the full `A`-path from `n0` to `n1`, we might try to
- * follow the first production, i.e. `A :: B`, which leads us to consider the
- * `B`-path from `n0` to `n1`. There is a valid Derivation for the
- * corresponding Edge (namely, that it was generated from the Edge
- * `n0 --A--> n1`), but we can't use it in the construction of the path, since
- * that Edge is itself the one we're trying to break down.
- */
-bool derivation_is_valid(const Derivation &deriv, const Step *step) {
+/* STEP HANDLING =========================================================== */
+
+void StepTree::Step::check_invariants() const {
+    assert(!is_terminal() || !expanded);
+    assert(expanded || choices.empty());
+    // TODO: Could check the parent pointer on all the sub-steps.
+    // TODO: Could check that all sub-steps of a closed Step are also closed.
+}
+
+StepTree::Step::Step(Step *parent, Step *next_sibling, Edge *edge,
+		     bool reverse)
+    : parent(parent), next_sibling(next_sibling), edge(edge), reverse(reverse),
+      expanded(false), closed(false) {
+    check_invariants();
+}
+
+StepTree::Step *StepTree::Step::make_sub_steps(const Derivation& deriv) {
+    if (deriv.left_edge == NULL) {
+	assert(deriv.right_edge == NULL);
+	return NULL;
+    }
+    Step *second = NULL;
+    if (deriv.right_edge != NULL) {
+	second = new Step(this, NULL, deriv.right_edge, deriv.right_reverse);
+    }
+    return new Step(this, second, deriv.left_edge, deriv.left_reverse);
+}
+
+bool StepTree::Step::valid_derivation(const Derivation& deriv) const {
     Edge *left_edge = deriv.left_edge;
     Edge *right_edge = deriv.right_edge;
     if (left_edge == NULL) {
@@ -838,7 +817,7 @@ bool derivation_is_valid(const Derivation &deriv, const Step *step) {
     }
     // Verify that we haven't already recursed on one of the Edges in the
     // Derivation.
-    for (; step != NULL; step = step->parent) {
+    for (const Step *step = this; step != NULL; step = step->parent) {
 	if (edge_equals(step->edge, left_edge) ||
 	    (right_edge != NULL && edge_equals(step->edge, right_edge))) {
 	    return false;
@@ -847,307 +826,269 @@ bool derivation_is_valid(const Derivation &deriv, const Step *step) {
     return true;
 }
 
-/* STEP TREE HANDLING ====================================================== */
+StepTree::Step::Step(Edge *top_edge) : Step(NULL, NULL, top_edge, false) {}
 
-Step *step_alloc() {
-    Step *step = STRICT_ALLOC(1, Step);
-    step->is_reverse = false;
-    step->is_expanded = false;
-    step->num_choices = 0;
-    step->edge = NULL;
-    step->next_sibling = NULL;
-    step->parent = NULL;
-    step->sub_step_seqs = NULL;
-    return step;
+bool StepTree::Step::is_terminal() const {
+    return ::is_terminal(edge->kind);
 }
 
-Step *step_init(Edge *edge) {
-    Step *top = step_alloc();
-    top->edge = edge;
-    return top;
+bool StepTree::Step::is_expanded() const {
+    return expanded;
 }
 
-Step *derivation_to_step_sequence(const Derivation &deriv, Step *parent) {
-    Step *first_step = NULL;
-    if (deriv.left_edge == NULL) {
-	assert(deriv.right_edge == NULL);
-    } else {
-	first_step = step_alloc();
-	first_step->edge = deriv.left_edge;
-	first_step->is_reverse = deriv.left_reverse;
-	first_step->parent = parent;
-	if (deriv.right_edge != NULL) {
-	    Step *second_step = step_alloc();
-	    second_step->edge = deriv.right_edge;
-	    second_step->is_reverse = deriv.right_reverse;
-	    second_step->parent = parent;
-	    first_step->next_sibling = second_step;
-	}
-    }
-    return first_step;
+bool StepTree::Step::is_closed() const {
+    return closed;
 }
 
-/**
- * Expand a path by considering all Derivation%s that could have been used to
- * produce @a step.
- */
-void step_expand(Step *step) {
+bool StepTree::Step::valid_choice(CHOICE_REF c) const {
+    assert(expanded);
+    return c < choices.size();
+}
+
+CHOICE_REF StepTree::Step::num_choices() const {
+    assert(expanded);
+    return choices.size();
+}
+
+void StepTree::Step::expand() {
     // Edges corresponding to terminal symbols are elementary steps, which
     // cannot be expanded any further.
-    assert(!is_terminal(step->edge->kind));
-    if (step->is_expanded) {
-	// This Step has already been expanded.
+    assert(!is_terminal());
+    if (expanded) {
 	return;
     }
-    step->is_expanded = true;
+    expanded = true;
 
-    // Calculate all derivations that could have produced the parent step.
-    std::list<Derivation> derivs = all_derivations(step->edge);
-    auto is_invalid = [=](const Derivation &d){
-	return !derivation_is_valid(d, step);
-    };
-    derivs.remove_if(is_invalid);
-    if (derivs.size() == 0) {
-	// There are no valid derivations: we have failed to find a path using
-	// this branch.
-	// TODO: Prune the branch at this point.
-	return;
-    }
-
-    // Record all valid derivations as possible sub-steps of the parent step.
-    step->num_choices = derivs.size();
-    step->sub_step_seqs = STRICT_ALLOC(derivs.size(), Step *);
-    unsigned int i = 0;
+    // Calculate all derivations that could have produced the Edge. Some of
+    // these might be invalid for this Step, so we filter them out and record
+    // the rest as possible sub-steps.
+    // TODO: Prune the branch if we find no valid derivations.
+    std::list<Derivation> derivs = all_derivations(edge);
+    // Make sure we don't get more Derivations than we can store.
+    // TODO: Move this inside the invocation.
+    assert(VALID_CHOICE_REF(derivs.size()));
     for (const Derivation &d : derivs) {
-	step->sub_step_seqs[i] = derivation_to_step_sequence(d, step);
-	i++;
+	if (valid_derivation(d)) {
+	    choices.push_back(make_sub_steps(d));
+	}
     }
+
+    check_invariants();
 }
 
-Step *step_follow_choice(Step *parent, CHOICE choice) {
-    assert(parent->is_expanded);
-    assert(!is_terminal(parent->edge->kind));
-    assert(choice < parent->num_choices);
-    Step *sub_steps = parent->sub_step_seqs[choice];
-    // TODO: Check the parent pointer on all the steps.
-    // This may be NULL, in the case of empty productions.
-    return sub_steps;
+void StepTree::Step::close() {
+    if (closed) {
+	// We assume that all sub-steps of closed steps have also been marked
+	// as closed.
+	return;
+    }
+    closed = true;
+    for (Step *step : choices) {
+	for (; step != NULL; step = step->next_sibling) {
+	    step->close();
+	}
+    }
+
+    check_invariants();
 }
 
-PATH_LENGTH step_sequence_estimate_length(Step *first_step) {
+StepTree::Step *StepTree::Step::follow(CHOICE_REF choice) const {
+    assert(expanded);
+    return choices.at(choice);
+}
+
+PATH_LENGTH StepTree::Step::estimate_sequence_length() const {
     PATH_LENGTH min_length = 0;
-    for (Step *step = first_step; step != NULL; step = step->next_sibling) {
+    for (const Step *step = this; step != NULL; step = step->next_sibling) {
 	min_length += static_min_length(step->edge->kind);
     }
     return min_length;
 }
 
-/**
- * Move forward in the Step tree according to an in-order traversal, up to the
- * next non-terminal Step. This operation is deterministic, because the tree
- * can only split at non-terminal Step%s.
- *
- * @param [in] parent The non-terminal Step to start from.
- * @param [in] choice The Derivation to follow on the @a parent Step.
- * @return The next non-terminal Step in the Step tree, if there exists one,
- * or @e NULL if we reach the end of the traversal without finding such a Step.
- */
-Step *step_follow_choice_skip_terminals(Step *parent, CHOICE choice) {
-    Step *curr = step_follow_choice(parent, choice);
+/* EXPANDER HANDLING ======================================================= */
+
+void StepTree::Expander::check_invariants() const {
+    if (curr_step == NULL) {
+	assert(choice == CHOICE_NONE);
+    } else {
+	assert(!curr_step->is_terminal());
+	if (choice != CHOICE_NONE) {
+	    assert(curr_step->valid_choice(choice));
+	}
+    }
+}
+
+StepTree::Expander::Expander(Step *curr_step, CHOICE_REF choice,
+			     PATH_LENGTH min_length, Path *path)
+    : curr_step(curr_step), choice(choice), min_length(min_length),
+      path(path) {
+    check_invariants();
+}
+
+StepTree::Expander::Expander(Step *top_step)
+    : Expander(top_step, CHOICE_NONE, static_min_length(top_step->edge->kind),
+	       NULL) {}
+
+bool StepTree::Expander::at_closed_step() const {
+    return curr_step != NULL && curr_step->is_closed();
+}
+
+bool StepTree::Expander::at_end() const {
+    return curr_step == NULL;
+}
+
+bool StepTree::Expander::at_choice() const {
+    return curr_step != NULL && choice == CHOICE_NONE;
+}
+
+void StepTree::Expander::move_to_next_choice() {
+    assert(curr_step == NULL || !curr_step->is_closed());
+    // We only traverse terminals and empty productions, whose length has
+    // already been included in the running estimate, so we don't need to
+    // update min_length. Also, we don't need to make any non-deterministic
+    // choices, so we don't need to update our path.
+
+    if (choice == CHOICE_NONE || curr_step == NULL) {
+	// Special case, where we start right on a choice, or at the end.
+	return;
+    }
+
+    Step *parent = curr_step;
+    Step *curr = parent->follow(choice);
+    choice = CHOICE_NONE;
+
     while (curr == NULL) {
 	// We've hit an empty production, so we try the next sibling of the
 	// parent step. We may have to skip multiple levels to reach one that
 	// hasn't been fully traversed yet.
 	if (parent == NULL) {
 	    // We've reached the top of the step tree.
-	    return NULL;
+	    curr_step = NULL;
+	    check_invariants();
+	    return;
 	}
+	// We're the first Expander to pop back to a non-deterministic choice,
+	// so we mark it as closed (any other Expander that reaches this point
+	// will be longer, and thus not worth keeping).
+	assert(!parent->is_closed());
+	parent->close();
 	curr = parent->next_sibling;
 	parent = parent->parent;
     }
+
     // We are at a concrete Step, and need to stop at the first non-terminal
     // that we find.
-    while (is_terminal(curr->edge->kind)) {
-	// Move to the next step on the same level, repeat if it's a
-	// terminal step.
-	assert(!curr->is_expanded);
-	assert(curr->sub_step_seqs == NULL);
+    while (curr->is_terminal()) {
+	assert(!curr->is_closed());
+	// Move to the next Step on the same level, repeat if it's a terminal
+	// Step.
 	while (curr->next_sibling == NULL) {
 	    // If we're at the end of the current level, move up to the first
 	    // level that is not yet fully traversed, and continue from there.
 	    curr = curr->parent;
 	    if (curr == NULL) {
-		// We've reach the top of the step tree.
-		return NULL;
+		// We've reached the top of the step tree.
+		curr_step = NULL;
+		check_invariants();
+		return;
 	    }
+	    // Another case of pop-back; close all choices.
+	    assert(!curr->is_closed());
+	    curr->close();
 	}
 	curr = curr->next_sibling;
     }
-    return curr;
+
+    assert(!curr->is_closed());
+    curr_step = curr;
+    check_invariants();
 }
 
-// Edit steps in place to only keep the first choice we manage to fully expand.
-// Will NOT produce the shortest path.
-bool bake_single_path(Step *first) {
-    // TODO: Discarded paths are not deallocated.
-    for (Step *step = first; step != NULL; step = step->next_sibling) {
-	if (is_terminal(step->edge->kind)) {
-	    continue;
-	}
-	step_expand(step);
-	if (step->num_choices == 0) {
-	    return false;
-	}
-	bool recovered = false;
-	for (CHOICE c = 0; c < step->num_choices; c++) {
-	    if (bake_single_path(step->sub_step_seqs[c])) {
-		recovered = true;
-		step->num_choices = 1;
-		step->sub_step_seqs[0] = step->sub_step_seqs[c];
-	    }
-	}
-	if (!recovered) {
-	    return false;
-	}
-    }
-    return true;
-}
+std::list<StepTree::Expander> StepTree::Expander::fork() const {
+    assert(at_choice());
+    // Lazily expand the tree at the current step.
+    curr_step->expand();
 
-/* PATH HANDLING =========================================================== */
+    std::list<Expander> children;
+    PATH_LENGTH curr_edge_estimate = static_min_length(curr_step->edge->kind);
 
-PartialPath *partial_path_alloc() {
-    PartialPath *path = STRICT_ALLOC(1, PartialPath);
-    path->min_length = 0;
-    path->choices = NULL;
-    path->curr_step = NULL;
-    return path;
-}
-
-PartialPath *partial_path_init(Step *top_step) {
-    PartialPath *path = partial_path_alloc();
-    path->min_length = static_min_length(top_step->edge->kind);
-    path->choices = choice_sequence_empty();
-    path->curr_step = top_step;
-    return path;
-}
-
-/**
- * Check if the input PartialPath represents a complete path.
- *
- * For complete paths, PartialPath::min_length is the actual length of the
- * path, PartialPath::choices cover a full derivation, and
- * PartialPath::curr_step is @e NULL.
- */
-constexpr bool partial_path_is_complete(const PartialPath *path) {
-    // TODO: Also check that path->choices cover a full derivation.
-    return path->curr_step == NULL;
-    // NOTE: PartialPath::curr_step could also be NULL if we allowed
-    // PartialPaths to point at empty productions, which is why we must take
-    // special care before following a potentially empty derivation.
-}
-
-constexpr bool partial_path_is_at_terminal(const PartialPath *path) {
-    return (path->curr_step != NULL &&
-	    is_terminal(path->curr_step->edge->kind));
-}
-
-/**
- * Expand @a path once by considering all possible Derivation%s at the current
- * point. Assumes we are currently processing a non-terminal Step. Moves each
- * of the resulting PartialPath%s to the next non-terminal Step, if any.
- *
- * @param [in] path The path to split.
- * @return An unsorted list of extended PartialPath%s derived from @a path.
- * These will either be complete, or will point to non-terminal Step%s.
- */
-std::list<PartialPath*> partial_path_split(const PartialPath *path) {
-    std::list<PartialPath*> ext_paths;
-    Step *parent = path->curr_step;
-    PATH_LENGTH parent_min_length = static_min_length(parent->edge->kind);
-    // Lazily expand the path at the current step.
-    step_expand(parent);
-    for (CHOICE c = 0; c < parent->num_choices; c++) {
-	Step *sub_steps = step_follow_choice(parent, c);
-	PartialPath *ext = partial_path_alloc();
+    for (CHOICE_REF c = 0; c < curr_step->num_choices(); c++) {
+	Step *sub_steps = curr_step->follow(c);
 	// We know how many terminals are added to the path by this production,
 	// so we immediatelly include them in the lower bound for the path's
 	// length.
-	ext->min_length = path->min_length - parent_min_length
-	    + step_sequence_estimate_length(sub_steps);
-	ext->choices = choice_sequence_extend(path->choices, c);
-	// Whenever we pick up this path again, we will continue from the next
-	// non-terminal step.
-	// We can safely skip any subsequent terminal steps at this point,
-	// because any terminal steps we may take have already been counted in
-	// PartialPath::min_length, and simply following the non-terminals does
-	// not require any non-deterministic choices.
-	ext->curr_step = step_follow_choice_skip_terminals(parent, c);
-	ext_paths.push_back(ext);
+	PATH_LENGTH child_min_len = (min_length - curr_edge_estimate +
+				     sub_steps->estimate_sequence_length());
+	Path *child_path = new Path(path, c);
+	children.push_back(Expander(curr_step, c, child_min_len, child_path));
     }
-    return ext_paths;
+
+    return children;
 }
 
-/**
- * Construct the @a num_paths shortest paths that could have generated @a edge.
- * In case there's fewer than @a num_paths paths, return all of them.
- *
- * @return A list of up to @a num_paths PartialPath%s for @a edge, sorted in
- * shortest-first order. The objects returned are of type PartialPath, but they
- * represent complete paths, @see partial_path_is_complete().
- */
-std::list<PartialPath*> recover_paths(Step *top_step,
-				      const unsigned int num_paths) {
-    if (num_paths == 1) {
-	bake_single_path(top_step);
-    }
+bool StepTree::Expander::operator<(const Expander& other) const {
+    return min_length > other.min_length;
+}
 
-    std::list<PartialPath*> full_paths;
-    // std::priority_queue::pop() always returns the largest element, so we
-    // have to use 'possibly longer path' as the 'less than' operator.
-    auto maybe_longer = [](PartialPath *p1, PartialPath *p2) {
-    	return p1->min_length >= p2->min_length;
+/* PATH CALCULATION ======================================================== */
+
+StepTree::Path::Path(Path *prefix, CHOICE_REF last)
+    : prefix(prefix), last(last) {}
+
+std::stack<CHOICE_REF> StepTree::Path::unwind(const Path *path) {
+    std::stack<CHOICE_REF> choices;
+    for (const Path *p = path; p != NULL; p = p->prefix) {
+	choices.push(p->last);
     };
-    // Priority queue of partial paths, sorted by lower bound on length. Paths
-    // stored in the priority queue can either be complete or point to a
-    // non-terminal edge.
-    std::priority_queue<PartialPath*, std::vector<PartialPath*>,
-    			decltype(maybe_longer)> queue(maybe_longer);
-    queue.push(partial_path_init(top_step));
-    unsigned int paths_found = 0;
-    PATH_LENGTH min_length = 0;
+    return choices;
+}
 
-    while (paths_found < num_paths && !queue.empty()) {
-	PartialPath *p = queue.top();
+StepTree::StepTree(Edge *top_edge) : root(Step(top_edge)) {
+    assert(!is_terminal(top_edge->kind));
+}
+
+std::stack<CHOICE_REF> StepTree::expand() {
+    // Priority queue of all live Expanders over the StepTree, sorted by lower
+    // bound on length.
+    std::priority_queue<Expander> queue;
+    queue.push(Expander(&root));
+
+    while (!queue.empty()) {
+
+	Expander exp = queue.top();
 	queue.pop();
 
-	if (partial_path_is_complete(p)) {
-	    // p is a complete path for the input edge, and it should be the
-	    // shortest remaining one.
-	    assert(min_length <= p->min_length);
-	    min_length = p->min_length;
-	    full_paths.push_back(p);
-	    paths_found++;
+	// Check if we should discard this Expander: If the Step we're
+	// currently on or any of its ancestors has been closed, that must have
+	// been caused by a previously processed Expander, which had a better
+	// minimum length estimate, therefore we don't need to continue with
+	// this one (we couldn't possibly do any better).
+	// We only need to check if the Step we start from is closed; only one
+	// of the Expanders forked at each non-deterministic choice survives,
+	// and when it does, it recursively closes all the Steps under all
+	// other choices.
+	if (exp.at_closed_step()) {
 	    continue;
 	}
-	assert(!partial_path_is_at_terminal(p));
-	// The path points to a non-terminal edge: split it according to the
-	// expansion choices.
-	for (PartialPath *ext_p : partial_path_split(p)) {
-	    // The terminals on the returned paths should have been skipped.
-	    assert(!partial_path_is_at_terminal(ext_p));
-	    queue.push(ext_p);
+	exp.move_to_next_choice();
+	if (exp.at_end()) {
+	    // We have fully traversed the StepTree, while always working on
+	    // the shortest possible alternative. Thus, we have found the
+	    // shortest path.
+	    return Path::unwind(exp.path);
 	}
-	// The previous path is no longer needed, and can be free'd.
-	free(p);
+	// The Expander points to a non-terminal Step: split it according to
+	// the expansion choices.
+	for (Expander e : l) {
+	    queue.push(e);
+	}
+
+	// Discard the parent Expander.
     }
 
-    // We should find at least one path, the one which actually produced the
-    // input edge.
-    assert(paths_found > 0);
-    // TODO: The remaining PartialPath's, as well as the Step and Choice trees,
-    // are not deallocated. The latter two are necessary to allow the caller to
-    // retrieve the paths from the returned ChoiceSequences.
-    return full_paths;
+    // No path found, return an empty choice stack (since we only allow path
+    // calculations for non-terminals, this should be unambiguous).
+    return std::stack<CHOICE_REF>();
 }
 
 /* PATH PRINTING =========================================================== */
@@ -1188,7 +1129,6 @@ void print_step_close(Edge *edge, FILE *f) {
     }
 }
 
-// Only takes complete paths (assumes trees are present).
 // TODO: Reverse direction is not baked into the final representation. To
 // support this, we'd need to:
 // - add an 'in_reverse' boolean parameter, that defines the direction we're
@@ -1207,28 +1147,25 @@ void print_step_close(Edge *edge, FILE *f) {
 // For now, the client of this output will need to bake the results (or we
 // could avoid printing immediatelly, and do this at a post-processing step).
 // TODO: Generalize visitor pattern.
-void print_step(Step *step, std::stack<CHOICE> &choices, FILE *f) {
-    print_step_open(step->edge, step->is_reverse, f);
-    if (!is_terminal(step->edge->kind)) {
-	assert(!choices.empty());
-	CHOICE c = choices.top();
-	choices.pop();
-	Step *sub_steps = step_follow_choice(step, c);
-	for (Step *s = sub_steps; s != NULL; s = s->next_sibling) {
-	    print_step(s, choices, f);
+void StepTree::Step::print(std::stack<CHOICE_REF>& path, FILE *f) const {
+    print_step_open(edge, reverse, f);
+    if (!is_terminal()) {
+	assert(!path.empty());
+	CHOICE_REF c = path.top();
+	path.pop();
+	for (Step *s = follow(c); s != NULL; s = s->next_sibling) {
+	    s->print(path, f);
 	}
     }
-    print_step_close(step->edge, f);
+    print_step_close(edge, f);
 }
 
-void print_path(PartialPath *path, Step *top_step, FILE *f) {
-    assert(partial_path_is_complete(path));
-    assert(top_step->next_sibling == NULL);
+void StepTree::print_path(const std::stack<CHOICE_REF>& path, FILE *f) const {
     fprintf(f, "<path>\n");
-    std::stack<CHOICE> choices = choice_sequence_unwind(path->choices);
-    print_step(top_step, choices, f);
+    std::stack<CHOICE_REF> p(path);
+    root.print(p, f);
     // All choices should have been exhausted.
-    assert(choices.empty());
+    assert(p.empty());
     fprintf(f, "</path>\n");
 }
 
@@ -1272,10 +1209,9 @@ void print_paths_for_kind(EDGE_KIND k, unsigned int num_paths) {
 #ifdef PATH_RECORDING
 	    print_prerecorded_path(e, f);
 #else
-	    Step *top_step = step_init(e);
-	    for (PartialPath *p : recover_paths(top_step, num_paths)) {
-		print_path(p, top_step, f);
-	    }
+	    StepTree tree = StepTree(e);
+	    std::stack<CHOICE_REF> path = tree.expand();
+	    tree.print_path(path, f);
 #endif
 	    fprintf(f, "</edge>\n");
 	}
