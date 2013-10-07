@@ -44,7 +44,6 @@ import soot.util.MapNumberer;
  */
 public class TaintedVar extends XMLReport
 {
-	private static final Map<Pair<Pair<String,Ctxt>,Pair<String,Ctxt>>,BitVector> flowToBucket = new HashMap();
 	private static final Map<Pair<String,Ctxt>,List<Pair<Pair<String,Ctxt>,Pair<String,Ctxt>>>> labelToFlows = new HashMap();
 	private static final Map<Pair<String,Ctxt>,List<Integer>> labelToFlowNums = new HashMap();
 	private static final double threshhold = Double.parseDouble(System.getProperty("stamp.flowcluster.threshhold", "0.9"));
@@ -158,12 +157,6 @@ public class TaintedVar extends XMLReport
 			Pair<String,Ctxt> srcLabel = flow.val0;
 			Pair<String,Ctxt> sinkLabel = flow.val1;
 			
-			BitVector bucket = flowToBucket.get(flow);
-			if(bucket == null){
-				bucket = new BitVector(numVars);
-				flowToBucket.put(flow, bucket);
-			}
-
 			List<Pair<Pair<String,Ctxt>,Pair<String,Ctxt>>> flows = labelToFlows.get(srcLabel);
 			List<Integer> flowNums = labelToFlowNums.get(srcLabel);
 			if(flows == null){
@@ -246,13 +239,6 @@ public class TaintedVar extends XMLReport
 			str += ":";
 			if (!varToFlows.get(var).contains(str))
 				varToFlows.put(var, varToFlows.get(var)+str);
-
-			Pair<Ctxt,VarNode> ctxtVar = new Pair(ctxt,var);
-			int ctxtVarIndex = (int) taintedVarNumberer.get(ctxtVar);
-			for(Pair<Pair<String,Ctxt>,Pair<String,Ctxt>> flow : flows){
-				BitVector bucket = flowToBucket.get(flow);
-				bucket.set(ctxtVarIndex);
-			}
 		}
 	}
 }
