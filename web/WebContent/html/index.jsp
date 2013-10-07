@@ -237,7 +237,6 @@
 
 			function colorTaint(href) {
 				href = href.replace('#','');
-				console.log("HERF IS "+href);
 				var taintedVariables = $('#'+href).find("[name=taintedVariable]");
 			    for(var i=0; i<taintedVariables.length; ++i) {
 			    	var flowString = taintedVariables[i].getAttribute("flows");
@@ -271,8 +270,6 @@
 					registerCellback();
 				}
 
-				console.log("THE HREF");
-				console.log(response);
 				var ppStr = prettyPrintOne(response, 'java', true);
 				$('#codetabcontents').append('<div class="tab-pane source-view" id="'+href+'">'+ppStr+'</div>');
 
@@ -744,7 +741,6 @@
 	                    }
 
 		                var $activeCodeTabs = $('li.active a');
-		                console.log($activeCodeTabs);
 		                for (var i = 0; i < $activeCodeTabs.length; ++i) {
 		                	var attr = $activeCodeTabs[i].getAttribute('href');
 		                	colorTaint(attr);
