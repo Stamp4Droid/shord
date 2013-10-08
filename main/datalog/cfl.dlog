@@ -140,12 +140,13 @@ return(v:V,u:V,i:I) input   # v is the lhs at callsite, u is the return var, i i
 # INTERMEDIATE: STUB HELPER
 ###################
 
-AssignCtxt(c:C,v:V,u:U)         # v = u
-AssignArgCCtxt(c:C,v:V,d:C,u:U) # v = u
-AssignRetCCtxt(c:C,v:V,d:C,u:U) # v = u
-AssignCCtxt(c:C,v:V,d:C,u:U)    # v = u
-StoreCtxt(c:C,v:V,f:F,u:V)      # v.f = u
-LoadCtxt(c:C,v:V,u:V,f:F)       # v = u.f
+AssignCtxt(c:C,v:V,u:V)           # v = u
+AssignArgCCtxt(c:C,v:V,d:C,u:V)   # v = u
+AssignRetCCtxt(c:C,v:V,d:C,u:V)   # v = u
+AssignCCtxt(c:C,v:V,d:C,u:V)      # v = u
+StoreCtxt(c:C,v:V,f:F,u:V) output # v.f = u
+StoreArrCtxt(c:C,v:V,u:V) output  # v.f = u
+LoadCtxt(c:C,v:V,u:V,f:F)         # v = u.f
 
 Vmissing(c:C,v:V)
 
@@ -160,6 +161,7 @@ AssignCCtxt(c,v,d,u)    :- AssignArgCCtxt(c,v,d,u).
 AssignCCtxt(c,v,d,u)    :- AssignRetCCtxt(c,v,d,u).
 
 StoreCtxt(c,v,f,u)      :- Store(v,f,u), MV(m,v), CM(c,m).
+StoreArrCtxt(c,v,u)     :- Store(v,0,u), MV(m,v), CM(c,m).
 LoadCtxt(c,v,u,f)       :- Load(v,u,f), MV(m,v), CM(c,m).
 
 Vmissing(c,v) :- Stub(m), MmethArg(m,_,v), CM(c,m).
@@ -191,18 +193,18 @@ PostFlowsTo(c,v,d,w) :- PostFlowsTo(c,v,d,u), AssignCtxt(d,w,u).
 # 2b) v_c -> u_d -> w_b
 PostFlowsTo(c,v,b,w) :- PostFlowsTo(c,v,d,u), AssignCCtxt(b,w,d,u).
 # 3) v_c -> u_d -> w_d -> o -> x_b -> y_b
-PostFlowsTo(c,v,b,y) :- PostFlowsTo(c,v,d,u), StoreCtxt(d,w,_,u), pt(d,w,o), pt(b,x,o), LoadCtxt(b,y,x).
+PostFlowsTo(c,v,b,y) :- PostFlowsTo(c,v,d,u), StoreCtxt(d,w,_,u), pt(d,w,o), pt(b,x,o), LoadCtxt(b,y,x,_).
 # 4) v_c -> o -> u_d -> w_d
-PostFlowsTo(c,v,d,w) :- PreFlowsTo(c,o,v), pt(d,u,o), LoadCtxt(d,w,u).
+PostFlowsTo(c,v,d,w) :- PreFlowsTo(c,o,v), pt(d,u,o), LoadCtxt(d,w,u,_).
 # 5) v_c -> u_d -> w_d
-PostFlowsTo(c,v,d,w) :- PostFlowsTo(c,v,d,u), LoadCtxt(d,w,u).
+PostFlowsTo(c,v,d,w) :- PostFlowsTo(c,v,d,u), LoadCtxt(d,w,u,_).
 
 # 1) v_c -> u_d
-MidFlowsTo(c,v,d,w) :- PostFlowsTo(c,v,d,u), Vmissing(d,u).
+MidFlowsTo(c,v,d,u) :- PostFlowsTo(c,v,d,u), Vmissing(d,u).
 # 2) v_c -> u_d -> w_d -> x_b
-MidFlowsTo(c,v,b,x) :- PostFlowsTo(c,v,d,u), StoreCtxt(d,w,u), PostFlowsTo(b,x,d,w)
+MidFlowsTo(c,v,b,x) :- PostFlowsTo(c,v,d,u), StoreCtxt(d,w,_,u), PostFlowsTo(b,x,d,w).
 # 3) v_c -> u_d -> w_d -> o -> x_b
-MidFlowsTo(c,v,b,x) :- PostFlowsTo(c,v,d,u), StoreCtxt(d,w,u), pt(d,w,o), PreFlowsTo(b,o,x).
+MidFlowsTo(c,v,b,x) :- PostFlowsTo(c,v,d,u), StoreCtxt(d,w,_,u), pt(d,w,o), PreFlowsTo(b,o,x).
 # 4) v_c -> o -> u_d
 MidFlowsTo(c,v,d,u) :- PreFlowsTo(c,o,v), PreFlowsTo(d,o,u).
 
