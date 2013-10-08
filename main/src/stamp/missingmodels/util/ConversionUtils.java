@@ -118,7 +118,7 @@ public class ConversionUtils {
 		/*
 		 * The following are phantom points-to relations.
 		 */
-		//relations.add("flowsTo", new IndexRelation("phpt", "V", 3, 2, "V", 1, 0));
+		//relations.add("flowsTo", new IndexRelation("phpt", "V", 2, 3, "V", 1, 0));
 		
 		/*
 		 * The following are taint information.

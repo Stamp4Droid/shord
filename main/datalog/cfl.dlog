@@ -16,7 +16,6 @@
 
 .bddvarorder L0_Z0xZ1_M0_CL0xCL1_C0xC1xC2_V0xV1_U0xU1_F0_I0
 
-
 ###################
 # INPUT
 ###################
@@ -181,26 +180,26 @@ LoadCtxt(c,v,u,f)       :- Load(v,u,f), MV(m,v), CM(c,m).
 #Vmissing(c,v) :- Stub(m), MmethArg(m,_,v), CM(c,m).
 Vmissing(c,v) :- Stub(m), MmethRet(m,_,v), CM(c,m).
 
-fPostFlowsTo(c:C,v:V,d:C,u:V,f:F)
-
 ###################
 # OUTPUT: STUB PARTIAL POINTER
 ###################
 
-PreFlowsTo(c:C,o:C,v:V) output
+fPostFlowsTo(c:C,v:V,o:C,f:F)
+
+#PreFlowsTo(c:C,o:C,v:V) output
 PostFlowsTo(c:C,v:V,d:C,u:V) output
-MidFlowsTo(c:C,v:V,d:C,u:V) output
+#MidFlowsTo(c:C,v:V,d:C,u:V) output
 
 ###################
 # RULES: STUB PARTIAL POINTER
 ###################
 
 # 1) o -> v_c
-PreFlowsTo(c,o,v)  :- pt(c,v,o), Vmissing(c,v).
+#PreFlowsTo(c,o,v)  :- pt(c,v,o), Vmissing(c,v).
 # 2) o -> v_c -> u_c -> w_d
-PreFlowsTo(d,o,w)  :- pt(c,v,o), StoreCtxt(c,u,_,v), PostFlowsTo(d,w,c,u).
+#PreFlowsTo(d,o,w)  :- pt(c,v,o), StoreCtxt(c,u,_,v), PostFlowsTo(d,w,c,u).
 # 3) o1 -> v_c -> u_c -> o2 -> w_c
-PreFlowsTo(c,o1,w) :- pt(c,v,o1), StoreCtxt(c,u,_,v), pt(c,u,o2), PreFlowsTo(c,o2,w).
+#PreFlowsTo(c,o1,w) :- pt(c,v,o1), StoreCtxt(c,u,_,v), pt(c,u,o2), PreFlowsTo(c,o2,w).
 
 # 1) v_c -> v_c
 PostFlowsTo(c,v,d,u) :- u=v, d=c, Vmissing(c,v).
@@ -209,21 +208,21 @@ PostFlowsTo(c,v,d,w) :- PostFlowsTo(c,v,d,u), AssignCtxt(d,w,u).
 # 2b) v_c -> u_d -> w_b
 PostFlowsTo(c,v,b,w) :- PostFlowsTo(c,v,d,u), AssignCCtxt(b,w,d,u).
 # 3) v_c -> u_d -> w_d -> o -> x_b -> y_b
-fPostFlowsTo(c,v,b,y,f) :- PostFlowsTo(c,v,d,u), StoreCtxt(d,w,f,u), pt(d,w,o)
-PostFlowsTo(c,v,b,y) :- fPostFlowsTo(c,v,b,y,f), pt(b,x,o), LoadCtxt(b,y,x,f).
+fPostFlowsTo(c,v,o,f) :- PostFlowsTo(c,v,d,u), StoreCtxt(d,w,f,u), pt(d,w,o).
+PostFlowsTo(c,v,b,y) :- fPostFlowsTo(c,v,o,f), pt(b,x,o), LoadCtxt(b,y,x,f).
 # 4) v_c -> o -> u_d -> w_d
 #PostFlowsTo(c,v,d,w) :- PreFlowsTo(c,o,v), pt(d,u,o), LoadCtxt(d,w,u,_).
 # 5) v_c -> u_d -> w_d
 #PostFlowsTo(c,v,d,w) :- PostFlowsTo(c,v,d,u), LoadCtxt(d,w,u,_).
 
 # 1) v_c -> u_d
-MidFlowsTo(c,v,d,u) :- PostFlowsTo(c,v,d,u), Vmissing(d,u).
+#MidFlowsTo(c,v,d,u) :- PostFlowsTo(c,v,d,u), Vmissing(d,u).
 # 2) v_c -> u_d -> w_d -> x_b
-MidFlowsTo(c,v,b,x) :- PostFlowsTo(c,v,d,u), StoreCtxt(d,w,_,u), PostFlowsTo(b,x,d,w).
+#MidFlowsTo(c,v,b,x) :- PostFlowsTo(c,v,d,u), StoreCtxt(d,w,_,u), PostFlowsTo(b,x,d,w).
 # 3) v_c -> u_d -> w_d -> o -> x_b
-MidFlowsTo(c,v,b,x) :- PostFlowsTo(c,v,d,u), StoreCtxt(d,w,_,u), pt(d,w,o), PreFlowsTo(b,o,x).
+#MidFlowsTo(c,v,b,x) :- PostFlowsTo(c,v,d,u), StoreCtxt(d,w,_,u), pt(d,w,o), PreFlowsTo(b,o,x).
 # 4) v_c -> o -> u_d
-MidFlowsTo(c,v,d,u) :- PreFlowsTo(c,o,v), PreFlowsTo(d,o,u).
+#MidFlowsTo(c,v,d,u) :- PreFlowsTo(c,o,v), PreFlowsTo(d,o,u).
 
 ###################
 # OUTPUT: STUB ANNOTATIONS
