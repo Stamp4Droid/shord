@@ -93,7 +93,7 @@ public class FileManager {
 			}
 		}
 
-		System.out.println("DEBUG: " + srcMapDirPath + " " + file.getCanonicalPath());
+		//System.out.println("DEBUG: " + srcMapDirPath + " " + file.getCanonicalPath());
 		
 		if(srcMapDirPath == null)
 			return;
@@ -119,7 +119,7 @@ public class FileManager {
 		//String jimpleFilePath = filePath.substring(0, filePath.length()-4).concat("jimple").replace("/", ".");
 		File jimpleFile = new File(outPath + "/jimple/" + jimpleFilePath);
 		
-		System.out.println("DEBUG: " + filePath + " " + jimpleFile.getCanonicalPath());
+		//System.out.println("DEBUG: " + filePath + " " + jimpleFile.getCanonicalPath());
 
 		//SourceData data = srcVisitor.process(file);
 		File taintedInfoFile = new File(outPath+"/results/TaintedVar.xml");
@@ -129,7 +129,7 @@ public class FileManager {
 		//replace .jimple with .xml
 		String fname = jimpleFilePath.substring(0, jimpleFilePath.length()-6).concat("xml");
 		File srcMapFile = new File(outPath + "/jimple/" + fname);
-		System.out.println("DEBUG: srcmap file now at " + srcMapFile.getCanonicalPath());
+		//System.out.println("DEBUG: srcmap file now at " + srcMapFile.getCanonicalPath());
 
 		SourceProcessor sp = new SourceProcessor(jimpleFile, droidrecord, srcMapFile, taintedInfoFile, allReachableFile, reachedFile, filePath);
 		String annotatedSource = sp.getSourceWithAnnotations();

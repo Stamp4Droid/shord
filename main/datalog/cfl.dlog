@@ -126,6 +126,20 @@ Ref2PrimF(c:C,v:V,u:U) output
 Prim2RefF(c:C,v:U,u:V) output
 Prim2PrimF(c:C,v:U,u:U) output
 
+##################
+# OUTPUT: PHANTOM ALLOCATIONS
+###################
+
+# phantom allocations
+phAlloc(v:V,c:C)  output
+
+##################
+# RULES: PHANTOM ALLOCATIONS
+##################
+
+# phantom allocations
+phAlloc(v,c) :- Stub(m), CM(c,m), MmethRet(m,_,v).
+
 ###################
 # INPUT: STUB HELPER
 ###################
@@ -148,7 +162,7 @@ StoreCtxt(c:C,v:V,f:F,u:V) output # v.f = u
 StoreArrCtxt(c:C,v:V,u:V) output  # v.f = u
 LoadCtxt(c:C,v:V,u:V,f:F)         # v = u.f
 
-Vmissing(c:C,v:V)
+Vmissing(c:C,v:V) output
 
 ###################
 # RULES: STUB HELPER
@@ -164,8 +178,10 @@ StoreCtxt(c,v,f,u)      :- Store(v,f,u), MV(m,v), CM(c,m).
 StoreArrCtxt(c,v,u)     :- Store(v,0,u), MV(m,v), CM(c,m).
 LoadCtxt(c,v,u,f)       :- Load(v,u,f), MV(m,v), CM(c,m).
 
-Vmissing(c,v) :- Stub(m), MmethArg(m,_,v), CM(c,m).
+#Vmissing(c,v) :- Stub(m), MmethArg(m,_,v), CM(c,m).
 Vmissing(c,v) :- Stub(m), MmethRet(m,_,v), CM(c,m).
+
+fPostFlowsTo(c:C,v:V,d:C,u:V,f:F)
 
 ###################
 # OUTPUT: STUB PARTIAL POINTER
@@ -193,11 +209,12 @@ PostFlowsTo(c,v,d,w) :- PostFlowsTo(c,v,d,u), AssignCtxt(d,w,u).
 # 2b) v_c -> u_d -> w_b
 PostFlowsTo(c,v,b,w) :- PostFlowsTo(c,v,d,u), AssignCCtxt(b,w,d,u).
 # 3) v_c -> u_d -> w_d -> o -> x_b -> y_b
-PostFlowsTo(c,v,b,y) :- PostFlowsTo(c,v,d,u), StoreCtxt(d,w,_,u), pt(d,w,o), pt(b,x,o), LoadCtxt(b,y,x,_).
+fPostFlowsTo(c,v,b,y,f) :- PostFlowsTo(c,v,d,u), StoreCtxt(d,w,f,u), pt(d,w,o)
+PostFlowsTo(c,v,b,y) :- fPostFlowsTo(c,v,b,y,f), pt(b,x,o), LoadCtxt(b,y,x,f).
 # 4) v_c -> o -> u_d -> w_d
-PostFlowsTo(c,v,d,w) :- PreFlowsTo(c,o,v), pt(d,u,o), LoadCtxt(d,w,u,_).
+#PostFlowsTo(c,v,d,w) :- PreFlowsTo(c,o,v), pt(d,u,o), LoadCtxt(d,w,u,_).
 # 5) v_c -> u_d -> w_d
-PostFlowsTo(c,v,d,w) :- PostFlowsTo(c,v,d,u), LoadCtxt(d,w,u,_).
+#PostFlowsTo(c,v,d,w) :- PostFlowsTo(c,v,d,u), LoadCtxt(d,w,u,_).
 
 # 1) v_c -> u_d
 MidFlowsTo(c,v,d,u) :- PostFlowsTo(c,v,d,u), Vmissing(d,u).
