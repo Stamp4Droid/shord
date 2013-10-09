@@ -107,13 +107,66 @@
 		    	<h5 style="display: inline;">
 		    		Source	
 		    	</h5>
-		    	<div class="select btn-group" data-resize="auto" id="srcSelect">
+		    	<div class="select btn-group" id="srcSelect">
 		    		<button type="button" data-toggle="dropdown" class="btn dropdown-toggle"><span class="dropdown-label"></span><span class="caret"></span></button>
-		    		<ul class="dropdown-menu">
-		    			<li data-value="1"><a href="#">One</a></li>
-		    			<li data-value="2"><a href="#">Two</a></li>
-		    			<li data-value="3" data-selected="true"><a href="#">Three</a></li>
-		    			<li data-value="4" data-fizz="buzz"><a href="#">Four</a></li>
+		    		<ul class="dropdown-menu" style="max-height: 200px; overflow-y: scroll;">
+			    		<li data-selected="true"><a href="#">$accounts.name</a></li>
+			    		<li><a href="#">$audio</a></li>
+			    		<li><a href="#">$browser</a></li>
+			    		<li><a href="#">$browser.bookmarks</a></li>
+			    		<li><a href="#">$calllog</a></li>
+			    		<li><a href="#">$calendar</a></li>
+			    		<li><a href="#">$camera.picture</a></li>
+			    		<li><a href="#">$contacts</a></li>
+			    		<li><a href="#">$content://com.android.calendar/calendars</a></li>
+			    		<li><a href="#">$content://com.android.calendar/events</a></li>
+			    		<li><a href="#">$content://com.android.contacts/contacts/</a></li>
+			    		<li><a href="#">$content://com.android.contacts/data</a></li>
+			    		<li><a href="#">$content://com.android.contacts/data/phones</a></li>
+			    		<li><a href="#">$content://calendar/events</a></li>
+			    		<li><a href="#">$content://calendar/calendars</a></li>
+			    		<li><a href="#">$content://contacts/people</a></li>
+			    		<li><a href="#">$content://mms</a></li>
+			    		<li><a href="#">$content://mms/part</a></li>
+			    		<li><a href="#">$content://sms</a></li>
+			    		<li><a href="#">$content://sms/sent</a></li>
+			    		<li><a href="#">$content://sms/inbox</a></li>
+			    		<li><a href="#">$content://call_log/calls</a></li>
+			    		<li><a href="#">$incomingcallnumber</a></li>
+			    		<li><a href="#">$media</a></li>
+			    		<li><a href="#">$content://telephony/carriers</a></li>
+			    		<li><a href="#">$content://telephony/carriers/preferapn</a></li>
+			    		<li><a href="#">$cdma_network_id</a></li>
+			    		<li><a href="#">$cmda_system_id</a></li>
+			    		<li><a href="#">$getline1number</a></li>
+			    		<li><a href="#">$getnetworkcountryiso</a></li>
+			    		<li><a href="#">$getsimserialnumber</a></li>
+			    		<li><a href="#">$getsubscriberid</a></li>
+			    		<li><a href="#">$getvoicemailnumber</a></li>
+			    		<li><a href="#">$networkoperator</a></li>
+			    		<li><a href="#">$networkoperatorname</a></li>
+			    		<li><a href="#">$simcountryiso</a></li>
+			    		<li><a href="#">$simoperatorname</a></li>
+			    		<li><a href="#">$getdeviceid</a></li>
+			    		<li><a href="#">$cdma_Location</a></li>
+			    		<li><a href="#">$getlongitude</a></li>
+			    		<li><a href="#">$location</a></li>
+			    		<li><a href="#">$getlatitude</a></li>
+			    		<li><a href="#">$fine_Location</a></li>
+			    		<li><a href="#">$process.inputstream</a></li>
+			    		<li><a href="#">$systemproperties.get</a></li>
+			    		<li><a href="#">$getdevicesoftwareversion</a></li>
+			    		<li><a href="#">$fileinputstream</a></li>
+			    		<li><a href="#">$process.errorstream</a></li>
+			    		<li><a href="#">$externalstorage</a></li>
+			    		<li><a href="#">$context.getstring</a></li>
+			    		<li><a href="#">$wifimanager.getdhcpinfo</a></li>
+			    		<li><a href="#">$process.exitvalue</a></li>
+			    		<li><a href="#">$datainputstream</a></li>
+			    		<li><a href="#">$filesystem</a></li>
+			    		<li><a href="#">$file</a></li>
+			    		<li><a href="#">$getextras</a></li>
+			    		<li><a href="#">$content_provider</a></li>
 		    		</ul>
 		    	</div>
 
@@ -123,11 +176,22 @@
 		    	</h5>
 		    	<div class="select btn-group" data-resize="auto" id="sinkSelect">
 		    		<button type="button" data-toggle="dropdown" class="btn dropdown-toggle"><span class="dropdown-label"></span><span class="caret"></span></button>
-		    		<ul class="dropdown-menu">
-		    			<li data-value="1"><a href="#">One</a></li>
-		    			<li data-value="2"><a href="#">Two</a></li>
-		    			<li data-value="3" data-selected="true"><a href="#">Three</a></li>
-		    			<li data-value="4" data-fizz="buzz"><a href="#">Four</a></li>
+		    		<ul class="dropdown-menu" style="max-height: 200px; overflow-y: scroll;">
+			    		<li><a href="#">!socket</a></li>
+			    		<li><a href="#">!internet</a></li>
+			    		<li><a href="#">!senddatamessage</a></li>
+			    		<li><a href="#">!socketaddr</a></li>
+			    		<li><a href="#">!webview</a></li>
+			    		<li><a href="#">!sendmultiparttextmessage</a></li>
+			    		<li><a href="#">!sendtextmessage</a></li>
+			    		<li><a href="#">browser_searches.modify</a></li>
+			    		<li><a href="#">browser_history.modify</a></li>
+			    		<li><a href="#">!log</a></li>
+			    		<li><a href="#">!intent</a></li>
+			    		<li><a href="#">!file</a></li>
+			    		<li><a href="#">!activity</a></li>
+			    		<li><a href="#">!broadcast</a></li>
+			    		<li><a href="#">nc/dec</a></li>
 		    		</ul>
 		    	</div>
 
@@ -143,12 +207,6 @@
 	      	<th>Remove</th>
 	      	<th>Source</th>
 	      	<th>Sink</th>
-		<tr>
-			<td><label class="checkbox checkbox-custom"><input type="checkbox"><i class="checkbox"></i></label></td>
-	      	<td><i class="icon-remove"></i></td>
-			<td>LOCATION</td>
-			<td>LOCATION</td>
-		</tr>
 	      </table>
 
 	      <table class="table table-condensed table-hover" id="incident-summary">
@@ -251,8 +309,20 @@
 	  $('#addPolicyBtn').click( function () {
 	  	var src = $('#srcSelect').select('selectedItem').text;
 	  	var sink = $('#sinkSelect').select('selectedItem').text;
-	  	$('#src-sink-table tr:last').after('<tr><td><label class="checkbox checkbox-custom"><input type="checkbox"><i class="checkbox"></i></label></td><td><i class="icon-remove"></td><td>'+src+'</td><td>'+sink+'</td></tr>');
-	  });
+	  	$('#src-sink-table tr:last').after('<tr><td><input type="checkbox"><i class="checkbox"></i></td><td><i class="icon-remove"></i></td><td>'+src+'</td><td>'+sink+'</td></tr>');
+
+	  	$('#src-sink-table .icon-remove').click(function () {
+	  		$(this).parent().parent().remove();
+
+  		});
+	});
+
+
+  	$('#src-sink-table .icon-remove').click(function () {
+  		$(this).parent().parent().remove();
+
+	});
+
 	});
 	</script>
 	
