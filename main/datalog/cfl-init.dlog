@@ -43,11 +43,7 @@ fpt(o1:C,f:F,o2:C) input
 # INPUT: PARTIAL FLOWS HELPER
 ###################
 
-Assign(v:V,u:V)     input   # v = u
-Load(v:V,u:V,f:F)   input   # v = u.f
-Store(v:V,f:F,u:V)  input   # v.f = u
-param(v:V,u:V,i:I)  input   # v is the formal parameter, u is actual arg, i is invocation stmt
-return(v:V,u:V,i:I) input   # v is the lhs at callsite, u is the return var, i is invocation stmt
+#Store(v:V,f:F,u:V)  input   # v.f = u
 
 ###################
 # INPUT: PHANTOM ALLOCATIONS
@@ -83,18 +79,15 @@ AssignPrimCCtxt(c:C,v:U,d:C,u:U) output
 fptArr(o1:C,o2:C) output
 LoadPrimCtxtArr(c:C,v:U,u:V) output
 StorePrimCtxtArr(c:C,v:V,u:U) output
+#StoreArrCtxt(c:C,v:V,u:V) output        # v.f = u
 
 ###################
 # OUTPUT: PARTIAL FLOW HELPER
 ###################
 
-AssignCtxt(c:C,v:V,u:V) output          # v = u
 AssignArgCCtxt(c:C,v:V,d:C,u:V) output  # v = u
 AssignRetCCtxt(c:C,v:V,d:C,u:V) output  # v = u
 AssignCCtxt(c:C,v:V,d:C,u:V) output     # v = u
-StoreCtxt(c:C,v:V,f:F,u:V) output       # v.f = u
-StoreArrCtxt(c:C,v:V,u:V) output        # v.f = u
-LoadCtxt(c:C,v:V,u:V,f:F) output        # v = u.f
 
 ###################
 # RULES: TAINT HELPER
@@ -114,25 +107,12 @@ AssignPrimCCtxt(c,v,d,u)    :- AssignPrimRetCCtxt(c,v,d,u).
 fptArr(o1,o2)           :- fpt(o1,0,o2).
 LoadPrimCtxtArr(c,v,u)  :- LoadPrimCtxt(c,v,u,0).
 StorePrimCtxtArr(c,v,u) :- StorePrimCtxt(c,v,0,u).
-
-###################
-# RULES: PARTIAL FLOWS HELPER
-###################
-
-AssignCtxt(c,v,u)       :- Assign(v,u), MV(m,v), CM(c,m).
-AssignArgCCtxt(c,v,d,u) :- param(v,u,i), CC(d,c), CI(c,i).
-AssignRetCCtxt(c,v,d,u) :- return(v,u,i), CC(c,d), CI(d,i).
-AssignCCtxt(c,v,d,u)    :- AssignArgCCtxt(c,v,d,u).
-AssignCCtxt(c,v,d,u)    :- AssignRetCCtxt(c,v,d,u).
-
-StoreCtxt(c,v,f,u)      :- Store(v,f,u), MV(m,v), CM(c,m).
-StoreArrCtxt(c,v,u)     :- Store(v,0,u), MV(m,v), CM(c,m).
-LoadCtxt(c,v,u,f)       :- Load(v,u,f), MV(m,v), CM(c,m).
+#StoreArrCtxt(c,v,u)     :- Store(v,0,u), MV(m,v), CM(c,m).
 
 ##################
 # RULES: PHANTOM ALLOCATIONS
 ##################
 
 # phantom allocations
-#phAlloc(v,c) :- Stub(m), MmethArg(m,_,v), CM(c,m).
+phAlloc(v,c) :- Stub(m), MmethArg(m,_,v), CM(c,m).
 phAlloc(v,c) :- Stub(m), CM(c,m), MmethRet(m,_,v).
