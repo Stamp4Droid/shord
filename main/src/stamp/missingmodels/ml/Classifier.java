@@ -61,10 +61,6 @@ public class Classifier {
 	}
 
 	public static double[] maximumLikelihood(double[][] x, double[] y, double alpha) {
-		System.out.println("Training set:");
-		for(int i=0; i<x.length; i++) {
-			System.out.println(toString(x[i]) + ": " + y[i]);
-		}
 		double[] theta = new double[x[0].length];
 		for(int i=0; i<200; i++) {
 			double[] thetaDerivative = logLikelihoodDerivative(theta, x, y);
