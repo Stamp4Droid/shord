@@ -108,7 +108,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		}
 		trainingAccuracy /= yTraining.length;
 		double testAccuracy = 0.0; 
-		for(int i=0; i<yTraining.length; i++) {
+		for(int i=0; i<yTest.length; i++) {
 			if((yTest[i] > 0.5) == yTestHat[i]) { 
 				testAccuracy += 1.0;
 			}
