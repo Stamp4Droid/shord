@@ -23,6 +23,7 @@ import stamp.missingmodels.util.FileManager;
 import stamp.missingmodels.util.FileManager.FileType;
 import stamp.missingmodels.util.FileManager.StampOutputFile;
 import stamp.missingmodels.util.StubLookup;
+import stamp.missingmodels.util.StubLookup.StubLookupValue;
 import stamp.missingmodels.util.StubModelSet;
 import stamp.missingmodels.util.StubModelSet.ModelType;
 import stamp.missingmodels.util.StubModelSet.StubModel;
@@ -47,35 +48,30 @@ import chord.project.Chord;
 public class JCFLSolverAnalysis extends JavaAnalysis {
 	private static JCFLSolverRunner j = new JCFLSolverStubs();
 	
-	public static void runStubModelClassifier(StubModelSet m) {
+	public static void runStubModelClassifier(StubLookup s, StubModelSet m) {
 		Random random = new Random();
 		int length = 5;
 		
 		// STEP 1: Build the training and test sets.
-		Map<StubModel,Boolean> trainingSet = new HashMap<StubModel,Boolean>();
-		Map<StubModel,Boolean> testSet = new HashMap<StubModel,Boolean>();
-		for(StubModel model : m.keySet()) {
+		Map<StubLookupValue,Boolean> trainingSet = new HashMap<StubLookupValue,Boolean>();
+		Map<StubLookupValue,Boolean> testSet = new HashMap<StubLookupValue,Boolean>();
+		for(StubLookupValue value : s.values()) {
 			boolean b = random.nextDouble() < 0.7;
+			StubModel model = new StubModel(value);
 			if(m.get(model) != null) {
 				System.out.println(model.toString() + ": " + m.get(model));
 			}
-			try {
-				ModelInfo info = new ModelInfo(model);
-			} catch(Exception e) {
-				e.printStackTrace();
-				continue;
-			}
 			if(m.get(model) == ModelType.FALSE) {
 				if(b) {
-					trainingSet.put(model, false);
+					trainingSet.put(value, false);
 				} else {
-					testSet.put(model, false);
+					testSet.put(value, false);
 				}
 			} else if(m.get(model) == ModelType.TRUE) {
 				if(b) {
-					trainingSet.put(model, true);
+					trainingSet.put(value, true);
 				} else {
-					testSet.put(model, true);
+					testSet.put(value, true);
 				}
 			}
 		}
@@ -84,13 +80,15 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		double[][] xTraining = new double[trainingSet.keySet().size()][length];
 		double[] yTraining = new double[trainingSet.keySet().size()];
 		int counter=0;
-		for(Map.Entry<StubModel,Boolean> entry : trainingSet.entrySet()) {
+		for(Map.Entry<StubLookupValue,Boolean> entry : trainingSet.entrySet()) {
+			xTraining[counter] = new ModelInfo(entry.getKey()).featurize();
+			yTraining[counter] = entry.getValue() ? 1.0 : 0.0;
 			counter++;
 		}
 		double[][] xTest = new double[testSet.keySet().size()][length];
 		double[] yTest = new double[testSet.keySet().size()];
 		counter=0;
-		for(Map.Entry<StubModel,Boolean> entry : testSet.entrySet()) {
+		for(Map.Entry<StubLookupValue,Boolean> entry : testSet.entrySet()) {
 			xTest[counter] = new ModelInfo(entry.getKey()).featurize();
 			yTest[counter] = entry.getValue() ? 1.0 : 0.0;
 			counter++;
@@ -115,8 +113,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		}
 		testAccuracy /= yTest.length;
 		System.out.println("Training accuracy: " + trainingAccuracy);
-		System.out.println("Test accuracy: " + testAccuracy);
-		
+		System.out.println("Test accuracy: " + testAccuracy);		
 	}
 	
 	public static Graph g() {
@@ -188,7 +185,6 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 			e.printStackTrace();
 			m = new StubModelSet();
 		}
-		runStubModelClassifier(m);
 		
 		//j = new JCFLSolverSingle(new E12(), m);
 		//j.run(E12.class, m);
@@ -263,6 +259,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 				}
 			}
 		}));
+		runStubModelClassifier(j.s(), m);
 		try {
 			for(StampOutputFile file : files) {
 				manager.write(file);
