@@ -3,7 +3,10 @@ package stamp.analyses;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import shord.project.analyses.JavaAnalysis;
@@ -12,7 +15,9 @@ import stamp.missingmodels.analysis.JCFLSolverRunner;
 import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverSingle;
 import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverStubs;
 import stamp.missingmodels.analysis.JCFLSolverRunner.RelationAdder;
+import stamp.missingmodels.analysis.ModelClassifier.ModelInfo;
 import stamp.missingmodels.grammars.G;
+import stamp.missingmodels.ml.Classifier;
 import stamp.missingmodels.util.ConversionUtils.ChordRelationAdder;
 import stamp.missingmodels.util.FileManager;
 import stamp.missingmodels.util.FileManager.FileType;
@@ -20,6 +25,7 @@ import stamp.missingmodels.util.FileManager.StampOutputFile;
 import stamp.missingmodels.util.StubLookup;
 import stamp.missingmodels.util.StubModelSet;
 import stamp.missingmodels.util.StubModelSet.ModelType;
+import stamp.missingmodels.util.StubModelSet.StubModel;
 import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.jcflsolver.Edge;
 import stamp.missingmodels.util.jcflsolver.EdgeData;
@@ -37,10 +43,77 @@ import chord.project.Chord;
 /*
  * An analysis that runs the JCFLSolver to do the taint analysis.
  */
-
 @Chord(name = "jcflsolver")
-public class JCFLSolverAnalysis extends JavaAnalysis {	
+public class JCFLSolverAnalysis extends JavaAnalysis {
 	private static JCFLSolverRunner j = new JCFLSolverStubs();
+	
+	public static void runStubModelClassifier(StubModelSet m) {
+		Random random = new Random();
+		int length = 5;
+		
+		// STEP 1: Build the training and test sets.
+		Map<StubModel,Boolean> trainingSet = new HashMap<StubModel,Boolean>();
+		Map<StubModel,Boolean> testSet = new HashMap<StubModel,Boolean>();
+		for(StubModel model : m.keySet()) {
+			boolean b = random.nextDouble() < 0.7;
+			if(m.get(model) != null) {
+				System.out.println(model.toString() + ": " + m.get(model));
+			}
+			if(m.get(model) == ModelType.FALSE) {
+				if(b) {
+					trainingSet.put(model, false);
+				} else {
+					testSet.put(model, false);
+				}
+			} else if(m.get(model) == ModelType.TRUE) {
+				if(b) {
+					trainingSet.put(model, true);
+				} else {
+					testSet.put(model, true);
+				}
+			}
+		}
+		
+		// STEP 2: Construct the features.
+		double[][] xTraining = new double[trainingSet.keySet().size()][length];
+		double[] yTraining = new double[trainingSet.keySet().size()];
+		int counter=0;
+		for(Map.Entry<StubModel,Boolean> entry : trainingSet.entrySet()) {
+			xTraining[counter] = new ModelInfo(entry.getKey()).featurize();
+			yTraining[counter] = entry.getValue() ? 1.0 : 0.0;
+			counter++;
+		}
+		double[][] xTest = new double[testSet.keySet().size()][length];
+		double[] yTest = new double[testSet.keySet().size()];
+		counter=0;
+		for(Map.Entry<StubModel,Boolean> entry : testSet.entrySet()) {
+			xTest[counter] = new ModelInfo(entry.getKey()).featurize();
+			yTest[counter] = entry.getValue() ? 1.0 : 0.0;
+			counter++;
+		}
+		
+		// STEP 3: Predict and get accuracy
+		double[] theta = Classifier.maximumLikelihood(xTraining, yTraining, 0.01);
+		boolean[] yTrainingHat = Classifier.predictLabel(theta, xTraining, 0.5);
+		boolean[] yTestHat = Classifier.predictLabel(theta, xTest, 0.5);
+		double trainingAccuracy = 0.0; 
+		for(int i=0; i<yTraining.length; i++) {
+			if((yTraining[i] > 0.5) == yTrainingHat[i]) { 
+				trainingAccuracy += 1.0;
+			}
+		}
+		trainingAccuracy /= yTraining.length;
+		double testAccuracy = 0.0; 
+		for(int i=0; i<yTraining.length; i++) {
+			if((yTest[i] > 0.5) == yTestHat[i]) { 
+				testAccuracy += 1.0;
+			}
+		}
+		testAccuracy /= yTest.length;
+		System.out.println("Training accuracy: " + trainingAccuracy);
+		System.out.println("Test accuracy: " + testAccuracy);
+		
+	}
 	
 	public static Graph g() {
 		if(j == null) return null;
@@ -73,7 +146,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 				String symbol = g.kindToSymbol(k);
 				try {
 					if(!g.isTerminal(k)) {
-						continue;						
+						continue;
 					}
 					Set<EdgeData> edges = this.manager.read(new JCFLRelationInputFile(FileType.SCRATCH, symbol, g.kindToWeight(k)));
 					for(EdgeData edge : edges) {
@@ -103,10 +176,15 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		StubModelSet m;
 		try {
 			m = manager.read(new StubModelSetInputFile("StubModelSet.txt", FileType.PERMANENT));
+			System.out.println("HERE");
+			for(Map.Entry<StubModel,ModelType> entry : m.entrySet()) {
+				System.out.println(entry.getKey().toString() + ": " + entry.getValue());
+			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			e.printStackTrace();	
 			m = new StubModelSet();
 		}
+		runStubModelClassifier(m);
 		
 		//j = new JCFLSolverSingle(new E12(), m);
 		//j.run(E12.class, m);
