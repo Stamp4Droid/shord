@@ -59,6 +59,12 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 			if(m.get(model) != null) {
 				System.out.println(model.toString() + ": " + m.get(model));
 			}
+			try {
+				ModelInfo info = new ModelInfo(model);
+			} catch(Exception e) {
+				e.printStackTrace();
+				continue;
+			}
 			if(m.get(model) == ModelType.FALSE) {
 				if(b) {
 					trainingSet.put(model, false);
@@ -79,8 +85,6 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		double[] yTraining = new double[trainingSet.keySet().size()];
 		int counter=0;
 		for(Map.Entry<StubModel,Boolean> entry : trainingSet.entrySet()) {
-			xTraining[counter] = new ModelInfo(entry.getKey()).featurize();
-			yTraining[counter] = entry.getValue() ? 1.0 : 0.0;
 			counter++;
 		}
 		double[][] xTest = new double[testSet.keySet().size()][length];
@@ -181,7 +185,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 				System.out.println(entry.getKey().toString() + ": " + entry.getValue());
 			}
 		} catch (IOException e) {
-			e.printStackTrace();	
+			e.printStackTrace();
 			m = new StubModelSet();
 		}
 		runStubModelClassifier(m);

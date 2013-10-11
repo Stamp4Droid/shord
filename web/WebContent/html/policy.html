@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" class="fuelux">
+  <head>
+	<link href="/stamp/fuelux/css/fuelux.min.css" rel="stylesheet" />
+	
+	<style type="text/css">
+	  body {
+	  padding-top: 60px;
+	  padding-bottom: 20px;
+      }
+      
+      .source-view {height:80vh; overflow:auto; resize:auto;}
+      .right-view {overflow:auto; }
+      
+      .fuelux .nav-tabs > li > a {
+      padding-top: 0px;
+      padding-bottom: 5px;
+      line-height: 10px;
+      }
+ 
+      .bar {
+      height: 8px;
+      }
+      
+      table.appslist td.status {
+      text-align: right;
+      }
+
+        [class^="icon-"], [class*=" icon-"]{
+        	background: none;
+        }
+    background:none;
+  }
+	</style>
+
+	<link href="/stamp/fuelux/css/fuelux-responsive.min.css" rel="stylesheet" />
+	<link href="../fileupload/jquery.fileupload-ui.css" rel="stylesheet">
+	<link rel="stylesheet" href="/stamp/css/bootstrap-switch.css">
+	
+  </head>	  
+
+  <body>
+	<!-- navigation bar -->
+	<div class="navbar navbar-inverse navbar-fixed-top">
+	  <div class="navbar-inner">
+	    <div class="container">
+
+	      <ul class="nav pull-left">
+		<li><a class="brand" href="#">STAMP&alpha;-APK</a></li>
+	      </ul>
+
+	      <ul class="nav pull-left">
+			<li>
+			    <span class="btn">
+			      <i class="icon-cog"></i>
+			      <span>Admin</span>
+			    </span>
+			    <span class="btn disabled">
+			      <span>Policy List</span>
+			    </span>
+			</li>
+			</li>
+	      </ul>
+	      
+	      <!-- <ul class="nav"> -->
+	      <!-- 	<\!-- Help -\-> -->
+	      <!-- 	<li class="dropdown"> -->
+	      <!-- 	  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help <b class="caret"></b></a> -->
+	      <!-- 	  <ul class="dropdown-menu"> -->
+	      <!-- 	    <\!-- <li><a href="/doc/stamp.html" target="_blank">Docs</a></li> -\-> -->
+	      <!-- 	    <li><a href="http://www.youtube.com/user/STAMPStanford" target="_blank">Video Tutorials</a></li> -->
+	      <!-- 	  </ul> -->
+	      <!-- 	</li> -->
+	      <!-- </ul> -->
+
+	    </div>
+ 	  </div>
+	</div> 
+
+
+	<!-- content -->
+	<div class="container-fluid">
+	  <div class="row-fluid">
+
+	    <!--Sidebar content-->
+ 	    <div class="span3">
+	      <table id="appslist" class="table table-striped appslist">
+		<tbody>
+		</tbody>
+	      </table>
+	    </div>
+
+	    <!-- Main content -->
+	    <div class="span6" id="reportdiv">
+
+	    	<div class="well" style="margin-bottom:10px; text-align: center;">
+		    	<h5 style="display: inline;">
+		    		Policy List Mode:
+		    	</h5>
+		    	<div id="label-switch" class="make-switch" data-on="black" data-on-label="black" data-off-label="white">
+		    		<input type="checkbox" checked>
+		    	</div>
+
+		    <hr>
+
+
+		    	<h5 style="display: inline;">
+		    		Source	
+		    	</h5>
+		    	<div class="select btn-group" id="srcSelect">
+		    		<button type="button" data-toggle="dropdown" class="btn dropdown-toggle"><span class="dropdown-label"></span><span class="caret"></span></button>
+		    		<ul class="dropdown-menu" style="max-height: 200px; overflow-y: scroll;">
+			    		<li data-selected="true"><a href="#">$accounts.name</a></li>
+			    		<li><a href="#">$audio</a></li>
+			    		<li><a href="#">$browser</a></li>
+			    		<li><a href="#">$browser.bookmarks</a></li>
+			    		<li><a href="#">$calllog</a></li>
+			    		<li><a href="#">$calendar</a></li>
+			    		<li><a href="#">$camera.picture</a></li>
+			    		<li><a href="#">$contacts</a></li>
+			    		<li><a href="#">$content://com.android.calendar/calendars</a></li>
+			    		<li><a href="#">$content://com.android.calendar/events</a></li>
+			    		<li><a href="#">$content://com.android.contacts/contacts/</a></li>
+			    		<li><a href="#">$content://com.android.contacts/data</a></li>
+			    		<li><a href="#">$content://com.android.contacts/data/phones</a></li>
+			    		<li><a href="#">$content://calendar/events</a></li>
+			    		<li><a href="#">$content://calendar/calendars</a></li>
+			    		<li><a href="#">$content://contacts/people</a></li>
+			    		<li><a href="#">$content://mms</a></li>
+			    		<li><a href="#">$content://mms/part</a></li>
+			    		<li><a href="#">$content://sms</a></li>
+			    		<li><a href="#">$content://sms/sent</a></li>
+			    		<li><a href="#">$content://sms/inbox</a></li>
+			    		<li><a href="#">$content://call_log/calls</a></li>
+			    		<li><a href="#">$incomingcallnumber</a></li>
+			    		<li><a href="#">$media</a></li>
+			    		<li><a href="#">$content://telephony/carriers</a></li>
+			    		<li><a href="#">$content://telephony/carriers/preferapn</a></li>
+			    		<li><a href="#">$cdma_network_id</a></li>
+			    		<li><a href="#">$cmda_system_id</a></li>
+			    		<li><a href="#">$getline1number</a></li>
+			    		<li><a href="#">$getnetworkcountryiso</a></li>
+			    		<li><a href="#">$getsimserialnumber</a></li>
+			    		<li><a href="#">$getsubscriberid</a></li>
+			    		<li><a href="#">$getvoicemailnumber</a></li>
+			    		<li><a href="#">$networkoperator</a></li>
+			    		<li><a href="#">$networkoperatorname</a></li>
+			    		<li><a href="#">$simcountryiso</a></li>
+			    		<li><a href="#">$simoperatorname</a></li>
+			    		<li><a href="#">$getdeviceid</a></li>
+			    		<li><a href="#">$cdma_Location</a></li>
+			    		<li><a href="#">$getlongitude</a></li>
+			    		<li><a href="#">$location</a></li>
+			    		<li><a href="#">$getlatitude</a></li>
+			    		<li><a href="#">$fine_Location</a></li>
+			    		<li><a href="#">$process.inputstream</a></li>
+			    		<li><a href="#">$systemproperties.get</a></li>
+			    		<li><a href="#">$getdevicesoftwareversion</a></li>
+			    		<li><a href="#">$fileinputstream</a></li>
+			    		<li><a href="#">$process.errorstream</a></li>
+			    		<li><a href="#">$externalstorage</a></li>
+			    		<li><a href="#">$context.getstring</a></li>
+			    		<li><a href="#">$wifimanager.getdhcpinfo</a></li>
+			    		<li><a href="#">$process.exitvalue</a></li>
+			    		<li><a href="#">$datainputstream</a></li>
+			    		<li><a href="#">$filesystem</a></li>
+			    		<li><a href="#">$file</a></li>
+			    		<li><a href="#">$getextras</a></li>
+			    		<li><a href="#">$content_provider</a></li>
+		    		</ul>
+		    	</div>
+
+
+		    	<h5 style="display: inline; padding-left: 10px;">
+		    		Sink	
+		    	</h5>
+		    	<div class="select btn-group" data-resize="auto" id="sinkSelect">
+		    		<button type="button" data-toggle="dropdown" class="btn dropdown-toggle"><span class="dropdown-label"></span><span class="caret"></span></button>
+		    		<ul class="dropdown-menu" style="max-height: 200px; overflow-y: scroll;">
+			    		<li><a href="#">!socket</a></li>
+			    		<li><a href="#">!internet</a></li>
+			    		<li><a href="#">!senddatamessage</a></li>
+			    		<li><a href="#">!socketaddr</a></li>
+			    		<li><a href="#">!webview</a></li>
+			    		<li><a href="#">!sendmultiparttextmessage</a></li>
+			    		<li><a href="#">!sendtextmessage</a></li>
+			    		<li><a href="#">browser_searches.modify</a></li>
+			    		<li><a href="#">browser_history.modify</a></li>
+			    		<li><a href="#">!log</a></li>
+			    		<li><a href="#">!intent</a></li>
+			    		<li><a href="#">!file</a></li>
+			    		<li><a href="#">!activity</a></li>
+			    		<li><a href="#">!broadcast</a></li>
+			    		<li><a href="#">nc/dec</a></li>
+		    		</ul>
+		    	</div>
+
+		    	<button class="btn btn-inverse" type="button" style="margin-left: 10px;" id="addPolicyBtn">Add Policy</button>
+
+	    	</div>
+
+
+
+
+	      <table class="table table-condensed table-hover" id="src-sink-table">
+	      	<th>Active</th>
+	      	<th>Remove</th>
+	      	<th>Source</th>
+	      	<th>Sink</th>
+	      </table>
+
+	      <table class="table table-condensed table-hover" id="incident-summary">
+	      </table>
+
+	      <table class="table table-condensed table-hover" id="privacy-rpt">
+	      </table>
+
+	      <table class="table table-condensed table-hover" id="conf-rpt">
+	      </table>
+
+	      <table class="table table-condensed table-hover" id="lowrisk-rpt">
+	      </table>
+
+
+	    </div>
+
+
+	      <div class="span3 right-view" id="rightbar">
+
+		<!-- <table class="table table-condensed table-hover" id="warnings"><th colspan="2">Flow Details</th> -->
+		<!--   <tr><td>Category:</td><td>Privacy</td></tr> -->
+	      	<!--   <tr><td>Flow:</td><td>content://sms <i class="icon-arrow-right"></i> HttpPOST</td></tr> -->
+		<!--   <tr><td>Modifiers:</td><td><span class="label label-success">Hashed</span></td></tr> -->
+		<!--   <tr><td>Source Component:</td><td>App</td></tr>  -->
+		<!--   <tr><td>Source Params:</td><td>None</td></tr> -->
+		<!--   <tr><td>Sink Component:</td><td>Ad library</td></tr> -->
+		<!--   <tr><td>Sink Params:</td><td>33.44.55.66</td></tr> -->
+		<!--   <tr><td>Misc:</td><td><i class="icon-question-sign"></i> &nbsp <i class="icon-search"></i></td></tr> -->
+		<!-- </table> -->
+
+	      </div>
+	      
+	</div>
+	
+	<div class="modal hide fade" id="errormsgs-modal">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h3>Only files with .apk extensions can be uploaded. The following files were ignored:</h3>
+		</div>
+		<div class="modal-body">
+			<ul class="unstyled" id="errormsgs">
+		  	</ul>
+		</div>
+	</div>
+	
+	<script src="/stamp/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+	<script src="/stamp/fuelux/loader.js" type="text/javascript"></script>
+	<script src="/stamp/scripts/bootstrap-switch.js"></script>
+	<script src="../jquery-ui/jquery.ui.widget.js"></script>
+	<script src="../fileupload/jquery.iframe-transport.js"></script>
+	<script src="../fileupload/jquery.fileupload.js"></script>
+	<script src="/stamp/scripts/processMsg.js"></script>
+
+	<script>
+		var apkIdToRow = new Object();
+		
+	  $(function () {
+		  
+        'use strict';
+
+        $('#fileupload').fileupload({
+          url: '../fileUpload',
+
+          maxFileSize: 15000000,
+          
+          add: function (e, data) {
+        	//alert('hellp');
+        	var file = data.files[0];
+        	if(file.name.match(/\.apk$/)){
+        		var row = $('<tr><td>'+file.name+'</td><td class="status"><div class="progress progess-striped" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar bar-success" style="width: 10%;"></div></div></td></tr>');
+        		apkIdToRow[file.name+file.size] = row;
+        		data.context = row.appendTo('#appslist > tbody:last');
+    			data.submit();
+        	} else {
+        		$('<li>'+file.name+'</li>').appendTo('#errormsgs');
+        		$('#errormsgs-modal').modal('show');
+        	}
+          },
+			
+          progress: function (e, data) {
+                if (data.context) {
+                    var progress = Math.floor(data.loaded / data.total * 100);
+                    data.context.find('.progress')
+                        .attr('aria-valuenow', progress)
+                        .find('.bar').css(
+                            'width',
+                            progress + '%'
+                        );
+                }
+          },
+          
+          done: function (e,data) {
+        	  data.context.find('.progress').replaceWith('<span class="label">Uploaded</span>');
+          }
+          
+        });
+
+	  //DEAR BRYCE: Please move this to a different file. Thanks, Bryce.
+	  $('#addPolicyBtn').click( function () {
+	  	var src = $('#srcSelect').select('selectedItem').text;
+	  	var sink = $('#sinkSelect').select('selectedItem').text;
+	  	$('#src-sink-table tr:last').after('<tr><td><input type="checkbox"><i class="checkbox"></i></td><td><i class="icon-remove"></i></td><td>'+src+'</td><td>'+sink+'</td></tr>');
+
+	  	$('#src-sink-table .icon-remove').click(function () {
+	  		$(this).parent().parent().remove();
+
+  		});
+	});
+
+
+  	$('#src-sink-table .icon-remove').click(function () {
+  		$(this).parent().parent().remove();
+
+	});
+
+	});
+	</script>
+	
+	<script>
+	  var ws = new WebSocket("ws://localhost:8080/stamp/pushupdates");
+	  ws.onmessage = processMessage;
+	</script>
+	
+  </body>
+</html>
