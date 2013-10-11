@@ -41,6 +41,7 @@ public class JimplePrinterAnalysis extends JavaAnalysis {
 
 			// GET STRUCTURE AND PRINT
 			CodeStructureInfo codeInfo = jse.getCodeStructureInfo();
+			/*
 			System.out.println("PRINTING CLASS INFO:");
 			for(SootClass cl : codeInfo.getClasses()) {
 				System.out.println(cl.toString() + ": " + codeInfo.getClassInfo(cl).toString());
@@ -49,6 +50,7 @@ public class JimplePrinterAnalysis extends JavaAnalysis {
 			for(SootMethod m : codeInfo.getMethods()) {
 				System.out.println(m.toString() + ": " + codeInfo.getMethodInfo(m).toString());
 			}
+			*/
 
 			JimpleSourceInfo sourceInfo = SourceInfoSingleton.getJimpleSourceInfo();
 

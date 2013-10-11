@@ -118,8 +118,8 @@ public class Tuple {
 	
 	public final Tuple addValueWithSig(String label, SootClass klass, String lineNum, String type, String chordSig) {
 		String srcFile = sourceInfo.filePath(klass);
-		System.out.println("DEBUG: Tuple source info type 1 " + (sourceInfo instanceof JimpleSourceInfo));
-		System.out.println("DEBUG: Tuple source path " + srcFile);
+		//System.out.println("DEBUG: Tuple source info type 1 " + (sourceInfo instanceof JimpleSourceInfo));
+		//System.out.println("DEBUG: Tuple source path " + srcFile);
 		str = (str != null ? str : "") +
 			"\t<value"+
 			(srcFile == null ? "" : (" srcFile=\""+srcFile+"\" lineNum=\""+lineNum+"\"")) +
@@ -145,8 +145,8 @@ public class Tuple {
 
 	public final Tuple addValueWithHighlight(SootClass klass, Expr e) {
 		String srcFile = sourceInfo.filePath(klass);
-		System.out.println("DEBUG: Tuple source info type 2 " + (sourceInfo instanceof JimpleSourceInfo));
-		System.out.println("DEBUG: Tuple source path " + srcFile);
+		//System.out.println("DEBUG: Tuple source info type 2 " + (sourceInfo instanceof JimpleSourceInfo));
+		//System.out.println("DEBUG: Tuple source path " + srcFile);
 		str = (str != null ? str : "") +
 			"\t<value srcFile=\""+srcFile+
 			"\" lineNum=\""+e.line()+"\""+

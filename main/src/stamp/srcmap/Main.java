@@ -62,6 +62,7 @@ public class Main {
 			infoFile.delete();
 		}
 		
+		/*
 		try {
 			XMLContainerObject object = visitor.getXMLObject();
 			File objectFile = new File(srcMapDir, relSrcFilePath.replace(".java", ".obj"));
@@ -73,6 +74,7 @@ public class Main {
 			System.out.println("FAILED TO PRINT XML OBJECT FOR " + javaFile.getName() + "!");
 			e.printStackTrace();
 		}
+		*/
 
 		AnnotationReader annotReader = new AnnotationReader(canonicalPath);		
 		cu.accept(annotReader);	

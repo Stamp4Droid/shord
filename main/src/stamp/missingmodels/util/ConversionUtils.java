@@ -118,7 +118,7 @@ public class ConversionUtils {
 		/*
 		 * The following are phantom points-to relations.
 		 */
-		//relations.add("flowsTo", new IndexRelation("phpt", "V", 3, 2, "V", 1, 0));
+		//relations.add("flowsTo", new IndexRelation("phpt", "V", 2, 3, "V", 1, 0));
 		
 		/*
 		 * The following are taint information.
@@ -236,8 +236,15 @@ public class ConversionUtils {
 		relations.add("refArg2PrimRetTStub", new StubIndexRelation("RefArg2PrimRetTStub", "V", 1, 0, "U", 2, 0, 3, 4));
 		relations.add("primArg2PrimRetTStub", new StubIndexRelation("PrimArg2PrimRetTStub", "U", 1, 0, "U", 2, 0, 3, 4));
 		
-		// phantom points to
-		relations.add("pt", new IndexRelation("phpt", "V", 1, 0, "V", 3, 2));
+		// partial pt
+		relations.add("preFlowsTo", new IndexRelation("PreFlowsTo", "O", 1, null, "V", 2, 0));
+		relations.add("postFlowsTo", new IndexRelation("PostFlowsTo", "V", 1, 0, "V", 3, 2));
+		relations.add("midFlowsTo", new IndexRelation("MidFlowsTo", "V", 1, 0, "V", 3, 2));
+		
+		// partial pt helper
+		relations.add("storeCtxt", new IndexRelation("StoreCtxt", "V", 1, 0, "V", 2, 0, 3));
+		relations.add("storeArrCtxt", new IndexRelation("StoreArrCtxt", "V", 1, 0, "V", 2, 0));
+		
 	}
 	
 	/*
