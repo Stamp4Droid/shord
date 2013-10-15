@@ -566,8 +566,9 @@ public:
     // be added.
     bool add(Edge *e, Edge *parent);
     const std::set<Edge*>& operator[](Edge *e);
-    Iterator begin() const;
-    Iterator end() const;
+    // TODO: Reintroduce constness.
+    Iterator begin();
+    Iterator end();
     Edge *first();
 };
 
@@ -615,8 +616,9 @@ public:
 	Group(Position group_by);
 	void add(const Derivation& deriv, Edge *parent);
 	Size size() const;
-	Iterator begin() const;
-	Iterator end() const;
+	// TODO: Reintroduce constness.
+	Iterator begin();
+	Iterator end();
     };
 
 public:
@@ -672,7 +674,8 @@ private:
 	Step* const next_sibling; // next in the step sequence (tree level)
 	// TODO: Waste of space in the case of singleton groups, should at
 	// least use a lightweight set data structure inside EdgeGroup.
-	const EdgeGroup edges;
+	// TODO: Reintroduce constness.
+	EdgeGroup edges;
 	const bool reverse; // relative to the original Edge
     private:
 	bool expanded;
@@ -683,7 +686,8 @@ private:
 	// - expanded non-terminal steps with no possible expansions
 	std::vector<Step*> choices;
     private:
-	void check_invariants() const;
+	// TODO: Reintroduce constness.
+	void check_invariants();
 	explicit Step(Step *parent, Step *next_sibling, EdgeGroup&& edges,
 		      bool reverse);
 	// Passed grouping is invalidated.
@@ -691,10 +695,12 @@ private:
 	/**
 	 * Check if @a deriv could have produced the given Edge on this Step.
 	 */
-	bool valid_derivation(const Derivation& deriv, Edge *e) const;
+	// TODO: Reintroduce constness.
+	bool valid_derivation(const Derivation& deriv, Edge *e);
     public:
 	explicit Step(Edge *top_edge);
-	bool is_terminal() const;
+	// TODO: Reintroduce constness.
+	bool is_terminal();
 	bool is_expanded() const;
 	bool is_closed() const;
 	bool valid_choice(CHOICE_REF c) const;
@@ -718,8 +724,10 @@ private:
 	/**
 	 * Estimate the total length of a Step sequence starting at this Step.
 	 */
-	PATH_LENGTH estimate_sequence_length() const;
-	void print(std::stack<CHOICE_REF>& path, FILE *f) const;
+	// TODO: Reintroduce constness
+	PATH_LENGTH estimate_sequence_length();
+	// TODO: Reintroduce constness
+	void print(std::stack<CHOICE_REF>& path, FILE *f);
     };
 
     // can either be right before a choice, right after a choice, or at the end
@@ -773,7 +781,8 @@ public:
     explicit StepTree(Edge *top_edge);
     // Builds up a complete (shortest) path, expands tree as needed.
     std::stack<CHOICE_REF> expand();
-    void print_path(const std::stack<CHOICE_REF>& path, FILE *f) const;
+    // TODO: Reintroduce constness.
+    void print_path(const std::stack<CHOICE_REF>& path, FILE *f);
 };
 
 /**

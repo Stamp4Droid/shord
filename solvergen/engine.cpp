@@ -933,7 +933,7 @@ Derivation::split(Position group_by) const {
 
 /* STEP HANDLING =========================================================== */
 
-void StepTree::Step::check_invariants() const {
+void StepTree::Step::check_invariants() {
     assert(!is_terminal() || !expanded);
     assert(expanded || choices.empty());
     // TODO: Could check the parent pointer on all the sub-steps.
@@ -987,7 +987,7 @@ void StepTree::Step::add_choices(Derivation::Group& grouping) {
     }
 }
 
-bool StepTree::Step::valid_derivation(const Derivation& deriv, Edge *e) const {
+bool StepTree::Step::valid_derivation(const Derivation& deriv, Edge *e) {
     // TODO: Verify that e is actually an Edge of the current EdgeGroup.
     Edge *left_edge = deriv.left_edge;
     Edge *right_edge = deriv.right_edge;
@@ -1021,7 +1021,7 @@ bool StepTree::Step::valid_derivation(const Derivation& deriv, Edge *e) const {
 StepTree::Step::Step(Edge *top_edge)
     : Step(NULL, NULL, EdgeGroup(top_edge), false) {}
 
-bool StepTree::Step::is_terminal() const {
+bool StepTree::Step::is_terminal() {
     return ::is_terminal(edges.first()->kind);
 }
 
@@ -1116,9 +1116,9 @@ StepTree::Step *StepTree::Step::follow(CHOICE_REF choice) const {
     return choices.at(choice);
 }
 
-PATH_LENGTH StepTree::Step::estimate_sequence_length() const {
+PATH_LENGTH StepTree::Step::estimate_sequence_length() {
     PATH_LENGTH min_length = 0;
-    for (const Step *step = this; step != NULL; step = step->next_sibling) {
+    for (Step *step = this; step != NULL; step = step->next_sibling) {
 	min_length += static_min_length(step->edges.first()->kind);
     }
     return min_length;
@@ -1367,7 +1367,7 @@ void print_step_close(Edge *edge, FILE *f) {
 // For now, the client of this output will need to bake the results (or we
 // could avoid printing immediatelly, and do this at a post-processing step).
 // TODO: Generalize visitor pattern.
-void StepTree::Step::print(std::stack<CHOICE_REF>& path, FILE *f) const {
+void StepTree::Step::print(std::stack<CHOICE_REF>& path, FILE *f) {
     print_step_open(edges.first(), reverse, f);
     if (!is_terminal()) {
 	assert(!path.empty());
@@ -1380,7 +1380,7 @@ void StepTree::Step::print(std::stack<CHOICE_REF>& path, FILE *f) const {
     print_step_close(edges.first(), f);
 }
 
-void StepTree::print_path(const std::stack<CHOICE_REF>& path, FILE *f) const {
+void StepTree::print_path(const std::stack<CHOICE_REF>& path, FILE *f) {
     fprintf(f, "<path>\n");
     std::stack<CHOICE_REF> p(path);
     root.print(p, f);
