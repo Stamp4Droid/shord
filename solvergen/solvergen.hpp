@@ -470,9 +470,7 @@ private:
      * without breaking the View interface.
      */
     static V dummy;
-    /**
-     * The actual contents of the LightMap.
-     */
+    /** The actual contents of the LightMap. */
     List list;
 private:
     /**
@@ -481,15 +479,14 @@ private:
      */
     typename List::iterator find(K k);
 public:
-    /**
-     * Create an empty LightMap.
-     */
+    /** Create an empty LightMap. */
     LightMap();
     /**
      * Retrieve the value mapped to key @a k. If @a k is not present in the
      * LightMap, a dummy default-constructed element is returned, which should
      * not be modified.
      */
+    // TODO: Immutability requirement on returned reference is not enforced.
     V& const_get(K k);
     /**
      * Retrieve the value mapped to key @a k. If @a k is not present in the
@@ -515,14 +512,25 @@ struct Node {
     LightMap<EDGE_KIND,OutEdgeSet> out;
 };
 
-/**
- * Structure describing a possible way to produce an Edge.
- */
+/** Structure describing a possible way to produce an Edge. */
 struct Derivation {
-    Edge *left_edge;
-    Edge *right_edge;
-    bool left_reverse;
-    bool right_reverse;
+public:
+    Edge* const left_edge;
+    Edge* const right_edge;
+    const bool left_reverse;
+    const bool right_reverse;
+public:
+    /**
+     * @addtogroup PublicAPI
+     * @{
+     */
+    Derivation();
+    Derivation(Edge *e, bool reverse);
+    Derivation(Edge *left_edge, bool left_reverse,
+	       Edge *right_edge, bool right_reverse);
+    /**
+     * @}
+     */
 };
 
 /**
@@ -860,11 +868,6 @@ Edge *find_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index);
  */
 const std::set<INDEX>& rel_select(RELATION_REF ref, ARITY proj_col,
 				  INDEX val_a, INDEX val_b);
-
-Derivation derivation_empty();
-Derivation derivation_single(Edge *e, bool reverse);
-Derivation derivation_double(Edge *left_edge, bool left_reverse,
-			     Edge *right_edge, bool right_reverse);
 
 /**
  * @}

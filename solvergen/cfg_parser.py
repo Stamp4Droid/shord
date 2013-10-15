@@ -1470,7 +1470,7 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
                 # Empty production
                 pr.write('if (from == to) {')
                 if emit_derivs:
-                    pr.write('derivs.push_back(derivation_empty());')
+                    pr.write('derivs.push_back(Derivation());')
                 else:
                     pr.write('return true;')
                 pr.write('}')
@@ -1497,7 +1497,7 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
             if p.right is None:
                 # single production
                 if emit_derivs:
-                    pr.write('derivs.push_back(derivation_single(l, %s));'
+                    pr.write('derivs.push_back(Derivation(l, %s));'
                              % l_rev)
                 else:
                     pr.write('return true;')
@@ -1521,8 +1521,8 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
                 if in_cond is not None:
                     pr.write('if (%s) {' % in_cond)
                 if emit_derivs:
-                    pr.write('derivs.push_back(derivation_double' +
-                             '(l, %s, r, %s));' % (l_rev, r_rev))
+                    pr.write('derivs.push_back(Derivation(l, %s, r, %s));'
+                             % (l_rev, r_rev))
                 else:
                     pr.write('return true;')
                 if in_cond is not None:

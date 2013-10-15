@@ -767,18 +767,18 @@ void print_results() {
 
 /* DERIVATION HANDLING ===================================================== */
 
-Derivation derivation_empty() {
-    return Derivation({NULL, NULL, false, false});
-}
+Derivation::Derivation()
+    : left_edge(NULL),     right_edge(NULL),
+      left_reverse(false), right_reverse(false) {}
 
-Derivation derivation_single(Edge *e, bool reverse) {
-    return Derivation({e, NULL, reverse, false});
-}
+Derivation::Derivation(Edge *e, bool reverse)
+    : left_edge(e),          right_edge(NULL),
+      left_reverse(reverse), right_reverse(false) {}
 
-Derivation derivation_double(Edge *left_edge, bool left_reverse,
-			     Edge *right_edge, bool right_reverse) {
-    return Derivation({left_edge, right_edge, left_reverse, right_reverse});
-}
+Derivation::Derivation(Edge *left_edge,  bool left_reverse,
+		       Edge *right_edge, bool right_reverse)
+    : left_edge(left_edge),       right_edge(right_edge),
+      left_reverse(left_reverse), right_reverse(right_reverse) {}
 
 /* STEP HANDLING =========================================================== */
 
