@@ -366,9 +366,17 @@ Edge *edge_new(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 /**
  * Check if two Edge objects represent the same graph edge.
  */
+// TODO: Don't need to perform the field checks; Edges are uniqued (should
+// still use this function instead of a naked pointer check).
 bool edge_equals(Edge *a, Edge *b) {
     return a == b || ((a->from == b->from) && (a->to == b->to) &&
 		      (a->kind == b->kind) && (a->index == b->index));
+}
+
+bool same_arc(Edge *a, Edge *b) {
+    // TODO: The equality check is added to gracefully handle NULL pointers.
+    return a == b || ((a->from == b->from) && (a->to == b->to) &&
+		      (a->kind == b->kind));
 }
 
 /* OUTGOING EDGE SET OPERATIONS ============================================ */
@@ -799,6 +807,106 @@ void print_results() {
 
 /* DERIVATION HANDLING ===================================================== */
 
+EdgeGroup::EdgeGroup(Edge *top_edge) {
+    edges[top_edge];
+}
+
+EdgeGroup::EdgeGroup(Edge *e, Edge *parent) {
+    edges[e].insert(parent);
+}
+
+EdgeGroup::EdgeGroup(Edge *e, EdgeGroup& prods_src) {
+    for (const auto& edgeAndProds : prods_src) {
+	const std::set<Edge*>& prods = edgeAndProds.second;
+	edges[e].insert(prods.cbegin(), prods.cend());
+    }
+}
+
+void EdgeGroup::swap(EdgeGroup& other) {
+    std::swap(edges, other.edges);
+}
+
+EdgeGroup::EdgeGroup(EdgeGroup&& other) {
+    other.swap(*this);
+}
+
+bool EdgeGroup::add(Edge *e, Edge *parent) {
+    // No need to record the characteristics of the group's endpoints, we can
+    // just check against an arbitrary edge from the group (since it's always
+    // non-empty).
+    if (same_arc(e, first())) {
+	edges[e].insert(parent);
+	return true;
+    }
+    return false;
+}
+
+const std::set<Edge*>& EdgeGroup::operator[](Edge *e) {
+    return edges.at(e);
+}
+
+EdgeGroup::Iterator EdgeGroup::begin() {
+    return edges.begin();
+}
+
+EdgeGroup::Iterator EdgeGroup::end() {
+    return edges.end();
+}
+
+Edge *EdgeGroup::first() {
+    return begin()->first;
+}
+
+Derivation::Shared::Shared(Edge* common_edge, bool left_reverse,
+			   bool right_reverse)
+    : common_edge(common_edge), left_reverse(left_reverse),
+      right_reverse(right_reverse) {}
+
+
+bool Derivation::Shared::is_null() const {
+    return common_edge == NULL;
+}
+
+bool Derivation::Shared::operator==(const Shared& other) const {
+    // TODO: Using pointer equality for Edge*.
+    return (common_edge == other.common_edge &&
+	    left_reverse == other.left_reverse &&
+	    right_reverse == other.left_reverse);
+}
+
+Derivation::Group::Group(Position group_by) : group_by(group_by) {}
+
+void Derivation::Group::add(const Derivation& deriv, Edge *parent) {
+    std::pair<Shared,Edge*> parts = deriv.split(group_by);
+    // Group the single and empty Derivations under a special Shared part.
+    // Derivation::split() will always return NULL in the Shared part for
+    // those, regardless of requested direction.
+    std::forward_list<EdgeGroup>& completions = groups[parts.first];
+    Edge *e = parts.second;
+
+    for (EdgeGroup& g : completions) {
+	if (g.add(e, parent)) {
+	    return;
+	}
+    }
+    completions.emplace_front(e, parent);
+}
+
+// Not accurate: will count all non-double derivations as one group, but that's
+// acceptable, because this is only used for comparing groupings, and both
+// possible directions treat those Derivations in the same way.
+Derivation::Group::Size Derivation::Group::size() const {
+    return groups.size();
+}
+
+Derivation::Group::Iterator Derivation::Group::begin() {
+    return groups.begin();
+}
+
+Derivation::Group::Iterator Derivation::Group::end() {
+    return groups.end();
+}
+
 Derivation::Derivation()
     : left_edge(NULL),     right_edge(NULL),
       left_reverse(false), right_reverse(false) {}
@@ -812,6 +920,17 @@ Derivation::Derivation(Edge *left_edge,  bool left_reverse,
     : left_edge(left_edge),       right_edge(right_edge),
       left_reverse(left_reverse), right_reverse(right_reverse) {}
 
+std::pair<Derivation::Shared,Edge*>
+Derivation::split(Position group_by) const {
+    if (group_by == Position::RIGHT || right_edge == NULL) {
+	return std::make_pair(Shared(right_edge, left_reverse, right_reverse),
+			      left_edge);
+    } else {
+	return std::make_pair(Shared(left_edge, left_reverse, right_reverse),
+			      right_edge);
+    }
+}
+
 /* STEP HANDLING =========================================================== */
 
 void StepTree::Step::check_invariants() const {
@@ -821,47 +940,89 @@ void StepTree::Step::check_invariants() const {
     // TODO: Could check that all sub-steps of a closed Step are also closed.
 }
 
-StepTree::Step::Step(Step *parent, Step *next_sibling, Edge *edge,
+StepTree::Step::Step(Step *parent, Step *next_sibling, EdgeGroup&& edges,
 		     bool reverse)
-    : parent(parent), next_sibling(next_sibling), edge(edge), reverse(reverse),
-      expanded(false), closed(false) {
+    : parent(parent), next_sibling(next_sibling), edges(std::move(edges)),
+      reverse(reverse), expanded(false), closed(false) {
     check_invariants();
 }
 
-StepTree::Step *StepTree::Step::make_sub_steps(const Derivation& deriv) {
-    if (deriv.left_edge == NULL) {
-	assert(deriv.right_edge == NULL);
-	return NULL;
+void StepTree::Step::add_choices(Derivation::Group& grouping) {
+    for (auto& subgroup : grouping) {
+	const Derivation::Shared& common = subgroup.first;
+	std::forward_list<EdgeGroup>& completions = subgroup.second;
+
+	if (common.is_null()) {
+	    // Special case for empty and single productions
+	    for (EdgeGroup& g : completions) {
+		// Don't create any choices for empty productions.
+		if (g.first() != NULL) {
+		    choices.push_back(new Step(this, NULL, std::move(g),
+					       common.left_reverse));
+		}
+	    }
+	    return;
+	}
+
+	bool common_l = grouping.group_by == Position::LEFT;
+	for (EdgeGroup& g : completions) {
+	    assert(g.first() != NULL);
+	    // The shared Edge can produce in any of the parent Edges that the
+	    // completion Edges produce.
+	    // BUG: The two chains are now independent, so we might accept a
+	    // derivation chaing that wouldn't work if we kept them linked.
+	    // Will probably not cause an infinite loop, just a slightly
+	    // inconsistent result.
+	    EdgeGroup common_group = EdgeGroup(common.common_edge, g);
+	    Step *second =
+		new Step(this, NULL,
+			 (common_l) ? std::move(g) : std::move(common_group),
+			 common.right_reverse);
+	    Step *first =
+		new Step(this, second,
+			 (common_l) ? std::move(common_group) : std::move(g),
+			 common.left_reverse);
+	    choices.push_back(first);
+	}
     }
-    Step *second = NULL;
-    if (deriv.right_edge != NULL) {
-	second = new Step(this, NULL, deriv.right_edge, deriv.right_reverse);
-    }
-    return new Step(this, second, deriv.left_edge, deriv.left_reverse);
 }
 
-bool StepTree::Step::valid_derivation(const Derivation& deriv) const {
+bool StepTree::Step::valid_derivation(const Derivation& deriv, Edge *e) const {
+    // TODO: Verify that e is actually an Edge of the current EdgeGroup.
     Edge *left_edge = deriv.left_edge;
     Edge *right_edge = deriv.right_edge;
+    // Nothing to check for an empy Derivation.
     if (left_edge == NULL) {
 	assert(right_edge == NULL);
 	return true;
     }
-    // Verify that we haven't already recursed on one of the Edges in the
-    // Derivation.
-    for (const Step *step = this; step != NULL; step = step->parent) {
-	if (edge_equals(step->edge, left_edge) ||
-	    (right_edge != NULL && edge_equals(step->edge, right_edge))) {
-	    return false;
+    // Verify that the producing Edges don't conflict with our current Edge.
+    if (edge_equals(e, left_edge) ||
+	(right_edge != NULL && edge_equals(e, right_edge))) {
+	return false;
+    }
+    // Nothing more to check if we're at the top Edge of the StepTree.
+    if (parent == NULL) {
+	assert(edges[e].empty());
+	return true;
+    }
+    // Verify that we haven't recursed on one of the Edges in the Derivation.
+    // We only need to find a single consistent production chain for the
+    // current Edge.
+    for (Edge *product : edges[e]) {
+	if (parent->valid_derivation(deriv, product)) {
+	    return true;
 	}
     }
-    return true;
+    // No production chain without repetition could be found.
+    return false;
 }
 
-StepTree::Step::Step(Edge *top_edge) : Step(NULL, NULL, top_edge, false) {}
+StepTree::Step::Step(Edge *top_edge)
+    : Step(NULL, NULL, EdgeGroup(top_edge), false) {}
 
 bool StepTree::Step::is_terminal() const {
-    return ::is_terminal(edge->kind);
+    return ::is_terminal(edges.first()->kind);
 }
 
 bool StepTree::Step::is_expanded() const {
@@ -891,18 +1052,44 @@ void StepTree::Step::expand() {
     }
     expanded = true;
 
-    // Calculate all derivations that could have produced the Edge. Some of
-    // these might be invalid for this Step, so we filter them out and record
-    // the rest as possible sub-steps.
-    // TODO: Prune the branch if we find no valid derivations.
-    std::list<Derivation> derivs = all_derivations(edge);
-    // Make sure we don't get more Derivations than we can store.
-    // TODO: Move this inside the invocation.
-    assert(VALID_CHOICE_REF(derivs.size()));
-    for (const Derivation &d : derivs) {
-	if (valid_derivation(d)) {
-	    choices.push_back(make_sub_steps(d));
+    // We only support Edge grouping on one of the two sub-steps, so we need to
+    // decide which grouping strategy would be more efficient. For this reason,
+    // we build two alternative groupings from Derivations, then pick the best.
+    // TODO: Allow grouping on both positions. But we need to allow independent
+    // expansion of the two sub-steps, so that would only trigger iff we're
+    // processing the cartesian product of two index sets. Alternatively, we
+    // could track the relationship between the two.
+    // TODO: Could allow both kinds of grouping simultaneously (some part of
+    // the choices are grouped one way, and the rest the other way).
+    Derivation::Group left_grouping(Position::LEFT);
+    Derivation::Group right_grouping(Position::RIGHT);
+
+    // TODO: Make sure we don't get more choices than we can store.
+    for (const auto& edgeAndProds : edges) {
+	Edge *parent = edgeAndProds.first;
+	// For each Edge in the current EdgeGroup, calculate all derivations
+	// that could have produced it.
+	// TODO: Could build the maps directly inside all_derivations, instead
+	// of returning a list (but would have to filter for validity on the
+	// maps).
+	for (const Derivation& d : all_derivations(parent)) {
+	    // Some of these might be invalid for this Step, so we filter them.
+	    // TODO: Prune the branch if we find no valid derivations.
+	    if (valid_derivation(d, parent)) {
+		left_grouping.add(d, parent);
+		right_grouping.add(d, parent);
+	    }
 	}
+    }
+
+    // Pick the best grouping: currently just taking the one with the fewest
+    // common groups.
+    // TODO: Should also count the #choices each shared group would produce.
+    // TODO: Could implement a better decision heuristic.
+    if (left_grouping.size() < right_grouping.size()) {
+	add_choices(left_grouping);
+    } else {
+	add_choices(right_grouping);
     }
 
     check_invariants();
@@ -932,7 +1119,7 @@ StepTree::Step *StepTree::Step::follow(CHOICE_REF choice) const {
 PATH_LENGTH StepTree::Step::estimate_sequence_length() const {
     PATH_LENGTH min_length = 0;
     for (const Step *step = this; step != NULL; step = step->next_sibling) {
-	min_length += static_min_length(step->edge->kind);
+	min_length += static_min_length(step->edges.first()->kind);
     }
     return min_length;
 }
@@ -958,8 +1145,8 @@ StepTree::Expander::Expander(Step *curr_step, CHOICE_REF choice,
 }
 
 StepTree::Expander::Expander(Step *top_step)
-    : Expander(top_step, CHOICE_NONE, static_min_length(top_step->edge->kind),
-	       NULL) {}
+    : Expander(top_step, CHOICE_NONE,
+	       static_min_length(top_step->edges.first()->kind), NULL) {}
 
 bool StepTree::Expander::at_closed_step() const {
     return curr_step != NULL && curr_step->is_closed();
@@ -1042,7 +1229,8 @@ std::list<StepTree::Expander> StepTree::Expander::fork() const {
     curr_step->expand();
 
     std::list<Expander> children;
-    PATH_LENGTH curr_edge_estimate = static_min_length(curr_step->edge->kind);
+    PATH_LENGTH curr_edge_estimate =
+	static_min_length(curr_step->edges.first()->kind);
 
     for (CHOICE_REF c = 0; c < curr_step->num_choices(); c++) {
 	Step *sub_steps = curr_step->follow(c);
@@ -1180,7 +1368,7 @@ void print_step_close(Edge *edge, FILE *f) {
 // could avoid printing immediatelly, and do this at a post-processing step).
 // TODO: Generalize visitor pattern.
 void StepTree::Step::print(std::stack<CHOICE_REF>& path, FILE *f) const {
-    print_step_open(edge, reverse, f);
+    print_step_open(edges.first(), reverse, f);
     if (!is_terminal()) {
 	assert(!path.empty());
 	CHOICE_REF c = path.top();
@@ -1189,7 +1377,7 @@ void StepTree::Step::print(std::stack<CHOICE_REF>& path, FILE *f) const {
 	    s->print(path, f);
 	}
     }
-    print_step_close(edge, f);
+    print_step_close(edges.first(), f);
 }
 
 void StepTree::print_path(const std::stack<CHOICE_REF>& path, FILE *f) const {

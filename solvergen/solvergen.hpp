@@ -525,8 +525,100 @@ struct Node {
     LightMap<EDGE_KIND,OutEdgeSet> out;
 };
 
+// Group of Edges corresponding to the same Arc (same endpoints and kind).
+// Specialized for use in the witness search.
+// TODO: Invariant that all Edges are compatible is only mildly enforced.
+// TODO: Parent-product relationship not checked -- we depend on the client of
+// the interface to only feed us real pairs.
+// TODO: Use some more lightweight data structure for the product set.
+// TODO: The map is always non-empty, but this invariant is not checked.
+// XXX: We depend on the fact that Edges are uniqued, i.e. that:
+// if e1->{from,to,kind,index} == e2->{from,to,kind,index}, then e1 == e2
+// in order to avoid duplicate entries.
+// TODO: Can even store NULL (should probably disallow that).
+class EdgeGroup {
+private:
+    // TODO: Could store pointers to free-store sets of Edges.
+    typedef LightMap<Edge*,std::set<Edge*>> ProductMap;
+public:
+    typedef ProductMap::Iterator Iterator;
+private:
+    /**
+     * A set of Edge%s, where each Edge also carries information about all the
+     * Edge%s it's been discovered to derive (called its products). An Edge
+     * can have zero products (specifically, the one at the root of the
+     * StepTree). The products are kept so that we can perform the recursion
+     * check properly in StepTree::Step::expand().
+     */
+    ProductMap edges;
+public:
+    EdgeGroup(Edge *top_edge);
+    EdgeGroup(Edge *e, Edge *parent);
+    // TODO: Reintroduce constness.
+    EdgeGroup(Edge *e, EdgeGroup& prods_src);
+    void swap(EdgeGroup& other);
+    // Copy constructor and assignment removed, to make sure we never copy the
+    // struct into a Derivation::Group, but rather move.
+    EdgeGroup(const EdgeGroup& other) = delete;
+    EdgeGroup& operator=(const EdgeGroup& other) = delete;
+    EdgeGroup(EdgeGroup&& other);
+    // Returns true iff the Edge was compatible with this group, and thus could
+    // be added.
+    bool add(Edge *e, Edge *parent);
+    const std::set<Edge*>& operator[](Edge *e);
+    Iterator begin() const;
+    Iterator end() const;
+    Edge *first();
+};
+
+enum class Position {LEFT, RIGHT};
+
 /** Structure describing a possible way to produce an Edge. */
 struct Derivation {
+public:
+
+    // TODO: Could instead use common_reverse and completion_reverse.
+    struct Shared {
+	Edge* const common_edge;
+	const bool left_reverse;
+	const bool right_reverse;
+    public:
+	Shared(Edge* common_edge, bool left_reverse, bool right_reverse);
+	/**
+	 * Whether this instance corresponds to the special "no additional Edge
+	 * required" Shared part. This is used to group the single and empty
+	 * Derivation%s.
+	 */
+	bool is_null() const;
+	bool operator==(const Shared& other) const;
+    };
+
+    class Group {
+    private:
+	typedef LightMap<Shared,std::forward_list<EdgeGroup>> Map;
+    public:
+	typedef Map::Size Size;
+	typedef Map::Iterator Iterator;
+    public:
+	/**
+	 * What position we're grouping by. Irrelevant for single and empty
+	 * derivations; those are always grouped under a special Shared part
+	 * with a @e NULL Shared::common_edge.
+	 */
+	// TODO: Then the corresponding 'reverse' flag will always be false,
+	// so they will be matched on output.
+	const Position group_by;
+    private:
+	// TODO: Could group non-common Edges using a LightMap<Arc,IndexSet>.
+	Map groups;
+    public:
+	Group(Position group_by);
+	void add(const Derivation& deriv, Edge *parent);
+	Size size() const;
+	Iterator begin() const;
+	Iterator end() const;
+    };
+
 public:
     Edge* const left_edge;
     Edge* const right_edge;
@@ -544,6 +636,9 @@ public:
     /**
      * @}
      */
+    // Always groups single and empty Derivations on a NULL Shared part,
+    // regardless of requested direction.
+    std::pair<Shared,Edge*> split(Position group_by) const;
 };
 
 /**
@@ -552,7 +647,8 @@ public:
  * in Step nodes. Each node can have more than one disjoint sets of children,
  * representing all the possible combinations that can produce it. The tree
  * starts out as a single node, and can be filled-in by expanding one Step at a
- * time.
+ * time. A single Step can represent multiple Edge%s sharing the same endpoints
+ * and @Kind.
  */
 // TODO: No support for freeing allocated memory. The StepTree destructor
 // should recursively destroy the subtrees.
@@ -562,6 +658,7 @@ private:
 
     // NULL stands for empty Path
     // TODO: No memory deallocation support, should ref-count.
+    // TODO: Should wrap in a class.
     struct Path {
 	Path* const prefix;
 	const CHOICE_REF last;
@@ -573,7 +670,9 @@ private:
     public:
 	Step* const parent;
 	Step* const next_sibling; // next in the step sequence (tree level)
-	Edge* const edge;
+	// TODO: Waste of space in the case of singleton groups, should at
+	// least use a lightweight set data structure inside EdgeGroup.
+	const EdgeGroup edges;
 	const bool reverse; // relative to the original Edge
     private:
 	bool expanded;
@@ -585,13 +684,14 @@ private:
 	std::vector<Step*> choices;
     private:
 	void check_invariants() const;
-	explicit Step(Step *parent, Step *next_sibling, Edge *edge,
+	explicit Step(Step *parent, Step *next_sibling, EdgeGroup&& edges,
 		      bool reverse);
-	Step *make_sub_steps(const Derivation& deriv);
+	// Passed grouping is invalidated.
+	void add_choices(Derivation::Group& grouping);
 	/**
-	 * Check if @a deriv could have produced the Edge for this Step.
+	 * Check if @a deriv could have produced the given Edge on this Step.
 	 */
-	bool valid_derivation(const Derivation& deriv) const;
+	bool valid_derivation(const Derivation& deriv, Edge *e) const;
     public:
 	explicit Step(Edge *top_edge);
 	bool is_terminal() const;
