@@ -191,11 +191,11 @@ typename LightMap<K,V>::List::iterator LightMap<K,V>::find(K k) {
 }
 
 template<typename K, typename V>
-LightMap<K,V>::LightMap() {}
+LightMap<K,V>::LightMap() : list_size(0) {}
 
 template<typename K, typename V>
 V& LightMap<K,V>::const_get(K k) {
-    typename List::iterator pos = find(k);
+    auto pos = find(k);
     if (pos == list.end()) {
 	return dummy;
     } else {
@@ -205,13 +205,45 @@ V& LightMap<K,V>::const_get(K k) {
 
 template<typename K, typename V>
 V& LightMap<K,V>::operator[](K k) {
-    typename List::iterator pos = find(k);
+    auto pos = find(k);
     if (pos == list.end()) {
 	list.emplace_front(k, V());
+	list_size++;
 	return list.front().second;
     } else {
 	return (*pos).second;
     }
+}
+
+template<typename K, typename V>
+V& LightMap<K,V>::at(K k) {
+    auto pos = find(k);
+    if (pos == list.end()) {
+	throw std::out_of_range("");
+    } else {
+	return (*pos).second;
+    }
+}
+
+template<typename K, typename V>
+typename LightMap<K,V>::Size LightMap<K,V>::size() const {
+    return list_size;
+}
+
+template<typename K, typename V>
+typename LightMap<K,V>::Iterator LightMap<K,V>::begin() {
+    return list.begin();
+}
+
+template<typename K, typename V>
+typename LightMap<K,V>::Iterator LightMap<K,V>::end() {
+    return list.end();
+}
+
+template<typename K, typename V>
+void LightMap<K,V>::swap(LightMap& other) {
+    std::swap(list_size, other.list_size);
+    std::swap(list, other.list);
 }
 
 /* NODES HANDLING ========================================================== */

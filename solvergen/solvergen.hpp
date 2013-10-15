@@ -460,6 +460,10 @@ public:
 template<typename K, typename V> class LightMap {
 private:
     typedef std::forward_list<std::pair<K,V>> List;
+public:
+    typedef typename List::size_type Size;
+    // TODO: Should also provide constant iterator type.
+    typedef typename List::iterator Iterator;
 private:
     /**
      * A dummy default-constructed value element, returned by ::dummy_get(K k)
@@ -470,6 +474,8 @@ private:
      * without breaking the View interface.
      */
     static V dummy;
+    /** The size of the wrapped list. */
+    Size list_size;
     /** The actual contents of the LightMap. */
     List list;
 private:
@@ -481,6 +487,7 @@ private:
 public:
     /** Create an empty LightMap. */
     LightMap();
+    void swap(LightMap& other);
     /**
      * Retrieve the value mapped to key @a k. If @a k is not present in the
      * LightMap, a dummy default-constructed element is returned, which should
@@ -493,6 +500,12 @@ public:
      * LightMap, it get inserted under a newly default-constructed value.
      */
     V& operator[](K k);
+    /** Retrieve the value mapped to key @a k. Fail if @a k is not present. */
+    V& at(K k);
+    Size size() const;
+    // Iterator over K-V pairs.
+    Iterator begin();
+    Iterator end();
 };
 
 /**
