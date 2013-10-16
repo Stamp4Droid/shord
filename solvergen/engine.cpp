@@ -955,8 +955,10 @@ void StepTree::Step::add_choices(Derivation::Group& grouping) {
 	if (common.is_null()) {
 	    // Special case for empty and single productions
 	    for (EdgeGroup& g : completions) {
-		// Don't create any choices for empty productions.
-		if (g.first() != NULL) {
+		if (g.first() == NULL) {
+		    // Don't create a Step for empty productions.
+		    choices.push_back(NULL);
+		} else {
 		    choices.push_back(new Step(this, NULL, std::move(g),
 					       common.left_reverse));
 		}
