@@ -1301,7 +1301,7 @@ std::stack<CHOICE_REF> StepTree::expand() {
 	}
 	// The Expander points to a non-terminal Step: split it according to
 	// the expansion choices.
-	for (Expander e : l) {
+	for (Expander e : exp.fork()) {
 	    queue.push(e);
 	}
 
