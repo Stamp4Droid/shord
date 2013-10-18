@@ -51,12 +51,18 @@
 
 	      <ul class="nav pull-left">
 			<li>
+			    <!-- <span class="btn"> -->
+			    <!--   <i class="icon-cog"></i> -->
+			    <!--   <span>Admin</span> -->
+			    <!-- </span> -->
 			    <span class="btn">
-			      <i class="icon-cog"></i>
-			      <span>Admin</span>
+			      <span>Risk View (sorted/summarized grid)</span>
 			    </span>
-			    <span class="btn disabled">
-			      <span>Policy List</span>
+			    <span class="btn">
+			      <span>App View (the grid)</span>
+			    </span>
+			    <span class="btn">
+			      <span>Policy View</span>
 			    </span>
 			</li>
 			</li>
@@ -84,8 +90,28 @@
 
 	    <!--Sidebar content-->
  	    <div class="span3">
+
+	      <h3>Policy List
+	      <button class="btn btn-inverse" type="button" style="margin-left: 10px;" id="addNewPolicyBtn">Add Policy</button></h3> 
+
+
+
 	      <table id="appslist" class="table table-striped appslist">
 		<tbody>
+		  <tr>
+		    <td><a href="">Advanced Persistent Threat 1</a></td>
+		    <td><button class="btn btn-inverse" type="button" style="margin-left: 10px;" id="evalPolicy">Eval</button> </td>
+		  </tr>
+		  <tr>
+		    <td><a href="">Advanced Persistent Threat 2</a></td>
+		    <td><button class="btn btn-inverse" type="button" style="margin-left: 10px;" id="evalPolicy">Eval</button> </td>
+		  </tr>
+		  <tr><td><a href="">Data Leak Prevention</a></td>
+		    <td><button class="btn btn-inverse" type="button" style="margin-left: 10px;" id="evalPolicy">Eval</button> </td>
+		  </tr>
+		  <tr><td><a href="">Authorized Cloud Services</a></td>
+		    <td><button class="btn btn-inverse" type="button" style="margin-left: 10px;" id="evalPolicy">Eval</button> </td>
+		  </tr>
 		</tbody>
 	      </table>
 	    </div>
@@ -94,6 +120,8 @@
 	    <div class="span6" id="reportdiv">
 
 	    	<div class="well" style="margin-bottom:10px; text-align: center;">
+		    	<h5 style="display: inline;">Name: </h5><form><input type="text"></input></form>
+
 		    	<h5 style="display: inline;">
 		    		Policy List Mode:
 		    	</h5>
@@ -110,7 +138,8 @@
 		    	<div class="select btn-group" id="srcSelect">
 		    		<button type="button" data-toggle="dropdown" class="btn dropdown-toggle"><span class="dropdown-label"></span><span class="caret"></span></button>
 		    		<ul class="dropdown-menu" style="max-height: 200px; overflow-y: scroll;">
-			    		<li data-selected="true"><a href="#">$accounts.name</a></li>
+			    		<li data-selected="true"><a href="#">*</a></li>
+			    		<li><a href="#">$accounts.name</a></li>
 			    		<li><a href="#">$audio</a></li>
 			    		<li><a href="#">$browser</a></li>
 			    		<li><a href="#">$browser.bookmarks</a></li>
@@ -169,6 +198,8 @@
 			    		<li><a href="#">$content_provider</a></li>
 		    		</ul>
 		    	</div>
+		    	<h5 style="display: inline;">Param:</h5>
+			<form><input type="text"></input></form>
 
 
 		    	<h5 style="display: inline; padding-left: 10px;">
@@ -177,6 +208,7 @@
 		    	<div class="select btn-group" data-resize="auto" id="sinkSelect">
 		    		<button type="button" data-toggle="dropdown" class="btn dropdown-toggle"><span class="dropdown-label"></span><span class="caret"></span></button>
 		    		<ul class="dropdown-menu" style="max-height: 200px; overflow-y: scroll;">
+			    		<li><a href="#">*</a></li>
 			    		<li><a href="#">!socket</a></li>
 			    		<li><a href="#">!internet</a></li>
 			    		<li><a href="#">!senddatamessage</a></li>
@@ -191,11 +223,14 @@
 			    		<li><a href="#">!file</a></li>
 			    		<li><a href="#">!activity</a></li>
 			    		<li><a href="#">!broadcast</a></li>
-			    		<li><a href="#">nc/dec</a></li>
+			    		<li><a href="#">enc/dec</a></li>
 		    		</ul>
 		    	</div>
+		    	<h5 style="display: inline;">Param:</h5>
+			<form><input type="text"></input></form>
 
-		    	<button class="btn btn-inverse" type="button" style="margin-left: 10px;" id="addPolicyBtn">Add Policy</button>
+
+		    	<button class="btn btn-inverse" type="button" style="margin-left: 10px;" id="addPolicyBtn">Submit Policy</button>
 
 	    	</div>
 
@@ -206,7 +241,9 @@
 	      	<th>Active</th>
 	      	<th>Remove</th>
 	      	<th>Source</th>
+	      	<th>Source Param</th>
 	      	<th>Sink</th>
+	      	<th>Sink Param</th>
 	      </table>
 
 	      <table class="table table-condensed table-hover" id="incident-summary">
