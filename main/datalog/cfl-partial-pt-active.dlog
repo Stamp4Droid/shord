@@ -1,0 +1,315 @@
+##################
+# Active Partial FLows Relations
+##################
+
+###################
+# CONFIGURATION
+###################
+
+# name=cfl-partial-pt-active-dlog
+
+.include "Z.dom"
+.include "M.dom"
+.include "C.dom"
+.include "V.dom"
+.include "H.dom"
+.include "F.dom"
+.include "I.dom"
+
+.bddvarorder Z0xZ1_M0_C0xC1xC2_V0xV1_H0xF0_I0
+
+###################
+# INPUT: PARTIAL FLOW RELATIONS
+###################
+
+pt(c:C,v:V,o:C)    input
+fpt(o1:C,f:F,o2:C) input
+
+Assign(v:V,u:V) input              # v = u
+param(u:V,v:V,i:I)  input   # u is the formal parameter, v is actual arg, i is invocation stmt
+return(u:V,v:V,i:I) input   # u is the lhs at callsite, v is the return var, i is invocation stmt
+Store(v:V,f:F,u:V) input           # v.f = u
+Load(v:V,u:V,f:F) input            # v = u.f
+CI(c:C,i:I) input # stmt i is the top element in the k-limited callstack c
+CC(c:C,d:C) input # there exists i s.t. c++[i] = d
+
+Varg(v:V,c:C) input
+Vret(v:V,c:C) input
+
+PreFlowsToA(c:C,o:C,v:V) input
+PreFlowsToR(c:C,o:C,v:V) input
+PostFlowsToA(c:C,v:V,d:C,u:V) input
+PostFlowsToR(c:C,v:V,d:C,u:V) input
+MidFlowsToAA(c:C,v:V,d:C,u:V) input
+MidFlowsToAR(c:C,v:V,d:C,u:V) input
+MidFlowsToRA(c:C,v:V,d:C,u:V) input
+MidFlowsToRR(c:C,v:V,d:C,u:V) input
+
+#RefArg2RefArgTStub(c:C,v:V,u:V,m:M,z1:Z,z2:Z) input
+#RefArg2RefRetTStub(c:C,v:V,u:V,m:M,z:Z) input
+typeFilter(v:V,o:C) input   # type wise, v can point-to o
+
+PreFlowsToFullA(c:C,o:C,v:V) input
+PreFlowsToFullR(c:C,o:C,v:V) input
+Transfer(c:C,v:V,u:V) input
+
+PtFull(c:C,v:V,o:C) input
+
+PtFullActive(c:C,v:V,o:C) input
+FptFullActive(o1:C,f:F,o2:C) input
+
+###################
+# OUTPUT: ACTIVE PARTIAL FLOW RELATIONS
+###################
+
+ptActive(c:C,v:V,o:C)    output
+fptActive(o1:C,f:F,o2:C) output
+
+AssignActive(v:V,u:V) output              # v = u
+paramActive(u:V,v:V,i:I)  output   # u is the formal parameter, v is actual arg, i is invocation stmt
+returnActive(u:V,v:V,i:I) output   # u is the lhs at callsite, v is the return var, i is invocation stmt
+StoreActive(v:V,f:F,u:V) output           # v.f = u
+LoadActive(v:V,u:V,f:F) output            # v = u.f
+CIActive(c:C,i:I) output # stmt i is the top element in the k-limited callstack c
+CCActive(c:C,d:C) output # there exists i s.t. c++[i] = d
+
+VargActive(v:V,c:C) output
+VretActive(v:V,c:C) output
+
+PreFlowsToAActive(c:C,o:C,v:V) output
+PreFlowsToRActive(c:C,o:C,v:V) output
+PostFlowsToAActive(c:C,v:V,d:C,u:V) output
+PostFlowsToRActive(c:C,v:V,d:C,u:V) output
+MidFlowsToAAActive(c:C,v:V,d:C,u:V) output
+MidFlowsToARActive(c:C,v:V,d:C,u:V) output
+MidFlowsToRAActive(c:C,v:V,d:C,u:V) output
+MidFlowsToRRActive(c:C,v:V,d:C,u:V) output
+
+#RefArg2RefArgTStubActive(c:C,v:V,u:V,m:M,z1:Z,z2:Z) output
+#RefArg2RefRetTStubActive(c:C,v:V,u:V,m:M,z:Z) output
+typeFilterActive(v:V,o:C) output   # type wise, v can point-to o
+
+PreFlowsToFullAActive(c:C,o:C,v:V) output
+PreFlowsToFullRActive(c:C,o:C,v:V) output
+TransferActive(c:C,v:V,u:V) output
+TransferActive2(v:V,u:V) output
+
+PtFullActive2(c:C,v:V,o:C) output
+FptFullActive2(o1:C,f:F,o2:C) output
+
+###################
+# RULES: INPUT
+###################
+
+PtFullActive2(d,u,o) :- PtFullActive(d,u,o).
+FptFullActive2(o1,f,o2) :- FptFullActive(o1,f,o2).
+
+###################
+# RULES: EXTRA
+###################
+
+TransferActive2(v,u) :- TransferActive(_,v,u).
+
+###################
+# RULES: PARTIAL FLOWS
+###################
+
+# 1) o -> v_c
+ptActive(c,v,o) :- PreFlowsToAActive(c,o,v), pt(c,v,o), Varg(v,c).
+VargActive(v,c) :- PreFlowsToAActive(c,o,v), pt(c,v,o), Varg(v,c).
+# 2) o -> v_c -> u_c -> w_d
+ptActive(c,v,o) :- PreFlowsToAActive(d,o,w), pt(c,v,o), Store(u,_,v), PostFlowsToA(d,w,c,u).
+StoreActive(u,f,v) :- PreFlowsToAActive(d,o,w), pt(c,v,o), Store(u,f,v), PostFlowsToA(d,w,c,u).
+PostFlowsToA(d,w,c,u) :- PreFlowsToAActive(d,o,w), pt(c,v,o), Store(u,_,v), PostFlowsToA(d,w,c,u).
+ptActive(c,v,o) :- PreFlowsToRActive(d,o,w), pt(c,v,o), Store(u,_,v), PostFlowsToR(d,w,c,u).
+StoreActive(u,f,v) :- PreFlowsToRActive(d,o,w), pt(c,v,o), Store(u,f,v), PostFlowsToR(d,w,c,u).
+PostFlowsToRActive(d,w,c,u) :- PreFlowsToRActive(d,o,w), pt(c,v,o), Store(u,_,v), PostFlowsToR(d,w,c,u).
+# 3) o1 -> v_c -> u_c -> o2 -> w_c
+ptActive(c,v,o1) :- PreFlowsToAActive(c,o1,w), pt(c,v,o1), Store(u,_,v), pt(c,u,o2), PreFlowsToA(c,o2,w).
+StoreActive(u,f,v) :- PreFlowsToAActive(c,o1,w), pt(c,v,o1), Store(u,f,v), pt(c,u,o2), PreFlowsToA(c,o2,w).
+ptActive(c,u,o2) :- PreFlowsToAActive(c,o1,w), pt(c,v,o1), Store(u,_,v), pt(c,u,o2), PreFlowsToA(c,o2,w).
+PreFlowsToAActive(c,o2,w) :- PreFlowsToAActive(c,o1,w), pt(c,v,o1), Store(u,_,v), pt(c,u,o2), PreFlowsToA(c,o2,w).
+ptActive(c,v,o1) :- PreFlowsToRActive(c,o1,w), pt(c,v,o1), Store(u,_,v), pt(c,u,o2), PreFlowsToR(c,o2,w).
+StoreActive(u,f,v) :- PreFlowsToRActive(c,o1,w), pt(c,v,o1), Store(u,f,v), pt(c,u,o2), PreFlowsToR(c,o2,w).
+ptActive(c,u,o2) :- PreFlowsToRActive(c,o1,w), pt(c,v,o1), Store(u,_,v), pt(c,u,o2), PreFlowsToR(c,o2,w).
+PreFlowsToRActive(c,o2,w) :- PreFlowsToRActive(c,o1,w), pt(c,v,o1), Store(u,_,v), pt(c,u,o2), PreFlowsToR(c,o2,w).
+
+# 1) v_c -> v_c
+VretActive(v,c) :- PostFlowsToRActive(c,v,d,u), u=v, d=c, Vret(v,c).
+
+# 2a) v_c -> u_d -> w_d
+PostFlowsToAActive(c,v,d,u) :- PostFlowsToAActive(c,v,d,w), PostFlowsToA(c,v,d,u), Assign(w,u).
+AssignActive(w,u) :- PostFlowsToAActive(c,v,d,w), PostFlowsToA(c,v,d,u), Assign(w,u).
+
+PostFlowsToRActive(c,v,d,u) :- PostFlowsToRActive(c,v,d,w), PostFlowsToR(c,v,d,u), Assign(w,u).
+AssignActive(w,u) :- PostFlowsToRActive(c,v,d,w), PostFlowsToR(c,v,d,u), Assign(w,u).
+
+# 2b) v_c -> u_d -> w_b
+PostFlowsToAActive(c,v,d,u) :- PostFlowsToAActive(c,v,b,w), PostFlowsToA(c,v,d,u), param(w,u,i), CC(d,b), CI(b,i).
+paramActive(w,u,i) :- PostFlowsToAActive(c,v,b,w), PostFlowsToA(c,v,d,u), param(w,u,i), CC(d,b), CI(b,i).
+CCActive(d,b) :- PostFlowsToAActive(c,v,b,w), PostFlowsToA(c,v,d,u), param(w,u,i), CC(d,b), CI(b,i).
+CIActive(b,i) :- PostFlowsToAActive(c,v,b,w), PostFlowsToA(c,v,d,u), param(w,u,i), CC(d,b), CI(b,i).
+
+PostFlowsToAActive(c,v,d,u) :- PostFlowsToAActive(c,v,b,w), PostFlowsToA(c,v,d,u), return(w,u,i), CC(b,d), CI(d,i).
+returnActive(w,u,i) :- PostFlowsToAActive(c,v,b,w), PostFlowsToA(c,v,d,u), return(w,u,i), CC(b,d), CI(d,i).
+CCActive(b,d) :- PostFlowsToAActive(c,v,b,w), PostFlowsToA(c,v,d,u), return(w,u,i), CC(b,d), CI(d,i).
+CIActive(d,i) :- PostFlowsToAActive(c,v,b,w), PostFlowsToA(c,v,d,u), return(w,u,i), CC(b,d), CI(d,i).
+
+PostFlowsToRActive(c,v,d,u) :- PostFlowsToRActive(c,v,b,w), PostFlowsToR(c,v,d,u), param(w,u,i), CC(d,b), CI(b,i).
+paramActive(w,u,i) :- PostFlowsToRActive(c,v,b,w), PostFlowsToR(c,v,d,u), param(w,u,i), CC(d,b), CI(b,i).
+CCActive(d,b) :- PostFlowsToRActive(c,v,b,w), PostFlowsToR(c,v,d,u), param(w,u,i), CC(d,b), CI(b,i).
+CIActive(b,i) :- PostFlowsToRActive(c,v,b,w), PostFlowsToR(c,v,d,u), param(w,u,i), CC(d,b), CI(b,i).
+
+PostFlowsToRActive(c,v,d,u) :- PostFlowsToRActive(c,v,b,w), PostFlowsToR(c,v,d,u), return(w,u,i), CC(b,d), CI(d,i).
+returnActive(w,u,i) :- PostFlowsToRActive(c,v,b,w), PostFlowsToR(c,v,d,u), return(w,u,i), CC(b,d), CI(d,i).
+CCActive(b,d) :- PostFlowsToRActive(c,v,b,w), PostFlowsToR(c,v,d,u), return(w,u,i), CC(b,d), CI(d,i).
+CIActive(d,i) :- PostFlowsToRActive(c,v,b,w), PostFlowsToR(c,v,d,u), return(w,u,i), CC(b,d), CI(d,i).
+
+# 3) v_c -> u_d -> w_d -> o -> x_b -> y_b
+PostFlowsToAActive(c,v,d,u) :- PostFlowsToAActive(c,v,b,y), PostFlowsToA(c,v,d,u), Store(w,f,u), pt(d,w,o), pt(b,x,o), Load(y,x,f).
+StoreActive(w,f,u) :- PostFlowsToAActive(c,v,b,y), PostFlowsToA(c,v,d,u), Store(w,f,u), pt(d,w,o), pt(b,x,o), Load(y,x,f).
+ptActive(d,w,o) :- PostFlowsToAActive(c,v,b,y), PostFlowsToA(c,v,d,u), Store(w,f,u), pt(d,w,o), pt(b,x,o), Load(y,x,f).
+ptActive(b,x,o) :- PostFlowsToAActive(c,v,b,y), PostFlowsToA(c,v,d,u), Store(w,f,u), pt(d,w,o), pt(b,x,o), Load(y,x,f).
+LoadActive(y,x,f) :- PostFlowsToAActive(c,v,b,y), PostFlowsToA(c,v,d,u), Store(w,f,u), pt(d,w,o), pt(b,x,o), Load(y,x,f).
+
+PostFlowsToRActive(c,v,d,u) :- PostFlowsToRActive(c,v,b,y), PostFlowsToR(c,v,d,u), Store(w,f,u), pt(d,w,o), pt(b,x,o), Load(y,x,f).
+StoreActive(w,f,u) :- PostFlowsToRActive(c,v,b,y), PostFlowsToR(c,v,d,u), Store(w,f,u), pt(d,w,o), pt(b,x,o), Load(y,x,f).
+ptActive(d,w,o) :- PostFlowsToRActive(c,v,b,y), PostFlowsToR(c,v,d,u), Store(w,f,u), pt(d,w,o), pt(b,x,o), Load(y,x,f).
+ptActive(b,x,o) :- PostFlowsToRActive(c,v,b,y), PostFlowsToR(c,v,d,u), Store(w,f,u), pt(d,w,o), pt(b,x,o), Load(y,x,f).
+LoadActive(y,x,f) :- PostFlowsToRActive(c,v,b,y), PostFlowsToR(c,v,d,u), Store(w,f,u), pt(d,w,o), pt(b,x,o), Load(y,x,f).
+
+# 4) v_c -> o -> u_d -> w_d
+PreFlowsToAActive(c,o,v) :- PostFlowsToAActive(c,v,d,w), PreFlowsToA(c,o,v), pt(d,u,o), Load(w,u,_).
+ptActive(d,u,o) :- PostFlowsToAActive(c,v,d,w), PreFlowsToA(c,o,v), pt(d,u,o), Load(w,u,_).
+LoadActive(w,u,f) :- PostFlowsToAActive(c,v,d,w), PreFlowsToA(c,o,v), pt(d,u,o), Load(w,u,f).
+
+PreFlowsToRActive(c,o,v) :- PostFlowsToRActive(c,v,d,w), PreFlowsToR(c,o,v), pt(d,u,o), Load(w,u,_).
+ptActive(d,u,o) :- PostFlowsToRActive(c,v,d,w), PreFlowsToR(c,o,v), pt(d,u,o), Load(w,u,_).
+LoadActive(w,u,f) :- PostFlowsToRActive(c,v,d,w), PreFlowsToR(c,o,v), pt(d,u,o), Load(w,u,f).
+
+# 5) v_c -> u_d -> w_d
+PostFlowsToAActive(c,v,d,u) :- PostFlowsToAActive(c,v,d,w), PostFlowsToA(c,v,d,u), Load(w,u,_).
+LoadActive(w,u,f) :- PostFlowsToAActive(c,v,d,w), PostFlowsToA(c,v,d,u), Load(w,u,f).
+
+PostFlowsToRActive(c,v,d,u) :- PostFlowsToRActive(c,v,d,w), PostFlowsToR(c,v,d,u), Load(w,u,_).
+LoadActive(w,u,f) :- PostFlowsToRActive(c,v,d,w), PostFlowsToR(c,v,d,u), Load(w,u,f).
+
+# 1) v_c -> u_d
+PostFlowsToAActive(c,v,d,u) :- MidFlowsToAAActive(c,v,d,u), PostFlowsToA(c,v,d,u), Varg(u,d).
+VargActive(u,d) :- MidFlowsToAAActive(c,v,d,u), PostFlowsToA(c,v,d,u), Varg(u,d).
+
+PostFlowsToAActive(c,v,d,u) :- MidFlowsToARActive(c,v,d,u), PostFlowsToA(c,v,d,u), Vret(u,d).
+VretActive(u,d) :- MidFlowsToARActive(c,v,d,u), PostFlowsToA(c,v,d,u), Vret(u,d).
+
+PostFlowsToAActive(c,v,d,u) :- MidFlowsToARActive(c,v,d,u), PostFlowsToA(c,v,d,u), Vret(u,d).
+VretActive(u,d) :- MidFlowsToARActive(c,v,d,u), PostFlowsToA(c,v,d,u), Vret(u,d).
+
+PostFlowsToRActive(c,v,d,u) :- MidFlowsToRAActive(c,v,d,u), PostFlowsToR(c,v,d,u), Varg(u,d).
+VargActive(u,d) :- MidFlowsToRAActive(c,v,d,u), PostFlowsToR(c,v,d,u), Varg(u,d).
+
+PostFlowsToRActive(c,v,d,u) :- MidFlowsToRRActive(c,v,d,u), PostFlowsToR(c,v,d,u), Vret(u,d).
+VretActive(u,d) :- MidFlowsToRRActive(c,v,d,u), PostFlowsToR(c,v,d,u), Vret(u,d).
+
+# 2) v_c -> u_d -> w_d -> x_b
+PostFlowsToAActive(c,v,d,u) :- MidFlowsToAAActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,_,u), PostFlowsToA(b,x,d,w).
+StoreActive(w,f,u) :- MidFlowsToAAActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,f,u), PostFlowsToA(b,x,d,w).
+PostFlowsToAActive(b,x,d,w) :- MidFlowsToAAActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,_,u), PostFlowsToA(b,x,d,w).
+
+PostFlowsToAActive(c,v,d,u) :- MidFlowsToARActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,_,u), PostFlowsToR(b,x,d,w).
+StoreActive(w,f,u) :- MidFlowsToARActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,f,u), PostFlowsToR(b,x,d,w).
+PostFlowsToRActive(b,x,d,w) :- MidFlowsToARActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,_,u), PostFlowsToR(b,x,d,w).
+
+PostFlowsToRActive(c,v,d,u) :- MidFlowsToRAActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,_,u), PostFlowsToA(b,x,d,w).
+StoreActive(w,f,u) :- MidFlowsToRAActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,f,u), PostFlowsToA(b,x,d,w).
+PostFlowsToAActive(b,x,d,w) :- MidFlowsToRAActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,_,u), PostFlowsToA(b,x,d,w).
+
+PostFlowsToRActive(c,v,d,u) :- MidFlowsToRRActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,_,u), PostFlowsToR(b,x,d,w).
+StoreActive(w,f,u) :- MidFlowsToRRActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,f,u), PostFlowsToR(b,x,d,w).
+PostFlowsToRActive(b,x,d,w) :- MidFlowsToRRActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,_,u), PostFlowsToR(b,x,d,w).
+
+# 3) v_c -> u_d -> w_d -> o -> x_b
+PostFlowsToAActive(c,v,d,u) :- MidFlowsToAAActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToA(b,o,x).
+StoreActive(w,f,u) :- MidFlowsToAAActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,f,u), pt(d,w,o), PreFlowsToA(b,o,x).
+ptActive(d,w,o) :- MidFlowsToAAActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToA(b,o,x).
+PreFlowsToAActive(b,o,x) :- MidFlowsToAAActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToA(b,o,x).
+
+PostFlowsToAActive(c,v,d,u) :- MidFlowsToARActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToR(b,o,x).
+StoreActive(w,f,u) :- MidFlowsToARActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,f,u), pt(d,w,o), PreFlowsToR(b,o,x).
+ptActive(d,w,o) :- MidFlowsToARActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToR(b,o,x).
+PreFlowsToRActive(b,o,x) :- MidFlowsToARActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToR(b,o,x).
+
+PostFlowsToRActive(c,v,d,u) :- MidFlowsToRAActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToA(b,o,x).
+StoreActive(w,f,u) :- MidFlowsToRAActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,f,u), pt(d,w,o), PreFlowsToA(b,o,x).
+ptActive(d,w,o) :- MidFlowsToRAActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToA(b,o,x).
+PreFlowsToAActive(b,o,x) :- MidFlowsToRAActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToA(b,o,x).
+
+PostFlowsToRActive(c,v,d,u) :- MidFlowsToRRActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToR(b,o,x).
+StoreActive(w,f,u) :- MidFlowsToRRActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,f,u), pt(d,w,o), PreFlowsToR(b,o,x).
+ptActive(d,w,o) :- MidFlowsToRRActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToR(b,o,x).
+PreFlowsToRActive(b,o,x) :- MidFlowsToRRActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToR(b,o,x).
+
+# 4) v_c -> o -> u_d
+PreFlowsToAActive(c,o,v) :- MidFlowsToAAActive(c,v,d,u), PreFlowsToA(c,o,v), PreFlowsToA(d,o,u).
+PreFlowsToAActive(d,o,u) :- MidFlowsToAAActive(c,v,d,u), PreFlowsToA(c,o,v), PreFlowsToA(d,o,u).
+
+PreFlowsToAActive(c,o,v) :- MidFlowsToARActive(c,v,d,u), PreFlowsToA(c,o,v), PreFlowsToR(d,o,u).
+PreFlowsToRActive(d,o,u) :- MidFlowsToARActive(c,v,d,u), PreFlowsToA(c,o,v), PreFlowsToR(d,o,u).
+
+PreFlowsToRActive(c,o,v) :- MidFlowsToRAActive(c,v,d,u), PreFlowsToR(c,o,v), PreFlowsToA(d,o,u).
+PreFlowsToAActive(d,o,u) :- MidFlowsToRAActive(c,v,d,u), PreFlowsToR(c,o,v), PreFlowsToA(d,o,u).
+
+PreFlowsToRActive(c,o,v) :- MidFlowsToRRActive(c,v,d,u), PreFlowsToR(c,o,v), PreFlowsToR(d,o,u).
+PreFlowsToRActive(d,o,u) :- MidFlowsToRRActive(c,v,d,u), PreFlowsToR(c,o,v), PreFlowsToR(d,o,u).
+
+###################
+# RULES: FULL FLOWS
+###################
+
+# helper
+#Transfer(c,v,u) :- RefArg2RefArgTStub(c,v,u,_,_,_).
+#Transfer(c,v,u) :- RefArg2RefRetTStub(c,v,u,_,_).
+#Transfer(c,u,v) :- RefArg2RefRetTStub(c,v,u,_,_).
+
+# full flows
+
+PreFlowsToAActive(c,o,v) :- PreFlowsToFullAActive(c,o,v), PreFlowsToA(c,o,v).
+
+PreFlowsToRActive(c,o,v) :- PreFlowsToFullRActive(c,o,v), PreFlowsToR(c,o,v).
+
+PreFlowsToAActive(c,o,v) :- PreFlowsToFullAActive(d,o,w), PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAA(c,u,d,w).
+TransferActive(c,v,u) :- PreFlowsToFullAActive(d,o,w), PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAA(c,u,d,w).
+MidFlowsToAAActive(c,u,d,w) :- PreFlowsToFullAActive(d,o,w), PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAA(c,u,d,w).
+
+PreFlowsToAActive(c,o,v) :- PreFlowsToFullAActive(d,o,w), PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAR(c,u,d,w).
+TransferActive(c,v,u) :- PreFlowsToFullAActive(d,o,w), PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAR(c,u,d,w).
+MidFlowsToARActive(c,u,d,w) :- PreFlowsToFullAActive(d,o,w), PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAR(c,u,d,w).
+
+PreFlowsToRActive(c,o,v) :- PreFlowsToFullRActive(d,o,w), PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRA(c,u,d,w).
+TransferActive(c,v,u) :- PreFlowsToFullRActive(d,o,w), PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRA(c,u,d,w).
+MidFlowsToRAActive(c,u,d,w) :- PreFlowsToFullRActive(d,o,w), PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRA(c,u,d,w).
+
+PreFlowsToRActive(c,o,v) :- PreFlowsToFullRActive(d,o,w), PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRR(c,u,d,w).
+TransferActive(c,v,u) :- PreFlowsToFullRActive(d,o,w), PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRR(c,u,d,w).
+MidFlowsToRRActive(c,u,d,w) :- PreFlowsToFullRActive(d,o,w), PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRR(c,u,d,w).
+
+###################
+# RULES: OUTPUT
+###################
+
+ptActive(d,u,o) :- PtFullActive2(d,u,o), pt(d,u,o).
+fptActive(o1,f,o2) :- FptFullActive2(o1,f,o2), fpt(o1,f,o2).
+
+PreFlowsToFullAActive(c,o,v) :- PtFullActive2(d,u,o), PreFlowsToFullA(c,o,v), PostFlowsToA(c,v,d,u), typeFilter(u,o).
+typeFilterActive(u,o) :- PtFullActive2(d,u,o), PreFlowsToFullA(c,o,v), PostFlowsToA(c,v,d,u), typeFilter(u,o).
+
+PreFlowsToFullAActive(c,o,v) :- PtFullActive2(d,u,o), PreFlowsToFullA(c,o,v), PostFlowsToA(c,v,d,u), typeFilter(u,o).
+PostFlowsToAActive(c,v,d,u) :- PtFullActive2(d,u,o), PreFlowsToFullA(c,o,v), PostFlowsToA(c,v,d,u), typeFilter(u,o).
+typeFilterActive(u,o) :- PtFullActive2(d,u,o), PreFlowsToFullA(c,o,v), PostFlowsToA(c,v,d,u), typeFilter(u,o).
+
+PreFlowsToFullRActive(c,o,v) :- PtFullActive2(d,u,o), PreFlowsToFullR(c,o,v), PostFlowsToR(c,v,d,u), typeFilter(u,o).
+PostFlowsToRActive(c,v,d,u) :- PtFullActive2(d,u,o), PreFlowsToFullR(c,o,v), PostFlowsToR(c,v,d,u), typeFilter(u,o).
+typeFilterActive(u,o) :- PtFullActive2(d,u,o), PreFlowsToFullR(c,o,v), PostFlowsToR(c,v,d,u), typeFilter(u,o).
+
+PtFullActive2(c,v,o2) :- FptFullActive2(o1,f,o2), PtFull(c,v,o2), Store(u,f,v), PtFull(c,u,o1).
+StoreActive(u,f,v) :- FptFullActive2(o1,f,o2), PtFull(c,v,o2), Store(u,f,v), PtFull(c,u,o1).
+PtFullActive2(c,u,o1) :- FptFullActive2(o1,f,o2), PtFull(c,v,o2), Store(u,f,v), PtFull(c,u,o1).

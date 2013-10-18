@@ -68,27 +68,27 @@ Prim2PrimF(c:C,v:U,u:U) input
 # INTERMEDIATE: OBJECT ANNOTATIONS
 ###################
 
-Obj2RefT(c:C,o:C,v:V)
-Obj2PrimT(c:C,o:C,v:U)
+Obj2RefT(c:C,o:C,v:V) output
+Obj2PrimT(c:C,o:C,v:U) output
 
-Src2ObjT(cl:CL,o:C)
-Sink2ObjT(cl:CL,o:C)
+Src2ObjT(cl:CL,o:C) output
+Sink2ObjT(cl:CL,o:C) output
 
 ###################
 # INTERMEDIATE: SINKF
 ###################
 
 # Sink_full-obj flow
-SinkF2Obj(cl:CL,o:C)
+SinkF2Obj(cl:CL,o:C) output
 
 # Sink_full-prim flow
-SinkF2Prim(c:C,cl:CL,v:U)
+SinkF2Prim(c:C,cl:CL,v:U) output
 
 ###################
 # INTERMEDIATE: SRC-SINK FLOW
 ###################
 
-Src2Sink(src:CL,sink:CL)
+Src2Sink(src:CL,sink:CL) output
 
 ###################
 # INTERMEDIATE: LABEL FLOW
@@ -96,25 +96,25 @@ Src2Sink(src:CL,sink:CL)
 
 # Src-obj flow
 
-Src2Obj(cl:CL,o:C)
-Src2ObjX(cl:CL,o2:C)
+Src2Obj(cl:CL,o:C) output
+Src2ObjX(cl:CL,o2:C) output
 
 # Sink-obj flow
 
-Sink2Obj(cl:CL,o:C)
-Sink2ObjX(cl:CL,o2:C)
+Sink2Obj(cl:CL,o:C) output
+Sink2ObjX(cl:CL,o2:C) output
 
 # Src-prim flow
 
-Src2Prim(c:C,cl:CL,v:U)
-Src2PrimFld(cl:CL,o:C,f:F)
-Src2PrimFldStat(cl:CL,f:F)
+Src2Prim(c:C,cl:CL,v:U) output
+Src2PrimFld(cl:CL,o:C,f:F) output
+Src2PrimFldStat(cl:CL,f:F) output
 
 # Sink-prim flow
 
-Sink2Prim(c:C,cl:CL,v:U)
-Sink2PrimFld(cl:CL,o:C,f:F)
-Sink2PrimFldStat(cl:CL,f:F)
+Sink2Prim(c:C,cl:CL,v:U) output
+Sink2PrimFld(cl:CL,o:C,f:F) output
+Sink2PrimFldStat(cl:CL,f:F) output
 
 ###################
 # OUTPUT: RESULTS

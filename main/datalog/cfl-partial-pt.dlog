@@ -23,6 +23,7 @@
 ###################
 
 pt(c:C,v:V,o:C)    input
+fpt(o1:C,f:F,o2:C) input
 
 ###################
 # INPUT: PARTIAL FLOWS
@@ -66,7 +67,7 @@ typeFilter(v:V,o:C) input   # type wise, v can point-to o
 
 PreFlowsToFullA(c:C,o:C,v:V) output
 PreFlowsToFullR(c:C,o:C,v:V) output
-Transfer(c:C,v:V,u:V)
+Transfer(c:C,v:V,u:V) output
 
 PtFull(c:C,v:V,o:C) output
 FptFull(o1:C,f:F,o2:C) output
@@ -126,7 +127,7 @@ MidFlowsToRA(c,v,d,u) :- PreFlowsToR(c,o,v), PreFlowsToA(d,o,u).
 MidFlowsToRR(c,v,d,u) :- PreFlowsToR(c,o,v), PreFlowsToR(d,o,u).
 
 ###################
-# OUTPUT: FULL FLOWS
+# RULES: FULL FLOWS
 ###################
 
 # helper
@@ -144,6 +145,13 @@ PreFlowsToFullA(d,o,w) :- PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAA(c,u,
 PreFlowsToFullA(d,o,w) :- PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAR(c,u,d,w).
 PreFlowsToFullR(d,o,w) :- PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRA(c,u,d,w).
 PreFlowsToFullR(d,o,w) :- PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRR(c,u,d,w).
+
+###################
+# RULES: OUTPUT
+###################
+
+PtFull(d,u,o) :- pt(d,u,o).
+FptFull(o1,f,o2) :- fpt(o1,f,o2).
 
 PtFull(d,u,o) :- PreFlowsToFullA(c,o,v), PostFlowsToA(c,v,d,u), typeFilter(u,o).
 PtFull(d,u,o) :- PreFlowsToFullR(c,o,v), PostFlowsToR(c,v,d,u), typeFilter(u,o).
