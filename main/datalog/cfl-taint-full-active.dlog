@@ -19,6 +19,9 @@
 # INPUT: TAINT RELATIONS
 ###################
 
+pt(c:C,v:V,o:C)    input
+fpt(o1:C,f:F,o2:C) input
+
 PtFull(c:C,v:V,o:C)    input
 FptFull(o1:C,f:F,o2:C) input
 
@@ -93,302 +96,302 @@ Sink2PrimFldStat(cl:CL,f:F) input
 flow4(src:CL,sink:CL) input
 
 ###################
-# OUTPUT: ACTIVE TAINT RELATIONS
+# INPUT: PARTIAL FLOW RELATIONS
 ###################
 
-PtFullActive(c:C,v:V,o:C)    output
+Assign(v:V,u:V) input              # v = u
+param(u:V,v:V,i:I)  input   # u is the formal parameter, v is actual arg, i is invocation stmt
+return(u:V,v:V,i:I) input   # u is the lhs at callsite, v is the return var, i is invocation stmt
+Store(v:V,f:F,u:V) input           # v.f = u
+Load(v:V,u:V,f:F) input            # v = u.f
+CI(c:C,i:I) input # stmt i is the top element in the k-limited callstack c
+CC(c:C,d:C) input # there exists i s.t. c++[i] = d
+
+PreFlowsToA(c:C,o:C,v:V) input
+PreFlowsToR(c:C,o:C,v:V) input
+PostFlowsToA(c:C,v:V,d:C,u:V) input
+PostFlowsToR(c:C,v:V,d:C,u:V) input
+MidFlowsToAA(c:C,v:V,d:C,u:V) input
+MidFlowsToAR(c:C,v:V,d:C,u:V) input
+MidFlowsToRA(c:C,v:V,d:C,u:V) input
+MidFlowsToRR(c:C,v:V,d:C,u:V) input
+
+typeFilter(v:V,o:C) input   # type wise, v can point-to o
+
+PreFlowsToFullA(c:C,o:C,v:V) input
+PreFlowsToFullR(c:C,o:C,v:V) input
+Transfer(c:C,v:V,u:V) input
+
+###################
+# OUTPUT: ACTIVE OBJS AND REFS
+###################
+
+Varg(v:V,c:C) input
+Vret(v:V,c:C) input
+
+###################
+# OUTPUT: ACTIVE OBJS AND REFS
+###################
+
+ActiveRef(c:C,v:V) output
+ActiveObj(o:C) output
+
+ActiveVarg(v:V) output
+ActiveVret(v:V) output
+
+###################
+# OUTPUT: ACTIVE PARTIAL FLOW RELATIONS
+###################
+
+PreFlowsToAActive(c:C,o:C,v:V) output
+PreFlowsToRActive(c:C,o:C,v:V) output
+PostFlowsToAActive(c:C,v:V,d:C,u:V) output
+PostFlowsToRActive(c:C,v:V,d:C,u:V) output
+MidFlowsToAAActive(c:C,v:V,d:C,u:V) output
+MidFlowsToARActive(c:C,v:V,d:C,u:V) output
+MidFlowsToRAActive(c:C,v:V,d:C,u:V) output
+MidFlowsToRRActive(c:C,v:V,d:C,u:V) output
+
+typeFilterActive(v:V,o:C) output   # type wise, v can point-to o
+
+PreFlowsToFullAActive(c:C,o:C,v:V) output
+PreFlowsToFullRActive(c:C,o:C,v:V) output
+TransferActive(c:C,v:V,u:V) output
+TransferActive2(v:V,u:V) output
+
+PtFullActive(c:C,v:V,o:C) output
 FptFullActive(o1:C,f:F,o2:C) output
 
-LoadPrimCtxtActive(c:C,v:U,u:V,f:F) output
-LoadStatPrimCtxtActive(c:C,v:U,f:F) output
-StorePrimCtxtActive(c:C,v:V,f:F,u:U) output
-StoreStatPrimCtxtActive(c:C,f:F,v:U) output
-
-AssignPrimCtxtActive(c:C,v:U,u:U) output
-AssignPrimCCtxtActive(c:C,v:U,d:C,u:U) output
-
-# Src label
-Src2RefTActive(c:C,cl:CL,v:V) output
-Src2PrimTActive(c:C,cl:CL,v:U) output
-
-# Sink label
-Sink2RefTActive(c:C,cl:CL,v:V) output
-Sink2PrimTActive(c:C,cl:CL,v:U) output
-
-# Sink full label Active(out labels)
-SinkF2RefFActive(c:C,cl:CL,v:V) output
-SinkF2PrimFActive(c:C,cl:CL,v:U) output
-
-# Transfer
-Ref2RefTActive(c:C,v:V,u:V) output
-Ref2PrimTActive(c:C,v:V,u:U) output
-Prim2RefTActive(c:C,v:U,u:V) output
-Prim2PrimTActive(c:C,v:U,u:U) output
-
-# Flow Active(!)
-Ref2RefFActive(c:C,v:V,u:V) output
-Ref2PrimFActive(c:C,v:V,u:U) output
-Prim2RefFActive(c:C,v:U,u:V) output
-Prim2PrimFActive(c:C,v:U,u:U) output
-
-Obj2RefTActive(c:C,o:C,v:V) output
-Obj2PrimTActive(c:C,o:C,v:U) output
-
-Src2ObjTActive(cl:CL,o:C) output
-Sink2ObjTActive(cl:CL,o:C) output
-
-# Sink_full-obj flow
-SinkF2ObjActive(cl:CL,o:C) output
-
-# Sink_full-prim flow
-SinkF2PrimActive(c:C,cl:CL,v:U) output
-
-Src2SinkActive(src:CL,sink:CL) output
-
-# Src-obj flow
-
-Src2ObjActive(cl:CL,o:C) output
-Src2ObjXActive(cl:CL,o2:C) output
-
-# Sink-obj flow
-
-Sink2ObjActive(cl:CL,o:C) output
-Sink2ObjXActive(cl:CL,o2:C) output
-
-# Src-prim flow
-
-Src2PrimActive(c:C,cl:CL,v:U) output
-Src2PrimFldActive(cl:CL,o:C,f:F) output
-Src2PrimFldStatActive(cl:CL,f:F) output
-
-# Sink-prim flow
-
-Sink2PrimActive(c:C,cl:CL,v:U) output
-Sink2PrimFldActive(cl:CL,o:C,f:F) output
-Sink2PrimFldStatActive(cl:CL,f:F) output
-
-flow4Active(src:CL,sink:CL) output
-
 ###################
-# RULES: ACTIVE SEEDS
+# RULES: ACTIVE VARG AND VRET
 ###################
 
-flow4Active(src,sink) :- flow4(src,sink).
+ActiveVarg(v) :- Varg(v,c), ActiveRef(c,v).
+ActiveVret(v) :- Vret(v,c), ActiveRef(c,v).
 
 ###################
 # RULES: OBJECT ANNOTATIONS
 ###################
 
-PtFullActive(c,v,o) :- Obj2RefTActive(c,o,u), PtFull(c,v,o), Ref2RefT(c,v,u). # pt is backwards
-Ref2RefTActive(c,v,u) :- Obj2RefTActive(c,o,u), PtFull(c,v,o), Ref2RefT(c,v,u). # pt is backwards
+ActiveRef(c,v) :- Obj2RefT(c,o,u), PtFull(c,v,o), Ref2RefT(c,v,u). # pt is backwards
+ActiveObj(o) :- Obj2RefT(c,o,u), PtFull(c,v,o), Ref2RefT(c,v,u). # pt is backwards
 
-PtFullActive(c,v,o) :- Obj2PrimTActive(c,o,u), PtFull(c,v,o), Ref2PrimT(c,v,u). # pt is backwards
-Ref2PrimTActive(c,v,u) :- Obj2PrimTActive(c,o,u), PtFull(c,v,o), Ref2PrimT(c,v,u). # pt is backwards
+ActiveRef(c,v) :- Obj2PrimT(c,o,u), PtFull(c,v,o), Ref2PrimT(c,v,u). # pt is backwards
+ActiveObj(o) :- Obj2PrimT(c,o,u), PtFull(c,v,o), Ref2PrimT(c,v,u). # pt is backwards
 
-FptFullActive(o2,0,o1) :- Obj2RefTActive(c,o1,v), FptFull(o2,0,o1), Obj2RefT(c,o2,v). # fpt is backwards
-Obj2RefTActive(c,o2,v) :- Obj2RefTActive(c,o1,v), FptFull(o2,0,o1), Obj2RefT(c,o2,v). # fpt is backwards
+ActiveObj(o2) :- Obj2RefT(c,o1,v), FptFull(o2,0,o1), Obj2RefT(c,o2,v). # fpt is backwards
+ActiveObj(o1) :- Obj2RefT(c,o1,v), FptFull(o2,0,o1), Obj2RefT(c,o2,v). # fpt is backwards
 
-FptFullActive(o2,0,o1) :- Obj2PrimTActive(c,o1,v), FptFull(o2,0,o1), Obj2PrimT(c,o2,v). # fpt is backwards
-Obj2PrimTActive(c,o2,v) :- Obj2PrimTActive(c,o1,v), FptFull(o2,0,o1), Obj2PrimT(c,o2,v). # fpt is backwards
+ActiveObj(o2) :- Obj2PrimT(c,o1,v), FptFull(o2,0,o1), Obj2PrimT(c,o2,v). # fpt is backwards
+ActiveObj(o1) :- Obj2PrimT(c,o1,v), FptFull(o2,0,o1), Obj2PrimT(c,o2,v). # fpt is backwards
 
-Src2RefTActive(c,cl,v) :- Src2ObjTActive(cl,o), Src2RefT(c,cl,v), PtFull(c,v,o).
-PtFullActive(c,v,o) :- Src2ObjTActive(cl,o), Src2RefT(c,cl,v), PtFull(c,v,o).
+ActiveRef(c,v) :- Src2ObjT(cl,o), Src2RefT(c,cl,v), PtFull(c,v,o).
+ActiveObj(o) :- Src2ObjT(cl,o), Src2RefT(c,cl,v), PtFull(c,v,o).
 
-Src2ObjTActive(cl,o1) :- Src2ObjTActive(cl,o2), Src2ObjT(cl,o1), FptFull(o1,_,o2).
-FptFullActive(o1,f,o2) :- Src2ObjTActive(cl,o2), Src2ObjT(cl,o1), FptFull(o1,f,o2).
+ActiveObj(o2) :- Src2ObjT(cl,o2), Src2ObjT(cl,o1), FptFull(o1,_,o2).
+ActiveObj(o1) :- Src2ObjT(cl,o2), Src2ObjT(cl,o1), FptFull(o1,_,o2).
 
-Sink2RefTActive(c,cl,v) :- Sink2ObjTActive(cl,o), Sink2RefT(c,cl,v), PtFull(c,v,o).
-PtFullActive(c,v,o) :- Sink2ObjTActive(cl,o), Sink2RefT(c,cl,v), PtFull(c,v,o).
+ActiveRef(c,v) :- Sink2ObjT(cl,o), Sink2RefT(c,cl,v), PtFull(c,v,o).
+ActiveObj(o) :- Sink2ObjT(cl,o), Sink2RefT(c,cl,v), PtFull(c,v,o).
 
-Sink2ObjTActive(cl,o1) :- Sink2ObjTActive(cl,o2), Sink2ObjT(cl,o1), FptFull(o1,_,o2).
-FptFullActive(o1,f,o2) :- Sink2ObjTActive(cl,o2), Sink2ObjT(cl,o1), FptFull(o1,f,o2).
+ActiveObj(o2) :- Sink2ObjT(cl,o2), Sink2ObjT(cl,o1), FptFull(o1,_,o2).
+ActiveObj(o1) :- Sink2ObjT(cl,o2), Sink2ObjT(cl,o1), FptFull(o1,_,o2).
+
+ActiveRef(c,v) :- SinkF2Obj(cl,o), SinkF2RefF(c,cl,v), PtFull(c,v,o).
+ActiveObj(o) :- SinkF2Obj(cl,o), SinkF2RefF(c,cl,v), PtFull(c,v,o).
+
+ActiveRef(c,v) :- SinkF2Obj(cl,o2), Sink2Obj(cl,o1), PtFull(c,v,o1), Ref2RefF(c,u,v), PtFull(c,u,o2). # first pt, Ref2RefF are backwards
+ActiveObj(o2) :- SinkF2Obj(cl,o2), Sink2Obj(cl,o1), PtFull(c,v,o1), Ref2RefF(c,u,v), PtFull(c,u,o2). # first pt, Ref2RefF are backwards
+
+ActiveRef(c,u) :- SinkF2Obj(cl,o), Sink2Prim(c,cl,v), Ref2PrimF(c,u,v), PtFull(c,u,o). # Ref2PrimF is backwards
+ActiveObj(o) :- SinkF2Obj(cl,o), Sink2Prim(c,cl,v), Ref2PrimF(c,u,v), PtFull(c,u,o). # Ref2PrimF is backwards
+
+ActiveObj(o2) :- SinkF2Obj(cl,o2), SinkF2Obj(cl,o1), FptFull(o1,_,o2).
+ActiveObj(o1) :- SinkF2Obj(cl,o2), SinkF2Obj(cl,o1), FptFull(o1,_,o2).
+
+ActiveRef(c,v) :- SinkF2Prim(c,cl,u), Sink2Obj(cl,o), PtFull(c,v,o), Prim2RefF(c,u,v). # pt, Prim2RefF are backwards
+ActiveObj(o) :- SinkF2Prim(c,cl,u), Sink2Obj(cl,o), PtFull(c,v,o), Prim2RefF(c,u,v). # pt, Prim2RefF are backwards
+
+ActiveRef(c,v) :- Src2ObjX(cl,o2), Src2Obj(cl,o1), Obj2RefT(c,o1,v), PtFull(c,v,o2).
+ActiveObj(o2) :- Src2ObjX(cl,o2), Src2Obj(cl,o1), Obj2RefT(c,o1,v), PtFull(c,v,o2).
+
+ActiveRef(c,u) :- Src2ObjX(cl,o), Src2Prim(c,cl,v), Prim2RefT(c,v,u), PtFull(c,u,o).
+ActiveObj(o) :- Src2ObjX(cl,o), Src2Prim(c,cl,v), Prim2RefT(c,v,u), PtFull(c,u,o).
+
+ActiveRef(c,v) :- Src2ObjX(cl,o2), Src2PrimFld(cl,o1,0), Obj2RefT(c,o1,v), PtFull(c,v,o2).
+ActiveObj(o2) :- Src2ObjX(cl,o2), Src2PrimFld(cl,o1,0), Obj2RefT(c,o1,v), PtFull(c,v,o2).
+
+ActiveObj(o1) :- Src2ObjX(cl,o2), Src2ObjX(cl,o1), FptFull(o1,0,o2).
+ActiveObj(o2) :- Src2ObjX(cl,o2), Src2ObjX(cl,o1), FptFull(o1,0,o2).
+
+ActiveRef(c,v) :- Sink2ObjX(cl,o2), Sink2Obj(cl,o1), Obj2RefT(c,o1,v), PtFull(c,v,o2).
+ActiveObj(o2) :- Sink2ObjX(cl,o2), Sink2Obj(cl,o1), Obj2RefT(c,o1,v), PtFull(c,v,o2).
+
+ActiveRef(c,u) :- Sink2ObjX(cl,o), Sink2Prim(c,cl,v), Prim2RefT(c,v,u), PtFull(c,u,o).
+ActiveObj(o) :- Sink2ObjX(cl,o), Sink2Prim(c,cl,v), Prim2RefT(c,v,u), PtFull(c,u,o).
+
+ActiveRef(c,v) :- Sink2ObjX(cl,o2), Sink2PrimFld(cl,o1,0), Obj2RefT(c,o1,v), PtFull(c,v,o2).
+ActiveObj(o2) :- Sink2ObjX(cl,o2), Sink2PrimFld(cl,o1,0), Obj2RefT(c,o1,v), PtFull(c,v,o2).
+
+ActiveObj(o1) :- Sink2ObjX(cl,o2), Sink2ObjX(cl,o1), FptFull(o1,0,o2).
+ActiveObj(o2) :- Sink2ObjX(cl,o2), Sink2ObjX(cl,o1), FptFull(o1,0,o2).
+
+ActiveRef(c,v) :- Src2Prim(c,cl,u), Src2ObjT(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,_). # pt is backwards, LoadPrimCtxt is flipped
+ActiveObj(o) :- Src2Prim(c,cl,u), Src2ObjT(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,_). # pt is backwards, LoadPrimCtxt is flipped
+
+ActiveRef(c,v) :- Src2Prim(c,cl,u), Src2ObjX(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,0). # pt is backwards, LoadPrimCtxt is flipped
+ActiveObj(o) :- Src2Prim(c,cl,u), Src2ObjX(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,0). # pt is backwards, LoadPrimCtxt is flipped
+
+ActiveRef(c,v) :- Src2Prim(c,cl,u), Src2PrimFld(cl,o,f), PtFull(c,v,o), LoadPrimCtxt(c,u,v,f). # pt is backwards, LoadPrim is flipped
+ActiveObj(o) :- Src2Prim(c,cl,u), Src2PrimFld(cl,o,f), PtFull(c,v,o), LoadPrimCtxt(c,u,v,f). # pt is backwards, LoadPrim is flipped
+
+ActiveRef(c,u) :- Src2PrimFld(cl,o,f), Src2Prim(c,cl,v), StorePrimCtxt(c,u,f,v), PtFull(c,u,o). # StorePrimCtxt is flipped
+ActiveObj(o) :- Src2PrimFld(cl,o,f), Src2Prim(c,cl,v), StorePrimCtxt(c,u,f,v), PtFull(c,u,o). # StorePrimCtxt is flipped
+
+ActiveRef(c,v) :- Sink2Prim(c,cl,u), Sink2ObjT(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,_). # pt is backwards, LoadPrimCtxt is flipped
+ActiveObj(o) :- Sink2Prim(c,cl,u), Sink2ObjT(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,_). # pt is backwards, LoadPrimCtxt is flipped
+
+ActiveRef(c,v) :- Sink2Prim(c,cl,u), Sink2ObjX(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,0). # pt is backwards, LoadPrimCtxt is flipped
+ActiveObj(o) :- Sink2Prim(c,cl,u), Sink2ObjX(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,0). # pt is backwards, LoadPrimCtxt is flipped
+
+ActiveRef(c,v) :- Sink2Prim(c,cl,u), Sink2PrimFld(cl,o,f), PtFull(c,v,o), LoadPrimCtxt(c,u,v,f). # pt is backwards, LoadPrim is flipped
+ActiveObj(o) :- Sink2Prim(c,cl,u), Sink2PrimFld(cl,o,f), PtFull(c,v,o), LoadPrimCtxt(c,u,v,f). # pt is backwards, LoadPrim is flipped
+
+ActiveRef(c,u) :- Sink2PrimFld(cl,o,f), Sink2Prim(c,cl,v), StorePrimCtxt(c,u,f,v), PtFull(c,u,o). # StorePrimCtxt is flipped
+ActiveObj(o) :- Sink2PrimFld(cl,o,f), Sink2Prim(c,cl,v), StorePrimCtxt(c,u,f,v), PtFull(c,u,o). # StorePrimCtxt is flipped
 
 ###################
-# RULES: SINKF
+# RULES: INPUT
 ###################
 
-# Sink_full-obj flow
-
-SinkF2RefFActive(c,cl,v) :- SinkF2ObjActive(cl,o), SinkF2RefF(c,cl,v), PtFull(c,v,o).
-PtFullActive(c,v,o) :- SinkF2ObjActive(cl,o), SinkF2RefF(c,cl,v), PtFull(c,v,o).
-
-Sink2ObjActive(cl,o1) :- SinkF2ObjActive(cl,o2), Sink2Obj(cl,o1), PtFull(c,v,o1), Ref2RefF(c,u,v), PtFull(c,u,o2). # first pt, Ref2RefF are backwards
-PtFullActive(c,v,o1) :- SinkF2ObjActive(cl,o2), Sink2Obj(cl,o1), PtFull(c,v,o1), Ref2RefF(c,u,v), PtFull(c,u,o2). # first pt, Ref2RefF are backwards
-Ref2RefFActive(c,u,v) :- SinkF2ObjActive(cl,o2), Sink2Obj(cl,o1), PtFull(c,v,o1), Ref2RefF(c,u,v), PtFull(c,u,o2). # first pt, Ref2RefF are backwards
-PtFullActive(c,u,o2) :- SinkF2ObjActive(cl,o2), Sink2Obj(cl,o1), PtFull(c,v,o1), Ref2RefF(c,u,v), PtFull(c,u,o2). # first pt, Ref2RefF are backwards
-
-Sink2PrimActive(c,cl,v) :- SinkF2ObjActive(cl,o), Sink2Prim(c,cl,v), Ref2PrimF(c,u,v), PtFull(c,u,o). # Ref2PrimF is backwards
-Ref2PrimFActive(c,u,v) :- SinkF2ObjActive(cl,o), Sink2Prim(c,cl,v), Ref2PrimF(c,u,v), PtFull(c,u,o). # Ref2PrimF is backwards
-PtFullActive(c,u,o) :- SinkF2ObjActive(cl,o), Sink2Prim(c,cl,v), Ref2PrimF(c,u,v), PtFull(c,u,o). # Ref2PrimF is backwards
-
-Sink2PrimActive(c,cl,v) :- SinkF2ObjActive(cl,o), Sink2Prim(c,cl,v), Ref2PrimF(c,u,v), PtFull(c,u,o). # Ref2PrimF is backwards
-Ref2PrimFActive(c,u,v) :- SinkF2ObjActive(cl,o), Sink2Prim(c,cl,v), Ref2PrimF(c,u,v), PtFull(c,u,o). # Ref2PrimF is backwards
-PtFullActive(c,u,o) :- SinkF2ObjActive(cl,o), Sink2Prim(c,cl,v), Ref2PrimF(c,u,v), PtFull(c,u,o). # Ref2PrimF is backwards
-
-SinkF2ObjActive(cl,o1) :- SinkF2ObjActive(cl,o2), SinkF2Obj(cl,o1), FptFull(o1,_,o2).
-FptFull(o1,f,o2) :- SinkF2ObjActive(cl,o2), SinkF2Obj(cl,o1), FptFull(o1,f,o2).
-
-SinkF2ObjActive(cl,o1) :- SinkF2ObjActive(cl,o2), SinkF2Obj(cl,o1), FptFull(o1,_,o2).
-FptFullActive(o1,f,o2) :- SinkF2ObjActive(cl,o2), SinkF2Obj(cl,o1), FptFull(o1,f,o2).
-
-# Sink_full-prim flow
-
-SinkF2PrimFActive(c,cl,v) :- SinkF2PrimActive(c,cl,v), SinkF2PrimF(c,cl,v).
-
-Sink2ObjActive(cl,o) :- SinkF2PrimActive(c,cl,u), Sink2Obj(cl,o), PtFull(c,v,o), Prim2RefF(c,u,v). # pt, Prim2RefF are backwards
-PtFullActive(c,v,o) :- SinkF2PrimActive(c,cl,u), Sink2Obj(cl,o), PtFull(c,v,o), Prim2RefF(c,u,v). # pt, Prim2RefF are backwards
-Prim2RefFActive(c,u,v) :- SinkF2PrimActive(c,cl,u), Sink2Obj(cl,o), PtFull(c,v,o), Prim2RefF(c,u,v). # pt, Prim2RefF are backwards
-
-Sink2PrimActive(c,cl,v) :- SinkF2PrimActive(c,cl,u), Sink2Prim(c,cl,v), Prim2PrimF(c,u,v). # Prim2PrimF is backwards
-Prim2PrimFActive(c,u,v) :- SinkF2PrimActive(c,cl,u), Sink2Prim(c,cl,v), Prim2PrimF(c,u,v). # Prim2PrimF is backwards
+PtFullActive(d,u,o) :- PtFull(d,u,o), ActiveRef(d,u), ActiveObj(o).
+FptFullActive(o1,f,o2) :- FptFull(o1,f,o2), ActiveObj(o1), ActiveObj(o2).
 
 ###################
-# RULES: SRC-SINK FLOW
+# RULES: EXTRA
 ###################
 
-Src2ObjActive(src,o) :- Src2SinkActive(src,sink), Src2Obj(src,o), SinkF2Obj(sink,o). # SinkF2Obj is backwards
-SinkF2ObjActive(sink,o) :- Src2SinkActive(src,sink), Src2Obj(src,o), SinkF2Obj(sink,o). # SinkF2Obj is backwards
-
-Src2PrimActive(c,src,v) :- Src2SinkActive(src,sink), Src2Prim(c,src,v), SinkF2Prim(c,sink,v). # SinkF2Prim is backwards
-SinkF2PrimActive(c,sink,v) :- Src2SinkActive(src,sink), Src2Prim(c,src,v), SinkF2Prim(c,sink,v). # SinkF2Prim is backwards
-
-Src2PrimFldActive(src,o,f) :- Src2SinkActive(src,sink), Src2PrimFld(src,o,f), SinkF2Obj(sink,o). # SinkF2Obj is backwards
-SinkF2ObjActive(sink,o) :- Src2SinkActive(src,sink), Src2PrimFld(src,o,_), SinkF2Obj(sink,o). # SinkF2Obj is backwards
+TransferActive2(v,u) :- TransferActive(_,v,u).
 
 ###################
-# RULES: LABEL FLOW
+# RULES: PARTIAL FLOWS
 ###################
 
-# Src-obj flow
+# 1) o -> v_c
+# 2) o -> v_c -> u_c -> w_d
+PostFlowsToAActive(d,w,c,u) :- PreFlowsToAActive(d,o,w), pt(c,v,o), Store(u,_,v), PostFlowsToA(d,w,c,u).
+PostFlowsToRActive(d,w,c,u) :- PreFlowsToRActive(d,o,w), pt(c,v,o), Store(u,_,v), PostFlowsToR(d,w,c,u).
+# 3) o1 -> v_c -> u_c -> o2 -> w_c
+PreFlowsToAActive(c,o2,w) :- PreFlowsToAActive(c,o1,w), pt(c,v,o1), Store(u,_,v), pt(c,u,o2), PreFlowsToA(c,o2,w).
+PreFlowsToRActive(c,o2,w) :- PreFlowsToRActive(c,o1,w), pt(c,v,o1), Store(u,_,v), pt(c,u,o2), PreFlowsToR(c,o2,w).
 
-Src2ObjTActive(cl,o) :- Src2ObjActive(cl,o), Src2ObjT(cl,o).
+# 2a) v_c -> u_d -> w_d
+PostFlowsToAActive(c,v,d,u) :- PostFlowsToAActive(c,v,d,w), PostFlowsToA(c,v,d,u), Assign(w,u).
+PostFlowsToRActive(c,v,d,u) :- PostFlowsToRActive(c,v,d,w), PostFlowsToR(c,v,d,u), Assign(w,u).
 
-Src2ObjXActive(cl,o) :- Src2ObjActive(cl,o), Src2ObjX(cl,o).
+# 2b) v_c -> u_d -> w_b
+PostFlowsToAActive(c,v,d,u) :- PostFlowsToAActive(c,v,b,w), PostFlowsToA(c,v,d,u), param(w,u,i), CC(d,b), CI(b,i).
+PostFlowsToAActive(c,v,d,u) :- PostFlowsToAActive(c,v,b,w), PostFlowsToA(c,v,d,u), return(w,u,i), CC(b,d), CI(d,i).
+PostFlowsToRActive(c,v,d,u) :- PostFlowsToRActive(c,v,b,w), PostFlowsToR(c,v,d,u), param(w,u,i), CC(d,b), CI(b,i).
+PostFlowsToRActive(c,v,d,u) :- PostFlowsToRActive(c,v,b,w), PostFlowsToR(c,v,d,u), return(w,u,i), CC(b,d), CI(d,i).
 
-Src2ObjActive(cl,o1) :- Src2ObjXActive(cl,o2), Src2Obj(cl,o1), Obj2RefT(c,o1,v), PtFull(c,v,o2).
-Obj2RefTActive(c,o1,v) :- Src2ObjXActive(cl,o2), Src2Obj(cl,o1), Obj2RefT(c,o1,v), PtFull(c,v,o2).
-PtFullActive(c,v,o2) :- Src2ObjXActive(cl,o2), Src2Obj(cl,o1), Obj2RefT(c,o1,v), PtFull(c,v,o2).
+# 3) v_c -> u_d -> w_d -> o -> x_b -> y_b
+PostFlowsToAActive(c,v,d,u) :- PostFlowsToAActive(c,v,b,y), PostFlowsToA(c,v,d,u), Store(w,f,u), pt(d,w,o), pt(b,x,o), Load(y,x,f).
+PostFlowsToRActive(c,v,d,u) :- PostFlowsToRActive(c,v,b,y), PostFlowsToR(c,v,d,u), Store(w,f,u), pt(d,w,o), pt(b,x,o), Load(y,x,f).
 
-Src2PrimActive(c,cl,v) :- Src2ObjXActive(cl,o), Src2Prim(c,cl,v), Prim2RefT(c,v,u), PtFull(c,u,o).
-Prim2RefTActive(c,v,u) :- Src2ObjXActive(cl,o), Src2Prim(c,cl,v), Prim2RefT(c,v,u), PtFull(c,u,o).
-PtFullActive(c,u,o) :- Src2ObjXActive(cl,o), Src2Prim(c,cl,v), Prim2RefT(c,v,u), PtFull(c,u,o).
+# 4) v_c -> o -> u_d -> w_d
+PreFlowsToAActive(c,o,v) :- PostFlowsToAActive(c,v,d,w), PreFlowsToA(c,o,v), pt(d,u,o), Load(w,u,_).
+PreFlowsToRActive(c,o,v) :- PostFlowsToRActive(c,v,d,w), PreFlowsToR(c,o,v), pt(d,u,o), Load(w,u,_).
 
-Src2PrimFldActive(cl,o1,0) :- Src2ObjXActive(cl,o2), Src2PrimFld(cl,o1,0), Obj2RefT(c,o1,v), PtFull(c,v,o2).
-Obj2RefTActive(c,o1,v) :- Src2ObjXActive(cl,o2), Src2PrimFld(cl,o1,0), Obj2RefT(c,o1,v), PtFull(c,v,o2).
-PtFullActive(c,v,o2) :- Src2ObjXActive(cl,o2), Src2PrimFld(cl,o1,0), Obj2RefT(c,o1,v), PtFull(c,v,o2).
+# 5) v_c -> u_d -> w_d
+PostFlowsToAActive(c,v,d,u) :- PostFlowsToAActive(c,v,d,w), PostFlowsToA(c,v,d,u), Load(w,u,_).
+PostFlowsToRActive(c,v,d,u) :- PostFlowsToRActive(c,v,d,w), PostFlowsToR(c,v,d,u), Load(w,u,_).
 
-Src2ObjXActive(cl,o1) :- Src2ObjXActive(cl,o2), Src2ObjX(cl,o1), FptFull(o1,0,o2).
-FptFullActive(o1,0,o2) :- Src2ObjXActive(cl,o2), Src2ObjX(cl,o1), FptFull(o1,0,o2).
+# 1) v_c -> u_d
+PostFlowsToAActive(c,v,d,u) :- MidFlowsToAAActive(c,v,d,u), PostFlowsToA(c,v,d,u), Varg(u,d).
+PostFlowsToAActive(c,v,d,u) :- MidFlowsToARActive(c,v,d,u), PostFlowsToA(c,v,d,u), Vret(u,d).
+PostFlowsToAActive(c,v,d,u) :- MidFlowsToARActive(c,v,d,u), PostFlowsToA(c,v,d,u), Vret(u,d).
+PostFlowsToRActive(c,v,d,u) :- MidFlowsToRAActive(c,v,d,u), PostFlowsToR(c,v,d,u), Varg(u,d).
+PostFlowsToRActive(c,v,d,u) :- MidFlowsToRRActive(c,v,d,u), PostFlowsToR(c,v,d,u), Vret(u,d).
 
-# Sink-obj flow
+# 2) v_c -> u_d -> w_d -> x_b
+PostFlowsToAActive(c,v,d,u) :- MidFlowsToAAActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,_,u), PostFlowsToA(b,x,d,w).
+PostFlowsToAActive(b,x,d,w) :- MidFlowsToAAActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,_,u), PostFlowsToA(b,x,d,w).
 
-Sink2ObjTActive(cl,o) :- Sink2ObjActive(cl,o), Sink2ObjT(cl,o).
+PostFlowsToAActive(c,v,d,u) :- MidFlowsToARActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,_,u), PostFlowsToR(b,x,d,w).
+PostFlowsToRActive(b,x,d,w) :- MidFlowsToARActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,_,u), PostFlowsToR(b,x,d,w).
 
-Sink2ObjXActive(cl,o) :- Sink2ObjActive(cl,o), Sink2ObjX(cl,o).
+PostFlowsToRActive(c,v,d,u) :- MidFlowsToRAActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,_,u), PostFlowsToA(b,x,d,w).
+PostFlowsToAActive(b,x,d,w) :- MidFlowsToRAActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,_,u), PostFlowsToA(b,x,d,w).
 
-Sink2ObjActive(cl,o1) :- Sink2ObjXActive(cl,o2), Sink2Obj(cl,o1), Obj2RefT(c,o1,v), PtFull(c,v,o2).
-Obj2RefTActive(c,o1,v) :- Sink2ObjXActive(cl,o2), Sink2Obj(cl,o1), Obj2RefT(c,o1,v), PtFull(c,v,o2).
-PtFullActive(c,v,o2) :- Sink2ObjXActive(cl,o2), Sink2Obj(cl,o1), Obj2RefT(c,o1,v), PtFull(c,v,o2).
+PostFlowsToRActive(c,v,d,u) :- MidFlowsToRRActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,_,u), PostFlowsToR(b,x,d,w).
+PostFlowsToRActive(b,x,d,w) :- MidFlowsToRRActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,_,u), PostFlowsToR(b,x,d,w).
 
-Sink2PrimActive(c,cl,v) :- Sink2ObjXActive(cl,o), Sink2Prim(c,cl,v), Prim2RefT(c,v,u), PtFull(c,u,o).
-Prim2RefTActive(c,v,u) :- Sink2ObjXActive(cl,o), Sink2Prim(c,cl,v), Prim2RefT(c,v,u), PtFull(c,u,o).
-PtFullActive(c,u,o) :- Sink2ObjXActive(cl,o), Sink2Prim(c,cl,v), Prim2RefT(c,v,u), PtFull(c,u,o).
+# 3) v_c -> u_d -> w_d -> o -> x_b
+PostFlowsToAActive(c,v,d,u) :- MidFlowsToAAActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToA(b,o,x).
+PreFlowsToAActive(b,o,x) :- MidFlowsToAAActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToA(b,o,x).
 
-Sink2PrimFldActive(cl,o1,0) :- Sink2ObjXActive(cl,o2), Sink2PrimFld(cl,o1,0), Obj2RefT(c,o1,v), PtFull(c,v,o2).
-Obj2RefTActive(c,o1,v) :- Sink2ObjXActive(cl,o2), Sink2PrimFld(cl,o1,0), Obj2RefT(c,o1,v), PtFull(c,v,o2).
-PtFullActive(c,v,o2) :- Sink2ObjXActive(cl,o2), Sink2PrimFld(cl,o1,0), Obj2RefT(c,o1,v), PtFull(c,v,o2).
+PostFlowsToAActive(c,v,d,u) :- MidFlowsToARActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToR(b,o,x).
+PreFlowsToRActive(b,o,x) :- MidFlowsToARActive(c,v,b,x), PostFlowsToA(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToR(b,o,x).
 
-Sink2ObjXActive(cl,o1) :- Sink2ObjXActive(cl,o2), Sink2ObjX(cl,o1), FptFull(o1,0,o2).
-FptFullActive(o1,0,o2) :- Sink2ObjXActive(cl,o2), Sink2ObjX(cl,o1), FptFull(o1,0,o2).
+PostFlowsToRActive(c,v,d,u) :- MidFlowsToRAActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToA(b,o,x).
+PreFlowsToAActive(b,o,x) :- MidFlowsToRAActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToA(b,o,x).
 
-# Src-prim flow
+PostFlowsToRActive(c,v,d,u) :- MidFlowsToRRActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToR(b,o,x).
+PreFlowsToRActive(b,o,x) :- MidFlowsToRRActive(c,v,b,x), PostFlowsToR(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToR(b,o,x).
 
-Src2PrimTActive(c,cl,v) :- Src2PrimActive(c,cl,v), Src2PrimT(c,cl,v).
+# 4) v_c -> o -> u_d
+PreFlowsToAActive(c,o,v) :- MidFlowsToAAActive(c,v,d,u), PreFlowsToA(c,o,v), PreFlowsToA(d,o,u).
+PreFlowsToAActive(d,o,u) :- MidFlowsToAAActive(c,v,d,u), PreFlowsToA(c,o,v), PreFlowsToA(d,o,u).
 
-Src2PrimActive(c,cl,v) :- Src2PrimActive(c,cl,u), Src2Prim(c,cl,v), AssignPrimCtxt(c,u,v). # AssignPrim is flipped
-AssignPrimCtxtActive(c,u,v) :- Src2PrimActive(c,cl,u), Src2Prim(c,cl,v), AssignPrimCtxt(c,u,v). # AssignPrim is flipped
+PreFlowsToAActive(c,o,v) :- MidFlowsToARActive(c,v,d,u), PreFlowsToA(c,o,v), PreFlowsToR(d,o,u).
+PreFlowsToRActive(d,o,u) :- MidFlowsToARActive(c,v,d,u), PreFlowsToA(c,o,v), PreFlowsToR(d,o,u).
 
-Src2PrimActive(c,cl,v) :- Src2PrimActive(d,cl,u), Src2Prim(c,cl,v), AssignPrimCCtxt(d,u,c,v). # AssignPrimCtxt is flipped
-AssignPrimCCtxtActive(d,u,c,v) :- Src2PrimActive(d,cl,u), Src2Prim(c,cl,v), AssignPrimCCtxt(d,u,c,v). # AssignPrimCtxt is flipped
+PreFlowsToRActive(c,o,v) :- MidFlowsToRAActive(c,v,d,u), PreFlowsToR(c,o,v), PreFlowsToA(d,o,u).
+PreFlowsToAActive(d,o,u) :- MidFlowsToRAActive(c,v,d,u), PreFlowsToR(c,o,v), PreFlowsToA(d,o,u).
 
-Src2ObjActive(cl,o) :- Src2PrimActive(c,cl,v), Src2Obj(cl,o), Obj2PrimT(c,o,v).
-Obj2PrimTActive(c,o,v) :- Src2PrimActive(c,cl,v), Src2Obj(cl,o), Obj2PrimT(c,o,v).
+PreFlowsToRActive(c,o,v) :- MidFlowsToRRActive(c,v,d,u), PreFlowsToR(c,o,v), PreFlowsToR(d,o,u).
+PreFlowsToRActive(d,o,u) :- MidFlowsToRRActive(c,v,d,u), PreFlowsToR(c,o,v), PreFlowsToR(d,o,u).
 
-Src2PrimActive(c,cl,v) :- Src2PrimActive(c,cl,u), Src2Prim(c,cl,v), Prim2PrimT(c,v,u).
-Prim2PrimTActive(c,v,u) :- Src2PrimActive(c,cl,u), Src2Prim(c,cl,v), Prim2PrimT(c,v,u).
+###################
+# RULES: FULL FLOWS
+###################
 
-Src2ObjTActive(cl,o) :- Src2PrimActive(c,cl,u), Src2ObjT(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,_). # pt is backwards, LoadPrimCtxt is flipped
-PtFullActive(c,v,o) :- Src2PrimActive(c,cl,u), Src2ObjT(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,_). # pt is backwards, LoadPrimCtxt is flipped
-LoadPrimCtxt(c,u,v,f) :- Src2PrimActive(c,cl,u), Src2ObjT(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,f). # pt is backwards, LoadPrimCtxt is flipped
+# full flows
 
-Src2ObjXActive(cl,o) :- Src2PrimActive(c,cl,u), Src2ObjX(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,0). # pt is backwards, LoadPrimCtxt is flipped
-PtFullActive(c,v,o) :- Src2PrimActive(c,cl,u), Src2ObjX(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,0). # pt is backwards, LoadPrimCtxt is flipped
-LoadPrimCtxtActive(c,u,v,0) :- Src2PrimActive(c,cl,u), Src2ObjX(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,0). # pt is backwards, LoadPrimCtxt is flipped
+PreFlowsToAActive(c,o,v) :- PreFlowsToFullAActive(c,o,v), PreFlowsToA(c,o,v).
+PreFlowsToRActive(c,o,v) :- PreFlowsToFullRActive(c,o,v), PreFlowsToR(c,o,v).
 
-Src2PrimFldActive(cl,o,0) :- Src2PrimActive(c,cl,v), Src2PrimFld(cl,o,0), Obj2PrimT(c,o,v).
-Obj2PrimTActive(c,o,v) :- Src2PrimActive(c,cl,v), Src2PrimFld(cl,o,0), Obj2PrimT(c,o,v).
+PreFlowsToAActive(c,o,v) :- PreFlowsToFullAActive(d,o,w), PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAA(c,u,d,w).
+TransferActive(c,v,u) :- PreFlowsToFullAActive(d,o,w), PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAA(c,u,d,w).
+MidFlowsToAAActive(c,u,d,w) :- PreFlowsToFullAActive(d,o,w), PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAA(c,u,d,w).
 
-Src2PrimFldActive(cl,o,f) :- Src2PrimActive(c,cl,u), Src2PrimFld(cl,o,f), PtFull(c,v,o), LoadPrimCtxt(c,u,v,f). # pt is backwards, LoadPrim is flipped
-PtFullActive(c,v,o) :- Src2PrimActive(c,cl,u), Src2PrimFld(cl,o,f), PtFull(c,v,o), LoadPrimCtxt(c,u,v,f). # pt is backwards, LoadPrim is flipped
-LoadPrimCtxt(c,u,v,f) :- Src2PrimActive(c,cl,u), Src2PrimFld(cl,o,f), PtFull(c,v,o), LoadPrimCtxt(c,u,v,f). # pt is backwards, LoadPrim is flipped
+PreFlowsToAActive(c,o,v) :- PreFlowsToFullAActive(d,o,w), PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAR(c,u,d,w).
+TransferActive(c,v,u) :- PreFlowsToFullAActive(d,o,w), PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAR(c,u,d,w).
+MidFlowsToARActive(c,u,d,w) :- PreFlowsToFullAActive(d,o,w), PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAR(c,u,d,w).
 
-Src2PrimFldStatActive(cl,f) :- Src2PrimActive(c,cl,u), Src2PrimFldStat(cl,f), LoadStatPrimCtxt(c,u,f). # LoadStatPrimCtxt is flipped
-LoadStatPrimCtxtActive(c,u,f) :- Src2PrimActive(c,cl,u), Src2PrimFldStat(cl,f), LoadStatPrimCtxt(c,u,f). # LoadStatPrimCtxt is flipped
+PreFlowsToRActive(c,o,v) :- PreFlowsToFullRActive(d,o,w), PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRA(c,u,d,w).
+TransferActive(c,v,u) :- PreFlowsToFullRActive(d,o,w), PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRA(c,u,d,w).
+MidFlowsToRAActive(c,u,d,w) :- PreFlowsToFullRActive(d,o,w), PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRA(c,u,d,w).
 
-# Src-prim_fld flow
-
-Src2PrimActive(c,cl,v) :- Src2PrimFldActive(cl,o,f), Src2Prim(c,cl,v), StorePrimCtxt(c,u,f,v), PtFull(c,u,o). # StorePrimCtxt is flipped
-StorePrimCtxtActive(c,u,f,v) :- Src2PrimFldActive(cl,o,f), Src2Prim(c,cl,v), StorePrimCtxt(c,u,f,v), PtFull(c,u,o). # StorePrimCtxt is flipped
-PtFullActive(c,u,o) :- Src2PrimFldActive(cl,o,f), Src2Prim(c,cl,v), StorePrimCtxt(c,u,f,v), PtFull(c,u,o). # StorePrimCtxt is flipped
-
-Src2PrimActive(c,cl,v) :- Src2PrimFldStatActive(cl,f), Src2Prim(c,cl,v), StoreStatPrimCtxt(c,f,v). # StoreStatPrimCtxt is flipped
-StoreStatPrimCtxtActive(c,f,v) :- Src2PrimFldStatActive(cl,f), Src2Prim(c,cl,v), StoreStatPrimCtxt(c,f,v). # StoreStatPrimCtxt is flipped
-
-# Sink-prim flow
-
-Sink2PrimTActive(c,cl,v) :- Sink2PrimActive(c,cl,v), Sink2PrimT(c,cl,v).
-
-Sink2PrimActive(c,cl,v) :- Sink2PrimActive(c,cl,u), Sink2Prim(c,cl,v), AssignPrimCtxt(c,u,v). # AssignPrim is flipped
-AssignPrimCtxtActive(c,u,v) :- Sink2PrimActive(c,cl,u), Sink2Prim(c,cl,v), AssignPrimCtxt(c,u,v). # AssignPrim is flipped
-
-Sink2PrimActive(c,cl,v) :- Sink2PrimActive(d,cl,u), Sink2Prim(c,cl,v), AssignPrimCCtxt(d,u,c,v). # AssignPrimCtxt is flipped
-AssignPrimCCtxtActive(d,u,c,v) :- Sink2PrimActive(d,cl,u), Sink2Prim(c,cl,v), AssignPrimCCtxt(d,u,c,v). # AssignPrimCtxt is flipped
-
-Sink2ObjActive(cl,o) :- Sink2PrimActive(c,cl,v), Sink2Obj(cl,o), Obj2PrimT(c,o,v).
-Obj2PrimTActive(c,o,v) :- Sink2PrimActive(c,cl,v), Sink2Obj(cl,o), Obj2PrimT(c,o,v).
-
-Sink2PrimActive(c,cl,v) :- Sink2PrimActive(c,cl,u), Sink2Prim(c,cl,v), Prim2PrimT(c,v,u).
-Prim2PrimTActive(c,v,u) :- Sink2PrimActive(c,cl,u), Sink2Prim(c,cl,v), Prim2PrimT(c,v,u).
-
-Sink2ObjTActive(cl,o) :- Sink2PrimActive(c,cl,u), Sink2ObjT(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,_). # pt is backwards, LoadPrimCtxt is flipped
-PtFullActive(c,v,o) :- Sink2PrimActive(c,cl,u), Sink2ObjT(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,_). # pt is backwards, LoadPrimCtxt is flipped
-LoadPrimCtxt(c,u,v,f) :- Sink2PrimActive(c,cl,u), Sink2ObjT(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,f). # pt is backwards, LoadPrimCtxt is flipped
-
-Sink2ObjXActive(cl,o) :- Sink2PrimActive(c,cl,u), Sink2ObjX(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,0). # pt is backwards, LoadPrimCtxt is flipped
-PtFullActive(c,v,o) :- Sink2PrimActive(c,cl,u), Sink2ObjX(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,0). # pt is backwards, LoadPrimCtxt is flipped
-LoadPrimCtxtActive(c,u,v,0) :- Sink2PrimActive(c,cl,u), Sink2ObjX(cl,o), PtFull(c,v,o), LoadPrimCtxt(c,u,v,0). # pt is backwards, LoadPrimCtxt is flipped
-
-Sink2PrimFldActive(cl,o,0) :- Sink2PrimActive(c,cl,v), Sink2PrimFld(cl,o,0), Obj2PrimT(c,o,v).
-Obj2PrimTActive(c,o,v) :- Sink2PrimActive(c,cl,v), Sink2PrimFld(cl,o,0), Obj2PrimT(c,o,v).
-
-Sink2PrimFldActive(cl,o,f) :- Sink2PrimActive(c,cl,u), Sink2PrimFld(cl,o,f), PtFull(c,v,o), LoadPrimCtxt(c,u,v,f). # pt is backwards, LoadPrim is flipped
-PtFullActive(c,v,o) :- Sink2PrimActive(c,cl,u), Sink2PrimFld(cl,o,f), PtFull(c,v,o), LoadPrimCtxt(c,u,v,f). # pt is backwards, LoadPrim is flipped
-LoadPrimCtxt(c,u,v,f) :- Sink2PrimActive(c,cl,u), Sink2PrimFld(cl,o,f), PtFull(c,v,o), LoadPrimCtxt(c,u,v,f). # pt is backwards, LoadPrim is flipped
-
-Sink2PrimFldStatActive(cl,f) :- Sink2PrimActive(c,cl,u), Sink2PrimFldStat(cl,f), LoadStatPrimCtxt(c,u,f). # LoadStatPrimCtxt is flipped
-LoadStatPrimCtxtActive(c,u,f) :- Sink2PrimActive(c,cl,u), Sink2PrimFldStat(cl,f), LoadStatPrimCtxt(c,u,f). # LoadStatPrimCtxt is flipped
-
-# Sink-prim_fld flow
-
-Sink2PrimActive(c,cl,v) :- Sink2PrimFldActive(cl,o,f), Sink2Prim(c,cl,v), StorePrimCtxt(c,u,f,v), PtFull(c,u,o). # StorePrimCtxt is flipped
-StorePrimCtxtActive(c,u,f,v) :- Sink2PrimFldActive(cl,o,f), Sink2Prim(c,cl,v), StorePrimCtxt(c,u,f,v), PtFull(c,u,o). # StorePrimCtxt is flipped
-PtFullActive(c,u,o) :- Sink2PrimFldActive(cl,o,f), Sink2Prim(c,cl,v), StorePrimCtxt(c,u,f,v), PtFull(c,u,o). # StorePrimCtxt is flipped
-
-Sink2PrimActive(c,cl,v) :- Sink2PrimFldStatActive(cl,f), Sink2Prim(c,cl,v), StoreStatPrimCtxt(c,f,v). # StoreStatPrimCtxt is flipped
-StoreStatPrimCtxtActive(c,f,v) :- Sink2PrimFldStatActive(cl,f), Sink2Prim(c,cl,v), StoreStatPrimCtxt(c,f,v). # StoreStatPrimCtxt is flipped
+PreFlowsToRActive(c,o,v) :- PreFlowsToFullRActive(d,o,w), PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRR(c,u,d,w).
+TransferActive(c,v,u) :- PreFlowsToFullRActive(d,o,w), PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRR(c,u,d,w).
+MidFlowsToRRActive(c,u,d,w) :- PreFlowsToFullRActive(d,o,w), PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRR(c,u,d,w).
 
 ###################
 # RULES: OUTPUT
 ###################
 
-Src2SinkActive(src,sink) :- flow4Active(src,sink), Src2Sink(src,sink).
+PreFlowsToFullAActive(c,o,v) :- PtFullActive(d,u,o), PreFlowsToFullA(c,o,v), PostFlowsToA(c,v,d,u), typeFilter(u,o).
+typeFilterActive(u,o) :- PtFullActive(d,u,o), PreFlowsToFullA(c,o,v), PostFlowsToA(c,v,d,u), typeFilter(u,o).
+
+PreFlowsToFullAActive(c,o,v) :- PtFullActive(d,u,o), PreFlowsToFullA(c,o,v), PostFlowsToA(c,v,d,u), typeFilter(u,o).
+PostFlowsToAActive(c,v,d,u) :- PtFullActive(d,u,o), PreFlowsToFullA(c,o,v), PostFlowsToA(c,v,d,u), typeFilter(u,o).
+typeFilterActive(u,o) :- PtFullActive(d,u,o), PreFlowsToFullA(c,o,v), PostFlowsToA(c,v,d,u), typeFilter(u,o).
+
+PreFlowsToFullRActive(c,o,v) :- PtFullActive(d,u,o), PreFlowsToFullR(c,o,v), PostFlowsToR(c,v,d,u), typeFilter(u,o).
+PostFlowsToRActive(c,v,d,u) :- PtFullActive(d,u,o), PreFlowsToFullR(c,o,v), PostFlowsToR(c,v,d,u), typeFilter(u,o).
+typeFilterActive(u,o) :- PtFullActive(d,u,o), PreFlowsToFullR(c,o,v), PostFlowsToR(c,v,d,u), typeFilter(u,o).
+
+PtFullActive(c,v,o2) :- FptFullActive(o1,f,o2), PtFull(c,v,o2), Store(u,f,v), PtFull(c,u,o1).
+PtFullActive(c,u,o1) :- FptFullActive(o1,f,o2), PtFull(c,v,o2), Store(u,f,v), PtFull(c,u,o1).

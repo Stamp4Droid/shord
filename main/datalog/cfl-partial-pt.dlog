@@ -150,8 +150,8 @@ PreFlowsToFullR(d,o,w) :- PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRR(c,u,
 # RULES: OUTPUT
 ###################
 
-PtFull(d,u,o) :- pt(d,u,o).
-FptFull(o1,f,o2) :- fpt(o1,f,o2).
+#PtFull(d,u,o) :- pt(d,u,o).
+#FptFull(o1,f,o2) :- fpt(o1,f,o2).
 
 PtFull(d,u,o) :- PreFlowsToFullA(c,o,v), PostFlowsToA(c,v,d,u), typeFilter(u,o).
 PtFull(d,u,o) :- PreFlowsToFullR(c,o,v), PostFlowsToR(c,v,d,u), typeFilter(u,o).

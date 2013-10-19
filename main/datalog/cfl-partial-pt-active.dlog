@@ -120,7 +120,7 @@ VargActive(v,c) :- PreFlowsToAActive(c,o,v), pt(c,v,o), Varg(v,c).
 # 2) o -> v_c -> u_c -> w_d
 ptActive(c,v,o) :- PreFlowsToAActive(d,o,w), pt(c,v,o), Store(u,_,v), PostFlowsToA(d,w,c,u).
 StoreActive(u,f,v) :- PreFlowsToAActive(d,o,w), pt(c,v,o), Store(u,f,v), PostFlowsToA(d,w,c,u).
-PostFlowsToA(d,w,c,u) :- PreFlowsToAActive(d,o,w), pt(c,v,o), Store(u,_,v), PostFlowsToA(d,w,c,u).
+PostFlowsToAActive(d,w,c,u) :- PreFlowsToAActive(d,o,w), pt(c,v,o), Store(u,_,v), PostFlowsToA(d,w,c,u).
 ptActive(c,v,o) :- PreFlowsToRActive(d,o,w), pt(c,v,o), Store(u,_,v), PostFlowsToR(d,w,c,u).
 StoreActive(u,f,v) :- PreFlowsToRActive(d,o,w), pt(c,v,o), Store(u,f,v), PostFlowsToR(d,w,c,u).
 PostFlowsToRActive(d,w,c,u) :- PreFlowsToRActive(d,o,w), pt(c,v,o), Store(u,_,v), PostFlowsToR(d,w,c,u).
