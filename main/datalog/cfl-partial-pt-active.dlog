@@ -49,7 +49,6 @@ Varg(v:V,c:C) input
 Vret(v:V,c:C) input
 
 pt(c:C,v:V,o:C) input
-PtFull(c:C,v:V,o:C) input
 
 ###################
 # INPUT: ACTIVE REF AND OBJ FROM TAINT
@@ -71,13 +70,6 @@ ActiveVret(v:V) output
 ActiveTransfer(v:V,u:V) output
 
 ###################
-# RULES: INPUT
-###################
-
-ActiveRef2(c,v) :- ActiveRef(c,v).
-ActiveObj2(o) :- ActiveObj(o).
-
-###################
 # RULES: ACTIVE VARG, VRET, AND TRANSFER
 ###################
 
@@ -87,34 +79,17 @@ ActiveVret(v) :- Vret(v,c), ActiveRef2(c,v).
 ActiveTransfer(v,u) :- Transfer(c,v,u), ActiveRef2(c,v), ActiveRef2(c,u).
 
 ###################
-# RULES: FULL FLOWS
-###################
-
-# full flows
-
-# o -> v_c -> u_c -> w_d
-ActiveRef2(c,v) :- PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAA(c,u,d,w), ActiveObj2(o), ActiveRef2(d,w).
-ActiveRef2(c,u) :- PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAA(c,u,d,w), ActiveObj2(o), ActiveRef2(d,w).
-
-ActiveRef2(c,v) :- PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAR(c,u,d,w), ActiveObj2(o), ActiveRef2(d,w).
-ActiveRef2(c,u) :- PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAR(c,u,d,w), ActiveObj2(o), ActiveRef2(d,w).
-
-ActiveRef2(c,v) :- PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRA(c,u,d,w), ActiveObj2(o), ActiveRef2(d,w).
-ActiveRef2(c,u) :- PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRA(c,u,d,w), ActiveObj2(o), ActiveRef2(d,w).
-
-ActiveRef2(c,v) :- PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRR(c,u,d,w), ActiveObj2(o), ActiveRef2(d,w).
-ActiveRef2(c,u) :- PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRR(c,u,d,w), ActiveObj2(o), ActiveRef2(d,w).
-
-###################
 # RULES: OUTPUT
 ###################
 
 # o -> v_c -> u_c -> w_d
-ActiveRef2(c,v) :- PreFlowsToFullA(c,o,v), Transfer(c,v,u), PostFlowsToA(c,u,d,w), typeFilter(w,o), ActiveObj2(o), ActiveRef2(d,w).
-ActiveRef2(c,v) :- PreFlowsToFullA(c,o,v), Transfer(c,v,u), PostFlowsToR(c,u,d,w), typeFilter(w,o), ActiveObj2(o), ActiveRef2(d,w).
-ActiveRef2(c,v) :- PreFlowsToFullR(c,o,v), Transfer(c,v,u), PostFlowsToA(c,u,d,w), typeFilter(w,o), ActiveObj2(o), ActiveRef2(d,w).
-ActiveRef2(c,v) :- PreFlowsToFullR(c,o,v), Transfer(c,v,u), PostFlowsToR(c,u,d,w), typeFilter(w,o), ActiveObj2(o), ActiveRef2(d,w).
+# also need all PreFlowsToFullA where ending is active
+#ActiveRef2(c,u) :- PreFlowsToFullA(c,o,v), Transfer(c,v,u), PostFlowsToA(c,u,d,w), typeFilter(w,o), ActiveObj(o), ActiveRef(d,w).
+#ActiveRef2(c,u) :- PreFlowsToFullA(c,o,v), Transfer(c,v,u), PostFlowsToR(c,u,d,w), typeFilter(w,o), ActiveObj(o), ActiveRef(d,w).
+#ActiveRef2(c,u) :- PreFlowsToFullR(c,o,v), Transfer(c,v,u), PostFlowsToA(c,u,d,w), typeFilter(w,o), ActiveObj(o), ActiveRef(d,w).
+#ActiveRef2(c,u) :- PreFlowsToFullR(c,o,v), Transfer(c,v,u), PostFlowsToR(c,u,d,w), typeFilter(w,o), ActiveObj(o), ActiveRef(d,w).
 
-# o2 -> v_c -> u_c -> o1
-ActiveRef2(c,v) :- PtFull(c,v,o2), Store(u,_,v), PtFull(c,u,o1), ActiveObj2(o1), ActiveObj2(o2).
-ActiveRef2(c,u) :- PtFull(c,v,o2), Store(u,_,v), PtFull(c,u,o1), ActiveObj2(o1), ActiveObj2(o2).
+ActiveRef2(c,u) :- PreFlowsToFullA(c,o,v), Transfer(c,v,u), ActiveObj(o).
+ActiveRef2(c,u) :- PreFlowsToFullA(c,o,v), Transfer(c,v,u), ActiveObj(o).
+ActiveRef2(c,u) :- PreFlowsToFullR(c,o,v), Transfer(c,v,u), ActiveObj(o).
+ActiveRef2(c,u) :- PreFlowsToFullR(c,o,v), Transfer(c,v,u), ActiveObj(o).

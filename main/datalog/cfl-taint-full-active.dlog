@@ -25,6 +25,8 @@ fpt(o1:C,f:F,o2:C) input
 PtFull(c:C,v:V,o:C)    input
 FptFull(o1:C,f:F,o2:C) input
 
+Store(v:V,f:F,u:V) input           # v.f = u
+
 LoadPrimCtxt(c:C,v:U,u:V,f:F) input
 LoadStatPrimCtxt(c:C,v:U,f:F) input
 StorePrimCtxt(c:C,v:V,f:F,u:U) input
@@ -103,7 +105,15 @@ ActiveRef(c:C,v:V) output
 ActiveObj(o:C) output
 
 ###################
-# RULES: OBJECT ANNOTATIONS
+# RULES: ACTIVE FPT TO ACTIVE PT
+###################
+
+# o2 -> v_c -> u_c -> o1
+ActiveRef(c,v) :- PtFull(c,v,o2), Store(u,_,v), PtFull(c,u,o1), ActiveObj(o1), ActiveObj(o2).
+ActiveRef(c,u) :- PtFull(c,v,o2), Store(u,_,v), PtFull(c,u,o1), ActiveObj(o1), ActiveObj(o2).
+
+###################
+# RULES: ACTIVE OBJS AND REFS
 ###################
 
 ActiveRef(c,v) :- Obj2RefT(c,o,u), PtFull(c,v,o), Ref2RefT(c,v,u). # pt is backwards
