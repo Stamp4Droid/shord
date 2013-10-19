@@ -68,6 +68,8 @@ ActiveObj2(o:C) output
 ActiveVarg(v:V) output
 ActiveVret(v:V) output
 
+ActiveTransfer(v:V,u:V) output
+
 ###################
 # RULES: INPUT
 ###################
@@ -76,79 +78,13 @@ ActiveRef2(c,v) :- ActiveRef(c,v).
 ActiveObj2(o) :- ActiveObj(o).
 
 ###################
-# RULES: ACTIVE VARG AND VRET
+# RULES: ACTIVE VARG, VRET, AND TRANSFER
 ###################
 
 ActiveVarg(v) :- Varg(v,c), ActiveRef2(c,v).
 ActiveVret(v) :- Vret(v,c), ActiveRef2(c,v).
 
-###################
-# RULES: PARTIAL FLOWS
-###################
-
-# 1) o -> v_c
-# 2) o -> v_c -> u_c -> w_d
-ActiveRef2(c,u) :- pt(c,v,o), Store(u,_,v), PostFlowsToA(d,w,c,u), ActiveRef2(d,w), ActiveObj2(o).
-ActiveRef2(c,u) :- pt(c,v,o), Store(u,_,v), PostFlowsToR(d,w,c,u), ActiveRef2(d,w), ActiveObj2(o).
-
-# 3) o1 -> v_c -> u_c -> o2 -> w_c
-ActiveObj2(o2) :- pt(c,v,o1), Store(u,_,v), pt(c,u,o2), PreFlowsToA(c,o2,w), ActiveRef2(c,w), ActiveObj2(o1).
-ActiveObj2(o2) :- pt(c,v,o1), Store(u,_,v), pt(c,u,o2), PreFlowsToR(c,o2,w), ActiveRef2(c,w), ActiveObj2(o1).
-
-# 2a) v_c -> u_d -> w_d
-ActiveRef2(d,u) :- PostFlowsToA(c,v,d,u), Assign(w,u), ActiveRef2(c,v), ActiveRef2(d,w).
-ActiveRef2(d,u) :- PostFlowsToR(c,v,d,u), Assign(w,u), ActiveRef2(c,v), ActiveRef2(d,w).
-
-# 2b) v_c -> u_d -> w_b
-ActiveRef2(d,u) :- PostFlowsToA(c,v,d,u), param(w,u,i), CC(d,b), CI(b,i), ActiveRef2(c,v), ActiveRef2(b,w).
-ActiveRef2(d,u) :- PostFlowsToA(c,v,d,u), return(w,u,i), CC(b,d), CI(d,i), ActiveRef2(c,v), ActiveRef2(b,w).
-ActiveRef2(d,u) :- PostFlowsToR(c,v,d,u), param(w,u,i), CC(d,b), CI(b,i), ActiveRef2(c,v), ActiveRef2(b,w).
-ActiveRef2(d,u) :- PostFlowsToR(c,v,d,u), return(w,u,i), CC(b,d), CI(d,i), ActiveRef2(c,v), ActiveRef2(b,w).
-
-# 3) v_c -> u_d -> w_d -> o -> x_b -> y_b
-ActiveRef2(d,u) :- PostFlowsToA(c,v,d,u), Store(w,f,u), pt(d,w,o), pt(b,x,o), Load(y,x,f), ActiveRef2(c,v), ActiveRef2(b,y).
-ActiveRef2(d,u) :- PostFlowsToR(c,v,d,u), Store(w,f,u), pt(d,w,o), pt(b,x,o), Load(y,x,f), ActiveRef2(c,v), ActiveRef2(b,y).
-
-# 4) v_c -> o -> u_d -> w_d
-ActiveObj2(o) :- PreFlowsToA(c,o,v), pt(d,u,o), Load(w,u,_), ActiveRef2(c,v), ActiveRef2(d,w).
-ActiveObj2(o) :- PreFlowsToR(c,o,v), pt(d,u,o), Load(w,u,_), ActiveRef2(c,v), ActiveRef2(d,w).
-
-# 5) v_c -> u_d -> w_d
-ActiveRef2(d,u) :- PostFlowsToA(c,v,d,u), Load(w,u,_), ActiveRef2(c,v), ActiveRef2(d,w).
-ActiveRef2(d,u) :- PostFlowsToR(c,v,d,u), Load(w,u,_), ActiveRef2(c,v), ActiveRef2(d,w).
-
-# 1) v_c -> u_d
-# 2) v_c -> u_d -> w_d -> x_b
-ActiveRef2(d,u) :- PostFlowsToA(c,v,d,u), Store(w,_,u), PostFlowsToA(b,x,d,w), ActiveRef2(c,v), ActiveRef2(b,x).
-ActiveRef2(d,w) :- PostFlowsToA(c,v,d,u), Store(w,_,u), PostFlowsToA(b,x,d,w), ActiveRef2(c,v), ActiveRef2(b,x).
-
-ActiveRef2(d,u) :- PostFlowsToA(c,v,d,u), Store(w,_,u), PostFlowsToR(b,x,d,w), ActiveRef2(c,v), ActiveRef2(b,x).
-ActiveRef2(d,w) :- PostFlowsToA(c,v,d,u), Store(w,_,u), PostFlowsToR(b,x,d,w), ActiveRef2(c,v), ActiveRef2(b,x).
-
-ActiveRef2(d,u) :- PostFlowsToR(c,v,d,u), Store(w,_,u), PostFlowsToA(b,x,d,w), ActiveRef2(c,v), ActiveRef2(b,x).
-ActiveRef2(d,w) :- PostFlowsToR(c,v,d,u), Store(w,_,u), PostFlowsToA(b,x,d,w), ActiveRef2(c,v), ActiveRef2(b,x).
-
-ActiveRef2(d,u) :- PostFlowsToR(c,v,d,u), Store(w,_,u), PostFlowsToR(b,x,d,w), ActiveRef2(c,v), ActiveRef2(b,x).
-ActiveRef2(d,w) :- PostFlowsToR(c,v,d,u), Store(w,_,u), PostFlowsToR(b,x,d,w), ActiveRef2(c,v), ActiveRef2(b,x).
-
-# 3) v_c -> u_d -> w_d -> o -> x_b
-ActiveRef2(d,u) :- PostFlowsToA(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToA(b,o,x), ActiveRef2(c,v), ActiveRef2(b,x).
-ActiveObj2(o) :- PostFlowsToA(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToA(b,o,x), ActiveRef2(c,v), ActiveRef2(b,x).
-
-ActiveRef2(d,u) :- PostFlowsToA(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToR(b,o,x), ActiveRef2(c,v), ActiveRef2(b,x).
-ActiveObj2(o) :- PostFlowsToA(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToR(b,o,x), ActiveRef2(c,v), ActiveRef2(b,x).
-
-ActiveRef2(d,u) :- PostFlowsToR(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToA(b,o,x), ActiveRef2(c,v), ActiveRef2(b,x).
-ActiveObj2(o) :- PostFlowsToR(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToA(b,o,x), ActiveRef2(c,v), ActiveRef2(b,x).
-
-ActiveRef2(d,u) :- PostFlowsToR(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToR(b,o,x), ActiveRef2(c,v), ActiveRef2(b,x).
-ActiveObj2(o) :- PostFlowsToR(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsToR(b,o,x), ActiveRef2(c,v), ActiveRef2(b,x).
-
-# 4) v_c -> o -> u_d
-ActiveObj2(o) :- PreFlowsToA(c,o,v), PreFlowsToA(d,o,u), ActiveRef2(c,v), ActiveRef2(d,u).
-ActiveObj2(o) :- PreFlowsToA(c,o,v), PreFlowsToR(d,o,u), ActiveRef2(c,v), ActiveRef2(d,u).
-ActiveObj2(o) :- PreFlowsToR(c,o,v), PreFlowsToA(d,o,u), ActiveRef2(c,v), ActiveRef2(d,u).
-ActiveObj2(o) :- PreFlowsToR(c,o,v), PreFlowsToR(d,o,u), ActiveRef2(c,v), ActiveRef2(d,u).
+ActiveTransfer(v,u) :- Transfer(c,v,u), ActiveRef2(c,v), ActiveRef2(c,u).
 
 ###################
 # RULES: FULL FLOWS
