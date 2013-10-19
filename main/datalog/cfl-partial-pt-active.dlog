@@ -62,21 +62,40 @@ ActiveObj(o:C) input
 ###################
 
 ActiveRef2(c:C,v:V) output
-ActiveObj2(o:C) output
 
 ActiveVarg(v:V) output
 ActiveVret(v:V) output
 
 ActiveTransfer(v:V,u:V) output
+ActiveTypeFilter(o:C,v:V) output
+ActivePreFlowsToA(c:C,o:C,v:V) output
+ActivePreFlowsToR(c:C,o:C,v:V) output
+ActiveMidFlowsToAA(c:C,v:V,d:C,u:V) output
+ActiveMidFlowsToAR(c:C,v:V,d:C,u:V) output
+ActiveMidFlowsToRA(c:C,v:V,d:C,u:V) output
+ActiveMidFlowsToRR(c:C,v:V,d:C,u:V) output
+ActivePostFlowsToA(c:C,v:V,d:C,u:V) output
+ActivePostFlowsToR(c:C,v:V,d:C,u:V) output
 
 ###################
 # RULES: ACTIVE VARG, VRET, AND TRANSFER
 ###################
 
+ActiveRef2(c,v) :- ActiveRef(c,v).
+
 ActiveVarg(v) :- Varg(v,c), ActiveRef2(c,v).
 ActiveVret(v) :- Vret(v,c), ActiveRef2(c,v).
 
 ActiveTransfer(v,u) :- Transfer(c,v,u), ActiveRef2(c,v), ActiveRef2(c,u).
+ActiveTypeFilter(o,v) :- ActiveObj(o), ActiveRef(_,v).
+ActivePreFlowsToA(c,o,v) :- PreFlowsToA(c,o,v), ActiveObj(o), ActiveRef2(c,v).
+ActivePreFlowsToR(c,o,v) :- PreFlowsToA(c,o,v), ActiveObj(o), ActiveRef2(c,v).
+ActiveMidFlowsToAA(c,v,d,u) :- MidFlowsToAA(c,v,d,u), ActiveRef2(c,v), ActiveRef2(d,u).
+ActiveMidFlowsToAR(c,v,d,u) :- MidFlowsToAR(c,v,d,u), ActiveRef2(c,v), ActiveRef2(d,u).
+ActiveMidFlowsToRA(c,v,d,u) :- MidFlowsToRA(c,v,d,u), ActiveRef2(c,v), ActiveRef2(d,u).
+ActiveMidFlowsToRR(c,v,d,u) :- MidFlowsToRR(c,v,d,u), ActiveRef2(c,v), ActiveRef2(d,u).
+ActivePostFlowsToA(c,v,d,u) :- PostFlowsToA(c,v,d,u), ActiveRef2(c,v), ActiveRef2(d,u).
+ActivePostFlowsToR(c,v,d,u) :- PostFlowsToR(c,v,d,u), ActiveRef2(c,v), ActiveRef2(d,u).
 
 ###################
 # RULES: OUTPUT
