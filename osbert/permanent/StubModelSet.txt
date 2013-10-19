@@ -15,6 +15,7 @@
 {RefArg2PrimRetTStub;<android.test.mock.MockCursor: long getLong(int)>;0;null}#0
 {ArgArgTransferCtxtStub;<java.util.Vector: boolean contains(java.lang.Object)>;1;0}#2
 {RefArg2RefArgTStub;<java.io.BufferedOutputStream: void write(byte[],int,int)>;0;1}#0
+{RefArg2PrimRetTStub;<java.net.URI: int getPort()>;0;null}#0
 {RefArg2PrimRetTStub;<java.net.HttpURLConnection: int getResponseCode()>;0;null}#0
 {RefArg2RefRetTStub;<android.content.res.Resources: android.util.DisplayMetrics getDisplayMetrics()>;0;null}#0
 {RefArg2RefArgTStub;<android.app.NotificationManager: void notify(int,android.app.Notification)>;0;2}#0
@@ -379,9 +380,9 @@
 {ArgArgTransferCtxtStub;<java.util.HashSet: boolean contains(java.lang.Object)>;1;0}#2
 {ArgRetPrimTransferCtxtStub;<java.util.ArrayList: int size()>;0;null}#2
 {RefArg2RefArgTStub;<android.content.ContextWrapper: java.lang.Object getSystemService(java.lang.String)>;1;0}#0
-{RefArg2RefArgTStub;<java.io.RandomAccessFile: void writeUTF(java.lang.String)>;0;1}#0
 {PrimArg2RefArgTStub;<java.io.BufferedOutputStream: void write(byte[],int,int)>;3;1}#0
 {RefArg2PrimRetTStub;<java.io.FilterInputStream: int read(byte[],int,int)>;1;null}#0
+{RefArg2RefArgTStub;<java.io.RandomAccessFile: void writeUTF(java.lang.String)>;0;1}#0
 {ArgRetPrimTransferCtxtStub;<android.content.ContentResolver: int delete(android.net.Uri,java.lang.String,java.lang.String[])>;0;null}#2
 {RefArg2PrimRetTStub;<java.io.BufferedInputStream: int read(byte[],int,int)>;1;null}#0
 {ArgRetPrimTransferCtxtStub;<android.test.mock.MockCursor: int getColumnIndex(java.lang.String)>;0;null}#2
