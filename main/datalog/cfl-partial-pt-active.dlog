@@ -43,7 +43,7 @@ typeFilter(v:V,o:C) input   # type wise, v can point-to o
 
 PreFlowsToFullA(c:C,o:C,v:V) input
 PreFlowsToFullR(c:C,o:C,v:V) input
-Transfer(c:C,v:V,u:V) input
+Transfer(v:V,u:V) input
 
 Varg(v:V,c:C) input
 Vret(v:V,c:C) input
@@ -56,6 +56,16 @@ pt(c:C,v:V,o:C) input
 
 ActiveRef(c:C,v:V) input
 ActiveObj(o:C) input
+
+###################
+# INTERMEDIATE: CONSTRAINED
+###################
+
+CPreFlowsToFullA(c:C,o:C,v:V) output
+CPreFlowsToFullR(c:C,o:C,v:V) output
+
+CPostFlowsToA(c:C,v:V,w:V) output
+CPostFlowsToR(c:C,v:V,w:V) output
 
 ###################
 # OUTPUT: ACTIVE OBJS AND REFS
@@ -117,27 +127,34 @@ ActivePostFlowsToR(c:C,v:V,d:C,u:V) output
 
 # o -> v_c -> u_c -> w_d
 # ActiveRef2 denotes endpoints of PreFlowsToFullA
-#ActiveRefA(c,v) :- PreFlowsToFullA(c,o,v), Transfer(c,v,u), PostFlowsToA(c,u,d,w), typeFilter(w,o), ActiveObj(o), ActiveRef(d,w).
-#ActiveRefA(c,v) :- PreFlowsToFullA(c,o,v), Transfer(c,v,u), PostFlowsToR(c,u,d,w), typeFilter(w,o), ActiveObj(o), ActiveRef(d,w).
-#ActiveRefR(c,v) :- PreFlowsToFullR(c,o,v), Transfer(c,v,u), PostFlowsToA(c,u,d,w), typeFilter(w,o), ActiveObj(o), ActiveRef(d,w).
-#ActiveRefR(c,v) :- PreFlowsToFullR(c,o,v), Transfer(c,v,u), PostFlowsToR(c,u,d,w), typeFilter(w,o), ActiveObj(o), ActiveRef(d,w).
 
-#ActiveRefA(c,v) :- PreFlowsToFullA(c,o,v), Transfer(c,v,u), MidFlowsToAA(c,u,_,_), ActiveObj(o).
-#ActiveRefA(c,v) :- PreFlowsToFullR(c,o,v), Transfer(c,v,u), MidFlowsToRA(c,u,_,_), ActiveObj(o).
-#ActiveRefR(c,v) :- PreFlowsToFullA(c,o,v), Transfer(c,v,u), MidFlowsToAR(c,u,_,_), ActiveObj(o).
-#ActiveRefR(c,v) :- PreFlowsToFullR(c,o,v), Transfer(c,v,u), MidFlowsToRR(c,u,_,_), ActiveObj(o).
+CPreFlowsToFullA(c,o,v) :- ActiveObj(o), PreFlowsToFullA(c,o,v).
+CPreFlowsToFullR(c,o,v) :- ActiveObj(o), PreFlowsToFullR(c,o,v).
 
-ActiveRefAP(c,u) :- PreFlowsToFullA(c,o,v), Transfer(c,v,u), PostFlowsToA(c,u,d,w), typeFilter(w,o), ActiveObj(o), ActiveRef(d,w).
-ActiveRefAP(c,u) :- PreFlowsToFullR(c,o,v), Transfer(c,v,u), PostFlowsToA(c,u,d,w), typeFilter(w,o), ActiveObj(o), ActiveRef(d,w).
-ActiveRefRP(c,u) :- PreFlowsToFullA(c,o,v), Transfer(c,v,u), PostFlowsToR(c,u,d,w), typeFilter(w,o), ActiveObj(o), ActiveRef(d,w).
-ActiveRefRP(c,u) :- PreFlowsToFullR(c,o,v), Transfer(c,v,u), PostFlowsToR(c,u,d,w), typeFilter(w,o), ActiveObj(o), ActiveRef(d,w).
+CPostFlowsToA(c,u,w) :- PostFlowsToA(c,u,d,w), ActiveRef(d,w).
+CPostFlowsToR(c,u,w) :- PostFlowsToR(c,u,d,w), ActiveRef(d,w).
 
-#ActiveRefAP(c,u) :- PreFlowsToFullA(c,o,v), Transfer(c,v,u), MidFlowsToAA(c,u,d,w), ActiveObj(o), ActiveRefA(d,w).
-#ActiveRefAP(c,u) :- PreFlowsToFullR(c,o,v), Transfer(c,v,u), MidFlowsToRA(c,u,d,w), ActiveObj(o), ActiveRefR(d,w).
-#ActiveRefRP(c,u) :- PreFlowsToFullA(c,o,v), Transfer(c,v,u), MidFlowsToAR(c,u,d,w), ActiveObj(o), ActiveRefA(d,w).
-#ActiveRefRP(c,u) :- PreFlowsToFullR(c,o,v), Transfer(c,v,u), MidFlowsToRR(c,u,d,w), ActiveObj(o), ActiveRefR(d,w).
+ActiveRefA(c,v) :- CPostFlowsToA(c,u,w), Transfer(v,u), CPreFlowsToFullA(c,o,v), typeFilter(w,o).
+ActiveRefA(c,v) :- CPostFlowsToR(c,u,w), Transfer(v,u), CPreFlowsToFullA(c,o,v), typeFilter(w,o).
+ActiveRefR(c,v) :- CPostFlowsToA(c,u,w), Transfer(v,u), CPreFlowsToFullR(c,o,v), typeFilter(w,o).
+ActiveRefR(c,v) :- CPostFlowsToR(c,u,w), Transfer(v,u), CPreFlowsToFullR(c,o,v), typeFilter(w,o).
 
-ActiveRefA(c,u) :- PreFlowsToFullA(c,o,v), Transfer(c,v,u), ActiveObj(o).
-ActiveRefA(c,u) :- PreFlowsToFullA(c,o,v), Transfer(c,v,u), ActiveObj(o).
-ActiveRefR(c,u) :- PreFlowsToFullR(c,o,v), Transfer(c,v,u), ActiveObj(o).
-ActiveRefR(c,u) :- PreFlowsToFullR(c,o,v), Transfer(c,v,u), ActiveObj(o).
+ActiveRefA(c,v) :- CPreFlowsToFullA(c,_,v), Transfer(v,u), MidFlowsToAA(c,u,_,_).
+ActiveRefA(c,v) :- CPreFlowsToFullR(c,_,v), Transfer(v,u), MidFlowsToRA(c,u,_,_).
+ActiveRefR(c,v) :- CPreFlowsToFullA(c,_,v), Transfer(v,u), MidFlowsToAR(c,u,_,_).
+ActiveRefR(c,v) :- CPreFlowsToFullR(c,_,v), Transfer(v,u), MidFlowsToRR(c,u,_,_).
+
+ActiveRefAP(c,u) :- CPostFlowsToA(c,u,w), Transfer(v,u), CPreFlowsToFullA(c,o,v), typeFilter(w,o).
+ActiveRefAP(c,u) :- CPostFlowsToA(c,u,w), Transfer(v,u), CPreFlowsToFullR(c,o,v), typeFilter(w,o).
+ActiveRefRP(c,u) :- CPostFlowsToR(c,u,w), Transfer(v,u), CPreFlowsToFullA(c,o,v), typeFilter(w,o).
+ActiveRefRP(c,u) :- CPostFlowsToR(c,u,w), Transfer(v,u), CPreFlowsToFullR(c,o,v), typeFilter(w,o).
+
+#ActiveRefAP(c,u) :- PreFlowsToFullA(c,o,v), Transfer(v,u), MidFlowsToAA(c,u,d,w), ActiveObj(o), ActiveRefA(d,w).
+#ActiveRefAP(c,u) :- PreFlowsToFullR(c,o,v), Transfer(v,u), MidFlowsToRA(c,u,d,w), ActiveObj(o), ActiveRefR(d,w).
+#ActiveRefRP(c,u) :- PreFlowsToFullA(c,o,v), Transfer(v,u), MidFlowsToAR(c,u,d,w), ActiveObj(o), ActiveRefA(d,w).
+#ActiveRefRP(c,u) :- PreFlowsToFullR(c,o,v), Transfer(v,u), MidFlowsToRR(c,u,d,w), ActiveObj(o), ActiveRefR(d,w).
+
+#ActiveRefA(c,u) :- PreFlowsToFullA(c,o,v), Transfer(v,u), ActiveObj(o).
+#ActiveRefA(c,u) :- PreFlowsToFullA(c,o,v), Transfer(v,u), ActiveObj(o).
+#ActiveRefR(c,u) :- PreFlowsToFullR(c,o,v), Transfer(v,u), ActiveObj(o).
+#ActiveRefR(c,u) :- PreFlowsToFullR(c,o,v), Transfer(v,u), ActiveObj(o).

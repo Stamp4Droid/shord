@@ -67,7 +67,7 @@ typeFilter(v:V,o:C) input   # type wise, v can point-to o
 
 PreFlowsToFullA(c:C,o:C,v:V) output
 PreFlowsToFullR(c:C,o:C,v:V) output
-Transfer(c:C,v:V,u:V) output
+Transfer(v:V,u:V) output
 
 PtFull(c:C,v:V,o:C) output
 FptFull(o1:C,f:F,o2:C) output
@@ -131,20 +131,20 @@ MidFlowsToRR(c,v,d,u) :- PreFlowsToR(c,o,v), PreFlowsToR(d,o,u).
 ###################
 
 # helper
-Transfer(_,v,u) :- v = u.
-Transfer(c,v,u) :- RefArg2RefArgTStub(c,v,u,_,_,_).
-Transfer(c,v,u) :- RefArg2RefRetTStub(c,v,u,_,_).
-Transfer(c,u,v) :- RefArg2RefRetTStub(c,v,u,_,_).
+Transfer(v,u) :- v = u.
+Transfer(v,u) :- RefArg2RefArgTStub(_,v,u,_,_,_).
+Transfer(v,u) :- RefArg2RefRetTStub(_,v,u,_,_).
+Transfer(u,v) :- RefArg2RefRetTStub(_,v,u,_,_).
 
 # full flows
 
 PreFlowsToFullA(c,o,v) :- PreFlowsToA(c,o,v).
 PreFlowsToFullR(c,o,v) :- PreFlowsToR(c,o,v).
 
-PreFlowsToFullA(d,o,w) :- PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAA(c,u,d,w).
-PreFlowsToFullA(d,o,w) :- PreFlowsToA(c,o,v), Transfer(c,v,u), MidFlowsToAR(c,u,d,w).
-PreFlowsToFullR(d,o,w) :- PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRA(c,u,d,w).
-PreFlowsToFullR(d,o,w) :- PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRR(c,u,d,w).
+PreFlowsToFullA(d,o,w) :- PreFlowsToA(c,o,v), Transfer(v,u), MidFlowsToAA(c,u,d,w).
+PreFlowsToFullA(d,o,w) :- PreFlowsToA(c,o,v), Transfer(v,u), MidFlowsToAR(c,u,d,w).
+PreFlowsToFullR(d,o,w) :- PreFlowsToR(c,o,v), Transfer(v,u), MidFlowsToRA(c,u,d,w).
+PreFlowsToFullR(d,o,w) :- PreFlowsToR(c,o,v), Transfer(v,u), MidFlowsToRR(c,u,d,w).
 
 ###################
 # RULES: OUTPUT
@@ -153,9 +153,9 @@ PreFlowsToFullR(d,o,w) :- PreFlowsToR(c,o,v), Transfer(c,v,u), MidFlowsToRR(c,u,
 #PtFull(d,u,o) :- pt(d,u,o).
 #FptFull(o1,f,o2) :- fpt(o1,f,o2).
 
-PtFull(d,w,o) :- PreFlowsToFullA(c,o,v), Transfer(c,v,u), PostFlowsToA(c,u,d,w), typeFilter(w,o).
-PtFull(d,w,o) :- PreFlowsToFullA(c,o,v), Transfer(c,v,u), PostFlowsToR(c,u,d,w), typeFilter(w,o).
-PtFull(d,w,o) :- PreFlowsToFullR(c,o,v), Transfer(c,v,u), PostFlowsToA(c,u,d,w), typeFilter(w,o).
-PtFull(d,w,o) :- PreFlowsToFullR(c,o,v), Transfer(c,v,u), PostFlowsToR(c,u,d,w), typeFilter(w,o).
+PtFull(d,w,o) :- PreFlowsToFullA(c,o,v), Transfer(v,u), PostFlowsToA(c,u,d,w), typeFilter(w,o).
+PtFull(d,w,o) :- PreFlowsToFullA(c,o,v), Transfer(v,u), PostFlowsToR(c,u,d,w), typeFilter(w,o).
+PtFull(d,w,o) :- PreFlowsToFullR(c,o,v), Transfer(v,u), PostFlowsToA(c,u,d,w), typeFilter(w,o).
+PtFull(d,w,o) :- PreFlowsToFullR(c,o,v), Transfer(v,u), PostFlowsToR(c,u,d,w), typeFilter(w,o).
 
 FptFull(o1,f,o2) :- PtFull(c,v,o2), Store(u,f,v), PtFull(c,u,o1).
