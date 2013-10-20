@@ -2,6 +2,9 @@
 <html lang="en" class="fuelux">
     
     <head>
+        <!--TODOnon-hrefthis-->
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
         <link href="../fuelux/css/fuelux.min.css" rel="stylesheet" />
         <style type="text/css">
             body {
@@ -29,6 +32,57 @@
             }
             [class^="icon-"], [class*=" icon-"] {
                 background: none;
+            }
+            .fuelux .table td.gridSquare0 {
+                width: 60px;
+                height:60px;
+                font-family: inherit;
+                font-weight: bold;
+                line-height: 20px;
+                font-size: 40px;
+                color: inherit;
+                text-rendering: optimizelegibility;
+                text-align: center;
+                vertical-align: middle;
+            }
+            .fuelux .table td.gridSquare1 {
+                width: 60px;
+                height:60px;
+                font-family: inherit;
+                font-weight: bold;
+                line-height: 20px;
+                font-size: 40px;
+                color: inherit;
+                text-rendering: optimizelegibility;
+                text-align: center;
+                vertical-align: middle;
+                background-color: #FFCCCC;
+            }
+            .fuelux .table td.gridSquare2 {
+                width: 60px;
+                height:60px;
+                font-family: inherit;
+                font-weight: bold;
+                line-height: 20px;
+                font-size: 40px;
+                color: inherit;
+                text-rendering: optimizelegibility;
+                text-align: center;
+                vertical-align: middle;
+                background-color: #FF6666;
+            }
+            .fuelux .table td.gridSquare3 {
+                width: 60px;
+                height:60px;
+                font-family: inherit;
+                font-weight: bold;
+                line-height: 20px;
+                font-size: 40px;
+                color: inherit;
+                text-rendering: optimizelegibility;
+                text-align: center;
+                vertical-align: middle;
+                background-color: #FF3333;
             }
             background:none;
         </style>
@@ -60,6 +114,79 @@
                             </span>
                         </li>
                     </ul>
-                </div><!--/container-->
-            </div><!--/navbar-inner-->
-        </div><!--/navbar-->
+                </div>
+                <!--/container-->
+            </div>
+            <!--/navbar-inner-->
+        </div>
+        <!--/navbar-->
+        <!--content-->
+        <!-- Row Highlight Javascript -->
+        <div class="container">
+            <div class="row">
+                <div class="span4"></div>
+                <div class="span4">
+                    <table class="table table-bordered" id="app_table" style="border-top: 0">
+                        <tr>
+                            <th></th>
+                            <th>APT Policy 1</th>
+                            <th>DLP Policy 1</th>
+                            <th>APT Policy 2</th>
+                            <th>Default Policy</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="height: 50px; width: 50px;">
+                                    <i class="icon-dropbox icon-4x" style="margin-top: 20px"></i>
+                                </div>
+                            </td>
+                            <td class="gridSquare0">0</td>
+                            <td class="gridSquare0">0</td>
+                            <td class="gridSquare1">1</td>
+                            <td class="gridSquare1">1</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="height: 50px; width: 50px;">
+                                    <i class="icon-flickr icon-4x" style="margin-top: 20px"></i>
+                                </div>
+                            </td>
+                            <td class="gridSquare1">1</td>
+                            <td class="gridSquare2">2</td>
+                            <td class="gridSquare3">3</td>
+                            <td class="gridSquare0">0</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="height: 50px; width: 50px;">
+                                    <i class="icon-google-plus icon-4x" style="margin-top: 20px"></i>
+                                </div>
+                            </td>
+                            <td class="gridSquare2">2</td>
+                            <td class="gridSquare0">0</td>
+                            <td class="gridSquare0">0</td>
+                            <td class="gridSquare0">0</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="height: 50px; width: 50px;">
+                                    <i class="icon-youtube icon-4x" style="margin-top: 20px"></i>
+                                </div>
+                            </td>
+                            <td class="gridSquare1">1</td>
+                            <td class="gridSquare3">3</td>
+                            <td class="gridSquare0">0</td>
+                            <td class="gridSquare0">0</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="span4"></div>
+            </div>
+        </div>
+    </body>
+    <script src="../jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+    <script>
+        $('tr :first-child').css('border-left', '0');
+    </script>
+
+</html>
