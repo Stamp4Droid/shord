@@ -29,8 +29,8 @@
         [class^="icon-"], [class*=" icon-"]{
         	background: none;
         }
+
     background:none;
-  }
 	</style>
 
 	<link href="/stamp/fuelux/css/fuelux-responsive.min.css" rel="stylesheet" />
@@ -51,10 +51,6 @@
 
 	      <ul class="nav pull-left">
 			<li>
-			    <!-- <span class="btn"> -->
-			    <!--   <i class="icon-cog"></i> -->
-			    <!--   <span>Admin</span> -->
-			    <!-- </span> -->
 			    <span class="btn">
 			      <span>Risk View (sorted/summarized grid)</span>
 			    </span>
@@ -119,24 +115,40 @@
 	    <!-- Main content -->
 	    <div class="span6" id="reportdiv">
 
-	    	<div class="well" style="margin-bottom:10px; text-align: center;">
-		    	<h5 style="display: inline;">Name: </h5><form><input type="text"></input></form>
-
-		    	<h5 style="display: inline;">
-		    		Policy List Mode:
-		    	</h5>
+	   <form>
+      <legend>Policy Creator</legend>
+      <div class="row-fluid">
+          <div class="row-fluid">
+              <div class="alert alert-error">
+              <a href="#" class="close" data-dismiss="alert">×</a>
+                Error Messages.
+              </div>
+            </div>
+          </div>         
+          <div class="row-fluid">   
+            <div class="span7 lightblue">
+              <label>Policy Name</label>
+              <input type="text" class="span12" placeholder="New Policy">           
+            </div><!--/span-->
+            <div class="span2 lightblue">
+              <label>Policy Type</label>
 		    	<div id="label-switch" class="make-switch" data-on="black" data-on-label="black" data-off-label="white">
 		    		<input type="checkbox" checked>
 		    	</div>
-
-		    <hr>
-
-
-		    	<h5 style="display: inline;">
-		    		Source	
-		    	</h5>
-		    	<div class="select btn-group" id="srcSelect">
-		    		<button type="button" data-toggle="dropdown" class="btn dropdown-toggle"><span class="dropdown-label"></span><span class="caret"></span></button>
+            </div><!--/span-->
+            <div class="span3 lightblue">
+	            <label class="muted" id="policy_save_status"> <i>Policy Not Saved</i></label>
+	            <button class="btn btn-inverse" type="button" id="save_policy_btn">Save Policy</button>
+            </div><!--/span-->
+          </div><!--/row-->
+          <div class="well">
+          <legend style="font-size: 12pt;">Rule Creator</legend>
+          <fieldset>
+          <div class="row-fluid">
+            <div class="span6 bgcolor">
+              <label>Source</label>
+		    	<div class="select btn-group" id="srcSelect" style="width: 100%">
+		    		<button type="button" data-toggle="dropdown" class="btn dropdown-toggle" style="width: inherit"><span class="dropdown-label"></span><span class="caret"></span></button>
 		    		<ul class="dropdown-menu" style="max-height: 200px; overflow-y: scroll;">
 			    		<li data-selected="true"><a href="#">*</a></li>
 			    		<li><a href="#">$accounts.name</a></li>
@@ -198,15 +210,17 @@
 			    		<li><a href="#">$content_provider</a></li>
 		    		</ul>
 		    	</div>
-		    	<h5 style="display: inline;">Param:</h5>
-			<form><input type="text"></input></form>
-
-
-		    	<h5 style="display: inline; padding-left: 10px;">
-		    		Sink	
-		    	</h5>
-		    	<div class="select btn-group" data-resize="auto" id="sinkSelect">
-		    		<button type="button" data-toggle="dropdown" class="btn dropdown-toggle"><span class="dropdown-label"></span><span class="caret"></span></button>
+            </div><!--/span-->
+            <div class="span6 bgcolor">
+              <label>Param</label>
+              <input type="text" class="span12" placeholder="dd/mm/yyyy">    
+            </div><!--/span-->
+          </div><!--/row-->
+           <div class="row-fluid">
+            <div class="span6 bgcolor">
+              <label>Source</label>
+		    	<div class="select btn-group" id="sinkSelect" style="width: 100%">
+		    		<button type="button" data-toggle="dropdown" class="btn dropdown-toggle" style="width: inherit"><span class="dropdown-label"></span><span class="caret"></span></button>
 		    		<ul class="dropdown-menu" style="max-height: 200px; overflow-y: scroll;">
 			    		<li><a href="#">*</a></li>
 			    		<li><a href="#">!socket</a></li>
@@ -226,16 +240,18 @@
 			    		<li><a href="#">enc/dec</a></li>
 		    		</ul>
 		    	</div>
-		    	<h5 style="display: inline;">Param:</h5>
-			<form><input type="text"></input></form>
+            </div><!--/span-->
+            <div class="span6 bgcolor">
+              <label>Param</label>
+              <input type="text" class="span12" placeholder="dd/mm/yyyy">    
+            </div><!--/span-->
+          </div><!--/row-->
+          <button class="btn btn-inverse pull-right" type="button" id="addPolicyBtn">Add Rule</button>
+          </fieldset>
+          </div><!--/well-->
+      </form> 
 
-
-		    	<button class="btn btn-inverse" type="button" style="margin-left: 10px;" id="addPolicyBtn">Submit Policy</button>
-
-	    	</div>
-
-
-
+      <legend>Policy Rules</legend>
 
 	      <table class="table table-condensed table-hover" id="src-sink-table">
 	      	<th>Active</th>
