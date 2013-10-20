@@ -117,14 +117,7 @@
 
 	   <form>
       <legend>Policy Creator</legend>
-      <div class="row-fluid">
-          <div class="row-fluid">
-              <div class="alert alert-error">
-              <a href="#" class="close" data-dismiss="alert">×</a>
-                Error Messages.
-              </div>
-            </div>
-          </div>         
+      <div class="row-fluid" id="centerpane">
           <div class="row-fluid">   
             <div class="span7 lightblue">
               <label>Policy Name</label>
@@ -213,7 +206,7 @@
             </div><!--/span-->
             <div class="span6 bgcolor">
               <label>Param</label>
-              <input type="text" class="span12" placeholder="dd/mm/yyyy">    
+              <input type="text" class="span12" placeholder="dd/mm/yyyy" id="src_param">    
             </div><!--/span-->
           </div><!--/row-->
            <div class="row-fluid">
@@ -243,7 +236,7 @@
             </div><!--/span-->
             <div class="span6 bgcolor">
               <label>Param</label>
-              <input type="text" class="span12" placeholder="dd/mm/yyyy">    
+              <input type="text" class="span12" placeholder="dd/mm/yyyy" id="sink_param">    
             </div><!--/span-->
           </div><!--/row-->
           <button class="btn btn-inverse pull-right" type="button" id="addPolicyBtn">Add Rule</button>
@@ -360,9 +353,12 @@
 
 	  //DEAR BRYCE: Please move this to a different file. Thanks, Bryce.
 	  $('#addPolicyBtn').click( function () {
+	  	reportFormError();
 	  	var src = $('#srcSelect').select('selectedItem').text;
+	  	var srcparam = $('#src_param').val();
 	  	var sink = $('#sinkSelect').select('selectedItem').text;
-	  	$('#src-sink-table tr:last').after('<tr><td><input type="checkbox"><i class="checkbox"></i></td><td><i class="icon-remove"></i></td><td>'+src+'</td><td>'+sink+'</td></tr>');
+	  	var sinkparam = $('#sink_param').val();
+	  	$('#src-sink-table tr:last').after('<tr><td><input type="checkbox"><i class="checkbox"></i></td><td><i class="icon-remove"></i></td><td>'+src+'</td><td>'+srcparam+'</td><td>'+sink+'</td><td>'+sinkparam+'</td></tr>');
 
 	  	$('#src-sink-table .icon-remove').click(function () {
 	  		$(this).parent().parent().remove();
@@ -375,6 +371,16 @@
   		$(this).parent().parent().remove();
 
 	});
+
+	function reportFormError() {
+          $('#centerpane').prepend([
+              '<div class="alert alert-error">',
+              '<a href="#" class="close" data-dismiss="alert">x</a>',
+                'Error Messages.',
+              '</div>',
+          '</div>'].join('\n'));
+	}
+
 
 	});
 	</script>
