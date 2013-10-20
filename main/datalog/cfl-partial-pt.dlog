@@ -41,8 +41,8 @@ CC(c:C,d:C) input # there exists i s.t. c++[i] = d
 # INPUT: PHANTOM OBJECTS
 ###################
 
-Varg(v:V,c:C) input
-Vret(v:V,c:C) input
+Varg(v:V) input
+Vret(v:V) input
 
 ###################
 # OUTPUT: PARTIAL FLOWS
@@ -77,7 +77,7 @@ FptFull(o1:C,f:F,o2:C) output
 ###################
 
 # 1) o -> v_c
-PreFlowsToA(c,o,v)  :- pt(c,v,o), Varg(v,c).
+PreFlowsToA(c,o,v)  :- pt(c,v,o), Varg(v).
 # 2) o -> v_c -> u_c -> w_d
 PreFlowsToA(d,o,w)  :- pt(c,v,o), Store(u,_,v), PostFlowsToA(d,w,c,u).
 PreFlowsToR(d,o,w)  :- pt(c,v,o), Store(u,_,v), PostFlowsToR(d,w,c,u).
@@ -86,7 +86,7 @@ PreFlowsToA(c,o1,w) :- pt(c,v,o1), Store(u,_,v), pt(c,u,o2), PreFlowsToA(c,o2,w)
 PreFlowsToR(c,o1,w) :- pt(c,v,o1), Store(u,_,v), pt(c,u,o2), PreFlowsToR(c,o2,w).
 
 # 1) v_c -> v_c
-PostFlowsToR(c,v,d,u) :- u=v, d=c, Vret(v,c).
+PostFlowsToR(c,v,d,u) :- u=v, d=c, Vret(v).
 # 2a) v_c -> u_d -> w_d
 PostFlowsToA(c,v,d,w) :- PostFlowsToA(c,v,d,u), Assign(w,u).
 PostFlowsToR(c,v,d,w) :- PostFlowsToR(c,v,d,u), Assign(w,u).
@@ -106,10 +106,10 @@ PostFlowsToA(c,v,d,w) :- PostFlowsToA(c,v,d,u), Load(w,u,_).
 PostFlowsToR(c,v,d,w) :- PostFlowsToR(c,v,d,u), Load(w,u,_).
 
 # 1) v_c -> u_d
-MidFlowsToAA(c,v,d,u) :- PostFlowsToA(c,v,d,u), Varg(u,d).
-MidFlowsToAR(c,v,d,u) :- PostFlowsToA(c,v,d,u), Vret(u,d).
-MidFlowsToRA(c,v,d,u) :- PostFlowsToR(c,v,d,u), Varg(u,d).
-MidFlowsToRR(c,v,d,u) :- PostFlowsToR(c,v,d,u), Vret(u,d).
+MidFlowsToAA(c,v,d,u) :- PostFlowsToA(c,v,d,u), Varg(u).
+MidFlowsToAR(c,v,d,u) :- PostFlowsToA(c,v,d,u), Vret(u).
+MidFlowsToRA(c,v,d,u) :- PostFlowsToR(c,v,d,u), Varg(u).
+MidFlowsToRR(c,v,d,u) :- PostFlowsToR(c,v,d,u), Vret(u).
 # 2) v_c -> u_d -> w_d -> x_b
 MidFlowsToAA(c,v,b,x) :- PostFlowsToA(c,v,d,u), Store(w,_,u), PostFlowsToA(b,x,d,w).
 MidFlowsToAR(c,v,b,x) :- PostFlowsToA(c,v,d,u), Store(w,_,u), PostFlowsToR(b,x,d,w).
@@ -131,7 +131,10 @@ MidFlowsToRR(c,v,d,u) :- PreFlowsToR(c,o,v), PreFlowsToR(d,o,u).
 ###################
 
 # helper
-Transfer(v,u) :- v = u.
+Transfer(v,u) :- v = u, Varg(v), Varg(u).
+Transfer(v,u) :- v = u, Varg(v), Vret(u).
+Transfer(v,u) :- v = u, Vret(v), Varg(u).
+Transfer(v,u) :- v = u, Vret(v), Vret(u).
 Transfer(v,u) :- RefArg2RefArgTStub(_,v,u,_,_,_).
 Transfer(v,u) :- RefArg2RefRetTStub(_,v,u,_,_).
 Transfer(u,v) :- RefArg2RefRetTStub(_,v,u,_,_).
@@ -141,10 +144,10 @@ Transfer(u,v) :- RefArg2RefRetTStub(_,v,u,_,_).
 PreFlowsToFullA(c,o,v) :- PreFlowsToA(c,o,v).
 PreFlowsToFullR(c,o,v) :- PreFlowsToR(c,o,v).
 
-PreFlowsToFullA(d,o,w) :- PreFlowsToA(c,o,v), Transfer(v,u), MidFlowsToAA(c,u,d,w).
-PreFlowsToFullA(d,o,w) :- PreFlowsToA(c,o,v), Transfer(v,u), MidFlowsToAR(c,u,d,w).
-PreFlowsToFullR(d,o,w) :- PreFlowsToR(c,o,v), Transfer(v,u), MidFlowsToRA(c,u,d,w).
-PreFlowsToFullR(d,o,w) :- PreFlowsToR(c,o,v), Transfer(v,u), MidFlowsToRR(c,u,d,w).
+PreFlowsToFullA(d,o,w) :- PreFlowsToFullA(c,o,v), Transfer(v,u), MidFlowsToAA(c,u,d,w).
+PreFlowsToFullA(d,o,w) :- PreFlowsToFullR(c,o,v), Transfer(v,u), MidFlowsToRA(c,u,d,w).
+PreFlowsToFullR(d,o,w) :- PreFlowsToFullA(c,o,v), Transfer(v,u), MidFlowsToAR(c,u,d,w).
+PreFlowsToFullR(d,o,w) :- PreFlowsToFullR(c,o,v), Transfer(v,u), MidFlowsToRR(c,u,d,w).
 
 ###################
 # RULES: OUTPUT
@@ -154,8 +157,8 @@ PreFlowsToFullR(d,o,w) :- PreFlowsToR(c,o,v), Transfer(v,u), MidFlowsToRR(c,u,d,
 #FptFull(o1,f,o2) :- fpt(o1,f,o2).
 
 PtFull(d,w,o) :- PreFlowsToFullA(c,o,v), Transfer(v,u), PostFlowsToA(c,u,d,w), typeFilter(w,o).
-PtFull(d,w,o) :- PreFlowsToFullA(c,o,v), Transfer(v,u), PostFlowsToR(c,u,d,w), typeFilter(w,o).
 PtFull(d,w,o) :- PreFlowsToFullR(c,o,v), Transfer(v,u), PostFlowsToA(c,u,d,w), typeFilter(w,o).
+PtFull(d,w,o) :- PreFlowsToFullA(c,o,v), Transfer(v,u), PostFlowsToR(c,u,d,w), typeFilter(w,o).
 PtFull(d,w,o) :- PreFlowsToFullR(c,o,v), Transfer(v,u), PostFlowsToR(c,u,d,w), typeFilter(w,o).
 
 FptFull(o1,f,o2) :- PtFull(c,v,o2), Store(u,f,v), PtFull(c,u,o1).
