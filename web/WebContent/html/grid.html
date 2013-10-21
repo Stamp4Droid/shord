@@ -84,6 +84,64 @@
                 vertical-align: middle;
                 background-color: #FF3333;
             }
+            .square3 {
+                width: 60px;
+                height:60px;
+                font-family: inherit;
+                font-weight: bold;
+                line-height: 60px;
+                font-size: 40px;
+                text-rendering: optimizelegibility;
+                text-align: center;
+                vertical-align: middle;
+                background-color: #FF3333;
+                border-color: white;
+                border: 5px;
+                color: inherit;
+            }
+            .square2 {
+                width: 60px;
+                height:60px;
+                font-family: inherit;
+                font-weight: bold;
+                line-height: 60px;
+                font-size: 40px;
+                color: inherit;
+                text-rendering: optimizelegibility;
+                text-align: center;
+                vertical-align: middle;
+                background-color: #FF6666;
+                border-color: white;
+                border: 5px;
+            }
+            .square1 {
+                width: 60px;
+                height:60px;
+                font-family: inherit;
+                font-weight: bold;
+                line-height: 60px;
+                font-size: 40px;
+                color: inherit;
+                text-rendering: optimizelegibility;
+                text-align: center;
+                vertical-align: middle;
+                background-color: #FFCCCC;
+                border-color: white;
+                border: 5px;
+            }
+            .square {
+                width: 60px;
+                height:60px;
+                font-family: inherit;
+                font-weight: bold;
+                line-height: 60px;
+                font-size: 40px;
+                color: inherit;
+                text-rendering: optimizelegibility;
+                text-align: center;
+                border-color: white;
+                border:10px;
+            }
             background:none;
         </style>
         <link href="../fuelux/css/fuelux-responsive.min.css" rel="stylesheet" />
@@ -126,7 +184,7 @@
             <div class="row">
                 <div class="span4"></div>
                 <div class="span4">
-                    <table class="table table-bordered" id="app_table" style="border-top: 0">
+                    <table class="table table-bordered" id="app_table" cellpadding="10" style="border-top: 0;">
                         <tr>
                             <th></th>
                             <th>APT Policy 1</th>
@@ -140,10 +198,18 @@
                                     <i class="icon-dropbox icon-4x" style="margin-top: 20px"></i>
                                 </div>
                             </td>
-                            <td class="gridSquare0">0</td>
-                            <td class="gridSquare0">0</td>
-                            <td class="gridSquare1">1</td>
-                            <td class="gridSquare1">1</td>
+                            <td>
+                                <div class="square">0</div>
+                            </td>
+                            <td>
+                                <div class="square">0</div>
+                            </td>
+                            <td>
+                                <div class="square1">1</div>
+                            </td>
+                            <td>
+                                <div class="square1">1</div>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -151,10 +217,18 @@
                                     <i class="icon-flickr icon-4x" style="margin-top: 20px"></i>
                                 </div>
                             </td>
-                            <td class="gridSquare1">1</td>
-                            <td class="gridSquare2">2</td>
-                            <td class="gridSquare3">3</td>
-                            <td class="gridSquare0">0</td>
+                            <td>
+                                <div class="square1">1</div>
+                            </td>
+                            <td>
+                                <div class="square2">2</div>
+                            </td>
+                            <td>
+                                <div class="square3">3</div>
+                            </td>
+                            <td>
+                                <div class="square">0</div>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -162,10 +236,18 @@
                                     <i class="icon-google-plus icon-4x" style="margin-top: 20px"></i>
                                 </div>
                             </td>
-                            <td class="gridSquare2">2</td>
-                            <td class="gridSquare0">0</td>
-                            <td class="gridSquare0">0</td>
-                            <td class="gridSquare0">0</td>
+                            <td>
+                                <div class="square">0</div>
+                            </td>
+                            <td>
+                                <div class="square2">2</div>
+                            </td>
+                            <td>
+                                <div class="square1">1</div>
+                            </td>
+                            <td>
+                                <div class="square">0</div>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -173,10 +255,18 @@
                                     <i class="icon-youtube icon-4x" style="margin-top: 20px"></i>
                                 </div>
                             </td>
-                            <td class="gridSquare1">1</td>
-                            <td class="gridSquare3">3</td>
-                            <td class="gridSquare0">0</td>
-                            <td class="gridSquare0">0</td>
+                            <td>
+                                <div class="square">0</div>
+                            </td>
+                            <td>
+                                <div class="square2">2</div>
+                            </td>
+                            <td>
+                                <div class="square">0</div>
+                            </td>
+                            <td>
+                                <div class="square">0</div>
+                            </td>
                         </tr>
                     </table>
                 </div>
