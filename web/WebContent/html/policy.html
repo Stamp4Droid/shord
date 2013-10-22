@@ -52,10 +52,10 @@
                             <span class="btn">
                                 <span>Risk View (sorted/summarized grid)</span>
                             </span>
-                            <span class="btn">
+                            <span class="btn" onclick="location.href='grid.html'">
                                 <span>App View (the grid)</span>
                             </span>
-                            <span class="btn">
+                            <span class="btn" onclick="location.href='policy.html'">
                                 <span>Policy View</span>
                             </span>
                         </li>
@@ -337,7 +337,7 @@
                                         <!--/span-->
                                         <div class="span6 bgcolor">
                                             <label>Param</label>
-                                            <input type="text" class="span12" placeholder="dd/mm/yyyy" id="src_param">
+                                            <input type="text" class="span12" placeholder="Param Regex" id="src_param">
                                         </div>
                                         <!--/span-->
                                     </div>
@@ -405,7 +405,7 @@
                                         <!--/span-->
                                         <div class="span6 bgcolor">
                                             <label>Param</label>
-                                            <input type="text" class="span12" placeholder="dd/mm/yyyy" id="sink_param">
+                                            <input type="text" class="span12" placeholder="Param Regex" id="sink_param">
                                         </div>
                                         <!--/span-->
                                     </div>
@@ -459,79 +459,18 @@
                 <script src="../fileupload/jquery.iframe-transport.js"></script>
                 <script src="../fileupload/jquery.fileupload.js"></script>
                 <script src="../scripts/processMsg.js"></script>
+                <script src="../scripts/policy.js"></script>
                 <script>
                     var apkIdToRow = new Object();
 
                     $(function() {
-
+                        
                         'use strict';
 
-                        $('#fileupload').fileupload({
-                            url: '../fileUpload',
-
-                            maxFileSize: 15000000,
-
-                            add: function(e, data) {
-                                //alert('hellp');
-                                var file = data.files[0];
-                                if (file.name.match(/\.apk$/)) {
-                                    var row = $('<tr><td>' + file.name + '</td><td class="status"><div class="progress progess-striped" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar bar-success" style="width: 10%;"></div></div></td></tr>');
-                                    apkIdToRow[file.name + file.size] = row;
-                                    data.context = row.appendTo('#appslist > tbody:last');
-                                    data.submit();
-                                } else {
-                                    $('<li>' + file.name + '</li>').appendTo('#errormsgs');
-                                    $('#errormsgs-modal').modal('show');
-                                }
-                            },
-
-                            progress: function(e, data) {
-                                if (data.context) {
-                                    var progress = Math.floor(data.loaded / data.total * 100);
-                                    data.context.find('.progress')
-                                        .attr('aria-valuenow', progress)
-                                        .find('.bar').css(
-                                        'width',
-                                        progress + '%');
-                                }
-                            },
-
-                            done: function(e, data) {
-                                data.context.find('.progress').replaceWith('<span class="label">Uploaded</span>');
-                            }
-
+                        $.get("ajax/test.html", function(data) {
+                            $(".result").html(data);
+                            alert("Load was performed.");
                         });
-
-                        //DEAR BRYCE: Please move this to a different file. Thanks, Bryce.
-                        $('#addPolicyBtn').click(function() {
-                            var src = $('#srcSelect').select('selectedItem').text;
-                            var srcparam = $('#src_param').val();
-                            var sink = $('#sinkSelect').select('selectedItem').text;
-                            var sinkparam = $('#sink_param').val();
-                            $('#src-sink-table tr:last').after('<tr><td><input type="checkbox"><i class="checkbox"></i></td><td><i class="icon-remove"></i></td><td>' + src + '</td><td>' + srcparam + '</td><td>' + sink + '</td><td>' + sinkparam + '</td></tr>');
-
-                            $('#src-sink-table .icon-remove').click(function() {
-                                $(this).parent().parent().remove();
-
-                            });
-                        });
-
-
-                        $('#src-sink-table .icon-remove').click(function() {
-                            $(this).parent().parent().remove();
-
-                        });
-
-                        function reportFormError() {
-                            $('#centerpane').prepend([
-                                    '<div class="alert alert-error">',
-                                    '<a href="#" class="close" data-dismiss="alert">x</a>',
-                                    'Error Messages.',
-                                    '</div>',
-                                    '</div>'
-                            ].join('\n'));
-                        }
-
 
                     });
                 </script>
