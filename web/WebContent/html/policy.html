@@ -156,7 +156,7 @@
                                                     <span class="dropdown-label"></span>
                                                     <span class="caret"></span>
                                                 </button>
-                                                <ul class="dropdown-menu" style="max-height: 200px; overflow-y: scroll;">
+                                                <ul id="src-drop-down" class="dropdown-menu" style="max-height: 200px; overflow-y: scroll;">
                                                     <li data-selected="true">
                                                         <a href="#">*</a>
                                                     </li>
@@ -350,7 +350,7 @@
                                                     <span class="dropdown-label"></span>
                                                     <span class="caret"></span>
                                                 </button>
-                                                <ul class="dropdown-menu" style="max-height: 200px; overflow-y: scroll;">
+                                                <ul id="sink-drop-down" class="dropdown-menu" style="max-height: 200px; overflow-y: scroll;">
                                                     <li>
                                                         <a href="#">*</a>
                                                     </li>
@@ -464,12 +464,20 @@
                     var apkIdToRow = new Object();
 
                     $(function() {
-                        
+
                         'use strict';
 
-                        $.get("ajax/test.html", function(data) {
-                            $(".result").html(data);
-                            alert("Load was performed.");
+                        $.ajax({
+                            type: "GET",
+                            url: "getMembers.php",
+                            cache: false,
+                            dataType: "xml",
+                            success: function(xml) {
+                                $(xml).find('members').each(function() {
+                                    var name = $(this).find("name").text()
+                                    alert(name);
+                                });
+                            }
                         });
 
                     });
