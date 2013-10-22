@@ -102,7 +102,7 @@ ActiveTypeFilter(c,o,v) :- ActiveObj(o), typeFilter(v,o), ActiveRef(_,v), MV(m,v
 
 ActivePreFlowsTo(c,o,v) :- ActiveObj(o), PreFlowsTo(c,o,v), ActiveRefF(c,v).
 ActiveMidFlowsTo(c,v,d,u) :- ActiveRefT(c,v), MidFlowsTo(c,v,d,u), ActiveRefF(d,u).
-ActivePostFlowsTo(c,v,d,u) :- ActiveRef(c,v), PostFlowsTo(c,v,d,u), ActiveRef(d,u).
+ActivePostFlowsTo(c,v,d,u) :- ActiveRefT(c,v), PostFlowsTo(c,v,d,u), ActiveRef(d,u).
 
 ###################
 # RULES: OUTPUT
