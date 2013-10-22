@@ -60,7 +60,8 @@ Stub(m:M) input
 ###################
 
 # phantom allocations
-phAlloc(v:V,c:C)  output
+Varg(v:V)  output
+Vret(v:V)  output
 
 ###################
 # OUTPUT: TAINT HELPER
@@ -114,5 +115,5 @@ StorePrimCtxtArr(c,v,u) :- StorePrimCtxt(c,v,0,u).
 ##################
 
 # phantom allocations
-#phAlloc(v,c) :- Stub(m), MmethArg(m,_,v), CM(c,m).
-phAlloc(v,c) :- Stub(m), CM(c,m), MmethRet(m,_,v).
+Varg(v) :- Stub(m), MmethArg(m,_,v).
+Vret(v) :- Stub(m), MmethRet(m,_,v).
