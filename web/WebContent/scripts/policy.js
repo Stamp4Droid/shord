@@ -1,4 +1,3 @@
-//DEAR BRYCE: Please move this to a different file. Thanks, Bryce.
 $('#addPolicyBtn').click(function () {
     var src = $('#srcSelect').select('selectedItem').text;
     var srcparam = $('#src_param').val();
