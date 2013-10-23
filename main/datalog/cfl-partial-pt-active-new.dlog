@@ -120,7 +120,7 @@ CPostFlowsTo(c,u,d,w) :- ActivePtFullFiltered(c,w,o), PreFlowsToFull(c,o,v), Tra
 CMidFlowsTo(c,u) :- MidFlowsTo(c,u,d,w), ActiveRefF(d,w).
 
 ActiveObj(o) :- CPreFlowsToFull(_,o,_).
-ActiveRef(c,v) :- CPostFlowsTo(_,_,d,w).
+ActiveRef(d,w) :- CPostFlowsTo(_,_,d,w).
 
 ActiveRefF(c,v) :- CPreFlowsToFull(c,o,v), Transfer(v,u), CPostFlowsTo(c,u,_,w), typeFilter(w,o).
 ActiveRefF(c,v) :- CPreFlowsToFull(c,_,v), Transfer(v,u), MidFlowsTo(c,u,_,_).
