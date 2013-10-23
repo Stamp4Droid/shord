@@ -60,6 +60,8 @@ ActivePtFull(c:C,v:V,o:C) input
 ###################
 
 ActivePtFullFiltered(c:C,v:V,o:C) output
+ActiveObj(o:C) output
+ActiveRef(c:C,v:V) output
 
 CPreFlowsToFull(c:C,o:C,v:V) output
 
@@ -81,7 +83,7 @@ ActiveTransferArg(c:C,v:V,u:V,m:M,z1:Z,z2:Z) output
 ActiveTransferRet(c:C,v:V,u:V,m:M,z:Z) output
 
 #ActiveTypeFilter(c:C,o:C,v:V) output
-#ActivePreFlowsTo(c:C,o:C,v:V) output
+ActivePreFlowsTo(c:C,o:C,v:V) output
 ActiveMidFlowsTo(c:C,v:V,d:C,u:V) output
 ActivePostFlowsTo(c:C,v:V,d:C,u:V) output
 
@@ -99,9 +101,9 @@ ActiveTransferArg(c,v,u,m,z1,z2) :- ActiveTransfer(v,u), MmethArg(m,z1,v), Mmeth
 ActiveTransferRet(c,v,u,m,z) :- ActiveTransfer(v,u), MmethArg(m,z,v), MmethRet(m,_,u), CM(c,m).
 ActiveTransferRet(c,v,u,m,z) :- ActiveTransfer(v,u), MmethArg(m,z,u), MmethRet(m,_,v), CM(c,m).
 
-#ActiveTypeFilter(c,o,v) :- ActiveObj(o), typeFilter(v,o), ActiveRef(_,v), MV(m,v), CM(c,m).
+ActiveTypeFilter(c,o,v) :- ActiveObj(o), typeFilter(v,o), ActiveRef(_,v), MV(m,v), CM(c,m).
 
-#ActivePreFlowsTo(c,o,v) :- ActiveObj(o), PreFlowsTo(c,o,v), ActiveRefF(c,v).
+ActivePreFlowsTo(c,o,v) :- ActiveObj(o), PreFlowsTo(c,o,v), ActiveRefF(c,v).
 ActiveMidFlowsTo(c,v,d,u) :- ActiveRefT(c,o,v), MidFlowsTo(c,v,d,u), ActiveRefF(d,u), typeFilter(v,o).
 ActivePostFlowsTo(c,v,d,u) :- CPostFlowsTo(c,v,d,u).
 
@@ -116,6 +118,9 @@ ActivePtFullFiltered(c,v,o) :- ActivePtFull(c,v,o), typeFilter(v,o).
 CPreFlowsToFull(c,o,v) :- ActivePtFullFiltered(c,w,o), PreFlowsToFull(c,o,v), Transfer(v,u), PostFlowsTo(c,u,_,w).
 CPostFlowsTo(c,u,d,w) :- ActivePtFullFiltered(c,w,o), PreFlowsToFull(c,o,v), Transfer(v,u), PostFlowsTo(c,u,d,w).
 CMidFlowsTo(c,u) :- MidFlowsTo(c,u,d,w), ActiveRefF(d,w).
+
+ActiveObj(o) :- CPreFlowsToFull(_,o,_).
+ActiveRef(c,v) :- CPostFlowsTo(_,_,d,w).
 
 ActiveRefF(c,v) :- CPreFlowsToFull(c,o,v), Transfer(v,u), CPostFlowsTo(c,u,_,w), typeFilter(w,o).
 ActiveRefF(c,v) :- CPreFlowsToFull(c,_,v), Transfer(v,u), MidFlowsTo(c,u,_,_).
