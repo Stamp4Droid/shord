@@ -150,4 +150,6 @@ PtFull(d,w,o) :- PreFlowsToFull(c,o,v), Transfer(v,u), PostFlowsTo(c,u,d,w), typ
 #PtFull(d,u,o) :- pt(d,u,o).
 #FptFull(o1,f,o2) :- fpt(o1,f,o2).
 
+FptFull(o1,f,o2) :- pt(c,v,o2), Store(u,f,v), PtFull(c,u,o1).
+FptFull(o1,f,o2) :- PtFull(c,v,o2), Store(u,f,v), pt(c,u,o1).
 FptFull(o1,f,o2) :- PtFull(c,v,o2), Store(u,f,v), PtFull(c,u,o1).

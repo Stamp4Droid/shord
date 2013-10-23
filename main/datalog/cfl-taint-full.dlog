@@ -165,9 +165,13 @@ SinkF2Obj(cl,o)  :- Sink2Prim(c,cl,v), Ref2PrimF(c,u,v), pt(c,u,o). # Ref2PrimF 
 SinkF2Obj(cl,o2) :- SinkF2Obj(cl,o1), fpt(o1,_,o2).
 
 SinkF2Obj(cl,o)  :- SinkF2RefF(c,cl,v), PtFull(c,v,o).
-SinkF2Obj(cl,o2) :- Sink2Obj(cl,o1), PtFull(c,v,o1), Ref2RefF(c,u,v), PtFull(c,u,o2). # first pt, Ref2RefF are backwards
 SinkF2Obj(cl,o)  :- Sink2Prim(c,cl,v), Ref2PrimF(c,u,v), PtFull(c,u,o). # Ref2PrimF is backwards
 SinkF2Obj(cl,o2) :- SinkF2Obj(cl,o1), FptFull(o1,_,o2).
+
+SinkF2Obj(cl,o2) :- Sink2Obj(cl,o1), PtFull(c,v,o1), Ref2RefF(c,u,v), pt(c,u,o2). # first pt, Ref2RefF are backwards
+SinkF2Obj(cl,o2) :- Sink2Obj(cl,o1), pt(c,v,o1), Ref2RefF(c,u,v), PtFull(c,u,o2). # first pt, Ref2RefF are backwards
+SinkF2Obj(cl,o2) :- Sink2Obj(cl,o1), PtFull(c,v,o1), Ref2RefF(c,u,v), PtFull(c,u,o2). # first pt, Ref2RefF are backwards
+
 
 # Sink_full-prim flow
 
