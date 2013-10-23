@@ -17,7 +17,9 @@ import stamp.missingmodels.util.jcflsolver.*;
 .weights primArg2RefRetTStub 1
 
 .weights refArg2PrimRetTStub 1
-.weights prim2PrimT 1 
+.weights prim2PrimT 1
+
+.weights transfer 1
 
 ###################
 # INPUTS
@@ -1900,6 +1902,8 @@ public short kindToWeight(int kind) {
   case 33:
     return (short)1;
   case 34:
+    return (short)1;
+  case 42:
     return (short)1;
   default:
     return (short)0;
