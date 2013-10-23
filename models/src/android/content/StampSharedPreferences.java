@@ -49,6 +49,7 @@ public class StampSharedPreferences implements SharedPreferences
 	}
 
 	public void registerOnSharedPreferenceChangeListener(final android.content.SharedPreferences.OnSharedPreferenceChangeListener listener) {
+		listener.onSharedPreferenceChanged(StampSharedPreferences.this, null);
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {

@@ -25,4 +25,9 @@ class WebView
 	{ 
 	}
 
+    public void setWebViewClient(android.webkit.WebViewClient client) {
+        client.shouldOverrideUrlLoading(this, null);
+    }
+
+
 }

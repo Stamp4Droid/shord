@@ -5,11 +5,13 @@ class BroadcastReceiver
 {
 	public  BroadcastReceiver() 
 	{ 
-		ApplicationDriver.getInstance().
+
+		BroadcastReceiver.this.onReceive(null, new android.content.Intent());
+		/*ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {
 						BroadcastReceiver.this.onReceive(null, new android.content.Intent());
 					}
-				}); 
+				}); */
 	}
 }

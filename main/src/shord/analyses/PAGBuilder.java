@@ -584,7 +584,7 @@ public class PAGBuilder extends JavaAnalysis
 							unit2Node.put(s, n);
 						}
 						//if(str.matches("android.intent.action.*|android.provider.*|.*[A-Z]+$")){
-						if(str.matches(".*[A-Z]+$")){//end with uppercase word.
+					    if(str.matches("[a-zA-Z]+\\.[a-zA-Z]+.*")){//end with uppercase word.
 							StringConstNode n = new StringConstNode(s);
 							domH.add(n);
 							unit2Node.put(s, n);
@@ -869,7 +869,7 @@ public class PAGBuilder extends JavaAnalysis
 						Alloc(nodeFor((Local) leftOp), unit2Node.get(s));
 					}
 					//if(str.matches("android.intent.action.*|android.provider.*")){
-					if(str.matches(".*[A-Z]+$")){//end with uppercase word.
+					if(str.matches("[a-zA-Z]+\\.[a-zA-Z]+.*")){//end with uppercase word.
 						relVH.add(nodeFor((Local) leftOp), unit2Node.get(s));
 						Alloc(nodeFor((Local) leftOp), unit2Node.get(s));
 					}

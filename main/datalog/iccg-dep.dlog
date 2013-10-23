@@ -1,0 +1,43 @@
+##################
+# ICCG dependency. 
+##################
+# name=iccg-dep-dlog
+
+.include "M.dom"
+.include "T.dom"
+.include "V.dom"
+.include "C.dom"
+.include "H.dom"
+
+.bddvarorder M0_V0_C0xC1_H0_T0_T1
+
+pt(c:C,v:V,o:C)    input  # in context c, v points to o.
+CM(c:C,m:M) input         # c is a context of method m.
+CC(c:C,d:C) input         # there exists i s.t. c++[i] = d, c is old ctx, d is new ctx. 
+
+MC(m:M,c:T) input         # m is a method declared in c
+MV(m:M,v:V) input         # v is a variable in method m
+MH(m:M,h:H) input         # h is a alloc in method m
+CH(o:C,h:H) input         # context’ified abstract location o corresponds to new stmt h
+
+CT(c:C,t:T) input         # c is a context in class t
+
+CallerComp(m:M,c:C,o:T)   input  # m is a method declared in c
+
+varComp(c:C,v:V,k:T) output
+ptComp(c:C,v:V,k:T) output
+#CMC(d:C,m:M) output
+depComp(s:T,c:C,v:V,t:T) output
+
+###################
+#    RULES
+###################
+
+#CMC(d,m) :- CM(d,m), CC(d,o), MH(m,h), CH(o,h).
+varComp(c,v,k) :- CM(c,m), MV(m,v), CT(c,k).
+varComp(c,v,k) :- MV(m,v), CM(c,m), MC(m,k).
+ptComp(c,v,k) :- pt(c,v,o), CH(o,h), MH(m,h), CM(c,m), MC(m,k).
+ptComp(c,v,k) :- pt(c,v,o), CH(o,h), MH(m,h), CM(c,m), CT(c,k).
+#ptComp(c,v,k) :- pt(c,v,o), CH(o,h), MH(m,h), CM(d,m), CC(d,o),CallerComp(m,d,k).
+
+depComp(s,c,v,t) :- varComp(c,v,s), ptComp(c,v,t), s!=t.

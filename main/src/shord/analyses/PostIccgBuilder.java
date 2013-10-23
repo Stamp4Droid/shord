@@ -38,16 +38,34 @@ import chord.project.Chord;
 
 import java.util.jar.*;
 import java.io.*;
+import chord.util.Utils;
 import chord.util.tuple.object.Pair;
 import chord.util.tuple.object.Trio;
 import chord.util.tuple.object.Quad;
+
+
+import java.io.File;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.OutputKeys;
+ 
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 
 /**
   * Search for implicit intent.
   **/
 
 @Chord(name="post-java-iccg",
-       consumes={ "CallerComp", "CICM" },
+       consumes={ "CallerComp", "CICM", "depComp" },
        namesOfTypes = { "M", "T", "C", "I"},
        types = { DomM.class, DomT.class, DomC.class, DomI.class},
        namesOfSigns = { "CalledComp", "CICM", "ICCG", "ICCGImp" },
@@ -594,6 +612,92 @@ public class PostIccgBuilder extends JavaAnalysis
 		System.out.println(iccg.getSignature());
     }
 
+    private Map<String, Integer> depMap = new HashMap<String,Integer>();
+
+    public void compDepend() 
+    {
+        ProgramRel relDepComp = (ProgramRel) ClassicProject.g().getTrgt("depComp");
+		relDepComp.load();
+
+        //k1:varComp
+        Iterable<Quad<Object,Object,Object,Object>> varComp = relDepComp.getAry4ValTuples();
+        for(Quad<Object,Object, Object, Object> quad : varComp) {
+            RefType s = (RefType)quad.val0;
+			String srckey = s.getClassName(); 
+            RefType t = (RefType)quad.val3;
+			String tgtkey = t.getClassName();
+            String key = srckey+"@"+tgtkey;
+            String revkey = tgtkey+"@"+srckey;
+            if( (depMap.get(key) == null) && (depMap.get(revkey) == null) ){
+            //if( (depMap.get(key) == null) ){
+                depMap.put(key, 1);
+            } else {
+                if(depMap.get(key) != null) depMap.put(key, depMap.get(key)+1);
+                if(depMap.get(revkey) != null) depMap.put(revkey, depMap.get(revkey)+1);
+                //depMap.put(key, depMap.get(key)+1);
+            }
+
+        }
+
+		relDepComp.close();
+
+        /*System.out.println("Weight:...." + depMap);
+
+        Iterator itSrc = depMap.entrySet().iterator();
+        while (itSrc.hasNext()) {//k1: src
+			Map.Entry srcEntry = (Map.Entry) itSrc.next();
+			String srckey = (String)srcEntry.getKey();
+			int val = (Integer)srcEntry.getValue();
+            System.out.println(srckey.replace("$", "-->") + " Weight=" +val);
+
+        }*/
+
+        /*ProgramRel relVarComp = (ProgramRel) ClassicProject.g().getTrgt("varComp");
+		relVarComp.load();
+        ProgramRel relPtComp = (ProgramRel) ClassicProject.g().getTrgt("ptComp");
+		relPtComp.load();
+
+        Iterator itSrc = components.entrySet().iterator();
+		while (itSrc.hasNext()) {//k1: src
+			Map.Entry srcEntry = (Map.Entry) itSrc.next();
+			String srckey = (String)srcEntry.getKey();
+            Iterator itTgt = components.entrySet().iterator();
+		    while (itTgt.hasNext()) {//k2:tgt
+			    Map.Entry tgtEntry = (Map.Entry) itTgt.next();
+			    String tgtkey = (String)tgtEntry.getKey();
+                if(tgtkey.equals(srckey)) continue;
+
+                int weight = 0;
+                //k1:varComp
+                Iterable<Trio<Object,Object,Object>> varComp = relVarComp.getAry3ValTuples();
+                for(Trio<Object,Object, Object> trioVar : varComp) {
+                    RefType s  = (RefType)trioVar.val2;
+                    if(!s.getClassName().equals(srckey)) continue;
+                        //System.out.println("srcccc: ..." + s.getClassName());
+
+                    //k2:ptComp
+                    Iterable<Trio<Object,Object,Object>> ptComp = relPtComp.getAry3ValTuples();
+                    for(Trio<Object,Object, Object> trioPt : ptComp) {
+                        RefType t  = (RefType)trioPt.val2;
+                        if(!t.getClassName().equals(tgtkey)) continue;
+                            //System.out.println("tgtttt: ..." + t.getClassName());
+                        if(Utils.areEqual(trioVar.val0, trioPt.val0) &&
+                           Utils.areEqual(trioVar.val1, trioPt.val1) ) 
+                            weight++;
+                    }
+                }
+                System.out.println("Depend....." + srckey + "---->(" + weight +")" + tgtkey);
+
+
+            }
+
+
+        }
+		
+		relVarComp.close();
+		relPtComp.close();*/
+    }
+
 	public void run()
 	{
 		/*parsePermission();
@@ -606,8 +710,164 @@ public class PostIccgBuilder extends JavaAnalysis
 
 		//output dotty.
         dump();
+        compDepend();
+        genGraph();
 		//System.out.println(iccg.getSignature());
 
 	}
+    
+    /*class IccgNamespaceContext implements NamespaceContext
+    {
+        public String getNamespaceURI(String prefix) {
+            return "http://schemas.android.com/apk/res/android";
+	}
+	
+
+    }*/
+
+    public void genGraph() 
+    {
+      try {
+ 
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        docFactory.setNamespaceAware(true);
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+ 
+        // root elements
+        Document doc = docBuilder.newDocument();
+        Element rootElement = doc.createElement("graphml");
+        rootElement.setAttribute("xmlns", "http://graphml.graphdrawing.org/xmlns");
+
+        //rootElement.add( new Namespace( "xmlns", "http://graphml.graphdrawing.org/xmlns" ) );
+        doc.appendChild(rootElement);
+ 
+        // graph elements
+        Element graph = doc.createElement("graph");
+        rootElement.appendChild(graph);
+ 
+        // set attribute to graph element
+        Attr attr = doc.createAttribute("id");
+        attr.setValue("G");
+        graph.setAttributeNode(attr);
+
+        Attr direct = doc.createAttribute("edgedefault");
+        direct.setValue("directed");
+        graph.setAttributeNode(direct);
+
+        //<key id="weight" for="edge" attr.name="weight" attr.type="int"/>
+        Element keyw= doc.createElement("key");
+        Attr wAttr = doc.createAttribute("id");
+        wAttr.setValue("weight");
+        keyw.setAttributeNode(wAttr);
+
+        Attr forAttr = doc.createAttribute("for");
+        forAttr.setValue("edge");
+        keyw.setAttributeNode(forAttr);
+
+        Attr nAttr = doc.createAttribute("attr.name");
+        nAttr.setValue("weight");
+        keyw.setAttributeNode(nAttr);
+
+        Attr tAttr = doc.createAttribute("attr.type");
+        tAttr.setValue("int");
+        keyw.setAttributeNode(tAttr);
+
+        graph.appendChild(keyw);
+
+        //nodes.
+        Iterator itSrc = components.entrySet().iterator();
+		while (itSrc.hasNext()) {//k1: src
+			Map.Entry srcEntry = (Map.Entry) itSrc.next();
+			String srckey = (String)srcEntry.getKey();
+
+            Element node = doc.createElement("node");
+            Attr nodeAttr = doc.createAttribute("id");
+            nodeAttr.setValue(parseStr(srckey));
+            node.setAttributeNode(nodeAttr);
+
+            Attr nodeLabAttr = doc.createAttribute("label");
+            nodeLabAttr.setValue(parseStr(srckey));
+            node.setAttributeNode(nodeLabAttr);
+
+            graph.appendChild(node);
+     
+        }
+        //edges.
+	    Iterator itEdge = depMap.entrySet().iterator();
+        int cnt = 1;
+        while (itEdge.hasNext()) {//k1: src
+			Map.Entry e = (Map.Entry) itEdge.next();
+			String eKey = (String)e.getKey();
+			int val = (Integer)e.getValue();
+            String[] sa = eKey.split("@");
+            //System.out.println(srckey.replace("$", "-->") + " Weight=" +val);
+
+            Element edge = doc.createElement("edge");
+            Attr idAttr = doc.createAttribute("id");
+            idAttr.setValue("E"+String.valueOf(cnt));
+            edge.setAttributeNode(idAttr);
+
+            Attr srcAttr = doc.createAttribute("source");
+            srcAttr.setValue(parseStr(sa[0]));
+            edge.setAttributeNode(srcAttr);
+
+            Attr tgtAttr = doc.createAttribute("target");
+            tgtAttr.setValue(parseStr(sa[1]));
+            edge.setAttributeNode(tgtAttr);
+
+            Attr wtAttr = doc.createAttribute("weight");
+            wtAttr.setValue(String.valueOf(val));
+            edge.setAttributeNode(wtAttr);
+
+
+            Element w = doc.createElement("data");
+            Attr dataAttr = doc.createAttribute("key");
+            dataAttr.setValue("weight");
+            w.setAttributeNode(dataAttr);
+            w.appendChild(doc.createTextNode(String.valueOf(val)));
+            edge.appendChild(w);
+ 
+            graph.appendChild(edge);
+            cnt++;
+
+        }
+ 
+        // write the content into xml file
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        transformerFactory.setAttribute("indent-number", 4);
+        Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+        DOMSource source = new DOMSource(doc);
+        StreamResult result = new StreamResult(new File("/afs/cs.stanford.edu/u/yufeng/file.graphml"));
+ 
+        // Output to console for testing
+        // StreamResult result = new StreamResult(System.out);
+ 
+        transformer.transform(source, result);
+ 
+        System.out.println("File saved!");
+ 
+      } catch (ParserConfigurationException pce) {
+        pce.printStackTrace();
+      } catch (TransformerException tfe) {
+        tfe.printStackTrace();
+      }
+    }
+
+    private String parseStr(String str)
+    {
+        //if (str.contains("$"))
+         //   str = str.substring(0, str.indexOf("$"));
+
+        str = str.replaceAll("\\/", ".");
+
+        if(str.contains("."))
+            str= str.substring(str.lastIndexOf(".")+1,str.length());
+
+        return str;
+    }
+
+
 
 }

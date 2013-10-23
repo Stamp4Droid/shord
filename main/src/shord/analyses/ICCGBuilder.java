@@ -242,6 +242,8 @@ public class ICCGBuilder extends JavaAnalysis
                         "<edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>")) {
 			//FIX-ME: without this, we will have redundant edges.
                         if(m.getSignature().equals("<android.app.Activity: void <init>()>")) continue;
+                        //if(m.getSignature().equals("<android.app.Service: void <init>()>")) continue;
+                        //if(m.getSignature().equals("<android.content.BroadcastReceiver: void <init>()>")) continue;
                         relMregI.add(m, stmt);
                     }
 

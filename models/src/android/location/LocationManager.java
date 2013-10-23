@@ -8,6 +8,7 @@ class LocationManager
 
 	private void registerListener(final android.location.LocationListener listener)
 	{
+		listener.onLocationChanged(getLocation());
 		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
 			registerCallback(new edu.stanford.stamp.harness.Callback(){
 					public void run() {
@@ -80,6 +81,7 @@ class LocationManager
 	}
 
         public  boolean addNmeaListener(final android.location.GpsStatus.NmeaListener listener) {
+		listener.onNmeaReceived(0,getNmea());
 		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
 			registerCallback(new edu.stanford.stamp.harness.Callback(){
 					public void run() {

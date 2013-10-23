@@ -42,7 +42,7 @@ class View
     // Callback classes and callback setter methods                                                                                                                            
     public  void setOnClickListener(final android.view.View.OnClickListener l) 
     { 
-	l.onClick(View.this);
+	    l.onClick(View.this);
 
         /*edu.stanford.stamp.harness.applicationdriver.getinstance().
 			registercallback(new edu.stanford.stamp.harness.callback(){
@@ -94,4 +94,6 @@ class View
 					}
 				});*/
 	}
+
+
 }

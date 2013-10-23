@@ -10,8 +10,10 @@ import java.util.Iterator;
 
 import gnu.trove.list.array.TIntArrayList;
 
+import soot.jimple.Stmt;
 import soot.Unit;
 import soot.Type;
+import soot.RefType;
 import soot.SootMethod;
 import soot.util.NumberedSet;
 
@@ -31,11 +33,11 @@ import chord.util.tuple.object.Pair;
 
 @Chord(name = "contexts-java",
 	   consumes = { "chaIM", "I", "M", "H", "MH", "MI" },
-	   produces = { "C", "CC", "CI", "CM", "CH" },
-	   namesOfTypes = { "C" },
-	   types = { DomC.class },
-	   namesOfSigns = { "CC", "CI", "CM", "CH" },
-	   signs = { "C0,C1:C0xC1", "C0,I0:C0_I0", "C0,M0:C0_M0", "C0,H0:C0_H0"}
+	   produces = { "C", "CC", "CI", "CM", "CH", "CT" },
+	   namesOfTypes = { "C", "T" },
+	   types = { DomC.class, DomT.class },
+	   namesOfSigns = { "CC", "CI", "CM", "CH", "CT" },
+	   signs = { "C0,C1:C0xC1", "C0,I0:C0_I0", "C0,M0:C0_M0", "C0,H0:C0_H0", "C0,T0:C0_T0"}
 	   )
 public class ContextsAnalysis extends JavaAnalysis
 {
@@ -140,7 +142,9 @@ public class ContextsAnalysis extends JavaAnalysis
 	private void CM()
 	{
 		ProgramRel relCM = (ProgramRel) ClassicProject.g().getTrgt("CM");
+        ProgramRel relCT = (ProgramRel) ClassicProject.g().getTrgt("CT");
 		relCM.zero();
+        relCT.zero();
         for (int mIdx = 0; mIdx < methToCtxts.length; mIdx++) {
             SootMethod meth = (SootMethod) domM.get(mIdx);
 			Set<Ctxt> ctxts = methToCtxts[mIdx];
@@ -150,10 +154,24 @@ public class ContextsAnalysis extends JavaAnalysis
 			}
 			for(Ctxt c : ctxts){
 				relCM.add(c, meth);
-				//System.out.println("meth: " + meth + " ctxt: "+c);
+                //check whether we can add it to CT.
+                for(Object elem : c.getElems()){
+                    if(elem instanceof Unit){
+                        Stmt stmt = (Stmt) elem;
+                        SootMethod mt = Program.containerMethod(stmt);
+                        if(mt != null){
+                            RefType t = mt.getDeclaringClass().getType();
+                            if(ICCGBuilder.components.get(t.getClassName())!=null){
+                                relCT.add(c,t);
+                                break;
+                            }
+                        }
+                    }
+                }
 			}
 		}
 		relCM.save();
+		relCT.save();
 	}
 
 	private void CH()
@@ -201,6 +219,7 @@ public class ContextsAnalysis extends JavaAnalysis
 	{
         ProgramRel relCC = (ProgramRel) ClassicProject.g().getTrgt("CC");
         ProgramRel relCI = (ProgramRel) ClassicProject.g().getTrgt("CI");
+
 		relCC.zero();
         relCI.zero();
 
