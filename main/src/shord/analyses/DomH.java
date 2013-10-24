@@ -9,9 +9,9 @@ import shord.project.analyses.ProgramDom;
  * 
  * @author Saswat Anand
  */
-public class DomH extends ProgramDom<Unit> {
-    @Override
+public class DomH extends ProgramDom<AllocNode> {
+    /*@Override
     public String toUniqueString(Unit u) {
 		return Program.unitToString(u);
-    }
+    }*/
 }

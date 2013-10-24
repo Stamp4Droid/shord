@@ -10,6 +10,7 @@ import soot.Value;
 import soot.Unit;
 import soot.Body;
 import soot.Type;
+import soot.RefType;
 import soot.RefLikeType;
 import soot.PrimType;
 import soot.VoidType;
@@ -50,6 +51,7 @@ import shord.project.ClassicProject;
 import shord.program.Program;
 
 import chord.project.Chord;
+import stamp.analyses.SootUtils;
 
 import java.util.*;
 
@@ -69,7 +71,7 @@ import java.util.*;
 				 "LoadStatPrim", "StoreStatPrim",
 				 "MmethPrimArg", "MmethPrimRet", 
 				 "IinvkPrimRet", "IinvkPrimArg",
-	             "Stub" },
+	             "VH", "Stub" },
        namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U"},
        types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class},
 	   namesOfSigns = { "Alloc", "Assign", 
@@ -86,7 +88,7 @@ import java.util.*;
 						"LoadStatPrim", "StoreStatPrim",
 						"MmethPrimArg", "MmethPrimRet", 
 						"IinvkPrimRet", "IinvkPrimArg",
-                        "Stub" },
+                        "VH", "Stub" },
 	   signs = { "V0,H0:V0_H0", "V0,V1:V0xV1",
 				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
 				 "V0,F0:F0_V0", "F0,V0:F0_V0",
@@ -101,7 +103,7 @@ import java.util.*;
 				 "U0,F0:U0_F0", "F0,U0:U0_F0",
 				 "M0,Z0,U0:M0_U0_Z0", "M0,Z0,U0:M0_U0_Z0",
 				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0",
-                 "M0:M0" }
+                 "V0,H0:V0_H0", "M0:M0" }
 	   )
 public class PAGBuilder extends JavaAnalysis
 {
@@ -135,6 +137,7 @@ public class PAGBuilder extends JavaAnalysis
 	private ProgramRel relMH;
 	private ProgramRel relMV;
 	private ProgramRel relMU;
+	private ProgramRel relVH;
 
 	private DomV domV;
 	private DomU domU;
@@ -185,6 +188,8 @@ public class PAGBuilder extends JavaAnalysis
         relMV.zero();
 		relMU = (ProgramRel) ClassicProject.g().getTrgt("MU");
         relMU.zero();
+		relVH = (ProgramRel) ClassicProject.g().getTrgt("VH");
+        relVH.zero();
 
 		relAssignPrim = (ProgramRel) ClassicProject.g().getTrgt("AssignPrim");
 		relAssignPrim.zero();
@@ -227,6 +232,7 @@ public class PAGBuilder extends JavaAnalysis
 		relMH.save();
 		relMV.save();
 		relMU.save();
+		relVH.save();
 
 		relAssignPrim.save();
 		relLoadPrim.save();
@@ -240,7 +246,7 @@ public class PAGBuilder extends JavaAnalysis
 		relIinvkPrimArg.save();
 	}
 
-	void Alloc(LocalVarNode l, Stmt h)
+	void Alloc(VarNode l, AllocNode h)
 	{
 		assert l != null;
 		relAlloc.add(l, h);
@@ -409,10 +415,19 @@ public class PAGBuilder extends JavaAnalysis
 		private Set<Local> primLocals;
 		private Map<Stmt,CastVarNode> stmtToCastNode;
 		private Tag containerTag;
+		private Map<Unit, AllocNode> unit2Node = new HashMap();
+		private boolean isStub;
+		private Set<StubAllocNode> stubSet = new HashSet();
 
 		MethodPAGBuilder(SootMethod method)
 		{
+			this(method, false);
+		}
+
+		MethodPAGBuilder(SootMethod method, boolean stub)
+		{
 			this.method = method;
+			this.isStub = stub;
 		}
 		
 		void pass1()
@@ -454,6 +469,20 @@ public class PAGBuilder extends JavaAnalysis
 			if(!method.isConcrete())
 				return;
 
+			//for stub, we don't want to touch it's body.
+			if(isStub) {
+				//for each method's return types, we add it.
+				if((method.getReturnType() instanceof RefType)){
+					RefType t = (RefType)method.getReturnType();
+					for(SootClass st: SootUtils.subTypesOf(t.getSootClass())){
+						StubAllocNode n = new StubAllocNode(st.getType(), method);
+						domH.add(n);
+						stubSet.add(n);
+					}
+				}
+				return;
+			} 
+
 			localToVarNode = new HashMap();
 			Body body = method.retrieveActiveBody();
 			LocalsClassifier lc = new LocalsClassifier(body);
@@ -481,9 +510,12 @@ public class PAGBuilder extends JavaAnalysis
 					domI.add(s);
 				} else if(s instanceof AssignStmt) {
 					Value rightOp = ((AssignStmt) s).getRightOp();
-					if(rightOp instanceof AnyNewExpr)
-						domH.add(s);
-					else if(rightOp instanceof CastExpr){
+                    //FIXME: we still need to deal with String! v = "foo"
+					if(rightOp instanceof AnyNewExpr){
+						SiteAllocNode n = new SiteAllocNode(s);
+						domH.add(n);
+						unit2Node.put(s, n);
+                    }else if(rightOp instanceof CastExpr){
 						CastExpr castExpr = (CastExpr) rightOp;
 						Type castType = castExpr.getCastType();
 						if(castType instanceof RefLikeType){
@@ -538,6 +570,31 @@ public class PAGBuilder extends JavaAnalysis
 
 			if(!method.isConcrete())
 				return;
+
+        	Collection allocNodes = isStub ? stubSet : unit2Node.values();
+			//System.out.println("PP "+method+" "+allocNodes.size());
+            //FIXME: what we do for stubs may not scale.
+			for(Object o : allocNodes){
+				AllocNode an = (AllocNode) o;
+				Type type = an.getType();
+
+				relHT.add(an, type);
+				relMH.add(method, an);
+				
+				Iterator<Type> typesIt = Program.g().getTypes().iterator();
+				while(typesIt.hasNext()){
+					Type varType = typesIt.next();
+					if(canStore(type, varType))
+						relHTFilter.add(an, varType);
+				}
+			}
+
+			if(isStub) {
+				for(StubAllocNode an : stubSet)
+					Alloc(retVar, an);
+				return;
+			}
+
 			for(Map.Entry<Local,LocalVarNode> e : localToVarNode.entrySet()){
 				LocalVarNode varNode = e.getValue();
 				if(nonPrimLocals.contains(e.getKey())){
@@ -674,19 +731,15 @@ public class PAGBuilder extends JavaAnalysis
 				Value leftOp = as.getLeftOp();
 				Value rightOp = as.getRightOp();
 
+                if(unit2Node.get(s) != null && nodeFor((Local)leftOp) != null)
+				    relVH.add(nodeFor((Local) leftOp), unit2Node.get(s));
+
 				if(rightOp instanceof AnyNewExpr){
-					Alloc(nodeFor((Local) leftOp), s);
-					relHT.add(s, rightOp.getType());
-					relMH.add(method, s);
+                    AllocNode an = unit2Node.get(s);
+					Alloc(nodeFor((Local) leftOp), an);
+					//relHT.add(s, rightOp.getType());
+					//relMH.add(method, s);
 					s.addTag(containerTag);
-					Iterator<Type> typesIt = Program.g().getTypes().iterator();
-					while(typesIt.hasNext()){
-						Type varType = typesIt.next();
-						//if(!(varType instanceof RefLikeType)
-						//	continue;
-						if(canStore(rightOp.getType(), varType))
-							relHTFilter.add(s, varType);
-					}
 				} else if(rightOp instanceof CastExpr){
 					Type castType = ((CastExpr) rightOp).getCastType();
 					Immediate op = (Immediate) ((CastExpr) rightOp).getOp();
@@ -769,7 +822,8 @@ public class PAGBuilder extends JavaAnalysis
 				if(stubMethods.contains(tgt) || (src != null && stubMethods.contains(src)))
 					continue;
 			}
-			relChaIM.add(stmt, tgt);
+			if(!stubMethods.contains(src))
+			    relChaIM.add(stmt, tgt);
 		}
 		relChaIM.save();
 	}
@@ -843,7 +897,7 @@ public class PAGBuilder extends JavaAnalysis
 				if(stubMethods.contains(m))
 					continue;
 			}
-			MethodPAGBuilder mpagBuilder = new MethodPAGBuilder(m);
+			MethodPAGBuilder mpagBuilder = new MethodPAGBuilder(m, stubMethods.contains(m));
 			mpagBuilder.pass1();
 			mpagBuilders.add(mpagBuilder);
 		}

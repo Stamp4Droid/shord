@@ -29,7 +29,7 @@ import chord.util.graph.MutableGraph;
 import chord.util.tuple.object.Pair;
 
 @Chord(name = "contexts-java",
-	   consumes = { "chaIM", "I", "M", "H", "MH", "MI" },
+	   consumes = { "chaIM", "I", "M", "H", "MH", "MI", "VH" },
 	   produces = { "C", "CC", "CI", "CM", "CH" },
 	   namesOfTypes = { "C" },
 	   types = { DomC.class },

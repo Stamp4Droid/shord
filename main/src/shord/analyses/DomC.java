@@ -15,7 +15,7 @@ import shord.project.analyses.ProgramDom;
  */
 public class DomC extends ProgramDom<Ctxt> 
 {
-    public Ctxt setCtxt(Unit[] elems) {
+    public Ctxt setCtxt(Object[] elems) {
         Ctxt cVal = new Ctxt(elems);
         int cIdx = indexOf(cVal);
         if (cIdx != -1)
