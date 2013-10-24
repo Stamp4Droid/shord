@@ -1,0 +1,42 @@
+#######################################
+# Context Insensitive Points-to analysis
+#######################################
+
+# name=cipt-dlog
+
+.include "M.dom"
+.include "C.dom"
+.include "V.dom"
+.include "H.dom"
+.include "F.dom"
+.include "I.dom"
+
+.bddvarorder M0_C0xC1xC2_V0xV1_H0xF0_I0
+
+Assign(v:V,u:V)     input   # v = u
+Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
+Load(y:V,x:V,f:F)   input   # y = x.f
+Store(u:V,f:F,v:V)  input   # u.f = v
+LoadStat(y:V,f:F)   input   # y = f
+StoreStat(f:F,v:V)  input   # f = v
+param(u:V,v:V,i:I)  input   # u is the formal parameter, v is actual arg, i is invocation stmt
+return(u:V,v:V,i:I) input   # u is the lhs at callsite, v is the return var, i is invocation stmt
+ciTypeFilter(v:V,h:H) input   # type wise, v can point-to o
+
+ipt(v:V,h:H)    output # (c,v) points-to o
+ifpt(f:F,h:H) output
+
+ifptStat(f:F,h:H)
+
+###################
+#    RULES
+###################
+
+ipt(v,h) :- Alloc(v,h).
+ipt(v,h) :- ipt(u,h), Assign(v,u), ciTypeFilter(v,h).
+ipt(u,h) :- ipt(v,h), param(u,v,_), ciTypeFilter(u,h). 
+ipt(u,h) :- ipt(v,h), return(u,v,_), ciTypeFilter(u,h).
+ifpt(f,h) :- ipt(v,h), Store(_,f,v).
+ipt(y,h) :- Load(y,_,f), ifpt(f,h).
+ifptStat(f,h) :- ipt(v,h), StoreStat(f,v).
+ipt(y,h) :- LoadStat(y,f), ifptStat(f,h).
