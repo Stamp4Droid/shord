@@ -214,12 +214,8 @@ ActivePrimTaintSrc(cl,c,v) :- ActiveObjTaintSrc(cl,o), PtFull(c,u,o), StorePrimC
 # ActivePtFull
 
 ActivePtFull(c,v,o) :- ActivePrimTaintSrc(cl,c,u), LoadPrimCtxt(c,u,v,_), PtFull(c,v,o), Src2ObjT(cl,o).
-ActivePtFull(c,v,o) :- ActivePrimTaintSrc(cl,c,u), LoadPrimCtxt(c,u,v,_), PtFull(c,v,o), Src2ObjT(cl,o).
-ActivePtFull(c,v,o) :- ActivePrimTaintSrc(cl,c,u), LoadPrimCtxt(c,u,v,0), PtFull(c,v,o), Src2ObjX(cl,o).
 ActivePtFull(c,v,o) :- ActivePrimTaintSrc(cl,c,u), LoadPrimCtxt(c,u,v,0), PtFull(c,v,o), Src2ObjX(cl,o).
 ActivePtFull(c,v,o) :- ActivePrimTaintSrc(cl,c,u), LoadPrimCtxt(c,u,v,f), PtFull(c,v,o), Src2PrimFld(cl,o,f).
-ActivePtFull(c,v,o) :- ActivePrimTaintSrc(cl,c,u), LoadPrimCtxt(c,u,v,f), PtFull(c,v,o), Src2PrimFld(cl,o,f).
-ActivePtFull(c,u,o) :- ActiveObjTaintSrc(cl,o), PtFull(c,u,o), StorePrimCtxt(c,u,_,v), Src2Prim(c,cl,v).
 ActivePtFull(c,u,o) :- ActiveObjTaintSrc(cl,o), PtFull(c,u,o), StorePrimCtxt(c,u,_,v), Src2Prim(c,cl,v).
 
 ###################
@@ -310,12 +306,8 @@ ActivePrimTaintSink(cl,c,v) :- ActiveObjTaintSink(cl,o), PtFull(c,u,o), StorePri
 # ActivePtFull
 
 ActivePtFull(c,v,o) :- ActivePrimTaintSink(cl,c,u), LoadPrimCtxt(c,u,v,_), PtFull(c,v,o), Sink2ObjT(cl,o).
-ActivePtFull(c,v,o) :- ActivePrimTaintSink(cl,c,u), LoadPrimCtxt(c,u,v,_), PtFull(c,v,o), Sink2ObjT(cl,o).
-ActivePtFull(c,v,o) :- ActivePrimTaintSink(cl,c,u), LoadPrimCtxt(c,u,v,0), PtFull(c,v,o), Sink2ObjX(cl,o).
 ActivePtFull(c,v,o) :- ActivePrimTaintSink(cl,c,u), LoadPrimCtxt(c,u,v,0), PtFull(c,v,o), Sink2ObjX(cl,o).
 ActivePtFull(c,v,o) :- ActivePrimTaintSink(cl,c,u), LoadPrimCtxt(c,u,v,f), PtFull(c,v,o), Sink2PrimFld(cl,o,f).
-ActivePtFull(c,v,o) :- ActivePrimTaintSink(cl,c,u), LoadPrimCtxt(c,u,v,f), PtFull(c,v,o), Sink2PrimFld(cl,o,f).
-ActivePtFull(c,u,o) :- ActiveObjTaintSink(cl,o), PtFull(c,u,o), StorePrimCtxt(c,u,_,v), Sink2Prim(c,cl,v).
 ActivePtFull(c,u,o) :- ActiveObjTaintSink(cl,o), PtFull(c,u,o), StorePrimCtxt(c,u,_,v), Sink2Prim(c,cl,v).
 
 ###################
