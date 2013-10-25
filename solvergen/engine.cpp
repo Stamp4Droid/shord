@@ -807,106 +807,6 @@ void print_results() {
 
 /* DERIVATION HANDLING ===================================================== */
 
-EdgeGroup::EdgeGroup(Edge *top_edge) {
-    edges[top_edge];
-}
-
-EdgeGroup::EdgeGroup(Edge *e, Edge *parent) {
-    edges[e].insert(parent);
-}
-
-EdgeGroup::EdgeGroup(Edge *e, EdgeGroup& prods_src) {
-    for (const auto& edgeAndProds : prods_src) {
-	const std::set<Edge*>& prods = edgeAndProds.second;
-	edges[e].insert(prods.cbegin(), prods.cend());
-    }
-}
-
-void EdgeGroup::swap(EdgeGroup& other) {
-    std::swap(edges, other.edges);
-}
-
-EdgeGroup::EdgeGroup(EdgeGroup&& other) {
-    other.swap(*this);
-}
-
-bool EdgeGroup::add(Edge *e, Edge *parent) {
-    // No need to record the characteristics of the group's endpoints, we can
-    // just check against an arbitrary edge from the group (since it's always
-    // non-empty).
-    if (same_arc(e, first())) {
-	edges[e].insert(parent);
-	return true;
-    }
-    return false;
-}
-
-const std::set<Edge*>& EdgeGroup::operator[](Edge *e) {
-    return edges.at(e);
-}
-
-EdgeGroup::Iterator EdgeGroup::begin() {
-    return edges.begin();
-}
-
-EdgeGroup::Iterator EdgeGroup::end() {
-    return edges.end();
-}
-
-Edge *EdgeGroup::first() {
-    return begin()->first;
-}
-
-Derivation::Shared::Shared(Edge* common_edge, bool left_reverse,
-			   bool right_reverse)
-    : common_edge(common_edge), left_reverse(left_reverse),
-      right_reverse(right_reverse) {}
-
-
-bool Derivation::Shared::is_null() const {
-    return common_edge == NULL;
-}
-
-bool Derivation::Shared::operator==(const Shared& other) const {
-    // TODO: Using pointer equality for Edge*.
-    return (common_edge == other.common_edge &&
-	    left_reverse == other.left_reverse &&
-	    right_reverse == other.left_reverse);
-}
-
-Derivation::Group::Group(Position group_by) : group_by(group_by) {}
-
-void Derivation::Group::add(const Derivation& deriv, Edge *parent) {
-    std::pair<Shared,Edge*> parts = deriv.split(group_by);
-    // Group the single and empty Derivations under a special Shared part.
-    // Derivation::split() will always return NULL in the Shared part for
-    // those, regardless of requested direction.
-    std::forward_list<EdgeGroup>& completions = groups[parts.first];
-    Edge *e = parts.second;
-
-    for (EdgeGroup& g : completions) {
-	if (g.add(e, parent)) {
-	    return;
-	}
-    }
-    completions.emplace_front(e, parent);
-}
-
-// Not accurate: will count all non-double derivations as one group, but that's
-// acceptable, because this is only used for comparing groupings, and both
-// possible directions treat those Derivations in the same way.
-Derivation::Group::Size Derivation::Group::size() const {
-    return groups.size();
-}
-
-Derivation::Group::Iterator Derivation::Group::begin() {
-    return groups.begin();
-}
-
-Derivation::Group::Iterator Derivation::Group::end() {
-    return groups.end();
-}
-
 Derivation::Derivation()
     : left_edge(NULL),     right_edge(NULL),
       left_reverse(false), right_reverse(false) {}
@@ -920,397 +820,265 @@ Derivation::Derivation(Edge *left_edge,  bool left_reverse,
     : left_edge(left_edge),       right_edge(right_edge),
       left_reverse(left_reverse), right_reverse(right_reverse) {}
 
-std::pair<Derivation::Shared,Edge*>
-Derivation::split(Position group_by) const {
-    if (group_by == Position::RIGHT || right_edge == NULL) {
-	return std::make_pair(Shared(right_edge, left_reverse, right_reverse),
-			      left_edge);
-    } else {
-	return std::make_pair(Shared(left_edge, left_reverse, right_reverse),
-			      right_edge);
-    }
-}
-
-/* STEP HANDLING =========================================================== */
-
-void StepTree::Step::check_invariants() {
-    assert(!is_terminal() || !expanded);
-    assert(expanded || choices.empty());
-    // TODO: Could check the parent pointer on all the sub-steps.
-    // TODO: Could check that all sub-steps of a closed Step are also closed.
-}
-
-StepTree::Step::Step(Step *parent, Step *next_sibling, EdgeGroup&& edges,
-		     bool reverse)
-    : parent(parent), next_sibling(next_sibling), edges(std::move(edges)),
-      reverse(reverse), expanded(false), closed(false) {
-    check_invariants();
-}
-
-void StepTree::Step::add_choices(Derivation::Group& grouping) {
-    for (auto& subgroup : grouping) {
-	const Derivation::Shared& common = subgroup.first;
-	std::forward_list<EdgeGroup>& completions = subgroup.second;
-
-	if (common.is_null()) {
-	    // Special case for empty and single productions
-	    for (EdgeGroup& g : completions) {
-		if (g.first() == NULL) {
-		    // Don't create a Step for empty productions.
-		    choices.push_back(NULL);
-		} else {
-		    choices.push_back(new Step(this, NULL, std::move(g),
-					       common.left_reverse));
-		}
-	    }
-	    return;
-	}
-
-	bool common_l = grouping.group_by == Position::LEFT;
-	for (EdgeGroup& g : completions) {
-	    assert(g.first() != NULL);
-	    // The shared Edge can produce in any of the parent Edges that the
-	    // completion Edges produce.
-	    // BUG: The two chains are now independent, so we might accept a
-	    // derivation chaing that wouldn't work if we kept them linked.
-	    // Will probably not cause an infinite loop, just a slightly
-	    // inconsistent result.
-	    EdgeGroup common_group = EdgeGroup(common.common_edge, g);
-	    Step *second =
-		new Step(this, NULL,
-			 (common_l) ? std::move(g) : std::move(common_group),
-			 common.right_reverse);
-	    Step *first =
-		new Step(this, second,
-			 (common_l) ? std::move(common_group) : std::move(g),
-			 common.left_reverse);
-	    choices.push_back(first);
-	}
-    }
-}
-
-bool StepTree::Step::valid_derivation(const Derivation& deriv, Edge *e) {
-    // TODO: Verify that e is actually an Edge of the current EdgeGroup.
-    Edge *left_edge = deriv.left_edge;
-    Edge *right_edge = deriv.right_edge;
-    // Nothing to check for an empy Derivation.
+bool Derivation::empty() const {
     if (left_edge == NULL) {
 	assert(right_edge == NULL);
 	return true;
     }
-    // Verify that the producing Edges don't conflict with our current Edge.
-    if (edge_equals(e, left_edge) ||
-	(right_edge != NULL && edge_equals(e, right_edge))) {
-	return false;
-    }
-    // Nothing more to check if we're at the top Edge of the StepTree.
-    if (parent == NULL) {
-	assert(edges[e].empty());
-	return true;
-    }
-    // Verify that we haven't recursed on one of the Edges in the Derivation.
-    // We only need to find a single consistent production chain for the
-    // current Edge.
-    for (Edge *product : edges[e]) {
-	if (parent->valid_derivation(deriv, product)) {
-	    return true;
-	}
-    }
-    // No production chain without repetition could be found.
     return false;
-}
-
-StepTree::Step::Step(Edge *top_edge)
-    : Step(NULL, NULL, EdgeGroup(top_edge), false) {}
-
-bool StepTree::Step::is_terminal() {
-    return ::is_terminal(edges.first()->kind);
-}
-
-bool StepTree::Step::is_expanded() const {
-    return expanded;
-}
-
-bool StepTree::Step::is_closed() const {
-    return closed;
-}
-
-bool StepTree::Step::valid_choice(CHOICE_REF c) const {
-    assert(expanded);
-    return c < choices.size();
-}
-
-CHOICE_REF StepTree::Step::num_choices() const {
-    assert(expanded);
-    return choices.size();
-}
-
-void StepTree::Step::expand() {
-    // Edges corresponding to terminal symbols are elementary steps, which
-    // cannot be expanded any further.
-    assert(!is_terminal());
-    if (expanded) {
-	return;
-    }
-    expanded = true;
-
-    // We only support Edge grouping on one of the two sub-steps, so we need to
-    // decide which grouping strategy would be more efficient. For this reason,
-    // we build two alternative groupings from Derivations, then pick the best.
-    // TODO: Allow grouping on both positions. But we need to allow independent
-    // expansion of the two sub-steps, so that would only trigger iff we're
-    // processing the cartesian product of two index sets. Alternatively, we
-    // could track the relationship between the two.
-    // TODO: Could allow both kinds of grouping simultaneously (some part of
-    // the choices are grouped one way, and the rest the other way).
-    Derivation::Group left_grouping(Position::LEFT);
-    Derivation::Group right_grouping(Position::RIGHT);
-
-    // TODO: Make sure we don't get more choices than we can store.
-    for (const auto& edgeAndProds : edges) {
-	Edge *parent = edgeAndProds.first;
-	// For each Edge in the current EdgeGroup, calculate all derivations
-	// that could have produced it.
-	// TODO: Could build the maps directly inside all_derivations, instead
-	// of returning a list (but would have to filter for validity on the
-	// maps).
-	for (const Derivation& d : all_derivations(parent)) {
-	    // Some of these might be invalid for this Step, so we filter them.
-	    // TODO: Prune the branch if we find no valid derivations.
-	    if (valid_derivation(d, parent)) {
-		left_grouping.add(d, parent);
-		right_grouping.add(d, parent);
-	    }
-	}
-    }
-
-    // Pick the best grouping: currently just taking the one with the fewest
-    // common groups.
-    // TODO: Should also count the #choices each shared group would produce.
-    // TODO: Could implement a better decision heuristic.
-    if (left_grouping.size() < right_grouping.size()) {
-	add_choices(left_grouping);
-    } else {
-	add_choices(right_grouping);
-    }
-
-    check_invariants();
-}
-
-void StepTree::Step::close() {
-    if (closed) {
-	// We assume that all sub-steps of closed steps have also been marked
-	// as closed.
-	return;
-    }
-    closed = true;
-    for (Step *step : choices) {
-	for (; step != NULL; step = step->next_sibling) {
-	    step->close();
-	}
-    }
-
-    check_invariants();
-}
-
-StepTree::Step *StepTree::Step::follow(CHOICE_REF choice) const {
-    assert(expanded);
-    return choices.at(choice);
-}
-
-PATH_LENGTH StepTree::Step::estimate_sequence_length() {
-    PATH_LENGTH min_length = 0;
-    for (Step *step = this; step != NULL; step = step->next_sibling) {
-	min_length += static_min_length(step->edges.first()->kind);
-    }
-    return min_length;
-}
-
-/* EXPANDER HANDLING ======================================================= */
-
-void StepTree::Expander::check_invariants() const {
-    if (curr_step == NULL) {
-	assert(choice == CHOICE_NONE);
-    } else {
-	assert(!curr_step->is_terminal());
-	if (choice != CHOICE_NONE) {
-	    assert(curr_step->valid_choice(choice));
-	}
-    }
-}
-
-StepTree::Expander::Expander(Step *curr_step, CHOICE_REF choice,
-			     PATH_LENGTH min_length, Path *path)
-    : curr_step(curr_step), choice(choice), min_length(min_length),
-      path(path) {
-    check_invariants();
-}
-
-StepTree::Expander::Expander(Step *top_step)
-    : Expander(top_step, CHOICE_NONE,
-	       static_min_length(top_step->edges.first()->kind), NULL) {}
-
-bool StepTree::Expander::at_closed_step() const {
-    return curr_step != NULL && curr_step->is_closed();
-}
-
-bool StepTree::Expander::at_end() const {
-    return curr_step == NULL;
-}
-
-bool StepTree::Expander::at_choice() const {
-    return curr_step != NULL && choice == CHOICE_NONE;
-}
-
-void StepTree::Expander::move_to_next_choice() {
-    assert(curr_step == NULL || !curr_step->is_closed());
-    // We only traverse terminals and empty productions, whose length has
-    // already been included in the running estimate, so we don't need to
-    // update min_length. Also, we don't need to make any non-deterministic
-    // choices, so we don't need to update our path.
-
-    if (choice == CHOICE_NONE || curr_step == NULL) {
-	// Special case, where we start right on a choice, or at the end.
-	return;
-    }
-
-    Step *parent = curr_step;
-    Step *curr = parent->follow(choice);
-    choice = CHOICE_NONE;
-
-    while (curr == NULL) {
-	// We've hit an empty production, so we try the next sibling of the
-	// parent step. We may have to skip multiple levels to reach one that
-	// hasn't been fully traversed yet.
-	if (parent == NULL) {
-	    // We've reached the top of the step tree.
-	    curr_step = NULL;
-	    check_invariants();
-	    return;
-	}
-	// We're the first Expander to pop back to a non-deterministic choice,
-	// so we mark it as closed (any other Expander that reaches this point
-	// will be longer, and thus not worth keeping).
-	assert(!parent->is_closed());
-	parent->close();
-	curr = parent->next_sibling;
-	parent = parent->parent;
-    }
-
-    // We are at a concrete Step, and need to stop at the first non-terminal
-    // that we find.
-    while (curr->is_terminal()) {
-	assert(!curr->is_closed());
-	// Move to the next Step on the same level, repeat if it's a terminal
-	// Step.
-	while (curr->next_sibling == NULL) {
-	    // If we're at the end of the current level, move up to the first
-	    // level that is not yet fully traversed, and continue from there.
-	    curr = curr->parent;
-	    if (curr == NULL) {
-		// We've reached the top of the step tree.
-		curr_step = NULL;
-		check_invariants();
-		return;
-	    }
-	    // Another case of pop-back; close all choices.
-	    assert(!curr->is_closed());
-	    curr->close();
-	}
-	curr = curr->next_sibling;
-    }
-
-    assert(!curr->is_closed());
-    curr_step = curr;
-    check_invariants();
-}
-
-std::list<StepTree::Expander> StepTree::Expander::fork() const {
-    assert(at_choice());
-    // Lazily expand the tree at the current step.
-    curr_step->expand();
-
-    std::list<Expander> children;
-    PATH_LENGTH curr_edge_estimate =
-	static_min_length(curr_step->edges.first()->kind);
-
-    for (CHOICE_REF c = 0; c < curr_step->num_choices(); c++) {
-	Step *sub_steps = curr_step->follow(c);
-	// We know how many terminals are added to the path by this production,
-	// so we immediatelly include them in the lower bound for the path's
-	// length.
-	PATH_LENGTH child_min_len = (min_length - curr_edge_estimate +
-				     sub_steps->estimate_sequence_length());
-	Path *child_path = new Path(path, c);
-	children.push_back(Expander(curr_step, c, child_min_len, child_path));
-    }
-
-    return children;
-}
-
-bool StepTree::Expander::operator<(const Expander& other) const {
-    return min_length > other.min_length;
 }
 
 /* PATH CALCULATION ======================================================== */
 
-StepTree::Path::Path(Path *prefix, CHOICE_REF last)
-    : prefix(prefix), last(last) {}
-
-std::stack<CHOICE_REF> StepTree::Path::unwind(const Path *path) {
-    std::stack<CHOICE_REF> choices;
-    for (const Path *p = path; p != NULL; p = p->prefix) {
-	choices.push(p->last);
-    };
-    return choices;
+void DerivTable::Info::check_invariants() {
+    switch (state) {
+    case State::UNFORKED:
+    case State::UNREACHED:
+	assert(best_choice == CHOICE_NONE);
+	break;
+    case State::REACHED:
+	assert(best_choice != CHOICE_NONE);
+	break;
+    case State::CLOSED:
+	break;
+    default:
+	assert(false);
+    }
+    assert(best_choice == CHOICE_NONE || best_choice < derivs.size());
 }
 
-StepTree::StepTree(Edge *top_edge) : root(Step(top_edge)) {
-    assert(!is_terminal(top_edge->kind));
+DerivTable::Info::Info(Edge* e) : derivs(all_derivations(e)),
+				  state(State::UNFORKED),
+				  best_choice(CHOICE_NONE),
+				  length(static_min_length(e->kind)) {
+    // We close immediatelly if this is a terminal Edge (the minimum-length
+    // estimate is then the real length).
+    if (is_terminal(e->kind)) {
+	assert(derivs.empty());
+	close();
+	return;
+    }
+    // If this is a non-terminal Edge, it should have at least one Derivation.
+    assert(!derivs.empty());
+    // We skip forking on the derivations if this Edge has an empty production
+    // (we don't do this for all-terminal derivations: other derivations might
+    // prove to be shorter).
+    for (CHOICE_REF c = 0; c < derivs.size(); c++) {
+	if (derivs[c].empty()) {
+	    state = State::UNREACHED;
+	    update(c, 0);
+	    return;
+	}
+    }
+    check_invariants();
 }
 
-std::stack<CHOICE_REF> StepTree::expand() {
-    // Priority queue of all live Expanders over the StepTree, sorted by lower
-    // bound on length.
-    std::priority_queue<Expander> queue;
-    queue.push(Expander(&root));
+DerivTable::Info::Info(Info&& other)
+    : derivs(std::move(other.derivs)), state(other.state),
+      best_choice(other.best_choice), length(other.length),
+      parents(std::move(other.parents)) {}
 
-    while (!queue.empty()) {
+DerivTable::Info::State DerivTable::Info::get_state() const {
+    return state;
+}
 
-	Expander exp = queue.top();
-	queue.pop();
+PATH_LENGTH DerivTable::Info::get_length() const {
+    return length;
+}
 
-	// Check if we should discard this Expander: If the Step we're
-	// currently on or any of its ancestors has been closed, that must have
-	// been caused by a previously processed Expander, which had a better
-	// minimum length estimate, therefore we don't need to continue with
-	// this one (we couldn't possibly do any better).
-	// We only need to check if the Step we start from is closed; only one
-	// of the Expanders forked at each non-deterministic choice survives,
-	// and when it does, it recursively closes all the Steps under all
-	// other choices.
-	if (exp.at_closed_step()) {
-	    continue;
+const Derivation& DerivTable::Info::best_derivation() const {
+    assert(state == State::CLOSED && best_choice != CHOICE_NONE);
+    return derivs.at(best_choice);
+}
+
+void DerivTable::Info::close() {
+    assert(state == State::UNFORKED || state == State::REACHED);
+    state = State::CLOSED;
+    check_invariants();
+}
+
+std::set<Edge*> DerivTable::Info::get_children() {
+    assert(state == State::UNFORKED);
+    state = State::UNREACHED;
+
+    std::set<Edge*> children;
+    for (const Derivation& d : derivs) {
+	if (d.left_edge != NULL) {
+	    children.insert(d.left_edge);
 	}
-	exp.move_to_next_choice();
-	if (exp.at_end()) {
-	    // We have fully traversed the StepTree, while always working on
-	    // the shortest possible alternative. Thus, we have found the
-	    // shortest path.
-	    return Path::unwind(exp.path);
+	if (d.right_edge != NULL) {
+	    children.insert(d.right_edge);
 	}
-	// The Expander points to a non-terminal Step: split it according to
-	// the expansion choices.
-	for (Expander e : exp.fork()) {
-	    queue.push(e);
-	}
-
-	// Discard the parent Expander.
     }
 
-    // No path found, return an empty choice stack (since we only allow path
-    // calculations for non-terminals, this should be unambiguous).
-    return std::stack<CHOICE_REF>();
+    check_invariants();
+    return children;
+}
+
+std::list<std::pair<CHOICE_REF,Edge*>>
+DerivTable::Info::completions(Edge* e) const {
+    std::list<std::pair<CHOICE_REF,Edge*>> res;
+    for (CHOICE_REF c = 0; c < derivs.size(); c++) {
+	const Derivation& d = derivs[c];
+	// We wouldn't have recursed on the Derivations if this Edge had an
+	// empty production.
+	assert(d.left_edge != NULL);
+	if (edge_equals(d.left_edge, e)) {
+	    res.push_back(std::make_pair(c, d.right_edge));
+	} else if (d.right_edge != NULL && edge_equals(d.right_edge, e)) {
+	    res.push_back(std::make_pair(c, d.left_edge));
+	}
+    }
+    return res;
+}
+
+// TODO: Assumes we've checked 'choice' for overflow.
+bool DerivTable::Info::update(CHOICE_REF choice, PATH_LENGTH length) {
+    bool must_update = false;
+
+    switch (state) {
+    case State::UNREACHED:
+	must_update = true;
+	break;
+    case State::REACHED:
+	must_update = (this->length > length);
+	break;
+    default:
+	assert(false);
+    }
+
+    if (must_update) {
+	state = State::REACHED;
+	best_choice = choice;
+	this->length = length;
+	check_invariants();
+    }
+    return must_update;
+}
+
+void DerivTable::Info::add_parent(Edge* p) {
+    parents.push_back(p);
+}
+
+void DerivTable::Info::get_parents(std::list<Edge*>& ret) {
+    parents.swap(ret);
+    parents.clear();
+}
+
+DerivTable::QueueItem::QueueItem(PATH_LENGTH length, Edge* edge)
+    : length(length), edge(edge) {}
+
+bool DerivTable::QueueItem::operator<(const QueueItem& other) const {
+    return length < other.length;
+}
+
+void DerivTable::process(const QueueItem& item) {
+    PATH_LENGTH length = item.length;
+    Edge* edge = item.edge;
+    Info& info = table.at(edge);
+
+    switch (info.get_state()) {
+    case Info::State::UNFORKED:
+	for (Edge* child : info.get_children()) {
+	    auto iterAndFlag = table.emplace(child, child);
+	    Info& child_info = iterAndFlag.first->second;
+	    if (iterAndFlag.second
+		|| child_info.get_state() == Info::State::CLOSED) {
+		// A new entry was created on the table, which needs to be
+		// expanded, or we hit a cached entry that has been closed, so
+		// we insert it into the queue to re-activate it (cached Edges
+		// in any other state are already active, i.e. they are, or
+		// soon will be, added to the queue.
+		queue.emplace(child_info.get_length(), child);
+	    }
+	    child_info.add_parent(edge);
+	}
+	// The item for this Edge is removed from the worklist, but will be
+	// added again when we find a production for it.
+	break;
+    case Info::State::REACHED:
+	// Since we're processing Derivations in absolute length order, the
+	// shortest possible expansion for an Edge will always be the first to
+	// arrive to the front of the queue.
+	assert(info.get_length() == length);
+	info.close();
+	propagate(edge, info);
+	break;
+    case Info::State::CLOSED:
+	// This could either be an overtaken update (we don't propagate paths
+	// that we know are worse than the best we've seen, but we might
+	// add a path for some Edge, and before that gets to the front, find a
+	// better one), or the result of a fork that hit a cached result. In
+	// either case, it can't contain a shorter path than the one currently
+	// stored.
+	assert(info.get_length() <= length);
+	propagate(edge, info);
+	break;
+    default:
+	assert(false);
+    }
+}
+
+void DerivTable::propagate(Edge* child, Info& child_info) {
+    std::list<Edge*> parents;
+    child_info.get_parents(parents);
+    for (Edge* p : parents) {
+	Info& p_info = table.at(p);
+	if (p_info.get_state() == Info::State::CLOSED) {
+	    // We process paths in absolute order length, so a closed Edge will
+	    // already have the shortest possible path filled in.
+	    // TODO: Could also check that we don't get a shorter path than
+	    // the stored one.
+	    continue;
+	}
+
+	// First find the shortest path made possible by the newly closed
+	// child (there may be multiple derivations that use the same Edge).
+	CHOICE_REF best_choice = CHOICE_NONE;
+	PATH_LENGTH min_length = LENGTH_INF;
+
+	// TODO: Check that the completion set isn't empty.
+	for (const auto& choiceAndEdge : p_info.completions(child)) {
+	    CHOICE_REF choice = choiceAndEdge.first;
+	    Edge* completion = choiceAndEdge.second;
+	    PATH_LENGTH total_length = child_info.get_length();
+	    if (completion != NULL) {
+		const Info& completion_info = table.at(completion);
+		// Could get the same Edge in the completion set, in cases like
+		// this: A :: B _B. This is OK, since the child Edge should
+		// have already been closed.
+		if (completion_info.get_state() != Info::State::CLOSED) {
+		    continue;
+		}
+		total_length += completion_info.get_length();
+	    }
+	    if (best_choice == CHOICE_NONE || total_length < min_length) {
+		best_choice = choice;
+		min_length = total_length;
+	    }
+	}
+
+	if (best_choice != CHOICE_NONE) {
+	    // Only add the parent to the queue if the shortest path we found
+	    // is actually shorter than the previous best one.
+	    if (p_info.update(best_choice, min_length)) {
+		queue.emplace(min_length, p);
+	    }
+	}
+    }
+}
+
+void DerivTable::add(Edge* e) {
+    auto iterAndFlag = table.emplace(e, e);
+    if (iterAndFlag.second) {
+	queue.emplace(iterAndFlag.first->second.get_length(), e);
+    }
+
+    while (!queue.empty()) {
+	QueueItem item = queue.top();
+	queue.pop();
+	process(item);
+    }
 }
 
 /* PATH PRINTING =========================================================== */
@@ -1368,26 +1136,23 @@ void print_step_close(Edge *edge, FILE *f) {
 //   traversal)
 // For now, the client of this output will need to bake the results (or we
 // could avoid printing immediatelly, and do this at a post-processing step).
-// TODO: Generalize visitor pattern.
-void StepTree::Step::print(std::stack<CHOICE_REF>& path, FILE *f) {
-    print_step_open(edges.first(), reverse, f);
-    if (!is_terminal()) {
-	assert(!path.empty());
-	CHOICE_REF c = path.top();
-	path.pop();
-	for (Step *s = follow(c); s != NULL; s = s->next_sibling) {
-	    s->print(path, f);
+void DerivTable::print_edge(Edge* edge, bool reverse, FILE* f) {
+    print_step_open(edge, reverse, f);
+    if (!is_terminal(edge->kind)) {
+	const Derivation& deriv = table.at(edge).best_derivation();
+	if (deriv.left_edge != NULL) {
+	    print_edge(deriv.left_edge, deriv.left_reverse, f);
+	}
+	if (deriv.right_edge != NULL) {
+	    print_edge(deriv.right_edge, deriv.right_reverse, f);
 	}
     }
-    print_step_close(edges.first(), f);
+    print_step_close(edge, f);
 }
 
-void StepTree::print_path(const std::stack<CHOICE_REF>& path, FILE *f) {
+void DerivTable::print_path(Edge* top_edge, FILE* f) {
     fprintf(f, "<path>\n");
-    std::stack<CHOICE_REF> p(path);
-    root.print(p, f);
-    // All choices should have been exhausted.
-    assert(p.empty());
+    print_edge(top_edge, false, f);
     fprintf(f, "</path>\n");
 }
 
@@ -1410,7 +1175,8 @@ void print_prerecorded_path(Edge *e, FILE *f) {
 }
 #endif
 
-void print_paths_for_kind(EDGE_KIND k, unsigned int num_paths) {
+void print_paths_for_kind(EDGE_KIND k, unsigned int num_paths,
+			  DerivTable& table) {
     assert(!is_terminal(k));
     // TODO: Filename buffer may be too small.
     char fname[256];
@@ -1431,9 +1197,8 @@ void print_paths_for_kind(EDGE_KIND k, unsigned int num_paths) {
 #ifdef PATH_RECORDING
 	    print_prerecorded_path(e, f);
 #else
-	    StepTree tree = StepTree(e);
-	    std::stack<CHOICE_REF> path = tree.expand();
-	    tree.print_path(path, f);
+	    table.add(e);
+	    table.print_path(e, f);
 #endif
 	    fprintf(f, "</edge>\n");
 	}
@@ -1444,6 +1209,8 @@ void print_paths_for_kind(EDGE_KIND k, unsigned int num_paths) {
 }
 
 void print_paths() {
+    // Use a single table for all path printing.
+    DerivTable table;
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
 	if (is_predicate(k)) {
 	    // TODO: Also check that no edges have been produced.
@@ -1451,7 +1218,7 @@ void print_paths() {
 	}
 	unsigned int num_paths = num_paths_to_print(k);
 	if (num_paths > 0) {
-	    print_paths_for_kind(k, num_paths);
+	    print_paths_for_kind(k, num_paths, table);
 	}
     }
 }

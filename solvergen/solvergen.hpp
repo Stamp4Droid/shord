@@ -7,6 +7,7 @@
 #include <limits.h>
 #include <list>
 #include <map>
+#include <queue>
 #include <set>
 #include <stack>
 #include <stdlib.h>
@@ -78,6 +79,10 @@ typedef unsigned int NODE_REF;
 
 /** The length of some Edge<!-- -->'s witness path. */
 typedef unsigned int PATH_LENGTH;
+/** A PATH_LENGTH value reserved for representing "infinity". */
+#define LENGTH_INF UINT_MAX
+/** Check if a PATH_LENGTH is within bounds. */
+#define VALID_PATH_LENGTH(l) ((l) < LENGTH_INF)
 
 /**
  * An integer identifying a selection among multiple possible Derivation%s of
@@ -525,102 +530,8 @@ struct Node {
     LightMap<EDGE_KIND,OutEdgeSet> out;
 };
 
-// Group of Edges corresponding to the same Arc (same endpoints and kind).
-// Specialized for use in the witness search.
-// TODO: Invariant that all Edges are compatible is only mildly enforced.
-// TODO: Parent-product relationship not checked -- we depend on the client of
-// the interface to only feed us real pairs.
-// TODO: Use some more lightweight data structure for the product set.
-// TODO: The map is always non-empty, but this invariant is not checked.
-// XXX: We depend on the fact that Edges are uniqued, i.e. that:
-// if e1->{from,to,kind,index} == e2->{from,to,kind,index}, then e1 == e2
-// in order to avoid duplicate entries.
-// TODO: Can even store NULL (should probably disallow that).
-class EdgeGroup {
-private:
-    // TODO: Could store pointers to free-store sets of Edges.
-    typedef LightMap<Edge*,std::set<Edge*>> ProductMap;
-public:
-    typedef ProductMap::Iterator Iterator;
-private:
-    /**
-     * A set of Edge%s, where each Edge also carries information about all the
-     * Edge%s it's been discovered to derive (called its products). An Edge
-     * can have zero products (specifically, the one at the root of the
-     * StepTree). The products are kept so that we can perform the recursion
-     * check properly in StepTree::Step::expand().
-     */
-    ProductMap edges;
-public:
-    EdgeGroup(Edge *top_edge);
-    EdgeGroup(Edge *e, Edge *parent);
-    // TODO: Reintroduce constness.
-    EdgeGroup(Edge *e, EdgeGroup& prods_src);
-    void swap(EdgeGroup& other);
-    // Copy constructor and assignment removed, to make sure we never copy the
-    // struct into a Derivation::Group, but rather move.
-    EdgeGroup(const EdgeGroup& other) = delete;
-    EdgeGroup& operator=(const EdgeGroup& other) = delete;
-    EdgeGroup(EdgeGroup&& other);
-    // Returns true iff the Edge was compatible with this group, and thus could
-    // be added.
-    bool add(Edge *e, Edge *parent);
-    const std::set<Edge*>& operator[](Edge *e);
-    // TODO: Reintroduce constness.
-    Iterator begin();
-    Iterator end();
-    Edge *first();
-};
-
-enum class Position {LEFT, RIGHT};
-
 /** Structure describing a possible way to produce an Edge. */
 struct Derivation {
-public:
-
-    // TODO: Could instead use common_reverse and completion_reverse.
-    struct Shared {
-	Edge* const common_edge;
-	const bool left_reverse;
-	const bool right_reverse;
-    public:
-	Shared(Edge* common_edge, bool left_reverse, bool right_reverse);
-	/**
-	 * Whether this instance corresponds to the special "no additional Edge
-	 * required" Shared part. This is used to group the single and empty
-	 * Derivation%s.
-	 */
-	bool is_null() const;
-	bool operator==(const Shared& other) const;
-    };
-
-    class Group {
-    private:
-	typedef LightMap<Shared,std::forward_list<EdgeGroup>> Map;
-    public:
-	typedef Map::Size Size;
-	typedef Map::Iterator Iterator;
-    public:
-	/**
-	 * What position we're grouping by. Irrelevant for single and empty
-	 * derivations; those are always grouped under a special Shared part
-	 * with a @e NULL Shared::common_edge.
-	 */
-	// TODO: Then the corresponding 'reverse' flag will always be false,
-	// so they will be matched on output.
-	const Position group_by;
-    private:
-	// TODO: Could group non-common Edges using a LightMap<Arc,IndexSet>.
-	Map groups;
-    public:
-	Group(Position group_by);
-	void add(const Derivation& deriv, Edge *parent);
-	Size size() const;
-	// TODO: Reintroduce constness.
-	Iterator begin();
-	Iterator end();
-    };
-
 public:
     Edge* const left_edge;
     Edge* const right_edge;
@@ -638,151 +549,84 @@ public:
     /**
      * @}
      */
-    // Always groups single and empty Derivations on a NULL Shared part,
-    // regardless of requested direction.
-    std::pair<Shared,Edge*> split(Position group_by) const;
+    bool empty() const;
 };
 
-/**
- * A tree describing multiple ways of producing the Edge on the root. The top
- * Edge and each sub-Edge recursively combined to form the top Edge are stored
- * in Step nodes. Each node can have more than one disjoint sets of children,
- * representing all the possible combinations that can produce it. The tree
- * starts out as a single node, and can be filled-in by expanding one Step at a
- * time. A single Step can represent multiple Edge%s sharing the same endpoints
- * and @Kind.
- */
-// TODO: No support for freeing allocated memory. The StepTree destructor
-// should recursively destroy the subtrees.
-// TODO: Unused subtrees are not deallocated; could do ref-counting.
-class StepTree {
+// TODO:
+// - when closing a non-terminal edge, can close all unsuccessful derivations
+//   recurse down all other derivations, remove self from parent list,
+//   close/freeze any that have no parents, repeat
+//   but then would be less efficient/harder to reuse for other top edges (?)
+// - could have better child information on parents
+//   so we don't have to iterate on their list
+// - can add the no-recursion constraint
+class DerivTable {
 private:
 
-    // NULL stands for empty Path
-    // TODO: No memory deallocation support, should ref-count.
-    // TODO: Should wrap in a class.
-    struct Path {
-	Path* const prefix;
-	const CHOICE_REF last;
-	explicit Path(Path *prefix, CHOICE_REF last);
-	static std::stack<CHOICE_REF> unwind(const Path *path);
-    };
-
-    class Step {
+    class Info {
     public:
-	Step* const parent;
-	Step* const next_sibling; // next in the step sequence (tree level)
-	// TODO: Waste of space in the case of singleton groups, should at
-	// least use a lightweight set data structure inside EdgeGroup.
-	// TODO: Reintroduce constness.
-	EdgeGroup edges;
-	const bool reverse; // relative to the original Edge
+	enum class State {UNFORKED, UNREACHED, REACHED, CLOSED};
     private:
-	bool expanded;
-	bool closed;
-	// possible sub-step sequences, is empty for:
-	// - terminal steps
-	// - unexpanded non-terminal steps
-	// - expanded non-terminal steps with no possible expansions
-	std::vector<Step*> choices;
+	const std::vector<Derivation> derivs;
+	State state;
+	CHOICE_REF best_choice;
+	// This member's meaning is overloaded, depending on the current state:
+	// - UNFORKED, UNREACHED => strict lower bound
+	// - REACHED => minimum real length found so far
+	// - CLOSED => minimum real length (best_choice doesn't have to be
+	//   != CHOICE_NONE, because this might be a terminal Edge)
+	PATH_LENGTH length;
+	std::list<Edge*> parents;
     private:
-	// TODO: Reintroduce constness.
 	void check_invariants();
-	explicit Step(Step *parent, Step *next_sibling, EdgeGroup&& edges,
-		      bool reverse);
-	// Passed grouping is invalidated.
-	void add_choices(Derivation::Group& grouping);
-	/**
-	 * Check if @a deriv could have produced the given Edge on this Step.
-	 */
-	// TODO: Reintroduce constness.
-	bool valid_derivation(const Derivation& deriv, Edge *e);
     public:
-	explicit Step(Edge *top_edge);
-	// TODO: Reintroduce constness.
-	bool is_terminal();
-	bool is_expanded() const;
-	bool is_closed() const;
-	bool valid_choice(CHOICE_REF c) const;
-	CHOICE_REF num_choices() const;
-	/**
-	 * Expand a Step by considering all Derivation%s that could have been
-	 * used to produce it.
-	 */
-	void expand();
-	/**
-	 * Close this Step and all its descendants, i.e. mark them so that any
-	 * Expander%s currently live on them are discarded.
-	 */
+	Info(Edge* e);
+	Info(const Info& other) = delete;
+	Info& operator=(const Info& other) = delete;
+	Info(Info&& other);
+	State get_state() const;
+	PATH_LENGTH get_length() const;
+	const Derivation& best_derivation() const;
 	void close();
-	/**
-	 * Follow the specified expansion choice. Returns the head of the
-	 * corresponding sub-Step sequence. This may be NULL, in the case of
-	 * empty productions.
-	 */
-	Step *follow(CHOICE_REF choice) const;
-	/**
-	 * Estimate the total length of a Step sequence starting at this Step.
-	 */
-	// TODO: Reintroduce constness
-	PATH_LENGTH estimate_sequence_length();
-	// TODO: Reintroduce constness
-	void print(std::stack<CHOICE_REF>& path, FILE *f);
+	std::set<Edge*> get_children();
+	// what Edges can be used to complete a derivation with this one
+	// can contain NULL, for single productions
+	std::list<std::pair<CHOICE_REF,Edge*>> completions(Edge* e) const;
+	// TODO: We trust the information that gets passed in.
+	// TODO: Should never get two updates for the same choice.
+	// returns true iff we should add it to the worklist
+	bool update(CHOICE_REF choice, PATH_LENGTH length);
+	// "registers" an Edge to this child's expansion
+	void add_parent(Edge* parent);
+	// clears the parents
+	void get_parents(std::list<Edge*>& ret);
     };
 
-    // can either be right before a choice, right after a choice, or at the end
-    class Expander {
-    private:
-	// the node of the tree that we're currently on, NULL if at end
-	Step *curr_step;
-	// if != CHOICE_NONE, we are implicitly at that sub-step of curr_step
-	CHOICE_REF choice;
-    public:
-	// TODO: Can't make these const, because priority_queue needs to use
-	// operator=.
-	PATH_LENGTH min_length; // includes all expanded terminals
-	// stack of choices that have lead us to this point
-	Path *path;
-    private:
-	void check_invariants() const;
-	explicit Expander(Step *curr_step, CHOICE_REF choice,
-			  PATH_LENGTH min_length, Path *path);
-    public:
-	explicit Expander(Step *top_step);
-	bool at_closed_step() const;
-	bool at_end() const;
-	bool at_choice() const;
-	/**
-	 * Move forward in the StepTree according to an in-order traversal, up
-	 * to the next non-terminal Step. If no such Step exists, the Expander
-	 * is placed at the end of the traversal.
-	 *
-	 * This operation is deterministic, because the tree can only split at
-	 * non-terminal Step%s. The Expander is modified in-place. Assumes that
-	 * no closed Step%s are encountered during the traversal. Closes any
-	 * non-deterministic Step%s it pops back to.
-	 */
-	void move_to_next_choice();
-	/**
-	 * Create one Expander for each possible Derivation at the current
-	 * point. Assumes we are currently processing a non-terminal Step.
-	 */
-	std::list<Expander> fork() const;
-	/**
-	 * Return true iff @a this Expander<!-- -->'s length estimate is worse
-	 * than @a other<!-- -->'s.
-	 */
-	bool operator<(const Expander& other) const;
+    // TODO: We need to explicitly store the length under which an Edge is
+    // added. If we simply stored Edge*'s, we would run the risk of elements in
+    // the priority_queue changing in value.
+    // TODO: Could perhaps get away with this, because the length of an Edge
+    // can only decrease.
+    struct QueueItem {
+	PATH_LENGTH length;
+	Edge* edge;
+	QueueItem(PATH_LENGTH length, Edge* edge);
+	// To achieve proper ordering, we consider an Edge with a shorter path
+	// to be 'greater'.
+	bool operator<(const QueueItem& other) const;
     };
 
 private:
-    Step root;
+    std::map<Edge*,Info> table;
+    std::priority_queue<QueueItem> queue;
+private:
+    void process(const QueueItem& item);
+    void propagate(Edge* child, Info& child_info);
+    void print_edge(Edge* edge, bool reverse, FILE* f);
 public:
-    explicit StepTree(Edge *top_edge);
-    // Builds up a complete (shortest) path, expands tree as needed.
-    std::stack<CHOICE_REF> expand();
-    // TODO: Reintroduce constness.
-    void print_path(const std::stack<CHOICE_REF>& path, FILE *f);
+    // Adds Edge and all induced Derivations.
+    void add(Edge* e);
+    void print_path(Edge* top_edge, FILE* f);
 };
 
 /**
@@ -1041,7 +885,7 @@ EDGE_KIND symbol2kind(const char *symbol);
 const char *kind2symbol(EDGE_KIND kind);
 
 /** Return all possible ways that an Edge could have been produced. */
-std::list<Derivation> all_derivations(Edge *edge);
+std::vector<Derivation> all_derivations(Edge *edge);
 
 /**
  * Return the number of paths to print for each Edge of @Kind @a kind in the

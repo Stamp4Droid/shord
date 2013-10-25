@@ -1423,8 +1423,8 @@ def parse(grammar_in, code_out, terms_out, rels_out):
 
 def emit_derivs_or_reachable(grammar, pr, emit_derivs):
     if emit_derivs:
-        pr.write('std::list<Derivation> all_derivations(Edge *e) {')
-        pr.write('std::list<Derivation> derivs;')
+        pr.write('std::vector<Derivation> all_derivations(Edge *e) {')
+        pr.write('std::vector<Derivation> derivs;')
         pr.write('NODE_REF from = e->from;')
         pr.write('NODE_REF to = e->to;')
         pr.write('EDGE_KIND kind = e->kind;')
@@ -1446,22 +1446,22 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
     pr.write('switch (kind) {')
     for e_symbol in grammar.symbols:
         pr.write('case %s: /* %s */' % (e_symbol.kind, e_symbol))
-        if (e_symbol.is_predicate() or e_symbol.is_terminal()) == emit_derivs:
+        if (emit_derivs and e_symbol.is_predicate() or
+            not emit_derivs and not (e_symbol.is_predicate()
+                                     or e_symbol.is_terminal())):
             # Derivation re-construction should never be requested for
             # predicate witness edges, because none are ever explicitly
-            # produced. Similarly, it doesn't make sense to request the
-            # derivations for a terminal symbol.
-            # Conversely, reachability queries only need to be performed for
-            # predicate (and terminal) symbols.
+            # produced. Conversely, reachability queries only need to be
+            # performed for predicate (and terminal) symbols.
             pr.write('assert(false);')
             pr.write('break;')
             continue
         if e_symbol.is_terminal():
-            assert not emit_derivs
-            pr.write('if (find_edge(from, to, %s, index) != NULL) {'
-                     % e_symbol.kind)
-            pr.write('return true;')
-            pr.write('}')
+            if not emit_derivs:
+                pr.write('if (find_edge(from, to, %s, index) != NULL) {'
+                         % e_symbol.kind)
+                pr.write('return true;')
+                pr.write('}')
             pr.write('break;')
             continue
         for p in grammar.prods.get(e_symbol):
