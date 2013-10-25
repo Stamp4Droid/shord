@@ -26,8 +26,8 @@ public class MissingModels extends XMLReport {
 
 			MultivalueMap<Edge,Pair<Edge,Boolean>> positiveWeightEdges = JCFLSolverAnalysis.g().getPositiveWeightEdges("Src2Sink");
 			for(Edge edge : positiveWeightEdges.keySet()) {
-				String source = ConversionUtils.getNodeInfoTokens(edge.from.getName())[1];
-				String sink = ConversionUtils.getNodeInfoTokens(edge.to.getName())[1];
+				String source = ConversionUtils.getNodeInfoTokens(this.sourceInfo, edge.from.getName())[1];
+				String sink = ConversionUtils.getNodeInfoTokens(this.sourceInfo, edge.to.getName())[1];
 				for(Pair<Edge,Boolean> pair : positiveWeightEdges.get(edge)) {
 					EdgeData data = pair.getX().getData(g);
 

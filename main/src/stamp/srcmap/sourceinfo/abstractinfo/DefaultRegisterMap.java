@@ -1,44 +1,46 @@
-package stamp.srcmap;
+package stamp.srcmap.sourceinfo.abstractinfo;
 
-import soot.Scene;
-import soot.SootClass;
-import soot.SootMethod;
-import soot.SootField;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import soot.Local;
-import soot.Value;
+import soot.SootField;
+import soot.SootMethod;
 import soot.Unit;
-import soot.Body;
-import soot.jimple.Stmt;
-import soot.jimple.AssignStmt;
-import soot.jimple.IdentityStmt;
-import soot.jimple.ReturnStmt;
-import soot.jimple.LookupSwitchStmt;
-import soot.jimple.TableSwitchStmt;
-import soot.jimple.AnyNewExpr;
-import soot.jimple.ThrowStmt;
-import soot.jimple.InvokeExpr;
-import soot.jimple.InstanceInvokeExpr;
-import soot.jimple.CastExpr;
-import soot.jimple.LengthExpr;
-import soot.jimple.FieldRef;
-import soot.jimple.InstanceFieldRef;
-import soot.jimple.ParameterRef;
+import soot.Value;
 import soot.jimple.ArrayRef;
-import soot.jimple.BinopExpr;
-import soot.jimple.NegExpr;
-
-import java.io.*;
-import java.util.*;
+import soot.jimple.AssignStmt;
+import soot.jimple.FieldRef;
+import soot.jimple.IdentityStmt;
+import soot.jimple.InstanceFieldRef;
+import soot.jimple.InstanceInvokeExpr;
+import soot.jimple.InvokeExpr;
+import soot.jimple.LengthExpr;
+import soot.jimple.LookupSwitchStmt;
+import soot.jimple.ParameterRef;
+import soot.jimple.ReturnStmt;
+import soot.jimple.Stmt;
+import soot.jimple.TableSwitchStmt;
+import stamp.srcmap.Expr;
+import stamp.srcmap.InvkMarker;
+import stamp.srcmap.Marker;
+import stamp.srcmap.SimpleMarker;
+import stamp.srcmap.sourceinfo.MethodInfo;
+import stamp.srcmap.sourceinfo.RegisterMap;
+import stamp.srcmap.sourceinfo.SourceInfo;
 
 /**
  * @author Saswat Anand 
  */
-public class RegisterMap
-{
+public class DefaultRegisterMap implements RegisterMap {
     private Map<Local,Set<Expr>> varToExprs;
+    private SourceInfo sourceInfo;
 
-	public RegisterMap(SootMethod meth, MethodInfo mi)
-	{
+	public DefaultRegisterMap(SourceInfo sourceInfo, SootMethod meth, MethodInfo mi) {
+		this.sourceInfo = sourceInfo;
 		if(meth.isConcrete() && mi != null){
 			//System.out.println("=== registermap " + meth);
 			//for(InvkExpr ie : mi.invkExprs()){
@@ -53,50 +55,30 @@ public class RegisterMap
 				Stmt stmt = (Stmt) u;
 				visitor.handleStmt(stmt);
 			}
-
-			
-			/*
-			System.out.println("*** results");
-			for(UnionFind.EqClass klass : allClasses){
-				List<Register> regs = klass.allRegs();
-				for(Register reg : regs){
-					System.out.println(reg + ", ");
-				}
-				System.out.println(" ==> ");
-				for(Expr expr : eqClassToExprs.get(klass))
-					System.out.println("\t"+expr.toString());
-			}
-			System.out.println("************");
-			*/
 		}
 	}
 	
-	public Set<Expr> srcLocsFor(Local var)
-	{
+	public Set<Expr> srcLocsFor(Local var) {
         if(varToExprs == null)
             return null;
         Set<Expr> result = varToExprs.get(var);
         return result;
 	}
 
-	public Map<Local,Set<Expr>> allSrcLocs()
-	{
+	public Map<Local,Set<Expr>> allSrcLocs() {
 		return varToExprs;
 	}
 
-	private class Visitor 
-	{
+	private class Visitor {
 		private MethodInfo mi;
 		private List<Marker> paramMarkers;
 
-		Visitor(MethodInfo mi)
-		{
-			this.mi = mi;
-			this.paramMarkers = mi.markers(-1, "param", null);
+		Visitor(MethodInfo mi2) {
+			this.mi = mi2;
+			this.paramMarkers = mi2.markers(-1, "param", null);
 		}
 		
-		private void addSrcLoc(Value v, Expr srcLoc)
-		{
+		private void addSrcLoc(Value v, Expr srcLoc) {
 			if(!(v instanceof Local))
 				return;
 			if(srcLoc == null)
@@ -111,8 +93,7 @@ public class RegisterMap
 			srcLocs.add(srcLoc);
 		}
 
-		private Marker lookupMarker(int lineNum, String markerType, String calleeSig)
-		{
+		private Marker lookupMarker(int lineNum, String markerType, String calleeSig) {
 			//System.out.println("Query: line = " + lineNum + " chordSig = " + calleeSig + " index = " + index);
 			Marker marker = null;
 			for(Marker m : mi.markers(lineNum, markerType, calleeSig)){
@@ -128,8 +109,7 @@ public class RegisterMap
 			return marker;
 		}
 
-		private void map(int lineNum, Value v, String markerType, String chordSig)
-		{
+		private void map(int lineNum, Value v, String markerType, String chordSig) {
 			if(!(v instanceof Local))
 				return;
 			Marker marker = lookupMarker(lineNum, markerType, chordSig);
@@ -138,13 +118,12 @@ public class RegisterMap
 			addSrcLoc((Local) v, ((SimpleMarker) marker).operand());
 		}
 	
-		void handleStmt(Stmt s)
-		{
-			int lineNum = SourceInfo.stmtLineNum(s);
+		void handleStmt(Stmt s) {
+			int lineNum = sourceInfo.stmtLineNum(s);
 
 			if(s.containsInvokeExpr()){
 				InvokeExpr ie = s.getInvokeExpr();
-				String calleeSig = SourceInfo.chordSigFor(ie.getMethod());
+				String calleeSig = sourceInfo.chordSigFor(ie.getMethod());
 
                 InvkMarker marker = (InvkMarker) lookupMarker(lineNum, "invoke", calleeSig);
                 if(marker != null){
@@ -172,7 +151,7 @@ public class RegisterMap
 				Value leftOp = as.getLeftOp();
 				FieldRef fr = s.getFieldRef();
 				SootField field = fr.getField();
-				String fieldSig = SourceInfo.chordSigFor(field);
+				String fieldSig = sourceInfo.chordSigFor(field);
 				if(fr instanceof InstanceFieldRef){
 					map(lineNum, ((InstanceFieldRef) fr).getBase(), "fieldexpr", fieldSig);
 				}
@@ -193,7 +172,7 @@ public class RegisterMap
 				ArrayRef ar = s.getArrayRef();
 				if(leftOp instanceof Local){
 					//array read
-					map(lineNum, leftOp, "aload.lhs", SourceInfo.chordTypeFor(ar.getBase().getType()));
+					map(lineNum, leftOp, "aload.lhs", sourceInfo.chordTypeFor(ar.getBase().getType()));
 				}else{
 					//array write
 					//TODO
@@ -205,7 +184,7 @@ public class RegisterMap
 
 				if(rightOp instanceof LengthExpr){
 					Value base = ((LengthExpr) rightOp).getOp();
-					map(lineNum, base, "arraylen", SourceInfo.chordTypeFor(base.getType()));
+					map(lineNum, base, "arraylen", sourceInfo.chordTypeFor(base.getType()));
 				}
 			} else if(s instanceof ReturnStmt){
 				map(lineNum, ((ReturnStmt) s).getOp(), "return", null);
@@ -214,9 +193,13 @@ public class RegisterMap
 				Local leftOp = (Local) is.getLeftOp();
 				Value rightOp = is.getRightOp();
 				if(rightOp instanceof ParameterRef){
-					int index = ((ParameterRef) rightOp).getIndex();
-					Expr expr = ((SimpleMarker) paramMarkers.get(index)).operand();
-					addSrcLoc(leftOp, expr);
+					try {
+						int index = ((ParameterRef) rightOp).getIndex();
+						Expr expr = ((SimpleMarker) paramMarkers.get(index)).operand();
+						addSrcLoc(leftOp, expr);
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
 				}
 			} else if(s instanceof TableSwitchStmt){
 				map(lineNum, ((TableSwitchStmt) s).getKey(), "switch", null);

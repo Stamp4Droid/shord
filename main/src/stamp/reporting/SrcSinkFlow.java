@@ -1,5 +1,6 @@
 package stamp.reporting;
 
+<<<<<<< HEAD
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -9,16 +10,22 @@ import shord.project.analyses.ProgramRel;
 import stamp.analyses.DomL;
 import stamp.analyses.JCFLSolverAnalysis;
 import stamp.srcmap.SourceInfo;
+=======
+>>>>>>> master
 import shord.analyses.Ctxt;
 import shord.program.Program;
-
+import shord.project.ClassicProject;
+import shord.project.analyses.ProgramRel;
 import soot.Unit;
+<<<<<<< HEAD
 import soot.jimple.Stmt;
 import soot.SootClass;
 import soot.SootMethod;
 
 import chord.bddbddb.Rel.RelView;
 import chord.util.tuple.object.Trio;
+=======
+>>>>>>> master
 import chord.util.tuple.object.Pair;
 
 /*

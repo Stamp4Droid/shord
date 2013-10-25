@@ -6,14 +6,16 @@ import java.util.*;
 public class ClassIndexGenerator
 {
 	private File rootPath;
+	private File outPath;
 	private List<File> srcPaths;
 
-	public ClassIndexGenerator(String srcPath, String rootPath)
+	public ClassIndexGenerator(String srcPath, String rootPath, String outPath)
 	{
 		this.srcPaths = new ArrayList();
 		for(String dirName : srcPath.split(":"))
 			this.srcPaths.add(new File(dirName));
 		this.rootPath = new File(rootPath);
+		this.outPath = new File(outPath);
 		System.out.println("CallIndexGenerator "+srcPath+" "+rootPath);
 	}
 
@@ -26,6 +28,22 @@ public class ClassIndexGenerator
 			} else {
 				String fname = f.getName();
 				if(fname.endsWith(".java") && Character.isLetter(fname.charAt(0))) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean isJimpleDir(File dir)
+	{
+		for(File f : dir.listFiles()) {
+			if(f.isDirectory()){
+				if(isJimpleDir(f))
+					return true;
+			} else {
+				String fname = f.getName();
+				if(fname.endsWith(".jimple") && Character.isLetter(fname.charAt(0))) {
 					return true;
 				}
 			}
@@ -76,6 +94,33 @@ public class ClassIndexGenerator
 		}
 	}
 
+	private void collectJimple(File rootDir, String pkgName, TreeSet<String> subPkgs, TreeSet<String> jimpleFiles) 
+	{
+		File dir = rootDir;
+		if(pkgName != null)
+			dir = new File(dir, pkgName.replace('.','/'));
+		if(!dir.exists())
+			return;
+
+		System.out.println("dir: "+dir);
+		try {
+			for(File f : dir.listFiles()) {
+				if(f.isDirectory()){
+					if(isJimpleDir(f)){
+						subPkgs.add(f.getName());
+					}
+			   } else {
+				   String fname = f.getName();
+				   if(fname.endsWith(".jimple") && Character.isLetter(fname.charAt(0))) {
+					   jimpleFiles.add(fname);
+				   }
+			   }
+			}
+		} catch(Exception e) {
+			throw new Error(e);
+		}
+	}
+
 	public String generate(String type, String pkgName)
 	{
 		TreeSet<String> subPkgs = new TreeSet();
@@ -91,6 +136,9 @@ public class ClassIndexGenerator
 		} else if(type.equals("framework")){
 			File dir = new File(rootPath, "models/api-16/gen");
 			collect(dir, pkgName, subPkgs, javaFiles);
+		} else if(type.equals("jimple")) {
+			File dir = new File(outPath, "jimple");
+			collectJimple(dir, pkgName, subPkgs, javaFiles);
 		}
 		
 		List<String> result = getString(pkgName, subPkgs, javaFiles);

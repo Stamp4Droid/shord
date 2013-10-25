@@ -24,6 +24,9 @@
      String dr_log_template = props.getProperty("stamp.droidrecord.logfile.template");
      String dr_log_bin = props.getProperty("stamp.droidrecord.logfile.bin");
      DroidrecordProxyWeb droidrecord = new DroidrecordProxyWeb(dr_log_template, dr_log_bin);
+     System.out.println("DEBUG: " + outPath);
+     boolean useJimple = outPath.matches("^.*\\.apk$");
+     System.out.println("DEBUG: boolean useJimple = " + useJimple);
 
      session.setAttribute("rootPath", rootPath);
      session.setAttribute("appPath", appPath);
@@ -31,6 +34,7 @@
      session.setAttribute("srcPath", srcPath);
      session.setAttribute("libPath", libPath);
      session.setAttribute("droidrecord", droidrecord);
+     session.setAttribute("useJimple", useJimple);
 
      System.out.println("srcPath = "+srcPath);
      
@@ -62,7 +66,7 @@
 		out.println(e.getMessage());
 	}
 
-	int tabCount = numFlows + titleToFileName.size() + 3 /* app, model, framework */;
+	int tabCount = numFlows + titleToFileName.size() + 4 /* app, model, framework, jimple */;
   %>	  	
 		<link href="/stamp/fuelux/css/fuelux.min.css" rel="stylesheet" />
 		
@@ -206,6 +210,7 @@
 		    $('#AppHierarchy').tree({dataSource: new ClassHierarchyDataSource("app")});
 		    $('#ModelsHierarchy').tree({dataSource: new ClassHierarchyDataSource("model")});
 		    $('#FrameworkHierarchy').tree({dataSource: new ClassHierarchyDataSource("framework")});
+		    $('#JimpleHierarchy').tree({dataSource: new ClassHierarchyDataSource("jimple")});
 		</script>
 		
 		<script>
@@ -391,7 +396,7 @@
 							var tokens = $.trim(response).split(",");
 							var filePath = tokens[0];
 							var lineNum = tokens[1];
-							showSource(filePath, 'false', lineNum);
+							showSource(filePath, 'false', lineNum, <%=useJimple%>);
 						});	
                     });
 			    }
@@ -468,7 +473,7 @@
                 onTabDisplay(href);
             };
 			
-			var showSource = function(selectedFile, isModelFlag, ln)
+			var showSource = function(selectedFile, isModelFlag, ln, useJimple)
 			{
 			    var tabTitle = selectedFile.substring(selectedFile.lastIndexOf('/')+1);
 			    var onTabLoad = function (href) {
@@ -477,7 +482,8 @@
                         url: "/stamp/html/viewSource.jsp",
                         data: {filepath: selectedFile, 
                             lineNum: ln, 
-                            isModel: isModelFlag}
+                            isModel: isModelFlag,
+			    useJimple: useJimple}
 	                }).done(function (response) {
                         showCode(response, href);
                         highlightLine(ln, href);
@@ -499,15 +505,19 @@
 			  
 		<script>
 			$('#AppHierarchy').on('selected', function(event,selection){
-				showSource(selection.info[0].file, 'false');
+				showSource(selection.info[0].file, 'false', undefined, 'false');
 			});
 
 			$('#ModelsHierarchy').on('selected', function(event,selection){
-				showSource(selection.info[0].file, 'true');
+				showSource(selection.info[0].file, 'true', undefined, 'false');
 			});
 
 			$('#FrameworkHierarchy').on('selected', function(event,selection){
-				showSource(selection.info[0].file, 'false');
+				showSource(selection.info[0].file, 'false', undefined, 'false');
+			});
+
+			$('#JimpleHierarchy').on('selected', function(event,selection){
+				showSource(selection.info[0].file, 'false', undefined, 'true');
 			});
 		</script>
 		
@@ -555,13 +565,18 @@
             var datasources = {};
 			
 			function setupResultTree(resultTreeId, resultFileName) {
+			    useJimple = 'false';
+			    //if(resultFileName.indexOf('jimple') != -1) {
+			    if(<%=useJimple%>) {
+			        useJimple = 'true';
+			    }
                 var datasource = new ResultDataSource(resultFileName);
-
-			    $('#' + resultTreeId).tree({dataSource: datasource});
-
+			    $('#' + resultTreeId).tree({dataSource: dataSource});
                 datasources[resultTreeId] = datasource;
 
-                $('#' + resultTreeId).on('selected', function(ev, selection){
+			if(useJimple == 'true') {
+			//alert('true: ' + resultFileName);
+                $('#' + resultTreeId).on('selected', function(event,selection){
                     var reportScript = selection.info[0].showReport;
                     if(typeof reportScript === "undefined")
                     {
@@ -571,8 +586,8 @@
                             return;
                         if(typeof lineNum === "undefined")
                             return;
-                        showSource(file, 'false', lineNum);
-                    } 
+                        showSource(file, 'false', lineNum, 'true');
+                    }
 				    else 
 				    {
                         var nodeID = selection.info[0].nodeId;
@@ -584,6 +599,32 @@
                         showReport(reportScript, resultFileName, nodeID, shortName);
                     }
                 });
+		} else {
+			//alert('false: ' + resultFileName);
+                $('#' + resultTreeId).on('selected', function(event,selection){
+                    var reportScript = selection.info[0].showReport;
+                    if(typeof reportScript === "undefined")
+                    {
+                        var file = selection.info[0].file;
+                        var lineNum = selection.info[0].lineNum;
+                        if(typeof file === "undefined")
+                            return;
+                        if(typeof lineNum === "undefined")
+                            return;
+                        showSource(file, 'false', lineNum, 'false');
+                    }
+				    else 
+				    {
+                        var nodeID = selection.info[0].nodeId;
+                        var shortName = selection.info[0].reportNodeShortName;
+                        if(typeof nodeID === "undefined")
+                            return;
+                        if(typeof shortName === "undefined")
+                            return;
+                        showReport(reportScript, resultFileName, nodeID, shortName);
+                    }
+                });
+			}
 			}
 
             /*

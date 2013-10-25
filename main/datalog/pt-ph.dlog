@@ -82,15 +82,15 @@ phpt(d,u,w,cw) :- phpt(c,v,w,cw), param(u,v,i), CC(c,d), CI(d,i).
 #phpt(c,u,w,cw) :- phpt(d,v,w,cw), return(u,v,i), CI(d,i), CC(c,d), phTypeFilter(u,w).
 phpt(c,u,w,cw) :- phpt(d,v,w,cw), return(u,v,i), CI(d,i), CC(c,d).
 
-fphptph(w1,cw1,f,w2,cw2) :- phpt(c,v,w2,cw2), Store(u,f,v), phpt(c,u,w1,cw1).
-phpt(c,y,w2,cw2) :- phpt(c,x,w1,cw1), Load(y,x,f), fphptph(w1,cw1,f,w2,cw2).
+#fphptph(w1,cw1,f,w2,cw2) :- phpt(c,v,w2,cw2), Store(u,f,v), phpt(c,u,w1,cw1).
+#phpt(c,y,w2,cw2) :- phpt(c,x,w1,cw1), Load(y,x,f), fphptph(w1,cw1,f,w2,cw2).
 
 fptph(o1,f,w2,cw2) :- phpt(c,v,w2,cw2), Store(u,f,v), pt(c,u,o1).
 phpt(c,y,w2,cw2) :- pt(c,x,o1), Load(y,x,f), fptph(o1,f,w2,cw2).
 
-fphpt(w1,cw1,f,o2) :- pt(c,v,o2), Store(u,f,v), phpt(c,u,w1,cw1).
-pt(c,y,o2) :- phpt(c,x,w1,cw1), Load(y,x,f), fphpt(w1,cw1,f,o2).
+#fphpt(w1,cw1,f,o2) :- pt(c,v,o2), Store(u,f,v), phpt(c,u,w1,cw1).
+#pt(c,y,o2) :- phpt(c,x,w1,cw1), Load(y,x,f), fphpt(w1,cw1,f,o2).
 
 # static flow
-fphptStat(f,w,cw)  :- phpt(_,v,w,cw), StoreStat(f,v).
-phpt(c,y,w,cw) :- LoadStat(y,f), fphptStat(f,w,cw), MV(m,y), CM(c,m).
+#fphptStat(f,w,cw)  :- phpt(_,v,w,cw), StoreStat(f,v).
+#phpt(c,y,w,cw) :- LoadStat(y,f), fphptStat(f,w,cw), MV(m,y), CM(c,m).

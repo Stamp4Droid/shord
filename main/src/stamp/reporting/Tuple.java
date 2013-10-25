@@ -1,65 +1,71 @@
 package stamp.reporting;
 
-import soot.SootClass;
-import soot.Unit;
-import soot.SootMethod;
-import soot.jimple.Stmt;
-
-import java.io.*;
-import java.util.*;
+import java.io.PrintWriter;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import shord.program.Program;
-import stamp.srcmap.SourceInfo;
+import soot.SootClass;
+import soot.SootMethod;
+import soot.Unit;
+import soot.jimple.Stmt;
 import stamp.srcmap.Expr;
+import stamp.srcmap.SourceInfoSingleton;
+import stamp.srcmap.sourceinfo.SourceInfo;
+import stamp.srcmap.sourceinfo.jimpleinfo.JimpleSourceInfo;
 
 /*
  * @author Saswat Anand
 **/
-public class Tuple
-{
+public class Tuple {
 	protected String str;
 	protected String attrs;
+	protected SourceInfo sourceInfo;
+	
+	public Tuple() {
+		this.sourceInfo = SourceInfoSingleton.v();
+	}
+	
+	/*
+	public void setSourceInfo(SourceInfo sourceInfo) {	
+		this.sourceInfo = sourceInfo;
+		System.out.println("DEBUG: New tuple source info type " + (this.sourceInfo instanceof JimpleSourceInfo));	
+	}
+	*/
 
-	public Tuple addValue(SootClass klass)
-	{
-		String line = String.valueOf(SourceInfo.classLineNum(klass));
+	public Tuple addValue(SootClass klass) 	{
+		String line = String.valueOf(sourceInfo.classLineNum(klass));
 		addValue(klass.getName(), klass, line);
 		return this;
 	}
 
-	public Tuple addValue(SootMethod meth)
-	{
+	public Tuple addValue(SootMethod meth) {
 		return addValue(meth, false, null);
 	}
 
-	public Tuple addValue(SootMethod meth, boolean showClassName, String type)
-	{
-		String line = String.valueOf(SourceInfo.methodLineNum(meth));
+	public Tuple addValue(SootMethod meth, boolean showClassName, String type) {
+		String line = String.valueOf(sourceInfo.methodLineNum(meth));
 		SootClass declKlass = meth.getDeclaringClass();
 		addValueWithSig((showClassName ? declKlass.getName() + "." : "") + meth.getName(), 
 						declKlass, 
 						line,
 						(type == null ? "method" : type),
-						SourceInfo.chordSigFor(meth));
+						sourceInfo.chordSigFor(meth));
 		return this;
 	}
 	
-	public Tuple addValue(Unit quad)
-	{
+	public Tuple addValue(Unit quad) {
 		SootMethod meth = Program.containerMethod((Stmt) quad);
 		if(meth != null){
 			String label = quad.toString();//meth.getDeclaringClass().getSourceFileName() + ":"+ quad.getLineNumber();
-			addValue(label, meth.getDeclaringClass(), String.valueOf(SourceInfo.stmtLineNum((Stmt) quad)));
+			addValue(label, meth.getDeclaringClass(), String.valueOf(sourceInfo.stmtLineNum((Stmt) quad)));
 		}
 		else
 			addValue(quad.toString());
 		return this;
 	}
 	
-	public Tuple addValue(Object obj)
-	{
+	public Tuple addValue(Object obj) {
 		if(obj instanceof String)
 			addValue((String) obj);
 		else if(obj instanceof Unit)
@@ -75,8 +81,7 @@ public class Tuple
 		return this;
 	}
 	
-	public void write(PrintWriter writer)
-	{
+	public void write(PrintWriter writer) {
 		writer.print("<tuple"+(attrs != null ? attrs : ""));
 		if(str != null){
 			writer.println(">");
@@ -86,8 +91,7 @@ public class Tuple
 			writer.println("/>");
 	}
 
-	public final Tuple setAttr(String key, String value)
-	{
+	public final Tuple setAttr(String key, String value) {
 		String kvp = " "+key+"=\""+value+"\"";
 		if(attrs != null)
 			attrs += kvp;
@@ -96,8 +100,7 @@ public class Tuple
 		return this;
 	}
 
-	public final Tuple addValue(String label)
-	{
+	public final Tuple addValue(String label) {
 		str = (str != null ? str : "") +
 			"\t<value>\n" +
 			"\t\t<label><![CDATA["+label+"]]></label>\n" +
@@ -105,19 +108,18 @@ public class Tuple
 		return this;
 	}
 
-	public final Tuple addValue(String label, SootClass klass, String lineNum)
-	{
+	public final Tuple addValue(String label, SootClass klass, String lineNum) {
 		return addValue(label, klass, lineNum, null);
 	}
 
-	public final Tuple addValue(String label, SootClass klass, String lineNum, String type)
-	{
+	public final Tuple addValue(String label, SootClass klass, String lineNum, String type) {
 		return addValueWithSig(label, klass, lineNum, type, null);
  	}
 	
-	public final Tuple addValueWithSig(String label, SootClass klass, String lineNum, String type, String chordSig)
-	{
-		String srcFile = SourceInfo.filePath(klass);
+	public final Tuple addValueWithSig(String label, SootClass klass, String lineNum, String type, String chordSig) {
+		String srcFile = sourceInfo.filePath(klass);
+		//System.out.println("DEBUG: Tuple source info type 1 " + (sourceInfo instanceof JimpleSourceInfo));
+		//System.out.println("DEBUG: Tuple source path " + srcFile);
 		str = (str != null ? str : "") +
 			"\t<value"+
 			(srcFile == null ? "" : (" srcFile=\""+srcFile+"\" lineNum=\""+lineNum+"\"")) +
@@ -141,10 +143,10 @@ public class Tuple
 		return this;
 	}
 
-
-	public final Tuple addValueWithHighlight(SootClass klass, Expr e)
-	{
-		String srcFile = SourceInfo.filePath(klass);
+	public final Tuple addValueWithHighlight(SootClass klass, Expr e) {
+		String srcFile = sourceInfo.filePath(klass);
+		//System.out.println("DEBUG: Tuple source info type 2 " + (sourceInfo instanceof JimpleSourceInfo));
+		//System.out.println("DEBUG: Tuple source path " + srcFile);
 		str = (str != null ? str : "") +
 			"\t<value srcFile=\""+srcFile+
 			"\" lineNum=\""+e.line()+"\""+
@@ -174,13 +176,11 @@ public class Tuple
 		return this;
 	}
 		
-	public int hashCode()
-	{
+	public int hashCode() {
 		return str == null ? 0 : str.hashCode();
 	}
 	
-	public boolean equals(Object other)
-	{
+	public boolean equals(Object other) {
 		if(!(other instanceof Tuple))
 			return false;
 		Tuple o = (Tuple) other;
@@ -190,8 +190,7 @@ public class Tuple
 			return str.equals(o.str);
 	}
 	
-	public String toString()
-	{
+	public String toString() {
 		return str;
 	}
 }

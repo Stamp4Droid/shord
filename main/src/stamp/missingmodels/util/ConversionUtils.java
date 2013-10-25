@@ -23,8 +23,8 @@ import stamp.missingmodels.util.Relation.StubIndexRelation;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.srcmap.Expr;
-import stamp.srcmap.RegisterMap;
-import stamp.srcmap.SourceInfo;
+import stamp.srcmap.sourceinfo.RegisterMap;
+import stamp.srcmap.sourceinfo.SourceInfo;
 
 /*
  * This class contains code to convert to and from the
@@ -118,7 +118,7 @@ public class ConversionUtils {
 		/*
 		 * The following are phantom points-to relations.
 		 */
-		//relations.add("flowsTo", new IndexRelation("phpt", "V", 3, 2, "V", 1, 0));
+		//relations.add("flowsTo", new IndexRelation("phpt", "V", 2, 3, "V", 1, 0));
 		
 		/*
 		 * The following are taint information.
@@ -178,6 +178,73 @@ public class ConversionUtils {
 		relations.add("cs_srcPrimFlowNew", new StubIndexRelation("cfl_cs_primFullSrcFlow_new", "M", 3, null, "U", 2, 0, 3));
 		relations.add("cs_primSinkFlowNew", new StubIndexRelation("cfl_cs_primFullSinkFlow_new", "U", 1, 0, "M", 3, 4, 3, 4));
 		*/
+		
+		/*
+		 * The following are relations for the new taint analysis.
+		 */
+		
+		// source annotations: src2RefT, src2PrimT
+		relations.add("src2RefT", new IndexRelation("Src2RefT", "CL", 1, null, "V", 2, 0));
+		relations.add("src2PrimT", new IndexRelation("Src2PrimT", "CL", 1, null, "U", 2, 0));		
+		
+		// sink annotations: sink2RefT, sink2PrimT, sinkF2RefF, sinkF2PrimF
+		relations.add("sink2RefT", new IndexRelation("Sink2RefT", "CL", 1, null, "V", 2, 0));
+		relations.add("sink2PrimT", new IndexRelation("Sink2PrimT", "CL", 1, null, "U", 2, 0));
+		relations.add("sinkF2RefF", new IndexRelation("SinkF2RefF", "CL", 1, null, "V", 2, 0));
+		relations.add("sinkF2PrimF", new IndexRelation("SinkF2PrimF", "CL", 1, null, "U", 2, 0));
+		
+		// transfer annotations: ref2RefT, ref2PrimT, prim2RefT, prim2PrimT
+		relations.add("ref2RefT", new IndexRelation("Ref2RefT", "V", 1, 0, "V", 2, 0));
+		relations.add("ref2PrimT", new IndexRelation("Ref2PrimT", "V", 1, 0, "U", 2, 0));
+		relations.add("prim2RefT", new IndexRelation("Prim2RefT", "U", 1, 0, "V", 2, 0));
+		relations.add("prim2PrimT", new IndexRelation("Prim2PrimT", "U", 1, 0, "U", 2, 0));
+		
+		// flow annotations: ref2RefF, ref2PrimF, prim2RefF, prim2PrimF
+		relations.add("ref2RefF", new IndexRelation("Ref2RefF", "V", 1, 0, "V", 2, 0));
+		relations.add("ref2PrimF", new IndexRelation("Ref2PrimF", "V", 1, 0, "U", 2, 0));
+		relations.add("prim2RefF", new IndexRelation("Prim2RefF", "U", 1, 0, "V", 2, 0));
+		relations.add("prim2PrimF", new IndexRelation("Prim2PrimF", "U", 1, 0, "U", 2, 0));
+		
+		// pt: pt, fptArr
+		relations.add("pt", new IndexRelation("pt", "V", 1, 0, "O", 2, null));
+		relations.add("fptArr", new IndexRelation("fptArr", "O", 0, null, "O", 1, null));
+		
+		// field: fpt
+		relations.add("fpt", new IndexRelation("fpt", "O", 0, null, "O", 2, null, 1));
+
+		// helper: assignPrimCtxt, assignPrimCCtxt, loadPrimCtxtArr, storePrimCtxtArr
+		relations.add("assignPrimCtxt", new IndexRelation("AssignPrimCtxt", "U", 1, 0, "U", 2, 0));
+		relations.add("assignPrimCCtxt", new IndexRelation("AssignPrimCCtxt", "U", 1, 0, "U", 3, 2));
+		relations.add("loadPrimCtxtArr", new IndexRelation("LoadPrimCtxtArr", "U", 1, 0, "V", 2, 0));
+		relations.add("storePrimCtxtArr", new IndexRelation("StorePrimCtxtArr", "V", 1, 0, "U", 2, 0));
+
+		// field helper: loadPrimCtxt, loadStatPrimCtxt, storePrimCtxt, storeStatPrimCtxt
+		relations.add("loadPrimCtxt", new IndexRelation("LoadPrimCtxt", "U", 1, 0, "V", 2, 0, 3));
+		relations.add("storePrimCtxt", new IndexRelation("StorePrimCtxt", "V", 1, 0, "U", 3, 0, 2));
+		relations.add("loadStatPrimCtxt", new IndexRelation("LoadStatPrimCtxt", "U", 1, 0, "F", 2, null));
+		relations.add("storeStatPrimCtxt", new IndexRelation("StoreStatPrimCtxt", "F", 1, null, "U", 2, 0));
+
+		// ref stub taint flow
+		relations.add("refArg2RefArgTStub", new StubIndexRelation("RefArg2RefArgTStub", "V", 1, 0, "V", 2, 0, 3, 4, 5));
+		relations.add("refArg2RefRetTStub", new StubIndexRelation("RefArg2RefRetTStub", "V", 1, 0, "V", 2, 0, 3, 4));
+		
+		// cross stub taint flow
+		relations.add("primArg2RefArgTStub", new StubIndexRelation("PrimArg2RefArgTStub", "U", 1, 0, "V", 2, 0, 3, 4, 5));
+		relations.add("primArg2RefRetTStub", new StubIndexRelation("PrimArg2RefRetTStub", "U", 1, 0, "V", 2, 0, 3, 4));
+		
+		// prim stub taint flow
+		relations.add("refArg2PrimRetTStub", new StubIndexRelation("RefArg2PrimRetTStub", "V", 1, 0, "U", 2, 0, 3, 4));
+		relations.add("primArg2PrimRetTStub", new StubIndexRelation("PrimArg2PrimRetTStub", "U", 1, 0, "U", 2, 0, 3, 4));
+		
+		// partial pt
+		relations.add("preFlowsTo", new IndexRelation("PreFlowsTo", "O", 1, null, "V", 2, 0));
+		relations.add("postFlowsTo", new IndexRelation("PostFlowsTo", "V", 1, 0, "V", 3, 2));
+		relations.add("midFlowsTo", new IndexRelation("MidFlowsTo", "V", 1, 0, "V", 3, 2));
+		
+		// partial pt helper
+		relations.add("storeCtxt", new IndexRelation("StoreCtxt", "V", 1, 0, "V", 2, 0, 3));
+		relations.add("storeArrCtxt", new IndexRelation("StoreArrCtxt", "V", 1, 0, "V", 2, 0));
+		
 	}
 	
 	/*
@@ -196,8 +263,8 @@ public class ConversionUtils {
 	/*
 	 * Gets the node info and concatenates into a String.
 	 */
-	public static String getNodeInfo(String node) {
-		String[] tokens = getNodeInfoTokens(node);
+	public static String getNodeInfo(SourceInfo sourceInfo, String node) {
+		String[] tokens = getNodeInfoTokens(sourceInfo, node);
 		return tokens[0] + (tokens.length >= 2 ? tokens[1] : ""); /*+ (tokens.length == 3 ? "_" + tokens[2] : "")*/
 	}
 
@@ -215,7 +282,7 @@ public class ConversionUtils {
 	 * found, then the variableId is returned in place of
 	 * the second hyper link.
 	 */
-	public static String[] getNodeInfoTokens(String node) {
+	public static String[] getNodeInfoTokens(SourceInfo sourceInfo, String node) {
 		try {
 			// STEP 1: tokenize the node name
 			String[] tokens = tokenizeNodeName(node);
@@ -258,13 +325,13 @@ public class ConversionUtils {
 				}
 	
 				// HTML hyper link to the method
-				String sourceFileName = method == null ? "" : SourceInfo.filePath(method.getDeclaringClass());
-				int methodLineNum = SourceInfo.methodLineNum(method);
+				String sourceFileName = method == null ? "" : sourceInfo.filePath(method.getDeclaringClass());
+				int methodLineNum = sourceInfo.methodLineNum(method);
 	
 				String methStr = "<a onclick=\"showSource('" + sourceFileName + "','false','" + methodLineNum + "')\">" + "[" + method.getName() + "]</a> ";
 	
 				// HTML hyper link to the register
-				RegisterMap regMap = getRegisterMap(method);
+				RegisterMap regMap = getRegisterMap(sourceInfo, method);
 				Set<Expr> locations = regMap.srcLocsFor(local);
 				Integer registerLineNum = null;
 				String text = null;
@@ -306,10 +373,10 @@ public class ConversionUtils {
 	/*
 	 * Returns a register map, caching them as they are requested.
 	 */
-	private static RegisterMap getRegisterMap(SootMethod method) {
+	private static RegisterMap getRegisterMap(SourceInfo sourceInfo, SootMethod method) {
 		RegisterMap registerMap = registerMaps.get(method.toString());
 		if(registerMap == null) {
-			registerMap = SourceInfo.buildRegMapFor(method);
+			registerMap = sourceInfo.buildRegMapFor(method);
 			registerMaps.put(method.toString(), registerMap);
 		}
 		return registerMap;

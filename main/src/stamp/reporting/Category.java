@@ -1,34 +1,37 @@
 package stamp.reporting;
 
-import java.io.*;
-import java.util.*;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import soot.SootClass;
 import soot.SootMethod;
+import stamp.srcmap.sourceinfo.SourceInfo;
 
 /*
  * @author Saswat Anand
 **/
-public class Category extends Tuple
-{
+public class Category extends Tuple {
 	protected Map<Object,Category> subCategories = new LinkedHashMap();
 	protected List<Tuple> tuples = new ArrayList();
 	protected String type;
 
-	public Category()
-	{
+	public Category() {
 		this(null);
 	}
 
-	public Category(Object key)
-	{
+	public Category(Object key) {
 		addValue(key);
 		if(key instanceof SootClass)
 			type = "class";
 		else if(key instanceof SootMethod)
 			type = "method";
 	}
-
+	
 	public Category lastSubCat() {
 		ArrayList<Object> al = new ArrayList<Object>(subCategories.keySet());
 		return subCategories.get(al.get(al.size()-1));
@@ -55,11 +58,11 @@ public class Category extends Tuple
 	}
 
 
-	public Category makeOrGetSubCat(Object key)
-	{
+	public Category makeOrGetSubCat(Object key) {
 		Category sc = subCategories.get(key);
 		if(sc == null){
 			sc = new Category(key);
+			//sc.setSourceInfo(this.sourceInfo);
 			subCategories.put(key, sc);
 		}
 		return sc;
@@ -83,13 +86,13 @@ public class Category extends Tuple
 		}
 
 		Category newCat = new Category(key);
+		//newCat.setSourceInfo(this.sourceInfo);
 		newCat.putSubCat(sub, oldCat);
 		subCategories.put(key, newCat);
 		return newCat;
 	}
 	
-	public void write(PrintWriter writer)
-	{
+	public void write(PrintWriter writer) {
 		if(type != null)
 			writer.println("<category type=\""+type+"\">");
 		else
@@ -105,8 +108,7 @@ public class Category extends Tuple
 	}
 
 
-	public void writeInsertionOrder(PrintWriter writer)
-	{
+	public void writeInsertionOrder(PrintWriter writer) {
 		if(type != null)
 			writer.println("<category type=\""+type+"\">");
 		else
@@ -121,32 +123,28 @@ public class Category extends Tuple
 		writer.println("</category>");
 	}
 	
-	public Tuple newTuple()
-	{
+	public Tuple newTuple() {
 		Tuple tuple = new Tuple();
+		//tuple.setSourceInfo(this.sourceInfo);
 		return addTuple(tuple);
 	}
 	
-	public Tuple addTuple(Tuple t)
-	{
+	public Tuple addTuple(Tuple t) {
 		tuples.add(t);
 		return t;
 	}
 
-	public Category makeOrGetPkgCat(SootClass klass)
-	{
+	public Category makeOrGetPkgCat(SootClass klass) {
 		String name = klass.getName();
 		return makeOrGetPkgCat(name, klass);
 	}
 
-	public Category makeOrGetPkgCat(SootMethod method)
-	{
+	public Category makeOrGetPkgCat(SootMethod method) {
 		SootClass klass = method.getDeclaringClass();
 		return makeOrGetPkgCat(klass).makeOrGetSubCat(method);
 	}
 	
-	private Category makeOrGetPkgCat(String pkg, SootClass klass)
-	{
+	private Category makeOrGetPkgCat(String pkg, SootClass klass) {
 		int index = pkg.indexOf('.');
 		Category ret;
 		if(index < 0)
@@ -158,8 +156,7 @@ public class Category extends Tuple
 		return ret;
 	}
 	
-	protected List<Category> sortSubCats()
-	{
+	protected List<Category> sortSubCats() {
 		//sort
 		Map<String,Category> strToSubcat = new HashMap();
 		List<String> strs = new ArrayList();

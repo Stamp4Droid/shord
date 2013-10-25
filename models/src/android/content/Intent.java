@@ -185,8 +185,7 @@ class Intent
 	@STAMP(flows = {@Flow(from="extras",to="!this")})
 	public  android.content.Intent putExtras(android.os.Bundle extras) 
 	{ 
-		//FIXME: copy content of bundle to current bundle, how to model it?
-		// extras.unknown = extras;
+		this.extras = extras;
 		return this;
 	}
 

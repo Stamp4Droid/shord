@@ -87,12 +87,10 @@ flowPrimPrim(u:U,v:U)
 transferObjRef(o:C,c:C,v:V)
 transferObjPrim(o:C,c:C,u:U)
 
-labelDirIn(o:C,l:CL)         # l is introduced directly into object o
-labelRecIn(o:C,l:CL)         # l inductively reaches o from a directly-labeled value
+labelIn(o:C,l:CL)            # l inductively reaches o from a directly-labeled value
 labelXferOut(o:C,l:CL)       # l inductively reaches o from a value tainted by a passthrough
 label(o:C,l:CL)              # o is labeled with l
 
-labelPrimIntro(c:C,u:U,l:CL) # l is introduced directly into (c,u)
 labelPrimFld(o:C,f:F,l:CL)   # prim fld f of object o is labeled l
 labelPrimFldStat(f:F,l:CL)   # static field f of primitive type has label l
 
@@ -132,7 +130,7 @@ flowPrimPrim(u,v) :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,u), MmethPrimArg(m,z
 
 # abstract objects
 # base escaping objects
-sink(o,cl)    :- varOutLabel(v,l), MV(m,v), CM(c,m), pt(c,v,o), CCL(c,cl), LCL(l,cl).
+sink(o,cl) :- varOutLabel(v,l), MV(m,v), CM(c,m), pt(c,v,o), CCL(c,cl), LCL(l,cl).
 # conditional escaping
 sink(o,l)  :- pt(c,u,o), flowRefRef(u,v), labelRef(c,v,l), sinkCtxtLabel(l).
 sink(o,l)  :- pt(c,u,o), flowRefPrim(u,v), labelPrim(c,v,l), sinkCtxtLabel(l).
@@ -141,7 +139,6 @@ sink(o2,l) :- sink(o1,l), fpt(o1,_,o2).
 
 # primitive-type variables/fields
 # base escaping variables
-#sinkPrim(c,u,l) :- labelPrimIntro(c,u,l), sinkCtxtLabel(l).
 sinkPrim(c,u,cl) :- varOutLabelPrim(u,l), CM(c,m), MU(m,u), LCL(l,cl), CCL(c,cl). 
 # conditional escaping
 sinkPrim(c,u,l) :- flowPrimRef(u,v), labelRef(c,v,l), sinkCtxtLabel(l).
@@ -168,11 +165,10 @@ flow(src,sink) :- sink(o,sink), labelPrimFld(o,_,src), srcCtxtLabel(src).
 
 # abstract objects
 # label introduction
-labelDirIn(o,cl)    :- varInLabel(v,l), MV(m,v), CM(c,m), pt(c,v,o), CCL(c,cl), LCL(l,cl).
+labelIn(o,cl)      :- varInLabel(v,l), MV(m,v), CM(c,m), pt(c,v,o), CCL(c,cl), LCL(l,cl).
 # nested tainting
-labelRecIn(o,l)    :- labelDirIn(o,l).
-labelRecIn(o2,l)   :- labelRecIn(o1,l), fpt(o1,_,o2).
-label(o,l)         :- labelRecIn(o,l).
+labelIn(o2,l)      :- labelIn(o1,l), fpt(o1,_,o2).
+label(o,l)         :- labelIn(o,l).
 # passthrough handling
 labelXferOut(o2,l) :- label(o1,l), transferObjRef(o1,c,v), pt(c,v,o2).
 labelXferOut(o,l)  :- labelPrim(c,u,l), transferPrimRef(u,v), pt(c,v,o).
@@ -188,8 +184,7 @@ labelRef(c,v,l) :- pt(c,v,o), label(o,l).
 
 # primitive-type variables/fields
 # label introduction
-labelPrimIntro(c,v,cl) :- varInLabelPrim(v,l), CM(c,m), MU(m,v), LCL(l,cl), CCL(c,cl).
-labelPrim(c,v,l)      :- labelPrimIntro(c,v,l).
+labelPrim(c,v,cl)     :- varInLabelPrim(v,l), CM(c,m), MU(m,v), LCL(l,cl), CCL(c,cl).
 # label propagation
 labelPrim(c,v,l)      :- AssignPrim(v,u), labelPrim(c,u,l).
 labelPrimFld(o,f,l)   :- labelPrim(c,v,l), StorePrim(u,f,v), pt(c,u,o).
@@ -202,7 +197,7 @@ labelPrim(c,u,l)      :- labelPrim(d,v,l), returnPrim(u,v,i), CI(d,i), CC(c,d).
 labelPrim(c,v,l)      :- label(o,l), transferObjPrim(o,c,v).
 labelPrim(c,v,l)      :- labelPrim(c,u,l), transferPrimPrim(u,v).
 # nested tainting
-labelPrim(c,y,l)      :- LoadPrim(y,x,_), labelRecIn(o,l), pt(c,x,o).
+labelPrim(c,y,l)      :- LoadPrim(y,x,_), labelIn(o,l), pt(c,x,o).
 # nested passthrough entry
 labelPrim(c,v,l)      :- labelPrimFld(o,0,l), transferObjPrim(o,c,v).
 # nested passthrough exit

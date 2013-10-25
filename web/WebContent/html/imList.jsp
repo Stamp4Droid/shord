@@ -12,6 +12,7 @@
   	<%
 		String outPath = (String)session.getAttribute("outPath");
    		String chordSig = request.getParameter("chordSig");
+		boolean useJimple = (Boolean)session.getAttribute("useJimple");
         String type = request.getParameter("type");
 
         QueryCallGraph qcg = (QueryCallGraph) session.getAttribute("qcg");
@@ -125,6 +126,6 @@
 			var index = srcLoc.indexOf('#');
 			var fileName = srcLoc.substring(0,index);
 			var lineNum = srcLoc.substring(index+1);
-			showSource(fileName, 'false', lineNum);
+			showSource(fileName, 'false', lineNum, <%=useJimple%>);
 		});
 	</script>

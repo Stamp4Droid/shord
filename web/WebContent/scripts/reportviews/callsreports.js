@@ -13,11 +13,11 @@ $(function ()
     });
   $(".mname").click(function (e) {
       e.preventDefault();
-      showSource($(this).data("file"), 'false', $(this).data("linenum"));
+      showSource($(this).data("file"), 'false', $(this).data("linenum"), 'instCallReports1');
     });
   $("a.callsite-position").click(function (e) {
       e.preventDefault();
-      showSource($(this).data("file"), 'false', $(this).data("linenum"));
+      showSource($(this).data("file"), 'false', $(this).data("linenum"), 'instCallReports2');
     });
   $(".method-plus-button").click(function (e) {
       e.preventDefault();

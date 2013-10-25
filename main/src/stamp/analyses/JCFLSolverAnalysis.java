@@ -12,7 +12,7 @@ import stamp.missingmodels.analysis.JCFLSolverRunner;
 import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverSingle;
 import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverStubs;
 import stamp.missingmodels.analysis.JCFLSolverRunner.RelationAdder;
-import stamp.missingmodels.grammars.E12;
+import stamp.missingmodels.grammars.G;
 import stamp.missingmodels.util.ConversionUtils.ChordRelationAdder;
 import stamp.missingmodels.util.FileManager;
 import stamp.missingmodels.util.FileManager.FileType;
@@ -21,10 +21,13 @@ import stamp.missingmodels.util.StubLookup;
 import stamp.missingmodels.util.StubModelSet;
 import stamp.missingmodels.util.StubModelSet.ModelType;
 import stamp.missingmodels.util.Util.Pair;
+import stamp.missingmodels.util.jcflsolver.Edge;
 import stamp.missingmodels.util.jcflsolver.EdgeData;
 import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.missingmodels.util.viz.jcflsolver.JCFLRelationInputFile;
 import stamp.missingmodels.util.viz.jcflsolver.JCFLRelationOutputFile;
+import stamp.missingmodels.viz.flow.JCFLRelationOutputFileNew;
+import stamp.missingmodels.viz.flow.JCFLRelationOutputFileNew.TupleConverter;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.AllStubInputsFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetInputFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetOutputFile;
@@ -107,7 +110,10 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		
 		//j = new JCFLSolverSingle(new E12(), m);
 		//j.run(E12.class, m);
-		Experiment experiment = new Experiment(JCFLSolverSingle.class, E12.class);
+		//Experiment experiment = new Experiment(JCFLSolverSingle.class, E12.class);
+		File outputDir = manager.getDirectory(FileType.OUTPUT);
+		String appDir = outputDir.getParentFile().getName();
+		Experiment experiment = new Experiment(JCFLSolverSingle.class, G.class, appDir);
 		experiment.run(m, new StubModelSet(), relationAdder, ModelType.FALSE);
 		j = experiment.j();
 
@@ -128,6 +134,53 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		m.putAll(experiment.getAllProposedModels());
 		files.add(new StubModelSetOutputFile(m, "StubModelSet.txt", FileType.PERMANENT));
 		files.add(experiment);
+		files.add(new JCFLRelationOutputFileNew("Flow3", j.g(), new TupleConverter() {
+			@Override
+			public int[] convert(Edge edge) {
+				String srcString = edge.from.getName().substring(2);
+				String sinkString = edge.to.getName().substring(2);
+				try {
+					int src = Integer.parseInt(srcString);
+					int sink = Integer.parseInt(sinkString);
+					return new int[]{src,sink};
+				} catch(Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException("Failed to parse src-sink pair: (" + srcString + "," + sinkString + ")!");
+				}
+			}
+		}));
+		files.add(new JCFLRelationOutputFileNew("LabelRef3", j.g(), new TupleConverter() {
+			@Override
+			public int[] convert(Edge edge) {
+				String srcString = edge.from.getName().substring(2);
+				String[] varStrings = edge.to.getName().substring(1).split("_");
+				try {
+					int src = Integer.parseInt(srcString);
+					int var = Integer.parseInt(varStrings[0]);
+					int ctxt = Integer.parseInt(varStrings[1]);
+					return new int[]{ctxt,src,var};
+				} catch(Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException("Failed to parse src-ref pair: (" + srcString + "," + varStrings[0] + "_" + varStrings[1] + ")!");
+				}
+			}
+		}));
+		files.add(new JCFLRelationOutputFileNew("LabelPrim3", j.g(), new TupleConverter() {
+			@Override
+			public int[] convert(Edge edge) {
+				String srcString = edge.from.getName().substring(2);
+				String[] varStrings = edge.to.getName().substring(1).split("_");
+				try {
+					int src = Integer.parseInt(srcString);
+					int var = Integer.parseInt(varStrings[0]);
+					int ctxt = Integer.parseInt(varStrings[1]);
+					return new int[]{ctxt,src,var};
+				} catch(Exception e) {
+					e.printStackTrace();
+					throw new RuntimeException("Failed to parse src-prim pair: (" + srcString + "," + varStrings[0] + "_" + varStrings[1] + ")!");
+				}
+			}
+		}));
 		try {
 			for(StampOutputFile file : files) {
 				manager.write(file);

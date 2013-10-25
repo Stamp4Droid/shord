@@ -11,8 +11,8 @@ import soot.jimple.Stmt;
 
 import chord.util.tuple.object.Pair;
 
-import stamp.srcmap.SourceInfo;
 import stamp.srcmap.SyntheticMethodMap;
+import stamp.srcmap.sourceinfo.SourceInfo;
 
 import java.util.*;
 
@@ -46,7 +46,7 @@ public class IM extends XMLReport
 
 			SootClass klass = callee.getDeclaringClass();
 			if(!processedClasses.contains(klass)){
-				SyntheticMethodMap.computeSyntheticToSrcMethodMap(klass, synthToSrcMethod);
+				SyntheticMethodMap.computeSyntheticToSrcMethodMap(this.sourceInfo, klass, synthToSrcMethod);
 				processedClasses.add(klass);
 			}
 
@@ -55,17 +55,17 @@ public class IM extends XMLReport
 				callee = srcMeth;
 
 			Tuple tuple = makeOrGetPkgCat(callee).newTuple();
-			String invkExpr = SourceInfo.srcInvkExprFor(stmt);
+			String invkExpr = this.sourceInfo.srcInvkExprFor(stmt);
 			if(invkExpr != null)
-				invkExpr = SourceInfo.javaLocStr(stmt) + "\n" + invkExpr;
+				invkExpr = this.sourceInfo.javaLocStr(stmt) + "\n" + invkExpr;
 			else
-				invkExpr = SourceInfo.javaLocStr(stmt);
+				invkExpr = this.sourceInfo.javaLocStr(stmt);
 
 			tuple.addValueWithSig(invkExpr,
 								  Program.containerMethod(stmt).getDeclaringClass(),
-								  String.valueOf(SourceInfo.stmtLineNum(stmt)),
+								  String.valueOf(this.sourceInfo.stmtLineNum(stmt)),
 								  "invk",
-								  SourceInfo.chordSigFor(stmt.getInvokeExpr().getMethod()));
+								  this.sourceInfo.chordSigFor(stmt.getInvokeExpr().getMethod()));
 		}
 
 		relIM.close();

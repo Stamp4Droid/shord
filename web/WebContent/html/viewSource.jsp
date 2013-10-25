@@ -1,8 +1,18 @@
 <%@ page import="stamp.reporting.FileManager,stamp.droidrecordweb.DroidrecordProxyWeb"%>
 <%
 	String filepath = request.getParameter("filepath");
-	boolean isModel = request.getParameter("isModel").equals("true");
-    String lineNum = request.getParameter("lineNum");
+	boolean isModel = false;
+	if(request.getParameter("isModel") != null) {
+		isModel = request.getParameter("isModel").equals("true");
+	} else {
+		System.out.println("No flag 'isModel' set!");
+	}	
+	boolean useJimple = false;
+	if(request.getParameter("useJimple") != null) {
+	    useJimple = request.getParameter("useJimple").equals("true");
+	}
+	System.out.println("DEBUG: useJimple=" + request.getParameter("useJimple"));
+	String lineNum = request.getParameter("lineNum");
 
 	FileManager manager = (FileManager) session.getAttribute("manager");
 	if(manager == null){
@@ -15,5 +25,10 @@
 		session.setAttribute("manager", manager);
 	}
 	
-	String program = manager.getAnnotatedSource(filepath, isModel);
+	String program;
+	if(useJimple) {	
+		program = manager.getAnnotatedJimple(filepath, isModel);
+	} else {
+	        program = manager.getAnnotatedSource(filepath, isModel);
+	}
 %><link href="/stamp/css/viewSource.css" rel="stylesheet" /><%=program%>

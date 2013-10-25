@@ -26,6 +26,7 @@ import stamp.missingmodels.util.jcflsolver.Edge;
 import stamp.missingmodels.util.jcflsolver.EdgeData;
 import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.missingmodels.viz.flow.FlowObject.AliasCompressedFlowObject;
+import stamp.srcmap.sourceinfo.SourceInfo;
 
 /*
  * Collection of StampFile generators to print various
@@ -112,10 +113,12 @@ public class JCFLSolverFiles {
 	public static class StubInputsFile implements StampOutputFile {
 		private final Graph g;
 		private final StubLookup s;
+		private final SourceInfo sourceInfo;
 
-		public StubInputsFile(Graph g, StubLookup s) {
+		public StubInputsFile(Graph g, StubLookup s, SourceInfo sourceInfo) {
 			this.g = g;
 			this.s = s;
+			this.sourceInfo = sourceInfo;
 		}
 
 		@Override
@@ -133,8 +136,8 @@ public class JCFLSolverFiles {
 			StringBuilder sb = new StringBuilder();
 			MultivalueMap<Edge,Pair<Edge,Boolean>> positiveWeightEdges = this.g.getPositiveWeightEdges("Src2Sink");
 			for(Edge edge : positiveWeightEdges.keySet()) {
-				String source = ConversionUtils.getNodeInfoTokens(edge.from.getName())[1];
-				String sink = ConversionUtils.getNodeInfoTokens(edge.to.getName())[1];
+				String source = ConversionUtils.getNodeInfoTokens(this.sourceInfo, edge.from.getName())[1];
+				String sink = ConversionUtils.getNodeInfoTokens(this.sourceInfo, edge.to.getName())[1];
 				sb.append(source + " -> " + sink).append("\n");
 
 				for(Pair<Edge,Boolean> pair : positiveWeightEdges.get(edge)) {
@@ -248,15 +251,15 @@ public class JCFLSolverFiles {
 	/*
 	 * Returns a list of files that are the HTML objects for the visualization.
 	 */
-	public static Set<StampOutputFile> viz(final Graph g, final StubLookup s) {
+	public static Set<StampOutputFile> viz(final SourceInfo sourceInfo, final Graph g, final StubLookup s) {
 		Set<StampOutputFile> files = new HashSet<StampOutputFile>();
 		final Set<String> terminals = new HashSet<String>();
 		terminals.add("FlowsTo");
 		for(final Edge edge : g.getEdges("Src2Sink")) {
-			String[] sourceTokens = ConversionUtils.getNodeInfoTokens(edge.from.getName());
+			String[] sourceTokens = ConversionUtils.getNodeInfoTokens(sourceInfo, edge.from.getName());
 			final String source = sourceTokens[1].substring(1);
 
-			String[] sinkTokens = ConversionUtils.getNodeInfoTokens(edge.to.getName());
+			String[] sinkTokens = ConversionUtils.getNodeInfoTokens(sourceInfo, edge.to.getName());
 			final String sink = sinkTokens[1].substring(1);
 
 			files.add(new StampOutputFile() {
@@ -273,7 +276,7 @@ public class JCFLSolverFiles {
 				@Override
 				public String getContent() {
 					//return new MethodCompressedFlowObject(g.getPath(edge), g, s).toString();
-					return new AliasCompressedFlowObject(g.getPath(edge, terminals), g, s).toString();
+					return new AliasCompressedFlowObject(g.getPath(edge, terminals), g, s, sourceInfo).toString();
 				}
 
 			});

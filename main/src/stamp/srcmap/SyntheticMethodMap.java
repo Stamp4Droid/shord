@@ -6,15 +6,13 @@ import soot.AbstractJasminClass;
 import soot.Unit;
 import soot.jimple.Stmt;
 
-import stamp.srcmap.SourceInfo;
+import stamp.srcmap.sourceinfo.SourceInfo;
 
 import java.util.*;
 
-public class SyntheticMethodMap
-{
-	public static void computeSyntheticToSrcMethodMap(SootClass klass, Map<SootMethod,SootMethod> syntheticToSrcMethod)
-	{
-		String srcFileName = SourceInfo.filePath(klass);
+public class SyntheticMethodMap {
+	public static void computeSyntheticToSrcMethodMap(SourceInfo sourceInfo, SootClass klass, Map<SootMethod,SootMethod> syntheticToSrcMethod) {
+		String srcFileName = sourceInfo.filePath(klass);
 		if(srcFileName == null)
 			return;
 
@@ -25,7 +23,7 @@ public class SyntheticMethodMap
 		}
 
 		Set<SootMethod> synthMeths = new HashSet();
-		for(Map.Entry<String,List<String>> aliasSigEntry : SourceInfo.allAliasSigs(klass).entrySet()){
+		for(Map.Entry<String,List<String>> aliasSigEntry : sourceInfo.allAliasSigs(klass).entrySet()){
 			String chordSig = aliasSigEntry.getKey();
 			List<String> aliasDescs = aliasSigEntry.getValue();
 			if(aliasDescs.isEmpty())
@@ -50,10 +48,10 @@ public class SyntheticMethodMap
 			}
 		}
 
-		for(SootMethod synthMeth : klass.getMethods()){
+		for(SootMethod synthMeth : klass.getMethods()) {
 			if(!synthMeth.isStatic())
 				continue;
-			if(SourceInfo.methodLineNum(synthMeth) > 0)
+			if(sourceInfo.methodLineNum(synthMeth) > 0)
 				continue;
 			if(synthMeths.contains(synthMeth))
 				continue;
@@ -66,8 +64,7 @@ public class SyntheticMethodMap
 		}
 	}
 
-	private static SootMethod performMapping(SootMethod synthMeth)
-	{
+	private static SootMethod performMapping(SootMethod synthMeth) {
 		if(!synthMeth.isConcrete())
 			return null;
 		
