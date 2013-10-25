@@ -28,6 +28,10 @@ import soot.jimple.AnyNewExpr;
 import soot.jimple.ThrowStmt;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InstanceInvokeExpr;
+import soot.jimple.StaticInvokeExpr;
+import soot.jimple.VirtualInvokeExpr;
+import soot.jimple.SpecialInvokeExpr;
+import soot.jimple.InterfaceInvokeExpr;
 import soot.jimple.CastExpr;
 import soot.jimple.FieldRef;
 import soot.jimple.InstanceFieldRef;
@@ -43,6 +47,7 @@ import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 import soot.tagkit.Tag;
 import soot.util.NumberedSet;
+import soot.util.NumberedString;
 
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
@@ -56,7 +61,7 @@ import stamp.analyses.SootUtils;
 import java.util.*;
 
 @Chord(name="base-java", 
-	   produces={"M", "Z", "I", "H", "V", "T", "F", "U",
+	   produces={"M", "Z", "I", "H", "V", "T", "F", "U", "S",
 				 "Alloc", "Assign", 
 				 "Load", "Store", 
 				 "LoadStat", "StoreStat", 
@@ -71,9 +76,11 @@ import java.util.*;
 				 "LoadStatPrim", "StoreStatPrim",
 				 "MmethPrimArg", "MmethPrimRet", 
 				 "IinvkPrimRet", "IinvkPrimArg",
+                 "StatIM", "VirtIM",
+                 "SpecIM", "SubSig", "Dispatch",
 	             "VH", "Stub" },
-       namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U"},
-       types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class},
+       namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U", "S"},
+       types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class},
 	   namesOfSigns = { "Alloc", "Assign", 
 						"Load", "Store", 
 						"LoadStat", "StoreStat", 
@@ -88,6 +95,8 @@ import java.util.*;
 						"LoadStatPrim", "StoreStatPrim",
 						"MmethPrimArg", "MmethPrimRet", 
 						"IinvkPrimRet", "IinvkPrimArg",
+                        "StatIM", "VirtIM",
+                        "SpecIM", "SubSig", "Dispatch",
                         "VH", "Stub" },
 	   signs = { "V0,H0:V0_H0", "V0,V1:V0xV1",
 				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
@@ -103,6 +112,8 @@ import java.util.*;
 				 "U0,F0:U0_F0", "F0,U0:U0_F0",
 				 "M0,Z0,U0:M0_U0_Z0", "M0,Z0,U0:M0_U0_Z0",
 				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0",
+                 "I0,M0:I0_M0", "I0,M0:I0_M0",
+                 "I0,M0:I0_M0", "M0,S0:M0_S0", "T0,S0,M0:T0_S0_M0",
                  "V0,H0:V0_H0", "M0:M0" }
 	   )
 public class PAGBuilder extends JavaAnalysis
@@ -138,6 +149,12 @@ public class PAGBuilder extends JavaAnalysis
 	private ProgramRel relMV;
 	private ProgramRel relMU;
 	private ProgramRel relVH;
+
+    private ProgramRel relSpecIM;//(i:I,m:M)
+    private ProgramRel relStatIM;//(i:I,m:M)
+    private ProgramRel relVirtIM;//(i:I,m:M)
+    private ProgramRel relSubSig;//(m:M,s:S)
+    private ProgramRel relDispatch;//(t:T,s:S,m:M)
 
 	private DomV domV;
 	private DomU domU;
@@ -191,6 +208,15 @@ public class PAGBuilder extends JavaAnalysis
 		relVH = (ProgramRel) ClassicProject.g().getTrgt("VH");
         relVH.zero();
 
+        relSpecIM = (ProgramRel) ClassicProject.g().getTrgt("SpecIM");
+        relSpecIM.zero();
+        relStatIM = (ProgramRel) ClassicProject.g().getTrgt("StatIM");
+        relStatIM.zero();
+        relVirtIM = (ProgramRel) ClassicProject.g().getTrgt("VirtIM");
+        relVirtIM.zero();
+        relDispatch = (ProgramRel) ClassicProject.g().getTrgt("Dispatch");
+        relDispatch.zero();
+
 		relAssignPrim = (ProgramRel) ClassicProject.g().getTrgt("AssignPrim");
 		relAssignPrim.zero();
 		relLoadPrim = (ProgramRel) ClassicProject.g().getTrgt("LoadPrim");
@@ -233,6 +259,11 @@ public class PAGBuilder extends JavaAnalysis
 		relMV.save();
 		relMU.save();
 		relVH.save();
+
+        relSpecIM.save();
+        relStatIM.save();
+        relVirtIM.save();
+        relDispatch.save();
 
 		relAssignPrim.save();
 		relLoadPrim.save();
@@ -634,6 +665,21 @@ public class PAGBuilder extends JavaAnalysis
 				relMI.add(method, s);
 				s.addTag(containerTag);
 
+                DomM domM = (DomM) ClassicProject.g().getTrgt("M");
+                if(domM.contains(callee)){
+                    if(ie instanceof SpecialInvokeExpr){
+                        relSpecIM.add(s,callee);
+                    }
+
+                    if(ie instanceof StaticInvokeExpr){
+                        relStatIM.add(s,callee);
+                    }
+
+                    if( (ie instanceof VirtualInvokeExpr) || (ie instanceof InterfaceInvokeExpr)){
+                        relVirtIM.add(s,callee);
+                    }
+                }
+
 				//handle receiver
 				int j = 0;
 				if(ie instanceof InstanceInvokeExpr){
@@ -852,8 +898,100 @@ public class PAGBuilder extends JavaAnalysis
 			relStub.add(stub);
 		}
 		relStub.save();
+
+        populateSubsig();
 	}
-	
+
+
+   void buildDispatchMap()
+    {
+        Map<SootClass, Set<SootMethod>> dispatchMap = new HashMap<SootClass, Set<SootMethod>>();
+        Program program = Program.g();                
+        int totalCls = program.getClasses().size();
+
+        while(dispatchMap.size() < totalCls){//Not finish yet.
+            for(SootClass cl : program.getClasses()) {
+                //no superclass?
+                if(!cl.hasSuperclass()){
+                    Set methods = new HashSet<SootMethod>();
+                    for(SootMethod m: cl.getMethods()){
+                        if(!m.isConcrete()) continue;
+                        methods.add(m);
+                    }
+                    dispatchMap.put(cl, methods);
+
+                    continue;
+                }
+                //this is the right candidate.propagate the method from superclass.
+                if( dispatchMap.get(cl)==null && dispatchMap.get(cl.getSuperclass()) != null){
+
+                    SootClass supercl = cl.getSuperclass();
+                    Set<SootMethod> clMethods = new HashSet<SootMethod>();
+                    for(SootMethod m: cl.getMethods()){
+                        if(!m.isConcrete()) continue;
+                        clMethods.add(m);
+                    }
+                    //propagate from superclass.
+                    for(SootMethod sm: dispatchMap.get(cl.getSuperclass())){
+                        if(!sm.isConcrete()) continue;
+                        if(sm.isPrivate()) continue;
+                        //check whether exists the same subsignature in cl.
+                        boolean isOveride = false;
+                        for(SootMethod m: clMethods){
+                            if(m.getSubSignature().equals(sm.getSubSignature())){
+                                isOveride = true;
+                                //System.out.println("override:" + cl + m + " || " + supercl + sm);
+                                break;
+                            }
+                        }
+                        if(!isOveride) clMethods.add(sm);
+                    }
+
+                    dispatchMap.put(cl, clMethods);
+                }
+            }
+        }
+
+        //create dispatch tuple based on the map.
+        DomM domM = (DomM) ClassicProject.g().getTrgt("M");
+        Iterator iter = dispatchMap.keySet().iterator();
+        while(iter.hasNext()){
+            SootClass clazz = (SootClass)iter.next();
+            Set cMeths = (Set)dispatchMap.get(clazz);
+            for(Object o: cMeths){
+                if(!domM.contains(o)) continue;
+                SootMethod m = (SootMethod) o;
+                relDispatch.add(clazz.getType(), m.getSubSignature(), m);
+            }
+        }
+
+    }
+
+    void populateSubsig()
+    {
+        relSubSig = (ProgramRel) ClassicProject.g().getTrgt("SubSig");
+        relSubSig.zero();
+
+        DomM domM = (DomM) ClassicProject.g().getTrgt("M");
+        Iterator<SootMethod> mIt = Program.g().getMethods();
+        while(mIt.hasNext()){
+            SootMethod m = mIt.next();
+            if(domM.contains(m))
+                relSubSig.add(m, m.getSubSignature());
+        }
+        relSubSig.save();
+    }
+
+    void populateMethodSigs()
+    {
+        DomS domS = (DomS) ClassicProject.g().getTrgt("S");
+        for(Iterator it = Scene.v().getSubSigNumberer().iterator(); it.hasNext();){
+            NumberedString s = (NumberedString)it.next();
+            domS.add(s.getString());
+        }
+        domS.save();
+    }
+
 	void populateFields()
 	{
 		DomF domF = (DomF) ClassicProject.g().getTrgt("F");
@@ -881,6 +1019,7 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		domZ = (DomZ) ClassicProject.g().getTrgt("Z");
 
+        populateMethodSigs();
 		populateMethods();
 		populateFields();
 		populateTypes();
@@ -955,6 +1094,8 @@ public class PAGBuilder extends JavaAnalysis
 		openRels();
 		for(MethodPAGBuilder mpagBuilder : mpagBuilders)
 			mpagBuilder.pass2();
+
+        buildDispatchMap();
 		saveRels();
 
 		populateCallgraph();

@@ -161,7 +161,7 @@ public class SrcSinkFlowViz extends XMLVizReport {
      * @return the node for the bottom context method
      */
     public Node<SootMethod> addCtxt(Tree<SootMethod> t, Step s) {
-        Unit[] context = ((CtxtPoint)s.target).ctxt.getElems();
+        Object[] context = ((CtxtPoint)s.target).ctxt.getElems();
         Node<SootMethod> lastNode = t.getRoot();
        
         for (int i = context.length - 1; i >= 0; --i) {
@@ -231,7 +231,7 @@ public class SrcSinkFlowViz extends XMLVizReport {
      */
     private SootMethod getTopCtxtMethod(Step s) {
         CtxtPoint point = (CtxtPoint)s.target;
-        Unit[] ctxt = point.ctxt.getElems();
+        Object[] ctxt = point.ctxt.getElems();
 
         if (ctxt.length > 1) {
             SootMethod method = getMethod((Stmt)ctxt[ctxt.length-1]);
@@ -250,7 +250,7 @@ public class SrcSinkFlowViz extends XMLVizReport {
      */
     private SootMethod getBottomCtxtMethod(Step s) {
         CtxtPoint point = (CtxtPoint)s.target;
-        Unit[] ctxt = point.ctxt.getElems();
+        Object[] ctxt = point.ctxt.getElems();
 
         if (ctxt.length >= 1) {
             SootMethod method = getMethod((Stmt)ctxt[0]);
@@ -302,7 +302,7 @@ public class SrcSinkFlowViz extends XMLVizReport {
      */
     private void logCallSites(Step s, Map<SootMethod, ArrayDeque<CallSite>> callSites) {
         CtxtPoint point = (CtxtPoint)s.target;
-        Unit[] context = point.ctxt.getElems();
+        Object[] context = point.ctxt.getElems();
         SootMethod method = getMethod(s);
         Stmt stm = null;
 

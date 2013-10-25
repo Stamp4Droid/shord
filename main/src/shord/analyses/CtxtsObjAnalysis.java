@@ -42,7 +42,7 @@ import chord.util.tuple.object.Pair;
  * @author Yu Feng (yufeng@cs.stanford.edu)
  */
 @Chord(name = "ctxts-obj-java",
-       consumes = { "MI", "VH", "MH" },
+       consumes = { "MI", "VH", "MH", "ipt", "StatIM"},
        produces = { "C", "CC", "CH", "CI", "CM" },
        namesOfTypes = { "C" },
        types = { DomC.class }
@@ -80,6 +80,8 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
     private ProgramRel relCC;
     private ProgramRel relCH;
     private ProgramRel relCI;
+    private ProgramRel relIpt;
+    private ProgramRel relStatIM;
     
 
 
@@ -94,6 +96,8 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
         relCC = (ProgramRel) ClassicProject.g().getTrgt("CC");
         relCH = (ProgramRel) ClassicProject.g().getTrgt("CH");
         relCI = (ProgramRel) ClassicProject.g().getTrgt("CI");
+        relIpt = (ProgramRel) ClassicProject.g().getTrgt("ipt");
+        relStatIM = (ProgramRel) ClassicProject.g().getTrgt("StatIM");
 
         mainMeth = Program.g().getMainMethod();
 
@@ -142,6 +146,8 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
         }
         relMH.close();
         relVH.load();
+        relIpt.load();
+        relStatIM.load();
 
         Ctxt epsilon = domC.setCtxt(emptyElems);
         epsilonCtxtSet = new ArraySet<Ctxt>(1);
@@ -155,6 +161,8 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
         doAnalysis();
 
         relVH.close();
+        relIpt.close();
+        relStatIM.close();
 
         // Populate domC
         for (int iIdx = 0; iIdx < numI; iIdx++) {
@@ -266,10 +274,28 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
                 Set<SootMethod> predMeths = new HashSet<SootMethod>();
                 TIntArrayList rcvSites = new TIntArrayList();
                 ThisVarNode thisVar = methToThis.get(meth);
-                if(thisVar == null) continue;
+                if(thisVar == null) {
+                    System.out.println("Thisvarrrr: " + meth);
+                    assert(meth.isStatic());
 
-                Iterable<Unit> pts = getPointsTo(thisVar);
-                for (Unit inst : pts) {
+                    methToRcvSites[mIdx] = rcvSites;
+                    Iterable<Object> ivks = getStatIvk(meth);
+                    for (Object ivk : ivks) {
+                        //int mIdx = domM.indexOf(meth);
+                        int iIdx = domI.indexOf(ivk);
+                        int mm = ItoM[iIdx];
+
+                        predMeths.add(domM.get(mm));
+                    }
+
+                    methToPredsMap.put(meth, predMeths);
+                    methToCtxts[mIdx] = emptyCtxtSet;
+
+                    continue;
+                }
+
+                Iterable<Object> pts = getPointsTo(thisVar);
+                for (Object inst : pts) {
                     int hIdx = domH.indexOf(inst);
                     predMeths.add(domM.get(HtoM[hIdx]));
                     rcvSites.add(hIdx);
@@ -333,9 +359,17 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
         }
     }
 
-    private Iterable<Unit> getPointsTo(VarNode var) {
-        RelView view = relVH.getView();
+    private Iterable<Object> getPointsTo(VarNode var) {
+        //RelView view = relVH.getView();
+        RelView view = relIpt.getView();
         view.selectAndDelete(0, var);
+        return view.getAry1ValTuples();
+    }
+
+    private Iterable<Object> getStatIvk(SootMethod var) {
+        //RelView view = relVH.getView();
+        RelView view = relStatIM.getView();
+        view.selectAndDelete(1, var);
         return view.getAry1ValTuples();
     }
 

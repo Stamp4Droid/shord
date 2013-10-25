@@ -18,6 +18,7 @@ public class CtxtObjPoint extends CtxtPoint {
 
 	@Override
 	public String toShortString() {
-		return Program.unitToString(ctxt.getElems()[0]);
+		return ctxt.getElems()[0].toString();
+		//return Program.unitToString(ctxt.getElems()[0]);
 	}
 }

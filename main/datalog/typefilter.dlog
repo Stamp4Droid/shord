@@ -16,4 +16,4 @@ ciTypeFilter(v:V,h:H) output
 
 typeFilter(v,o) :- VT(v,t), HTFilter(h,t), CH(o,h).
 # for context-insensitive filter.
-ciTypeFilter(v,h) :- VT(v,t), HTFilter(h,t).
+#ciTypeFilter(v,h) :- VT(v,t), HTFilter(h,t).

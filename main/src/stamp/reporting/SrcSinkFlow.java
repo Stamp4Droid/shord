@@ -57,12 +57,14 @@ public class SrcSinkFlow extends XMLReport {
 			Category ctxtFlowCat = flowCat.makeOrGetSubCat("Flow "+count);
 			Tuple srcTuple = ctxtFlowCat.newTuple();//makeOrGetSubCat("context");
 			srcTuple.setAttr("source", source);
-			for(Unit unit : sourceCtxt.getElems())
-				srcTuple.addValue(Program.unitToString(unit));
+			for(Object unit : sourceCtxt.getElems())
+				srcTuple.addValue(unit.toString());
+				//srcTuple.addValue(Program.unitToString(unit));
 			Tuple sinkTuple = ctxtFlowCat.newTuple();//makeOrGetSubCat(sink).makeOrGetSubCat("context");
 			sinkTuple.setAttr("sink", sink);
-			for(Unit unit : sinkCtxt.getElems())
-				sinkTuple.addValue(Program.unitToString(unit));
+			for(Object unit : sinkCtxt.getElems())
+				sinkTuple.addValue(unit.toString());
+				//sinkTuple.addValue(Program.unitToString(unit));
 		}
 	}
 

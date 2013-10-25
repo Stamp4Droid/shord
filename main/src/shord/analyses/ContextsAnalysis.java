@@ -156,8 +156,8 @@ public class ContextsAnalysis extends JavaAnalysis
 			Unit alloc = HtoQ[hIdx];
             Set<Ctxt> ctxts = methToCtxts[mIdx];
             for (Ctxt oldCtxt : ctxts) {
-                Unit[] oldElems = oldCtxt.getElems();
-                Unit[] newElems = combine(K, alloc, oldElems);
+                Object[] oldElems = oldCtxt.getElems();
+                Object[] newElems = combine(K, alloc, oldElems);
                 Ctxt newCtxt = domC.setCtxt(newElems);
                 //relCC.add(oldCtxt, newCtxt);
                 relCH.add(newCtxt, alloc);
@@ -179,8 +179,8 @@ public class ContextsAnalysis extends JavaAnalysis
 			Unit invk = ItoQ[iIdx];
             Set<Ctxt> ctxts = methToCtxts[mIdx];
             for (Ctxt oldCtxt : ctxts) {
-                Unit[] oldElems = oldCtxt.getElems();
-                Unit[] newElems = combine(K, invk, oldElems);
+                Object[] oldElems = oldCtxt.getElems();
+                Object[] newElems = combine(K, invk, oldElems);
                 Ctxt newCtxt = domC.setCtxt(newElems);
 				relCC.add(oldCtxt, newCtxt);
                 relCI.add(newCtxt, invk);
@@ -193,8 +193,8 @@ public class ContextsAnalysis extends JavaAnalysis
 			Unit alloc = HtoQ[hIdx];
             Set<Ctxt> ctxts = methToCtxts[mIdx];
             for (Ctxt oldCtxt : ctxts) {
-                Unit[] oldElems = oldCtxt.getElems();
-                Unit[] newElems = combine(K, alloc, oldElems);
+                Object[] oldElems = oldCtxt.getElems();
+                Object[] newElems = combine(K, alloc, oldElems);
                 Ctxt newCtxt = domC.setCtxt(newElems);
 				relCC.add(oldCtxt, newCtxt);
             }
@@ -209,8 +209,8 @@ public class ContextsAnalysis extends JavaAnalysis
 			Unit invk = ItoQ[iIdx];
             Set<Ctxt> ctxts = methToCtxts[mIdx];
             for (Ctxt oldCtxt : ctxts) {
-                Unit[] oldElems = oldCtxt.getElems();
-                Unit[] newElems = combine(K, invk, oldElems);
+                Object[] oldElems = oldCtxt.getElems();
+                Object[] newElems = combine(K, invk, oldElems);
                 domC.setCtxt(newElems);
             }
         }
@@ -220,8 +220,8 @@ public class ContextsAnalysis extends JavaAnalysis
 			Unit alloc = HtoQ[hIdx];
             Set<Ctxt> ctxts = methToCtxts[mIdx];
             for (Ctxt oldCtxt : ctxts) {
-                Unit[] oldElems = oldCtxt.getElems();
-                Unit[] newElems = combine(K, alloc, oldElems);
+                Object[] oldElems = oldCtxt.getElems();
+                Object[] newElems = combine(K, alloc, oldElems);
                 domC.setCtxt(newElems);
             }
         }
@@ -333,11 +333,11 @@ public class ContextsAnalysis extends JavaAnalysis
         return view.getAry1ValTuples();
     }
 
-    private Unit[] combine(int k, Unit inst, Unit[] elems)
+    private Object[] combine(int k, Object inst, Object[] elems)
 	{
         int oldLen = elems.length;
         int newLen = Math.min(k - 1, oldLen) + 1;
-        Unit[] newElems = new Unit[newLen];
+        Object[] newElems = new Unit[newLen];
         if (newLen > 0) newElems[0] = inst;
         if (newLen > 1)
             System.arraycopy(elems, 0, newElems, 1, newLen - 1);
@@ -357,8 +357,8 @@ public class ContextsAnalysis extends JavaAnalysis
 			int clrIdx = ItoM[iIdx];
 			Set<Ctxt> clrCtxts = methToCtxts[clrIdx]; // method of caller
 			for (Ctxt oldCtxt : clrCtxts) {
-				Unit[] oldElems = oldCtxt.getElems();
-				Unit[] newElems = combine(K, invk, oldElems); // Append
+				Object[] oldElems = oldCtxt.getElems();
+				Object[] newElems = combine(K, invk, oldElems); // Append
 				Ctxt newCtxt = domC.setCtxt(newElems);
 				newCtxts.add(newCtxt);
 				//System.out.println("newCtxt: "+newCtxt);

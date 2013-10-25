@@ -23,7 +23,7 @@ import soot.Unit;
 	name = "paths-printer-java"
 )
 public class PathsPrinterAnalysis extends JavaAnalysis {
-	List<Unit> stack = new ArrayList<Unit>(); // the partial stack, bottom is on the left
+	List<Object> stack = new ArrayList<Object>(); // the partial stack, bottom is on the left
 	PrintWriter pw = null;
 
 	@Override
@@ -89,13 +89,13 @@ public class PathsPrinterAnalysis extends JavaAnalysis {
 	//   sticking to kCFA-sensitivity)
 
 	private boolean recordStep(String symbol, Point target) {
-		Unit[] elems = null;
+		Object[] elems = null;
 
 		// UGLY: This code should be moved into the different *Point classes
 		if (target instanceof CtxtLabelPoint) {
 			elems = ((CtxtLabelPoint) target).ctxt.getElems();
 		} else if (target instanceof CtxtObjPoint) {
-			Unit[] elemsObj = ((CtxtObjPoint) target).ctxt.getElems();
+			Object[] elemsObj = ((CtxtObjPoint) target).ctxt.getElems();
 			elems = Arrays.copyOfRange(elemsObj, 1, elemsObj.length);
 		} else if (target instanceof CtxtVarPoint) {
 			elems = ((CtxtVarPoint) target).ctxt.getElems();
@@ -117,7 +117,7 @@ public class PathsPrinterAnalysis extends JavaAnalysis {
 		return true;
 	}
 
-	private boolean matchStack(Unit[] elems, int base) {
+	private boolean matchStack(Object[] elems, int base) {
 		int elemsIdx = 0;
 		int stackIdx = base;
 
