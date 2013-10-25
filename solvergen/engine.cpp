@@ -18,6 +18,7 @@
 #include <string>
 #include <string.h>
 #include <sys/resource.h>
+#include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -55,7 +56,7 @@ RelationIndex **rel_indices;
  */
 DECL_COUNTER(iteration, 0);
 
-/* MEMORY & ERROR MANAGEMENT =============================================== */
+/* UTILITY FUNCTIONS ======================================================= */
 
 /**
  * Underlying implementation of logging and error-reporting macros (base case).
@@ -146,6 +147,17 @@ long allocated_memory() {
     struct rusage usage;
     getrusage(RUSAGE_SELF, &usage);
     return usage.ru_maxrss;
+}
+
+/**
+ * Create a directory with the given name, unless it already exists.
+ */
+void create_directory(const char *path) {
+    if (mkdir(path, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) != 0) {
+	if (errno != EEXIST) {
+	    SYS_ERR("Can't create directory ", path);
+	}
+    }
 }
 
 /* BASE TYPE OPERATIONS ==================================================== */
@@ -1083,24 +1095,24 @@ void DerivTable::add(Edge* e) {
 
 /* PATH PRINTING =========================================================== */
 
-void print_step_open(Edge *edge, bool reverse, FILE *f) {
-    if (is_terminal(edge->kind)) {
-	fprintf(f, "<%s", kind2symbol(edge->kind));
+void print_step_open(Edge* edge, bool reverse, FILE* f) {
+    EDGE_KIND kind = edge->kind;
+    if (is_terminal(kind)) {
+	fprintf(f, "<%s", kind2symbol(kind));
     } else {
 	fprintf(f, "<%s symbol='%s'",
-		is_temporary(edge->kind) ? "TempStep" : "NTStep",
-		kind2symbol(edge->kind));
+		is_temporary(kind) ? "TempStep" : "NTStep", kind2symbol(kind));
     }
     fprintf(f, " reverse='%s' from='%s' to='%s'", reverse ? "true" : "false",
 	    node_names.name_of(edge->from).c_str(),
 	    node_names.name_of(edge->to).c_str());
-    if (is_parametric(edge->kind)) {
+    if (is_parametric(kind)) {
 	char idx_buf[32];
 	// TODO: Check that printing is successful.
 	index_print(edge->index, idx_buf, sizeof(idx_buf));
 	fprintf(f, " index='%s'", idx_buf);
     }
-    if (is_terminal(edge->kind)) {
+    if (is_terminal(kind)) {
 	// Terminal steps can have no nested sub-steps, so we can close the tag
 	// at this point.
 	fprintf(f, "/>\n");
@@ -1109,7 +1121,7 @@ void print_step_open(Edge *edge, bool reverse, FILE *f) {
     }
 }
 
-void print_step_close(Edge *edge, FILE *f) {
+void print_step_close(Edge* edge, FILE* f) {
     if (is_terminal(edge->kind)) {
 	// The tag has already been closed, nothing to do at this point.
     } else if (is_temporary(edge->kind)) {
@@ -1127,7 +1139,7 @@ void print_step_close(Edge *edge, FILE *f) {
 //   e.g. step->is_reverse ^ in_reverse
 // - visit sub-steps in reverse order if the parent Step was visited in reverse
 //   i.e. the last child first
-// - reorder the choices appropriattely (they were recorded in unbaked order).
+// - reorder the choices appropriately (they were recorded in unbaked order).
 //   e.g. for D :: _C, C :: A B, A :: a0 | a1, B :: b0 | b1, and input "b1 a0",
 //   the choices would be recorded as [0,1], but the real series of choices
 //   (the one that respects the reverse directions) would be [1,0].
@@ -1326,7 +1338,7 @@ void start_profiler() {
     if (profiler_pid == 0) { /* In the child process. */
 	/* TODO: The solver will run unprofiled for a little time before the
 	   profiler has had enough time to finish initialization. */
-	execlp("perf", "perf", "stat", "-p", pid_arg, (char *) NULL);
+	execlp("perf", "perf", "record", "-p", pid_arg, "-g", (char *) NULL);
 	/* Will only reach here if exec fails. */
 	SYS_WARN("Profiler spawn failed");
     }
@@ -1383,6 +1395,7 @@ void stop_profiler() {
 int main() {
     mem_manager_init();
     LOGGING_INIT();
+    create_directory("output");
 
     DECL_COUNTER(loading_start, CURRENT_TIME());
     parse_input_files(ParsingMode::RECORD_NODES);
