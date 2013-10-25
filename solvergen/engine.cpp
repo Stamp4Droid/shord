@@ -957,7 +957,7 @@ DerivTable::QueueItem::QueueItem(PATH_LENGTH length, Edge* edge)
     : length(length), edge(edge) {}
 
 bool DerivTable::QueueItem::operator<(const QueueItem& other) const {
-    return length < other.length;
+    return length > other.length;
 }
 
 void DerivTable::process(const QueueItem& item) {
