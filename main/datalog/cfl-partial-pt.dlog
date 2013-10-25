@@ -119,12 +119,12 @@ PostFlowsTo(c,v,d,u) :- PostFlowsToA(c,v,d,u).
 PostFlowsTo(c,v,d,u) :- PostFlowsToR(c,v,d,u).
 
 # 1) v_c -> u_d
-MidFlowsTo(c,v,d,u) :- PostFlowsTo(c,v,d,u), Varg(u).
-MidFlowsTo(c,v,d,u) :- PostFlowsTo(c,v,d,u), Vret(u).
+MidFlowsTo(c,v,d,u) :- Varg(u), PostFlowsTo(c,v,d,u).
+MidFlowsTo(c,v,d,u) :- Vret(u), PostFlowsTo(c,v,d,u).
 # 2) v_c -> u_d -> w_d -> x_b
 MidFlowsTo(c,v,b,x) :- PostFlowsTo(c,v,d,u), Store(w,_,u), PostFlowsTo(b,x,d,w).
 # 3) v_c -> u_d -> w_d -> o -> x_b
-MidFlowsTo(c,v,b,x) :- PostFlowsTo(c,v,d,u), Store(w,_,u), pt(d,w,o), PreFlowsTo(b,o,x).
+MidFlowsTo(c,v,b,x) :- PreFlowsTo(b,o,x), pt(d,w,o), Store(w,_,u), PostFlowsTo(c,v,d,u).
 # 4) v_c -> o -> u_d
 MidFlowsTo(c,v,d,u) :- PreFlowsTo(c,o,v), PreFlowsTo(d,o,u).
 
@@ -144,12 +144,12 @@ Transfer(u,v) :- RefArg2RefRetTStub(_,v,u,_,_).
 # full flows
 
 PreFlowsToFull(c,o,v) :- PreFlowsTo(c,o,v).
-PreFlowsToFull(d,o,w) :- PreFlowsToFull(c,o,v), Transfer(v,u), MidFlowsTo(c,u,d,w).
-PtFull(d,w,o) :- PreFlowsToFull(c,o,v), Transfer(v,u), PostFlowsTo(c,u,d,w), typeFilter(w,o).
+PreFlowsToFull(d,o,w) :- Transfer(v,u), PreFlowsToFull(c,o,v), MidFlowsTo(c,u,d,w).
+PtFull(d,w,o) :-  Transfer(v,u), PreFlowsToFull(c,o,v), PostFlowsTo(c,u,d,w), typeFilter(w,o).
 
 #PtFull(d,u,o) :- pt(d,u,o).
 #FptFull(o1,f,o2) :- fpt(o1,f,o2).
 
 FptFull(o1,f,o2) :- pt(c,v,o2), Store(u,f,v), PtFull(c,u,o1).
-FptFull(o1,f,o2) :- PtFull(c,v,o2), Store(u,f,v), pt(c,u,o1).
+FptFull(o1,f,o2) :- pt(c,u,o1), Store(u,f,v), PtFull(c,v,o2).
 FptFull(o1,f,o2) :- PtFull(c,v,o2), Store(u,f,v), PtFull(c,u,o1).

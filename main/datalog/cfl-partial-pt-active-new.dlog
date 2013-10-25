@@ -81,6 +81,7 @@ ActiveVret(v:V) output
 ActiveTransfer(v:V,u:V) output
 ActiveTransferArg(c:C,v:V,u:V,m:M,z1:Z,z2:Z) output
 ActiveTransferRet(c:C,v:V,u:V,m:M,z:Z) output
+ActiveTransferPre(v:V,u:V) output
 
 ActivePreFlowsTo(c:C,o:C,v:V) output
 ActiveMidFlowsTo(c:C,v:V,d:C,u:V) output
@@ -99,6 +100,7 @@ ActiveTransfer(v,u) :- Transfer(v,u), ActiveRefF(c,v), ActiveRefT(c,u).
 ActiveTransferArg(c,v,u,m,z1,z2) :- ActiveTransfer(v,u), MmethArg(m,z1,v), MmethArg(m,z2,u), CM(c,m).
 ActiveTransferRet(c,v,u,m,z) :- ActiveTransfer(v,u), MmethArg(m,z,v), MmethRet(m,_,u), CM(c,m).
 ActiveTransferRet(c,v,u,m,z) :- ActiveTransfer(v,u), MmethArg(m,z,u), MmethRet(m,_,v), CM(c,m).
+ActiveTransferPre(v,u) :- ActiveTransfer(v,u), ActivePreFlowsTo(_,_,v).
 
 ActivePreFlowsTo(c,o,v) :- ActiveObj(o), PreFlowsTo(c,o,v), ActiveRefF(c,v).
 ActiveMidFlowsTo(c,v,d,u) :- ActiveRefT(c,v), MidFlowsTo(c,v,d,u), ActiveRefF(d,u).
