@@ -264,7 +264,7 @@
                                     var d = $(this).attr("desc");
                                     if (jQuery.inArray(d, seen) < 0) {
                                         seen.push(d);
-                                        $("#src-drop-down").append('<li><a href="#"></a>' + d + '</li>');
+                                        $("#src-drop-down").append('<li><a href="#">' + d + '</a></li>');
                                     }
                                 });
                             }
@@ -283,14 +283,12 @@
                                     var d = $(this).attr("desc");
                                     if ($.inArray(d, seen) < 0) {
                                         seen.push(d);
-                                        $("#sink-drop-down").append('<li><a href="#"></a>' + d + '</li>');
+                                        $("#sink-drop-down").append('<li><a href="#">' + d + '</a></li>');
                                     }
                                 });
                             }
                         });
                     });
-                    
-                    $('#sinkSelect').select();
                 </script>
                 <script>
                     var ws = new WebSocket("ws://localhost:8080/stamp/pushupdates");
