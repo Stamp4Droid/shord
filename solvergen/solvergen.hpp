@@ -136,6 +136,8 @@ struct Edge {
      * traversed in reverse.
      */
     const bool r_rev;
+    /** The length of the path used to construct this Edge. */
+    const PATH_LENGTH length;
 #endif
     /**
      * The @Index associated with this Edge. An Edge for @Symbol `S` that
@@ -787,7 +789,7 @@ typedef unsigned long COUNTER;
  */
 
 /**
- * Add a new Edge to the graph and the ::worklist, unless it's already present.
+ * Add a new Edge to the ::worklist for future processing.
  */
 void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	      Edge* l_edge, bool l_rev, Edge* r_edge, bool r_rev);

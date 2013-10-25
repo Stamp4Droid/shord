@@ -40,8 +40,20 @@ Node *nodes;
 /** A mapping between Node%s and their names. */
 NodeNameMap node_names;
 
+#ifdef PATH_RECORDING
+/**
+ * Edge comparator object: An Edge is ranked better than another iff the path
+ * which constructed it was shorter.
+ */
+auto edge_lt = [](Edge* x, Edge* y){return x->length > y->length;};
+
 /** The Edge worklist used by the fixpoint calculation. */
-std::deque<Edge*> worklist;
+std::priority_queue<Edge*,std::vector<Edge*>,decltype(edge_lt)>
+worklist(edge_lt);
+#else
+/** The Edge worklist used by the fixpoint calculation. */
+std::queue<Edge*> worklist;
+#endif
 
 /**
  * All the indices on the @Relation%s used by the @Grammar, indexed by
@@ -342,7 +354,10 @@ Edge::Edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	   Edge* l_edge, bool l_rev, Edge* r_edge, bool r_rev)
     : from(from), to(to), kind(kind), index(index)
 #ifdef PATH_RECORDING
-    , l_edge(l_edge), l_rev(l_rev), r_edge(r_edge), r_rev(r_rev)
+    , l_edge(l_edge), l_rev(l_rev), r_edge(r_edge), r_rev(r_rev),
+      length(is_terminal(kind) ? static_min_length(kind)
+	     : (l_edge == NULL ? 0 : l_edge->length) +
+	       (r_edge == NULL ? 0 : r_edge->length))
 #endif
 {
     assert((is_parametric(kind)) ^ (index == INDEX_NONE));
@@ -552,15 +567,26 @@ Edge *find_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index) {
     return NULL;
 }
 
-void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
-	      Edge *l_edge, bool l_rev, Edge *r_edge, bool r_rev) {
-    if (find_edge(from, to, kind, index) != NULL) {
-	return;
+// Return true iff the Edge wasn't already present in the graph.
+bool graph_add(Edge* e) {
+    if (find_edge(e->from, e->to, e->kind, e->index) != NULL) {
+	return false;
     }
-    Edge* e = new Edge(from, to, kind, index, l_edge, l_rev, r_edge, r_rev);
     nodes[e->to].in[e->kind].add(e);
     nodes[e->from].out[e->kind].add(e);
-    worklist.push_back(e);
+    return true;
+}
+
+void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
+	      Edge* l_edge, bool l_rev, Edge* r_edge, bool r_rev) {
+    Edge* e = new Edge(from, to, kind, index, l_edge, l_rev, r_edge, r_rev);
+#ifndef PATH_RECORDING
+    if (!graph_add(e)) {
+	delete e;
+	return;
+    }
+#endif
+    worklist.push(e);
 }
 
 /* INPUT & OUTPUT ========================================================== */
@@ -1397,9 +1423,19 @@ int main() {
     /* Main loop. */
     while (!worklist.empty()) {
 	INC_COUNTER(iteration, 1);
+#ifdef PATH_RECORDING
+	Edge *base = worklist.top();
+	worklist.pop();
+	if (graph_add(base)) {
+	    main_loop(base);
+	} else {
+	    delete base;
+	}
+#else
 	Edge *base = worklist.front();
-	worklist.pop_front();
+	worklist.pop();
 	main_loop(base);
+#endif
     }
     LOG("Fixpoint reached after ", iteration, " iterations");
     LOG("Solving completed in ", CURRENT_TIME() - solving_start, " ms");
