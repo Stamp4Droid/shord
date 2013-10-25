@@ -13,7 +13,6 @@
 #include <sstream>
 #include <stack>
 #include <stdexcept>
-#include <stdlib.h>
 #include <stdio.h>
 #include <string>
 #include <string.h>
@@ -126,17 +125,6 @@ void mem_manager_init() {
     if (setrlimit(RLIMIT_AS, &rlp) != 0) {
 	SYS_ERR("Unable to set memory limit");
     }
-}
-
-/**
- * Underlying implementation of @ref STRICT_ALLOC.
- */
-void *strict_alloc(size_t num_bytes) {
-    void *ptr;
-    if ((ptr = malloc(num_bytes)) == NULL) {
-	SYS_ERR("Out of memory");
-    }
-    return ptr;
 }
 
 /**
@@ -350,29 +338,17 @@ const std::set<INDEX>& rel_select(RELATION_REF ref, ARITY proj_col,
 
 /* EDGE OPERATIONS ========================================================= */
 
-/**
- * Create an Edge with the given attributes.
- *
- * The new Edge is not added to the graph or the ::worklist, and there is no
- * way to do so from client code. Thus, this function should only be used to
- * construct temporary Edge%s; otherwise use ::add_edge().
- */
-Edge *edge_new(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
-	       Edge *l_edge, bool l_rev, Edge *r_edge, bool r_rev) {
+Edge::Edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
+	   Edge* l_edge, bool l_rev, Edge* r_edge, bool r_rev)
+    : from(from), to(to), kind(kind), index(index)
+#ifdef PATH_RECORDING
+    , l_edge(l_edge), l_rev(l_rev), r_edge(r_edge), r_rev(r_rev)
+#endif
+{
     assert((is_parametric(kind)) ^ (index == INDEX_NONE));
-    Edge *e = STRICT_ALLOC(1, Edge);
-    e->from = from;
-    e->to = to;
-    e->kind = kind;
-    e->index = index;
 #ifdef PATH_RECORDING
     assert(l_edge != NULL || r_edge == NULL);
-    e->l_edge = l_edge;
-    e->l_rev = l_rev;
-    e->r_edge = r_edge;
-    e->r_rev = r_rev;
 #endif
-    return e;
 }
 
 /**
@@ -581,7 +557,7 @@ void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
     if (find_edge(from, to, kind, index) != NULL) {
 	return;
     }
-    Edge *e = edge_new(from, to, kind, index, l_edge, l_rev, r_edge, r_rev);
+    Edge* e = new Edge(from, to, kind, index, l_edge, l_rev, r_edge, r_rev);
     nodes[e->to].in[e->kind].add(e);
     nodes[e->from].out[e->kind].add(e);
     worklist.push_back(e);
