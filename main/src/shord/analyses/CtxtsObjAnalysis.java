@@ -165,6 +165,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
         relStatIM.close();
 
         // Populate domC
+		/*
         for (int iIdx = 0; iIdx < numI; iIdx++) {
 			int mIdx = ItoM[iIdx];
 			Unit invk = ItoQ[iIdx];
@@ -176,6 +177,8 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
                 domC.setCtxt(newElems);
             }
         }
+		*/
+
         for (int hIdx = 1; hIdx < numA; hIdx++) {
 			int mIdx = HtoM[hIdx];
 			AllocNode alloc = HtoQ[hIdx];
@@ -203,8 +206,8 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
                 Object[] oldElems = oldCtxt.getElems();
                 Object[] newElems = combine(K, invk, oldElems);
                 Ctxt newCtxt = domC.setCtxt(newElems);
-                relCC.add(oldCtxt, newCtxt);
-                relCI.add(newCtxt, invk);
+                //relCC.add(oldCtxt, newCtxt);
+                //relCI.add(newCtxt, invk);
             }
         }
         relCI.save();

@@ -954,13 +954,12 @@ public class PAGBuilder extends JavaAnalysis
 
         //create dispatch tuple based on the map.
         DomM domM = (DomM) ClassicProject.g().getTrgt("M");
-        Iterator iter = dispatchMap.keySet().iterator();
+        Iterator<SootClass> iter = dispatchMap.keySet().iterator();
         while(iter.hasNext()){
-            SootClass clazz = (SootClass)iter.next();
-            Set cMeths = (Set)dispatchMap.get(clazz);
-            for(Object o: cMeths){
-                if(!domM.contains(o)) continue;
-                SootMethod m = (SootMethod) o;
+            SootClass clazz = iter.next();
+            Set<SootMethod> cMeths = dispatchMap.get(clazz);
+            for(SootMethod m: cMeths){
+                if(!domM.contains(m)) continue;
                 relDispatch.add(clazz.getType(), m.getSubSignature(), m);
             }
         }

@@ -1,0 +1,35 @@
+
+
+
+CICM(c:C,i:I,d:C,m:M)
+
+
+reachableCM(0,m) :- clinitTM(t,m), reachableT(t).
+reachableCM(c,m) :- CICM(_,_,c,m). 
+reachableCI(c,i) :- MI(m,i), reachableCM(c,m).
+
+ICM(i,o,m2) :- VirtIM(i,m1), HT(h,t), SubSig(m1,s), Dispatch(t,s,m2), CH(o,h).
+
+DIC(c,i,o) :- IinvkArg(i,0,v), pt(c,v,o).
+
+CICM(c,i,o,m) :- reachableCI(c,i), ICM(i,o,m), DIC(c,i,o).
+CICM(c,i,o,m) :- reachableCI(c,i), SpecIM(i,m), DIC(c,i,o).
+CICM(c,i,d,m) :- reachableCI(c,i), StatIM(i,m), d=c.
+
+DVDV(d,u,c,v) :- param(u,v,i), MV(m,u), CICM(c,i,d,m).
+DVDV(c,u,d,v) :- return(u,v,i), MV(m,v), CICM(c,i,d,m).
+
+pt(c,u,o) :- DVDV(c,u,d,v), pt(d,v,o), typeFilter(u,o).
+
+pt(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
+pt(c,v,o) :- pt(c,u,o), Assign(v,u), typeFilter(v,o).
+fpt(o1,f,o2) :- pt(c,v,o2), Store(u,f,v), pt(c,u,o1).
+pt(c,y,o2) :- pt(c,x,o1), Load(y,x,f), fpt(o1,f,o2).
+fptStat(f,o) :- pt(_,v,o), StoreStat(f,v).
+pt(c,y,o) :- LoadStat(y,f), fptStat(f,o), MV(m,y), CM(c,m).
+
+reachableT(t) :- reachableCM(_,m), MV(m,v), Alloc(v,h), HT(h,t).
+reachableT(t) :- reachableCM(_,m), staticTM(t,m).
+reachableT(t) :- reachableCM(_,m), MV(m,v), StoreStat(f,v), staticTF(t,f).
+reachableT(t) :- reachableCM(_,m), MV(m,v), LoadStat(v,f), staticTF(t,f).
+reachableT(t) :- classT(t), reachableT(s), sub(s,t).
