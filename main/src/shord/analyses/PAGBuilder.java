@@ -77,7 +77,10 @@ import java.util.*;
 				 "MmethPrimArg", "MmethPrimRet", 
 				 "IinvkPrimRet", "IinvkPrimArg",
                  "StatIM", "VirtIM",
-                 "SpecIM", "SubSig", "Dispatch",
+                 "SpecIM", "SubSig", 
+                 "Dispatch", "classT", 
+                 "sub", "staticTM", 
+                 "staticTF", "clinitTM",
 	             "VH", "Stub" },
        namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U", "S"},
        types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class},
@@ -96,7 +99,10 @@ import java.util.*;
 						"MmethPrimArg", "MmethPrimRet", 
 						"IinvkPrimRet", "IinvkPrimArg",
                         "StatIM", "VirtIM",
-                        "SpecIM", "SubSig", "Dispatch",
+                        "SpecIM", "SubSig",
+                        "Dispatch", "classT", 
+                        "sub", "staticTM", 
+                        "staticTF", "clinitTM",
                         "VH", "Stub" },
 	   signs = { "V0,H0:V0_H0", "V0,V1:V0xV1",
 				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
@@ -113,7 +119,10 @@ import java.util.*;
 				 "M0,Z0,U0:M0_U0_Z0", "M0,Z0,U0:M0_U0_Z0",
 				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0",
                  "I0,M0:I0_M0", "I0,M0:I0_M0",
-                 "I0,M0:I0_M0", "M0,S0:M0_S0", "T0,S0,M0:T0_S0_M0",
+                 "I0,M0:I0_M0", "M0,S0:M0_S0",
+                 "T0,S0,M0:T0_S0_M0", "T0:T0",
+                 "T0,T1:T0_T1", "T0,M0:T0_M0",
+                 "T0,F0:T0_F0", "T0,M0:T0_M0",
                  "V0,H0:V0_H0", "M0:M0" }
 	   )
 public class PAGBuilder extends JavaAnalysis
@@ -155,6 +164,12 @@ public class PAGBuilder extends JavaAnalysis
     private ProgramRel relVirtIM;//(i:I,m:M)
     private ProgramRel relSubSig;//(m:M,s:S)
     private ProgramRel relDispatch;//(t:T,s:S,m:M)
+
+    private ProgramRel relClassT;//(t:T)
+    private ProgramRel relSub;//(s:T,t:T)
+    private ProgramRel relStaticTM;//(t:T,m:M)
+    private ProgramRel relStaticTF;//(t:T,f:F)
+    private ProgramRel relClinitTM;//(t:T,m:M)
 
 	private DomV domV;
 	private DomU domU;
@@ -217,6 +232,19 @@ public class PAGBuilder extends JavaAnalysis
         relDispatch = (ProgramRel) ClassicProject.g().getTrgt("Dispatch");
         relDispatch.zero();
 
+
+
+        relClassT = (ProgramRel) ClassicProject.g().getTrgt("classT");
+        relClassT.zero();
+        relSub = (ProgramRel) ClassicProject.g().getTrgt("sub");
+        relSub.zero();
+        relStaticTM = (ProgramRel) ClassicProject.g().getTrgt("staticTM");
+        relStaticTM.zero();
+        relStaticTF = (ProgramRel) ClassicProject.g().getTrgt("staticTF");
+        relStaticTF.zero();
+        relClinitTM = (ProgramRel) ClassicProject.g().getTrgt("clinitTM");
+        relClinitTM.zero();
+
 		relAssignPrim = (ProgramRel) ClassicProject.g().getTrgt("AssignPrim");
 		relAssignPrim.zero();
 		relLoadPrim = (ProgramRel) ClassicProject.g().getTrgt("LoadPrim");
@@ -264,6 +292,12 @@ public class PAGBuilder extends JavaAnalysis
         relStatIM.save();
         relVirtIM.save();
         relDispatch.save();
+
+        relClassT.save();
+        relSub.save();
+        relStaticTM.save();
+        relStaticTF.save();
+        relClinitTM.save();
 
 		relAssignPrim.save();
 		relLoadPrim.save();
@@ -599,6 +633,12 @@ public class PAGBuilder extends JavaAnalysis
 					assert false;
 			}
 
+            if(method.isStatic())//m is a static method defined in t.
+                relStaticTM.add(method.getDeclaringClass().getType(), method);
+
+            if(method.getName().equals("<clinit>"))//m is the class initializer in t.
+                relClinitTM.add(method.getDeclaringClass().getType(), method);
+
 			if(!method.isConcrete())
 				return;
 
@@ -880,6 +920,7 @@ public class PAGBuilder extends JavaAnalysis
 		Program program = Program.g();
 		stubMethods = new NumberedSet(Scene.v().getMethodNumberer());
 		Iterator<SootMethod> mIt = program.getMethods();
+		domM.add(program.getMainMethod());
 		while(mIt.hasNext()){
 			SootMethod m = mIt.next();
 			growZIfNeeded(m.getParameterCount());
@@ -909,7 +950,7 @@ public class PAGBuilder extends JavaAnalysis
         Program program = Program.g();                
         int totalCls = program.getClasses().size();
 
-        while(dispatchMap.size() < totalCls){//Not finish yet.
+        while(dispatchMap.size() < totalCls){
             for(SootClass cl : program.getClasses()) {
                 //no superclass?
                 if(!cl.hasSuperclass()){
@@ -1095,10 +1136,28 @@ public class PAGBuilder extends JavaAnalysis
 			mpagBuilder.pass2();
 
         buildDispatchMap();
+        populateMisc();
 		saveRels();
 
 		populateCallgraph();
 	}
+
+    void populateMisc()
+    {
+		Program program = Program.g();		
+        for(SootClass klass : program.getClasses()){
+            if(klass.isConcrete() || klass.isAbstract())
+                relClassT.add(klass.getType());
+
+            for(SootField field : klass.getFields())
+                if(field.isStatic())
+                    relStaticTF.add(klass.getType(), field);
+
+            for(SootClass clazz : program.getClasses())
+                if(SootUtils.subTypesOf(clazz).contains(klass))
+                    relSub.add(klass.getType(), clazz.getType());//klass is subtype of clazz
+        }
+    }
 
 	final public boolean canStore(Type objType, Type varType) 
 	{

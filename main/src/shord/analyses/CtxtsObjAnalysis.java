@@ -59,6 +59,9 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
     
     private Map<SootMethod, ThisVarNode> methToThis = new HashMap<SootMethod, ThisVarNode>();
 
+    private Set<SootMethod>[] methToClrMeths; // ctxt kind is CTXTCPY
+
+
     private Set<Ctxt> epsilonCtxtSet;
 
 	public static int K = 2;
@@ -156,6 +159,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
         methToCtxts = new Set[numM];
 
         methToRcvSites = new TIntArrayList[numM];
+        methToClrMeths = new Set[numM];
 
         // Do the heavy crunching
         doAnalysis();
@@ -197,7 +201,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
 
         relCC.zero();
         relCI.zero();
-        for (int iIdx = 0; iIdx < numI; iIdx++) {
+        /*for (int iIdx = 0; iIdx < numI; iIdx++) {
 			int mIdx = ItoM[iIdx];
             Unit invk = ItoQ[iIdx];
             Set<Ctxt> ctxts = methToCtxts[mIdx];
@@ -209,7 +213,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
                 //relCC.add(oldCtxt, newCtxt);
                 //relCI.add(newCtxt, invk);
             }
-        }
+        }*/
         relCI.save();
 
         assert (domC.size() == numC);
@@ -273,39 +277,32 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
                 methToPredsMap.put(meth, emptyMethSet);
                 methToCtxts[mIdx] = epsilonCtxtSet;
 			} else {
-
                 Set<SootMethod> predMeths = new HashSet<SootMethod>();
-                TIntArrayList rcvSites = new TIntArrayList();
-                ThisVarNode thisVar = methToThis.get(meth);
-                if(thisVar == null) {
-                    System.out.println("Thisvarrrr: " + meth);
-                    assert(meth.isStatic());
-
-                    methToRcvSites[mIdx] = rcvSites;
+                if(meth.isStatic()) {
+                    //do the copyctxt for static method.
                     Iterable<Object> ivks = getStatIvk(meth);
                     for (Object ivk : ivks) {
-                        //int mIdx = domM.indexOf(meth);
                         int iIdx = domI.indexOf(ivk);
                         int mm = ItoM[iIdx];
-
                         predMeths.add(domM.get(mm));
                     }
-
                     methToPredsMap.put(meth, predMeths);
                     methToCtxts[mIdx] = emptyCtxtSet;
-
-                    continue;
+                    methToClrMeths[mIdx] = predMeths;
+                } else {
+                    TIntArrayList rcvSites = new TIntArrayList();
+                    ThisVarNode thisVar = methToThis.get(meth);
+                    Iterable<Object> pts = getPointsTo(thisVar);
+                    for (Object inst : pts) {
+                        int hIdx = domH.indexOf(inst);
+                        predMeths.add(domM.get(HtoM[hIdx]));
+                        rcvSites.add(hIdx);
+                    }
+                    methToRcvSites[mIdx] = rcvSites;
+                    methToPredsMap.put(meth, predMeths);
+                    methToCtxts[mIdx] = emptyCtxtSet;
                 }
 
-                Iterable<Object> pts = getPointsTo(thisVar);
-                for (Object inst : pts) {
-                    int hIdx = domH.indexOf(inst);
-                    predMeths.add(domM.get(HtoM[hIdx]));
-                    rcvSites.add(hIdx);
-                }
-                methToRcvSites[mIdx] = rcvSites;
-                methToPredsMap.put(meth, predMeths);
-                methToCtxts[mIdx] = emptyCtxtSet;
             }
         }
         process(roots, methToPredsMap);
@@ -388,18 +385,29 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
 
     private Set<Ctxt> getNewCtxts(int cleIdx) { // Update contexts for this method (callee)
         final Set<Ctxt> newCtxts = new HashSet<Ctxt>();
-        TIntArrayList rcvs = methToRcvSites[cleIdx];
-        int n = rcvs.size();
-        for (int i = 0; i < n; i++) {
-            int hIdx = rcvs.get(i);
-            Object rcv = HtoQ[hIdx];
-            int clrIdx = HtoM[hIdx];
-            Set<Ctxt> rcvCtxts = methToCtxts[clrIdx];
-            for (Ctxt oldCtxt : rcvCtxts) {
-                Object[] oldElems = oldCtxt.getElems();
-                Object[] newElems = combine(K, rcv, oldElems);
-                Ctxt newCtxt = domC.setCtxt(newElems);
-                newCtxts.add(newCtxt);
+        SootMethod meth = (SootMethod) domM.get(cleIdx);
+
+        if(meth.isStatic()){//static?copy all the ctxts from its callers.
+            Set<SootMethod> clrs = methToClrMeths[cleIdx];
+            for (SootMethod clr : clrs) {
+                int clrIdx = domM.indexOf(clr);
+                Set<Ctxt> clrCtxts = methToCtxts[clrIdx];
+                newCtxts.addAll(clrCtxts);
+            }
+        }else{
+            TIntArrayList rcvs = methToRcvSites[cleIdx];
+            int n = rcvs.size();
+            for (int i = 0; i < n; i++) {
+                int hIdx = rcvs.get(i);
+                Object rcv = HtoQ[hIdx];
+                int clrIdx = HtoM[hIdx];
+                Set<Ctxt> rcvCtxts = methToCtxts[clrIdx];
+                for (Ctxt oldCtxt : rcvCtxts) {
+                    Object[] oldElems = oldCtxt.getElems();
+                    Object[] newElems = combine(K, rcv, oldElems);
+                    Ctxt newCtxt = domC.setCtxt(newElems);
+                    newCtxts.add(newCtxt);
+                }
             }
         }
         return newCtxts;
