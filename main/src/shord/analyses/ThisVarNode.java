@@ -15,4 +15,10 @@ public class ThisVarNode extends VarNode
 	{
 		return "this@"+method;
 	}
+
+	public SootMethod getMethod()
+	{
+		return method;
+	}
+
 }
