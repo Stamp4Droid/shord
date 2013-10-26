@@ -22,13 +22,26 @@
 	</head>
 
 	<body>
+	  <div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+		  <div class="container">
+			<ul class="nav pull-left">
+			  <li><a class="brand" href="#">STAMP&alpha;</a></li>
+			</ul>
+		  </div>
+		</div>
+	  </div>
 	  <div class="container-fluid">
 		<div class="row-fluid">
- 		  <div class="span9" id="summarytable">
-			<table id="appsdata" class="table">
+		  <div class="span2">
+		  </div>
+ 		  <div class="span8" id="summarytable">
+			<table id="appsdata" class="table table-bordered">
 			  <tbody>
 			  </tbody>
 			</table>
+		  </div>
+		  <div class="span2">
 		  </div>
 		</div>
 	  </div>
@@ -57,6 +70,7 @@
 		      for (var j in datatypes) { 
                   header += '<th>'+ datatypes[j] + '</th>';
               }
+              header += '<th>Privacy Violation Index (PVI)</th>'
 		      header += '</tr>';
 		      $(header).appendTo('#appsdata > tbody:last');
 
@@ -69,15 +83,19 @@
 		        shortsha += '...';
 		        shortsha += sha.substring(sha.length-5);
 
-		        var html =  '<tr><td>'+ shortsha + '</td>' + '<td>' + row.app + '</td>';
+		        var html =  '<tr><td><a href="#" data-toggle="tooltip" title="'+sha+'">'+ shortsha + '</a></td>' + '<td>' + row.app + '</td>';
                 var flows = row.flows;
+                var numflows = 0;
 		        for (var f in flows) {
-                  if(flows[f] == 1)
+                  if(flows[f] == 1) {
                     html += '<td class="danger">';
-                  else
+					numflows++;
+                  } else
                     html += '<td class="success">';
-		          html += flows[f] + '</td>';
+		          html += '</td>';
 		        }
+                var pvi = Math.round((numflows/flows.length)*10);
+                html += '<td><span class="badge badge-important">'+pvi+'</span></td>';
                 html += '</tr>';
 		        $(html).appendTo('#appsdata > tbody:last');
                 console.log(row.app);
