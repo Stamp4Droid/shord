@@ -1,5 +1,5 @@
-###################
-#Kobj Points-to analysis
+##################
+# K-obj Points-to analysis
 ##################
 
 # name=pt-obj-dlog
@@ -10,8 +10,12 @@
 .include "H.dom"
 .include "F.dom"
 .include "I.dom"
+.include "S.dom"
+.include "T.dom"
+.include "Z.dom"
 
-.bddvarorder M0_C0xC1xC2_V0xV1_H0xF0_I0
+#.bddvarorder M0_C0xC1xC2_V0xV1_H0xF0_I0_T0xT1_S0_Z0
+.bddvarorder C0xC1_V0xV1_H0_F0_I0_T0xT1_M0_S0_M1_Z0
 
 Assign(v:V,u:V)     input   # v = u
 Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
@@ -22,77 +26,72 @@ StoreStat(f:F,v:V)  input   # f = v
 param(u:V,v:V,i:I)  input   # u is the formal parameter, v is actual arg, i is invocation stmt
 return(u:V,v:V,i:I) input   # u is the lhs at callsite, v is the return var, i is invocation stmt
 typeFilter(v:V,o:C) input   # type wise, v can point-to o
+IinvkArg(i:I,n:Z,v:V) input
 
 MV(m:M,v:V) input         # v is a variable in method m
 CM(c:C,m:M) input         # c is a context of method m
 CH(o:C,h:H) input         # context’ified abstract location o corresponds to new stmt h
-CI(c:C,i:I) input         # stmt i is the top element in the k-limited callstack c
 CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
+HT(h:H,t:T) input         # heap h point to Type t.
+MI(m:M,i:I) input         # stmt i belongs to method m.
 
+StatIM(i:I,m:M) input     # i statically invokes m. 
+SpecIM(i:I,m:M) input     # i special invoke m. 
+VirtIM(i:I,m:M) input     # i virtually invokes m. 
+classT(t:T) input         # t is concrete or abstract
+staticTM(t:T,m:M) input   # m is a static method in t.
+staticTF(t:T,f:F) input   # f is a static field in t.
+clinitTM(t:T,m:M) input   # m is the class initializer in m.
+sub(t1:T0,t2:T1) input    # t1 is a subtype of t2.
+
+SubSig(m:M,s:S) input     # s is subsignature of m.
+Dispatch(t:T,s:S,m:M) input     # t.m has subsig s.
+
+###################
+#    OUTPUT
+###################
+reachableT(t:T) output
+DIC(c:C,i:I,c:C) output
+DVDV(c:C0,u:V0,d:C1,v:V1) output
+reachableCI(c:C,i:I) output
+reachableCM(c:C,m:M) output
+CICM(d:C,i:I,c:C,m:M)   output  # i in cotext d calls method m in context c.
 pt(c:C,v:V,o:C)    output # (c,v) points-to o
 fpt(o1:C,f:F,o2:C) output
-
-fptStat(f:F,o:C)
+fptStat(f:F,o:C) output
+ICM(i:I,c:C,m:M) output
 
 ###################
 #    RULES
 ###################
 
-#pt(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
-#pt(c,v,o) :- pt(c,u,o), Assign(v,u), typeFilter(v,o).
-#pt(d,u,o) :- pt(c,v,o), param(u,v,i), typeFilter(u,o), CC(c,d), CI(d,i).
-#pt(c,u,o) :- pt(d,v,o), return(u,v,i), CI(d,i), CC(c,d), typeFilter(u,o).
-#fpt(o1,f,o2) :- pt(c,v,o2), Store(u,f,v), pt(c,u,o1).
-#pt(c,y,o2) :- pt(c,x,o1), Load(y,x,f), fpt(o1,f,o2).
-#fptStat(f,o) :- pt(_,v,o), StoreStat(f,v).
-#pt(c,y,o) :- LoadStat(y,f), fptStat(f,o), MV(m,y), CM(c,m).
+reachableCM(0,0).
+reachableCM(0,m) :- clinitTM(t,m), reachableT(t).
+reachableCM(c,m) :- CICM(_,_,c,m). 
+reachableCI(c,i) :- MI(m,i), reachableCM(c,m).
 
+ICM(i,o,m2) :- VirtIM(i,m1), HT(h,t), SubSig(m1,s), Dispatch(t,s,m2), CH(o,h). split
 
+DIC(c,i,o) :- IinvkArg(i,0,v), pt(c,v,o).
 
-# In context c, l = new h
-#RobjValAsgnInst(c,l,h) :- reachableCM(c,m), MobjValAsgnInst(m,l,h).
-#DVC(c,l,o) :- RobjValAsgnInst(c,l,h), CHC(c,h,o).
+CICM(c,i,o,m) :- reachableCI(c,i), ICM(i,o,m), DIC(c,i,o).
+CICM(c,i,o,m) :- reachableCI(c,i), SpecIM(i,m), DIC(c,i,o).
+CICM(c,i,d,m) :- reachableCI(c,i), StatIM(i,m), d=c.
+
+DVDV(d,u,c,v) :- param(u,v,i), MV(m,u), CICM(c,i,d,m).
+DVDV(c,u,d,v) :- return(u,v,i), MV(m,v), CICM(c,i,d,m).
+
+pt(c,u,o) :- DVDV(c,u,d,v), pt(d,v,o), typeFilter(u,o).
 
 pt(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
-
-###
-# in context c, l = r
-#RobjVarAsgnInst(c,l,r) :- reachableCM(c,m), MobjVarAsgnInst(m,l,r).
-#DVC(c,l,c1) :- RobjVarAsgnInst(c,l,r), DVC(c,r,c1), VCfilter(l,c1).
-
 pt(c,v,o) :- pt(c,u,o), Assign(v,u), typeFilter(v,o).
-
-
-#########formal
-pt(d,u,o) :- pt(c,v,o), param(u,v,i), typeFilter(u,o), CC(c,d), CI(d,i).
-
-##########return
-pt(c,u,o) :- pt(d,v,o), return(u,v,i), CI(d,i), CC(c,d), typeFilter(u,o).
-
-#
-####
-# in context c, l = b.f
-#RgetInstFldInst(c,l,b,f) :- reachableCM(c,m), MgetInstFldInst(m,l,b,f).
-#DVC(c,l,c2) :- RgetInstFldInst(c,l,b,f), DVC(c,b,c1), CFC(c1,f,c2). split
-
 fpt(o1,f,o2) :- pt(c,v,o2), Store(u,f,v), pt(c,u,o1).
 pt(c,y,o2) :- pt(c,x,o1), Load(y,x,f), fpt(o1,f,o2).
-
-#
-####
-# in context c, l = static.f
-#RgetStatFldInst(c,l,f) :- reachableCM(c,m), MgetStatFldInst(m,l,f).
-#DVC(c,l,o) :- RgetStatFldInst(c,l,f), FC(f,o).
-
 fptStat(f,o) :- pt(_,v,o), StoreStat(f,v).
 pt(c,y,o) :- LoadStat(y,f), fptStat(f,o), MV(m,y), CM(c,m).
-#
-####
-# in context c, b.f = r
-#RputInstFldInst(c,b,f,r) :- reachableCM(c,m), MputInstFldInst(m,b,f,r).
-#CFC(c1,f,c2) :- RputInstFldInst(c,b,f,r), DVC(c,b,c1), DVC(c,r,c2). split
-#
-####
-#
-#RputStatFldInst(c,f,r) :- reachableCM(c,m), MputStatFldInst(m,f,r).
-#FC(f,o) :- RputStatFldInst(c,f,r), DVC(c,r,o).
+
+reachableT(t) :- reachableCM(_,m), MV(m,v), Alloc(v,h), HT(h,t).
+reachableT(t) :- reachableCM(_,m), staticTM(t,m).
+reachableT(t) :- reachableCM(_,m), MV(m,v), StoreStat(f,v), staticTF(t,f).
+reachableT(t) :- reachableCM(_,m), MV(m,v), LoadStat(v,f), staticTF(t,f).
+reachableT(t) :- classT(t), reachableT(s), sub(s,t).

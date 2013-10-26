@@ -6,78 +6,53 @@
 .include "M.dom"
 .include "I.dom"
 .include "T.dom"
-.include "Z.dom"
 .include "V.dom"
 .include "C.dom"
 .include "H.dom"
-.include "S.dom"
 .include "F.dom"
 
-.bddvarorder M0xM1_I0_Z0_V0_C0xC1_H0_S0_F0_T0_T1
+.bddvarorder M0xM1_I0_V0_C0xC1_H0_F0_T0_T1
 
-IinvkArg(i:I,n:Z,v:V) input  # v is the nth args of the method m in invocation i.
-MmethArg(m:M,z:Z,v:V) input  # v is the zth args in method m 
-pt(c:C,v:V,o:C)    input  # in context c, v points to o.
-fpt(o1:C,f:F,o2:C) input
-chaIM(i:I,m:M) input      # stmt i invokes method m.
 MI(m:M,i:I) input         # stmt i belongs to method m.
 MC(m:M,c:T) input         # m is a method declared in a
-Callbacks(m:M) input	  # m is a callback method.
-MregI(m:M,i:I) input 	  # m has an invocation i that register callback. 
 CM(c:C,m:M) input         # c is a context of method m.
-CI(c:C,i:I) input         # stmt i is the top element in the k-limited callstack c
 CC(c:C,d:C) input         # there exists i s.t. c++[i] = d, c is old ctx, d is new ctx. 
 
 CH(o:C,h:H) input         # context’ified abstract location o corresponds to new stmt h
 HT(h:H,t:T) input         # heap h point to Type t.
 
-StatIM(i:I,m:M) input     # i statically invokes m. 
-SpecIM(i:I,m:M) input     # i special invoke m. 
-VirtIM(i:I,m:M) input     # i virtually invokes m. 
-
-SubSig(m:M,s:S) input     # s is subsignature of m.
-Dispatch(t:T,s:S,m:M) input     # t.m has subsig s.
 Launch(v:V,m:M) input
 IntentTgtField(f:F) input
 ActionField(f:F) input
 TgtAction(t:T,h:H) input
-VH(v:V,h:H) input
 MV(m:M,v:V) input         # v is a variable in method m
 MH(m:M,h:H) input         # h is a alloc in method m
+pt(c:C,v:V,o:C)    input  # in context c, v points to o.
+fpt(o1:C,f:F,o2:C) input
+CICM(d:C,i:I,c:C,m:M)   input  # i in cotext d calls method m in context c.
 
 CallerComp(m:M,c:C,o:T)   output  # m is a method declared in c
-
-DI(c:C,i:I) output  # invocation i has context c in method.
-DIC(d:C,i:I,c:C) output  # 
-CICM(d:C,i:I,c:C,m:M)   output  # i in cotext d calls method m in context c.
 ICCG(s:T,t:H)  output
 ICCGImp(s:T,t:T)  output
 
-#varComp(c:C,v:V,k:T) output
-#ptComp(c:C,v:V,k:T) output
-#depComp(s:T,c:C,v:V,t:T) output
+varComp(c:C,v:V,k:T) output
+ptComp(c:C,v:V,k:T) output
+depComp(s:T,c:C,v:V,t:T) output
 
 ###################
 #    RULES
 ###################
 
-DI(c,i) :- CM(c,m), MI(m,i).
-DIC(c,i,d) :- CI(d,i), CC(c,d).
-
-CICM(d,i,c,m) :- StatIM(i,m), DI(d,i), DIC(d,i,c).
-CICM(d,i,c,m) :- SpecIM(i,m), DI(d,i), DIC(d,i,c).
-CICM(d,i,c,m2) :- VirtIM(i,m1), IinvkArg(i,0,v), DI(d,i), pt(d,v,o), CH(o,h), HT(h,t), SubSig(m1,s), Dispatch(t,s,m2), DIC(d,i,c).
 
 CallerComp(m,k,c) :- MC(m,c), CM(k,m).
 CallerComp(m2,k2,c) :- CallerComp(m1,k1,c), MI(m1,i), CICM(k1,i,k2,m2).
-#CallerComp(cb,k2,c) :- Callbacks(cb), MmethArg(cb,0,p), pt(k2,p,o), pt(k1,a,o), CallerComp(m,k1,c), MregI(m,i), IinvkArg(i,0,a).
 
 #explicit intent
 ICCG(s,h) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), IntentTgtField(f), fpt(o,f,c), CH(c,h).
 #implicit intent
 ICCGImp(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), ActionField(f), TgtAction(t,h), fpt(o,f,c), CH(c,h).
 
-#varComp(c,v,k) :- CallerComp(m,c,k), MV(m,v).
-#ptComp(c,v,k) :- CallerComp(m,d,k), pt(c,v,o), CH(o,h), MH(m,h), CM(d,m), CC(d,o).
-#depComp(s,c,v,t) :- varComp(c,v,s), ptComp(c,v,t), s!=t.
-#depComp(s,c,v,t) :- CallerComp(m,c,s), MV(m,v), CallerComp(m1,d,t), pt(c,v,o), CH(o,h), MH(m1,h), CM(d,m1), CC(d,o), s!=t.
+varComp(c,v,k) :- CallerComp(m,c,k), MV(m,v).
+ptComp(c,v,k) :- CallerComp(m,d,k), pt(c,v,o), CH(o,h), MH(m,h), CM(d,m), CC(d,o).
+depComp(s,c,v,t) :- varComp(c,v,s), ptComp(c,v,t), s!=t.
+depComp(s,c,v,t) :- CallerComp(m,c,s), MV(m,v), CallerComp(m1,d,t), pt(c,v,o), CH(o,h), MH(m1,h), CM(d,m1), CC(d,o), s!=t.
