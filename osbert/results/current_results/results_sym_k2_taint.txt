@@ -1,0 +1,132 @@
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_012cf176808920e40598b4afac70e7d7.apk
+Number of proposed models: 1
+Number of rounds: 2
+Accuracy: 0.0
+Number of flows [before,after]: [2902,2902]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_018ee7f7fffd7323d7b771935382a1a6.apk
+Number of proposed models: 6
+Number of rounds: 2
+Accuracy: 0.0
+Number of flows [before,after]: [38,38]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_0ac54ec80dc63f5f6d0334d5eca8bb59.apk
+Number of proposed models: 0
+Number of rounds: 1
+Accuracy: NaN
+Number of flows [before,after]: [50,50]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_10163c1477513d7fb29e92d49a3d432a.apk
+Number of proposed models: 1
+Number of rounds: 2
+Accuracy: 0.0
+Number of flows [before,after]: [563,563]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_19780dca7c7b51891fb8962c1d9718e1.apk
+Number of proposed models: 7
+Number of rounds: 3
+Accuracy: 0.0
+Number of flows [before,after]: [715,715]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_1c2514acb978edccf7dabf6db23688f9.apk
+Number of proposed models: 30
+Number of rounds: 9
+Accuracy: 0.0
+Number of flows [before,after]: [127,127]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_24feff7f70fc1f4369069d64a9998d43.apk
+Number of proposed models: 0
+Number of rounds: 1
+Accuracy: NaN
+Number of flows [before,after]: [47,47]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_2e5cf84c11dea1e21e10e5d967c61b8e83fa65b8ea18aa3c26818403178cbaca.apk
+Number of proposed models: 13
+Number of rounds: 2
+Accuracy: 0.0
+Number of flows [before,after]: [0,0]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_4140ab0395fafad2b8642154e02615b08b1abea53a5e378784ed9d6775278c7b.apk
+Number of proposed models: 0
+Number of rounds: 1
+Accuracy: NaN
+Number of flows [before,after]: [3,3]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_54975175131d44e08fc08811a318c440.apk
+Number of proposed models: 5
+Number of rounds: 3
+Accuracy: 0.0
+Number of flows [before,after]: [65,65]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_75916bd63c15b6f5abece4c726aabacf.apk
+Number of proposed models: 3
+Number of rounds: 2
+Accuracy: 0.0
+Number of flows [before,after]: [855,855]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_7c3cd2c89ff1d204ebb39dcfb4ee8f655d68afca53f88ae504ea9e39199ed423.apk
+Number of proposed models: 12
+Number of rounds: 2
+Accuracy: 0.0
+Number of flows [before,after]: [0,0]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_a1d58b52b3f4b87116f346010d56214f.apk
+Number of proposed models: 0
+Number of rounds: 1
+Accuracy: NaN
+Number of flows [before,after]: [48,48]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_b098b09393b400c7fef3ea5e4439c569.apk
+Number of proposed models: 0
+Number of rounds: 1
+Accuracy: NaN
+Number of flows [before,after]: [64,64]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_b473ef5338c0e4e405af9b0048909833ae6b256ab552f190c67c32e7b4d1e7af.apk
+Number of proposed models: 0
+Number of rounds: 1
+Accuracy: NaN
+Number of flows [before,after]: [18,18]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_com.att.android.attsmartwifi-1.apk
+Number of proposed models: 14
+Number of rounds: 2
+Accuracy: 0.0
+Number of flows [before,after]: [39,39]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_e0c432cb2d5d4ed7af4f2fc2ff22918b.apk
+Number of proposed models: 0
+Number of rounds: 1
+Accuracy: NaN
+Number of flows [before,after]: [69,69]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_e1fdc8e10c047aa7875dfc6843b26eca.apk
+Number of proposed models: 0
+Number of rounds: 1
+Accuracy: NaN
+Number of flows [before,after]: [8,8]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_game-androng-andmj.apk
+Number of proposed models: 0
+Number of rounds: 1
+Accuracy: NaN
+Number of flows [before,after]: [264,264]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_mycalendarmobile_1d147f9e3e8dab05ddf1ed85b9939c13b62d1a007f58a5a2ff8cc7e73754bf27.apk
+Number of proposed models: 0
+Number of rounds: 1
+Accuracy: NaN
+Number of flows [before,after]: [278,278]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_pmsz_android_zol.apk
+Number of proposed models: 3
+Number of rounds: 2
+Accuracy: 0.0
+Number of flows [before,after]: [32,32]
+
+Results file name: _home_obastani_Documents_projects_stamp_stamptest_SymcApks_ready2go.apk
+Number of proposed models: 2
+Number of rounds: 2
+Accuracy: 0.0
+Number of flows [before,after]: [0,0]
+
