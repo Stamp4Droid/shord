@@ -59,6 +59,8 @@
 		  description="relations to print out after the analysis finishes"/>
     <prop-default property="stamp.print.allclasses" default="true"
 		  description="whether to dump out all processed jimple files"/>
+    <prop-default property="stamp.all.reports" default="depends on whether processing source or apk"
+		  description="whether to generate all reports or just final flows"/>
 
     <!-- Prepare the selected analysis backend. -->
     <runtarget target="-prepare-backend-${stamp.backend}"/>
@@ -126,7 +128,7 @@
     </java>
 
 	<!-- run the postprocessing python script-->
-	<exec executable="python" failonerror="true">
+	<!--exec executable="python" failonerror="true">
 	  <arg value="${stamp.dir}/scripts/buildReportDB.py"/>
 	  <arg value="-c"/>
 	  <arg value="${stamp.dir}/scripts/srcClass.xml"/>
@@ -136,7 +138,21 @@
 	  <arg value="${stamp.out.dir}/results"/>
 	  <arg value="-o"/>
 	  <arg value="${stamp.dir}/stamp_output"/>
-	</exec>
+	</exec-->
+
+	<java classname="stamp.reporting.DBWriter" fork="true" failonerror="true">
+	  <jvmarg value="-ea"/>
+	  <arg value="${apk}"/>
+	  <arg value="${stamp.dir}/stamp_output/app-reports.db"/>
+	  <arg value="${stamp.out.dir}/results"/>
+	  <arg value="${stamp.dir}/scripts/srcClass.xml"/>
+	  <arg value="${stamp.dir}/scripts/sinkClass.xml"/>
+      <classpath>
+		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
+		<pathelement location="${stamp.dir}/lib/commons-lang3-3.1.jar"/>
+		<pathelement location="${stamp.dir}/lib/sqlite-jdbc-3.7.2.jar"/>
+	  </classpath>
+	</java>
 
   </target>
 
