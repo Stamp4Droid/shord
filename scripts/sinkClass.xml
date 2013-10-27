@@ -11,7 +11,9 @@
   <sink desc="Device Log" class="OnDevice" id="10">!log</sink>
   <sink desc="Internal Message" class="OnDevice" id="11">!intent</sink>
   <sink desc="File" class="OnDevice" id="12">!file</sink>
-  <sink desc="Internal Message" class="OnDevice" id="13">!activity</sink>
+  <sink desc="Internal Message" class="OnDevice" id="13">!activity.start</sink>
   <sink desc="Internal Message" class="OnDevice" id="14">!broadcast</sink>
+  <sink desc="Internal Message" class="OnDevice" id="16">!service.start</sink>
+  <sink desc="Internal Message" class="OnDevice" id="17">!service.bind</sink>
   <sink desc="" class="Cipher" id="15">!enc/dec</sink>
 </root>

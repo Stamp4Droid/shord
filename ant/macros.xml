@@ -136,6 +136,17 @@
   <macrodef name="open-browser">
     <attribute name="url"/>
 	<sequential>
+	  <!-- Start Tomcat server. -->
+	  <exec executable="${stamp.tomcat.bindir}/startup.sh"
+			spawn="false"
+			failonerror="true"/>
+	  <echo>Starting Tomcat server</echo>
+	  
+	  <!-- Wait until the server is ready. -->
+	  <waitfor maxwait="3" maxwaitunit="minute" checkevery="1000">
+		<http url="http://localhost:8080"/>
+	  </waitfor>
+
 	  <if>
 		<isset property="stamp.server.host"/>
 		<then/>
@@ -155,6 +166,14 @@
 		<arg value="${stamp.osx_browser}" />
 		<arg line="http://${stamp.server.host}:8080/@{url}"/>
 	  </exec>
+	  <echo>
+		If your browser fails to open automatically in a few seconds, please go to: 
+		http://${stamp.server.host}:8080/@{url}
+	  </echo>
+	  <echo file="stamp-url.txt">
+		http://${stamp.server.host}:8080/@{url}
+	  </echo>
+
 	</sequential>
   </macrodef>
 
