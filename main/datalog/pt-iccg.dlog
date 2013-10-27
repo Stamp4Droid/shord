@@ -16,17 +16,13 @@
 MI(m:M,i:I) input         # stmt i belongs to method m.
 MC(m:M,c:T) input         # m is a method declared in a
 CM(c:C,m:M) input         # c is a context of method m.
-CC(c:C,d:C) input         # there exists i s.t. c++[i] = d, c is old ctx, d is new ctx. 
 
 CH(o:C,h:H) input         # context’ified abstract location o corresponds to new stmt h
-HT(h:H,t:T) input         # heap h point to Type t.
 
 Launch(v:V,m:M) input
 IntentTgtField(f:F) input
 ActionField(f:F) input
 TgtAction(t:T,h:H) input
-MV(m:M,v:V) input         # v is a variable in method m
-MH(m:M,h:H) input         # h is a alloc in method m
 pt(c:C,v:V,o:C)    input  # in context c, v points to o.
 fpt(o1:C,f:F,o2:C) input
 CICM(d:C,i:I,c:C,m:M)   input  # i in cotext d calls method m in context c.
@@ -34,10 +30,6 @@ CICM(d:C,i:I,c:C,m:M)   input  # i in cotext d calls method m in context c.
 CallerComp(m:M,c:C,o:T)   output  # m is a method declared in c
 ICCG(s:T,t:H)  output
 ICCGImp(s:T,t:T)  output
-
-varComp(c:C,v:V,k:T) output
-ptComp(c:C,v:V,k:T) output
-depComp(s:T,c:C,v:V,t:T) output
 
 ###################
 #    RULES
@@ -52,7 +44,3 @@ ICCG(s,h) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), IntentTgtField(f), fpt(o
 #implicit intent
 ICCGImp(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), ActionField(f), TgtAction(t,h), fpt(o,f,c), CH(c,h).
 
-varComp(c,v,k) :- CallerComp(m,c,k), MV(m,v).
-ptComp(c,v,k) :- CallerComp(m,d,k), pt(c,v,o), CH(o,h), MH(m,h), CM(d,m), CC(d,o).
-depComp(s,c,v,t) :- varComp(c,v,s), ptComp(c,v,t), s!=t.
-depComp(s,c,v,t) :- CallerComp(m,c,s), MV(m,v), CallerComp(m1,d,t), pt(c,v,o), CH(o,h), MH(m1,h), CM(d,m1), CC(d,o), s!=t.

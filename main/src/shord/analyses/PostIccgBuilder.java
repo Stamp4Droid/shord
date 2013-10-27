@@ -65,6 +65,7 @@ import org.w3c.dom.Element;
   **/
 
 @Chord(name="post-java-iccg",
+       //consumes={ "CallerComp", "CICM" },
        consumes={ "CallerComp", "CICM", "depComp" },
        namesOfTypes = { "M", "T", "C", "I"},
        types = { DomM.class, DomT.class, DomC.class, DomI.class},

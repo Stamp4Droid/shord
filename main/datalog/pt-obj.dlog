@@ -14,7 +14,6 @@
 .include "T.dom"
 .include "Z.dom"
 
-#.bddvarorder M0_C0xC1xC2_V0xV1_H0xF0_I0_T0xT1_S0_Z0
 .bddvarorder C0xC1_V0xV1_H0_F0_I0_T0xT1_M0_S0_M1_Z0
 
 Assign(v:V,u:V)     input   # v = u
@@ -34,6 +33,7 @@ CH(o:C,h:H) input         # context’ified abstract location o corresponds to n
 CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
 HT(h:H,t:T) input         # heap h point to Type t.
 MI(m:M,i:I) input         # stmt i belongs to method m.
+CI(c:C,i:I) input         # stmt i is on the top of c.
 
 StatIM(i:I,m:M) input     # i statically invokes m. 
 SpecIM(i:I,m:M) input     # i special invoke m. 
@@ -50,6 +50,7 @@ Dispatch(t:T,s:S,m:M) input     # t.m has subsig s.
 ###################
 #    OUTPUT
 ###################
+CIC(c:C,i:I,d:C) output # d = [i, c]
 reachableT(t:T) output
 DIC(c:C,i:I,c:C) output
 DVDV(c:C0,u:V0,d:C1,v:V1) output
@@ -70,9 +71,15 @@ reachableCM(0,m) :- clinitTM(t,m), reachableT(t).
 reachableCM(c,m) :- CICM(_,_,c,m). 
 reachableCI(c,i) :- MI(m,i), reachableCM(c,m).
 
-ICM(i,o,m2) :- VirtIM(i,m1), HT(h,t), SubSig(m1,s), Dispatch(t,s,m2), CH(o,h). split
+ICM(i,o,m2) :- VirtIM(i,m1), HT(h,t), SubSig(m1,s), Dispatch(t,s,m2), CH(o,h).
 
 DIC(c,i,o) :- IinvkArg(i,0,v), pt(c,v,o).
+
+CIC(c,i,d) :- CC(c,d), CI(d,i).
+#kcfaSenStatIM(i,m) :- statIM(i,m), kcfaSenM(m).
+#kcfaDIC(c,i,d) :- CIC(c,i,d), MI(m,i), kcfaSenM(m).
+CICM(c,i,d,m) :- reachableCI(c,i), StatIM(i,m), CIC(c,i,d).
+
 
 CICM(c,i,o,m) :- reachableCI(c,i), ICM(i,o,m), DIC(c,i,o).
 CICM(c,i,o,m) :- reachableCI(c,i), SpecIM(i,m), DIC(c,i,o).
@@ -86,6 +93,12 @@ pt(c,u,o) :- DVDV(c,u,d,v), pt(d,v,o), typeFilter(u,o).
 pt(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
 pt(c,v,o) :- pt(c,u,o), Assign(v,u), typeFilter(v,o).
 fpt(o1,f,o2) :- pt(c,v,o2), Store(u,f,v), pt(c,u,o1).
+#u.f=v
+#fpt(c1,f,c2) :- pt(c,v,c2), reachableCM(c,m),MV(m,u),Store(u,f,v), pt(c,u,c1).
+
+#RputInstFldInst(c,b,f,r) :- reachableCM(c,m), MputInstFldInst(m,b,f,r).
+#CFC(c1,f,c2) :- RputInstFldInst(c,b,f,r), DVC(c,b,c1), DVC(c,r,c2). split
+
 pt(c,y,o2) :- pt(c,x,o1), Load(y,x,f), fpt(o1,f,o2).
 fptStat(f,o) :- pt(_,v,o), StoreStat(f,v).
 pt(c,y,o) :- LoadStat(y,f), fptStat(f,o), MV(m,y), CM(c,m).
