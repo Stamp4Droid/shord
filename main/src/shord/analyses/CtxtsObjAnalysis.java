@@ -169,25 +169,12 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
         relStatIM.close();
 
         // Populate domC
-		/*
-        for (int iIdx = 0; iIdx < numI; iIdx++) {
-			int mIdx = ItoM[iIdx];
-			Unit invk = ItoQ[iIdx];
-            Set<Ctxt> ctxts = methToCtxts[mIdx];
-            if(ctxts == null) continue;
-            for (Ctxt oldCtxt : ctxts) {
-                Object[] oldElems = oldCtxt.getElems();
-                Object[] newElems = combine(K, invk, oldElems);
-                domC.setCtxt(newElems);
-            }
-        }
-		*/
-
         for (int hIdx = 1; hIdx < numA; hIdx++) {
 			int mIdx = HtoM[hIdx];
 			AllocNode alloc = HtoQ[hIdx];
 
             Set<Ctxt> ctxts = methToCtxts[mIdx];
+            assert(ctxts != null);
             if(ctxts == null) continue;
             for (Ctxt oldCtxt : ctxts) {
                 Object[] oldElems = oldCtxt.getElems();
@@ -200,30 +187,13 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
         int numC = domC.size();
 
         relCC.zero();
-        relCI.zero();
-        /*for (int iIdx = 0; iIdx < numI; iIdx++) {
-			int mIdx = ItoM[iIdx];
-            Unit invk = ItoQ[iIdx];
-            Set<Ctxt> ctxts = methToCtxts[mIdx];
-            if(ctxts == null) continue;
-            for (Ctxt oldCtxt : ctxts) {
-                Object[] oldElems = oldCtxt.getElems();
-                Object[] newElems = combine(K, invk, oldElems);
-                Ctxt newCtxt = domC.setCtxt(newElems);
-                //relCC.add(oldCtxt, newCtxt);
-                //relCI.add(newCtxt, invk);
-            }
-        }*/
-        relCI.save();
-
-        assert (domC.size() == numC);
-
         relCH.zero();
-        for (int hIdx = 1; hIdx < numA; hIdx++) {
+
+        for (int hIdx = 0; hIdx < numA; hIdx++) {//why chord uses 1?
             int mIdx = HtoM[hIdx];
 			AllocNode alloc = HtoQ[hIdx];
             Set<Ctxt> ctxts = methToCtxts[mIdx];
-            if(ctxts == null) continue;
+            assert(ctxts != null);
             for (Ctxt oldCtxt : ctxts) {
                 Object[] oldElems = oldCtxt.getElems();
                 Object[] newElems = combine(K, alloc, oldElems);

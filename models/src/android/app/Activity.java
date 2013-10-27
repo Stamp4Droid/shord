@@ -74,10 +74,10 @@ public class Activity
 		return getContentResolver().query(uri, projection, selection, selectionArgs, sortOrder);
     }
 
-	public  android.view.View findViewById(int id) 
+	/*public  android.view.View findViewById(int id) 
 	{ 
 		return edu.stanford.stamp.harness.ViewFactory.findViewById(null, id);
-	}
+	}*/
 
 
 	public  java.lang.Object getSystemService(java.lang.String name) 
