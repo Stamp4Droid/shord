@@ -32,7 +32,9 @@ depComp(s:T,c:C,v:V,t:T) output
 
 varComp(c,v,k) :- CM(c,m), MV(m,v), CT(c,k).
 varComp(c,v,k) :- MV(m,v), CM(c,m), MC(m,k).
-ptComp(c,v,k) :- pt(c,v,o), CH(o,h), MH(m,h), CM(c,m), MC(m,k).
-ptComp(c,v,k) :- pt(c,v,o), CH(o,h), MH(m,h), CM(c,m), CT(c,k).
+#ptComp(c,v,k) :- pt(c,v,o), CH(o,h), MH(m,h), CM(c,m), MC(m,k).
+ptComp(c,v,k) :- pt(c,v,o), CH(o,h), MH(m,h), MC(m,k).
+#ptComp(c,v,k) :- pt(c,v,o), CH(o,h), MH(m,h), CM(c,m), CT(c,k).
+ptComp(c,v,k) :- pt(c,v,o), CH(o,h), MH(_,h), CT(c,k).
 
 depComp(s,c,v,t) :- varComp(c,v,s), ptComp(c,v,t), s!=t.

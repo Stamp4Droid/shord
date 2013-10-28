@@ -26,6 +26,8 @@ import soot.RefType;
 import soot.jimple.Stmt;
 import soot.SootMethod;
 import soot.util.NumberedSet;
+import soot.jimple.AnyNewExpr;
+import soot.jimple.AssignStmt;
 
 import shord.program.Program;
 import shord.project.ClassicProject;
@@ -286,6 +288,12 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
                                 relCT.add(c,t);
                                 break;
                             }
+                        }
+                    } else {
+                        RefType t = (RefType)((AllocNode)elem).getType();
+                        if(ICCGBuilder.components.get(t.getClassName())!=null){
+                            relCT.add(c,t);
+                            break;
                         }
                     }
                 }
