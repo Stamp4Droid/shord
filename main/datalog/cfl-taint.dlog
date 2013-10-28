@@ -120,9 +120,9 @@ Sink2PrimFldStat(cl:CL,f:F)
 # OUTPUT: RESULTS
 ###################
 
-labelRef2(c:C,v:V,l:CL)  output # (c,v) is labeled with l
-labelPrim2(c:C,v:U,l:CL) output # (c,v) is labeled with l
-flow2(src:CL,sink:CL) output
+labelRefTaint(c:C,v:V,l:CL)  output # (c,v) is labeled with l
+labelPrimTaint(c:C,v:U,l:CL) output # (c,v) is labeled with l
+flowTaint(src:CL,sink:CL) output
 
 ###################
 # RULES: OBJECT ANNOTATIONS
@@ -234,8 +234,8 @@ Sink2PrimFldStat(cl,f) :- Sink2Prim(c,cl,v), StoreStatPrimCtxt(c,f,v). # StoreSt
 # RULES: OUTPUT
 ###################
 
-labelRef2(c,v,l)  :- Src2Obj(l,o), pt(c,v,o).
-labelRef2(c,v,l)  :- Sink2Obj(l,o), pt(c,v,o).
-labelPrim2(c,u,l) :- Src2Prim(c,l,u).
-labelPrim2(c,u,l) :- Sink2Prim(c,l,u).
-flow2(src,sink)   :- Src2Sink(src,sink).
+labelRefTaint(c,v,l)  :- Src2Obj(l,o), pt(c,v,o).
+labelRefTaint(c,v,l)  :- Sink2Obj(l,o), pt(c,v,o).
+labelPrimTaint(c,u,l) :- Src2Prim(c,l,u).
+labelPrimTaint(c,u,l) :- Sink2Prim(c,l,u).
+flowTaint(src,sink)   :- Src2Sink(src,sink).
