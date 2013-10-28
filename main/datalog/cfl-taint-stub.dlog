@@ -171,7 +171,7 @@ Obj2PrimRetTStub(c,o,u,m,z) :- pt(c,v,o), RefArg2PrimRetTStub(c,v,u,m,z). # pt i
 
 Obj2RefArgTStub(c,o1,v,m,z1,z2) :- fpt(o2,0,o1), Obj2RefArgTStub(c,o2,v,m,z1,z2). # fpt is backwards
 Obj2RefRetTStub(c,o1,v,m,z) :- fpt(o2,0,o1), Obj2RefRetTStub(c,o2,v,m,z). # fpt is backwards
-Obj2PrimRetTStub(c,o1,v,m,z) :- fpt(o2,0,o1), Obj2PrimRetTStub(c,o2,v,m,z) # fpt is backwards
+Obj2PrimRetTStub(c,o1,v,m,z) :- fpt(o2,0,o1), Obj2PrimRetTStub(c,o2,v,m,z). # fpt is backwards
 
 ###################
 # RULES: SINKF
@@ -255,9 +255,9 @@ Src2Prim(c,cl,u) :- Src2PrimFld(cl,o,f), pt(c,v,o), LoadPrimCtxt(c,u,v,f). # pt 
 Src2Prim(c,cl,u) :- Src2PrimFldStat(cl,f), LoadStatPrimCtxt(c,u,f). # LoadStatPrimCtxt is flipped
 
 # Stub
-Src2Prim(c,cl,v) :- Src2Obj(cl,o), Obj2PrimRetT(c,o,v,_,_).
+Src2Prim(c,cl,v) :- Src2Obj(cl,o), Obj2PrimRetTStub(c,o,v,_,_).
 Src2Prim(c,cl,u) :- Src2Prim(c,cl,v), PrimArg2PrimRetTStub(c,v,u,_,_).
-Src2Prim(c,cl,v) :- Src2PrimFld(cl,o,0), Obj2PrimRetT(c,o,v,_,_).
+Src2Prim(c,cl,v) :- Src2PrimFld(cl,o,0), Obj2PrimRetTStub(c,o,v,_,_).
 
 # Src-prim_fld flow
 
@@ -281,9 +281,9 @@ Sink2Prim(c,cl,u) :- Sink2PrimFld(cl,o,f), pt(c,v,o), LoadPrimCtxt(c,u,v,f). # p
 Sink2Prim(c,cl,u) :- Sink2PrimFldStat(cl,f), LoadStatPrimCtxt(c,u,f). # LoadStatPrimCtxt is flipped
 
 # Stub
-Sink2Prim(c,cl,v) :- Sink2Obj(cl,o), Obj2PrimRetT(c,o,v,_,_).
+Sink2Prim(c,cl,v) :- Sink2Obj(cl,o), Obj2PrimRetTStub(c,o,v,_,_).
 Sink2Prim(c,cl,u) :- Sink2Prim(c,cl,v), PrimArg2PrimRetTStub(c,v,u,_,_).
-Sink2Prim(c,cl,v) :- Sink2PrimFld(cl,o,0), Obj2PrimRetT(c,o,v,_,_).
+Sink2Prim(c,cl,v) :- Sink2PrimFld(cl,o,0), Obj2PrimRetTStub(c,o,v,_,_).
 
 # Sink-prim_fld flow
 
