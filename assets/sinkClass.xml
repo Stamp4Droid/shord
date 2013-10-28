@@ -8,7 +8,7 @@
   <sink desc="SMS" class="OffDevice" id="7">!sendtextmessage</sink>
   <sink desc="Browser" class="OnDevice" id="8">!browser_searches.modify</sink>
   <sink desc="Browser" class="OnDevice" id="9">!browser_history.modify</sink>
-  <sink desc="Device Log" class="OnDevice" id="10">!log</sink>
+  <sink desc="Device Log" class="Log" id="10">!log</sink>
   <sink desc="Internal Message" class="OnDevice" id="11">!intent</sink>
   <sink desc="File" class="OnDevice" id="12">!file</sink>
   <sink desc="Internal Message" class="OnDevice" id="13">!activity.start</sink>

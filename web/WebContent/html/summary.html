@@ -2,6 +2,7 @@
 <html lang="en" class="fuelux">
 	<head>
 		<link href="/stamp/fuelux/css/fuelux.min.css" rel="stylesheet" />
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 		
 		<style type="text/css">
 		  body {
@@ -13,8 +14,16 @@
              background-color: #F5A9A9;
 		  }
 
+          .table tbody tr td.warning {
+             background-color: #F5DA81;
+		  }
+
           .table tbody tr td.success {
              background-color: #BCF5A9;
+		  }
+
+		  .table tbody tr.header {
+             background-color: #F2F2F2;
 		  }
   		</style>
   		
@@ -36,7 +45,7 @@
 		  <div class="span2">
 		  </div>
  		  <div class="span8" id="summarytable">
-			<table id="appsdata" class="table table-bordered">
+			<table id="appsdata" class="table table-bordered" align="center">
 			  <tbody>
 			  </tbody>
 			</table>
@@ -50,6 +59,11 @@
 	  <script src="/stamp/fuelux/loader.js" type="text/javascript"></script>
 
 	  <script>
+		var iconmap = { "HTTP" : "glyphicon-cloud-upload",
+		                "Internet" : "glyphicon-cloud-upload",
+                        "SMS" : "glyphicon-envelope",
+                        "File" : "glyphicon-floppy-save" }; 
+
 		function getParameterByName(name) {
           var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
           return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
@@ -65,7 +79,7 @@
             data: {dbpath: getParameterByName("dbpath"), formatfilepath: getParameterByName("format")},
             dataType: "json",
             success: function(rows) {
-              var header = '<tr><th>SHA256</th><th>APK Name</th>';
+              var header = '<tr class="header"><th>SHA256</th><th>APK Name</th>';
 		      var datatypes = rows[0];
 		      for (var j in datatypes) { 
                   header += '<th>'+ datatypes[j] + '</th>';
@@ -85,15 +99,27 @@
 
 		        var html =  '<tr><td><a href="#" data-toggle="tooltip" title="'+sha+'">'+ shortsha + '</a></td>' + '<td>' + row.app + '</td>';
                 var flows = row.flows;
-                var numflows = 0;
+                var numredflows = 0;
+                var numyellowflows = 0;
 		        for (var f in flows) {
-                  if(flows[f] == 1) {
-                    html += '<td class="danger">';
-					numflows++;
-                  } else
-                    html += '<td class="success">';
-		          html += '</td>';
+                  var flow = flows[f];
+				  if(flow.length > 0) {
+                    var sinkDesc = flow[0];
+                    var icon = iconmap[sinkDesc];
+                    var sinkClass = flow[1];
+		            if(sinkClass == 'OffDevice') {
+                      html += '<td class="danger"><div style="text-align: center;" class="glyphicon '+icon+'"></div></td>';
+                      numredflows++;
+                    }
+                    else if(sinkClass == 'OnDevice') {
+                      html += '<td class="warning"><div style="text-align: center;" class="glyphicon '+icon+'"></div></td>';
+                      numyellowflows++;
+                    }
+                  } else 
+                    html += '<td class="success"></td>';
 		        }
+                var yellowweight = 0.5;
+                var numflows = yellowweight * numyellowflows + numredflows;
                 var pvi = Math.round((numflows/flows.length)*10);
                 html += '<td><span class="badge badge-important">'+pvi+'</span></td>';
                 html += '</tr>';

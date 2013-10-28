@@ -147,6 +147,9 @@
 		<http url="http://localhost:8080"/>
 	  </waitfor>
 
+	  <ant antfile="${stamp.dir}/web/build.xml" target="deploy"
+	 inheritAll="false" useNativeBasedir="true"/>
+
 	  <if>
 		<isset property="stamp.server.host"/>
 		<then/>

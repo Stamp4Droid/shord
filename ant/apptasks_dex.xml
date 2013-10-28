@@ -145,8 +145,8 @@
 	  <arg value="${apk}"/>
 	  <arg value="${stamp.dir}/stamp_output/app-reports.db"/>
 	  <arg value="${stamp.out.dir}/results"/>
-	  <arg value="${stamp.dir}/scripts/srcClass.xml"/>
-	  <arg value="${stamp.dir}/scripts/sinkClass.xml"/>
+	  <arg value="${stamp.dir}/assets/srcClass.xml"/>
+	  <arg value="${stamp.dir}/assets/sinkClass.xml"/>
       <classpath>
 		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
 		<pathelement location="${stamp.dir}/lib/commons-lang3-3.1.jar"/>
