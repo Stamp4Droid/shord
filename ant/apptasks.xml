@@ -20,7 +20,9 @@
 		<mkdir dir="${stamp.out.dir}"/>
 	  </else>
 	</if>
+
     <property name="driver.dir" location="${stamp.out.dir}/stamp-driver"/>
+
 	<if>
 	  <!-- NOTE: same heuristic used in index.jsp! -->
 	  <matches string="${app}" pattern="^.*\.apk$"/>
@@ -44,6 +46,14 @@ outPath=${stamp.out.dir}
 srcPath=${stamp.src.path}:${stamp.gen.path}:${driver.dir}
 libPath=${stamp.lib.jars}
 		</echo>
+
+		<!-- Launch browser if appropriate. -->
+		<if>
+		  <equals arg1="${stamp.show.results}" arg2="true"/>
+		  <then>
+			<open-browser url="stamp/html/index.jsp?propertyfile=${stamp.out.dir}/stamp.properties"/>
+		  </then>
+		</if>
 	  </then>
 
 	  <else>
@@ -60,11 +70,19 @@ libPath=${stamp.lib.jars}
 stamp.droidrecord.logfile.template=${stamp.droidrecord.logfile.template}
 stamp.droidrecord.logfile.bin=${stamp.droidrecord.logfile.bin}
 		</echo>
+
+		<!-- Launch browser if appropriate. -->
+		<if>
+		  <or>
+			<not><isset property="stamp.show.results"/></not>
+			<equals arg1="${stamp.show.results}" arg2="true" casesensitive="false"/>
+		  </or>
+		  <then>
+			<open-browser url="stamp/html/index.jsp?propertyfile=${stamp.out.dir}/stamp.properties"/>
+		  </then>
+		</if>		
 	  </else>
-    </if>
-	
-	<!-- Launch browser. -->
-	<open-browser url="stamp/html/index.jsp?propertyfile=${stamp.out.dir}/stamp.properties"/>
+	</if>	  
   </target>
 
   <target name="-analyze-src"

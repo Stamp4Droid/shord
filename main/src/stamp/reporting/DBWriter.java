@@ -93,6 +93,10 @@ public class DBWriter
 		int numFlows = flowElems.getLength();
 		System.out.println("numFlows = "+ numFlows);
 		
+		Statement stmt = c.createStatement();
+		stmt.executeUpdate("DELETE FROM flows WHERE sha256 = '"+sha256+"';");
+		stmt.close();
+		
 		for(int i = 0; i < numFlows; i++){
 			Element flowElem = (Element) flowElems.item(i);
 			String label = getLabel(flowElem);
@@ -114,7 +118,7 @@ public class DBWriter
 			//System.out.println("src: "+src+" "+srcDesc+" "+srcClass+" "+srcPriority);
 			//System.out.println("sink: "+sink+" "+sinkDesc+" "+sinkClass);
 			
-			Statement stmt = c.createStatement();
+			stmt = c.createStatement();
 			String sql = "INSERT INTO flows (sha256,appName,srcLabel,srcDesc,srcClass,sinkLabel,sinkDesc,sinkClass) VALUES (" +
 				"'"+sha256+"',"+ 
 				"'"+apkName+"',"+ 

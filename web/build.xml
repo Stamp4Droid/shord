@@ -2,7 +2,7 @@
 <project name="Stamp-Web" default="compile">
   
   <property name="stamp.dir" location=".."/>
-  <property name="warname" value="stamp.war"/>
+  <property name="warname" value="${stamp.dir}/bin/stamp.war"/>
   <property name="tomcat.dir" location="${stamp.dir}/tomcat"/>
 
   <path id="catalina-ant-classpath">
@@ -51,7 +51,7 @@
 	 <replace file="web.xml" token="###stamp.dir###" value="${stamp.dir}"/>
   </target>
 
-  <target name="war" depends="-create-web.xml">
+  <target name="war" depends="compile,-create-web.xml">
 	<war destfile="${warname}" webxml="web.xml">
 	  <fileset dir="WebContent"/>
 	  <lib dir="lib"/>
@@ -72,7 +72,7 @@
 					 url="${tomcat.manager}"
 					 path="/stamp"
 					 update="true"
-					 localWar="${stamp.dir}/web/${warname}"/>
+					 localWar="${warname}"/>
   </target>
 
   <target name="clean">

@@ -58,9 +58,9 @@ public class DBReader extends HttpServlet
 			}
 
 			String query = 
-				"SELECT sha256, appName, srcDesc "+
+				"SELECT sha256, appName, srcDesc, sinkDesc, sinkClass "+
 				"FROM flows "+
-				"WHERE sinkClass = 'OffDevice' and srcDesc in ("+types.toString()+");";
+				"WHERE sinkClass in ('OnDevice', 'OffDevice') and srcDesc in ("+types.toString()+");";
 			System.out.println("Query: "+query); 
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
@@ -75,7 +75,9 @@ public class DBReader extends HttpServlet
 				}
 
 				String srcDesc = rs.getString("srcDesc");
-				ad.setFlow(srcDesc);
+				String sinkDesc = rs.getString("sinkDesc");
+				String sinkClass = rs.getString("sinkClass");
+				ad.setFlow(srcDesc, sinkDesc, sinkClass);
 
 				//String sinkLabel = rs.getString("sinkLabel");
 				//System.out.println( appName + " " + sourceLabel +" " +sinkLabel);
@@ -91,17 +93,23 @@ public class DBReader extends HttpServlet
 			boolean first = true;
 			for(Map.Entry<String,AppData> e : shaToAppData.entrySet()){
 				String sha = e.getKey();
-				String appName = e.getValue().appName;
-				boolean[] flows = e.getValue().flows;
+				AppData ad = e.getValue();
+				String appName = ad.appName;
+				String[] sinkDescs = ad.sinkDescs;
+				String[] sinkClasses = ad.sinkClasses;
 
 				builder.append(", ");
 
 				builder.append("{\"sha\": \""+sha+"\", \"app\": \""+appName+"\", \"flows\": [");
-
-				for(int i = 0; i < flows.length; i++){
+				for(int i = 0; i < sinkDescs.length; i++){
 					if(i > 0)
 						builder.append(", ");
-					builder.append(flows[i] ? "1" : "0");
+					String sinkDesc = sinkDescs[i];
+					String sinkClass = sinkClasses[i];
+					if(sinkDesc != null)
+						builder.append("[\"" + sinkDesc +"\",\""+sinkClass+"\"]");
+					else
+						builder.append("[]");
 				}						
 				builder.append("]}");
 			}
@@ -118,19 +126,23 @@ public class DBReader extends HttpServlet
 
 	private class AppData
 	{
-		boolean[] flows;
+		String[] sinkClasses;
+		String[] sinkDescs;
 		String appName;
 		
 		AppData(String appName){
 			this.appName = appName;
-			this.flows = new boolean[DBReader.this.dataTypes.length];
+			int n = DBReader.this.dataTypes.length;
+			this.sinkClasses = new String[n];
+			this.sinkDescs = new String[n];
 		}
 		
-		void setFlow(String dt){
+		void setFlow(String dt, String sinkDesc, String sinkClass){
 			String[] dtypes = DBReader.this.dataTypes;
 			for(int i = 0; i < dtypes.length; i++){
 				if(dtypes[i].equals(dt)){
-					flows[i] = true;
+					sinkDescs[i] = sinkDesc;
+					sinkClasses[i] = sinkClass;
 					break;
 				}
 			}
