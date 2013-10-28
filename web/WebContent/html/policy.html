@@ -254,11 +254,18 @@
                         $.ajax({
                             type: "GET",
                             url: "/stamp/policyServlet",
-                            data: {annot: "Sources"},
+                            data: {
+                                annot: "Sources"
+                            },
                             dataType: "xml",
                             success: function(xml) {
+                                var seen = [];
                                 $(xml).find('src').each(function() {
-                                    $("#src-drop-down").append('<li><a href="#"></a>' + $(this).text() + '</li>');
+                                    var d = $(this).attr("desc");
+                                    if (jQuery.inArray(d, seen) < 0) {
+                                        seen.push(d);
+                                        $("#src-drop-down").append('<li><a href="#">' + d + '</a></li>');
+                                    }
                                 });
                             }
                         });
@@ -266,11 +273,18 @@
                         $.ajax({
                             type: "GET",
                             url: "/stamp/policyServlet",
-                            data: {annot: "Sinks"},
+                            data: {
+                                annot: "Sinks"
+                            },
                             dataType: "xml",
                             success: function(xml) {
+                                var seen = [];
                                 $(xml).find('sink').each(function() {
-                                    $("#sink-drop-down").append('<li><a href="#"></a>' + $(this).text() + '</li>');
+                                    var d = $(this).attr("desc");
+                                    if ($.inArray(d, seen) < 0) {
+                                        seen.push(d);
+                                        $("#sink-drop-down").append('<li><a href="#">' + d + '</a></li>');
+                                    }
                                 });
                             }
                         });
