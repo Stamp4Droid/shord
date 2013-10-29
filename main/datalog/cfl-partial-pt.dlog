@@ -72,6 +72,9 @@ typeFilter(v:V,o:C) input   # type wise, v can point-to o
 PreFlowsToFull(c:C,o:C,v:V) output
 Transfer(v:V,u:V) output
 
+PtPartial(c:C,v:V,o:C) output
+FptPartial(o1:C,f:F,o2:C) output
+
 PtFull(c:C,v:V,o:C) output
 FptFull(o1:C,f:F,o2:C) output
 
@@ -129,7 +132,7 @@ MidFlowsTo(c,v,b,x) :- PreFlowsTo(b,o,x), pt(d,w,o), Store(w,_,u), PostFlowsTo(c
 MidFlowsTo(c,v,d,u) :- PreFlowsTo(c,o,v), PreFlowsTo(d,o,u).
 
 ###################
-# RULES: FULL FLOWS
+# RULES: PARTIAL FLOWS
 ###################
 
 # helper
@@ -141,15 +144,23 @@ Transfer(v,u) :- RefArg2RefArgTStub(_,v,u,_,_,_).
 Transfer(v,u) :- RefArg2RefRetTStub(_,v,u,_,_).
 Transfer(u,v) :- RefArg2RefRetTStub(_,v,u,_,_).
 
-# full flows
+# partial flows
 
 PreFlowsToFull(c,o,v) :- PreFlowsTo(c,o,v).
 PreFlowsToFull(d,o,w) :- Transfer(v,u), PreFlowsToFull(c,o,v), MidFlowsTo(c,u,d,w).
-PtFull(d,w,o) :-  Transfer(v,u), PreFlowsToFull(c,o,v), PostFlowsTo(c,u,d,w), typeFilter(w,o).
 
-#PtFull(d,u,o) :- pt(d,u,o).
-#FptFull(o1,f,o2) :- fpt(o1,f,o2).
+PtPartial(d,w,o) :-  Transfer(v,u), PreFlowsToFull(c,o,v), PostFlowsTo(c,u,d,w), typeFilter(w,o).
 
-FptFull(o1,f,o2) :- pt(c,v,o2), Store(u,f,v), PtFull(c,u,o1).
-FptFull(o1,f,o2) :- pt(c,u,o1), Store(u,f,v), PtFull(c,v,o2).
-FptFull(o1,f,o2) :- PtFull(c,v,o2), Store(u,f,v), PtFull(c,u,o1).
+FptPartial(o1,f,o2) :- pt(c,v,o2), Store(u,f,v), PtPartial(c,u,o1).
+FptPartial(o1,f,o2) :- pt(c,u,o1), Store(u,f,v), PtPartial(c,v,o2).
+FptPartial(o1,f,o2) :- PtPartial(c,v,o2), Store(u,f,v), PtPartial(c,u,o1).
+
+###################
+# RULES: FULL FLOWS
+###################
+
+PtFull(c,v,o) :- pt(c,v,o).
+FptFull(o1,f,o2) :- fpt(o1,f,o2).
+
+PtFull(c,v,o) :- PtPartial(c,v,o).
+FptFull(o1,f,o2) :- FptFull(o1,f,o2).

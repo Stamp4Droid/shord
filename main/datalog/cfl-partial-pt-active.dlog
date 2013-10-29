@@ -53,13 +53,13 @@ pt(c:C,v:V,o:C) input
 # INPUT: ACTIVE PT
 ###################
 
-ActivePtFull(c:C,v:V,o:C) input
+ActivePtPartial(c:C,v:V,o:C) input
 
 ###################
 # INTERMEDIATE: CONSTRAINED
 ###################
 
-ActivePtFullFiltered(c:C,v:V,o:C) output
+ActivePtPartialFiltered(c:C,v:V,o:C) output
 ActiveObj(o:C) output
 ActiveRef(c:C,v:V) output
 
@@ -112,8 +112,8 @@ ActivePostFlowsTo(c,v,d,u) :- CPostFlowsTo(c,v,u), ActiveRef(d,u).
 
 # o -> v_c -> u_c -> w_d
 
-ActiveObj(o) :- ActivePtFull(_,v,o), typeFilter(v,o).
-ActiveRef(c,v) :- ActivePtFull(c,v,o), typeFilter(v,o).
+ActiveObj(o) :- ActivePtPartial(_,v,o), typeFilter(v,o).
+ActiveRef(c,v) :- ActivePtPartial(c,v,o), typeFilter(v,o).
 
 CPreFlowsToFull(c,o,v) :- ActiveObj(o), PreFlowsToFull(c,o,v).
 CPostFlowsTo(c,u,w) :- ActiveRef(d,w), PostFlowsTo(c,u,d,w).
