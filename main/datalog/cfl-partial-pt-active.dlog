@@ -37,13 +37,9 @@ StoreStatPrimCtxt(c:C,f:F,v:U) input
 AssignPrimCtxt(c:C,v:U,u:U) input
 AssignPrimCCtxt(c:C,v:U,d:C,u:U) input
 
-# Src label
-Src2RefT(c:C,cl:CL,v:V) input
-Src2PrimT(c:C,cl:CL,v:U) input
-
-# Sink label
-Sink2RefT(c:C,cl:CL,v:V) input
-Sink2PrimT(c:C,cl:CL,v:U) input
+# Label label
+Label2RefT(c:C,cl:CL,v:V) input
+Label2PrimT(c:C,cl:CL,v:U) input
 
 # Sink full label (out labels)
 SinkF2RefF(c:C,cl:CL,v:V) input
@@ -64,8 +60,7 @@ Prim2PrimF(c:C,v:U,u:U) input
 Obj2RefT(c:C,o:C,v:V) input
 Obj2PrimT(c:C,o:C,v:U) input
 
-Src2ObjT(cl:CL,o:C) input
-Sink2ObjT(cl:CL,o:C) input
+Label2ObjT(cl:CL,o:C) input
 
 # Sink_full-obj flow
 SinkF2Obj(cl:CL,o:C) input
@@ -73,29 +68,17 @@ SinkF2Obj(cl:CL,o:C) input
 # Sink_full-prim flow
 SinkF2Prim(c:C,cl:CL,v:U) input
 
+# Src-sink flow
 Src2Sink(src:CL,sink:CL) input
 
-# Src-obj flow
+# Label-obj flow
+Label2Obj(cl:CL,o:C) input
+Label2ObjX(cl:CL,o2:C) input
 
-Src2Obj(cl:CL,o:C) input
-Src2ObjX(cl:CL,o2:C) input
-
-# Sink-obj flow
-
-Sink2Obj(cl:CL,o:C) input
-Sink2ObjX(cl:CL,o2:C) input
-
-# Src-prim flow
-
-Src2Prim(c:C,cl:CL,v:U) input
-Src2PrimFld(cl:CL,o:C,f:F) input
-Src2PrimFldStat(cl:CL,f:F) input
-
-# Sink-prim flow
-
-Sink2Prim(c:C,cl:CL,v:U) input
-Sink2PrimFld(cl:CL,o:C,f:F) input
-Sink2PrimFldStat(cl:CL,f:F) input
+# Label-prim flow
+Label2Prim(c:C,cl:CL,v:U) input
+Label2PrimFld(cl:CL,o:C,f:F) input
+Label2PrimFldStat(cl:CL,f:F) input
 
 ###################
 # INPUT: PARTIAL PT RELATIONS
@@ -108,15 +91,10 @@ FptPartial(o1:C,f:F,o2:C) input
 # INPUT: ACTIVE OBJS AND REFS
 ###################
 
-ActiveObjTaintSrc(cl:CL,o:C) input
-ActivePrimTaintSrc(cl:CL,c:C,v:U) input
-ActiveRefTaintSrc(cl:CL,c:C,v:V) input
-ActivePrimFldStatTaintSrc(cl:CL,f:F) input
-
-ActiveObjTaintSink(cl:CL,o:C) input
-ActivePrimTaintSink(cl:CL,c:C,v:U) input
-ActiveRefTaintSink(cl:CL,c:C,v:V) input
-ActivePrimFldStatTaintSink(cl:CL,f:F) input
+ActiveObjTaint(cl:CL,o:C) input
+ActivePrimTaint(cl:CL,c:C,v:U) input
+ActiveRefTaint(cl:CL,c:C,v:V) input
+ActivePrimFldStatTaint(cl:CL,f:F) input
 
 ###################
 # INPUT: PARTIAL FLOW RELATIONS
@@ -191,59 +169,39 @@ ActivePostFlowsTo(c:C,v:V,d:C,u:V) output
 # RULES: ACTIVE PARTIAL PT
 ###################
 
-# Src2Obj, Src2ObjX
-ActivePtPartial(c,v,o2) :- ActiveObjTaintSrc(cl,o2), PtPartial(c,v,o2), Obj2RefT(c,o1,v), Src2Obj(cl,o1).
-ActivePtPartial(c,u,o) :- ActiveObjTaintSrc(cl,o), PtPartial(c,u,o), Prim2RefTFull(c,v,u), Src2Prim(c,cl,v).
-ActivePtPartial(c,v,o2) :- ActiveObjTaintSrc(cl,o2), PtPartial(c,v,o2), Obj2RefT(c,o1,v), Src2PrimFld(cl,o1,0).
+# Label2Obj, Label2ObjX
+ActivePtPartial(c,v,o2) :- ActiveObjTaintLabel(cl,o2), PtPartial(c,v,o2), Obj2RefT(c,o1,v), Label2Obj(cl,o1).
+ActivePtPartial(c,u,o) :- ActiveObjTaintLabel(cl,o), PtPartial(c,u,o), Prim2RefTFull(c,v,u), Label2Prim(c,cl,v).
+ActivePtPartial(c,v,o2) :- ActiveObjTaintLabel(cl,o2), PtPartial(c,v,o2), Obj2RefT(c,o1,v), Label2PrimFld(cl,o1,0).
 
-ActiveFptPartial(o1,0,o2) :- ActiveObjTaintSrc(cl,o2), FptPartial(o1,0,o2), Src2ObjX(cl,o1).
+ActiveFptPartial(o1,0,o2) :- ActiveObjTaintLabel(cl,o2), FptPartial(o1,0,o2), Label2ObjX(cl,o1).
 
-# Src2Prim, Src2PrimFld
-ActivePtPartial(c,v,o) :- ActivePrimTaintSrc(cl,c,u), LoadPrimCtxt(c,u,v,_), PtPartial(c,v,o), Src2ObjT(cl,o).
-ActivePtPartial(c,v,o) :- ActivePrimTaintSrc(cl,c,u), LoadPrimCtxt(c,u,v,0), PtPartial(c,v,o), Src2ObjX(cl,o).
-ActivePtPartial(c,v,o) :- ActivePrimTaintSrc(cl,c,u), LoadPrimCtxt(c,u,v,f), PtPartial(c,v,o), Src2PrimFld(cl,o,f).
-ActivePtPartial(c,u,o) :- ActiveObjTaintSrc(cl,o), PtPartial(c,u,o), StorePrimCtxt(c,u,_,v), Src2Prim(c,cl,v).
-
-# Sink2Obj, Sink2ObjX
-ActivePtPartial(c,v,o2) :- ActiveObjTaintSink(cl,o2), PtPartial(c,v,o2), Obj2RefT(c,o1,v), Sink2Obj(cl,o1).
-ActivePtPartial(c,u,o) :- ActiveObjTaintSink(cl,o), PtPartial(c,u,o), Prim2RefTFull(c,v,u), Sink2Prim(c,cl,v).
-ActivePtPartial(c,v,o2) :- ActiveObjTaintSink(cl,o2), PtPartial(c,v,o2), Obj2RefT(c,o1,v), Sink2PrimFld(cl,o1,0).
-
-ActiveFptPartial(o1,0,o2) :- ActiveObjTaintSink(cl,o2), FptPartial(o1,0,o2), Sink2ObjX(cl,o1).
-
-# Sink2Prim, Sink2PrimFld
-ActivePtPartial(c,v,o) :- ActivePrimTaintSink(cl,c,u), LoadPrimCtxt(c,u,v,_), PtPartial(c,v,o), Sink2ObjT(cl,o).
-ActivePtPartial(c,v,o) :- ActivePrimTaintSink(cl,c,u), LoadPrimCtxt(c,u,v,0), PtPartial(c,v,o), Sink2ObjX(cl,o).
-ActivePtPartial(c,v,o) :- ActivePrimTaintSink(cl,c,u), LoadPrimCtxt(c,u,v,f), PtPartial(c,v,o), Sink2PrimFld(cl,o,f).
-ActivePtPartial(c,u,o) :- ActiveObjTaintSink(cl,o), PtPartial(c,u,o), StorePrimCtxt(c,u,_,v), Sink2Prim(c,cl,v).
+# Label2Prim, Label2PrimFld
+ActivePtPartial(c,v,o) :- ActivePrimTaintLabel(cl,c,u), LoadPrimCtxt(c,u,v,_), PtPartial(c,v,o), Label2ObjT(cl,o).
+ActivePtPartial(c,v,o) :- ActivePrimTaintLabel(cl,c,u), LoadPrimCtxt(c,u,v,0), PtPartial(c,v,o), Label2ObjX(cl,o).
+ActivePtPartial(c,v,o) :- ActivePrimTaintLabel(cl,c,u), LoadPrimCtxt(c,u,v,f), PtPartial(c,v,o), Label2PrimFld(cl,o,f).
+ActivePtPartial(c,u,o) :- ActiveObjTaintLabel(cl,o), PtPartial(c,u,o), StorePrimCtxt(c,u,_,v), Label2Prim(c,cl,v).
 
 # SinkF
-ActivePtPartial(c,v,o) :- ActiveObjTaintSink(cl,o), PtPartial(c,v,o), SinkF2RefF(c,cl,v).
-ActivePtPartial(c,u,o) :- ActiveObjTaintSink(cl,o), PtPartial(c,u,o), Ref2PrimF(c,u,v), Sink2Prim(c,cl,v).
+ActivePtPartial(c,v,o) :- ActiveObjTaint(cl,o), PtPartial(c,v,o), SinkF2RefF(c,cl,v).
+ActivePtPartial(c,u,o) :- ActiveObjTaint(cl,o), PtPartial(c,u,o), Ref2PrimF(c,u,v), Label2Prim(c,cl,v), Sink2Label(cl,cl).
 
-ActivePtPartial(c,u,o2) :- ActiveObjTaintSink(cl,o2), PtPartial(c,u,o2), Ref2RefF(c,u,v), PtFull(c,v,o1), Sink2Obj(cl,o1).
-ActivePtPartial(c,v,o1) :- ActiveObjTaintSink(cl,o2), PtFull(c,u,o2), Ref2RefF(c,u,v), PtPartial(c,v,o1), Sink2Obj(cl,o1).
+ActivePtPartial(c,u,o2) :- ActiveObjTaint(cl,o2), PtPartial(c,u,o2), Ref2RefF(c,u,v), PtFull(c,v,o1), Label2Obj(cl,o1), Sink2Label(cl,cl).
+ActivePtPartial(c,v,o1) :- ActiveObjTaint(cl,o2), PtFull(c,u,o2), Ref2RefF(c,u,v), PtPartial(c,v,o1), Label2Obj(cl,o1), Sink2Label(cl,cl).
 
-ActivePtPartial(c,v,o) :- ActivePrimTaintSink(cl,c,u), Prim2RefF(c,u,v), PtPartial(c,v,o), Sink2Obj(cl,o).
+ActivePtPartial(c,v,o) :- ActivePrimTaint(cl,c,u), Prim2RefF(c,u,v), PtPartial(c,v,o), Label2Obj(cl,o), Sink2Label(cl,cl).
 
-ActiveFptPartial(o1,f,o2) :- ActiveObjTaintSink(cl,o2), FptPartial(o1,f,o2), SinkF2Obj(cl,o1).
+ActiveFptPartial(o1,f,o2) :- ActiveObjTaint(cl,o2), FptPartial(o1,f,o2), SinkF2Obj(cl,o1).
 
 # Object Annotations
-ActivePtPartial(c,v,o) :- ActiveObjTaintSrc(cl,o), PtPartial(c,v,o), Ref2RefTFull(c,v,u), ActiveRefTaintSrc(cl,c,u).
-ActivePtPartial(c,v,o) :- ActiveObjTaintSink(cl,o), PtPartial(c,v,o), Ref2RefTFull(c,v,u), ActiveRefTaintSink(cl,c,u).
-ActivePtPartial(c,v,o) :- ActiveObjTaintSrc(cl,o), PtPartial(c,v,o), Ref2PrimTFull(c,v,u), ActivePrimTaintSrc(cl,c,u).
-ActivePtPartial(c,v,o) :- ActiveObjTaintSink(cl,o), PtPartial(c,v,o), Ref2PrimTFull(c,v,u), ActivePrimTaintSink(cl,c,u).
+ActivePtPartial(c,v,o) :- ActiveObjTaintLabel(cl,o), PtPartial(c,v,o), Ref2RefTFull(c,v,u), ActiveRefTaintLabel(cl,c,u).
+ActivePtPartial(c,v,o) :- ActiveObjTaintLabel(cl,o), PtPartial(c,v,o), Ref2PrimTFull(c,v,u), ActivePrimTaintLabel(cl,c,u).
 
-ActivePtPartial(c,v,o) :- Src2RefT(c,cl,v), PtPartial(c,v,o), ActiveObjTaintSrc(cl,o).
+ActivePtPartial(c,v,o) :- Label2RefT(c,cl,v), PtPartial(c,v,o), ActiveObjTaintLabel(cl,o).
 
-ActivePtPartial(c,v,o) :- Sink2RefT(c,cl,v), PtPartial(c,v,o), ActiveObjTaintSink(cl,o).
-
-ActiveFptPartial(o2,0,o1) :- ActiveObjTaintSrc(cl,o1), FptPartial(o2,0,o1), Obj2RefT(c,o2,v), ActiveRefTaintSrc(cl,c,v).
-ActiveFptPartial(o2,0,o1) :- ActiveObjTaintSink(cl,o1), FptPartial(o2,0,o1), Obj2RefT(c,o2,v), ActiveRefTaintSink(cl,c,v).
-ActiveFptPartial(o2,0,o1) :- ActiveObjTaintSrc(cl,o1), FptPartial(o2,0,o1), Obj2PrimT(c,o2,v), ActivePrimTaintSrc(cl,c,v).
-ActiveFptPartial(o2,0,o1) :- ActiveObjTaintSink(cl,o1), FptPartial(o2,0,o1), Obj2PrimT(c,o2,v), ActivePrimTaintSink(cl,c,v).
-ActiveFptPartial(o1,f,o2) :- Src2ObjT(cl,o1), FptPartial(o1,f,o2), ActiveObjTaintSrc(cl,o2).
-ActiveFptPartial(o1,f,o2) :- Sink2ObjT(cl,o1), FptPartial(o1,f,o2), ActiveObjTaintSink(cl,o2).
+ActiveFptPartial(o2,0,o1) :- ActiveObjTaintLabel(cl,o1), FptPartial(o2,0,o1), Obj2RefT(c,o2,v), ActiveRefTaintLabel(cl,c,v).
+ActiveFptPartial(o2,0,o1) :- ActiveObjTaintLabel(cl,o1), FptPartial(o2,0,o1), Obj2PrimT(c,o2,v), ActivePrimTaintLabel(cl,c,v).
+ActiveFptPartial(o1,f,o2) :- Label2ObjT(cl,o1), FptPartial(o1,f,o2), ActiveObjTaintLabel(cl,o2).
 
 ###################
 # OUTPUT: HANDLE FPT

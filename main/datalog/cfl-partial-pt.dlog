@@ -65,8 +65,8 @@ MidFlowsTo(c:C,v:V,d:C,u:V) output
 # OUTPUT: FULL FLOWS
 ###################
 
-RefArg2RefArgTStub(c:C,v:V,u:V,m:M,z1:Z,z2:Z) input
-RefArg2RefRetTStub(c:C,v:V,u:V,m:M,z:Z) input
+Ref2RefArgTStub(c:C,v:V,u:V,m:M,z1:Z,z2:Z) input
+Ref2RefRetTStub(c:C,v:V,u:V,m:M,z:Z) input
 typeFilter(v:V,o:C) input   # type wise, v can point-to o
 
 PreFlowsToFull(c:C,o:C,v:V) output
@@ -140,9 +140,9 @@ Transfer(v,u) :- Varg(v), v = u, Varg(u).
 Transfer(v,u) :- Varg(v), v = u, Vret(u).
 Transfer(v,u) :- Vret(v), v = u, Varg(u).
 Transfer(v,u) :- Vret(v), v = u, Vret(u).
-Transfer(v,u) :- RefArg2RefArgTStub(_,v,u,_,_,_).
-Transfer(v,u) :- RefArg2RefRetTStub(_,v,u,_,_).
-Transfer(u,v) :- RefArg2RefRetTStub(_,v,u,_,_).
+Transfer(v,u) :- Ref2RefArgTStub(_,v,u,_,_,_).
+Transfer(v,u) :- Ref2RefRetTStub(_,v,u,_,_).
+Transfer(u,v) :- Ref2RefRetTStub(_,v,u,_,_).
 
 # partial flows
 
