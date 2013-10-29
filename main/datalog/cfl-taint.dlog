@@ -41,8 +41,8 @@ AssignPrimCCtxt(c:C,v:U,d:C,u:U) input
 ###################
 
 # Src label
-Src2Label(cl1:CL,cl2:CL) input
-Sink2Label(cl1:CL,cl2:CL) input
+Src2Label(cl:CL) input
+Sink2Label(cl:CL) input
 
 # Label
 Label2RefT(c:C,cl:CL,v:V) input
@@ -131,8 +131,8 @@ Label2ObjT(cl,o2) :- Label2ObjT(cl,o1), FptFull(o1,_,o2).
 # Sink_full-obj flow
 
 SinkF2Obj(cl,o)  :- SinkF2RefF(c,cl,v), PtFull(c,v,o).
-SinkF2Obj(cl,o2) :- Sink2Label(cl,cl), Label2Obj(cl,o1), PtFull(c,v,o1), Ref2RefF(c,u,v), PtFull(c,u,o2). # first pt, Ref2RefF are backwards
-SinkF2Obj(cl,o)  :- Sink2Label(cl,cl), Label2Prim(c,cl,v), Ref2PrimF(c,u,v), PtFull(c,u,o). # Ref2PrimF is backwards
+SinkF2Obj(cl,o2) :- Sink2Label(cl), Label2Obj(cl,o1), PtFull(c,v,o1), Ref2RefF(c,u,v), PtFull(c,u,o2). # first pt, Ref2RefF are backwards
+SinkF2Obj(cl,o)  :- Sink2Label(cl), Label2Prim(c,cl,v), Ref2PrimF(c,u,v), PtFull(c,u,o). # Ref2PrimF is backwards
 SinkF2Obj(cl,o2) :- SinkF2Obj(cl,o1), FptFull(o1,_,o2).
 
 # Sink_full-prim flow
@@ -145,9 +145,9 @@ SinkF2Prim(c,cl,u) :- Sink2Prim(c,cl,v), Prim2PrimF(c,u,v). # Prim2PrimF is back
 # RULES: SRC-SINK FLOW
 ###################
 
-Src2Sink(src,sink) :- Src2Label(src,src), Label2Obj(src,o), SinkF2Obj(sink,o). # SinkF2Obj is backwards
-Src2Sink(src,sink) :- Src2Label(src,src), Label2Prim(c,src,v), SinkF2Prim(c,sink,v). # SinkF2Prim is backwards
-Src2Sink(src,sink) :- Src2Label(src,src), Label2PrimFld(src,o,_), SinkF2Obj(sink,o). # SinkF2Obj is backwards
+Src2Sink(src,sink) :- Src2Label(src), Label2Obj(src,o), SinkF2Obj(sink,o). # SinkF2Obj is backwards
+Src2Sink(src,sink) :- Src2Label(src), Label2Prim(c,src,v), SinkF2Prim(c,sink,v). # SinkF2Prim is backwards
+Src2Sink(src,sink) :- Src2Label(src), Label2PrimFld(src,o,_), SinkF2Obj(sink,o). # SinkF2Obj is backwards
 
 ###################
 # RULES: LABEL FLOW

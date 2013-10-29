@@ -50,8 +50,11 @@ CM(c:C,m:M) input # c is a context of method m
 ###################
 
 # Src label
-Src2Label(cl1:CL,cl2:CL) output
-Sink2Label(cl1:CL,cl2:CL) output
+Src2Label(cl:CL) output
+Sink2Label(cl:CL) output
+
+Src2LabelEdge(cl1:CL,cl2:CL) output
+Sink2LabelEdge(cl1:CL,cl2:CL) output
 
 # Label
 
@@ -89,10 +92,12 @@ Prim2PrimF(c:C,v:U,u:U) output
 ###################
 
 # Src label
-Src2Label(cl1,cl2) :- srcCtxtLabel(cl1), cl1=cl2.
+Src2Label(cl) :- srcCtxtLabel(cl).
+Src2LabelEdge(cl1,cl2) :- srcCtxtLabel(cl1), cl1=cl2.
 
 # Sink label
-Sink2Label(cl1,cl2) :- sinkCtxtLabel(cl1), cl1=cl2.
+Sink2Label(cl) :- sinkCtxtLabel(cl).
+Sink2LabelEdge(cl1,cl2) :- sinkCtxtLabel(cl1), cl1=cl2.
 
 # Label
 
