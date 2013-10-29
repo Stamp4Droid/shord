@@ -105,6 +105,20 @@ PtPartial(c:C,v:V,o:C)    input
 FptPartial(o1:C,f:F,o2:C) input
 
 ###################
+# INPUT: ACTIVE OBJS AND REFS
+###################
+
+ActiveObjTaintSrc(cl:CL,o:C) input
+ActivePrimTaintSrc(cl:CL,c:C,v:U) input
+ActiveRefTaintSrc(cl:CL,c:C,v:V) input
+ActivePrimFldStatTaintSrc(cl:CL,f:F) input
+
+ActiveObjTaintSink(cl:CL,o:C) input
+ActivePrimTaintSink(cl:CL,c:C,v:U) input
+ActiveRefTaintSink(cl:CL,c:C,v:V) input
+ActivePrimFldStatTaintSink(cl:CL,f:F) input
+
+###################
 # INPUT: PARTIAL FLOW RELATIONS
 ###################
 
