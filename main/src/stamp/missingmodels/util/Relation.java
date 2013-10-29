@@ -106,34 +106,38 @@ public abstract class Relation {
 	 * @param stubModelSet: Argument for the filter. 
 	 */
 	public void addEdges(String edgeName, Graph g, StubLookup stubLookup, StubModelSet stubModelSet) {
-		// STEP 0: Get some basic information about the kind of edge we are adding.
-		int kind = g.symbolToKind(edgeName);
-		short weight = g.kindToWeight(kind);
-
-		// STEP 1: Load the Shord relation.
-		final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt(getRelationName());
-		rel.load();
-		Iterable<int[]> res = rel.getAryNIntTuples();
-
-		// STEP 2: Iterate over relation and add to the graph.
-		for(int[] tuple : res) {
-			if(this.filter(tuple, stubModelSet)) {
-				String sourceName = getSourceFromTuple(tuple);
-				String sinkName = getSinkFromTuple(tuple);
-
-				if(hasLabel()) {
-					g.addWeightedInputEdge(sourceName, sinkName, kind, getLabelFromTuple(tuple), weight);
-				} else {
-					g.addWeightedInputEdge(sourceName, sinkName, kind, weight);
-				}
-
-				if(isStub()) {
-					stubLookup.put(this.getStubLookupKeyFromTuple(tuple, edgeName), this.getStubLookupValueFromTuple(tuple));
+		try {
+			// STEP 0: Get some basic information about the kind of edge we are adding.
+			int kind = g.symbolToKind(edgeName);
+			short weight = g.kindToWeight(kind);
+	
+			// STEP 1: Load the Shord relation.
+			final ProgramRel rel = (ProgramRel)ClassicProject.g().getTrgt(getRelationName());
+			rel.load();
+			Iterable<int[]> res = rel.getAryNIntTuples();
+	
+			// STEP 2: Iterate over relation and add to the graph.
+			for(int[] tuple : res) {
+				if(this.filter(tuple, stubModelSet)) {
+					String sourceName = getSourceFromTuple(tuple);
+					String sinkName = getSinkFromTuple(tuple);
+	
+					if(hasLabel()) {
+						g.addWeightedInputEdge(sourceName, sinkName, kind, getLabelFromTuple(tuple), weight);
+					} else {
+						g.addWeightedInputEdge(sourceName, sinkName, kind, weight);
+					}
+	
+					if(isStub()) {
+						stubLookup.put(this.getStubLookupKeyFromTuple(tuple, edgeName), this.getStubLookupValueFromTuple(tuple));
+					}
 				}
 			}
+	
+			rel.close();
+		} catch(RuntimeException e) {
+			e.printStackTrace();
 		}
-
-		rel.close();
 	}
 
 
