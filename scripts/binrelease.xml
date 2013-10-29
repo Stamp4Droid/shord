@@ -23,10 +23,13 @@
     <zipfileset dir="${stamp.dir}/tomcat" prefix="stamp/tomcat/">
 	  <patternset>
 		<exclude name="logs/*"/>
-		<exclude name="work/*"/>
+		<exclude name="work/**/*"/>
 		<exclude name="temp/*"/>
 		<exclude name="webapps/*"/>
 		<exclude name="bin/*.sh"/>
+		<exclude name="webapps/docs/**/*"/>
+		<exclude name="webapps/examples/**/*"/>
+		<exclude name="webapps/stamp/**/*"/>
 	  </patternset>
 	</zipfileset>
 
