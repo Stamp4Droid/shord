@@ -2,7 +2,7 @@
 # Points-to analysis with phantom objects for stub returns
 ##################
 
-# name=pt-ph-dlog
+# name=cfl-ph-pt-dlog
 
 .include "M.dom"
 .include "C.dom"
