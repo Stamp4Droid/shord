@@ -147,8 +147,12 @@
 		<http url="http://localhost:8080"/>
 	  </waitfor>
 
-	  <ant antfile="${stamp.dir}/web/build.xml" target="deploy"
-	 inheritAll="false" useNativeBasedir="true"/>
+	  <catalina-deploy username="admin"
+					   password="stamp"
+					   url="${tomcat.manager}"
+					   path="/stamp"
+					   update="true"
+					   localWar="${stamp.dir}/bin/stamp.war"/>
 
 	  <if>
 		<isset property="stamp.server.host"/>
