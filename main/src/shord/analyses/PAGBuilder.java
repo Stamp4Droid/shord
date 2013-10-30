@@ -147,15 +147,6 @@ public class PAGBuilder extends JavaAnalysis
 	public static NumberedSet stubMethods;
 
 	public static final boolean ignoreStubs = false;
-	
-	private static final Set<String> immutableTypes = new HashSet<String>();
-	static {
-		immutableTypes.add("java.lang.String");
-		immutableTypes.add("android.net.Uri");
-	}
-	public static boolean isPrimType(Type type) {
-		return type instanceof PrimType || immutableTypes.contains(type.toString());
-	}
 
 	void openRels()
 	{
@@ -252,8 +243,6 @@ public class PAGBuilder extends JavaAnalysis
 	void Alloc(LocalVarNode l, Stmt h)
 	{
 		assert l != null;
-		if(isPrimType(l.local.getType()))
-			return;
 		relAlloc.add(l, h);
 	}
 
@@ -432,11 +421,7 @@ public class PAGBuilder extends JavaAnalysis
 			
 			if(!method.isStatic()) {
 				thisVar = new ThisVarNode(method);
-				if(isPrimType(method.getDeclaringClass().getType())) {
-					domU.add(thisVar);
-				} else {
-					domV.add(thisVar);
-				}
+				domV.add(thisVar);
  			}
 
 			int count = method.getParameterCount();
@@ -445,10 +430,10 @@ public class PAGBuilder extends JavaAnalysis
 				int j = 0;
 				for(Type pType : method.getParameterTypes()){
 					ParamVarNode node = new ParamVarNode(method, j);
-					if(isPrimType(pType)) {
-						domU.add(node);
-					} else if(pType instanceof RefLikeType) {
+					if(pType instanceof RefLikeType){
 						domV.add(node);
+					} else if(pType instanceof PrimType){
+						domU.add(node);
 					} else
 						assert false;
 					paramVars[j++] = node;
@@ -458,10 +443,10 @@ public class PAGBuilder extends JavaAnalysis
 			Type retType = method.getReturnType();
 			if(!(retType instanceof VoidType)){
 				retVar = new RetVarNode(method);
-				if(isPrimType(retType)) {
-					domU.add(retVar);
-				} else if(retType instanceof RefLikeType) {
+				if(retType instanceof RefLikeType) {
 					domV.add(retVar);
+				} else if(retType instanceof PrimType) {
+					domU.add(retVar);
 				} else
 					assert false;
 			} 
@@ -501,7 +486,7 @@ public class PAGBuilder extends JavaAnalysis
 					else if(rightOp instanceof CastExpr){
 						CastExpr castExpr = (CastExpr) rightOp;
 						Type castType = castExpr.getCastType();
-						if(castType instanceof RefLikeType && isPrimType(castType)){
+						if(castType instanceof RefLikeType){
 							CastVarNode node =
 								new CastVarNode(method, castExpr);
 							domV.add(node);
@@ -516,27 +501,22 @@ public class PAGBuilder extends JavaAnalysis
 		{
 			int i = 0;
 			if(thisVar != null){
-				if(isPrimType(thisVar.method.getDeclaringClass().getType())) {
-					MmethPrimArg(method, i++, thisVar);
-					relMU.add(method, thisVar);
-				} else {
-					MmethArg(method, i++, thisVar);
-					relVT.add(thisVar, method.getDeclaringClass().getType());
-					relMV.add(method, thisVar);
-				}
+				MmethArg(method, i++, thisVar);
+				relVT.add(thisVar, method.getDeclaringClass().getType());
+				relMV.add(method, thisVar);
 			}
 			
 			if(paramVars != null){
 				for(int j = 0; j < paramVars.length; j++){
 					Type paramType = method.getParameterType(j);
 					ParamVarNode node = paramVars[j];
-					if(isPrimType(paramType)){
-						MmethPrimArg(method, i, node);
-						relMU.add(method, node);
-					} else if(paramType instanceof RefLikeType){
+					if(paramType instanceof RefLikeType){
 						MmethArg(method, i, node);
 						relVT.add(node, paramType);
 						relMV.add(method, node);
+					} else if(paramType instanceof PrimType){
+						MmethPrimArg(method, i, node);
+						relMU.add(method, node);
 					} else
 						assert false;
 					i++;
@@ -545,13 +525,13 @@ public class PAGBuilder extends JavaAnalysis
 			
 			if(retVar != null){
 				Type retType = method.getReturnType();
-				if(isPrimType(retType)){
-					MmethPrimRet(method, retVar);
-					relMU.add(method, retVar);
-				} else if(retType instanceof RefLikeType){
+				if(retType instanceof RefLikeType){
 					MmethRet(method, retVar);
 					relVT.add(retVar, retType);
 					relMV.add(method, retVar);
+				} else if(retType instanceof PrimType){
+					MmethPrimRet(method, retVar);
+					relMU.add(method, retVar);
 				} else
 					assert false;
 			}
@@ -601,10 +581,7 @@ public class PAGBuilder extends JavaAnalysis
 				int j = 0;
 				if(ie instanceof InstanceInvokeExpr){
 					InstanceInvokeExpr iie = (InstanceInvokeExpr) ie;
-					if(isPrimType(iie.getBase().getType()))
-						IinvkPrimArg(s, j, nodeFor((Immediate) iie.getBase()));
-					else
-						IinvkArg(s, j, nodeFor((Immediate) iie.getBase()));
+					IinvkArg(s, j, nodeFor((Immediate) iie.getBase()));
 					j++;
 				}
 				
@@ -612,20 +589,20 @@ public class PAGBuilder extends JavaAnalysis
 				for(int i = 0; i < numArgs; i++,j++){
 					Immediate arg = (Immediate) ie.getArg(i);
 					Type argType = callee.getParameterType(i);
-					if(isPrimType(argType))
-						IinvkPrimArg(s, j, nodeFor(arg));
-					else if(argType instanceof RefLikeType)
+					if(argType instanceof RefLikeType)
 						IinvkArg(s, j, nodeFor(arg));
+					else if(argType instanceof PrimType)
+						IinvkPrimArg(s, j, nodeFor(arg));
 				}
 				
 				//return value
 				if(s instanceof AssignStmt){
 					Local lhs = (Local) ((AssignStmt) s).getLeftOp();
 					Type retType = callee.getReturnType();
-					if(isPrimType(retType))
-						IinvkPrimRet(s, nodeFor(lhs));
-					else if(retType instanceof RefLikeType)
+					if(retType instanceof RefLikeType)
 						IinvkRet(s, nodeFor(lhs));
+					else if(retType instanceof PrimType)
+						IinvkPrimRet(s, nodeFor(lhs));
 				}
 			} else if(s.containsFieldRef()){
 				AssignStmt as = (AssignStmt) s;
@@ -636,32 +613,32 @@ public class PAGBuilder extends JavaAnalysis
 				if(leftOp instanceof Local){
 					//load
 					if(field.isStatic()){
-						if(isPrimType(fieldType))
-							LoadStatPrim(nodeFor((Local) leftOp), field);
-						else if(fieldType instanceof RefLikeType)
+						if(fieldType instanceof RefLikeType)
 							LoadStat(nodeFor((Local) leftOp), field);
+						else if(fieldType instanceof PrimType)
+							LoadStatPrim(nodeFor((Local) leftOp), field);
 					} else{
 						Immediate base = (Immediate) ((InstanceFieldRef) fr).getBase();
-						if(isPrimType(fieldType))
-							LoadPrim(nodeFor((Local) leftOp), nodeFor(base), field);
-						else if(fieldType instanceof RefLikeType)
+						if(fieldType instanceof RefLikeType)
 							Load(nodeFor((Local) leftOp), nodeFor(base), field);
+						else if(fieldType instanceof PrimType)
+							LoadPrim(nodeFor((Local) leftOp), nodeFor(base), field);
 					}
 				}else{
 					//store
 					assert leftOp == fr;
 					Immediate rightOp = (Immediate) as.getRightOp();
 					if(field.isStatic()){
-						if(isPrimType(fieldType))
-							StoreStatPrim(field, nodeFor(rightOp));
-						else if(fieldType instanceof RefLikeType)
+						if(fieldType instanceof RefLikeType)
 							StoreStat(field, nodeFor(rightOp));
+						else if(fieldType instanceof PrimType)
+							StoreStatPrim(field, nodeFor(rightOp));
 					} else{
 						Immediate base = (Immediate) ((InstanceFieldRef) fr).getBase();
-						if(isPrimType(fieldType))
-							StorePrim(nodeFor(base), field, nodeFor(rightOp));
-						else if(fieldType instanceof RefLikeType)
-							Store(nodeFor(base), field, nodeFor(rightOp));		
+						if(fieldType instanceof RefLikeType)
+							Store(nodeFor(base), field, nodeFor(rightOp));
+						else if(fieldType instanceof PrimType)
+							StorePrim(nodeFor(base), field, nodeFor(rightOp));		
 					}
 				}
 			} else if(s.containsArrayRef()) {
@@ -713,13 +690,12 @@ public class PAGBuilder extends JavaAnalysis
 				} else if(rightOp instanceof CastExpr){
 					Type castType = ((CastExpr) rightOp).getCastType();
 					Immediate op = (Immediate) ((CastExpr) rightOp).getOp();
-					if(isPrimType(castType))
-						AssignPrim(nodeFor((Local) leftOp), nodeFor(op));
-					else if(castType instanceof RefLikeType){
+					if(castType instanceof RefLikeType){
 						CastVarNode castNode = stmtToCastNode.get(s);
 						Assign(castNode, nodeFor(op));
 						Assign(nodeFor((Local) leftOp), castNode);
-					}
+					} else if(castType instanceof PrimType)
+						AssignPrim(nodeFor((Local) leftOp), nodeFor(op));
 				} else if(leftOp instanceof Local && rightOp instanceof Immediate){
 					Local l = (Local) leftOp;
 					Immediate r = (Immediate) rightOp;
@@ -748,26 +724,23 @@ public class PAGBuilder extends JavaAnalysis
 			}else if(s instanceof ReturnStmt){
 				Type retType = method.getReturnType();
 				Immediate retOp = (Immediate) ((ReturnStmt) s).getOp();
-				if(isPrimType(retType))
-					AssignPrim(retVar, nodeFor(retOp));
-				else if(retType instanceof RefLikeType)
+				if(retType instanceof RefLikeType)
 					Assign(retVar, nodeFor(retOp));
+				else if(retType instanceof PrimType)
+					AssignPrim(retVar, nodeFor(retOp));
 			}else if(s instanceof IdentityStmt){
 				IdentityStmt is = (IdentityStmt) s;
 				Local leftOp = (Local) is.getLeftOp();
 				Value rightOp = is.getRightOp();
 				if(rightOp instanceof ThisRef){
-					if(isPrimType(rightOp.getType()))
-						AssignPrim(nodeFor(leftOp), thisVar);
-					else
-						Assign(nodeFor(leftOp), thisVar);
+					Assign(nodeFor(leftOp), thisVar);
 				} else if(rightOp instanceof ParameterRef){
 					int index = ((ParameterRef) rightOp).getIndex();
 					Type type = method.getParameterType(index);
-					if(isPrimType(type))
-						AssignPrim(nodeFor(leftOp), paramVars[index]);
-					else if(type instanceof RefLikeType)
+					if(type instanceof RefLikeType)
 						Assign(nodeFor(leftOp), paramVars[index]);
+					else if(type instanceof PrimType)
+						AssignPrim(nodeFor(leftOp), paramVars[index]);
 				}
 			}
 		}
