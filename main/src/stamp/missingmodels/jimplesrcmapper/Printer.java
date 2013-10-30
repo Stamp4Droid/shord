@@ -32,9 +32,11 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import soot.AttributesUnitPrinter;
@@ -58,8 +60,6 @@ import soot.tagkit.Tag;
 import soot.toolkits.graph.UnitGraph;
 import soot.util.Chain;
 import soot.util.DeterministicHashMap;
-import stamp.srcmap.SourceInfoSingleton;
-import stamp.srcmap.sourceinfo.SourceInfo;
 
 /**
  * Prints out a class and all its methods.
@@ -121,6 +121,28 @@ public class Printer {
 	public int getFrameworkLOC() {
 		return this.frameworkLOC;
 	}
+	
+	private static final Set<String> packagePrefices = new HashSet<String>();
+	static {
+		packagePrefices.add("java");
+		packagePrefices.add("javax");
+		packagePrefices.add("android");
+		packagePrefices.add("org.apache");
+		packagePrefices.add("org.json");
+		packagePrefices.add("org.xmlpull");
+		packagePrefices.add("edu.stanford.stamp.harness");
+		packagePrefices.add("com.google");		
+	}
+	
+	private boolean isFrameworkClass(SootClass cl) {
+		String packageName = cl.getPackageName();
+		for(String packagePrefix : packagePrefices) {
+			if(packageName.startsWith(packagePrefix)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * Prints all the files in the given output directory.
@@ -130,9 +152,6 @@ public class Printer {
 		if(!System.getProperty("line.separator").equals("\n")) {
 			throw new RuntimeException("Bad line separator!");
 		}
-		File outDir = new File(outputPath + "/jimple/");
-		outDir.mkdirs();
-		SourceInfo sourceInfo = SourceInfoSingleton.getJimpleSourceInfo();
 		for(SootClass cl : Scene.v().getClasses()) {
 			System.out.println("PRINTING: " + cl.getName());
 
@@ -158,7 +177,7 @@ public class Printer {
 			printTo(cl, file);
 			
 			// Line counts
-			if(sourceInfo.isFrameworkClass(cl)) {
+			if(isFrameworkClass(cl)) {
 				this.frameworkLOC += this.getJimpleLnNum();
 			} else {
 				this.appLOC += this.getJimpleLnNum();
