@@ -10,13 +10,14 @@ import stamp.missingmodels.util.jcflsolver.*;
 .output LabelPrim3
 .output Flow3
 
-.weights refArg2RefArgTStub 1
-.weights refArg2RefRetTStub 1
+.weights ref2RefArgTStub 1
+.weights ref2RefRetTStub 1
 
-.weights primArg2RefArgTStub 1
-.weights primArg2RefRetTStub 1
+.weights prim2RefArgTStub 1
+.weights prim2RefRetTStub 1
 
-.weights refArg2PrimRetTStub 1
+.weights ref2PrimTStub 1
+
 .weights prim2PrimT 1
 
 .weights transfer 1
@@ -25,8 +26,9 @@ import stamp.missingmodels.util.jcflsolver.*;
 # INPUTS
 ###################
 
-# source annotations: src2RefT, src2PrimT
-# sink annotations: sink2RefT, sink2PrimT, sinkF2RefF, sinkF2PrimF
+# src and sink annotations: src2Label, sink2Label
+# label annotations: label2RefT, label2PrimT
+# sinkf annotations: sink2RefT, sink2PrimT, sinkF2RefF, sinkF2PrimF
 # transfer annotations: ref2RefT, ref2PrimT, prim2RefT, prim2PrimT 
 # flow annotations: ref2RefF, ref2PrimF, prim2RefF, prim2PrimF
 
@@ -46,10 +48,8 @@ Ref2PrimT :: ref2PrimT
 Prim2RefT :: prim2RefT
 Prim2PrimT :: prim2PrimT
 
-Src2RefT :: src2RefT
-Src2PrimT :: src2PrimT
-Sink2RefT :: sink2RefT
-Sink2PrimT :: sink2PrimT
+Label2RefT :: label2RefT
+Label2PrimT :: label2PrimT
 
 # flow annotations
 
@@ -65,14 +65,14 @@ Prim2PrimF :: prim2PrimF
 # RULES: STUB ANNOTATION CONVERSION
 ###################
 
-Ref2RefT :: refArg2RefArgTStub
-Ref2RefT :: refArg2RefRetTStub
+Ref2RefT :: ref2RefArgTStub
+Ref2RefT :: ref2RefRetTStub
 
-Prim2RefT :: primArg2RefArgTStub
-Prim2RefT :: primArg2RefRetTStub
+Prim2RefT :: prim2RefArgTStub
+Prim2RefT :: prim2RefRetTStub
 
-Ref2PrimT :: refArg2PrimRetTStub
-Prim2PrimT :: primArg2PrimRetTStub
+Ref2PrimT :: ref2PrimTStub
+Prim2PrimT :: prim2PrimTStub
 
 ###################
 # RULES: PARTIAL FLOW PROPAGATION
@@ -82,15 +82,14 @@ PreFlowsTo :: preFlowsTo
 PostFlowsTo :: postFlowsTo
 MidFlowsTo :: midFlowsTo
 
-PreFlowsTo :: PreFlowsTo transfer MidFlowsTo
+Transfer :: transfer
+Transfer :: transferSelf
 
-Pt :: _PostFlowsTo _transfer _PreFlowsTo
+PreFlowsTo :: PreFlowsTo Transfer MidFlowsTo
 
-Fpt[f] :: _Pt Store[f] pt
-Fpt[f] :: _pt Store[f] Pt
+Pt :: _PostFlowsTo _Transfer _PreFlowsTo
+
 Fpt[f] :: _Pt Store[f] Pt
-FptArr :: _Pt StoreArr pt
-FptArr :: _pt StoreArr Pt
 FptArr :: _Pt StoreArr Pt
 
 Pt :: pt
@@ -107,11 +106,8 @@ Obj2PrimT :: _Pt Ref2PrimT
 Obj2RefT :: _FptArr Obj2RefT
 Obj2PrimT :: _FptArr Obj2PrimT
 
-Src2ObjT :: Src2RefT Pt
-Src2ObjT :: Src2ObjT Fpt[*]
-
-Sink2ObjT :: Sink2RefT Pt
-Sink2ObjT :: Sink2ObjT Fpt[*]
+Label2ObjT :: Label2RefT Pt
+Label2ObjT :: Label2ObjT Fpt[*]
 
 ###################
 # RULES: SINKF
@@ -120,616 +116,464 @@ Sink2ObjT :: Sink2ObjT Fpt[*]
 # Sink_full-obj flow
 
 SinkF2Obj :: SinkF2RefF Pt
-SinkF2Obj :: Sink2Obj _Pt _Ref2RefF Pt
-SinkF2Obj :: Sink2Prim _Ref2PrimF Pt
+SinkF2Obj :: sink2Label Label2Obj _Pt _Ref2RefF Pt
+SinkF2Obj :: sink2Label Label2Prim _Ref2PrimF Pt
 SinkF2Obj :: SinkF2Obj Fpt[*]
 
 # Sink_full-prim flow
 
 SinkF2Prim :: SinkF2PrimF
-SinkF2Prim :: Sink2Obj _Pt _Prim2RefF
-SinkF2Prim :: Sink2Prim _Prim2PrimF
+SinkF2Prim :: sink2Label Label2Obj _Pt _Prim2RefF
+SinkF2Prim :: sink2Label Label2Prim _Prim2PrimF
 
 ###################
 # RULES: SRC-SINK FLOW
 ###################
 
-Src2Sink :: Src2Obj _SinkF2Obj
-Src2Sink :: Src2Prim _SinkF2Prim
-Src2Sink :: Src2PrimFld[*] _SinkF2Obj
+Src2Sink :: src2Label Label2Obj _SinkF2Obj
+Src2Sink :: src2Label Label2Prim _SinkF2Prim
+Src2Sink :: src2Label Label2PrimFld[*] _SinkF2Obj
 
 ###################
 # RULES: LABEL FLOW
 ###################
 
-# Src-obj flow
+# Label-obj flow
 
-Src2Obj :: Src2ObjT
-Src2Obj :: Src2ObjX
+Label2Obj :: Label2ObjT
+Label2Obj :: Label2ObjX
 
-Src2ObjX :: Src2Obj Obj2RefT Pt
-Src2ObjX :: Src2Prim Prim2RefT Pt
-Src2ObjX :: Src2PrimFldArr Obj2RefT Pt
-Src2ObjX :: Src2ObjX FptArr
+Label2ObjX :: Label2Obj Obj2RefT Pt
+Label2ObjX :: Label2Prim Prim2RefT Pt
+Label2ObjX :: Label2PrimFldArr Obj2RefT Pt
+Label2ObjX :: Label2ObjX FptArr
 
-# Sink-obj flow
+# Label-prim flow
 
-Sink2Obj :: Sink2ObjT
-Sink2Obj :: Sink2ObjX
+Label2Prim :: Label2PrimT
+Label2Prim :: Label2Prim _assignPrimCtxt
+Label2Prim :: Label2Prim _assignPrimCCtxt
 
-Sink2ObjX :: Sink2Obj Obj2RefT Pt
-Sink2ObjX :: Sink2Prim Prim2RefT Pt
-Sink2ObjX :: Sink2PrimFldArr Obj2RefT Pt
-Sink2ObjX :: Sink2ObjX FptArr
+Label2Prim :: Label2Obj Obj2PrimT
+Label2Prim :: Label2Prim Prim2PrimT
 
-# Src-prim flow
+Label2Prim :: Label2ObjT _Pt _loadPrimCtxt[*]
+Label2Prim :: Label2ObjX _Pt _loadPrimCtxtArr
+Label2Prim :: Label2PrimFldArr Obj2PrimT
 
-Src2Prim :: Src2PrimT
-Src2Prim :: Src2Prim _assignPrimCtxt
-Src2Prim :: Src2Prim _assignPrimCCtxt
+# cl Label2PrimFld[f] o _Pt v_c _loadPrimCtxt[f] u_c
+Label2Prim :: Label2PrimFld[f] _Pt _loadPrimCtxt[f]
+Label2Prim :: Label2PrimFldStat[f] _loadStatPrimCtxt[f]
 
-Src2Prim :: Src2Obj Obj2PrimT
-Src2Prim :: Src2Prim Prim2PrimT
+# Label-prim_fld flow
 
-Src2Prim :: Src2ObjT _Pt _loadPrimCtxt[*]
-Src2Prim :: Src2ObjX _Pt _loadPrimCtxtArr
-Src2Prim :: Src2PrimFldArr Obj2PrimT
-
-# cl Src2PrimFld[f] o _Pt v_c _loadPrimCtxt[f] u_c
-Src2Prim :: Src2PrimFld[f] _Pt _loadPrimCtxt[f]
-Src2Prim :: Src2PrimFldStat[f] _loadStatPrimCtxt[f]
-
-# Src-prim_fld flow
-
-Src2PrimFld[f] :: Src2Prim _storePrimCtxt[f] Pt
-Src2PrimFldArr :: Src2Prim _storePrimCtxtArr Pt
-Src2PrimFldStat[f] :: Src2Prim _storeStatPrimCtxt[f]
-
-# Sink-prim flow
-
-Sink2Prim :: Sink2PrimT
-Sink2Prim :: Sink2Prim _assignPrimCtxt
-Sink2Prim :: Sink2Prim _assignPrimCCtxt
-
-Sink2Prim :: Sink2Obj Obj2PrimT
-Sink2Prim :: Sink2Prim Prim2PrimT
-
-Sink2Prim :: Sink2ObjT _Pt _loadPrimCtxt[*]
-Sink2Prim :: Sink2ObjX _Pt _loadPrimCtxtArr
-Sink2Prim :: Sink2PrimFldArr Obj2PrimT
-
-# cl Sink2PrimFld[f] o _Pt v_c _loadPrimCtxt[f] u_c
-Sink2Prim :: Sink2PrimFld[f] _Pt _loadPrimCtxt[f]
-Sink2Prim :: Sink2PrimFldStat[f] _loadStatPrimCtxt[f]
-
-# Sink-prim_fld flow
-
-Sink2PrimFld[f] :: Sink2Prim _storePrimCtxt[f] Pt
-Sink2PrimFldArr :: Sink2Prim _storePrimCtxtArr Pt
-Sink2PrimFldStat[f] :: Sink2Prim _storeStatPrimCtxt[f]
+Label2PrimFld[f] :: Label2Prim _storePrimCtxt[f] Pt
+Label2PrimFldArr :: Label2Prim _storePrimCtxtArr Pt
+Label2PrimFldStat[f] :: Label2Prim _storeStatPrimCtxt[f]
 
 ###################
 # RULES: OUTPUT
 ###################
 
-LabelRef3 :: Src2Obj _Pt
-LabelRef3 :: Sink2Obj _Pt
-LabelPrim3 :: Src2Prim
-LabelPrim3 :: Sink2Prim
+LabelRef3 :: Label2Obj _Pt
+LabelPrim3 :: Label2Prim
 Flow3 :: Src2Sink
 */
 
 /* Normalized Grammar:
-%13:
-	%13 :: Src2Prim Prim2RefT
+Label2Obj:
+	Label2Obj :: Label2ObjT
+	Label2Obj :: Label2ObjX
 PostFlowsTo:
 	PostFlowsTo :: postFlowsTo
 Pt:
 	Pt :: %1 _PreFlowsTo
 	Pt :: pt
+Transfer:
+	Transfer :: transfer
+	Transfer :: transferSelf
 Flow3:
 	Flow3 :: Src2Sink
-SinkF2Obj:
-	SinkF2Obj :: SinkF2RefF Pt
-	SinkF2Obj :: %9 Pt
-	SinkF2Obj :: %10 Pt
-	SinkF2Obj :: SinkF2Obj Fpt
+%14:
+	%14 :: src2Label Label2PrimFld
 Fpt:
-	Fpt[i] :: %2[i] pt
-	Fpt[i] :: %3[i] Pt
-	Fpt[i] :: %4[i] Pt
+	Fpt[i] :: %2[i] Pt
 	Fpt[i] :: fpt[i]
-Sink2PrimFldStat:
-	Sink2PrimFldStat[i] :: Sink2Prim _storeStatPrimCtxt[i]
 %9:
-	%9 :: %8 _Ref2RefF
+	%9 :: sink2Label Label2Obj
 %8:
-	%8 :: Sink2Obj _Pt
-%4:
-	%4[i] :: _Pt Store[i]
+	%8 :: %7 _Ref2PrimF
 %5:
-	%5 :: _Pt StoreArr
-Src2PrimT:
-	Src2PrimT :: src2PrimT
+	%5 :: %4 _Pt
+%4:
+	%4 :: sink2Label Label2Obj
 %7:
-	%7 :: _Pt StoreArr
+	%7 :: sink2Label Label2Prim
 %6:
-	%6 :: _pt StoreArr
+	%6 :: %5 _Ref2RefF
 %1:
-	%1 :: _PostFlowsTo _transfer
+	%1 :: _PostFlowsTo _Transfer
 %0:
-	%0 :: PreFlowsTo transfer
+	%0 :: PreFlowsTo Transfer
 %3:
-	%3[i] :: _pt Store[i]
+	%3 :: _Pt StoreArr
 %2:
 	%2[i] :: _Pt Store[i]
-%24:
-	%24 :: Sink2ObjX _Pt
-Sink2PrimT:
-	Sink2PrimT :: sink2PrimT
-%26:
-	%26[i] :: Sink2Prim _storePrimCtxt[i]
-Src2PrimFldStat:
-	Src2PrimFldStat[i] :: Src2Prim _storeStatPrimCtxt[i]
 %20:
-	%20[i] :: Src2PrimFld[i] _Pt
+	%20[i] :: Label2PrimFld[i] _Pt
 %21:
-	%21[i] :: Src2Prim _storePrimCtxt[i]
+	%21[i] :: Label2Prim _storePrimCtxt[i]
 %22:
-	%22 :: Src2Prim _storePrimCtxtArr
-%23:
-	%23 :: Sink2ObjT _Pt
-Sink2Prim:
-	Sink2Prim :: Sink2PrimT
-	Sink2Prim :: Sink2Prim _assignPrimCtxt
-	Sink2Prim :: Sink2Prim _assignPrimCCtxt
-	Sink2Prim :: Sink2Obj Obj2PrimT
-	Sink2Prim :: Sink2Prim Prim2PrimT
-	Sink2Prim :: %23 _loadPrimCtxt
-	Sink2Prim :: %24 _loadPrimCtxtArr
-	Sink2Prim :: Sink2PrimFldArr Obj2PrimT
-	Sink2Prim :: %25[i] _loadPrimCtxt[i]
-	Sink2Prim :: Sink2PrimFldStat[i] _loadStatPrimCtxt[i]
-Src2PrimFldArr:
-	Src2PrimFldArr :: %22 Pt
+	%22 :: Label2Prim _storePrimCtxtArr
+Label2RefT:
+	Label2RefT :: label2RefT
 FptArr:
-	FptArr :: %5 pt
-	FptArr :: %6 Pt
-	FptArr :: %7 Pt
+	FptArr :: %3 Pt
 	FptArr :: fptArr
+Label2PrimFldStat:
+	Label2PrimFldStat[i] :: Label2Prim _storeStatPrimCtxt[i]
 SinkF2PrimF:
 	SinkF2PrimF :: sinkF2PrimF
+Label2ObjT:
+	Label2ObjT :: Label2RefT Pt
+	Label2ObjT :: Label2ObjT Fpt
 PreFlowsTo:
 	PreFlowsTo :: preFlowsTo
 	PreFlowsTo :: %0 MidFlowsTo
-Sink2PrimFld:
-	Sink2PrimFld[i] :: %26[i] Pt
-%19:
-	%19 :: Src2ObjX _Pt
+Label2ObjX:
+	Label2ObjX :: %15 Pt
+	Label2ObjX :: %16 Pt
+	Label2ObjX :: %17 Pt
+	Label2ObjX :: Label2ObjX FptArr
+Label2PrimFld:
+	Label2PrimFld[i] :: %21[i] Pt
 Src2Sink:
-	Src2Sink :: Src2Obj _SinkF2Obj
-	Src2Sink :: Src2Prim _SinkF2Prim
-	Src2Sink :: Src2PrimFld _SinkF2Obj
-%18:
-	%18 :: Src2ObjT _Pt
-Src2Prim:
-	Src2Prim :: Src2PrimT
-	Src2Prim :: Src2Prim _assignPrimCtxt
-	Src2Prim :: Src2Prim _assignPrimCCtxt
-	Src2Prim :: Src2Obj Obj2PrimT
-	Src2Prim :: Src2Prim Prim2PrimT
-	Src2Prim :: %18 _loadPrimCtxt
-	Src2Prim :: %19 _loadPrimCtxtArr
-	Src2Prim :: Src2PrimFldArr Obj2PrimT
-	Src2Prim :: %20[i] _loadPrimCtxt[i]
-	Src2Prim :: Src2PrimFldStat[i] _loadStatPrimCtxt[i]
+	Src2Sink :: %12 _SinkF2Obj
+	Src2Sink :: %13 _SinkF2Prim
+	Src2Sink :: %14 _SinkF2Obj
+Label2PrimFldArr:
+	Label2PrimFldArr :: %22 Pt
 Prim2PrimF:
 	Prim2PrimF :: prim2PrimF
-%25:
-	%25[i] :: Sink2PrimFld[i] _Pt
-Sink2Obj:
-	Sink2Obj :: Sink2ObjT
-	Sink2Obj :: Sink2ObjX
-Src2PrimFld:
-	Src2PrimFld[i] :: %21[i] Pt
-%27:
-	%27 :: Sink2Prim _storePrimCtxtArr
-MidFlowsTo:
-	MidFlowsTo :: midFlowsTo
-Sink2ObjT:
-	Sink2ObjT :: Sink2RefT Pt
-	Sink2ObjT :: Sink2ObjT Fpt
+LabelPrim3:
+	LabelPrim3 :: Label2Prim
+SinkF2RefF:
+	SinkF2RefF :: sinkF2RefF
+%19:
+	%19 :: Label2ObjX _Pt
 Obj2PrimT:
 	Obj2PrimT :: _Pt Ref2PrimT
 	Obj2PrimT :: _FptArr Obj2PrimT
-Sink2ObjX:
-	Sink2ObjX :: %15 Pt
-	Sink2ObjX :: %16 Pt
-	Sink2ObjX :: %17 Pt
-	Sink2ObjX :: Sink2ObjX FptArr
-%14:
-	%14 :: Src2PrimFldArr Obj2RefT
 Prim2PrimT:
 	Prim2PrimT :: prim2PrimT
-	Prim2PrimT :: primArg2PrimRetTStub
-Sink2PrimFldArr:
-	Sink2PrimFldArr :: %27 Pt
+	Prim2PrimT :: prim2PrimTStub
+Label2Prim:
+	Label2Prim :: Label2PrimT
+	Label2Prim :: Label2Prim _assignPrimCtxt
+	Label2Prim :: Label2Prim _assignPrimCCtxt
+	Label2Prim :: Label2Obj Obj2PrimT
+	Label2Prim :: Label2Prim Prim2PrimT
+	Label2Prim :: %18 _loadPrimCtxt
+	Label2Prim :: %19 _loadPrimCtxtArr
+	Label2Prim :: Label2PrimFldArr Obj2PrimT
+	Label2Prim :: %20[i] _loadPrimCtxt[i]
+	Label2Prim :: Label2PrimFldStat[i] _loadStatPrimCtxt[i]
 Obj2RefT:
 	Obj2RefT :: _Pt Ref2RefT
 	Obj2RefT :: _FptArr Obj2RefT
 Ref2PrimT:
 	Ref2PrimT :: ref2PrimT
-	Ref2PrimT :: refArg2PrimRetTStub
-Src2ObjX:
-	Src2ObjX :: %12 Pt
-	Src2ObjX :: %13 Pt
-	Src2ObjX :: %14 Pt
-	Src2ObjX :: Src2ObjX FptArr
+	Ref2PrimT :: ref2PrimTStub
+%18:
+	%18 :: Label2ObjT _Pt
 SinkF2Prim:
 	SinkF2Prim :: SinkF2PrimF
-	SinkF2Prim :: %11 _Prim2RefF
-	SinkF2Prim :: Sink2Prim _Prim2PrimF
+	SinkF2Prim :: %10 _Prim2RefF
+	SinkF2Prim :: %11 _Prim2PrimF
 Ref2RefF:
 	Ref2RefF :: ref2RefF
-Sink2RefT:
-	Sink2RefT :: sink2RefT
 %11:
-	%11 :: Sink2Obj _Pt
+	%11 :: sink2Label Label2Prim
 %10:
-	%10 :: Sink2Prim _Ref2PrimF
+	%10 :: %9 _Pt
 Prim2RefT:
 	Prim2RefT :: prim2RefT
-	Prim2RefT :: primArg2RefArgTStub
-	Prim2RefT :: primArg2RefRetTStub
+	Prim2RefT :: prim2RefArgTStub
+	Prim2RefT :: prim2RefRetTStub
 %12:
-	%12 :: Src2Obj Obj2RefT
+	%12 :: src2Label Label2Obj
 %15:
-	%15 :: Sink2Obj Obj2RefT
-Src2ObjT:
-	Src2ObjT :: Src2RefT Pt
-	Src2ObjT :: Src2ObjT Fpt
+	%15 :: Label2Obj Obj2RefT
+SinkF2Obj:
+	SinkF2Obj :: SinkF2RefF Pt
+	SinkF2Obj :: %6 Pt
+	SinkF2Obj :: %8 Pt
+	SinkF2Obj :: SinkF2Obj Fpt
 %17:
-	%17 :: Sink2PrimFldArr Obj2RefT
+	%17 :: Label2PrimFldArr Obj2RefT
 %16:
-	%16 :: Sink2Prim Prim2RefT
+	%16 :: Label2Prim Prim2RefT
 Ref2PrimF:
 	Ref2PrimF :: ref2PrimF
-LabelPrim3:
-	LabelPrim3 :: Src2Prim
-	LabelPrim3 :: Sink2Prim
+Label2PrimT:
+	Label2PrimT :: label2PrimT
 Ref2RefT:
 	Ref2RefT :: ref2RefT
-	Ref2RefT :: refArg2RefArgTStub
-	Ref2RefT :: refArg2RefRetTStub
+	Ref2RefT :: ref2RefArgTStub
+	Ref2RefT :: ref2RefRetTStub
 Prim2RefF:
 	Prim2RefF :: prim2RefF
-SinkF2RefF:
-	SinkF2RefF :: sinkF2RefF
-Src2Obj:
-	Src2Obj :: Src2ObjT
-	Src2Obj :: Src2ObjX
-Src2RefT:
-	Src2RefT :: src2RefT
+MidFlowsTo:
+	MidFlowsTo :: midFlowsTo
+%13:
+	%13 :: src2Label Label2Prim
 LabelRef3:
-	LabelRef3 :: Src2Obj _Pt
-	LabelRef3 :: Sink2Obj _Pt
+	LabelRef3 :: Label2Obj _Pt
 */
 
 /* Reverse Productions:
 storePrimCtxtArr:
-	_storePrimCtxtArr + (Src2Prim *) => %22
-	_storePrimCtxtArr + (Sink2Prim *) => %27
+	_storePrimCtxtArr + (Label2Prim *) => %22
 prim2RefT:
 	prim2RefT => Prim2RefT
 %9:
-	%9 + (* Pt) => SinkF2Obj
+	%9 + (* _Pt) => %10
 %8:
-	%8 + (* _Ref2RefF) => %9
+	%8 + (* Pt) => SinkF2Obj
 prim2RefF:
 	prim2RefF => Prim2RefF
 %4:
-	%4[i] + (* Pt) => Fpt[i]
+	%4 + (* _Pt) => %5
 %7:
-	%7 + (* Pt) => FptArr
+	%7 + (* _Ref2PrimF) => %8
 %6:
-	%6 + (* Pt) => FptArr
+	%6 + (* Pt) => SinkF2Obj
 %1:
 	%1 + (* _PreFlowsTo) => Pt
 %0:
 	%0 + (* MidFlowsTo) => PreFlowsTo
 %3:
-	%3[i] + (* Pt) => Fpt[i]
+	%3 + (* Pt) => FptArr
 %2:
-	%2[i] + (* pt) => Fpt[i]
-Src2PrimFldStat:
-	Src2PrimFldStat[i] + (* _loadStatPrimCtxt[i]) => Src2Prim
+	%2[i] + (* Pt) => Fpt[i]
 postFlowsTo:
 	postFlowsTo => PostFlowsTo
-sink2RefT:
-	sink2RefT => Sink2RefT
-refArg2RefRetTStub:
-	refArg2RefRetTStub => Ref2RefT
-sink2PrimT:
-	sink2PrimT => Sink2PrimT
+Label2ObjT:
+	Label2ObjT + (* Fpt) => Label2ObjT
+	Label2ObjT => Label2Obj
+	Label2ObjT + (* _Pt) => %18
+Label2ObjX:
+	Label2ObjX => Label2Obj
+	Label2ObjX + (* FptArr) => Label2ObjX
+	Label2ObjX + (* _Pt) => %19
+label2RefT:
+	label2RefT => Label2RefT
 storePrimCtxt:
-	_storePrimCtxt[i] + (Src2Prim *) => %21[i]
-	_storePrimCtxt[i] + (Sink2Prim *) => %26[i]
-primArg2RefArgTStub:
-	primArg2RefArgTStub => Prim2RefT
-Src2PrimFld:
-	Src2PrimFld + (* _SinkF2Obj) => Src2Sink
-	Src2PrimFld[i] + (* _Pt) => %20[i]
+	_storePrimCtxt[i] + (Label2Prim *) => %21[i]
 MidFlowsTo:
 	MidFlowsTo + (%0 *) => PreFlowsTo
 preFlowsTo:
 	preFlowsTo => PreFlowsTo
-Src2ObjX:
-	Src2ObjX => Src2Obj
-	Src2ObjX + (* FptArr) => Src2ObjX
-	Src2ObjX + (* _Pt) => %19
 Ref2RefF:
-	_Ref2RefF + (%8 *) => %9
+	_Ref2RefF + (%5 *) => %6
 assignPrimCCtxt:
-	_assignPrimCCtxt + (Src2Prim *) => Src2Prim
-	_assignPrimCCtxt + (Sink2Prim *) => Sink2Prim
+	_assignPrimCCtxt + (Label2Prim *) => Label2Prim
 SinkF2Obj:
 	SinkF2Obj + (* Fpt) => SinkF2Obj
-	_SinkF2Obj + (Src2Obj *) => Src2Sink
-	_SinkF2Obj + (Src2PrimFld *) => Src2Sink
+	_SinkF2Obj + (%12 *) => Src2Sink
+	_SinkF2Obj + (%14 *) => Src2Sink
+Label2Prim:
+	Label2Prim + (sink2Label *) => %7
+	Label2Prim + (sink2Label *) => %11
+	Label2Prim + (src2Label *) => %13
+	Label2Prim + (* Prim2RefT) => %16
+	Label2Prim + (* _assignPrimCtxt) => Label2Prim
+	Label2Prim + (* _assignPrimCCtxt) => Label2Prim
+	Label2Prim + (* Prim2PrimT) => Label2Prim
+	Label2Prim + (* _storePrimCtxt[i]) => %21[i]
+	Label2Prim + (* _storePrimCtxtArr) => %22
+	Label2Prim + (* _storeStatPrimCtxt[i]) => Label2PrimFldStat[i]
+	Label2Prim => LabelPrim3
+Label2PrimT:
+	Label2PrimT => Label2Prim
 Ref2RefT:
 	Ref2RefT + (_Pt *) => Obj2RefT
-refArg2PrimRetTStub:
-	refArg2PrimRetTStub => Ref2PrimT
-Src2Obj:
-	Src2Obj + (* _SinkF2Obj) => Src2Sink
-	Src2Obj + (* Obj2RefT) => %12
-	Src2Obj + (* Obj2PrimT) => Src2Prim
-	Src2Obj + (* _Pt) => LabelRef3
+StoreArr:
+	StoreArr + (_Pt *) => %3
 ref2PrimT:
 	ref2PrimT => Ref2PrimT
 Pt:
 	_Pt + (* Store[i]) => %2[i]
-	Pt + (%3[i] *) => Fpt[i]
-	_Pt + (* Store[i]) => %4[i]
-	Pt + (%4[i] *) => Fpt[i]
-	_Pt + (* StoreArr) => %5
-	Pt + (%6 *) => FptArr
-	_Pt + (* StoreArr) => %7
-	Pt + (%7 *) => FptArr
+	Pt + (%2[i] *) => Fpt[i]
+	_Pt + (* StoreArr) => %3
+	Pt + (%3 *) => FptArr
 	_Pt + (* Ref2RefT) => Obj2RefT
 	_Pt + (* Ref2PrimT) => Obj2PrimT
-	Pt + (Src2RefT *) => Src2ObjT
-	Pt + (Sink2RefT *) => Sink2ObjT
+	Pt + (Label2RefT *) => Label2ObjT
 	Pt + (SinkF2RefF *) => SinkF2Obj
-	_Pt + (Sink2Obj *) => %8
-	Pt + (%9 *) => SinkF2Obj
-	Pt + (%10 *) => SinkF2Obj
-	_Pt + (Sink2Obj *) => %11
-	Pt + (%12 *) => Src2ObjX
-	Pt + (%13 *) => Src2ObjX
-	Pt + (%14 *) => Src2ObjX
-	Pt + (%15 *) => Sink2ObjX
-	Pt + (%16 *) => Sink2ObjX
-	Pt + (%17 *) => Sink2ObjX
-	_Pt + (Src2ObjT *) => %18
-	_Pt + (Src2ObjX *) => %19
-	_Pt + (Src2PrimFld[i] *) => %20[i]
-	Pt + (%21[i] *) => Src2PrimFld[i]
-	Pt + (%22 *) => Src2PrimFldArr
-	_Pt + (Sink2ObjT *) => %23
-	_Pt + (Sink2ObjX *) => %24
-	_Pt + (Sink2PrimFld[i] *) => %25[i]
-	Pt + (%26[i] *) => Sink2PrimFld[i]
-	Pt + (%27 *) => Sink2PrimFldArr
-	_Pt + (Src2Obj *) => LabelRef3
-	_Pt + (Sink2Obj *) => LabelRef3
-Src2ObjT:
-	Src2ObjT + (* Fpt) => Src2ObjT
-	Src2ObjT => Src2Obj
-	Src2ObjT + (* _Pt) => %18
+	_Pt + (%4 *) => %5
+	Pt + (%6 *) => SinkF2Obj
+	Pt + (%8 *) => SinkF2Obj
+	_Pt + (%9 *) => %10
+	Pt + (%15 *) => Label2ObjX
+	Pt + (%16 *) => Label2ObjX
+	Pt + (%17 *) => Label2ObjX
+	_Pt + (Label2ObjT *) => %18
+	_Pt + (Label2ObjX *) => %19
+	_Pt + (Label2PrimFld[i] *) => %20[i]
+	Pt + (%21[i] *) => Label2PrimFld[i]
+	Pt + (%22 *) => Label2PrimFldArr
+	_Pt + (Label2Obj *) => LabelRef3
+prim2RefArgTStub:
+	prim2RefArgTStub => Prim2RefT
 %5:
-	%5 + (* pt) => FptArr
+	%5 + (* _Ref2RefF) => %6
 ref2PrimF:
 	ref2PrimF => Ref2PrimF
-refArg2RefArgTStub:
-	refArg2RefArgTStub => Ref2RefT
+Label2PrimFldArr:
+	Label2PrimFldArr + (* Obj2RefT) => %17
+	Label2PrimFldArr + (* Obj2PrimT) => Label2Prim
 FptArr:
 	_FptArr + (* Obj2RefT) => Obj2RefT
 	_FptArr + (* Obj2PrimT) => Obj2PrimT
-	FptArr + (Src2ObjX *) => Src2ObjX
-	FptArr + (Sink2ObjX *) => Sink2ObjX
+	FptArr + (Label2ObjX *) => Label2ObjX
 SinkF2PrimF:
 	SinkF2PrimF => SinkF2Prim
-Sink2PrimFld:
-	Sink2PrimFld[i] + (* _Pt) => %25[i]
 Src2Sink:
 	Src2Sink => Flow3
 loadStatPrimCtxt:
-	_loadStatPrimCtxt[i] + (Src2PrimFldStat[i] *) => Src2Prim
-	_loadStatPrimCtxt[i] + (Sink2PrimFldStat[i] *) => Sink2Prim
+	_loadStatPrimCtxt[i] + (Label2PrimFldStat[i] *) => Label2Prim
 Prim2PrimF:
-	_Prim2PrimF + (Sink2Prim *) => SinkF2Prim
+	_Prim2PrimF + (%11 *) => SinkF2Prim
 Prim2PrimT:
-	Prim2PrimT + (Src2Prim *) => Src2Prim
-	Prim2PrimT + (Sink2Prim *) => Sink2Prim
+	Prim2PrimT + (Label2Prim *) => Label2Prim
 storeStatPrimCtxt:
-	_storeStatPrimCtxt[i] + (Src2Prim *) => Src2PrimFldStat[i]
-	_storeStatPrimCtxt[i] + (Sink2Prim *) => Sink2PrimFldStat[i]
+	_storeStatPrimCtxt[i] + (Label2Prim *) => Label2PrimFldStat[i]
 Ref2PrimT:
 	Ref2PrimT + (_Pt *) => Obj2PrimT
 SinkF2Prim:
-	_SinkF2Prim + (Src2Prim *) => Src2Sink
+	_SinkF2Prim + (%13 *) => Src2Sink
 loadPrimCtxtArr:
-	_loadPrimCtxtArr + (%19 *) => Src2Prim
-	_loadPrimCtxtArr + (%24 *) => Sink2Prim
-StoreArr:
-	StoreArr + (_Pt *) => %5
-	StoreArr + (_pt *) => %6
-	StoreArr + (_Pt *) => %7
+	_loadPrimCtxtArr + (%19 *) => Label2Prim
 Ref2PrimF:
-	_Ref2PrimF + (Sink2Prim *) => %10
+	_Ref2PrimF + (%7 *) => %8
+sink2Label:
+	sink2Label + (* Label2Obj) => %4
+	sink2Label + (* Label2Prim) => %7
+	sink2Label + (* Label2Obj) => %9
+	sink2Label + (* Label2Prim) => %11
 PostFlowsTo:
-	_PostFlowsTo + (* _transfer) => %1
+	_PostFlowsTo + (* _Transfer) => %1
 assignPrimCtxt:
-	_assignPrimCtxt + (Src2Prim *) => Src2Prim
-	_assignPrimCtxt + (Sink2Prim *) => Sink2Prim
+	_assignPrimCtxt + (Label2Prim *) => Label2Prim
 fptArr:
 	fptArr => FptArr
+label2PrimT:
+	label2PrimT => Label2PrimT
 sinkF2PrimF:
 	sinkF2PrimF => SinkF2PrimF
-Src2PrimT:
-	Src2PrimT => Src2Prim
 Store:
 	Store[i] + (_Pt *) => %2[i]
-	Store[i] + (_pt *) => %3[i]
-	Store[i] + (_Pt *) => %4[i]
 pt:
-	pt + (%2[i] *) => Fpt[i]
-	_pt + (* Store[i]) => %3[i]
-	pt + (%5 *) => FptArr
-	_pt + (* StoreArr) => %6
 	pt => Pt
+Label2RefT:
+	Label2RefT + (* Pt) => Label2ObjT
 transfer:
-	transfer + (PreFlowsTo *) => %0
-	_transfer + (_PostFlowsTo *) => %1
-Sink2PrimFldArr:
-	Sink2PrimFldArr + (* Obj2RefT) => %17
-	Sink2PrimFldArr + (* Obj2PrimT) => Sink2Prim
+	transfer => Transfer
+transferSelf:
+	transferSelf => Transfer
 sinkF2RefF:
 	sinkF2RefF => SinkF2RefF
-Sink2RefT:
-	Sink2RefT + (* Pt) => Sink2ObjT
-%25:
-	%25[i] + (* _loadPrimCtxt[i]) => Sink2Prim
-src2PrimT:
-	src2PrimT => Src2PrimT
+Label2PrimFldStat:
+	Label2PrimFldStat[i] + (* _loadStatPrimCtxt[i]) => Label2Prim
+ref2PrimTStub:
+	ref2PrimTStub => Ref2PrimT
+src2Label:
+	src2Label + (* Label2Obj) => %12
+	src2Label + (* Label2Prim) => %13
+	src2Label + (* Label2PrimFld) => %14
 Obj2PrimT:
 	Obj2PrimT + (_FptArr *) => Obj2PrimT
-	Obj2PrimT + (Src2Obj *) => Src2Prim
-	Obj2PrimT + (Src2PrimFldArr *) => Src2Prim
-	Obj2PrimT + (Sink2Obj *) => Sink2Prim
-	Obj2PrimT + (Sink2PrimFldArr *) => Sink2Prim
+	Obj2PrimT + (Label2Obj *) => Label2Prim
+	Obj2PrimT + (Label2PrimFldArr *) => Label2Prim
 loadPrimCtxt:
-	_loadPrimCtxt + (%18 *) => Src2Prim
-	_loadPrimCtxt[i] + (%20[i] *) => Src2Prim
-	_loadPrimCtxt + (%23 *) => Sink2Prim
-	_loadPrimCtxt[i] + (%25[i] *) => Sink2Prim
+	_loadPrimCtxt + (%18 *) => Label2Prim
+	_loadPrimCtxt[i] + (%20[i] *) => Label2Prim
 Obj2RefT:
 	Obj2RefT + (_FptArr *) => Obj2RefT
-	Obj2RefT + (Src2Obj *) => %12
-	Obj2RefT + (Src2PrimFldArr *) => %14
-	Obj2RefT + (Sink2Obj *) => %15
-	Obj2RefT + (Sink2PrimFldArr *) => %17
-Src2Prim:
-	Src2Prim + (* _SinkF2Prim) => Src2Sink
-	Src2Prim + (* Prim2RefT) => %13
-	Src2Prim + (* _assignPrimCtxt) => Src2Prim
-	Src2Prim + (* _assignPrimCCtxt) => Src2Prim
-	Src2Prim + (* Prim2PrimT) => Src2Prim
-	Src2Prim + (* _storePrimCtxt[i]) => %21[i]
-	Src2Prim + (* _storePrimCtxtArr) => %22
-	Src2Prim + (* _storeStatPrimCtxt[i]) => Src2PrimFldStat[i]
-	Src2Prim => LabelPrim3
-Fpt:
-	Fpt + (Src2ObjT *) => Src2ObjT
-	Fpt + (Sink2ObjT *) => Sink2ObjT
-	Fpt + (SinkF2Obj *) => SinkF2Obj
+	Obj2RefT + (Label2Obj *) => %15
+	Obj2RefT + (Label2PrimFldArr *) => %17
 Prim2RefT:
-	Prim2RefT + (Src2Prim *) => %13
-	Prim2RefT + (Sink2Prim *) => %16
+	Prim2RefT + (Label2Prim *) => %16
 prim2PrimF:
 	prim2PrimF => Prim2PrimF
 midFlowsTo:
 	midFlowsTo => MidFlowsTo
 Prim2RefF:
-	_Prim2RefF + (%11 *) => SinkF2Prim
+	_Prim2RefF + (%10 *) => SinkF2Prim
 prim2PrimT:
 	prim2PrimT => Prim2PrimT
-Src2RefT:
-	Src2RefT + (* Pt) => Src2ObjT
+Label2Obj:
+	Label2Obj + (sink2Label *) => %4
+	Label2Obj + (sink2Label *) => %9
+	Label2Obj + (src2Label *) => %12
+	Label2Obj + (* Obj2RefT) => %15
+	Label2Obj + (* Obj2PrimT) => Label2Prim
+	Label2Obj + (* _Pt) => LabelRef3
 ref2RefF:
 	ref2RefF => Ref2RefF
-primArg2RefRetTStub:
-	primArg2RefRetTStub => Prim2RefT
-Sink2PrimFldStat:
-	Sink2PrimFldStat[i] + (* _loadStatPrimCtxt[i]) => Sink2Prim
+Transfer:
+	Transfer + (PreFlowsTo *) => %0
+	_Transfer + (_PostFlowsTo *) => %1
+Fpt:
+	Fpt + (Label2ObjT *) => Label2ObjT
+	Fpt + (SinkF2Obj *) => SinkF2Obj
+ref2RefArgTStub:
+	ref2RefArgTStub => Ref2RefT
 ref2RefT:
 	ref2RefT => Ref2RefT
-Sink2Prim:
-	Sink2Prim + (* _Ref2PrimF) => %10
-	Sink2Prim + (* _Prim2PrimF) => SinkF2Prim
-	Sink2Prim + (* Prim2RefT) => %16
-	Sink2Prim + (* _assignPrimCtxt) => Sink2Prim
-	Sink2Prim + (* _assignPrimCCtxt) => Sink2Prim
-	Sink2Prim + (* Prim2PrimT) => Sink2Prim
-	Sink2Prim + (* _storePrimCtxt[i]) => %26[i]
-	Sink2Prim + (* _storePrimCtxtArr) => %27
-	Sink2Prim + (* _storeStatPrimCtxt[i]) => Sink2PrimFldStat[i]
-	Sink2Prim => LabelPrim3
-primArg2PrimRetTStub:
-	primArg2PrimRetTStub => Prim2PrimT
-%24:
-	%24 + (* _loadPrimCtxtArr) => Sink2Prim
-Src2PrimFldArr:
-	Src2PrimFldArr + (* Obj2RefT) => %14
-	Src2PrimFldArr + (* Obj2PrimT) => Src2Prim
-%26:
-	%26[i] + (* Pt) => Sink2PrimFld[i]
-%27:
-	%27 + (* Pt) => Sink2PrimFldArr
+Label2PrimFld:
+	Label2PrimFld + (src2Label *) => %14
+	Label2PrimFld[i] + (* _Pt) => %20[i]
 %20:
-	%20[i] + (* _loadPrimCtxt[i]) => Src2Prim
+	%20[i] + (* _loadPrimCtxt[i]) => Label2Prim
 %21:
-	%21[i] + (* Pt) => Src2PrimFld[i]
+	%21[i] + (* Pt) => Label2PrimFld[i]
 %22:
-	%22 + (* Pt) => Src2PrimFldArr
-%23:
-	%23 + (* _loadPrimCtxt) => Sink2Prim
-src2RefT:
-	src2RefT => Src2RefT
+	%22 + (* Pt) => Label2PrimFldArr
+prim2PrimTStub:
+	prim2PrimTStub => Prim2PrimT
 fpt:
 	fpt[i] => Fpt[i]
 PreFlowsTo:
-	PreFlowsTo + (* transfer) => %0
+	PreFlowsTo + (* Transfer) => %0
 	_PreFlowsTo + (%1 *) => Pt
-Sink2PrimT:
-	Sink2PrimT => Sink2Prim
-Sink2Obj:
-	Sink2Obj + (* _Pt) => %8
-	Sink2Obj + (* _Pt) => %11
-	Sink2Obj + (* Obj2RefT) => %15
-	Sink2Obj + (* Obj2PrimT) => Sink2Prim
-	Sink2Obj + (* _Pt) => LabelRef3
+ref2RefRetTStub:
+	ref2RefRetTStub => Ref2RefT
 SinkF2RefF:
 	SinkF2RefF + (* Pt) => SinkF2Obj
-Sink2ObjT:
-	Sink2ObjT + (* Fpt) => Sink2ObjT
-	Sink2ObjT => Sink2Obj
-	Sink2ObjT + (* _Pt) => %23
-Sink2ObjX:
-	Sink2ObjX => Sink2Obj
-	Sink2ObjX + (* FptArr) => Sink2ObjX
-	Sink2ObjX + (* _Pt) => %24
+prim2RefRetTStub:
+	prim2RefRetTStub => Prim2RefT
 %19:
-	%19 + (* _loadPrimCtxtArr) => Src2Prim
+	%19 + (* _loadPrimCtxtArr) => Label2Prim
 %18:
-	%18 + (* _loadPrimCtxt) => Src2Prim
+	%18 + (* _loadPrimCtxt) => Label2Prim
 %11:
-	%11 + (* _Prim2RefF) => SinkF2Prim
+	%11 + (* _Prim2PrimF) => SinkF2Prim
 %10:
-	%10 + (* Pt) => SinkF2Obj
+	%10 + (* _Prim2RefF) => SinkF2Prim
 %13:
-	%13 + (* Pt) => Src2ObjX
+	%13 + (* _SinkF2Prim) => Src2Sink
 %12:
-	%12 + (* Pt) => Src2ObjX
+	%12 + (* _SinkF2Obj) => Src2Sink
 %15:
-	%15 + (* Pt) => Sink2ObjX
+	%15 + (* Pt) => Label2ObjX
 %14:
-	%14 + (* Pt) => Src2ObjX
+	%14 + (* _SinkF2Obj) => Src2Sink
 %17:
-	%17 + (* Pt) => Sink2ObjX
+	%17 + (* Pt) => Label2ObjX
 %16:
-	%16 + (* Pt) => Sink2ObjX
+	%16 + (* Pt) => Label2ObjX
 */
 
 public class G extends Graph {
@@ -748,29 +592,30 @@ public boolean isTerminal(int kind) {
   case 19:
   case 21:
   case 23:
+  case 24:
   case 25:
+  case 26:
   case 27:
   case 28:
   case 29:
-  case 30:
   case 31:
-  case 32:
   case 33:
   case 35:
   case 37:
-  case 39:
-  case 40:
-  case 46:
+  case 38:
+  case 48:
+  case 49:
+  case 50:
   case 55:
-  case 56:
-  case 83:
-  case 84:
-  case 85:
+  case 68:
+  case 78:
+  case 79:
+  case 80:
+  case 82:
+  case 86:
   case 87:
+  case 89:
   case 91:
-  case 92:
-  case 94:
-  case 96:
     return true;
   default:
     return false;
@@ -778,7 +623,7 @@ public boolean isTerminal(int kind) {
 }
 
 public int numKinds() {
-  return 107;
+  return 95;
 }
 
 public int symbolToKind(String symbol) {
@@ -790,105 +635,93 @@ public int symbolToKind(String symbol) {
   if (symbol.equals("prim2RefT")) return 5;
   if (symbol.equals("Prim2PrimT")) return 6;
   if (symbol.equals("prim2PrimT")) return 7;
-  if (symbol.equals("Src2RefT")) return 8;
-  if (symbol.equals("src2RefT")) return 9;
-  if (symbol.equals("Src2PrimT")) return 10;
-  if (symbol.equals("src2PrimT")) return 11;
-  if (symbol.equals("Sink2RefT")) return 12;
-  if (symbol.equals("sink2RefT")) return 13;
-  if (symbol.equals("Sink2PrimT")) return 14;
-  if (symbol.equals("sink2PrimT")) return 15;
-  if (symbol.equals("SinkF2RefF")) return 16;
-  if (symbol.equals("sinkF2RefF")) return 17;
-  if (symbol.equals("SinkF2PrimF")) return 18;
-  if (symbol.equals("sinkF2PrimF")) return 19;
-  if (symbol.equals("Ref2RefF")) return 20;
-  if (symbol.equals("ref2RefF")) return 21;
-  if (symbol.equals("Ref2PrimF")) return 22;
-  if (symbol.equals("ref2PrimF")) return 23;
-  if (symbol.equals("Prim2RefF")) return 24;
-  if (symbol.equals("prim2RefF")) return 25;
-  if (symbol.equals("Prim2PrimF")) return 26;
-  if (symbol.equals("prim2PrimF")) return 27;
-  if (symbol.equals("refArg2RefArgTStub")) return 28;
-  if (symbol.equals("refArg2RefRetTStub")) return 29;
-  if (symbol.equals("primArg2RefArgTStub")) return 30;
-  if (symbol.equals("primArg2RefRetTStub")) return 31;
-  if (symbol.equals("refArg2PrimRetTStub")) return 32;
-  if (symbol.equals("primArg2PrimRetTStub")) return 33;
-  if (symbol.equals("PreFlowsTo")) return 34;
-  if (symbol.equals("preFlowsTo")) return 35;
-  if (symbol.equals("PostFlowsTo")) return 36;
-  if (symbol.equals("postFlowsTo")) return 37;
-  if (symbol.equals("MidFlowsTo")) return 38;
-  if (symbol.equals("midFlowsTo")) return 39;
-  if (symbol.equals("transfer")) return 40;
-  if (symbol.equals("%0")) return 41;
-  if (symbol.equals("Pt")) return 42;
-  if (symbol.equals("%1")) return 43;
-  if (symbol.equals("Fpt")) return 44;
-  if (symbol.equals("Store")) return 45;
-  if (symbol.equals("pt")) return 46;
-  if (symbol.equals("%2")) return 47;
-  if (symbol.equals("%3")) return 48;
-  if (symbol.equals("%4")) return 49;
-  if (symbol.equals("FptArr")) return 50;
-  if (symbol.equals("StoreArr")) return 51;
-  if (symbol.equals("%5")) return 52;
-  if (symbol.equals("%6")) return 53;
-  if (symbol.equals("%7")) return 54;
-  if (symbol.equals("fpt")) return 55;
-  if (symbol.equals("fptArr")) return 56;
-  if (symbol.equals("Obj2RefT")) return 57;
-  if (symbol.equals("Obj2PrimT")) return 58;
-  if (symbol.equals("Src2ObjT")) return 59;
-  if (symbol.equals("Sink2ObjT")) return 60;
-  if (symbol.equals("SinkF2Obj")) return 61;
-  if (symbol.equals("Sink2Obj")) return 62;
-  if (symbol.equals("%8")) return 63;
+  if (symbol.equals("Label2RefT")) return 8;
+  if (symbol.equals("label2RefT")) return 9;
+  if (symbol.equals("Label2PrimT")) return 10;
+  if (symbol.equals("label2PrimT")) return 11;
+  if (symbol.equals("SinkF2RefF")) return 12;
+  if (symbol.equals("sinkF2RefF")) return 13;
+  if (symbol.equals("SinkF2PrimF")) return 14;
+  if (symbol.equals("sinkF2PrimF")) return 15;
+  if (symbol.equals("Ref2RefF")) return 16;
+  if (symbol.equals("ref2RefF")) return 17;
+  if (symbol.equals("Ref2PrimF")) return 18;
+  if (symbol.equals("ref2PrimF")) return 19;
+  if (symbol.equals("Prim2RefF")) return 20;
+  if (symbol.equals("prim2RefF")) return 21;
+  if (symbol.equals("Prim2PrimF")) return 22;
+  if (symbol.equals("prim2PrimF")) return 23;
+  if (symbol.equals("ref2RefArgTStub")) return 24;
+  if (symbol.equals("ref2RefRetTStub")) return 25;
+  if (symbol.equals("prim2RefArgTStub")) return 26;
+  if (symbol.equals("prim2RefRetTStub")) return 27;
+  if (symbol.equals("ref2PrimTStub")) return 28;
+  if (symbol.equals("prim2PrimTStub")) return 29;
+  if (symbol.equals("PreFlowsTo")) return 30;
+  if (symbol.equals("preFlowsTo")) return 31;
+  if (symbol.equals("PostFlowsTo")) return 32;
+  if (symbol.equals("postFlowsTo")) return 33;
+  if (symbol.equals("MidFlowsTo")) return 34;
+  if (symbol.equals("midFlowsTo")) return 35;
+  if (symbol.equals("Transfer")) return 36;
+  if (symbol.equals("transfer")) return 37;
+  if (symbol.equals("transferSelf")) return 38;
+  if (symbol.equals("%0")) return 39;
+  if (symbol.equals("Pt")) return 40;
+  if (symbol.equals("%1")) return 41;
+  if (symbol.equals("Fpt")) return 42;
+  if (symbol.equals("Store")) return 43;
+  if (symbol.equals("%2")) return 44;
+  if (symbol.equals("FptArr")) return 45;
+  if (symbol.equals("StoreArr")) return 46;
+  if (symbol.equals("%3")) return 47;
+  if (symbol.equals("pt")) return 48;
+  if (symbol.equals("fpt")) return 49;
+  if (symbol.equals("fptArr")) return 50;
+  if (symbol.equals("Obj2RefT")) return 51;
+  if (symbol.equals("Obj2PrimT")) return 52;
+  if (symbol.equals("Label2ObjT")) return 53;
+  if (symbol.equals("SinkF2Obj")) return 54;
+  if (symbol.equals("sink2Label")) return 55;
+  if (symbol.equals("Label2Obj")) return 56;
+  if (symbol.equals("%4")) return 57;
+  if (symbol.equals("%5")) return 58;
+  if (symbol.equals("%6")) return 59;
+  if (symbol.equals("Label2Prim")) return 60;
+  if (symbol.equals("%7")) return 61;
+  if (symbol.equals("%8")) return 62;
+  if (symbol.equals("SinkF2Prim")) return 63;
   if (symbol.equals("%9")) return 64;
-  if (symbol.equals("Sink2Prim")) return 65;
-  if (symbol.equals("%10")) return 66;
-  if (symbol.equals("SinkF2Prim")) return 67;
-  if (symbol.equals("%11")) return 68;
-  if (symbol.equals("Src2Sink")) return 69;
-  if (symbol.equals("Src2Obj")) return 70;
-  if (symbol.equals("Src2Prim")) return 71;
-  if (symbol.equals("Src2PrimFld")) return 72;
-  if (symbol.equals("Src2ObjX")) return 73;
-  if (symbol.equals("%12")) return 74;
-  if (symbol.equals("%13")) return 75;
-  if (symbol.equals("Src2PrimFldArr")) return 76;
-  if (symbol.equals("%14")) return 77;
-  if (symbol.equals("Sink2ObjX")) return 78;
-  if (symbol.equals("%15")) return 79;
-  if (symbol.equals("%16")) return 80;
-  if (symbol.equals("Sink2PrimFldArr")) return 81;
-  if (symbol.equals("%17")) return 82;
-  if (symbol.equals("assignPrimCtxt")) return 83;
-  if (symbol.equals("assignPrimCCtxt")) return 84;
-  if (symbol.equals("loadPrimCtxt")) return 85;
-  if (symbol.equals("%18")) return 86;
-  if (symbol.equals("loadPrimCtxtArr")) return 87;
-  if (symbol.equals("%19")) return 88;
-  if (symbol.equals("%20")) return 89;
-  if (symbol.equals("Src2PrimFldStat")) return 90;
-  if (symbol.equals("loadStatPrimCtxt")) return 91;
-  if (symbol.equals("storePrimCtxt")) return 92;
-  if (symbol.equals("%21")) return 93;
-  if (symbol.equals("storePrimCtxtArr")) return 94;
-  if (symbol.equals("%22")) return 95;
-  if (symbol.equals("storeStatPrimCtxt")) return 96;
-  if (symbol.equals("%23")) return 97;
-  if (symbol.equals("%24")) return 98;
-  if (symbol.equals("Sink2PrimFld")) return 99;
-  if (symbol.equals("%25")) return 100;
-  if (symbol.equals("Sink2PrimFldStat")) return 101;
-  if (symbol.equals("%26")) return 102;
-  if (symbol.equals("%27")) return 103;
-  if (symbol.equals("LabelRef3")) return 104;
-  if (symbol.equals("LabelPrim3")) return 105;
-  if (symbol.equals("Flow3")) return 106;
+  if (symbol.equals("%10")) return 65;
+  if (symbol.equals("%11")) return 66;
+  if (symbol.equals("Src2Sink")) return 67;
+  if (symbol.equals("src2Label")) return 68;
+  if (symbol.equals("%12")) return 69;
+  if (symbol.equals("%13")) return 70;
+  if (symbol.equals("Label2PrimFld")) return 71;
+  if (symbol.equals("%14")) return 72;
+  if (symbol.equals("Label2ObjX")) return 73;
+  if (symbol.equals("%15")) return 74;
+  if (symbol.equals("%16")) return 75;
+  if (symbol.equals("Label2PrimFldArr")) return 76;
+  if (symbol.equals("%17")) return 77;
+  if (symbol.equals("assignPrimCtxt")) return 78;
+  if (symbol.equals("assignPrimCCtxt")) return 79;
+  if (symbol.equals("loadPrimCtxt")) return 80;
+  if (symbol.equals("%18")) return 81;
+  if (symbol.equals("loadPrimCtxtArr")) return 82;
+  if (symbol.equals("%19")) return 83;
+  if (symbol.equals("%20")) return 84;
+  if (symbol.equals("Label2PrimFldStat")) return 85;
+  if (symbol.equals("loadStatPrimCtxt")) return 86;
+  if (symbol.equals("storePrimCtxt")) return 87;
+  if (symbol.equals("%21")) return 88;
+  if (symbol.equals("storePrimCtxtArr")) return 89;
+  if (symbol.equals("%22")) return 90;
+  if (symbol.equals("storeStatPrimCtxt")) return 91;
+  if (symbol.equals("LabelRef3")) return 92;
+  if (symbol.equals("LabelPrim3")) return 93;
+  if (symbol.equals("Flow3")) return 94;
   throw new RuntimeException("Unknown symbol "+symbol);
 }
 
@@ -902,105 +735,93 @@ public String kindToSymbol(int kind) {
   case 5: return "prim2RefT";
   case 6: return "Prim2PrimT";
   case 7: return "prim2PrimT";
-  case 8: return "Src2RefT";
-  case 9: return "src2RefT";
-  case 10: return "Src2PrimT";
-  case 11: return "src2PrimT";
-  case 12: return "Sink2RefT";
-  case 13: return "sink2RefT";
-  case 14: return "Sink2PrimT";
-  case 15: return "sink2PrimT";
-  case 16: return "SinkF2RefF";
-  case 17: return "sinkF2RefF";
-  case 18: return "SinkF2PrimF";
-  case 19: return "sinkF2PrimF";
-  case 20: return "Ref2RefF";
-  case 21: return "ref2RefF";
-  case 22: return "Ref2PrimF";
-  case 23: return "ref2PrimF";
-  case 24: return "Prim2RefF";
-  case 25: return "prim2RefF";
-  case 26: return "Prim2PrimF";
-  case 27: return "prim2PrimF";
-  case 28: return "refArg2RefArgTStub";
-  case 29: return "refArg2RefRetTStub";
-  case 30: return "primArg2RefArgTStub";
-  case 31: return "primArg2RefRetTStub";
-  case 32: return "refArg2PrimRetTStub";
-  case 33: return "primArg2PrimRetTStub";
-  case 34: return "PreFlowsTo";
-  case 35: return "preFlowsTo";
-  case 36: return "PostFlowsTo";
-  case 37: return "postFlowsTo";
-  case 38: return "MidFlowsTo";
-  case 39: return "midFlowsTo";
-  case 40: return "transfer";
-  case 41: return "%0";
-  case 42: return "Pt";
-  case 43: return "%1";
-  case 44: return "Fpt";
-  case 45: return "Store";
-  case 46: return "pt";
-  case 47: return "%2";
-  case 48: return "%3";
-  case 49: return "%4";
-  case 50: return "FptArr";
-  case 51: return "StoreArr";
-  case 52: return "%5";
-  case 53: return "%6";
-  case 54: return "%7";
-  case 55: return "fpt";
-  case 56: return "fptArr";
-  case 57: return "Obj2RefT";
-  case 58: return "Obj2PrimT";
-  case 59: return "Src2ObjT";
-  case 60: return "Sink2ObjT";
-  case 61: return "SinkF2Obj";
-  case 62: return "Sink2Obj";
-  case 63: return "%8";
+  case 8: return "Label2RefT";
+  case 9: return "label2RefT";
+  case 10: return "Label2PrimT";
+  case 11: return "label2PrimT";
+  case 12: return "SinkF2RefF";
+  case 13: return "sinkF2RefF";
+  case 14: return "SinkF2PrimF";
+  case 15: return "sinkF2PrimF";
+  case 16: return "Ref2RefF";
+  case 17: return "ref2RefF";
+  case 18: return "Ref2PrimF";
+  case 19: return "ref2PrimF";
+  case 20: return "Prim2RefF";
+  case 21: return "prim2RefF";
+  case 22: return "Prim2PrimF";
+  case 23: return "prim2PrimF";
+  case 24: return "ref2RefArgTStub";
+  case 25: return "ref2RefRetTStub";
+  case 26: return "prim2RefArgTStub";
+  case 27: return "prim2RefRetTStub";
+  case 28: return "ref2PrimTStub";
+  case 29: return "prim2PrimTStub";
+  case 30: return "PreFlowsTo";
+  case 31: return "preFlowsTo";
+  case 32: return "PostFlowsTo";
+  case 33: return "postFlowsTo";
+  case 34: return "MidFlowsTo";
+  case 35: return "midFlowsTo";
+  case 36: return "Transfer";
+  case 37: return "transfer";
+  case 38: return "transferSelf";
+  case 39: return "%0";
+  case 40: return "Pt";
+  case 41: return "%1";
+  case 42: return "Fpt";
+  case 43: return "Store";
+  case 44: return "%2";
+  case 45: return "FptArr";
+  case 46: return "StoreArr";
+  case 47: return "%3";
+  case 48: return "pt";
+  case 49: return "fpt";
+  case 50: return "fptArr";
+  case 51: return "Obj2RefT";
+  case 52: return "Obj2PrimT";
+  case 53: return "Label2ObjT";
+  case 54: return "SinkF2Obj";
+  case 55: return "sink2Label";
+  case 56: return "Label2Obj";
+  case 57: return "%4";
+  case 58: return "%5";
+  case 59: return "%6";
+  case 60: return "Label2Prim";
+  case 61: return "%7";
+  case 62: return "%8";
+  case 63: return "SinkF2Prim";
   case 64: return "%9";
-  case 65: return "Sink2Prim";
-  case 66: return "%10";
-  case 67: return "SinkF2Prim";
-  case 68: return "%11";
-  case 69: return "Src2Sink";
-  case 70: return "Src2Obj";
-  case 71: return "Src2Prim";
-  case 72: return "Src2PrimFld";
-  case 73: return "Src2ObjX";
-  case 74: return "%12";
-  case 75: return "%13";
-  case 76: return "Src2PrimFldArr";
-  case 77: return "%14";
-  case 78: return "Sink2ObjX";
-  case 79: return "%15";
-  case 80: return "%16";
-  case 81: return "Sink2PrimFldArr";
-  case 82: return "%17";
-  case 83: return "assignPrimCtxt";
-  case 84: return "assignPrimCCtxt";
-  case 85: return "loadPrimCtxt";
-  case 86: return "%18";
-  case 87: return "loadPrimCtxtArr";
-  case 88: return "%19";
-  case 89: return "%20";
-  case 90: return "Src2PrimFldStat";
-  case 91: return "loadStatPrimCtxt";
-  case 92: return "storePrimCtxt";
-  case 93: return "%21";
-  case 94: return "storePrimCtxtArr";
-  case 95: return "%22";
-  case 96: return "storeStatPrimCtxt";
-  case 97: return "%23";
-  case 98: return "%24";
-  case 99: return "Sink2PrimFld";
-  case 100: return "%25";
-  case 101: return "Sink2PrimFldStat";
-  case 102: return "%26";
-  case 103: return "%27";
-  case 104: return "LabelRef3";
-  case 105: return "LabelPrim3";
-  case 106: return "Flow3";
+  case 65: return "%10";
+  case 66: return "%11";
+  case 67: return "Src2Sink";
+  case 68: return "src2Label";
+  case 69: return "%12";
+  case 70: return "%13";
+  case 71: return "Label2PrimFld";
+  case 72: return "%14";
+  case 73: return "Label2ObjX";
+  case 74: return "%15";
+  case 75: return "%16";
+  case 76: return "Label2PrimFldArr";
+  case 77: return "%17";
+  case 78: return "assignPrimCtxt";
+  case 79: return "assignPrimCCtxt";
+  case 80: return "loadPrimCtxt";
+  case 81: return "%18";
+  case 82: return "loadPrimCtxtArr";
+  case 83: return "%19";
+  case 84: return "%20";
+  case 85: return "Label2PrimFldStat";
+  case 86: return "loadStatPrimCtxt";
+  case 87: return "storePrimCtxt";
+  case 88: return "%21";
+  case 89: return "storePrimCtxtArr";
+  case 90: return "%22";
+  case 91: return "storeStatPrimCtxt";
+  case 92: return "LabelRef3";
+  case 93: return "LabelPrim3";
+  case 94: return "Flow3";
   default: throw new RuntimeException("Unknown kind "+kind);
   }
 }
@@ -1009,8 +830,8 @@ public void process(Edge base) {
   switch (base.kind) {
   case 0: /* Ref2RefT */
     /* Ref2RefT + (_Pt *) => Obj2RefT */
-    for(Edge other : base.from.getOutEdges(42)){
-      addEdge(other.to, base.to, 57, base, other, false);
+    for(Edge other : base.from.getOutEdges(40)){
+      addEdge(other.to, base.to, 51, base, other, false);
     }
     break;
   case 1: /* ref2RefT */
@@ -1019,8 +840,8 @@ public void process(Edge base) {
     break;
   case 2: /* Ref2PrimT */
     /* Ref2PrimT + (_Pt *) => Obj2PrimT */
-    for(Edge other : base.from.getOutEdges(42)){
-      addEdge(other.to, base.to, 58, base, other, false);
+    for(Edge other : base.from.getOutEdges(40)){
+      addEdge(other.to, base.to, 52, base, other, false);
     }
     break;
   case 3: /* ref2PrimT */
@@ -1028,13 +849,9 @@ public void process(Edge base) {
     addEdge(base.from, base.to, 2, base, false);
     break;
   case 4: /* Prim2RefT */
-    /* Prim2RefT + (Src2Prim *) => %13 */
-    for(Edge other : base.from.getInEdges(71)){
+    /* Prim2RefT + (Label2Prim *) => %16 */
+    for(Edge other : base.from.getInEdges(60)){
       addEdge(other.from, base.to, 75, base, other, false);
-    }
-    /* Prim2RefT + (Sink2Prim *) => %16 */
-    for(Edge other : base.from.getInEdges(65)){
-      addEdge(other.from, base.to, 80, base, other, false);
     }
     break;
   case 5: /* prim2RefT */
@@ -1042,945 +859,693 @@ public void process(Edge base) {
     addEdge(base.from, base.to, 4, base, false);
     break;
   case 6: /* Prim2PrimT */
-    /* Prim2PrimT + (Src2Prim *) => Src2Prim */
-    for(Edge other : base.from.getInEdges(71)){
-      addEdge(other.from, base.to, 71, base, other, false);
-    }
-    /* Prim2PrimT + (Sink2Prim *) => Sink2Prim */
-    for(Edge other : base.from.getInEdges(65)){
-      addEdge(other.from, base.to, 65, base, other, false);
+    /* Prim2PrimT + (Label2Prim *) => Label2Prim */
+    for(Edge other : base.from.getInEdges(60)){
+      addEdge(other.from, base.to, 60, base, other, false);
     }
     break;
   case 7: /* prim2PrimT */
     /* prim2PrimT => Prim2PrimT */
     addEdge(base.from, base.to, 6, base, false);
     break;
-  case 8: /* Src2RefT */
-    /* Src2RefT + (* Pt) => Src2ObjT */
-    for(Edge other : base.to.getOutEdges(42)){
-      addEdge(base.from, other.to, 59, base, other, false);
+  case 8: /* Label2RefT */
+    /* Label2RefT + (* Pt) => Label2ObjT */
+    for(Edge other : base.to.getOutEdges(40)){
+      addEdge(base.from, other.to, 53, base, other, false);
     }
     break;
-  case 9: /* src2RefT */
-    /* src2RefT => Src2RefT */
+  case 9: /* label2RefT */
+    /* label2RefT => Label2RefT */
     addEdge(base.from, base.to, 8, base, false);
     break;
-  case 10: /* Src2PrimT */
-    /* Src2PrimT => Src2Prim */
-    addEdge(base.from, base.to, 71, base, false);
+  case 10: /* Label2PrimT */
+    /* Label2PrimT => Label2Prim */
+    addEdge(base.from, base.to, 60, base, false);
     break;
-  case 11: /* src2PrimT */
-    /* src2PrimT => Src2PrimT */
+  case 11: /* label2PrimT */
+    /* label2PrimT => Label2PrimT */
     addEdge(base.from, base.to, 10, base, false);
     break;
-  case 12: /* Sink2RefT */
-    /* Sink2RefT + (* Pt) => Sink2ObjT */
-    for(Edge other : base.to.getOutEdges(42)){
-      addEdge(base.from, other.to, 60, base, other, false);
+  case 12: /* SinkF2RefF */
+    /* SinkF2RefF + (* Pt) => SinkF2Obj */
+    for(Edge other : base.to.getOutEdges(40)){
+      addEdge(base.from, other.to, 54, base, other, false);
     }
     break;
-  case 13: /* sink2RefT */
-    /* sink2RefT => Sink2RefT */
+  case 13: /* sinkF2RefF */
+    /* sinkF2RefF => SinkF2RefF */
     addEdge(base.from, base.to, 12, base, false);
     break;
-  case 14: /* Sink2PrimT */
-    /* Sink2PrimT => Sink2Prim */
-    addEdge(base.from, base.to, 65, base, false);
+  case 14: /* SinkF2PrimF */
+    /* SinkF2PrimF => SinkF2Prim */
+    addEdge(base.from, base.to, 63, base, false);
     break;
-  case 15: /* sink2PrimT */
-    /* sink2PrimT => Sink2PrimT */
+  case 15: /* sinkF2PrimF */
+    /* sinkF2PrimF => SinkF2PrimF */
     addEdge(base.from, base.to, 14, base, false);
     break;
-  case 16: /* SinkF2RefF */
-    /* SinkF2RefF + (* Pt) => SinkF2Obj */
-    for(Edge other : base.to.getOutEdges(42)){
-      addEdge(base.from, other.to, 61, base, other, false);
+  case 16: /* Ref2RefF */
+    /* _Ref2RefF + (%5 *) => %6 */
+    for(Edge other : base.to.getInEdges(58)){
+      addEdge(other.from, base.from, 59, base, other, false);
     }
     break;
-  case 17: /* sinkF2RefF */
-    /* sinkF2RefF => SinkF2RefF */
+  case 17: /* ref2RefF */
+    /* ref2RefF => Ref2RefF */
     addEdge(base.from, base.to, 16, base, false);
     break;
-  case 18: /* SinkF2PrimF */
-    /* SinkF2PrimF => SinkF2Prim */
-    addEdge(base.from, base.to, 67, base, false);
+  case 18: /* Ref2PrimF */
+    /* _Ref2PrimF + (%7 *) => %8 */
+    for(Edge other : base.to.getInEdges(61)){
+      addEdge(other.from, base.from, 62, base, other, false);
+    }
     break;
-  case 19: /* sinkF2PrimF */
-    /* sinkF2PrimF => SinkF2PrimF */
+  case 19: /* ref2PrimF */
+    /* ref2PrimF => Ref2PrimF */
     addEdge(base.from, base.to, 18, base, false);
     break;
-  case 20: /* Ref2RefF */
-    /* _Ref2RefF + (%8 *) => %9 */
-    for(Edge other : base.to.getInEdges(63)){
-      addEdge(other.from, base.from, 64, base, other, false);
+  case 20: /* Prim2RefF */
+    /* _Prim2RefF + (%10 *) => SinkF2Prim */
+    for(Edge other : base.to.getInEdges(65)){
+      addEdge(other.from, base.from, 63, base, other, false);
     }
     break;
-  case 21: /* ref2RefF */
-    /* ref2RefF => Ref2RefF */
+  case 21: /* prim2RefF */
+    /* prim2RefF => Prim2RefF */
     addEdge(base.from, base.to, 20, base, false);
     break;
-  case 22: /* Ref2PrimF */
-    /* _Ref2PrimF + (Sink2Prim *) => %10 */
-    for(Edge other : base.to.getInEdges(65)){
-      addEdge(other.from, base.from, 66, base, other, false);
+  case 22: /* Prim2PrimF */
+    /* _Prim2PrimF + (%11 *) => SinkF2Prim */
+    for(Edge other : base.to.getInEdges(66)){
+      addEdge(other.from, base.from, 63, base, other, false);
     }
     break;
-  case 23: /* ref2PrimF */
-    /* ref2PrimF => Ref2PrimF */
+  case 23: /* prim2PrimF */
+    /* prim2PrimF => Prim2PrimF */
     addEdge(base.from, base.to, 22, base, false);
     break;
-  case 24: /* Prim2RefF */
-    /* _Prim2RefF + (%11 *) => SinkF2Prim */
-    for(Edge other : base.to.getInEdges(68)){
-      addEdge(other.from, base.from, 67, base, other, false);
-    }
-    break;
-  case 25: /* prim2RefF */
-    /* prim2RefF => Prim2RefF */
-    addEdge(base.from, base.to, 24, base, false);
-    break;
-  case 26: /* Prim2PrimF */
-    /* _Prim2PrimF + (Sink2Prim *) => SinkF2Prim */
-    for(Edge other : base.to.getInEdges(65)){
-      addEdge(other.from, base.from, 67, base, other, false);
-    }
-    break;
-  case 27: /* prim2PrimF */
-    /* prim2PrimF => Prim2PrimF */
-    addEdge(base.from, base.to, 26, base, false);
-    break;
-  case 28: /* refArg2RefArgTStub */
-    /* refArg2RefArgTStub => Ref2RefT */
+  case 24: /* ref2RefArgTStub */
+    /* ref2RefArgTStub => Ref2RefT */
     addEdge(base.from, base.to, 0, base, false);
     break;
-  case 29: /* refArg2RefRetTStub */
-    /* refArg2RefRetTStub => Ref2RefT */
+  case 25: /* ref2RefRetTStub */
+    /* ref2RefRetTStub => Ref2RefT */
     addEdge(base.from, base.to, 0, base, false);
     break;
-  case 30: /* primArg2RefArgTStub */
-    /* primArg2RefArgTStub => Prim2RefT */
+  case 26: /* prim2RefArgTStub */
+    /* prim2RefArgTStub => Prim2RefT */
     addEdge(base.from, base.to, 4, base, false);
     break;
-  case 31: /* primArg2RefRetTStub */
-    /* primArg2RefRetTStub => Prim2RefT */
+  case 27: /* prim2RefRetTStub */
+    /* prim2RefRetTStub => Prim2RefT */
     addEdge(base.from, base.to, 4, base, false);
     break;
-  case 32: /* refArg2PrimRetTStub */
-    /* refArg2PrimRetTStub => Ref2PrimT */
+  case 28: /* ref2PrimTStub */
+    /* ref2PrimTStub => Ref2PrimT */
     addEdge(base.from, base.to, 2, base, false);
     break;
-  case 33: /* primArg2PrimRetTStub */
-    /* primArg2PrimRetTStub => Prim2PrimT */
+  case 29: /* prim2PrimTStub */
+    /* prim2PrimTStub => Prim2PrimT */
     addEdge(base.from, base.to, 6, base, false);
     break;
-  case 34: /* PreFlowsTo */
-    /* PreFlowsTo + (* transfer) => %0 */
-    for(Edge other : base.to.getOutEdges(40)){
-      addEdge(base.from, other.to, 41, base, other, false);
+  case 30: /* PreFlowsTo */
+    /* PreFlowsTo + (* Transfer) => %0 */
+    for(Edge other : base.to.getOutEdges(36)){
+      addEdge(base.from, other.to, 39, base, other, false);
     }
     /* _PreFlowsTo + (%1 *) => Pt */
-    for(Edge other : base.to.getInEdges(43)){
-      addEdge(other.from, base.from, 42, base, other, false);
+    for(Edge other : base.to.getInEdges(41)){
+      addEdge(other.from, base.from, 40, base, other, false);
     }
     break;
-  case 35: /* preFlowsTo */
+  case 31: /* preFlowsTo */
     /* preFlowsTo => PreFlowsTo */
+    addEdge(base.from, base.to, 30, base, false);
+    break;
+  case 32: /* PostFlowsTo */
+    /* _PostFlowsTo + (* _Transfer) => %1 */
+    for(Edge other : base.from.getInEdges(36)){
+      addEdge(base.to, other.from, 41, base, other, false);
+    }
+    break;
+  case 33: /* postFlowsTo */
+    /* postFlowsTo => PostFlowsTo */
+    addEdge(base.from, base.to, 32, base, false);
+    break;
+  case 34: /* MidFlowsTo */
+    /* MidFlowsTo + (%0 *) => PreFlowsTo */
+    for(Edge other : base.from.getInEdges(39)){
+      addEdge(other.from, base.to, 30, base, other, false);
+    }
+    break;
+  case 35: /* midFlowsTo */
+    /* midFlowsTo => MidFlowsTo */
     addEdge(base.from, base.to, 34, base, false);
     break;
-  case 36: /* PostFlowsTo */
-    /* _PostFlowsTo + (* _transfer) => %1 */
-    for(Edge other : base.from.getInEdges(40)){
-      addEdge(base.to, other.from, 43, base, other, false);
+  case 36: /* Transfer */
+    /* Transfer + (PreFlowsTo *) => %0 */
+    for(Edge other : base.from.getInEdges(30)){
+      addEdge(other.from, base.to, 39, base, other, false);
+    }
+    /* _Transfer + (_PostFlowsTo *) => %1 */
+    for(Edge other : base.to.getOutEdges(32)){
+      addEdge(other.to, base.from, 41, base, other, false);
     }
     break;
-  case 37: /* postFlowsTo */
-    /* postFlowsTo => PostFlowsTo */
+  case 37: /* transfer */
+    /* transfer => Transfer */
     addEdge(base.from, base.to, 36, base, false);
     break;
-  case 38: /* MidFlowsTo */
-    /* MidFlowsTo + (%0 *) => PreFlowsTo */
-    for(Edge other : base.from.getInEdges(41)){
-      addEdge(other.from, base.to, 34, base, other, false);
-    }
+  case 38: /* transferSelf */
+    /* transferSelf => Transfer */
+    addEdge(base.from, base.to, 36, base, false);
     break;
-  case 39: /* midFlowsTo */
-    /* midFlowsTo => MidFlowsTo */
-    addEdge(base.from, base.to, 38, base, false);
-    break;
-  case 40: /* transfer */
-    /* transfer + (PreFlowsTo *) => %0 */
-    for(Edge other : base.from.getInEdges(34)){
-      addEdge(other.from, base.to, 41, base, other, false);
-    }
-    /* _transfer + (_PostFlowsTo *) => %1 */
-    for(Edge other : base.to.getOutEdges(36)){
-      addEdge(other.to, base.from, 43, base, other, false);
-    }
-    break;
-  case 41: /* %0 */
+  case 39: /* %0 */
     /* %0 + (* MidFlowsTo) => PreFlowsTo */
-    for(Edge other : base.to.getOutEdges(38)){
-      addEdge(base.from, other.to, 34, base, other, false);
+    for(Edge other : base.to.getOutEdges(34)){
+      addEdge(base.from, other.to, 30, base, other, false);
     }
     break;
-  case 42: /* Pt */
+  case 40: /* Pt */
     /* _Pt + (* Store[i]) => %2[i] */
-    for(Edge other : base.from.getOutEdges(45)){
-      addEdge(base.to, other.to, 47, base, other, true);
+    for(Edge other : base.from.getOutEdges(43)){
+      addEdge(base.to, other.to, 44, base, other, true);
     }
-    /* Pt + (%3[i] *) => Fpt[i] */
-    for(Edge other : base.from.getInEdges(48)){
-      addEdge(other.from, base.to, 44, base, other, true);
+    /* Pt + (%2[i] *) => Fpt[i] */
+    for(Edge other : base.from.getInEdges(44)){
+      addEdge(other.from, base.to, 42, base, other, true);
     }
-    /* _Pt + (* Store[i]) => %4[i] */
-    for(Edge other : base.from.getOutEdges(45)){
-      addEdge(base.to, other.to, 49, base, other, true);
+    /* _Pt + (* StoreArr) => %3 */
+    for(Edge other : base.from.getOutEdges(46)){
+      addEdge(base.to, other.to, 47, base, other, false);
     }
-    /* Pt + (%4[i] *) => Fpt[i] */
-    for(Edge other : base.from.getInEdges(49)){
-      addEdge(other.from, base.to, 44, base, other, true);
-    }
-    /* _Pt + (* StoreArr) => %5 */
-    for(Edge other : base.from.getOutEdges(51)){
-      addEdge(base.to, other.to, 52, base, other, false);
-    }
-    /* Pt + (%6 *) => FptArr */
-    for(Edge other : base.from.getInEdges(53)){
-      addEdge(other.from, base.to, 50, base, other, false);
-    }
-    /* _Pt + (* StoreArr) => %7 */
-    for(Edge other : base.from.getOutEdges(51)){
-      addEdge(base.to, other.to, 54, base, other, false);
-    }
-    /* Pt + (%7 *) => FptArr */
-    for(Edge other : base.from.getInEdges(54)){
-      addEdge(other.from, base.to, 50, base, other, false);
+    /* Pt + (%3 *) => FptArr */
+    for(Edge other : base.from.getInEdges(47)){
+      addEdge(other.from, base.to, 45, base, other, false);
     }
     /* _Pt + (* Ref2RefT) => Obj2RefT */
     for(Edge other : base.from.getOutEdges(0)){
-      addEdge(base.to, other.to, 57, base, other, false);
+      addEdge(base.to, other.to, 51, base, other, false);
     }
     /* _Pt + (* Ref2PrimT) => Obj2PrimT */
     for(Edge other : base.from.getOutEdges(2)){
-      addEdge(base.to, other.to, 58, base, other, false);
+      addEdge(base.to, other.to, 52, base, other, false);
     }
-    /* Pt + (Src2RefT *) => Src2ObjT */
+    /* Pt + (Label2RefT *) => Label2ObjT */
     for(Edge other : base.from.getInEdges(8)){
-      addEdge(other.from, base.to, 59, base, other, false);
-    }
-    /* Pt + (Sink2RefT *) => Sink2ObjT */
-    for(Edge other : base.from.getInEdges(12)){
-      addEdge(other.from, base.to, 60, base, other, false);
+      addEdge(other.from, base.to, 53, base, other, false);
     }
     /* Pt + (SinkF2RefF *) => SinkF2Obj */
-    for(Edge other : base.from.getInEdges(16)){
-      addEdge(other.from, base.to, 61, base, other, false);
+    for(Edge other : base.from.getInEdges(12)){
+      addEdge(other.from, base.to, 54, base, other, false);
     }
-    /* _Pt + (Sink2Obj *) => %8 */
-    for(Edge other : base.to.getInEdges(62)){
-      addEdge(other.from, base.from, 63, base, other, false);
+    /* _Pt + (%4 *) => %5 */
+    for(Edge other : base.to.getInEdges(57)){
+      addEdge(other.from, base.from, 58, base, other, false);
     }
-    /* Pt + (%9 *) => SinkF2Obj */
-    for(Edge other : base.from.getInEdges(64)){
-      addEdge(other.from, base.to, 61, base, other, false);
+    /* Pt + (%6 *) => SinkF2Obj */
+    for(Edge other : base.from.getInEdges(59)){
+      addEdge(other.from, base.to, 54, base, other, false);
     }
-    /* Pt + (%10 *) => SinkF2Obj */
-    for(Edge other : base.from.getInEdges(66)){
-      addEdge(other.from, base.to, 61, base, other, false);
+    /* Pt + (%8 *) => SinkF2Obj */
+    for(Edge other : base.from.getInEdges(62)){
+      addEdge(other.from, base.to, 54, base, other, false);
     }
-    /* _Pt + (Sink2Obj *) => %11 */
-    for(Edge other : base.to.getInEdges(62)){
-      addEdge(other.from, base.from, 68, base, other, false);
+    /* _Pt + (%9 *) => %10 */
+    for(Edge other : base.to.getInEdges(64)){
+      addEdge(other.from, base.from, 65, base, other, false);
     }
-    /* Pt + (%12 *) => Src2ObjX */
+    /* Pt + (%15 *) => Label2ObjX */
     for(Edge other : base.from.getInEdges(74)){
       addEdge(other.from, base.to, 73, base, other, false);
     }
-    /* Pt + (%13 *) => Src2ObjX */
+    /* Pt + (%16 *) => Label2ObjX */
     for(Edge other : base.from.getInEdges(75)){
       addEdge(other.from, base.to, 73, base, other, false);
     }
-    /* Pt + (%14 *) => Src2ObjX */
+    /* Pt + (%17 *) => Label2ObjX */
     for(Edge other : base.from.getInEdges(77)){
       addEdge(other.from, base.to, 73, base, other, false);
     }
-    /* Pt + (%15 *) => Sink2ObjX */
-    for(Edge other : base.from.getInEdges(79)){
-      addEdge(other.from, base.to, 78, base, other, false);
+    /* _Pt + (Label2ObjT *) => %18 */
+    for(Edge other : base.to.getInEdges(53)){
+      addEdge(other.from, base.from, 81, base, other, false);
     }
-    /* Pt + (%16 *) => Sink2ObjX */
-    for(Edge other : base.from.getInEdges(80)){
-      addEdge(other.from, base.to, 78, base, other, false);
-    }
-    /* Pt + (%17 *) => Sink2ObjX */
-    for(Edge other : base.from.getInEdges(82)){
-      addEdge(other.from, base.to, 78, base, other, false);
-    }
-    /* _Pt + (Src2ObjT *) => %18 */
-    for(Edge other : base.to.getInEdges(59)){
-      addEdge(other.from, base.from, 86, base, other, false);
-    }
-    /* _Pt + (Src2ObjX *) => %19 */
+    /* _Pt + (Label2ObjX *) => %19 */
     for(Edge other : base.to.getInEdges(73)){
-      addEdge(other.from, base.from, 88, base, other, false);
+      addEdge(other.from, base.from, 83, base, other, false);
     }
-    /* _Pt + (Src2PrimFld[i] *) => %20[i] */
-    for(Edge other : base.to.getInEdges(72)){
-      addEdge(other.from, base.from, 89, base, other, true);
+    /* _Pt + (Label2PrimFld[i] *) => %20[i] */
+    for(Edge other : base.to.getInEdges(71)){
+      addEdge(other.from, base.from, 84, base, other, true);
     }
-    /* Pt + (%21[i] *) => Src2PrimFld[i] */
-    for(Edge other : base.from.getInEdges(93)){
-      addEdge(other.from, base.to, 72, base, other, true);
+    /* Pt + (%21[i] *) => Label2PrimFld[i] */
+    for(Edge other : base.from.getInEdges(88)){
+      addEdge(other.from, base.to, 71, base, other, true);
     }
-    /* Pt + (%22 *) => Src2PrimFldArr */
-    for(Edge other : base.from.getInEdges(95)){
+    /* Pt + (%22 *) => Label2PrimFldArr */
+    for(Edge other : base.from.getInEdges(90)){
       addEdge(other.from, base.to, 76, base, other, false);
     }
-    /* _Pt + (Sink2ObjT *) => %23 */
-    for(Edge other : base.to.getInEdges(60)){
-      addEdge(other.from, base.from, 97, base, other, false);
-    }
-    /* _Pt + (Sink2ObjX *) => %24 */
-    for(Edge other : base.to.getInEdges(78)){
-      addEdge(other.from, base.from, 98, base, other, false);
-    }
-    /* _Pt + (Sink2PrimFld[i] *) => %25[i] */
-    for(Edge other : base.to.getInEdges(99)){
-      addEdge(other.from, base.from, 100, base, other, true);
-    }
-    /* Pt + (%26[i] *) => Sink2PrimFld[i] */
-    for(Edge other : base.from.getInEdges(102)){
-      addEdge(other.from, base.to, 99, base, other, true);
-    }
-    /* Pt + (%27 *) => Sink2PrimFldArr */
-    for(Edge other : base.from.getInEdges(103)){
-      addEdge(other.from, base.to, 81, base, other, false);
-    }
-    /* _Pt + (Src2Obj *) => LabelRef3 */
-    for(Edge other : base.to.getInEdges(70)){
-      addEdge(other.from, base.from, 104, base, other, false);
-    }
-    /* _Pt + (Sink2Obj *) => LabelRef3 */
-    for(Edge other : base.to.getInEdges(62)){
-      addEdge(other.from, base.from, 104, base, other, false);
+    /* _Pt + (Label2Obj *) => LabelRef3 */
+    for(Edge other : base.to.getInEdges(56)){
+      addEdge(other.from, base.from, 92, base, other, false);
     }
     break;
-  case 43: /* %1 */
+  case 41: /* %1 */
     /* %1 + (* _PreFlowsTo) => Pt */
-    for(Edge other : base.to.getInEdges(34)){
-      addEdge(base.from, other.from, 42, base, other, false);
+    for(Edge other : base.to.getInEdges(30)){
+      addEdge(base.from, other.from, 40, base, other, false);
     }
     break;
-  case 44: /* Fpt */
-    /* Fpt + (Src2ObjT *) => Src2ObjT */
-    for(Edge other : base.from.getInEdges(59)){
-      addEdge(other.from, base.to, 59, base, other, false);
-    }
-    /* Fpt + (Sink2ObjT *) => Sink2ObjT */
-    for(Edge other : base.from.getInEdges(60)){
-      addEdge(other.from, base.to, 60, base, other, false);
+  case 42: /* Fpt */
+    /* Fpt + (Label2ObjT *) => Label2ObjT */
+    for(Edge other : base.from.getInEdges(53)){
+      addEdge(other.from, base.to, 53, base, other, false);
     }
     /* Fpt + (SinkF2Obj *) => SinkF2Obj */
-    for(Edge other : base.from.getInEdges(61)){
-      addEdge(other.from, base.to, 61, base, other, false);
+    for(Edge other : base.from.getInEdges(54)){
+      addEdge(other.from, base.to, 54, base, other, false);
     }
     break;
-  case 45: /* Store */
+  case 43: /* Store */
     /* Store[i] + (_Pt *) => %2[i] */
-    for(Edge other : base.from.getOutEdges(42)){
-      addEdge(other.to, base.to, 47, base, other, true);
-    }
-    /* Store[i] + (_pt *) => %3[i] */
-    for(Edge other : base.from.getOutEdges(46)){
-      addEdge(other.to, base.to, 48, base, other, true);
-    }
-    /* Store[i] + (_Pt *) => %4[i] */
-    for(Edge other : base.from.getOutEdges(42)){
-      addEdge(other.to, base.to, 49, base, other, true);
+    for(Edge other : base.from.getOutEdges(40)){
+      addEdge(other.to, base.to, 44, base, other, true);
     }
     break;
-  case 46: /* pt */
-    /* pt + (%2[i] *) => Fpt[i] */
-    for(Edge other : base.from.getInEdges(47)){
-      addEdge(other.from, base.to, 44, base, other, true);
-    }
-    /* _pt + (* Store[i]) => %3[i] */
-    for(Edge other : base.from.getOutEdges(45)){
-      addEdge(base.to, other.to, 48, base, other, true);
-    }
-    /* pt + (%5 *) => FptArr */
-    for(Edge other : base.from.getInEdges(52)){
-      addEdge(other.from, base.to, 50, base, other, false);
-    }
-    /* _pt + (* StoreArr) => %6 */
-    for(Edge other : base.from.getOutEdges(51)){
-      addEdge(base.to, other.to, 53, base, other, false);
-    }
-    /* pt => Pt */
-    addEdge(base.from, base.to, 42, base, false);
-    break;
-  case 47: /* %2 */
-    /* %2[i] + (* pt) => Fpt[i] */
-    for(Edge other : base.to.getOutEdges(46)){
-      addEdge(base.from, other.to, 44, base, other, true);
+  case 44: /* %2 */
+    /* %2[i] + (* Pt) => Fpt[i] */
+    for(Edge other : base.to.getOutEdges(40)){
+      addEdge(base.from, other.to, 42, base, other, true);
     }
     break;
-  case 48: /* %3 */
-    /* %3[i] + (* Pt) => Fpt[i] */
-    for(Edge other : base.to.getOutEdges(42)){
-      addEdge(base.from, other.to, 44, base, other, true);
-    }
-    break;
-  case 49: /* %4 */
-    /* %4[i] + (* Pt) => Fpt[i] */
-    for(Edge other : base.to.getOutEdges(42)){
-      addEdge(base.from, other.to, 44, base, other, true);
-    }
-    break;
-  case 50: /* FptArr */
+  case 45: /* FptArr */
     /* _FptArr + (* Obj2RefT) => Obj2RefT */
-    for(Edge other : base.from.getOutEdges(57)){
-      addEdge(base.to, other.to, 57, base, other, false);
+    for(Edge other : base.from.getOutEdges(51)){
+      addEdge(base.to, other.to, 51, base, other, false);
     }
     /* _FptArr + (* Obj2PrimT) => Obj2PrimT */
-    for(Edge other : base.from.getOutEdges(58)){
-      addEdge(base.to, other.to, 58, base, other, false);
+    for(Edge other : base.from.getOutEdges(52)){
+      addEdge(base.to, other.to, 52, base, other, false);
     }
-    /* FptArr + (Src2ObjX *) => Src2ObjX */
+    /* FptArr + (Label2ObjX *) => Label2ObjX */
     for(Edge other : base.from.getInEdges(73)){
       addEdge(other.from, base.to, 73, base, other, false);
     }
-    /* FptArr + (Sink2ObjX *) => Sink2ObjX */
-    for(Edge other : base.from.getInEdges(78)){
-      addEdge(other.from, base.to, 78, base, other, false);
+    break;
+  case 46: /* StoreArr */
+    /* StoreArr + (_Pt *) => %3 */
+    for(Edge other : base.from.getOutEdges(40)){
+      addEdge(other.to, base.to, 47, base, other, false);
     }
     break;
-  case 51: /* StoreArr */
-    /* StoreArr + (_Pt *) => %5 */
-    for(Edge other : base.from.getOutEdges(42)){
-      addEdge(other.to, base.to, 52, base, other, false);
-    }
-    /* StoreArr + (_pt *) => %6 */
-    for(Edge other : base.from.getOutEdges(46)){
-      addEdge(other.to, base.to, 53, base, other, false);
-    }
-    /* StoreArr + (_Pt *) => %7 */
-    for(Edge other : base.from.getOutEdges(42)){
-      addEdge(other.to, base.to, 54, base, other, false);
+  case 47: /* %3 */
+    /* %3 + (* Pt) => FptArr */
+    for(Edge other : base.to.getOutEdges(40)){
+      addEdge(base.from, other.to, 45, base, other, false);
     }
     break;
-  case 52: /* %5 */
-    /* %5 + (* pt) => FptArr */
-    for(Edge other : base.to.getOutEdges(46)){
-      addEdge(base.from, other.to, 50, base, other, false);
-    }
+  case 48: /* pt */
+    /* pt => Pt */
+    addEdge(base.from, base.to, 40, base, false);
     break;
-  case 53: /* %6 */
-    /* %6 + (* Pt) => FptArr */
-    for(Edge other : base.to.getOutEdges(42)){
-      addEdge(base.from, other.to, 50, base, other, false);
-    }
-    break;
-  case 54: /* %7 */
-    /* %7 + (* Pt) => FptArr */
-    for(Edge other : base.to.getOutEdges(42)){
-      addEdge(base.from, other.to, 50, base, other, false);
-    }
-    break;
-  case 55: /* fpt */
+  case 49: /* fpt */
     /* fpt[i] => Fpt[i] */
-    addEdge(base.from, base.to, 44, base, true);
+    addEdge(base.from, base.to, 42, base, true);
     break;
-  case 56: /* fptArr */
+  case 50: /* fptArr */
     /* fptArr => FptArr */
-    addEdge(base.from, base.to, 50, base, false);
+    addEdge(base.from, base.to, 45, base, false);
     break;
-  case 57: /* Obj2RefT */
+  case 51: /* Obj2RefT */
     /* Obj2RefT + (_FptArr *) => Obj2RefT */
-    for(Edge other : base.from.getOutEdges(50)){
-      addEdge(other.to, base.to, 57, base, other, false);
+    for(Edge other : base.from.getOutEdges(45)){
+      addEdge(other.to, base.to, 51, base, other, false);
     }
-    /* Obj2RefT + (Src2Obj *) => %12 */
-    for(Edge other : base.from.getInEdges(70)){
+    /* Obj2RefT + (Label2Obj *) => %15 */
+    for(Edge other : base.from.getInEdges(56)){
       addEdge(other.from, base.to, 74, base, other, false);
     }
-    /* Obj2RefT + (Src2PrimFldArr *) => %14 */
+    /* Obj2RefT + (Label2PrimFldArr *) => %17 */
     for(Edge other : base.from.getInEdges(76)){
       addEdge(other.from, base.to, 77, base, other, false);
     }
-    /* Obj2RefT + (Sink2Obj *) => %15 */
-    for(Edge other : base.from.getInEdges(62)){
-      addEdge(other.from, base.to, 79, base, other, false);
-    }
-    /* Obj2RefT + (Sink2PrimFldArr *) => %17 */
-    for(Edge other : base.from.getInEdges(81)){
-      addEdge(other.from, base.to, 82, base, other, false);
-    }
     break;
-  case 58: /* Obj2PrimT */
+  case 52: /* Obj2PrimT */
     /* Obj2PrimT + (_FptArr *) => Obj2PrimT */
-    for(Edge other : base.from.getOutEdges(50)){
-      addEdge(other.to, base.to, 58, base, other, false);
+    for(Edge other : base.from.getOutEdges(45)){
+      addEdge(other.to, base.to, 52, base, other, false);
     }
-    /* Obj2PrimT + (Src2Obj *) => Src2Prim */
-    for(Edge other : base.from.getInEdges(70)){
-      addEdge(other.from, base.to, 71, base, other, false);
+    /* Obj2PrimT + (Label2Obj *) => Label2Prim */
+    for(Edge other : base.from.getInEdges(56)){
+      addEdge(other.from, base.to, 60, base, other, false);
     }
-    /* Obj2PrimT + (Src2PrimFldArr *) => Src2Prim */
+    /* Obj2PrimT + (Label2PrimFldArr *) => Label2Prim */
     for(Edge other : base.from.getInEdges(76)){
-      addEdge(other.from, base.to, 71, base, other, false);
-    }
-    /* Obj2PrimT + (Sink2Obj *) => Sink2Prim */
-    for(Edge other : base.from.getInEdges(62)){
-      addEdge(other.from, base.to, 65, base, other, false);
-    }
-    /* Obj2PrimT + (Sink2PrimFldArr *) => Sink2Prim */
-    for(Edge other : base.from.getInEdges(81)){
-      addEdge(other.from, base.to, 65, base, other, false);
+      addEdge(other.from, base.to, 60, base, other, false);
     }
     break;
-  case 59: /* Src2ObjT */
-    /* Src2ObjT + (* Fpt) => Src2ObjT */
-    for(Edge other : base.to.getOutEdges(44)){
-      addEdge(base.from, other.to, 59, base, other, false);
+  case 53: /* Label2ObjT */
+    /* Label2ObjT + (* Fpt) => Label2ObjT */
+    for(Edge other : base.to.getOutEdges(42)){
+      addEdge(base.from, other.to, 53, base, other, false);
     }
-    /* Src2ObjT => Src2Obj */
-    addEdge(base.from, base.to, 70, base, false);
-    /* Src2ObjT + (* _Pt) => %18 */
-    for(Edge other : base.to.getInEdges(42)){
-      addEdge(base.from, other.from, 86, base, other, false);
-    }
-    break;
-  case 60: /* Sink2ObjT */
-    /* Sink2ObjT + (* Fpt) => Sink2ObjT */
-    for(Edge other : base.to.getOutEdges(44)){
-      addEdge(base.from, other.to, 60, base, other, false);
-    }
-    /* Sink2ObjT => Sink2Obj */
-    addEdge(base.from, base.to, 62, base, false);
-    /* Sink2ObjT + (* _Pt) => %23 */
-    for(Edge other : base.to.getInEdges(42)){
-      addEdge(base.from, other.from, 97, base, other, false);
+    /* Label2ObjT => Label2Obj */
+    addEdge(base.from, base.to, 56, base, false);
+    /* Label2ObjT + (* _Pt) => %18 */
+    for(Edge other : base.to.getInEdges(40)){
+      addEdge(base.from, other.from, 81, base, other, false);
     }
     break;
-  case 61: /* SinkF2Obj */
+  case 54: /* SinkF2Obj */
     /* SinkF2Obj + (* Fpt) => SinkF2Obj */
-    for(Edge other : base.to.getOutEdges(44)){
-      addEdge(base.from, other.to, 61, base, other, false);
+    for(Edge other : base.to.getOutEdges(42)){
+      addEdge(base.from, other.to, 54, base, other, false);
     }
-    /* _SinkF2Obj + (Src2Obj *) => Src2Sink */
-    for(Edge other : base.to.getInEdges(70)){
-      addEdge(other.from, base.from, 69, base, other, false);
+    /* _SinkF2Obj + (%12 *) => Src2Sink */
+    for(Edge other : base.to.getInEdges(69)){
+      addEdge(other.from, base.from, 67, base, other, false);
     }
-    /* _SinkF2Obj + (Src2PrimFld *) => Src2Sink */
+    /* _SinkF2Obj + (%14 *) => Src2Sink */
     for(Edge other : base.to.getInEdges(72)){
-      addEdge(other.from, base.from, 69, base, other, false);
+      addEdge(other.from, base.from, 67, base, other, false);
     }
     break;
-  case 62: /* Sink2Obj */
-    /* Sink2Obj + (* _Pt) => %8 */
-    for(Edge other : base.to.getInEdges(42)){
-      addEdge(base.from, other.from, 63, base, other, false);
+  case 55: /* sink2Label */
+    /* sink2Label + (* Label2Obj) => %4 */
+    for(Edge other : base.to.getOutEdges(56)){
+      addEdge(base.from, other.to, 57, base, other, false);
     }
-    /* Sink2Obj + (* _Pt) => %11 */
-    for(Edge other : base.to.getInEdges(42)){
-      addEdge(base.from, other.from, 68, base, other, false);
-    }
-    /* Sink2Obj + (* Obj2RefT) => %15 */
-    for(Edge other : base.to.getOutEdges(57)){
-      addEdge(base.from, other.to, 79, base, other, false);
-    }
-    /* Sink2Obj + (* Obj2PrimT) => Sink2Prim */
-    for(Edge other : base.to.getOutEdges(58)){
-      addEdge(base.from, other.to, 65, base, other, false);
-    }
-    /* Sink2Obj + (* _Pt) => LabelRef3 */
-    for(Edge other : base.to.getInEdges(42)){
-      addEdge(base.from, other.from, 104, base, other, false);
-    }
-    break;
-  case 63: /* %8 */
-    /* %8 + (* _Ref2RefF) => %9 */
-    for(Edge other : base.to.getInEdges(20)){
-      addEdge(base.from, other.from, 64, base, other, false);
-    }
-    break;
-  case 64: /* %9 */
-    /* %9 + (* Pt) => SinkF2Obj */
-    for(Edge other : base.to.getOutEdges(42)){
+    /* sink2Label + (* Label2Prim) => %7 */
+    for(Edge other : base.to.getOutEdges(60)){
       addEdge(base.from, other.to, 61, base, other, false);
     }
-    break;
-  case 65: /* Sink2Prim */
-    /* Sink2Prim + (* _Ref2PrimF) => %10 */
-    for(Edge other : base.to.getInEdges(22)){
-      addEdge(base.from, other.from, 66, base, other, false);
+    /* sink2Label + (* Label2Obj) => %9 */
+    for(Edge other : base.to.getOutEdges(56)){
+      addEdge(base.from, other.to, 64, base, other, false);
     }
-    /* Sink2Prim + (* _Prim2PrimF) => SinkF2Prim */
-    for(Edge other : base.to.getInEdges(26)){
-      addEdge(base.from, other.from, 67, base, other, false);
-    }
-    /* Sink2Prim + (* Prim2RefT) => %16 */
-    for(Edge other : base.to.getOutEdges(4)){
-      addEdge(base.from, other.to, 80, base, other, false);
-    }
-    /* Sink2Prim + (* _assignPrimCtxt) => Sink2Prim */
-    for(Edge other : base.to.getInEdges(83)){
-      addEdge(base.from, other.from, 65, base, other, false);
-    }
-    /* Sink2Prim + (* _assignPrimCCtxt) => Sink2Prim */
-    for(Edge other : base.to.getInEdges(84)){
-      addEdge(base.from, other.from, 65, base, other, false);
-    }
-    /* Sink2Prim + (* Prim2PrimT) => Sink2Prim */
-    for(Edge other : base.to.getOutEdges(6)){
-      addEdge(base.from, other.to, 65, base, other, false);
-    }
-    /* Sink2Prim + (* _storePrimCtxt[i]) => %26[i] */
-    for(Edge other : base.to.getInEdges(92)){
-      addEdge(base.from, other.from, 102, base, other, true);
-    }
-    /* Sink2Prim + (* _storePrimCtxtArr) => %27 */
-    for(Edge other : base.to.getInEdges(94)){
-      addEdge(base.from, other.from, 103, base, other, false);
-    }
-    /* Sink2Prim + (* _storeStatPrimCtxt[i]) => Sink2PrimFldStat[i] */
-    for(Edge other : base.to.getInEdges(96)){
-      addEdge(base.from, other.from, 101, base, other, true);
-    }
-    /* Sink2Prim => LabelPrim3 */
-    addEdge(base.from, base.to, 105, base, false);
-    break;
-  case 66: /* %10 */
-    /* %10 + (* Pt) => SinkF2Obj */
-    for(Edge other : base.to.getOutEdges(42)){
-      addEdge(base.from, other.to, 61, base, other, false);
+    /* sink2Label + (* Label2Prim) => %11 */
+    for(Edge other : base.to.getOutEdges(60)){
+      addEdge(base.from, other.to, 66, base, other, false);
     }
     break;
-  case 67: /* SinkF2Prim */
-    /* _SinkF2Prim + (Src2Prim *) => Src2Sink */
-    for(Edge other : base.to.getInEdges(71)){
-      addEdge(other.from, base.from, 69, base, other, false);
+  case 56: /* Label2Obj */
+    /* Label2Obj + (sink2Label *) => %4 */
+    for(Edge other : base.from.getInEdges(55)){
+      addEdge(other.from, base.to, 57, base, other, false);
     }
-    break;
-  case 68: /* %11 */
-    /* %11 + (* _Prim2RefF) => SinkF2Prim */
-    for(Edge other : base.to.getInEdges(24)){
-      addEdge(base.from, other.from, 67, base, other, false);
+    /* Label2Obj + (sink2Label *) => %9 */
+    for(Edge other : base.from.getInEdges(55)){
+      addEdge(other.from, base.to, 64, base, other, false);
     }
-    break;
-  case 69: /* Src2Sink */
-    /* Src2Sink => Flow3 */
-    addEdge(base.from, base.to, 106, base, false);
-    break;
-  case 70: /* Src2Obj */
-    /* Src2Obj + (* _SinkF2Obj) => Src2Sink */
-    for(Edge other : base.to.getInEdges(61)){
-      addEdge(base.from, other.from, 69, base, other, false);
+    /* Label2Obj + (src2Label *) => %12 */
+    for(Edge other : base.from.getInEdges(68)){
+      addEdge(other.from, base.to, 69, base, other, false);
     }
-    /* Src2Obj + (* Obj2RefT) => %12 */
-    for(Edge other : base.to.getOutEdges(57)){
+    /* Label2Obj + (* Obj2RefT) => %15 */
+    for(Edge other : base.to.getOutEdges(51)){
       addEdge(base.from, other.to, 74, base, other, false);
     }
-    /* Src2Obj + (* Obj2PrimT) => Src2Prim */
-    for(Edge other : base.to.getOutEdges(58)){
-      addEdge(base.from, other.to, 71, base, other, false);
+    /* Label2Obj + (* Obj2PrimT) => Label2Prim */
+    for(Edge other : base.to.getOutEdges(52)){
+      addEdge(base.from, other.to, 60, base, other, false);
     }
-    /* Src2Obj + (* _Pt) => LabelRef3 */
-    for(Edge other : base.to.getInEdges(42)){
-      addEdge(base.from, other.from, 104, base, other, false);
+    /* Label2Obj + (* _Pt) => LabelRef3 */
+    for(Edge other : base.to.getInEdges(40)){
+      addEdge(base.from, other.from, 92, base, other, false);
     }
     break;
-  case 71: /* Src2Prim */
-    /* Src2Prim + (* _SinkF2Prim) => Src2Sink */
-    for(Edge other : base.to.getInEdges(67)){
-      addEdge(base.from, other.from, 69, base, other, false);
+  case 57: /* %4 */
+    /* %4 + (* _Pt) => %5 */
+    for(Edge other : base.to.getInEdges(40)){
+      addEdge(base.from, other.from, 58, base, other, false);
     }
-    /* Src2Prim + (* Prim2RefT) => %13 */
+    break;
+  case 58: /* %5 */
+    /* %5 + (* _Ref2RefF) => %6 */
+    for(Edge other : base.to.getInEdges(16)){
+      addEdge(base.from, other.from, 59, base, other, false);
+    }
+    break;
+  case 59: /* %6 */
+    /* %6 + (* Pt) => SinkF2Obj */
+    for(Edge other : base.to.getOutEdges(40)){
+      addEdge(base.from, other.to, 54, base, other, false);
+    }
+    break;
+  case 60: /* Label2Prim */
+    /* Label2Prim + (sink2Label *) => %7 */
+    for(Edge other : base.from.getInEdges(55)){
+      addEdge(other.from, base.to, 61, base, other, false);
+    }
+    /* Label2Prim + (sink2Label *) => %11 */
+    for(Edge other : base.from.getInEdges(55)){
+      addEdge(other.from, base.to, 66, base, other, false);
+    }
+    /* Label2Prim + (src2Label *) => %13 */
+    for(Edge other : base.from.getInEdges(68)){
+      addEdge(other.from, base.to, 70, base, other, false);
+    }
+    /* Label2Prim + (* Prim2RefT) => %16 */
     for(Edge other : base.to.getOutEdges(4)){
       addEdge(base.from, other.to, 75, base, other, false);
     }
-    /* Src2Prim + (* _assignPrimCtxt) => Src2Prim */
-    for(Edge other : base.to.getInEdges(83)){
-      addEdge(base.from, other.from, 71, base, other, false);
+    /* Label2Prim + (* _assignPrimCtxt) => Label2Prim */
+    for(Edge other : base.to.getInEdges(78)){
+      addEdge(base.from, other.from, 60, base, other, false);
     }
-    /* Src2Prim + (* _assignPrimCCtxt) => Src2Prim */
-    for(Edge other : base.to.getInEdges(84)){
-      addEdge(base.from, other.from, 71, base, other, false);
+    /* Label2Prim + (* _assignPrimCCtxt) => Label2Prim */
+    for(Edge other : base.to.getInEdges(79)){
+      addEdge(base.from, other.from, 60, base, other, false);
     }
-    /* Src2Prim + (* Prim2PrimT) => Src2Prim */
+    /* Label2Prim + (* Prim2PrimT) => Label2Prim */
     for(Edge other : base.to.getOutEdges(6)){
-      addEdge(base.from, other.to, 71, base, other, false);
+      addEdge(base.from, other.to, 60, base, other, false);
     }
-    /* Src2Prim + (* _storePrimCtxt[i]) => %21[i] */
-    for(Edge other : base.to.getInEdges(92)){
-      addEdge(base.from, other.from, 93, base, other, true);
+    /* Label2Prim + (* _storePrimCtxt[i]) => %21[i] */
+    for(Edge other : base.to.getInEdges(87)){
+      addEdge(base.from, other.from, 88, base, other, true);
     }
-    /* Src2Prim + (* _storePrimCtxtArr) => %22 */
-    for(Edge other : base.to.getInEdges(94)){
-      addEdge(base.from, other.from, 95, base, other, false);
+    /* Label2Prim + (* _storePrimCtxtArr) => %22 */
+    for(Edge other : base.to.getInEdges(89)){
+      addEdge(base.from, other.from, 90, base, other, false);
     }
-    /* Src2Prim + (* _storeStatPrimCtxt[i]) => Src2PrimFldStat[i] */
-    for(Edge other : base.to.getInEdges(96)){
-      addEdge(base.from, other.from, 90, base, other, true);
+    /* Label2Prim + (* _storeStatPrimCtxt[i]) => Label2PrimFldStat[i] */
+    for(Edge other : base.to.getInEdges(91)){
+      addEdge(base.from, other.from, 85, base, other, true);
     }
-    /* Src2Prim => LabelPrim3 */
-    addEdge(base.from, base.to, 105, base, false);
+    /* Label2Prim => LabelPrim3 */
+    addEdge(base.from, base.to, 93, base, false);
     break;
-  case 72: /* Src2PrimFld */
-    /* Src2PrimFld + (* _SinkF2Obj) => Src2Sink */
-    for(Edge other : base.to.getInEdges(61)){
-      addEdge(base.from, other.from, 69, base, other, false);
-    }
-    /* Src2PrimFld[i] + (* _Pt) => %20[i] */
-    for(Edge other : base.to.getInEdges(42)){
-      addEdge(base.from, other.from, 89, base, other, true);
+  case 61: /* %7 */
+    /* %7 + (* _Ref2PrimF) => %8 */
+    for(Edge other : base.to.getInEdges(18)){
+      addEdge(base.from, other.from, 62, base, other, false);
     }
     break;
-  case 73: /* Src2ObjX */
-    /* Src2ObjX => Src2Obj */
-    addEdge(base.from, base.to, 70, base, false);
-    /* Src2ObjX + (* FptArr) => Src2ObjX */
-    for(Edge other : base.to.getOutEdges(50)){
+  case 62: /* %8 */
+    /* %8 + (* Pt) => SinkF2Obj */
+    for(Edge other : base.to.getOutEdges(40)){
+      addEdge(base.from, other.to, 54, base, other, false);
+    }
+    break;
+  case 63: /* SinkF2Prim */
+    /* _SinkF2Prim + (%13 *) => Src2Sink */
+    for(Edge other : base.to.getInEdges(70)){
+      addEdge(other.from, base.from, 67, base, other, false);
+    }
+    break;
+  case 64: /* %9 */
+    /* %9 + (* _Pt) => %10 */
+    for(Edge other : base.to.getInEdges(40)){
+      addEdge(base.from, other.from, 65, base, other, false);
+    }
+    break;
+  case 65: /* %10 */
+    /* %10 + (* _Prim2RefF) => SinkF2Prim */
+    for(Edge other : base.to.getInEdges(20)){
+      addEdge(base.from, other.from, 63, base, other, false);
+    }
+    break;
+  case 66: /* %11 */
+    /* %11 + (* _Prim2PrimF) => SinkF2Prim */
+    for(Edge other : base.to.getInEdges(22)){
+      addEdge(base.from, other.from, 63, base, other, false);
+    }
+    break;
+  case 67: /* Src2Sink */
+    /* Src2Sink => Flow3 */
+    addEdge(base.from, base.to, 94, base, false);
+    break;
+  case 68: /* src2Label */
+    /* src2Label + (* Label2Obj) => %12 */
+    for(Edge other : base.to.getOutEdges(56)){
+      addEdge(base.from, other.to, 69, base, other, false);
+    }
+    /* src2Label + (* Label2Prim) => %13 */
+    for(Edge other : base.to.getOutEdges(60)){
+      addEdge(base.from, other.to, 70, base, other, false);
+    }
+    /* src2Label + (* Label2PrimFld) => %14 */
+    for(Edge other : base.to.getOutEdges(71)){
+      addEdge(base.from, other.to, 72, base, other, false);
+    }
+    break;
+  case 69: /* %12 */
+    /* %12 + (* _SinkF2Obj) => Src2Sink */
+    for(Edge other : base.to.getInEdges(54)){
+      addEdge(base.from, other.from, 67, base, other, false);
+    }
+    break;
+  case 70: /* %13 */
+    /* %13 + (* _SinkF2Prim) => Src2Sink */
+    for(Edge other : base.to.getInEdges(63)){
+      addEdge(base.from, other.from, 67, base, other, false);
+    }
+    break;
+  case 71: /* Label2PrimFld */
+    /* Label2PrimFld + (src2Label *) => %14 */
+    for(Edge other : base.from.getInEdges(68)){
+      addEdge(other.from, base.to, 72, base, other, false);
+    }
+    /* Label2PrimFld[i] + (* _Pt) => %20[i] */
+    for(Edge other : base.to.getInEdges(40)){
+      addEdge(base.from, other.from, 84, base, other, true);
+    }
+    break;
+  case 72: /* %14 */
+    /* %14 + (* _SinkF2Obj) => Src2Sink */
+    for(Edge other : base.to.getInEdges(54)){
+      addEdge(base.from, other.from, 67, base, other, false);
+    }
+    break;
+  case 73: /* Label2ObjX */
+    /* Label2ObjX => Label2Obj */
+    addEdge(base.from, base.to, 56, base, false);
+    /* Label2ObjX + (* FptArr) => Label2ObjX */
+    for(Edge other : base.to.getOutEdges(45)){
       addEdge(base.from, other.to, 73, base, other, false);
     }
-    /* Src2ObjX + (* _Pt) => %19 */
-    for(Edge other : base.to.getInEdges(42)){
-      addEdge(base.from, other.from, 88, base, other, false);
+    /* Label2ObjX + (* _Pt) => %19 */
+    for(Edge other : base.to.getInEdges(40)){
+      addEdge(base.from, other.from, 83, base, other, false);
     }
     break;
-  case 74: /* %12 */
-    /* %12 + (* Pt) => Src2ObjX */
-    for(Edge other : base.to.getOutEdges(42)){
+  case 74: /* %15 */
+    /* %15 + (* Pt) => Label2ObjX */
+    for(Edge other : base.to.getOutEdges(40)){
       addEdge(base.from, other.to, 73, base, other, false);
     }
     break;
-  case 75: /* %13 */
-    /* %13 + (* Pt) => Src2ObjX */
-    for(Edge other : base.to.getOutEdges(42)){
+  case 75: /* %16 */
+    /* %16 + (* Pt) => Label2ObjX */
+    for(Edge other : base.to.getOutEdges(40)){
       addEdge(base.from, other.to, 73, base, other, false);
     }
     break;
-  case 76: /* Src2PrimFldArr */
-    /* Src2PrimFldArr + (* Obj2RefT) => %14 */
-    for(Edge other : base.to.getOutEdges(57)){
+  case 76: /* Label2PrimFldArr */
+    /* Label2PrimFldArr + (* Obj2RefT) => %17 */
+    for(Edge other : base.to.getOutEdges(51)){
       addEdge(base.from, other.to, 77, base, other, false);
     }
-    /* Src2PrimFldArr + (* Obj2PrimT) => Src2Prim */
-    for(Edge other : base.to.getOutEdges(58)){
-      addEdge(base.from, other.to, 71, base, other, false);
+    /* Label2PrimFldArr + (* Obj2PrimT) => Label2Prim */
+    for(Edge other : base.to.getOutEdges(52)){
+      addEdge(base.from, other.to, 60, base, other, false);
     }
     break;
-  case 77: /* %14 */
-    /* %14 + (* Pt) => Src2ObjX */
-    for(Edge other : base.to.getOutEdges(42)){
+  case 77: /* %17 */
+    /* %17 + (* Pt) => Label2ObjX */
+    for(Edge other : base.to.getOutEdges(40)){
       addEdge(base.from, other.to, 73, base, other, false);
     }
     break;
-  case 78: /* Sink2ObjX */
-    /* Sink2ObjX => Sink2Obj */
-    addEdge(base.from, base.to, 62, base, false);
-    /* Sink2ObjX + (* FptArr) => Sink2ObjX */
-    for(Edge other : base.to.getOutEdges(50)){
-      addEdge(base.from, other.to, 78, base, other, false);
-    }
-    /* Sink2ObjX + (* _Pt) => %24 */
-    for(Edge other : base.to.getInEdges(42)){
-      addEdge(base.from, other.from, 98, base, other, false);
+  case 78: /* assignPrimCtxt */
+    /* _assignPrimCtxt + (Label2Prim *) => Label2Prim */
+    for(Edge other : base.to.getInEdges(60)){
+      addEdge(other.from, base.from, 60, base, other, false);
     }
     break;
-  case 79: /* %15 */
-    /* %15 + (* Pt) => Sink2ObjX */
-    for(Edge other : base.to.getOutEdges(42)){
-      addEdge(base.from, other.to, 78, base, other, false);
+  case 79: /* assignPrimCCtxt */
+    /* _assignPrimCCtxt + (Label2Prim *) => Label2Prim */
+    for(Edge other : base.to.getInEdges(60)){
+      addEdge(other.from, base.from, 60, base, other, false);
     }
     break;
-  case 80: /* %16 */
-    /* %16 + (* Pt) => Sink2ObjX */
-    for(Edge other : base.to.getOutEdges(42)){
-      addEdge(base.from, other.to, 78, base, other, false);
+  case 80: /* loadPrimCtxt */
+    /* _loadPrimCtxt + (%18 *) => Label2Prim */
+    for(Edge other : base.to.getInEdges(81)){
+      addEdge(other.from, base.from, 60, base, other, false);
+    }
+    /* _loadPrimCtxt[i] + (%20[i] *) => Label2Prim */
+    for(Edge other : base.to.getInEdges(84)){
+      addEdge(other.from, base.from, 60, base, other, false);
     }
     break;
-  case 81: /* Sink2PrimFldArr */
-    /* Sink2PrimFldArr + (* Obj2RefT) => %17 */
-    for(Edge other : base.to.getOutEdges(57)){
-      addEdge(base.from, other.to, 82, base, other, false);
-    }
-    /* Sink2PrimFldArr + (* Obj2PrimT) => Sink2Prim */
-    for(Edge other : base.to.getOutEdges(58)){
-      addEdge(base.from, other.to, 65, base, other, false);
+  case 81: /* %18 */
+    /* %18 + (* _loadPrimCtxt) => Label2Prim */
+    for(Edge other : base.to.getInEdges(80)){
+      addEdge(base.from, other.from, 60, base, other, false);
     }
     break;
-  case 82: /* %17 */
-    /* %17 + (* Pt) => Sink2ObjX */
-    for(Edge other : base.to.getOutEdges(42)){
-      addEdge(base.from, other.to, 78, base, other, false);
+  case 82: /* loadPrimCtxtArr */
+    /* _loadPrimCtxtArr + (%19 *) => Label2Prim */
+    for(Edge other : base.to.getInEdges(83)){
+      addEdge(other.from, base.from, 60, base, other, false);
     }
     break;
-  case 83: /* assignPrimCtxt */
-    /* _assignPrimCtxt + (Src2Prim *) => Src2Prim */
-    for(Edge other : base.to.getInEdges(71)){
-      addEdge(other.from, base.from, 71, base, other, false);
-    }
-    /* _assignPrimCtxt + (Sink2Prim *) => Sink2Prim */
-    for(Edge other : base.to.getInEdges(65)){
-      addEdge(other.from, base.from, 65, base, other, false);
+  case 83: /* %19 */
+    /* %19 + (* _loadPrimCtxtArr) => Label2Prim */
+    for(Edge other : base.to.getInEdges(82)){
+      addEdge(base.from, other.from, 60, base, other, false);
     }
     break;
-  case 84: /* assignPrimCCtxt */
-    /* _assignPrimCCtxt + (Src2Prim *) => Src2Prim */
-    for(Edge other : base.to.getInEdges(71)){
-      addEdge(other.from, base.from, 71, base, other, false);
-    }
-    /* _assignPrimCCtxt + (Sink2Prim *) => Sink2Prim */
-    for(Edge other : base.to.getInEdges(65)){
-      addEdge(other.from, base.from, 65, base, other, false);
+  case 84: /* %20 */
+    /* %20[i] + (* _loadPrimCtxt[i]) => Label2Prim */
+    for(Edge other : base.to.getInEdges(80)){
+      addEdge(base.from, other.from, 60, base, other, false);
     }
     break;
-  case 85: /* loadPrimCtxt */
-    /* _loadPrimCtxt + (%18 *) => Src2Prim */
+  case 85: /* Label2PrimFldStat */
+    /* Label2PrimFldStat[i] + (* _loadStatPrimCtxt[i]) => Label2Prim */
     for(Edge other : base.to.getInEdges(86)){
-      addEdge(other.from, base.from, 71, base, other, false);
-    }
-    /* _loadPrimCtxt[i] + (%20[i] *) => Src2Prim */
-    for(Edge other : base.to.getInEdges(89)){
-      addEdge(other.from, base.from, 71, base, other, false);
-    }
-    /* _loadPrimCtxt + (%23 *) => Sink2Prim */
-    for(Edge other : base.to.getInEdges(97)){
-      addEdge(other.from, base.from, 65, base, other, false);
-    }
-    /* _loadPrimCtxt[i] + (%25[i] *) => Sink2Prim */
-    for(Edge other : base.to.getInEdges(100)){
-      addEdge(other.from, base.from, 65, base, other, false);
+      addEdge(base.from, other.from, 60, base, other, false);
     }
     break;
-  case 86: /* %18 */
-    /* %18 + (* _loadPrimCtxt) => Src2Prim */
+  case 86: /* loadStatPrimCtxt */
+    /* _loadStatPrimCtxt[i] + (Label2PrimFldStat[i] *) => Label2Prim */
     for(Edge other : base.to.getInEdges(85)){
-      addEdge(base.from, other.from, 71, base, other, false);
+      addEdge(other.from, base.from, 60, base, other, false);
     }
     break;
-  case 87: /* loadPrimCtxtArr */
-    /* _loadPrimCtxtArr + (%19 *) => Src2Prim */
-    for(Edge other : base.to.getInEdges(88)){
-      addEdge(other.from, base.from, 71, base, other, false);
-    }
-    /* _loadPrimCtxtArr + (%24 *) => Sink2Prim */
-    for(Edge other : base.to.getInEdges(98)){
-      addEdge(other.from, base.from, 65, base, other, false);
+  case 87: /* storePrimCtxt */
+    /* _storePrimCtxt[i] + (Label2Prim *) => %21[i] */
+    for(Edge other : base.to.getInEdges(60)){
+      addEdge(other.from, base.from, 88, base, other, true);
     }
     break;
-  case 88: /* %19 */
-    /* %19 + (* _loadPrimCtxtArr) => Src2Prim */
-    for(Edge other : base.to.getInEdges(87)){
-      addEdge(base.from, other.from, 71, base, other, false);
+  case 88: /* %21 */
+    /* %21[i] + (* Pt) => Label2PrimFld[i] */
+    for(Edge other : base.to.getOutEdges(40)){
+      addEdge(base.from, other.to, 71, base, other, true);
     }
     break;
-  case 89: /* %20 */
-    /* %20[i] + (* _loadPrimCtxt[i]) => Src2Prim */
-    for(Edge other : base.to.getInEdges(85)){
-      addEdge(base.from, other.from, 71, base, other, false);
+  case 89: /* storePrimCtxtArr */
+    /* _storePrimCtxtArr + (Label2Prim *) => %22 */
+    for(Edge other : base.to.getInEdges(60)){
+      addEdge(other.from, base.from, 90, base, other, false);
     }
     break;
-  case 90: /* Src2PrimFldStat */
-    /* Src2PrimFldStat[i] + (* _loadStatPrimCtxt[i]) => Src2Prim */
-    for(Edge other : base.to.getInEdges(91)){
-      addEdge(base.from, other.from, 71, base, other, false);
-    }
-    break;
-  case 91: /* loadStatPrimCtxt */
-    /* _loadStatPrimCtxt[i] + (Src2PrimFldStat[i] *) => Src2Prim */
-    for(Edge other : base.to.getInEdges(90)){
-      addEdge(other.from, base.from, 71, base, other, false);
-    }
-    /* _loadStatPrimCtxt[i] + (Sink2PrimFldStat[i] *) => Sink2Prim */
-    for(Edge other : base.to.getInEdges(101)){
-      addEdge(other.from, base.from, 65, base, other, false);
-    }
-    break;
-  case 92: /* storePrimCtxt */
-    /* _storePrimCtxt[i] + (Src2Prim *) => %21[i] */
-    for(Edge other : base.to.getInEdges(71)){
-      addEdge(other.from, base.from, 93, base, other, true);
-    }
-    /* _storePrimCtxt[i] + (Sink2Prim *) => %26[i] */
-    for(Edge other : base.to.getInEdges(65)){
-      addEdge(other.from, base.from, 102, base, other, true);
-    }
-    break;
-  case 93: /* %21 */
-    /* %21[i] + (* Pt) => Src2PrimFld[i] */
-    for(Edge other : base.to.getOutEdges(42)){
-      addEdge(base.from, other.to, 72, base, other, true);
-    }
-    break;
-  case 94: /* storePrimCtxtArr */
-    /* _storePrimCtxtArr + (Src2Prim *) => %22 */
-    for(Edge other : base.to.getInEdges(71)){
-      addEdge(other.from, base.from, 95, base, other, false);
-    }
-    /* _storePrimCtxtArr + (Sink2Prim *) => %27 */
-    for(Edge other : base.to.getInEdges(65)){
-      addEdge(other.from, base.from, 103, base, other, false);
-    }
-    break;
-  case 95: /* %22 */
-    /* %22 + (* Pt) => Src2PrimFldArr */
-    for(Edge other : base.to.getOutEdges(42)){
+  case 90: /* %22 */
+    /* %22 + (* Pt) => Label2PrimFldArr */
+    for(Edge other : base.to.getOutEdges(40)){
       addEdge(base.from, other.to, 76, base, other, false);
     }
     break;
-  case 96: /* storeStatPrimCtxt */
-    /* _storeStatPrimCtxt[i] + (Src2Prim *) => Src2PrimFldStat[i] */
-    for(Edge other : base.to.getInEdges(71)){
-      addEdge(other.from, base.from, 90, base, other, true);
-    }
-    /* _storeStatPrimCtxt[i] + (Sink2Prim *) => Sink2PrimFldStat[i] */
-    for(Edge other : base.to.getInEdges(65)){
-      addEdge(other.from, base.from, 101, base, other, true);
-    }
-    break;
-  case 97: /* %23 */
-    /* %23 + (* _loadPrimCtxt) => Sink2Prim */
-    for(Edge other : base.to.getInEdges(85)){
-      addEdge(base.from, other.from, 65, base, other, false);
-    }
-    break;
-  case 98: /* %24 */
-    /* %24 + (* _loadPrimCtxtArr) => Sink2Prim */
-    for(Edge other : base.to.getInEdges(87)){
-      addEdge(base.from, other.from, 65, base, other, false);
-    }
-    break;
-  case 99: /* Sink2PrimFld */
-    /* Sink2PrimFld[i] + (* _Pt) => %25[i] */
-    for(Edge other : base.to.getInEdges(42)){
-      addEdge(base.from, other.from, 100, base, other, true);
-    }
-    break;
-  case 100: /* %25 */
-    /* %25[i] + (* _loadPrimCtxt[i]) => Sink2Prim */
-    for(Edge other : base.to.getInEdges(85)){
-      addEdge(base.from, other.from, 65, base, other, false);
-    }
-    break;
-  case 101: /* Sink2PrimFldStat */
-    /* Sink2PrimFldStat[i] + (* _loadStatPrimCtxt[i]) => Sink2Prim */
-    for(Edge other : base.to.getInEdges(91)){
-      addEdge(base.from, other.from, 65, base, other, false);
-    }
-    break;
-  case 102: /* %26 */
-    /* %26[i] + (* Pt) => Sink2PrimFld[i] */
-    for(Edge other : base.to.getOutEdges(42)){
-      addEdge(base.from, other.to, 99, base, other, true);
-    }
-    break;
-  case 103: /* %27 */
-    /* %27 + (* Pt) => Sink2PrimFldArr */
-    for(Edge other : base.to.getOutEdges(42)){
-      addEdge(base.from, other.to, 81, base, other, false);
+  case 91: /* storeStatPrimCtxt */
+    /* _storeStatPrimCtxt[i] + (Label2Prim *) => Label2PrimFldStat[i] */
+    for(Edge other : base.to.getInEdges(60)){
+      addEdge(other.from, base.from, 85, base, other, true);
     }
     break;
   }
@@ -1995,17 +1560,17 @@ public short kindToWeight(int kind) {
   switch (kind) {
   case 7:
     return (short)1;
+  case 24:
+    return (short)1;
+  case 25:
+    return (short)1;
+  case 26:
+    return (short)1;
+  case 27:
+    return (short)1;
   case 28:
     return (short)1;
-  case 29:
-    return (short)1;
-  case 30:
-    return (short)1;
-  case 31:
-    return (short)1;
-  case 32:
-    return (short)1;
-  case 40:
+  case 37:
     return (short)1;
   default:
     return (short)0;

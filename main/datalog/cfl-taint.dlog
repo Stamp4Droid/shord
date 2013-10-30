@@ -138,8 +138,8 @@ SinkF2Obj(cl,o2) :- SinkF2Obj(cl,o1), FptFull(o1,_,o2).
 # Sink_full-prim flow
 
 SinkF2Prim(c,cl,v) :- SinkF2PrimF(c,cl,v).
-SinkF2Prim(c,cl,u) :- Sink2Obj(cl,o), PtFull(c,v,o), Prim2RefF(c,u,v). # pt, Prim2RefF are backwards
-SinkF2Prim(c,cl,u) :- Sink2Prim(c,cl,v), Prim2PrimF(c,u,v). # Prim2PrimF is backwards
+SinkF2Prim(c,cl,u) :- Sink2Label(cl), Label2Obj(cl,o), PtFull(c,v,o), Prim2RefF(c,u,v). # pt, Prim2RefF are backwards
+SinkF2Prim(c,cl,u) :- Sink2Label(cl), Label2Prim(c,cl,v), Prim2PrimF(c,u,v). # Prim2PrimF is backwards
 
 ###################
 # RULES: SRC-SINK FLOW
@@ -189,5 +189,5 @@ Label2PrimFldStat(cl,f) :- Label2Prim(c,cl,v), StoreStatPrimCtxt(c,f,v). # Store
 ###################
 
 labelRefTaint(c,v,l)  :- Label2Obj(l,o), PtFull(c,v,o).
-labelPrimTaint(c,u,l) :- Label2Label(l,l), Label2Prim(c,l,u).
+labelPrimTaint(c,u,l) :- Src2Label(l), Label2Prim(c,l,u).
 flowTaint(src,sink)   :- Src2Sink(src,sink).

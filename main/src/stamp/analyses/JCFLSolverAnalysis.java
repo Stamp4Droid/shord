@@ -180,11 +180,10 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		StubModelSet m;
 		try {
 			m = manager.read(new StubModelSetInputFile("StubModelSet.txt", FileType.PERMANENT));
-			System.out.println("HERE");
 			for(Map.Entry<StubModel,ModelType> entry : m.entrySet()) {
 				System.out.println(entry.getKey().toString() + ": " + entry.getValue());
 			}
-		} catch (IOException e) {
+		} catch(IOException e) {
 			e.printStackTrace();
 			m = new StubModelSet();
 		}

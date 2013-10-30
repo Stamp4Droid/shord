@@ -37,6 +37,9 @@ Load(v:V,u:V,f:F) input            # v = u.f
 CI(c:C,i:I) input # stmt i is the top element in the k-limited callstack c
 CC(c:C,d:C) input # there exists i s.t. c++[i] = d
 
+MV(m:M,v:V) input # v is a ref type variable in m
+CM(c:C,m:M) input # c is a context of method m
+
 ###################
 # INPUT: PHANTOM OBJECTS
 ###################
@@ -71,6 +74,7 @@ typeFilter(v:V,o:C) input   # type wise, v can point-to o
 
 PreFlowsToFull(c:C,o:C,v:V) output
 Transfer(v:V,u:V) output
+TransferCtxt(c:C,v:V,u:V) output
 
 PtPartial(c:C,v:V,o:C) output
 FptPartial(o1:C,f:F,o2:C) output
@@ -143,6 +147,8 @@ Transfer(v,u) :- Vret(v), v = u, Vret(u).
 Transfer(v,u) :- Ref2RefArgTStub(_,v,u,_,_,_).
 Transfer(v,u) :- Ref2RefRetTStub(_,v,u,_,_).
 Transfer(u,v) :- Ref2RefRetTStub(_,v,u,_,_).
+
+TransferCtxt(c,v,u) :- Transfer(v,u), MV(m,v), CM(c,m).
 
 # partial flows
 

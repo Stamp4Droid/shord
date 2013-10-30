@@ -97,9 +97,6 @@ ActivePrimTaint(cl:CL,c:C,v:U) output
 ActiveRefTaint(cl:CL,c:C,v:V) output
 ActivePrimFldStatTaint(cl:CL,f:F) output
 
-ActivePtPartial(c:C,v:V,o:C) output
-ActiveFptPartial(c:C,f:F,o:C) output
-
 ###################
 # Src2Sink
 ###################

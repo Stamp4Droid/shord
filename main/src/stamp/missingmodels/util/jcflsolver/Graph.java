@@ -2,6 +2,8 @@ package stamp.missingmodels.util.jcflsolver;
 
 import java.util.*;
 
+import shord.project.ClassicProject;
+import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.Util.Pair;
 
@@ -27,11 +29,23 @@ public abstract class Graph {
 	//public Collection<Node> nodes = new ArrayList();
 	public Map<String,Node> nodes = new HashMap<String,Node>();
 
+	private final int ptKind;
+	private final HashSet<String> typeFilter = new HashSet<String>();
+	
 	public Graph() {
 		if(this.useReps()) {
 			this.algo = new RepsAlgo(this);
 		} else {
 			this.algo = new KnuthsAlgo(this);
+		}
+		this.ptKind = this.symbolToKind("Pt");
+		ProgramRel typeFilterRel = (ProgramRel)ClassicProject.g().getTrgt("typeFilter");
+		typeFilterRel.load();
+		Iterable<int[]> res = typeFilterRel.getAryNIntTuples();
+		
+		// STEP 2: Iterate over relation and add to the graph.
+		for(int[] tuple : res) {
+			this.typeFilter.add("V" + Integer.toString(tuple[0]) + "_" + "O" + Integer.toString(tuple[1]));
 		}
 	}
 
@@ -105,8 +119,17 @@ public abstract class Graph {
 	}
 
 	private void addEdgeInternal(Node from, Node to, int kind, boolean addLabel, int label, short weight, Edge edgeA, Edge edgeB) {
+		if(kind == this.ptKind) {
+			String ref = from.name.split("_")[0];
+			String obj = to.name;
+			if(!this.typeFilter.contains(ref + "_" + obj)) {
+				return;
+			}
+		}
+		
 		Edge newEdge = (addLabel && label >= 0)  ? new LabeledEdge(kind, from, to, label) : new NonLabeledEdge(kind, from, to);
 		newEdge.weight = weight;
+
 		newEdge.firstInput = edgeA;
 		newEdge.secondInput = edgeB;
 

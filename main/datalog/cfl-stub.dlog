@@ -91,12 +91,12 @@ Prim2PrimTFull(c,v,u) :- Prim2PrimT(c,v,u).
 # RULES: FULL STUB ANNOTATIONS
 ##################
 
-Ref2RefTFull(c,v,u) :- Ref2RefArgTStub(c,v,u,_,_,_).
-Ref2RefTFull(c,v,u) :- Ref2RefRetTStub(c,v,u,_,_).
+#Ref2RefTFull(c,v,u) :- Ref2RefArgTStub(c,v,u,_,_,_).
+#Ref2RefTFull(c,v,u) :- Ref2RefRetTStub(c,v,u,_,_).
 
-Prim2RefTFull(c,v,u) :- Prim2RefArgTStub(c,v,u,_,_,_).
-Prim2RefTFull(c,v,u) :- Prim2RefRetTStub(c,v,u,_,_).
+#Prim2RefTFull(c,v,u) :- Prim2RefArgTStub(c,v,u,_,_,_).
+#Prim2RefTFull(c,v,u) :- Prim2RefRetTStub(c,v,u,_,_).
 
-Ref2PrimTFull(c,v,u) :- Ref2PrimTStub(c,v,u,_,_).
+#Ref2PrimTFull(c,v,u) :- Ref2PrimTStub(c,v,u,_,_).
 
-Prim2PrimTFull(c,v,u) :- Prim2PrimTStub(c,v,u,_,_).
+#Prim2PrimTFull(c,v,u) :- Prim2PrimTStub(c,v,u,_,_).

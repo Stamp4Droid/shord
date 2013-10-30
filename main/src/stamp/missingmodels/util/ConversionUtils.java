@@ -80,13 +80,15 @@ public class ConversionUtils {
 	 */	
 	private static final MultivalueMap<String,Relation> relations = new MultivalueMap<String,Relation>();
 	static {
-		// source annotations: src2RefT, src2PrimT
-		relations.add("src2RefT", new IndexRelation("Src2RefT", "CL", 1, null, "V", 2, 0));
-		relations.add("src2PrimT", new IndexRelation("Src2PrimT", "CL", 1, null, "U", 2, 0));		
+		// src and sink annotations:
+		relations.add("src2Label", new IndexRelation("Src2Label", "CL", 0, null, "CL", 0, null));
+		relations.add("sink2Label", new IndexRelation("Sink2Label", "CL", 0, null, "CL", 0, null));
 		
-		// sink annotations: sink2RefT, sink2PrimT, sinkF2RefF, sinkF2PrimF
-		relations.add("sink2RefT", new IndexRelation("Sink2RefT", "CL", 1, null, "V", 2, 0));
-		relations.add("sink2PrimT", new IndexRelation("Sink2PrimT", "CL", 1, null, "U", 2, 0));
+		// label annotations: label2RefT, label2PrimT
+		relations.add("label2RefT", new IndexRelation("Label2RefT", "CL", 1, null, "V", 2, 0));
+		relations.add("label2PrimT", new IndexRelation("Label2PrimT", "CL", 1, null, "U", 2, 0));		
+		
+		// sinkF annotations: sinkF2RefF, sinkF2PrimF		
 		relations.add("sinkF2RefF", new IndexRelation("SinkF2RefF", "CL", 1, null, "V", 2, 0));
 		relations.add("sinkF2PrimF", new IndexRelation("SinkF2PrimF", "CL", 1, null, "U", 2, 0));
 		
@@ -103,7 +105,7 @@ public class ConversionUtils {
 		relations.add("prim2PrimF", new IndexRelation("Prim2PrimF", "U", 1, 0, "U", 2, 0));
 
 		// pt: phantom points
-		relations.add("pt", new IndexRelation("phpt", "V", 2, 3, "V", 1, 0));
+		//relations.add("Pt", new IndexRelation("phpt", "V", 2, 3, "V", 1, 0));
 		
 		// pt: pt, fptArr
 		relations.add("pt", new IndexRelation("pt", "V", 1, 0, "O", 2, null));
@@ -124,17 +126,19 @@ public class ConversionUtils {
 		relations.add("loadStatPrimCtxt", new IndexRelation("LoadStatPrimCtxt", "U", 1, 0, "F", 2, null));
 		relations.add("storeStatPrimCtxt", new IndexRelation("StoreStatPrimCtxt", "F", 1, null, "U", 2, 0));
 
+		/*
 		// ref stub taint flow
-		relations.add("refArg2RefArgTStub", new StubIndexRelation("RefArg2RefArgTStub", "V", 1, 0, "V", 2, 0, 3, 4, 5));
-		relations.add("refArg2RefRetTStub", new StubIndexRelation("RefArg2RefRetTStub", "V", 1, 0, "V", 2, 0, 3, 4));
+		relations.add("ref2RefArgTStub", new StubIndexRelation("Ref2RefArgTStub", "V", 1, 0, "V", 2, 0, 3, 4, 5));
+		relations.add("ref2RefRetTStub", new StubIndexRelation("Ref2RefRetTStub", "V", 1, 0, "V", 2, 0, 3, 4));
 		
 		// cross stub taint flow
-		relations.add("primArg2RefArgTStub", new StubIndexRelation("PrimArg2RefArgTStub", "U", 1, 0, "V", 2, 0, 3, 4, 5));
-		relations.add("primArg2RefRetTStub", new StubIndexRelation("PrimArg2RefRetTStub", "U", 1, 0, "V", 2, 0, 3, 4));
+		relations.add("prim2RefArgTStub", new StubIndexRelation("Prim2RefArgTStub", "U", 1, 0, "V", 2, 0, 3, 4, 5));
+		relations.add("prim2RefRetTStub", new StubIndexRelation("Prim2RefRetTStub", "U", 1, 0, "V", 2, 0, 3, 4));
 		
 		// prim stub taint flow
-		relations.add("refArg2PrimRetTStub", new StubIndexRelation("RefArg2PrimRetTStub", "V", 1, 0, "U", 2, 0, 3, 4));
-		relations.add("primArg2PrimRetTStub", new StubIndexRelation("PrimArg2PrimRetTStub", "U", 1, 0, "U", 2, 0, 3, 4));
+		relations.add("ref2PrimTStub", new StubIndexRelation("Ref2PrimTStub", "V", 1, 0, "U", 2, 0, 3, 4));
+		relations.add("prim2PrimTStub", new StubIndexRelation("Prim2PrimTStub", "U", 1, 0, "U", 2, 0, 3, 4));
+		*/
 		
 		// partial pt
 		relations.add("preFlowsTo", new IndexRelation("ActivePreFlowsTo", "O", 1, null, "V", 2, 0));
@@ -142,6 +146,7 @@ public class ConversionUtils {
 		relations.add("midFlowsTo", new IndexRelation("ActiveMidFlowsTo", "V", 1, 0, "V", 3, 2));
 		relations.add("transfer", new StubIndexRelation("ActiveTransferArg", "V", 1, 0, "V", 2, 0, 3, 4, 5));
 		relations.add("transfer", new StubIndexRelation("ActiveTransferRet", "V", 1, 0, "V", 2, 0, 3, 4));
+		relations.add("transferSelf", new IndexRelation("ActiveTransferSelf", "V", 1, 0, "V", 2, 0));
 		
 		//relations.add("typeFilter", new IndexRelation("TypeFilter", "O", 1, null, "V", 2, 0));
 		

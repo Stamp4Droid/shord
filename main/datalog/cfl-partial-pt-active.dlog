@@ -143,7 +143,6 @@ ActiveFptPartial(c:C,f:F,o:C) output
 # INTERMEDIATE: CONSTRAINED
 ###################
 
-ActivePtPartialFiltered(c:C,v:V,o:C) output
 ActiveObj(o:C) output
 ActiveRef(c:C,v:V) output
 
@@ -166,48 +165,51 @@ ActiveTransfer(v:V,u:V) output
 ActiveTransferArg(c:C,v:V,u:V,m:M,z1:Z,z2:Z) output
 ActiveTransferRet(c:C,v:V,u:V,m:M,z:Z) output
 ActiveTransferPre(v:V,u:V) output
+ActiveTransferSelf(c:C,v:V,u:V) output
 
 ActivePreFlowsTo(c:C,o:C,v:V) output
 ActiveMidFlowsTo(c:C,v:V,d:C,u:V) output
 ActivePostFlowsTo(c:C,v:V,d:C,u:V) output
+
+ActiveTypeFilter(o:C,v:V) output
 
 ###################
 # RULES: ACTIVE PARTIAL PT
 ###################
 
 # Label2Obj, Label2ObjX
-ActivePtPartial(c,v,o2) :- ActiveObjTaintLabel(cl,o2), PtPartial(c,v,o2), Obj2RefT(c,o1,v), Label2Obj(cl,o1).
-ActivePtPartial(c,u,o) :- ActiveObjTaintLabel(cl,o), PtPartial(c,u,o), Prim2RefTFull(c,v,u), Label2Prim(c,cl,v).
-ActivePtPartial(c,v,o2) :- ActiveObjTaintLabel(cl,o2), PtPartial(c,v,o2), Obj2RefT(c,o1,v), Label2PrimFld(cl,o1,0).
+ActivePtPartial(c,v,o2) :- ActiveObjTaint(cl,o2), PtPartial(c,v,o2), Obj2RefT(c,o1,v), Label2Obj(cl,o1), typeFilter(v,o2).
+ActivePtPartial(c,u,o) :- ActiveObjTaint(cl,o), PtPartial(c,u,o), Prim2RefTFull(c,v,u), Label2Prim(c,cl,v), typeFilter(u,o).
+ActivePtPartial(c,v,o2) :- ActiveObjTaint(cl,o2), PtPartial(c,v,o2), Obj2RefT(c,o1,v), Label2PrimFld(cl,o1,0), typeFilter(v,o2).
 
-ActiveFptPartial(o1,0,o2) :- ActiveObjTaintLabel(cl,o2), FptPartial(o1,0,o2), Label2ObjX(cl,o1).
+ActiveFptPartial(o1,0,o2) :- ActiveObjTaint(cl,o2), FptPartial(o1,0,o2), Label2ObjX(cl,o1).
 
 # Label2Prim, Label2PrimFld
-ActivePtPartial(c,v,o) :- ActivePrimTaintLabel(cl,c,u), LoadPrimCtxt(c,u,v,_), PtPartial(c,v,o), Label2ObjT(cl,o).
-ActivePtPartial(c,v,o) :- ActivePrimTaintLabel(cl,c,u), LoadPrimCtxt(c,u,v,0), PtPartial(c,v,o), Label2ObjX(cl,o).
-ActivePtPartial(c,v,o) :- ActivePrimTaintLabel(cl,c,u), LoadPrimCtxt(c,u,v,f), PtPartial(c,v,o), Label2PrimFld(cl,o,f).
-ActivePtPartial(c,u,o) :- ActiveObjTaintLabel(cl,o), PtPartial(c,u,o), StorePrimCtxt(c,u,_,v), Label2Prim(c,cl,v).
+ActivePtPartial(c,v,o) :- ActivePrimTaint(cl,c,u), LoadPrimCtxt(c,u,v,_), PtPartial(c,v,o), Label2ObjT(cl,o), typeFilter(v,o).
+ActivePtPartial(c,v,o) :- ActivePrimTaint(cl,c,u), LoadPrimCtxt(c,u,v,0), PtPartial(c,v,o), Label2ObjX(cl,o), typeFilter(v,o).
+ActivePtPartial(c,v,o) :- ActivePrimTaint(cl,c,u), LoadPrimCtxt(c,u,v,f), PtPartial(c,v,o), Label2PrimFld(cl,o,f), typeFilter(v,o).
+ActivePtPartial(c,u,o) :- ActiveObjTaint(cl,o), PtPartial(c,u,o), StorePrimCtxt(c,u,_,v), Label2Prim(c,cl,v), typeFilter(u,o).
 
 # SinkF
-ActivePtPartial(c,v,o) :- ActiveObjTaint(cl,o), PtPartial(c,v,o), SinkF2RefF(c,cl,v).
-ActivePtPartial(c,u,o) :- ActiveObjTaint(cl,o), PtPartial(c,u,o), Ref2PrimF(c,u,v), Label2Prim(c,cl,v), Sink2Label(cl).
+ActivePtPartial(c,v,o) :- ActiveObjTaint(cl,o), PtPartial(c,v,o), SinkF2RefF(c,cl,v), typeFilter(v,o).
+ActivePtPartial(c,u,o) :- ActiveObjTaint(cl,o), PtPartial(c,u,o), Ref2PrimF(c,u,v), Label2Prim(c,cl,v), Sink2Label(cl), typeFilter(u,o).
 
-ActivePtPartial(c,u,o2) :- ActiveObjTaint(cl,o2), PtPartial(c,u,o2), Ref2RefF(c,u,v), PtFull(c,v,o1), Label2Obj(cl,o1), Sink2Label(cl).
-ActivePtPartial(c,v,o1) :- ActiveObjTaint(cl,o2), PtFull(c,u,o2), Ref2RefF(c,u,v), PtPartial(c,v,o1), Label2Obj(cl,o1), Sink2Label(cl).
+ActivePtPartial(c,u,o2) :- ActiveObjTaint(cl,o2), PtPartial(c,u,o2), Ref2RefF(c,u,v), PtFull(c,v,o1), Label2Obj(cl,o1), Sink2Label(cl), typeFilter(u,o2).
+ActivePtPartial(c,v,o1) :- ActiveObjTaint(cl,o2), PtFull(c,u,o2), Ref2RefF(c,u,v), PtPartial(c,v,o1), Label2Obj(cl,o1), Sink2Label(cl), typeFilter(v,o1).
 
-ActivePtPartial(c,v,o) :- ActivePrimTaint(cl,c,u), Prim2RefF(c,u,v), PtPartial(c,v,o), Label2Obj(cl,o), Sink2Label(cl).
+ActivePtPartial(c,v,o) :- ActivePrimTaint(cl,c,u), Prim2RefF(c,u,v), PtPartial(c,v,o), Label2Obj(cl,o), Sink2Label(cl), typeFilter(v,o).
 
 ActiveFptPartial(o1,f,o2) :- ActiveObjTaint(cl,o2), FptPartial(o1,f,o2), SinkF2Obj(cl,o1).
 
 # Object Annotations
-ActivePtPartial(c,v,o) :- ActiveObjTaintLabel(cl,o), PtPartial(c,v,o), Ref2RefTFull(c,v,u), ActiveRefTaintLabel(cl,c,u).
-ActivePtPartial(c,v,o) :- ActiveObjTaintLabel(cl,o), PtPartial(c,v,o), Ref2PrimTFull(c,v,u), ActivePrimTaintLabel(cl,c,u).
+ActivePtPartial(c,v,o) :- ActiveObjTaint(cl,o), PtPartial(c,v,o), Ref2RefTFull(c,v,u), ActiveRefTaint(cl,c,u), typeFilter(v,o).
+ActivePtPartial(c,v,o) :- ActiveObjTaint(cl,o), PtPartial(c,v,o), Ref2PrimTFull(c,v,u), ActivePrimTaint(cl,c,u), typeFilter(v,o).
 
-ActivePtPartial(c,v,o) :- Label2RefT(c,cl,v), PtPartial(c,v,o), ActiveObjTaintLabel(cl,o).
+ActivePtPartial(c,v,o) :- Label2RefT(c,cl,v), PtPartial(c,v,o), ActiveObjTaint(cl,o), typeFilter(v,o).
 
-ActiveFptPartial(o2,0,o1) :- ActiveObjTaintLabel(cl,o1), FptPartial(o2,0,o1), Obj2RefT(c,o2,v), ActiveRefTaintLabel(cl,c,v).
-ActiveFptPartial(o2,0,o1) :- ActiveObjTaintLabel(cl,o1), FptPartial(o2,0,o1), Obj2PrimT(c,o2,v), ActivePrimTaintLabel(cl,c,v).
-ActiveFptPartial(o1,f,o2) :- Label2ObjT(cl,o1), FptPartial(o1,f,o2), ActiveObjTaintLabel(cl,o2).
+ActiveFptPartial(o2,0,o1) :- ActiveObjTaint(cl,o1), FptPartial(o2,0,o1), Obj2RefT(c,o2,v), ActiveRefTaint(cl,c,v).
+ActiveFptPartial(o2,0,o1) :- ActiveObjTaint(cl,o1), FptPartial(o2,0,o1), Obj2PrimT(c,o2,v), ActivePrimTaint(cl,c,v).
+ActiveFptPartial(o1,f,o2) :- Label2ObjT(cl,o1), FptPartial(o1,f,o2), ActiveObjTaint(cl,o2).
 
 ###################
 # OUTPUT: HANDLE FPT
@@ -215,8 +217,8 @@ ActiveFptPartial(o1,f,o2) :- Label2ObjT(cl,o1), FptPartial(o1,f,o2), ActiveObjTa
 
 # active partial pt
 
-ActivePtPartial(c,v,o2) :- ActiveFptPartial(o1,f,o2), PtPartial(c,v,o2), Store(u,f,v), PtFull(c,u,o1).
-ActivePtPartial(c,u,o1) :- ActiveFptPartial(o1,f,o2), PtFull(c,v,o2), Store(u,f,v), PtPartial(c,u,o1).
+ActivePtPartial(c,v,o2) :- ActiveFptPartial(o1,f,o2), PtPartial(c,v,o2), Store(u,f,v), PtFull(c,u,o1), typeFilter(v,o2).
+ActivePtPartial(c,u,o1) :- ActiveFptPartial(o1,f,o2), PtFull(c,v,o2), Store(u,f,v), PtPartial(c,u,o1), typeFilter(u,o1).
 
 ###################
 # RULES: ACTIVE REF T AND REF F
@@ -248,12 +250,16 @@ ActiveVret(v) :- Vret(v), ActiveRefF(_,v).
 ActiveVret(v) :- Vret(v), ActiveRefT(_,v).
 
 ActiveTransfer(v,u) :- Transfer(v,u), ActiveRefF(c,v), ActiveRefT(c,u).
-ActiveTransferArg(c,v,u,m,z1,z2) :- ActiveTransfer(v,u), MmethArg(m,z1,v), MmethArg(m,z2,u), CM(c,m).
+ActiveTransferArg(c,v,u,m,z1,z2) :- ActiveTransfer(v,u), MmethArg(m,z1,v), MmethArg(m,z2,u), CM(c,m), z1!=z2.
 ActiveTransferRet(c,v,u,m,z) :- ActiveTransfer(v,u), MmethArg(m,z,v), MmethRet(m,_,u), CM(c,m).
 ActiveTransferRet(c,v,u,m,z) :- ActiveTransfer(v,u), MmethArg(m,z,u), MmethRet(m,_,v), CM(c,m).
 ActiveTransferPre(v,u) :- ActiveTransfer(v,u), ActivePreFlowsTo(_,_,v).
+
+ActiveTransferSelf(c,v,u) :- ActiveTransfer(v,u), MmethArg(m,_,v), CM(c,m), v=u.
+ActiveTransferSelf(c,v,u) :- ActiveTransfer(v,u), MmethRet(m,_,v), CM(c,m), v=u.
 
 ActivePreFlowsTo(c,o,v) :- ActiveObj(o), PreFlowsTo(c,o,v), ActiveRefF(c,v).
 ActiveMidFlowsTo(c,v,d,u) :- ActiveRefT(c,v), MidFlowsTo(c,v,d,u), ActiveRefF(d,u).
 ActivePostFlowsTo(c,v,d,u) :- CPostFlowsTo(c,v,u), ActiveRef(d,u).
 
+ActiveTypeFilter(o,v) :- ActiveObj(o), ActiveRef(_,v).
