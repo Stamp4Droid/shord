@@ -37,7 +37,12 @@ public class JimplePrinterAnalysis extends JavaAnalysis {
 
 			// PRINT JIMPLE
 			JimpleStructureExtractor jse = new JimpleStructureExtractor();
-			new Printer(jse).printAll(outDir + "/jimple/");
+			Printer printer = new Printer(jse);
+			printer.printAll(outDir + "/jimple/");
+
+			PrintWriter pw = new PrintWriter(outDir + "/loc.txt");
+			pw.println(printer.getAppLOC() + "\n" + printer.getFrameworkLOC());
+			pw.close();
 
 			// GET STRUCTURE AND PRINT
 			CodeStructureInfo codeInfo = jse.getCodeStructureInfo();
@@ -67,7 +72,7 @@ public class JimplePrinterAnalysis extends JavaAnalysis {
 
 				// CREATE THE OBJECT
 				ChordJimpleAdapter cja = new ChordJimpleAdapter(sourceInfo);
-				Printer printer = new Printer(cja.toJimpleVisitor(codeInfo));
+				printer = new Printer(cja.toJimpleVisitor(codeInfo));
 				printer.printTo(cl, new NullOutputStream());
 				XMLObject object = cja.getResults().get(cl);
 
@@ -75,10 +80,11 @@ public class JimplePrinterAnalysis extends JavaAnalysis {
 				File objectOutputFile = new File(xmlOutputPath);
 				objectOutputFile.getParentFile().mkdirs();
 				System.out.println("PRINTING TO: " + objectOutputFile.getCanonicalPath());
-				PrintWriter pw = new PrintWriter(new FileOutputStream(objectOutputFile));
+				pw = new PrintWriter(new FileOutputStream(objectOutputFile));
 				pw.println(object.toString());
 				pw.close();
 			}
+			
 		} catch(IOException e) {
 			e.printStackTrace();
 		}

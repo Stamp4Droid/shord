@@ -275,7 +275,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 	}
 	
 	public static Pair<Integer,Integer> getLOC() {
-		String path = System.getProperty("stamp.out.dir") + File.separator + "jimple" + File.separator + "loc.txt";
+		String path = System.getProperty("stamp.out.dir") + File.separator + "loc.txt";
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(path));
 			int appLOC = Integer.parseInt(br.readLine());

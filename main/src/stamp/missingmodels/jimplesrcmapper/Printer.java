@@ -113,6 +113,14 @@ public class Printer {
 	 */
 	private int appLOC = 0;
 	private int frameworkLOC = 0;
+	
+	public int getAppLOC() {
+		return this.appLOC;
+	}
+	
+	public int getFrameworkLOC() {
+		return this.frameworkLOC;
+	}
 
 	/**
 	 * Prints all the files in the given output directory.
@@ -122,6 +130,8 @@ public class Printer {
 		if(!System.getProperty("line.separator").equals("\n")) {
 			throw new RuntimeException("Bad line separator!");
 		}
+		File outDir = new File(outputPath + "/jimple/");
+		outDir.mkdirs();
 		SourceInfo sourceInfo = SourceInfoSingleton.getJimpleSourceInfo();
 		for(SootClass cl : Scene.v().getClasses()) {
 			System.out.println("PRINTING: " + cl.getName());
@@ -154,10 +164,6 @@ public class Printer {
 				this.appLOC += this.getJimpleLnNum();
 			}
 		}
-		
-		PrintWriter pw = new PrintWriter("loc.txt");
-		pw.println(this.appLOC + "\n" + this.frameworkLOC);
-		pw.close();
 		
 		System.out.println("EXITING PRINTER");
 	}
