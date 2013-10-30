@@ -54,7 +54,7 @@ public class LocalsClassifier
 
 		for(Local l : body.getLocals()){
 			Type type = l.getType();
-			if(type instanceof PrimType)
+			if(PAGBuilder.isPrimType(type))
 				addPrim(l);
 			else if(type instanceof RefType || type instanceof ArrayType)
 				addNonPrim(l);
@@ -117,17 +117,20 @@ public class LocalsClassifier
 	{
 		if(!(v instanceof Local))
 			return;
-		if(type instanceof RefLikeType)
-			nonPrimLocals.add((Local) v);
-		else if(type instanceof PrimType)
+		if(PAGBuilder.isPrimType(type))
 			primLocals.add((Local) v);
+		else if(type instanceof RefLikeType)
+			nonPrimLocals.add((Local) v);
 	}
 
 	private void addNonPrim(Value v)
 	{
 		if(!(v instanceof Local))
 			return;
-		nonPrimLocals.add((Local) v);
+		if(PAGBuilder.isPrimType(v.getType()))
+			primLocals.add((Local) v);
+		else
+			nonPrimLocals.add((Local) v);
 	}
 
 	private void addPrim(Value v)
