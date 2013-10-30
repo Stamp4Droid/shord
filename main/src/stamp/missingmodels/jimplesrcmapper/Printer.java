@@ -178,9 +178,9 @@ public class Printer {
 			
 			// Line counts
 			if(isFrameworkClass(cl)) {
-				this.frameworkLOC += this.getJimpleLnNum();
+				this.frameworkLOC += this.escapedWriter.getCurLineNumber();
 			} else {
-				this.appLOC += this.getJimpleLnNum();
+				this.appLOC += this.escapedWriter.getCurLineNumber();
 			}
 		}
 		
