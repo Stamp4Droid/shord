@@ -58,6 +58,8 @@ import soot.tagkit.Tag;
 import soot.toolkits.graph.UnitGraph;
 import soot.util.Chain;
 import soot.util.DeterministicHashMap;
+import stamp.srcmap.SourceInfoSingleton;
+import stamp.srcmap.sourceinfo.SourceInfo;
 
 /**
  * Prints out a class and all its methods.
@@ -105,6 +107,12 @@ public class Printer {
 		jimpleLnNum++;
 		//G.v().out.println("jimple Ln Num: "+jimpleLnNum);
 	}
+	
+	/**
+	 * Counts the number of lines of code.
+	 */
+	private int appLOC = 0;
+	private int frameworkLOC = 0;
 
 	/**
 	 * Prints all the files in the given output directory.
@@ -114,6 +122,7 @@ public class Printer {
 		if(!System.getProperty("line.separator").equals("\n")) {
 			throw new RuntimeException("Bad line separator!");
 		}
+		SourceInfo sourceInfo = SourceInfoSingleton.getJimpleSourceInfo();
 		for(SootClass cl : Scene.v().getClasses()) {
 			System.out.println("PRINTING: " + cl.getName());
 
@@ -137,8 +146,19 @@ public class Printer {
 
 			// Print the class to the file.
 			printTo(cl, file);
-
+			
+			// Line counts
+			if(sourceInfo.isFrameworkClass(cl)) {
+				this.frameworkLOC += this.getJimpleLnNum();
+			} else {
+				this.appLOC += this.getJimpleLnNum();
+			}
 		}
+		
+		PrintWriter pw = new PrintWriter("loc.txt");
+		pw.println(this.appLOC + "\n" + this.frameworkLOC);
+		pw.close();
+		
 		System.out.println("EXITING PRINTER");
 	}
 	

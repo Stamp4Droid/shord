@@ -1,6 +1,8 @@
 package stamp.analyses;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -189,12 +191,15 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		}
 		runStubModelClassifier(m);
 		
+		// STEP 2: Get lines of code and run experiment.
+		Pair<Integer,Integer> loc = getLOC();
+		
 		//j = new JCFLSolverSingle(new E12(), m);
 		//j.run(E12.class, m);
 		//Experiment experiment = new Experiment(JCFLSolverSingle.class, E12.class);
 		File outputDir = manager.getDirectory(FileType.OUTPUT);
 		String appDir = outputDir.getParentFile().getName();
-		Experiment experiment = new Experiment(JCFLSolverSingle.class, G.class, appDir);
+		Experiment experiment = new Experiment(JCFLSolverSingle.class, G.class, appDir, loc.getX(), loc.getY());
 		experiment.run(m, new StubModelSet(), relationAdder, ModelType.FALSE);
 		j = experiment.j();
 
@@ -267,6 +272,18 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 				manager.write(file);
 			}
 		} catch(IOException e) { e.printStackTrace(); }
+	}
+	
+	public static Pair<Integer,Integer> getLOC() {
+		String path = System.getProperty("stamp.out.dir") + File.separator + "jimple" + File.separator + "loc.txt";
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(path));
+			int appLOC = Integer.parseInt(br.readLine());
+			int frameworkLOC = Integer.parseInt(br.readLine());
+			return new Pair<Integer,Integer>(appLOC, frameworkLOC);
+		} catch(IOException e) {
+			return new Pair<Integer,Integer>(0,0);
+		}
 	}
 	
 	public static FileManager getFileManager(String stampDirectory) {
