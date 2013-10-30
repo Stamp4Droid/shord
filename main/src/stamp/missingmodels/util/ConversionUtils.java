@@ -105,7 +105,7 @@ public class ConversionUtils {
 		relations.add("prim2PrimF", new IndexRelation("Prim2PrimF", "U", 1, 0, "U", 2, 0));
 
 		// pt: phantom points
-		//relations.add("Pt", new IndexRelation("phpt", "V", 2, 3, "V", 1, 0));
+		//relations.add("pt", new IndexRelation("phpt", "V", 1, 0, "V", 3, 2));
 		
 		// pt: pt, fptArr
 		relations.add("pt", new IndexRelation("pt", "V", 1, 0, "O", 2, null));
@@ -126,7 +126,6 @@ public class ConversionUtils {
 		relations.add("loadStatPrimCtxt", new IndexRelation("LoadStatPrimCtxt", "U", 1, 0, "F", 2, null));
 		relations.add("storeStatPrimCtxt", new IndexRelation("StoreStatPrimCtxt", "F", 1, null, "U", 2, 0));
 
-		/*
 		// ref stub taint flow
 		relations.add("ref2RefArgTStub", new StubIndexRelation("Ref2RefArgTStub", "V", 1, 0, "V", 2, 0, 3, 4, 5));
 		relations.add("ref2RefRetTStub", new StubIndexRelation("Ref2RefRetTStub", "V", 1, 0, "V", 2, 0, 3, 4));
@@ -138,7 +137,6 @@ public class ConversionUtils {
 		// prim stub taint flow
 		relations.add("ref2PrimTStub", new StubIndexRelation("Ref2PrimTStub", "V", 1, 0, "U", 2, 0, 3, 4));
 		relations.add("prim2PrimTStub", new StubIndexRelation("Prim2PrimTStub", "U", 1, 0, "U", 2, 0, 3, 4));
-		*/
 		
 		// partial pt
 		relations.add("preFlowsTo", new IndexRelation("ActivePreFlowsTo", "O", 1, null, "V", 2, 0));
