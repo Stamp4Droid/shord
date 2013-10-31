@@ -42,6 +42,7 @@ import chord.util.Utils;
 import chord.util.tuple.object.Pair;
 import chord.util.tuple.object.Trio;
 import chord.util.tuple.object.Quad;
+import chord.project.OutDirUtils;
 
 
 import java.io.File;
@@ -110,6 +111,8 @@ public class PostIccgBuilder extends JavaAnalysis
 		manifest.extractComponents(manifestFile, components);
 		pkgName = manifest.getPkgName();
 
+        /*
+
 		//plot every node to graph + unknown.
 		Iterator iter = components.entrySet().iterator();
 		while (iter.hasNext()) {
@@ -148,10 +151,11 @@ public class PostIccgBuilder extends JavaAnalysis
 		ICCGNode notFoundNode = new ICCGNode("targetNotFound");
 		notFoundNode.setShape("box");
 		iccg.addNode(notFoundNode);
+        */
 
 	}
 
-   	void openRels()
+   	void genPermission(ICCG ig)
 	{
 		relCallerComp = (ProgramRel) ClassicProject.g().getTrgt("CallerComp");
 		relCallerComp.load();
@@ -167,7 +171,7 @@ public class PostIccgBuilder extends JavaAnalysis
 			}
 			hs.add(mm.getSignature());
 			//add permission.
-			ICCGNode iNode = iccg.getNode(cc.getClassName());
+			ICCGNode iNode = ig.getNode(cc.getClassName());
 			if(iNode!=null) {
 				if(pMap.get(mm.getSignature()) != null) {
 					//do union.
@@ -183,6 +187,7 @@ public class PostIccgBuilder extends JavaAnalysis
     //dump out ICCG.
     public void dump() {
 	    ICCG iccg = new ICCG();
+        int cnt = 1;
 
         Iterator iter = components.entrySet().iterator();
 		while (iter.hasNext()) {
@@ -194,7 +199,7 @@ public class PostIccgBuilder extends JavaAnalysis
 			if(nodeName.indexOf(".") == 0) nodeName = pkgName +  nodeName;
 			if(nodeName.indexOf(".") == -1) nodeName = pkgName + "." +  nodeName;
 
-			ICCGNode iNode = new ICCGNode(nodeName);
+			ICCGNode iNode = new ICCGNode(nodeName, cnt++);
 			iNode.setMain(val.getMain());
 			iNode.setType(val.getType());
 			iNode.setIntentFilter(val.getIntentFilter());
@@ -248,8 +253,11 @@ public class PostIccgBuilder extends JavaAnalysis
 
 		relICCG.close();
 		relICCGImp.close();
-
-		System.out.println(iccg.getSignature());
+        genPermission(iccg);
+		//System.out.println(iccg.getSignature());
+        PrintWriter out = OutDirUtils.newPrintWriter(dotFilePath);
+        out.println(iccg.getSignature());
+        out.close();
     }
 
     private Map<String, Integer> depMap = new HashMap<String,Integer>();
@@ -285,6 +293,7 @@ public class PostIccgBuilder extends JavaAnalysis
 	public void run()
 	{
 	    //output dotty.
+		parsePermission();
         dump();
         compDepend();
         genGraph();
@@ -404,14 +413,8 @@ public class PostIccgBuilder extends JavaAnalysis
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
         DOMSource source = new DOMSource(doc);
-        StreamResult result = new StreamResult(new File("/afs/cs.stanford.edu/u/yufeng/file.graphml"));
- 
-        // Output to console for testing
-        // StreamResult result = new StreamResult(System.out);
- 
+        StreamResult result = new StreamResult(new File(reportsFilePath));
         transformer.transform(source, result);
- 
-        System.out.println("File saved!");
  
       } catch (ParserConfigurationException pce) {
         pce.printStackTrace();
@@ -419,6 +422,42 @@ public class PostIccgBuilder extends JavaAnalysis
         tfe.printStackTrace();
       }
     }
+
+	public static final String reportsFilePath = System.getProperty("stamp.out.dir")+"/datadep.graphml";
+	public static final String dotFilePath = "/iccg.dot";
+
+    /* Read the permission into a map.*/
+	void parsePermission() {
+		String loc = System.getProperty("stamp.dir") + "/models/permissionmap401.txt";
+		try {
+			FileReader fileIn = new FileReader(loc);
+			LineNumberReader in = new LineNumberReader(fileIn);
+			String line = in.readLine();
+			String currPer = line.substring(line.indexOf(":") + 1, line.length());
+			do {
+				if(line.contains("Permission:")) {
+					String key = line.substring(line.indexOf(":") + 1, line.length());
+					currPer = key;
+				} else {
+					String methSig = line.substring(0, line.indexOf(")>")+2 );
+					//System.out.println(methSig);
+					if (pMap.get(methSig) == null) {
+						Set<String> newperSet = new HashSet<String>(); 
+						newperSet.add(currPer);
+						pMap.put(methSig, newperSet);
+					} else {
+						pMap.get(methSig).add(currPer);
+					}
+				}
+				line = in.readLine();
+			} while (line != null);
+			in.close();
+		}catch(Exception e){
+			e.printStackTrace();
+
+		}
+
+	}
 
     private String parseStr(String str)
     {

@@ -290,8 +290,10 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
                             }
                         }
                     } else {
-                        RefType t = (RefType)((AllocNode)elem).getType();
-                        if(ICCGBuilder.components.get(t.getClassName())!=null){
+                        Type t = ((AllocNode)elem).getType();
+                        //RefType t = (RefType)((AllocNode)elem).getType();
+                        if(!(t instanceof RefType)) continue;
+                        if(ICCGBuilder.components.get(((RefType)t).getClassName())!=null){
                             relCT.add(c,t);
                             break;
                         }

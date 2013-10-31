@@ -13,6 +13,9 @@ public class ICCGNode
     private String type = "";
     private String intentFilter = "";
 
+
+    private int id;
+
     //box:unknown, diamond:main, ellipse:activity, circle:service, triangle:broadcaster
     private String shape = "box";
 
@@ -20,11 +23,12 @@ public class ICCGNode
         this.comptName = "unknown";
     }
 
-    public ICCGNode(String cptName) {
+    public ICCGNode(String cptName, int cnt) {
         //need to get rid of "$"
         if(cptName.contains("$")) 
             cptName = cptName.substring(0, cptName.indexOf("$"));
         this.comptName = cptName; 
+        id = cnt;
     }
 
     public String getComptName() {
@@ -57,8 +61,12 @@ public class ICCGNode
         type = name;
     }
 
+    public int getId() {
+        return id;
+    }
 
-   public Set getPermission() {
+
+   public Set<String> getPermission() {
 
         return permission;
     }

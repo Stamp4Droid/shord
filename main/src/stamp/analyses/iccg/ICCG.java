@@ -23,19 +23,25 @@ public class ICCG
     public String getSignature() {
 
 	//first dump all the permission info.
-        String sig = "digraph G { ";
+        String sig = "digraph G {\n ";
 
-        for (ICCGNode node:nodes) {
-	    if(!"unknown".equals(node.getComptName()) && !"targetNotFound".equals(node.getComptName()) )
-	        System.out.println("nodepermission: " + node.getComptName() + node.getPermission());
+        for (ICCGNode node : nodes) {
+	    //if(!"unknown".equals(node.getComptName()) && !"targetNotFound".equals(node.getComptName()) ){
             String nodeName = node.toString();
-            sig += nodeName + "[shape=" + node.getShape()+"];";
+            String pers = "";
+            for(String perm : node.getPermission())
+                pers += " \\n " + perm;
+
+            nodeName += pers;
+            //sig += nodeName + "[shape=" + node.getShape()+"];";
+            sig += '\n' + Integer.toString(node.getId()) + "[label=\""+ nodeName + "\", shape=" + node.getShape()+"];";
+
         }
 
         for (ICCGEdge edge:edges) {
-            sig += edge.toString() ;
+            sig += '\n' + edge.toString() ;
         }
-        sig += "}";
+        sig += "\n}";
         return sig;
     }
 

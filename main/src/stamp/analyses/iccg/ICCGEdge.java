@@ -93,7 +93,7 @@ public class ICCGEdge
 
     public String toString() {
         //com.foo.a$1 => a;
-        String srcStr = "deadNode";
+        /*String srcStr = "deadNode";
         String tgtStr = "deadNode";
         if(source != null) srcStr = source.toString();
         if(target != null) tgtStr = target.toString();
@@ -102,8 +102,10 @@ public class ICCGEdge
             return srcStr + " -> " + tgtStr + "[style=dashed]; ";
             //return srcStr + " -> " + tgtStr + "[label=\" "+ event + "\",style=dashed]; ";
 
-        return srcStr + " -> " + tgtStr + "; ";
-
+        return srcStr + " -> " + tgtStr + "; "; */
+        String ret = source.getId() + " -> " + target.getId();
+        if(isAsynchronous) ret += "[style=dashed]; ";
+        return ret;
     }
 
 }
