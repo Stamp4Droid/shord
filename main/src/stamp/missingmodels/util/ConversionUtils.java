@@ -93,10 +93,15 @@ public class ConversionUtils {
 		relations.add("sinkF2PrimF", new IndexRelation("SinkF2PrimF", "CL", 1, null, "U", 2, 0));
 		
 		// transfer annotations: ref2RefT, ref2PrimT, prim2RefT, prim2PrimT
-		relations.add("ref2RefT", new IndexRelation("Ref2RefT", "V", 1, 0, "V", 2, 0));
-		relations.add("ref2PrimT", new IndexRelation("Ref2PrimT", "V", 1, 0, "U", 2, 0));
-		relations.add("prim2RefT", new IndexRelation("Prim2RefT", "U", 1, 0, "V", 2, 0));
-		relations.add("prim2PrimT", new IndexRelation("Prim2PrimT", "U", 1, 0, "U", 2, 0));
+		relations.add("ref2RefT", new StubIndexRelation("Ref2RefArgT", "V", 1, 0, "V", 2, 0, 3, 4, 5));
+		relations.add("ref2RefT", new StubIndexRelation("Ref2RefRetT", "V", 1, 0, "V", 2, 0, 3, 4));
+		
+		relations.add("ref2PrimT", new StubIndexRelation("Ref2PrimRetT", "V", 1, 0, "U", 2, 0, 3, 4));
+		
+		relations.add("prim2RefT", new StubIndexRelation("Prim2RefArgT", "U", 1, 0, "V", 2, 0, 3, 4, 5));
+		relations.add("prim2RefT", new StubIndexRelation("Prim2RefRetT", "U", 1, 0, "V", 2, 0, 3, 4));
+		
+		relations.add("prim2PrimT", new StubIndexRelation("Prim2PrimRetT", "U", 1, 0, "U", 2, 0, 3, 4));
 		
 		// flow annotations: ref2RefF, ref2PrimF, prim2RefF, prim2PrimF
 		relations.add("ref2RefF", new IndexRelation("Ref2RefF", "V", 1, 0, "V", 2, 0));

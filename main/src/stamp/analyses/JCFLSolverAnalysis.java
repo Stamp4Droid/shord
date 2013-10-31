@@ -25,6 +25,8 @@ import stamp.missingmodels.util.FileManager;
 import stamp.missingmodels.util.FileManager.FileType;
 import stamp.missingmodels.util.FileManager.StampOutputFile;
 import stamp.missingmodels.util.StubLookup;
+import stamp.missingmodels.util.StubLookup.StubLookupKey;
+import stamp.missingmodels.util.StubLookup.StubLookupValue;
 import stamp.missingmodels.util.StubModelSet;
 import stamp.missingmodels.util.StubModelSet.ModelType;
 import stamp.missingmodels.util.StubModelSet.StubModel;
@@ -189,7 +191,6 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 			e.printStackTrace();
 			m = new StubModelSet();
 		}
-		runStubModelClassifier(m);
 		
 		// STEP 2: Get lines of code and run experiment.
 		Pair<Integer,Integer> loc = getLOC();
@@ -202,6 +203,11 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		Experiment experiment = new Experiment(JCFLSolverSingle.class, G.class, appDir, loc.getX(), loc.getY());
 		experiment.run(m, new StubModelSet(), relationAdder, ModelType.FALSE);
 		j = experiment.j();
+
+
+		setGroundTruth(experiment.j().g(), experiment.j().s(), m);
+		runStubModelClassifier(m);		
+		
 
 		// STEP 3: Output some results
 		printRelCounts(j.g());
@@ -272,6 +278,26 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 				manager.write(file);
 			}
 		} catch(IOException e) { e.printStackTrace(); }
+	}
+	
+	public static Set<String> groundTruthEdges = new HashSet<String>();
+	static {
+		groundTruthEdges.add("ref2RefT");
+		groundTruthEdges.add("ref2PrimT");
+		groundTruthEdges.add("prim2RefT");
+		groundTruthEdges.add("prim2PrimT");
+	}
+	
+	public static void setGroundTruth(Graph g, StubLookup s, StubModelSet m) {
+		System.out.println("Setting ground truths...");
+		for(String symbol : groundTruthEdges) {
+			for(Edge edge : g.getEdges(symbol)) {
+				StubLookupValue value = s.get(new StubLookupKey(symbol, edge.from.getName(), edge.to.getName()));
+				m.put(new StubModel(value.relationName + "Stub", value.method.toString(), value.firstArg, value.secondArg), ModelType.TRUE);
+				System.out.println("Ground truth: " + value.toString());
+			}
+		}
+		System.out.println("Done setting ground truths!");
 	}
 	
 	public static Pair<Integer,Integer> getLOC() {
