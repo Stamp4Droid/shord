@@ -134,7 +134,7 @@ public class Printer {
 		packagePrefices.add("com.google");		
 	}
 	
-	private boolean isFrameworkClass(SootClass cl) {
+	public static boolean isFrameworkClass(SootClass cl) {
 		String packageName = cl.getPackageName();
 		for(String packagePrefix : packagePrefices) {
 			if(packageName.startsWith(packagePrefix)) {
