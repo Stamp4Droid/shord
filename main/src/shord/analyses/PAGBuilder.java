@@ -1,57 +1,57 @@
 package shord.analyses;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import shord.program.Program;
-import shord.project.ClassicProject;
-import shord.project.analyses.JavaAnalysis;
-import shord.project.analyses.ProgramRel;
-import soot.AnySubType;
-import soot.Body;
-import soot.FastHierarchy;
-import soot.Immediate;
-import soot.Local;
-import soot.NullType;
-import soot.PrimType;
-import soot.RefLikeType;
 import soot.Scene;
 import soot.SootClass;
-import soot.SootField;
 import soot.SootMethod;
-import soot.Type;
-import soot.Unit;
-import soot.UnknownType;
+import soot.SootField;
+import soot.Local;
+import soot.Immediate;
 import soot.Value;
+import soot.Unit;
+import soot.Body;
+import soot.Type;
+import soot.RefLikeType;
+import soot.PrimType;
 import soot.VoidType;
-import soot.jimple.AnyNewExpr;
-import soot.jimple.ArrayRef;
-import soot.jimple.AssignStmt;
-import soot.jimple.BinopExpr;
-import soot.jimple.CastExpr;
+import soot.NullType;
+import soot.AnySubType;
+import soot.UnknownType;
+import soot.FastHierarchy;
+import soot.PatchingChain;
 import soot.jimple.Constant;
-import soot.jimple.FieldRef;
-import soot.jimple.IdentityStmt;
-import soot.jimple.InstanceFieldRef;
-import soot.jimple.InstanceInvokeExpr;
-import soot.jimple.InvokeExpr;
-import soot.jimple.NegExpr;
-import soot.jimple.ParameterRef;
-import soot.jimple.ReturnStmt;
 import soot.jimple.Stmt;
+import soot.jimple.AssignStmt;
+import soot.jimple.IdentityStmt;
+import soot.jimple.ReturnStmt;
+import soot.jimple.AnyNewExpr;
+import soot.jimple.ThrowStmt;
+import soot.jimple.InvokeExpr;
+import soot.jimple.InstanceInvokeExpr;
+import soot.jimple.CastExpr;
+import soot.jimple.FieldRef;
+import soot.jimple.InstanceFieldRef;
+import soot.jimple.ParameterRef;
 import soot.jimple.ThisRef;
-import soot.jimple.spark.pag.ArrayElement;
+import soot.jimple.ArrayRef;
+import soot.jimple.BinopExpr;
+import soot.jimple.NegExpr;
+import soot.jimple.NewExpr;
 import soot.jimple.spark.pag.SparkField;
+import soot.jimple.spark.pag.ArrayElement;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 import soot.tagkit.Tag;
 import soot.util.NumberedSet;
-import stamp.missingmodels.jimplesrcmapper.Printer;
+
+import shord.project.analyses.JavaAnalysis;
+import shord.project.analyses.ProgramRel;
+import shord.project.analyses.ProgramDom;
+import shord.project.ClassicProject;
+import shord.program.Program;
+
 import chord.project.Chord;
+
+import java.util.*;
 
 @Chord(name="base-java", 
 	   produces={"M", "Z", "I", "H", "V", "T", "F", "U",
@@ -859,8 +859,6 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		if(!method.isConcrete())
 			return false;
-		return Printer.isFrameworkClass(method.getDeclaringClass());
-		/*
 		PatchingChain<Unit> units = method.retrieveActiveBody().getUnits();
 		Unit unit = units.getFirst();
 		while(unit instanceof IdentityStmt)
@@ -896,7 +894,6 @@ public class PAGBuilder extends JavaAnalysis
 			return false;
 		Immediate i = (Immediate) ((ThrowStmt) unit).getOp();
 		return i.equals(e) || i.equals(f);
-		*/
 	}
 	
 	void populateRelations(List<MethodPAGBuilder> mpagBuilders)
