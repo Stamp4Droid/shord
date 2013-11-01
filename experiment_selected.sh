@@ -1,8 +1,5 @@
 #!/bin/bash
 
-echo ./stamp analyze apps/samples/MultipleLeaks/
-./stamp analyze apps/samples/MultipleLeaks/
-
 echo ./stamp analyze ../stamptest/MissingModels/andRoc-rev418.apk
 ./stamp analyze ../stamptest/MissingModels/andRoc-rev418.apk
 echo ./stamp analyze ../stamptest/MissingModels/angulo-1.2.apk
