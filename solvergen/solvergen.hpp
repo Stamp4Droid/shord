@@ -568,7 +568,7 @@ public:
 class DerivTable {
 private:
 
-    class Info {
+    class Record {
     public:
 	enum class State {UNFORKED, UNREACHED, REACHED, CLOSED};
     private:
@@ -585,10 +585,10 @@ private:
     private:
 	void check_invariants();
     public:
-	Info(Edge* e);
-	Info(const Info& other) = delete;
-	Info& operator=(const Info& other) = delete;
-	Info(Info&& other);
+	Record(Edge* e);
+	Record(const Record& other) = delete;
+	Record& operator=(const Record& other) = delete;
+	Record(Record&& other);
 	State get_state() const;
 	PATH_LENGTH get_length() const;
 	const Derivation& best_derivation() const;
@@ -622,11 +622,11 @@ private:
     };
 
 private:
-    std::map<Edge*,Info> table;
+    std::map<Edge*,Record> table;
     std::priority_queue<QueueItem> queue;
 private:
     void process(const QueueItem& item);
-    void propagate(Edge* child, Info& child_info);
+    void propagate(Edge* child, Record& child_rec);
     void print_edge(Edge* edge, bool reverse, FILE* f);
 public:
     // Adds Edge and all induced Derivations.

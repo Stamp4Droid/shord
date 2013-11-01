@@ -844,7 +844,7 @@ bool Derivation::empty() const {
 
 /* PATH CALCULATION ======================================================== */
 
-void DerivTable::Info::check_invariants() {
+void DerivTable::Record::check_invariants() {
     switch (state) {
     case State::UNFORKED:
     case State::UNREACHED:
@@ -861,10 +861,10 @@ void DerivTable::Info::check_invariants() {
     assert(best_choice == CHOICE_NONE || best_choice < derivs.size());
 }
 
-DerivTable::Info::Info(Edge* e) : derivs(all_derivations(e)),
-				  state(State::UNFORKED),
-				  best_choice(CHOICE_NONE),
-				  length(static_min_length(e->kind)) {
+DerivTable::Record::Record(Edge* e) : derivs(all_derivations(e)),
+				      state(State::UNFORKED),
+				      best_choice(CHOICE_NONE),
+				      length(static_min_length(e->kind)) {
     // We close immediatelly if this is a terminal Edge (the minimum-length
     // estimate is then the real length).
     if (is_terminal(e->kind)) {
@@ -887,31 +887,32 @@ DerivTable::Info::Info(Edge* e) : derivs(all_derivations(e)),
     check_invariants();
 }
 
-DerivTable::Info::Info(Info&& other)
+DerivTable::Record::Record(Record&& other)
     : derivs(std::move(other.derivs)), state(other.state),
       best_choice(other.best_choice), length(other.length),
       parents(std::move(other.parents)) {}
 
-DerivTable::Info::State DerivTable::Info::get_state() const {
+DerivTable::Record::State DerivTable::Record::get_state() const {
     return state;
 }
 
-PATH_LENGTH DerivTable::Info::get_length() const {
+PATH_LENGTH DerivTable::Record::get_length() const {
     return length;
 }
 
-const Derivation& DerivTable::Info::best_derivation() const {
+const Derivation& DerivTable::Record::best_derivation() const {
     assert(state == State::CLOSED && best_choice != CHOICE_NONE);
     return derivs.at(best_choice);
 }
 
-void DerivTable::Info::close() {
+void DerivTable::Record::close() {
     assert(state == State::UNFORKED || state == State::REACHED);
     state = State::CLOSED;
     check_invariants();
 }
 
-std::set<Edge*> DerivTable::Info::get_children() {
+// TODO: Depends on the fact that Edges are uniqued.
+std::set<Edge*> DerivTable::Record::get_children() {
     assert(state == State::UNFORKED);
     state = State::UNREACHED;
 
@@ -930,7 +931,7 @@ std::set<Edge*> DerivTable::Info::get_children() {
 }
 
 std::list<std::pair<CHOICE_REF,Edge*>>
-DerivTable::Info::completions(Edge* e) const {
+DerivTable::Record::completions(Edge* e) const {
     std::list<std::pair<CHOICE_REF,Edge*>> res;
     for (CHOICE_REF c = 0; c < derivs.size(); c++) {
 	const Derivation& d = derivs[c];
@@ -947,7 +948,7 @@ DerivTable::Info::completions(Edge* e) const {
 }
 
 // TODO: Assumes we've checked 'choice' for overflow.
-bool DerivTable::Info::update(CHOICE_REF choice, PATH_LENGTH length) {
+bool DerivTable::Record::update(CHOICE_REF choice, PATH_LENGTH length) {
     bool must_update = false;
 
     switch (state) {
@@ -970,11 +971,11 @@ bool DerivTable::Info::update(CHOICE_REF choice, PATH_LENGTH length) {
     return must_update;
 }
 
-void DerivTable::Info::add_parent(Edge* p) {
+void DerivTable::Record::add_parent(Edge* p) {
     parents.push_back(p);
 }
 
-void DerivTable::Info::get_parents(std::list<Edge*>& ret) {
+void DerivTable::Record::get_parents(std::list<Edge*>& ret) {
     parents.swap(ret);
     parents.clear();
 }
@@ -989,56 +990,56 @@ bool DerivTable::QueueItem::operator<(const QueueItem& other) const {
 void DerivTable::process(const QueueItem& item) {
     PATH_LENGTH length = item.length;
     Edge* edge = item.edge;
-    Info& info = table.at(edge);
+    Record& rec = table.at(edge);
 
-    switch (info.get_state()) {
-    case Info::State::UNFORKED:
-	for (Edge* child : info.get_children()) {
+    switch (rec.get_state()) {
+    case Record::State::UNFORKED:
+	for (Edge* child : rec.get_children()) {
 	    auto iterAndFlag = table.emplace(child, child);
-	    Info& child_info = iterAndFlag.first->second;
+	    Record& child_rec = iterAndFlag.first->second;
 	    if (iterAndFlag.second
-		|| child_info.get_state() == Info::State::CLOSED) {
+		|| child_rec.get_state() == Record::State::CLOSED) {
 		// A new entry was created on the table, which needs to be
 		// expanded, or we hit a cached entry that has been closed, so
 		// we insert it into the queue to re-activate it (cached Edges
 		// in any other state are already active, i.e. they are, or
 		// soon will be, added to the queue.
-		queue.emplace(child_info.get_length(), child);
+		queue.emplace(child_rec.get_length(), child);
 	    }
-	    child_info.add_parent(edge);
+	    child_rec.add_parent(edge);
 	}
 	// The item for this Edge is removed from the worklist, but will be
 	// added again when we find a production for it.
 	break;
-    case Info::State::REACHED:
+    case Record::State::REACHED:
 	// Since we're processing Derivations in absolute length order, the
 	// shortest possible expansion for an Edge will always be the first to
 	// arrive to the front of the queue.
-	assert(info.get_length() == length);
-	info.close();
-	propagate(edge, info);
+	assert(rec.get_length() == length);
+	rec.close();
+	propagate(edge, rec);
 	break;
-    case Info::State::CLOSED:
+    case Record::State::CLOSED:
 	// This could either be an overtaken update (we don't propagate paths
 	// that we know are worse than the best we've seen, but we might
 	// add a path for some Edge, and before that gets to the front, find a
 	// better one), or the result of a fork that hit a cached result. In
 	// either case, it can't contain a shorter path than the one currently
 	// stored.
-	assert(info.get_length() <= length);
-	propagate(edge, info);
+	assert(rec.get_length() <= length);
+	propagate(edge, rec);
 	break;
     default:
 	assert(false);
     }
 }
 
-void DerivTable::propagate(Edge* child, Info& child_info) {
+void DerivTable::propagate(Edge* child, Record& child_rec) {
     std::list<Edge*> parents;
-    child_info.get_parents(parents);
+    child_rec.get_parents(parents);
     for (Edge* p : parents) {
-	Info& p_info = table.at(p);
-	if (p_info.get_state() == Info::State::CLOSED) {
+	Record& p_rec = table.at(p);
+	if (p_rec.get_state() == Record::State::CLOSED) {
 	    // We process paths in absolute order length, so a closed Edge will
 	    // already have the shortest possible path filled in.
 	    // TODO: Could also check that we don't get a shorter path than
@@ -1052,19 +1053,19 @@ void DerivTable::propagate(Edge* child, Info& child_info) {
 	PATH_LENGTH min_length = LENGTH_INF;
 
 	// TODO: Check that the completion set isn't empty.
-	for (const auto& choiceAndEdge : p_info.completions(child)) {
+	for (const auto& choiceAndEdge : p_rec.completions(child)) {
 	    CHOICE_REF choice = choiceAndEdge.first;
 	    Edge* completion = choiceAndEdge.second;
-	    PATH_LENGTH total_length = child_info.get_length();
+	    PATH_LENGTH total_length = child_rec.get_length();
 	    if (completion != NULL) {
-		const Info& completion_info = table.at(completion);
+		const Record& completion_rec = table.at(completion);
 		// Could get the same Edge in the completion set, in cases like
 		// this: A :: B _B. This is OK, since the child Edge should
 		// have already been closed.
-		if (completion_info.get_state() != Info::State::CLOSED) {
+		if (completion_rec.get_state() != Record::State::CLOSED) {
 		    continue;
 		}
-		total_length += completion_info.get_length();
+		total_length += completion_rec.get_length();
 	    }
 	    if (best_choice == CHOICE_NONE || total_length < min_length) {
 		best_choice = choice;
@@ -1075,7 +1076,7 @@ void DerivTable::propagate(Edge* child, Info& child_info) {
 	if (best_choice != CHOICE_NONE) {
 	    // Only add the parent to the queue if the shortest path we found
 	    // is actually shorter than the previous best one.
-	    if (p_info.update(best_choice, min_length)) {
+	    if (p_rec.update(best_choice, min_length)) {
 		queue.emplace(min_length, p);
 	    }
 	}
