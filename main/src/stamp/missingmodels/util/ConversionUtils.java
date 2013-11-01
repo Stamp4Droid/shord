@@ -81,16 +81,16 @@ public class ConversionUtils {
 	private static final MultivalueMap<String,Relation> relations = new MultivalueMap<String,Relation>();
 	static {
 		// src and sink annotations:
-		relations.add("src2Label", new IndexRelation("Src2Label", "CL", 0, null, "CL", 0, null));
-		relations.add("sink2Label", new IndexRelation("Sink2Label", "CL", 0, null, "CL", 0, null));
+		relations.add("src2Label", new IndexRelation("Src2Label", "L", 0, null, "L", 0, null));
+		relations.add("sink2Label", new IndexRelation("Sink2Label", "L", 0, null, "L", 0, null));
 		
 		// label annotations: label2RefT, label2PrimT
-		relations.add("label2RefT", new IndexRelation("Label2RefT", "CL", 1, null, "V", 2, 0));
-		relations.add("label2PrimT", new IndexRelation("Label2PrimT", "CL", 1, null, "U", 2, 0));		
+		relations.add("label2RefT", new IndexRelation("Label2RefT", "L", 1, null, "V", 2, 0));
+		relations.add("label2PrimT", new IndexRelation("Label2PrimT", "L", 1, null, "U", 2, 0));		
 		
 		// sinkF annotations: sinkF2RefF, sinkF2PrimF		
-		relations.add("sinkF2RefF", new IndexRelation("SinkF2RefF", "CL", 1, null, "V", 2, 0));
-		relations.add("sinkF2PrimF", new IndexRelation("SinkF2PrimF", "CL", 1, null, "U", 2, 0));
+		relations.add("sinkF2RefF", new IndexRelation("SinkF2RefF", "L", 1, null, "V", 2, 0));
+		relations.add("sinkF2PrimF", new IndexRelation("SinkF2PrimF", "L", 1, null, "U", 2, 0));
 		
 		// transfer annotations: ref2RefT, ref2PrimT, prim2RefT, prim2PrimT
 		relations.add("ref2RefT", new StubIndexRelation("Ref2RefArgT", "V", 1, 0, "V", 2, 0, 3, 4, 5));

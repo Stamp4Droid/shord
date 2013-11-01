@@ -11,9 +11,9 @@
 .include "U.dom"
 .include "F.dom"
 .include "I.dom"
-.include "CL.dom"
+.include "L.dom"
 
-.bddvarorder Z0xZ1_M0_CL0xCL1_C0xC1xC2_V0xV1_U0xU1_F0_I0
+.bddvarorder Z0xZ1_M0_L0xL1_C0xC1xC2_V0xV1_U0xU1_F0_I0
 
 ###################
 # INPUT: POINTER
@@ -41,16 +41,16 @@ AssignPrimCCtxt(c:C,v:U,d:C,u:U) input
 ###################
 
 # Src label
-Src2Label(cl:CL) input
-Sink2Label(cl:CL) input
+Src2Label(cl:L) input
+Sink2Label(cl:L) input
 
 # Label
-Label2RefT(c:C,cl:CL,v:V) input
-Label2PrimT(c:C,cl:CL,v:U) input
+Label2RefT(c:C,cl:L,v:V) input
+Label2PrimT(c:C,cl:L,v:U) input
 
 # Sink full label (out labels)
-SinkF2RefF(c:C,cl:CL,v:V) input
-SinkF2PrimF(c:C,cl:CL,v:U) input
+SinkF2RefF(c:C,cl:L,v:V) input
+SinkF2PrimF(c:C,cl:L,v:U) input
 
 # Transfer
 Ref2RefTFull(c:C,v:V,u:V) input
@@ -71,23 +71,23 @@ Prim2PrimF(c:C,v:U,u:U) input
 Obj2RefT(c:C,o:C,v:V) output
 Obj2PrimT(c:C,o:C,v:U) output
 
-Label2ObjT(cl:CL,o:C) output
+Label2ObjT(cl:L,o:C) output
 
 ###################
 # INTERMEDIATE: SINKF
 ###################
 
 # Sink_full-obj flow
-SinkF2Obj(cl:CL,o:C) output
+SinkF2Obj(cl:L,o:C) output
 
 # Sink_full-prim flow
-SinkF2Prim(c:C,cl:CL,v:U) output
+SinkF2Prim(c:C,cl:L,v:U) output
 
 ###################
 # INTERMEDIATE: SRC-SINK FLOW
 ###################
 
-Src2Sink(src:CL,sink:CL) output
+Src2Sink(src:L,sink:L) output
 
 ###################
 # INTERMEDIATE: LABEL FLOW
@@ -95,22 +95,22 @@ Src2Sink(src:CL,sink:CL) output
 
 # Label-obj flow
 
-Label2Obj(cl:CL,o:C) output
-Label2ObjX(cl:CL,o2:C) output
+Label2Obj(cl:L,o:C) output
+Label2ObjX(cl:L,o2:C) output
 
 # Label-prim flow
 
-Label2Prim(c:C,cl:CL,v:U) output
-Label2PrimFld(cl:CL,o:C,f:F) output
-Label2PrimFldStat(cl:CL,f:F) output
+Label2Prim(c:C,cl:L,v:U) output
+Label2PrimFld(cl:L,o:C,f:F) output
+Label2PrimFldStat(cl:L,f:F) output
 
 ###################
 # OUTPUT: RESULTS
 ###################
 
-labelRefTaint(c:C,v:V,l:CL)  output # (c,v) is labeled with l
-labelPrimTaint(c:C,v:U,l:CL) output # (c,v) is labeled with l
-flowTaint(src:CL,sink:CL) output
+labelRefTaint(c:C,v:V,l:L)  output # (c,v) is labeled with l
+labelPrimTaint(c:C,v:U,l:L) output # (c,v) is labeled with l
+flowTaint(src:L,sink:L) output
 
 ###################
 # RULES: OBJECT ANNOTATIONS

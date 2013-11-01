@@ -50,18 +50,18 @@ CM(c:C,m:M) input # c is a context of method m
 ###################
 
 # Src label
-Src2Label(cl:CL) output
-Sink2Label(cl:CL) output
+Src2Label(cl:L) output
+Sink2Label(cl:L) output
 
 # Label
 
-Label2RefT(c:C,cl:CL,v:V) output
-Label2PrimT(c:C,cl:CL,v:U) output
+Label2RefT(c:C,cl:L,v:V) output
+Label2PrimT(c:C,cl:L,v:U) output
 
 # Sink full label (out labels)
 
-SinkF2RefF(c:C,cl:CL,v:V) output
-SinkF2PrimF(c:C,cl:CL,v:U) output
+SinkF2RefF(c:C,cl:L,v:V) output
+SinkF2PrimF(c:C,cl:L,v:U) output
 
 # Transfer
 
@@ -91,24 +91,24 @@ Prim2PrimF(c:C,v:U,u:U) output
 ###################
 
 # Src label
-Src2Label(cl) :- srcCtxtLabel(cl).
+Src2Label(l) :- srcCtxtLabel(cl), LCL(l,cl).
 
 # Sink label
-Sink2Label(cl) :- sinkCtxtLabel(cl).
+Sink2Label(l) :- sinkCtxtLabel(cl), LCL(l,cl).
 
 # Label
 
-Label2RefT(c,cl,v)   :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelArg(l,m,z), MmethArg(m,z,v).
-Label2RefT(c,cl,v)   :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelRet(l,m), MmethRet(m,_,v).
-# Label2PrimT(c,cl,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelArg(l,m,z), MmethPrimArg(m,z,v).
-Label2PrimT(c,cl,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelRet(l,m), MmethPrimRet(m,_,v).
+Label2RefT(c,l,v)   :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelArg(l,m,z), MmethArg(m,z,v).
+Label2RefT(c,l,v)   :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelRet(l,m), MmethRet(m,_,v).
+# Label2PrimT(c,l,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelArg(l,m,z), MmethPrimArg(m,z,v).
+Label2PrimT(c,l,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelRet(l,m), MmethPrimRet(m,_,v).
 
 # Sink full label (out labels)
 
-SinkF2RefF(c,cl,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelArg(l,m,z), MmethArg(m,z,v).
-SinkF2RefF(c,cl,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelRet(l,m), MmethRet(m,_,v).
-# SinkF2PrimF(c,cl,v) :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelArg(l,m,z), MmethPrimArg(m,z,v).
-SinkF2PrimF(c,cl,v) :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelRet(l,m), MmethPrimRet(m,_,v).
+SinkF2RefF(c,l,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelArg(l,m,z), MmethArg(m,z,v).
+SinkF2RefF(c,l,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelRet(l,m), MmethRet(m,_,v).
+# SinkF2PrimF(c,l,v) :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelArg(l,m,z), MmethPrimArg(m,z,v).
+SinkF2PrimF(c,c,v) :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelRet(l,m), MmethPrimRet(m,_,v).
 
 # Arg-arg transfer
 

@@ -11,9 +11,9 @@
 .include "U.dom"
 .include "F.dom"
 .include "I.dom"
-.include "CL.dom"
+.include "L.dom"
 
-.bddvarorder Z0xZ1_M0_CL0xCL1_C0xC1xC2_V0xV1_U0xU1_F0_I0
+.bddvarorder Z0xZ1_M0_L0xL1_C0xC1xC2_V0xV1_U0xU1_F0_I0
 
 ###################
 # INPUT: TAINT RELATIONS
@@ -33,18 +33,18 @@ AssignPrimCtxt(c:C,v:U,u:U) input
 AssignPrimCCtxt(c:C,v:U,d:C,u:U) input
 
 # Src label
-Src2Label(cl:CL) input
+Src2Label(cl:L) input
 
 # Sink label
-Sink2Label(cl:CL) input
+Sink2Label(cl:L) input
 
 # Label label
-Label2RefT(c:C,cl:CL,v:V) input
-Label2PrimT(c:C,cl:CL,v:U) input
+Label2RefT(c:C,cl:L,v:V) input
+Label2PrimT(c:C,cl:L,v:U) input
 
 # Sink full label (out labels)
-SinkF2RefF(c:C,cl:CL,v:V) input
-SinkF2PrimF(c:C,cl:CL,v:U) input
+SinkF2RefF(c:C,cl:L,v:V) input
+SinkF2PrimF(c:C,cl:L,v:U) input
 
 # Transfer
 Ref2RefTFull(c:C,v:V,u:V) input
@@ -61,25 +61,25 @@ Prim2PrimF(c:C,v:U,u:U) input
 Obj2RefT(c:C,o:C,v:V) input
 Obj2PrimT(c:C,o:C,v:U) input
 
-Label2ObjT(cl:CL,o:C) input
+Label2ObjT(cl:L,o:C) input
 
 # Sink_full-obj flow
-SinkF2Obj(cl:CL,o:C) input
+SinkF2Obj(cl:L,o:C) input
 
 # Sink_full-prim flow
-SinkF2Prim(c:C,cl:CL,v:U) input
+SinkF2Prim(c:C,cl:L,v:U) input
 
 # Src-sink flow
-Src2Sink(src:CL,sink:CL) input
+Src2Sink(src:L,sink:L) input
 
 # Label-obj flow
-Label2Obj(cl:CL,o:C) input
-Label2ObjX(cl:CL,o2:C) input
+Label2Obj(cl:L,o:C) input
+Label2ObjX(cl:L,o2:C) input
 
 # Label-prim flow
-Label2Prim(c:C,cl:CL,v:U) input
-Label2PrimFld(cl:CL,o:C,f:F) input
-Label2PrimFldStat(cl:CL,f:F) input
+Label2Prim(c:C,cl:L,v:U) input
+Label2PrimFld(cl:L,o:C,f:F) input
+Label2PrimFldStat(cl:L,f:F) input
 
 ###################
 # INPUT: PARTIAL PT RELATIONS
@@ -92,10 +92,10 @@ FptPartial(o1:C,f:F,o2:C) input
 # OUTPUT
 ###################
 
-ActiveObjTaint(cl:CL,o:C) output
-ActivePrimTaint(cl:CL,c:C,v:U) output
-ActiveRefTaint(cl:CL,c:C,v:V) output
-ActivePrimFldStatTaint(cl:CL,f:F) output
+ActiveObjTaint(cl:L,o:C) output
+ActivePrimTaint(cl:L,c:C,v:U) output
+ActiveRefTaint(cl:L,c:C,v:V) output
+ActivePrimFldStatTaint(cl:L,f:F) output
 
 ###################
 # Src2Sink
