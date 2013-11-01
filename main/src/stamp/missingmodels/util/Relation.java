@@ -19,7 +19,7 @@ public abstract class Relation {
 	 * 
 	 * @return: The name of the Shord relation being processed.
 	 */
-	protected abstract String getRelationName();
+	public abstract String getRelationName();
 
 	/*
 	 * This returns the source of the edge.
@@ -27,7 +27,7 @@ public abstract class Relation {
 	 * @param tuple: The Shord tuple being converted to a graph edge.
 	 * @return: String representing the graph edge's source.
 	 */
-	protected abstract String getSourceFromTuple(int[] tuple);
+	public abstract String getSourceFromTuple(int[] tuple);
 	
 	/*
 	 * This returns the sink of the edge.
@@ -35,7 +35,7 @@ public abstract class Relation {
 	 * @param tuple: The Shord tuple being converted to a graph edge.
 	 * @return: String representing the graph edge's sink. 
 	 */
-	protected abstract String getSinkFromTuple(int[] tuple);
+	public abstract String getSinkFromTuple(int[] tuple);
 
 	/*
 	 * This returns whether or not the relation has edge labels.
@@ -43,7 +43,7 @@ public abstract class Relation {
 	 * @return: True if the edge is labeled, false if the edge
 	 * is unlabeled.
 	 */
-	protected abstract boolean hasLabel();
+	public abstract boolean hasLabel();
 	
 	/*
 	 * Returns the label on the edge.
@@ -52,7 +52,7 @@ public abstract class Relation {
 	 * @return: The label on the edge as an integer (unspecified if there
 	 * is no label).
 	 */
-	protected abstract int getLabelFromTuple(int[] tuple);
+	public abstract int getLabelFromTuple(int[] tuple);
 
 	/*
 	 * Returns whether or not the relation is a stub relation. Stub edges
@@ -61,7 +61,7 @@ public abstract class Relation {
 	 * @return: True if the relation is a stub relation, false if the
 	 * relation is not a stub relation.
 	 */
-	protected abstract boolean isStub();
+	public abstract boolean isStub();
 	
 	/*
 	 * Returns the stub lookup value corresponding to the tuple.
@@ -71,7 +71,7 @@ public abstract class Relation {
 	 * @param tuple: The Shord tuple being converted to a graph edge.
 	 * @return: The stub lookup value.
 	 */
-	protected abstract StubLookupValue getStubLookupValueFromTuple(int[] tuple);
+	public abstract StubLookupValue getStubLookupValueFromTuple(int[] tuple);
 	
 	/*
 	 * A filter on the tuple. The algorithm only adds the tuple if this
@@ -82,7 +82,7 @@ public abstract class Relation {
 	 * @param stubModelSet: A set of models to filter by.
 	 * should be discarded.
 	 */
-	protected abstract boolean filter(int[] tuple, StubModelSet stubModelSet);
+	public abstract boolean filter(int[] tuple, StubModelSet stubModelSet);
 
 	/*
 	 * Returns the stub lookup key corresponding to the tuple. By default,
@@ -92,7 +92,7 @@ public abstract class Relation {
 	 * @param tuple: The Shord tuple being converted to a graph edge.
 	 * @param edgeName: The name of the edge in the graph.
 	 */
-	protected StubLookupKey getStubLookupKeyFromTuple(int[] tuple, String edgeName) {
+	public StubLookupKey getStubLookupKeyFromTuple(int[] tuple, String edgeName) {
 		return new StubLookupKey(edgeName, this.getSourceFromTuple(tuple), this.getSinkFromTuple(tuple));
 	}
 
@@ -182,11 +182,13 @@ public abstract class Relation {
 			this(relationName, firstVarType, firstVarIndex, firstCtxtIndex, secondVarType, secondVarIndex, secondCtxtIndex, null);
 		}
 
-		@Override protected String getRelationName() {
+		@Override
+		public String getRelationName() {
 			return this.relationName;
 		}
 
-		@Override protected String getSourceFromTuple(int[] tuple) {
+		@Override
+		public String getSourceFromTuple(int[] tuple) {
 			try {
 				return firstVarType + Integer.toString(tuple[firstVarIndex]) + (hasFirstCtxt ? "_" + Integer.toString(tuple[firstCtxtIndex]) : "");
 			} catch(Exception e) {
@@ -194,7 +196,8 @@ public abstract class Relation {
 			}
 		}
 
-		@Override protected String getSinkFromTuple(int[] tuple) {
+		@Override
+		public String getSinkFromTuple(int[] tuple) {
 			try {
 				return secondVarType + Integer.toString(tuple[secondVarIndex]) + (hasSecondCtxt ? "_" + Integer.toString(tuple[secondCtxtIndex]) : "");
 			} catch(Exception e) {
@@ -202,7 +205,8 @@ public abstract class Relation {
 			}
 		}
 
-		@Override protected int getLabelFromTuple(int[] tuple) {
+		@Override
+		public int getLabelFromTuple(int[] tuple) {
 			try {
 				return tuple[labelIndex];
 			} catch(Exception e) {
@@ -210,19 +214,23 @@ public abstract class Relation {
 			}
 		}
 
-		@Override protected boolean hasLabel() {
+		@Override
+		public boolean hasLabel() {
 			return hasLabel;
 		}
 
-		@Override protected boolean isStub() {
+		@Override
+		public boolean isStub() {
 			return false;
 		}
 
-		@Override protected StubLookupValue getStubLookupValueFromTuple(int[] tuple) {
+		@Override
+		public StubLookupValue getStubLookupValueFromTuple(int[] tuple) {
 			return null;
 		}
 
-		@Override protected boolean filter(int[] tuple, StubModelSet stubModelSet) {
+		@Override
+		public boolean filter(int[] tuple, StubModelSet stubModelSet) {
 			return true;
 		}
 	}
@@ -251,17 +259,20 @@ public abstract class Relation {
 			this(relationName, firstVarType, firstVarIndex, firstCtxtIndex, secondVarType, secondVarIndex, secondCtxtIndex, null, methodIndex, null, null);
 		}
 
-		@Override protected boolean isStub() {
+		@Override
+		public boolean isStub() {
 			return true;
 		}
 
-		@Override protected StubLookupValue getStubLookupValueFromTuple(int[] tuple) {
+		@Override
+		public StubLookupValue getStubLookupValueFromTuple(int[] tuple) {
 			Integer firstArg = this.firstArgIndex == null ? null : tuple[this.firstArgIndex];
 			Integer secondArg = this.secondArgIndex == null ? null : tuple[this.secondArgIndex];
 			return new StubLookupValue(this.getRelationName(), tuple[this.methodIndex], firstArg, secondArg);
 		}
 
-		@Override protected boolean filter(int[] tuple, StubModelSet stubModelSet) {
+		@Override
+		public boolean filter(int[] tuple, StubModelSet stubModelSet) {
 			return stubModelSet.get(this.getStubLookupValueFromTuple(tuple)) != ModelType.FALSE;
 		}
 	}

@@ -11,7 +11,9 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
+import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.analysis.Experiment;
 import stamp.missingmodels.analysis.JCFLSolverRunner;
 import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverSingle;
@@ -20,12 +22,13 @@ import stamp.missingmodels.analysis.JCFLSolverRunner.RelationAdder;
 import stamp.missingmodels.analysis.ModelClassifier.ModelInfo;
 import stamp.missingmodels.grammars.G;
 import stamp.missingmodels.ml.Classifier;
+import stamp.missingmodels.util.ConversionUtils;
 import stamp.missingmodels.util.ConversionUtils.ChordRelationAdder;
 import stamp.missingmodels.util.FileManager;
 import stamp.missingmodels.util.FileManager.FileType;
 import stamp.missingmodels.util.FileManager.StampOutputFile;
+import stamp.missingmodels.util.Relation;
 import stamp.missingmodels.util.StubLookup;
-import stamp.missingmodels.util.StubLookup.StubLookupKey;
 import stamp.missingmodels.util.StubLookup.StubLookupValue;
 import stamp.missingmodels.util.StubModelSet;
 import stamp.missingmodels.util.StubModelSet.ModelType;
@@ -192,6 +195,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 			m = new StubModelSet();
 		}
 		
+		
 		// STEP 2: Get lines of code and run experiment.
 		Pair<Integer,Integer> loc = getLOC();
 		
@@ -201,13 +205,15 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		File outputDir = manager.getDirectory(FileType.OUTPUT);
 		String appDir = outputDir.getParentFile().getName();
 		Experiment experiment = new Experiment(JCFLSolverSingle.class, G.class, appDir, loc.getX(), loc.getY());
-		experiment.run(m, new StubModelSet(), relationAdder, ModelType.FALSE);
-		j = experiment.j();
 
+		
 
 		setGroundTruth(experiment.j().g(), experiment.j().s(), m);
-		runStubModelClassifier(m);		
+		runStubModelClassifier(m);
 		
+		
+		experiment.run(m, new StubModelSet(), relationAdder, ModelType.FALSE);
+		j = experiment.j();
 
 		// STEP 3: Output some results
 		printRelCounts(j.g());
@@ -291,10 +297,17 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 	public static void setGroundTruth(Graph g, StubLookup s, StubModelSet m) {
 		System.out.println("Setting ground truths...");
 		for(String symbol : groundTruthEdges) {
-			for(Edge edge : g.getEdges(symbol)) {
-				StubLookupValue value = s.get(new StubLookupKey(symbol, edge.from.getName(), edge.to.getName()));
-				m.put(new StubModel(value.relationName + "Stub", value.method.toString(), value.firstArg, value.secondArg), ModelType.TRUE);
-				System.out.println("Ground truth: " + value.toString());
+			for(Relation rel : ConversionUtils.getChordRelationsFor(symbol)) {
+				final ProgramRel programRel = (ProgramRel)ClassicProject.g().getTrgt(rel.getRelationName());
+				programRel.load();
+				Iterable<int[]> res = programRel.getAryNIntTuples();
+				
+				for(int[] tuple : res) {
+					StubLookupValue value = rel.getStubLookupValueFromTuple(tuple);
+
+					m.put(new StubModel(value.relationName + "Stub", value.method.toString(), value.firstArg, value.secondArg), ModelType.TRUE);
+					System.out.println("Ground truth: " + value.toString());
+				}
 			}
 		}
 		System.out.println("Done setting ground truths!");

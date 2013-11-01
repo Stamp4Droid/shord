@@ -110,7 +110,7 @@ public class ConversionUtils {
 		relations.add("prim2PrimF", new IndexRelation("Prim2PrimF", "U", 1, 0, "U", 2, 0));
 
 		// pt: phantom points
-		//relations.add("pt", new IndexRelation("phpt", "V", 1, 0, "V", 3, 2));
+		relations.add("pt", new IndexRelation("phpt", "V", 1, 0, "V", 3, 2));
 		
 		// pt: pt, fptArr
 		relations.add("pt", new IndexRelation("pt", "V", 1, 0, "O", 2, null));
@@ -162,7 +162,7 @@ public class ConversionUtils {
 	 * Returns the Shord relations associated with a given
 	 * JCFLSolver relation. 
 	 */
-	private static Set<Relation> getChordRelationsFor(String relation) {
+	public static Set<Relation> getChordRelationsFor(String relation) {
 		return relations.get(relation);		
 	}
 
