@@ -25,8 +25,6 @@ echo ./stamp analyze ../stamptest/DarpaApps/1A_ConnectBot
 ./stamp analyze ../stamptest/DarpaApps/1A_ConnectBot
 echo ./stamp analyze ../stamptest/DarpaApps/1A_TextSecure
 ./stamp analyze ../stamptest/DarpaApps/1A_TextSecure
-echo ./stamp analyze ../stamptest/DarpaApps/1C_tomdroid
-./stamp analyze ../stamptest/DarpaApps/1C_tomdroid
 echo ./stamp analyze ../stamptest/DarpaApps/2A_GeoTagger
 ./stamp analyze ../stamptest/DarpaApps/2A_GeoTagger
 echo ./stamp analyze ../stamptest/DarpaApps/2B_fillinfun
