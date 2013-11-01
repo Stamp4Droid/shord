@@ -439,7 +439,9 @@ public class PostIccgBuilder extends JavaAnalysis
 					String key = line.substring(line.indexOf(":") + 1, line.length());
 					currPer = key;
 				} else {
+                    if(line.contains("Callers")) line = in.readLine();//filter out the title.
 					String methSig = line.substring(0, line.indexOf(")>")+2 );
+                    assert(methSig.length() > 2);
 					//System.out.println(methSig);
 					if (pMap.get(methSig) == null) {
 						Set<String> newperSet = new HashSet<String>(); 
@@ -467,7 +469,6 @@ public class PostIccgBuilder extends JavaAnalysis
 
         return str;
     }
-
 
 
 }

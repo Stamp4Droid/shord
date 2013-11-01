@@ -50,17 +50,17 @@ Dispatch(t:T,s:S,m:M) input     # t.m has subsig s.
 ###################
 #    OUTPUT
 ###################
-CIC(c:C,i:I,d:C) output # d = [i, c]
-reachableT(t:T) output
-DIC(c:C,i:I,c:C) output
-DVDV(c:C0,u:V0,d:C1,v:V1) output
-reachableCI(c:C,i:I) output
-reachableCM(c:C,m:M) output
+CIC(c:C,i:I,d:C) # d = [i, c]
+reachableT(t:T) 
+DIC(c:C,i:I,c:C) 
+DVDV(c:C0,u:V0,d:C1,v:V1) 
+reachableCI(c:C,i:I) 
+reachableCM(c:C,m:M) 
 CICM(d:C,i:I,c:C,m:M)   output  # i in cotext d calls method m in context c.
 pt(c:C,v:V,o:C)    output # (c,v) points-to o
 fpt(o1:C,f:F,o2:C) output
 fptStat(f:F,o:C) output
-ICM(i:I,c:C,m:M) output
+ICM(i:I,c:C,m:M) 
 
 ###################
 #    RULES
@@ -81,7 +81,7 @@ CIC(c,i,d) :- CC(c,d), CI(d,i).
 CICM(c,i,d,m) :- reachableCI(c,i), StatIM(i,m), CIC(c,i,d).
 
 
-CICM(c,i,o,m) :- reachableCI(c,i), ICM(i,o,m), DIC(c,i,o).
+CICM(c,i,o,m) :- reachableCI(c,i), DIC(c,i,o), ICM(i,o,m). 
 CICM(c,i,o,m) :- reachableCI(c,i), SpecIM(i,m), DIC(c,i,o).
 CICM(c,i,d,m) :- reachableCI(c,i), StatIM(i,m), d=c.
 
