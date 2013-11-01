@@ -209,7 +209,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		
 
 		setGroundTruth(experiment.j().g(), experiment.j().s(), m);
-		runStubModelClassifier(m);
+		//runStubModelClassifier(m);
 		
 		
 		experiment.run(m, new StubModelSet(), relationAdder, ModelType.FALSE);
@@ -235,8 +235,8 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		files.add(new JCFLRelationOutputFileNew("Flow3", j.g(), new TupleConverter() {
 			@Override
 			public int[] convert(Edge edge) {
-				String srcString = edge.from.getName().substring(2);
-				String sinkString = edge.to.getName().substring(2);
+				String srcString = edge.from.getName().substring(1);
+				String sinkString = edge.to.getName().substring(1);
 				try {
 					int src = Integer.parseInt(srcString);
 					int sink = Integer.parseInt(sinkString);
@@ -250,7 +250,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		files.add(new JCFLRelationOutputFileNew("LabelRef3", j.g(), new TupleConverter() {
 			@Override
 			public int[] convert(Edge edge) {
-				String srcString = edge.from.getName().substring(2);
+				String srcString = edge.from.getName().substring(1);
 				String[] varStrings = edge.to.getName().substring(1).split("_");
 				try {
 					int src = Integer.parseInt(srcString);
@@ -266,7 +266,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		files.add(new JCFLRelationOutputFileNew("LabelPrim3", j.g(), new TupleConverter() {
 			@Override
 			public int[] convert(Edge edge) {
-				String srcString = edge.from.getName().substring(2);
+				String srcString = edge.from.getName().substring(1);
 				String[] varStrings = edge.to.getName().substring(1).split("_");
 				try {
 					int src = Integer.parseInt(srcString);

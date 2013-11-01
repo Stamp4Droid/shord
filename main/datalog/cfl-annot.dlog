@@ -108,7 +108,7 @@ Label2PrimT(c,l,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelRet(l,m), MmethPrim
 SinkF2RefF(c,l,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelArg(l,m,z), MmethArg(m,z,v).
 SinkF2RefF(c,l,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelRet(l,m), MmethRet(m,_,v).
 # SinkF2PrimF(c,l,v) :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelArg(l,m,z), MmethPrimArg(m,z,v).
-SinkF2PrimF(c,c,v) :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelRet(l,m), MmethPrimRet(m,_,v).
+SinkF2PrimF(c,l,v) :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelRet(l,m), MmethPrimRet(m,_,v).
 
 # Arg-arg transfer
 
