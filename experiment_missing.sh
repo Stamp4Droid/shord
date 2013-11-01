@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo ./stamp analyze ../stamptest/MissingModels/andRoc-rev418.apk
 ./stamp analyze ../stamptest/MissingModels/andRoc-rev418.apk
 echo ./stamp analyze ../stamptest/MissingModels/angulo-1.2.apk
@@ -10,3 +12,4 @@ echo ./stamp analyze ../stamptest/MissingModels/TUIOdroid.apk
 ./stamp analyze ../stamptest/MissingModels/TUIOdroid.apk
 echo ./stamp analyze ../stamptest/MissingModels/yaaic-1.0.apk
 ./stamp analyze ../stamptest/MissingModels/yaaic-1.0.apk
+
