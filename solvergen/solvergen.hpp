@@ -569,42 +569,58 @@ class DerivTable {
 private:
 
     class Record {
-    public:
-	enum class State {UNFORKED, UNREACHED, REACHED, CLOSED};
     private:
 	const std::vector<Derivation> derivs;
-	State state;
+	/**
+	 * Whether all derivation choices for this Edge have been explored.
+	 * Terminal Edge%s and the special @e NULL Record start out frozen,
+	 * non-terminals are frozen after a round of propagation completes.
+	 */
+	bool frozen;
+	/**
+	 * If this is a non-terminal Edge, the derivation that generates the
+	 * shortest path for it. Equal to @e CHOICE_NONE for terminals, the
+	 * special @e NULL Record, and for non-terminal Edge%s not yet reached.
+	 */
 	CHOICE_REF best_choice;
-	// This member's meaning is overloaded, depending on the current state:
-	// - UNFORKED, UNREACHED => strict lower bound
-	// - REACHED => minimum real length found so far
-	// - CLOSED => minimum real length (best_choice doesn't have to be
-	//   != CHOICE_NONE, because this might be a terminal Edge)
+	/**
+	 * The length of the shortest path found for this Edge. Equal to
+	 * @e LENGTH_INF for non-terminal Edge%s not yet reached.
+	 */
 	PATH_LENGTH length;
-	std::list<Edge*> parents;
+	std::set<Edge*> parents;
     private:
 	void check_invariants();
     public:
 	Record(Edge* e);
 	Record(const Record& other) = delete;
 	Record& operator=(const Record& other) = delete;
+	// TODO: Shouldn't have a move constructor if I'm ever going to keep
+	// references to Records.
 	Record(Record&& other);
-	State get_state() const;
+	void freeze();
+	bool is_frozen() const;
+	bool is_reached() const;
 	PATH_LENGTH get_length() const;
 	const Derivation& best_derivation() const;
-	void close();
-	std::set<Edge*> get_children();
-	// what Edges can be used to complete a derivation with this one
-	// can contain NULL, for single productions
+	// Will contain NULL if this Edge contains an empty Derivation.
+	std::set<Edge*> get_children() const;
+	/**
+	 * Calculate the set of Edge%s that can be combined with @a e to
+	 * complete a Derivation for this Edge. Can contain @e NULL, for single
+	 * and empty Production%s.
+	 */
 	std::list<std::pair<CHOICE_REF,Edge*>> completions(Edge* e) const;
-	// TODO: We trust the information that gets passed in.
-	// TODO: Should never get two updates for the same choice.
-	// returns true iff we should add it to the worklist
+	/**
+	 * Returns true iff this was the first (and best) arriving Derivation,
+	 * and caused the Record to be updated.
+	 */
+	// We trust the information that gets passed in. Should never get two
+	// updates for the same choice. The best choice should arrive first.
 	bool update(CHOICE_REF choice, PATH_LENGTH length);
-	// "registers" an Edge to this child's expansion
-	void add_parent(Edge* parent);
-	// clears the parents
-	void get_parents(std::list<Edge*>& ret);
+	/** Returns @e true iff @a parent was not already present. */
+	bool add_parent(Edge* parent);
+	const std::set<Edge*>& get_parents() const;
     };
 
     // TODO: We need to explicitly store the length under which an Edge is
@@ -612,10 +628,13 @@ private:
     // the priority_queue changing in value.
     // TODO: Could perhaps get away with this, because the length of an Edge
     // can only decrease.
+    // TODO: Fields should be const, but then need to write custom copy
+    // assignment.
     struct QueueItem {
-	PATH_LENGTH length;
 	Edge* edge;
-	QueueItem(PATH_LENGTH length, Edge* edge);
+	CHOICE_REF choice;
+	PATH_LENGTH length;
+	QueueItem(Edge* edge, CHOICE_REF choice, PATH_LENGTH length);
 	// To achieve proper ordering, we consider an Edge with a shorter path
 	// to be 'greater'.
 	bool operator<(const QueueItem& other) const;
@@ -625,8 +644,9 @@ private:
     std::map<Edge*,Record> table;
     std::priority_queue<QueueItem> queue;
 private:
+    void fill(Edge* e, Edge* parent, std::set<Edge*>& base_edges);
     void process(const QueueItem& item);
-    void propagate(Edge* child, Record& child_rec);
+    void propagate(Edge* parent, Edge* child, PATH_LENGTH child_len);
     void print_edge(Edge* edge, bool reverse, FILE* f);
 public:
     // Adds Edge and all induced Derivations.
