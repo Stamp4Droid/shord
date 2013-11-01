@@ -28,10 +28,6 @@ echo ./stamp analyze ../stamptest/DarpaApps/1A_ConnectBot
 ./stamp analyze ../stamptest/DarpaApps/1A_ConnectBot
 echo ./stamp analyze ../stamptest/DarpaApps/1A_TextSecure
 ./stamp analyze ../stamptest/DarpaApps/1A_TextSecure
-echo ./stamp analyze ../stamptest/DarpaApps/1B_AndBible
-./stamp analyze ../stamptest/DarpaApps/1B_AndBible
-echo ./stamp analyze ../stamptest/DarpaApps/1B_OpenGPSTracker
-./stamp analyze ../stamptest/DarpaApps/1B_OpenGPSTracker
 echo ./stamp analyze ../stamptest/DarpaApps/1C_tomdroid
 ./stamp analyze ../stamptest/DarpaApps/1C_tomdroid
 echo ./stamp analyze ../stamptest/DarpaApps/2A_GeoTagger
