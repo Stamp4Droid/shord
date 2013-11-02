@@ -96,27 +96,43 @@
 		        var shortsha = sha.substring(0,4);
 		        shortsha += '...';
 		        shortsha += sha.substring(sha.length-5);
+				
+                var app = row.app;
+		        var shortapp = app.substring(0,10);
+		        shortapp += '...';
 
-		        var html =  '<tr><td><a href="#" data-toggle="tooltip" title="'+sha+'">'+ shortsha + '</a></td>' + '<td>' + row.app + '</td>';
+		        var html =  '<tr><td><a href="#" data-toggle="tooltip" title="'+sha+'">'+ shortsha + '</a></td>';
+                html += '<td><a href="#" data-toggle="tooltip" title="'+app+'">' + shortapp + '</td>';
+
                 var flows = row.flows;
                 var numredflows = 0;
                 var numyellowflows = 0;
 		        for (var f in flows) {
                   var flow = flows[f];
-				  if(flow.length > 0) {
-                    var sinkDesc = flow[0];
-                    var icon = iconmap[sinkDesc];
-                    var sinkClass = flow[1];
-		            if(sinkClass == 'OffDevice') {
-                      html += '<td class="danger"><div style="text-align: center;" class="glyphicon '+icon+'"></div></td>';
-                      numredflows++;
+				  if(flow.length > 0) { 
+                    var red = false;
+                    var iconshtml = "";
+		            for (var sink in flow) {
+                      var sinkDesc = flow[sink][0];
+                      var icon = iconmap[sinkDesc];
+                      var sinkClass = flow[sink][1];
+		              if(sinkClass == 'OffDevice') {
+                        iconshtml += '<div style="text-align: center;" class="glyphicon '+icon+'"></div>&nbsp;';  
+                        red = true;
+                      }
+                      else if(sinkClass == 'OnDevice') {
+                        iconshtml += '<div style="text-align: center;" class="glyphicon '+icon+'"></div>&nbsp;';
+                      }
                     }
-                    else if(sinkClass == 'OnDevice') {
-                      html += '<td class="warning"><div style="text-align: center;" class="glyphicon '+icon+'"></div></td>';
-                      numyellowflows++;
-                    }
+                    if(red == true) {
+                       numredflows++;
+                       html += '<td class="danger">'+iconshtml+'</td>';
+                    } else {
+                       numyellowflows++;
+                       html += '<td class="warning">'+iconshtml+'</td>';
+		            }
                   } else 
-                    html += '<td class="success"></td>';
+                     html += '<td class="success"></td>';
 		        }
                 var yellowweight = 0.5;
                 var numflows = yellowweight * numyellowflows + numredflows;
