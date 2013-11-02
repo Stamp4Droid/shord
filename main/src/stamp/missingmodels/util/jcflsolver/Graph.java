@@ -123,8 +123,10 @@ public abstract class Graph {
 		if(kind == this.ptKind) {
 			String ref = from.name.split("_")[0];
 			String obj = to.name;
-			if(!this.typeFilter.contains(ref + "_" + obj)) {
-				return;
+			if(obj.charAt(0) == 'O') {
+				if(!this.typeFilter.contains(ref + "_" + obj)) {
+					return;
+				}
 			}
 		}
 		

@@ -110,10 +110,11 @@ public class ConversionUtils {
 		relations.add("prim2PrimF", new IndexRelation("Prim2PrimF", "U", 1, 0, "U", 2, 0));
 
 		// pt: phantom points
-		//relations.add("pt", new IndexRelation("phpt", "V", 1, 0, "V", 3, 2));
+		relations.add("ptG", new IndexRelation("phpt", "V", 1, 0, "V", 3, 2));
 		
 		// pt: pt, fptArr
-		relations.add("pt", new IndexRelation("pt", "V", 1, 0, "O", 2, null));
+		relations.add("ptG", new IndexRelation("pt", "V", 1, 0, "O", 2, null));
+		relations.add("ptH", new IndexRelation("pt", "V", 1, 0, "O", 2, null));
 		relations.add("fptArr", new IndexRelation("fptArr", "O", 0, null, "O", 1, null));
 		
 		// field: fpt
