@@ -29,7 +29,7 @@ public abstract class Graph {
 	//public Collection<Node> nodes = new ArrayList();
 	public Map<String,Node> nodes = new HashMap<String,Node>();
 
-	private final int ptKind;
+	private int ptKind;
 	private final HashSet<String> typeFilter = new HashSet<String>();
 	
 	public Graph() {
@@ -39,14 +39,19 @@ public abstract class Graph {
 			this.algo = new KnuthsAlgo(this);
 		}
 
-		this.ptKind = this.symbolToKind("Pt");
-		ProgramRel typeFilterRel = (ProgramRel)ClassicProject.g().getTrgt("typeFilter");
-		typeFilterRel.load();
-		Iterable<int[]> res = typeFilterRel.getAryNIntTuples();
+		try {
+			this.ptKind = this.symbolToKind("Pt");
+			ProgramRel typeFilterRel = (ProgramRel)ClassicProject.g().getTrgt("typeFilter");
+			typeFilterRel.load();
+			Iterable<int[]> res = typeFilterRel.getAryNIntTuples();
 		
-		// STEP 2: Iterate over relation and add to the graph.
-		for(int[] tuple : res) {
-			this.typeFilter.add("V" + Integer.toString(tuple[0]) + "_" + "O" + Integer.toString(tuple[1]));
+			// STEP 2: Iterate over relation and add to the graph.
+			for(int[] tuple : res) {
+				this.typeFilter.add("V" + Integer.toString(tuple[0]) + "_" + "O" + Integer.toString(tuple[1]));
+			}
+		} catch(Exception e) {
+			this.ptKind = -1;
+			e.printStackTrace();
 		}
 	}
 

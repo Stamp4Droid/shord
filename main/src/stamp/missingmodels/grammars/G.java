@@ -6,10 +6,6 @@ import stamp.missingmodels.util.jcflsolver.*;
 # CONFIGURATION
 ###################
 
-.output LabelRef3
-.output LabelPrim3
-.output Flow3
-
 .weights ref2RefArgTStub 1
 .weights ref2RefRetTStub 1
 
@@ -148,21 +144,11 @@ Label2Prim :: Label2PrimFldStat[f] _loadStatPrimCtxt[f]
 Label2PrimFld[f] :: Label2Prim _storePrimCtxt[f] ptG
 Label2PrimFldArr :: Label2Prim _storePrimCtxtArr ptG
 Label2PrimFldStat[f] :: Label2Prim _storeStatPrimCtxt[f]
-
-###################
-# RULES: OUTPUT
-###################
-
-LabelRef3 :: Label2Obj _ptG
-LabelPrim3 :: Label2Prim
-Flow3 :: Src2Sink
 */
 
 /* Normalized Grammar:
 %13:
 	%13 :: Label2Prim Prim2RefT
-Flow3:
-	Flow3 :: Src2Sink
 %14:
 	%14 :: Label2PrimFldArr Obj2RefT
 Fpt:
@@ -216,8 +202,6 @@ Label2PrimFldArr:
 	Label2PrimFldArr :: %19 ptG
 Prim2PrimF:
 	Prim2PrimF :: prim2PrimF
-LabelPrim3:
-	LabelPrim3 :: Label2Prim
 SinkF2RefF:
 	SinkF2RefF :: sinkF2RefF
 Obj2PrimT:
@@ -281,8 +265,6 @@ Prim2RefF:
 Label2Obj:
 	Label2Obj :: Label2ObjT
 	Label2Obj :: Label2ObjX
-LabelRef3:
-	LabelRef3 :: Label2Obj _ptG
 */
 
 /* Reverse Productions:
@@ -356,7 +338,6 @@ ptG:
 	_ptG + (Label2PrimFld[i] *) => %17[i]
 	ptG + (%18[i] *) => Label2PrimFld[i]
 	ptG + (%19 *) => Label2PrimFldArr
-	_ptG + (Label2Obj *) => LabelRef3
 src2Label:
 	src2Label + (* Label2Obj) => %9
 	src2Label + (* Label2Prim) => %10
@@ -390,8 +371,6 @@ Label2ObjX:
 	Label2ObjX + (* _ptG) => %16
 storePrimCtxt:
 	_storePrimCtxt[i] + (Label2Prim *) => %18[i]
-Src2Sink:
-	Src2Sink => Flow3
 label2RefT:
 	label2RefT => Label2RefT
 ref2RefRetTStub:
@@ -431,7 +410,6 @@ Label2Prim:
 	Label2Prim + (* _storePrimCtxt[i]) => %18[i]
 	Label2Prim + (* _storePrimCtxtArr) => %19
 	Label2Prim + (* _storeStatPrimCtxt[i]) => Label2PrimFldStat[i]
-	Label2Prim => LabelPrim3
 Obj2RefT:
 	Obj2RefT + (_FptArr *) => Obj2RefT
 	Obj2RefT + (Label2Obj *) => %12
@@ -459,7 +437,6 @@ Label2Obj:
 	Label2Obj + (src2Label *) => %9
 	Label2Obj + (* Obj2RefT) => %12
 	Label2Obj + (* Obj2PrimT) => Label2Prim
-	Label2Obj + (* _ptG) => LabelRef3
 Label2RefT:
 	Label2RefT + (* ptG) => Label2ObjT
 %15:
@@ -528,7 +505,7 @@ public boolean isTerminal(int kind) {
 }
 
 public int numKinds() {
-  return 77;
+  return 74;
 }
 
 public int symbolToKind(String symbol) {
@@ -606,9 +583,6 @@ public int symbolToKind(String symbol) {
   if (symbol.equals("storePrimCtxtArr")) return 71;
   if (symbol.equals("%19")) return 72;
   if (symbol.equals("storeStatPrimCtxt")) return 73;
-  if (symbol.equals("LabelRef3")) return 74;
-  if (symbol.equals("LabelPrim3")) return 75;
-  if (symbol.equals("Flow3")) return 76;
   throw new RuntimeException("Unknown symbol "+symbol);
 }
 
@@ -688,9 +662,6 @@ public String kindToSymbol(int kind) {
   case 71: return "storePrimCtxtArr";
   case 72: return "%19";
   case 73: return "storeStatPrimCtxt";
-  case 74: return "LabelRef3";
-  case 75: return "LabelPrim3";
-  case 76: return "Flow3";
   default: throw new RuntimeException("Unknown kind "+kind);
   }
 }
@@ -904,10 +875,6 @@ public void process(Edge base) {
     for(Edge other : base.from.getInEdges(72)){
       addEdge(other.from, base.to, 58, base, other, false);
     }
-    /* _ptG + (Label2Obj *) => LabelRef3 */
-    for(Edge other : base.to.getInEdges(38)){
-      addEdge(other.from, base.from, 74, base, other, false);
-    }
     break;
   case 28: /* Store */
     /* Store[i] + (_ptG *) => %0[i] */
@@ -1036,10 +1003,6 @@ public void process(Edge base) {
     for(Edge other : base.to.getOutEdges(34)){
       addEdge(base.from, other.to, 42, base, other, false);
     }
-    /* Label2Obj + (* _ptG) => LabelRef3 */
-    for(Edge other : base.to.getInEdges(27)){
-      addEdge(base.from, other.from, 74, base, other, false);
-    }
     break;
   case 39: /* %1 */
     /* %1 + (* _ptG) => %2 */
@@ -1100,8 +1063,6 @@ public void process(Edge base) {
     for(Edge other : base.to.getInEdges(73)){
       addEdge(base.from, other.from, 67, base, other, true);
     }
-    /* Label2Prim => LabelPrim3 */
-    addEdge(base.from, base.to, 75, base, false);
     break;
   case 43: /* %4 */
     /* %4 + (* _Ref2PrimF) => %5 */
@@ -1138,10 +1099,6 @@ public void process(Edge base) {
     for(Edge other : base.to.getInEdges(14)){
       addEdge(base.from, other.from, 45, base, other, false);
     }
-    break;
-  case 49: /* Src2Sink */
-    /* Src2Sink => Flow3 */
-    addEdge(base.from, base.to, 76, base, false);
     break;
   case 50: /* src2Label */
     /* src2Label + (* Label2Obj) => %9 */
@@ -1317,7 +1274,7 @@ public void process(Edge base) {
 }
 
 public String[] outputRels() {
-    String[] rels = {"LabelRef3", "LabelPrim3", "Flow3"};
+    String[] rels = {};
     return rels;
 }
 

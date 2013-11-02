@@ -124,14 +124,37 @@ public class Printer {
 	
 	private static final Set<String> packagePrefices = new HashSet<String>();
 	static {
-		packagePrefices.add("java");
-		packagePrefices.add("javax");
-		packagePrefices.add("android");
-		packagePrefices.add("org.apache");
+		packagePrefices.add("java.io");
+		packagePrefices.add("java.lang");
+		packagePrefices.add("java.net");
+		packagePrefices.add("java.nio");
+		packagePrefices.add("java.util");
+		packagePrefices.add("javax.crypto");
+		packagePrefices.add("android.accounts");
+		packagePrefices.add("android.app");
+		packagePrefices.add("android.contents");
+		packagePrefices.add("android.database");
+		packagePrefices.add("android.hardware");
+		packagePrefices.add("android.location");
+		packagePrefices.add("android.media");
+		packagePrefices.add("android.net");
+		packagePrefices.add("android.nfc");
+		packagePrefices.add("android.opengl");
+		packagePrefices.add("android.os");
+		packagePrefices.add("android.preference");
+		packagePrefices.add("android.provider");
+		packagePrefices.add("android.speech");
+		packagePrefices.add("android.telephony");
+		packagePrefices.add("android.text");
+		packagePrefices.add("android.util");
+		packagePrefices.add("android.view");
+		packagePrefices.add("android.webkit");
+		packagePrefices.add("android.widget");
+		packagePrefices.add("org.apache.http");
 		packagePrefices.add("org.json");
-		packagePrefices.add("org.xmlpull");
+		packagePrefices.add("org.xmlpull.v1");
 		packagePrefices.add("edu.stanford.stamp.harness");
-		packagePrefices.add("com.google");		
+		packagePrefices.add("com.google.android.maps");		
 	}
 	
 	public static boolean isFrameworkClass(SootClass cl) {
