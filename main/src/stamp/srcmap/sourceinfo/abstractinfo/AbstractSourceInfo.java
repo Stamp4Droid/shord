@@ -42,11 +42,10 @@ public abstract class AbstractSourceInfo implements SourceInfo {
 	private Map<String,ClassInfo> classInfos = new HashMap<String,ClassInfo>();
 	private AnonymousClassMap anonymousClassMap;
 	
-	protected Set<String> frameworkClassNames = new HashSet();
+	private static Set<String> frameworkClassNames = new HashSet();
 
 	public AbstractSourceInfo() {		
 		this.anonymousClassMap = new AnonymousClassMap(this);
-		computeFrameworkClassNames();
 	}
 
 	public String javaLocStr(Stmt stmt) {		
@@ -204,12 +203,16 @@ public abstract class AbstractSourceInfo implements SourceInfo {
 		return ((InvkMarker) marker).text();
 	}
 
-	public boolean isFrameworkClass(SootClass klass) {
+	public static boolean isFrameworkClass(SootClass klass) {
+		if(frameworkClassNames == null){
+			computeFrameworkClassNames();
+		}
 		return frameworkClassNames.contains(klass.getName());
 	}
 	
-	private void computeFrameworkClassNames()
+	private static void computeFrameworkClassNames()
 	{
+		frameworkClassNames = new HashSet();
 		try{
 			JarFile androidJar = new JarFile(System.getProperty("stamp.android.jar"));
 			for(Enumeration<JarEntry> e = androidJar.entries(); e.hasMoreElements();){

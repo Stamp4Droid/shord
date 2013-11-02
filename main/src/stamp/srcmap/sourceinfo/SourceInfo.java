@@ -20,13 +20,12 @@ import shord.analyses.ContainerTag;
 import shord.program.Program;
 
 /**
- * @author Saswat Anand 
+ * @author Osbert Bastani
  */
 public interface SourceInfo {
 	public abstract String filePath(SootClass klass);
 	public abstract String javaLocStr(Stmt stmt);
     public abstract String srcClassName(Stmt stmt);
-	public abstract boolean isFrameworkClass(SootClass klass);
 	public abstract int classLineNum(SootClass klass);
     public abstract int methodLineNum(SootMethod meth);
 	public abstract int stmtLineNum(Stmt s);

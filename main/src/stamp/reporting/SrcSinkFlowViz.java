@@ -16,6 +16,8 @@ import shord.analyses.VarNode;
 import shord.program.Program;
 import shord.project.ClassicProject;
 import shord.project.analyses.ProgramRel;
+import stamp.srcmap.sourceinfo.abstractinfo.AbstractSourceInfo;
+
 import soot.SootMethod;
 import soot.Type;
 import soot.Unit;
@@ -222,7 +224,7 @@ public class SrcSinkFlowViz extends XMLVizReport {
         if (t.isRoot(method)) {
             return false;
         }
-        return (this.sourceInfo.isFrameworkClass(method.getDeclaringClass()) && depth == 0);
+        return (AbstractSourceInfo.isFrameworkClass(method.getDeclaringClass()) && depth == 0);
     }
 
     /**
