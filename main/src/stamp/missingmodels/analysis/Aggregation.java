@@ -71,7 +71,7 @@ public class Aggregation {
 		}
 		
 		//run(appNames);
-		int numTrials = 20;
+		int numTrials = 100;
 		double[] averageResult = new double[appNames.size()];
 		for(int i=0; i<numTrials; i++) {
 			double[] result = run(randomize(appNames));
