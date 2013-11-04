@@ -22,6 +22,7 @@ public class ICCG
 
     public String getSignature() {
 
+    //node2 [style=filled, fillcolor=red] 
 	//first dump all the permission info.
         String sig = "digraph G {\n ";
 
@@ -29,12 +30,23 @@ public class ICCG
 	    //if(!"unknown".equals(node.getComptName()) && !"targetNotFound".equals(node.getComptName()) ){
             String nodeName = node.toString();
             String pers = "";
+            String flows = "";
+            String extraStyle = "";
+
             for(String perm : node.getPermission())
                 pers += " \\n " + perm;
 
+            for(String flow : node.getFlow())
+                flows += " \\n " + flow;
+
+            if(!node.getMain())
+                extraStyle += " ,style=filled, fillcolor=red";
+
             nodeName += pers;
+            nodeName += flows;
             //sig += nodeName + "[shape=" + node.getShape()+"];";
-            sig += '\n' + Integer.toString(node.getId()) + "[label=\""+ nodeName + "\", shape=" + node.getShape()+"];";
+            sig += '\n' + Integer.toString(node.getId()) + 
+                "[label=\""+ nodeName + "\", shape=" + node.getShape() + extraStyle+"];";
 
         }
 
@@ -86,6 +98,17 @@ public class ICCG
 
     public void addNode(ICCGNode n) {
         nodes.add(n);
+    }
+
+    public void setFlow(Set<String> flows) {
+        for(String flow : flows){
+            String[] fset = flow.split("@");
+            String comp = fset[0];
+            String src = fset[1];
+            String sink = fset[2];
+            ICCGNode node = getNode(comp);
+            node.addFlow(src.replace("$", "\\$")+"->"+sink.replace("!", "\\!"));
+        }
     }
 
     public ICCGNode getNode(String name) {

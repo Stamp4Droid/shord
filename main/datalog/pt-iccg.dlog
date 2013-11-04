@@ -11,11 +11,12 @@
 .include "H.dom"
 .include "F.dom"
 
-.bddvarorder M0xM1_I0_V0_C0xC1_H0_F0_T0_T1
+.bddvarorder M0xM1_I0_V0_C0xC1_H0_F0_T0_T1_T2
 
 MI(m:M,i:I) input         # stmt i belongs to method m.
 MC(m:M,c:T) input         # m is a method declared in a
 CM(c:C,m:M) input         # c is a context of method m.
+TargetHT(h:H,t:T) input   # StringConst corresponds to target of type t.
 
 CH(o:C,h:H) input         # context’ified abstract location o corresponds to new stmt h
 
@@ -27,20 +28,40 @@ pt(c:C,v:V,o:C)    input  # in context c, v points to o.
 fpt(o1:C,f:F,o2:C) input
 CICM(d:C,i:I,c:C,m:M)   input  # i in cotext d calls method m in context c.
 
+IntentAlloc(h:H,s:T) 
+
 CallerComp(m:M,c:C,o:T)   output  # m is a method declared in c
-ICCG(s:T,t:H)  output
-ICCGImp(s:T,t:T)  output
+ICCG(s:T,t:T)  output
+#ICCGImp(s:T,t:T)  output
+
+ReachableComp(s:T,t:T)           # t is the node that can be reached by s.
+ConjunctSet(s:T,t:T,u:T)  output # u is the node that can be reached by both s and t.
 
 ###################
 #    RULES
 ###################
 
+IntentAlloc(h,s) :- CallerComp(_,k,s), CH(k,h).
 
 CallerComp(m,k,c) :- MC(m,c), CM(k,m).
 CallerComp(m2,k2,c) :- CallerComp(m1,k1,c), MI(m1,i), CICM(k1,i,k2,m2).
 
 #explicit intent
-ICCG(s,h) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), IntentTgtField(f), fpt(o,f,c), CH(c,h).
+#ICCG(s,h) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), CH(o,h2), IntentAlloc(h2,s), IntentTgtField(f), fpt(o,f,c), CH(c,h).
 #implicit intent
-ICCGImp(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), ActionField(f), TgtAction(t,h), fpt(o,f,c), CH(c,h).
+#ICCGImp(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o),CH(o,h2), IntentAlloc(h2,s), ActionField(f), TgtAction(t,h), fpt(o,f,c), CH(c,h).
+
+
+
+#explicit intent
+ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), CH(o,h2), IntentAlloc(h2,s), IntentTgtField(f), fpt(o,f,c), CH(c,h), TargetHT(h,t).
+#implicit intent
+ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o),CH(o,h2), IntentAlloc(h2,s), ActionField(f), TgtAction(t,h), fpt(o,f,c), CH(c,h).
+
+
+#no self-loop
+ReachableComp(s,t) :- ICCG(s,t), s!=t.  
+ReachableComp(s,t) :- ReachableComp(s,m), ReachableComp(m,t). 
+
+ConjunctSet(s,t,u) :- ReachableComp(s,u), ReachableComp(t,u), ReachableComp(s,t), s!=t, u!=t.
 

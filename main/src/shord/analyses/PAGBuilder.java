@@ -82,7 +82,7 @@ import java.util.*;
 				 "SpecIM", "StatIM",
 				 "VirtIM", "SubSig",
 				 "Dispatch", "Launch", 
-                 "classT", 
+                 "classT", "TargetHT", 
                  "sub", "staticTM", 
                  "staticTF", "clinitTM",
 				 "VH", "TgtAction",
@@ -106,7 +106,7 @@ import java.util.*;
                         "SpecIM", "StatIM",
                         "VirtIM", "SubSig",
 						"Dispatch", "Launch", 
-                        "classT", 
+                        "classT", "TargetHT",
                         "sub", "staticTM", 
                         "staticTF", "clinitTM",
 						"VH", "TgtAction",
@@ -128,7 +128,7 @@ import java.util.*;
 				 "I0,M0:I0_M0", "I0,M0:I0_M0",
 				 "I0,M0:I0_M0", "M0,S0:M0_S0",
 				 "T0,S0,M0:T0_S0_M0", "V0,M0:V0_M0", 
-                 "T0:T0",
+                 "T0:T0", "H0,T0:H0_T0",
                  "T0,T1:T0_T1", "T0,M0:T0_M0",
                  "T0,F0:T0_F0", "T0,M0:T0_M0",
 				 "V0,H0:V0_H0", "T0,H0:T0_H0",
@@ -167,6 +167,7 @@ public class PAGBuilder extends JavaAnalysis
 	private ProgramRel relLaunch;//(v:V,m:M)
 	private ProgramRel relVH;//(v:V,h:H)
 	private ProgramRel relTgtAction;//(v:V,h:H)
+	private ProgramRel relTargetHT;//(h:H,t:T)
 
     private ProgramRel relClassT;//(t:T)
     private ProgramRel relSub;//(s:T,t:T)
@@ -269,6 +270,8 @@ public class PAGBuilder extends JavaAnalysis
 		relVH.zero();
 		relTgtAction = (ProgramRel) ClassicProject.g().getTrgt("TgtAction");
 		relTgtAction.zero();
+		relTargetHT= (ProgramRel) ClassicProject.g().getTrgt("TargetHT");
+		relTargetHT.zero();
 
         relClassT = (ProgramRel) ClassicProject.g().getTrgt("classT");
         relClassT.zero();
@@ -323,6 +326,7 @@ public class PAGBuilder extends JavaAnalysis
 		relLaunch.save();
 		relVH.save();
 		relTgtAction.save();
+		relTargetHT.save();
 
         relClassT.save();
         relSub.save();
@@ -616,13 +620,12 @@ public class PAGBuilder extends JavaAnalysis
 							StringConstNode n = new StringConstNode(s);
 							domH.add(n);
 							unit2Node.put(s, n);
-                            System.out.println("whatiput..." + s + "||||" + n);
 						}else if(str.matches("[a-zA-Z]+\\.[a-zA-Z]+.*")){//end with uppercase word.
 						//if(str.matches("android.intent.action.*|android.provider.*|.*[A-Z]+$")){
 							StringConstNode n = new StringConstNode(s);
 							domH.add(n);
 							unit2Node.put(s, n);
-							//sava for targetAction rel.
+							//save for targetAction rel.
 							action2Node.put(str, n);
 						}
 					}
@@ -906,6 +909,12 @@ public class PAGBuilder extends JavaAnalysis
 				if(rightOp instanceof StringConstant) {
 					String str = ((StringConstant)rightOp).value;
 					if(ICCGBuilder.components.get(str.replaceAll("/",".")) != null){
+                        if(Scene.v().containsClass(str)){
+		                    DomT domT = (DomT) ClassicProject.g().getTrgt("T");
+                            SootClass sc = Scene.v().getSootClass(str);
+                            int tIdx = domT.indexOf(sc.getType());
+                            relTargetHT.add(unit2Node.get(s), domT.get(tIdx));
+                        }
 						relVH.add(nodeFor((Local) leftOp), unit2Node.get(s));
 						Alloc(nodeFor((Local) leftOp), unit2Node.get(s));
 					}

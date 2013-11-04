@@ -65,6 +65,7 @@ import org.w3c.dom.Element;
   * Search for implicit intent.
   **/
 
+/*
 @Chord(name="post-java-iccg",
        //consumes={ "CallerComp", "CICM" },
        consumes={ "CallerComp", "CICM", "depComp" },
@@ -73,6 +74,11 @@ import org.w3c.dom.Element;
        namesOfSigns = { "CalledComp", "CICM", "ICCG", "ICCGImp" },
        signs = { "M0,C0,T0:M0_C0_T0", "C0,I0,C1,M0:C0_I0_C1_M0", "T0,H0:T0_H0", "T0,T1:T0_T1" }
        )
+*/
+@Chord(name="post-java-iccg",
+       consumes={ "CallerComp", "CICM", "depComp", "CT", "flow"}
+       )
+
 public class PostIccgBuilder extends JavaAnalysis
 {
 
@@ -184,6 +190,72 @@ public class PostIccgBuilder extends JavaAnalysis
 		relCallerComp.close();
 	}
 
+    //locate extraneous components.
+   	void findExtra(ICCG ig)
+	{
+		ProgramRel relConjunctSet = (ProgramRel) ClassicProject.g().getTrgt("ConjunctSet");
+		relConjunctSet.load();
+
+        Set<String> mainSet = new HashSet<String>();
+        Set<String> reachSet = new HashSet<String>();
+        Iterator iter = ICCGBuilder.components.entrySet().iterator();
+        String pkgName = ICCGBuilder.pkgName;
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            String key = (String)entry.getKey();
+            XmlNode val = (XmlNode)entry.getValue();
+            String nodeName = val.getName();
+            if(nodeName.indexOf(".") == 0) nodeName = pkgName +  nodeName;
+            if(nodeName.indexOf(".") == -1) nodeName = pkgName + "." +  nodeName;
+            if(val.getMain()) mainSet.add(nodeName);
+        }
+
+        //First, pick up the main components from AndroidManifest.xml.
+		Iterable<Trio<RefType,RefType,RefType>> res = relConjunctSet.getAry3ValTuples();
+		for(Trio<RefType, RefType, RefType> trio: res) {
+            //Second,
+			RefType src = trio.val0;
+			RefType tgt = trio.val1;
+            String srcStr = src.getClassName();
+            String tgtStr = tgt.getClassName();
+            if(mainSet.contains(srcStr)){
+                reachSet.add(tgtStr);
+            }
+           /* else if(mainSet.contains(tgtStr)) {
+                reachSet.add(srcStr);
+            }*/
+		}
+        mainSet.addAll(reachSet);
+
+    	ProgramRel relICCG = (ProgramRel) ClassicProject.g().getTrgt("ICCG");
+		relICCG.load();
+
+		Iterable<Pair<RefType,RefType>> reachRes = relICCG.getAry2ValTuples();
+		for(Pair<RefType, RefType> pair: reachRes) {
+			RefType src = pair.val0;
+			RefType tgt = pair.val1;
+            String srcStr = src.getClassName();
+            String tgtStr = tgt.getClassName();
+            if(!mainSet.contains(srcStr) && mainSet.contains(tgtStr)){
+                mainSet.remove(tgtStr);
+            }
+		}
+    
+
+
+        System.out.println("MainSet....." + mainSet);
+        for(String mainNode : mainSet){
+            ICCGNode mNode = ig.getNode(mainNode);
+            mNode.setMain(true);
+        }
+
+		relICCG.close();
+		relConjunctSet.close();
+	}
+
+
+
+
     //dump out ICCG.
     public void dump() {
 	    ICCG iccg = new ICCG();
@@ -218,10 +290,10 @@ public class PostIccgBuilder extends JavaAnalysis
 
         ProgramRel relICCG = (ProgramRel) ClassicProject.g().getTrgt("ICCG");
 		relICCG.load();
-        ProgramRel relICCGImp = (ProgramRel) ClassicProject.g().getTrgt("ICCGImp");
-		relICCGImp.load();
+        //ProgramRel relICCGImp = (ProgramRel) ClassicProject.g().getTrgt("ICCGImp");
+		//relICCGImp.load();
 
-		Iterable<Pair<Object,Object>> res1 = relICCG.getAry2ValTuples();
+		/*Iterable<Pair<Object,Object>> res1 = relICCG.getAry2ValTuples();
 		for(Pair<Object,Object> pair : res1) {
             if(!(pair.val1 instanceof StringConstNode)) continue;
 			RefType t  = (RefType)pair.val0;
@@ -234,9 +306,9 @@ public class PostIccgBuilder extends JavaAnalysis
             iccgEdge.setSrc(srcNode);
             iccg.addEdge(iccgEdge);
 
-		}
+		}*/
 
-		Iterable<Pair<Object,Object>> res2 = relICCGImp.getAry2ValTuples();
+		Iterable<Pair<Object,Object>> res2 = relICCG.getAry2ValTuples();
 		for(Pair<Object,Object> pair : res2) {
 			RefType t  = (RefType)pair.val0;
 			RefType s = (RefType)pair.val1;
@@ -252,8 +324,10 @@ public class PostIccgBuilder extends JavaAnalysis
 
 
 		relICCG.close();
-		relICCGImp.close();
+		//relICCGImp.close();
+        findExtra(iccg);
         genPermission(iccg);
+        plotFlow2Comp(iccg);
 		//System.out.println(iccg.getSignature());
         PrintWriter out = OutDirUtils.newPrintWriter(dotFilePath);
         out.println(iccg.getSignature());
@@ -296,7 +370,7 @@ public class PostIccgBuilder extends JavaAnalysis
 		parsePermission();
         dump();
         compDepend();
-        genGraph();
+        //genGraph();
 	}
     
     public void genGraph() 
@@ -460,6 +534,45 @@ public class PostIccgBuilder extends JavaAnalysis
 		}
 
 	}
+
+    
+    private void plotFlow2Comp(ICCG ig)
+    {
+        final ProgramRel relCtxtFlows = (ProgramRel)ClassicProject.g().getTrgt("flow");
+        final ProgramRel relCT = (ProgramRel)ClassicProject.g().getTrgt("CT");
+
+        relCtxtFlows.load();
+        relCT.load();
+        Set<String> flowSet = new HashSet<String>();
+        Iterable<Pair<Pair<String,Ctxt>,Pair<String,Ctxt>>> res = relCtxtFlows.getAry2ValTuples();
+        for(Pair<Pair<String,Ctxt>,Pair<String,Ctxt>> pair : res) {
+            String source = pair.val0.val0;
+            Ctxt srcCtxt = pair.val0.val1;
+            String sink = pair.val1.val0;
+            Ctxt sinkCtxt = pair.val1.val1;
+            //we should consider webview.
+            if(source.contains("getExtras") || sink.contains("Activity") 
+              || sink.contains("Broadcast") || sink.contains("LOG")) continue;
+
+            //for each end-2-end flow.
+            Iterable<Pair<Ctxt,Type>> resCT = relCT.getAry2ValTuples();
+            for(Pair<Ctxt,Type> ctPair : resCT) {
+                //assume that src&sink are in the same component.
+                Ctxt ctxt = ctPair.val0;
+                RefType comp = (RefType)ctPair.val1;
+                //if(ctxt.equals(srcCtxt) || ctxt.equals(sinkCtxt))
+                if(ctxt.equals(sinkCtxt))
+                    flowSet.add(comp.getClassName()+"@"+source+"@"+sink);
+
+            }
+        
+         }
+
+        ig.setFlow(flowSet);
+	    relCT.close();
+	    relCtxtFlows.close();
+
+    }
 
     private String parseStr(String str)
     {

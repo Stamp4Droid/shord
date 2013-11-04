@@ -31,6 +31,16 @@ public class ICCGNode
         id = cnt;
     }
 
+    private Set<String> flowSet = new HashSet<String>();
+
+    public void addFlow(String flow) {
+        flowSet.add(flow);
+    }
+
+    public Set<String> getFlow() {
+        return flowSet;
+    }
+
     public String getComptName() {
 
         return comptName;
@@ -108,7 +118,7 @@ public class ICCGNode
 
     public String toString() {
         String str = comptName;
-        if("unknown".equals(comptName) || "targetNotFound".equals(comptName)) return comptName;
+        /*if("unknown".equals(comptName) || "targetNotFound".equals(comptName)) return comptName;
 
         if (str.contains("$"))
             str = str.substring(0, str.indexOf("$"));
@@ -121,7 +131,8 @@ public class ICCGNode
         if( intentFilter!=null && type.equals("receiver") && !"".equals(intentFilter))
             return str + "_" + intentFilter.replaceAll("\\.","") +"_" + type; 
 
-        return str + "_" + type; 
+        return str + "_" + type; */
+        return str.replaceAll("\\/", ".");
     }
 
     public boolean equals(ICCGNode obj) 

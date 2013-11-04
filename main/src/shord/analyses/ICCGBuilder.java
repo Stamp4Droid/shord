@@ -161,7 +161,7 @@ public class ICCGBuilder extends JavaAnalysis
         File manifestFile = new File(manifestDir, "AndroidManifest.xml");
         ParseManifest pmf = new ParseManifest();
         pmf.extractComponents(manifestFile, components);
-	pkgName = pmf.getPkgName();
+	    pkgName = pmf.getPkgName();
     }
 
 
