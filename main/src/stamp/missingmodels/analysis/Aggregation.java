@@ -17,7 +17,7 @@ import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetInputFile;
 
 
 public class Aggregation {
-	private static String rootPath = "experiment1_results";
+	private static String rootPath = "experiment2_results";
 	private static MultivalueMap<String,StubModel> stubModelsByApp = new MultivalueMap<String,StubModel>();
 	private static Random random = new Random();
 	
