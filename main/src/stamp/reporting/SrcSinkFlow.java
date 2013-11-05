@@ -48,7 +48,8 @@ public class SrcSinkFlow extends XMLReport {
 	//Note: As of 7.9.2013, the first block below is used for non-jcfl stuff. The second block is
 	//required instead for Osbert's JCFL flow stuff. They are mutually exclusive.
 
-	for(Pair<String,String> pair : relFlows.getAry2ValTuples()) {
+	Iterable<Pair<String,String>> res = relFlows.getAry2ValTuples();
+	for(Pair<String,String> pair : res) {
 	    String source = pair.val0;
 	    String sink = pair.val1;
 		newTuple()

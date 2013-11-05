@@ -12,7 +12,7 @@
 .include "L.dom"
 .include "CL.dom"
 
-.bddvarorder Z0_M0_C0_V0_U0_I0_L0_CL0
+.bddvarorder Z0_M0_C0_V0_U0_I0_L0xL1_CL0xCL1
 
 ## INPUT RELATIONS ============================================================
 
@@ -64,7 +64,7 @@ out_taintedStub(m:M) output
 out_reachableM(m) :- CM(_,m).
 
 out_taintedRefVar(l,v)  :- labelRef(_,v,cl), LCL(l,cl).
-out_taintedPrimVar(l,v) :- labelPrim(_,u,cl), LCL(l,cl).
+out_taintedPrimVar(l,u) :- labelPrim(_,u,cl), LCL(l,cl).
 out_flow(src,sink)      :- flow(c_src,c_sink), LCL(src,c_src), LCL(sink,c_sink).
 
 out_taintSrc(l,m) :- chaIM(_,m), InLabelRet(l,m), SrcLabel(l).
