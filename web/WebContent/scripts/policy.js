@@ -68,7 +68,12 @@ $(function () {
                 rules.push(rule);
             }
         });
-        console.log(rules);
+        
+        $.post("/stamp/policyServlet", rules.toString(), function(data) {
+            var date = new Date();
+            var timestr = date.getHours()+':'+date.getMinutes();
+            $('#policy_save_status').html('<i>Policy Saved at '+timestr+'</i>');
+        });
     });
 
     $('#src-sink-table .icon-remove').click(function () {
