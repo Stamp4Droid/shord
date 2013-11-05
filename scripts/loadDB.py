@@ -51,7 +51,7 @@ def connectPolicyTable(path):
 def createPolicyTable(path):
     conn = connectPolicyTable(path)
     cursor = conn.cursor()
-    cursor.execute("""CREATE TABLE if not exists policies(policyKey INTEGER PRIMARY KEY AUTOINCREMENT, active INT, sourceName TEXT, sourceParamRaw TEXT, sinkName TEXT, sinkParamRaw TEXT, created TIMESTAMP, modified DATETIME DEFAULT CURRENT_TIMESTAMP)""");
+    cursor.execute("""CREATE TABLE if not exists policies(policyKey INTEGER PRIMARY KEY AUTOINCREMENT, policyName TEXT, active INT, sourceName TEXT, sourceParamRaw TEXT, sinkName TEXT, sinkParamRaw TEXT, created TIMESTAMP, modified DATETIME DEFAULT CURRENT_TIMESTAMP)""");
     return conn
 
 def insertPolicyTable(conn, data):
@@ -60,8 +60,8 @@ def insertPolicyTable(conn, data):
     if not data:
         return False 
         
-    insertData = [(x[0],x[1],x[2],x[3],x[4]) for x in data]
-    cursor.executemany("INSERT INTO policies(active,sourceName,sourceParamRaw,sinkName,sinkParamRaw,created) VALUES(?,?,?,?,?,CURRENT_TIMESTAMP)", insertData)
+    insertData = [(x[0],x[1],x[2],x[3],x[4],x[5]) for x in data]
+    cursor.executemany("INSERT INTO policies(policyName,active,sourceName,sourceParamRaw,sinkName,sinkParamRaw,created) VALUES(?,?,?,?,?,?,CURRENT_TIMESTAMP)", insertData)
     conn.commit()
 
 '''End Policy DB managment functions'''
