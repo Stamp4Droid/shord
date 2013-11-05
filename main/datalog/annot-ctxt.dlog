@@ -1,0 +1,60 @@
+# Contextification of annotation facts
+
+# CONFIGURATION ===============================================================
+
+# name=annot-ctxt-dlog
+
+.include "Z.dom"
+.include "M.dom"
+.include "C.dom"
+.include "V.dom"
+.include "U.dom"
+.include "L.dom"
+.include "CL.dom"
+
+.bddvarorder L0_Z0xZ1_M0_CL0_C0_V0xV1_U0xU1
+
+# INPUT RELATIONS =============================================================
+
+MmethArg(m:M,z:Z,v:V)     input
+MmethRet(m:M,z:Z,v:V)     input
+MmethPrimArg(m:M,z:Z,u:U) input
+MmethPrimRet(m:M,z:Z,u:U) input
+
+CM(c:C,m:M) input
+
+InLabelRet(l:L,m:M)      input
+InLabelArg(l:L,m:M,z:Z)  input
+OutLabelRet(l:L,m:M)     input
+OutLabelArg(l:L,m:M,z:Z) input
+
+SrcLabel(l:L)  input
+SinkLabel(l:L) input
+CCL(c:C,cl:CL) input
+LCL(l:L,cl:CL) input
+
+# OUTPUT RELATIONS ============================================================
+
+srcCtxtLabel(l:CL)  output
+sinkCtxtLabel(l:CL) output
+
+varInLabel(c:C,v:V,l:CL)      output
+varOutLabel(c:C,v:V,l:CL)     output
+varInLabelPrim(c:C,u:U,l:CL)  output
+varOutLabelPrim(c:C,u:U,l:CL) output
+
+# RULES =======================================================================
+
+srcCtxtLabel(cl)  :- LCL(l,cl), SrcLabel(l).
+sinkCtxtLabel(cl) :- LCL(l,cl), SinkLabel(l).
+
+varInLabel(c,v,cl)      :- CCL(c,cl), LCL(l,cl), InLabelRet(l,m), MmethRet(m,_,v), CM(c,m).
+varInLabel(c,v,cl)      :- CCL(c,cl), LCL(l,cl), InLabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).
+varOutLabel(c,v,cl)     :- CCL(c,cl), LCL(l,cl), OutLabelRet(l,m), MmethRet(m,_,v), CM(c,m).
+varOutLabel(c,v,cl)     :- CCL(c,cl), LCL(l,cl), OutLabelArg(l,m,z), MmethArg(m,z,v), CM(c,m).
+
+varInLabelPrim(c,u,cl)  :- CCL(c,cl), LCL(l,cl), InLabelRet(l,m), MmethPrimRet(m,_,u), CM(c,m).
+# Pass-by-value semantics means that we could never introduce a taint label to
+# a primitive-type argument, so we don't need to consider InLabelArg here.
+varOutLabelPrim(c,u,cl) :- CCL(c,cl), LCL(l,cl), OutLabelRet(l,m), MmethPrimRet(m,_,u), CM(c,m).
+varOutLabelPrim(c,u,cl) :- CCL(c,cl), LCL(l,cl), OutLabelArg(l,m,z), MmethPrimArg(m,z,u), CM(c,m).

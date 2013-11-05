@@ -27,10 +27,10 @@ public class SrcSinkFlow extends XMLReport {
     }
 
     public void generate() {
-	final ProgramRel relCtxtFlows = (ProgramRel)ClassicProject.g().getTrgt("flow");
+	final ProgramRel relFlows = (ProgramRel)ClassicProject.g().getTrgt("out_flow");
 	//final ProgramRel relSrcSinkFlow = (ProgramRel)ClassicProject.g().getTrgt("JSrcSinkFlow");
 
-	relCtxtFlows.load();
+	relFlows.load();
 
 	/*
 	Iterable<Trio<String,String,Integer>> res = relSrcSinkFlow.getAry3ValTuples();
@@ -48,32 +48,29 @@ public class SrcSinkFlow extends XMLReport {
 	//Note: As of 7.9.2013, the first block below is used for non-jcfl stuff. The second block is
 	//required instead for Osbert's JCFL flow stuff. They are mutually exclusive.
 
+	for(Pair<String,String> pair : relFlows.getAry2ValTuples()) {
+	    String source = pair.val0;
+	    String sink = pair.val1;
+		newTuple()
+			.addValue(source)
+			.addValue(sink);
 
-	Iterable<Pair<Pair<String,Ctxt>,Pair<String,Ctxt>>> res = relCtxtFlows.getAry2ValTuples();
-	int count = 0;
-	for(Pair<Pair<String,Ctxt>,Pair<String,Ctxt>> pair : res) {
-		count++;
-	    String source = pair.val0.val0;
-		Ctxt sourceCtxt = pair.val0.val1;
-	    String sink = pair.val1.val0;
-		Ctxt sinkCtxt = pair.val1.val1;
-
-		if(Postmortem.processingSrc){
-			newTuple()
-				.addValue(source)
-				.addValue(sink);
-		} else {
-			Category flowCat = makeOrGetSubCat(source + " -> " + sink);
-			Category ctxtFlowCat = flowCat.makeOrGetSubCat("Flow "+count);
-			Tuple srcTuple = ctxtFlowCat.newTuple();//makeOrGetSubCat("context");
-			srcTuple.setAttr("source", source);
-			for(Unit unit : sourceCtxt.getElems())
-				srcTuple.addValue(Program.unitToString(unit));
-			Tuple sinkTuple = ctxtFlowCat.newTuple();//makeOrGetSubCat(sink).makeOrGetSubCat("context");
-			sinkTuple.setAttr("sink", sink);
-			for(Unit unit : sinkCtxt.getElems())
-				sinkTuple.addValue(Program.unitToString(unit));
-		}
+		// if(Postmortem.processingSrc){
+		// 	newTuple()
+		// 		.addValue(source)
+		// 		.addValue(sink);
+		// } else {
+		// 	Category flowCat = makeOrGetSubCat(source + " -> " + sink);
+		// 	Category ctxtFlowCat = flowCat.makeOrGetSubCat("Flow "+count);
+		// 	Tuple srcTuple = ctxtFlowCat.newTuple();//makeOrGetSubCat("context");
+		// 	srcTuple.setAttr("source", source);
+		// 	for(Unit unit : sourceCtxt.getElems())
+		// 		srcTuple.addValue(Program.unitToString(unit));
+		// 	Tuple sinkTuple = ctxtFlowCat.newTuple();//makeOrGetSubCat(sink).makeOrGetSubCat("context");
+		// 	sinkTuple.setAttr("sink", sink);
+		// 	for(Unit unit : sinkCtxt.getElems())
+		// 		sinkTuple.addValue(Program.unitToString(unit));
+		// }
 	}
 
 	/*
@@ -118,7 +115,7 @@ public class SrcSinkFlow extends XMLReport {
 	}
     */
 
-	relCtxtFlows.close();
+	relFlows.close();
 
     }
 }
