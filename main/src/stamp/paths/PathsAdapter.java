@@ -17,13 +17,11 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Schema;
 import org.xml.sax.SAXException;
 
-import shord.analyses.Ctxt;
-import shord.analyses.DomC;
 import shord.analyses.DomI;
 import shord.analyses.DomF;
 import shord.analyses.DomV;
 import shord.analyses.DomU;
-import stamp.analyses.DomCL;
+import stamp.analyses.DomL;
 import stamp.paths.raw.BaseStep;
 import stamp.paths.raw.NonTerminalStep;
 import stamp.paths.raw.ObjectFactory;
@@ -171,16 +169,8 @@ public class PathsAdapter {
 			int i = ((stamp.paths.raw.ReturnStep) s).getIndex().intValue();
 			return new ReturnStep(reverse, tgtPoint,
 								  ((DomI) doms.get("I")).get(i));
-		} else if (s instanceof stamp.paths.raw.CtxtCrossingStep) {
-			int c =
-				((stamp.paths.raw.CtxtCrossingStep) s).getIndex().intValue();
-			return new CtxtCrossingStep(reverse, tgtPoint,
-										((DomC) doms.get("C")).get(c));
-		} else if (s instanceof stamp.paths.raw.CtxtSettingStep) {
-			int c =
-				((stamp.paths.raw.CtxtSettingStep) s).getIndex().intValue();
-			return new CtxtSettingStep(reverse, tgtPoint,
-									   ((DomC) doms.get("C")).get(c));
+		} else if (s instanceof stamp.paths.raw.StackCrossingStep) {
+			return new StackCrossingStep(reverse, tgtPoint);
 		}
 
 		// Shouldn't reach here.
@@ -298,14 +288,13 @@ public class PathsAdapter {
 			return new VarPoint(((DomU) doms.get("U")).get(u));
 		case 'o':
 			int o = getSingleDomIndex(rawNode);
-			return new CtxtObjPoint(((DomC) doms.get("C")).get(o));
+			return new ObjPoint(((DomI) doms.get("I")).get(o));
 		case 'f':
 			int f = getSingleDomIndex(rawNode);
 			return new StatFldPoint(((DomF) doms.get("F")).get(f));
 		case 'l':
-			int cl = getSingleDomIndex(rawNode);
-			Pair<String,Ctxt> ctxtLabel = ((DomCL) doms.get("CL")).get(cl);
-			return new CtxtLabelPoint(ctxtLabel.val1, ctxtLabel.val0);
+			int l = getSingleDomIndex(rawNode);
+			return new LabelPoint(((DomL) doms.get("L")).get(l));
 		default:
 			throw new TranslationException("Invalid node name: " + rawNode);
 		}

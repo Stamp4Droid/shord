@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import stamp.paths.CallStep;
-import stamp.paths.CtxtCrossingStep;
-import stamp.paths.CtxtLabelPoint;
-import stamp.paths.CtxtObjPoint;
-import stamp.paths.CtxtPoint;
-import stamp.paths.CtxtSettingStep;
+import stamp.paths.StackCrossingStep;
+import stamp.paths.LabelPoint;
+import stamp.paths.ObjPoint;
 import stamp.paths.Path;
 import stamp.paths.PathsAdapter;
 import stamp.paths.Point;
@@ -20,7 +18,6 @@ import stamp.paths.VarPoint;
 import stamp.util.PropertyHelper;
 
 import chord.project.Chord;
-import shord.analyses.Ctxt;
 import shord.project.analyses.JavaAnalysis;
 import soot.Unit;
 
@@ -50,7 +47,7 @@ public class PathsPrinterAnalysis extends JavaAnalysis {
 
 			for (Path p : paths) {
 				int breaks = 0;
-				initStack(getElems(p.start));
+				initStack(new Unit[0]);
 				pw.println(p.start + " --> " + p.end);
 				for (Step s : p.steps) {
 					if (!recordStep(s)) {
@@ -119,31 +116,10 @@ public class PathsPrinterAnalysis extends JavaAnalysis {
 					stack.remove(0);
 				}
 			}
-		} else if (step instanceof CtxtCrossingStep) {
-			// When this step was followed, it altered the depth of the stack
-			// that the solver could see, but that shouldn't create a stack
-			// break, i.e. the context it carries should be compatible with the
-			// current view of the stack.
-			Unit[] elems = ((CtxtCrossingStep) step).ctxt.getElems();
-			matched = matchStack(elems, 0);
-		} else if (step instanceof CtxtSettingStep) {
+		} else if (step instanceof StackCrossingStep) {
 			// When the solver followed the underlying edge for this step, it
 			// completely switched contexts.
-			Unit[] elems = ((CtxtSettingStep) step).ctxt.getElems();
-			if (step.reverse) {
-				// This step set the context at its target node, which
-				// corresponds to the point we're currently on (since this step
-				// is traversed in reverse). Therefore, the context on the step
-				// should be compatible with the one on the current point.
-				matched = matchStack(elems, 0);
-				// The context from which this edge originated could be
-				// arbitrary, so we need to reset our view of the stack.
-				elemsToSet = new Unit[0];
-			} else {
-				// We're moving to a new context, entirely dictated by the
-				// context on this step.
-				elemsToSet = elems;
-			}
+			elemsToSet = new Unit[0];
 		} else {
 			// All other steps do not affect the context.
 			return true;
@@ -158,21 +134,7 @@ public class PathsPrinterAnalysis extends JavaAnalysis {
 		return matched;
 	}
 
-	private Unit[] getElems(Point p) {
-		if (p instanceof CtxtPoint) {
-			return ((CtxtPoint) p).getElems();
-		} else {
-			// The other kinds of points carry no context information.
-			return new Unit[0];
-		}
-	}
-
 	private boolean recordTarget(Point target) {
-		Unit[] elems = getElems(target);
-		if (!matchStack(elems, 0)) {
-			initStack(elems);
-			return false;
-		}
 		return true;
 	}
 

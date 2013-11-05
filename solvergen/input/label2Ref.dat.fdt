@@ -1,1 +1,1 @@
-@DUMP:varInLabel(%C,%V,%L):l%L v%V %C@
+@DUMP:InLabel(%V,%L):l%L v%V@
