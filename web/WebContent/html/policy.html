@@ -244,52 +244,6 @@
                 <script src="../fileupload/jquery.fileupload.js"></script>
                 <script src="../scripts/processMsg.js"></script>
                 <script src="../scripts/policy.js"></script>
-                <script>
-                    $(function() {
-
-                        'use strict';
-
-                        $.ajax({
-                            type: "GET",
-                            url: "/stamp/policyServlet",
-                            data: {
-                                annot: "Sources"
-                            },
-                            dataType: "xml",
-                            success: function(xml) {
-                                var seen = [];
-                                $(xml).find('src').each(function() {
-                                    var d = $(this).attr("desc");
-                                    if (jQuery.inArray(d, seen) < 0) {
-                                        seen.push(d);
-                                        $("#src-drop-down").append('<li><a href="#">' + d + '</a></li>');
-                                    }
-                                });
-                            }
-                        });
-
-                        $.ajax({
-                            type: "GET",
-                            url: "/stamp/policyServlet",
-                            data: {
-                                annot: "Sinks"
-                            },
-                            dataType: "xml",
-                            success: function(xml) {
-                                var seen = [];
-                                $(xml).find('sink').each(function() {
-                                    var d = $(this).attr("desc");
-                                    if ($.inArray(d, seen) < 0) {
-                                        seen.push(d);
-                                        $("#sink-drop-down").append('<li><a href="#">' + d + '</a></li>');
-                                    }
-                                });
-                            }
-                        });
-                        var ws = new WebSocket("ws://localhost:8080/stamp/pushupdates");
-                        ws.onmessage = processMessage;
-                    });
-                </script>
             </div>
         </div>
     </body>

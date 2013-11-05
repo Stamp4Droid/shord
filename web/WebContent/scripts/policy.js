@@ -58,15 +58,4 @@ $(function () {
         $(this).parent().parent().remove();
         
     });
-    
-    function reportFormError() {
-        $('#centerpane').prepend([
-            '<div class="alert alert-error">',
-            '<a href="#" class="close" data-dismiss="alert">x</a>',
-            'Error Messages.',
-            '</div>',
-            '</div>'
-        ].join('\n'));
-    }
-    
 });
