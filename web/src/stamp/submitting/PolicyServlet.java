@@ -24,19 +24,20 @@ public class PolicyServlet extends HttpServlet
 
 	/**
 	 * GET requests expected include:
-	 *   > Request for list of known srcs or sinks
-	 *  
+	 *  (1) Request for list of known srcs or sinks
 	 */
 	protected void doGet (HttpServletRequest request,
 		HttpServletResponse response) 
 	throws ServletException, IOException
 	{
+
+        String path = getServletContext().getRealPath("/scripts/");
 		if (request.getParameter("annot") != null) {
 			String filename = "";
 			if (request.getParameter("annot").equals("Sources")) {
-				filename = "../scripts/srcClass.xml";
+				filename = path+"/srcClass.xml";
 			} else if (request.getParameter("annot").equals("Sinks")) {
-				filename = "../scripts/sinkClass.xml";
+				filename = path+"/sinkClass.xml";
 			} else {
 				return;
 			}
@@ -58,6 +59,7 @@ public class PolicyServlet extends HttpServlet
 	protected void doPost (HttpServletRequest request,
 		HttpServletResponse response) throws ServletException, IOException
 	{
+        
 
 	}
 }

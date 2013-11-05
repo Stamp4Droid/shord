@@ -245,8 +245,6 @@
                 <script src="../scripts/processMsg.js"></script>
                 <script src="../scripts/policy.js"></script>
                 <script>
-                    var apkIdToRow = new Object();
-
                     $(function() {
 
                         'use strict';
@@ -288,11 +286,9 @@
                                 });
                             }
                         });
+                        var ws = new WebSocket("ws://localhost:8080/stamp/pushupdates");
+                        ws.onmessage = processMessage;
                     });
-                </script>
-                <script>
-                    var ws = new WebSocket("ws://localhost:8080/stamp/pushupdates");
-                    ws.onmessage = processMessage;
                 </script>
             </div>
         </div>
