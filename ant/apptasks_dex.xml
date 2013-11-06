@@ -59,6 +59,8 @@
 		  description="relations to print out after the analysis finishes"/>
     <prop-default property="stamp.print.allclasses" default="true"
 		  description="whether to dump out all processed jimple files"/>
+	<prop-default property="stamp.timeout" default="86400000"
+	      description="time out"/>
 
 	<condition property="stamp.all.reports.default" else="false">
 	  <equals arg1="${stamp.input.type}" arg2="src"/>
@@ -96,7 +98,8 @@
     <!-- Run Chord. -->
     <java classname="shord.project.Boot" 
 		  fork="true" 
-		  failonerror="true">
+		  failonerror="true"
+		  timeout="${stamp.timeout}">
       <jvmarg value="-ea"/>
       <sysproperty key="chord.work.dir" file="${stamp.out.dir}"/>
       <sysproperty key="chord.main.class" value="edu.stanford.stamp.harness.Main"/>
