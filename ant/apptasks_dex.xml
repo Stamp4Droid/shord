@@ -59,8 +59,12 @@
 		  description="relations to print out after the analysis finishes"/>
     <prop-default property="stamp.print.allclasses" default="true"
 		  description="whether to dump out all processed jimple files"/>
-    <prop-default property="stamp.all.reports" default="depends on whether processing source or apk"
-		  description="whether to generate all reports or just final flows"/>
+
+	<condition property="stamp.all.reports.default" else="false">
+	  <equals arg1="${stamp.input.type}" arg2="src"/>
+	</condition>
+    <prop-default property="stamp.all.reports" default="${stamp.all.reports.default}"
+	      description="whether to generate all reports or just final flows"/>
 
     <!-- Prepare the selected analysis backend. -->
     <runtarget target="-prepare-backend-${stamp.backend}"/>
@@ -90,7 +94,9 @@
     </if>
 
     <!-- Run Chord. -->
-    <java classname="shord.project.Boot" fork="true" failonerror="true">
+    <java classname="shord.project.Boot" 
+		  fork="true" 
+		  failonerror="true">
       <jvmarg value="-ea"/>
       <sysproperty key="chord.work.dir" file="${stamp.out.dir}"/>
       <sysproperty key="chord.main.class" value="edu.stanford.stamp.harness.Main"/>
