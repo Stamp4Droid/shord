@@ -21,7 +21,7 @@
   <src desc="SMS/MMS Messages" class="PII" id="20" priority="high">$content://sms</src>
   <src desc="SMS/MMS Messages" class="PII" id="21" priority="high">$content://sms/sent</src>
   <src desc="SMS/MMS Messages" class="PII" id="22" priority="high">$content://sms/inbox</src>
-  <src desc="SMS/MMS Messages" class="PII" id="22" priority="high">$sms</src>
+  <src desc="SMS/MMS Messages" class="PII" id="60" priority="high">$sms</src>
   <src desc="Call Log" class="PII" id="23" priority="high">$content://call_log/calls</src>
   <src desc="Call Log" class="PII" id="24" priority="high">$incomingcallnumber</src>
   <src desc="Photos and Media" class="PII" id="25" priority="high">$media</src>
@@ -39,7 +39,7 @@
   <src desc="Location Data" class="Phone Info" id="37">$simcountryiso</src>
   <src desc="Cellular Network Data" class="Phone Info" id="38">$simoperatorname</src>  
   <src desc="Device Identifier" class="Phone Info" id="39" priority="high">$getdeviceid</src>
-  <src desc="Location" class="Location" id="40">$cdma_Location</src>
+  <src desc="Location" class="Location" id="40">$cdma_location</src>
   <src desc="Location" class="Location" id="41" priority="high">$getlongitude</src>
   <src desc="Location" class="Location" id="42" priority="high">$location</src>
   <src desc="Location" class="Location" id="43" priority="high">$getlatitude</src>
