@@ -49,7 +49,7 @@
   <src desc="Software Versions" class="System Data" id="47" priority="low">$getdevicesoftwareversion</src>
   <src desc="Application Data" class="System Data" id="48" priority="high">$fileinputstream</src>
   <src desc="Error Data" class="System Data" id="49" priority="med">$process.errorstream</src>
-  <src desc="Device Storage" class="System Data" id="50" priority="high">$externalstorage</src>
+  <src desc="SDCARD Data" class="SDCARD Data" id="50" priority="high">$externalstorage</src>
   <src desc="Application Data" class="System Data" id="51" priority="low">$context.getstring</src>
   <src desc="Wireless Network Info" class="System Data" id="52" priority="low">$wifimanager.getdhcpinfo</src>
   <src desc="Application Data" class="System Data" id="53" priority="low">$process.exitvalue</src>
@@ -58,5 +58,5 @@
   <src desc="Device Storage" class="System Data" id="56" priority="high">$file</src>
   <src desc="Application Message Data" class="Internal" id="57" priority="low">$getextras</src>
   <src desc="Device and Application Data" class="Internal" id="58" priority="low">$content_provider</src>
-  <src desc="Installed Packages" class="System Data" id="59" priority="med">$installedpackages</src>
+  <src desc="Installed Packages" class="Installed Packages" id="59" priority="med">$installedpackages</src>
 </root>
