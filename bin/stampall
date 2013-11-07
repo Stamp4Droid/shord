@@ -4,5 +4,8 @@
 STAMP_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}")"/.. && pwd )"
 BASE_DIR="$( pwd )"
 
-ant -f "$STAMP_DIR/ant/stamp.xml" -Dbasedir="$BASE_DIR" summary
-
+for f in `ls "$1"/*.apk`
+do
+	shift
+	ant -f "$STAMP_DIR/ant/stamp.xml" -Dbasedir="$BASE_DIR" analyze -Dapp="$f" "$@"
+done

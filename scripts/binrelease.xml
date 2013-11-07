@@ -12,10 +12,24 @@
 
   <zip destfile="${stamp.dir}/releases/stamp-${TIME_STAMP1}.zip">
 	<zipfileset dir="${stamp.dir}/releases" includes="buildinfo.txt" prefix="stamp"/>
-	<zipfileset dir="${stamp.dir}/bin" filemode="755" includes="stamp" prefix="stamp"/>
-	<zipfileset dir="${stamp.dir}/bin" filemode="755" includes="summary" prefix="stamp"/>
 	<zipfileset dir="${stamp.dir}" includes="stamp.config" prefix="stamp"/>
-	<zipfileset dir="${stamp.dir}/bin" prefix="stamp/bin"/>
+
+	<zipfileset dir="${stamp.dir}/bin" prefix="stamp/bin">
+	  <patternset>
+		<exclude name="summary"/>
+		<exclude name="stamp"/>
+		<exclude name="stampall"/>
+	  </patternset>
+	</zipfileset>
+
+	<zipfileset dir="${stamp.dir}/bin" filemode="755" prefix="stamp/bin">
+	  <patternset>
+		<include name="summary"/>
+		<include name="stamp"/>
+		<include name="stampall"/>
+	  </patternset>
+	</zipfileset>
+
 	<zipfileset dir="${stamp.dir}/lib" prefix="stamp/lib"/>
 	<zipfileset dir="${stamp.dir}/ant" prefix="stamp/ant"/>
 	<zipfileset dir="${stamp.dir}/assets" prefix="stamp/assets"/>
