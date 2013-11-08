@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import shord.project.analyses.JavaAnalysis;
+import stamp.util.PropertyHelper;
 import soot.Scene;
 import soot.SootClass;
 import soot.SootMethod;
@@ -21,19 +22,22 @@ import chord.project.Chord;
 import com.google.common.io.NullOutputStream;
 
 /*
- * An analysis that runs the JCFLSolver to do the taint analysis.
+ * @author Osbert Bastani
  */
-
 @Chord(name = "jimpleprinter")
 public class JimplePrinterAnalysis extends JavaAnalysis {
 
 	@Override public void run() {		
 		try {
+
+			boolean printClasses =
+				PropertyHelper.getBoolProp("stamp.print.allclasses");
+			System.out.println("++stamp.print.allclasses = "+printClasses);
+			if(!printClasses)
+				return;
+
 			// SET UP SCRATCH DIRECTORY
 			String outDir = System.getProperty("stamp.out.dir");
-			//File outputDir = new File(stampDirectory + File.separator + "cfl");
-			//File scratchDir = new File(stampDirectory + File.separator + "/../../osbert/scratch/" + outputDir.getParentFile().getName());
-			//String outputPath = scratchDir.getCanonicalPath() + "/jimple/";
 
 			// PRINT JIMPLE
 			JimpleStructureExtractor jse = new JimpleStructureExtractor();
@@ -41,21 +45,11 @@ public class JimplePrinterAnalysis extends JavaAnalysis {
 
 			// GET STRUCTURE AND PRINT
 			CodeStructureInfo codeInfo = jse.getCodeStructureInfo();
-			/*
-			System.out.println("PRINTING CLASS INFO:");
-			for(SootClass cl : codeInfo.getClasses()) {
-				System.out.println(cl.toString() + ": " + codeInfo.getClassInfo(cl).toString());
-			}
-			System.out.println("PRINTING METHOD INFO:");
-			for(SootMethod m : codeInfo.getMethods()) {
-				System.out.println(m.toString() + ": " + codeInfo.getMethodInfo(m).toString());
-			}
-			*/
 
 			JimpleSourceInfo sourceInfo = SourceInfoSingleton.getJimpleSourceInfo();
 
 			for(SootClass cl : Scene.v().getClasses()) {
-				System.out.println("READING: " + cl.getName());
+				//System.out.println("READING: " + cl.getName());
 
 				// GET THE OUTPUT FILE PATH	
 				StringBuffer b = new StringBuffer();

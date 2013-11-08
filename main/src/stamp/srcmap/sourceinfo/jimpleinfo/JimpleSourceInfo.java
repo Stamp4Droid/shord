@@ -13,27 +13,17 @@ import stamp.srcmap.sourceinfo.abstractinfo.AbstractSourceInfo;
 
 /**
  * @author Saswat Anand 
+ * @author Osbert Bastani
  */
-public class JimpleSourceInfo extends AbstractSourceInfo {
+public class JimpleSourceInfo extends AbstractSourceInfo 
+{
 	//private File frameworkSrcDir;
 	private File srcMapDir;;
 	
-	public JimpleSourceInfo() {
-		//File frameworkDir = new File(System.getProperty("stamp.framework.dir"));
-
-		//frameworkSrcDir = new File(frameworkDir, "gen");
-		//if(!frameworkSrcDir.exists())
-		//	throw new RuntimeException("Framework dir " + frameworkSrcDir + " does not exist");
- 		
-		//File frameworkSrcMapDir = new File(frameworkDir, "srcmap");
-	 	//if(!frameworkSrcMapDir.exists())
-		//	throw new RuntimeException("Framework dir " + frameworkSrcMapDir + " does not exist");
-		//srcMapDirs.add(frameworkSrcMapDir);
-
+	public JimpleSourceInfo() 
+	{
 		String outDir = System.getProperty("stamp.out.dir");
 		srcMapDir = new File(outDir+"/jimple");
-		if(!srcMapDir.exists())
-			throw new RuntimeException("Framework dir " + srcMapDir + " does not exist");
 	}
 	
 	/*
