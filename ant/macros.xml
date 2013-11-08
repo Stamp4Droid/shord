@@ -184,4 +184,25 @@
 	</sequential>
   </macrodef>
 
+  <macrodef name="run-apktool">
+	<sequential>
+	  <java classname="brut.apktool.Main"
+			maxmemory="${stamp.maxheap}"
+			fork="true"
+			failonerror="true">
+		<jvmarg value="-ea"/>
+		<classpath>
+		  <pathelement location="${stamp.dir}/lib/apktool-cli-1.5.3-SNAPSHOT.jar"/>
+		</classpath>
+		<arg value="d"/>
+		<arg value="-f"/>
+		<arg value="--frame-path"/>
+		<arg value="${stamp.dir}"/>
+		<arg value="-s"/>
+		<arg value="${apk}"/>
+		<arg value="${stamp.out.dir}/apktool-out"/>
+	  </java>
+	</sequential>
+  </macrodef>
+
 </project>

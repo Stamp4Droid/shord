@@ -5,7 +5,7 @@ import javax.xml.xpath.*;
 import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
 
-class PersonalNamespaceContext implements NamespaceContext 
+public class PersonalNamespaceContext implements NamespaceContext 
 {
 	public String getNamespaceURI(String prefix) {
 		if (prefix == null) throw new NullPointerException("Null prefix");

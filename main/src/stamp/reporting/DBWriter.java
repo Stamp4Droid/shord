@@ -172,7 +172,7 @@ public class DBWriter
 					" sinkLabel      TEXT    NOT NULL, " + 
 					" sinkDesc       TEXT    NOT NULL, " + 
 					" sinkClass      TEXT    NOT NULL, " +
-                    " UNIQUE(appName, srcLabel, srcDesc, srcClass, sinkLabel, sinkDesc, sinkClass) ON CONFLICT IGNORE)";
+                    " UNIQUE(sha256, appName, srcLabel, srcDesc, srcClass, sinkLabel, sinkDesc, sinkClass) ON CONFLICT IGNORE)";
 				stmt.executeUpdate(sql);
 				stmt.close();
 			} else {

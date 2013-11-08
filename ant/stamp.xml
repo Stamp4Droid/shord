@@ -54,6 +54,7 @@
   <import file="solvergen.xml"/>
   <import file="debug.xml"/>
   <import file="apptasks_dex.xml"/>
+  <import file="perm.xml"/>
 
   <target name="clean" depends="-clean-tool"/>
 

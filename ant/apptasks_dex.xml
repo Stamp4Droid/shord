@@ -13,22 +13,7 @@
 
   <target name="-analyze-apk">
 	<!-- Run android-apktool to decompile the manifest and resource xml files -->
-	<java classname="brut.apktool.Main"
-		  maxmemory="${stamp.maxheap}"
-		  fork="true"
-		  failonerror="true">
-	  <jvmarg value="-ea"/>
-	  <classpath>
-		<pathelement location="${stamp.dir}/lib/apktool-cli-1.5.3-SNAPSHOT.jar"/>
-      </classpath>
-	  <arg value="d"/>
-      <arg value="-f"/>
-	  <arg value="--frame-path"/>
-	  <arg value="${stamp.dir}"/>
-	  <arg value="-s"/>
-	  <arg value="${apk}"/>
-	  <arg value="${stamp.out.dir}/apktool-out"/>
-	</java>
+	<run-apktool/>	
 
     <!-- Generate harness. -->
     <java classname="stamp.harnessgen.Main"
@@ -152,7 +137,7 @@
 	<java classname="stamp.reporting.DBWriter" fork="true" failonerror="true">
 	  <jvmarg value="-ea"/>
 	  <arg value="${apk}"/>
-	  <arg value="${stamp.dir}/stamp_output/app-reports.db"/>
+	  <arg value="${stamp.out.dir}/../app-reports.db"/>
 	  <arg value="${stamp.out.dir}/results"/>
 	  <arg value="${stamp.dir}/assets/srcClass.xml"/>
 	  <arg value="${stamp.dir}/assets/sinkClass.xml"/>
@@ -162,7 +147,6 @@
 		<pathelement location="${stamp.dir}/lib/sqlite-jdbc-3.7.2.jar"/>
 	  </classpath>
 	</java>
-
   </target>
 
 </project>
