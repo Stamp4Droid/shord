@@ -25,8 +25,8 @@ public class ICCGNode
 
     public ICCGNode(String cptName, int cnt) {
         //need to get rid of "$"
-        if(cptName.contains("$")) 
-            cptName = cptName.substring(0, cptName.indexOf("$"));
+        //if(cptName.contains("$")) 
+            //cptName = cptName.substring(0, cptName.indexOf("$"));
         this.comptName = cptName; 
         id = cnt;
     }
@@ -58,8 +58,8 @@ public class ICCGNode
 
 
     public void setComptName(String name) {
-        if(name.contains("$")) 
-            name = name.substring(0, name.indexOf("$"));
+        //if(name.contains("$")) 
+            //name = name.substring(0, name.indexOf("$"));
         comptName = name;
     }
 

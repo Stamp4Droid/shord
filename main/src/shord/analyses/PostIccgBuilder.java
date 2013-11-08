@@ -545,14 +545,15 @@ public class PostIccgBuilder extends JavaAnalysis
         relCT.load();
         Set<String> flowSet = new HashSet<String>();
         Iterable<Pair<Pair<String,Ctxt>,Pair<String,Ctxt>>> res = relCtxtFlows.getAry2ValTuples();
+        int cnt = 1;
         for(Pair<Pair<String,Ctxt>,Pair<String,Ctxt>> pair : res) {
             String source = pair.val0.val0;
             Ctxt srcCtxt = pair.val0.val1;
             String sink = pair.val1.val0;
             Ctxt sinkCtxt = pair.val1.val1;
             //we should consider webview.
-            if(source.contains("getExtras") || sink.contains("Activity") 
-              || sink.contains("Broadcast") || sink.contains("LOG")) continue;
+            if(source.contains("getExtras") || sink.contains("ENC") || sink.contains("Activity") || sink.contains("File") || source.contains("File") 
+              || sink.contains("Broadcast") || source.contains("CONTENT_PROVIDER") || sink.contains("LOG")) continue;
 
             //for each end-2-end flow.
             Iterable<Pair<Ctxt,Type>> resCT = relCT.getAry2ValTuples();
@@ -561,10 +562,14 @@ public class PostIccgBuilder extends JavaAnalysis
                 Ctxt ctxt = ctPair.val0;
                 RefType comp = (RefType)ctPair.val1;
                 //if(ctxt.equals(srcCtxt) || ctxt.equals(sinkCtxt))
-                if(ctxt.equals(sinkCtxt))
-                    flowSet.add(comp.getClassName()+"@"+source+"@"+sink);
+                //
+                if(ctxt.equals(sinkCtxt))//sink
+                    flowSet.add(comp.getClassName()+"@"+source+"@"+sink + "-" +cnt + "T");
 
+                if(ctxt.equals(srcCtxt))//source
+                    flowSet.add(comp.getClassName()+"@"+source+"@"+sink + "-"+cnt + "S");
             }
+            cnt++;
         
          }
 

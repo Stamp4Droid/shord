@@ -58,9 +58,9 @@ public class App
 						}
 						className = className.replace('/','.');
 						String tmp = className.replace('$', '.');
-						if(activities.contains(tmp))
+						if(activities.contains(className))
 							components.put(className, findCallbackMethods(defItem, xmlCallbacks));
-						else if(otherComps.contains(tmp))
+						else if(otherComps.contains(className))
 							components.put(className, Collections.EMPTY_LIST);
 						else if(guiElems.contains(tmp))
 							customGUIs.put(className, findConstructors(defItem));

@@ -28,7 +28,7 @@ public class ICCG
 
         for (ICCGNode node : nodes) {
 	    //if(!"unknown".equals(node.getComptName()) && !"targetNotFound".equals(node.getComptName()) ){
-            String nodeName = node.toString();
+            String nodeName = node.toString().replace("$", "\\$");
             String pers = "";
             String flows = "";
             String extraStyle = "";
