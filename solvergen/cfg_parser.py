@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import argparse
+from argparse import RawTextHelpFormatter as RawFormatter
 import os
 import re
 import string
@@ -995,11 +997,10 @@ class ReverseProduction(util.FinalAttrs):
 
 class Grammar(util.FinalAttrs):
     """
-    A representation of the input grammar. Can be built incrementally by
-    feeding it a text representation of a grammar line-by-line.
+    A representation of the input grammar.
     """
 
-    def __init__(self):
+    def __init__(self, cfg_file):
         self._lhs_symbol = None
         self._lhs_idx_char = None
         self._relation = None
@@ -1025,8 +1026,12 @@ class Grammar(util.FinalAttrs):
         ## All the @ReverseProduction%s encountered so far, grouped by base
         #  @Symbol.
         self.rev_prods = util.OrderedMultiDict()
+        with open(cfg_file) as grammar_in:
+            for line in grammar_in:
+                self._parse_line(line)
+        self._finalize()
 
-    def finalize(self):
+    def _finalize(self):
         """
         Run final sanity checks and calculations, which require all productions
         to be present.
@@ -1043,7 +1048,6 @@ class Grammar(util.FinalAttrs):
                     assert p.predicate is None, \
                         "Predicates not allowed on predicate-generating rules"
         self._calc_min_lengths()
-        # TODO: Also disable parse_line().
 
     def _calc_min_lengths(self):
         for symbol in self.symbols:
@@ -1057,7 +1061,7 @@ class Grammar(util.FinalAttrs):
                     if p._update_result_min_length():
                         fixpoint = False
 
-    def parse_line(self, line):
+    def _parse_line(self, line):
         """
         Parse the next line of the grammar specification.
         """
@@ -1186,12 +1190,11 @@ class Grammar(util.FinalAttrs):
                 # parameter of the relation.
                 self._param_chars.index(idx_char))
 
-def parse(grammar_in, code_out, terms_out, rels_out):
+def emit_solver(grammar, code_out, terms_out, rels_out):
     """
-    Read a grammar specification and generate the corresponding solver code.
-    Accepts File-like objects for its input and output parameters.
+    Generate the solver code for the input grammar. Accepts File-like objects
+    for its output parameters.
     """
-    grammar = Grammar()
     pr = util.CodePrinter(code_out)
 
     pr.write('#include <assert.h>')
@@ -1199,14 +1202,6 @@ def parse(grammar_in, code_out, terms_out, rels_out):
     pr.write('#include <stdbool.h>')
     pr.write('#include <string.h>')
     pr.write('#include "solvergen.hpp"')
-    pr.write('')
-
-    pr.write('/* Original Grammar:')
-    for line in grammar_in:
-        grammar.parse_line(line)
-        pr.write(line, False)
-    grammar.finalize()
-    pr.write('*/')
     pr.write('')
 
     pr.write('/* Normalized Grammar:')
@@ -1551,41 +1546,32 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
 # class, or put base program text in a large triple-quoted string and leave
 # %s's for places to fill in.
 
-## Help message describing the calling convention for this script.
-usage_string = """Usage: %s <input-file> [<output-dir>]
-Produce CFL-Reachability solver code for a Context-Free Grammar.
-
-<input-file> must contain a grammar specification (see the main project docs
-for details), and have a .cfg extension.
-
-If <output-dir> is not provided, print generated code to stdout.
-
-If <output-dir> is provided, and assuming that <input-file> is foo.cfg, then
-nothing is printed on stdout, and the following files are created:
+cfg_file_help = '.cfg file describing a context-free grammar'
+prog_desc = 'Produce CFL-Reachability solver code for the input grammar.'
+out_dir_help = """print generated code and grammar info to this directory
+if cfg_file=foo.cfg, the following files are created:
 - foo.cpp: the generated code
 - foo.terms.dat: all terminal symbols of the grammar, one per line
 - foo.rels.dat: all relations used in the grammar, one per line
-"""
+if not specified, print generated code only, to stdout"""
 
 if __name__ == '__main__':
-    if (len(sys.argv) < 2 or
-        sys.argv[1] == '-h' or sys.argv[1] == '--help' or
-        os.path.splitext(sys.argv[1])[1] != '.cfg' or
-        len(sys.argv) >= 3 and (not os.path.exists(sys.argv[2]) or
-                                not os.path.isdir(sys.argv[2]))):
-        script_name = os.path.basename(__file__)
-        sys.stderr.write(usage_string % script_name)
-        exit(1)
-    with open(sys.argv[1], 'r') as grammar_in:
-        if len(sys.argv) >= 3:
-            outdir = sys.argv[2]
-            grammar = os.path.basename(os.path.splitext(sys.argv[1])[0])
-            code_out_name = os.path.join(outdir, grammar + '.cpp')
-            terms_out_name = os.path.join(outdir, grammar + '.terms.dat')
-            rels_out_name = os.path.join(outdir, grammar + '.rels.dat')
-            with open(code_out_name, 'w') as code_out:
-                with open(terms_out_name, 'w') as terms_out:
-                    with open(rels_out_name, 'w') as rels_out:
-                        parse(grammar_in, code_out, terms_out, rels_out)
-        else:
-            parse(grammar_in, sys.stdout, None, None)
+    parser = argparse.ArgumentParser(description=prog_desc,
+                                     formatter_class=RawFormatter)
+    parser.add_argument('cfg_file', help=cfg_file_help)
+    parser.add_argument('out_dir', nargs='?', help=out_dir_help)
+    args = parser.parse_args()
+
+    grammar = Grammar(args.cfg_file)
+    if args.out_dir is not None:
+        code_out_name = util.switch_dir(args.cfg_file, args.out_dir, 'cpp')
+        terms_out_name = util.switch_dir(args.cfg_file, args.out_dir,
+                                         'terms.dat')
+        rels_out_name = util.switch_dir(args.cfg_file, args.out_dir,
+                                        'rels.dat')
+        with open(code_out_name, 'w') as code_out:
+            with open(terms_out_name, 'w') as terms_out:
+                with open(rels_out_name, 'w') as rels_out:
+                    emit_solver(grammar, code_out, terms_out, rels_out)
+    else:
+        emit_solver(grammar, sys.stdout, None, None)

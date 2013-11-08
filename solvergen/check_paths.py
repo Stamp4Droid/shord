@@ -8,24 +8,13 @@ if len(sys.argv) != 3:
     print 'Usage: %s <grammar> <files-dir>' % sys.argv[0]
     sys.exit(1)
 
-grammar = cfg_parser.Grammar()
-with open(sys.argv[1]) as f:
-    for line in f:
-        grammar.parse_line(line)
-
-def to_py_bool(xml_bool):
-    if xml_bool == 'true':
-        return True
-    elif xml_bool == 'false':
-        return False
-    else:
-        assert False
+grammar = cfg_parser.Grammar(sys.argv[1])
 
 def parse_step_node(step_node):
     assert step_node.tag == 'step'
     symbol = grammar.symbols.find_symbol(step_node.attrib['symbol'])
     assert symbol is not None
-    reverse = to_py_bool(step_node.attrib['reverse'])
+    reverse = util.to_py_bool(step_node.attrib['reverse'])
     src = step_node.attrib['from']
     tgt = step_node.attrib['to']
     index = step_node.get('index')

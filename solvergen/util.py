@@ -1,3 +1,5 @@
+import os
+
 class FinalAttrs(object):
     """
     A class that enforces a single assignment to any instance attribute.
@@ -26,6 +28,19 @@ class FinalAttrs(object):
             super(FinalAttrs, self).__setattr__(name, value)
         else:
             raise Exception('Attribute %s is final' % name)
+
+class Hashable(FinalAttrs):
+    def __init__(self):
+        raise NotImplementedError() # abstract class
+
+    def __key__(self):
+        raise NotImplementedError()
+
+    def __eq__(self, other):
+        return type(other) == type(self) and self.__key__() == other.__key__()
+
+    def __hash__(self):
+        return hash(self.__key__())
 
 class MultiDict(FinalAttrs):
     """
@@ -238,6 +253,14 @@ class CodePrinter(FinalAttrs):
 def to_c_bool(py_bool):
     return 'true' if py_bool else 'false'
 
+def to_py_bool(xml_bool):
+    if xml_bool == 'true':
+        return True
+    elif xml_bool == 'false':
+        return False
+    else:
+        assert False
+
 def all_same(elems):
     if elems == []:
         return True
@@ -252,3 +275,7 @@ def all_different(elems):
 def idx2char(idx):
     assert idx >= 0 and idx < 26
     return chr(ord('a') + idx)
+
+def switch_dir(src_file, tgt_dir, new_ext):
+    base = os.path.basename(os.path.splitext(src_file)[0])
+    return os.path.join(tgt_dir, base + '.' + new_ext)
