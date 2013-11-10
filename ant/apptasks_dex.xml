@@ -83,8 +83,7 @@
     <!-- Run Chord. -->
     <java classname="shord.project.Boot" 
 		  fork="true" 
-		  failonerror="true"
-		  timeout="${stamp.timeout}">
+		  failonerror="true">
       <jvmarg value="-ea"/>
       <sysproperty key="chord.work.dir" file="${stamp.out.dir}"/>
       <sysproperty key="chord.main.class" value="edu.stanford.stamp.harness.Main"/>
@@ -109,6 +108,7 @@
       <sysproperty key="stamp.droidrecord.logfile.template" value="${stamp.droidrecord.logfile.template}"/>
       <sysproperty key="stamp.droidrecord.logfile.bin" value="${stamp.droidrecord.logfile.bin}"/>
 	  <sysproperty key="stamp.print.allclasses" value="${stamp.print.allclasses}"/>
+	  <sysproperty key="stamp.timeout" value="${stamp.timeout}"/>
       <syspropertyset refid="stamp.analyses.main.sysprops"/>
       <classpath>
 		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>

@@ -10,8 +10,9 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.FileInputStream;
-import chord.util.ProcessExecutor;
+
 import chord.util.Utils;
+import chord.util.ProcessExecutor;
 import edu.berkeley.confspell.*;
 
 import chord.project.Messages;
@@ -170,6 +171,7 @@ public class Boot {
         String dlogAnalysisPath = getOrSetProperty("chord.dlog.analysis.path",
             Utils.concat(stdDlogAnalysisPath, File.pathSeparator, extDlogAnalysisPath));
         String userClassPath = getOrSetProperty("chord.class.path", "");
+		int timeout = Integer.getInteger("stamp.timeout", Integer.MAX_VALUE).intValue();
 
         System.setProperty("user.dir", workDirName);
 
@@ -238,7 +240,7 @@ public class Boot {
         if (Utils.buildBoolProperty("showMainArgs", false))
             showArgsToMain(cmdAry);
         
-        int result = ProcessExecutor.execute(cmdAry, null, new File(workDirName), -1);
+        int result = ProcessExecutor.execute(cmdAry, null, new File(workDirName), timeout);
         System.exit(result);
     }
 
