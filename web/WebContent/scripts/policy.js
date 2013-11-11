@@ -39,7 +39,21 @@ $(function () {
             });
         }
     });
-    
+
+    var addEntries = function (str) {
+        var line = str.split(' ');
+        var src = line[1];
+        var srcparam = line[2];
+        var sink = line[3];
+        var sinkparam = line[4];
+        $('#src-sink-table tr:last').after('<tr><td><input type="checkbox"' + ((line[0] === "1") ? ' checked' : '') + '><i class="checkbox"></i></td><td><i class="icon-remove"></i></td><td>' + src + '</td><td>' + srcparam + '</td><td>' + sink + '</td><td>' + sinkparam + '</td></tr>');
+
+        $('#src-sink-table .icon-remove').click(function () {
+            $(this).parent().parent().remove();
+        });
+    }
+
+
     $.ajax({
         type: "GET",
         url: "/stamp/policyServlet",
@@ -48,10 +62,15 @@ $(function () {
         },
         dataType: "text",
         success: function (tex) {
-            console.log(tex);
+            var lines = tex.split('\n');
+            for (var i = 0; i < lines.length; i++) {
+                if (lines[i].length > 0) {
+                    addEntries(lines[i]);
+                }
+            }
         }
     });
-    
+
     $.ajax({
         type: "GET",
         url: "/stamp/policyServlet",
@@ -92,11 +111,11 @@ $(function () {
                 rules.push(rule);
             }
         });
-        
-        $.post("/stamp/policyServlet", rules.toString(), function(data) {
+
+        $.post("/stamp/policyServlet", rules.toString(), function (data) {
             var date = new Date();
-            var timestr = date.getHours()+':'+date.getMinutes();
-            $('#policy_save_status').html('<i>Policy Saved at '+timestr+'</i>');
+            var timestr = date.getHours() + ':' + date.getMinutes();
+            $('#policy_save_status').html('<i>Policy Saved at ' + timestr + '</i>');
         });
     });
 
