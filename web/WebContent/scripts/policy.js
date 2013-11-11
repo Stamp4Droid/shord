@@ -39,6 +39,18 @@ $(function () {
             });
         }
     });
+    
+    $.ajax({
+        type: "GET",
+        url: "/stamp/policyServlet",
+        data: {
+            policies: "all"
+        },
+        dataType: "text",
+        success: function (tex) {
+            alert(tex);
+        }
+    });
 
 
     $('#add_policy_btn').click(function () {
