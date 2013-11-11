@@ -55,8 +55,10 @@ public class Main {
         run();
         if (outStream != null)
             outStream.close();
+		System.out.println("HULU");
         if (errStream != null && errStream != outStream)
             errStream.close();
+		System.out.println("JULU");
     }
     private static void run() {
 		startTime = System.currentTimeMillis();
