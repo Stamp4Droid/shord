@@ -44,6 +44,18 @@ $(function () {
         type: "GET",
         url: "/stamp/policyServlet",
         data: {
+            policyName: "initPolicy"
+        },
+        dataType: "text",
+        success: function (tex) {
+            console.log(tex);
+        }
+    });
+    
+    $.ajax({
+        type: "GET",
+        url: "/stamp/policyServlet",
+        data: {
             policies: "all"
         },
         dataType: "text",

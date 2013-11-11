@@ -34,7 +34,6 @@ public class PolicyServlet extends HttpServlet
 		try {
 			String path = getServletContext().getRealPath("/");
 			path += "../../../stamp_output/";
-			System.out.println ("PATHIS "+path);
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:"+path+"policy.db");
 			c.setAutoCommit(false);
@@ -69,34 +68,39 @@ public class PolicyServlet extends HttpServlet
 		Connection c = null;
 		Statement stmt = null;
 		try {
+			String path = getServletContext().getRealPath("/");
+			path += "../../../stamp_output/";
 			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:test.db");
+			c = DriverManager.getConnection("jdbc:sqlite:"+path+"policy.db");
 			c.setAutoCommit(false);
 			System.out.println("Opened database successfully");
 
 			stmt = c.createStatement();
-			ResultSet rs = stmt.executeQuery( "SELECT * FROM COMPANY WHERE policyName="+policyName );
+			ResultSet rs = stmt.executeQuery( "SELECT * FROM policies WHERE policyName='"+policyName+"'" );
+			String param = "";
+			StringBuilder sb = new StringBuilder();
 			while ( rs.next() ) {
-				int id = rs.getInt("id");
-				String  name = rs.getString("name");
-				int age  = rs.getInt("age");
-				String  address = rs.getString("address");
-				float salary = rs.getFloat("salary");
-				System.out.println( "ID = " + id );
-				System.out.println( "NAME = " + name );
-				System.out.println( "AGE = " + age );
-				System.out.println( "ADDRESS = " + address );
-				System.out.println( "SALARY = " + salary );
-				System.out.println();
+				String active = Integer.toString(rs.getInt("active"));
+				String sourceName = rs.getString("sourceName");
+				String sourceParamName = rs.getString("sourceParamRaw");
+				String sinkName = rs.getString("sinkName");
+				String sinkParamName = rs.getString("sinkParamRaw");
+				param = active+' '+sourceName+' '+sourceParamName+' '+sinkName+' '+sinkParamName;
+				System.out.println("PARAM "+param);
+				sb.append(param);
+				sb.append('\n');
 			}
 			rs.close();
 			stmt.close();
 			c.close();
+			return sb.toString();
 		} catch ( Exception e ) {
+			System.out.println("FAILED database open");
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
 		}
 		System.out.println("Operation done successfully");
+		return "";
 	}
 
 	/**
@@ -142,7 +146,18 @@ public class PolicyServlet extends HttpServlet
 			} 
 		} else if (request.getParameter("policyName") != null) {
 			String policyName = request.getParameter("policyName");
-		}
+			System.out.println("WHADDUP "+policyName);
+			response.setContentType("text/plain");
+			StringReader in = new StringReader(policy(policyName));
+			OutputStream out = response.getOutputStream();
+			char[] buffer = new char[4096];
+			int length;
+			while ((length = in.read(buffer)) > 0) {
+				out.write(new String(buffer).getBytes(), 0, length);
+			}
+			in.close();
+			out.flush();
+		} 
 	}
 
 	/**
