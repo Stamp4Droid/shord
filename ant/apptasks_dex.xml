@@ -125,9 +125,9 @@
 	<exec executable="python" failonerror="true">
 	  <arg value="${stamp.dir}/scripts/buildReportDB.py"/>
 	  <arg value="-c"/>
-	  <arg value="${stamp.dir}/scripts/srcClass.xml"/>
+	  <arg value="${stamp.dir}/assets/srcClass.xml"/>
 	  <arg value="-k"/>
-	  <arg value="${stamp.dir}/scripts/sinkClass.xml"/>
+	  <arg value="${stamp.dir}/assets/sinkClass.xml"/>
 	  <arg value="-r"/>
 	  <arg value="${stamp.out.dir}/results"/>
 	  <arg value="-o"/>
