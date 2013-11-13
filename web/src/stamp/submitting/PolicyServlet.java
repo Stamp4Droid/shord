@@ -14,6 +14,7 @@ import java.sql.*;
 import java.util.Set;
 import java.util.HashSet;
 import java.io.StringReader;
+import java.io.BufferedReader;
 
 @WebServlet(name="PolicyServlet", urlPatterns={"/policyServlet"})
 public class PolicyServlet extends HttpServlet 
@@ -25,7 +26,6 @@ public class PolicyServlet extends HttpServlet
 	{
 		super();
 	}
-
 
 	protected String select()
 	{
@@ -146,7 +146,6 @@ public class PolicyServlet extends HttpServlet
 			} 
 		} else if (request.getParameter("policyName") != null) {
 			String policyName = request.getParameter("policyName");
-			System.out.println("WHADDUP "+policyName);
 			response.setContentType("text/plain");
 			StringReader in = new StringReader(policy(policyName));
 			OutputStream out = response.getOutputStream();
@@ -167,36 +166,51 @@ public class PolicyServlet extends HttpServlet
 		HttpServletResponse response) throws ServletException, IOException
 	{
 		response.setContentType("text/plain");
+		System.out.println(request.getParameter("sourceName"));
 		Connection c = null;
-		Statement stmt = null;
 		try {
+			String path = getServletContext().getRealPath("/");
+			path += "../../../stamp_output/";
 			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:test.db");
+			c = DriverManager.getConnection("jdbc:sqlite:"+path+"policy.db");
 			c.setAutoCommit(false);
 			System.out.println("Opened database successfully");
 
-			stmt = c.createStatement();
-			ResultSet rs = stmt.executeQuery( "SELECT * FROM policies;" );
-			while ( rs.next() ) {
-				int id = rs.getInt("id");
-				String  name = rs.getString("name");
-				int age  = rs.getInt("age");
-				String  address = rs.getString("address");
-				float salary = rs.getFloat("salary");
-				System.out.println( "ID = " + id );
-				System.out.println( "NAME = " + name );
-				System.out.println( "AGE = " + age );
-				System.out.println( "ADDRESS = " + address );
-				System.out.println( "SALARY = " + salary );
-				System.out.println();
+			String policyName = request.getParameter("policyName");
+			String delete = request.getParameter("delete");
+			if (delete != null && (delete.equals("before_update") || delete.equals("just_delete"))) {
+				PreparedStatement stmt = c.prepareStatement("DELETE FROM policies WHERE policyName= ? ");
+				stmt.setString(1, policyName);
+				stmt.executeUpdate();
+				stmt.close();
+				c.commit();
+				if (delete.equals("just_delete")) {
+					c.close();
+					return;
+				}
 			}
-			rs.close();
-			stmt.close();
+
+			PreparedStatement stmt2 = c.prepareStatement("INSERT INTO policies (policyName,active,sourceName,sourceParamRaw,sinkName,sinkParamRaw) "+
+															"VALUES (?,?,?,?,?,?);");
+			String active = request.getParameter("active");
+			String sourceName = request.getParameter("sourceName");
+			String sourceParamRaw = request.getParameter("sourceParamRaw");
+			String sinkName = request.getParameter("sinkName");
+			String sinkParamRaw = request.getParameter("sinkParamRaw");
+			stmt2.setString(1,policyName);
+			stmt2.setInt(2,Integer.parseInt(active));
+			stmt2.setString(3,sourceName);
+			stmt2.setString(4,sourceParamRaw);
+			stmt2.setString(5,sinkName);
+			stmt2.setString(6,sinkParamRaw);
+			stmt2.addBatch();
+			stmt2.executeBatch();
+			stmt2.close();
+			c.commit();
 			c.close();
 		} catch ( Exception e ) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
 		}
-		System.out.println("Operation done successfully");
 	}
 }

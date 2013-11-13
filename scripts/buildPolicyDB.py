@@ -29,5 +29,8 @@ if __name__ == "__main__":
     if not outputPath.endswith("/"):
         outputPath = outputPath + "/"
 
-    initPolicies = [["initPolicy",1,"source","srcParam","sink","sinkParam"]]
+    initPolicies = [["initPolicy",1,"source","srcParam","sink","sinkParam"],
+                    ["Data Loss Prevention",1,"FILE",".*","INTERNET",".*"],
+                    ["Data Loss Prevention",1,"CONTACTS",".*","INTERNET",".*"],
+                    ["Data Loss Prevention",1,"FILE",".*","SMS",".*"]]
     storePolicyResults(outputPath, initPolicies)
