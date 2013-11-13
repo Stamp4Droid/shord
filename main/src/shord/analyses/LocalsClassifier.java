@@ -99,7 +99,7 @@ public class LocalsClassifier
 					System.out.print(l + " ");
 			}
 			System.out.println("");
-			System.out.println(body.toString());
+			//System.out.println(body.toString());
 			}
 	}
 
