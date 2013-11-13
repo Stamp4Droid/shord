@@ -122,19 +122,19 @@
     </java>
 
 	<!-- run the postprocessing python script-->
-	<!--exec executable="python" failonerror="true">
+	<exec executable="python" failonerror="true">
 	  <arg value="${stamp.dir}/scripts/buildReportDB.py"/>
 	  <arg value="-c"/>
-	  <arg value="${stamp.dir}/scripts/srcClass.xml"/>
+	  <arg value="${stamp.dir}/assets/srcClass.xml"/>
 	  <arg value="-k"/>
-	  <arg value="${stamp.dir}/scripts/sinkClass.xml"/>
+	  <arg value="${stamp.dir}/assets/sinkClass.xml"/>
 	  <arg value="-r"/>
 	  <arg value="${stamp.out.dir}/results"/>
 	  <arg value="-o"/>
 	  <arg value="${stamp.dir}/stamp_output"/>
-	</exec-->
+	</exec>
 
-	<java classname="stamp.reporting.DBWriter" fork="true" failonerror="true">
+	<!--java classname="stamp.reporting.DBWriter" fork="true" failonerror="true">
 	  <jvmarg value="-ea"/>
 	  <arg value="${apk}"/>
 	  <arg value="${stamp.out.dir}/../app-reports.db"/>
@@ -146,7 +146,7 @@
 		<pathelement location="${stamp.dir}/lib/commons-lang3-3.1.jar"/>
 		<pathelement location="${stamp.dir}/lib/sqlite-jdbc-3.7.2.jar"/>
 	  </classpath>
-	</java>
+	</java-->
   </target>
 
 </project>
