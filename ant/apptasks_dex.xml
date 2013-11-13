@@ -134,10 +134,10 @@
 	  <arg value="${stamp.dir}/stamp_output"/>
 	</exec>
 
-	<!--java classname="stamp.reporting.DBWriter" fork="true" failonerror="true">
+	<java classname="stamp.reporting.DBWriter" fork="true" failonerror="true">
 	  <jvmarg value="-ea"/>
 	  <arg value="${apk}"/>
-	  <arg value="${stamp.out.dir}/../app-reports.db"/>
+	  <arg value="${stamp.out.dir}/../app-reports.sqlite"/>
 	  <arg value="${stamp.out.dir}/results"/>
 	  <arg value="${stamp.dir}/assets/srcClass.xml"/>
 	  <arg value="${stamp.dir}/assets/sinkClass.xml"/>
@@ -146,7 +146,7 @@
 		<pathelement location="${stamp.dir}/lib/commons-lang3-3.1.jar"/>
 		<pathelement location="${stamp.dir}/lib/sqlite-jdbc-3.7.2.jar"/>
 	  </classpath>
-	</java-->
+	</java>
   </target>
 
 </project>
