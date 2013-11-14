@@ -61,6 +61,7 @@ MmethRet(m:M,z:Z,v:V)     input
 MmethPrimArg(m:M,z:Z,u:U) input
 MmethPrimRet(m:M,z:Z,u:U) input
 
+reachableCM(c:C,m:M) input
 # OUTPUT RELATIONS ============================================================
 
 labelRef(c:C,v:V,l:CL)  output # (c,v) is labeled with l
@@ -130,7 +131,7 @@ flowPrimPrim(u,v) :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,u), MmethPrimArg(m,z
 
 # abstract objects
 # base escaping objects
-sink(o,cl) :- varOutLabel(v,l), MV(m,v), CM(c,m), pt(c,v,o), CCL(c,cl), LCL(l,cl).
+sink(o,cl) :- varOutLabel(v,l), MV(m,v), reachableCM(c,m), pt(c,v,o), CCL(c,cl), LCL(l,cl).
 # conditional escaping
 sink(o,l)  :- pt(c,u,o), flowRefRef(u,v), labelRef(c,v,l), sinkCtxtLabel(l).
 sink(o,l)  :- pt(c,u,o), flowRefPrim(u,v), labelPrim(c,v,l), sinkCtxtLabel(l).
@@ -139,7 +140,7 @@ sink(o2,l) :- sink(o1,l), fpt(o1,_,o2).
 
 # primitive-type variables/fields
 # base escaping variables
-sinkPrim(c,u,cl) :- varOutLabelPrim(u,l), CM(c,m), MU(m,u), LCL(l,cl), CCL(c,cl). 
+sinkPrim(c,u,cl) :- varOutLabelPrim(u,l), reachableCM(c,m), MU(m,u), LCL(l,cl), CCL(c,cl). 
 # conditional escaping
 sinkPrim(c,u,l) :- flowPrimRef(u,v), labelRef(c,v,l), sinkCtxtLabel(l).
 sinkPrim(c,u,l) :- flowPrimPrim(u,v), labelPrim(c,v,l), sinkCtxtLabel(l).
@@ -165,7 +166,7 @@ flow(src,sink) :- sink(o,sink), labelPrimFld(o,_,src), srcCtxtLabel(src).
 
 # abstract objects
 # label introduction
-labelIn(o,cl)      :- varInLabel(v,l), MV(m,v), CM(c,m), pt(c,v,o), CCL(c,cl), LCL(l,cl).
+labelIn(o,cl)      :- varInLabel(v,l), MV(m,v), reachableCM(c,m), pt(c,v,o), CCL(c,cl), LCL(l,cl).
 # nested tainting
 labelIn(o2,l)      :- labelIn(o1,l), fpt(o1,_,o2).
 label(o,l)         :- labelIn(o,l).
@@ -184,13 +185,13 @@ labelRef(c,v,l) :- pt(c,v,o), label(o,l).
 
 # primitive-type variables/fields
 # label introduction
-labelPrim(c,v,cl)     :- varInLabelPrim(v,l), CM(c,m), MU(m,v), LCL(l,cl), CCL(c,cl).
+labelPrim(c,v,cl)     :- varInLabelPrim(v,l), reachableCM(c,m), MU(m,v), LCL(l,cl), CCL(c,cl).
 # label propagation
 labelPrim(c,v,l)      :- AssignPrim(v,u), labelPrim(c,u,l).
 labelPrimFld(o,f,l)   :- labelPrim(c,v,l), StorePrim(u,f,v), pt(c,u,o).
 labelPrim(c,y,l)      :- LoadPrim(y,x,f), labelPrimFld(o,f,l), pt(c,x,o).
 labelPrimFldStat(f,l) :- StoreStatPrim(f,v), labelPrim(_,v,l).
-labelPrim(c,y,l)      :- LoadStatPrim(y,f), labelPrimFldStat(f,l), MU(m,y), CM(c,m).
+labelPrim(c,y,l)      :- LoadStatPrim(y,f), labelPrimFldStat(f,l), MU(m,y), reachableCM(c,m).
 labelPrim(d,u,l)      :- labelPrim(c,v,l), paramPrim(u,v,i), CC(c,d), CI(d,i).
 labelPrim(c,u,l)      :- labelPrim(d,v,l), returnPrim(u,v,i), CI(d,i), CC(c,d).
 # passthrough handling

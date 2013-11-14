@@ -25,16 +25,19 @@ class LocationManager
 	public  void requestLocationUpdates(java.lang.String provider, long minTime, float minDistance, android.location.LocationListener listener) 
 	{ 
 		registerListener(listener);
+		listener.onLocationChanged(getLocation());
 	}
 
 	public  void requestLocationUpdates(java.lang.String provider, long minTime, float minDistance, android.location.LocationListener listener, android.os.Looper looper) 
 	{ 
 		registerListener(listener);
+	    listener.onLocationChanged(getLocation());
 	}
 
 	public  void requestLocationUpdates(long minTime, float minDistance, android.location.Criteria criteria, android.location.LocationListener listener, android.os.Looper looper) 
 	{ 
 		registerListener(listener);
+		listener.onLocationChanged(getLocation());
 	}
 
         @STAMP(flows={@Flow(from="$FINE_LOCATION",to="!INTENT")})
@@ -44,11 +47,13 @@ class LocationManager
 	public  void requestSingleUpdate(java.lang.String provider, android.location.LocationListener listener, android.os.Looper looper) 
 	{ 
 		registerListener(listener);
+		listener.onLocationChanged(getLocation());
 	}
 
 	public  void requestSingleUpdate(android.location.Criteria criteria, android.location.LocationListener listener, android.os.Looper looper) 
 	{
 		registerListener(listener);
+		listener.onLocationChanged(getLocation());
 	}
 
 	@STAMP(flows={@Flow(from="$FINE_LOCATION",to="!INTENT")})

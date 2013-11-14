@@ -2,6 +2,28 @@ class View
 {
 	public  View(android.content.Context context) 
 	{ 
+
+        View.this.onFinishInflate();
+
+        View.this.onMeasure(0,0);
+        View.this.onLayout(false, 0, 0, 0, 0);
+        View.this.onSizeChanged(0, 0, 0, 0);
+
+        View.this.onDraw(null);
+        
+        View.this.onTouchEvent(null);
+        View.this.onTrackballEvent(null);
+        View.this.onKeyUp(0, null);
+        View.this.onKeyDown(0, null);
+        
+        View.this.onFocusChanged(false, 0, null);
+        View.this.onWindowFocusChanged(false);
+        
+        View.this.onAttachedToWindow();
+        View.this.onDetachedFromWindow();
+        View.this.onWindowVisibilityChanged(0);
+
+
 		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
 			registerCallback(new edu.stanford.stamp.harness.Callback(){
 					public void run() {

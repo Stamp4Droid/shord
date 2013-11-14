@@ -8,13 +8,13 @@ public class ICCGNode
 
     private String comptName = "unknown";
     private Set<String> permission = new HashSet<String>();
+    private Set<String> flowSet = new HashSet<String>();
     private boolean isMain = false;
     private Set<String> keys;
     private String type = "";
     private String intentFilter = "";
-
-
     private int id;
+    private int rowid;
 
     //box:unknown, diamond:main, ellipse:activity, circle:service, triangle:broadcaster
     private String shape = "box";
@@ -30,8 +30,6 @@ public class ICCGNode
         this.comptName = cptName; 
         id = cnt;
     }
-
-    private Set<String> flowSet = new HashSet<String>();
 
     public void addFlow(String flow) {
         flowSet.add(flow);
@@ -73,6 +71,14 @@ public class ICCGNode
 
     public int getId() {
         return id;
+    }
+
+    public int getRowid() {
+        return rowid;
+    }
+
+    public void setRowid(int rid) {
+        rowid = rid;
     }
 
 

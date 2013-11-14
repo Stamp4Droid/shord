@@ -28,7 +28,7 @@ typeFilter(v:V,o:C) input   # type wise, v can point-to o
 IinvkArg(i:I,n:Z,v:V) input
 
 MV(m:M,v:V) input         # v is a variable in method m
-CM(c:C,m:M) input         # c is a context of method m
+#CM(c:C,m:M) input         # c is a context of method m
 CH(o:C,h:H) input         # context’ified abstract location o corresponds to new stmt h
 CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
 HT(h:H,t:T) input         # heap h point to Type t.
@@ -55,7 +55,7 @@ reachableT(t:T)
 DIC(c:C,i:I,c:C) 
 DVDV(c:C0,u:V0,d:C1,v:V1) 
 reachableCI(c:C,i:I) 
-reachableCM(c:C,m:M) 
+reachableCM(c:C,m:M)   output
 CICM(d:C,i:I,c:C,m:M)   output  # i in cotext d calls method m in context c.
 pt(c:C,v:V,o:C)    output # (c,v) points-to o
 fpt(o1:C,f:F,o2:C) output
@@ -71,7 +71,7 @@ reachableCM(0,m) :- clinitTM(t,m), reachableT(t).
 reachableCM(c,m) :- CICM(_,_,c,m). 
 reachableCI(c,i) :- MI(m,i), reachableCM(c,m).
 
-ICM(i,o,m2) :- VirtIM(i,m1), HT(h,t), SubSig(m1,s), Dispatch(t,s,m2), CH(o,h).
+ICM(i,o,m2) :- VirtIM(i,m1), SubSig(m1,s), Dispatch(t,s,m2), HT(h,t), CH(o,h).
 
 DIC(c,i,o) :- IinvkArg(i,0,v), pt(c,v,o).
 
@@ -90,7 +90,8 @@ DVDV(c,u,d,v) :- return(u,v,i), MV(m,v), CICM(c,i,d,m).
 
 pt(c,u,o) :- DVDV(c,u,d,v), pt(d,v,o), typeFilter(u,o).
 
-pt(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
+pt(c,v,o) :- Alloc(v,h), MV(m,v), reachableCM(c,m), CC(c,o), CH(o,h).
+#pt(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
 pt(c,v,o) :- pt(c,u,o), Assign(v,u), typeFilter(v,o).
 fpt(o1,f,o2) :- pt(c,v,o2), Store(u,f,v), pt(c,u,o1).
 #u.f=v
@@ -101,7 +102,8 @@ fpt(o1,f,o2) :- pt(c,v,o2), Store(u,f,v), pt(c,u,o1).
 
 pt(c,y,o2) :- pt(c,x,o1), Load(y,x,f), fpt(o1,f,o2).
 fptStat(f,o) :- pt(_,v,o), StoreStat(f,v).
-pt(c,y,o) :- LoadStat(y,f), fptStat(f,o), MV(m,y), CM(c,m).
+pt(c,y,o) :- LoadStat(y,f), fptStat(f,o), MV(m,y), reachableCM(c,m).
+#pt(c,y,o) :- LoadStat(y,f), fptStat(f,o), MV(m,y), CM(c,m).
 
 reachableT(t) :- reachableCM(_,m), MV(m,v), Alloc(v,h), HT(h,t).
 reachableT(t) :- reachableCM(_,m), staticTM(t,m).

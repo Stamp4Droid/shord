@@ -5,6 +5,11 @@ public class ListActivity
 {
     public  ListActivity() 
 	{
+        ListActivity.this.onListItemClick(null, null, 0, 0l);
+        ListActivity.this.onRestoreInstanceState(null);
+        ListActivity.this.onDestroy(); 
+        ListActivity.this.onContentChanged(); 
+
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
                 public void run() {

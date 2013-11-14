@@ -141,6 +141,7 @@ public class Activity
 	@STAMP(flows = {@Flow(from="!Activity",to="intent")})
 	public  void startActivityForResult(android.content.Intent intent, int requestCode) 
 	{ 
+		Activity.this.onActivityResult(0, 0, new android.content.Intent());
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {
@@ -152,6 +153,7 @@ public class Activity
 	@STAMP(flows = {@Flow(from="!Activity",to="intent")})
 	public  void startActivityForResult(android.content.Intent intent, int requestCode, android.os.Bundle options) 
 	{ 
+		Activity.this.onActivityResult(0, 0, new android.content.Intent());
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {
@@ -166,6 +168,7 @@ public class Activity
 	}
 
     public final void runOnUiThread(final java.lang.Runnable action) {
+		action.run();
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {

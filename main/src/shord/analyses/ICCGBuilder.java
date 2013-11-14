@@ -48,8 +48,8 @@ import java.io.*;
        produces={ "MC", "Callbacks", "MregI", "IntentTgtField", "ActionField" },
        namesOfTypes = { "M", "T", "I"},
        types = { DomM.class, DomT.class, DomI.class},
-       namesOfSigns = { "MC", "Callbacks", "MregI", "IntentTgtField", "ActionField" },
-       signs = { "M0,T0:M0_T0", "M0:M0", "M0,I0:M0_I0", "F0:F0", "F0:F0" }
+       namesOfSigns = { "MC", "Callbacks", "MregI", "IntentTgtField", "ActionField", "SpecM" },
+       signs = { "M0,T0:M0_T0", "M0:M0", "M0,I0:M0_I0", "F0:F0", "F0:F0", "M0:M0" }
        )
 public class ICCGBuilder extends JavaAnalysis
 {
@@ -57,6 +57,7 @@ public class ICCGBuilder extends JavaAnalysis
 	private ProgramRel relMC;
 	private ProgramRel relCallbacks;
 	private ProgramRel relMregI;
+	private ProgramRel relSpecM;
 
 	private int maxArgs = -1;
 	private FastHierarchy fh;
@@ -144,6 +145,9 @@ public class ICCGBuilder extends JavaAnalysis
         relMC.zero();
         relCallbacks.zero(); 
         relMregI.zero(); 
+        relSpecM = (ProgramRel) ClassicProject.g().getTrgt("SpecM");
+        relSpecM.zero();
+
     }
 
     void saveRels() 
@@ -151,6 +155,7 @@ public class ICCGBuilder extends JavaAnalysis
         relMC.save();
         relCallbacks.save(); 
         relMregI.save(); 
+        relSpecM.save();
     }
 
     public ICCGBuilder()
@@ -194,6 +199,10 @@ public class ICCGBuilder extends JavaAnalysis
     {
         if(!method.isConcrete())
             return;
+
+        //record special invocation.
+        if("void abortBroadcast()".equals(method.getSubSignature())) 
+            relSpecM.add(method);
 
         if(components.get(this.klass.getName()) != null) {
             String[] str = { "void onPostResume()",

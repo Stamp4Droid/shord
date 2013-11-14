@@ -110,6 +110,7 @@
 	  <sysproperty key="stamp.android.jar" value="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"/>
 	  <sysproperty key="stamp.framework.dir" value="${stamp.dir}/models/api-${apilevel}"/>
 	  <sysproperty key="stamp.icdf" value="${stamp.icdf}"/>
+	  <sysproperty key="stamp.app" value="${app}"/>
       <sysproperty key="stamp.droidrecord.logfile.template" value="${stamp.droidrecord.logfile.template}"/>
       <sysproperty key="stamp.droidrecord.logfile.bin" value="${stamp.droidrecord.logfile.bin}"/>
 	  <sysproperty key="stamp.print.allclasses" value="${stamp.print.allclasses}"/>
@@ -122,6 +123,7 @@
 		<pathelement location="${stamp.dir}/lib/stamp.chord.jar"/>
         <pathelement location="${stamp.dir}/lib/automaton.jar"/>
     	<pathelement location="${stamp.dir}/lib/droidrecord_reader.jar"/>
+		<pathelement location="${stamp.dir}/lib/sqlite-jdbc-3.7.2.jar"/>
       </classpath>
     </java>
 

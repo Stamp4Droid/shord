@@ -113,24 +113,24 @@ import java.util.*;
                         "Stub" },
 	   signs = { "V0,H0:V0_H0", "V0,V1:V0xV1",
 				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
-				 "V0,F0:F0_V0", "F0,V0:F0_V0",
+				 "V0,F0:F0_V0", "F0,V0:V0_F0",
 				 "M0,Z0,V0:M0_V0_Z0", "M0,Z0,V0:M0_V0_Z0",
 				 "I0,Z0,V0:I0_V0_Z0", "I0,Z0,V0:I0_V0_Z0",
 				 "V0,T0:T0_V0", "I0,M0:I0_M0",
 				 "H0,T0:H0_T0", "H0,T0:H0_T0",
 				 "M0,I0:M0_I0", "M0,H0:M0_H0",
-				 "M0,V0:M0_V0", "M0,U0:M0_U0",
+				 "M0,V0:V0_M0", "M0,U0:M0_U0",
 				 "U0,U1:U0xU1",
 				 "U0,V0,F0:U0_V0_F0", "V0,F0,U0:U0_V0_F0",
 				 "U0,F0:U0_F0", "F0,U0:U0_F0",
 				 "M0,Z0,U0:M0_U0_Z0", "M0,Z0,U0:M0_U0_Z0",
 				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0",
-				 "I0,M0:I0_M0", "I0,M0:I0_M0",
+				 "I0,M0:M0_I0", "I0,M0:M0_I0",
 				 "I0,M0:I0_M0", "M0,S0:M0_S0",
-				 "T0,S0,M0:T0_S0_M0", "V0,M0:V0_M0", 
+				 "T0,S0,M0:T0_M0_S0", "V0,M0:V0_M0", 
                  "T0:T0", "H0,T0:H0_T0",
                  "T0,T1:T0_T1", "T0,M0:T0_M0",
-                 "T0,F0:T0_F0", "T0,M0:T0_M0",
+                 "T0,F0:F0_T0", "T0,M0:T0_M0",
 				 "V0,H0:V0_H0", "T0,H0:T0_H0",
                  "M0:M0" }
 	   )
@@ -499,6 +499,8 @@ public class PAGBuilder extends JavaAnalysis
     }
 
 
+	public static GlobalStringNode gStringNode  = new GlobalStringNode();
+
 	class MethodPAGBuilder
 	{
 		private ThisVarNode thisVar;
@@ -627,7 +629,10 @@ public class PAGBuilder extends JavaAnalysis
 							unit2Node.put(s, n);
 							//save for targetAction rel.
 							action2Node.put(str, n);
-						}
+						}else{
+                            //use a global alloc.
+							unit2Node.put(s, PAGBuilder.gStringNode);
+                        }
 					}
 
 					if(rightOp instanceof AnyNewExpr) {
@@ -922,7 +927,10 @@ public class PAGBuilder extends JavaAnalysis
 					if(str.matches("[a-zA-Z]+\\.[a-zA-Z]+.*")){//end with uppercase word.
 						relVH.add(nodeFor((Local) leftOp), unit2Node.get(s));
 						Alloc(nodeFor((Local) leftOp), unit2Node.get(s));
-					}
+					} else {
+                    	relVH.add(nodeFor((Local) leftOp), PAGBuilder.gStringNode);
+						Alloc(nodeFor((Local) leftOp), PAGBuilder.gStringNode);
+                    }
 
 				}
 
@@ -1121,6 +1129,8 @@ public class PAGBuilder extends JavaAnalysis
 		domU = (DomU) ClassicProject.g().getTrgt("U");
 
 		Iterator mIt = Program.g().scene().getReachableMethods().listener();
+
+	    domH.add(PAGBuilder.gStringNode);
 		while(mIt.hasNext()){
 			SootMethod m = (SootMethod) mIt.next();
 			if(ignoreStubs){

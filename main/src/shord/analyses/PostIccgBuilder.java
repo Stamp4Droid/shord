@@ -76,7 +76,7 @@ import org.w3c.dom.Element;
        )
 */
 @Chord(name="post-java-iccg",
-       consumes={ "CallerComp", "CICM", "depComp", "CT", "flow"}
+       consumes={ "CallerComp", "depComp", "CT", "flow"}
        )
 
 public class PostIccgBuilder extends JavaAnalysis
@@ -257,8 +257,11 @@ public class PostIccgBuilder extends JavaAnalysis
 
 
     //dump out ICCG.
-    public void dump() {
+    public void dump() 
+    {
 	    ICCG iccg = new ICCG();
+		String appName = System.getProperty("stamp.app");
+        iccg.setAppName(appName);
         int cnt = 1;
 
         Iterator iter = components.entrySet().iterator();
@@ -332,6 +335,8 @@ public class PostIccgBuilder extends JavaAnalysis
         PrintWriter out = OutDirUtils.newPrintWriter(dotFilePath);
         out.println(iccg.getSignature());
         out.close();
+        //store in DB.
+        //iccg.updateDB();
     }
 
     private Map<String, Integer> depMap = new HashMap<String,Integer>();
@@ -535,11 +540,40 @@ public class PostIccgBuilder extends JavaAnalysis
 
 	}
 
+    //e.g. abortBroadcast()
+    private void getSpecCaller(ICCG ig)
+    {
+        final ProgramRel relSpecCaller = (ProgramRel)ClassicProject.g().getTrgt("SpecCallerComp");
+        Iterable<Pair<SootMethod,Type>> res = relSpecCaller.getAry2ValTuples();
+        Set<String> specCallSet = new HashSet<String>();
+        for(Pair<SootMethod,Type> pair : res) {
+            String meth = pair.val0.getSubSignature();
+            String comp = ((RefType)pair.val1).getClassName();
+            specCallSet.add(comp+"@"+meth);
+        }
+        ig.setSpecCall(specCallSet);
+    }
+
     
     private void plotFlow2Comp(ICCG ig)
     {
         final ProgramRel relCtxtFlows = (ProgramRel)ClassicProject.g().getTrgt("flow");
         final ProgramRel relCT = (ProgramRel)ClassicProject.g().getTrgt("CT");
+
+        final ProgramRel relCompFlows = (ProgramRel)ClassicProject.g().getTrgt("FlowComp");
+        Set<String> cpFlowSet = new HashSet<String>();
+        relCompFlows.load();
+        Iterable<Quad<Type,Pair<String,Ctxt>,Type,Pair<String,Ctxt>>> cflows = relCompFlows.getAry4ValTuples();
+        for(Quad<Type,Pair<String,Ctxt>,Type,Pair<String,Ctxt>> quad : cflows) {
+            String srcComp = ((RefType)quad.val0).getClassName();
+            String srctxt = quad.val1.val0;
+            String tgtComp = ((RefType)quad.val2).getClassName();
+            String sinktxt = quad.val3.val0;
+            cpFlowSet.add(srcComp + "@" + srctxt + "@" + tgtComp + "@"+ sinktxt);
+        }
+        System.out.println("NEW flows: " + cpFlowSet);
+        ig.setFlows(cpFlowSet);
+        relCompFlows.close();
 
         relCtxtFlows.load();
         relCT.load();

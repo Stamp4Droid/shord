@@ -10,13 +10,21 @@
 .include "C.dom"
 .include "H.dom"
 .include "F.dom"
+.include "CL.dom"
+.include "L.dom"
+.include "Z.dom"
 
-.bddvarorder M0xM1_I0_V0_C0xC1_H0_F0_T0_T1_T2
+.bddvarorder L0_M0xM1_I0_V0_C0xC1_H0_F0_T0_T1_T2_CL0_CL1_Z0
 
 MI(m:M,i:I) input         # stmt i belongs to method m.
 MC(m:M,c:T) input         # m is a method declared in a
 CM(c:C,m:M) input         # c is a context of method m.
 TargetHT(h:H,t:T) input   # StringConst corresponds to target of type t.
+
+flow(src:CL,sink:CL) input
+#CT(c:C,t:T) input         # c is a context in class t
+CCL(c:C,cl:CL) input 
+LCL(l:L,cl:CL) input
 
 CH(o:C,h:H) input         # context’ified abstract location o corresponds to new stmt h
 
@@ -28,7 +36,16 @@ pt(c:C,v:V,o:C)    input  # in context c, v points to o.
 fpt(o1:C,f:F,o2:C) input
 CICM(d:C,i:I,c:C,m:M)   input  # i in cotext d calls method m in context c.
 
+InLabelRet(l:L,m:M)           input
+InLabelArg(l:L,m:M,z:Z)       input
+OutLabelRet(l:L,m:M)          input
+OutLabelArg(l:L,m:M,z:Z)      input
+
+SpecM(m:M)           input
+
 IntentAlloc(h:H,s:T) 
+
+FlowComp(comp1:T, src:CL, comp2:T, sink:CL) output
 
 CallerComp(m:M,c:C,o:T)   output  # m is a method declared in c
 ICCG(s:T,t:T)  output
@@ -37,15 +54,22 @@ ICCG(s:T,t:T)  output
 ReachableComp(s:T,t:T)           # t is the node that can be reached by s.
 ConjunctSet(s:T,t:T,u:T)  output # u is the node that can be reached by both s and t.
 
+SpecCallerComp(m:M,c:T)  output  #special call, e.g, does component c invoke abortBroadcast?
+
 ###################
 #    RULES
 ###################
+#
+ML(m:M,l:L)
+MCL(m:M,c:C,cl:CL)
 
 IntentAlloc(h,s) :- CallerComp(_,k,s), CH(k,h).
+
 
 CallerComp(m,k,c) :- MC(m,c), CM(k,m).
 CallerComp(m2,k2,c) :- CallerComp(m1,k1,c), MI(m1,i), CICM(k1,i,k2,m2).
 
+SpecCallerComp(m,c) :- CallerComp(m,_,c), SpecM(m).
 #explicit intent
 #ICCG(s,h) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), CH(o,h2), IntentAlloc(h2,s), IntentTgtField(f), fpt(o,f,c), CH(c,h).
 #implicit intent
@@ -65,3 +89,16 @@ ReachableComp(s,t) :- ReachableComp(s,m), ReachableComp(m,t).
 
 ConjunctSet(s,t,u) :- ReachableComp(s,u), ReachableComp(t,u), ReachableComp(s,t), s!=t, u!=t.
 
+#FlowComp(comp1, src, comp2, sink) :- flow(src,sink), CCL(c,src), CCL(d, sink), CT(c,comp1),CT(d,comp2).
+#FlowComp(comp1, src, comp2, sink) :- flow(src,sink), CCL(c,src), CCL(d, sink), CallerComp(_,c,comp1),CallerComp(_,d,comp2).
+
+ML(m,l) :- InLabelRet(l,m).
+ML(m,l) :- InLabelArg(l,m,_).
+ML(m,l) :- OutLabelRet(l,m).
+ML(m,l) :- OutLabelArg(l,m,_).
+
+MCL(m,c,cl) :- LCL(l,cl), ML(m,l), CICM(_,_,c,m), CCL(c,cl).
+#MCL(m,c,cl) :- LCL(l,cl), ML(m,l), CM(c,m), CCL(c,cl).
+#now assume there is no inter-flow
+FlowComp(comp1, src, comp2, sink) :- flow(src,sink), MCL(m1,c,src), CallerComp(m1,c,comp1), MCL(m2,d, sink), CallerComp(m2,d,comp2), comp1=comp2.
+#FlowComp(comp1, src, comp2, sink) :- flow(src,sink), MCL(m1,c,src), CallerComp(m1,c,comp1), MCL(m2,d, sink), CallerComp(m2,d,comp2).

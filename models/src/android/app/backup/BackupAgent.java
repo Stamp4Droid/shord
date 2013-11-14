@@ -7,6 +7,15 @@ class BackupAgent
 	public  BackupAgent() 
 	{
 		super((android.content.Context)null); 
+        try{
+            BackupAgent.this.onCreate();
+            BackupAgent.this.onDestroy();
+            BackupAgent.this.onBackup(null, null, null);
+            BackupAgent.this.onRestore(null, 0, null);
+            BackupAgent.this.onFullBackup(null);
+            BackupAgent.this.onRestoreFile(null, 0L, null, 0, 0L, 0L);
+        }catch(IOException e){
+        }
 
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){

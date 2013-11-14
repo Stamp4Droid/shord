@@ -11,6 +11,7 @@ class ContentResolver
     }
 
 	public final  void registerContentObserver(android.net.Uri uri, boolean notifyForDescendents, final android.database.ContentObserver observer) { 
+		observer.onChange(true);
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {
