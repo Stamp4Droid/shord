@@ -1,7 +1,21 @@
 class View
 {
+
+
+    protected android.content.Context mContext;
+
+    public View(android.content.Context context, android.util.AttributeSet attrs) {
+        mContext = context;
+    }
+
+    public View(android.content.Context context, android.util.AttributeSet attrs, int defStyle) {
+        mContext = context;
+    }
+
 	public  View(android.content.Context context) 
 	{ 
+
+        mContext = context;
 
         View.this.onFinishInflate();
 
@@ -22,7 +36,6 @@ class View
         View.this.onAttachedToWindow();
         View.this.onDetachedFromWindow();
         View.this.onWindowVisibilityChanged(0);
-
 
 		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
 			registerCallback(new edu.stanford.stamp.harness.Callback(){
@@ -117,5 +130,8 @@ class View
 				});*/
 	}
 
+    public final android.content.Context getContext() {
+        return mContext;
+    }
 
 }
