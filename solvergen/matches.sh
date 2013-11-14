@@ -7,10 +7,11 @@ if [ $# -ne 3 ]; then
     exit 1
 fi
 GRAMMAR="$1"
+SOLVER="bin/$GRAMMAR#-DPATH_RECORDING"
 SYMBOL="$2"
 PATH_XML="$3"
 
-make -C "$SGEN_DIR" -s "bin/$GRAMMAR"
+make -C "$SGEN_DIR" -s "$SOLVER"
 
 TEMP_DIR="$(mktemp -d)"
 mkdir "$TEMP_DIR/input"
@@ -22,7 +23,7 @@ done < "$SGEN_DIR/gen/$GRAMMAR.terms.dat"
 
 CURR_DIR="$(pwd)"
 cd "$TEMP_DIR"
-"$SGEN_DIR/bin/$GRAMMAR"
+"$SGEN_DIR/$SOLVER"
 cd "$CURR_DIR"
 
 if "$SGEN_DIR/edge_exists.py" "$PATH_XML" "$TEMP_DIR/output/$SYMBOL.dat"; then

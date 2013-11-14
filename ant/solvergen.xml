@@ -74,8 +74,6 @@
 		  description="CFL Solver analysis to process"/>
     <prop-default property="stamp.solvergen.logging" default="true"
 		  description="whether to enable logging in the generated solver"/>
-    <prop-default property="stamp.solvergen.debug" default="true"
-		  description="whether to store debugging symbols in the generated solver"/>
     <prop-default property="stamp.solvergen.profiling" default="false"
 		  description="whether to enable profiling output for the generated solver"/>
     <prop-default property="stamp.solvergen.pathrecord" default="true"
@@ -86,8 +84,6 @@
     <!-- Set compiler flags. -->
     <prop-ite property="stamp.solvergen.logging.flag"
 	      condition="${stamp.solvergen.logging}" then="-DLOGGING" else=""/>
-    <prop-ite property="stamp.solvergen.debug.flag"
-	      condition="${stamp.solvergen.debug}" then="-g" else=""/>
     <prop-ite property="stamp.solvergen.profiling.flag"
 	      condition="${stamp.solvergen.profiling}"
 	      then="-DPROFILING" else=""/>
@@ -97,46 +93,27 @@
     <prop-ite property="stamp.solvergen.assertions.flag"
 	      condition="${stamp.solvergen.assertions}"
 	      then="" else="-DNDEBUG"/>
+    <property name="stamp.solvergen.flags"
+	      value="${stamp.solvergen.logging.flag}${stamp.solvergen.profiling.flag}${stamp.solvergen.pathrecord.flag}${stamp.solvergen.assertions.flag}"/>
 
-    <!-- Locate input files. -->
-    <property name="stamp.solvergen.analysis.cfg"
-	      location="${stamp.dir}/solvergen/analyses/${stamp.solvergen.analysis}.cfg"/>
-    <require-file file="${stamp.solvergen.analysis.cfg}"/>
-
-    <!-- Produce CFL Solver code from the input grammar. -->
-    <exec executable="python" spawn="false" failonerror="true">
-      <arg file="${stamp.dir}/solvergen/cfg_parser.py"/>
-      <arg file="${stamp.solvergen.analysis.cfg}"/>
-      <arg file="${stamp.out.dir}"/>
+    <!-- Compile and link the analysis code with the CFL Solver engine. -->
+    <property name="stamp.solvergen.solver"
+	      value="bin/${stamp.solvergen.analysis}#${stamp.solvergen.flags}"/>
+    <exec executable="make" dir="${stamp.dir}/solvergen"
+	  spawn="false" failonerror="true">
+      <arg value="${stamp.solvergen.solver}"/>
     </exec>
 
     <!-- Locate output files. -->
-    <property name="stamp.solvergen.analysis.cpp"
-	      location="${stamp.out.dir}/${stamp.solvergen.analysis}.cpp"/>
     <property name="stamp.solvergen.executable"
-	      location="${stamp.out.dir}/${stamp.solvergen.analysis}"/>
+	      location="${stamp.dir}/solvergen/${stamp.solvergen.solver}"/>
     <property name="stamp.solvergen.terms.listfile"
-	      location="${stamp.out.dir}/${stamp.solvergen.analysis}.terms.dat"/>
+	      location="${stamp.dir}/solvergen/gen/${stamp.solvergen.analysis}.terms.dat"/>
     <property name="stamp.solvergen.rels.listfile"
-	      location="${stamp.out.dir}/${stamp.solvergen.analysis}.rels.dat"/>
-    <require-file file="${stamp.solvergen.analysis.cpp}"/>
+	      location="${stamp.dir}/solvergen/gen/${stamp.solvergen.analysis}.rels.dat"/>
+    <require-file file="${stamp.solvergen.executable}"/>
     <require-file file="${stamp.solvergen.terms.listfile}"/>
     <require-file file="${stamp.solvergen.rels.listfile}"/>
-
-    <!-- Compile and link the analysis code with the CFL Solver engine. -->
-    <exec executable="g++-4.8" dir="${stamp.out.dir}"
-	  spawn="false" failonerror="true">
-      <arg line="-std=c++11 -Wall -Wextra -pedantic -O2"/>
-      <arg line="${stamp.solvergen.logging.flag}"/>
-      <arg line="${stamp.solvergen.debug.flag}"/>
-      <arg line="${stamp.solvergen.profiling.flag}"/>
-      <arg line="${stamp.solvergen.pathrecord.flag}"/>
-      <arg line="${stamp.solvergen.assertions.flag}"/>
-      <arg value="-o"/><arg file="${stamp.solvergen.executable}"/>
-      <arg value="-I"/><arg file="${stamp.dir}/solvergen"/>
-      <arg file="${stamp.dir}/solvergen/engine.cpp"/>
-      <arg file="${stamp.solvergen.analysis.cpp}"/>
-    </exec>
   </target>
 
   <target name="doc-solvergen">
