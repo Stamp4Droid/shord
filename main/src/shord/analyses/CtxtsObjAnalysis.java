@@ -242,6 +242,10 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
         for (int hIdx = 0; hIdx < numA; hIdx++) {//why chord uses 1?
             int mIdx = HtoM[hIdx];
 			AllocNode alloc = HtoQ[hIdx];
+
+            //ignore the context of gString.
+            if(alloc instanceof GlobalStringNode) continue;
+
             Set<Ctxt> ctxts = methToCtxts[mIdx];
             assert(ctxts != null);
             for (Ctxt oldCtxt : ctxts) {

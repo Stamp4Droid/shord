@@ -54,6 +54,7 @@ import java.io.*;
 public class ICCGBuilder extends JavaAnalysis
 {
 
+    private	DomM domM;
 	private ProgramRel relMC;
 	private ProgramRel relCallbacks;
 	private ProgramRel relMregI;
@@ -167,6 +168,7 @@ public class ICCGBuilder extends JavaAnalysis
         ParseManifest pmf = new ParseManifest();
         pmf.extractComponents(manifestFile, components);
 	    pkgName = pmf.getPkgName();
+        System.out.println("Current components: " + components);
     }
 
 
@@ -282,14 +284,8 @@ public class ICCGBuilder extends JavaAnalysis
 
 	}
 
-
-    private	DomM domM;
-
     public void run()
     {
-        //Program program = Program.g();
-        //program.buildCallGraph();
-        //fh = Program.g().scene().getOrMakeFastHierarchy();
         openRels();
         fillCallback();
         populateMregI();
@@ -300,9 +296,6 @@ public class ICCGBuilder extends JavaAnalysis
             this.visit(klass);
         }
         saveRels();
-
-        //fh = null;
-
     }
 
 

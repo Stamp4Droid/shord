@@ -922,9 +922,7 @@ public class PAGBuilder extends JavaAnalysis
                         }
 						relVH.add(nodeFor((Local) leftOp), unit2Node.get(s));
 						Alloc(nodeFor((Local) leftOp), unit2Node.get(s));
-					}
-					//if(str.matches("android.intent.action.*|android.provider.*")){
-					if(str.matches("[a-zA-Z]+\\.[a-zA-Z]+.*")){//end with uppercase word.
+					}else if(str.matches("[a-zA-Z]+\\.[a-zA-Z]+.*")){//end with uppercase word.
 						relVH.add(nodeFor((Local) leftOp), unit2Node.get(s));
 						Alloc(nodeFor((Local) leftOp), unit2Node.get(s));
 					} else {

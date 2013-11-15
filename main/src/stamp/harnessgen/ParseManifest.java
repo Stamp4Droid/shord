@@ -219,6 +219,7 @@ public class ParseManifest
                     if(n.getNodeName().equals("android:name")){
                         name = n.getNodeValue();
 
+                        //get component node.
                         Node mainNode = mynode.getParentNode().getParentNode();
                         NamedNodeMap nnm1 = mainNode.getAttributes();
                         String actname = null;
@@ -233,7 +234,19 @@ public class ParseManifest
                                 break;
                             }
                         }
-                        //break;
+                        //get priority from intent filter, if any.
+                        Node filterNode = mynode.getParentNode();
+                        NamedNodeMap filterMap = filterNode.getAttributes();
+                        for(int k = 0; k < filterMap.getLength(); k++){
+                            Node fn = filterMap.item(k);
+                            if(fn.getNodeName().equals("android:priority")) {
+                                String priority = fn.getNodeValue();
+                                assert(actname != null);
+                                activities.get(fixName(actname)).addFilter(priority);
+                                break;
+                            }
+                        }
+
                     }
                     //System.out.println(n.getNodeName() + " " + );
                 }			

@@ -330,13 +330,15 @@ public class PostIccgBuilder extends JavaAnalysis
 		//relICCGImp.close();
         findExtra(iccg);
         genPermission(iccg);
+        getSpecCaller(iccg);
+        getIntentFilter(iccg);
         plotFlow2Comp(iccg);
 		//System.out.println(iccg.getSignature());
         PrintWriter out = OutDirUtils.newPrintWriter(dotFilePath);
         out.println(iccg.getSignature());
         out.close();
         //store in DB.
-        //iccg.updateDB();
+        iccg.updateDB();
     }
 
     private Map<String, Integer> depMap = new HashMap<String,Integer>();
@@ -544,6 +546,7 @@ public class PostIccgBuilder extends JavaAnalysis
     private void getSpecCaller(ICCG ig)
     {
         final ProgramRel relSpecCaller = (ProgramRel)ClassicProject.g().getTrgt("SpecCallerComp");
+        relSpecCaller.load();
         Iterable<Pair<SootMethod,Type>> res = relSpecCaller.getAry2ValTuples();
         Set<String> specCallSet = new HashSet<String>();
         for(Pair<SootMethod,Type> pair : res) {
@@ -552,9 +555,43 @@ public class PostIccgBuilder extends JavaAnalysis
             specCallSet.add(comp+"@"+meth);
         }
         ig.setSpecCall(specCallSet);
+        relSpecCaller.close();
     }
 
     
+    private void getIntentFilter(ICCG ig)
+    {
+        Set<String> filterList = new HashSet<String>();
+		String pkgName = ICCGBuilder.pkgName;
+		Collection compNodes = ICCGBuilder.components.values();
+        for(Object node : compNodes){
+            XmlNode comp = (XmlNode) node;
+            String nodeName = comp.getName();
+
+            if(nodeName.indexOf(".") == 0) nodeName = pkgName +  nodeName;
+            if(nodeName.indexOf(".") == -1) nodeName = pkgName + "." +  nodeName;
+
+            //pick up the maximum priority.
+            int max = 0;
+            String action = "";
+            for(String priority : comp.getFilterList()){
+                int p = Integer.parseInt(priority);
+                if(p > max) max = p;
+            }
+
+            //union all the action strings.
+            for(String actionName : comp.getActionList()){
+                action += actionName;
+            }
+
+            filterList.add(nodeName + "@" + action + "@" + String.valueOf(max));
+
+        }
+
+        System.out.println("Filterlist: " + filterList);
+        ig.setFilterList(filterList);
+    }
+
     private void plotFlow2Comp(ICCG ig)
     {
         final ProgramRel relCtxtFlows = (ProgramRel)ClassicProject.g().getTrgt("flow");

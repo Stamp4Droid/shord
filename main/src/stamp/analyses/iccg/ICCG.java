@@ -19,6 +19,7 @@ public class ICCG
     private List<ICCGNode> nodes;
     Set<String> cpFlows = new HashSet<String>();
     Set<String> specCallSet = new HashSet<String>();
+    Set<String> filterList = new HashSet<String>();
 
     ///All external or unknown nodes share 1 instance.
     private static ICCGNode unknownNode = new ICCGNode(); 
@@ -76,6 +77,11 @@ public class ICCG
     public void setSpecCall(Set<String> spec)
     {
         specCallSet = spec;
+    }
+
+    public void setFilterList(Set<String> filters)
+    {
+        filterList = filters;
     }
 
     public void setAppName(String name)
@@ -192,12 +198,14 @@ public class ICCG
 
             //insert nodes
             for(ICCGNode nd : nodes ){
-                statement.executeUpdate("insert into node values(?, '"+nd.getComptName()+"', '"+nd.getType()+"', "+iccgId+")");
+                statement.executeUpdate("insert into node values(?, '"
+                        +nd.getComptName()+"', '"+nd.getType()+"', "+iccgId+")");
                 int nodeId = getRowid(statement);
                 nd.setRowid(nodeId);
                 //insert permission
                 for(String per: nd.getPermission()){
-                    statement.executeUpdate("insert into permission values(?, '" + per +"', "+nodeId+ ","+iccgId+")");
+                    statement.executeUpdate("insert into permission values(?, '" 
+                            + per +"', "+nodeId+ ","+iccgId+")");
                 }
                 //insert src-sink
                 for(String srcSink : cpFlows){
@@ -207,13 +215,27 @@ public class ICCG
                     String src = flowSet[1];
                     int tgtId = getNode(flowSet[2]).getRowid();
                     String sink = flowSet[3];
-                    statement.executeUpdate("insert into flow values(?, '" +src +"', '"+sink+"', "+srcId+", "+tgtId+","+iccgId+")");
+                    statement.executeUpdate("insert into flow values(?, '" 
+                        +src +"', '"+sink+"', "+srcId+", "+tgtId+","+iccgId+")");
                 }
             }
 
-            //insert callerCamp. TBD
-            
+            //insert callerCamp. 
+            for(String pair: specCallSet){
+                String[] callSet = pair.split("@");
+                int compId = getNode(callSet[0]).getRowid();
+                String meth = callSet[1];
+                statement.executeUpdate("insert into callerComp values(?, "+iccgId+", "+compId+", '"+meth+"')");
+            }
             //insert intent filter. TBD
+            for(String filter : filterList){
+                String[] filterSet = filter.split("@");
+                int compId = getNode(filterSet[0]).getRowid();
+                String action = filterSet[1];
+                int priority = Integer.parseInt(filterSet[2]);
+
+                statement.executeUpdate("insert into intentFilter values(?, '"+action+"', "+priority+", "+compId+", "+iccgId+")");
+            }
 
             //insert edges
             for(ICCGEdge ed : edges){
