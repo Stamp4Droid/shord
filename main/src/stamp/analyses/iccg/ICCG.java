@@ -207,17 +207,19 @@ public class ICCG
                     statement.executeUpdate("insert into permission values(?, '" 
                             + per +"', "+nodeId+ ","+iccgId+")");
                 }
-                //insert src-sink
-                for(String srcSink : cpFlows){
-                    String[] flowSet = srcSink.split("@");
-                    //remove "$" and "!".
-                    int srcId = getNode(flowSet[0]).getRowid();
-                    String src = flowSet[1];
-                    int tgtId = getNode(flowSet[2]).getRowid();
-                    String sink = flowSet[3];
-                    statement.executeUpdate("insert into flow values(?, '" 
-                        +src +"', '"+sink+"', "+srcId+", "+tgtId+","+iccgId+")");
-                }
+            }
+
+            //insert src-sink
+            for(String srcSink : cpFlows){
+                String[] flowSet = srcSink.split("@");
+                //remove "$" and "!".
+                int srcId = getNode(flowSet[0]).getRowid();
+                String src = flowSet[1];
+                int tgtId = getNode(flowSet[2]).getRowid();
+                String sink = flowSet[3];
+                System.out.println("MYflow:" + src + "||"+srcId);
+                statement.executeUpdate("insert into flow values(?, '" 
+                    +src +"', '"+sink+"', "+srcId+", "+tgtId+","+iccgId+")");
             }
 
             //insert callerCamp. 

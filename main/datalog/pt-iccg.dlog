@@ -102,5 +102,5 @@ ML(m,l) :- OutLabelArg(l,m,_).
 MCL(m,c,cl) :- LCL(l,cl), ML(m,l), CICM(_,_,c,m), CCL(c,cl).
 #MCL(m,c,cl) :- LCL(l,cl), ML(m,l), CM(c,m), CCL(c,cl).
 #now assume there is no inter-flow
-#FlowComp(comp1, src, comp2, sink) :- flow(src,sink), MCL(m1,c,src), CallerComp(m1,c,comp1), MCL(m2,d, sink), CallerComp(m2,d,comp2), comp1=comp2.
-FlowComp(comp1, src, comp2, sink) :- flow(src,sink), MCL(m1,c,src), CallerComp(m1,c,comp1), MCL(m2,d, sink), CallerComp(m2,d,comp2).
+FlowComp(comp1, src, comp2, sink) :- flow(src,sink), MCL(m1,c,src), CallerComp(m1,c,comp1), MCL(m2,d, sink), CallerComp(m2,d,comp2), comp1=comp2.
+#FlowComp(comp1, src, comp2, sink) :- flow(src,sink), MCL(m1,c,src), CallerComp(m1,c,comp1), MCL(m2,d, sink), CallerComp(m2,d,comp2).

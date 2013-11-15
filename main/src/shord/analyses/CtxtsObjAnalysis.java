@@ -47,7 +47,7 @@ import chord.util.tuple.object.Pair;
  */
 @Chord(name = "ctxts-obj-java",
        consumes = { "MI", "VH", "MH", "ipt", "StatIM"},
-       produces = { "C", "CC", "CH", "CI", "CM", "CT" },
+       produces = { "C", "CC", "CH", "CI"},
        namesOfTypes = { "C" },
        types = { DomC.class }
 )
@@ -261,55 +261,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
         assert (domC.size() == numC);
 
         relCC.save();
-
-        CM();
     }
-
-    private void CM()
-	{
-		ProgramRel relCM = (ProgramRel) ClassicProject.g().getTrgt("CM");
-		relCM.zero();
-        ProgramRel relCT = (ProgramRel) ClassicProject.g().getTrgt("CT");
-        relCT.zero();
-
-        for (int mIdx = 0; mIdx < methToCtxts.length; mIdx++) {
-            SootMethod meth = (SootMethod) domM.get(mIdx);
-			Set<Ctxt> ctxts = methToCtxts[mIdx];
-			if(ctxts == null){
-				//either meth is unreachable or a reachable stub
-				continue;
-			}
-			for(Ctxt c : ctxts){
-				relCM.add(c, meth);
-
-                //check whether we can add it to CT.
-                for(Object elem : c.getElems()){
-                    if(elem instanceof Unit){
-                        SootMethod mt = Program.containerMethod((Stmt)elem);
-                        if(mt != null){
-                            RefType t = mt.getDeclaringClass().getType();
-                            if(ICCGBuilder.components.get(t.getClassName())!=null){
-                                relCT.add(c,t);
-                                break;
-                            }
-                        }
-                    } else {
-                        Type t = ((AllocNode)elem).getType();
-                        //RefType t = (RefType)((AllocNode)elem).getType();
-                        if(!(t instanceof RefType)) continue;
-                        if(ICCGBuilder.components.get(((RefType)t).getClassName())!=null){
-                            relCT.add(c,t);
-                            break;
-                        }
-                    }
-                }
-
-			}
-		}
-		relCT.save();
-		relCM.save();
-	}
-
 
     private void doAnalysis() {
         SootMethod mainMeth = Program.g().getMainMethod();

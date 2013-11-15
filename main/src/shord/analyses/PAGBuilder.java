@@ -125,7 +125,7 @@ import java.util.*;
 				 "U0,F0:U0_F0", "F0,U0:U0_F0",
 				 "M0,Z0,U0:M0_U0_Z0", "M0,Z0,U0:M0_U0_Z0",
 				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0",
-				 "I0,M0:M0_I0", "I0,M0:M0_I0",
+				 "I0,M0:I0_M0", "I0,M0:I0_M0",
 				 "I0,M0:I0_M0", "M0,S0:M0_S0",
 				 "T0,S0,M0:T0_M0_S0", "V0,M0:V0_M0", 
                  "T0:T0", "H0,T0:H0_T0",

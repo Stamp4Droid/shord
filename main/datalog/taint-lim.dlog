@@ -38,7 +38,7 @@ returnPrim(u:U,v:U,i:I) input # u: lhs at callsite, v: return var, i: invocation
 
 MU(m:M,u:U) input # u is a prim type variable in m
 MV(m:M,v:V) input # v is a ref type variable in m
-CM(c:C,m:M) input # c is a context of method m
+#CM(c:C,m:M) input # c is a context of method m
 CI(c:C,i:I) input # stmt i is the top element in the k-limited callstack c
 CC(c:C,d:C) input # there exists i s.t. c++[i] = d
 

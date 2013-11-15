@@ -65,18 +65,8 @@ import org.w3c.dom.Element;
   * Search for implicit intent.
   **/
 
-/*
 @Chord(name="post-java-iccg",
-       //consumes={ "CallerComp", "CICM" },
-       consumes={ "CallerComp", "CICM", "depComp" },
-       namesOfTypes = { "M", "T", "C", "I"},
-       types = { DomM.class, DomT.class, DomC.class, DomI.class},
-       namesOfSigns = { "CalledComp", "CICM", "ICCG", "ICCGImp" },
-       signs = { "M0,C0,T0:M0_C0_T0", "C0,I0,C1,M0:C0_I0_C1_M0", "T0,H0:T0_H0", "T0,T1:T0_T1" }
-       )
-*/
-@Chord(name="post-java-iccg",
-       consumes={ "CallerComp", "depComp", "CT", "flow"}
+       consumes={ "CallerComp", "flow"}
        )
 
 public class PostIccgBuilder extends JavaAnalysis
@@ -117,49 +107,7 @@ public class PostIccgBuilder extends JavaAnalysis
 		manifest.extractComponents(manifestFile, components);
 		pkgName = manifest.getPkgName();
 
-        /*
-
-		//plot every node to graph + unknown.
-		Iterator iter = components.entrySet().iterator();
-		while (iter.hasNext()) {
-			Map.Entry entry = (Map.Entry) iter.next();
-			String key = (String)entry.getKey();
-			XmlNode val = (XmlNode)entry.getValue();
-			String nodeName = val.getName();
-			System.out.println("nodeinfo:" + val.getName() +" "+ val.getType()+" " + val.getPermission()+ " " 
-				+ val.getMain() + val.getIntentFilter());
-
-			if(nodeName.indexOf(".") == 0) nodeName = pkgName +  nodeName;
-			if(nodeName.indexOf(".") == -1) nodeName = pkgName + "." +  nodeName;
-
-			ICCGNode iNode = new ICCGNode(nodeName);
-			iNode.setMain(val.getMain());
-			iNode.setType(val.getType());
-			iNode.setIntentFilter(val.getIntentFilter());
-
-			if (val.getMain()) {
-				iNode.setShape("diamond");
-			} else if("activity".equals(val.getType())) {
-				iNode.setShape("ellipse");
-			} else if("service".equals(val.getType())) {
-				iNode.setShape("box");
-			} else if("receiver".equals(val.getType())) {
-				iNode.setShape("box");
-			}
-			iccg.addNode(iNode);
-		}
-
-		//create unknown node.
-		ICCGNode unknownNode = new ICCGNode("unknown");
-		unknownNode.setShape("box");
-		iccg.addNode(unknownNode);
-
-		ICCGNode notFoundNode = new ICCGNode("targetNotFound");
-		notFoundNode.setShape("box");
-		iccg.addNode(notFoundNode);
-        */
-
-	}
+   	}
 
    	void genPermission(ICCG ig)
 	{
@@ -327,13 +275,11 @@ public class PostIccgBuilder extends JavaAnalysis
 
 
 		relICCG.close();
-		//relICCGImp.close();
-        findExtra(iccg);
+        //findExtra(iccg);
         genPermission(iccg);
         getSpecCaller(iccg);
         getIntentFilter(iccg);
         plotFlow2Comp(iccg);
-		//System.out.println(iccg.getSignature());
         PrintWriter out = OutDirUtils.newPrintWriter(dotFilePath);
         out.println(iccg.getSignature());
         out.close();
@@ -376,7 +322,7 @@ public class PostIccgBuilder extends JavaAnalysis
 	    //output dotty.
 		parsePermission();
         dump();
-        compDepend();
+        //compDepend();
         //genGraph();
 	}
     
@@ -594,9 +540,6 @@ public class PostIccgBuilder extends JavaAnalysis
 
     private void plotFlow2Comp(ICCG ig)
     {
-        final ProgramRel relCtxtFlows = (ProgramRel)ClassicProject.g().getTrgt("flow");
-        final ProgramRel relCT = (ProgramRel)ClassicProject.g().getTrgt("CT");
-
         final ProgramRel relCompFlows = (ProgramRel)ClassicProject.g().getTrgt("FlowComp");
         Set<String> cpFlowSet = new HashSet<String>();
         relCompFlows.load();
@@ -608,9 +551,12 @@ public class PostIccgBuilder extends JavaAnalysis
             String sinktxt = quad.val3.val0;
             cpFlowSet.add(srcComp + "@" + srctxt + "@" + tgtComp + "@"+ sinktxt);
         }
-        System.out.println("NEW flows: " + cpFlowSet);
         ig.setFlows(cpFlowSet);
         relCompFlows.close();
+
+        /*
+        final ProgramRel relCtxtFlows = (ProgramRel)ClassicProject.g().getTrgt("flow");
+        final ProgramRel relCT = (ProgramRel)ClassicProject.g().getTrgt("CT");
 
         relCtxtFlows.load();
         relCT.load();
@@ -647,6 +593,7 @@ public class PostIccgBuilder extends JavaAnalysis
         ig.setFlow(flowSet);
 	    relCT.close();
 	    relCtxtFlows.close();
+        */
 
     }
 
