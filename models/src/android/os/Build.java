@@ -67,7 +67,7 @@ public class Build
         static { 
             INCREMENTAL = null; 
             RELEASE = null; 
-            SDK = taintedSDK(); 
+            //SDK = taintedSDK(); 
             SDK_INT = 0; 
             CODENAME = null; 
         }
@@ -125,25 +125,32 @@ public class Build
     public static final java.lang.String HOST;*/
 
     static { 
-        ID = taintedId(); 
+        //ID = taintedId(); 
+        ID = null;
         DISPLAY = null; 
         PRODUCT = null; 
         DEVICE = null; 
         BOARD = null; 
-        CPU_ABI = taintedCPU(); 
+        CPU_ABI = null;
+        //CPU_ABI = taintedCPU(); 
         CPU_ABI2 = null; 
-        MANUFACTURER = taintedManufact(); 
-        BRAND = taintedBrand(); 
-        MODEL = taintedModel(); 
+        MANUFACTURER = null;
+        //BRAND = taintedBrand(); 
+        BRAND = null;
+        //MODEL = taintedModel(); 
+        MODEL = null;
         BOOTLOADER = null; 
         RADIO = null; 
         HARDWARE = null; 
-        SERIAL = taintedSerial(); 
+        SERIAL = null;
+        //SERIAL = taintedSerial(); 
         TYPE = null; 
         TAGS = null; 
-        FINGERPRINT = taintedFinger(); 
+        FINGERPRINT = null;
+        //FINGERPRINT = taintedFinger(); 
         TIME = 0; 
         USER = null; 
-        HOST = taintedHost(); 
+        HOST = null;
+        //HOST = taintedHost(); 
     }
 }
