@@ -284,7 +284,6 @@ public class PostIccgBuilder extends JavaAnalysis
         out.println(iccg.getSignature());
         out.close();
         //store in DB.
-        //
         iccg.updateDB();
     }
 

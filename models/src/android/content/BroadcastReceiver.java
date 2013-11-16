@@ -6,7 +6,7 @@ class BroadcastReceiver
 	public  BroadcastReceiver() 
 	{ 
 
-		BroadcastReceiver.this.onReceive(null, new android.content.Intent());
+		BroadcastReceiver.this.onReceive(new android.content.ContextWrapper(null), new android.content.Intent());
 		/*ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {
