@@ -65,7 +65,7 @@ public class StaticFieldAnnotation extends AnnotationInjector.Visitor
     private Local insertLabelIfNecessary(String strConst, Chain<Local> locals, Chain<Unit> units, Unit currentStmt)
     {
 		SootMethod meth = getOrCreateLabelMethodFor(strConst);
-		Local temp = Jimple.v().newLocal("stamp$stamp$tmp"+newLocalCount++, 
+		Local temp = Jimple.v().newLocal("stamp$stamp$static$tmp"+newLocalCount++, 
 										 RefType.v("java.lang.String"));
 		locals.add(temp);
 		Stmt toInsert = Jimple.v().newAssignStmt(temp, Jimple.v().newStaticInvokeExpr(meth.makeRef(), StringConstant.v(strConst)));
@@ -80,7 +80,7 @@ public class StaticFieldAnnotation extends AnnotationInjector.Visitor
 		if(meth == null){
 			RefType stringType = RefType.v("java.lang.String");
 			List paramTypes = Arrays.asList(new Type[]{stringType});
-			String methName = "stamp$stamp$"+srcLabelToLabelMethod.size();
+			String methName = "stamp$stamp$static$"+srcLabelToLabelMethod.size();
 			meth = new SootMethod(methName, paramTypes, stringType, Modifier.STATIC | Modifier.PRIVATE);
 			klass.addMethod(meth);
 			srcLabelToLabelMethod.put(label, meth);
