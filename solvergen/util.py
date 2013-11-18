@@ -1,4 +1,9 @@
+import errno
+from itertools import izip, count
 import os
+import re
+import string
+import xml.etree.ElementTree as ET
 
 class FinalAttrs(object):
     """
@@ -276,6 +281,123 @@ def idx2char(idx):
     assert idx >= 0 and idx < 26
     return chr(ord('a') + idx)
 
+def enum(*sequential, **named):
+    enums = dict(zip(sequential, range(len(sequential))), **named)
+    return type('Enum', (), enums)
+
 def switch_dir(src_file, tgt_dir, new_ext):
     base = os.path.basename(os.path.splitext(src_file)[0])
     return os.path.join(tgt_dir, base + '.' + new_ext)
+
+def mkdir(path):
+    try:
+        os.mkdir(path)
+    except OSError as exc:
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else:
+            raise
+
+class DomMap(FinalAttrs):
+    def __init__(self, map_file):
+        self._idx2val = []
+        self._val2idx = OrderedMultiDict()
+        for (idx, line) in izip(count(), map_file):
+            val = line[:-1]
+            self._idx2val.append(val)
+            # XXX: It turns out, "unique" strings aren't always so
+            # assert val not in self._val2idx
+            self._val2idx.append(val, idx)
+
+    def idx2val(self, idx):
+        return self._idx2val[idx]
+
+    def val2idx(self, val):
+        return self._val2idx.get(val)
+
+    def __iter__(self):
+        for val in self._idx2val:
+            yield val
+
+class Edge(Hashable):
+    def __init__(self, symbol, src, dst, index):
+        self.symbol = symbol
+        self.src = src
+        self.dst = dst
+        self.index = index
+
+    def __key__(self):
+        return (self.symbol, self.src, self.dst, self.index)
+
+    def to_tuple(self):
+        return ('%s %s%s' %
+                (self.src, self.dst,
+                 '' if self.index is None else (' %s' % self.index)))
+
+    def to_file_base(self):
+        index_str = '' if self.index is None else ('[%s]' % self.index)
+        return ('%s%s.%s-%s' % (self.symbol, index_str, self.src, self.dst))
+
+    def is_terminal(self):
+        return self.symbol[0] in string.ascii_lowercase
+
+    @staticmethod
+    def from_path_node(node):
+        src = node.attrib['from']
+        dst = node.attrib['to']
+        index = node.get('index')
+        if node.tag == 'NTStep' or node.tag == 'TempStep':
+            edge = Edge(node.attrib['symbol'], src, dst, index)
+            assert not edge.is_terminal()
+        else:
+            assert list(node) == []
+            edge = Edge(node.tag, src, dst, index)
+            assert edge.is_terminal()
+        return edge
+
+    @staticmethod
+    def from_file_base(base):
+        m = re.match(r'(\w+)(?:\[([0-9]+)\])?\.(\w+)-(\w+)', base)
+        return Edge(m.group(1), m.group(3), m.group(4), m.group(2))
+
+class Step(FinalAttrs):
+    def __init__(self, reverse, edge):
+        assert edge.is_terminal()
+        self.reverse = reverse
+        self.edge = edge
+
+    def __str__(self):
+        return ('%s %s %s %s%s'
+                % ('REV' if self.reverse else 'STR', self.edge.symbol,
+                   self.edge.src, self.edge.dst,
+                   '' if self.edge.index is None else (' ' + self.edge.index)))
+
+    @staticmethod
+    def from_string(str):
+        step_pat = r'^(STR|REV) ([a-z]\w*) (\w+) (\w+)(?: ([0-9]+))?$'
+        m = re.match(step_pat, str)
+        assert m is not None
+        edge = Edge(m.group(2), m.group(3), m.group(4), m.group(5))
+        return Step(m.group(1) == 'REV', edge)
+
+class PathTree(FinalAttrs):
+    def __init__(self, path_xml_file):
+        root_node = ET.parse(path_xml_file).getroot()
+        assert root_node.tag == 'path'
+        assert len(list(root_node)) == 1
+        self._top_node = root_node[0]
+        assert self._top_node.tag == 'NTStep'
+
+    def top_edge(self):
+        return Edge.from_path_node(self._top_node)
+
+    def walk(self, handle):
+        def process(node, reverse):
+            reverse = reverse ^ (node.attrib['reverse'] == 'true')
+            edge = Edge.from_path_node(node)
+            if edge.is_terminal():
+                handle(Step(reverse, edge))
+            else:
+                for child in (reversed(node) if reverse else node):
+                    process(child, reverse)
+        process(self._top_node, False)

@@ -1,25 +1,19 @@
 #!/usr/bin/env python
 
 import argparse
+import os
+import re
 import sys
-import xml.etree.ElementTree as ET
+import util
 
 parser = argparse.ArgumentParser()
-parser.add_argument('path_xml_file')
+parser.add_argument('path_or_trace')
 parser.add_argument('dat_file', type=argparse.FileType('r'))
 args = parser.parse_args()
 
-tree = ET.parse(args.path_xml_file)
-root = tree.getroot()
-assert root.tag == 'path'
-assert len(list(root)) == 1
-top_edge = root[0]
-assert top_edge.tag == 'NTStep'
-src = top_edge.attrib['from']
-dst = top_edge.attrib['to']
-index = top_edge.get('index')
-to_find = '%s %s%s\n' % (src, dst, '' if index is None else (' %s' % index))
-
+m = re.match(r'^(.*)\.[0-9]+\.(xml|tr)$', os.path.basename(args.path_or_trace))
+edge = util.Edge.from_file_base(m.group(1))
+to_find = edge.to_tuple() + '\n'
 for line in args.dat_file:
     if line == to_find:
         sys.exit(0)
