@@ -203,7 +203,9 @@ public class ICCGBuilder extends JavaAnalysis
             return;
 
         //record special invocation.
-        if("void abortBroadcast()".equals(method.getSubSignature())) 
+        if(
+            "void abortBroadcast()".equals(method.getSubSignature())
+            || "java.lang.Process exec(java.lang.String)".equals(method.getSubSignature()) ) 
             relSpecM.add(method);
 
         if(components.get(this.klass.getName()) != null) {
