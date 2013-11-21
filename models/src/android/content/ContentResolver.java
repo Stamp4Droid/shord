@@ -35,4 +35,25 @@ class ContentResolver
 		return new java.io.StampOutputStream();
     }
 
+	@STAMP(flows={@Flow(from="url",to="!Content.Delete")})
+    public final int delete(android.net.Uri url, java.lang.String where, java.lang.String[] selectionArgs) {
+        throw new RuntimeException("Stub!");
+    }
+
+	@STAMP(flows={@Flow(from="uri",to="!Content.Update")})
+    public final int update(android.net.Uri uri, android.content.ContentValues values, java.lang.String where, java.lang.String[] selectionArgs) {
+        throw new RuntimeException("Stub!");
+    }
+
+	@STAMP(flows={@Flow(from="url",to="!Content.Insert")})
+    public final int bulkInsert(android.net.Uri url, android.content.ContentValues[] values) {
+        throw new RuntimeException("Stub!");
+    }
+
+	@STAMP(flows={@Flow(from="url",to="!Content.Insert")})
+    public final android.net.Uri insert(android.net.Uri url, android.content.ContentValues values) {
+        throw new RuntimeException("Stub!");
+    }
+
+
 }

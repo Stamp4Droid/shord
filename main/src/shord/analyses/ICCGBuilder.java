@@ -202,10 +202,22 @@ public class ICCGBuilder extends JavaAnalysis
         if(!method.isConcrete())
             return;
 
+            
+        String[] callerComp = {
+            "void setWallpaper(java.io.InputStream)",
+            "void setWallpaper(android.graphics.Bitmap)",
+            "void loadLibrary(java.lang.String)",
+            "void load(java.lang.String)",
+            "void sendMultipartTextMessage(java.lang.String,java.lang.String,java.util.ArrayList,java.util.ArrayList,java.util.ArrayList)",
+            "void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)",
+            "void <init>(java.lang.String,java.lang.String,java.lang.String,java.lang.ClassLoader)",
+            "android.content.pm.PackageManager getPackageManager()",
+            "java.lang.String getPackageName()",
+            "java.lang.Class loadClass(java.lang.String)"
+        };
+        List<String> cList = Arrays.asList(callerComp);
         //record special invocation.
-        if(
-            "void abortBroadcast()".equals(method.getSubSignature())
-            || "java.lang.Process exec(java.lang.String)".equals(method.getSubSignature()) ) 
+        if(cList.contains(method.getSubSignature()) )
             relSpecM.add(method);
 
         if(components.get(this.klass.getName()) != null) {
