@@ -81,15 +81,17 @@
     </if>
 
     <!-- Run Chord. -->
-    <java classname="shord.project.Boot" 
+    <java classname="shord.project.Main" 
+		  maxmemory="${stamp.maxheap}"
 		  fork="true" 
 		  failonerror="true">
       <jvmarg value="-ea"/>
+	  <sysproperty key="chord.classic" value="true"/>
       <sysproperty key="chord.work.dir" file="${stamp.out.dir}"/>
       <sysproperty key="chord.main.class" value="edu.stanford.stamp.harness.Main"/>
       <sysproperty key="chord.class.path" path="${apk}:${driver.dir}"/>
-      <sysproperty key="chord.std.java.analysis.path" path="${stamp.dir}/bin/stamp.main.jar:${stamp.dir}/scanner/stamp.scanner.jar"/>
-      <sysproperty key="chord.std.dlog.analysis.path" path="${stamp.dir}/bin/stamp.main.jar"/>
+      <sysproperty key="chord.java.analysis.path" path="${stamp.dir}/bin/stamp.main.jar:${stamp.dir}/scanner/stamp.scanner.jar"/>
+      <sysproperty key="chord.dlog.analysis.path" path="${stamp.dir}/bin/stamp.main.jar"/>
       <sysproperty key="chord.run.analyses" value="${stamp.analyses}"/>
       <sysproperty key="chord.std.scope.exclude" value=""/>
       <sysproperty key="chord.ext.scope.exclude" value=""/>

@@ -121,7 +121,7 @@ public class AnnotationReader extends JavaAnalysis
 		DomM domM = (DomM) ClassicProject.g().getTrgt("M");
 		Scene scene = Program.g().scene();
 		try{
-			BufferedReader reader = new BufferedReader(new FileReader(new File("stamp_annotations.txt")));
+			BufferedReader reader = new BufferedReader(new FileReader(new File(System.getProperty("stamp.out.dir"), "stamp_annotations.txt")));
 			String line = reader.readLine();
 			while(line != null){
 				final String[] tokens = line.split(" ");
