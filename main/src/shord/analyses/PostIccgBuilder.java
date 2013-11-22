@@ -73,26 +73,12 @@ public class PostIccgBuilder extends JavaAnalysis
 {
 
 	private ProgramRel relCallerComp;
-	private ProgramRel relCICM;
-
-	private int maxArgs = -1;
-	private FastHierarchy fh;
-	public static NumberedSet stubMethods;
-
-	public static final boolean ignoreStubs = false;
-
-	private SootClass klass;
-
-	//One ICCG per each app.
-	private static ICCG iccg = new ICCG();
 
 	public static final String dotFilePath = "/iccg.dot";
 
 	Map<String,Set<String>> component2Meths = new HashMap<String, Set<String>>();
 
 	private Map<String, XmlNode> components = new HashMap<String, XmlNode>();
-
-    	public static List actionList = new ArrayList();
 
 	private String pkgName = "";
 
@@ -241,6 +227,12 @@ public class PostIccgBuilder extends JavaAnalysis
 			iccg.addNode(iNode);
 		}
 
+        //special node for getAPK
+		ICCGNode apkNode = new ICCGNode("INSTALL_APK", cnt++);
+		apkNode.setType("unknown");
+		iccg.addNode(apkNode);
+
+
         ProgramRel relICCG = (ProgramRel) ClassicProject.g().getTrgt("ICCG");
 		relICCG.load();
         //ProgramRel relICCGImp = (ProgramRel) ClassicProject.g().getTrgt("ICCGImp");
@@ -281,7 +273,7 @@ public class PostIccgBuilder extends JavaAnalysis
         genPermission(iccg);
         getSpecCaller(iccg);
         getIntentFilter(iccg);
-        //plotFlow2Comp(iccg);
+        plotFlow2Comp(iccg);
         PrintWriter out = OutDirUtils.newPrintWriter(dotFilePath);
         out.println(iccg.getSignature());
         out.close();
@@ -388,11 +380,11 @@ public class PostIccgBuilder extends JavaAnalysis
         final ProgramRel relCompFlows = (ProgramRel)ClassicProject.g().getTrgt("FlowComp");
         Set<String> cpFlowSet = new HashSet<String>();
         relCompFlows.load();
-        Iterable<Quad<Type,Pair<String,Ctxt>,Type,Pair<String,Ctxt>>> cflows = relCompFlows.getAry4ValTuples();
-        for(Quad<Type,Pair<String,Ctxt>,Type,Pair<String,Ctxt>> quad : cflows) {
-            String srcComp = ((RefType)quad.val0).getClassName();
+        Iterable<Quad<String,Pair<String,Ctxt>,String,Pair<String,Ctxt>>> cflows = relCompFlows.getAry4ValTuples();
+        for(Quad<String,Pair<String,Ctxt>,String,Pair<String,Ctxt>> quad : cflows) {
+            String srcComp = quad.val0;
             String srctxt = quad.val1.val0;
-            String tgtComp = ((RefType)quad.val2).getClassName();
+            String tgtComp = quad.val2;
             String sinktxt = quad.val3.val0;
             cpFlowSet.add(srcComp + "@" + srctxt + "@" + tgtComp + "@"+ sinktxt);
         }

@@ -176,6 +176,7 @@ public class ICCG
     {
 		String dbLoc = "jdbc:sqlite:" + System.getProperty("stamp.dir") + "/iccg_scheme.sqlite";
         System.out.println("updateDb for:" + appName);
+        System.out.println("updateDb for:" + nodes);
         // load the sqlite-JDBC driver using the current class loader
         //assert(!appName.contains("/"));
         try{
