@@ -13,13 +13,14 @@
 .include "CL.dom"
 .include "L.dom"
 .include "Z.dom"
+.include "COMP.dom"
 
-.bddvarorder L0_M0xM1_I0_V0_C0xC1_H0_F0_T0_T1_T2_CL0_CL1_Z0
+.bddvarorder L0_M0xM1_I0_V0_C0xC1_H0_F0_T0_T1_T2_CL0_CL1_Z0_COMP0_COMP1
 
 MI(m:M,i:I) input         # stmt i belongs to method m.
-MC(m:M,c:T) input         # m is a method declared in a
+MC(m:M,c:COMP) input         # m is a method declared in a
 #CM(c:C,m:M) input         # c is a context of method m.
-TargetHT(h:H,t:T) input   # StringConst corresponds to target of type t.
+TargetHT(h:H,t:COMP) input   # StringConst corresponds to target of type t.
 
 flow(src:CL,sink:CL) input
 #CT(c:C,t:T) input         # c is a context in class t
@@ -31,7 +32,9 @@ CH(o:C,h:H) input         # context’ified abstract location o corresponds to n
 Launch(v:V,m:M) input
 IntentTgtField(f:F) input
 ActionField(f:F) input
-TgtAction(t:T,h:H) input
+DataTypeField(f:F) input
+TgtAction(t:COMP,h:H) input
+TgtDataType(t:COMP,h:H) input
 pt(c:C,v:V,o:C)    input  # in context c, v points to o.
 fpt(o1:C,f:F,o2:C) input
 CICM(d:C,i:I,c:C,m:M)   input  # i in cotext d calls method m in context c.
@@ -45,18 +48,18 @@ reachableCM(c:C,m:M) input
 
 SpecM(m:M)           input
 
-IntentAlloc(h:H,s:T) 
+IntentAlloc(h:H,s:COMP) 
 
-FlowComp(comp1:T, src:CL, comp2:T, sink:CL) output
+FlowComp(comp1:COMP, src:CL, comp2:COMP, sink:CL) output
 
-CallerComp(m:M,c:C,o:T)   output  # m is a method declared in c
-ICCG(s:T,t:T)  output
+CallerComp(m:M,c:C,o:COMP)   output  # m is a method declared in c
+ICCG(s:COMP,t:COMP)  output
 #ICCGImp(s:T,t:T)  output
 
-ReachableComp(s:T,t:T)           # t is the node that can be reached by s.
-ConjunctSet(s:T,t:T,u:T)  output # u is the node that can be reached by both s and t.
+#ReachableComp(s:T,t:T)           # t is the node that can be reached by s.
+#ConjunctSet(s:T,t:T,u:T)  output # u is the node that can be reached by both s and t.
 
-SpecCallerComp(m:M,c:T)  output  #special call, e.g, does component c invoke abortBroadcast?
+SpecCallerComp(m:M,c:COMP)  output  #special call, e.g, does component c invoke abortBroadcast?
 
 ###################
 #    RULES
@@ -83,13 +86,14 @@ SpecCallerComp(m,c) :- CallerComp(m,_,c), SpecM(m).
 ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), CH(o,h2), IntentAlloc(h2,s), IntentTgtField(f), fpt(o,f,c), CH(c,h), TargetHT(h,t).
 #implicit intent
 ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o),CH(o,h2), IntentAlloc(h2,s), ActionField(f), TgtAction(t,h), fpt(o,f,c), CH(c,h).
-
+#install apk through datatype.
+ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o),CH(o,h2), IntentAlloc(h2,s), DataTypeField(f), TgtDataType(t,h), fpt(o,f,c), CH(c,h).
 
 #no self-loop
-ReachableComp(s,t) :- ICCG(s,t), s!=t.  
-ReachableComp(s,t) :- ReachableComp(s,m), ReachableComp(m,t). 
+#ReachableComp(s,t) :- ICCG(s,t), s!=t.  
+#ReachableComp(s,t) :- ReachableComp(s,m), ReachableComp(m,t). 
 
-ConjunctSet(s,t,u) :- ReachableComp(s,u), ReachableComp(t,u), ReachableComp(s,t), s!=t, u!=t.
+#ConjunctSet(s,t,u) :- ReachableComp(s,u), ReachableComp(t,u), ReachableComp(s,t), s!=t, u!=t.
 
 #FlowComp(comp1, src, comp2, sink) :- flow(src,sink), CCL(c,src), CCL(d, sink), CT(c,comp1),CT(d,comp2).
 #FlowComp(comp1, src, comp2, sink) :- flow(src,sink), CCL(c,src), CCL(d, sink), CallerComp(_,c,comp1),CallerComp(_,d,comp2).

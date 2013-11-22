@@ -86,9 +86,9 @@ import java.util.*;
                  "sub", "staticTM", 
                  "staticTF", "clinitTM",
 				 "VH", "TgtAction",
-	             "Stub" },
-       namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U", "S"},
-       types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class},
+	             "Stub", "COMP", "TgtDataType" },
+       namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U", "S", "COMP"},
+       types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class, DomComp.class},
 	   namesOfSigns = { "Alloc", "Assign", 
 						"Load", "Store", 
 						"LoadStat", "StoreStat", 
@@ -110,7 +110,7 @@ import java.util.*;
                         "sub", "staticTM", 
                         "staticTF", "clinitTM",
 						"VH", "TgtAction",
-                        "Stub" },
+                        "Stub", "TgtDataType" },
 	   signs = { "V0,H0:V0_H0", "V0,V1:V0xV1",
 				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
 				 "V0,F0:F0_V0", "F0,V0:V0_F0",
@@ -128,11 +128,11 @@ import java.util.*;
 				 "I0,M0:I0_M0", "I0,M0:I0_M0",
 				 "I0,M0:I0_M0", "M0,S0:M0_S0",
 				 "T0,S0,M0:T0_M0_S0", "V0,M0:V0_M0", 
-                 "T0:T0", "H0,T0:H0_T0",
+                 "T0:T0", "H0,COMP0:H0_COMP0",
                  "T0,T1:T0_T1", "T0,M0:T0_M0",
                  "T0,F0:F0_T0", "T0,M0:T0_M0",
-				 "V0,H0:V0_H0", "T0,H0:T0_H0",
-                 "M0:M0" }
+				 "V0,H0:V0_H0", "COMP0,H0:COMP0_H0",
+                 "M0:M0", "COMP0,H0:COMP0_H0"}
 	   )
 public class PAGBuilder extends JavaAnalysis
 {
@@ -167,6 +167,7 @@ public class PAGBuilder extends JavaAnalysis
 	private ProgramRel relLaunch;//(v:V,m:M)
 	private ProgramRel relVH;//(v:V,h:H)
 	private ProgramRel relTgtAction;//(v:V,h:H)
+	private ProgramRel relTgtDataType;//(v:V,h:H)
 	private ProgramRel relTargetHT;//(h:H,t:T)
 
     private ProgramRel relClassT;//(t:T)
@@ -189,6 +190,8 @@ public class PAGBuilder extends JavaAnalysis
 	private DomH domH;
 	private DomZ domZ;
 	private DomI domI;
+
+    private	DomComp domComp;
 
 	private int maxArgs = -1;
 	private FastHierarchy fh;
@@ -270,6 +273,8 @@ public class PAGBuilder extends JavaAnalysis
 		relVH.zero();
 		relTgtAction = (ProgramRel) ClassicProject.g().getTrgt("TgtAction");
 		relTgtAction.zero();
+		relTgtDataType = (ProgramRel) ClassicProject.g().getTrgt("TgtDataType");
+		relTgtDataType.zero();
 		relTargetHT= (ProgramRel) ClassicProject.g().getTrgt("TargetHT");
 		relTargetHT.zero();
 
@@ -326,6 +331,7 @@ public class PAGBuilder extends JavaAnalysis
 		relLaunch.save();
 		relVH.save();
 		relTgtAction.save();
+		relTgtDataType.save();
 		relTargetHT.save();
 
         relClassT.save();
@@ -517,6 +523,7 @@ public class PAGBuilder extends JavaAnalysis
 	    private boolean parseAction = false;
 		private Map<Unit, AllocNode> unit2Node = new HashMap();
 		private Map<String, AllocNode> action2Node = new HashMap();
+		private Map<String, AllocNode> dataType2Node = new HashMap();
 		//private Map<Unit, SiteAllocNode> unit2Node = new HashMap();
 
 		MethodPAGBuilder(SootMethod method)
@@ -629,7 +636,14 @@ public class PAGBuilder extends JavaAnalysis
 							unit2Node.put(s, n);
 							//save for targetAction rel.
 							action2Node.put(str, n);
-						}else{
+						}else if("application/vnd.android.package-archive".equals(str)){ //install apk by data type: 
+                            //application/vnd.android.package-archive
+    						StringConstNode n = new StringConstNode(s);
+							domH.add(n);
+							unit2Node.put(s, n);
+							//save for targetType rel.
+							dataType2Node.put(str, n);
+                        }else{
                             //use a global alloc.
 							unit2Node.put(s, PAGBuilder.gStringNode);
                         }
@@ -764,13 +778,15 @@ public class PAGBuilder extends JavaAnalysis
 					if(nodeName.indexOf(".") == -1) nodeName = pkgName + "." +  nodeName;
 					for(String actionName : val.getActionList()){
 						//<nodeName, actionName>
-						SootClass cmpcls = Scene.v().getSootClass(nodeName);
 						if(action2Node.get(actionName) != null)
-							relTgtAction.add(cmpcls.getType(), action2Node.get(actionName));
+							relTgtAction.add(ICCGBuilder.getCompKey(nodeName), action2Node.get(actionName));
 					}
 				}
 
 			}
+
+			if(dataType2Node.get("application/vnd.android.package-archive") != null)
+			    relTgtDataType.add(PAGBuilder.gInstallAPK, dataType2Node.get("application/vnd.android.package-archive"));
 		}
 
 		LocalVarNode nodeFor(Immediate i)
@@ -915,17 +931,17 @@ public class PAGBuilder extends JavaAnalysis
 					String str = ((StringConstant)rightOp).value;
 					if(ICCGBuilder.components.get(str.replaceAll("/",".")) != null){
                         if(Scene.v().containsClass(str)){
-		                    DomT domT = (DomT) ClassicProject.g().getTrgt("T");
-                            SootClass sc = Scene.v().getSootClass(str);
-                            int tIdx = domT.indexOf(sc.getType());
-                            relTargetHT.add(unit2Node.get(s), domT.get(tIdx));
+                            relTargetHT.add(unit2Node.get(s), ICCGBuilder.getCompKey(str));
                         }
 						relVH.add(nodeFor((Local) leftOp), unit2Node.get(s));
 						Alloc(nodeFor((Local) leftOp), unit2Node.get(s));
 					}else if(str.matches("[a-zA-Z]+\\.[a-zA-Z]+.*")){//end with uppercase word.
 						relVH.add(nodeFor((Local) leftOp), unit2Node.get(s));
 						Alloc(nodeFor((Local) leftOp), unit2Node.get(s));
-					} else {
+					} else if("application/vnd.android.package-archive".equals(str)){ //install apk by data type: 
+                    	relVH.add(nodeFor((Local) leftOp), unit2Node.get(s));
+						Alloc(nodeFor((Local) leftOp), unit2Node.get(s));
+                    }else {
                     	relVH.add(nodeFor((Local) leftOp), PAGBuilder.gStringNode);
 						Alloc(nodeFor((Local) leftOp), PAGBuilder.gStringNode);
                     }
@@ -1314,7 +1330,18 @@ public class PAGBuilder extends JavaAnalysis
         return fh.canStoreType(objType, varType);
     }
 
+    //add a node to represent install apk
+    static String gInstallAPK = "INSTALL_APK";
 
+	private void populateDomComp() 
+	{
+		DomComp domComp = (DomComp) ClassicProject.g().getTrgt("COMP");
+        for(Object node : ICCGBuilder.components.keySet()) {
+            domComp.add((String)node);
+        }
+        domComp.add(gInstallAPK);
+        domComp.save();
+	}
 
 	public void run()
 	{
@@ -1323,6 +1350,7 @@ public class PAGBuilder extends JavaAnalysis
 		program.buildCallGraph();
 
 		fh = Program.g().scene().getOrMakeFastHierarchy();
+	    populateDomComp();
 		List<MethodPAGBuilder> mpagBuilders = new ArrayList();
 		populateDomains(mpagBuilders);
 		populateRelations(mpagBuilders);

@@ -86,6 +86,8 @@ public class PostIccgBuilder extends JavaAnalysis
 	//One ICCG per each app.
 	private static ICCG iccg = new ICCG();
 
+	public static final String dotFilePath = "/iccg.dot";
+
 	Map<String,Set<String>> component2Meths = new HashMap<String, Set<String>>();
 
 	private Map<String, XmlNode> components = new HashMap<String, XmlNode>();
@@ -114,18 +116,18 @@ public class PostIccgBuilder extends JavaAnalysis
 		relCallerComp = (ProgramRel) ClassicProject.g().getTrgt("CallerComp");
 		relCallerComp.load();
 
-		Iterable<Trio<SootMethod,Ctxt,RefType>> res1 = relCallerComp.getAry3ValTuples();
-		for(Trio<SootMethod,Ctxt,RefType> pair : res1) {
+		Iterable<Trio<SootMethod,Ctxt,String>> res1 = relCallerComp.getAry3ValTuples();
+		for(Trio<SootMethod,Ctxt,String> pair : res1) {
 			SootMethod mm = pair.val0;
-			RefType cc = pair.val2;
-			Set<String> hs = component2Meths.get(cc.getClassName());
+			String cc = pair.val2;
+			Set<String> hs = component2Meths.get(cc);
 			if(hs == null) {
 				hs = new HashSet<String>();
-				component2Meths.put(cc.getClassName(), hs);
+				component2Meths.put(cc, hs);
 			}
 			hs.add(mm.getSignature());
 			//add permission.
-			ICCGNode iNode = ig.getNode(cc.getClassName());
+			ICCGNode iNode = ig.getNode(cc);
 			if(iNode!=null) {
 				if(pMap.get(mm.getSignature()) != null) {
 					//do union.
@@ -259,13 +261,13 @@ public class PostIccgBuilder extends JavaAnalysis
 
 		}*/
 
-		Iterable<Pair<Object,Object>> res2 = relICCG.getAry2ValTuples();
-		for(Pair<Object,Object> pair : res2) {
-			RefType t  = (RefType)pair.val0;
-			RefType s = (RefType)pair.val1;
+		Iterable<Pair<String,String>> res2 = relICCG.getAry2ValTuples();
+		for(Pair<String,String> pair : res2) {
+			String s  = pair.val0;
+			String t = pair.val1;
 	        ICCGEdge iccgEdge = new ICCGEdge();
-            ICCGNode srcNode = iccg.getNode(t.getClassName());
-            ICCGNode tgtNode = iccg.getNode(s.getClassName());
+            ICCGNode srcNode = iccg.getNode(s);
+            ICCGNode tgtNode = iccg.getNode(t);
 
             iccgEdge.setTgt(tgtNode);
             iccgEdge.setSrc(srcNode);
@@ -279,7 +281,7 @@ public class PostIccgBuilder extends JavaAnalysis
         genPermission(iccg);
         getSpecCaller(iccg);
         getIntentFilter(iccg);
-        plotFlow2Comp(iccg);
+        //plotFlow2Comp(iccg);
         PrintWriter out = OutDirUtils.newPrintWriter(dotFilePath);
         out.println(iccg.getSignature());
         out.close();
@@ -287,171 +289,14 @@ public class PostIccgBuilder extends JavaAnalysis
         iccg.updateDB();
     }
 
-    private Map<String, Integer> depMap = new HashMap<String,Integer>();
-
-    public void compDepend() 
-    {
-        ProgramRel relDepComp = (ProgramRel) ClassicProject.g().getTrgt("depComp");
-		relDepComp.load();
-
-        //k1:varComp
-        Iterable<Quad<Object,Object,Object,Object>> varComp = relDepComp.getAry4ValTuples();
-        for(Quad<Object,Object, Object, Object> quad : varComp) {
-            RefType s = (RefType)quad.val0;
-			String srckey = s.getClassName(); 
-            RefType t = (RefType)quad.val3;
-			String tgtkey = t.getClassName();
-            String key = srckey+"@"+tgtkey;
-            String revkey = tgtkey+"@"+srckey;
-            if( (depMap.get(key) == null) && (depMap.get(revkey) == null) ){
-            //if( (depMap.get(key) == null) ){
-                depMap.put(key, 1);
-            } else {
-                if(depMap.get(key) != null) depMap.put(key, depMap.get(key)+1);
-                if(depMap.get(revkey) != null) depMap.put(revkey, depMap.get(revkey)+1);
-                //depMap.put(key, depMap.get(key)+1);
-            }
-
-        }
-
-		relDepComp.close();
-    }
 
 	public void run()
 	{
 	    //output dotty.
 		parsePermission();
         dump();
-        //compDepend();
-        //genGraph();
 	}
     
-    public void genGraph() 
-    {
-      try {
- 
-        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-        docFactory.setNamespaceAware(true);
-        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
- 
-        // root elements
-        Document doc = docBuilder.newDocument();
-        Element rootElement = doc.createElement("graphml");
-        rootElement.setAttribute("xmlns", "http://graphml.graphdrawing.org/xmlns");
-
-        //rootElement.add( new Namespace( "xmlns", "http://graphml.graphdrawing.org/xmlns" ) );
-        doc.appendChild(rootElement);
- 
-        // graph elements
-        Element graph = doc.createElement("graph");
-        rootElement.appendChild(graph);
- 
-        // set attribute to graph element
-        Attr attr = doc.createAttribute("id");
-        attr.setValue("G");
-        graph.setAttributeNode(attr);
-
-        Attr direct = doc.createAttribute("edgedefault");
-        direct.setValue("directed");
-        graph.setAttributeNode(direct);
-
-        //<key id="weight" for="edge" attr.name="weight" attr.type="int"/>
-        Element keyw= doc.createElement("key");
-        Attr wAttr = doc.createAttribute("id");
-        wAttr.setValue("weight");
-        keyw.setAttributeNode(wAttr);
-
-        Attr forAttr = doc.createAttribute("for");
-        forAttr.setValue("edge");
-        keyw.setAttributeNode(forAttr);
-
-        Attr nAttr = doc.createAttribute("attr.name");
-        nAttr.setValue("weight");
-        keyw.setAttributeNode(nAttr);
-
-        Attr tAttr = doc.createAttribute("attr.type");
-        tAttr.setValue("int");
-        keyw.setAttributeNode(tAttr);
-
-        graph.appendChild(keyw);
-
-        //nodes.
-        Iterator itSrc = components.entrySet().iterator();
-		while (itSrc.hasNext()) {//k1: src
-			Map.Entry srcEntry = (Map.Entry) itSrc.next();
-			String srckey = (String)srcEntry.getKey();
-
-            Element node = doc.createElement("node");
-            Attr nodeAttr = doc.createAttribute("id");
-            nodeAttr.setValue(parseStr(srckey));
-            node.setAttributeNode(nodeAttr);
-
-            Attr nodeLabAttr = doc.createAttribute("label");
-            nodeLabAttr.setValue(parseStr(srckey));
-            node.setAttributeNode(nodeLabAttr);
-
-            graph.appendChild(node);
-     
-        }
-        //edges.
-	    Iterator itEdge = depMap.entrySet().iterator();
-        int cnt = 1;
-        while (itEdge.hasNext()) {//k1: src
-			Map.Entry e = (Map.Entry) itEdge.next();
-			String eKey = (String)e.getKey();
-			int val = (Integer)e.getValue();
-            String[] sa = eKey.split("@");
-            //System.out.println(srckey.replace("$", "-->") + " Weight=" +val);
-
-            Element edge = doc.createElement("edge");
-            Attr idAttr = doc.createAttribute("id");
-            idAttr.setValue("E"+String.valueOf(cnt));
-            edge.setAttributeNode(idAttr);
-
-            Attr srcAttr = doc.createAttribute("source");
-            srcAttr.setValue(parseStr(sa[0]));
-            edge.setAttributeNode(srcAttr);
-
-            Attr tgtAttr = doc.createAttribute("target");
-            tgtAttr.setValue(parseStr(sa[1]));
-            edge.setAttributeNode(tgtAttr);
-
-            Attr wtAttr = doc.createAttribute("weight");
-            wtAttr.setValue(String.valueOf(val));
-            edge.setAttributeNode(wtAttr);
-
-
-            Element w = doc.createElement("data");
-            Attr dataAttr = doc.createAttribute("key");
-            dataAttr.setValue("weight");
-            w.setAttributeNode(dataAttr);
-            w.appendChild(doc.createTextNode(String.valueOf(val)));
-            edge.appendChild(w);
- 
-            graph.appendChild(edge);
-            cnt++;
-
-        }
- 
-        // write the content into xml file
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        transformerFactory.setAttribute("indent-number", 4);
-        Transformer transformer = transformerFactory.newTransformer();
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-        DOMSource source = new DOMSource(doc);
-        StreamResult result = new StreamResult(new File(reportsFilePath));
-        transformer.transform(source, result);
- 
-      } catch (ParserConfigurationException pce) {
-        pce.printStackTrace();
-      } catch (TransformerException tfe) {
-        tfe.printStackTrace();
-      }
-    }
-
-	public static final String reportsFilePath = System.getProperty("stamp.out.dir")+"/datadep.graphml";
-	public static final String dotFilePath = "/iccg.dot";
 
     /* Read the permission into a map.*/
 	void parsePermission() {
@@ -493,11 +338,11 @@ public class PostIccgBuilder extends JavaAnalysis
     {
         final ProgramRel relSpecCaller = (ProgramRel)ClassicProject.g().getTrgt("SpecCallerComp");
         relSpecCaller.load();
-        Iterable<Pair<SootMethod,Type>> res = relSpecCaller.getAry2ValTuples();
+        Iterable<Pair<SootMethod,String>> res = relSpecCaller.getAry2ValTuples();
         Set<String> specCallSet = new HashSet<String>();
-        for(Pair<SootMethod,Type> pair : res) {
-            String meth = pair.val0.getSubSignature();
-            String comp = ((RefType)pair.val1).getClassName();
+        for(Pair<SootMethod,String> pair : res) {
+            String meth = pair.val0.getSignature();
+            String comp = pair.val1;
             specCallSet.add(comp+"@"+meth);
         }
         ig.setSpecCall(specCallSet);
@@ -553,48 +398,6 @@ public class PostIccgBuilder extends JavaAnalysis
         }
         ig.setFlows(cpFlowSet);
         relCompFlows.close();
-
-        /*
-        final ProgramRel relCtxtFlows = (ProgramRel)ClassicProject.g().getTrgt("flow");
-        final ProgramRel relCT = (ProgramRel)ClassicProject.g().getTrgt("CT");
-
-        relCtxtFlows.load();
-        relCT.load();
-        Set<String> flowSet = new HashSet<String>();
-        Iterable<Pair<Pair<String,Ctxt>,Pair<String,Ctxt>>> res = relCtxtFlows.getAry2ValTuples();
-        int cnt = 1;
-        for(Pair<Pair<String,Ctxt>,Pair<String,Ctxt>> pair : res) {
-            String source = pair.val0.val0;
-            Ctxt srcCtxt = pair.val0.val1;
-            String sink = pair.val1.val0;
-            Ctxt sinkCtxt = pair.val1.val1;
-            //we should consider webview.
-            if(source.contains("getExtras") || sink.contains("ENC") || sink.contains("Activity") || sink.contains("File") || source.contains("File") 
-              || sink.contains("Broadcast") || source.contains("CONTENT_PROVIDER") || sink.contains("LOG")) continue;
-
-            //for each end-2-end flow.
-            Iterable<Pair<Ctxt,Type>> resCT = relCT.getAry2ValTuples();
-            for(Pair<Ctxt,Type> ctPair : resCT) {
-                //assume that src&sink are in the same component.
-                Ctxt ctxt = ctPair.val0;
-                RefType comp = (RefType)ctPair.val1;
-                //if(ctxt.equals(srcCtxt) || ctxt.equals(sinkCtxt))
-                //
-                if(ctxt.equals(sinkCtxt))//sink
-                    flowSet.add(comp.getClassName()+"@"+source+"@"+sink + "-" +cnt + "T");
-
-                if(ctxt.equals(srcCtxt))//source
-                    flowSet.add(comp.getClassName()+"@"+source+"@"+sink + "-"+cnt + "S");
-            }
-            cnt++;
-        
-         }
-
-        ig.setFlow(flowSet);
-	    relCT.close();
-	    relCtxtFlows.close();
-        */
-
     }
 
     private String parseStr(String str)
