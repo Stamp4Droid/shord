@@ -204,12 +204,25 @@ public class ICCGBuilder extends JavaAnalysis
             "<java.lang.Runtime: java.lang.Process exec(java.lang.String[],java.lang.String[],java.io.File)>",
             "<java.lang.Runtime: java.lang.Process exec(java.lang.String,java.lang.String[])>",
             "<java.lang.Runtime: java.lang.Process exec(java.lang.String,java.lang.String[],java.io.File)>",
-            "<java.lang.ProcessBuilder: java.lang.Process start()>"
+            "<java.lang.ProcessBuilder: java.lang.Process start()>",
+
+            "<javax.crypto.Cipher: byte[] doFinal()>",
+            "<javax.crypto.Cipher: byte[] doFinal(byte[])>",
+            "<javax.crypto.Cipher: int doFinal(byte[],int)>",
+            "<javax.crypto.Cipher: byte[] doFinal(byte[],int,int)>",
+            "<javax.crypto.Cipher: int doFinal(byte[],int,int,byte[])>",
+            "<javax.crypto.Cipher: byte[] doFinal(byte[])>",
+
+            "<javax.crypto.Cipher: byte[] update(byte[])>",
+            "<javax.crypto.Cipher: byte[] update(byte[],int,int)>",
+            "<javax.crypto.Cipher: int update(byte[],int,int,byte[])>",
+            "<javax.crypto.Cipher: int update(byte[],int,int,byte[],int)>",
+            "<javax.crypto.Cipher: int update(java.nio.ByteBuffer,java.nio.ByteBuffer)>"
 
         };
         List<String> cList = Arrays.asList(callerComp);
         //record special invocation.
-        if(cList.contains(method.getSubSignature()) )
+        if(cList.contains(method.getSignature()) )
             relSpecM.add(method);
 
         if(components.get(this.klass.getName()) != null) {
