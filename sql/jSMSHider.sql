@@ -3,7 +3,7 @@ select distinct actId from
  (select act.id as actId from 
  (select recv.iccg_id as iccg_id from node as recv 
        inner join intentFilter as ift on recv.id=ift.node_id
-  where recv.iccg_id=85 and
+  where recv.iccg_id=? and
                recv.type='receiver' and
                (ift.name like '%PACKAGE_REMOVE%') and
                (ift.name like '%PACKAGE_ADDED%') and
