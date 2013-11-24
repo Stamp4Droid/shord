@@ -72,7 +72,7 @@ public class JimplePrinterAnalysis extends JavaAnalysis {
 				File objectOutputFile = new File(xmlOutputPath);
 				objectOutputFile.getParentFile().mkdirs();
 				//System.out.println("PRINTING TO: " + objectOutputFile.getCanonicalPath());
-				PrintWriter pw = new PrintWriter(new FileOutputStream(objectOutputFile));
+				pw = new PrintWriter(new FileOutputStream(objectOutputFile));
 				pw.println(object.toString());
 				pw.close();
 			}
