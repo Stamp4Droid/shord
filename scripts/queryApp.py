@@ -11,6 +11,8 @@ def queryApp(dbDir, appDir, sqlDir):
     print dbDir + '  ' + appDir + ' ' + sqlDir
     
     querySet = {
+        'DroidDream' : ''
+        ,
         'DroidDreamLight' : ''
         ,
         'GoldDream' : '' 

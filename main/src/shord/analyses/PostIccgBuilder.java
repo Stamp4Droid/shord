@@ -367,6 +367,8 @@ public class PostIccgBuilder extends JavaAnalysis
                 action += actionName;
             }
 
+            //ignore empty action
+            if(action.equals("")) continue;
             filterList.add(nodeName + "@" + action + "@" + String.valueOf(max));
 
         }

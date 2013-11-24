@@ -52,7 +52,7 @@ public class StaticFieldAnnotation extends AnnotationInjector.Visitor
                     StaticFieldRef sfr = (StaticFieldRef)rhs;
                     String srcName = sfr.getField().getName();
                     String clsName = sfr.getField().getDeclaringClass().getName();
-                    if("android.os.Build".equals(clsName)){
+                    if("android.os.Build".equals(clsName) || "android.os.Build$VERSION".equals(clsName)){
 					    Local newRhs = insertLabelIfNecessary(srcName, locals, units, stmt);
                         if(newRhs != null)
 						    ((AssignStmt) stmt).setRightOp(newRhs);

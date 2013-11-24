@@ -68,6 +68,7 @@ public class Build
             INCREMENTAL = null; 
             RELEASE = null; 
             //SDK = taintedSDK(); 
+            SDK = null; 
             SDK_INT = 0; 
             CODENAME = null; 
         }
