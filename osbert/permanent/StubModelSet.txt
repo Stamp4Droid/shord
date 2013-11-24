@@ -558,6 +558,7 @@
 {Prim2PrimRetTStub;<java.lang.Math: long abs(long)>;0;null}#1
 {Ref2RefRetTStub;<com.deryl.persistentassistant.AccountSettingsFragment: java.lang.String toString()>;0;null}#1
 {Ref2RefRetTStub;<org.apache.ogt.http.cookie.CookieOrigin: java.lang.String toString()>;0;null}#1
+{ActiveTransferArg;<android.graphics.Paint: void setStrokeCap(android.graphics.Paint$Cap)>;1;0}#1
 {Ref2RefRetTStub;<java.net.URL: java.lang.String getQuery()>;0;null}#1
 {Ref2PrimRetTStub;<a.c.au: int read()>;0;null}#1
 {Ref2RefRetTStub;<com.admob.android.ads.j: java.lang.String toString()>;0;null}#1
@@ -764,9 +765,9 @@
 {Ref2RefArgTStub;<java.util.ArrayList: boolean add(java.lang.Object)>;0;1}#2
 {Ref2RefRetTStub;<java.util.Stack: java.lang.Object push(java.lang.Object)>;1;null}#2
 {Ref2RefRetTStub;<com.badlogic.gdx.utils.IntMap: java.lang.String toString()>;0;null}#1
+{Ref2RefRetTStub;<com.nd.dianjin.other.ef: java.lang.String toString()>;0;null}#1
 {Ref2RefRetTStub;<java.lang.Boolean: java.lang.String toString()>;0;null}#1
 {Ref2RefArgTStub;<java.io.FileInputStream: void <init>(java.io.File)>;1;0}#1
-{Ref2RefRetTStub;<com.nd.dianjin.other.ef: java.lang.String toString()>;0;null}#1
 {Ref2RefRetTStub;<com.nd.dianjin.other.ed: java.lang.String toString()>;0;null}#1
 {Ref2RefRetTStub;<java.nio.ByteBuffer: java.nio.ByteBuffer wrap(byte[])>;0;null}#1
 {Ref2RefRetTStub;<android.location.Address: java.lang.String getAddressLine(int)>;0;null}#1
@@ -1617,6 +1618,7 @@
 {Ref2RefRetTStub;<org.alicebot.ab.Contact: java.lang.String toString()>;0;null}#1
 {Ref2RefArgTStub;<org.apache.http.ProtocolVersion: boolean equals(java.lang.Object)>;1;0}#2
 {Ref2RefArgTStub;<android.os.Bundle: void putString(java.lang.String,java.lang.String)>;0;2}#2
+{ActiveTransferRet;<android.telephony.gsm.SmsMessage: java.lang.String getMessageBody()>;0;null}#1
 {Ref2RefRetTStub;<com.actionbarsherlock.internal.nineoldandroids.animation.KeyframeSet: java.lang.String toString()>;0;null}#1
 {Ref2RefArgTStub;<org.apache.http.auth.AuthScope: boolean equals(java.lang.Object)>;0;1}#2
 {Ref2RefRetTStub;<android.view.inputmethod.CompletionInfo: java.lang.String toString()>;0;null}#1

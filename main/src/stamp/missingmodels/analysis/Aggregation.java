@@ -19,7 +19,7 @@ import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetInputFile;
 
 
 public class Aggregation {
-	private static String rootPath = "experiment2_results";
+	private static String rootPath = "experiment2_results/";
 	private static MultivalueMap<String,StubModel> stubModelsByApp = new MultivalueMap<String,StubModel>();
 	private static StubModelSet groundTruth = null;
 	private static Random random = new Random();
@@ -67,6 +67,9 @@ public class Aggregation {
 	public static void main(String[] args) throws IOException {
 		File root = new File("../" + rootPath);
 		for(File appDir : root.listFiles()) {
+			if(appDir.getCanonicalPath().equals("/home/obastani/Documents/projects/stamp/shord/stamp_output/app-reports.db")) {
+				continue;
+			}
 			String[] tokens = appDir.getName().split("_");
 			String appName = tokens[tokens.length-1];
 			try {
@@ -102,7 +105,7 @@ public class Aggregation {
 
 		Set<StubModel> commonModels = new HashSet<StubModel>();
 		int totalNumTrueModels = 0;
-		int commonCount = 3;
+		int commonCount = 5;
 		for(StubModel model : stubModelCounts.keySet()) {
 			if(groundTruth.get(model) == ModelType.TRUE && stubModelCounts.getCount(model) >= commonCount) {
 				commonModels.add(model);
@@ -112,8 +115,9 @@ public class Aggregation {
 			}
 		}
 		System.out.println("Total true models: " + totalNumTrueModels);
+		System.out.println("Total models: " + stubModelCounts.keySet().size());
 
-		int numTrials = 1;
+		int numTrials = 100;
 		
 		// count fraction after 20 apps
 		double[] numTrueModelsAddedAverage = new double[appNames.size()];

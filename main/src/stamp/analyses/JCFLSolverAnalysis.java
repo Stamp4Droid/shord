@@ -195,7 +195,6 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 			m = new StubModelSet();
 		}
 		
-		
 		// STEP 2: Get lines of code and run experiment.
 		Pair<Integer,Integer> loc = getLOC();
 		

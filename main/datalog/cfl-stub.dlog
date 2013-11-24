@@ -100,3 +100,17 @@ Prim2RefTFull(c,v,u) :- Prim2RefRetTStub(c,v,u,_,_).
 Ref2PrimTFull(c,v,u) :- Ref2PrimTStub(c,v,u,_,_).
 
 Prim2PrimTFull(c,v,u) :- Prim2PrimTStub(c,v,u,_,_).
+
+##################
+# RULES: TAINTED STUB INPUTS
+##################
+
+#Ref2RefTFullT(v:V,w:V) output
+#Prim2RefTFullT(v:U,w:V) output
+#Ref2PrimTFullT(v:V,w:U) output
+#Prim2PrimTFullT(v:U,w:U) output
+
+#Ref2RefTFullT(v,u) :- Ref2RefTFull(_,v,u).
+#Prim2RefTFullT(v,u) :- Prim2RefTFull(_,v,u).
+#Ref2PrimTFullT(v,u) :- Ref2PrimTFull(_,v,u).
+#Prim2PrimTFullT(v,u) :- Prim2PrimTFull(_,v,u).

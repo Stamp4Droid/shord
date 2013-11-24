@@ -8,7 +8,6 @@ import java.io.PrintWriter;
 import shord.project.analyses.JavaAnalysis;
 import soot.Scene;
 import soot.SootClass;
-import soot.SootMethod;
 import stamp.missingmodels.jimplesrcmapper.ChordJimpleAdapter;
 import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo;
 import stamp.missingmodels.jimplesrcmapper.JimpleStructureExtractor;
@@ -27,7 +26,7 @@ import com.google.common.io.NullOutputStream;
 @Chord(name = "jimpleprinter")
 public class JimplePrinterAnalysis extends JavaAnalysis {
 
-	@Override public void run() {		
+	@Override public void run() {
 		try {
 			// SET UP SCRATCH DIRECTORY
 			String outDir = System.getProperty("stamp.out.dir");
@@ -56,7 +55,6 @@ public class JimplePrinterAnalysis extends JavaAnalysis {
 				System.out.println(m.toString() + ": " + codeInfo.getMethodInfo(m).toString());
 			}
 			*/
-
 			JimpleSourceInfo sourceInfo = SourceInfoSingleton.getJimpleSourceInfo();
 
 			for(SootClass cl : Scene.v().getClasses()) {

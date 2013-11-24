@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SpreadsheetFormatter {
-	private static String rootPath = "experiment3_results";
+	private static String rootPath = "stamp_output";
 	private static String locPath = "experimentLOC_results";
 	
 	private static int correctModels = 0;
@@ -39,11 +39,17 @@ public class SpreadsheetFormatter {
 		sb.append(flowTokens[0]).append("\t").append(flowTokens[1]).append("\t");
 		
 		sb.append(resultInfo.get("Maximum running time")).append("\t");
+
+		sb.append(resultInfo.get("pt")).append("\t");
+		sb.append(resultInfo.get("ptFull")).append("\t");
+		sb.append(resultInfo.get("transfer")).append("\t");
+		sb.append(resultInfo.get("taintedStub")).append("\t");
+		sb.append(resultInfo.get("minEdges")).append("\t");
+		sb.append(resultInfo.get("maxEdges")).append("\t");
 		
 		// set some global parameters
 		correctModels += (int)(Double.parseDouble(resultInfo.get("Accuracy"))*Integer.parseInt(resultInfo.get("Number of proposed models")));
 		totalModels += Integer.parseInt(resultInfo.get("Number of proposed models"));
-		
 		
 		return sb.toString();
 	}
@@ -57,9 +63,12 @@ public class SpreadsheetFormatter {
 			String[] appTokens = appDir.getName().split("_");
 			String appName = appTokens[appTokens.length-1];
 			try {
-				File resultFile = new File(appDir, "cfl/results.txt");
-				BufferedReader br = new BufferedReader(new FileReader(resultFile));
 				String line;
+				File resultFile;
+				BufferedReader br;
+				
+				resultFile = new File(appDir, "cfl/results.txt");
+				br = new BufferedReader(new FileReader(resultFile));
 				while((line = br.readLine()) != null) {
 					String[] tokens = line.split(": ");
 					if(tokens.length == 2) {
@@ -69,6 +78,57 @@ public class SpreadsheetFormatter {
 				br.close();
 				resultInfo.put(appName, curResultInfo);
 				appList.add(appName);
+				
+				resultFile = new File(appDir, "chord_output/log.txt");
+				br = new BufferedReader(new FileReader(resultFile));
+				int numRef2Ref = 0;
+				while((line = br.readLine()) != null) {
+					if(line.contains("Relation pt:")) {
+						curResultInfo.put("pt", Integer.toString((int)Double.parseDouble(line.split("nodes, ")[1].split(" elements")[0])));
+					}
+					if(line.contains("Relation PtFull:")) {
+						curResultInfo.put("ptFull", Integer.toString((int)Double.parseDouble(line.split("nodes, ")[1].split(" elements")[0])));
+						//System.out.println(curResultInfo.get("ptFull"));
+					}
+					if(line.contains("SAVING rel Framework size: ")) {
+						curResultInfo.put("framework", line.split(": ")[1]);
+					}
+					if(line.contains("Relation out_taintedStub: ")) {
+						curResultInfo.put("taintedStub", Integer.toString((int)Double.parseDouble(line.split("nodes, ")[1].split(" elements")[0])));
+					}
+					if(line.contains("Relation out_taintedStub: ")) {
+						curResultInfo.put("taintedStub", Integer.toString((int)Double.parseDouble(line.split("nodes, ")[1].split(" elements")[0])));
+					}
+					if(line.contains("Relation Transfer: ")) {
+						curResultInfo.put("transfer", Integer.toString((int)Double.parseDouble(line.split("nodes, ")[1].split(" elements")[0])));						
+					}
+					if(line.contains("Relation Ref2RefTFullT: ")) {
+						numRef2Ref += (int)Double.parseDouble(line.split("nodes, ")[1].split(" elements")[0]);						
+					}
+					if(line.contains("Relation Prim2RefTFullT: ")) {
+						numRef2Ref += (int)Double.parseDouble(line.split("nodes, ")[1].split(" elements")[0]);						
+					}
+					if(line.contains("Relation Ref2PrimTFullT: ")) {
+						numRef2Ref += (int)Double.parseDouble(line.split("nodes, ")[1].split(" elements")[0]);						
+					}
+					if(line.contains("Relation Prim2PrimTFullT: ")) {
+						numRef2Ref += (int)Double.parseDouble(line.split("nodes, ")[1].split(" elements")[0]);						
+					}				
+				}
+				curResultInfo.put("maxEdges", Integer.toString(numRef2Ref));
+				System.out.println(appName + "\t" + numRef2Ref);
+				br.close();
+				
+				resultFile = new File(appDir, "cfl/AllStubInputs.txt");
+				br = new BufferedReader(new FileReader(resultFile));
+				int lineCount = 0;
+				while((line = br.readLine()) != null) {
+					if(line.contains(":")) {
+						lineCount++;
+					}
+				}
+				curResultInfo.put("minEdges", Integer.toString(lineCount));
+				br.close();
 			} catch(IOException e) {
 				//e.printStackTrace();
 			}
@@ -113,9 +173,9 @@ public class SpreadsheetFormatter {
 		});
 		
 		for(String appName : appList) {
-			//System.out.println(s);
+			System.out.println(appName);
 			System.out.println(convert(appName, resultInfo.get(appName)));
 		}
-		System.out.println(correctModels + "," + totalModels);
+		//System.out.println(correctModels + "," + totalModels);
 	}
 }
