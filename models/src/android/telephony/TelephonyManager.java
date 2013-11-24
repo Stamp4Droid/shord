@@ -77,6 +77,16 @@ class TelephonyManager
 		return new String();
 	}
 
+	@STAMP(flows = {@Flow(from="$PhoneType",to="@return")})
+    public int getPhoneType() {
+        return 1;
+    }
+
+	@STAMP(flows = {@Flow(from="$NetworkType",to="@return")})
+    public int getNetworkType() {
+        return 1;
+    }
+
 	@STAMP(flows = {@Flow(from="$NetworkOperator",to="@return")})
 	public  java.lang.String getNetworkOperator() 
 	{ 
