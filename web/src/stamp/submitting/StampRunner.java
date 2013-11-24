@@ -122,13 +122,13 @@ public class StampRunner extends Thread
     	    statement.setQueryTimeout(30);  // set timeout to 30 sec.
 
 	    /* XXX add better input validation and processing */
-	    apkName = apkName.replaceAll(".apk", "");
+			apkName = apkName.replaceAll(".apk", "");
 
 	    /* Select incident counts */
     	    Statement statement1 = connection.createStatement();
     	    statement1.setQueryTimeout(30);  // set timeout to 30 sec.
-    	    ResultSet privCount = statement1.executeQuery("select COUNT(*) from flows where appName =\"" + apkName + "\"" 
-							 + "and flowClass =\"privacy\"");
+    	    ResultSet privCount = statement1.executeQuery("select COUNT(*) from flows where appName ='" + apkName + "'" 
+							 + "and flowClass ='privacy'");
 	    JSONObject countReport = new JSONObject();
 	    /* Build incident count summary */
 	    while (privCount.next()) {
@@ -138,7 +138,7 @@ public class StampRunner extends Thread
     		    System.err.println(e.getMessage());
     		}
 	    }
-
+		System.out.println(countReport);
 	    jarr.put(countReport);
 	    privCount.close();
 	    statement1.close();
@@ -282,7 +282,7 @@ public class StampRunner extends Thread
 	    }
 
 	    /* Send classified flow data */
-	    JSONArray flowData = getFlowResults(stampDir + "/stamp_output/app-reports.db", apkName);
+	    JSONArray flowData = getFlowResults(stampDir + "/stamp_output/app-reports.db", apkName.toLowerCase());
 	    try{
 	    	updater.update("Flow::"+apkId+"::"+flowData.toString(2));
 	    }catch(IOException ioe){

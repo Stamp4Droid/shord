@@ -5,7 +5,7 @@
     
     <property name="stamp.droidrecord.cmd.readlog" value="${stamp.dir}/droidrecord/droidrecord-readlog" />
     <property name="stamp.dynamic.device.arg" value="" />
-    <!--<property name="stamp.android.buildtools.dir" value="/home/ubuntu/android-source/out/host/linux-x86/sdk/android-sdk_eng.ubuntu_linux-x86/build-tools/18.0.1" />-->
+    <property name="stamp.android.buildtools.dir" value="/opt/android-sdk-linux/build-tools/19.0.0/" />
   
     <target name="-android-project-update">
       <if>
@@ -184,7 +184,6 @@
 		<property name="droidrecord.enableOnMethodStart" value="true"/>
 		<ant antfile="${stamp.dir}/droidrecord/build.xml" target="instrument"/>
         
-        <property name="stamp.droidrecord.out.apk.unsigned" value="${droidrecord.out.apk.dir}/unsigned.apk"/>
         <mkdir dir="${droidrecord.out.dir}/apk"/>
         <mkdir dir="${droidrecord.out.dir}/apk/raw"/>
         <mkdir dir="${droidrecord.out.dir}/apk/unsigned"/>
@@ -208,17 +207,17 @@
             <arg value="${stamp.dir}/droidrecord/extra/utils/scripts/prepare_manifest_only.py"/>
             <arg value="${droidrecord.out.dir}/apk/AndroidManifest.xml"/>
         </exec>-->
-        <zip basedir="${droidrecord.out.dir}/apk/raw" destfile="${stamp.droidrecord.out.apk.unsigned}"/>
+        <zip basedir="${droidrecord.out.dir}/apk/raw" destfile="${droidrecord.out.dir}/apk/unsigned/unsigned.apk"/>
         
         <exec executable="jarsigner"
           spawn="false"
     	  failonerror="true">
-    	    <arg line="-verbose -keystore ${user.home}/.android/debug.keystore -storepass android -keypass android ${stamp.droidrecord.out.apk.unsigned} androiddebugkey"/>
+    	    <arg line="-verbose -keystore ${user.home}/.android/debug.keystore -storepass android -keypass android ${droidrecord.out.dir}/apk/unsigned/unsigned.apk androiddebugkey"/>
         </exec>
         <exec executable="zipalign"
           spawn="false"
     	  failonerror="true">
-    	    <arg line="4 ${stamp.droidrecord.out.apk.unsigned} ${stamp.droidrecord.out.apk}"/>
+    	    <arg line="4 ${droidrecord.out.dir}/apk/unsigned/unsigned.apk ${stamp.droidrecord.out.apk}"/>
         </exec>
   </target>          
 
@@ -246,7 +245,7 @@
 	<exec executable="adb"
       spawn="false"
 	  failonerror="true">
-      <arg line="${stamp.dynamic.device.arg} shell mkdir sdcard/droidrecord"/>
+      <arg line="${stamp.dynamic.device.arg} shell mkdir /data/droidrecord"/>
     </exec>
     <if>
         <equals arg1="${stamp.input.type}" arg2="apk"/>
@@ -270,7 +269,7 @@
     <exec executable="adb"
       spawn="false"
 	  failonerror="true">
-      <arg line="${stamp.dynamic.device.arg} pull sdcard/droidrecord/ ${stamp.droidrecord.logdir}"/>
+      <arg line="${stamp.dynamic.device.arg} pull /data/droidrecord/ ${stamp.droidrecord.logdir}"/>
     </exec>
     <if>
         <equals arg1="${stamp.input.type}" arg2="apk"/>
@@ -288,7 +287,7 @@
     <exec executable="adb"
 	  spawn="false"
 	  failonerror="true">
-      <arg line="${stamp.dynamic.device.arg} shell rm -R /sdcard/droidrecord"/>
+      <arg line="${stamp.dynamic.device.arg} shell rm -R /data/droidrecord"/>
     </exec>
   </target>
 

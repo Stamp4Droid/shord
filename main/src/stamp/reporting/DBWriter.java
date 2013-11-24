@@ -108,13 +108,30 @@ public class DBWriter
 			Element sinkElem = sinkLabelReader.findElem(sink);
 			
 			System.out.println(src+" --> "+sink);
-			String srcDesc = srcElem.getAttribute("desc");
-			String srcClass = srcElem.getAttribute("class");
-			String srcPriority = srcElem.getAttribute("priority");
+
+			String srcDesc;
+			String srcClass;
+			if(srcElem == null){
+				srcDesc = "";
+				srcClass = "";
+				System.out.println("src not found: "+src);
+			} else {
+				srcDesc = srcElem.getAttribute("desc");
+				srcClass = srcElem.getAttribute("class");
+				//String srcPriority = srcElem.getAttribute("priority");
+			}
 			
-			String sinkDesc = sinkElem.getAttribute("desc");
-			String sinkClass = sinkElem.getAttribute("class");
+			String sinkDesc; 
+			String sinkClass; 
 			
+			if(sinkElem == null){
+				sinkDesc = "";
+				sinkClass = "";
+				System.out.println("sink not found: "+sink);
+			} else {
+				sinkDesc = sinkElem.getAttribute("desc");
+				sinkClass = sinkElem.getAttribute("class");
+			}
 			//System.out.println("src: "+src+" "+srcDesc+" "+srcClass+" "+srcPriority);
 			//System.out.println("sink: "+sink+" "+sinkDesc+" "+sinkClass);
 			
@@ -154,7 +171,8 @@ public class DBWriter
 					" srcClass       TEXT    NOT NULL, " + 
 					" sinkLabel      TEXT    NOT NULL, " + 
 					" sinkDesc       TEXT    NOT NULL, " + 
-					" sinkClass      TEXT    NOT NULL)";
+					" sinkClass      TEXT    NOT NULL, " +
+                    " UNIQUE(sha256, appName, srcLabel, srcDesc, srcClass, sinkLabel, sinkDesc, sinkClass) ON CONFLICT IGNORE)";
 				stmt.executeUpdate(sql);
 				stmt.close();
 			} else {

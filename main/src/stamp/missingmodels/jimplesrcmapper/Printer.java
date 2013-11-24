@@ -156,7 +156,7 @@ public class Printer {
 			throw new RuntimeException("Bad line separator!");
 		}
 		for(SootClass cl : Scene.v().getClasses()) {
-			System.out.println("PRINTING: " + cl.getName());
+			//System.out.println("PRINTING: " + cl.getName());
 
 			// Get file name.
 			StringBuffer b = new StringBuffer();
@@ -169,7 +169,7 @@ public class Printer {
 			b.append(".jimple");
 			File file = new File(folder, b.toString());
 			
-			System.out.println("TO FILE: " + file.getCanonicalPath());
+			//System.out.println("TO FILE: " + file.getCanonicalPath());
 			
 			// Get print writer for the file.
 			//final int format = Options.v().output_format();

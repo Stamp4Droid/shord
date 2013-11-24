@@ -83,38 +83,6 @@
                     </h3>
                     <table id="appslist" class="table table-striped appslist">
                         <tbody>
-                            <tr>
-                                <td>
-                                    <a href="">Advanced Persistent Threat 1</a>
-                                </td>
-                                <td>
-                                    <button class="btn btn-inverse" type="button" style="margin-left: 10px;" id="evalPolicy">Eval</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="">Advanced Persistent Threat 2</a>
-                                </td>
-                                <td>
-                                    <button class="btn btn-inverse" type="button" style="margin-left: 10px;" id="evalPolicy">Eval</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="">Data Leak Prevention</a>
-                                </td>
-                                <td>
-                                    <button class="btn btn-inverse" type="button" style="margin-left: 10px;" id="evalPolicy">Eval</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="">Authorized Cloud Services</a>
-                                </td>
-                                <td>
-                                    <button class="btn btn-inverse" type="button" style="margin-left: 10px;" id="evalPolicy">Eval</button>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -126,7 +94,7 @@
                             <div class="row-fluid">
                                 <div class="span7 lightblue">
                                     <label>Policy Name</label>
-                                    <input type="text" class="span12" placeholder="New Policy">
+                                    <input id="policy-name-textbox" type="text" class="span12" placeholder="New Policy">
                                 </div>
                                 <!--/span-->
                                 <div class="span2 lightblue">
@@ -194,7 +162,7 @@
                                         <!--/span-->
                                     </div>
                                     <!--/row-->
-                                    <button class="btn btn-inverse pull-right" type="button" id="addPolicyBtn">Add Rule</button>
+                                    <button class="btn btn-inverse pull-right" type="button" id="add_policy_btn">Add Rule</button>
                                 </fieldset>
                             </div>
                             <!--/well-->
@@ -244,56 +212,6 @@
                 <script src="../fileupload/jquery.fileupload.js"></script>
                 <script src="../scripts/processMsg.js"></script>
                 <script src="../scripts/policy.js"></script>
-                <script>
-                    var apkIdToRow = new Object();
-
-                    $(function() {
-
-                        'use strict';
-
-                        $.ajax({
-                            type: "GET",
-                            url: "/stamp/policyServlet",
-                            data: {
-                                annot: "Sources"
-                            },
-                            dataType: "xml",
-                            success: function(xml) {
-                                var seen = [];
-                                $(xml).find('src').each(function() {
-                                    var d = $(this).attr("desc");
-                                    if (jQuery.inArray(d, seen) < 0) {
-                                        seen.push(d);
-                                        $("#src-drop-down").append('<li><a href="#">' + d + '</a></li>');
-                                    }
-                                });
-                            }
-                        });
-
-                        $.ajax({
-                            type: "GET",
-                            url: "/stamp/policyServlet",
-                            data: {
-                                annot: "Sinks"
-                            },
-                            dataType: "xml",
-                            success: function(xml) {
-                                var seen = [];
-                                $(xml).find('sink').each(function() {
-                                    var d = $(this).attr("desc");
-                                    if ($.inArray(d, seen) < 0) {
-                                        seen.push(d);
-                                        $("#sink-drop-down").append('<li><a href="#">' + d + '</a></li>');
-                                    }
-                                });
-                            }
-                        });
-                    });
-                </script>
-                <script>
-                    var ws = new WebSocket("ws://localhost:8080/stamp/pushupdates");
-                    ws.onmessage = processMessage;
-                </script>
             </div>
         </div>
     </body>

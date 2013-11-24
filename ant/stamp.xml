@@ -17,9 +17,27 @@
     <classpath path="${stamp.dir}/lib/jaxb-xjc.jar"/>
   </taskdef>
 
+  <property name="tomcat.dir" location="${stamp.dir}/tomcat"/>
+
+  <path id="catalina-ant-classpath">
+    <fileset dir="${tomcat.dir}/lib">
+      <include name="catalina-ant.jar"/>
+      <include name="tomcat-coyote.jar"/>
+      <include name="tomcat-util.jar"/>
+    </fileset>
+    <fileset dir="${tomcat.dir}/bin">
+      <include name="tomcat-juli.jar"/>
+    </fileset>
+  </path>
+  <taskdef name="catalina-deploy" 
+		   classname="org.apache.catalina.ant.DeployTask" 
+		   classpathref="catalina-ant-classpath"/>
+  <property name="tomcat.manager" value="http://localhost:8080/manager/text"/>
+
   <!-- Set project-wide options. -->
   <property name="web.dir" location="${stamp.dir}/web"/>
-  <property name="stamp.tomcat.bindir" location="${stamp.dir}/tomcat/bin"/>
+
+  <property name="stamp.tomcat.bindir" location="${tomcat.dir}/bin"/>
   <property name="stamp.paths.schema"
 	    location="${stamp.dir}/solvergen/paths.xsd"/>
   <path id="stamp.build.classpath">
@@ -36,6 +54,7 @@
   <import file="solvergen.xml"/>
   <import file="debug.xml"/>
   <import file="apptasks_dex.xml"/>
+  <import file="perm.xml"/>
 
   <target name="clean" depends="-clean-tool"/>
 

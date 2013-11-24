@@ -104,12 +104,19 @@ public class DBReader extends HttpServlet
 				for(int i = 0; i < sinkDescs.length; i++){
 					if(i > 0)
 						builder.append(", ");
+					builder.append("[");
 					String sinkDesc = sinkDescs[i];
 					String sinkClass = sinkClasses[i];
-					if(sinkDesc != null)
-						builder.append("[\"" + sinkDesc +"\",\""+sinkClass+"\"]");
-					else
-						builder.append("[]");
+					if(sinkDesc != null){
+						String[] descTokens = sinkDesc.split(",");
+						String[] classTokens = sinkClass.split(",");
+						for(int j = 0; j < descTokens.length; j++){
+							if(j > 0)
+								builder.append(",");
+							builder.append("[\"" + descTokens[j] +"\",\""+classTokens[j]+"\"]");
+						}
+					}
+					builder.append("]");
 				}						
 				builder.append("]}");
 			}
@@ -141,8 +148,15 @@ public class DBReader extends HttpServlet
 			String[] dtypes = DBReader.this.dataTypes;
 			for(int i = 0; i < dtypes.length; i++){
 				if(dtypes[i].equals(dt)){
-					sinkDescs[i] = sinkDesc;
-					sinkClasses[i] = sinkClass;
+					if(sinkDescs[i] != null){
+						if(sinkDescs[i].indexOf(sinkDesc) < 0){
+							sinkDescs[i] += ","+sinkDesc;
+							sinkClasses[i] += ","+sinkClass;
+						}
+					} else {
+						sinkDescs[i] = sinkDesc;
+						sinkClasses[i] = sinkClass;
+					}
 					break;
 				}
 			}

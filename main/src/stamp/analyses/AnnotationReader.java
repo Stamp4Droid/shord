@@ -121,7 +121,7 @@ public class AnnotationReader extends JavaAnalysis
 		DomM domM = (DomM) ClassicProject.g().getTrgt("M");
 		Scene scene = Program.g().scene();
 		try{
-			BufferedReader reader = new BufferedReader(new FileReader(new File("stamp_annotations.txt")));
+			BufferedReader reader = new BufferedReader(new FileReader(new File(System.getProperty("stamp.out.dir"), "stamp_annotations.txt")));
 			String line = reader.readLine();
 			while(line != null){
 				final String[] tokens = line.split(" ");
@@ -182,7 +182,7 @@ public class AnnotationReader extends JavaAnalysis
 
 	private void addFlow(SootMethod meth, String from, String to) //throws NumberFormatException
 	{
-		System.out.println("+++ " + meth + " " + from + " " + to);
+		//System.out.println("+++ " + meth + " " + from + " " + to);
 		List<SootMethod> meths = SootUtils.overridingMethodsFor(meth);
 		char from0 = from.charAt(0);
 		if(from0 == '$' || from0 == '!') {

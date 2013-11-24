@@ -24,10 +24,13 @@ import chord.project.ICtrlCollection;
 import chord.project.IDataCollection;
 import chord.project.IStepCollection;
 import chord.util.Utils;
+//import chord.util.ProcessExecutor;
 import chord.project.Config;
 import chord.project.OutDirUtils;
 
+import shord.project.Main;
 import shord.project.ModernProject;
+import shord.project.ProcessExecutor;
 
 import gnu.trove.list.array.TIntArrayList;
 
@@ -51,6 +54,11 @@ public class DlogAnalysis extends JavaAnalysis {
     private String order;
     // ordered list of all domains specified using .bddvarorder in the datalog program
     private List<String> minorDomNames;
+
+	private static final String PROCESS_STARTING = "Starting command: '%s'";
+    private static final String PROCESS_FINISHED = "Finished command: '%s'";
+    private static final String PROCESS_FAILED = "Command '%s' terminated abnormally: %s";
+
     // may return null
     /**
      * Provides the name of this Datalog analysis.
@@ -294,8 +302,30 @@ public class DlogAnalysis extends JavaAnalysis {
             "net.sf.bddbddb.Solver",
 			fileName.toString()
         };
-        OutDirUtils.executeWithFailOnError(cmdArray);
+
+		int elapsedTime = (int) (System.currentTimeMillis() - Main.startTime);
+		int timeout = Integer.getInteger("stamp.timeout").intValue();
+		timeout -= elapsedTime;
+        //OutDirUtils.
+		executeWithFailOnError(cmdArray, timeout);
     }
+
+	public static final void executeWithFailOnError(String[] cmdarray, int timeout) 
+	{
+        String cmd = "";
+        for (String s : cmdarray)
+            cmd += s + " ";
+        if (Config.verbose >= 1) Messages.log(PROCESS_STARTING, cmd);
+        try {
+            int result = ProcessExecutor.execute(cmdarray, null, null, timeout);
+            if (result != 0)
+                throw new RuntimeException("Return value=" + result);
+        } catch (Throwable ex) {
+            Messages.fatal(PROCESS_FAILED, cmd, ex.getMessage());
+        }
+        if (Config.verbose >= 1) Messages.log(PROCESS_FINISHED, cmd);
+    }
+
     public void run(Object ctrl, IStepCollection sc) {
         ModernProject p = ModernProject.g();
         Object[] consumes = p.runPrologue(ctrl, sc);

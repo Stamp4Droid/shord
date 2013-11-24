@@ -8,7 +8,6 @@ import shord.program.Program;
 import shord.project.analyses.JavaAnalysis;
 import stamp.srcmap.SourceInfoSingleton;
 import stamp.srcmap.SourceInfoSingleton.SourceInfoType;
-import stamp.util.PropertyHelper;
 import chord.project.Chord;
 
 /**
@@ -91,11 +90,5 @@ public class Postmortem extends JavaAnalysis {
 		} catch(Exception e){
 			throw new Error(e);
 		}
-		
-		boolean printClasses =
-			PropertyHelper.getBoolProp("stamp.print.allclasses");
-		System.out.println("stamp.print.allclasses = "+printClasses);
-		if(printClasses)
-			Program.g().printAllClasses();
-    }
+	}
 }
