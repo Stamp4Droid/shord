@@ -16,6 +16,8 @@ import java.io.*;
 @Chord(name="inject-annot")
 public class AnnotationInjector extends JavaAnalysis
 {
+	private static boolean alreadyRun = false;
+
 	static abstract class Visitor
 	{
 		private PrintWriter writer;
@@ -36,6 +38,9 @@ public class AnnotationInjector extends JavaAnalysis
 
 	public void run()
 	{
+		if(alreadyRun)
+			return;
+		alreadyRun = true;
 		try{			
 			String stampOutDir = System.getProperty("stamp.out.dir");
 			File annotFile = new File(stampOutDir, "stamp_annotations.txt");

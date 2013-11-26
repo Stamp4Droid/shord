@@ -18,7 +18,7 @@ public class ParseManifest
 {
 	private String pkgName;
 
-	void process(File manifestFile, Set<String> activities, Set<String> others)
+	List<Component> process(File manifestFile)
 	{
 		try{
 			File tmpFile = File.createTempFile("stamp_android_manifest", null, null);
@@ -38,11 +38,12 @@ public class ParseManifest
 				xpath.evaluate("/manifest", document, XPathConstants.NODE);
 			pkgName = node.getAttributes().getNamedItem("package").getNodeValue();
 			
-			findComponents(xpath, document, activities, "activity");
+			List<Component> comps = new ArrayList();
 
-			for(String compType : new String[]{"service", "receiver"}){
-				findComponents(xpath, document, others, compType);
-			}
+			//find activities
+			findComponents(xpath, document, comps, "activity");
+			findComponents(xpath, document, comps, "service");
+			findComponents(xpath, document, comps, "receiver");
 			
 			node = (Node)
 				xpath.evaluate("/manifest/application", document, XPathConstants.NODE);
@@ -50,13 +51,14 @@ public class ParseManifest
 			//backup agent
 			Node backupAgent = node.getAttributes().getNamedItem("android:backupAgent");
 			if(backupAgent != null)
-				others.add(fixName(backupAgent.getNodeValue()));
+				comps.add(new Component(fixName(backupAgent.getNodeValue()), false));
 			
 			//application class
 			Node application = node.getAttributes().getNamedItem("android:name");
 			if(application != null)
-				others.add(fixName(application.getNodeValue()));
+				comps.add(new Component(fixName(application.getNodeValue()), false));
 
+			return comps;
 		}catch(Exception e){
 			throw new Error(e);
 		}
@@ -72,7 +74,7 @@ public class ParseManifest
 	}
 
 
-	private void findComponents(XPath xpath, Document document, Set<String> comps, String componentType) throws Exception
+	private void findComponents(XPath xpath, Document document, List<Component> comps, String componentType) throws Exception
 	{
 		NodeList nodes = (NodeList)
 			xpath.evaluate("/manifest/application/"+componentType, document, XPathConstants.NODESET);
@@ -89,7 +91,7 @@ public class ParseManifest
 				//System.out.println(n.getNodeName() + " " + );
 			}			
 			assert name != null : node.getNodeName();
-			comps.add(fixName(name));
+			comps.add(new Component(fixName(name), componentType.equals("activity")));
 		}
 	}
 

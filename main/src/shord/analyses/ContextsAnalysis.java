@@ -10,6 +10,7 @@ import java.util.Iterator;
 
 import gnu.trove.list.array.TIntArrayList;
 
+import soot.Scene;
 import soot.Unit;
 import soot.SootMethod;
 import soot.util.NumberedSet;
@@ -18,18 +19,18 @@ import shord.program.Program;
 import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
+import shord.project.Config;
+import shord.project.Messages;
 
-import chord.bddbddb.Rel.RelView;
-import chord.project.Config;
 import chord.project.Chord;
-import chord.project.Messages;
+import chord.bddbddb.Rel.RelView;
 import chord.util.ArraySet;
 import chord.util.graph.IGraph;
 import chord.util.graph.MutableGraph;
 import chord.util.tuple.object.Pair;
 
 @Chord(name = "contexts-java",
-	   consumes = { "chaIM", "I", "M", "H", "MH", "MI" },
+	   consumes = { "chaIM", "I", "M", "H", "MH", "MI", "Stub" },
 	   produces = { "C", "CC", "CI", "CM", "CH" },
 	   namesOfTypes = { "C" },
 	   types = { DomC.class },
@@ -237,7 +238,7 @@ public class ContextsAnalysis extends JavaAnalysis
 		
 		boolean ignoreStubs = PAGBuilder.ignoreStubs;
         //DomStubs domStubs = (DomStubs) ClassicProject.g().getTrgt("Stubs");
-		NumberedSet stubs = PAGBuilder.stubMethods;
+		NumberedSet stubs = stubMethods();
 		Iterator mIt = Program.g().scene().getReachableMethods().listener();
 		while(mIt.hasNext()){
 			SootMethod meth = (SootMethod) mIt.next();
@@ -274,11 +275,11 @@ public class ContextsAnalysis extends JavaAnalysis
         IGraph<SootMethod> graph = new MutableGraph<SootMethod>(roots, methToPredsMap, null);
         List<Set<SootMethod>> sccList = graph.getTopSortedSCCs();
         int n = sccList.size();
-        if (Config.verbose >= 2)
+        if (Config.v().verbose >= 2)
             System.out.println("numSCCs: " + n);
         for (int i = 0; i < n; i++) { // For each SCC...
             Set<SootMethod> scc = sccList.get(i);
-            //if (Config.verbose >= 2)
+            //if (Config.v().verbose >= 2)
             //    System.out.println("Processing SCC #" + i + " of size: " + scc.size());
             if (scc.size() == 1) { // Singleton
                 SootMethod cle = scc.iterator().next();
@@ -300,7 +301,7 @@ public class ContextsAnalysis extends JavaAnalysis
             }
 			boolean changed = true;
             for (int count = 0; changed; count++) { // Iterate...
-                if (Config.verbose >= 2)
+                if (Config.v().verbose >= 2)
                     System.out.println("\tIteration  #" + count);
                 changed = false;
                 for (SootMethod cle : scc) { // For each node (method) in SCC
@@ -366,4 +367,18 @@ public class ContextsAnalysis extends JavaAnalysis
 		}
 		return newCtxts;
     }
+
+	private NumberedSet stubMethods()
+	{
+		NumberedSet stubMethods = new NumberedSet(Scene.v().getMethodNumberer());
+		final ProgramRel relStub = (ProgramRel) ClassicProject.g().getTrgt("Stub");		
+		relStub.load();
+        RelView view = relStub.getView();
+        Iterable<SootMethod> it = view.getAry1ValTuples();
+		for(SootMethod m : it)
+			stubMethods.add(m);		
+		relStub.close();
+		return stubMethods;
+    }
+
 }

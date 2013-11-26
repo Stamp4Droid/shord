@@ -24,14 +24,15 @@ public class Program
 	{
 		if(g == null){
 			g = new Program();
-			g.build();
 		}
 		return g;
 	}
 
-	private Program(){}
+	private Program()
+	{
+	}
 
-	private void build()
+	public void build(List<String> harnesses)
 	{
         try {
 			StringBuilder options = new StringBuilder();
@@ -57,25 +58,37 @@ public class Program
 
             Scene.v().loadBasicClasses();
 
-			String mainClassName = System.getProperty("chord.main.class");
-			SootClass mainClass = Scene.v().loadClassAndSupport(mainClassName);
-			Scene.v().setMainClass(mainClass);
+			for(String h : harnesses){
+				Scene.v().loadClassAndSupport(h);
+			}
 
-			mainMethod = mainClass.getMethod(Scene.v().getSubSigNumberer().findOrAdd("void main(java.lang.String[])"));
+			//String mainClassName = System.getProperty("chord.main.class");
+			//SootClass mainClass = Scene.v().loadClassAndSupport(mainClassName);
+			//Scene.v().setMainClass(mainClass);
 
-			Scene.v().setEntryPoints(Arrays.asList(new SootMethod[]{mainMethod}));
+			//mainMethod = mainClass.getMethod(Scene.v().getSubSigNumberer().findOrAdd("void main(java.lang.String[])"));
+
+			//Scene.v().setEntryPoints(Arrays.asList(new SootMethod[]{mainMethod}));
+
+
 			Scene.v().loadDynamicClasses();
-        } catch (CompilationDeathException e) {
-            if(e.getStatus()!=CompilationDeathException.COMPILATION_SUCCEEDED)
-                throw e;
-            else
-                return;
+        } catch (Exception e) {
+			throw new Error(e);
         }
+	}
+
+	public void setMainClass(String harness)
+	{
+		SootClass mainClass = Scene.v().getSootClass(harness);
+		mainMethod = mainClass.getMethod(Scene.v().getSubSigNumberer().findOrAdd("void main(java.lang.String[])"));
+		Scene.v().setMainClass(mainClass);
+		Scene.v().setEntryPoints(Arrays.asList(new SootMethod[]{mainMethod}));
 	}
 
 	public void buildCallGraph()
 	{
 		//run CHA
+		Scene.v().releaseCallGraph();
 		CallGraphBuilder cg = new CallGraphBuilder(DumbPointerAnalysis.v());
 		cg.build();
 	}

@@ -144,7 +144,7 @@ public class PAGBuilder extends JavaAnalysis
 
 	private int maxArgs = -1;
 	private FastHierarchy fh;
-	public static NumberedSet stubMethods;
+	private NumberedSet stubMethods;
 
 	public static final boolean ignoreStubs = false;
 

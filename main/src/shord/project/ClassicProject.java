@@ -18,16 +18,17 @@ import shord.project.analyses.DlogAnalysis;
 import shord.project.analyses.ProgramDom;
 import shord.project.analyses.ProgramRel;
 
-import chord.project.Messages;
-import chord.project.Config;
-import chord.project.OutDirUtils;
-import chord.project.ITask;
-import chord.project.TrgtInfo;
+import shord.project.Messages;
+import shord.project.Config;
+import shord.project.OutDirUtils;
+import shord.project.ITask;
+import shord.project.TrgtInfo;
+
+import chord.bddbddb.RelSign;
+import chord.bddbddb.Dom;
 import chord.util.ArraySet;
 import chord.util.Utils;
 import chord.util.Timer;
-import chord.bddbddb.RelSign;
-import chord.bddbddb.Dom;
 
 /**
  * A Chord project comprising a set of tasks and a set of targets
@@ -53,9 +54,13 @@ public class ClassicProject extends Project {
 
     private static ClassicProject project = null;
 
-    public static ClassicProject g() {
-        if (project == null)
-            project = new ClassicProject();
+	public static void init()
+	{
+		project = new ClassicProject();
+	}
+
+    public static ClassicProject g() 
+	{
         return project;
     }
 
@@ -118,8 +123,8 @@ public class ClassicProject extends Project {
         PrintWriter out;
         out = OutDirUtils.newPrintWriter("targets.xml");
         out.println("<targets " +
-            "java_analysis_path=\"" + Config.javaAnalysisPathName + "\" " +
-            "dlog_analysis_path=\"" + Config.dlogAnalysisPathName + "\">");
+            "java_analysis_path=\"" + Config.v().javaAnalysisPathName + "\" " +
+            "dlog_analysis_path=\"" + Config.v().dlogAnalysisPathName + "\">");
         for (String name : nameToTrgtMap.keySet()) {
             Object trgt = nameToTrgtMap.get(name);
             String kind;
@@ -366,12 +371,12 @@ public class ClassicProject extends Project {
 
     public void runTask(ITask task) {
         if (isTaskDone(task)) {
-            if (Config.verbose >= 1)
+            if (Config.v().verbose >= 1)
                 System.out.println("TASK " + task + " ALREADY DONE.");
             return;
         }
         Timer timer = new Timer(task.getName());
-        if (Config.verbose >= 1)
+        if (Config.v().verbose >= 1)
             System.out.println("ENTER: " + task + " at " + (new Date()));
         timer.init();
         timer.pause();
@@ -379,9 +384,9 @@ public class ClassicProject extends Project {
         for (Object trgt : consumedTrgts) {
             if (isTrgtDone(trgt))
                 continue;
-            if (Config.reuseRels && trgt instanceof ProgramRel) {
+            if (Config.v().reuseRels && trgt instanceof ProgramRel) {
                 ProgramRel rel = (ProgramRel) trgt;
-                File file = new File(Config.bddbddbWorkDirName, rel.getName() + ".bdd");
+                File file = new File(Config.v().bddbddbWorkDirName, rel.getName() + ".bdd");
                 if (file.exists()) {
                     for (Dom dom : rel.getDoms()) {
                         ITask task2 = getTaskProducingTrgt(dom);
@@ -397,7 +402,7 @@ public class ClassicProject extends Project {
         timer.resume();
         task.run();
         timer.done();
-        if (Config.verbose >= 1) {
+        if (Config.v().verbose >= 1) {
             System.out.println("LEAVE: " + task);
             printTimer(timer);
         }
@@ -497,7 +502,7 @@ public class ClassicProject extends Project {
             loc = (new File(loc)).getName();
         } else
             loc = clazz.getName().replace(".", "/") + ".html";
-        loc = Config.javadocURL + loc;
+        //loc = Config.v().javadocURL + loc;
         return "producer_name=\"" + task.getName() +
             "\" producer_url=\"" + loc + "\"";
     }
@@ -510,7 +515,7 @@ public class ClassicProject extends Project {
     }
 
     private void undefinedTarget(String name, List<String> consumerTaskNames) {
-        if (Config.verbose >= 2) {
+        if (Config.v().verbose >= 2) {
             String msg = "WARNING: '" + name + "' not declared as produced name of any task";
             if (consumerTaskNames.isEmpty())
                 msg += "\n";
@@ -524,7 +529,7 @@ public class ClassicProject extends Project {
     }
     
     private void redefinedTarget(String name, List<String> producerTaskNames) {
-        if (Config.verbose >= 2) {
+        if (Config.v().verbose >= 2) {
             String msg = "WARNING: '" + name + "' declared as produced name of multiple tasks:\n";
             for (String taskName : producerTaskNames) 
                 msg += "\t'" + taskName + "'\n";
