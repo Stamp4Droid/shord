@@ -1,6 +1,6 @@
 /*receiver->service(leak data)->activity*/
 
-select * from
+select tmp4.serviceId from
  (
  select distinct serviceId from
  (
@@ -18,5 +18,29 @@ select * from
                   /*encrypt c&c server and parse it by native call..*/
                   ) as tmp4 inner join flow as f5 on (tmp4.serviceId=f5.src_node_id and f5.sink_node_id=f5.src_node_id and f5.source='$ENC/DEC' and f5.sink='!EXEC') 
 
+   UNION
+   SELECT tmp5.actId from
+  (SELECT  distinct f1.src_node_id as actId FROM flow as f1, flow as f2, flow as f3, flow as f4
+                      where 
+                                         f1.iccg_id=? and 
+                                         f2.iccg_id=? and 
+                                         f3.iccg_id=? and 
+                                         f4.iccg_id=? and 
+                                         f1.src_node_id=f2.src_node_id and 
+                                         f2.src_node_id=f3.src_node_id and
+                                         f1.src_node_id=f1.sink_node_id and 
+                                         f2.src_node_id=f2.sink_node_id and 
+                                         f3.src_node_id=f3.sink_node_id and 
+                                         f4.src_node_id=f4.sink_node_id and 
+                                         f1.source='$getDeviceId' and 
+                                         f1.sink='!FILE' and  
+                                         f2.source='$BRAND' and 
+                                         f2.sink='!FILE' and  
+                                         f3.source='$MODEL' and 
+                                         f3.sink='!FILE' and
+                                         f4.source='$ENC/DEC' and 
+                                         f4.sink='!FILE'
 
-
+   ) as tmp5  left join node as act2 on act2.id=tmp5.actId 
+      where 
+            act2.type='activity'

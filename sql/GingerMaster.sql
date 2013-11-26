@@ -1,4 +1,5 @@
- select distinct tmp2.servId from 
+ select tmp3.servId, tmp4.cnt from
+ (select distinct tmp2.servId from 
  (select distinct tmp1.servId as servId from  
  (select serv.id as servId from node as recv
         inner join intentFilter as ift on ift.node_id=recv.id
@@ -28,4 +29,9 @@
                     f3.sink='!INTERNET'  and 
                     f4.source='$getSimSerialNumber'  and
                     f4.sink='!INTERNET' 
+ ) as tmp3, 
+    ( select count(*) as cnt from flow as f5 where 
+                f5.iccg_id=? and f5.sink_node_id=f5.src_node_id and 
+                f5.source='$ENC/DEC' and f5.sink='!INTERNET') as tmp4
+                where tmp4.cnt=0
 

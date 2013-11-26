@@ -1,4 +1,4 @@
-select * from
+select tmp4.serviceId, tmp5.cnt from
 (
 select distinct serviceId from
 (
@@ -15,5 +15,8 @@ select distinct serviceId from
                  /*install apk can be in other component. */
                  ) as tmp3, edge as eInstall, node as nInstall where eInstall.iccg_id=? and eInstall.tgt_node_id=nInstall.id and nInstall.full_name='INSTALL_APK'
                  /*no encrypt c&c server for kungfu1.*/
-                 ) as tmp4 inner join flow as f5 on (tmp4.serviceId=f5.src_node_id and NOT(f5.sink_node_id=f5.src_node_id and f5.source='$ENC/DEC' and f5.sink='!INTERNET')) 
+                 ) as tmp4,
+                 ( select count(*) as cnt from flow as f5 where 
+                        f5.iccg_id=? and f5.sink_node_id=f5.src_node_id and f5.source='$ENC/DEC' and f5.sink='!INTERNET') as tmp5
+                where tmp5.cnt=0
 
