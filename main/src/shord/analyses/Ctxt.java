@@ -26,13 +26,13 @@ public class Ctxt implements Serializable
     /**
      * The sequence of statements comprising the abstract context, in decreasing order of significance.
      */
-    private final Unit[] elems;
+    private final Object[] elems;
     /**
      * Constructor.
      * 
      * @param elems The sequence of statements comprising this abstract context.
      */
-    public Ctxt(Unit[] elems) {
+    public Ctxt(Object[] elems) {
         this.elems = elems;
     }
     /**
@@ -40,13 +40,13 @@ public class Ctxt implements Serializable
      * 
      * @return The sequence of statements comprising this abstract context.
      */
-    public Unit[] getElems() {
+    public Object[] getElems() {
         return elems;
     }
 
     public int hashCode() {
         int i = 5381;
-        for (Unit inst : elems) {
+        for (Object inst : elems) {
             int q = inst == null ? 9999 : inst.hashCode();
             i = ((i << 5) + i) + q; // i*33 + q
         }
@@ -57,13 +57,13 @@ public class Ctxt implements Serializable
         if (!(o instanceof Ctxt))
             return false;
         Ctxt that = (Ctxt) o;
-        Unit[] thisElems = this.elems;
-        Unit[] thatElems = that.elems;
+        Object[] thisElems = this.elems;
+        Object[] thatElems = that.elems;
         int n = thisElems.length;
         if (thatElems.length != n)
             return false;
         for (int i = 0; i < n; i++) {
-            Unit inst = thisElems[i];
+            Object inst = thisElems[i];
             if (inst != thatElems[i])
                 return false;
         }
@@ -80,7 +80,7 @@ public class Ctxt implements Serializable
 		// If this is a contextified abstract object, skip the first element,
 		// i.e. the allocation statement that identifies the object.
         for (int i = asCtxtObj ? 1 : 0; i < elems.length; i++) {
-			Unit inst = elems[i];
+			Object inst = elems[i];
 			if(!first) {
 				builder.append(',');
 			} else {
