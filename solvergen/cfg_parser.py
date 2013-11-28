@@ -144,9 +144,10 @@ class Symbol(util.Hashable):
         ## Whether Edge%s of this @Symbol are parameterized by @Indices.
         self.parametric = parametric
         self.min_length = None
+        self.reachable = None
         self._predicate = False
         self._num_paths = 0
-        self._mutables = ['min_length']
+        self._mutables = ['min_length', 'reachable']
 
     def is_terminal(self):
         """
@@ -1022,6 +1023,16 @@ class Grammar(util.FinalAttrs):
                 self._parse_line(line)
         self._finalize()
 
+    def pred_support(self):
+        return set([t for s in self.symbols
+                    if not s.is_terminal() and s.is_predicate()
+                    for t in s.reachable if t.is_terminal()])
+
+    def main_support(self):
+        return set([t for s in self.symbols
+                    if not s.is_terminal() and not s.is_predicate()
+                    for t in s.reachable if t.is_terminal()])
+
     def _finalize(self):
         """
         Run final sanity checks and calculations, which require all productions
@@ -1039,6 +1050,9 @@ class Grammar(util.FinalAttrs):
                     assert p.predicate is None, \
                         "Predicates not allowed on predicate-generating rules"
         self._calc_min_lengths()
+        self._calc_reachable()
+        assert len(self.main_support() & self.pred_support()) == 0, \
+            "Support sets for predicates and main symbols can't match"
 
     def _calc_min_lengths(self):
         for symbol in self.symbols:
@@ -1051,6 +1065,20 @@ class Grammar(util.FinalAttrs):
                 for p in self.prods.get(symbol):
                     if p._update_result_min_length():
                         fixpoint = False
+
+    def _calc_reachable(self):
+        for top in self.symbols:
+            top.reachable = set()
+            def visit(s):
+                if s in top.reachable:
+                    return
+                top.reachable.add(s)
+                for p in self.prods.get(s):
+                    if p.left is not None:
+                        visit(p.left.symbol)
+                    if p.right is not None:
+                        visit(p.right.symbol)
+            visit(top)
 
     def _parse_line(self, line):
         """
@@ -1533,6 +1561,8 @@ if cfg_file=foo.cfg, the following files are created:
 - foo.cpp: the generated code
 - foo.terms.dat: all terminal symbols of the grammar
 - foo.rels.dat: all relations used in the grammar
+- foo.preds.dat: all edge predicates used in the grammar
+- foo.supp.dat: all terminal symbols used to support edge predicates
 if not specified, print generated code only, to stdout"""
 
 if __name__ == '__main__':
@@ -1558,5 +1588,14 @@ if __name__ == '__main__':
                 if r.ref == 0:
                     continue
                 f.write('%s\n' % r.name)
+        preds_out = util.switch_dir(args.cfg_file, args.out_dir, 'preds.dat')
+        with open(preds_out, 'w') as f:
+            for s in grammar.symbols:
+                if s.is_predicate():
+                    f.write('%s\n' % s)
+        supp_out = util.switch_dir(args.cfg_file, args.out_dir, 'supp.dat')
+        with open(supp_out, 'w') as f:
+            for supp_s in grammar.pred_support():
+                f.write('%s\n' % supp_s)
     else:
         emit_solver(grammar, sys.stdout)
