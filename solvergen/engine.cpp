@@ -580,10 +580,14 @@ bool graph_add(Edge* e) {
 void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	      Edge* l_edge, bool l_rev, Edge* r_edge, bool r_rev) {
     Edge* e = new Edge(from, to, kind, index, l_edge, l_rev, r_edge, r_rev);
-#ifndef PATH_RECORDING
-    if (!graph_add(e)) {
-	delete e;
-	return;
+#ifdef PATH_RECORDING
+    if (is_terminal(e->kind)) {
+#endif
+	if (!graph_add(e)) {
+	    delete e;
+	    return;
+	}
+#ifdef PATH_RECORDING
     }
 #endif
     worklist.push(e);
@@ -1387,7 +1391,7 @@ int main() {
 #ifdef PATH_RECORDING
 	Edge *base = worklist.top();
 	worklist.pop();
-	if (graph_add(base)) {
+	if (is_terminal(base->kind) || graph_add(base)) {
 	    main_loop(base);
 	} else {
 	    delete base;
