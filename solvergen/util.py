@@ -24,6 +24,9 @@ class FinalAttrs(object):
     storing their names (as strings) in `self._mutables`.
     """
 
+    # TODO: Should instead check the calling function (read the top of the
+    # stack).
+
     def __init__(self):
         raise NotImplementedError() # abstract class
 

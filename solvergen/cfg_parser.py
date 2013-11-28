@@ -126,7 +126,7 @@ class SymbolStore(util.UniqueNameMap):
         """
         return re.match(r'^[a-zA-Z]\w*$', name) is not None
 
-class Symbol(util.FinalAttrs):
+class Symbol(util.Hashable):
     """
     A symbol in the input grammar.
     """
@@ -205,12 +205,6 @@ class Symbol(util.FinalAttrs):
     def __key__(self):
         return (self.name, self.parametric)
 
-    def __eq__(self, other):
-        return type(other) == Symbol and self.__key__() == other.__key__()
-
-    def __hash__(self):
-        return hash(self.__key__())
-
     def __str__(self):
         return self.name
 
@@ -285,7 +279,7 @@ class RelationStore(util.UniqueNameMap):
     def managed_class(self):
         return Relation
 
-class Relation(util.FinalAttrs):
+class Relation(util.Hashable):
     """
     A relation describing the combinations of @Indices that are allowed to
     trigger a production.
@@ -307,9 +301,6 @@ class Relation(util.FinalAttrs):
 
     def __key__(self):
         return (self.name, self.arity)
-
-    def __eq__(self, other):
-        return type(other) == Relation and self.__key__() == other.__key__()
 
     def __str__(self):
         params_str = ','.join([util.idx2char(i) for i in range(0, self.arity)])
@@ -1190,7 +1181,7 @@ class Grammar(util.FinalAttrs):
                 # parameter of the relation.
                 self._param_chars.index(idx_char))
 
-def emit_solver(grammar, code_out, terms_out, rels_out):
+def emit_solver(grammar, code_out):
     """
     Generate the solver code for the input grammar. Accepts File-like objects
     for its output parameters.
@@ -1405,17 +1396,6 @@ def emit_solver(grammar, code_out, terms_out, rels_out):
 
     emit_derivs_or_reachable(grammar, pr, False)
 
-    if terms_out is not None:
-        for s in grammar.symbols:
-            if s.is_terminal():
-                terms_out.write('%s\n' % s)
-
-    if rels_out is not None:
-        for r in grammar.rels:
-            if r.ref == 0:
-                continue
-            rels_out.write('%s\n' % r.name)
-
 def emit_derivs_or_reachable(grammar, pr, emit_derivs):
     if emit_derivs:
         pr.write('std::vector<Derivation> all_derivations(Edge *e) {')
@@ -1551,8 +1531,8 @@ prog_desc = 'Produce CFL-Reachability solver code for the input grammar.'
 out_dir_help = """print generated code and grammar info to this directory
 if cfg_file=foo.cfg, the following files are created:
 - foo.cpp: the generated code
-- foo.terms.dat: all terminal symbols of the grammar, one per line
-- foo.rels.dat: all relations used in the grammar, one per line
+- foo.terms.dat: all terminal symbols of the grammar
+- foo.rels.dat: all relations used in the grammar
 if not specified, print generated code only, to stdout"""
 
 if __name__ == '__main__':
@@ -1564,14 +1544,19 @@ if __name__ == '__main__':
 
     grammar = Grammar(args.cfg_file)
     if args.out_dir is not None:
-        code_out_name = util.switch_dir(args.cfg_file, args.out_dir, 'cpp')
-        terms_out_name = util.switch_dir(args.cfg_file, args.out_dir,
-                                         'terms.dat')
-        rels_out_name = util.switch_dir(args.cfg_file, args.out_dir,
-                                        'rels.dat')
-        with open(code_out_name, 'w') as code_out:
-            with open(terms_out_name, 'w') as terms_out:
-                with open(rels_out_name, 'w') as rels_out:
-                    emit_solver(grammar, code_out, terms_out, rels_out)
+        code_out = util.switch_dir(args.cfg_file, args.out_dir, 'cpp')
+        with open(code_out, 'w') as f:
+            emit_solver(grammar, f)
+        terms_out = util.switch_dir(args.cfg_file, args.out_dir, 'terms.dat')
+        with open(terms_out, 'w') as f:
+            for s in grammar.symbols:
+                if s.is_terminal():
+                    f.write('%s\n' % s)
+        rels_out = util.switch_dir(args.cfg_file, args.out_dir, 'rels.dat')
+        with open(rels_out, 'w') as f:
+            for r in grammar.rels:
+                if r.ref == 0:
+                    continue
+                f.write('%s\n' % r.name)
     else:
-        emit_solver(grammar, sys.stdout, None, None)
+        emit_solver(grammar, sys.stdout)
