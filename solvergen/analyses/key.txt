@@ -1,0 +1,39 @@
+How to read an analysis name, if formatted as 1-2-3-4:5.cfg:
+
+1st part: field sensitivity
+  i : field-(i)nsensitive
+  s : fully field-(s)ensitive
+      fields are the primary context-free dimension
+
+2nd part: call sensitivity
+  i : calling context-(i)nsensitive
+  s : fully calling context-(s)ensitive
+      call strings are the primary context-free dimension
+  r : index (r)relation-based k-CFA call-string approximation
+  e : graph (e)xplosion-based k-CFA call-string approximation
+
+3rd part: alias formulation
+  p : (p)oints-to based
+      points-to facts computed for each abstract object, then connected to form
+      alias relations
+  v : intermediate (v)ariable based
+      no abstract objects used, connect alias subpaths at the first common
+      variable
+  t : (t)ype filters, implemented as edge predicates
+
+4th part: taint flow formulation:
+  a : (a)lias piggyback
+  c : (c)onditional flow annotations supported
+  e : (e)xploded labels (for the non-primary sensitivity dimension)
+  n : (almost) full (n)esting
+      no nesting support for conditional escaping trigger entry
+  l : (l)imited nested taint propagation
+      tainting, escaping, conditional escaping taint entry: all fields
+      passthrough entry & exit: only array elements
+      conditional escaping trigger entry: no nesting support
+
+5th part: additional parameters
+  base : original formulation, with no optimizations
+
+Other features (not currently covered):
+- Modeling of arbitrary object instantiation inside missing code
