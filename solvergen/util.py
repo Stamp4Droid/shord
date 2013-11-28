@@ -280,6 +280,7 @@ def all_same(elems):
 def all_different(elems):
     return len(elems) == len(set(elems))
 
+
 def idx2char(idx):
     assert idx >= 0 and idx < 26
     return chr(ord('a') + idx)
@@ -343,6 +344,11 @@ class Edge(Hashable):
 
     def is_terminal(self):
         return self.symbol[0] in string.ascii_lowercase
+
+    @staticmethod
+    def from_tuple(symbol, str):
+        m = re.match(r'^(\w+) (\w+)(?: ([0-9]+))?$', str)
+        return Edge(symbol, m.group(1), m.group(2), m.group(3))
 
     @staticmethod
     def from_path_node(node):
