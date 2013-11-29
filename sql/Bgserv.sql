@@ -1,3 +1,14 @@
+/* 
+ receiver(r)
+ priority(r)>1000
+ action(r) = {BOOT_COMPLETED}
+ calls(_) = {'<android.content.BroadcastReceiver: void abortBroadcast()>'}
+
+ service(s)
+ flows(s) = {$getDeviceId->!File, $File->!WebView, $SDK->!File, $getLine1Number->!File}
+ launch(r,s)
+ */
+
   select distinct tmp2.servId from 
  ( select distinct tmp1.servId as servId from 
  (select serv.id as servId, serv.iccg_id from node as recv

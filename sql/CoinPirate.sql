@@ -1,3 +1,17 @@
+/* 
+ receiver(r)
+ priority(r)>1000
+ action(r) = {SMS_SENT, SME_RECEIVED}
+ calls(r) = {'<android.content.BroadcastReceiver: void abortBroadcast()>'}
+
+ receiver(t)
+ service(s)
+ calls(s) = {'<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>'}
+ flows(s) = {$getDeviceId->!INTERNET, $MODEL->!INTERNET, $SDK->!INTERNET, $getSubscriberId->!INTERNET}
+ launch(r,s)
+ launch(s,t)
+ */
+
   select tmp4.servId from 
  (select tmp3.servId as servId from  
  (select distinct tmp2.servId as servId from 

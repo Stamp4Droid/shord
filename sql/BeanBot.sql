@@ -1,3 +1,18 @@
+/*
+ receiver(r)
+ service(s)
+ service(t)
+ service(q)
+ priority(r) > 1000
+ action(r) = {PHONE_STATE}
+ calls(r) = {'<android.content.BroadcastReceiver: void abortBroadcast()>'}
+ flows(s) = {$getLine1Number->!INTERNET, $getDeviceId->!INTERNET, $getSimSerialNumber->!INTERNET}
+ launch(r,s)
+ launch(s,t)
+ launch(s,q)
+ t != q
+ */
+
 select tmp2.servId from 
 (select distinct tmp1.servId as servId from 
  (select serv.id as servId from node as recv 

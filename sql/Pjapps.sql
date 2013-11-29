@@ -1,4 +1,10 @@
-/*iccg_id will be replaced dynamically.*/
+ /*
+ receiver(r)
+ action(r) = {SIG_STR}
+ service(s)
+ calls(_) = {'<android.content.BroadcastReceiver: void abortBroadcast()>'}
+ flows(s) = {$getDeviceId->!INTERNET, $getLine1Number->!INTERNET, $getSubscriberId->!INTERNET}
+ */
 
  select distinct tmp1.servId from 
  (select distinct serv.id as servId from node as recv 

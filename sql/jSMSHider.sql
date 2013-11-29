@@ -1,3 +1,13 @@
+/*
+ receiver(r)
+ service(s)
+ activity(a)
+ launch(a,s)
+ action(r) = {PACKAGE_REMOVE, PACKAGE_ADDED, PACKAGE_CHANGED, PACKAGE_INSTALL, PACKAGE_REPLACED}
+ calls(r) = {'<java.lang.Runtime: java.lang.Process exec(java.lang.String)>'}
+ flows(s) = {$getDeviceId->!ENC/DEC, $SDK->!ENC/DEC, $MODEL->!ENC/DEC}
+  */
+
 
 select distinct actId from 
  (select act.id as actId from 

@@ -1,4 +1,12 @@
-/*service->service*/
+/* 
+ service->service
+ service(r)
+ service(s)
+ calls(r) = {'<java.lang.Runtime: java.lang.Process exec(java.lang.String)>'}
+ flows(r) = {$getDeviceId->!INTERNET, $File->!EXEC, $getSubscriberId->!INTERNET}
+ launch(r,s)
+ */
+
 select tmp1.servId from (
 select serv1.id as servId from node as serv1 
  inner join edge as e on serv1.id=e.src_node_id

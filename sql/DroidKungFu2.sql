@@ -1,3 +1,16 @@
+/*receiver->service(leak data)->activity
+ receiver(r)
+ service(s)
+ activity(a)
+ launch(r,s)
+ launch(s,a)
+ action(r) = {BOOT_COMPLETED}
+ flows(s) = {$getDeviceId->!FILE, $MODEL->!FILE, $BRAND->!FILE, $getLine1Number->!INTERNET}
+ !flows(_) = {$ENC/DEC->_}
+ !installAPK(_)
+ */
+
+
  select tmp4.serviceId, tmp5.cnt from
  (
  select distinct serviceId from

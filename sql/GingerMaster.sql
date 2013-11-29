@@ -1,3 +1,12 @@
+ /*
+   receiver(r)
+   service(s)
+   calls(s) = {'<java.lang.Runtime: java.lang.Process exec(java.lang.String)>'}
+   flows(s) = {$getDeviceId->!INTERNET, $getLine1Number->!INTERNET, $getSubscriberId->!INTERNET}
+   {$ENC/DEC -> !INTERNET} is not a subset of flows(_) 
+   launch(r,s)
+  */
+
  select tmp3.servId, tmp4.cnt from
  (select distinct tmp2.servId from 
  (select distinct tmp1.servId as servId from  

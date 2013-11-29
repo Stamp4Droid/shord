@@ -1,3 +1,19 @@
+/* 
+ receiver(r)
+ action(r) = {PACKAGE_ADDED, PACKAGE_REMOVED}
+ priority(r) > 1000
+ calls(r) = {'<java.lang.Runtime: java.lang.Process exec(java.lang.String)>'}
+
+ receiver(t)
+ action(t) = {BOOT_COMPLETED}
+ priority(t) > 1000
+
+ service(s)
+ calls(s) = {'<java.lang.Runtime: java.lang.Process exec(java.lang.String)>'}
+ launch(t,s)
+ flows(s) = {$getDeviceId->!INTERNET, $ENC/DEC->!INTERNET, $getSubscriberId->!INTERNET}
+ */
+
   select tmp3.servId from
  (select tmp2.servId as servId from 
  (select serv.id as servId from

@@ -1,4 +1,14 @@
-/*receiver->service(leak data)->activity*/
+/*receiver->service(leak data)->activity
+ receiver(r)
+ service(s)
+ activity(a)
+ launch(r,s)
+ launch(s,a)
+ action(r) = {BOOT_COMPLETED}
+ flows(s) = {$getDeviceId->!FILE, $MODEL->!FILE, $BRAND->!FILE, $ENC/DEC->!EXEC}
+ installAPK(_)
+ */
+
 
 select tmp4.serviceId from
  (
@@ -10,7 +20,7 @@ select tmp4.serviceId from
             (select node_id, e.tgt_node_id as tgtId from intentFilter ift,  edge e 
                          where ift.iccg_id=? and 
                                (ift.name like '%BOOT_COMPLETE%') and 
-                               e.src_node_id=ift. node_id)  as tmp,
+                               e.src_node_id=ift.node_id)  as tmp,
 
          /*service  b that generates src-sink*/
            (SELECT  distinct f1.src_node_id as serviceId  FROM flow f1, flow f2, flow f3  
