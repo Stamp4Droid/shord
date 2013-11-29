@@ -7,6 +7,9 @@
         inner join node as serv on serv.id=e.tgt_node_id
         inner join callerComp as cc on cc.node_id=serv.id
   where recv.iccg_id=? and
+                 e.iccg_id=? and
+                 cc.iccg_id=? and
+                 serv.iccg_id=? and
                  recv.type='receiver' and
                  serv.type='service' and
                  ift.name like '%BOOT_COMPLETED%' and
