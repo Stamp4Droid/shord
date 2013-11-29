@@ -89,9 +89,6 @@ def checkFeature(dbDir, sqlDir, appDir):
             cur.execute(currentQuery)
             features = cur.fetchone()
 
-            grep = "find " + appDir + " -iname " + apkName
-            output, error = Popen(
-                grep.split(" "), stdout=PIPE, stderr=PIPE).communicate()
 
             nodeId = str(features[11])
             queryFlow = "SELECT source, sink FROM flow where src_node_id="+nodeId+"""
@@ -105,18 +102,9 @@ def checkFeature(dbDir, sqlDir, appDir):
                 source='MANUFACTURER')"""
 
         
-            output =  output.replace('\n', '') 
-            familyName = output.split('/')[3]
-
-            if not myTable.has_key(familyName):
-                continue
-                #myTable[familyName] = [True, True, True, True, True, False, False, False, False, False]
-
-            for i in range(10):
-                myTable[familyName][i] = (myTable[familyName][i] and (features[i]>0))
 
             print '\n***********************'
-            print output + ": " + str(features[0]>0) + ' ' + str(features[1]>0) + ' ' + str(features[2]>0) + ' ' + str(features[3]>0) +' ' + str(features[4]>0) + ' '+str(features[5]>0) +' ' + str(features[6]>0) + ' ' + str(features[7]>0) + ' '+  str(features[8]>0) + ' '+ str(features[9]>0) + ' ' + str(features[10]) + ' ' + str(features[11])
+            print apkName + ": " + str(features[0]>0) + ' ' + str(features[1]>0) + ' ' + str(features[2]>0) + ' ' + str(features[3]>0) +' ' + str(features[4]>0) + ' '+str(features[5]>0) +' ' + str(features[6]>0) + ' ' + str(features[7]>0) + ' '+  str(features[8]>0) + ' '+ str(features[9]>0) + ' ' + str(features[10]) + ' ' + str(features[11])
 
             if nodeId <> 'None':
                 cur.execute(queryFlow)
@@ -132,21 +120,6 @@ def checkFeature(dbDir, sqlDir, appDir):
         sys.exit(1)
         
     finally:
-        for key in myTable:
-            print key
-            print myTable[key]
-
-        for key in myTable:
-            for key2 in myTable:
-                if key == key2:
-                    continue
-                if myTable[key2] == myTable[key]:
-                    print key + '======'+ key2
-
-
-
-
-
 
 
 

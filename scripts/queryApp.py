@@ -72,8 +72,8 @@ def queryApp(dbDir, appDir, sqlDir):
                 #currentQuery = querySet[key]
                 #replace the actual iccg_id.
                 currentQuery = querySet[key].replace('?', apkId)
-                #print '***************' + key
-                #print currentQuery
+                print '***************' + key
+                print currentQuery
 
                 cur.execute(currentQuery)
                 matchs = cur.fetchall()

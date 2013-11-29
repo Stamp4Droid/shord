@@ -46,7 +46,7 @@ import chord.util.tuple.object.Pair;
  * @author Yu Feng (yufeng@cs.stanford.edu)
  */
 @Chord(name = "ctxts-obj-java",
-       consumes = { "MI", "VH", "MH", "ipt", "StatIM"},
+       consumes = { "MI", "MH", "ipt", "StatIM"},
        produces = { "C", "CC", "CH", "CI"},
        namesOfTypes = { "C" },
        types = { DomC.class }
@@ -84,7 +84,6 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
     private DomH domH;
     private DomC domC;
 
-    private ProgramRel relVH;
     private ProgramRel relCC;
     private ProgramRel relCH;
     private ProgramRel relCI;
@@ -100,7 +99,6 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
         domH = (DomH) ClassicProject.g().getTrgt("H");
         domC = (DomC) ClassicProject.g().getTrgt("C");
 
-        relVH = (ProgramRel) ClassicProject.g().getTrgt("VH");
         relCC = (ProgramRel) ClassicProject.g().getTrgt("CC");
         relCH = (ProgramRel) ClassicProject.g().getTrgt("CH");
         relCI = (ProgramRel) ClassicProject.g().getTrgt("CI");
@@ -153,7 +151,6 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
             HtoQ[hIdx] = alloc;
         }
         relMH.close();
-        relVH.load();
         relIpt.load();
         relStatIM.load();
 
@@ -170,7 +167,6 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
         // Do the heavy crunching
         doAnalysis();
 
-        relVH.close();
         relIpt.close();
         relStatIM.close();
 
@@ -374,14 +370,12 @@ public class CtxtsObjAnalysis extends JavaAnalysis {
     }
 
     private Iterable<Object> getPointsTo(VarNode var) {
-        //RelView view = relVH.getView();
         RelView view = relIpt.getView();
         view.selectAndDelete(0, var);
         return view.getAry1ValTuples();
     }
 
     private Iterable<Unit> getStatIvk(SootMethod var) {
-        //RelView view = relVH.getView();
         RelView view = relStatIM.getView();
         view.selectAndDelete(1, var);
         return view.getAry1ValTuples();

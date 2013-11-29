@@ -8,7 +8,7 @@ from subprocess import PIPE, Popen
 import sys
 import os
 import datetime
-
+import math
 
 def checkFeature(dbDir, sqlDir, appDir):
     #open the feature sql.
@@ -18,7 +18,7 @@ def checkFeature(dbDir, sqlDir, appDir):
 
     myTable = {
 
-  'DroidDream' : [True, True, True, True, True, True, True, True, True, True]
+        'DroidDream' : [True, True, True, True, True, True, True, True, True, True]
         ,
         'DroidDreamLight' : [True, True, True, True, True, True, True, True, True, True]
 
@@ -62,10 +62,57 @@ def checkFeature(dbDir, sqlDir, appDir):
         'jSMSHider' : [True, True, True, True, True, True, True, True, True, True]
         ,
         'GingerMaster' : [True, True, True, True, True, True, True, True, True, True]
-
-
     }
 
+    pair = {
+
+        'DroidDream' : 0
+        ,
+        'DroidDreamLight' : 0
+
+        ,
+        'GoldDream' : 0
+
+        ,
+        'Geinimi' : 0
+
+        ,
+        'Pjapps' : 0
+
+        ,
+        'DroidKungFu1' : 0
+
+        ,
+        'DroidKungFu2' : 0
+
+        ,
+        'DroidKungFu3' : 0
+
+        ,
+        'DroidKungFu4' : 0
+
+        ,
+        'BaseBridge' : 0
+
+        ,
+        'ADRD' : 0
+        ,
+        'BeanBot' : 0
+        ,
+        'Bgserv' : 0
+        ,
+        'AnserverBot' : 0
+        ,
+        'CoinPirate' : 0
+        ,
+        'DroidCoupon' : 0
+        ,
+        'jSMSHider' : 0
+        ,
+        'GingerMaster' : 0
+    }
+
+    appMap = {}
 
     try:
 
@@ -93,6 +140,12 @@ def checkFeature(dbDir, sqlDir, appDir):
             output, error = Popen(
                 grep.split(" "), stdout=PIPE, stderr=PIPE).communicate()
 
+            output =  output.replace('\n', '') 
+            familyName = output.split('/')[3]
+
+            if not pair.has_key(familyName):
+                continue
+
             nodeId = str(features[11])
             queryFlow = "SELECT source, sink FROM flow where src_node_id="+nodeId+"""
                and flow.src_node_id=flow.sink_node_id and 
@@ -105,25 +158,24 @@ def checkFeature(dbDir, sqlDir, appDir):
                 source='MANUFACTURER')"""
 
         
-            output =  output.replace('\n', '') 
-            familyName = output.split('/')[3]
-
-            if not myTable.has_key(familyName):
-                continue
-                #myTable[familyName] = [True, True, True, True, True, False, False, False, False, False]
-
-            for i in range(10):
-                myTable[familyName][i] = (myTable[familyName][i] and (features[i]>0))
-
-            print '\n***********************'
-            print output + ": " + str(features[0]>0) + ' ' + str(features[1]>0) + ' ' + str(features[2]>0) + ' ' + str(features[3]>0) +' ' + str(features[4]>0) + ' '+str(features[5]>0) +' ' + str(features[6]>0) + ' ' + str(features[7]>0) + ' '+  str(features[8]>0) + ' '+ str(features[9]>0) + ' ' + str(features[10]) + ' ' + str(features[11])
+            mystr = []
 
             if nodeId <> 'None':
                 cur.execute(queryFlow)
                 flows = cur.fetchall()
                 for f in flows:
                     #print f[0] + '->' + f[1] + ','
-                    sys.stdout.write(f[0]+'->'+f[1]+',')
+                    #sys.stdout.write(f[0]+'->'+f[1]+',')
+                    mystr.append(f[0]+'->'+f[1])
+
+            mystr.sort()
+
+            list = []
+            list.append(familyName)
+            for i in range(1,11):
+                list.append(str(features[i]))
+            list.append(str(mystr))
+            appMap[apkName] = list
 
 
     except lite.Error, e:
@@ -132,32 +184,61 @@ def checkFeature(dbDir, sqlDir, appDir):
         sys.exit(1)
         
     finally:
-        for key in myTable:
-            print key
-            print myTable[key]
 
-        for key in myTable:
-            for key2 in myTable:
+        equalist = []
+        count = 0
+
+        """
+        for key in pair:
+            count = count + nCr(pair[key],2)
+        """
+
+        
+        for key in appMap:
+            for key2 in appMap:
                 if key == key2:
                     continue
-                if myTable[key2] == myTable[key]:
-                    print key + '======'+ key2
+                if checklist(appMap[key2], appMap[key]):
+                    list1 = []
+                    list1.append(key)
+                    list1.append(key2)
+                    if addlist(equalist, list1):
+                        pair[appMap[key][0]] = pair[appMap[key][0]] + 1 
+                #    count = count + 1
 
-
-
-
-
-
-
-
-
-
+        print 'count = ' + str(len(equalist))
+        print pair
         
         if con:
             con.close()
 
 
+def nCr(n,r):
+    f = math.factorial
+    return f(n) / f(r) / f(n-r)
 
+def checklist(list1, list2):
+    rte = False
+    if (list1[0] <> list2[0]):
+        return False
+    for i in range(1,12):
+        if (list1[i] <> list2[i]):
+            rte = True
+            break
+
+    return rte
+
+def addlist(mylist, entity):
+    added = True
+    for i in mylist:
+        if (i[0] in entity) and (i[1] in entity):
+            added = False
+            break
+
+    if added:
+        mylist.append(entity)
+
+    return added
 
 def main():
     if len(sys.argv) < 4:

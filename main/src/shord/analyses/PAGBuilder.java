@@ -85,7 +85,7 @@ import java.util.*;
                  "classT", "TargetHT", 
                  "sub", "staticTM", 
                  "staticTF", "clinitTM",
-				 "VH", "TgtAction",
+				 "TgtAction",
 	             "Stub", "COMP", "TgtDataType" },
        namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U", "S", "COMP"},
        types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class, DomComp.class},
@@ -109,7 +109,7 @@ import java.util.*;
                         "classT", "TargetHT",
                         "sub", "staticTM", 
                         "staticTF", "clinitTM",
-						"VH", "TgtAction",
+						"TgtAction",
                         "Stub", "TgtDataType" },
 	   signs = { "V0,H0:V0_H0", "V0,V1:V0xV1",
 				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
@@ -131,7 +131,7 @@ import java.util.*;
                  "T0:T0", "H0,COMP0:H0_COMP0",
                  "T0,T1:T0_T1", "T0,M0:T0_M0",
                  "T0,F0:F0_T0", "T0,M0:T0_M0",
-				 "V0,H0:V0_H0", "COMP0,H0:COMP0_H0",
+				 "COMP0,H0:COMP0_H0",
                  "M0:M0", "COMP0,H0:COMP0_H0"}
 	   )
 public class PAGBuilder extends JavaAnalysis
@@ -165,16 +165,9 @@ public class PAGBuilder extends JavaAnalysis
 	private ProgramRel relSubSig;//(m:M,s:S)
 	private ProgramRel relDispatch;//(t:T,s:S,m:M)
 	private ProgramRel relLaunch;//(v:V,m:M)
-	private ProgramRel relVH;//(v:V,h:H)
 	private ProgramRel relTgtAction;//(v:V,h:H)
 	private ProgramRel relTgtDataType;//(v:V,h:H)
 	private ProgramRel relTargetHT;//(h:H,t:T)
-
-    private ProgramRel relClassT;//(t:T)
-    private ProgramRel relSub;//(s:T,t:T)
-    private ProgramRel relStaticTM;//(t:T,m:M)
-    private ProgramRel relStaticTF;//(t:T,f:F)
-    private ProgramRel relClinitTM;//(t:T,m:M)
 
 
 	private ProgramRel relVT;
@@ -269,8 +262,6 @@ public class PAGBuilder extends JavaAnalysis
 		relDispatch.zero();
 		relLaunch = (ProgramRel) ClassicProject.g().getTrgt("Launch");
 		relLaunch.zero();
-		relVH = (ProgramRel) ClassicProject.g().getTrgt("VH");
-		relVH.zero();
 		relTgtAction = (ProgramRel) ClassicProject.g().getTrgt("TgtAction");
 		relTgtAction.zero();
 		relTgtDataType = (ProgramRel) ClassicProject.g().getTrgt("TgtDataType");
@@ -278,18 +269,7 @@ public class PAGBuilder extends JavaAnalysis
 		relTargetHT= (ProgramRel) ClassicProject.g().getTrgt("TargetHT");
 		relTargetHT.zero();
 
-        relClassT = (ProgramRel) ClassicProject.g().getTrgt("classT");
-        relClassT.zero();
-        relSub = (ProgramRel) ClassicProject.g().getTrgt("sub");
-        relSub.zero();
-        relStaticTM = (ProgramRel) ClassicProject.g().getTrgt("staticTM");
-        relStaticTM.zero();
-        relStaticTF = (ProgramRel) ClassicProject.g().getTrgt("staticTF");
-        relStaticTF.zero();
-        relClinitTM = (ProgramRel) ClassicProject.g().getTrgt("clinitTM");
-        relClinitTM.zero();
-
-	}
+    }
 	
 	void saveRels()
 	{
@@ -329,18 +309,11 @@ public class PAGBuilder extends JavaAnalysis
 		relSubSig.save();
 		relDispatch.save();
 		relLaunch.save();
-		relVH.save();
 		relTgtAction.save();
 		relTgtDataType.save();
 		relTargetHT.save();
 
-        relClassT.save();
-        relSub.save();
-        relStaticTM.save();
-        relStaticTF.save();
-        relClinitTM.save();
-
-
+        
 	}
 
 
@@ -709,12 +682,7 @@ public class PAGBuilder extends JavaAnalysis
 			}
 
 
-             if(method.isStatic())//m is a static method defined in t.
-                relStaticTM.add(method.getDeclaringClass().getType(), method);
-
-            if(method.getName().equals("<clinit>"))//m is the class initializer in t.
-                relClinitTM.add(method.getDeclaringClass().getType(), method);
-
+           
 			if(!method.isConcrete())
 				return;
 			
@@ -933,16 +901,12 @@ public class PAGBuilder extends JavaAnalysis
                         if(Scene.v().containsClass(str)){
                             relTargetHT.add(unit2Node.get(s), ICCGBuilder.getCompKey(str));
                         }
-						relVH.add(nodeFor((Local) leftOp), unit2Node.get(s));
 						Alloc(nodeFor((Local) leftOp), unit2Node.get(s));
 					}else if(str.matches("[a-zA-Z]+\\.[a-zA-Z]+.*")){//end with uppercase word.
-						relVH.add(nodeFor((Local) leftOp), unit2Node.get(s));
 						Alloc(nodeFor((Local) leftOp), unit2Node.get(s));
 					} else if("application/vnd.android.package-archive".equals(str)){ //install apk by data type: 
-                    	relVH.add(nodeFor((Local) leftOp), unit2Node.get(s));
 						Alloc(nodeFor((Local) leftOp), unit2Node.get(s));
                     }else {
-                    	relVH.add(nodeFor((Local) leftOp), PAGBuilder.gStringNode);
 						Alloc(nodeFor((Local) leftOp), PAGBuilder.gStringNode);
                     }
 
@@ -1295,27 +1259,53 @@ public class PAGBuilder extends JavaAnalysis
 			mpagBuilder.pass2();
 
 		pass3();
-	        buildDispatchMap();
+	    buildDispatchMap();
 		saveRels();
+        populateMisc();
 
 		populateCallgraph();
 	}
 
     void populateMisc()
     {
+        ProgramRel relClassT = (ProgramRel) ClassicProject.g().getTrgt("classT");
+        relClassT.zero();
+        ProgramRel relSub = (ProgramRel) ClassicProject.g().getTrgt("sub");
+        relSub.zero();
+        ProgramRel relStaticTM = (ProgramRel) ClassicProject.g().getTrgt("staticTM");
+        relStaticTM.zero();
+        ProgramRel relStaticTF = (ProgramRel) ClassicProject.g().getTrgt("staticTF");
+        relStaticTF.zero();
+        ProgramRel relClinitTM = (ProgramRel) ClassicProject.g().getTrgt("clinitTM");
+        relClinitTM.zero();
+
 		Program program = Program.g();		
         for(SootClass klass : program.getClasses()){
-            if(klass.isConcrete() || klass.isAbstract())
-                relClassT.add(klass.getType());
+            Type type = klass.getType();
+
+            relClassT.add(type);
 
             for(SootField field : klass.getFields())
                 if(field.isStatic())
-                    relStaticTF.add(klass.getType(), field);
+                    relStaticTF.add(type, field);
 
-            for(SootClass clazz : program.getClasses())
-                if(SootUtils.subTypesOf(clazz).contains(klass))
-                    relSub.add(klass.getType(), clazz.getType());//klass is subtype of clazz
+            for(SootMethod meth : klass.getMethods())
+                if(meth.isStatic())//m is a static method defined in t.
+                    relStaticTM.add(type, meth);
+
+            if(klass.declaresMethodByName("<clinit>"))
+                relClinitTM.add(type, klass.getMethodByName("<clinit>"));
+
+
+            for(SootClass clazz : SootUtils.subTypesOf(klass))
+                relSub.add(clazz.getType(), type);//clazz is subtype of klass
         }
+
+        relClassT.save();
+        relSub.save();
+        relStaticTM.save();
+        relStaticTF.save();
+        relClinitTM.save();
     }
 
 	final public boolean canStore(Type objType, Type varType) 
