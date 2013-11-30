@@ -219,7 +219,7 @@ public class ICCG
                 String src = flowSet[1];
                 int tgtId = getNode(flowSet[2]).getRowid();
                 String sink = flowSet[3];
-                System.out.println("MYflow:" + src + "||"+srcId);
+                //System.out.println("MYflow:" + src + "||"+srcId);
                 statement.executeUpdate("insert into flow values(?, '" 
                     +src +"', '"+sink+"', "+srcId+", "+tgtId+","+iccgId+")");
             }
@@ -260,6 +260,24 @@ public class ICCG
         // if the error message is "out of memory",
         // it probably means no database file is found
             System.err.println(e.getMessage());
+            System.out.println("database is busy.....");
+
+            try {
+                if (connection != null)
+                    connection.close();
+            } catch (SQLException e1) {
+                // connection close failed.
+                System.err.println(e1);
+            }
+
+            //take a rest
+            try{
+                Thread.sleep(500);
+            }catch(Exception e2){
+                System.err.println(e2);
+            }
+            //sql busy, need to rerun it.
+            updateDB();
 
         } finally {
             try {
