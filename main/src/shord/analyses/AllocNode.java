@@ -8,15 +8,15 @@ import soot.Type;
  */
 public abstract class AllocNode
 {
-	private Type type;
+	protected final Type type;
 
 	public AllocNode(Type type)
 	{
 		this.type = type;
 	}
-	
+
 	public Type getType()
 	{
 		return type;
-	}
+	}	
 }

@@ -14,7 +14,7 @@ import chord.util.tuple.object.Pair;
 import chord.util.tuple.object.Trio;
 
 @Chord(name = "context-label-java",
-	   consumes = { "InLabelArg", "InLabelRet", "OutLabelArg", "OutLabelRet", "CM" },
+	   consumes = { "InLabelArg", "InLabelRet", "OutLabelArg", "OutLabelRet", "reachableCM" },
 	   produces = { "CL", "CCL", "LCL" },
 	   namesOfTypes = { "CL" },
 	   types = { DomCL.class },
@@ -29,7 +29,7 @@ public class ContextLabelAnalysis extends JavaAnalysis
 	public void run()
 	{
         domCL = (DomCL) ClassicProject.g().getTrgt("CL");
-		relCM = (ProgramRel) ClassicProject.g().getTrgt("CM");
+		relCM = (ProgramRel) ClassicProject.g().getTrgt("reachableCM");
 		relCM.load();
 
 		CL();

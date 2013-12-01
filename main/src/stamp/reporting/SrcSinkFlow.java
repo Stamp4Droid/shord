@@ -48,11 +48,13 @@ public class SrcSinkFlow extends XMLReport {
 	    String sink = pair.val1.val0;
 		Ctxt sinkCtxt = pair.val1.val1;
 
-		if(Postmortem.processingSrc){
+		if(true/*Postmortem.processingSrc*/){
 			newTuple()
 				.addValue(source)
 				.addValue(sink);
 		} else {
+			assert false; //TODO
+			/*
 			Category flowCat = makeOrGetSubCat(source + " -> " + sink);
 			Category ctxtFlowCat = flowCat.makeOrGetSubCat("Flow "+count);
 			Tuple srcTuple = ctxtFlowCat.newTuple();//makeOrGetSubCat("context");
@@ -63,6 +65,7 @@ public class SrcSinkFlow extends XMLReport {
 			sinkTuple.setAttr("sink", sink);
 			for(Unit unit : sinkCtxt.getElems())
 				sinkTuple.addValue(Program.unitToString(unit));
+			*/
 		}
 	}
 

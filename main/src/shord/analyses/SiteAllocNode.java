@@ -15,7 +15,7 @@ public class SiteAllocNode extends AllocNode
 
 	public SiteAllocNode(Unit u)
 	{
-		super(((AssignStmt) unit).getRightOp().getType());
+		super(((AssignStmt) u).getRightOp().getType());
 		this.unit = u;
 	}
 
@@ -27,11 +27,5 @@ public class SiteAllocNode extends AllocNode
 	public String toString()
 	{
 		return "SiteAlloc$" + Program.unitToString(unit);
-	}
-	
-    @Override
-    public String toUniqueString(Unit u) 
-	{
-		return Program.unitToString(u);
-    }
+	}	
 }

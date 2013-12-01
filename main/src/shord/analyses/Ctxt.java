@@ -1,6 +1,7 @@
 package shord.analyses;
 
 import soot.Unit;
+import soot.SootMethod;
 import java.io.Serializable;
 import shord.program.Program;
 
@@ -52,7 +53,7 @@ public class Ctxt implements Serializable
         }
         return i;
     }
-
+	
     public boolean equals(Object o) {
         if (!(o instanceof Ctxt))
             return false;
@@ -87,13 +88,31 @@ public class Ctxt implements Serializable
 				first = false;
 			}
 			builder.append(inst == null ? "null"
-						   : Program.unitToString(inst));
+						   : (inst instanceof Unit ? Program.unitToString((Unit) inst) : inst.toString()));
 		}
 		builder.append(']');
 		if (asCtxtObj) {
 			builder.append(':');
-			builder.append(Program.unitToString(elems[0]));
+			builder.append(elems[0].toString());
+			//builder.append(Program.unitToString(elems[0]));
 		}
 		return builder.toString();
 	}
+
+	/*
+	public int length()
+	{
+		return elems.length;
+	}
+
+	public SootMethod containerMethod(int index)
+	{
+		Object c = elems[index];
+		if(c instanceof Stmt)
+			return Program.containerMethod(c);
+		if(c instanceof AllocNode)
+			return ((AllocNode) c).getMethod(); //can be null
+		return null;
+	}
+	*/
 }

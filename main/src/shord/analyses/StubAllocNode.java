@@ -9,13 +9,12 @@ import soot.SootMethod;
  */
 public class StubAllocNode extends AllocNode
 {
-	private final Type type;
 	private final SootMethod method;
 
 	public StubAllocNode(Type t, SootMethod m)
 	{
 		super(t);
-		this.method= m;
+		this.method = m;
 	}
 
 	public SootMethod getMethod()

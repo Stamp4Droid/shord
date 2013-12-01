@@ -17,6 +17,7 @@ import java.util.Iterator;
 
 import gnu.trove.list.array.TIntArrayList;
 
+import soot.Scene;
 import soot.Unit;
 import soot.Type;
 import soot.RefType;
@@ -25,6 +26,7 @@ import soot.SootMethod;
 import soot.util.NumberedSet;
 import soot.jimple.AnyNewExpr;
 import soot.jimple.AssignStmt;
+import soot.jimple.StaticInvokeExpr;
 
 import shord.program.Program;
 import shord.project.ClassicProject;
@@ -32,7 +34,8 @@ import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
 import shord.project.Config;
 import shord.project.Messages;
-import shord.bddbddb.Rel.RelView;
+
+import static shord.analyses.PAGBuilder.isQuasiStaticInvk;
 
 import chord.util.Utils;
 import chord.project.Chord;
@@ -40,13 +43,14 @@ import chord.util.ArraySet;
 import chord.util.graph.IGraph;
 import chord.util.graph.MutableGraph;
 import chord.util.tuple.object.Pair;
+import chord.bddbddb.Rel.RelView;
 
 /**
  * Analysis for pre-computing abstract contexts.
  * @author Yu Feng (yufeng@cs.stanford.edu)
  */
 @Chord(name = "ctxts-obj-java",
-       consumes = { "MI", "MH", "ipt", "StatIM"},
+       consumes = { "MI", "MH", "ipt", "StatIM", "Stub"},
        produces = { "C", "CC", "CH", "CI"},
        namesOfTypes = { "C" },
        types = { DomC.class }
@@ -55,7 +59,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 {
     private static final Set<Ctxt> emptyCtxtSet = Collections.emptySet();
     private static final Set<SootMethod> emptyMethSet = Collections.emptySet();
-    private static final Unit[] emptyElems = new Unit[0];
+    private static final Object[] emptyElems = new Object[0];
 
     // includes all methods in domain
     private Set<Ctxt>[] methToCtxts;
@@ -115,7 +119,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         for(VarNode vnode:domV){
             if(vnode instanceof ThisVarNode) {
                 ThisVarNode thisVar = (ThisVarNode) vnode;
-                methToThis.put(thisVar.getMethod(), thisVar); 
+                methToThis.put(thisVar.method, thisVar); 
             }
         }
 
@@ -173,6 +177,10 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         for(int iIdx = 0; iIdx < ItoM.length; iIdx++){
             int mIdx = ItoM[iIdx];
             Unit invk = ItoQ[iIdx];
+
+			if(!isQuasiStaticInvk(invk))
+				continue;
+
             Set<Ctxt> ctxts = methToCtxts[mIdx];
             for (Ctxt oldCtxt : ctxts) {
                 Object[] oldElems = oldCtxt.getElems();
@@ -205,7 +213,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
             int mIdx = ItoM[iIdx];
             Unit invk = ItoQ[iIdx];
 
-			if(!(((Stmt) invk).getInvokeExpr() instanceof StaticInvokeExpr))
+			if(!isQuasiStaticInvk(invk))
 				continue;
 
             Set<Ctxt> ctxts = methToCtxts[mIdx];
@@ -254,7 +262,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         Set<SootMethod> roots = new HashSet<SootMethod>();
         Map<SootMethod, Set<SootMethod>> methToPredsMap = new HashMap<SootMethod, Set<SootMethod>>();
 		boolean ignoreStubs = PAGBuilder.ignoreStubs;
-		NumberedSet stubs = PAGBuilder.stubMethods;
+		NumberedSet stubs = stubMethods();
 		Iterator mIt = Program.g().scene().getReachableMethods().listener();
 		while(mIt.hasNext()){
 			SootMethod meth = (SootMethod) mIt.next();
@@ -313,11 +321,11 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         IGraph<SootMethod> graph = new MutableGraph<SootMethod>(roots, methToPredsMap, null);
         List<Set<SootMethod>> sccList = graph.getTopSortedSCCs();
         int n = sccList.size();
-        if (Config.verbose >= 2)
+        if (Config.v().verbose >= 2)
             System.out.println("numSCCs: " + n);
         for (int i = 0; i < n; i++) { // For each SCC...
             Set<SootMethod> scc = sccList.get(i);
-            if (Config.verbose >= 2)
+            if (Config.v().verbose >= 2)
                 System.out.println("Processing SCC #" + i + " of size: " + scc.size());
             if (scc.size() == 1) { // Singleton
                 SootMethod cle = scc.iterator().next();
@@ -334,7 +342,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
             }
             boolean changed = true;
             for (int count = 0; changed; count++) { // Iterate...
-                if (Config.verbose >= 2)
+                if (Config.v().verbose >= 2)
                     System.out.println("\tIteration  #" + count);
                 changed = false;
                 for (SootMethod cle : scc) { // For each node (method) in SCC
@@ -430,4 +438,16 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         return newCtxts;
     }
 
+	private NumberedSet stubMethods()
+	{
+		NumberedSet stubMethods = new NumberedSet(Scene.v().getMethodNumberer());
+		final ProgramRel relStub = (ProgramRel) ClassicProject.g().getTrgt("Stub");		
+		relStub.load();
+        RelView view = relStub.getView();
+        Iterable<SootMethod> it = view.getAry1ValTuples();
+		for(SootMethod m : it)
+			stubMethods.add(m);		
+		relStub.close();
+		return stubMethods;
+    }
 }
