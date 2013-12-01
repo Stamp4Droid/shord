@@ -115,6 +115,7 @@
       <sysproperty key="stamp.droidrecord.logfile.bin" value="${stamp.droidrecord.logfile.bin}"/>
 	  <sysproperty key="stamp.print.allclasses" value="${stamp.print.allclasses}"/>
       <syspropertyset refid="stamp.analyses.main.sysprops"/>
+	  <sysproperty key="stamp.timeout" value="${stamp.timeout}"/>
       <classpath>
 		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
 		<pathelement location="${stamp.dir}/lib/soot.jar"/>

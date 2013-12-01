@@ -15,6 +15,9 @@ import chord.util.Utils;
  * @author Mayur Naik (mhn@cs.stanford.edu)
  */
 public class Main {
+
+    public static long startTime;
+
     public static void main(String[] args) throws Exception {
         File outFile;
         {
@@ -56,6 +59,8 @@ public class Main {
             errStream.close();
     }
     private static void run() {
+        startTime = System.currentTimeMillis();
+
         Timer timer = new Timer("chord");
         timer.init();
         String initTime = timer.getInitTimeStr();
@@ -90,4 +95,5 @@ public class Main {
             System.out.println("Total time: " + timer.getInclusiveTimeStr());
         }
     }
+
 }
