@@ -86,6 +86,8 @@ def timeout(signum, frame):
 
 timeout = 500
 
+
+
 def runAppWithStamp(stampdir, appdir):
     for path, subdir, files in os.walk(appdir):
         for file in files:
@@ -104,6 +106,7 @@ def runAppWithStamp(stampdir, appdir):
 
 
                 start = datetime.datetime.now()
+                exestart = time.time()
                 flag = False
 
                 while process.poll() is None:
@@ -118,30 +121,22 @@ def runAppWithStamp(stampdir, appdir):
                 if flag: 
                     continue
                 
-                """
-                permitResult += analyzeLogPermit(stampdir, apkfile)
-                f = open( outputdir + appName + ".dot", "w")
-                f.write(statResult)
-                f.close()
-
-                pf = open( outputdir + appName + ".txt", "w")
-                pf.write(permitResult)
-                pf.close()
-                """
                 apkfile = apkfile.replace("/", "_")
                 baseXmlLoc = stampdir + "stamp_output/"
                 iccg =  baseXmlLoc + apkfile + iccgDir
                 str = "dot -Tpng " + iccg + " > " + outputdir+appName+".png"
-                print str
 
                 if os.path.isfile(iccg):
+                    exeend = time.time()
+                    elapsed = exeend-exestart
+                    timecost = secondsToStr(elapsed)
+
+                    pf = open( outputdir + appName + ".txt", "w")
+                    pf.write(timecost)
+                    pf.close()
+
                     os.system(str)
-
-
-
-                #dot -Tpng input.dot > output.png
-                #os.system("dot -Tpng " + outputdir+appName+".dot" + " > " + outputdir+appName+".png")
-
+                    print str + ':' + timecost
 
 
 def main():

@@ -26,7 +26,7 @@ public class Launcher
 		int maxStamp = Integer.parseInt(args[1]);
 		String apkDir = args[2];
 
-		String[] apks = new File(apkDir).list(new FilenameFilter(){
+		/*String[] apks = new File(apkDir).list(new FilenameFilter(){
 				public boolean accept(File dir, String name){
 					return name.endsWith("apk");
 				}
@@ -34,12 +34,34 @@ public class Launcher
 		
 		for(String apk : apks){
 			apkNames.add(apkDir + '/' +apk);
-		}	
+		}*/	
+		
+
+		displayDirectoryContents(new File(apkDir));
 		
 		for(int i = 0; i < maxStamp; i++){
 			new Worker().start();
 		}
 	}
+
+	public static void displayDirectoryContents(File dir) {
+		try {
+			File[] files = dir.listFiles();
+			for (File file : files) {
+				if (file.isDirectory()) {
+					System.out.println("directory:" + file.getCanonicalPath());
+					displayDirectoryContents(file);
+				} else {
+					System.out.println("     file:" + file.getCanonicalPath());
+					apkNames.add(file.getCanonicalPath());
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
 
 	static class Worker extends Thread 
 	{
