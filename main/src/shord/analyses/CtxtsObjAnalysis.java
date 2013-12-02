@@ -50,8 +50,8 @@ import chord.bddbddb.Rel.RelView;
  * @author Yu Feng (yufeng@cs.stanford.edu)
  */
 @Chord(name = "ctxts-obj-java",
-       consumes = { "MI", "MH", "ipt", "StatIM", "Stub"},
-       produces = { "C", "CC", "CH", "CI"},
+       consumes = { "MI", "MH", "ci_pt", "StatIM", "Stub"},
+       produces = { "C", "CC", "CH", "CI", "CM"},
        namesOfTypes = { "C" },
        types = { DomC.class }
 )
@@ -106,7 +106,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         relCC = (ProgramRel) ClassicProject.g().getTrgt("CC");
         relCH = (ProgramRel) ClassicProject.g().getTrgt("CH");
         relCI = (ProgramRel) ClassicProject.g().getTrgt("CI");
-        relIpt = (ProgramRel) ClassicProject.g().getTrgt("ipt");
+        relIpt = (ProgramRel) ClassicProject.g().getTrgt("ci_pt");
         relStatIM = (ProgramRel) ClassicProject.g().getTrgt("StatIM");
 
         mainMeth = Program.g().getMainMethod();
@@ -255,7 +255,28 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         assert (domC.size() == numC);
 
         relCC.save();
+		
+		CM();
     }
+
+	private void CM()
+	{
+		ProgramRel relCM = (ProgramRel) ClassicProject.g().getTrgt("CM");
+		relCM.zero();
+        for (int mIdx = 0; mIdx < methToCtxts.length; mIdx++) {
+            SootMethod meth = (SootMethod) domM.get(mIdx);
+			Set<Ctxt> ctxts = methToCtxts[mIdx];
+			if(ctxts == null){
+				//either meth is unreachable or a reachable stub
+				continue;
+			}
+			for(Ctxt c : ctxts){
+				relCM.add(c, meth);
+				//System.out.println("meth: " + meth + " ctxt: "+c);
+			}
+		}
+		relCM.save();
+	}
 
     private void doAnalysis() {
         SootMethod mainMeth = Program.g().getMainMethod();

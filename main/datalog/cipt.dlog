@@ -21,7 +21,7 @@ LoadStat(y:V,f:F)   input   # y = f
 StoreStat(f:F,v:V)  input   # f = v
 #param(u:V,v:V,i:I)  input   # u is the formal parameter, v is actual arg, i is invocation stmt
 #return(u:V,v:V,i:I) input   # u is the lhs at callsite, v is the return var, i is invocation stmt
-chaIM(i:I,m:M) input
+#chaIM(i:I,m:M) input
 IinvkRet(i:I,n:Z,v:V) input
 IinvkArg(i:I,n:Z,v:V) input
 MmethArg(m:M,z:Z,v:V) input
@@ -33,8 +33,8 @@ VT(v:V,t:T) input
 
 ciTypeFilter(v:V,h:H) output   # type wise, v can point-to o
 
-param(u:V,v:V,i:I) output   # u is the formal parameter, v is actual arg, i is invocation stmt
-return(u:V,v:V,i:I)  output   # u is the lhs at callsite, v is the return var, i is invocation stmt
+param(u:V,v:V,i:I)   # u is the formal parameter, v is actual arg, i is invocation stmt
+return(u:V,v:V,i:I)   # u is the lhs at callsite, v is the return var, i is invocation stmt
 
 ipt(v:V,h:H)    output # (c,v) points-to o
 ifpt(f:F,h:H) output

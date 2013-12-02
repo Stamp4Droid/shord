@@ -30,7 +30,6 @@ public class Main
 		String line = null;
 		while((line = reader.readLine()) != null){
 			harnessClasses.add(line);
-			break;
 		}
 		reader.close();
 		
