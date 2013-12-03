@@ -28,7 +28,7 @@ MmethPrimArg(m:M,z:Z,u:U) input
 MmethPrimRet(m:M,z:Z,u:U) input
 
 CM(c:C,m:M) input # c is a context of method m
-Framework(m:M) input
+Stub(m:M) input
 
 ###################
 # INPUT: ANNOTATIONS
@@ -68,15 +68,15 @@ Prim2PrimTFull(c:C,v:U,u:U) output
 ##################
 
 # stub annotations
-Ref2RefArgTStub(c,v,u,m,z1,z2) :- Framework(m), MmethArg(m,z1,v), MmethArg(m,z2,u), z1 != z2, CM(c,m).
-Ref2RefRetTStub(c,v,u,m,z) :- Framework(m), MmethArg(m,z,v), MmethRet(m,_,u), CM(c,m).
+Ref2RefArgTStub(c,v,u,m,z1,z2) :- Stub(m), MmethArg(m,z1,v), MmethArg(m,z2,u), z1 != z2, CM(c,m).
+Ref2RefRetTStub(c,v,u,m,z) :- Stub(m), MmethArg(m,z,v), MmethRet(m,_,u), CM(c,m).
 
-Prim2RefArgTStub(c,v,u,m,z1,z2) :- Framework(m), MmethPrimArg(m,z1,v), MmethArg(m,z2,u), CM(c,m).
-Prim2RefRetTStub(c,v,u,m,z) :- Framework(m), MmethPrimArg(m,z,v), MmethRet(m,_,u), CM(c,m).
+Prim2RefArgTStub(c,v,u,m,z1,z2) :- Stub(m), MmethPrimArg(m,z1,v), MmethArg(m,z2,u), CM(c,m).
+Prim2RefRetTStub(c,v,u,m,z) :- Stub(m), MmethPrimArg(m,z,v), MmethRet(m,_,u), CM(c,m).
 
-Ref2PrimTStub(c,v,u,m,z) :- Framework(m), MmethArg(m,z,v), MmethPrimRet(m,_,u), CM(c,m).
+Ref2PrimTStub(c,v,u,m,z) :- Stub(m), MmethArg(m,z,v), MmethPrimRet(m,_,u), CM(c,m).
 
-Prim2PrimTStub(c,v,u,m,z) :- Framework(m), MmethPrimArg(m,z,v), MmethPrimRet(m,_,u), CM(c,m).
+Prim2PrimTStub(c,v,u,m,z) :- Stub(m), MmethPrimArg(m,z,v), MmethPrimRet(m,_,u), CM(c,m).
 
 ##################
 # RULES: FULL ANNOTATIONS

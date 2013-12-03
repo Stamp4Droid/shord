@@ -54,7 +54,7 @@ MmethRet(m:M,z:Z,v:V)     input
 
 # stub information
 Stub(m:M) input
-Framework(m:M) input
+Stub(m:M) input
 
 ###################
 # OUTPUT: PHANTOM ALLOCATIONS
@@ -121,9 +121,4 @@ StorePrimCtxtArr(c,v,u) :- StorePrimCtxt(c,v,0,u).
 Varg(v) :- Stub(m), MmethArg(m,_,v).
 Vret(v) :- Stub(m), MmethRet(m,_,v).
 
-#phAlloc(v,c) :- Stub(m), MmethRet(m,_,v), CM(c,m).
-
-#Varg(v) :- Framework(m), MmethArg(m,_,v).
-#Vret(v) :- Framework(m), MmethRet(m,_,v).
-
-phAlloc(v,c) :- Framework(m), MmethRet(m,_,v), CM(c,m).
+phAlloc(v,c) :- Stub(m), MmethRet(m,_,v), CM(c,m).
