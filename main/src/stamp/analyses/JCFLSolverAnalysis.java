@@ -207,7 +207,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 
 		
 
-		setGroundTruth(experiment.j().g(), experiment.j().s(), m);
+		//setGroundTruth(experiment.j().g(), experiment.j().s(), m);
 		//runStubModelClassifier(m);
 		
 		
