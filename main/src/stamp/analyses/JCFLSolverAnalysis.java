@@ -1,25 +1,38 @@
 package stamp.analyses;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
+import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
+import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.analysis.Experiment;
 import stamp.missingmodels.analysis.JCFLSolverRunner;
 import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverSingle;
 import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverStubs;
 import stamp.missingmodels.analysis.JCFLSolverRunner.RelationAdder;
-import stamp.missingmodels.grammars.G;
+import stamp.missingmodels.analysis.ModelClassifier.ModelInfo;
+import stamp.missingmodels.grammars.H;
+import stamp.missingmodels.ml.Classifier;
+import stamp.missingmodels.util.ConversionUtils;
 import stamp.missingmodels.util.ConversionUtils.ChordRelationAdder;
 import stamp.missingmodels.util.FileManager;
 import stamp.missingmodels.util.FileManager.FileType;
 import stamp.missingmodels.util.FileManager.StampOutputFile;
+import stamp.missingmodels.util.Relation;
 import stamp.missingmodels.util.StubLookup;
+import stamp.missingmodels.util.StubLookup.StubLookupValue;
 import stamp.missingmodels.util.StubModelSet;
 import stamp.missingmodels.util.StubModelSet.ModelType;
+import stamp.missingmodels.util.StubModelSet.StubModel;
 import stamp.missingmodels.util.Util.Pair;
 import stamp.missingmodels.util.jcflsolver.Edge;
 import stamp.missingmodels.util.jcflsolver.EdgeData;
@@ -37,10 +50,81 @@ import chord.project.Chord;
 /*
  * An analysis that runs the JCFLSolver to do the taint analysis.
  */
-
 @Chord(name = "jcflsolver")
-public class JCFLSolverAnalysis extends JavaAnalysis {	
+public class JCFLSolverAnalysis extends JavaAnalysis {
 	private static JCFLSolverRunner j = new JCFLSolverStubs();
+	
+	public static void runStubModelClassifier(StubModelSet m) {
+		Random random = new Random();
+		int length = 5;
+		
+		// STEP 1: Build the training and test sets.
+		Map<StubModel,Boolean> trainingSet = new HashMap<StubModel,Boolean>();
+		Map<StubModel,Boolean> testSet = new HashMap<StubModel,Boolean>();
+		for(StubModel model : m.keySet()) {
+			boolean b = random.nextDouble() < 0.7;
+			if(m.get(model) != null) {
+				System.out.println(model.toString() + ": " + m.get(model));
+			}
+			try {
+				ModelInfo info = new ModelInfo(model);
+			} catch(Exception e) {
+				e.printStackTrace();
+				continue;
+			}
+			if(m.get(model) == ModelType.FALSE) {
+				if(b) {
+					trainingSet.put(model, false);
+				} else {
+					testSet.put(model, false);
+				}
+			} else if(m.get(model) == ModelType.TRUE) {
+				if(b) {
+					trainingSet.put(model, true);
+				} else {
+					testSet.put(model, true);
+				}
+			}
+		}
+		
+		// STEP 2: Construct the features.
+		double[][] xTraining = new double[trainingSet.keySet().size()][length];
+		double[] yTraining = new double[trainingSet.keySet().size()];
+		int counter=0;
+		for(Map.Entry<StubModel,Boolean> entry : trainingSet.entrySet()) {
+			counter++;
+		}
+		double[][] xTest = new double[testSet.keySet().size()][length];
+		double[] yTest = new double[testSet.keySet().size()];
+		counter=0;
+		for(Map.Entry<StubModel,Boolean> entry : testSet.entrySet()) {
+			xTest[counter] = new ModelInfo(entry.getKey()).featurize();
+			yTest[counter] = entry.getValue() ? 1.0 : 0.0;
+			counter++;
+		}
+		
+		// STEP 3: Predict and get accuracy
+		double[] theta = Classifier.maximumLikelihood(xTraining, yTraining, 0.01);
+		boolean[] yTrainingHat = Classifier.predictLabel(theta, xTraining, 0.5);
+		boolean[] yTestHat = Classifier.predictLabel(theta, xTest, 0.5);
+		double trainingAccuracy = 0.0; 
+		for(int i=0; i<yTraining.length; i++) {
+			if((yTraining[i] > 0.5) == yTrainingHat[i]) { 
+				trainingAccuracy += 1.0;
+			}
+		}
+		trainingAccuracy /= yTraining.length;
+		double testAccuracy = 0.0; 
+		for(int i=0; i<yTest.length; i++) {
+			if((yTest[i] > 0.5) == yTestHat[i]) { 
+				testAccuracy += 1.0;
+			}
+		}
+		testAccuracy /= yTest.length;
+		System.out.println("Training accuracy: " + trainingAccuracy);
+		System.out.println("Test accuracy: " + testAccuracy);
+		
+	}
 	
 	public static Graph g() {
 		if(j == null) return null;
@@ -73,7 +157,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 				String symbol = g.kindToSymbol(k);
 				try {
 					if(!g.isTerminal(k)) {
-						continue;						
+						continue;
 					}
 					Set<EdgeData> edges = this.manager.read(new JCFLRelationInputFile(FileType.SCRATCH, symbol, g.kindToWeight(k)));
 					for(EdgeData edge : edges) {
@@ -103,17 +187,30 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		StubModelSet m;
 		try {
 			m = manager.read(new StubModelSetInputFile("StubModelSet.txt", FileType.PERMANENT));
-		} catch (IOException e) {
+			for(Map.Entry<StubModel,ModelType> entry : m.entrySet()) {
+				System.out.println(entry.getKey().toString() + ": " + entry.getValue());
+			}
+		} catch(IOException e) {
 			e.printStackTrace();
 			m = new StubModelSet();
 		}
+		
+		// STEP 2: Get lines of code and run experiment.
+		Pair<Integer,Integer> loc = getLOC();
 		
 		//j = new JCFLSolverSingle(new E12(), m);
 		//j.run(E12.class, m);
 		//Experiment experiment = new Experiment(JCFLSolverSingle.class, E12.class);
 		File outputDir = manager.getDirectory(FileType.OUTPUT);
 		String appDir = outputDir.getParentFile().getName();
-		Experiment experiment = new Experiment(JCFLSolverSingle.class, G.class, appDir);
+		Experiment experiment = new Experiment(JCFLSolverSingle.class, H.class, appDir, loc.getX(), loc.getY());
+
+		
+
+		setGroundTruth(experiment.j().g(), experiment.j().s(), m);
+		//runStubModelClassifier(m);
+		
+		
 		experiment.run(m, new StubModelSet(), relationAdder, ModelType.FALSE);
 		j = experiment.j();
 
@@ -134,58 +231,50 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		m.putAll(experiment.getAllProposedModels());
 		files.add(new StubModelSetOutputFile(m, "StubModelSet.txt", FileType.PERMANENT));
 		files.add(experiment);
-		files.add(new JCFLRelationOutputFileNew("Flow3", j.g(), new TupleConverter() {
-			@Override
-			public int[] convert(Edge edge) {
-				String srcString = edge.from.getName().substring(2);
-				String sinkString = edge.to.getName().substring(2);
-				try {
-					int src = Integer.parseInt(srcString);
-					int sink = Integer.parseInt(sinkString);
-					return new int[]{src,sink};
-				} catch(Exception e) {
-					e.printStackTrace();
-					throw new RuntimeException("Failed to parse src-sink pair: (" + srcString + "," + sinkString + ")!");
-				}
-			}
-		}));
-		files.add(new JCFLRelationOutputFileNew("LabelRef3", j.g(), new TupleConverter() {
-			@Override
-			public int[] convert(Edge edge) {
-				String srcString = edge.from.getName().substring(2);
-				String[] varStrings = edge.to.getName().substring(1).split("_");
-				try {
-					int src = Integer.parseInt(srcString);
-					int var = Integer.parseInt(varStrings[0]);
-					int ctxt = Integer.parseInt(varStrings[1]);
-					return new int[]{ctxt,src,var};
-				} catch(Exception e) {
-					e.printStackTrace();
-					throw new RuntimeException("Failed to parse src-ref pair: (" + srcString + "," + varStrings[0] + "_" + varStrings[1] + ")!");
-				}
-			}
-		}));
-		files.add(new JCFLRelationOutputFileNew("LabelPrim3", j.g(), new TupleConverter() {
-			@Override
-			public int[] convert(Edge edge) {
-				String srcString = edge.from.getName().substring(2);
-				String[] varStrings = edge.to.getName().substring(1).split("_");
-				try {
-					int src = Integer.parseInt(srcString);
-					int var = Integer.parseInt(varStrings[0]);
-					int ctxt = Integer.parseInt(varStrings[1]);
-					return new int[]{ctxt,src,var};
-				} catch(Exception e) {
-					e.printStackTrace();
-					throw new RuntimeException("Failed to parse src-prim pair: (" + srcString + "," + varStrings[0] + "_" + varStrings[1] + ")!");
-				}
-			}
-		}));
 		try {
 			for(StampOutputFile file : files) {
 				manager.write(file);
 			}
 		} catch(IOException e) { e.printStackTrace(); }
+	}
+	
+	public static Set<String> groundTruthEdges = new HashSet<String>();
+	static {
+		groundTruthEdges.add("ref2RefT");
+		groundTruthEdges.add("ref2PrimT");
+		groundTruthEdges.add("prim2RefT");
+		groundTruthEdges.add("prim2PrimT");
+	}
+	
+	public static void setGroundTruth(Graph g, StubLookup s, StubModelSet m) {
+		System.out.println("Setting ground truths...");
+		for(String symbol : groundTruthEdges) {
+			for(Relation rel : ConversionUtils.getChordRelationsFor(symbol)) {
+				final ProgramRel programRel = (ProgramRel)ClassicProject.g().getTrgt(rel.getRelationName());
+				programRel.load();
+				Iterable<int[]> res = programRel.getAryNIntTuples();
+				
+				for(int[] tuple : res) {
+					StubLookupValue value = rel.getStubLookupValueFromTuple(tuple);
+
+					m.put(new StubModel(value.relationName + "Stub", value.method.toString(), value.firstArg, value.secondArg), ModelType.TRUE);
+					System.out.println("Ground truth: " + value.toString());
+				}
+			}
+		}
+		System.out.println("Done setting ground truths!");
+	}
+	
+	public static Pair<Integer,Integer> getLOC() {
+		String path = System.getProperty("stamp.out.dir") + File.separator + "loc.txt";
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(path));
+			int appLOC = Integer.parseInt(br.readLine());
+			int frameworkLOC = Integer.parseInt(br.readLine());
+			return new Pair<Integer,Integer>(appLOC, frameworkLOC);
+		} catch(IOException e) {
+			return new Pair<Integer,Integer>(0,0);
+		}
 	}
 	
 	public static FileManager getFileManager(String stampDirectory) {
