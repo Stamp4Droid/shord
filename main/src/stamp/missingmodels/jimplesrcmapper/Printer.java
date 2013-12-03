@@ -32,9 +32,11 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import soot.AttributesUnitPrinter;
@@ -105,6 +107,45 @@ public class Printer {
 		jimpleLnNum++;
 		//G.v().out.println("jimple Ln Num: "+jimpleLnNum);
 	}
+	
+	/**
+	 * Counts the number of lines of code.
+	 */
+	private int appLOC = 0;
+	private int frameworkLOC = 0;
+	
+	public int getAppLOC() {
+		return this.appLOC;
+	}
+	
+	public int getFrameworkLOC() {
+		return this.frameworkLOC;
+	}
+	
+	private static final Set<String> packagePrefices = new HashSet<String>();
+	static {
+		packagePrefices.add("android");
+		packagePrefices.add("java");
+		packagePrefices.add("javax");
+		packagePrefices.add("org.apache");
+		packagePrefices.add("org.json");
+		packagePrefices.add("org.w3c");
+		packagePrefices.add("org.xml");
+		packagePrefices.add("org.xmlpull");
+		packagePrefices.add("edu.stanford.stamp.harness");
+		packagePrefices.add("com.android");
+		packagePrefices.add("com.google.android.maps");		
+	}
+	
+	public static boolean isFrameworkClass(SootClass cl) {
+		String packageName = cl.getPackageName();
+		for(String packagePrefix : packagePrefices) {
+			if(packageName.startsWith(packagePrefix)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * Prints all the files in the given output directory.
@@ -115,7 +156,7 @@ public class Printer {
 			throw new RuntimeException("Bad line separator!");
 		}
 		for(SootClass cl : Scene.v().getClasses()) {
-			System.out.println("PRINTING: " + cl.getName());
+			//System.out.println("PRINTING: " + cl.getName());
 
 			// Get file name.
 			StringBuffer b = new StringBuffer();
@@ -128,7 +169,7 @@ public class Printer {
 			b.append(".jimple");
 			File file = new File(folder, b.toString());
 			
-			System.out.println("TO FILE: " + file.getCanonicalPath());
+			//System.out.println("TO FILE: " + file.getCanonicalPath());
 			
 			// Get print writer for the file.
 			//final int format = Options.v().output_format();
@@ -137,8 +178,15 @@ public class Printer {
 
 			// Print the class to the file.
 			printTo(cl, file);
-
+			
+			// Line counts
+			if(isFrameworkClass(cl)) {
+				this.frameworkLOC += this.escapedWriter.getCurLineNumber();
+			} else {
+				this.appLOC += this.escapedWriter.getCurLineNumber();
+			}
 		}
+		
 		System.out.println("EXITING PRINTER");
 	}
 	

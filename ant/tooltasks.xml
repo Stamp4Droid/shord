@@ -6,8 +6,8 @@
   <target name="-deploy-webapp"
 	  depends="-check-everythinguptodate"
 	  unless="${everythinguptodate}">
-    <ant antfile="${stamp.dir}/web/build.xml" target="deploy"
-	 inheritAll="false" useNativeBasedir="true"/>
+    <!--ant antfile="${stamp.dir}/web/build.xml" target="deploy"
+	 inheritAll="false" useNativeBasedir="true"/-->
     <tstamp>
       <format property="logtime" pattern="yyyy.MM.dd : HH:mm:ss z"/>
     </tstamp>
@@ -35,7 +35,7 @@
 	 inheritAll="false" useNativeBasedir="true"/>
     <ant antfile="${stamp.dir}/modelwiz/build.xml" target="jar"
 	 inheritAll="false" useNativeBasedir="true"/>
-    <ant antfile="${stamp.dir}/web/build.xml" target="compile"
+    <ant antfile="${stamp.dir}/web/build.xml" target="war"
 	 inheritAll="false" useNativeBasedir="true"/>
     <!--ant antfile="${stamp.dir}/cfl/jcflsolver/build.xml" target="jar"
 	 inheritAll="false" useNativeBasedir="true"/-->

@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import shord.project.analyses.JavaAnalysis;
+import stamp.util.PropertyHelper;
 import soot.Scene;
 import soot.SootClass;
-import soot.SootMethod;
 import stamp.missingmodels.jimplesrcmapper.ChordJimpleAdapter;
 import stamp.missingmodels.jimplesrcmapper.CodeStructureInfo;
 import stamp.missingmodels.jimplesrcmapper.JimpleStructureExtractor;
@@ -21,41 +21,38 @@ import chord.project.Chord;
 import com.google.common.io.NullOutputStream;
 
 /*
- * An analysis that runs the JCFLSolver to do the taint analysis.
+ * @author Osbert Bastani
  */
-
 @Chord(name = "jimpleprinter")
 public class JimplePrinterAnalysis extends JavaAnalysis {
 
-	@Override public void run() {		
+	@Override public void run() {
 		try {
+
+			boolean printClasses =
+				PropertyHelper.getBoolProp("stamp.print.allclasses");
+			System.out.println("++stamp.print.allclasses = "+printClasses);
+			if(!printClasses)
+				return;
+
 			// SET UP SCRATCH DIRECTORY
 			String outDir = System.getProperty("stamp.out.dir");
-			//File outputDir = new File(stampDirectory + File.separator + "cfl");
-			//File scratchDir = new File(stampDirectory + File.separator + "/../../osbert/scratch/" + outputDir.getParentFile().getName());
-			//String outputPath = scratchDir.getCanonicalPath() + "/jimple/";
 
 			// PRINT JIMPLE
 			JimpleStructureExtractor jse = new JimpleStructureExtractor();
-			new Printer(jse).printAll(outDir + "/jimple/");
+			Printer printer = new Printer(jse);
+			printer.printAll(outDir + "/jimple/");
+
+			PrintWriter pw = new PrintWriter(outDir + "/loc.txt");
+			pw.println(printer.getAppLOC() + "\n" + printer.getFrameworkLOC());
+			pw.close();
 
 			// GET STRUCTURE AND PRINT
 			CodeStructureInfo codeInfo = jse.getCodeStructureInfo();
-			/*
-			System.out.println("PRINTING CLASS INFO:");
-			for(SootClass cl : codeInfo.getClasses()) {
-				System.out.println(cl.toString() + ": " + codeInfo.getClassInfo(cl).toString());
-			}
-			System.out.println("PRINTING METHOD INFO:");
-			for(SootMethod m : codeInfo.getMethods()) {
-				System.out.println(m.toString() + ": " + codeInfo.getMethodInfo(m).toString());
-			}
-			*/
-
 			JimpleSourceInfo sourceInfo = SourceInfoSingleton.getJimpleSourceInfo();
 
 			for(SootClass cl : Scene.v().getClasses()) {
-				System.out.println("READING: " + cl.getName());
+				//System.out.println("READING: " + cl.getName());
 
 				// GET THE OUTPUT FILE PATH	
 				StringBuffer b = new StringBuffer();
@@ -67,18 +64,19 @@ public class JimplePrinterAnalysis extends JavaAnalysis {
 
 				// CREATE THE OBJECT
 				ChordJimpleAdapter cja = new ChordJimpleAdapter(sourceInfo);
-				Printer printer = new Printer(cja.toJimpleVisitor(codeInfo));
+				printer = new Printer(cja.toJimpleVisitor(codeInfo));
 				printer.printTo(cl, new NullOutputStream());
 				XMLObject object = cja.getResults().get(cl);
 
 				// WRITE THE XML OBJECT
 				File objectOutputFile = new File(xmlOutputPath);
 				objectOutputFile.getParentFile().mkdirs();
-				System.out.println("PRINTING TO: " + objectOutputFile.getCanonicalPath());
-				PrintWriter pw = new PrintWriter(new FileOutputStream(objectOutputFile));
+				//System.out.println("PRINTING TO: " + objectOutputFile.getCanonicalPath());
+				pw = new PrintWriter(new FileOutputStream(objectOutputFile));
 				pw.println(object.toString());
 				pw.close();
 			}
+			
 		} catch(IOException e) {
 			e.printStackTrace();
 		}

@@ -70,6 +70,8 @@ public class ContentProviderAnnotation extends AnnotationInjector.Visitor
 		String str = strConst.value;
 		if(!str.startsWith("content://"))
 			return null;
+		if(str.equals("content://"))
+			return null;
 
 		SootMethod meth = getOrCreateLabelMethodFor(str);
 		Local temp = Jimple.v().newLocal("stamp$stamp$tmp"+newLocalCount++, 

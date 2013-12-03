@@ -38,9 +38,6 @@ public class Main
 			File patchedFile = new File(stubsDir, modelFilePath);
 			File bakFile = new File(bakDir, modelFilePath);
 
-			//add by yu. check last modified time.
-			if (modelFile.lastModified() < patchedFile.lastModified()) continue;
-
 			if(!bakFile.exists() ){
 				//it is OK to add a new class that does not
 				//correspond to any stub class.

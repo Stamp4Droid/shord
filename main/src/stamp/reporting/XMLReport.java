@@ -51,7 +51,7 @@ public abstract class XMLReport extends Category {
 	public void write() {
 		try{
 			PrintWriter writer = new PrintWriter(new FileWriter(new File(getCanonicalReportFilePath())));
-			System.out.println("DEBUG: Generating XMLReport " + this.getTitle());
+			//System.out.println("DEBUG: Generating XMLReport " + this.getTitle());
 			generate();
 			write(writer);
 			writer.close();

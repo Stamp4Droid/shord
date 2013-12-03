@@ -61,6 +61,9 @@ public class Classifier {
 	}
 
 	public static double[] maximumLikelihood(double[][] x, double[] y, double alpha) {
+		if(x == null || x.length == 0) {
+			return new double[1];
+		}
 		double[] theta = new double[x[0].length];
 		System.out.println("Training set:");
 		for(int i=0; i<x.length; i++) {

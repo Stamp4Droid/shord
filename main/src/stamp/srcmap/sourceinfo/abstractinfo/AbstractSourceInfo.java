@@ -5,6 +5,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -37,6 +42,8 @@ public abstract class AbstractSourceInfo implements SourceInfo {
 	private Map<String,ClassInfo> classInfos = new HashMap<String,ClassInfo>();
 	private AnonymousClassMap anonymousClassMap;
 	
+	private static Set<String> frameworkClassNames = new HashSet();
+
 	public AbstractSourceInfo() {		
 		this.anonymousClassMap = new AnonymousClassMap(this);
 	}
@@ -194,5 +201,30 @@ public abstract class AbstractSourceInfo implements SourceInfo {
 		if(marker == null)
 			return null;
 		return ((InvkMarker) marker).text();
+	}
+
+	public static boolean isFrameworkClass(SootClass klass) {
+		if(frameworkClassNames == null){
+			computeFrameworkClassNames();
+		}
+		return frameworkClassNames.contains(klass.getName());
+	}
+	
+	private static void computeFrameworkClassNames()
+	{
+		frameworkClassNames = new HashSet();
+		try{
+			JarFile androidJar = new JarFile(System.getProperty("stamp.android.jar"));
+			for(Enumeration<JarEntry> e = androidJar.entries(); e.hasMoreElements();){
+				String name = e.nextElement().getName();
+				if(!name.endsWith(".class"))
+					continue;
+				name = name.replace('/', '.').substring(0, name.length()-6);
+				System.out.println("fclass: "+name);
+				frameworkClassNames.add(name);
+			}
+		}catch(Exception e){
+			throw new Error(e);
+		}
 	}
 }

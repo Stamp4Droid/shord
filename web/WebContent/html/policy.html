@@ -83,38 +83,6 @@
                     </h3>
                     <table id="appslist" class="table table-striped appslist">
                         <tbody>
-                            <tr>
-                                <td>
-                                    <a href="">Advanced Persistent Threat 1</a>
-                                </td>
-                                <td>
-                                    <button class="btn btn-inverse" type="button" style="margin-left: 10px;" id="evalPolicy">Eval</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="">Advanced Persistent Threat 2</a>
-                                </td>
-                                <td>
-                                    <button class="btn btn-inverse" type="button" style="margin-left: 10px;" id="evalPolicy">Eval</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="">Data Leak Prevention</a>
-                                </td>
-                                <td>
-                                    <button class="btn btn-inverse" type="button" style="margin-left: 10px;" id="evalPolicy">Eval</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="">Authorized Cloud Services</a>
-                                </td>
-                                <td>
-                                    <button class="btn btn-inverse" type="button" style="margin-left: 10px;" id="evalPolicy">Eval</button>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -126,7 +94,7 @@
                             <div class="row-fluid">
                                 <div class="span7 lightblue">
                                     <label>Policy Name</label>
-                                    <input type="text" class="span12" placeholder="New Policy">
+                                    <input id="policy-name-textbox" type="text" class="span12" placeholder="New Policy">
                                 </div>
                                 <!--/span-->
                                 <div class="span2 lightblue">
@@ -157,179 +125,8 @@
                                                     <span class="caret"></span>
                                                 </button>
                                                 <ul id="src-drop-down" class="dropdown-menu" style="max-height: 200px; overflow-y: scroll;">
-                                                    <li data-selected="true">
+                                                    <li>
                                                         <a href="#">*</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$accounts.name</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$audio</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$browser</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$browser.bookmarks</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$calllog</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$calendar</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$camera.picture</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$contacts</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$content://com.android.calendar/calendars</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$content://com.android.calendar/events</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$content://com.android.contacts/contacts/</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$content://com.android.contacts/data</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$content://com.android.contacts/data/phones</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$content://calendar/events</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$content://calendar/calendars</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$content://contacts/people</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$content://mms</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$content://mms/part</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$content://sms</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$content://sms/sent</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$content://sms/inbox</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$content://call_log/calls</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$incomingcallnumber</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$media</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$content://telephony/carriers</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$content://telephony/carriers/preferapn</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$cdma_network_id</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$cmda_system_id</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$getline1number</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$getnetworkcountryiso</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$getsimserialnumber</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$getsubscriberid</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$getvoicemailnumber</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$networkoperator</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$networkoperatorname</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$simcountryiso</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$simoperatorname</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$getdeviceid</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$cdma_Location</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$getlongitude</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$location</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$getlatitude</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$fine_Location</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$process.inputstream</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$systemproperties.get</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$getdevicesoftwareversion</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$fileinputstream</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$process.errorstream</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$externalstorage</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$context.getstring</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$wifimanager.getdhcpinfo</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$process.exitvalue</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$datainputstream</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$filesystem</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$file</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$getextras</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">$content_provider</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -344,7 +141,7 @@
                                     <!--/row-->
                                     <div class="row-fluid">
                                         <div class="span6 bgcolor">
-                                            <label>Source</label>
+                                            <label>Sink</label>
                                             <div class="select btn-group" id="sinkSelect" style="width: 100%">
                                                 <button type="button" data-toggle="dropdown" class="btn dropdown-toggle" style="width: inherit">
                                                     <span class="dropdown-label"></span>
@@ -353,51 +150,6 @@
                                                 <ul id="sink-drop-down" class="dropdown-menu" style="max-height: 200px; overflow-y: scroll;">
                                                     <li>
                                                         <a href="#">*</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">!socket</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">!internet</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">!senddatamessage</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">!socketaddr</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">!webview</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">!sendmultiparttextmessage</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">!sendtextmessage</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">browser_searches.modify</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">browser_history.modify</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">!log</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">!intent</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">!file</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">!activity</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">!broadcast</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">enc/dec</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -410,7 +162,7 @@
                                         <!--/span-->
                                     </div>
                                     <!--/row-->
-                                    <button class="btn btn-inverse pull-right" type="button" id="addPolicyBtn">Add Rule</button>
+                                    <button class="btn btn-inverse pull-right" type="button" id="add_policy_btn">Add Rule</button>
                                 </fieldset>
                             </div>
                             <!--/well-->
@@ -460,32 +212,6 @@
                 <script src="../fileupload/jquery.fileupload.js"></script>
                 <script src="../scripts/processMsg.js"></script>
                 <script src="../scripts/policy.js"></script>
-                <script>
-                    var apkIdToRow = new Object();
-
-                    $(function() {
-
-                        'use strict';
-
-                        $.ajax({
-                            type: "GET",
-                            url: "getMembers.php",
-                            cache: false,
-                            dataType: "xml",
-                            success: function(xml) {
-                                $(xml).find('members').each(function() {
-                                    var name = $(this).find("name").text()
-                                    alert(name);
-                                });
-                            }
-                        });
-
-                    });
-                </script>
-                <script>
-                    var ws = new WebSocket("ws://localhost:8080/stamp/pushupdates");
-                    ws.onmessage = processMessage;
-                </script>
             </div>
         </div>
     </body>

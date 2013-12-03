@@ -42,6 +42,7 @@ import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
 import soot.tagkit.Tag;
 import soot.util.NumberedSet;
+import stamp.missingmodels.jimplesrcmapper.Printer;
 
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
@@ -69,7 +70,7 @@ import java.util.*;
 				 "LoadStatPrim", "StoreStatPrim",
 				 "MmethPrimArg", "MmethPrimRet", 
 				 "IinvkPrimRet", "IinvkPrimArg",
-	             "Stub" },
+	             "Stub", "Framework"},
        namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U"},
        types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class},
 	   namesOfSigns = { "Alloc", "Assign", 
@@ -86,7 +87,7 @@ import java.util.*;
 						"LoadStatPrim", "StoreStatPrim",
 						"MmethPrimArg", "MmethPrimRet", 
 						"IinvkPrimRet", "IinvkPrimArg",
-                        "Stub" },
+                        "Stub", "Framework"},
 	   signs = { "V0,H0:V0_H0", "V0,V1:V0xV1",
 				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
 				 "V0,F0:F0_V0", "F0,V0:F0_V0",
@@ -101,7 +102,7 @@ import java.util.*;
 				 "U0,F0:U0_F0", "F0,U0:U0_F0",
 				 "M0,Z0,U0:M0_U0_Z0", "M0,Z0,U0:M0_U0_Z0",
 				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0",
-                 "M0:M0" }
+                 "M0:M0", "M0:M0" }
 	   )
 public class PAGBuilder extends JavaAnalysis
 {
@@ -145,6 +146,7 @@ public class PAGBuilder extends JavaAnalysis
 	private int maxArgs = -1;
 	private FastHierarchy fh;
 	public static NumberedSet stubMethods;
+	public static NumberedSet frameworkMethods;
 
 	public static final boolean ignoreStubs = false;
 
@@ -779,6 +781,7 @@ public class PAGBuilder extends JavaAnalysis
 		DomM domM = (DomM) ClassicProject.g().getTrgt("M");
 		Program program = Program.g();
 		stubMethods = new NumberedSet(Scene.v().getMethodNumberer());
+		frameworkMethods = new NumberedSet(Scene.v().getMethodNumberer());
 		Iterator<SootMethod> mIt = program.getMethods();
 		while(mIt.hasNext()){
 			SootMethod m = mIt.next();
@@ -786,6 +789,9 @@ public class PAGBuilder extends JavaAnalysis
 			if(isStub(m)){
 				//System.out.println("stub: "+ m);
 				stubMethods.add(m);
+			}
+			if(isFramework(m)) {
+				frameworkMethods.add(m);
 			}
 			domM.add(m);
 		}
@@ -798,6 +804,14 @@ public class PAGBuilder extends JavaAnalysis
 			relStub.add(stub);
 		}
 		relStub.save();
+
+		ProgramRel relFramework = (ProgramRel) ClassicProject.g().getTrgt("Framework");
+        relFramework.zero();
+		for(Iterator it = frameworkMethods.iterator(); it.hasNext();){
+			SootMethod framework = (SootMethod) it.next();
+			relFramework.add(framework);
+		}
+		relFramework.save();
 	}
 	
 	void populateFields()
@@ -853,6 +867,12 @@ public class PAGBuilder extends JavaAnalysis
 		domV.save();
 		domI.save();
 		domU.save();
+	}
+	
+	boolean isFramework(SootMethod method) {
+		if(!method.isConcrete())
+			return false;
+		return Printer.isFrameworkClass(method.getDeclaringClass());		
 	}
 
 	boolean isStub(SootMethod method)

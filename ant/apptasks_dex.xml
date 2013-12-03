@@ -13,22 +13,7 @@
 
   <target name="-analyze-apk">
 	<!-- Run android-apktool to decompile the manifest and resource xml files -->
-	<java classname="brut.apktool.Main"
-		  maxmemory="${stamp.maxheap}"
-		  fork="true"
-		  failonerror="true">
-	  <jvmarg value="-ea"/>
-	  <classpath>
-		<pathelement location="${stamp.dir}/lib/apktool-cli-1.5.3-SNAPSHOT.jar"/>
-      </classpath>
-	  <arg value="d"/>
-      <arg value="-f"/>
-	  <arg value="--frame-path"/>
-	  <arg value="${stamp.dir}"/>
-	  <arg value="-s"/>
-	  <arg value="${apk}"/>
-	  <arg value="${stamp.out.dir}/apktool-out"/>
-	</java>
+	<run-apktool/>	
 
     <!-- Generate harness. -->
     <java classname="stamp.harnessgen.Main"
@@ -59,6 +44,14 @@
 		  description="relations to print out after the analysis finishes"/>
     <prop-default property="stamp.print.allclasses" default="true"
 		  description="whether to dump out all processed jimple files"/>
+	<prop-default property="stamp.timeout" default="86400000"
+	      description="time out"/>
+
+	<condition property="stamp.all.reports.default" else="false">
+	  <equals arg1="${stamp.input.type}" arg2="src"/>
+	</condition>
+    <prop-default property="stamp.all.reports" default="${stamp.all.reports.default}"
+	      description="whether to generate all reports or just final flows"/>
 
     <!-- Prepare the selected analysis backend. -->
     <runtarget target="-prepare-backend-${stamp.backend}"/>
@@ -88,13 +81,17 @@
     </if>
 
     <!-- Run Chord. -->
-    <java classname="shord.project.Boot" fork="true" failonerror="true">
+    <java classname="shord.project.Main" 
+		  maxmemory="${stamp.maxheap}"
+		  fork="true" 
+		  failonerror="true">
       <jvmarg value="-ea"/>
+	  <sysproperty key="chord.classic" value="true"/>
       <sysproperty key="chord.work.dir" file="${stamp.out.dir}"/>
       <sysproperty key="chord.main.class" value="edu.stanford.stamp.harness.Main"/>
       <sysproperty key="chord.class.path" path="${apk}:${driver.dir}"/>
-      <sysproperty key="chord.std.java.analysis.path" path="${stamp.dir}/bin/stamp.main.jar:${stamp.dir}/scanner/stamp.scanner.jar"/>
-      <sysproperty key="chord.std.dlog.analysis.path" path="${stamp.dir}/bin/stamp.main.jar"/>
+      <sysproperty key="chord.java.analysis.path" path="${stamp.dir}/bin/stamp.main.jar:${stamp.dir}/scanner/stamp.scanner.jar"/>
+      <sysproperty key="chord.dlog.analysis.path" path="${stamp.dir}/bin/stamp.main.jar"/>
       <sysproperty key="chord.run.analyses" value="${stamp.analyses}"/>
       <sysproperty key="chord.std.scope.exclude" value=""/>
       <sysproperty key="chord.ext.scope.exclude" value=""/>
@@ -113,6 +110,7 @@
       <sysproperty key="stamp.droidrecord.logfile.template" value="${stamp.droidrecord.logfile.template}"/>
       <sysproperty key="stamp.droidrecord.logfile.bin" value="${stamp.droidrecord.logfile.bin}"/>
 	  <sysproperty key="stamp.print.allclasses" value="${stamp.print.allclasses}"/>
+	  <sysproperty key="stamp.timeout" value="${stamp.timeout}"/>
       <syspropertyset refid="stamp.analyses.main.sysprops"/>
       <classpath>
 		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
@@ -129,15 +127,28 @@
 	<exec executable="python" failonerror="true">
 	  <arg value="${stamp.dir}/scripts/buildReportDB.py"/>
 	  <arg value="-c"/>
-	  <arg value="${stamp.dir}/scripts/srcClass.xml"/>
+	  <arg value="${stamp.dir}/assets/srcClass.xml"/>
 	  <arg value="-k"/>
-	  <arg value="${stamp.dir}/scripts/sinkClass.xml"/>
+	  <arg value="${stamp.dir}/assets/sinkClass.xml"/>
 	  <arg value="-r"/>
 	  <arg value="${stamp.out.dir}/results"/>
 	  <arg value="-o"/>
 	  <arg value="${stamp.dir}/stamp_output"/>
 	</exec>
 
+	<java classname="stamp.reporting.DBWriter" fork="true" failonerror="true">
+	  <jvmarg value="-ea"/>
+	  <arg value="${apk}"/>
+	  <arg value="${stamp.out.dir}/../app-reports.sqlite"/>
+	  <arg value="${stamp.out.dir}/results"/>
+	  <arg value="${stamp.dir}/assets/srcClass.xml"/>
+	  <arg value="${stamp.dir}/assets/sinkClass.xml"/>
+      <classpath>
+		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
+		<pathelement location="${stamp.dir}/lib/commons-lang3-3.1.jar"/>
+		<pathelement location="${stamp.dir}/lib/sqlite-jdbc-3.7.2.jar"/>
+	  </classpath>
+	</java>
   </target>
 
 </project>

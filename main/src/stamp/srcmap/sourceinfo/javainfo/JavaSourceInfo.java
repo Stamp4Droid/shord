@@ -38,16 +38,19 @@ public class JavaSourceInfo extends AbstractSourceInfo {
 		srcMapDirs.add(appSrcMapDir);
 	}
 	
+	/*
 	public boolean isFrameworkClass(SootClass klass) {
 		String srcFileName = filePath(klass);
 		if(srcFileName == null){
 			//System.out.println("srcFileName null for "+klass);
+			//TODO: should we not return false here?
 			return true;
 		}
 		boolean result = new File(frameworkSrcDir, srcFileName).exists();
 		//System.out.println("isFrameworkClass " + srcFileName + " " + klass + " " + result);
 		return result;
 	}
+	*/
 
 	public int stmtLineNum(Stmt s) {
 		for(Tag tag : s.getTags()){

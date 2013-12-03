@@ -8,7 +8,6 @@ import shord.program.Program;
 import shord.project.analyses.JavaAnalysis;
 import stamp.srcmap.SourceInfoSingleton;
 import stamp.srcmap.SourceInfoSingleton.SourceInfoType;
-import stamp.util.PropertyHelper;
 import chord.project.Chord;
 
 /**
@@ -20,6 +19,7 @@ public class Postmortem extends JavaAnalysis {
 	public static final String reportsTxtFilePath = System.getProperty("stamp.out.dir")+"/reports.txt";
 	public static final String resultsDir = System.getProperty("stamp.out.dir")+"/results";
 	public static final boolean processingSrc = System.getProperty("stamp.input.type", "src").equals("src");
+	public static final boolean genAllReports = System.getProperty("stamp.all.reports", processingSrc ? "true" : "false").equals("true");
 	
 	public static void processReports(Class[] allReports, Class[] dontShowReports, PrintWriter reportsTxtWriter, boolean jimple) throws InstantiationException, IllegalAccessException {
 		for(Class reportClass : allReports) {
@@ -65,7 +65,7 @@ public class Postmortem extends JavaAnalysis {
 			,AllMissingModels.class
 		};
 
-		Class[] apkReports = new	Class[]{
+		Class[] finalReport = new Class[]{
 				SrcSinkFlow.class
 		};
 
@@ -77,22 +77,18 @@ public class Postmortem extends JavaAnalysis {
 
 		try{
 			PrintWriter reportsTxtWriter = new PrintWriter(new FileWriter(new File(reportsTxtFilePath)));
+
+			Class[] reportsToGenerate = genAllReports ? allReports : finalReport;
 			
 			if(processingSrc) {
-				processReports(allReports, dontShowReports, reportsTxtWriter, false);
+				processReports(reportsToGenerate, dontShowReports, reportsTxtWriter, false);
 			} else {
-				processReports(allReports, dontShowReports, reportsTxtWriter, true);
+				processReports(reportsToGenerate, dontShowReports, reportsTxtWriter, true);
 			}
 			
 			reportsTxtWriter.close();
 		} catch(Exception e){
 			throw new Error(e);
 		}
-		
-		boolean printClasses =
-			PropertyHelper.getBoolProp("stamp.print.allclasses");
-		System.out.println("stamp.print.allclasses = "+printClasses);
-		if(printClasses)
-			Program.g().printAllClasses();
-    }
+	}
 }
