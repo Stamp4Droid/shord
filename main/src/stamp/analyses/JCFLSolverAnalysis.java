@@ -20,7 +20,7 @@ import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverSingle;
 import stamp.missingmodels.analysis.JCFLSolverRunner.JCFLSolverStubs;
 import stamp.missingmodels.analysis.JCFLSolverRunner.RelationAdder;
 import stamp.missingmodels.analysis.ModelClassifier.ModelInfo;
-import stamp.missingmodels.grammars.H;
+import stamp.missingmodels.grammars.G;
 import stamp.missingmodels.ml.Classifier;
 import stamp.missingmodels.util.ConversionUtils;
 import stamp.missingmodels.util.ConversionUtils.ChordRelationAdder;
@@ -34,13 +34,10 @@ import stamp.missingmodels.util.StubModelSet;
 import stamp.missingmodels.util.StubModelSet.ModelType;
 import stamp.missingmodels.util.StubModelSet.StubModel;
 import stamp.missingmodels.util.Util.Pair;
-import stamp.missingmodels.util.jcflsolver.Edge;
 import stamp.missingmodels.util.jcflsolver.EdgeData;
 import stamp.missingmodels.util.jcflsolver.Graph;
 import stamp.missingmodels.util.viz.jcflsolver.JCFLRelationInputFile;
 import stamp.missingmodels.util.viz.jcflsolver.JCFLRelationOutputFile;
-import stamp.missingmodels.viz.flow.JCFLRelationOutputFileNew;
-import stamp.missingmodels.viz.flow.JCFLRelationOutputFileNew.TupleConverter;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.AllStubInputsFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetInputFile;
 import stamp.missingmodels.viz.flow.JCFLSolverFiles.StubModelSetOutputFile;
@@ -203,7 +200,7 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		//Experiment experiment = new Experiment(JCFLSolverSingle.class, E12.class);
 		File outputDir = manager.getDirectory(FileType.OUTPUT);
 		String appDir = outputDir.getParentFile().getName();
-		Experiment experiment = new Experiment(JCFLSolverSingle.class, H.class, appDir, loc.getX(), loc.getY());
+		Experiment experiment = new Experiment(JCFLSolverSingle.class, G.class, appDir, loc.getX(), loc.getY());
 
 		
 

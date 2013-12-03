@@ -93,15 +93,14 @@ public class ConversionUtils {
 		relations.add("sinkF2PrimF", new IndexRelation("SinkF2PrimF", "L", 1, null, "U", 2, 0));
 		
 		// transfer annotations: ref2RefT, ref2PrimT, prim2RefT, prim2PrimT
-		relations.add("ref2RefT", new StubIndexRelation("Ref2RefArgT", "V", 1, 0, "V", 2, 0, 3, 4, 5));
-		relations.add("ref2RefT", new StubIndexRelation("Ref2RefRetT", "V", 1, 0, "V", 2, 0, 3, 4));
+		relations.add("ref2RefT", new IndexRelation("Ref2RefArgT", "V", 1, 0, "V", 2, 0));
+		relations.add("ref2RefT", new IndexRelation("Ref2RefRetT", "V", 1, 0, "V", 2, 0));
 		
-		relations.add("ref2PrimT", new StubIndexRelation("Ref2PrimRetT", "V", 1, 0, "U", 2, 0, 3, 4));
-		
-		relations.add("prim2RefT", new StubIndexRelation("Prim2RefArgT", "U", 1, 0, "V", 2, 0, 3, 4, 5));
-		relations.add("prim2RefT", new StubIndexRelation("Prim2RefRetT", "U", 1, 0, "V", 2, 0, 3, 4));
-		
-		relations.add("prim2PrimT", new StubIndexRelation("Prim2PrimRetT", "U", 1, 0, "U", 2, 0, 3, 4));
+		relations.add("prim2RefT", new IndexRelation("Prim2RefArgT", "U", 1, 0, "V", 2, 0));
+		relations.add("prim2RefT", new IndexRelation("Prim2RefRetT", "U", 1, 0, "V", 2, 0));
+
+		relations.add("ref2PrimT", new IndexRelation("Ref2PrimRetT", "V", 1, 0, "U", 2, 0));
+		relations.add("prim2PrimT", new IndexRelation("Prim2PrimRetT", "U", 1, 0, "U", 2, 0));
 		
 		// flow annotations: ref2RefF, ref2PrimF, prim2RefF, prim2PrimF
 		relations.add("ref2RefF", new IndexRelation("Ref2RefF", "V", 1, 0, "V", 2, 0));
@@ -132,25 +131,25 @@ public class ConversionUtils {
 		relations.add("loadStatPrimCtxt", new IndexRelation("LoadStatPrimCtxt", "U", 1, 0, "F", 2, null));
 		relations.add("storeStatPrimCtxt", new IndexRelation("StoreStatPrimCtxt", "F", 1, null, "U", 2, 0));
 
-		// ref stub taint flow
+		// transfer annotations
 		relations.add("ref2RefArgTStub", new StubIndexRelation("Ref2RefArgTStub", "V", 1, 0, "V", 2, 0, 3, 4, 5));
 		relations.add("ref2RefRetTStub", new StubIndexRelation("Ref2RefRetTStub", "V", 1, 0, "V", 2, 0, 3, 4));
 		
-		// cross stub taint flow
 		relations.add("prim2RefArgTStub", new StubIndexRelation("Prim2RefArgTStub", "U", 1, 0, "V", 2, 0, 3, 4, 5));
 		relations.add("prim2RefRetTStub", new StubIndexRelation("Prim2RefRetTStub", "U", 1, 0, "V", 2, 0, 3, 4));
 		
-		// prim stub taint flow
 		relations.add("ref2PrimTStub", new StubIndexRelation("Ref2PrimTStub", "V", 1, 0, "U", 2, 0, 3, 4));
 		relations.add("prim2PrimTStub", new StubIndexRelation("Prim2PrimTStub", "U", 1, 0, "U", 2, 0, 3, 4));
 		
 		// partial pt
+		/*
 		relations.add("preFlowsTo", new IndexRelation("ActivePreFlowsTo", "O", 1, null, "V", 2, 0));
 		relations.add("postFlowsTo", new IndexRelation("ActivePostFlowsTo", "V", 1, 0, "V", 3, 2));
 		relations.add("midFlowsTo", new IndexRelation("ActiveMidFlowsTo", "V", 1, 0, "V", 3, 2));
 		relations.add("transfer", new StubIndexRelation("ActiveTransferArg", "V", 1, 0, "V", 2, 0, 3, 4, 5));
 		relations.add("transfer", new StubIndexRelation("ActiveTransferRet", "V", 1, 0, "V", 2, 0, 3, 4));
 		relations.add("transferSelf", new IndexRelation("ActiveTransferSelf", "V", 1, 0, "V", 2, 0));
+		*/
 		
 		//relations.add("typeFilter", new IndexRelation("TypeFilter", "O", 1, null, "V", 2, 0));
 		
