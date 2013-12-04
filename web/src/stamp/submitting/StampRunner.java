@@ -176,7 +176,9 @@ public class StampRunner extends Thread
 
 
     	    /* XXX should be prepared statement */
-    	    ResultSet rs = statement.executeQuery("select * from flows where appName =\"" + apkName + "\"");
+    	    ResultSet rs = statement.executeQuery("select * from flows where appName =\"" 
+						  + apkName + "\"" 
+						  + " group by sourceLabel,sinkLabel,modifier,adlib");
 
     	    while(rs.next()) {
 
@@ -192,6 +194,7 @@ public class StampRunner extends Thread
     		    json.put("analysisCounter", rs.getString("analysisCounter"));
     		    json.put("approvedStatus", rs.getString("approvedStatus"));
     		    json.put("modifier", rs.getString("modifier"));
+    		    json.put("adlib", rs.getString("adlib"));
 
 		    jarr.put(json);
     		} catch (JSONException e) {
