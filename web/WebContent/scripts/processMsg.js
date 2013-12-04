@@ -69,15 +69,15 @@ function processWarnings(message){
 function processFlowJSON(flow) {
 
     function newPrivTableEntry(entry) {
-        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td> <td><i  onClick=\"window.alert('Accepted')\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"window.alert('Reject')\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td>C</td></tr> ";
     }
 
     function newTableEntry(entry) {
-        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-success\">"+entry.modifier+"</span></td> \ <td><i  onClick=\"\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-success\">"+entry.adlib+"</span></td></tr> ";
     }
 
     function newTableEntryUnencrypted(entry) {
-        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-important\">"+entry.modifier+"</span></td> \ <td><i  onClick=\"\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-important\">"+entry.adlib+"</span></td></tr> ";
     }
 
     var maxC = -1;
@@ -101,7 +101,7 @@ function processFlowJSON(flow) {
     });
 
     // Report header
-    var headerRow = "<th><h3>" + apkName +  " Risk Report &nbsp</h3></th>";
+    var headerRow = "<th><h3>" + apkName +  ".apk Risk Report &nbsp</h3></th>";
     $("#reportheader").append(headerRow);
 
     // Incident counts
@@ -112,12 +112,14 @@ function processFlowJSON(flow) {
     //$("#incident-summary").append("<tr><td>Warnings</td></td><td>" + "X" + "</td></tr>");
 
     // Section headers
-    $("#privacy-rpt").append("<th colspan=\"5\"><h4>Privacy Report - Data sent off device</h4></th>");
-    $("#privacy-rpt").append("<tr><td><h4>Data</h4></td><td></td><td><h4>Destination</h4></td><td><h4>Approve</h4></td><td><h4>Reject</h4></td></tr>");
-    $("#conf-rpt").append("<th colspan=\"7\"><h4>Confidentiality Report - Data encryption status</h4></th>");
-    $("#conf-rpt").append("<tr><td><h4>Data</h4></td><td></td><td><h4>Destination</h4></td><td></td><td><h4>Approve</h4></td><td><h4>Reject</h4></td></tr>");
+    $("#privacyconf-rpt").append("<th colspan=\"5\"><h4>Conf+Privacy Risk - Unencrypted PII sent off device</h4></th>");
+    $("#privacyconf-rpt").append("<tr><td><h4>Data</h4></td><td></td><td><h4>Destination</h4></td><td><h4>Context</h4></td></tr>");
 
+    $("#privacy-rpt").append("<th colspan=\"5\"><h4>Privacy Risk - Encrypted PII sent off device</h4></th>");
+    $("#privacy-rpt").append("<tr><td><h4>Data</h4></td><td></td><td><h4>Destination</h4></td><td><h4>Context</h4></td></tr>");
 
+    $("#conf-rpt").append("<th colspan=\"7\"><h4>Confidentiality Risk - Unencrypted non-PII sent off device</h4></th>");
+    $("#conf-rpt").append("<tr><td><h4>Data</h4></td><td></td><td><h4>Destination</h4></td><td><h4>Context</h4></td></tr>");
 
     if (privacyCount == 0) {
 	$("#privacy-rpt").append("<tr colspan=\"7\"><h3>No Privacy Risks Detected!</h3></tr>");
@@ -125,29 +127,32 @@ function processFlowJSON(flow) {
     }
 
     if (lowRiskCount != 0) {
-	$("#lowrisk-rpt").append("<th colspan=\"7\"><h4>Integrity Report - Data accessed by application</h4></th>")
-	$("#lowrisk-rpt").append("<tr><td><h4>Data</h4></td><td></td><td><h4>Destination</h4></td><td></td><td><h4>Approve</h4></td><td><h4>Reject</h4></td></tr>");
+	$("#lowrisk-rpt").append("<th colspan=\"7\"><h4>Low Risk - Data accessed by application</h4></th>")
+	$("#lowrisk-rpt").append("<tr><td><h4>Data</h4></td><td></td><td><h4>Destination</h4></td><td><h4>Context</h4></td></tr>");
     }
 			  
     $.each(flow, function(i, item) {
         if (item.analysisCounter === maxC) {
 
-	    var newentry;
+	    // var newentry;
 	    if (item.modifier === "encrypted") {
-		newentry = newTableEntry(item); 
+	    	newentry = newTableEntry(item); 
 	    } else {
-		newentry = newTableEntryUnencrypted(item); 
+	    	newentry = newTableEntryUnencrypted(item); 
 	    }
 
             var flowC = item.flowClass;
 
 	    if (flowC === "privacy") {
-                $("#privacy-rpt").append(newPrivTableEntry(item));
+                $("#privacy-rpt").append(newTableEntry(item));
+	    } else if (flowC === "conf") {
                 $("#conf-rpt").append(newentry);
+	    } else if (flowC === "confpriv") {
+                $("#privacyconf-rpt").append(newentry);
             } else if (flowC === "integrity") {
                 $("integrity-rpt").append(newentry);
             } else if (flowC === "other") {
-                $("#lowrisk-rpt").append(newentry);
+                $("#lowrisk-rpt").append(newTableEntry(item));
             } else if (flowC === "NoClass" || flowC === "") {
                 // explicit no class. Treat as low-risk.
                 $("#lowrisk-rpt").append(newentry);
