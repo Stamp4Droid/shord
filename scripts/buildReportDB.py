@@ -208,6 +208,7 @@ def findAdlib(str):
     return ""
             
 
+"""Given Bools on flow characteristics, return risk type"""
 def getClass(encrypted, offdevice, pii):
     if not offdevice:
         return "low_risk"
@@ -262,6 +263,7 @@ def classifyFlows(app, flows, srcClassDict, sinkClassDict):
 
         flowClass.append((app,src,srcClasswoPriority,srcCtxt,sink,sinkC,sinkCtxt,flowC,adlib))
 
+    # flow class depends on modifier, so we determine class in another pass
     flowClass2 = []
     for f in flowClass:
         src = f[1]
