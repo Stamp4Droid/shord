@@ -1,0 +1,29 @@
+1 in
+2 
+3 
+4 
+5 out
+6 
+7 
+8 
+9 
+10 
+11 
+#
+1 2 srcLabel
+2 3 Label2Ref
+3 4 Alias
+4 5 ref2Sink
+2 6 Label2Prim
+6 3 storePrim[*]
+7 5 sinkLabel
+4 8 ref2SInkByRef
+8 9 Alias
+9 7 _Label2Ref
+4 10 ref2SinkByPrim
+10 7 _Label2Prim
+4 11 storeRef[*]
+11 4 Alias
+6 8 prim2SinkByRef
+6 10 prim2SinkByPrim
+6 5 prim2Sink
