@@ -1,5 +1,5 @@
 import errno
-from itertools import izip, count
+from itertools import izip, count, groupby
 import os
 import re
 import string
@@ -49,6 +49,25 @@ class Hashable(FinalAttrs):
 
     def __hash__(self):
         return hash(self.__key__())
+
+class IndexDict(FinalAttrs):
+    def __init__(self):
+        self._list = []
+
+    def index(self, value):
+        if value not in self._list:
+            self._list.append(value)
+        return self._list.index(value)
+
+    def __getitem__(self, i):
+        return self._list[i]
+
+    def __iter__(self):
+        for value in self._list:
+            yield value
+
+    def __len__(self):
+        return len(self._list)
 
 class MultiDict(FinalAttrs):
     """
@@ -301,6 +320,9 @@ def mkdir(path):
             pass
         else:
             raise
+
+def sort_uniq(seq):
+    return [g[0] for g in groupby(sorted(seq))]
 
 class DomMap(FinalAttrs):
     def __init__(self, map_file):
