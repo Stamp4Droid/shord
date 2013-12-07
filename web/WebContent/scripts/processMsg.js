@@ -73,11 +73,11 @@ function processFlowJSON(flow) {
     }
 
     function newTableEntry(entry) {
-        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-success\">"+entry.adlib+"</span></td></tr> ";
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-default\">"+entry.adlib+"</span></td></tr> ";
     }
 
     function newTableEntryUnencrypted(entry) {
-        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-important\">"+entry.adlib+"</span></td></tr> ";
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-warning\">"+entry.adlib+"</span></td></tr> ";
     }
 
     var maxC = -1;
@@ -101,7 +101,7 @@ function processFlowJSON(flow) {
     });
 
     // Report header
-    var headerRow = "<th><h3>" + apkName +  ".apk Risk Report &nbsp</h3></th>";
+    var headerRow = "<th><h3>Name: " + apkName +  ".apk &nbsp</h3></th>";
     $("#reportheader").append(headerRow);
 
     // Incident counts
@@ -128,10 +128,6 @@ function processFlowJSON(flow) {
     // 	$("#privacy-rpt").append("<tr colspan=\"7\"><h3>No Privacy Risks Detected!</h3></tr>");
     // 	$("#conf-rpt").append("<tr colspan=\"7\"><h3>No Confidentiality Risks Detected!</h3></tr>");
     // }
-
-
-
-
 			  
     $.each(flow, function(i, item) {
         if (item.analysisCounter === maxC) {
@@ -140,6 +136,7 @@ function processFlowJSON(flow) {
 		item.adlib = "App";
 	    	newentry = newTableEntry(item); 
 	    } else {
+		item.adlib = "Ad Lib: " + item.adlib
 	    	newentry = newTableEntryUnencrypted(item); 
 	    }
 
@@ -150,20 +147,18 @@ function processFlowJSON(flow) {
 	    // 	newentry = newTableEntryUnencrypted(item); 
 	    // }
 
-
-
             var flowC = item.flowClass;
 
 	    if (flowC === "privacy") {
-                $("#privacy-rpt").append(newTableEntry(item));
+                $("#privacy-rpt").append(newentry);
 	    } else if (flowC === "confidentiality_risk") {
                 $("#conf-rpt").append(newentry);
 	    } else if (flowC === "privacy_and_confidentiality_risk") {
                 $("#privacyconf-rpt").append(newentry);
             } else if (flowC === "integrity") {
                 $("integrity-rpt").append(newentry);
-            } else if (flowC === "low_risk") {
-                $("#lowrisk-rpt").append(newTableEntry(item));
+            } else if (flowC === "low_risk" || flowC === "other_network_traffic") {
+                $("#lowrisk-rpt").append(newentry);
             } else if (flowC === "NoClass" || flowC === "") {
                 // explicit no class. Treat as low-risk.
                 $("#lowrisk-rpt").append(newentry);
@@ -171,7 +166,7 @@ function processFlowJSON(flow) {
             } else {
                 // unknown flowClass. Treat as low-risk.
                 $("#lowrisk-rpt").append(newentry);
-                console.log("unknown flow class" + flowC);
+                console.log("unknown flow class: " + flowC);
             }
 
         }
