@@ -24,6 +24,8 @@ select tmp2.servId from
         recv.type='receiver' and
         e1.iccg_id=? and
         serv.iccg_id=? and
+        cc.iccg_id=? and
+        ift.iccg_id=? and
         ift.priority > 1000 and
         (ift.name like '%PHONE_STATE%') and
         cc.callee='<android.content.BroadcastReceiver: void abortBroadcast()>' and

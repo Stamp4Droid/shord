@@ -24,12 +24,17 @@
  ) as tmp left join callerComp as cc on cc.node_id=tmp.id
  ) as tmp2, edge as e1, node as serv where tmp2.ce='<android.content.BroadcastReceiver: void abortBroadcast()>' and 
                                            e1.src_node_id=tmp2.recvId and 
+                                           e1.iccg_id=? and
                                            serv.id=e1.tgt_node_id and 
                                            serv.type='service'
  ) as tmp3, flow as f1, flow as f2, flow as f3, flow as f4 where tmp3.servId=f1.src_node_id and 
                                                                  tmp3.servId=f2.src_node_id and 
                                                                  tmp3.servId=f3.src_node_id and 
                                                                  tmp3.servId=f4.src_node_id and 
+                                                                 f1.iccg_id=? and
+                                                                 f2.iccg_id=? and
+                                                                 f3.iccg_id=? and
+                                                                 f4.iccg_id=? and
                                                                  f1.source='$content://sms' and 
                                                                  f1.sink='!INTERNET' and  
                                                                  f2.source='$PRODUCT' and 

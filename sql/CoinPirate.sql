@@ -21,6 +21,8 @@
           inner join callerComp as cc1 on smsRecv.id=cc1.node_id
   where smsRecv.type='receiver' and
                  smsRecv.iccg_id=? and
+                 ift.iccg_id=? and
+                 cc1.iccg_id=? and
                  (ift.priority > 1000) and
                  (ift.name like '%SMS_SENT%') and
                  (ift.name like '%SMS_RECEIVED%') and
@@ -40,6 +42,7 @@
             inner join callerComp as cc2 on tmp2.servId
             inner join flow as f1 on f1.src_node_id=tmp2.servId
        where  f1.src_node_id=f1.sink_node_id and
+              f1.iccg_id=? and
               f1.source='$getDeviceId' and
               f1.sink='!INTERNET' and
               cc2.callee='<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>'

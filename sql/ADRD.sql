@@ -33,7 +33,10 @@ select tmp.src_node_id as recv1Id, tmp.tgt_node_id as recv2Id from
 ) as tmp4 inner join flow as f1 on f1.src_node_id=tmp4.servId
  inner join flow as f2 on f2.src_node_id=tmp4.servId
  inner join flow as f3 on f3.src_node_id=tmp4.servId
- where  f1.source='$getDeviceId' and 
+ where  f1.iccg_id=? and
+        f2.iccg_id=? and
+        f3.iccg_id=? and
+        f1.source='$getDeviceId' and 
         f1.sink='!ENC/DEC' and  
         f2.source='$getSubscriberId' and 
         f2.sink='!ENC/DEC' and  
