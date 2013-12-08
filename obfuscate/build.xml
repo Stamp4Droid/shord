@@ -2,8 +2,14 @@
 <project name="Obfuscate">
 
   <dirname property="this.dir" file="${ant.file}"/>
-  <property name="stamp.dir" location="${stamp.ant.dir}/.."/>
+  <property name="app.loc" location="foo.apk"/>
+  <property name="apk" location="foo.apk"/>
+  <property name="stamp.dir" location="../"/>
+  <property name="droidrecord.out.dir" location="../"/>
   <property file="${this.dir}/config.txt"/>
+  <property name="env.JavaHeap" value="8g"/>
+
+  <property name="stamp.android.buildtools.dir" value="/scr/lib/android-sdk-linux/build-tools/18.0.1/" />
 
   <property name="out.absolute.dir" location="${user.dir}"/>
   <property name="proguard.config" location="${this.dir}/proguard.cfg"/>
@@ -15,7 +21,8 @@
 	  <property name="obfuscated.jar.file" value="${obfuscate.absolute.dir}/obfuscated.jar" />
 	  
 	  <!-- Add Proguard Tasks -->
-	  <property name="proguard.jar" location="${android.tools.dir}/proguard/lib/proguard.jar" />
+      <property name="proguard.jar" location="/scr/lib/android-sdk-linux/tools/proguard/lib/proguard.jar" />
+	  <!--property name="proguard.jar" location="${android.tools.dir}/proguard/lib/proguard.jar" /-->
 	  <taskdef name="proguard" classname="proguard.ant.ProGuardTask" classpath="${proguard.jar}" />
 		
 	  <!-- Set the android classpath Path object into a single property. It'll be                                                                                                         
@@ -29,7 +36,8 @@
 		  </firstmatchmapper>
 		  </pathconvert-->                                                                                                                                                                    
 	  
-	  <property name="project.target.classpath.value" location="${stamp.dir}/bin/api-20/stamp.android.jar"/>
+          <property name="project.target.classpath.value" location="/scr/research/shord/bin/api-16/stamp.android.jar"/>
+	  <!--property name="project.target.classpath.value" location="${stamp.dir}/bin/api-16/stamp.android.jar"/-->
 	  
 	  <!-- Build a path object with all the jar files that must be obfuscated.                                                                                                            
 		   This include the project compiled source code and any 3rd party jar                                                                                                            
@@ -73,16 +81,114 @@
 		-dump         "${obfuscate.absolute.dir}/dump.txt"                                                                                                                              
 		-printseeds   "${obfuscate.absolute.dir}/seeds.txt"                                                                                                                             
 		-printusage   "${obfuscate.absolute.dir}/usage.txt"                                                                                                                             
-		-printmapping "${obfuscate.absolute.dir}/mapping.txt"                                                                                                                           
+        -printmapping "${obfuscate.absolute.dir}/mapping.txt"
 	  </proguard>
   </target>
 
-  <!--target name="apk2class">
+  <target name="apk2class">
 	<java classname="soot.Main"
-          maxmemory="2g"
+          maxmemory="8g"
           fork="true"
           failonerror="true">
-	  
+      <classpath>
+		<pathelement location="${stamp.dir}/obfuscate/soot.jar"/>
+      </classpath>
+      <arg value="-process-dir"/>
+      <arg value="foo.apk"/>
+      <arg value="-allow-phantom-refs"/>
+      <arg value="-src-prec"/>
+      <arg value="apk"/>
+      <arg value="-force-android-jar"/>
+      <arg value="${stamp.dir}/bin/api-16/stamp.android.jar"/>
+      <arg value="-O"/>
+      <arg value="-validate"/>
 	</java>
-  </target-->
+  </target>
+
+
+  <target name="class2apk">
+        
+        <path id="droidrecord.libraryjars.ref">
+            <pathelement location="${stamp.dir}/droidrecord/jars/droidrecord_lib.jar"/>
+            <pathelement location="${stamp.dir}/bin/api-${apilevel}/stamp.android.jar"/>
+        </path>
+        <pathconvert property="droidrecord.libraryjars" refid="droidrecord.libraryjars.ref">
+			<firstmatchmapper>
+				<regexpmapper from='^([^ ]*)( .*)$$' to='"\1\2"'/>
+				<identitymapper/>
+			</firstmatchmapper>
+		</pathconvert>
+		
+        <property name="droidrecord.in.apk" value="${app.loc}"/>
+		<property name="droidrecord.out.jar" value="${droidrecord.out.dir}/app.jar"/>
+		<property name="droidrecord.android.jar" value="${stamp.dir}/bin/api-${apilevel}/"/>
+		<property name="droidrecord.lib.jars" value="${droidrecord.libraryjars}"/>
+		<property name="droidrecord.out.template" value="${stamp.droidrecord.logfile.template}"/>
+		<property name="droidrecord.debug.dump_jimple" value="true"/>
+		<property name="droidrecord.debug.jimple.dir" location="${droidrecord.out.dir}/jimple"/>
+		<property name="droidrecord.enableOnMethodStart" value="true"/>
+
+        
+        <mkdir dir="${droidrecord.out.dir}/apk"/>
+        <mkdir dir="${droidrecord.out.dir}/apk/raw"/>
+        <mkdir dir="${droidrecord.out.dir}/apk/unsigned"/>
+
+        <run-apktool/>
+        
+        <exec executable="${stamp.android.buildtools.dir}/dx"
+          spawn="false"
+    	  failonerror="true">
+          <arg value="-JXmx${env.JavaHeap}"/>
+          <arg value="--dex"/>
+          <arg value="--output=${droidrecord.out.dir}/apk/classes.dex"/>
+          <!--arg value="${stamp.dir}/droidrecord/jars/droidrecord_lib.jar"/-->
+          <!--arg value="${droidrecord.out.dir}/obfuscate/proguard/obfuscated.jar"/-->
+          <arg value="${droidrecord.out.dir}/obfuscate/bin/classes-processed.jar"/>
+        </exec>
+        <unzip src="${app.loc}" dest="${droidrecord.out.dir}/apk/raw"/>
+        <delete file="${droidrecord.out.dir}/apk/raw/classes.dex"/>
+        <delete dir="${droidrecord.out.dir}/apk/raw/META-INF"/>
+        <copy file="${droidrecord.out.dir}/apk/classes.dex" tofile="${droidrecord.out.dir}/apk/raw/classes.dex"/>
+        <!--<exec executable="python" 
+          spawn="false"
+    	  failonerror="true">
+            <arg value="${stamp.dir}/droidrecord/extra/utils/scripts/prepare_manifest_only.py"/>
+            <arg value="${droidrecord.out.dir}/apk/AndroidManifest.xml"/>
+        </exec>-->
+        <zip basedir="${droidrecord.out.dir}/apk/raw" destfile="${droidrecord.out.dir}/apk/unsigned/unsigned.apk"/>
+        
+        <exec executable="jarsigner"
+          spawn="false"
+    	  failonerror="true">
+    	    <arg line="-verbose -keystore ${user.home}/.android/debug.keystore -storepass android -keypass android ${droidrecord.out.dir}/apk/unsigned/unsigned.apk androiddebugkey"/>
+        </exec>
+        <exec executable="zipalign"
+          spawn="false"
+    	  failonerror="true">
+    	    <arg line="4 ${droidrecord.out.dir}/apk/unsigned/unsigned.apk ${stamp.droidrecord.out.apk}"/>
+        </exec>
+  </target>          
+
+    <macrodef name="run-apktool">
+           <sequential>
+             <java classname="brut.apktool.Main"
+                           maxmemory="${env.JavaHeap}"
+                           fork="true"
+                           failonerror="true">
+                   <jvmarg value="-ea"/>
+                   <classpath>
+                     <pathelement location="${stamp.dir}/lib/apktool-cli-1.5.3-SNAPSHOT.jar"/>
+                   </classpath>
+                   <arg value="d"/>
+                   <arg value="-f"/>
+                   <arg value="--frame-path"/>
+                   <arg value="${stamp.dir}"/>
+                   <arg value="-s"/>
+                   <arg value="${apk}"/>
+                   <arg value="${stamp.dir}/apktool-out"/>
+             </java>
+           </sequential>
+     </macrodef>
+
+
 </project>
