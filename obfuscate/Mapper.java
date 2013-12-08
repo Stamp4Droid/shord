@@ -33,4 +33,9 @@ public class Mapper
 		}
 	}
 	
+	public String newName(String s)
+	{
+		return oldToNewClassName.get(s);
+	}
+	
 }

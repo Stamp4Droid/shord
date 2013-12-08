@@ -18,10 +18,13 @@ public class FixCode extends BodyTransformer
 		String mappingFile = args[0];
 		//String manifestFile = args[1];
 
+		String[] newArgs = new String[args.length-1];
+		System.arraycopy(args, 1, newArgs, 0, args.length-1);
+
 		FixCode fc = new FixCode(mappingFile);
 
 		PackManager.v().getPack("jtp").add(new Transform("jtp.fixCode", fc));
-		soot.Main.main(args);
+		soot.Main.main(newArgs);
 	}
 
 	protected void internalTransform(Body body, String phase, Map options)
@@ -59,7 +62,11 @@ public class FixCode extends BodyTransformer
 	private StringConstant replaceIfNeeded(StringConstant s)
 	{
 		String str = s.value;
-		return s;
+		String newName = mapper.newName(str);
+		if(newName == null)
+			return s;
+		else
+			return StringConstant.v(newName);
 	}
 	
 }
