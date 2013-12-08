@@ -10,6 +10,7 @@
 /*Receiver launches service.*/
 select node_id,  full_name, tgtId from ( 
    (select node_id, e.tgt_node_id as tgtId from intentFilter ift,  edge e where ift.iccg_id=? and 
+                                                                                e.iccg_id=? and
                                                                                 ( ift.name like '%PHONE_STATE%' and 
                                                                                   ift.name like '%BOOT_COMPLETED%' and 
                                                                                   ift.name like '%SMS_RECEIVED%' and 
@@ -30,6 +31,7 @@ SELECT  distinct f1.src_node_id as serviceId  FROM flow f1, flow f2, flow f3 whe
 ) as tmp2,
 
  node as nd) where node_id=nd.id and 
+                   nd.iccg_id=? and
                    nd.type='receiver' and 
                    serviceId=tgtId
 

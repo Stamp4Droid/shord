@@ -53,10 +53,13 @@
     inner join intentFilter as ift on ift.node_id=recv.id
     inner join edge as e on e.src_node_id=recv.id
     inner join node as serv on serv.id=e.tgt_node_id
-    where recv.iccg_id=? and
-                   recv.type='receiver' and
-                   ift.name='android.intent.action.BOOT_COMPLETED' and
-                   serv.type='service'
+    where  recv.iccg_id=? and
+           e.iccg_id=? and
+           serv.iccg_id=? and
+           ift.iccg_id=? and
+           recv.type='receiver' and
+           ift.name='android.intent.action.BOOT_COMPLETED' and
+           serv.type='service'
  ) as tmp3
     inner join callerComp as cc on cc.iccg_id=?
     inner join callerComp as cc2 on cc2.iccg_id=?
@@ -66,6 +69,8 @@
             f2.src_node_id=f2.sink_node_id  and
             f1.iccg_id=? and
             f2.iccg_id=? and
+            cc.iccg_id=? and
+            cc2.iccg_id=? and
             f1.source='$getDeviceId' and
             f1.sink='!File' and
             f2.source='$SDK' and

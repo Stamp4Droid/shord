@@ -43,6 +43,7 @@
             inner join flow as f1 on f1.src_node_id=tmp2.servId
        where  f1.src_node_id=f1.sink_node_id and
               f1.iccg_id=? and
+              cc2.iccg_id=? and
               f1.source='$getDeviceId' and
               f1.sink='!INTERNET' and
               cc2.callee='<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>'

@@ -20,7 +20,9 @@
  (select recv1.iccg_id as iccgId from node as recv1 
           inner join intentFilter as ift1 on recv1.id=ift1.node_id
           inner join callerComp as cc1 on recv1.id=cc1.node_id
-    where recv1.iccg_id=? and
+    where  recv1.iccg_id=? and
+           ift1.iccg_id=? and
+           cc1.iccg_id=? and
            recv1.type='receiver' and
            (ift1.name like '%PACKAGE_ADDED%') and 
            (ift1.name like '%PACKAGE_REMOVED%') and 
@@ -35,6 +37,7 @@
           e1.iccg_id=? and
           serv.iccg_id=? and
           recv2.iccg_id=? and
+          ift2.iccg_id=? and
           (ift2.priority>1000) and
           (ift2.name like '%BOOT_COMPLETED%') and
           serv.type='service'
@@ -43,6 +46,7 @@
           inner join callerComp as cc2 on tmp2.servId=cc2.node_id
     where   f1.src_node_id=f1.sink_node_id and
             f1.iccg_id=? and
+            cc2.iccg_id=? and
             f1.source='$getDeviceId' and
             f1.sink='!INTERNET' and
             cc2.callee='<java.lang.Runtime: java.lang.Process exec(java.lang.String)>'

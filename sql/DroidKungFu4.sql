@@ -19,6 +19,7 @@ select tmp4.serviceId from
        select node_id,  full_name, tgtId from ( 
             (select node_id, e.tgt_node_id as tgtId from intentFilter ift,  edge e 
                          where ift.iccg_id=? and 
+                               e.iccg_id=? and
                                (ift.name like '%BOOT_COMPLETE%') and 
                                e.src_node_id=ift.node_id)  as tmp,
 
@@ -40,13 +41,22 @@ select tmp4.serviceId from
                 node as nd) where node_id=nd.id 
                                   and nd.type='receiver' 
                                   and serviceId=tgtId) as tmp3, edge as eg, node as activity 
-                                     where eg. src_node_id=tgtId and 
+                                     where eg.src_node_id=tgtId and 
+                                           eg.iccg_id=? and 
+                                           activity.iccg_id=? and 
                                            eg.tgt_node_id=activity.id and 
                                            activity.type='activity'
                   /*install apk can be in other component. */
-                  ) as tmp3, edge as eInstall, node as nInstall where eInstall.iccg_id=? and eInstall.tgt_node_id=nInstall.id and nInstall.full_name='INSTALL_APK'
+                  ) as tmp3, edge as eInstall, node as nInstall where eInstall.iccg_id=? and 
+                                                                      nInstall.iccg_id=? and
+                                                                      eInstall.tgt_node_id=nInstall.id and 
+                                                                      nInstall.full_name='INSTALL_APK'
                   /*encrypt c&c server and parse it by native call..*/
-                  ) as tmp4 inner join flow as f5 on (tmp4.serviceId=f5.src_node_id and f5.sink_node_id=f5.src_node_id and f5.source='$ENC/DEC' and f5.sink='!EXEC') 
+                  ) as tmp4 inner join flow as f5 on (tmp4.serviceId=f5.src_node_id and 
+                                                      f5.iccg_id=? and
+                                                      f5.sink_node_id=f5.src_node_id and 
+                                                      f5.source='$ENC/DEC' and 
+                                                      f5.sink='!EXEC') 
 
    UNION
    SELECT tmp5.actId from
@@ -73,4 +83,5 @@ select tmp4.serviceId from
 
    ) as tmp5  left join node as act2 on act2.id=tmp5.actId 
       where 
+            act2.iccg_id=? and
             act2.type='activity'
