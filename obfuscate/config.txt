@@ -1,0 +1,3 @@
+android.tools.dir=/home/saswat/software/android-sdk-linux/tools
+stamp.dir=/home/saswat/work/shord
+
