@@ -3,7 +3,12 @@
 
 -dontusemixedcaseclassnames
 -dontskipnonpubliclibraryclasses
+
+#FIXME silent the warning.HACK!
+#-dontskipnonpubliclibraryclasses
 -verbose
+-dontwarn android.webkit.**
+#-dontskipnonpubliclibraryclassmembers
 
 # Optimization is turned off by default. Dex does not like code run
 # through the ProGuard optimize and preverify steps (and performs some
@@ -19,6 +24,7 @@
 -keepattributes *Annotation*
 -keep public class com.google.vending.licensing.ILicensingService
 -keep public class com.android.vending.licensing.ILicensingService
+
 
 # For native methods, see http://proguard.sourceforge.net/manual/examples.html#native
 -keepclasseswithmembernames class * {
