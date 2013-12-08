@@ -6,6 +6,11 @@ class Application
 	public Application()
 	{
 		super(null);
+    	Application.this.onCreate();
+        Application.this.onLowMemory();
+        Application.this.onTerminate();
+        Application.this.onTrimMemory(0);
+
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {

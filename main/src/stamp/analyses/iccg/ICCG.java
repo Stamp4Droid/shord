@@ -5,12 +5,21 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ICCG 
 {
     //private HashSet<ICCGEdge> edges;
+    String appName;
     private List<ICCGEdge> edges;
     private List<ICCGNode> nodes;
+    Set<String> cpFlows = new HashSet<String>();
+    Set<String> specCallSet = new HashSet<String>();
+    Set<String> filterList = new HashSet<String>();
 
     ///All external or unknown nodes share 1 instance.
     private static ICCGNode unknownNode = new ICCGNode(); 
@@ -22,20 +31,38 @@ public class ICCG
 
     public String getSignature() {
 
+    //node2 [style=filled, fillcolor=red] 
 	//first dump all the permission info.
-        String sig = "digraph G { ";
+        String sig = "digraph G {\n ";
 
-        for (ICCGNode node:nodes) {
-	    if(!"unknown".equals(node.getComptName()) && !"targetNotFound".equals(node.getComptName()) )
-	        System.out.println("nodepermission: " + node.getComptName() + node.getPermission());
-            String nodeName = node.toString();
-            sig += nodeName + "[shape=" + node.getShape()+"];";
+        for (ICCGNode node : nodes) {
+	    //if(!"unknown".equals(node.getComptName()) && !"targetNotFound".equals(node.getComptName()) ){
+            String nodeName = node.toString().replace("$", "\\$");
+            String pers = "";
+            String flows = "";
+            String extraStyle = "";
+
+            for(String perm : node.getPermission())
+                pers += " \\n " + perm;
+
+            for(String flow : node.getFlow())
+                flows += " \\n " + flow;
+
+            if(!node.getMain())
+                extraStyle += " ,style=filled, fillcolor=red";
+
+            nodeName += pers;
+            nodeName += flows;
+            //sig += nodeName + "[shape=" + node.getShape()+"];";
+            sig += '\n' + Integer.toString(node.getId()) + 
+                "[label=\""+ nodeName + "\", shape=" + node.getShape() + extraStyle+"];";
+
         }
 
         for (ICCGEdge edge:edges) {
-            sig += edge.toString() ;
+            sig += '\n' + edge.toString() ;
         }
-        sig += "}";
+        sig += "\n}";
         return sig;
     }
 
@@ -45,6 +72,26 @@ public class ICCG
 
     public ICCGNode getUnknown() {
         return unknownNode;
+    }
+
+    public void setSpecCall(Set<String> spec)
+    {
+        specCallSet = spec;
+    }
+
+    public void setFilterList(Set<String> filters)
+    {
+        filterList = filters;
+    }
+
+    public void setAppName(String name)
+    {
+        if(name.contains(".apk")){
+            String[] arr = name.split("/");
+            name = arr[arr.length-1];
+        }
+            
+        appName = name;
     }
 
     public int size() {
@@ -82,6 +129,21 @@ public class ICCG
         nodes.add(n);
     }
 
+    public void setFlows(Set<String> flows) {
+        cpFlows = flows;
+    }
+
+    public void setFlow(Set<String> flows) {
+        for(String flow : flows){
+            String[] fset = flow.split("@");
+            String comp = fset[0];
+            String src = fset[1];
+            String sink = fset[2];
+            ICCGNode node = getNode(comp);
+            node.addFlow(src.replace("$", "\\$")+"->"+sink.replace("!", "\\!"));
+        }
+    }
+
     public ICCGNode getNode(String name) {
         for(ICCGNode node:nodes){
             if(node.getComptName().equals(name)) return node;
@@ -94,4 +156,138 @@ public class ICCG
     public void removeEdge(ICCGEdge e) {
         edges.remove(e);
     }
+
+    private int getRowid(Statement statement)
+    {
+        ResultSet rs;
+        try{
+            rs = statement.getGeneratedKeys();
+            rs.next();
+            return rs.getInt(1);
+        }catch(SQLException e){
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+
+    ///insert iccg into database.
+    public void updateDB() 
+    {
+		String dbLoc = "jdbc:sqlite:" + System.getProperty("stamp.dir") + "/iccg_scheme.sqlite";
+        System.out.println("updateDb for:" + appName);
+        System.out.println("updateDb for:" + nodes);
+        // load the sqlite-JDBC driver using the current class loader
+        //assert(!appName.contains("/"));
+        try{
+            Class.forName("org.sqlite.JDBC");
+        }catch(ClassNotFoundException e){
+            e.printStackTrace();
+        }
+
+        Connection connection = null;
+        ResultSet rs;
+        try {
+
+            // create a database connection
+            connection = DriverManager.getConnection(dbLoc);
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30); // set timeout to 30 sec.
+
+            //insert iccg 
+            statement.executeUpdate("insert into iccg values(?, '"+appName+"', -1, -1)");
+            int iccgId = getRowid(statement);
+
+            //insert nodes
+            for(ICCGNode nd : nodes ){
+                statement.executeUpdate("insert into node values(?, '"
+                        +nd.getComptName()+"', '"+nd.getType()+"', "+iccgId+")");
+                int nodeId = getRowid(statement);
+                nd.setRowid(nodeId);
+                //insert permission
+                for(String per: nd.getPermission()){
+                    statement.executeUpdate("insert into permission values(?, '" 
+                            + per +"', "+nodeId+ ","+iccgId+")");
+                }
+            }
+
+            //insert src-sink
+            for(String srcSink : cpFlows){
+                String[] flowSet = srcSink.split("@");
+                //remove "$" and "!".
+                int srcId = getNode(flowSet[0]).getRowid();
+                String src = flowSet[1];
+                int tgtId = getNode(flowSet[2]).getRowid();
+                String sink = flowSet[3];
+                //System.out.println("MYflow:" + src + "||"+srcId);
+                statement.executeUpdate("insert into flow values(?, '" 
+                    +src +"', '"+sink+"', "+srcId+", "+tgtId+","+iccgId+")");
+            }
+
+            //insert callerCamp. 
+            for(String pair: specCallSet){
+                String[] callSet = pair.split("@");
+                int compId = getNode(callSet[0]).getRowid();
+                String meth = callSet[1];
+                statement.executeUpdate("insert into callerComp values(?, "+iccgId+", "+compId+", '"+meth+"')");
+            }
+            //insert intent filter. TBD
+            for(String filter : filterList){
+                String[] filterSet = filter.split("@");
+                int compId = getNode(filterSet[0]).getRowid();
+                String action = filterSet[1];
+                int priority = Integer.parseInt(filterSet[2]);
+
+                statement.executeUpdate("insert into intentFilter values(?, '"+action+"', "+priority+", "+compId+", "+iccgId+")");
+            }
+
+            //insert edges
+            for(ICCGEdge ed : edges){
+                int srcId = ed.getSrc().getRowid(); 
+                int tgtId = ed.getTgt().getRowid(); 
+                statement.executeUpdate("insert into edge values(?, "+srcId+", "+tgtId+", "+iccgId+")");
+            }
+
+            /*rs = statement.executeQuery("select * from iccg");
+            while (rs.next()) {
+                // read the result set
+                System.out.println("name = " + rs.getString("app_name"));
+                System.out.println("id = " + rs.getInt("id"));
+            }*/
+
+        } catch (SQLException e) {
+
+        // if the error message is "out of memory",
+        // it probably means no database file is found
+            System.err.println(e.getMessage());
+            System.out.println("database is busy.....");
+
+            try {
+                if (connection != null)
+                    connection.close();
+            } catch (SQLException e1) {
+                // connection close failed.
+                System.err.println(e1);
+            }
+
+            //take a rest
+            try{
+                Thread.sleep(500);
+            }catch(Exception e2){
+                System.err.println(e2);
+            }
+            //sql busy, need to rerun it.
+            updateDB();
+
+        } finally {
+            try {
+                if (connection != null)
+                    connection.close();
+            } catch (SQLException e) {
+                // connection close failed.
+                System.err.println(e);
+            }
+        }
+    }
+
 }

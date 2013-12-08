@@ -7,6 +7,7 @@ class Intent
 
 	public java.lang.String name; 
 	public java.lang.String action; 
+	public java.lang.String type; 
 
 	@STAMP(flows = {@Flow(from="uri",to="!this")})
 	public  Intent(java.lang.String action, android.net.Uri uri) 
@@ -67,6 +68,7 @@ class Intent
 	@STAMP(flows = {@Flow(from="data",to="!this")})
 	public  android.content.Intent setDataAndType(android.net.Uri data, java.lang.String type) 
 	{ 
+        this.type = type;
 		return this;
 	}
 

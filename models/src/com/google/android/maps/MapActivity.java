@@ -6,6 +6,7 @@ public abstract class MapActivity
 
   public  MapActivity()
   {
+		MapActivity.this.onGetMapDataSource();
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {

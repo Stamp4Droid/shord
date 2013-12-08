@@ -186,27 +186,22 @@ public class ParseManifest
                     Node n = nnm.item(j);
                     if(n.getNodeName().equals("android:name")){
                         name = n.getNodeValue();
+                        Node mainNode = mynode.getParentNode().getParentNode();
+                        NamedNodeMap nnm1 = mainNode.getAttributes();
+                        String actname = null;
+                        for(int k = 0; k < nnm1.getLength(); k++){
+                            Node n1 = nnm1.item(k);
+                            if(n1.getNodeName().equals("android:name")) {
+                                actname = n1.getNodeValue();
+                                //if (activities.get(fixName(actname)) != null)
+                                if ("android.intent.action.MAIN".equals(name))
+                                    activities.get(fixName(actname)).setMain(true);
 
-                        //if ("android.intent.action.MAIN".equals(name)) {
-                            Node mainNode = mynode.getParentNode().getParentNode();
-                            NamedNodeMap nnm1 = mainNode.getAttributes();
-                            String actname = null;
-                            for(int k = 0; k < nnm1.getLength(); k++){
-                                Node n1 = nnm1.item(k);
-                                if(n1.getNodeName().equals("android:name")) {
-                                    actname = n1.getNodeValue();
-                                    if (activities.get(fixName(actname)) != null)
-                                        activities.get(fixName(actname)).setMain(true);
-
-                                    activities.get(fixName(actname)).addAction(name);
-                                    break;
-                                }
+                                activities.get(fixName(actname)).addAction(name);
+                                break;
                             }
-                            
-                        //}
-                        //break;
+                        }
                     }
-                    //System.out.println(n.getNodeName() + " " + );
                 }			
             }
             //end
@@ -224,6 +219,7 @@ public class ParseManifest
                     if(n.getNodeName().equals("android:name")){
                         name = n.getNodeValue();
 
+                        //get component node.
                         Node mainNode = mynode.getParentNode().getParentNode();
                         NamedNodeMap nnm1 = mainNode.getAttributes();
                         String actname = null;
@@ -238,7 +234,19 @@ public class ParseManifest
                                 break;
                             }
                         }
-                        //break;
+                        //get priority from intent filter, if any.
+                        Node filterNode = mynode.getParentNode();
+                        NamedNodeMap filterMap = filterNode.getAttributes();
+                        for(int k = 0; k < filterMap.getLength(); k++){
+                            Node fn = filterMap.item(k);
+                            if(fn.getNodeName().equals("android:priority")) {
+                                String priority = fn.getNodeValue();
+                                assert(actname != null);
+                                activities.get(fixName(actname)).addFilter(priority);
+                                break;
+                            }
+                        }
+
                     }
                     //System.out.println(n.getNodeName() + " " + );
                 }			

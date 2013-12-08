@@ -6,70 +6,105 @@
 .include "M.dom"
 .include "I.dom"
 .include "T.dom"
-.include "Z.dom"
 .include "V.dom"
 .include "C.dom"
 .include "H.dom"
-.include "S.dom"
 .include "F.dom"
+.include "CL.dom"
+.include "L.dom"
+.include "Z.dom"
+.include "COMP.dom"
 
-.bddvarorder M0xM1_I0_Z0_V0_C0xC1_H0_S0_F0_T0_T1
+.bddvarorder L0_M0xM1_I0_V0_C0xC1_H0_F0_T0_T1_T2_CL0_CL1_Z0_COMP0_COMP1
 
-IinvkArg(i:I,n:Z,v:V) input  # v is the nth args of the method m in invocation i.
-MmethArg(m:M,z:Z,v:V) input  # v is the zth args in method m 
-pt(c:C,v:V,o:C)    input  # in context c, v points to o.
-fpt(o1:C,f:F,o2:C) input
-chaIM(i:I,m:M) input      # stmt i invokes method m.
 MI(m:M,i:I) input         # stmt i belongs to method m.
-MC(m:M,c:T) input         # m is a method declared in a
-Callbacks(m:M) input	  # m is a callback method.
-MregI(m:M,i:I) input 	  # m has an invocation i that register callback. 
-CM(c:C,m:M) input         # c is a context of method m.
-CI(c:C,i:I) input         # stmt i is the top element in the k-limited callstack c
-CC(c:C,d:C) input         # there exists i s.t. c++[i] = d, c is old ctx, d is new ctx. 
+MC(m:M,c:COMP) input         # m is a method declared in a
+#CM(c:C,m:M) input         # c is a context of method m.
+TargetHT(h:H,t:COMP) input   # StringConst corresponds to target of type t.
+
+flow(src:CL,sink:CL) input
+#CT(c:C,t:T) input         # c is a context in class t
+CCL(c:C,cl:CL) input 
+LCL(l:L,cl:CL) input
 
 CH(o:C,h:H) input         # context’ified abstract location o corresponds to new stmt h
-HT(h:H,t:T) input         # heap h point to Type t.
 
-StatIM(i:I,m:M) input     # i statically invokes m. 
-SpecIM(i:I,m:M) input     # i special invoke m. 
-VirtIM(i:I,m:M) input     # i virtually invokes m. 
-
-SubSig(m:M,s:S) input     # s is subsignature of m.
-Dispatch(t:T,s:S,m:M) input     # t.m has subsig s.
 Launch(v:V,m:M) input
 IntentTgtField(f:F) input
 ActionField(f:F) input
-TgtAction(t:T,h:H) input
-VH(v:V,h:H) input
+DataTypeField(f:F) input
+TgtAction(t:COMP,h:H) input
+TgtDataType(t:COMP,h:H) input
+pt(c:C,v:V,o:C)    input  # in context c, v points to o.
+fpt(o1:C,f:F,o2:C) input
+CICM(d:C,i:I,c:C,m:M)   input  # i in cotext d calls method m in context c.
 
-CallerComp(m:M,c:C,o:T)   output  # m is a method declared in c
+InLabelRet(l:L,m:M)           input
+InLabelArg(l:L,m:M,z:Z)       input
+OutLabelRet(l:L,m:M)          input
+OutLabelArg(l:L,m:M,z:Z)      input
 
-DI(c:C,i:I) output  # invocation i has context c in method.
-DIC(d:C,i:I,c:C) output  # 
-CICM(d:C,i:I,c:C,m:M)   output  # i in cotext d calls method m in context c.
-ICCG(s:T,t:H)  output
-ICCGImp(s:T,t:T)  output
+reachableCM(c:C,m:M) input
+
+SpecM(m:M)           input
+
+IntentAlloc(h:H,s:COMP) 
+
+FlowComp(comp1:COMP, src:CL, comp2:COMP, sink:CL) output
+
+CallerComp(m:M,c:C,o:COMP)   output  # m is a method declared in c
+ICCG(s:COMP,t:COMP)  output
+#ICCGImp(s:T,t:T)  output
+
+#ReachableComp(s:T,t:T)           # t is the node that can be reached by s.
+#ConjunctSet(s:T,t:T,u:T)  output # u is the node that can be reached by both s and t.
+
+SpecCallerComp(m:M,c:COMP)  output  #special call, e.g, does component c invoke abortBroadcast?
 
 ###################
 #    RULES
 ###################
+#
+ML(m:M,l:L)
+MCL(m:M,c:C,cl:CL)
 
-DI(c,i) :- CM(c,m), MI(m,i).
-DIC(c,i,d) :- CI(d,i), CC(c,d).
+IntentAlloc(h,s) :- CallerComp(_,k,s), CH(k,h).
 
-CICM(d,i,c,m) :- StatIM(i,m), DI(d,i), DIC(d,i,c).
-CICM(d,i,c,m) :- SpecIM(i,m), DI(d,i), DIC(d,i,c).
-CICM(d,i,c,m2) :- VirtIM(i,m1), IinvkArg(i,0,v), DI(d,i), pt(d,v,o), CH(o,h), HT(h,t), SubSig(m1,s), Dispatch(t,s,m2), DIC(d,i,c).
 
-CallerComp(m,k,c) :- MC(m,c), CM(k,m).
+CallerComp(m,k,c) :- MC(m,c), reachableCM(k,m).
 CallerComp(m2,k2,c) :- CallerComp(m1,k1,c), MI(m1,i), CICM(k1,i,k2,m2).
-CallerComp(cb,k2,c) :- Callbacks(cb), MmethArg(cb,0,p), pt(k2,p,o), pt(k1,a,o), CallerComp(m,k1,c), MregI(m,i), IinvkArg(i,0,a).
+
+SpecCallerComp(m,c) :- CallerComp(m,_,c), SpecM(m).
+#explicit intent
+#ICCG(s,h) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), CH(o,h2), IntentAlloc(h2,s), IntentTgtField(f), fpt(o,f,c), CH(c,h).
+#implicit intent
+#ICCGImp(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o),CH(o,h2), IntentAlloc(h2,s), ActionField(f), TgtAction(t,h), fpt(o,f,c), CH(c,h).
+
+
 
 #explicit intent
-ICCG(s,h) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), IntentTgtField(f), fpt(o,f,c), CH(c,h).
-#ICCG(s,h) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), IntentTgtField(f), fpt(o,f,c), pt(o,u,c), CH(c,h), VH(u,h).
-#ICCG(s,h) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), IntentTgtField(f), fpt(o,f,c), pt(o,u,c), VH(u,h).
-#ICCG(s,h) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), pt(k,u,o), CH(c,h), VH(u,h).
+ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), CH(o,h2), IntentAlloc(h2,s), IntentTgtField(f), fpt(o,f,c), CH(c,h), TargetHT(h,t).
 #implicit intent
-ICCGImp(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), ActionField(f), TgtAction(t,h), fpt(o,f,c), CH(c,h).
+ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o),CH(o,h2), IntentAlloc(h2,s), ActionField(f), TgtAction(t,h), fpt(o,f,c), CH(c,h).
+#install apk through datatype.
+ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o),CH(o,h2), IntentAlloc(h2,s), DataTypeField(f), TgtDataType(t,h), fpt(o,f,c), CH(c,h).
+
+#no self-loop
+#ReachableComp(s,t) :- ICCG(s,t), s!=t.  
+#ReachableComp(s,t) :- ReachableComp(s,m), ReachableComp(m,t). 
+
+#ConjunctSet(s,t,u) :- ReachableComp(s,u), ReachableComp(t,u), ReachableComp(s,t), s!=t, u!=t.
+
+#FlowComp(comp1, src, comp2, sink) :- flow(src,sink), CCL(c,src), CCL(d, sink), CT(c,comp1),CT(d,comp2).
+#FlowComp(comp1, src, comp2, sink) :- flow(src,sink), CCL(c,src), CCL(d, sink), CallerComp(_,c,comp1),CallerComp(_,d,comp2).
+
+ML(m,l) :- InLabelRet(l,m).
+ML(m,l) :- InLabelArg(l,m,_).
+ML(m,l) :- OutLabelRet(l,m).
+ML(m,l) :- OutLabelArg(l,m,_).
+
+MCL(m,c,cl) :- LCL(l,cl), ML(m,l), CICM(_,_,c,m), CCL(c,cl).
+#MCL(m,c,cl) :- LCL(l,cl), ML(m,l), CM(c,m), CCL(c,cl).
+#now assume there is no inter-flow
+#FlowComp(comp1, src, comp2, sink) :- flow(src,sink), MCL(m1,c,src), CallerComp(m1,c,comp1), MCL(m2,d, sink), CallerComp(m2,d,comp2), comp1=comp2.
+FlowComp(comp1, src, comp2, sink) :- flow(src,sink), MCL(m1,c,src), CallerComp(m1,c,comp1), MCL(m2,d, sink), CallerComp(m2,d,comp2).

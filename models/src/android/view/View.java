@@ -1,7 +1,42 @@
 class View
 {
+
+
+    protected android.content.Context mContext;
+
+    public View(android.content.Context context, android.util.AttributeSet attrs) {
+        mContext = context;
+    }
+
+    public View(android.content.Context context, android.util.AttributeSet attrs, int defStyle) {
+        mContext = context;
+    }
+
 	public  View(android.content.Context context) 
 	{ 
+
+        mContext = context;
+
+        View.this.onFinishInflate();
+
+        View.this.onMeasure(0,0);
+        View.this.onLayout(false, 0, 0, 0, 0);
+        View.this.onSizeChanged(0, 0, 0, 0);
+
+        View.this.onDraw(null);
+        
+        View.this.onTouchEvent(null);
+        View.this.onTrackballEvent(null);
+        View.this.onKeyUp(0, null);
+        View.this.onKeyDown(0, null);
+        
+        View.this.onFocusChanged(false, 0, null);
+        View.this.onWindowFocusChanged(false);
+        
+        View.this.onAttachedToWindow();
+        View.this.onDetachedFromWindow();
+        View.this.onWindowVisibilityChanged(0);
+
 		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
 			registerCallback(new edu.stanford.stamp.harness.Callback(){
 					public void run() {
@@ -42,7 +77,7 @@ class View
     // Callback classes and callback setter methods                                                                                                                            
     public  void setOnClickListener(final android.view.View.OnClickListener l) 
     { 
-	l.onClick(View.this);
+	    l.onClick(View.this);
 
         /*edu.stanford.stamp.harness.applicationdriver.getinstance().
 			registercallback(new edu.stanford.stamp.harness.callback(){
@@ -94,4 +129,9 @@ class View
 					}
 				});*/
 	}
+
+    public final android.content.Context getContext() {
+        return mContext;
+    }
+
 }

@@ -7,6 +7,7 @@ class IntentService
 	{ 
 		super();
 
+	    IntentService.this.onHandleIntent(new android.content.Intent());
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {

@@ -45,18 +45,18 @@ import java.io.*;
   **/
 
 @Chord(name="base-java-iccg",
-       produces={ "MC", "Callbacks", "MregI", "IntentTgtField", "ActionField" },
-       namesOfTypes = { "M", "T", "I"},
+       produces={ "MC", "IntentTgtField", "ActionField", "DataTypeField" },
+       namesOfTypes = {"M", "T", "I"},
        types = { DomM.class, DomT.class, DomI.class},
-       namesOfSigns = { "MC", "Callbacks", "MregI", "IntentTgtField", "ActionField" },
-       signs = { "M0,T0:M0_T0", "M0:M0", "M0,I0:M0_I0", "F0:F0", "F0:F0" }
+       namesOfSigns = { "MC", "IntentTgtField", "ActionField", "DataTypeField", "SpecM" },
+       signs = { "M0,COMP0:M0_COMP0", "F0:F0", "F0:F0", "F0:F0",  "M0:M0" }
        )
 public class ICCGBuilder extends JavaAnalysis
 {
 
+    private	DomM domM;
 	private ProgramRel relMC;
-	private ProgramRel relCallbacks;
-	private ProgramRel relMregI;
+	private ProgramRel relSpecM;
 
 	private int maxArgs = -1;
 	private FastHierarchy fh;
@@ -139,18 +139,16 @@ public class ICCGBuilder extends JavaAnalysis
     void openRels()
     {
         relMC = (ProgramRel) ClassicProject.g().getTrgt("MC");
-        relCallbacks = (ProgramRel) ClassicProject.g().getTrgt("Callbacks");
-        relMregI= (ProgramRel) ClassicProject.g().getTrgt("MregI");
         relMC.zero();
-        relCallbacks.zero(); 
-        relMregI.zero(); 
+        relSpecM = (ProgramRel) ClassicProject.g().getTrgt("SpecM");
+        relSpecM.zero();
+
     }
 
     void saveRels() 
     {
         relMC.save();
-        relCallbacks.save(); 
-        relMregI.save(); 
+        relSpecM.save();
     }
 
     public ICCGBuilder()
@@ -161,7 +159,8 @@ public class ICCGBuilder extends JavaAnalysis
         File manifestFile = new File(manifestDir, "AndroidManifest.xml");
         ParseManifest pmf = new ParseManifest();
         pmf.extractComponents(manifestFile, components);
-	pkgName = pmf.getPkgName();
+	    pkgName = pmf.getPkgName();
+        System.out.println("Current components: " + components);
     }
 
 
@@ -173,120 +172,136 @@ public class ICCGBuilder extends JavaAnalysis
 		    visitMethod(method);
 	}
 
-    private void fillCallback() {
-
-        SootClass callback = Scene.v().getSootClass("edu.stanford.stamp.harness.Callback");
-        List<SootClass> callbackList = SootUtils.subTypesOf(callback);
-        for(SootClass subCallback:callbackList) {
-            Collection<SootMethod> methodsCopy = new ArrayList(subCallback.getMethods());
-            for(SootMethod method : methodsCopy) {
-                if("void run()".equals(method.getSubSignature())) {
-                   //android.os.Handler.Callback or edu.stanford.stamp.harness.Callback
-                    relCallbacks.add(method);
-                }
-
-            }
-        }
-
-    }
-	
     private void visitMethod(SootMethod method)
     {
-	if(!method.isConcrete())
-		return;
+        if(!method.isConcrete())
+            return;
 
-	if(components.get(this.klass.getName()) != null) {
-		String[] str = { "void onPostResume()",
-				"java.lang.CharSequence onCreateDescription()",
-				"void onRestoreInstanceState(android.os.Bundle)",
-				"void onPostCreate(android.os.Bundle)",
-				"void onStart()",
-				"void onCreate(android.os.Bundle)",
-				"void onUserLeaveHint()",
-				"void onResume()",
-				"void onStop()",
-				"void onPause()",
-				"void onRestart()",
-				"boolean onCreateThumbnail(android.graphics.Bitmap,android.graphics.Canvas)",
-				"void onNewIntent(android.content.Intent)",
-				"void onDestroy()",
-				"void onSaveInstanceState(android.os.Bundle)"};
-		List<String> circleList = Arrays.asList(str);
-		//if(circleList.contains(method.getSubSignature()))
-			relMC.add(method, this.klass.getType());
-	}
+            
+        String[] callerComp = {
+            "<android.content.BroadcastReceiver: void abortBroadcast()>",
+            "<java.lang.Runtime: java.lang.Process exec(java.lang.String)>",
+            "<java.lang.System: void loadLibrary(java.lang.String)>",
+            "<java.lang.System: void load(java.lang.String)>",
+            "<android.telephony.SmsManager: void sendMultipartTextMessage(java.lang.String,java.lang.String,java.util.ArrayList,java.util.ArrayList,java.util.ArrayList)>",
+            "<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>",
+            "<android.content.Context: java.lang.String getPackageName()>",
+            "<android.content.Context: android.content.pm.PackageManager getPackageManager()>",
+            "<dalvik.system.DexClassLoader: void <init>(java.lang.String,java.lang.String,java.lang.String,java.lang.ClassLoader)>",
+            "<java.lang.ClassLoader: java.lang.Class loadClass(java.lang.String)>",
+
+            "<android.app.WallpaperManager: void setBitmap(android.graphics.Bitmap)>",
+            "<android.app.WallpaperManager: void setResource(int)>",
+            "<android.app.WallpaperManager: void setStream(java.io.InputStream)>",
+            "<android.content.Context: void setWallpaper(java.io.InputStream)>",
+            "<android.content.Context: void setWallpaper(android.graphics.Bitmap)>",
+
+            "<java.lang.Runtime: void load(java.lang.String)>",
+            "<java.lang.Runtime: void loadLibrary(java.lang.String)>",
+            "<java.lang.Runtime: java.lang.Process exec(java.lang.String)>",
+            "<java.lang.Runtime: java.lang.Process exec(java.lang.String[])>",
+            "<java.lang.Runtime: java.lang.Process exec(java.lang.String[],java.lang.String[])>",
+            "<java.lang.Runtime: java.lang.Process exec(java.lang.String[],java.lang.String[],java.io.File)>",
+            "<java.lang.Runtime: java.lang.Process exec(java.lang.String,java.lang.String[])>",
+            "<java.lang.Runtime: java.lang.Process exec(java.lang.String,java.lang.String[],java.io.File)>",
+            "<java.lang.ProcessBuilder: java.lang.Process start()>",
+
+            "<javax.crypto.Cipher: byte[] doFinal()>",
+            "<javax.crypto.Cipher: byte[] doFinal(byte[])>",
+            "<javax.crypto.Cipher: int doFinal(byte[],int)>",
+            "<javax.crypto.Cipher: byte[] doFinal(byte[],int,int)>",
+            "<javax.crypto.Cipher: int doFinal(byte[],int,int,byte[])>",
+            "<javax.crypto.Cipher: byte[] doFinal(byte[])>",
+
+            "<javax.crypto.Cipher: byte[] update(byte[])>",
+            "<javax.crypto.Cipher: byte[] update(byte[],int,int)>",
+            "<javax.crypto.Cipher: int update(byte[],int,int,byte[])>",
+            "<javax.crypto.Cipher: int update(byte[],int,int,byte[],int)>",
+            "<javax.crypto.Cipher: int update(java.nio.ByteBuffer,java.nio.ByteBuffer)>"
+
+        };
+        List<String> cList = Arrays.asList(callerComp);
+        //record special invocation.
+        if(cList.contains(method.getSignature()) )
+            relSpecM.add(method);
+
+        if(components.get(this.klass.getName()) != null) {
+            String[] str = { "void onPostResume()",
+                    "java.lang.CharSequence onCreateDescription()",
+                    "void onRestoreInstanceState(android.os.Bundle)",
+                    "void onPostCreate(android.os.Bundle)",
+                    "void onStart()",
+                    "void onCreate(android.os.Bundle)",
+                    "void onUserLeaveHint()",
+                    "void onResume()",
+                    "void onStop()",
+                    "void onPause()",
+                    "void onRestart()",
+                    "boolean onCreateThumbnail(android.graphics.Bitmap,android.graphics.Canvas)",
+                    "void onNewIntent(android.content.Intent)",
+                    "void onDestroy()",
+                    "void onSaveInstanceState(android.os.Bundle)"};
+            List<String> circleList = Arrays.asList(str);
+            String compKey = getCompKey(klass.getName());
+
+            //if(circleList.contains(method.getSubSignature()))
+            assert(compKey != null);
+            if(domM.contains(method)) 
+                relMC.add(method, compKey);
+        }
 
     }
 
-    private void populateMregI() 
+    //find the actual string object in domComp.
+    public static String getCompKey(String val)
     {
-        Iterator mIt = Program.g().scene().getReachableMethods().listener();
-        while(mIt.hasNext()){
-            SootMethod m = (SootMethod) mIt.next();
-            if(ignoreStubs){
-                if(stubMethods.contains(m))
-                    continue;
+        String compKey = null;
+        for(Object node : components.keySet()) {
+            if(val.equals(node)){
+                compKey = (String)node;
+                break;
             }
-
-            if(!m.isConcrete()) continue;
-
-            Body body = m.retrieveActiveBody();
-            for(Unit unit : body.getUnits()) {
-                Stmt stmt = (Stmt)unit;
-                if(stmt.containsInvokeExpr()){
-                    InvokeExpr ie = stmt.getInvokeExpr();
-
-                    //i is a statement that registercallback.
-                    if(ie.getMethod().getSignature().equals(
-                        "<edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>")) {
-			//FIX-ME: without this, we will have redundant edges.
-                        if(m.getSignature().equals("<android.app.Activity: void <init>()>")) continue;
-                        relMregI.add(m, stmt);
-                    }
-
-                }
-            }
-
-
         }
 
+        return compKey;
     }
 
 	//target name and action in intent object.
 	private void populateIntentActionTgt() 
 	{
 		ProgramRel relIntentTgtField = (ProgramRel) ClassicProject.g().getTrgt("IntentTgtField");
-        	relIntentTgtField.zero();
+        relIntentTgtField.zero();
 		ProgramRel relActionField = (ProgramRel) ClassicProject.g().getTrgt("ActionField");
-        	relActionField.zero();
+        relActionField.zero();
+		ProgramRel relDataTypeField = (ProgramRel) ClassicProject.g().getTrgt("DataTypeField");
+        relDataTypeField.zero();
 
 		SootClass klass = Program.g().scene().getSootClass("android.content.Intent");
 		SootField nameField = klass.getFieldByName("name");
 		SootField actionField = klass.getFieldByName("action");
+		SootField dataTypeField = klass.getFieldByName("type");
+
 		relIntentTgtField.add(nameField);
 		relIntentTgtField.save();
+
 		relActionField.add(actionField);
 		relActionField.save();
+
+        relDataTypeField.add(dataTypeField);
+        relDataTypeField.save();
 
 	}
 
     public void run()
     {
-        //Program program = Program.g();
-        //program.buildCallGraph();
-        //fh = Program.g().scene().getOrMakeFastHierarchy();
         openRels();
-        fillCallback();
-        populateMregI();
-	populateIntentActionTgt();
+        populateIntentActionTgt();
+        domM = (DomM) ClassicProject.g().getTrgt("M");
 
         for(SootClass klass: Program.g().getClasses()){
             this.visit(klass);
         }
         saveRels();
-
-        //fh = null;
-
     }
 
 

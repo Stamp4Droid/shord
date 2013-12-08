@@ -8,10 +8,13 @@ public class ICCGNode
 
     private String comptName = "unknown";
     private Set<String> permission = new HashSet<String>();
+    private Set<String> flowSet = new HashSet<String>();
     private boolean isMain = false;
     private Set<String> keys;
     private String type = "";
     private String intentFilter = "";
+    private int id;
+    private int rowid;
 
     //box:unknown, diamond:main, ellipse:activity, circle:service, triangle:broadcaster
     private String shape = "box";
@@ -20,11 +23,20 @@ public class ICCGNode
         this.comptName = "unknown";
     }
 
-    public ICCGNode(String cptName) {
+    public ICCGNode(String cptName, int cnt) {
         //need to get rid of "$"
-        if(cptName.contains("$")) 
-            cptName = cptName.substring(0, cptName.indexOf("$"));
+        //if(cptName.contains("$")) 
+            //cptName = cptName.substring(0, cptName.indexOf("$"));
         this.comptName = cptName; 
+        id = cnt;
+    }
+
+    public void addFlow(String flow) {
+        flowSet.add(flow);
+    }
+
+    public Set<String> getFlow() {
+        return flowSet;
     }
 
     public String getComptName() {
@@ -44,8 +56,8 @@ public class ICCGNode
 
 
     public void setComptName(String name) {
-        if(name.contains("$")) 
-            name = name.substring(0, name.indexOf("$"));
+        //if(name.contains("$")) 
+            //name = name.substring(0, name.indexOf("$"));
         comptName = name;
     }
 
@@ -57,8 +69,20 @@ public class ICCGNode
         type = name;
     }
 
+    public int getId() {
+        return id;
+    }
 
-   public Set getPermission() {
+    public int getRowid() {
+        return rowid;
+    }
+
+    public void setRowid(int rid) {
+        rowid = rid;
+    }
+
+
+   public Set<String> getPermission() {
 
         return permission;
     }
@@ -100,7 +124,7 @@ public class ICCGNode
 
     public String toString() {
         String str = comptName;
-        if("unknown".equals(comptName) || "targetNotFound".equals(comptName)) return comptName;
+        /*if("unknown".equals(comptName) || "targetNotFound".equals(comptName)) return comptName;
 
         if (str.contains("$"))
             str = str.substring(0, str.indexOf("$"));
@@ -113,7 +137,8 @@ public class ICCGNode
         if( intentFilter!=null && type.equals("receiver") && !"".equals(intentFilter))
             return str + "_" + intentFilter.replaceAll("\\.","") +"_" + type; 
 
-        return str + "_" + type; 
+        return str + "_" + type; */
+        return str.replaceAll("\\/", ".");
     }
 
     public boolean equals(ICCGNode obj) 

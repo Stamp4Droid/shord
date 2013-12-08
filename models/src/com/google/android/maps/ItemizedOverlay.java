@@ -6,36 +6,42 @@ public class ItemizedOverlay
   @STAMP(flows={@Flow(from="param1",to="this")})
   public  ItemizedOverlay(android.graphics.drawable.Drawable param1) 
   {
+		ItemizedOverlay.this.onTap(null, null);
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {
 						ItemizedOverlay.this.onTap(null, null);
 					}
 				}); 
+		ItemizedOverlay.this.onSnapToItem(0, 0, null, null);
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {
 						ItemizedOverlay.this.onSnapToItem(0, 0, null, null);
 					}
 				}); 
+		ItemizedOverlay.this.onTrackballEvent(null, null);
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {
 						ItemizedOverlay.this.onTrackballEvent(null, null);
 					}
 				}); 
+		ItemizedOverlay.this.onKeyUp(0, null, null);
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {
 						ItemizedOverlay.this.onKeyUp(0, null, null);
 					}
 				}); 
+		ItemizedOverlay.this.onTouchEvent(null, null);
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {
 						ItemizedOverlay.this.onTouchEvent(null, null);
 					}
 				}); 
+		ItemizedOverlay.this.onTap(0);
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {
@@ -73,6 +79,7 @@ public class ItemizedOverlay
 
   public void setOnFocusChangeListener(final com.google.android.maps.ItemizedOverlay.OnFocusChangeListener listener)
   {
+		listener.onFocusChanged(ItemizedOverlay.this, null);
         ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {

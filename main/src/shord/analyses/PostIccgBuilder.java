@@ -38,43 +38,47 @@ import chord.project.Chord;
 
 import java.util.jar.*;
 import java.io.*;
+import chord.util.Utils;
 import chord.util.tuple.object.Pair;
 import chord.util.tuple.object.Trio;
 import chord.util.tuple.object.Quad;
+import chord.project.OutDirUtils;
+
+
+import java.io.File;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.OutputKeys;
+ 
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 
 /**
   * Search for implicit intent.
   **/
 
 @Chord(name="post-java-iccg",
-       consumes={ "CallerComp", "CICM" },
-       namesOfTypes = { "M", "T", "C", "I"},
-       types = { DomM.class, DomT.class, DomC.class, DomI.class},
-       namesOfSigns = { "CalledComp", "CICM" },
-       signs = { "M0,C0,T0:M0_C0_T0", "C0,I0,C1,M0:C0_I0_C1_M0" }
+       consumes={ "CallerComp", "flow"}
        )
+
 public class PostIccgBuilder extends JavaAnalysis
 {
 
 	private ProgramRel relCallerComp;
-	private ProgramRel relCICM;
 
-	private int maxArgs = -1;
-	private FastHierarchy fh;
-	public static NumberedSet stubMethods;
-
-	public static final boolean ignoreStubs = false;
-
-	private SootClass klass;
-
-	//One ICCG per each app.
-	private static ICCG iccg = new ICCG();
+	public static final String dotFilePath = "/iccg.dot";
 
 	Map<String,Set<String>> component2Meths = new HashMap<String, Set<String>>();
 
 	private Map<String, XmlNode> components = new HashMap<String, XmlNode>();
-
-    	public static List actionList = new ArrayList();
 
 	private String pkgName = "";
 
@@ -91,20 +95,122 @@ public class PostIccgBuilder extends JavaAnalysis
 		manifest.extractComponents(manifestFile, components);
 		pkgName = manifest.getPkgName();
 
-		//plot every node to graph + unknown.
-		Iterator iter = components.entrySet().iterator();
+   	}
+
+   	void genPermission(ICCG ig)
+	{
+		relCallerComp = (ProgramRel) ClassicProject.g().getTrgt("CallerComp");
+		relCallerComp.load();
+
+		Iterable<Trio<SootMethod,Ctxt,String>> res1 = relCallerComp.getAry3ValTuples();
+		for(Trio<SootMethod,Ctxt,String> pair : res1) {
+			SootMethod mm = pair.val0;
+			String cc = pair.val2;
+			Set<String> hs = component2Meths.get(cc);
+			if(hs == null) {
+				hs = new HashSet<String>();
+				component2Meths.put(cc, hs);
+			}
+			hs.add(mm.getSignature());
+			//add permission.
+			ICCGNode iNode = ig.getNode(cc);
+			if(iNode!=null) {
+				if(pMap.get(mm.getSignature()) != null) {
+					//do union.
+					iNode.setPermission(pMap.get(mm.getSignature()));
+				}
+			}
+
+		}
+
+		relCallerComp.close();
+	}
+
+    //locate extraneous components.
+   	void findExtra(ICCG ig)
+	{
+		ProgramRel relConjunctSet = (ProgramRel) ClassicProject.g().getTrgt("ConjunctSet");
+		relConjunctSet.load();
+
+        Set<String> mainSet = new HashSet<String>();
+        Set<String> reachSet = new HashSet<String>();
+        Iterator iter = ICCGBuilder.components.entrySet().iterator();
+        String pkgName = ICCGBuilder.pkgName;
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            String key = (String)entry.getKey();
+            XmlNode val = (XmlNode)entry.getValue();
+            String nodeName = val.getName();
+            if(nodeName.indexOf(".") == 0) nodeName = pkgName +  nodeName;
+            if(nodeName.indexOf(".") == -1) nodeName = pkgName + "." +  nodeName;
+            if(val.getMain()) mainSet.add(nodeName);
+        }
+
+        //First, pick up the main components from AndroidManifest.xml.
+		Iterable<Trio<RefType,RefType,RefType>> res = relConjunctSet.getAry3ValTuples();
+		for(Trio<RefType, RefType, RefType> trio: res) {
+            //Second,
+			RefType src = trio.val0;
+			RefType tgt = trio.val1;
+            String srcStr = src.getClassName();
+            String tgtStr = tgt.getClassName();
+            if(mainSet.contains(srcStr)){
+                reachSet.add(tgtStr);
+            }
+           /* else if(mainSet.contains(tgtStr)) {
+                reachSet.add(srcStr);
+            }*/
+		}
+        mainSet.addAll(reachSet);
+
+    	ProgramRel relICCG = (ProgramRel) ClassicProject.g().getTrgt("ICCG");
+		relICCG.load();
+
+		Iterable<Pair<RefType,RefType>> reachRes = relICCG.getAry2ValTuples();
+		for(Pair<RefType, RefType> pair: reachRes) {
+			RefType src = pair.val0;
+			RefType tgt = pair.val1;
+            String srcStr = src.getClassName();
+            String tgtStr = tgt.getClassName();
+            if(!mainSet.contains(srcStr) && mainSet.contains(tgtStr)){
+                mainSet.remove(tgtStr);
+            }
+		}
+    
+
+
+        System.out.println("MainSet....." + mainSet);
+        for(String mainNode : mainSet){
+            ICCGNode mNode = ig.getNode(mainNode);
+            mNode.setMain(true);
+        }
+
+		relICCG.close();
+		relConjunctSet.close();
+	}
+
+
+
+
+    //dump out ICCG.
+    public void dump() 
+    {
+	    ICCG iccg = new ICCG();
+		String appName = System.getProperty("stamp.app");
+        iccg.setAppName(appName);
+        int cnt = 1;
+
+        Iterator iter = components.entrySet().iterator();
 		while (iter.hasNext()) {
 			Map.Entry entry = (Map.Entry) iter.next();
 			String key = (String)entry.getKey();
 			XmlNode val = (XmlNode)entry.getValue();
 			String nodeName = val.getName();
-			System.out.println("nodeinfo:" + val.getName() +" "+ val.getType()+" " + val.getPermission()+ " " 
-				+ val.getMain() + val.getIntentFilter());
 
 			if(nodeName.indexOf(".") == 0) nodeName = pkgName +  nodeName;
 			if(nodeName.indexOf(".") == -1) nodeName = pkgName + "." +  nodeName;
 
-			ICCGNode iNode = new ICCGNode(nodeName);
+			ICCGNode iNode = new ICCGNode(nodeName, cnt++);
 			iNode.setMain(val.getMain());
 			iNode.setType(val.getType());
 			iNode.setIntentFilter(val.getIntentFilter());
@@ -121,18 +227,70 @@ public class PostIccgBuilder extends JavaAnalysis
 			iccg.addNode(iNode);
 		}
 
-		//create unknown node.
-		ICCGNode unknownNode = new ICCGNode("unknown");
-		unknownNode.setShape("box");
-		iccg.addNode(unknownNode);
+        //special node for getAPK
+		ICCGNode apkNode = new ICCGNode("INSTALL_APK", cnt++);
+		apkNode.setType("unknown");
+		iccg.addNode(apkNode);
 
-		ICCGNode notFoundNode = new ICCGNode("targetNotFound");
-		notFoundNode.setShape("box");
-		iccg.addNode(notFoundNode);
 
+        ProgramRel relICCG = (ProgramRel) ClassicProject.g().getTrgt("ICCG");
+		relICCG.load();
+        //ProgramRel relICCGImp = (ProgramRel) ClassicProject.g().getTrgt("ICCGImp");
+		//relICCGImp.load();
+
+		/*Iterable<Pair<Object,Object>> res1 = relICCG.getAry2ValTuples();
+		for(Pair<Object,Object> pair : res1) {
+            if(!(pair.val1 instanceof StringConstNode)) continue;
+			RefType t  = (RefType)pair.val0;
+			StringConstNode s = (StringConstNode)pair.val1;
+	        ICCGEdge iccgEdge = new ICCGEdge();
+            ICCGNode srcNode = iccg.getNode(t.getClassName());
+            ICCGNode tgtNode = iccg.getNode(s.getValue());
+
+            iccgEdge.setTgt(tgtNode);
+            iccgEdge.setSrc(srcNode);
+            iccg.addEdge(iccgEdge);
+
+		}*/
+
+		Iterable<Pair<String,String>> res2 = relICCG.getAry2ValTuples();
+		for(Pair<String,String> pair : res2) {
+			String s  = pair.val0;
+			String t = pair.val1;
+	        ICCGEdge iccgEdge = new ICCGEdge();
+            ICCGNode srcNode = iccg.getNode(s);
+            ICCGNode tgtNode = iccg.getNode(t);
+
+            iccgEdge.setTgt(tgtNode);
+            iccgEdge.setSrc(srcNode);
+            iccg.addEdge(iccgEdge);
+			iccgEdge.setAsynchronous(true);
+		}
+
+
+		relICCG.close();
+        //findExtra(iccg);
+        genPermission(iccg);
+        getSpecCaller(iccg);
+        getIntentFilter(iccg);
+        plotFlow2Comp(iccg);
+        PrintWriter out = OutDirUtils.newPrintWriter(dotFilePath);
+        out.println(iccg.getSignature());
+        out.close();
+        //store in DB.
+        iccg.updateDB();
+    }
+
+
+	public void run()
+	{
+	    //output dotty.
+		parsePermission();
+        dump();
 	}
+    
 
-        /* Read the permission into a map.*/
+    /* Read the permission into a map.*/
 	void parsePermission() {
 		String loc = System.getProperty("stamp.dir") + "/models/permissionmap401.txt";
 		try {
@@ -145,7 +303,9 @@ public class PostIccgBuilder extends JavaAnalysis
 					String key = line.substring(line.indexOf(":") + 1, line.length());
 					currPer = key;
 				} else {
+                    if(line.contains("Callers")) line = in.readLine();//filter out the title.
 					String methSig = line.substring(0, line.indexOf(")>")+2 );
+                    assert(methSig.length() > 2);
 					//System.out.println(methSig);
 					if (pMap.get(methSig) == null) {
 						Set<String> newperSet = new HashSet<String>(); 
@@ -165,380 +325,83 @@ public class PostIccgBuilder extends JavaAnalysis
 
 	}
 
+    //e.g. abortBroadcast()
+    private void getSpecCaller(ICCG ig)
+    {
+        final ProgramRel relSpecCaller = (ProgramRel)ClassicProject.g().getTrgt("SpecCallerComp");
+        relSpecCaller.load();
+        Iterable<Pair<SootMethod,String>> res = relSpecCaller.getAry2ValTuples();
+        Set<String> specCallSet = new HashSet<String>();
+        for(Pair<SootMethod,String> pair : res) {
+            String meth = pair.val0.getSignature();
+            String comp = pair.val1;
+            specCallSet.add(comp+"@"+meth);
+        }
+        ig.setSpecCall(specCallSet);
+        relSpecCaller.close();
+    }
 
-	void openRels()
-	{
-		relCallerComp = (ProgramRel) ClassicProject.g().getTrgt("CallerComp");
-		relCallerComp.load();
+    
+    private void getIntentFilter(ICCG ig)
+    {
+        Set<String> filterList = new HashSet<String>();
+		String pkgName = ICCGBuilder.pkgName;
+		Collection compNodes = ICCGBuilder.components.values();
+        for(Object node : compNodes){
+            XmlNode comp = (XmlNode) node;
+            String nodeName = comp.getName();
 
-		Iterable<Trio<SootMethod,Ctxt,RefType>> res1 = relCallerComp.getAry3ValTuples();
-		for(Trio<SootMethod,Ctxt,RefType> pair : res1) {
-			SootMethod mm = pair.val0;
-			RefType cc = pair.val2;
-			Set<String> hs = component2Meths.get(cc.getClassName());
-			if(hs == null) {
-				hs = new HashSet<String>();
-				component2Meths.put(cc.getClassName(), hs);
-			}
-			hs.add(mm.getSignature());
-			//add permission.
-			ICCGNode iNode = iccg.getNode(cc.getClassName());
-			if(iNode!=null) {
-				if(pMap.get(mm.getSignature()) != null) {
-					//do union.
-					iNode.setPermission(pMap.get(mm.getSignature()));
-				}
-			}
+            if(nodeName.indexOf(".") == 0) nodeName = pkgName +  nodeName;
+            if(nodeName.indexOf(".") == -1) nodeName = pkgName + "." +  nodeName;
 
-		}
+            //pick up the maximum priority.
+            int max = 0;
+            String action = "";
+            for(String priority : comp.getFilterList()){
+                int p = Integer.parseInt(priority);
+                if(p > max) max = p;
+            }
 
-		relCallerComp.close();
-	}
+            //union all the action strings.
+            for(String actionName : comp.getActionList()){
+                action += actionName;
+            }
 
-	protected void visit(SootClass klass)
-	{
-		this.klass = klass;
-		Collection<SootMethod> methodsCopy = new ArrayList(klass.getMethods());
-		for(SootMethod method : methodsCopy)
-			visitMethod(method);
-	}
+            //ignore empty action
+            if(action.equals("")) continue;
+            filterList.add(nodeName + "@" + action + "@" + String.valueOf(max));
 
-	private void visitMethod(SootMethod method)
-	{
-	if(!method.isConcrete()) return;
+        }
 
-	Body body = method.retrieveActiveBody();
-	UnitGraph g = new ExceptionalUnitGraph(body);
-	ImplicitIntentDef sld = new ImplicitIntentDef(g, new SimpleLiveLocals(g));
-	//Running transitive reaching def to grep the values of intent filter.
-	ReachingDefsAnalysis.runReachingDef(body);
-	ICCGNode srcNode = new ICCGNode();
-	ICCGNode tgtNode = new ICCGNode();
-	ICCGEdge iccgEdge = new ICCGEdge();
+        System.out.println("Filterlist: " + filterList);
+        ig.setFilterList(filterList);
+    }
 
-	Chain<Local> locals = body.getLocals();
-	Chain<Unit> units = body.getUnits();
-	Iterator<Unit> uit = units.snapshotIterator();
-	while(uit.hasNext()){
-	    Stmt stmt = (Stmt) uit.next();
+    private void plotFlow2Comp(ICCG ig)
+    {
+        final ProgramRel relCompFlows = (ProgramRel)ClassicProject.g().getTrgt("FlowComp");
+        Set<String> cpFlowSet = new HashSet<String>();
+        relCompFlows.load();
+        Iterable<Quad<String,Pair<String,Ctxt>,String,Pair<String,Ctxt>>> cflows = relCompFlows.getAry4ValTuples();
+        for(Quad<String,Pair<String,Ctxt>,String,Pair<String,Ctxt>> quad : cflows) {
+            String srcComp = quad.val0;
+            String srctxt = quad.val1.val0;
+            String tgtComp = quad.val2;
+            String sinktxt = quad.val3.val0;
+            cpFlowSet.add(srcComp + "@" + srctxt + "@" + tgtComp + "@"+ sinktxt);
+        }
+        ig.setFlows(cpFlowSet);
+        relCompFlows.close();
+    }
 
-	    if(stmt.containsInvokeExpr()){
-		InvokeExpr ie = stmt.getInvokeExpr();
-		String methSig = ie.getMethod().getSignature();
-		//Entry point. new intent()...
-		///explicit target?
-		if (
-		    methSig.equals("<android.content.Intent: void <init>(java.lang.String,android.net.Uri,android.content.Context,java.lang.Class)>")
-		||  methSig.equals("<android.content.Intent: void <init>(android.content.Context,java.lang.Class)>")
-		||  methSig.equals("<android.content.Intent: android.content.Intent setClass(android.content.Context,java.lang.Class)>")
-		||  methSig.equals("<android.content.Intent: android.content.Intent setClassName(android.content.Context,java.lang.String)>")
-		||  methSig.equals("<android.content.Intent: android.content.Intent setClassName(java.lang.String,java.lang.String)>")
-		||  methSig.equals("<android.content.ComponentName: void <init>(java.lang.String,java.lang.String)>")
-		){
-		    ArrayList<String> keyList = new ArrayList<String>(); 
-		    String tgtName = "";
-		    if (methSig.equals("<android.content.Intent: void <init>(java.lang.String,android.net.Uri,android.content.Context,java.lang.Class)>"))
-			keyList = readKeysFromTag(stmt, ie.getArg(3));
-		    else 
-			keyList = readKeysFromTag(stmt, ie.getArg(1));
+    private String parseStr(String str)
+    {
+        str = str.replaceAll("\\/", ".");
+        if(str.contains("."))
+            str= str.substring(str.lastIndexOf(".")+1,str.length());
 
-		    if(keyList.size() > 0) {
-			tgtName = keyList.get(0);
-			if(tgtName.contains("/")) tgtName = tgtName.replaceAll("/", ".");
-			if(!tgtName.contains(".")) tgtName = pkgName + "." + tgtName;
-		    } else {
-			tgtName = "targetNotFound";
-			System.out.println("targetnotfound:" + stmt + " " + stmt.getTags() + method + this.klass);
-			//can we do better?
-		    }
+        return str;
+    }
 
-		    if(components.get(method.getDeclaringClass().getName()) == null) {
-			//any other component can reach this method? 
-			Iterator iter = component2Meths.entrySet().iterator();
-			while (iter.hasNext()) { 
-			    if(!klass.getName().contains(pkgName)) break;
-			    Map.Entry entry = (Map.Entry) iter.next(); 
-			    String key = (String)entry.getKey(); 
-			    Set val = (Set)entry.getValue(); 
-			    if(val.contains(method.getSignature())) {
-
-				ICCGNode srcNode1 = iccg.getNode(key);
-				ICCGEdge iccgEdge2 = new ICCGEdge();
-				ICCGNode myTgt1 = iccg.getNode(tgtName);
-				iccgEdge2.setTgt(myTgt1);
-				iccgEdge2.setAsynchronous(true);
-				String subSig = method.getSubSignature();
-				iccgEdge2.setEvent(subSig.substring(subSig.indexOf(" "), subSig.indexOf("(")));
-				iccgEdge2.setSrc(srcNode1);
-				iccg.addEdge(iccgEdge2);
-			    }
-			} 
-			
-		    } else {
-			ICCGEdge iccgEdge1 = new ICCGEdge();
-			srcNode = iccg.getNode(klass.getName());
-			ICCGNode myTgt = iccg.getNode(tgtName);
-
-			iccgEdge1.setTgt(myTgt);
-			iccgEdge1.setSrc(srcNode);
-			iccg.addEdge(iccgEdge1);
-		    }
-		    continue;
-
-		} else {//may be implicit
-		   tgtNode = iccg.getUnknown();  
-		}
-
-		//Intent filter info, if any.
-		///param values for setAction, setCategory and those related APIs.
-		if (
-		    methSig.equals("<android.content.Intent: void <init>(java.lang.String,android.net.Uri,android.content.Context,java.lang.Class)>")
-		    || methSig.equals("<android.content.Intent: android.content.Intent setAction(java.lang.String)>")
-		    || methSig.equals("<android.content.Intent: void <init>(java.lang.String,android.net.Uri)>")
-		    || methSig.equals("<android.content.Intent: void <init>(java.lang.String)>")
-		    ) {
-		    //Output intent filter, target info.
-		    System.out.println("Intent filter(action) = " + " Class:" + this.klass + " Method:" + method 
-					+ " Stmt:" + stmt + " Defs:" + stmt.getTags() + "\n");
-
-		    ArrayList<String> keyList = readKeysFromTag(stmt, ie.getArg(0));
-		    if(keyList.size() > 0) iccgEdge.setAction(keyList.get(0));
-		   tgtNode = iccg.getUnknown();  
-		}
-
-		if (methSig.equals("<android.content.Intent: android.content.Intent addCategory(java.lang.String)>")) {
-		    //Output intent filter, target info.
-		    System.out.println("Intent filter(category) = " + " Class:" + this.klass + " Method:" + method 
-					+ " Stmt:" + stmt + " Defs:" + stmt.getTags() + "\n");
-		    ArrayList<String> keyList = readKeysFromTag(stmt, ie.getArg(0));
-		    if(keyList.size() > 0) iccgEdge.setCategory(keyList.get(0));
-		}
-
-	       if (methSig.equals("<android.content.Intent: android.content.Intent setType(java.lang.String)>")
-		    || methSig.equals("<android.content.Intent: android.content.Intent setDataAndType(android.net.Uri,java.lang.String)>")
-		    ) {
-		    //Output intent filter, target info.
-		    System.out.println("Intent filter(type) = " + " Class:" + this.klass + " Method:" + method 
-					+ " Stmt:" + stmt + " Defs:" + stmt.getTags() + "\n");
-		    ArrayList<String> keyList = readKeysFromTag(stmt, ie.getArg(0));
-		    if(keyList.size() > 0) iccgEdge.setType(keyList.get(0));
-		}
-
-		//Bundle key info, if any.
-		if (
-		    (methSig.matches("^<android.content.Intent: .* get.*Extra.*") && !methSig.contains("getExtras()>"))
-		||  (methSig.matches("^<android.os.Bundle: .* get.*"))
-		||  (methSig.matches("^<android.content.Intent: android.content.Intent put.*"))
-		||  (methSig.matches("^<android.os.Bundle: void put.*"))
-		){
-
-		    if (ie.getUseBoxes().size() < 2) continue;
-		    ImmediateBox bundleLoc = (ImmediateBox) ie.getUseBoxes().get(1);
-		    Value putStringArg = bundleLoc.getValue();
-		    ArrayList<String> bundleKeyList = readKeysFromTag(stmt, putStringArg);
-		    //we don't need bundle key right now.
-		    //if(bundleKeyList.size() > 0) tgtNode.setKeys(new HashSet(bundleKeyList));
-
-		}
-
-		///exit point.
-		if (
-		    methSig.equals("<android.app.Activity: void startActivity(android.content.Intent)>")
-		    || methSig.equals("<android.content.ContextWrapper: void sendBroadcast(android.content.Intent)>")
-		    //shall we mark bindservice?|| methSig.equals("<android.content.ContextWrapper: boolean bindService(android.content.Intent,android.content.ServiceConnection,int)>") 
-		    || methSig.equals("<android.content.ContextWrapper: android.content.ComponentName startService(android.content.Intent)>")
-		    || methSig.equals("<android.content.ContextWrapper: void sendBroadcast(android.content.Intent,java.lang.String)>")
-		    || methSig.equals("<android.content.ContextWrapper: void sendStickyBroadcast(android.content.Intent)>")
-		    || methSig.equals("<android.content.ContextWrapper: void sendOrderedBroadcast(android.content.Intent,java.lang.String)>")
-		    || methSig.equals("<android.content.ContextWrapper: void sendOrderedBroadcast(android.content.Intent,java.lang.String,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)>")
-		    || methSig.equals("<android.content.ContextWrapper: void sendStickyOrderedBroadcast(android.content.Intent,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)>")
-
-		    || methSig.equals("<android.content.Context: void sendBroadcast(android.content.Intent)>")
-		    || methSig.equals("<android.content.Context: android.content.ComponentName startService(android.content.Intent)>")
-		    || methSig.equals("<android.content.Context: void sendBroadcast(android.content.Intent,java.lang.String)>")
-		    || methSig.equals("<android.content.Context: void sendStickyBroadcast(android.content.Intent)>")
-		    || methSig.equals("<android.content.Context: void sendOrderedBroadcast(android.content.Intent,java.lang.String)>")
-		    || methSig.equals("<android.content.Context: void sendOrderedBroadcast(android.content.Intent,java.lang.String,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)>")
-		    || methSig.equals("<android.content.Context: void sendStickyOrderedBroadcast(android.content.Intent,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)>")
-
-		    || methSig.equals("<android.app.Activity: void startActivities(android.content.Intent[])>")
-		    || methSig.equals("<android.app.Activity: void startIntentSender(android.content.IntentSender,android.content.Intent,int,int,int)>")
-		    || methSig.equals("<android.app.Activity: void startActivityForResult(android.content.Intent,int)>")
-		    || methSig.equals("<android.app.Activity: boolean startActivityIfNeeded(android.content.Intent,int)>")
-		    || methSig.equals("<android.app.Activity: boolean startNextMatchingActivity(android.content.Intent)>")
-		    || methSig.equals("<android.app.Activity: void startActivityFromChild(android.app.Activity,android.content.Intent,int)>")
-		    || methSig.equals("<android.app.Activity: void startActivityFromFragment(android.app.Fragment,android.content.Intent,int)>")
-		    || methSig.equals("<android.app.Activity: void startIntentSenderForResult(android.content.IntentSender,int,android.content.Intent,int,int,int)>")
-		    || methSig.equals("<android.app.Activity: void startIntentSenderFromChild(android.app.Activity,android.content.IntentSender,int,android.content.Intent,int,int,int)>")
-		){
-
-		    boolean isImplicit = sld.checkImplicit(stmt);
-		    //Output intent results.
-		    System.out.println("Implicit intent = " + isImplicit + "# Class: " + this.klass + "# Method: " 
-					+ method + "# Stmt: " + stmt + "\n");
-		    if (isImplicit) {
-			//iccgEdge.setImplicit(isImplicit);
-			ICCGNode myTgt3 = iccg.getNode("unknown");
-			
-			if(components.get(method.getDeclaringClass().getName()) == null) {
-			    Iterator iter = component2Meths.entrySet().iterator();
-			    while (iter.hasNext()) { 
-				if(!klass.getName().contains(pkgName)) break;
-				Map.Entry entry = (Map.Entry) iter.next(); 
-				String key = (String)entry.getKey(); 
-				Set val = (Set)entry.getValue(); 
-				if(val.contains(method.getSignature())) {
-				    ICCGNode srcNode3 = iccg.getNode(key);
-				    ICCGEdge iccgEdge3 = new ICCGEdge();
-				    iccgEdge3.setTgt(myTgt3);
-				    iccgEdge3.setSrc(srcNode3);
-
-				    iccgEdge3.setAsynchronous(true);
-				    String subSig = method.getSubSignature();
-				    iccgEdge3.setEvent(subSig.substring(subSig.indexOf(" "), subSig.indexOf("(")));
-
-				    iccg.addEdge(iccgEdge3);
-				}
-			    } 
-			    
-			}else{
-			    ICCGEdge iccgEdge4 = new ICCGEdge();
-			    srcNode = iccg.getNode(klass.getName());
-			    iccgEdge4.setTgt(myTgt3);
-			    iccgEdge4.setSrc(srcNode);
-			    iccg.addEdge(iccgEdge4);
-
-			}
-
-		    }
-		}
-	    }
-	}
-	}
-
-	/* Read the reaching def values of the regester.*/
-	private ArrayList<String> readKeysFromTag(Stmt stmt, Value arg) 
-	{
-		ArrayList<String> reachingDef = new ArrayList<String>();
-		// Value putStringArg = bundleLoc.getValue();
-		StringConstant strVal = StringConstant.v("dummy");
-
-		if (arg instanceof StringConstant){
-			strVal = (StringConstant) arg;
-			reachingDef.add(strVal.value);
-		} else {
-			// otherwise we have to ask for reaching def.
-			for (Tag tagEntity : stmt.getTags()) {
-				if(!(tagEntity instanceof LinkTag)) continue;
-				LinkTag ttg = (LinkTag) tagEntity;
-				if ( !(ttg.getLink() instanceof JAssignStmt)) continue;
-				JAssignStmt asst = (JAssignStmt) ttg.getLink();
-
-				// FIXME:can not deal with inter-proc now!
-				if (asst.getLeftOp().equals(arg)) {
-					if (asst.getRightOp() instanceof StringConstant) {
-						strVal = (StringConstant) asst.getRightOp();
-						String bundleKey = strVal.value;
-						//bundleKey = bundleKey.replaceAll("[\\s]+", "_");
-						reachingDef.add(bundleKey);
-					} else if (asst.getRightOp() instanceof ClassConstant) {
-						ClassConstant clazz = (ClassConstant) asst.getRightOp();
-						reachingDef.add(clazz.value);
-					}
-				}
-			}
-		}
-
-		return reachingDef;
-	}
-
-	NumberedSet frameworkClasses()
-	{
-		Scene scene = Scene.v();
-		NumberedSet frameworkClasses = new NumberedSet(scene.getClassNumberer());
-		String androidJar = System.getProperty("stamp.android.jar");
-		JarFile archive;
-		try{
-			archive = new JarFile(androidJar);
-		}catch(IOException e){
-			throw new Error(e);
-		}
-		for (Enumeration entries = archive.entries(); entries.hasMoreElements();) {
-			JarEntry entry = (JarEntry) entries.nextElement();
-			String entryName = entry.getName();
-			int extensionIndex = entryName.lastIndexOf('.');
-			if (extensionIndex >= 0) {
-				String entryExtension = entryName.substring(extensionIndex);
-				if (".class".equals(entryExtension)) {
-					entryName = entryName.substring(0, extensionIndex);
-					entryName = entryName.replace('/', '.');
-					if(scene.containsClass(entryName))
-						frameworkClasses.add(scene.getSootClass(entryName));
-				}
-			}
-		}
-		return frameworkClasses;
-	}
-
-	public SootMethod querySrc(Iterator<Edge> edgeIt, SootMethod method) 
-	{
-
-		while(edgeIt.hasNext()){
-			Edge edge = edgeIt.next();
-			if(!edge.isExplicit() && !edge.isThreadRunCall())
-				continue;
-			Stmt callStmt = edge.srcStmt();
-			SootMethod tgt = (SootMethod) edge.tgt();
-			SootMethod src = (SootMethod) edge.src();
-
-			if(method.equals(tgt))
-				return src; 
-			if(tgt.isAbstract())
-				assert false : "tgt = "+tgt +" "+tgt.isAbstract();
-			if(tgt.isPhantom())
-				continue;
-			if(ignoreStubs){
-				if(stubMethods.contains(tgt) || (src != null && stubMethods.contains(src)))
-				    continue;
-			}
-		}
-
-		return null;
-
-	}
-
-	//Return the name of first framework super class.
-	public String getSuperFramework(SootClass klazz) 
-	{
-		NumberedSet fklasses = frameworkClasses();
-		boolean flag = true;
-		while(flag){
-			if(klazz == null) break;
-			if(fklasses.contains(klazz)) break;
-			klazz = (klazz.hasSuperclass() ? klazz.getSuperclass() : null);
-		}
-
-		if(klazz == null) return ""; 
-		else return klazz.getName(); 
-	}
-
-	public void run()
-	{
-		//Program program = Program.g();
-		parsePermission();
-		//program.buildCallGraph();
-		//fh = Program.g().scene().getOrMakeFastHierarchy();
-		NumberedSet fklasses = frameworkClasses();
-		openRels();
-		for(SootClass klass: Program.g().getClasses()){
-			if(fklasses.contains(klass)) continue;
-			this.visit(klass);
-		}
-
-		//output dotty.
-		System.out.println(iccg.getSignature());
-		//fh = null;
-
-	}
 
 }

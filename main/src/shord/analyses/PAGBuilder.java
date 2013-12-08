@@ -82,10 +82,13 @@ import java.util.*;
 				 "SpecIM", "StatIM",
 				 "VirtIM", "SubSig",
 				 "Dispatch", "Launch", 
-				 "VH", "TgtAction",
-	             "Stub" },
-       namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U", "S"},
-       types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class},
+                 "classT", "TargetHT", 
+                 "sub", "staticTM", 
+                 "staticTF", "clinitTM",
+				 "TgtAction",
+	             "Stub", "COMP", "TgtDataType" },
+       namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U", "S", "COMP"},
+       types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class, DomComp.class},
 	   namesOfSigns = { "Alloc", "Assign", 
 						"Load", "Store", 
 						"LoadStat", "StoreStat", 
@@ -100,20 +103,23 @@ import java.util.*;
 						"LoadStatPrim", "StoreStatPrim",
 						"MmethPrimArg", "MmethPrimRet", 
 						"IinvkPrimRet", "IinvkPrimArg",
-				                "SpecIM", "StatIM",
-				                "VirtIM", "SubSig",
+                        "SpecIM", "StatIM",
+                        "VirtIM", "SubSig",
 						"Dispatch", "Launch", 
-						"VH", "TgtAction",
-                        "Stub" },
+                        "classT", "TargetHT",
+                        "sub", "staticTM", 
+                        "staticTF", "clinitTM",
+						"TgtAction",
+                        "Stub", "TgtDataType" },
 	   signs = { "V0,H0:V0_H0", "V0,V1:V0xV1",
 				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
-				 "V0,F0:F0_V0", "F0,V0:F0_V0",
+				 "V0,F0:F0_V0", "F0,V0:V0_F0",
 				 "M0,Z0,V0:M0_V0_Z0", "M0,Z0,V0:M0_V0_Z0",
 				 "I0,Z0,V0:I0_V0_Z0", "I0,Z0,V0:I0_V0_Z0",
 				 "V0,T0:T0_V0", "I0,M0:I0_M0",
 				 "H0,T0:H0_T0", "H0,T0:H0_T0",
 				 "M0,I0:M0_I0", "M0,H0:M0_H0",
-				 "M0,V0:M0_V0", "M0,U0:M0_U0",
+				 "M0,V0:V0_M0", "M0,U0:M0_U0",
 				 "U0,U1:U0xU1",
 				 "U0,V0,F0:U0_V0_F0", "V0,F0,U0:U0_V0_F0",
 				 "U0,F0:U0_F0", "F0,U0:U0_F0",
@@ -121,9 +127,12 @@ import java.util.*;
 				 "I0,Z0,U0:I0_U0_Z0", "I0,Z0,U0:I0_U0_Z0",
 				 "I0,M0:I0_M0", "I0,M0:I0_M0",
 				 "I0,M0:I0_M0", "M0,S0:M0_S0",
-				 "T0,S0,M0:T0_S0_M0", "V0,M0:V0_M0", 
-				 "V0,H0:V0_H0", "T0,H0:T0_H0",
-                 "M0:M0" }
+				 "T0,S0,M0:T0_M0_S0", "V0,M0:V0_M0", 
+                 "T0:T0", "H0,COMP0:H0_COMP0",
+                 "T0,T1:T0_T1", "T0,M0:T0_M0",
+                 "T0,F0:F0_T0", "T0,M0:T0_M0",
+				 "COMP0,H0:COMP0_H0",
+                 "M0:M0", "COMP0,H0:COMP0_H0"}
 	   )
 public class PAGBuilder extends JavaAnalysis
 {
@@ -156,8 +165,10 @@ public class PAGBuilder extends JavaAnalysis
 	private ProgramRel relSubSig;//(m:M,s:S)
 	private ProgramRel relDispatch;//(t:T,s:S,m:M)
 	private ProgramRel relLaunch;//(v:V,m:M)
-	private ProgramRel relVH;//(v:V,h:H)
 	private ProgramRel relTgtAction;//(v:V,h:H)
+	private ProgramRel relTgtDataType;//(v:V,h:H)
+	private ProgramRel relTargetHT;//(h:H,t:T)
+
 
 	private ProgramRel relVT;
 	private ProgramRel relHT;
@@ -172,6 +183,8 @@ public class PAGBuilder extends JavaAnalysis
 	private DomH domH;
 	private DomZ domZ;
 	private DomI domI;
+
+    private	DomComp domComp;
 
 	private int maxArgs = -1;
 	private FastHierarchy fh;
@@ -249,13 +262,14 @@ public class PAGBuilder extends JavaAnalysis
 		relDispatch.zero();
 		relLaunch = (ProgramRel) ClassicProject.g().getTrgt("Launch");
 		relLaunch.zero();
-		relVH = (ProgramRel) ClassicProject.g().getTrgt("VH");
-		relVH.zero();
 		relTgtAction = (ProgramRel) ClassicProject.g().getTrgt("TgtAction");
 		relTgtAction.zero();
+		relTgtDataType = (ProgramRel) ClassicProject.g().getTrgt("TgtDataType");
+		relTgtDataType.zero();
+		relTargetHT= (ProgramRel) ClassicProject.g().getTrgt("TargetHT");
+		relTargetHT.zero();
 
-
-	}
+    }
 	
 	void saveRels()
 	{
@@ -295,8 +309,11 @@ public class PAGBuilder extends JavaAnalysis
 		relSubSig.save();
 		relDispatch.save();
 		relLaunch.save();
-		relVH.save();
 		relTgtAction.save();
+		relTgtDataType.save();
+		relTargetHT.save();
+
+        
 	}
 
 
@@ -461,6 +478,8 @@ public class PAGBuilder extends JavaAnalysis
     }
 
 
+	public static GlobalStringNode gStringNode  = new GlobalStringNode();
+
 	class MethodPAGBuilder
 	{
 		private ThisVarNode thisVar;
@@ -477,6 +496,7 @@ public class PAGBuilder extends JavaAnalysis
 	    private boolean parseAction = false;
 		private Map<Unit, AllocNode> unit2Node = new HashMap();
 		private Map<String, AllocNode> action2Node = new HashMap();
+		private Map<String, AllocNode> dataType2Node = new HashMap();
 		//private Map<Unit, SiteAllocNode> unit2Node = new HashMap();
 
 		MethodPAGBuilder(SootMethod method)
@@ -582,15 +602,24 @@ public class PAGBuilder extends JavaAnalysis
 							StringConstNode n = new StringConstNode(s);
 							domH.add(n);
 							unit2Node.put(s, n);
-						}
+						}else if(str.matches("[a-zA-Z]+\\.[a-zA-Z]+.*")){//end with uppercase word.
 						//if(str.matches("android.intent.action.*|android.provider.*|.*[A-Z]+$")){
-						if(str.matches(".*[A-Z]+$")){//end with uppercase word.
 							StringConstNode n = new StringConstNode(s);
 							domH.add(n);
 							unit2Node.put(s, n);
-							//sava for targetAction rel.
+							//save for targetAction rel.
 							action2Node.put(str, n);
-						}
+						}else if("application/vnd.android.package-archive".equals(str)){ //install apk by data type: 
+                            //application/vnd.android.package-archive
+    						StringConstNode n = new StringConstNode(s);
+							domH.add(n);
+							unit2Node.put(s, n);
+							//save for targetType rel.
+							dataType2Node.put(str, n);
+                        }else{
+                            //use a global alloc.
+							unit2Node.put(s, PAGBuilder.gStringNode);
+                        }
 					}
 
 					if(rightOp instanceof AnyNewExpr) {
@@ -652,6 +681,8 @@ public class PAGBuilder extends JavaAnalysis
 					assert false;
 			}
 
+
+           
 			if(!method.isConcrete())
 				return;
 			
@@ -663,7 +694,7 @@ public class PAGBuilder extends JavaAnalysis
 
 				relHT.add(an, type);
 				relMH.add(method, an);
-				
+
 				Iterator<Type> typesIt = Program.g().getTypes().iterator();
 				while(typesIt.hasNext()){
 					Type varType = typesIt.next();
@@ -715,13 +746,15 @@ public class PAGBuilder extends JavaAnalysis
 					if(nodeName.indexOf(".") == -1) nodeName = pkgName + "." +  nodeName;
 					for(String actionName : val.getActionList()){
 						//<nodeName, actionName>
-						SootClass cmpcls = Scene.v().getSootClass(nodeName);
 						if(action2Node.get(actionName) != null)
-							relTgtAction.add(cmpcls.getType(), action2Node.get(actionName));
+							relTgtAction.add(ICCGBuilder.getCompKey(nodeName), action2Node.get(actionName));
 					}
 				}
 
 			}
+
+			if(dataType2Node.get("application/vnd.android.package-archive") != null)
+			    relTgtDataType.add(PAGBuilder.gInstallAPK, dataType2Node.get("application/vnd.android.package-archive"));
 		}
 
 		LocalVarNode nodeFor(Immediate i)
@@ -741,18 +774,20 @@ public class PAGBuilder extends JavaAnalysis
 				s.addTag(containerTag);
 
 
-				if(ie instanceof SpecialInvokeExpr){
-					relSpecIM.add(s,callee);
-				}
-				
-				if(ie instanceof StaticInvokeExpr){
-					relStatIM.add(s,callee);
-				}
-				
-				if( (ie instanceof VirtualInvokeExpr) || (ie instanceof InterfaceInvokeExpr)){
-					//VirtualInvokeExpr vie = (VirtualInvokeExpr) ie;
-					relVirtIM.add(s,callee);
-				}
+		        DomM domM = (DomM) ClassicProject.g().getTrgt("M");
+                if(domM.contains(callee)){
+                    if(ie instanceof SpecialInvokeExpr){
+                        relSpecIM.add(s,callee);
+                    }
+                    
+                    if(ie instanceof StaticInvokeExpr){
+                        relStatIM.add(s,callee);
+                    }
+                    
+                    if( (ie instanceof VirtualInvokeExpr) || (ie instanceof InterfaceInvokeExpr)){
+                        relVirtIM.add(s,callee);
+                    }
+                }
 
 				//handle receiver
 				int j = 0;
@@ -787,7 +822,6 @@ public class PAGBuilder extends JavaAnalysis
 				String methSubSig = callee.getSubSignature();
 				if(ICCGBuilder.launchList.contains(methSubSig)) {
                     if(methSubSig.equals("void setResult(int,android.content.Intent)")){
-                        System.out.println("fuck...." + s + method);
 					    relLaunch.add(nodeFor(((Immediate)ie.getArg(1))), method);
                     }else{
 					    relLaunch.add(nodeFor(((Immediate)ie.getArg(0))), method);
@@ -864,14 +898,17 @@ public class PAGBuilder extends JavaAnalysis
 				if(rightOp instanceof StringConstant) {
 					String str = ((StringConstant)rightOp).value;
 					if(ICCGBuilder.components.get(str.replaceAll("/",".")) != null){
-						relVH.add(nodeFor((Local) leftOp), unit2Node.get(s));
+                        if(Scene.v().containsClass(str)){
+                            relTargetHT.add(unit2Node.get(s), ICCGBuilder.getCompKey(str));
+                        }
 						Alloc(nodeFor((Local) leftOp), unit2Node.get(s));
-					}
-					//if(str.matches("android.intent.action.*|android.provider.*")){
-					if(str.matches(".*[A-Z]+$")){//end with uppercase word.
-						relVH.add(nodeFor((Local) leftOp), unit2Node.get(s));
+					}else if(str.matches("[a-zA-Z]+\\.[a-zA-Z]+.*")){//end with uppercase word.
 						Alloc(nodeFor((Local) leftOp), unit2Node.get(s));
-					}
+					} else if("application/vnd.android.package-archive".equals(str)){ //install apk by data type: 
+						Alloc(nodeFor((Local) leftOp), unit2Node.get(s));
+                    }else {
+						Alloc(nodeFor((Local) leftOp), PAGBuilder.gStringNode);
+                    }
 
 				}
 
@@ -879,8 +916,13 @@ public class PAGBuilder extends JavaAnalysis
 					String str = ((ClassConstant)rightOp).value;
 					if(ICCGBuilder.components.get(str.replaceAll("/", ".")) != null){
 						SootClass clazz = Scene.v().getSootClass("edu.stanford.stamp.harness.Main");
-						SootField field = clazz.getFieldByName(str.replaceAll("/", "\\$"));
-						LoadStat(nodeFor((Local) leftOp), field);
+                        String clazzName = str.replaceAll("/", "\\$");
+                        if(clazz.declaresFieldByName(clazzName)) {
+                            SootField field = clazz.getFieldByName(clazzName);
+                            LoadStat(nodeFor((Local) leftOp), field);
+                        } else {
+                            System.out.println("fatal error in harness..." + clazzName);
+                        }
 					}
 				}
 
@@ -982,6 +1024,7 @@ public class PAGBuilder extends JavaAnalysis
 		Program program = Program.g();
 		stubMethods = new NumberedSet(Scene.v().getMethodNumberer());
 		Iterator<SootMethod> mIt = program.getMethods();
+		domM.add(program.getMainMethod());
 		while(mIt.hasNext()){
 			SootMethod m = mIt.next();
 			growZIfNeeded(m.getParameterCount());
@@ -1064,6 +1107,8 @@ public class PAGBuilder extends JavaAnalysis
 		domU = (DomU) ClassicProject.g().getTrgt("U");
 
 		Iterator mIt = Program.g().scene().getReachableMethods().listener();
+
+	    domH.add(PAGBuilder.gStringNode);
 		while(mIt.hasNext()){
 			SootMethod m = (SootMethod) mIt.next();
 			if(ignoreStubs){
@@ -1089,7 +1134,7 @@ public class PAGBuilder extends JavaAnalysis
 
 	void buildDispatchMap() 
 	{
-        	Map<SootClass, Set<SootMethod>> dispatchMap = new HashMap<SootClass, Set<SootMethod>>();
+        Map<SootClass, Set<SootMethod>> dispatchMap = new HashMap<SootClass, Set<SootMethod>>();
 		Program program = Program.g();		
 		int totalCls = program.getClasses().size();
 
@@ -1139,13 +1184,15 @@ public class PAGBuilder extends JavaAnalysis
 		}
 
 		//create dispatch tuple based on the map.
+		DomM domM = (DomM) ClassicProject.g().getTrgt("M");
 		Iterator iter = dispatchMap.keySet().iterator();
 		while(iter.hasNext()){
 			SootClass clazz = (SootClass)iter.next();
 			Set cMeths = (Set)dispatchMap.get(clazz);
 			for(Object o: cMeths){
-                                SootMethod m = (SootMethod) o;
-		                relDispatch.add(clazz.getType(), m.getSubSignature(), m);
+                if(!domM.contains(o)) continue;
+                SootMethod m = (SootMethod) o;
+                relDispatch.add(clazz.getType(), m.getSubSignature(), m);
 
 			}
 		}
@@ -1196,10 +1243,12 @@ public class PAGBuilder extends JavaAnalysis
 
 	void pass3()
 	{
+		DomM domM = (DomM) ClassicProject.g().getTrgt("M");
 		Iterator<SootMethod> mIt = Program.g().getMethods();
 		while(mIt.hasNext()){
 			SootMethod m = mIt.next();
-			relSubSig.add(m, m.getSubSignature());
+            if(domM.contains(m))
+			    relSubSig.add(m, m.getSubSignature());
 		}
 	}
 	
@@ -1210,11 +1259,54 @@ public class PAGBuilder extends JavaAnalysis
 			mpagBuilder.pass2();
 
 		pass3();
-	        buildDispatchMap();
+	    buildDispatchMap();
 		saveRels();
+        populateMisc();
 
 		populateCallgraph();
 	}
+
+    void populateMisc()
+    {
+        ProgramRel relClassT = (ProgramRel) ClassicProject.g().getTrgt("classT");
+        relClassT.zero();
+        ProgramRel relSub = (ProgramRel) ClassicProject.g().getTrgt("sub");
+        relSub.zero();
+        ProgramRel relStaticTM = (ProgramRel) ClassicProject.g().getTrgt("staticTM");
+        relStaticTM.zero();
+        ProgramRel relStaticTF = (ProgramRel) ClassicProject.g().getTrgt("staticTF");
+        relStaticTF.zero();
+        ProgramRel relClinitTM = (ProgramRel) ClassicProject.g().getTrgt("clinitTM");
+        relClinitTM.zero();
+
+		Program program = Program.g();		
+        for(SootClass klass : program.getClasses()){
+            Type type = klass.getType();
+
+            relClassT.add(type);
+
+            for(SootField field : klass.getFields())
+                if(field.isStatic())
+                    relStaticTF.add(type, field);
+
+            for(SootMethod meth : klass.getMethods())
+                if(meth.isStatic())//m is a static method defined in t.
+                    relStaticTM.add(type, meth);
+
+            if(klass.declaresMethodByName("<clinit>"))
+                relClinitTM.add(type, klass.getMethodByName("<clinit>"));
+
+
+            for(SootClass clazz : SootUtils.subTypesOf(klass))
+                relSub.add(clazz.getType(), type);//clazz is subtype of klass
+        }
+
+        relClassT.save();
+        relSub.save();
+        relStaticTM.save();
+        relStaticTF.save();
+        relClinitTM.save();
+    }
 
 	final public boolean canStore(Type objType, Type varType) 
 	{
@@ -1228,7 +1320,18 @@ public class PAGBuilder extends JavaAnalysis
         return fh.canStoreType(objType, varType);
     }
 
+    //add a node to represent install apk
+    static String gInstallAPK = "INSTALL_APK";
 
+	private void populateDomComp() 
+	{
+		DomComp domComp = (DomComp) ClassicProject.g().getTrgt("COMP");
+        for(Object node : ICCGBuilder.components.keySet()) {
+            domComp.add((String)node);
+        }
+        domComp.add(gInstallAPK);
+        domComp.save();
+	}
 
 	public void run()
 	{
@@ -1237,6 +1340,7 @@ public class PAGBuilder extends JavaAnalysis
 		program.buildCallGraph();
 
 		fh = Program.g().scene().getOrMakeFastHierarchy();
+	    populateDomComp();
 		List<MethodPAGBuilder> mpagBuilders = new ArrayList();
 		populateDomains(mpagBuilders);
 		populateRelations(mpagBuilders);

@@ -77,6 +77,16 @@ class TelephonyManager
 		return new String();
 	}
 
+	@STAMP(flows = {@Flow(from="$PhoneType",to="@return")})
+    public int getPhoneType() {
+        return 1;
+    }
+
+	@STAMP(flows = {@Flow(from="$NetworkType",to="@return")})
+    public int getNetworkType() {
+        return 1;
+    }
+
 	@STAMP(flows = {@Flow(from="$NetworkOperator",to="@return")})
 	public  java.lang.String getNetworkOperator() 
 	{ 
@@ -86,6 +96,9 @@ class TelephonyManager
 
 	public  void listen(final android.telephony.PhoneStateListener listener, int events) 
 	{
+        listener.onCallStateChanged(0, incomingCallNumber());
+		listener.onCellLocationChanged(getCellLocation());
+
 		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
 			registerCallback(new edu.stanford.stamp.harness.Callback(){
 					public void run() {

@@ -5,6 +5,7 @@ class AbstractThreadedSyncAdapter
 {
 	public AbstractThreadedSyncAdapter(android.content.Context context, boolean autoInitialize)  
 	{
+		AbstractThreadedSyncAdapter.this.onPerformSync(null, new android.os.Bundle(), new String(), null, null);
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {
@@ -12,6 +13,7 @@ class AbstractThreadedSyncAdapter
 					}
 				});
 
+		AbstractThreadedSyncAdapter.this.onSyncCanceled();
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {
@@ -19,6 +21,7 @@ class AbstractThreadedSyncAdapter
 					}
 				});
 
+	    AbstractThreadedSyncAdapter.this.onSyncCanceled(null);
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {

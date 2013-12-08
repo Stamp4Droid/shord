@@ -1,0 +1,1167 @@
+virusshare-12-1.sqlite  /home/yufeng/research/scripts/virus/virusshare_classify/ sql/
+VirusShare51b5a4c2a42191ca9b46205c4c0b45ea.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShare51b5a4c2a42191ca9b46205c4c0b45ea.apk
+
+VirusShare7d54eb8d44d762c7cb70506235cb5077.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShare7d54eb8d44d762c7cb70506235cb5077.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare7d54eb8d44d762c7cb70506235cb5077.apk
+
+VirusSharea84997b0d220e6a63e2943da64ffa38c.apk belongs to those families:  | ADRD  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusSharea84997b0d220e6a63e2943da64ffa38c.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusSharea84997b0d220e6a63e2943da64ffa38c.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusSharea84997b0d220e6a63e2943da64ffa38c.apk
+
+VirusShareebae53103057981042d1e193aa9121f7.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShareebae53103057981042d1e193aa9121f7.apk
+
+VirusShare8353cad68f4d2b443b33bb2f32f2412d.apk belongs to those families:  | Pjapps  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShare8353cad68f4d2b443b33bb2f32f2412d.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare8353cad68f4d2b443b33bb2f32f2412d.apk
+
+VirusShare913756426b6d32c6041e438814a4ae76.apk belongs to those families:  | Pjapps  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShare913756426b6d32c6041e438814a4ae76.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare913756426b6d32c6041e438814a4ae76.apk
+
+VirusShare722da6cdfa8bac482c9c6be105b0ff2a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShare722da6cdfa8bac482c9c6be105b0ff2a.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare722da6cdfa8bac482c9c6be105b0ff2a.apk
+
+VirusShare5895bcd066abf6100a37a25c0c1290a5.apk belongs to those families:  | ADRD  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShare5895bcd066abf6100a37a25c0c1290a5.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare5895bcd066abf6100a37a25c0c1290a5.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare5895bcd066abf6100a37a25c0c1290a5.apk
+
+VirusShare5192ad05597e7a148f642be43f6441f6.apk belongs to those families:  | ADRD  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShare5192ad05597e7a148f642be43f6441f6.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare5192ad05597e7a148f642be43f6441f6.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare5192ad05597e7a148f642be43f6441f6.apk
+
+VirusShare8e4bc93becb3cc46123e7e250c598971.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShare8e4bc93becb3cc46123e7e250c598971.apk
+
+VirusSharef40deebbbd15a0fdcab0857b59d63f1a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusSharef40deebbbd15a0fdcab0857b59d63f1a.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusSharef40deebbbd15a0fdcab0857b59d63f1a.apk
+
+VirusShare60ce9b29a6b9c7ee22604ed5e08e8d8a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShare60ce9b29a6b9c7ee22604ed5e08e8d8a.apk
+
+VirusSharea3c2d7977a6b83c7f5b59e6009496c4b.apk belongs to those families:  | DroidDreamLight  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusSharea3c2d7977a6b83c7f5b59e6009496c4b.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/droiddream/VirusSharea3c2d7977a6b83c7f5b59e6009496c4b.apk
+
+VirusShare3ae28cbf5a92e8e7a06db4b9ab0a55ab.apk belongs to those families:  | DroidDreamLight  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShare3ae28cbf5a92e8e7a06db4b9ab0a55ab.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/droiddream/VirusShare3ae28cbf5a92e8e7a06db4b9ab0a55ab.apk
+
+VirusSharedbe1fcccc2e0b4c097eddb6f03a0c404.apk belongs to those families:  | GoldDream  Original: /home/yufeng/research/scripts/virus/virusshare_classify/golddream/VirusSharedbe1fcccc2e0b4c097eddb6f03a0c404.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharedbe1fcccc2e0b4c097eddb6f03a0c404.apk
+
+VirusShare2950164750c6e36322f1dac810a7a4b4.apk belongs to those families:  | GoldDream  Original: /home/yufeng/research/scripts/virus/virusshare_classify/golddream/VirusShare2950164750c6e36322f1dac810a7a4b4.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare2950164750c6e36322f1dac810a7a4b4.apk
+
+VirusSharecf677d173435d7a38421a0aca9efb1bf.apk belongs to those families:  | GingerMaster  Original: /home/yufeng/research/scripts/virus/virusshare_classify/golddream/VirusSharecf677d173435d7a38421a0aca9efb1bf.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusSharecf677d173435d7a38421a0aca9efb1bf.apk
+
+VirusShare7c46a02b9b7591621d2895df6b63fc7b.apk belongs to those families:  | GoldDream  Original: /home/yufeng/research/scripts/virus/virusshare_classify/golddream/VirusShare7c46a02b9b7591621d2895df6b63fc7b.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare7c46a02b9b7591621d2895df6b63fc7b.apk
+
+VirusShare9a2337c69f50aa91da7175e1abd7f218.apk belongs to those families:  | Geinimi  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare9a2337c69f50aa91da7175e1abd7f218.apk
+
+VirusShare3374d6322542d6aec9d319df335215e5.apk belongs to those families:  | Geinimi  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare3374d6322542d6aec9d319df335215e5.apk
+
+VirusShare749b77ed464aae7c8938012099bf5eb1.apk belongs to those families:  | Geinimi  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare749b77ed464aae7c8938012099bf5eb1.apk
+
+VirusSharede759e9fdb3ec577d753ff240fc91a13.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusSharede759e9fdb3ec577d753ff240fc91a13.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusSharede759e9fdb3ec577d753ff240fc91a13.apk
+
+VirusShare4e26a200ab149819dcdcf273f5ab171a.apk belongs to those families:  | Geinimi  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare4e26a200ab149819dcdcf273f5ab171a.apk
+
+VirusShare404fd6f9113870d1b6e63dcd23cfe206.apk belongs to those families:  | Geinimi  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare404fd6f9113870d1b6e63dcd23cfe206.apk
+
+VirusShareaa1f2dcdecba29a55050809aee030077.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShareaa1f2dcdecba29a55050809aee030077.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/droiddream/VirusShareaa1f2dcdecba29a55050809aee030077.apk
+
+VirusSharea84997b0d220e6a63e2943da64ffa38c.apk belongs to those families:  | ADRD  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusSharea84997b0d220e6a63e2943da64ffa38c.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusSharea84997b0d220e6a63e2943da64ffa38c.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusSharea84997b0d220e6a63e2943da64ffa38c.apk
+
+VirusShare5895bcd066abf6100a37a25c0c1290a5.apk belongs to those families:  | ADRD  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShare5895bcd066abf6100a37a25c0c1290a5.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare5895bcd066abf6100a37a25c0c1290a5.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare5895bcd066abf6100a37a25c0c1290a5.apk
+
+VirusShareaecb7c76cb497401be48459ff944f5fe.apk belongs to those families:  | Geinimi  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShareaecb7c76cb497401be48459ff944f5fe.apk
+
+VirusShare08e4a73f0f352c3accc03ea9d4e9467f.apk belongs to those families:  | Geinimi  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare08e4a73f0f352c3accc03ea9d4e9467f.apk
+
+VirusShare8aa5b868a29c160de9944e8beb02a9aa.apk belongs to those families:  | Geinimi  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare8aa5b868a29c160de9944e8beb02a9aa.apk
+
+VirusShare6f347d4fb3a5577db51ef473cd81ffe5.apk belongs to those families:  | Geinimi  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare6f347d4fb3a5577db51ef473cd81ffe5.apk
+
+VirusShare025a55c1bcbd3be2ca03aa314ce9a4c2.apk belongs to those families:  | Geinimi  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare025a55c1bcbd3be2ca03aa314ce9a4c2.apk
+
+VirusShare5c36bcd4a5b40877e5c879fb29b51436.apk belongs to those families:  | Geinimi  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare5c36bcd4a5b40877e5c879fb29b51436.apk
+
+VirusSharedb23e4c5cbb69590efb106a34a5fd11f.apk belongs to those families:  | Geinimi  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusSharedb23e4c5cbb69590efb106a34a5fd11f.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusSharedb23e4c5cbb69590efb106a34a5fd11f.apk
+
+VirusShare5192ad05597e7a148f642be43f6441f6.apk belongs to those families:  | ADRD  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShare5192ad05597e7a148f642be43f6441f6.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare5192ad05597e7a148f642be43f6441f6.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare5192ad05597e7a148f642be43f6441f6.apk
+
+VirusShare8947eae5c65df02d9c538b12ddaf636f.apk belongs to those families:  | ADRD  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare8947eae5c65df02d9c538b12ddaf636f.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare8947eae5c65df02d9c538b12ddaf636f.apk
+
+VirusShare85719eaf71c74061ab37fbdd8f42a0db.apk belongs to those families:  | Geinimi  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare85719eaf71c74061ab37fbdd8f42a0db.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare85719eaf71c74061ab37fbdd8f42a0db.apk
+
+VirusShareb85e50ff7d4a78bf0018ffd9ee2a0b40.apk belongs to those families:  | Geinimi  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShareb85e50ff7d4a78bf0018ffd9ee2a0b40.apk
+
+VirusShare5880e5891e00c4c5ccebdea7e2133402.apk belongs to those families:  | Geinimi  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare5880e5891e00c4c5ccebdea7e2133402.apk
+
+VirusSharea9e2ae1d8cd036e6f49114b99e26c668.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusSharea9e2ae1d8cd036e6f49114b99e26c668.apk
+
+VirusShare54fad8426e03a05279223173ec7d2fe2.apk belongs to those families:  | Geinimi  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare54fad8426e03a05279223173ec7d2fe2.apk
+
+VirusShare20fd327f999e00dce55ffa8712aa99da.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/droiddream/VirusShare20fd327f999e00dce55ffa8712aa99da.apk
+
+VirusSharea622d5483f92bcceb9ff9783e04818bf.apk belongs to those families:  | DroidDreamLight  Original: /home/yufeng/research/scripts/virus/virusshare_classify/droiddream/VirusSharea622d5483f92bcceb9ff9783e04818bf.apk
+
+VirusShare31c57a0f67ddca0fc78a4a8879a73bfc.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/droiddream/VirusShare31c57a0f67ddca0fc78a4a8879a73bfc.apk
+
+VirusShareaa1f2dcdecba29a55050809aee030077.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShareaa1f2dcdecba29a55050809aee030077.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/droiddream/VirusShareaa1f2dcdecba29a55050809aee030077.apk
+
+VirusShare3d9472d792019e40605abfa9cb22fba5.apk belongs to those families:  | DroidDreamLight  Original: /home/yufeng/research/scripts/virus/virusshare_classify/droiddream/VirusShare3d9472d792019e40605abfa9cb22fba5.apk
+
+VirusShared4fa864eedcf47fb7119e6b5317a4ac8.apk belongs to those families:  | DroidDream  Original: /home/yufeng/research/scripts/virus/virusshare_classify/droiddream/VirusShared4fa864eedcf47fb7119e6b5317a4ac8.apk
+
+VirusShare20fd327f999e00dce55ffa8712aa99da.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/droiddream/VirusShare20fd327f999e00dce55ffa8712aa99da.apk
+
+VirusSharea3c2d7977a6b83c7f5b59e6009496c4b.apk belongs to those families:  | DroidDreamLight  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusSharea3c2d7977a6b83c7f5b59e6009496c4b.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/droiddream/VirusSharea3c2d7977a6b83c7f5b59e6009496c4b.apk
+
+VirusShare6a19cb7915895b6a6a6af542ef0382c5.apk belongs to those families:  | Geinimi  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare6a19cb7915895b6a6a6af542ef0382c5.apk
+
+VirusShare745513a53af2befe3dc00d0341d80ca6.apk belongs to those families:  | DroidDream  Original: /home/yufeng/research/scripts/virus/virusshare_classify/droiddream/VirusShare745513a53af2befe3dc00d0341d80ca6.apk
+
+VirusShare3ae28cbf5a92e8e7a06db4b9ab0a55ab.apk belongs to those families:  | DroidDreamLight  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShare3ae28cbf5a92e8e7a06db4b9ab0a55ab.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/droiddream/VirusShare3ae28cbf5a92e8e7a06db4b9ab0a55ab.apk
+
+VirusShare749269ccabed03a4ec48001534661b4d.apk belongs to those families:  | BaseBridge  Original: /home/yufeng/research/scripts/virus/virusshare_classify/basebridge/VirusShare749269ccabed03a4ec48001534661b4d.apk
+
+VirusSharefcabb072d0470d1ce7e9cb452a3b2226.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/droiddream/VirusSharefcabb072d0470d1ce7e9cb452a3b2226.apk
+
+VirusShare0cb435647101b98c47b2546d7d2cdf90.apk belongs to those families:  | AnserverBot  Original: /home/yufeng/research/scripts/virus/virusshare_classify/basebridge/VirusShare0cb435647101b98c47b2546d7d2cdf90.apk
+
+VirusShareb2d359952bce1823d29e182dacac159c.apk belongs to those families:  | BaseBridge  Original: /home/yufeng/research/scripts/virus/virusshare_classify/basebridge/VirusShareb2d359952bce1823d29e182dacac159c.apk
+
+VirusShared548ce5ba2d8c71467cb007a9e48115d.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/basebridge/VirusShared548ce5ba2d8c71467cb007a9e48115d.apk
+
+VirusShare1325cda147e97e7652b6ca1c751714c5.apk belongs to those families:  | DroidDream  Original: /home/yufeng/research/scripts/virus/virusshare_classify/droiddream/VirusShare1325cda147e97e7652b6ca1c751714c5.apk
+
+VirusSharedf7422c28b1400aad57114ba7d43d35f.apk belongs to those families:  | BaseBridge  Original: /home/yufeng/research/scripts/virus/virusshare_classify/basebridge/VirusSharedf7422c28b1400aad57114ba7d43d35f.apk
+
+VirusShare5efb9f07bac4b3ca24b51b53dd8ceebe.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/basebridge/VirusShare5efb9f07bac4b3ca24b51b53dd8ceebe.apk
+
+VirusShareb6847521b548b806cf5e4f71b687ec26.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/basebridge/VirusShareb6847521b548b806cf5e4f71b687ec26.apk
+
+VirusShare15c80745529b1c4a6152a895d7e4df5f.apk belongs to those families:  | DroidDream  Original: /home/yufeng/research/scripts/virus/virusshare_classify/droiddream/VirusShare15c80745529b1c4a6152a895d7e4df5f.apk
+
+VirusShare91d23081b8478556e8a2b2fdf28f5760.apk belongs to those families:  | DroidDreamLight  Original: /home/yufeng/research/scripts/virus/virusshare_classify/droiddreamlight/VirusShare91d23081b8478556e8a2b2fdf28f5760.apk
+
+VirusShare164a147b663248558e4b6a287a429139.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/basebridge/VirusShare164a147b663248558e4b6a287a429139.apk
+
+VirusShare6ef268c9c43f1d31a60cdd3d3d7e2ec7.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/basebridge/VirusShare6ef268c9c43f1d31a60cdd3d3d7e2ec7.apk
+
+VirusSharec3b9ed157b71fba7c01be4394c12cd01.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/basebridge/VirusSharec3b9ed157b71fba7c01be4394c12cd01.apk
+
+VirusShare70508327ed95b8d86aa7bb630aaf8446.apk belongs to those families:  | DroidDreamLight  Original: /home/yufeng/research/scripts/virus/virusshare_classify/droiddreamlight/VirusShare70508327ed95b8d86aa7bb630aaf8446.apk
+
+VirusShare1bcda430eda6f2606d50f917d485500a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/basebridge/VirusShare1bcda430eda6f2606d50f917d485500a.apk
+
+VirusShare77e173e63306cdfc9cdeddcee8c9a241.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusShare77e173e63306cdfc9cdeddcee8c9a241.apk
+
+VirusSharef0c98b1c148efc3df9b8f7c8737eade8.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusSharef0c98b1c148efc3df9b8f7c8737eade8.apk
+
+VirusShare286b8a43e9d71c91814fe4efb514c463.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusShare286b8a43e9d71c91814fe4efb514c463.apk
+
+VirusShare74b88f463afbe1b7bd1d1c2ec706565b.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusShare74b88f463afbe1b7bd1d1c2ec706565b.apk
+
+VirusSharefe712df5afa585cca0dd4b5ba8a8e09f.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusSharefe712df5afa585cca0dd4b5ba8a8e09f.apk
+
+VirusShareb9c59b8cd85475fd52a7521c36efcc96.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusShareb9c59b8cd85475fd52a7521c36efcc96.apk
+
+VirusShare6a0871fc42e42a9942a8f396dd4888a2.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusShare6a0871fc42e42a9942a8f396dd4888a2.apk
+
+VirusSharee9736459f80529b463a3c91e8f734f9f.apk belongs to those families:  | DroidCoupon  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusSharee9736459f80529b463a3c91e8f734f9f.apk
+
+VirusShare8c09af51ca718110eb15e7b1125ef91d.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusShare8c09af51ca718110eb15e7b1125ef91d.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare8c09af51ca718110eb15e7b1125ef91d.apk
+
+VirusShare3dfd9288efd4c44fe904d97496ed093c.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusShare3dfd9288efd4c44fe904d97496ed093c.apk
+
+VirusShareb9d2d0ce46849e2fb31680ecad2f8677.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusShareb9d2d0ce46849e2fb31680ecad2f8677.apk
+
+VirusShared927a8d6e85267d72a5e88d59f99c015.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusShared927a8d6e85267d72a5e88d59f99c015.apk
+
+VirusSharee03c5cdcbd40b5f879ad88ad5f29ae1c.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusSharee03c5cdcbd40b5f879ad88ad5f29ae1c.apk
+
+VirusShare0f589cb5a0d0b595ff93149b17322e3d.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusShare0f589cb5a0d0b595ff93149b17322e3d.apk
+
+VirusShare24663299e69db8bfce2094c15dfd2325.apk belongs to those families:  | jSMSHider  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusShare24663299e69db8bfce2094c15dfd2325.apk
+
+VirusSharebaa533609d9c4626a63d525da7721de2.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusSharebaa533609d9c4626a63d525da7721de2.apk
+
+VirusShare088c5402985ad56227bd2e7e82780bce.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusShare088c5402985ad56227bd2e7e82780bce.apk
+
+VirusSharee4177d10a5c6e0a2d5181d4ea51e8d73.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusSharee4177d10a5c6e0a2d5181d4ea51e8d73.apk
+
+VirusShare6071c502eaacc9b873432f9322298be5.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusShare6071c502eaacc9b873432f9322298be5.apk
+
+VirusSharea674368b530d452cadb95e7b0daccc55.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusSharea674368b530d452cadb95e7b0daccc55.apk
+
+VirusShare044dd85b54004ab58bd23c7c2b211c54.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusShare044dd85b54004ab58bd23c7c2b211c54.apk
+
+VirusSharede015e6f8bdc450f64ae2d8a9e2a8f50.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusSharede015e6f8bdc450f64ae2d8a9e2a8f50.apk
+
+VirusShare7b27ae99d1fcecda165cc6649f0f3b15.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare7b27ae99d1fcecda165cc6649f0f3b15.apk
+
+VirusShare41f8cdae5ee106416ddf2e7907dab242.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare41f8cdae5ee106416ddf2e7907dab242.apk
+
+VirusSharee8245f75fef9ddcce98d2f95858341e3.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusSharee8245f75fef9ddcce98d2f95858341e3.apk
+
+VirusShare5b66662114e31e0dc69ab7dc64f2d4a3.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusShare5b66662114e31e0dc69ab7dc64f2d4a3.apk
+
+VirusSharefa37e30e90588739ec6b8b1d585f4924.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusSharefa37e30e90588739ec6b8b1d585f4924.apk
+
+VirusShare7d54eb8d44d762c7cb70506235cb5077.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShare7d54eb8d44d762c7cb70506235cb5077.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare7d54eb8d44d762c7cb70506235cb5077.apk
+
+VirusShare4650c18463ae42bbb80c2ef550e6c10f.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare4650c18463ae42bbb80c2ef550e6c10f.apk
+
+VirusShare49f9504a93b7b7d60e6ab7109bbd129e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare49f9504a93b7b7d60e6ab7109bbd129e.apk
+
+VirusShare7a0052a9901f7cc2006ecf5e128d2454.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare7a0052a9901f7cc2006ecf5e128d2454.apk
+
+VirusShare204e3f3b40d1a31c7f398f26e4e9274d.apk belongs to those families:  | ADRD  Original: /home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare204e3f3b40d1a31c7f398f26e4e9274d.apk
+
+VirusShare722da6cdfa8bac482c9c6be105b0ff2a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShare722da6cdfa8bac482c9c6be105b0ff2a.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare722da6cdfa8bac482c9c6be105b0ff2a.apk
+
+VirusSharea84997b0d220e6a63e2943da64ffa38c.apk belongs to those families:  | ADRD  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusSharea84997b0d220e6a63e2943da64ffa38c.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusSharea84997b0d220e6a63e2943da64ffa38c.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusSharea84997b0d220e6a63e2943da64ffa38c.apk
+
+VirusShareaa7bf5bae3817fc9c153f2ec61629f06.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShareaa7bf5bae3817fc9c153f2ec61629f06.apk
+
+VirusShareda0cb93f07b9e5749576a5db2db17fa3.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShareda0cb93f07b9e5749576a5db2db17fa3.apk
+
+VirusShare8353cad68f4d2b443b33bb2f32f2412d.apk belongs to those families:  | Pjapps  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShare8353cad68f4d2b443b33bb2f32f2412d.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare8353cad68f4d2b443b33bb2f32f2412d.apk
+
+VirusShare913756426b6d32c6041e438814a4ae76.apk belongs to those families:  | Pjapps  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShare913756426b6d32c6041e438814a4ae76.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare913756426b6d32c6041e438814a4ae76.apk
+
+VirusShare5895bcd066abf6100a37a25c0c1290a5.apk belongs to those families:  | ADRD  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShare5895bcd066abf6100a37a25c0c1290a5.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare5895bcd066abf6100a37a25c0c1290a5.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare5895bcd066abf6100a37a25c0c1290a5.apk
+
+VirusShare61e854712f96d1a790f427c8a0761f0b.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare61e854712f96d1a790f427c8a0761f0b.apk
+
+VirusShared54207189a5227f08765f6c8d3b080ab.apk belongs to those families:  | ADRD  Original: /home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShared54207189a5227f08765f6c8d3b080ab.apk
+
+VirusShareb884829c14abb365dff46f52bbabe217.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShareb884829c14abb365dff46f52bbabe217.apk
+
+VirusSharef40deebbbd15a0fdcab0857b59d63f1a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusSharef40deebbbd15a0fdcab0857b59d63f1a.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusSharef40deebbbd15a0fdcab0857b59d63f1a.apk
+
+VirusShare375151412aff0b21d72207f08665d16d.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare375151412aff0b21d72207f08665d16d.apk
+
+VirusShare5192ad05597e7a148f642be43f6441f6.apk belongs to those families:  | ADRD  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusShare5192ad05597e7a148f642be43f6441f6.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare5192ad05597e7a148f642be43f6441f6.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare5192ad05597e7a148f642be43f6441f6.apk
+
+VirusSharea36a1ce1721d8f56b6425385e98eac94.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusSharea36a1ce1721d8f56b6425385e98eac94.apk
+
+VirusShare2f51100a69010bb31d3b637ce2883228.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare2f51100a69010bb31d3b637ce2883228.apk
+
+VirusShare12227e37d2c8792d7dfb4dd4c1eb16d0.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare12227e37d2c8792d7dfb4dd4c1eb16d0.apk
+
+VirusShare8947eae5c65df02d9c538b12ddaf636f.apk belongs to those families:  | ADRD  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare8947eae5c65df02d9c538b12ddaf636f.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusShare8947eae5c65df02d9c538b12ddaf636f.apk
+
+VirusShare96f146cae79b5ae8926a1067ac4a913d.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare96f146cae79b5ae8926a1067ac4a913d.apk
+
+VirusShare0811a208c0c87aa8e3af6b714921f155.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare0811a208c0c87aa8e3af6b714921f155.apk
+
+VirusShared1a86eb3884c0bbe79ec150976b1d93e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShared1a86eb3884c0bbe79ec150976b1d93e.apk
+
+VirusSharef852e9de2069611f5b047867e49059fb.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusSharef852e9de2069611f5b047867e49059fb.apk
+
+VirusShared9e156ea23b51b793a4db303f972aa35.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShared9e156ea23b51b793a4db303f972aa35.apk
+
+VirusSharecd1c5174a63fdbd63834d6780f2a355e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusSharecd1c5174a63fdbd63834d6780f2a355e.apk
+
+VirusSharebfda082d7992a6b9fa8ae84ce291a6ff.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusSharebfda082d7992a6b9fa8ae84ce291a6ff.apk
+
+VirusSharef70664bb0d45665e79ba9113c5e4d0f4.apk belongs to those families:  | DroidDreamLight  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusSharef70664bb0d45665e79ba9113c5e4d0f4.apk
+
+VirusSharede759e9fdb3ec577d753ff240fc91a13.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/pjapps/VirusSharede759e9fdb3ec577d753ff240fc91a13.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/adrd/VirusSharede759e9fdb3ec577d753ff240fc91a13.apk
+
+VirusShare07e1be43eed15b7c764d0bbece61c9cf.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare07e1be43eed15b7c764d0bbece61c9cf.apk
+
+VirusShare833ce5840611300721f0ebb49f23279a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare833ce5840611300721f0ebb49f23279a.apk
+
+VirusShare63d42b325c307c7b1c8fc9815b3141d6.apk belongs to those families:  | GingerMaster  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare63d42b325c307c7b1c8fc9815b3141d6.apk
+
+VirusShare4c1b964b290849a2332550797abda240.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare4c1b964b290849a2332550797abda240.apk
+
+VirusShare0fb4b755394d98be53c1d5827e1a0991.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare0fb4b755394d98be53c1d5827e1a0991.apk
+
+VirusShareddc75a9aea5ac4933bcdf6001c0ef817.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShareddc75a9aea5ac4933bcdf6001c0ef817.apk
+
+VirusShare9ad24fef957242ba8137442fea951631.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare9ad24fef957242ba8137442fea951631.apk
+
+VirusSharebefe144a60a23f12438cd7cb4709e33b.apk belongs to those families:  | DroidKungFu2  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusSharebefe144a60a23f12438cd7cb4709e33b.apk
+
+VirusShareed292b13ffa5920fd1c412a7887d7644.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShareed292b13ffa5920fd1c412a7887d7644.apk
+
+VirusShare785a2e08a9c616a692573fd661e6c482.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare785a2e08a9c616a692573fd661e6c482.apk
+
+VirusShare4ec52e3093d197885166ed0bb6f169c4.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare4ec52e3093d197885166ed0bb6f169c4.apk
+
+VirusShareab334f92e27ac2236c20543074a9dc92.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShareab334f92e27ac2236c20543074a9dc92.apk
+
+VirusShare4e577464f7e8e87f6be2433ba30f8381.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare4e577464f7e8e87f6be2433ba30f8381.apk
+
+VirusShare633bdb9cc2225b0880f83cf7ce84666e.apk belongs to those families:  | GingerMaster  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare633bdb9cc2225b0880f83cf7ce84666e.apk
+
+VirusShareb0cf27edcb71b055ad20d3e055ef85ca.apk belongs to those families:  | GingerMaster  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShareb0cf27edcb71b055ad20d3e055ef85ca.apk
+
+VirusShare1f68436b4360f8f2069ed2010424a206.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare1f68436b4360f8f2069ed2010424a206.apk
+
+VirusSharedb23e4c5cbb69590efb106a34a5fd11f.apk belongs to those families:  | Geinimi  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusSharedb23e4c5cbb69590efb106a34a5fd11f.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusSharedb23e4c5cbb69590efb106a34a5fd11f.apk
+
+VirusShared29d3e013b2eea50bcfe7146310601ab.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShared29d3e013b2eea50bcfe7146310601ab.apk
+
+VirusShare3c7996a25b01b9eb1d551c6c9b4ca79f.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare3c7996a25b01b9eb1d551c6c9b4ca79f.apk
+
+VirusSharea59e42a652e02581893d2ab0885046cc.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusSharea59e42a652e02581893d2ab0885046cc.apk
+
+VirusSharef232db01feca8ea5563a77ac20d33f18.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusSharef232db01feca8ea5563a77ac20d33f18.apk
+
+VirusShare5551942441a2c445407df85a234337c6.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare5551942441a2c445407df85a234337c6.apk
+
+VirusSharec9f67cf4b1f17f05e39defd12d8ce3dc.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusSharec9f67cf4b1f17f05e39defd12d8ce3dc.apk
+
+VirusShare30086225581d9f74190559b45ada3c98.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare30086225581d9f74190559b45ada3c98.apk
+
+VirusShare38f624fa743e0bbe4eb398d3628d7a4c.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare38f624fa743e0bbe4eb398d3628d7a4c.apk
+
+VirusShare296aadffe81a23d636c581ea6062c146.apk belongs to those families:  | GingerMaster  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare296aadffe81a23d636c581ea6062c146.apk
+
+VirusShare38f624fa743e0bbe4eb398d3628d7a4c.apk belongs to those families:  | GingerMaster  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare38f624fa743e0bbe4eb398d3628d7a4c.apk
+
+VirusShare87b3c34a4cf93f7c77ad6ee324c58876.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare87b3c34a4cf93f7c77ad6ee324c58876.apk
+
+VirusShare370e9741eeeb113570cf9cf8fdda3e13.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare370e9741eeeb113570cf9cf8fdda3e13.apk
+
+VirusSharedaa1b55ef4c7a3e72b4578cc08afe0b3.apk belongs to those families:  | GingerMaster  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusSharedaa1b55ef4c7a3e72b4578cc08afe0b3.apk
+
+VirusShare1101406dc8f207d97001ccea12f232c8.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare1101406dc8f207d97001ccea12f232c8.apk
+
+VirusShare73c69c0ade84977c62a2ccebc82c58a6.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare73c69c0ade84977c62a2ccebc82c58a6.apk
+
+VirusShare3c4bc541f79f63917b022e0696579b1e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare3c4bc541f79f63917b022e0696579b1e.apk
+
+VirusShare85719eaf71c74061ab37fbdd8f42a0db.apk belongs to those families:  | Geinimi  Original: /home/yufeng/research/scripts/virus/virusshare_classify/geinimi/VirusShare85719eaf71c74061ab37fbdd8f42a0db.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare85719eaf71c74061ab37fbdd8f42a0db.apk
+
+VirusShare2a96b4721c638ec5d67b9b318bb0b3e0.apk belongs to those families:  | GingerMaster  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare2a96b4721c638ec5d67b9b318bb0b3e0.apk
+
+VirusShare219c50549a5feae5cf66d73d1df165d6.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare219c50549a5feae5cf66d73d1df165d6.apk
+
+VirusSharea124c285169bdaf536c14cc91b7d6c81.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusSharea124c285169bdaf536c14cc91b7d6c81.apk
+
+VirusShare115e0149ccfeaec1fa1fbd4abbecafeb.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare115e0149ccfeaec1fa1fbd4abbecafeb.apk
+
+VirusShare2ab9b9b4fa58a427279d462eef3bde83.apk belongs to those families:  | GingerMaster  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare2ab9b9b4fa58a427279d462eef3bde83.apk
+
+VirusShare35edf440c4a66b3db8a191957222a5fc.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare35edf440c4a66b3db8a191957222a5fc.apk
+
+VirusShareee846d74738a2178e74cd84f5f7e8fac.apk belongs to those families:  | GingerMaster  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShareee846d74738a2178e74cd84f5f7e8fac.apk
+
+VirusShareafde59d1f7683a60fc52e0ae292b3880.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShareafde59d1f7683a60fc52e0ae292b3880.apk
+
+VirusShareeff4c90212d2cb7814a4b19b6fa776d4.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShareeff4c90212d2cb7814a4b19b6fa776d4.apk
+
+VirusShare4bae94e93b87e4bb92c2fdc4ee0dd2e7.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare4bae94e93b87e4bb92c2fdc4ee0dd2e7.apk
+
+VirusShare5a188edf03f3efdd2e313b98e81e84d1.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare5a188edf03f3efdd2e313b98e81e84d1.apk
+
+VirusSharecf677d173435d7a38421a0aca9efb1bf.apk belongs to those families:  | GingerMaster  Original: /home/yufeng/research/scripts/virus/virusshare_classify/golddream/VirusSharecf677d173435d7a38421a0aca9efb1bf.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusSharecf677d173435d7a38421a0aca9efb1bf.apk
+
+VirusShareb62b074fc3dad0e8975b9ae88d4953f8.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShareb62b074fc3dad0e8975b9ae88d4953f8.apk
+
+VirusShare87b101646c044cad6865587a5c8669e2.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare87b101646c044cad6865587a5c8669e2.apk
+
+VirusShare4e70abe0ae8a557f6623995bef1d9ba7.apk belongs to those families:  | Bgserv  Original: /home/yufeng/research/scripts/virus/virusshare_classify/bgserv/VirusShare4e70abe0ae8a557f6623995bef1d9ba7.apk
+
+VirusShare1edf539abf64c2a7c2a684e505f5ca55.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare1edf539abf64c2a7c2a684e505f5ca55.apk
+
+VirusSharea7385ca49182a0ddd14fc9b213529c7a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusSharea7385ca49182a0ddd14fc9b213529c7a.apk
+
+VirusShare4bde125de005e2d4d358df5db52e051a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShare4bde125de005e2d4d358df5db52e051a.apk
+
+VirusShareac0cc982fb54150e8f9b7a58ad7f457a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShareac0cc982fb54150e8f9b7a58ad7f457a.apk
+
+VirusShare70d340d889020d67950080ff98e1eec6.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/bgserv/VirusShare70d340d889020d67950080ff98e1eec6.apk
+
+VirusShared8dce3a39a6bc0e4d20c955523532d7c.apk belongs to those families:  | Bgserv  Original: /home/yufeng/research/scripts/virus/virusshare_classify/bgserv/VirusShared8dce3a39a6bc0e4d20c955523532d7c.apk
+
+VirusShareb24b712ebd943c1952dd3e5c4bd52de9.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/gingermaster/VirusShareb24b712ebd943c1952dd3e5c4bd52de9.apk
+
+VirusShare0e6ad6b931fea832fac435371e189ead.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare0e6ad6b931fea832fac435371e189ead.apk
+
+VirusSharea60145d720d06aa9f2cf89db4202b2d9.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea60145d720d06aa9f2cf89db4202b2d9.apk
+
+VirusShare7c161c335c904197315875010038d9ba.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare7c161c335c904197315875010038d9ba.apk
+
+VirusSharef39a6b28e5934fd80f1c3c2430584733.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharef39a6b28e5934fd80f1c3c2430584733.apk
+
+VirusShare3bfcf38bb93ddf6579d0d579b678b3d7.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare3bfcf38bb93ddf6579d0d579b678b3d7.apk
+
+VirusSharefc54c9322e899ca5370299bd1ebbad27.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharefc54c9322e899ca5370299bd1ebbad27.apk
+
+VirusSharedbe1fcccc2e0b4c097eddb6f03a0c404.apk belongs to those families:  | GoldDream  Original: /home/yufeng/research/scripts/virus/virusshare_classify/golddream/VirusSharedbe1fcccc2e0b4c097eddb6f03a0c404.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharedbe1fcccc2e0b4c097eddb6f03a0c404.apk
+
+VirusShare6f917950ada5e12222c4bf45714b1aa1.apk belongs to those families:  | DroidKungFu3  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare6f917950ada5e12222c4bf45714b1aa1.apk
+
+VirusShare1eed928e7a925e38655f5dd4979104ca.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare1eed928e7a925e38655f5dd4979104ca.apk
+
+VirusShareb902e44dde394f5fc2e42743be05f26a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb902e44dde394f5fc2e42743be05f26a.apk
+
+VirusShareb2e2fbf6fa43bd6c3d265ef8e52f1fe5.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb2e2fbf6fa43bd6c3d265ef8e52f1fe5.apk
+
+VirusShare891d3d3fbb32660ddaafa96539da2d46.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare891d3d3fbb32660ddaafa96539da2d46.apk
+
+VirusSharec05d900e109b1b80745cac7c3d06e92b.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharec05d900e109b1b80745cac7c3d06e92b.apk
+
+VirusShareae5c04fdda67035c4912bad6080a055b.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareae5c04fdda67035c4912bad6080a055b.apk
+
+VirusShare1f5628300ef2a477e39e226fee73ce51.apk belongs to those families:  | DroidKungFu4  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare1f5628300ef2a477e39e226fee73ce51.apk
+
+VirusSharee5f211a68f35b4210530d8bc9d2f931f.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharee5f211a68f35b4210530d8bc9d2f931f.apk
+
+VirusSharea670addaee65795c60650cb8f82942de.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea670addaee65795c60650cb8f82942de.apk
+
+VirusShare475ec6fa7f9cc957d80b00f1f7d11ace.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare475ec6fa7f9cc957d80b00f1f7d11ace.apk
+
+VirusShared2dadbf55fa703ec4743c24ad763847a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShared2dadbf55fa703ec4743c24ad763847a.apk
+
+VirusShare4439aa27d11f1645404595194a57d722.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare4439aa27d11f1645404595194a57d722.apk
+
+VirusShare516c3e17d94cc71d92709da742bee0d7.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare516c3e17d94cc71d92709da742bee0d7.apk
+
+VirusShare8edebc11e25a6fd46fc57cf1f7f5cac5.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare8edebc11e25a6fd46fc57cf1f7f5cac5.apk
+
+VirusShare2b7aca48a1357b69c6bb63395935e002.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare2b7aca48a1357b69c6bb63395935e002.apk
+
+VirusShare6fdacf82f07fc49e937419c6c952df84.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare6fdacf82f07fc49e937419c6c952df84.apk
+
+VirusShare0db4edb17cbbcc6b245f3bc4a1d78362.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare0db4edb17cbbcc6b245f3bc4a1d78362.apk
+
+VirusShare0fafe84e2e5801c24bd17bad3ff41ef9.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare0fafe84e2e5801c24bd17bad3ff41ef9.apk
+
+VirusSharea22ef052966d63e4bb9aa9a4acb7c792.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea22ef052966d63e4bb9aa9a4acb7c792.apk
+
+VirusShare7c684a20270684b8df1bcb986e8a0729.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare7c684a20270684b8df1bcb986e8a0729.apk
+
+VirusShare1f8a9356cb95a4864d2b64a097548252.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare1f8a9356cb95a4864d2b64a097548252.apk
+
+VirusShare75da4da6ec681d6280756f738b4eab11.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare75da4da6ec681d6280756f738b4eab11.apk
+
+VirusShare6e54e6d79cbb12c5e96181b13fde08df.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare6e54e6d79cbb12c5e96181b13fde08df.apk
+
+VirusShare55b2ab90955300f72a37b380adda103a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare55b2ab90955300f72a37b380adda103a.apk
+
+VirusSharef2342e0f9a2ee1efcfc0bf8fb06888aa.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharef2342e0f9a2ee1efcfc0bf8fb06888aa.apk
+
+VirusShare1f75e1ed500097b9ae048f3c3d927119.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare1f75e1ed500097b9ae048f3c3d927119.apk
+
+VirusShareeaa5df74c0c2dbfa1e15533c7e670db9.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareeaa5df74c0c2dbfa1e15533c7e670db9.apk
+
+VirusShare06daec3bcf5721f7b6c3cd988ce94584.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare06daec3bcf5721f7b6c3cd988ce94584.apk
+
+VirusShare54bc7a8fb184884a26e4cce74697d3a5.apk belongs to those families:  | DroidKungFu2  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare54bc7a8fb184884a26e4cce74697d3a5.apk
+
+VirusShare0fbf65d2f0e6d516de6331b2dc3c7eaa.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare0fbf65d2f0e6d516de6331b2dc3c7eaa.apk
+
+VirusShare119b34cb12695b027f92e047bf08b367.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare119b34cb12695b027f92e047bf08b367.apk
+
+VirusShare7ee8b2b8ecb781a1f07ca63170a7a6ff.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare7ee8b2b8ecb781a1f07ca63170a7a6ff.apk
+
+VirusSharecdca0b1dda2f62bf79293590b8903e2a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharecdca0b1dda2f62bf79293590b8903e2a.apk
+
+VirusShare0d60665f894bb84df9baeb91eecfb8d1.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare0d60665f894bb84df9baeb91eecfb8d1.apk
+
+VirusShare4123e970e43929d7a29a099acad5e2fe.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare4123e970e43929d7a29a099acad5e2fe.apk
+
+VirusShare083186dc09a1e6a47a93b5e6622a4405.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare083186dc09a1e6a47a93b5e6622a4405.apk
+
+VirusSharef4b348fab66785c31a6580c549641375.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharef4b348fab66785c31a6580c549641375.apk
+
+VirusSharea030bd2cf175effdf1f9c9b5c92840c6.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea030bd2cf175effdf1f9c9b5c92840c6.apk
+
+VirusShare0bc1feb5fa4dd3e8ac8b623d45d7cce9.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare0bc1feb5fa4dd3e8ac8b623d45d7cce9.apk
+
+VirusShare7cc24daa897e06fb41713bcaf5100532.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare7cc24daa897e06fb41713bcaf5100532.apk
+
+VirusShareb64775094327fcd6d26b5f4ca54f54f7.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb64775094327fcd6d26b5f4ca54f54f7.apk
+
+VirusShare23ca60022b03098ce11d641735f15087.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare23ca60022b03098ce11d641735f15087.apk
+
+VirusShare7bc96e872fc05216440383635fcc8110.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare7bc96e872fc05216440383635fcc8110.apk
+
+VirusShare63ffaf57cdeee479a726675699ca192e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare63ffaf57cdeee479a726675699ca192e.apk
+
+VirusShared6f09c6b677c6755c7210fe28ea6d619.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShared6f09c6b677c6755c7210fe28ea6d619.apk
+
+VirusShareebd867ae3bd6ef6d4899f72b6985cb52.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareebd867ae3bd6ef6d4899f72b6985cb52.apk
+
+VirusShare8e1a4851b5ab63823c58d3580e1f1c7c.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare8e1a4851b5ab63823c58d3580e1f1c7c.apk
+
+VirusShareb7552ba9b28eabbc69ac66bbe9b1b0df.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb7552ba9b28eabbc69ac66bbe9b1b0df.apk
+
+VirusShare676228987a9445b1ab0910254bdf18a3.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare676228987a9445b1ab0910254bdf18a3.apk
+
+VirusShare6c0051ddf607c5889678a2feefbf7395.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare6c0051ddf607c5889678a2feefbf7395.apk
+
+VirusShare34e2c41a152852dba803bcc648b28c62.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare34e2c41a152852dba803bcc648b28c62.apk
+
+VirusShareec056818d38d18cb940a64bf89714df2.apk belongs to those families:  | DroidKungFu4  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareec056818d38d18cb940a64bf89714df2.apk
+
+VirusShare452cd789e85ed716ca9e9af24c1024f5.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare452cd789e85ed716ca9e9af24c1024f5.apk
+
+VirusShareee2745c993d8f585649b07eeed54efa8.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareee2745c993d8f585649b07eeed54efa8.apk
+
+VirusShare1b52611c2316d87835ec11bc47989872.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare1b52611c2316d87835ec11bc47989872.apk
+
+VirusSharea107db0ca614bb47240feb6c13342e76.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea107db0ca614bb47240feb6c13342e76.apk
+
+VirusSharefd613c02750e39559accb13af8872866.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharefd613c02750e39559accb13af8872866.apk
+
+VirusShared4755f61a2b1ccd3ba899de83023be0d.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShared4755f61a2b1ccd3ba899de83023be0d.apk
+
+VirusShare60f86cb2863198506758581e23b066c8.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare60f86cb2863198506758581e23b066c8.apk
+
+VirusSharee7167b34403f1b98e061ae904992bb4a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharee7167b34403f1b98e061ae904992bb4a.apk
+
+VirusShare76998ffcc1d97cecd90aaf8e0143a13b.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare76998ffcc1d97cecd90aaf8e0143a13b.apk
+
+VirusSharec96887c518db19fba54e4a760d803cf1.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharec96887c518db19fba54e4a760d803cf1.apk
+
+VirusShare12bb3b8ca5cd675c617640cb1c196b77.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare12bb3b8ca5cd675c617640cb1c196b77.apk
+
+VirusShare8781bdd77ac3e05f75242e12da87ca04.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare8781bdd77ac3e05f75242e12da87ca04.apk
+
+VirusSharef5aab2a25afb305b4a31ea3211551a30.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharef5aab2a25afb305b4a31ea3211551a30.apk
+
+VirusShare93482216b30c6573e28e46016b1334c4.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare93482216b30c6573e28e46016b1334c4.apk
+
+VirusShare4d56a6705afa9b162f652303f6c16741.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare4d56a6705afa9b162f652303f6c16741.apk
+
+VirusShare39d140511c18ebf7384a36113d48463d.apk belongs to those families:  | DroidKungFu1  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare39d140511c18ebf7384a36113d48463d.apk
+
+VirusShareeb41b2f1d18ea5fe7ea1f13f02787e97.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareeb41b2f1d18ea5fe7ea1f13f02787e97.apk
+
+VirusShare4e8a4592fcd3061dc6e7c8adb8e7b9c2.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare4e8a4592fcd3061dc6e7c8adb8e7b9c2.apk
+
+VirusShare90c8b6bbf12d663dcbd72879e4d43424.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare90c8b6bbf12d663dcbd72879e4d43424.apk
+
+VirusSharecbf55e4d747e6ed508ca806b56b22d2b.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharecbf55e4d747e6ed508ca806b56b22d2b.apk
+
+VirusSharefd89bdf7b6af024825281a3a49a72cd8.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharefd89bdf7b6af024825281a3a49a72cd8.apk
+
+VirusSharea80a8e72b94f3bb68111f639e44334c6.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea80a8e72b94f3bb68111f639e44334c6.apk
+
+VirusShared7f0ea8c707d7c29558d4df1ee7c56c4.apk belongs to those families:  | DroidKungFu2  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShared7f0ea8c707d7c29558d4df1ee7c56c4.apk
+
+VirusShareed02193213a4f383fdd4bfaeec93e4a8.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareed02193213a4f383fdd4bfaeec93e4a8.apk
+
+VirusShare805cb66e772430d408f88c85c167bb99.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare805cb66e772430d408f88c85c167bb99.apk
+
+VirusShare46108332aef498f16ee75fcfcd6b698b.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare46108332aef498f16ee75fcfcd6b698b.apk
+
+VirusShare2cbf163d85bd4f60ab9f055b825087e9.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare2cbf163d85bd4f60ab9f055b825087e9.apk
+
+VirusShare549ede7ed26951a8d5a5aff15dde3328.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare549ede7ed26951a8d5a5aff15dde3328.apk
+
+VirusShareb8c8c830195dfa68569894e3fd0901cd.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb8c8c830195dfa68569894e3fd0901cd.apk
+
+VirusSharebc754c74665ce8e8e2e3b133022820ce.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharebc754c74665ce8e8e2e3b133022820ce.apk
+
+VirusShare174cf9e9c5bc764beed33ebb61cea0b6.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare174cf9e9c5bc764beed33ebb61cea0b6.apk
+
+VirusSharebeb393f7531dc8d700234e9c86196220.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharebeb393f7531dc8d700234e9c86196220.apk
+
+VirusSharee7d56f2bd78faed48339aa58e5544873.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharee7d56f2bd78faed48339aa58e5544873.apk
+
+VirusSharea01a5cc0e3e14a64ea4cd1a55ef75b96.apk belongs to those families:  | DroidKungFu1  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea01a5cc0e3e14a64ea4cd1a55ef75b96.apk
+
+VirusShare1e036ab0c29dd1c8d8b95bdd2eb3400d.apk belongs to those families:  | DroidKungFu3  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare1e036ab0c29dd1c8d8b95bdd2eb3400d.apk
+
+VirusSharec9327593ac11fe8fe1dcd4c146723261.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharec9327593ac11fe8fe1dcd4c146723261.apk
+
+VirusShared6c1e6c59fb2a4cd3a46566264eac5a2.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShared6c1e6c59fb2a4cd3a46566264eac5a2.apk
+
+VirusShare29db8850ad4f821410c838770e026e30.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare29db8850ad4f821410c838770e026e30.apk
+
+VirusShared5f1b53e8dcb7da0174bca251cc9fa2d.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShared5f1b53e8dcb7da0174bca251cc9fa2d.apk
+
+VirusSharea08211edbaadd0a705047ccbbe876c50.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea08211edbaadd0a705047ccbbe876c50.apk
+
+VirusShare3293a85d14a9336941c3b8450069e2a8.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare3293a85d14a9336941c3b8450069e2a8.apk
+
+VirusShare0b2e1b2cce26b9e186a8ddfabf20907d.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare0b2e1b2cce26b9e186a8ddfabf20907d.apk
+
+VirusShare6f9ab74206fba490004e6a8be872d6a8.apk belongs to those families:  | DroidKungFu3  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare6f9ab74206fba490004e6a8be872d6a8.apk
+
+VirusShare98a5868ed18cf444624253e963924bf1.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare98a5868ed18cf444624253e963924bf1.apk
+
+VirusSharea8700708d1e902836398cb288de2ad06.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea8700708d1e902836398cb288de2ad06.apk
+
+VirusShare8a993ff491cd27cfc91cc1b9e41af714.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare8a993ff491cd27cfc91cc1b9e41af714.apk
+
+VirusShare0813263a8e9175d02704b3ad6891f3a3.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare0813263a8e9175d02704b3ad6891f3a3.apk
+
+VirusSharedaaac8063036ef6e5e7a6cc2f61eebbc.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharedaaac8063036ef6e5e7a6cc2f61eebbc.apk
+
+VirusShare3970674582594af87928e596eb60ff90.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare3970674582594af87928e596eb60ff90.apk
+
+VirusShare0d5696446e30c151c3689cfc9c9510fe.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare0d5696446e30c151c3689cfc9c9510fe.apk
+
+VirusShare842d7230c679f0646009c05e67877cf2.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare842d7230c679f0646009c05e67877cf2.apk
+
+VirusSharee63e3a42c324e38ba3bb1e970b0f16b9.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharee63e3a42c324e38ba3bb1e970b0f16b9.apk
+
+VirusSharea28eeabf4e7d7a1e5ba4c7813536f00c.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea28eeabf4e7d7a1e5ba4c7813536f00c.apk
+
+VirusShareb1382081a1b3e4a53c1c2312203afa0a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb1382081a1b3e4a53c1c2312203afa0a.apk
+
+VirusShare53ce77850aa272af358262ecc7286e1d.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare53ce77850aa272af358262ecc7286e1d.apk
+
+VirusShareddba910e1c11a9039291043d7af108bf.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareddba910e1c11a9039291043d7af108bf.apk
+
+VirusSharee71012dd7a9180275810323d90a7ad5b.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharee71012dd7a9180275810323d90a7ad5b.apk
+
+VirusShare0a0c9f3940548d446e5ed67cdcd280c7.apk belongs to those families:  | DroidKungFu2  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare0a0c9f3940548d446e5ed67cdcd280c7.apk
+
+VirusSharece18ee7f93ddf02d125c9a0e88ed4dc9.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharece18ee7f93ddf02d125c9a0e88ed4dc9.apk
+
+VirusSharea8a68917d350c95c0a7fb5a3aac434be.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea8a68917d350c95c0a7fb5a3aac434be.apk
+
+VirusSharee4c464a43fa28bdbf4ee196e9ac2a29d.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharee4c464a43fa28bdbf4ee196e9ac2a29d.apk
+
+VirusShareb1305ec6c401425acee1e6902d6e5b5e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb1305ec6c401425acee1e6902d6e5b5e.apk
+
+VirusShare40776cbbbaff85692ea3c7c6c6b3e44a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare40776cbbbaff85692ea3c7c6c6b3e44a.apk
+
+VirusShare3aac375ddaa38853897884c1ccd2078e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare3aac375ddaa38853897884c1ccd2078e.apk
+
+VirusShare3cf2f4783591494ecc3a01b2e033bb09.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare3cf2f4783591494ecc3a01b2e033bb09.apk
+
+VirusSharecfe1ffa86b608f613adba424f27bec46.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharecfe1ffa86b608f613adba424f27bec46.apk
+
+VirusShare783ba075952f618d137f5f25f5afe493.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare783ba075952f618d137f5f25f5afe493.apk
+
+VirusShare2cb37539c6ab9a2f96e13026e6dfc7c3.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare2cb37539c6ab9a2f96e13026e6dfc7c3.apk
+
+VirusShare22c82eb85b8fafe17df20218864871ef.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare22c82eb85b8fafe17df20218864871ef.apk
+
+VirusShare4c20af10f1eec407a12f41be8314bdf7.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare4c20af10f1eec407a12f41be8314bdf7.apk
+
+VirusSharee82158b2cd7f4acaa8d140c130a727b9.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharee82158b2cd7f4acaa8d140c130a727b9.apk
+
+VirusShare216b072e869a71c07ef159baab901d88.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare216b072e869a71c07ef159baab901d88.apk
+
+VirusShare2ff6ea987053e44ad6d22c34c56463a1.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare2ff6ea987053e44ad6d22c34c56463a1.apk
+
+VirusShare7fce8bda6381fe0274efcdd89b590691.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare7fce8bda6381fe0274efcdd89b590691.apk
+
+VirusShare3ce69c4ce14edd8db09364290854f2df.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare3ce69c4ce14edd8db09364290854f2df.apk
+
+VirusShareb784b30332e6bd555b9f8393837e3737.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb784b30332e6bd555b9f8393837e3737.apk
+
+VirusShare7fc83a83cdd2991c87241438a0526bc5.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare7fc83a83cdd2991c87241438a0526bc5.apk
+
+VirusSharecfccdb00f3ff3993f3b76b91d107669d.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharecfccdb00f3ff3993f3b76b91d107669d.apk
+
+VirusShare46aadffb638ac909c71307c617857328.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare46aadffb638ac909c71307c617857328.apk
+
+VirusShared71fd6ace7b4011b2b9fb1eb4b935e6c.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShared71fd6ace7b4011b2b9fb1eb4b935e6c.apk
+
+VirusShare9d84d6184fe99d08544b9b1e3f48cae4.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare9d84d6184fe99d08544b9b1e3f48cae4.apk
+
+VirusShare8afb4bf3c3b3877b029c6f1a17033cc9.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare8afb4bf3c3b3877b029c6f1a17033cc9.apk
+
+VirusShareb592b55d0aaecbff9c90babf823d1b5f.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb592b55d0aaecbff9c90babf823d1b5f.apk
+
+VirusSharefeefef943be1a1eeb78732e468ccbbe5.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharefeefef943be1a1eeb78732e468ccbbe5.apk
+
+VirusShare2d73e3c0895f512dd562f6431eb8ea2c.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare2d73e3c0895f512dd562f6431eb8ea2c.apk
+
+VirusShare8c09af51ca718110eb15e7b1125ef91d.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/jsmshider/VirusShare8c09af51ca718110eb15e7b1125ef91d.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare8c09af51ca718110eb15e7b1125ef91d.apk
+
+VirusShared14721f8b96f12e59c1ece6f4a7fa37b.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShared14721f8b96f12e59c1ece6f4a7fa37b.apk
+
+VirusShare5931feb749ea14d494b5d221bd499483.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare5931feb749ea14d494b5d221bd499483.apk
+
+VirusShare4298d41660a8658e1f6b75557cfd4df1.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare4298d41660a8658e1f6b75557cfd4df1.apk
+
+VirusShare3acdb12559621955681ed7667dc3ebf6.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare3acdb12559621955681ed7667dc3ebf6.apk
+
+VirusShare09d29a40a8b97c89bf13ac94bb5ea00e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare09d29a40a8b97c89bf13ac94bb5ea00e.apk
+
+VirusShare34db6182b1a6a2b388c4ef655cca52be.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare34db6182b1a6a2b388c4ef655cca52be.apk
+
+VirusSharee810356ff25b123361831c9398b8f432.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharee810356ff25b123361831c9398b8f432.apk
+
+VirusShare19dae3ae11ec24d8fa8be32bc1f39a4e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare19dae3ae11ec24d8fa8be32bc1f39a4e.apk
+
+VirusSharedcf3ff243946f594863b390a2d9ed666.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharedcf3ff243946f594863b390a2d9ed666.apk
+
+VirusShare5e53a4f47b14ad0d4115042386f55828.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare5e53a4f47b14ad0d4115042386f55828.apk
+
+VirusSharec0e2e7c1758bd625ad6444beceb1d536.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharec0e2e7c1758bd625ad6444beceb1d536.apk
+
+VirusSharedc7df634da988a2587fa0dc861666a9a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharedc7df634da988a2587fa0dc861666a9a.apk
+
+VirusShare7fcc98a1f11e36c96da3b976644b4838.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare7fcc98a1f11e36c96da3b976644b4838.apk
+
+VirusShare90a0713f42bc487a898ab3d4bd4fe505.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare90a0713f42bc487a898ab3d4bd4fe505.apk
+
+VirusShare323ad127ec1adcf81f50b6811a8eb122.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare323ad127ec1adcf81f50b6811a8eb122.apk
+
+VirusShare278a134ed1d7d2588b450241c506e818.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare278a134ed1d7d2588b450241c506e818.apk
+
+VirusShare995d94995a5c9b6f039de37c34c9ad23.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare995d94995a5c9b6f039de37c34c9ad23.apk
+
+VirusSharefdd3e1864dc4300df3954c316cc45d23.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharefdd3e1864dc4300df3954c316cc45d23.apk
+
+VirusShare57afebdd93e45bd758f42f6395a10f02.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare57afebdd93e45bd758f42f6395a10f02.apk
+
+VirusShareb319eed494b80b73d94e71a5e0b1e7a2.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb319eed494b80b73d94e71a5e0b1e7a2.apk
+
+VirusShare5705ce60d71086d574de07656a72991c.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare5705ce60d71086d574de07656a72991c.apk
+
+VirusSharea6a7349af71b4b4ec9b0d774d090c694.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea6a7349af71b4b4ec9b0d774d090c694.apk
+
+VirusShareda471ef9fb449d984aad68d3b29739bb.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareda471ef9fb449d984aad68d3b29739bb.apk
+
+VirusSharedab151a74d087af79f68381b945fdd06.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharedab151a74d087af79f68381b945fdd06.apk
+
+VirusShare002878f46b6e02c5c1846244d960fd59.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare002878f46b6e02c5c1846244d960fd59.apk
+
+VirusShare78e9ecc409f79e13f24220c3c39213fd.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare78e9ecc409f79e13f24220c3c39213fd.apk
+
+VirusShare42240cf968e2ce0ae77271cf38fda4db.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare42240cf968e2ce0ae77271cf38fda4db.apk
+
+VirusShare780a84cf01c7e792e1dff4ab9f61706e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare780a84cf01c7e792e1dff4ab9f61706e.apk
+
+VirusShare39244ed79e5aeb109205fe72257de425.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare39244ed79e5aeb109205fe72257de425.apk
+
+VirusShare528389b7dfaac4dac530439e5ad870e5.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare528389b7dfaac4dac530439e5ad870e5.apk
+
+VirusSharef750fbdd67a585155862fc0a96acf10e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharef750fbdd67a585155862fc0a96acf10e.apk
+
+VirusSharecaa6da85fd103ff305e4b705bbba028e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharecaa6da85fd103ff305e4b705bbba028e.apk
+
+VirusShare9ae9511fd12fc1b2432e5ff5afefe380.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare9ae9511fd12fc1b2432e5ff5afefe380.apk
+
+VirusShare1a9b60fb8fb582fcf6bdba2b991146ae.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare1a9b60fb8fb582fcf6bdba2b991146ae.apk
+
+VirusShare9a548397c403ad77748b611cf0df696a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare9a548397c403ad77748b611cf0df696a.apk
+
+VirusSharebf7eecd8f7783457043ecfcf4a5c8e9c.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharebf7eecd8f7783457043ecfcf4a5c8e9c.apk
+
+VirusSharefe5609ce7108c24a49551b8b382f9c47.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharefe5609ce7108c24a49551b8b382f9c47.apk
+
+VirusShare110f6dfbb31f449b3f19165c93dc3c93.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare110f6dfbb31f449b3f19165c93dc3c93.apk
+
+VirusShare6756e1326ea4b1520bbcbbcbb49a33b0.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare6756e1326ea4b1520bbcbbcbb49a33b0.apk
+
+VirusShare4fd21dd28d4570814c4507534aac0614.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare4fd21dd28d4570814c4507534aac0614.apk
+
+VirusShare959afa44156d43c08ea5236cfb912c51.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare959afa44156d43c08ea5236cfb912c51.apk
+
+VirusShare68efed5edf3a0a146aabda155d6fcbf6.apk belongs to those families:  | DroidKungFu1  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare68efed5edf3a0a146aabda155d6fcbf6.apk
+
+VirusShare83c14afe0be481cd2a88780735bb6261.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare83c14afe0be481cd2a88780735bb6261.apk
+
+VirusShare2756b4abac253fa9ac476e4279d55f40.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare2756b4abac253fa9ac476e4279d55f40.apk
+
+VirusShare294dc79805dbea26ecc10f42d727f77f.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare294dc79805dbea26ecc10f42d727f77f.apk
+
+VirusShare818fad032d5dbbe3b9a11959613af425.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare818fad032d5dbbe3b9a11959613af425.apk
+
+VirusSharea4b2d248c8b3bf3b4b54754f3501a9e8.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea4b2d248c8b3bf3b4b54754f3501a9e8.apk
+
+VirusSharea997762fd1edc5971071ec574e6e8c4e.apk belongs to those families:  | DroidKungFu3  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea997762fd1edc5971071ec574e6e8c4e.apk
+
+VirusSharef6b5e096c75982b93af2ab2689b1773d.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharef6b5e096c75982b93af2ab2689b1773d.apk
+
+VirusShareed6bf3e1709472c4c7c67a1e51d17ca2.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareed6bf3e1709472c4c7c67a1e51d17ca2.apk
+
+VirusShare0b677cdd4355e7af4a23ad05ea2e501c.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare0b677cdd4355e7af4a23ad05ea2e501c.apk
+
+VirusSharef0e116424fa2b7e87ca0b5003572fafe.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharef0e116424fa2b7e87ca0b5003572fafe.apk
+
+VirusShare490d61c720e82e34491faa6dff9ed7b7.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare490d61c720e82e34491faa6dff9ed7b7.apk
+
+VirusShare14d0a22557e3e8bd96dcfaff0825ac86.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare14d0a22557e3e8bd96dcfaff0825ac86.apk
+
+VirusShareb71bce5f2e0d0d5ed62c086bd188b434.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb71bce5f2e0d0d5ed62c086bd188b434.apk
+
+VirusShareccbfaf41c3c8fcb41cd7f744f3f303bf.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareccbfaf41c3c8fcb41cd7f744f3f303bf.apk
+
+VirusShareff6cc50c49d7d2a7c5c0af7e9050849a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareff6cc50c49d7d2a7c5c0af7e9050849a.apk
+
+VirusShare8d98cf0d8458575fcd2c8162b0c04231.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare8d98cf0d8458575fcd2c8162b0c04231.apk
+
+VirusShare74332ea44b02a5c04a53af456b53f13c.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare74332ea44b02a5c04a53af456b53f13c.apk
+
+VirusSharea2f225a696960a2d90d77bf8166f7f19.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea2f225a696960a2d90d77bf8166f7f19.apk
+
+VirusShare99393780e1c38c50c12c962d4e2e8ff0.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare99393780e1c38c50c12c962d4e2e8ff0.apk
+
+VirusShare37e6a0eb4854a1519177acee6c7295ad.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare37e6a0eb4854a1519177acee6c7295ad.apk
+
+VirusShare3d6d1add9dfb645fb093dfd64c76f37c.apk belongs to those families:  | DroidKungFu4  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare3d6d1add9dfb645fb093dfd64c76f37c.apk
+
+VirusShared3afc32a725de65cf034590531501345.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShared3afc32a725de65cf034590531501345.apk
+
+VirusSharef827a3bbf589c76b2e67e4dba0693897.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharef827a3bbf589c76b2e67e4dba0693897.apk
+
+VirusSharec025566714e38689ed0ea5ee5cff1be7.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharec025566714e38689ed0ea5ee5cff1be7.apk
+
+VirusShare4157c5bacb18c846e21e9238836e91e5.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare4157c5bacb18c846e21e9238836e91e5.apk
+
+VirusShare517cb4787a295986939b955f92ffb089.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare517cb4787a295986939b955f92ffb089.apk
+
+VirusSharebece8edb126b91594b962c5f4423610a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharebece8edb126b91594b962c5f4423610a.apk
+
+VirusSharecb877e98cee189b05830adf398a28c2b.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharecb877e98cee189b05830adf398a28c2b.apk
+
+VirusShareebfab77b5e07e8420d21d3d873ce252d.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareebfab77b5e07e8420d21d3d873ce252d.apk
+
+VirusShare0c072827a80ff7c1ed0f0655cadcea56.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare0c072827a80ff7c1ed0f0655cadcea56.apk
+
+VirusShare9094c63b6859615c5440e6d728ae7570.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare9094c63b6859615c5440e6d728ae7570.apk
+
+VirusShare1ad68cfb75fcd39323e63f2a366bca23.apk belongs to those families:  | DroidKungFu1  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare1ad68cfb75fcd39323e63f2a366bca23.apk
+
+VirusSharefc36138d0c165603c5441c68814fbfcd.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharefc36138d0c165603c5441c68814fbfcd.apk
+
+VirusShare06f69257cc80bf6e3268fb3ee20619e5.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare06f69257cc80bf6e3268fb3ee20619e5.apk
+
+VirusShare0a72eabc7599f2441463a3f65d981650.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare0a72eabc7599f2441463a3f65d981650.apk
+
+VirusShare7d52d6dc044367daec7358804f1db9cc.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare7d52d6dc044367daec7358804f1db9cc.apk
+
+VirusSharee143f12b7fd3ec7939baca0b9068a136.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharee143f12b7fd3ec7939baca0b9068a136.apk
+
+VirusShareb1ecddde4f3a69fcbdb58ebe987fd4fd.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb1ecddde4f3a69fcbdb58ebe987fd4fd.apk
+
+VirusShare42af136d7223544e7ce76c753be12750.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare42af136d7223544e7ce76c753be12750.apk
+
+VirusShare9848c6d91e36a71d84832f4cf8dab273.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare9848c6d91e36a71d84832f4cf8dab273.apk
+
+VirusSharecbde87cfcbbfce9f269be2ed29a31ed7.apk belongs to those families:  | DroidKungFu1  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharecbde87cfcbbfce9f269be2ed29a31ed7.apk
+
+VirusShare47c68ffbccae203c2c5f04b8f75fcbc4.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare47c68ffbccae203c2c5f04b8f75fcbc4.apk
+
+VirusShare0849698e0892b3b2dd31de84ef4d62cc.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare0849698e0892b3b2dd31de84ef4d62cc.apk
+
+VirusSharea609059566ce8a84e8e0f450ea03598e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea609059566ce8a84e8e0f450ea03598e.apk
+
+VirusShare1d74ea0520c165070b7b8e364a717714.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare1d74ea0520c165070b7b8e364a717714.apk
+
+VirusShareeb740f666ca03c48e7515ae67c6c01d6.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareeb740f666ca03c48e7515ae67c6c01d6.apk
+
+VirusShare2ef973a3c1e219a26a45a3ce1ff7a2cf.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare2ef973a3c1e219a26a45a3ce1ff7a2cf.apk
+
+VirusShareb3664ea62c7759e4cd572e3f3f2290d4.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb3664ea62c7759e4cd572e3f3f2290d4.apk
+
+VirusShareacfbb28b997275c365324e004c59771f.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareacfbb28b997275c365324e004c59771f.apk
+
+VirusShare07a5bd7aaf7f77917b8f6529d9d9a8ca.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare07a5bd7aaf7f77917b8f6529d9d9a8ca.apk
+
+VirusShare51638d81ec11100e7dc8c0489b9ea3cb.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare51638d81ec11100e7dc8c0489b9ea3cb.apk
+
+VirusShareff38325a327c54e72f39f6f16e75de9d.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareff38325a327c54e72f39f6f16e75de9d.apk
+
+VirusShare6673e65f784bafa2af30d8993d65b20a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare6673e65f784bafa2af30d8993d65b20a.apk
+
+VirusShareb89d8f1bc81a23202b81539394606185.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb89d8f1bc81a23202b81539394606185.apk
+
+VirusShareb177d3a8e92f3c519e84b6d442c84421.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb177d3a8e92f3c519e84b6d442c84421.apk
+
+VirusSharef756a072d551e212d643884b3f32b5d0.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharef756a072d551e212d643884b3f32b5d0.apk
+
+VirusShare1e4caf6d2e5625a7034caa6b63143e6f.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare1e4caf6d2e5625a7034caa6b63143e6f.apk
+
+VirusShare7eb9b4a2a171b616d6c11050ced9f978.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare7eb9b4a2a171b616d6c11050ced9f978.apk
+
+VirusShare85672ab3724dfc5154de4b183f169acd.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare85672ab3724dfc5154de4b183f169acd.apk
+
+VirusShareeb42dc2200fe498bd9afb926959d735a.apk belongs to those families:  | DroidKungFu4  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareeb42dc2200fe498bd9afb926959d735a.apk
+
+VirusShare8dbaa133bea42a1b3702843c59abfa5c.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare8dbaa133bea42a1b3702843c59abfa5c.apk
+
+VirusSharea61bf04c2963d81998f64af7418adbf8.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea61bf04c2963d81998f64af7418adbf8.apk
+
+VirusShared66feb385a49252c2c5fc68f6963acec.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShared66feb385a49252c2c5fc68f6963acec.apk
+
+VirusShare8f6a956a774df26c2c59dc50244c5aba.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare8f6a956a774df26c2c59dc50244c5aba.apk
+
+VirusShare8dda932aef0d0b4e006a69a4a7be0ce3.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare8dda932aef0d0b4e006a69a4a7be0ce3.apk
+
+VirusShare043ee6695689e13e0197dcaaff5ae889.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare043ee6695689e13e0197dcaaff5ae889.apk
+
+VirusShareef7674e728f3fc29e8c2f01bb2e9f54c.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareef7674e728f3fc29e8c2f01bb2e9f54c.apk
+
+VirusSharead9b707d3fd7bfa251492ba90ea5a6d0.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharead9b707d3fd7bfa251492ba90ea5a6d0.apk
+
+VirusSharebe93a1d8dcbcfd4753297f1d006e4bd4.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharebe93a1d8dcbcfd4753297f1d006e4bd4.apk
+
+VirusShared0b2454e18022a8bc4e1643061b6c363.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShared0b2454e18022a8bc4e1643061b6c363.apk
+
+VirusShare11bd9659ac2e629ddb645d8094262661.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare11bd9659ac2e629ddb645d8094262661.apk
+
+VirusShare107af5cf71f1a0e817e36b8deb683ac2.apk belongs to those families:  | DroidKungFu1  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare107af5cf71f1a0e817e36b8deb683ac2.apk
+
+VirusShare83f73fae3039d7ab4b8a80040f99bee1.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare83f73fae3039d7ab4b8a80040f99bee1.apk
+
+VirusSharec1dce3b073d8f87b11171812cabd82a1.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharec1dce3b073d8f87b11171812cabd82a1.apk
+
+VirusShare63a58c433be70f856a410b0c87118216.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare63a58c433be70f856a410b0c87118216.apk
+
+VirusShare896b8f1c9dc3af7569e191ff58244754.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare896b8f1c9dc3af7569e191ff58244754.apk
+
+VirusShare2920fb72da54afa593895947afd1af45.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare2920fb72da54afa593895947afd1af45.apk
+
+VirusSharea7e1de0ead97dc8b69d970281ac13bbf.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea7e1de0ead97dc8b69d970281ac13bbf.apk
+
+VirusShare28ec3d6e0847fce6137e44677ad7e464.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare28ec3d6e0847fce6137e44677ad7e464.apk
+
+VirusShare1b2e9e4601b1553a0e94c24d17319747.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare1b2e9e4601b1553a0e94c24d17319747.apk
+
+VirusShareb7f8906bf27a46d3f817f2eebb96ab58.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb7f8906bf27a46d3f817f2eebb96ab58.apk
+
+VirusShare4d47875d737204f66cabbe93a7e46718.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare4d47875d737204f66cabbe93a7e46718.apk
+
+VirusShare0d2e8637e766aee221143f2699d069b2.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare0d2e8637e766aee221143f2699d069b2.apk
+
+VirusShare1a3c2acc6e2a4a9a852a86ab29a7a189.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare1a3c2acc6e2a4a9a852a86ab29a7a189.apk
+
+VirusShare411476f633fb7a501998d17758224bd9.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare411476f633fb7a501998d17758224bd9.apk
+
+VirusSharebc89182355ad50c097c997d775bc1ce4.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharebc89182355ad50c097c997d775bc1ce4.apk
+
+VirusShareacb23a9cad52b9b85e596f15a26e590a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareacb23a9cad52b9b85e596f15a26e590a.apk
+
+VirusSharecb5cfc328c294baf24202d9e9dba4f31.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharecb5cfc328c294baf24202d9e9dba4f31.apk
+
+VirusShare7fdadfed88249726d88968b233139df5.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare7fdadfed88249726d88968b233139df5.apk
+
+VirusShare900952138b9ae984d1f499c37781ee09.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare900952138b9ae984d1f499c37781ee09.apk
+
+VirusShare46a814ee2460ec99d73a0a1f19b99e64.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare46a814ee2460ec99d73a0a1f19b99e64.apk
+
+VirusShared50e9a2c2a6ee7bf2512a3282fcb28b8.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShared50e9a2c2a6ee7bf2512a3282fcb28b8.apk
+
+VirusSharef6272a3828838869106d6263d65eab4c.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharef6272a3828838869106d6263d65eab4c.apk
+
+VirusShare2358a97d0f9b0e4b7d8e5a8386105c97.apk belongs to those families:  | DroidKungFu1  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare2358a97d0f9b0e4b7d8e5a8386105c97.apk
+
+VirusShareed20f5e184cd5179f6e193d0ef2f2ffd.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareed20f5e184cd5179f6e193d0ef2f2ffd.apk
+
+VirusShare1f28f76566b98a6b1f35ad388b6a1440.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare1f28f76566b98a6b1f35ad388b6a1440.apk
+
+VirusShare007bcb4b01cfc684e976889b1a9433b8.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare007bcb4b01cfc684e976889b1a9433b8.apk
+
+VirusShare52cbeddc7edbb873a0fd9f70f626aab6.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare52cbeddc7edbb873a0fd9f70f626aab6.apk
+
+VirusShare715b42782d5592908764bc56a68d1cf4.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare715b42782d5592908764bc56a68d1cf4.apk
+
+VirusShare8b40b91808aa7e557881400d11eed43b.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare8b40b91808aa7e557881400d11eed43b.apk
+
+VirusShared9d936e87b226ec289f71ddf66450923.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShared9d936e87b226ec289f71ddf66450923.apk
+
+VirusSharef0294ddaa08cd758179f09961dd4a646.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharef0294ddaa08cd758179f09961dd4a646.apk
+
+VirusShare7c46a02b9b7591621d2895df6b63fc7b.apk belongs to those families:  | GoldDream  Original: /home/yufeng/research/scripts/virus/virusshare_classify/golddream/VirusShare7c46a02b9b7591621d2895df6b63fc7b.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare7c46a02b9b7591621d2895df6b63fc7b.apk
+
+VirusShare160c86c5bd91069b66259f44c45031eb.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare160c86c5bd91069b66259f44c45031eb.apk
+
+VirusShareef8f2cbb943222434b01c9f7d4d6250a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareef8f2cbb943222434b01c9f7d4d6250a.apk
+
+VirusShare1ed96d593ea066234358194a6163bb72.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare1ed96d593ea066234358194a6163bb72.apk
+
+VirusShare4664e036c728fab1d6a1438230d744b8.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare4664e036c728fab1d6a1438230d744b8.apk
+
+VirusSharea45986e7c4d32acc971bb83ea997f813.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea45986e7c4d32acc971bb83ea997f813.apk
+
+VirusShareb877162b602bb5e24e96aa6f9d1c06b8.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb877162b602bb5e24e96aa6f9d1c06b8.apk
+
+VirusShare16b05e646b56086e373155085c29de29.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare16b05e646b56086e373155085c29de29.apk
+
+VirusShare22c50afcca8ad7aa4d645862bc3db967.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare22c50afcca8ad7aa4d645862bc3db967.apk
+
+VirusShared64cf282eb68932b89a9e5a34ad68b77.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShared64cf282eb68932b89a9e5a34ad68b77.apk
+
+VirusShare75376abffeb1a2e857665809aa16dc87.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare75376abffeb1a2e857665809aa16dc87.apk
+
+VirusShare3bd602aadc43499e2e7c7b9a391803bc.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare3bd602aadc43499e2e7c7b9a391803bc.apk
+
+VirusShare3402caad6763141570be4b0bf20981ac.apk belongs to those families:  | DroidKungFu3  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare3402caad6763141570be4b0bf20981ac.apk
+
+VirusShare4f6617d1950233d321f7d25f13f0295e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare4f6617d1950233d321f7d25f13f0295e.apk
+
+VirusSharec44d3fb8138794abb6385abdb535f6dc.apk belongs to those families:  | DroidKungFu4  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharec44d3fb8138794abb6385abdb535f6dc.apk
+
+VirusShare8aaa52f6b90a2be3b5239a0dabc8a3fe.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare8aaa52f6b90a2be3b5239a0dabc8a3fe.apk
+
+VirusShare4e481acc85dc6e0a0ac32cbeaa10702a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare4e481acc85dc6e0a0ac32cbeaa10702a.apk
+
+VirusSharefa207e1a4cdd7b064dfce38b4c5ec7e2.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharefa207e1a4cdd7b064dfce38b4c5ec7e2.apk
+
+VirusShare881de9813e1beda30d9cee202ed9c862.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare881de9813e1beda30d9cee202ed9c862.apk
+
+VirusShare1d0fc8d84621fa236627402940727a72.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare1d0fc8d84621fa236627402940727a72.apk
+
+VirusShare8cd2f7fd299db8ceb045df5e2d76c7a7.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare8cd2f7fd299db8ceb045df5e2d76c7a7.apk
+
+VirusSharee7831221b25ba9693d6ff9fbdfd7f7b1.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharee7831221b25ba9693d6ff9fbdfd7f7b1.apk
+
+VirusShare19abe31f6ba8ed8ad3691f2f33a1dba5.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare19abe31f6ba8ed8ad3691f2f33a1dba5.apk
+
+VirusShareec9d5dcca7be248d2cb2ba30c4112183.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareec9d5dcca7be248d2cb2ba30c4112183.apk
+
+VirusShare6143e7c9d0a435fa94212f3985b5bd64.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare6143e7c9d0a435fa94212f3985b5bd64.apk
+
+VirusShare5a000f00627b66da8d37ddb65a18151e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare5a000f00627b66da8d37ddb65a18151e.apk
+
+VirusShare7109b801ef967a692ac297ba220c32df.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare7109b801ef967a692ac297ba220c32df.apk
+
+VirusSharef0c5b19cb09879a6b734692d450b1dbb.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharef0c5b19cb09879a6b734692d450b1dbb.apk
+
+VirusShare45309985c2ef18a837c65b89c12243f7.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare45309985c2ef18a837c65b89c12243f7.apk
+
+VirusShare421519b93b825cf85d66f11de4cf8657.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare421519b93b825cf85d66f11de4cf8657.apk
+
+VirusShare4d2c21928cde54074b75768aef479368.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare4d2c21928cde54074b75768aef479368.apk
+
+VirusShare7d304e763111da4063d61434110d9fa1.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare7d304e763111da4063d61434110d9fa1.apk
+
+VirusShare97c1a0952d14ebe4839afc04f0870627.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare97c1a0952d14ebe4839afc04f0870627.apk
+
+VirusShare3d2050a4950652b04799d3dc3500e2a3.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare3d2050a4950652b04799d3dc3500e2a3.apk
+
+VirusShare7746d7685ca8815e0adb446d5b7dd76e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare7746d7685ca8815e0adb446d5b7dd76e.apk
+
+VirusSharef8362950facacdf67ee4b65f438bc69c.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharef8362950facacdf67ee4b65f438bc69c.apk
+
+VirusShare42f04adfc15e8219d5f24a28128c74a7.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare42f04adfc15e8219d5f24a28128c74a7.apk
+
+VirusShare53bbe9771336c72687d8d08dd8aca070.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare53bbe9771336c72687d8d08dd8aca070.apk
+
+VirusSharef19beb977835c861ae806ba9f6e2f087.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharef19beb977835c861ae806ba9f6e2f087.apk
+
+VirusShareab1c808e9ae2da5916dc2aa5051b3598.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareab1c808e9ae2da5916dc2aa5051b3598.apk
+
+VirusShare8f69a370d4570564f6d21885b1ea35a1.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare8f69a370d4570564f6d21885b1ea35a1.apk
+
+VirusShare993bb41d39e11b1255e1b112d27b62fe.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare993bb41d39e11b1255e1b112d27b62fe.apk
+
+VirusShare2807662c76f164ef0862d6db0a4889dd.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare2807662c76f164ef0862d6db0a4889dd.apk
+
+VirusShare10598cd6b55044de0d9778bd640bc930.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare10598cd6b55044de0d9778bd640bc930.apk
+
+VirusShare199133f500df2bf6159bc548ee5dbc14.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare199133f500df2bf6159bc548ee5dbc14.apk
+
+VirusShareb646689d939237f921d04e6a129c7dd6.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb646689d939237f921d04e6a129c7dd6.apk
+
+VirusShare417b325b6b9555c7b29c23883f354b19.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare417b325b6b9555c7b29c23883f354b19.apk
+
+VirusShare5216c15da054f5eb9f8b1361f86f9bfd.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare5216c15da054f5eb9f8b1361f86f9bfd.apk
+
+VirusShare078b15fd961c292bb1bb81db43db2f63.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare078b15fd961c292bb1bb81db43db2f63.apk
+
+VirusSharedcf3a0453c681d0cf94ec3f0198dba7d.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharedcf3a0453c681d0cf94ec3f0198dba7d.apk
+
+VirusShare13276f57a0f0f5959a115c29b00a2730.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare13276f57a0f0f5959a115c29b00a2730.apk
+
+VirusShared209c3c9dc36d056122d897814b7956a.apk belongs to those families:  | DroidKungFu4  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShared209c3c9dc36d056122d897814b7956a.apk
+
+VirusShared0db96043e0eeedf92e4be230319fdf7.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShared0db96043e0eeedf92e4be230319fdf7.apk
+
+VirusShare40d7ecb8389f4c2cd9f6fbfc2134251b.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare40d7ecb8389f4c2cd9f6fbfc2134251b.apk
+
+VirusShare9a20ea2eeb65d6c1cfeaac2ca3dedcb5.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare9a20ea2eeb65d6c1cfeaac2ca3dedcb5.apk
+
+VirusSharec622d558e1827fa096336cea9c1e16eb.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharec622d558e1827fa096336cea9c1e16eb.apk
+
+VirusShare18257f88d27444d733d479b65f69d8f8.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare18257f88d27444d733d479b65f69d8f8.apk
+
+VirusShare896a35822a398ce45eeb2db29dfeac92.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare896a35822a398ce45eeb2db29dfeac92.apk
+
+VirusShare2950164750c6e36322f1dac810a7a4b4.apk belongs to those families:  | GoldDream  Original: /home/yufeng/research/scripts/virus/virusshare_classify/golddream/VirusShare2950164750c6e36322f1dac810a7a4b4.apk
+/home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare2950164750c6e36322f1dac810a7a4b4.apk
+
+VirusShareb9eae89df96d9d62ed28504ee01e868b.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb9eae89df96d9d62ed28504ee01e868b.apk
+
+VirusShare1c4496e843df6d68e868bffad176f33a.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare1c4496e843df6d68e868bffad176f33a.apk
+
+VirusShareb450ea533a2130cb46439e06a8f97a78.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareb450ea533a2130cb46439e06a8f97a78.apk
+
+VirusShare3feb205f3a7ab8f779eec3002c1c2895.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare3feb205f3a7ab8f779eec3002c1c2895.apk
+
+VirusShare5d9b6b18d9edd1610b6951282d720d9e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare5d9b6b18d9edd1610b6951282d720d9e.apk
+
+VirusShare6b21667c601f41d1562328ea96bcb96e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare6b21667c601f41d1562328ea96bcb96e.apk
+
+VirusSharead250b26184ae643da68c3847981d10d.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharead250b26184ae643da68c3847981d10d.apk
+
+VirusShare64099c9f4b7099ca26a5b66c67ac4175.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare64099c9f4b7099ca26a5b66c67ac4175.apk
+
+VirusShare4ae15810a06b0c8b027e14eae4b04eba.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare4ae15810a06b0c8b027e14eae4b04eba.apk
+
+VirusSharecd55676ec729a829e5f38803b4c80809.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharecd55676ec729a829e5f38803b4c80809.apk
+
+VirusShareeab03297238466757cb09459484ab35e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShareeab03297238466757cb09459484ab35e.apk
+
+VirusSharee292cb308c5f109959ea47b06c7f5fac.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharee292cb308c5f109959ea47b06c7f5fac.apk
+
+VirusShare03ddb783e7ab88c838b1888b38eba992.apk belongs to those families:  | DroidKungFu4  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare03ddb783e7ab88c838b1888b38eba992.apk
+
+VirusShare71293480ad629884b5fb6af3a027c9d5.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare71293480ad629884b5fb6af3a027c9d5.apk
+
+VirusShare531998efebc2d80c6db967dcffd3f117.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare531998efebc2d80c6db967dcffd3f117.apk
+
+VirusShare480a17d247d0853499371a404ab08ab6.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare480a17d247d0853499371a404ab08ab6.apk
+
+VirusSharef839c1519f37573678c96e34064b4921.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharef839c1519f37573678c96e34064b4921.apk
+
+VirusSharea2f6823186ff1e37e4ae6eafbf85fc03.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharea2f6823186ff1e37e4ae6eafbf85fc03.apk
+
+VirusSharebd2c4a432da5aefb59bc6f8c3f3b9126.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharebd2c4a432da5aefb59bc6f8c3f3b9126.apk
+
+VirusShare1147a1b8164fbb8cfd96df9c911d1986.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare1147a1b8164fbb8cfd96df9c911d1986.apk
+
+VirusSharec9c6047acc9f339e2915e2b53a7501bf.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharec9c6047acc9f339e2915e2b53a7501bf.apk
+
+VirusShare8d9dc159b8da0826d7b78575f2e9dd84.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShare8d9dc159b8da0826d7b78575f2e9dd84.apk
+
+VirusSharef6aa4ae7d85efeb235555138081462ca.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharef6aa4ae7d85efeb235555138081462ca.apk
+
+VirusShared8f6bd9712c44e65d550880c466df63e.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusShared8f6bd9712c44e65d550880c466df63e.apk
+
+VirusSharee4ec2c94ff22f2098d62eee07683e858.apk belongs to those families: unknown  Original: /home/yufeng/research/scripts/virus/virusshare_classify/kungfu/VirusSharee4ec2c94ff22f2098d62eee07683e858.apk
+
+Total execute time:
+5:01:10.450299

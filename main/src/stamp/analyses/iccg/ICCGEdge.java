@@ -93,36 +93,19 @@ public class ICCGEdge
 
     public String toString() {
         //com.foo.a$1 => a;
-        String srcStr = "deadNode";
+        /*String srcStr = "deadNode";
         String tgtStr = "deadNode";
         if(source != null) srcStr = source.toString();
         if(target != null) tgtStr = target.toString();
 
-        /*if (srcStr.contains("$"))
-            srcStr = srcStr.substring(0, srcStr.indexOf("$"));
-        if (tgtStr.contains("$"))
-            tgtStr = tgtStr.substring(0, srcStr.indexOf("$"));
-
-        srcStr = srcStr.replaceAll("\\/", ".");
-        tgtStr = tgtStr.replaceAll("\\/", "."); 
-
-        if(srcStr.contains("."))
-            srcStr = srcStr.substring(srcStr.lastIndexOf(".")+1,srcStr.length());
-        if(tgtStr.contains("."))
-            tgtStr = tgtStr.substring(tgtStr.lastIndexOf(".")+1,tgtStr.length());*/
-
-       // srcStr = srcStr.replaceAll("\\.|\\$|\\/", "_");
-        //tgtStr = tgtStr.replaceAll("\\.|\\$|\\/", "_"); 
-
-
-        /*return srcStr + " -> " + tgtStr + " [label=\"action:" 
-                   + action + " category:" + category + " type:" + type + "\"]; ";*/
-
         if(isAsynchronous)
-            return srcStr + " -> " + tgtStr + "[label=\" "+ event + "\",style=dashed]; ";
+            return srcStr + " -> " + tgtStr + "[style=dashed]; ";
+            //return srcStr + " -> " + tgtStr + "[label=\" "+ event + "\",style=dashed]; ";
 
-        return srcStr + " -> " + tgtStr + "; ";
-
+        return srcStr + " -> " + tgtStr + "; "; */
+        String ret = source.getId() + " -> " + target.getId();
+        if(isAsynchronous) ret += "[style=dashed]; ";
+        return ret;
     }
 
 }

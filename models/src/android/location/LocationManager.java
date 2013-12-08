@@ -8,6 +8,7 @@ class LocationManager
 
 	private void registerListener(final android.location.LocationListener listener)
 	{
+		listener.onLocationChanged(getLocation());
 		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
 			registerCallback(new edu.stanford.stamp.harness.Callback(){
 					public void run() {
@@ -24,16 +25,19 @@ class LocationManager
 	public  void requestLocationUpdates(java.lang.String provider, long minTime, float minDistance, android.location.LocationListener listener) 
 	{ 
 		registerListener(listener);
+		listener.onLocationChanged(getLocation());
 	}
 
 	public  void requestLocationUpdates(java.lang.String provider, long minTime, float minDistance, android.location.LocationListener listener, android.os.Looper looper) 
 	{ 
 		registerListener(listener);
+	    listener.onLocationChanged(getLocation());
 	}
 
 	public  void requestLocationUpdates(long minTime, float minDistance, android.location.Criteria criteria, android.location.LocationListener listener, android.os.Looper looper) 
 	{ 
 		registerListener(listener);
+		listener.onLocationChanged(getLocation());
 	}
 
         @STAMP(flows={@Flow(from="$FINE_LOCATION",to="!INTENT")})
@@ -43,11 +47,13 @@ class LocationManager
 	public  void requestSingleUpdate(java.lang.String provider, android.location.LocationListener listener, android.os.Looper looper) 
 	{ 
 		registerListener(listener);
+		listener.onLocationChanged(getLocation());
 	}
 
 	public  void requestSingleUpdate(android.location.Criteria criteria, android.location.LocationListener listener, android.os.Looper looper) 
 	{
 		registerListener(listener);
+		listener.onLocationChanged(getLocation());
 	}
 
 	@STAMP(flows={@Flow(from="$FINE_LOCATION",to="!INTENT")})
@@ -80,6 +86,7 @@ class LocationManager
 	}
 
         public  boolean addNmeaListener(final android.location.GpsStatus.NmeaListener listener) {
+		listener.onNmeaReceived(0,getNmea());
 		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
 			registerCallback(new edu.stanford.stamp.harness.Callback(){
 					public void run() {
