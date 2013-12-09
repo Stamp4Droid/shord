@@ -1,3 +1,4 @@
-android.tools.dir=/home/saswat/software/android-sdk-linux/tools
+android.tools.dir=/home/saswat/work
 stamp.dir=/home/saswat/work/shord
+android.buildtools.dir=/home/saswat/software/android-sdk-linux/build-tools/18.0.1/
 
