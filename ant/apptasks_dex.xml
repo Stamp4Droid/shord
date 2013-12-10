@@ -50,7 +50,7 @@
 
     <!-- Read required properties. -->
     <prop-default property="stamp.backend" default="chord"
-		  description="backend to use for analyzing the app [chord,solvergen]"/>
+				  description="backend to use for analyzing the app [chord,solvergen]"/>
     <require-prop property="stamp.analyses.pre"
 		  description="Chord analyses that will set up the initial facts for later stages"/>
     <require-prop property="stamp.analyses.post"
@@ -59,6 +59,8 @@
 		  description="relations to print out after the analysis finishes"/>
     <prop-default property="stamp.print.allclasses" default="true"
 		  description="whether to dump out all processed jimple files"/>
+	<prop-default property="stamp.timeout" default="86400000"
+              description="time out"/>
 
     <!-- Prepare the selected analysis backend. -->
     <runtarget target="-prepare-backend-${stamp.backend}"/>
