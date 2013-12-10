@@ -14,14 +14,20 @@ import javax.xml.transform.stream.StreamResult;
 
 public class FixManifest
 {
-	Document document;
-	String pkgName; 
-	XPath xpath;
-	Mapper mapper;
+	private Document document;
+	private String pkgName; 
+	private XPath xpath;
+	private Mapper mapper;
+	private Set<String> actionStrings = new HashSet();
 
 	FixManifest(String mappingFile)
 	{
 		this.mapper = new Mapper(mappingFile);
+	}
+
+	Set<String> getActionStrings()
+	{
+		return actionStrings;
 	}
 
 	void fixManifest(String manifestFile) 
@@ -38,7 +44,11 @@ public class FixManifest
 			Node node = (Node)
 				xpath.evaluate("/manifest", document, XPathConstants.NODE);
 			this.pkgName = node.getAttributes().getNamedItem("package").getNodeValue();
-			
+
+			for(String compType : new String[]{"activity", "service", "receiver"}){
+				readActionStrings(compType);
+			}
+
 			for(String compType : new String[]{"activity", "service", "receiver"}){
 				fixCompNames(compType);
 			}
@@ -48,7 +58,26 @@ public class FixManifest
 			throw new Error(e);
 		}
 	}
-	
+
+	private void readActionStrings(String componentType) throws Exception
+	{
+		NodeList nodes = (NodeList)
+			xpath.evaluate("/manifest/application/"+componentType+"/intent-filter/action", document, XPathConstants.NODESET);
+		for (int i = 0; i < nodes.getLength(); i++) {
+			Node node = nodes.item(i);
+			NamedNodeMap nnm = node.getAttributes();
+			String name = null;
+			for(int j = 0; j < nnm.getLength(); j++){
+				Node n = nnm.item(j);
+				if(n.getNodeName().equals("android:name")){
+					name = n.getNodeValue();
+					actionStrings.add(name);
+					break;
+				}
+			}
+		}
+	}
+
 	private String fixName(String comp)
 	{
 		if(comp.startsWith("."))

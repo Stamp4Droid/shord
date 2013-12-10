@@ -7,11 +7,13 @@ import java.util.*;
 
 public class StringConstantsTransformer extends BodyTransformer
 {
-	Mapper mapper;
+	private Mapper mapper;
+	private Set<String> actionStrings;
 
-	public StringConstantsTransformer(String mappingFile)
+	public StringConstantsTransformer(String mappingFile, Set<String> actionStrings)
 	{
 		this.mapper = new Mapper(mappingFile);
+		this.actionStrings = actionStrings;
 	}
 
 	protected void internalTransform(Body body, String phase, Map options)
@@ -51,7 +53,13 @@ public class StringConstantsTransformer extends BodyTransformer
 		String str = s.value;
 		String newName = mapper.newName(str);
 		if(newName == null) {
-			if(!str.equals("application/vnd.android.package-archive"))
+			if(str.equals("application/vnd.android.package-archive"))
+				;
+			else if(str.startsWith("content://"))
+				;
+			else if(actionStrings.contains(str))
+				;
+			else
 				str = "obfuscated";
 			return StringConstant.v(str);
 		}
