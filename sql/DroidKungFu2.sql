@@ -61,8 +61,10 @@
                  /*encrypt c&c server and send it to internet*/
                   ) as tmp4,
                   ( select count(*) as cnt from flow as f5 where 
-                    f5.iccg_id=? and f5.sink_node_id=f5.src_node_id and f5.source='$ENC/DEC') as tmp5
-                    where tmp5.cnt=0
+                    f5.iccg_id=? and f5.sink_node_id=f5.src_node_id and f5.source='$ENC/DEC' and f5.sink='!INTERNET') as tmp5,
+                  ( select count(*) as cnt from flow as f6 where 
+                    f6.iccg_id=? and f6.sink_node_id=f6.src_node_id and f6.source='$ENC/DEC' and f6.sink='!EXEC') as tmp6
+                    where tmp5.cnt=0 and tmp6.cnt=0
 
    UNION
    SELECT tmp5.actId, tmp6.cnt from
@@ -84,7 +86,7 @@
                                          and f3.sink='!FILE'
    ) as tmp5, node as act2,  
       (select count(*) as cnt from flow as f4 
-          where f4.iccg_id=? and f4.src_node_id=f4.sink_node_id and f4.source='$ENC/DEC' ) as tmp6
+          where f4.iccg_id=? and f4.src_node_id=f4.sink_node_id and f4.source='$ENC/DEC' and f4.sink='!FILE' ) as tmp6
       where 
             act2.id=tmp5.actId and
             act2.iccg_id=? and

@@ -34,5 +34,5 @@
                  f3.src_node_id=f3.sink_node_id and
                  f2.source='$getSubscriberId' and 
                  f2.sink='!INTERNET' and 
-                 f3.source='$getLine1Number' and 
+                 f3.source='$getSimSerialNumber' and 
                  f3.sink='!INTERNET'  
