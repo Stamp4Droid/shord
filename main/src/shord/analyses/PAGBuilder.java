@@ -503,6 +503,7 @@ public class PAGBuilder extends JavaAnalysis
 
 			if(isStub) {
 				if(retType instanceof RefType){
+					/*
 					for(SootClass st: SootUtils.subTypesOf(((RefType) retType).getSootClass())){
 						//for each concrete subtype of method's return type, 
 						//we add a stub alloc node
@@ -514,6 +515,7 @@ public class PAGBuilder extends JavaAnalysis
 						stubAllocNodes.add(n);
 						//System.out.println("OO "+method+" "+n);
 					}
+					*/
 				} else if(retType instanceof ArrayType){
 					//TODO: introduce stub alloc node for arrays 
 				}
