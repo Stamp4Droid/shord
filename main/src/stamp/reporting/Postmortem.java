@@ -72,7 +72,10 @@ public class Postmortem extends JavaAnalysis {
 		Class[] dontShowReports = new Class[]{
 			IM.class
 			,AllReachable.class
+			,SrcSinkFlowViz.class
 			,FileNames.class
+			,MissingModels.class
+			,AllMissingModels.class
 		};
 
 		try{
