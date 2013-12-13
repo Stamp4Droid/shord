@@ -20,22 +20,22 @@ class Literal(util.Hashable):
     def __init__(self, reverse, symbol):
         assert re.match(r'^\w+$', symbol) is not None
         self._reverse = reverse
-        self._symbol = symbol
+        self.symbol = symbol
 
     def __key__(self):
-        return (self._reverse, self._symbol)
+        return (self._reverse, self.symbol)
 
     def __repr__(self):
-        return '%s(%r,%r)' % (type(self).__name__, self._reverse, self._symbol)
+        return '%s(%r,%r)' % (type(self).__name__, self._reverse, self.symbol)
 
     def __str__(self):
-        return ('_' if self._reverse else '') + self._symbol
+        return ('_' if self._reverse else '') + self.symbol
 
     def is_terminal(self):
-        return self._symbol[0] in string.ascii_lowercase
+        return self.symbol[0] in string.ascii_lowercase
 
     def reverse(self):
-        return Literal(not self._reverse, self._symbol)
+        return Literal(not self._reverse, self.symbol)
 
     @staticmethod
     def from_string(str):
@@ -228,20 +228,27 @@ class TransTable(util.FinalAttrs):
 
     def dump(self):
         idx_width = len(str(len(self.funs)))
+        print 'Literal signatures:'
         print ', '.join([str(l) + ':' + str(self.lit2fidx[l])
                          for l in self.lit2fidx])
+        print
+        print 'Transition functions (%s total):' % len(self.funs)
         for (f_idx, f) in izip(count(), self.funs):
             print (' %s %*s: %s' %
                    ('*' if f_idx in self.accepting else ' ',
                     idx_width, f_idx, f))
+        print
+        ratio = sum([len([x for x in row if x > 0])
+                     for row in self.comp_tab]) / float(len(self.funs)**2)
+        print 'Composition table (%s%% full):' % int(ratio * 100)
         for row in self.comp_tab:
             print ' '.join(['%*s' % (idx_width, str(r) if r > 0 else '.')
                             for r in row])
 
 def parse_dir(dir_name):
     fsm_files = glob.glob(os.path.join(dir_name, '*.fsm.tgf'))
-    # XXX: Just taking the FSM files in alphabetic order, and assuming it also
-    # reflected their stratification.
+    # TODO: Just taking the FSM files in alphabetic order, and assuming that
+    # also reflects their stratification.
     return parse_files(sorted(fsm_files))
 
 def parse_files(fsm_files):
@@ -299,6 +306,7 @@ if __name__ == '__main__':
     parser.add_argument('tgf_file', nargs='+')
     args = parser.parse_args()
     (min_fsm, trans_tab) = parse_files(args.tgf_file)
+    print 'Minimal FSM:'
     min_fsm.dump()
     print
     trans_tab.dump()

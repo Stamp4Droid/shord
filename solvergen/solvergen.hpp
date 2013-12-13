@@ -69,6 +69,8 @@ typedef unsigned char EDGE_KIND;
 typedef unsigned int INDEX;
 /** An INDEX value reserved for representing "none". */
 #define INDEX_NONE UINT_MAX
+/** Check if an INDEX is within bounds. */
+#define VALID_INDEX(i) ((i) < INDEX_NONE)
 
 /** An integer wide enough to uniquely identify any node in the input graph. */
 typedef unsigned int NODE_REF;
@@ -889,7 +891,7 @@ bool has_empty_prod(EDGE_KIND kind);
  * The body of the main solver loop; specifies how each Edge in the ::worklist
  * should be processed.
  */
-void main_loop(Edge *base);
+void main_loop(Edge* base);
 
 /**
  * Return the total number of Edge @Kind%s, i.e.\ the number of @Symbol%s in
@@ -898,13 +900,13 @@ void main_loop(Edge *base);
 EDGE_KIND num_kinds();
 
 /** Get the Edge @Kind associated with a @Symbol of the input grammar. */
-EDGE_KIND symbol2kind(const char *symbol);
+EDGE_KIND symbol2kind(const char* symbol);
 
 /** Get the grammar @Symbol corresponding to some Edge @Kind. */
-const char *kind2symbol(EDGE_KIND kind);
+const char* kind2symbol(EDGE_KIND kind);
 
 /** Return all possible ways that an Edge could have been produced. */
-std::vector<Derivation> all_derivations(Edge *edge);
+std::vector<Derivation> all_derivations(Edge* edge);
 
 /**
  * Return the number of paths to print for each Edge of @Kind @a kind in the

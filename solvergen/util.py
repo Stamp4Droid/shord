@@ -38,6 +38,16 @@ class FinalAttrs(object):
             raise Exception('Attribute %s is final' % name)
 
 class Hashable(FinalAttrs):
+    """
+    A base class that provides a base implementation of equality testing and
+    hashing functions. A subclass needs to implement Hashable#__key__(), which
+    should return a fixed size tuple with references to all the fields of the
+    object that matter for purposes of equality checking.
+
+    Note that classes which derive from this will only actually be hashable if
+    all the fields in the key tuple are hashable.
+    """
+
     def __init__(self):
         raise NotImplementedError() # abstract class
 
@@ -50,24 +60,18 @@ class Hashable(FinalAttrs):
     def __hash__(self):
         return hash(self.__key__())
 
-class IndexDict(FinalAttrs):
-    def __init__(self):
-        self._list = []
+class IndexDict(list):
+    """
+    A specialized list variant, which automatically grows to include elements
+    for which an #index() check fails.
+    """
 
     def index(self, value):
-        if value not in self._list:
-            self._list.append(value)
-        return self._list.index(value)
-
-    def __getitem__(self, i):
-        return self._list[i]
-
-    def __iter__(self):
-        for value in self._list:
-            yield value
-
-    def __len__(self):
-        return len(self._list)
+        try:
+            return super(IndexDict, self).index(value)
+        except ValueError:
+            self.append(value)
+            return len(self) - 1
 
 class MultiDict(FinalAttrs):
     """

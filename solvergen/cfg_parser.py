@@ -1277,14 +1277,14 @@ def emit_solver(grammar, code_out):
     pr.write('}')
     pr.write('')
 
-    pr.write('EDGE_KIND symbol2kind(const char *symbol) {')
+    pr.write('EDGE_KIND symbol2kind(const char* symbol) {')
     for s in grammar.symbols:
         pr.write('if (strcmp(symbol, "%s") == 0) return %s;' % (s, s.kind))
     pr.write('assert(false);')
     pr.write('}')
     pr.write('')
 
-    pr.write('const char *kind2symbol(EDGE_KIND kind) {')
+    pr.write('const char* kind2symbol(EDGE_KIND kind) {')
     pr.write('switch (kind) {')
     for s in grammar.symbols:
         pr.write('case %s: return "%s";' % (s.kind, s))
@@ -1329,14 +1329,14 @@ def emit_solver(grammar, code_out):
     pr.write('}')
     pr.write('')
 
-    pr.write('RELATION_REF rel2ref(const char *rel) {')
+    pr.write('RELATION_REF rel2ref(const char* rel) {')
     for r in grammar.rels:
         pr.write('if (strcmp(rel, "%s") == 0) return %s;' % (r.name, r.ref))
     pr.write('assert(false);')
     pr.write('}')
     pr.write('')
 
-    pr.write('const char *ref2rel(RELATION_REF ref) {')
+    pr.write('const char* ref2rel(RELATION_REF ref) {')
     pr.write('switch (ref) {')
     for r in grammar.rels:
         pr.write('case %s: return "%s";' % (r.ref, r.name))
@@ -1354,7 +1354,7 @@ def emit_solver(grammar, code_out):
     pr.write('}')
     pr.write('')
 
-    pr.write('void main_loop(Edge *base) {')
+    pr.write('void main_loop(Edge* base) {')
     # TODO: Could cache base->index
     pr.write('switch (base->kind) {')
     for base_symbol in grammar.symbols:
@@ -1386,7 +1386,7 @@ def emit_solver(grammar, code_out):
                 search_dir = rp.search_direction()
                 search_idx = rp.search_index()
                 reqd_kind = rp.reqd.symbol.kind
-                pr.write('for (Edge *other : edges_%s(%s, %s%s)) {'
+                pr.write('for (Edge* other : edges_%s(%s, %s%s)) {'
                          % (search_dir, search_src, reqd_kind,
                             '' if search_idx is None else (', %s' % search_idx)))
                 loop_header = rp.loop_header()
@@ -1426,18 +1426,19 @@ def emit_solver(grammar, code_out):
 
 def emit_derivs_or_reachable(grammar, pr, emit_derivs):
     if emit_derivs:
-        pr.write('std::vector<Derivation> all_derivations(Edge *e) {')
+        pr.write('std::vector<Derivation> all_derivations(Edge* e) {')
         pr.write('std::vector<Derivation> derivs;')
         pr.write('NODE_REF from = e->from;')
         pr.write('NODE_REF to = e->to;')
         pr.write('EDGE_KIND kind = e->kind;')
         pr.write('INDEX index = e->index;')
-        pr.write('Edge *l, *r;')
+        pr.write('Edge* l;')
+        pr.write('Edge* r;')
     else:
         pr.write('bool reachable(NODE_REF from, NODE_REF to, EDGE_KIND kind, '
                  + 'INDEX index) {')
         pr.write('assert(is_parametric(kind) ^ (index == INDEX_NONE));')
-        pr.write('Edge *r;')
+        pr.write('Edge* r;')
     # TODO: Paths for predicate witness edges are not used during path
     # reconstruction, so we don't have to consider that case when emitting
     # all_derivations.
@@ -1484,11 +1485,11 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
             out_idx = p.outer_search_index()
             if out_tgt is None:
                 out_dir = p.outer_search_direction()
-                pr.write('for (Edge *l : edges_%s(%s, %s%s)) {'
+                pr.write('for (Edge* l : edges_%s(%s, %s%s)) {'
                          % (out_dir, out_src, p.left.symbol.kind,
                             '' if out_idx is None else (', %s' % out_idx)))
             elif out_idx is None and p.left.symbol.parametric:
-                pr.write('for (Edge *l : edges_between(%s, %s, %s)) {'
+                pr.write('for (Edge* l : edges_between(%s, %s, %s)) {'
                          % (out_src, out_tgt, p.left.symbol.kind))
             else:
                 pr.write('if ((l = find_edge(%s, %s, %s, %s)) != NULL) {'
@@ -1511,7 +1512,7 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
                 in_tgt = p.inner_search_target()
                 in_idx = p.inner_search_index()
                 if in_idx is None and p.right.symbol.parametric:
-                    pr.write('for (Edge *r : edges_between(%s, %s, %s)) {'
+                    pr.write('for (Edge* r : edges_between(%s, %s, %s)) {'
                              % (in_src, in_tgt, p.right.symbol.kind))
                 else:
                     pr.write('if ((r = find_edge(%s, %s, %s, %s)) != NULL) {'
