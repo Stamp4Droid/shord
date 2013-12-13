@@ -102,7 +102,8 @@
 							sources.add(src);
 							sinks.add(sink);
 						%>	
-							<li><%=src%> <i class='icon-arrow-right'></i> <%=sink%> (<%=weight%>) <a href="#" id="showtab-<%=flowVizTabId%>">viz</a>
+							<!--li><%=src%> <i class='icon-arrow-right'></i> <%=sink%> (<%=weight%>) <a href="#" id="showtab-<%=flowVizTabId%>">viz</a-->
+							<li><%=src%> <i class='icon-arrow-right'></i> <%=sink%></li>
 						<%
 						}
 						%>
