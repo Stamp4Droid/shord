@@ -195,13 +195,16 @@ class TransTable(util.BaseClass):
         self.comp_tab = []
         self.accepting = set()
 
-        self.funs.index(PartialFun.bottom())
+        bot_fidx = self.funs.index(PartialFun.bottom())
         self.funs.index(PartialFun.id(fsm.states()))
         lit_effects = fsm.lit_effects()
         for lit in lit_effects:
             assert lit is not None
             eff_fun = PartialFun(lit_effects.get(lit))
             self.lit2fidx[lit] = self.funs.index(eff_fun)
+            rev_lit = lit.reverse()
+            if rev_lit not in self.lit2fidx:
+                self.lit2fidx[rev_lit] = bot_fidx
 
         i = 0
         while i < len(self.funs):
@@ -286,9 +289,6 @@ def parse_files(fsm_files):
 
     # Return the final FSM after minimization, along with the corresponding
     # transition function table.
-    # TODO: Might not output anything for some literal, should get a list of
-    # terminals to cover.
-    # TODO: Also make sure all our literals are covered in the terminals list.
     top_fsm = fsm_table[Literal(False, fsm_name)]
     min_fsm = top_fsm.minimize()
     return (min_fsm, TransTable(min_fsm))
