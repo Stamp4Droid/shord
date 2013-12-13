@@ -11,6 +11,7 @@ import os.path
 from os.path import basename, splitext
 import re
 import string
+import sys
 import util
 
 class Literal(util.Record):
@@ -182,6 +183,24 @@ class FSM(util.BaseClass):
             for (lit, dst) in self.out_arrows(src):
                 print '%s --%s--> %s' % (src, lit, dst)
 
+    def dump_tgf(self, out):
+        for sidx in range(0, len(self._nfa.States)):
+            out.write('%s%s%s\n' %
+                      (sidx, ' in' if sidx in self._nfa.Initial else '',
+                       ' out' if sidx in self._nfa.Final else '',))
+        out.write('#\n')
+        for src_idx in range(0, len(self._nfa.States)):
+            idx_trans = self._nfa.delta.get(src_idx, {})
+            dst2lits = util.OrderedMultiDict()
+            for tok in idx_trans:
+                lit = self._tok2lit(tok)
+                for dst_idx in idx_trans[tok]:
+                    dst2lits.append(dst_idx, lit)
+            for dst_idx in dst2lits:
+                out.write('%s %s %s\n' %
+                          (src_idx, dst_idx,
+                           ' '.join([str(l) for l in dst2lits.get(dst_idx)])))
+
     def minimize(self):
         # TODO: Also call complete(), to insert a dummy error state?
         return FSM(self._nfa.minimal().toNFA(),
@@ -297,10 +316,14 @@ if __name__ == '__main__':
     # Just dump information about the last grammar.
     # TODO: Document calling convention.
     parser = argparse.ArgumentParser()
-    parser.add_argument('tgf_file', nargs='+')
+    parser.add_argument('fsms_dir')
     args = parser.parse_args()
-    (min_fsm, trans_tab) = parse_files(args.tgf_file)
+
+    (min_fsm, trans_tab) = parse_dir(args.fsms_dir)
     print 'Minimal FSM:'
     min_fsm.dump()
     print
     trans_tab.dump()
+    print
+    print 'TGF for minimal FSM:'
+    min_fsm.dump_tgf(sys.stdout)
