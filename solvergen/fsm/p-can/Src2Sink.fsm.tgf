@@ -1,14 +1,14 @@
 1 in
-2 
-3 
-4 
+2
+3
+4
 5 out
-6 
-7 
-8 
-9 
-10 
-11 
+6
+7
+8
+9
+10
+11
 #
 1 2 srcLabel
 2 3 Label2Ref
@@ -17,7 +17,7 @@
 2 6 Label2Prim
 6 3 storePrim[*]
 7 5 sinkLabel
-4 8 ref2SInkByRef
+4 8 ref2SinkByRef
 8 9 Alias
 9 7 _Label2Ref
 4 10 ref2SinkByPrim
