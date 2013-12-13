@@ -2,6 +2,7 @@
 
 import argparse
 import bisect
+import copy
 import FAdo.common
 import FAdo.fa
 import glob
@@ -12,7 +13,7 @@ import re
 import string
 import util
 
-class Literal(util.Hashable):
+class Literal(util.Record):
     # TODO: Track if the symbol is parametric, enforce consistency, use when
     # printing.
     # TODO: Reuse code from cfg_parser.py.
@@ -24,9 +25,6 @@ class Literal(util.Hashable):
 
     def __key__(self):
         return (self._reverse, self.symbol)
-
-    def __repr__(self):
-        return '%s(%r,%r)' % (type(self).__name__, self._reverse, self.symbol)
 
     def __str__(self):
         return ('_' if self._reverse else '') + self.symbol
@@ -44,7 +42,7 @@ class Literal(util.Hashable):
         m = re.match(r'^(_)?(\w+)(?:\[\*\])?$', str)
         return Literal(m.group(1) is not None, m.group(2))
 
-class PartialFun(util.Hashable):
+class PartialFun(util.Record):
     # TODO: This gets used on states, which aren't always hashable => doing
     # this in a sub-optimal way currently.
 
@@ -54,10 +52,7 @@ class PartialFun(util.Hashable):
         assert len(self._table) == len(arg_ret_pairs)
 
     def __key__(self):
-        return self._table
-
-    def __repr__(self):
-        return '%s(%r)' % (type(self).__name__, self._table)
+        return (self._table, )
 
     def apply(self, arg):
         for (x, f_x) in self._table:
@@ -85,7 +80,7 @@ class PartialFun(util.Hashable):
     def id(dom):
         return PartialFun([(x,x) for x in dom])
 
-class FSM(util.FinalAttrs):
+class FSM(util.BaseClass):
     # TODO: Verify there's at least one start and one end state.
 
     def __init__(self, nfa=None, literals=None):
@@ -154,7 +149,7 @@ class FSM(util.FinalAttrs):
                 for (lit, dst) in self.out_arrows(src)]
 
     def literals(self):
-        return list(self._literals)
+        return self._literals
 
     def lit_effects(self):
         lit2arrows = util.OrderedMultiDict()
@@ -189,11 +184,10 @@ class FSM(util.FinalAttrs):
 
     def minimize(self):
         # TODO: Also call complete(), to insert a dummy error state?
-        # XXX: Unsafe to re-use the same literal index, in case the original
-        # FSM gets modified.
-        return FSM(self._nfa.minimal().toNFA(), self._literals)
+        return FSM(self._nfa.minimal().toNFA(),
+                   copy.deepcopy(self._literals))
 
-class TransTable(util.FinalAttrs):
+class TransTable(util.BaseClass):
     # Can only be called on a deterministic, non-epsilon FSM.
     def __init__(self, fsm):
         self.funs = util.IndexDict()

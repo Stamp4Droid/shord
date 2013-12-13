@@ -1,3 +1,5 @@
+import bisect
+import copy
 import errno
 from itertools import izip, count, groupby
 import os
@@ -5,9 +7,10 @@ import re
 import string
 import xml.etree.ElementTree as ET
 
-class FinalAttrs(object):
+class BaseClass(object):
     """
-    A class that enforces a single assignment to any instance attribute.
+    A specialization of Python's base object, that includes some sanity runtime
+    checks.
 
     Any object of this class (or any subclass of it) is prohibited from
     assigning to the same attribute twice. If this happens, an exception is
@@ -23,7 +26,6 @@ class FinalAttrs(object):
     constructor. You can whitelist a custom set of mutable attributes by
     storing their names (as strings) in `self._mutables`.
     """
-
     # TODO: Should instead check the calling function (read the top of the
     # stack).
 
@@ -33,23 +35,31 @@ class FinalAttrs(object):
     def __setattr__(self, name, value):
         if (not hasattr(self, name) or name.startswith('_') or
             hasattr(self, '_mutables') and name in self._mutables):
-            super(FinalAttrs, self).__setattr__(name, value)
+            super(BaseClass, self).__setattr__(name, value)
         else:
             raise Exception('Attribute %s is final' % name)
 
-class Hashable(FinalAttrs):
-    """
-    A base class that provides a base implementation of equality testing and
-    hashing functions. A subclass needs to implement Hashable#__key__(), which
-    should return a fixed size tuple with references to all the fields of the
-    object that matter for purposes of equality checking.
+    def __eq__(self):
+        raise NotImplementedError()
 
-    Note that classes which derive from this will only actually be hashable if
-    all the fields in the key tuple are hashable.
-    """
+    def __ne__(self):
+        raise NotImplementedError()
 
-    def __init__(self):
-        raise NotImplementedError() # abstract class
+    __hash__ = None
+
+    def __copy__(self):
+        raise NotImplementedError()
+
+    def __deepcopy__(self, memo):
+        raise NotImplementedError()
+
+class Comparable(BaseClass):
+    """
+    A base class that provides a base implementation of equality testing. A
+    subclass needs only implement #__key__(), which should return a fixed size
+    tuple with references to all the fields of the object that matter for
+    purposes of equality checking.
+    """
 
     def __key__(self):
         raise NotImplementedError()
@@ -57,8 +67,39 @@ class Hashable(FinalAttrs):
     def __eq__(self, other):
         return type(other) == type(self) and self.__key__() == other.__key__()
 
+    def __ne__(self, other):
+        return not self == other
+
+class Hashable(Comparable):
+    """
+    A specialization of Comparable that uses the contents of #__key__() to
+    hash instances. All the fields in the key tuple must also be hashable.
+    """
+
     def __hash__(self):
         return hash(self.__key__())
+
+class Record(Hashable):
+    """
+    A class that can be fully described by the contents of its #__key__(). The
+    elements of the key tuple must be exactly the arguments expected by the
+    constructor, and they must be provided in the same order.
+    """
+    # TODO: Can relax this requirement, by using reflection instead:
+    # http://stackoverflow.com/questions/1500718
+
+    def __repr__(self):
+        key = self.__key__()
+        if len(key) == 1:
+            return '%s(%r)' % (type(self).__name__, key[0])
+        else:
+            return '%s%r' % (type(self).__name__, key)
+
+    def __copy__(self):
+        return type(self)(*(self.__key__()))
+
+    def __deepcopy__(self, memo):
+        return type(self)(*(copy.deepcopy(self.__key__(), memo)))
 
 class IndexDict(list):
     """
@@ -73,7 +114,7 @@ class IndexDict(list):
             self.append(value)
             return len(self) - 1
 
-class MultiDict(FinalAttrs):
+class MultiDict(BaseClass):
     """
     An append-only dictionary, where a single key can be associated with more
     than one value. By default, a key is mapped to nothing.
@@ -164,7 +205,7 @@ class UniqueMultiDict(MultiDict):
     def append_to_container(self, set, value):
         set.add(value)
 
-class UniqueNameMap(FinalAttrs):
+class UniqueNameMap(BaseClass):
     """
     An object used to manage all instances of a given class. An instance of
     this class is expected to be the single point of creation for all objects
@@ -259,7 +300,7 @@ class UniqueNameMap(FinalAttrs):
         """
         return True
 
-class CodePrinter(FinalAttrs):
+class CodePrinter(BaseClass):
     """
     A helper class for pretty-printing C code.
     """
@@ -328,7 +369,7 @@ def mkdir(path):
 def sort_uniq(seq):
     return [g[0] for g in groupby(sorted(seq))]
 
-class DomMap(FinalAttrs):
+class DomMap(BaseClass):
     def __init__(self, map_file):
         self._idx2val = []
         self._val2idx = OrderedMultiDict()
@@ -349,7 +390,7 @@ class DomMap(FinalAttrs):
         for val in self._idx2val:
             yield val
 
-class Edge(Hashable):
+class Edge(Record):
     def __init__(self, symbol, src, dst, index):
         self.symbol = symbol
         self.src = src
@@ -395,7 +436,7 @@ class Edge(Hashable):
         m = re.match(r'(\w+)(?:\[([0-9]+)\])?\.(\w+)-(\w+)', base)
         return Edge(m.group(1), m.group(3), m.group(4), m.group(2))
 
-class Step(FinalAttrs):
+class Step(BaseClass):
     def __init__(self, reverse, edge):
         assert edge.is_terminal()
         self.reverse = reverse
@@ -415,7 +456,7 @@ class Step(FinalAttrs):
         edge = Edge(m.group(2), m.group(3), m.group(4), m.group(5))
         return Step(m.group(1) == 'REV', edge)
 
-class PathTree(FinalAttrs):
+class PathTree(BaseClass):
     def __init__(self, path_xml_file):
         root_node = ET.parse(path_xml_file).getroot()
         assert root_node.tag == 'path'

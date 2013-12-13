@@ -209,7 +209,7 @@ class Symbol(util.Hashable):
     def __str__(self):
         return self.name
 
-class Result(util.FinalAttrs):
+class Result(util.BaseClass):
     """
     An instance of some @Symbol on the LHS of a production.
     """
@@ -237,7 +237,7 @@ class Result(util.FinalAttrs):
                    ('[%s]' % util.idx2char(self.index)))
         return str(self.symbol) + idx_str
 
-class Literal(util.FinalAttrs):
+class Literal(util.BaseClass):
     """
     An instance of some @Symbol on the RHS of a production.
 
@@ -307,7 +307,7 @@ class Relation(util.Hashable):
         params_str = ','.join([util.idx2char(i) for i in range(0, self.arity)])
         return '%s(%s)' % (self.name, params_str)
 
-class Production(util.FinalAttrs):
+class Production(util.BaseClass):
     """
     A production of the input @Grammar.
     """
@@ -411,7 +411,7 @@ class Production(util.FinalAttrs):
             assert not(predicate.parametric and not result.indexed()), \
                 "Indexing mismatch between predicate and result symbol"
 
-class NormalProduction(util.FinalAttrs):
+class NormalProduction(util.BaseClass):
     """
     A normalized @Production, with up to 2 @Literal%s on the RHS.
     """
@@ -638,7 +638,7 @@ class NormalProduction(util.FinalAttrs):
                                   util.idx2char(self.result.index))
         return str(self.result) + ' :: ' + rhs + rel + pred
 
-class Position(util.FinalAttrs):
+class Position(util.BaseClass):
     """
     An enumeration of relative Edge positions in a @NormalProduction.
     """
@@ -657,7 +657,7 @@ class Position(util.FinalAttrs):
         """
         return pos >= Position.FIRST and pos <= Position.SECOND
 
-class ReverseProduction(util.FinalAttrs):
+class ReverseProduction(util.BaseClass):
     """
     A production as seen from the point of view of some element on the RHS.
 
@@ -987,7 +987,7 @@ class ReverseProduction(util.FinalAttrs):
                                    util.idx2char(self.result.index))
         return have + need + rel + pred + ' => ' + str(self.result)
 
-class Grammar(util.FinalAttrs):
+class Grammar(util.BaseClass):
     """
     A representation of the input grammar.
     """
@@ -1555,8 +1555,8 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
 # class, or put base program text in a large triple-quoted string and leave
 # %s's for places to fill in.
 
-cfg_file_help = '.cfg file describing a context-free grammar'
 prog_desc = 'Produce CFL-Reachability solver code for the input grammar.'
+cfg_file_help = '.cfg file describing a context-free grammar'
 out_dir_help = """print generated code and grammar info to this directory
 if cfg_file=foo.cfg, the following files are created:
 - foo.cpp: the generated code
