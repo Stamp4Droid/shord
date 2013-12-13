@@ -188,6 +188,24 @@ class OrderedMultiDict(MultiDict):
     def append_to_container(self, list, value):
         list.append(value)
 
+class SortedMultiDict(MultiDict):
+    """
+    A MultiDict variant where the values associated with each key are ordered
+    using the default ordering.
+
+    The underlying implementation uses a list which is kept ordered as the
+    container for values.
+    """
+
+    def __init__(self):
+        super(SortedMultiDict, self).__init__()
+
+    def empty_container(self):
+        return []
+
+    def append_to_container(self, list, value):
+        bisect.insort(list, value)
+
 class UniqueMultiDict(MultiDict):
     """
     A MultiDict variant where all values associated with a specific key are
@@ -344,7 +362,6 @@ def all_same(elems):
 def all_different(elems):
     return len(elems) == len(set(elems))
 
-
 def idx2char(idx):
     assert idx >= 0 and idx < 26
     return chr(ord('a') + idx)
@@ -356,6 +373,10 @@ def enum(*sequential, **named):
 def switch_dir(src_file, tgt_dir, new_ext):
     base = os.path.basename(os.path.splitext(src_file)[0])
     return os.path.join(tgt_dir, base + '.' + new_ext)
+
+def tail_dir(fname):
+    base = os.path.basename(fname)
+    return base if base != '' else os.path.basename(os.path.dirname(fname))
 
 def mkdir(path):
     try:
