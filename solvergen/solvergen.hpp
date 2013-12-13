@@ -51,7 +51,8 @@
 // HACK: Evil use of the preprocessor, to discard the extra information when
 // path recording is disabled. This covers both function declaration and use.
 #define add_edge(a, b, c, d, e, f, g, h) add_edge(a, b, c, d)
-#define Edge(a, b, c, d, e, f, g, h) Edge(a, b, c, d)
+#define Edge(a, b, c, d, e, f, g, h, i, j) Edge(a, b, c, d)
+#define find_edge(a, b, c, d, e, f) find_edge(a, b, c, d)
 #endif
 
 /* TYPES & SIZES =========================================================== */
@@ -102,6 +103,19 @@ typedef unsigned char RELATION_REF;
 /** The arity of some @Relation in the input @Grammar. */
 typedef unsigned char ARITY;
 
+/** An integer identifying a transition function over the intersected FSM. */
+typedef unsigned short TRANS_FUN_REF;
+// TODO: The FSM parser should output this information.
+/** The 'error' transition function, that doens't compose with anything. */
+#define TRANS_FUN_BOTTOM 0
+/** The 'identity' transition function. */
+#define TRANS_FUN_ID 1
+/**
+ * A special transition function, for terminals not present in the intersected
+ * FSM.
+ */
+#define TRANS_FUN_INVALID USHRT_MAX
+
 /**
  * The maximum amount of memory that the solver will allocate on the heap, in
  * bytes. Attempting to allocate memory beyond this limit will result in a
@@ -140,6 +154,8 @@ struct Edge {
     const bool r_rev;
     /** The length of the path used to construct this Edge. */
     const PATH_LENGTH length;
+    const TRANS_FUN_REF fwd_tfun;
+    const TRANS_FUN_REF bck_tfun;
 #endif
     /**
      * The @Index associated with this Edge. An Edge for @Symbol `S` that
@@ -165,6 +181,7 @@ struct Edge {
 #endif
 public:
     explicit Edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
+		  TRANS_FUN_REF fwd_tfun, TRANS_FUN_REF bck_tfun,
 		  Edge* l_edge, bool l_rev, Edge* r_edge, bool r_rev);
 };
 
@@ -846,7 +863,8 @@ OutEdgeSet::View edges_between(NODE_REF from, NODE_REF to, EDGE_KIND kind);
  * @return The single Edge identified by the provided features, if there exists
  * one, otherwise @e NULL.
  */
-Edge *find_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index);
+Edge *find_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
+		TRANS_FUN_REF fwd_tfun, TRANS_FUN_REF bck_tfun);
 
 /**
  * Peform a selection on all the columns of a @Relation except @a proj_col, and
@@ -949,6 +967,14 @@ const char *ref2rel(RELATION_REF ref);
 
 /** Return the arity of the @Relation with reference number @a ref. */
 ARITY rel_arity(RELATION_REF ref);
+
+TRANS_FUN_REF num_trans_funs();
+
+extern TRANS_FUN_REF compose_tab[];
+
+TRANS_FUN_REF trans_fun_for(EDGE_KIND kind, bool reverse);
+
+bool is_accepting(TRANS_FUN_REF tfun);
 
 /**
  * @}

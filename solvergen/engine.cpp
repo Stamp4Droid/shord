@@ -348,13 +348,22 @@ const std::set<INDEX>& rel_select(RELATION_REF ref, ARITY proj_col,
     return rel_indices[ref][proj_col].get(std::make_pair(val_a, val_b));
 }
 
+/* TRANSITION FUNCTION HANDLING ============================================ */
+
+TRANS_FUN_REF compose(TRANS_FUN_REF f, TRANS_FUN_REF g) {
+    assert(f < num_trans_funs() && g < num_trans_funs());
+    return compose_tab[f * num_trans_funs() + g];
+}
+
 /* EDGE OPERATIONS ========================================================= */
 
 Edge::Edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
+	   TRANS_FUN_REF fwd_tfun, TRANS_FUN_REF bck_tfun,
 	   Edge* l_edge, bool l_rev, Edge* r_edge, bool r_rev)
     : from(from), to(to), kind(kind), index(index)
 #ifdef PATH_RECORDING
-    , l_edge(l_edge), l_rev(l_rev), r_edge(r_edge), r_rev(r_rev),
+    , fwd_tfun(fwd_tfun), bck_tfun(bck_tfun),
+      l_edge(l_edge), l_rev(l_rev), r_edge(r_edge), r_rev(r_rev),
       length(is_terminal(kind) ? static_min_length(kind)
 	     : (l_edge == NULL ? 0 : l_edge->length) +
 	       (r_edge == NULL ? 0 : r_edge->length))
@@ -362,6 +371,7 @@ Edge::Edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 {
     assert((is_parametric(kind)) ^ (index == INDEX_NONE));
 #ifdef PATH_RECORDING
+    // TODO: Verify that at least one of the regular directions is valid.
     assert(l_edge != NULL || r_edge == NULL);
 #endif
 }
@@ -372,8 +382,13 @@ Edge::Edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 // TODO: Don't need to perform the field checks; Edges are uniqued (should
 // still use this function instead of a naked pointer check).
 bool edge_equals(Edge *a, Edge *b) {
-    return a == b || ((a->from == b->from) && (a->to == b->to) &&
-		      (a->kind == b->kind) && (a->index == b->index));
+    return a == b || ((a->from == b->from) && (a->to == b->to)
+		      && (a->kind == b->kind) && (a->index == b->index)
+#ifdef PATH_RECORDING
+		      && (a->fwd_tfun == b->fwd_tfun)
+		      && (a->bck_tfun == b->bck_tfun)
+#endif
+		      );
 }
 
 bool same_arc(Edge *a, Edge *b) {
@@ -553,7 +568,8 @@ OutEdgeSet::View edges_between(NODE_REF from, NODE_REF to, EDGE_KIND kind) {
     return get_out_set(from, kind).view(to, INDEX_NONE);
 }
 
-Edge *find_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index) {
+Edge *find_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
+		TRANS_FUN_REF fwd_tfun, TRANS_FUN_REF bck_tfun) {
     assert(!is_predicate(kind));
     assert((index == INDEX_NONE) ^ is_parametric(kind));
     // We search on the set of outgoing edges of the source node, because it's
@@ -562,14 +578,21 @@ Edge *find_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index) {
 	// We stop at the first compatible Edge; the view can only contain one
 	// such element anyway.
 	// TODO: Could verify this, but we'd be performing useless work.
+#ifdef PATH_RECORDING
+	if (e->fwd_tfun == fwd_tfun && e->bck_tfun == bck_tfun) {
+	    return e;
+	}
+#else
 	return e;
+#endif
     }
     return NULL;
 }
 
 // Return true iff the Edge wasn't already present in the graph.
 bool graph_add(Edge* e) {
-    if (find_edge(e->from, e->to, e->kind, e->index) != NULL) {
+    if (find_edge(e->from, e->to, e->kind, e->index, e->fwd_tfun,
+		  e->bck_tfun) != NULL) {
 	return false;
     }
     nodes[e->to].in[e->kind].add(e);
@@ -579,9 +602,36 @@ bool graph_add(Edge* e) {
 
 void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	      Edge* l_edge, bool l_rev, Edge* r_edge, bool r_rev) {
-    Edge* e = new Edge(from, to, kind, index, l_edge, l_rev, r_edge, r_rev);
 #ifdef PATH_RECORDING
-    if (is_terminal(e->kind)) {
+    TRANS_FUN_REF fwd_tfun, bck_tfun;
+    if (l_edge == NULL) {
+	assert(!l_rev && r_edge == NULL);
+	if (is_terminal(kind)) {
+	    fwd_tfun = trans_fun_for(kind, false);
+	    bck_tfun = trans_fun_for(kind, true);
+	} else {
+	    // non-terminal with empty production
+	    fwd_tfun = TRANS_FUN_ID;
+	    bck_tfun = TRANS_FUN_ID;
+	}
+    } else if (r_edge == NULL) {
+	fwd_tfun = l_rev ? l_edge->bck_tfun : l_edge->fwd_tfun;
+	bck_tfun = l_rev ? l_edge->fwd_tfun : l_edge->bck_tfun;
+    } else {
+	fwd_tfun = compose(l_rev ? l_edge->bck_tfun : l_edge->fwd_tfun,
+			   r_rev ? r_edge->bck_tfun : r_edge->fwd_tfun);
+	bck_tfun = compose(r_rev ? r_edge->fwd_tfun : r_edge->bck_tfun,
+			   l_rev ? l_edge->fwd_tfun : l_edge->bck_tfun);
+    }
+    if (fwd_tfun == TRANS_FUN_BOTTOM && bck_tfun == TRANS_FUN_BOTTOM) {
+	return;
+    }
+#endif
+
+    Edge* e = new Edge(from, to, kind, index, fwd_tfun, bck_tfun,
+		       l_edge, l_rev, r_edge, r_rev);
+#ifdef PATH_RECORDING
+    if (is_terminal(kind)) {
 #endif
 	if (!graph_add(e)) {
 	    delete e;
@@ -1170,6 +1220,11 @@ void print_paths_for_kind(EDGE_KIND k, unsigned int num_paths,
     for (NODE_REF n = 0; n < num_nodes(); n++) {
 	const char *tgt_name = node_names.name_of(n).c_str();
 	for (Edge *e : edges_to(n, k)) {
+#ifdef PATH_RECORDING
+	    if (!is_accepting(e->fwd_tfun)) {
+		continue;
+	    }
+#endif
 	    const char *src_name = node_names.name_of(e->from).c_str();
 	    // TODO: Quote input strings before printing to XML.
 	    fprintf(f, "<edge from='%s' to='%s'>\n", src_name, tgt_name);

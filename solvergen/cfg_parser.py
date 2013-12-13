@@ -3,6 +3,7 @@
 
 import argparse
 from argparse import RawTextHelpFormatter as RawFormatter
+import fsm
 import os
 import re
 import string
@@ -1209,7 +1210,7 @@ class Grammar(util.BaseClass):
                 # parameter of the relation.
                 self._param_chars.index(idx_char))
 
-def emit_solver(grammar, code_out):
+def emit_solver(grammar, trans_tab, code_out):
     """
     Generate the solver code for the input grammar. Accepts File-like objects
     for its output parameters.
@@ -1424,6 +1425,48 @@ def emit_solver(grammar, code_out):
 
     emit_derivs_or_reachable(grammar, pr, False)
 
+    pr.write('TRANS_FUN_REF num_trans_funs() {')
+    pr.write('return %s;' % len(trans_tab.funs))
+    pr.write('}')
+    pr.write('')
+
+    pr.write('TRANS_FUN_REF compose_tab[%s] = {' % len(trans_tab.funs)**2)
+    pr.write(','.join([str(fidx)
+                       for row in trans_tab.comp_tab for fidx in row]))
+    pr.write('};')
+    pr.write('')
+
+    pr.write('TRANS_FUN_REF trans_fun_for(EDGE_KIND kind, bool reverse) {')
+    pr.write('switch (kind) {')
+    for s in grammar.main_support():
+        pr.write('case %s: /* %s */' % (s.kind, s))
+        pr.write('if (reverse) {')
+        pr.write('return %s;'
+                 % trans_tab.lit2fidx[fsm.Literal(True, s.name)])
+        pr.write('} else {')
+        pr.write('return %s;'
+                 % trans_tab.lit2fidx[fsm.Literal(False, s.name)])
+        pr.write('}')
+    for s in grammar.pred_support():
+        pr.write('case %s: /* %s */' % (s.kind, s))
+        pr.write('return TRANS_FUN_INVALID;')
+    pr.write('default: assert(false);')
+    pr.write('}')
+    pr.write('}')
+    pr.write('')
+
+    pr.write('bool is_accepting(TRANS_FUN_REF tfun) {')
+    pr.write('switch (tfun) {')
+    for acc_fidx in trans_tab.accepting:
+        pr.write('case %s: return true;' % acc_fidx)
+    pr.write('default: return false;')
+    pr.write('}')
+    pr.write('}')
+    pr.write('')
+
+# XXX: We assume that predicate matching isn't affected by any regular
+# dimensions, and we've temporarily given up on post-hoc path calculation, so
+# these functions currently ignore the regular dimension.
 def emit_derivs_or_reachable(grammar, pr, emit_derivs):
     if emit_derivs:
         pr.write('std::vector<Derivation> all_derivations(Edge* e) {')
@@ -1462,8 +1505,8 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
             continue
         if e_symbol.is_terminal():
             if not emit_derivs:
-                pr.write('if (find_edge(from, to, %s, index) != NULL) {'
-                         % e_symbol.kind)
+                pr.write('if (find_edge(from, to, %s, index, ' % e_symbol.kind
+                         + 'TRANS_FUN_INVALID, TRANS_FUN_INVALID) != NULL) {')
                 pr.write('return true;')
                 pr.write('}')
             pr.write('break;')
@@ -1492,7 +1535,8 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
                 pr.write('for (Edge* l : edges_between(%s, %s, %s)) {'
                          % (out_src, out_tgt, p.left.symbol.kind))
             else:
-                pr.write('if ((l = find_edge(%s, %s, %s, %s)) != NULL) {'
+                pr.write(('if ((l = find_edge(%s, %s, %s, %s, ' +
+                          'TRANS_FUN_INVALID, TRANS_FUN_INVALID)) != NULL) {')
                          % (out_src, out_tgt, p.left.symbol.kind,
                             'INDEX_NONE' if out_idx is None else out_idx))
             out_cond = p.outer_condition()
@@ -1515,7 +1559,9 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
                     pr.write('for (Edge* r : edges_between(%s, %s, %s)) {'
                              % (in_src, in_tgt, p.right.symbol.kind))
                 else:
-                    pr.write('if ((r = find_edge(%s, %s, %s, %s)) != NULL) {'
+                    pr.write(('if ((r = find_edge(%s, %s, %s, %s, ' +
+                              'TRANS_FUN_INVALID, TRANS_FUN_INVALID)) ' +
+                              '!= NULL) {')
                              % (in_src, in_tgt, p.right.symbol.kind,
                                 'INDEX_NONE' if in_idx is None else in_idx))
                 in_loop_header = p.inner_loop_header()
@@ -1557,6 +1603,8 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
 
 prog_desc = 'Produce CFL-Reachability solver code for the input grammar.'
 cfg_file_help = '.cfg file describing a context-free grammar'
+fsms_dir_help = \
+    'directory of FSMs forming the regular grammar to intersect with'
 out_dir_help = """print generated code and grammar info to this directory
 if cfg_file=foo.cfg, the following files are created:
 - foo.cpp: the generated code
@@ -1570,33 +1618,42 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=prog_desc,
                                      formatter_class=RawFormatter)
     parser.add_argument('cfg_file', help=cfg_file_help)
+    parser.add_argument('fsms_dir', help=fsms_dir_help)
     parser.add_argument('out_dir', nargs='?', help=out_dir_help)
     args = parser.parse_args()
 
     grammar = Grammar(args.cfg_file)
+    (min_fsm, trans_tab) = fsm.parse_dir(args.fsms_dir)
+    cfg_terms = set([s.name for s in grammar.main_support()])
+    rg_terms = set([lit.symbol for lit in min_fsm.literals()])
+    assert (rg_terms == cfg_terms), "Alphabet mismatch between CFG and RG"
+
     if args.out_dir is not None:
-        code_out = util.switch_dir(args.cfg_file, args.out_dir, 'cpp')
+        cfg_name = os.path.splitext(os.path.basename(args.cfg_file))[0]
+        rg_name = util.tail_dir(args.fsms_dir)
+        intxn_name = '%s^%s' % (cfg_name, rg_name)
+        code_out = os.path.join(args.out_dir, '%s.cpp' % intxn_name)
         with open(code_out, 'w') as f:
-            emit_solver(grammar, f)
-        terms_out = util.switch_dir(args.cfg_file, args.out_dir, 'terms.dat')
+            emit_solver(grammar, trans_tab, f)
+        terms_out = os.path.join(args.out_dir, '%s.terms.dat' % intxn_name)
         with open(terms_out, 'w') as f:
             for s in grammar.symbols:
                 if s.is_terminal():
                     f.write('%s\n' % s)
-        rels_out = util.switch_dir(args.cfg_file, args.out_dir, 'rels.dat')
+        rels_out = os.path.join(args.out_dir, '%s.rels.dat' % intxn_name)
         with open(rels_out, 'w') as f:
             for r in grammar.rels:
                 if r.ref == 0:
                     continue
                 f.write('%s\n' % r.name)
-        preds_out = util.switch_dir(args.cfg_file, args.out_dir, 'preds.dat')
+        preds_out = os.path.join(args.out_dir, '%s.preds.dat' % intxn_name)
         with open(preds_out, 'w') as f:
             for s in grammar.symbols:
                 if s.is_predicate():
                     f.write('%s\n' % s)
-        supp_out = util.switch_dir(args.cfg_file, args.out_dir, 'supp.dat')
+        supp_out = os.path.join(args.out_dir, '%s.supp.dat' % intxn_name)
         with open(supp_out, 'w') as f:
             for supp_s in grammar.pred_support():
                 f.write('%s\n' % supp_s)
     else:
-        emit_solver(grammar, sys.stdout)
+        emit_solver(grammar, trans_tab, sys.stdout)
