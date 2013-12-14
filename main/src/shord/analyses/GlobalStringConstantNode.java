@@ -2,7 +2,7 @@ package shord.analyses;
 
 import soot.RefType;
 
-public class GlobalStringConstantNode extends AllocNode
+public class GlobalStringConstantNode extends GlobalAllocNode
 {
 	public GlobalStringConstantNode()
 	{

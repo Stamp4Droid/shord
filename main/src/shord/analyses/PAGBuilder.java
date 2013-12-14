@@ -69,7 +69,7 @@ import java.util.*;
 */
 @Chord(name="base-java", 
 	   produces={"M", "Z", "I", "H", "V", "T", "F", "U",
-				 "Alloc", "Assign", 
+				 "GlobalAlloc", "Alloc", "Assign", 
 				 "Load", "Store", 
 				 "LoadStat", "StoreStat", 
 				 "MmethArg", "MmethRet", 
@@ -89,7 +89,7 @@ import java.util.*;
                  "ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM"},
        namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U", "S"},
        types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class},
-	   namesOfSigns = { "Alloc", "Assign", 
+	   namesOfSigns = { "GlobalAlloc", "Alloc", "Assign", 
 						"Load", "Store", 
 						"LoadStat", "StoreStat", 
 						"MmethArg", "MmethRet", 
@@ -107,7 +107,7 @@ import java.util.*;
 						"SpecIM", "StatIM", "VirtIM",
 						"SubSig", "Dispatch",
 						"ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM" },
-	   signs = { "V0,H0:V0_H0", "V0,V1:V0xV1",
+	   signs = { "V0,H0:V0_H0", "V0,H0:V0_H0", "V0,V1:V0xV1",
 				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
 				 "V0,F0:F0_V0", "F0,V0:F0_V0",
 				 "M0,Z0,V0:M0_V0_Z0", "M0,Z0,V0:M0_V0_Z0",
@@ -128,6 +128,7 @@ import java.util.*;
 	   )
 public class PAGBuilder extends JavaAnalysis
 {
+	private ProgramRel relGlobalAlloc;//(l:V,h:H)
 	private ProgramRel relAlloc;//(l:V,h:H)
 	private ProgramRel relAssign;//(l:V,r:V)
 	private ProgramRel relLoad;//(l:V,b:V,f:F)
@@ -173,12 +174,16 @@ public class PAGBuilder extends JavaAnalysis
 	private FastHierarchy fh;
 	private NumberedSet stubMethods;
 
-	//private GlobalStringConstantNode gscn = new GlobalStringConstantNode();
+	private Map<Type,StubAllocNode> typeToStubAllocNode = new HashMap();
+
+	private GlobalStringConstantNode gscn = new GlobalStringConstantNode();
 
 	public static final boolean ignoreStubs = false;
 
 	void openRels()
 	{
+		relGlobalAlloc = (ProgramRel) ClassicProject.g().getTrgt("GlobalAlloc");
+		relGlobalAlloc.zero();
 		relAlloc = (ProgramRel) ClassicProject.g().getTrgt("Alloc");
 		relAlloc.zero();
 		relAssign = (ProgramRel) ClassicProject.g().getTrgt("Assign");
@@ -246,6 +251,7 @@ public class PAGBuilder extends JavaAnalysis
 	
 	void saveRels()
 	{
+		relGlobalAlloc.save();
 		relAlloc.save();
 		relAssign.save();
 		relLoad.save();
@@ -280,6 +286,12 @@ public class PAGBuilder extends JavaAnalysis
 		relMmethPrimRet.save();
 		relIinvkPrimRet.save();
 		relIinvkPrimArg.save();
+	}
+
+	void GlobalAlloc(VarNode l, GlobalAllocNode h)
+	{
+		assert l != null;
+		relGlobalAlloc.add(l, h);
 	}
 
 	void Alloc(VarNode l, AllocNode h)
@@ -509,7 +521,7 @@ public class PAGBuilder extends JavaAnalysis
 						if(!st.isConcrete())
 							continue;
 						assert !st.isInterface();
-						StubAllocNode n = new StubAllocNode(st.getType(), method);
+						StubAllocNode n = stubAllocNodeFor(st.getType());
 						domH.add(n);
 						stubAllocNodes.add(n);
 						//System.out.println("OO "+method+" "+n);
@@ -610,28 +622,16 @@ public class PAGBuilder extends JavaAnalysis
 			if(!method.isConcrete())
 				return;
 
-			Collection allocNodes = isStub ? stubAllocNodes : stmtToAllocNode.values();
-			for(Object o : allocNodes){
-				AllocNode an = (AllocNode) o;
-				Type type = an.getType();
-				
-				relHT.add(an, type);
-				relMH.add(method, an);
-
-				Iterator<Type> typesIt = Program.g().getTypes().iterator();
-				while(typesIt.hasNext()){
-					Type varType = typesIt.next();
-					if(canStore(type, varType))
-						relHTFilter.add(an, varType);
-				}
-			}
-
 			if(isStub) {
 				for(StubAllocNode an : stubAllocNodes)
-					Alloc(retVar, an);
+					GlobalAlloc(retVar, an);
 				return;
+			} else {
+				for(SiteAllocNode an : stmtToAllocNode.values()){
+					populateHT_HTFilter(an);
+					relMH.add(method, an);
+				}
 			}
-
 
 			for(Map.Entry<Local,LocalVarNode> e : localToVarNode.entrySet()){
 				LocalVarNode varNode = e.getValue();
@@ -781,12 +781,9 @@ public class PAGBuilder extends JavaAnalysis
 				Value leftOp = as.getLeftOp();
 				Value rightOp = as.getRightOp();
 
-				/*
 				if(rightOp instanceof StringConstant){
-				Alloc(nodeFor((Local) leftOp), gscn);
-				} else 
-				*/
-				if(rightOp instanceof AnyNewExpr){
+					GlobalAlloc(nodeFor((Local) leftOp), gscn);
+				} else if(rightOp instanceof AnyNewExpr){
 					AllocNode an = stmtToAllocNode.get(s);
 					Alloc(nodeFor((Local) leftOp), an);
 					s.addTag(containerTag);
@@ -945,7 +942,7 @@ public class PAGBuilder extends JavaAnalysis
 		domI = (DomI) ClassicProject.g().getTrgt("I");
 		domU = (DomU) ClassicProject.g().getTrgt("U");
 
-		//domH.add(gscn);
+		domH.add(gscn);
 
 		Iterator mIt = Program.g().scene().getReachableMethods().listener();
 		while(mIt.hasNext()){
@@ -1077,24 +1074,14 @@ public class PAGBuilder extends JavaAnalysis
 		relDispatch.save();
 	}
 
-	/*
-	void initGlobalStringConstantNode()
-	{
-		Type type = gscn.getType();
-		relHT.add(gscn, type);
-		Iterator<Type> typesIt = Program.g().getTypes().iterator();
-		while(typesIt.hasNext()){
-			Type varType = typesIt.next();
-			if(canStore(type, varType))
-				relHTFilter.add(gscn, varType);
-		}		
-	}*/
-
 	void populateRelations(List<MethodPAGBuilder> mpagBuilders)
 	{
 		openRels();
 		
-		//initGlobalStringConstantNode();
+		for(StubAllocNode an : typeToStubAllocNode.values()){
+			populateHT_HTFilter(an);
+		}
+		populateHT_HTFilter(gscn);
 
 		for(MethodPAGBuilder mpagBuilder : mpagBuilders)
 			mpagBuilder.pass2();
@@ -1108,6 +1095,19 @@ public class PAGBuilder extends JavaAnalysis
 		populateCallgraph();
 	}
 
+	void populateHT_HTFilter(AllocNode an)
+	{
+		Type type = an.getType();			
+		relHT.add(an, type);
+		
+		Iterator<Type> typesIt = Program.g().getTypes().iterator();
+		while(typesIt.hasNext()){
+			Type varType = typesIt.next();
+			if(canStore(type, varType))
+				relHTFilter.add(an, varType);
+		}
+	}
+	
     void populateMisc()
     {
         ProgramRel relClassT = (ProgramRel) ClassicProject.g().getTrgt("ClassT");
@@ -1170,6 +1170,16 @@ public class PAGBuilder extends JavaAnalysis
 		//if(calleeClass.getName().equals("java.lang.String"))
 		//	return true;
 		return false;
+	}
+
+	private StubAllocNode stubAllocNodeFor(Type type)
+	{
+		StubAllocNode node = typeToStubAllocNode.get(type);
+		if(node == null){
+			node = new StubAllocNode(type);
+			typeToStubAllocNode.put(type, node);
+		}
+		return node;
 	}
 
 	public void run()

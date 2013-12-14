@@ -15,6 +15,7 @@
 
 Assign(v:V,u:V)     input   # v = u
 Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
+GlobalAlloc(v:V,h:H) input   # v is the lhs in the new stmt h
 Load(y:V,x:V,f:F)   input   # y = x.f
 Store(u:V,f:F,v:V)  input   # u.f = v
 LoadStat(y:V,f:F)   input   # y = f
@@ -52,6 +53,7 @@ return(u,v,i) :- chaIM(i,m), MmethRet(m,z,v), IinvkRet(i,z,u).
 ciTypeFilter(v,h) :- VT(v,t), HTFilter(h,t).
 
 ipt(v,h) :- Alloc(v,h).
+ipt(v,h) :- GlobalAlloc(v,h).
 ipt(v,h) :- ipt(u,h), Assign(v,u), ciTypeFilter(v,h).
 ipt(u,h) :- ipt(v,h), param(u,v,_), ciTypeFilter(u,h). 
 ipt(u,h) :- ipt(v,h), return(u,v,_), ciTypeFilter(u,h).

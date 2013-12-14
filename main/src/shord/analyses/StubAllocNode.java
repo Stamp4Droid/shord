@@ -7,23 +7,15 @@ import soot.SootMethod;
  * @author Yu Feng
  * @author Saswat Anand
  */
-public class StubAllocNode extends AllocNode
+public class StubAllocNode extends GlobalAllocNode
 {
-	private final SootMethod method;
-
-	public StubAllocNode(Type t, SootMethod m)
+	public StubAllocNode(Type t)
 	{
 		super(t);
-		this.method = m;
-	}
-
-	public SootMethod getMethod()
-	{
-		return method;
 	}
 
 	public String toString()
 	{
-		return "StubAlloc$" + type + "@" + method;
+		return "StubAlloc$" + type;
 	}
 }

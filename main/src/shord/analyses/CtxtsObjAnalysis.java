@@ -48,10 +48,11 @@ import chord.bddbddb.Rel.RelView;
 /**
  * Analysis for pre-computing abstract contexts.
  * @author Yu Feng (yufeng@cs.stanford.edu)
+ * @author Saswat Anand
  */
 @Chord(name = "ctxts-obj-java",
        consumes = { "MI", "MH", "ci_pt", "StatIM", "Stub"},
-       produces = { "C", "CC", "CH", "CI", "CM"},
+       produces = { "C", "CC", "CH", "CI"},
        namesOfTypes = { "C" },
        types = { DomC.class }
 )
@@ -142,6 +143,11 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         int numH = domH.size();
         HtoM = new int[numH];
         HtoQ = new AllocNode[numH];
+
+		for (int hIdx = 0; hIdx < numA; hIdx++) {
+			HtoQ[hIdx] = domH.get(hIdx);
+		}
+
         final ProgramRel relMH = (ProgramRel) ClassicProject.g().getTrgt("MH");		
         relMH.load();
         Iterable<Pair<SootMethod,AllocNode>> res1 = relMH.getAry2ValTuples();
@@ -151,7 +157,6 @@ public class CtxtsObjAnalysis extends JavaAnalysis
             int mIdx = domM.indexOf(meth);
             int hIdx = domH.indexOf(alloc);
             HtoM[hIdx] = mIdx;
-            HtoQ[hIdx] = alloc;
         }
         relMH.close();
         relIpt.load();
@@ -189,18 +194,22 @@ public class CtxtsObjAnalysis extends JavaAnalysis
             }
         }
 
-        for (int hIdx = 1; hIdx < numA; hIdx++) {
-			int mIdx = HtoM[hIdx];
+        for (int hIdx = 0; hIdx < numA; hIdx++) {
 			AllocNode alloc = HtoQ[hIdx];
-
-            Set<Ctxt> ctxts = methToCtxts[mIdx];
-            assert(ctxts != null);
-            if(ctxts == null) continue;
-            for (Ctxt oldCtxt : ctxts) {
-                Object[] oldElems = oldCtxt.getElems();
-                Object[] newElems = combine(K, alloc, oldElems);
-                domC.setCtxt(newElems);
-            }
+            if(alloc instanceof GlobalAllocNode) {
+				Object[] newElems = combine(K, alloc, emptyElems);
+				domC.setCtxt(newElems);
+			} else {
+				int mIdx = HtoM[hIdx];
+				Set<Ctxt> ctxts = methToCtxts[mIdx];
+				assert(ctxts != null);
+				if(ctxts == null) continue;
+				for (Ctxt oldCtxt : ctxts) {
+					Object[] oldElems = oldCtxt.getElems();
+					Object[] newElems = combine(K, alloc, oldElems);
+					domC.setCtxt(newElems);
+				}
+			}
         }
         domC.save();
 
@@ -233,22 +242,25 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         ////CH
         relCH.zero();
 
-        for (int hIdx = 0; hIdx < numA; hIdx++) {//why chord uses 1?
-            int mIdx = HtoM[hIdx];
+        for (int hIdx = 0; hIdx < numA; hIdx++) {
 			AllocNode alloc = HtoQ[hIdx];
 
-            ////ignore the context of gString.
-            //if(alloc instanceof GlobalStringNode) continue;
-
-            Set<Ctxt> ctxts = methToCtxts[mIdx];
-            assert(ctxts != null);
-            for (Ctxt oldCtxt : ctxts) {
-                Object[] oldElems = oldCtxt.getElems();
-                Object[] newElems = combine(K, alloc, oldElems);
-                Ctxt newCtxt = domC.setCtxt(newElems);
-                relCC.add(oldCtxt, newCtxt);
-                relCH.add(newCtxt, alloc);
-            }
+            if(alloc instanceof GlobalAllocNode) {
+				Object[] newElems = combine(K, alloc, emptyElems);
+				Ctxt newCtxt = domC.setCtxt(newElems);
+				relCH.add(newCtxt, alloc);
+			} else {
+				int mIdx = HtoM[hIdx];
+				Set<Ctxt> ctxts = methToCtxts[mIdx];
+				assert(ctxts != null);
+				for (Ctxt oldCtxt : ctxts) {
+					Object[] oldElems = oldCtxt.getElems();
+					Object[] newElems = combine(K, alloc, oldElems);
+					Ctxt newCtxt = domC.setCtxt(newElems);
+					relCC.add(oldCtxt, newCtxt);
+					relCH.add(newCtxt, alloc);
+				}
+			}
         }
         relCH.save();
 
@@ -322,10 +334,11 @@ public class CtxtsObjAnalysis extends JavaAnalysis
                     TIntArrayList rcvSites = new TIntArrayList();
                     ThisVarNode thisVar = methToThis.get(meth);
                     Iterable<Object> pts = getPointsTo(thisVar);
-                    for (Object inst : pts) {
-                        int hIdx = domH.indexOf(inst);
-                        predMeths.add(domM.get(HtoM[hIdx]));
+                    for (Object alloc : pts) {
+                        int hIdx = domH.indexOf(alloc);
                         rcvSites.add(hIdx);
+						if(!(alloc instanceof GlobalAllocNode))
+							predMeths.add(domM.get(HtoM[hIdx]));
                     }
                     methToRcvSites[mIdx] = rcvSites;
                     methToPredsMap.put(meth, predMeths);
@@ -446,14 +459,20 @@ public class CtxtsObjAnalysis extends JavaAnalysis
             for (int i = 0; i < n; i++) {
                 int hIdx = rcvs.get(i);
                 Object rcv = HtoQ[hIdx];
-                int clrIdx = HtoM[hIdx];
-                Set<Ctxt> rcvCtxts = methToCtxts[clrIdx];
-                for (Ctxt oldCtxt : rcvCtxts) {
-                    Object[] oldElems = oldCtxt.getElems();
-                    Object[] newElems = combine(K, rcv, oldElems);
-                    Ctxt newCtxt = domC.setCtxt(newElems);
-                    newCtxts.add(newCtxt);
-                }
+				if(rcv instanceof GlobalAllocNode){
+					Object[] newElems = combine(K, rcv, emptyElems);
+					Ctxt newCtxt = domC.setCtxt(newElems);
+					newCtxts.add(newCtxt);
+				} else {
+					int clrIdx = HtoM[hIdx];
+					Set<Ctxt> rcvCtxts = methToCtxts[clrIdx];
+					for (Ctxt oldCtxt : rcvCtxts) {
+						Object[] oldElems = oldCtxt.getElems();
+						Object[] newElems = combine(K, rcv, oldElems);
+						Ctxt newCtxt = domC.setCtxt(newElems);
+						newCtxts.add(newCtxt);
+					}
+				}
             }
         }
         return newCtxts;
