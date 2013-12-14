@@ -70,16 +70,18 @@ ICM(i:I,c:C,m:M)
 pt(c,v,o) :- Assign(v,u), pt(c,u,o), typeFilter(v,o).
 
 reachableCI(c,i) :- MI(m,i), reachableCM(c,m).
+
+CIC(c,i,d) :- CC(c,d), CI(d,i).
+
 DIC(c,i,o) :- IinvkArg(i,0,v), pt(c,v,o).
 CICM(c,i,o,m) :- reachableCI(c,i), DIC(c,i,o), ICM(i,o,m). 
 CICM(c,i,d,m) :- reachableCI(c,i), StatIM(i,m), CIC(c,i,d).
 CICM(c,i,o,m) :- reachableCI(c,i), SpecIM(i,m), DIC(c,i,o).
 
-DVDV(d,u,c,v) :- param(u,v,i), CICM(c,i,d,m), MV(m,u).
-DVDV(c,u,d,v) :- return(u,v,i), CICM(c,i,d,m), MV(m,v).
+DVDV(d,u,c,v) :- CICM(c,i,d,m), MV(m,u), param(u,v,i).
+DVDV(c,u,d,v) :- CICM(c,i,d,m), MV(m,v), return(u,v,i).
+
 pt(c,u,o) :- DVDV(c,u,d,v), pt(d,v,o), typeFilter(u,o).
-
-
 
 pt(c,v,o) :- Alloc(v,h), MV(m,v), reachableCM(c,m), CC(c,o), CH(o,h).
 
@@ -99,4 +101,4 @@ reachableCM(0,0).
 reachableCM(0,m) :- ClinitTM(t,m), reachableT(t).
 reachableCM(c,m) :- CICM(_,_,c,m). 
 
-
+ICM(i,o,m2) :- VirtIM(i,m1), SubSig(m1,s), Dispatch(t,s,m2), HT(h,t), CH(o,h).
