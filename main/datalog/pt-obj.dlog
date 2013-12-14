@@ -17,13 +17,14 @@
 #.bddvarorder C0xC1_V0xV1_H0_F0_I0_T0_T1_M0_S0_M1_Z0
 .bddvarorder F0_I0xM0xM1_S0_T0_V0xV1_T1_H0_C0xC1xC2_Z0
 
-Assign(v:V,u:V)     input   # v = u
-Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
-Load(y:V,x:V,f:F)   input   # y = x.f
-Store(u:V,f:F,v:V)  input   # u.f = v
-LoadStat(y:V,f:F)   input   # y = f
-StoreStat(f:F,v:V)  input   # f = v
-param(u:V,v:V,i:I)  input   # u is the formal parameter, v is actual arg, i is invocation stmt
+Assign(v:V,u:V)      input   # v = u
+Alloc(v:V,h:H)       input   # v is the lhs in the new stmt h
+GlobalAlloc(v:V,h:H) input   # v is the lhs in the new stmt h
+Load(y:V,x:V,f:F)    input   # y = x.f
+Store(u:V,f:F,v:V)   input   # u.f = v
+LoadStat(y:V,f:F)    input   # y = f
+StoreStat(f:F,v:V)   input   # f = v
+param(u:V,v:V,i:I)   input   # u is the formal parameter, v is actual arg, i is invocation stmt
 return(u:V,v:V,i:I) input   # u is the lhs at callsite, v is the return var, i is invocation stmt
 typeFilter(v:V,o:C) input   # type wise, v can point-to o
 IinvkArg(i:I,n:Z,v:V) input
@@ -57,7 +58,7 @@ DIC(c:C,i:I,c:C)
 DVDV(c:C,u:V,d:C,v:V) 
 reachableCI(c:C,i:I) 
 reachableCM(c:C,m:M)   output
-CICM(d:C,i:I,c:C,m:M)   # i in cotext d calls method m in context c.
+CICM(d:C,i:I,c:C,m:M)   output # i in cotext d calls method m in context c.
 pt(c:C,v:V,o:C)    output # (c,v) points-to o
 fpt(o1:C,f:F,o2:C) output
 fptStat(f:F,o:C) 
@@ -84,6 +85,7 @@ DVDV(c,u,d,v) :- CICM(c,i,d,m), MV(m,v), return(u,v,i).
 pt(c,u,o) :- DVDV(c,u,d,v), pt(d,v,o), typeFilter(u,o).
 
 pt(c,v,o) :- Alloc(v,h), MV(m,v), reachableCM(c,m), CC(c,o), CH(o,h).
+pt(c,v,o) :- GlobalAlloc(v,h), MV(m,v), reachableCM(c,m), CH(o,h).
 
 fpt(o1,f,o2) :- pt(c,v,o2), Store(u,f,v), pt(c,u,o1).
 pt(c,y,o2) :- pt(c,x,o1), Load(y,x,f), fpt(o1,f,o2). 
