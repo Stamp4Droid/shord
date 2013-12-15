@@ -17,6 +17,7 @@
 
 Assign(v:V,u:V)     input   # v = u
 Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
+GlobalAlloc(v:V,h:H) input   # v is the lhs in the new stmt h
 Load(y:V,x:V,f:F)   input   # y = x.f
 Store(u:V,f:F,v:V)  input   # u.f = v
 LoadStat(y:V,f:F)   input   # y = f
@@ -82,6 +83,7 @@ interprocAssign(u,v) :- ci_IM(i,m), IinvkRet(i,z,u), MmethRet(m,z,v).
 
 ci_pt(u,o) :- interprocAssign(u,v), ci_pt(v,o), ci_typeFilter(u,o).
 
+ci_pt(v,h) :- GlobalAlloc(v,h), MV(m,v), ci_reachableM(m).
 ci_pt(v,h) :- Alloc(v,h), MV(m,v), ci_reachableM(m).
 ci_pt(v,o) :- ci_pt(u,o), Assign(v,u), ci_typeFilter(v,o).
 ci_fpt(o1,f,o2) :- ci_pt(v,o2), Store(u,f,v), ci_pt(u,o1).

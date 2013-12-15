@@ -114,7 +114,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 
         int numV = domV.size();
         int numM = domM.size();
-        int numA = domH.size();
+        int numH = domH.size();
         int numI = domI.size();
 
         for(VarNode vnode:domV){
@@ -139,15 +139,13 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         }
         relMI.close();
 
-        DomH domH = (DomH) ClassicProject.g().getTrgt("H");
-        int numH = domH.size();
-        HtoM = new int[numH];
-        HtoQ = new AllocNode[numH];
 
-		for (int hIdx = 0; hIdx < numA; hIdx++) {
+        HtoQ = new AllocNode[numH];
+		for (int hIdx = 0; hIdx < numH; hIdx++) {
 			HtoQ[hIdx] = domH.get(hIdx);
 		}
 
+        HtoM = new int[numH];
         final ProgramRel relMH = (ProgramRel) ClassicProject.g().getTrgt("MH");		
         relMH.load();
         Iterable<Pair<SootMethod,AllocNode>> res1 = relMH.getAry2ValTuples();
@@ -194,7 +192,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
             }
         }
 
-        for (int hIdx = 0; hIdx < numA; hIdx++) {
+        for (int hIdx = 0; hIdx < numH; hIdx++) {
 			AllocNode alloc = HtoQ[hIdx];
             if(alloc instanceof GlobalAllocNode) {
 				Object[] newElems = combine(K, alloc, emptyElems);
@@ -203,7 +201,6 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 				int mIdx = HtoM[hIdx];
 				Set<Ctxt> ctxts = methToCtxts[mIdx];
 				assert(ctxts != null);
-				if(ctxts == null) continue;
 				for (Ctxt oldCtxt : ctxts) {
 					Object[] oldElems = oldCtxt.getElems();
 					Object[] newElems = combine(K, alloc, oldElems);
@@ -242,7 +239,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         ////CH
         relCH.zero();
 
-        for (int hIdx = 0; hIdx < numA; hIdx++) {
+        for (int hIdx = 0; hIdx < numH; hIdx++) {
 			AllocNode alloc = HtoQ[hIdx];
 
             if(alloc instanceof GlobalAllocNode) {
@@ -334,17 +331,24 @@ public class CtxtsObjAnalysis extends JavaAnalysis
                     TIntArrayList rcvSites = new TIntArrayList();
                     ThisVarNode thisVar = methToThis.get(meth);
                     Iterable<Object> pts = getPointsTo(thisVar);
+					Set<Ctxt> newCtxts = null;
                     for (Object alloc : pts) {
                         int hIdx = domH.indexOf(alloc);
                         rcvSites.add(hIdx);
 						if(!(alloc instanceof GlobalAllocNode))
 							predMeths.add(domM.get(HtoM[hIdx]));
+						else{
+							if(newCtxts == null)
+								newCtxts = new HashSet<Ctxt>();
+							Object[] newElems = combine(K, alloc, emptyElems);
+							Ctxt newCtxt = domC.setCtxt(newElems);
+							newCtxts.add(newCtxt);
+						}
                     }
                     methToRcvSites[mIdx] = rcvSites;
                     methToPredsMap.put(meth, predMeths);
-                    methToCtxts[mIdx] = emptyCtxtSet;
+                    methToCtxts[mIdx] = newCtxts == null ? emptyCtxtSet : newCtxts;
                 }
-
             }
         }
         process(roots, methToPredsMap);
