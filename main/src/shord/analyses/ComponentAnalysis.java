@@ -44,11 +44,11 @@ import java.io.*;
  */
 
 @Chord(name="comp-java",
-       produces={"COMP", "MC"},
+       produces={"MC", "IntentTgtField", "ActionField", "DataTypeField" },
        namesOfTypes = {"COMP", "M"},
        types = {DomComp.class, DomM.class},
-       namesOfSigns = { "MC"},
-       signs = { "M0,COMP0:M0_COMP0"}
+       namesOfSigns = { "MC", "IntentTgtField", "ActionField", "DataTypeField"},
+       signs = { "M0,COMP0:M0_COMP0", "F0:F0", "F0:F0", "F0:F0"}
        )
 public class ComponentAnalysis extends JavaAnalysis
 {
@@ -60,6 +60,40 @@ public class ComponentAnalysis extends JavaAnalysis
 	public static Map<String, XmlNode> components = new HashMap<String, XmlNode>();
 
     public static String pkgName = ""; 
+
+
+    private static String[] subLaunchArray = {
+        "void startActivity(android.content.Intent)",
+        "void sendBroadcast(android.content.Intent)",
+        "boolean bindService(android.content.Intent,android.content.ServiceConnection,int)",
+        "android.content.ComponentName startService(android.content.Intent)",
+        "void sendBroadcast(android.content.Intent,java.lang.String)",
+        "void sendStickyBroadcast(android.content.Intent)",
+        "void sendOrderedBroadcast(android.content.Intent,java.lang.String)",
+        "void sendOrderedBroadcast(android.content.Intent,java.lang.String,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)",
+        "void sendStickyOrderedBroadcast(android.content.Intent,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)",
+        "void sendBroadcast(android.content.Intent)",
+        "android.content.ComponentName startService(android.content.Intent)",
+        "void sendBroadcast(android.content.Intent,java.lang.String)",
+        "void sendStickyBroadcast(android.content.Intent)",
+        "void sendOrderedBroadcast(android.content.Intent,java.lang.String)",
+        "void sendOrderedBroadcast(android.content.Intent,java.lang.String,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)",
+        "void sendStickyOrderedBroadcast(android.content.Intent,android.content.BroadcastReceiver,android.os.Handler,int,java.lang.String,android.os.Bundle)",
+        "void startActivities(android.content.Intent[])",
+        "void startIntentSender(android.content.IntentSender,android.content.Intent,int,int,int)",
+        "void startActivityForResult(android.content.Intent,int)",
+        "boolean startActivityIfNeeded(android.content.Intent,int)",
+        "boolean startNextMatchingActivity(android.content.Intent)",
+        "void startActivity(android.content.Intent)",
+        "void setResult(int,android.content.Intent)",
+        "void startActivityFromChild(android.app.Activity,android.content.Intent,int)",
+        "void startActivityFromFragment(android.app.Fragment,android.content.Intent,int)",
+        "void startIntentSenderForResult(android.content.IntentSender,int,android.content.Intent,int,int,int)",
+        "void startIntentSenderFromChild(android.app.Activity,android.content.IntentSender,int,android.content.Intent,int,int,int)",
+        "android.widget.TabHost$TabSpec setContent(android.content.Intent)"
+	};
+
+    public static List launchList = new ArrayList<String>(Arrays.asList(subLaunchArray));
 
     void openRels()
     {
@@ -159,18 +193,35 @@ public class ComponentAnalysis extends JavaAnalysis
         return compKey;
     }
 
-	private void populateDomComp() 
+	//target name and action in intent object.
+	private void populateIntentActionTgt() 
 	{
-		DomComp domComp = (DomComp) ClassicProject.g().getTrgt("COMP");
-        for(Object node : components.keySet()) {
-            domComp.add((String)node);
-        }
-        domComp.save();
+		ProgramRel relIntentTgtField = (ProgramRel) ClassicProject.g().getTrgt("IntentTgtField");
+        relIntentTgtField.zero();
+		ProgramRel relActionField = (ProgramRel) ClassicProject.g().getTrgt("ActionField");
+        relActionField.zero();
+		ProgramRel relDataTypeField = (ProgramRel) ClassicProject.g().getTrgt("DataTypeField");
+        relDataTypeField.zero();
+
+		SootClass klass = Program.g().scene().getSootClass("android.content.Intent");
+		SootField nameField = klass.getFieldByName("name");
+		SootField actionField = klass.getFieldByName("action");
+		SootField dataTypeField = klass.getFieldByName("type");
+
+		relIntentTgtField.add(nameField);
+		relIntentTgtField.save();
+
+		relActionField.add(actionField);
+		relActionField.save();
+
+        relDataTypeField.add(dataTypeField);
+        relDataTypeField.save();
+
 	}
 
     public void run()
     {
-        populateDomComp();
+        populateIntentActionTgt();
         openRels();
         domM = (DomM) ClassicProject.g().getTrgt("M");
 

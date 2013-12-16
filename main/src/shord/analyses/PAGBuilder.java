@@ -22,6 +22,7 @@ import soot.FastHierarchy;
 import soot.PatchingChain;
 import soot.jimple.Constant;
 import soot.jimple.StringConstant;
+import soot.jimple.ClassConstant;
 import soot.jimple.Stmt;
 import soot.jimple.AssignStmt;
 import soot.jimple.IdentityStmt;
@@ -58,6 +59,7 @@ import shord.project.ClassicProject;
 import shord.program.Program;
 
 import stamp.analyses.SootUtils;
+import stamp.harnessgen.*;
 
 import chord.project.Chord;
 
@@ -86,9 +88,11 @@ import java.util.*;
 	             "Stub",
 				 "SpecIM", "StatIM", "VirtIM",
 				 "SubSig", "Dispatch",
-                 "ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM"},
-       namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U", "S"},
-       types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class},
+                 "ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM",
+                 "TargetHT", "Launch", "TgtAction", "TgtDataType", "COMP",
+                 },
+       namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U", "S", "COMP"},
+       types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class, DomComp.class},
 	   namesOfSigns = { "GlobalAlloc", "Alloc", "Assign", 
 						"Load", "Store", 
 						"LoadStat", "StoreStat", 
@@ -106,7 +110,9 @@ import java.util.*;
                         "Stub",
 						"SpecIM", "StatIM", "VirtIM",
 						"SubSig", "Dispatch",
-						"ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM" },
+						"ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM",
+                        "TargetHT", "Launch", "TgtAction", "TgtDataType"
+                        },
 	   signs = { "V0,H0:V0_H0", "V0,H0:V0_H0", "V0,V1:V0xV1",
 				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
 				 "V0,F0:F0_V0", "F0,V0:F0_V0",
@@ -124,7 +130,9 @@ import java.util.*;
                  "M0:M0",
 				 "I0,M0:I0_M0", "I0,M0:I0_M0", "I0,M0:I0_M0",
 				 "M0,S0:M0_S0", "T0,S0,M0:T0_M0_S0",
-	             "T0:T0", "T0,T1:T0_T1", "T0,M0:T0_M0", "T0,F0:F0_T0", "T0,M0:T0_M0" }
+	             "T0:T0", "T0,T1:T0_T1", "T0,M0:T0_M0", "T0,F0:F0_T0", "T0,M0:T0_M0",
+                 "H0,COMP0:H0_COMP0", "V0,M0:V0_M0", "COMP0,H0:COMP0_H0", "COMP0,H0:COMP0_H0"
+                 }
 	   )
 public class PAGBuilder extends JavaAnalysis
 {
@@ -164,6 +172,11 @@ public class PAGBuilder extends JavaAnalysis
 	private ProgramRel relMV;
 	private ProgramRel relMU;
 
+	private ProgramRel relLaunch;//(v:V,m:M)
+	private ProgramRel relTgtAction;//(v:V,h:H)
+	private ProgramRel relTgtDataType;//(v:V,h:H)
+	private ProgramRel relTargetHT;//(h:H,t:COMP)
+
 	private DomV domV;
 	private DomU domU;
 	private DomH domH;
@@ -177,6 +190,8 @@ public class PAGBuilder extends JavaAnalysis
 	private Map<Type,StubAllocNode> typeToStubAllocNode = new HashMap();
 
 	private GlobalStringConstantNode gscn = new GlobalStringConstantNode();
+
+    static String gInstallAPK = "INSTALL_APK";
 
 	public static final boolean ignoreStubs = false;
 
@@ -247,6 +262,15 @@ public class PAGBuilder extends JavaAnalysis
 		relIinvkPrimRet.zero();
 		relIinvkPrimArg = (ProgramRel) ClassicProject.g().getTrgt("IinvkPrimArg");
 		relIinvkPrimArg.zero();
+
+		relLaunch = (ProgramRel) ClassicProject.g().getTrgt("Launch");
+		relLaunch.zero();
+		relTgtAction = (ProgramRel) ClassicProject.g().getTrgt("TgtAction");
+		relTgtAction.zero();
+		relTgtDataType = (ProgramRel) ClassicProject.g().getTrgt("TgtDataType");
+		relTgtDataType.zero();
+		relTargetHT= (ProgramRel) ClassicProject.g().getTrgt("TargetHT");
+		relTargetHT.zero();
 	}
 	
 	void saveRels()
@@ -286,6 +310,11 @@ public class PAGBuilder extends JavaAnalysis
 		relMmethPrimRet.save();
 		relIinvkPrimRet.save();
 		relIinvkPrimArg.save();
+
+		relLaunch.save();
+		relTgtAction.save();
+		relTgtDataType.save();
+		relTargetHT.save();
 	}
 
 	void GlobalAlloc(VarNode l, GlobalAllocNode h)
@@ -466,6 +495,10 @@ public class PAGBuilder extends JavaAnalysis
 		private final SootMethod method;
 		private final List<StubAllocNode> stubAllocNodes = new ArrayList();
 		private final Map<Unit,SiteAllocNode> stmtToAllocNode = new HashMap();
+		private Map<String, AllocNode> action2Node = new HashMap();
+		private Map<String, AllocNode> dataType2Node = new HashMap();
+
+
 		private final boolean isStub;
 
 		MethodPAGBuilder(SootMethod method, boolean isStub)
@@ -561,6 +594,34 @@ public class PAGBuilder extends JavaAnalysis
 					domI.add(s);
 				} else if(s instanceof AssignStmt) {
 					Value rightOp = ((AssignStmt) s).getRightOp();
+
+					if(rightOp instanceof StringConstant) {
+						String str = ((StringConstant)rightOp).value;
+						if(ComponentAnalysis.components.get(str.replaceAll("/",".")) != null){
+							StringConstNode n = new StringConstNode(s);
+							domH.add(n);
+						    stmtToAllocNode.put(s, n);
+
+						}else if(str.matches("[a-zA-Z]+\\.[a-zA-Z]+.*")){
+							StringConstNode n = new StringConstNode(s);
+							domH.add(n);
+						    stmtToAllocNode.put(s, n);
+
+							//save for targetAction rel.
+							action2Node.put(str, n);
+						}else if("application/vnd.android.package-archive".equals(str)){ 
+							StringConstNode n = new StringConstNode(s);
+							domH.add(n);
+						    stmtToAllocNode.put(s, n);
+
+                            //install apk by data type: 
+                            //application/vnd.android.package-archive
+							//save for targetType rel.
+							dataType2Node.put(str, n);
+                        }
+					}
+
+
 					if(rightOp instanceof AnyNewExpr){
 						SiteAllocNode n = new SiteAllocNode(s);
 						domH.add(n);
@@ -654,7 +715,35 @@ public class PAGBuilder extends JavaAnalysis
 			for(Unit unit : body.getUnits()){
 				handleStmt((Stmt) unit);
 			}
+
+            populateActionAndType();
+       
 		}
+
+        void populateActionAndType()
+        {
+            String pkgName = ComponentAnalysis.pkgName;
+            for(Object o : ComponentAnalysis.components.entrySet()){
+                Map.Entry entry = (Map.Entry) o;
+                String key = (String)entry.getKey();
+                XmlNode val = (XmlNode)entry.getValue();
+                String nodeName = val.getName();
+
+                if(nodeName.indexOf(".") == 0) nodeName = pkgName +  nodeName;
+                if(nodeName.indexOf(".") == -1) nodeName = pkgName + "." +  nodeName;
+                for(String actionName : val.getActionList()){
+                    //<nodeName, actionName>
+                    if(action2Node.get(actionName) != null)
+                        relTgtAction.add(ComponentAnalysis.getCompKey(nodeName), 
+                                         action2Node.get(actionName));
+                }
+            }
+
+			if(dataType2Node.get("application/vnd.android.package-archive") != null)
+			    relTgtDataType.add(PAGBuilder.gInstallAPK, 
+                    dataType2Node.get("application/vnd.android.package-archive"));
+
+        }
 
 		LocalVarNode nodeFor(Immediate i)
 		{
@@ -711,6 +800,16 @@ public class PAGBuilder extends JavaAnalysis
 					else if(retType instanceof PrimType)
 						IinvkPrimRet(s, nodeFor(lhs));
 				}
+
+				String methSubSig = callee.getSubSignature();
+				if(ComponentAnalysis.launchList.contains(methSubSig)) {
+                    if(methSubSig.equals("void setResult(int,android.content.Intent)")){
+					    relLaunch.add(nodeFor(((Immediate)ie.getArg(1))), method);
+                    }else{
+					    relLaunch.add(nodeFor(((Immediate)ie.getArg(0))), method);
+                    }
+				}
+
 			} else if(s.containsFieldRef()){
 				AssignStmt as = (AssignStmt) s;
 				Value leftOp = as.getLeftOp();
@@ -782,7 +881,36 @@ public class PAGBuilder extends JavaAnalysis
 				Value rightOp = as.getRightOp();
 
 				if(rightOp instanceof StringConstant){
-					GlobalAlloc(nodeFor((Local) leftOp), gscn);
+
+					String str = ((StringConstant)rightOp).value;
+					if(ComponentAnalysis.components.get(str.replaceAll("/",".")) != null){
+                        if(Scene.v().containsClass(str)){
+                            relTargetHT.add(stmtToAllocNode.get(s), 
+                                            ComponentAnalysis.getCompKey(str));
+                        }
+						Alloc(nodeFor((Local) leftOp), stmtToAllocNode.get(s));
+					}else if(str.matches("[a-zA-Z]+\\.[a-zA-Z]+.*")){
+						Alloc(nodeFor((Local) leftOp), stmtToAllocNode.get(s));
+					} else if("application/vnd.android.package-archive".equals(str)){
+						Alloc(nodeFor((Local) leftOp), stmtToAllocNode.get(s));
+                    }else {
+					    GlobalAlloc(nodeFor((Local) leftOp), gscn);
+                    }
+
+				} else if(rightOp instanceof ClassConstant) {
+					String str = ((ClassConstant)rightOp).value;
+					if(ComponentAnalysis.components.get(str.replaceAll("/", ".")) != null){
+						SootClass clazz = Scene.v()
+                                 .getSootClass("stamp.harness.Main1");
+                        String clazzName = str.replaceAll("/", "\\$");
+                        if(clazz.declaresFieldByName(clazzName)) {
+                            SootField field = clazz.getFieldByName(clazzName);
+                            LoadStat(nodeFor((Local) leftOp), field);
+                        } else {
+                            System.out.println("fatal error in harness..." + clazzName);
+                        }
+					}
+
 				} else if(rightOp instanceof AnyNewExpr){
 					AllocNode an = stmtToAllocNode.get(s);
 					Alloc(nodeFor((Local) leftOp), an);
@@ -931,6 +1059,7 @@ public class PAGBuilder extends JavaAnalysis
 		
 	void populateDomains(List<MethodPAGBuilder> mpagBuilders)
 	{
+	    populateDomComp();
 		domZ = (DomZ) ClassicProject.g().getTrgt("Z");
 
 		populateMethods();
@@ -1180,6 +1309,16 @@ public class PAGBuilder extends JavaAnalysis
 			typeToStubAllocNode.put(type, node);
 		}
 		return node;
+	}
+
+	private void populateDomComp() 
+	{
+		DomComp domComp = (DomComp) ClassicProject.g().getTrgt("COMP");
+        for(Object node : ComponentAnalysis.components.keySet()) {
+            domComp.add((String)node);
+        }
+        domComp.add(gInstallAPK);
+        domComp.save();
 	}
 
 	public void run()

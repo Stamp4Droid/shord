@@ -1,0 +1,45 @@
+#################################
+# Compute ICCG
+#################################
+# name=iccg-dlog
+
+.include "M.dom"
+.include "I.dom"
+.include "C.dom"
+.include "V.dom"
+.include "H.dom"
+.include "F.dom"
+.include "COMP.dom"
+
+.bddvarorder M0xM1_I0_V0_C0xC1_H0_F0_COMP0_COMP1
+
+TargetHT(h:H,t:COMP) input   # StringConst corresponds to target of type t.
+CH(o:C,h:H) input         # context’ified abstract location o corresponds to new stmt h
+Launch(v:V,m:M) input
+IntentTgtField(f:F) input
+ActionField(f:F) input
+DataTypeField(f:F) input
+TgtAction(t:COMP,h:H) input
+TgtDataType(t:COMP,h:H) input
+pt(c:C,v:V,o:C)    input  # in context c, v points to o.
+fpt(o1:C,f:F,o2:C) input
+CICM(d:C,i:I,c:C,m:M)   input  # i in cotext d calls method m in context c.
+CallerComp(m:M,c:C,o:COMP)   input  # m is a method declared in c
+
+IntentAlloc(h:H,s:COMP) 
+
+ICCG(s:COMP,t:COMP)  output
+
+###################
+#    RULES
+###################
+#
+
+IntentAlloc(h,s) :- CallerComp(_,k,s), CH(k,h).
+
+#explicit intent
+ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), CH(o,h2), IntentAlloc(h2,s), IntentTgtField(f), fpt(o,f,c), CH(c,h), TargetHT(h,t).
+#implicit intent
+ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o),CH(o,h2), IntentAlloc(h2,s), ActionField(f), TgtAction(t,h), fpt(o,f,c), CH(c,h).
+#install apk through datatype.
+ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o),CH(o,h2), IntentAlloc(h2,s), DataTypeField(f), TgtDataType(t,h), fpt(o,f,c), CH(c,h).

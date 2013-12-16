@@ -51,7 +51,7 @@ public class Main
 			harnessCount++;
 			String harnessClassName = "stamp.harness.Main"+harnessCount;
 			writer.println(harnessClassName);
-			Harness h = new Harness(harnessClassName);
+			Harness h = new Harness(harnessClassName, comps);
 			for(int j = 0; j < numCompsPerHarness && i < numComps; j++, i++){
 				Component comp = comps.get(i);
 				List<Layout> layouts = findLayoutsFor(comp);

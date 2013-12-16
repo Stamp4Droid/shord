@@ -2,6 +2,8 @@ package stamp.harnessgen;
 
 import soot.SootClass;
 import soot.SootMethod;
+import soot.SootMethodRef;
+import soot.SootField;
 import soot.Scene;
 import soot.Modifier;
 import soot.VoidType;
@@ -19,6 +21,7 @@ import soot.jimple.NullConstant;
 import soot.jimple.IntConstant;
 import soot.util.Chain;
 import soot.util.JasminOutputStream;
+import soot.jimple.StringConstant;
 
 import java.io.File;
 import java.io.OutputStream;
@@ -27,6 +30,8 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -37,7 +42,7 @@ public class Harness
 	private final Chain<Local> locals;
 	private int count = 0;
 
-	public Harness(String className)
+	public Harness(String className, List<Component> components)
 	{
 		sClass = new SootClass(className, Modifier.PUBLIC);
 		sClass.setSuperclass(Scene.v().getSootClass("java.lang.Object"));
@@ -54,6 +59,7 @@ public class Harness
 		Local arg = Jimple.v().newLocal("l0", ArrayType.v(RefType.v("java.lang.String"), 1));
 		locals.add(arg);
 		units.add(Jimple.v().newIdentityStmt(arg, Jimple.v().newParameterRef(ArrayType.v(RefType.v("java.lang.String"), 1), 0)));
+        addFields(components);
 	}
 
 	public void addComponent(Component comp, List<Layout> layouts)
@@ -126,4 +132,46 @@ public class Harness
 		units.add(Jimple.v().newInvokeStmt(Jimple.v().newSpecialInvokeExpr(c, init.makeRef(), args)));	
 		return c;
 	}
+
+
+	private void addFields(List<Component> comps)
+	{
+		SootMethod clinit = new SootMethod("<clinit>", Collections.EMPTY_LIST, VoidType.v(), Modifier.STATIC);
+		sClass.addMethod(clinit);
+		
+		Type classType = RefType.v("java.lang.Class");
+		Type stringType = RefType.v("java.lang.String");
+		SootMethodRef forNameMethod = Scene.v().getMethod("<java.lang.Class: java.lang.Class forName(java.lang.String)>").makeRef();
+
+		clinit.setActiveBody(Jimple.v().newBody(clinit));
+		Chain<Unit> stmts = clinit.getActiveBody().getUnits();
+		Chain<Local> ls = clinit.getActiveBody().getLocals();
+		int n = 0;
+
+		for(Component comp : comps){
+			//add fields corresponding to components
+			SootField f = new SootField(componentFieldNameFor(comp.name), 
+										classType, 
+										Modifier.FINAL | Modifier.STATIC | Modifier.PUBLIC);
+			sClass.addField(f);
+
+			//initialize them in the clinit
+			Local l = Jimple.v().newLocal("c"+n++, classType);
+			ls.add(l);
+			Local s = Jimple.v().newLocal("s"+n++, stringType);
+			ls.add(s);
+			stmts.add(Jimple.v().newAssignStmt(s, StringConstant.v(comp.name)));
+			//can't support stringconst as an argument now.
+			//stmts.add(Jimple.v().newAssignStmt(l, Jimple.v().newStaticInvokeExpr(forNameMethod, StringConstant.v(comp))));
+			stmts.add(Jimple.v().newAssignStmt(l, Jimple.v().newStaticInvokeExpr(forNameMethod, s)));
+			stmts.add(Jimple.v().newAssignStmt(Jimple.v().newStaticFieldRef(f.makeRef()), l));
+		}
+		stmts.add(Jimple.v().newReturnVoidStmt());
+	}
+
+	public static String componentFieldNameFor(String componentName)
+	{
+		return componentName.replace('.', '$');
+	}
+
 }
