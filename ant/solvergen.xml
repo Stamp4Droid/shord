@@ -3,7 +3,7 @@
 
   <target name="-prepare-backend-solvergen">
     <!-- Compile SolverGen analysis. -->
-    <property name="stamp.solvergen.analysis" value="s-k-the-call"/>
+    <property name="stamp.solvergen.analysis" value="s-r-pt-lace^null-r-l"/>
     <runtarget target="make-cfl-solver"/>
 
     <!-- Prepare SolverGen I/O directories. -->
