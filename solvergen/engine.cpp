@@ -360,13 +360,17 @@ TRANS_FUN_REF compose(TRANS_FUN_REF f, TRANS_FUN_REF g) {
 Edge::Edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	   TRANS_FUN_REF fwd_tfun, TRANS_FUN_REF bck_tfun,
 	   Edge* l_edge, bool l_rev, Edge* r_edge, bool r_rev)
-    : from(from), to(to), kind(kind), index(index)
+    : from(from), to(to), kind(kind)
 #ifdef PATH_RECORDING
-    , fwd_tfun(fwd_tfun), bck_tfun(bck_tfun),
-      l_edge(l_edge), l_rev(l_rev), r_edge(r_edge), r_rev(r_rev),
-      length(is_terminal(kind) ? static_min_length(kind)
+    , l_rev(l_rev), r_rev(r_rev)
+    , length(is_terminal(kind) ? static_min_length(kind)
 	     : (l_edge == NULL ? 0 : l_edge->length) +
 	       (r_edge == NULL ? 0 : r_edge->length))
+    , fwd_tfun(fwd_tfun), bck_tfun(bck_tfun)
+#endif
+    , index(index)
+#ifdef PATH_RECORDING
+    , l_edge(l_edge), r_edge(r_edge)
 #endif
 {
     assert((is_parametric(kind)) ^ (index == INDEX_NONE));
