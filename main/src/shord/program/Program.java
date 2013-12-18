@@ -82,7 +82,15 @@ public class Program
 		SootClass mainClass = Scene.v().getSootClass(harness);
 		mainMethod = mainClass.getMethod(Scene.v().getSubSigNumberer().findOrAdd("void main(java.lang.String[])"));
 		Scene.v().setMainClass(mainClass);
-		Scene.v().setEntryPoints(Arrays.asList(new SootMethod[]{mainMethod}));
+
+		List entryPoints = new ArrayList();
+		entryPoints.add(mainMethod);
+
+		//workaround soot bug
+		if(mainClass.declaresMethodByName("<clinit>"))
+			entryPoints.add(mainClass.getMethodByName("<clinit>"));
+
+		Scene.v().setEntryPoints(entryPoints);
 	}
 
 	public void buildCallGraph()
