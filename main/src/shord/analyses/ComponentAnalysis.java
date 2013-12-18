@@ -166,14 +166,14 @@ public class ComponentAnalysis extends JavaAnalysis
 
             List<String> circleList = Arrays.asList(str);
 
-            if(circleList.contains(method.getSubSignature())){
+            //if(circleList.contains(method.getSubSignature())){
                 String compKey = getCompKey(klass.getName());
 
                 assert(compKey != null);
                 if(domM.contains(method)) 
                     relMC.add(method, compKey);
 
-            }
+            //}
 
         }
 
