@@ -203,7 +203,7 @@ def findAdlib(str):
             adlibs.append(n.attrib['package'])
     
     for adlibname in adlibs:
-        if str.find(adlibname) >= 0:
+        if str.find(adlibname) >= 0 or str.find(adlibname.lower()) >= 0:
             return rootXML.find(".//*[@package='"+adlibname+"']").attrib['name'];
     return ""
             
