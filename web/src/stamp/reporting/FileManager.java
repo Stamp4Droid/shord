@@ -25,12 +25,12 @@ public class FileManager {
     // path data
     private String rootPath;
     private String outPath;
+	private String genPath;
+	private String srcmapPath;
+	private String modelsSrcPath;
     
 	private List<File> srcDirs = new ArrayList<File>();
-    //private StampVisitor srcVisitor;
 
-    // set of files and corresponding info
-    //private HashMap<String,SourceData> filePathToSourceData = new HashMap();
     private HashMap<String,String> filePathToAnnotatedSource = new HashMap<String,String>();
     private HashMap<String,String> modelFilePathToAnnotatedSource = new HashMap<String,String>();
     
@@ -39,10 +39,15 @@ public class FileManager {
 
     private DroidrecordProxyWeb droidrecord;
 
-    public FileManager(String rootPath, String outPath, String libPath, String srcPath, DroidrecordProxyWeb droidrecord) throws IOException {
+    public FileManager(String rootPath, String outPath, String libPath, String srcPath, DroidrecordProxyWeb droidrecord, String apiLevel) throws IOException 
+	{
 		this.rootPath = rootPath;
 		this.outPath = outPath;
-        
+
+		this.genPath = rootPath + "/models/"+apiLevel+"/gen";
+		this.srcmapPath = rootPath + "/models/"+apiLevel+"/srcmap";
+		this.modelsSrcPath = rootPath+"/models/src";
+
         this.droidrecord = droidrecord;
 		
 		List<String> srcpathEntries = new ArrayList<String>();
@@ -54,8 +59,8 @@ public class FileManager {
 			}
 		}
 		
-		srcpathEntries.add(rootPath + "/models/api-16/gen");
-		srcpathEntries.add(rootPath + "/models/src");
+		srcpathEntries.add(genPath);
+		srcpathEntries.add(modelsSrcPath);
 
 		List<String> classpathEntries = new ArrayList<String>();
 		for(String j : libPath.split(":")) {
@@ -70,7 +75,7 @@ public class FileManager {
 	
 	private void add(String filePath, boolean isModel) throws Exception {	
 		if(isModel) {
-			File file = new File(rootPath+"/models/src", filePath);
+			File file = new File(modelsSrcPath, filePath);
 			if(file.exists()){
 				SourceProcessor sp = new SourceProcessor(file, droidrecord);
 				String annotatedSource = sp.getSourceWithAnnotations();
@@ -80,9 +85,9 @@ public class FileManager {
 		} 
 
 		String srcMapDirPath = null;
-		File file = new File(rootPath+"/models/api-16/gen", filePath);
+		File file = new File(genPath, filePath);
 		if(file.exists()) {
-			srcMapDirPath = rootPath+"/models/api-16/srcmap";
+			srcMapDirPath = srcmapPath;
 		} else {
 			for(File sd : srcDirs){
 				file = new File(sd, filePath);
@@ -151,6 +156,7 @@ public class FileManager {
     
     public String getAnnotatedSource(String filePath, boolean isModel) {
 		try {
+			File f = new File(genPath, filePath);
 			if(isModel) {
 				if(!modelFilePathToAnnotatedSource.containsKey(filePath)) {
 					add(filePath, isModel);
@@ -182,7 +188,7 @@ public class FileManager {
 	}
 
 	public boolean isFrameworkFile(String filePath) {
-		return new File(this.rootPath+"/models/api-16/gen", filePath).exists();
+		return new File(genPath, filePath).exists();
 	}
 	
 	public static String readFile(File file) throws IOException {

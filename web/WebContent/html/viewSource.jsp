@@ -11,8 +11,8 @@
 	if(request.getParameter("useJimple") != null) {
 	    useJimple = request.getParameter("useJimple").equals("true");
 	}
-	System.out.println("DEBUG: useJimple=" + request.getParameter("useJimple"));
 	String lineNum = request.getParameter("lineNum");
+	System.out.println("DEBUG: useJimple=" + request.getParameter("useJimple")+" filePath="+filepath+" lineNum="+lineNum);
 
 	FileManager manager = (FileManager) session.getAttribute("manager");
 	if(manager == null){
@@ -21,7 +21,8 @@
 		String outPath = (String)session.getAttribute("outPath");
 		String libPath = (String)session.getAttribute("libPath");
         DroidrecordProxyWeb dr = (DroidrecordProxyWeb)session.getAttribute("droidrecord");
-    	manager = new FileManager(rootPath, outPath, libPath, srcPath, dr);
+		String apiLevel = (String)session.getAttribute("apiLevel");
+    	manager = new FileManager(rootPath, outPath, libPath, srcPath, dr, apiLevel);
 		session.setAttribute("manager", manager);
 	}
 	
