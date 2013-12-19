@@ -89,7 +89,8 @@ public class App
 					className = className.substring(1, len-1);
 				}
 				className = className.replace('/','.');
-				String tmp = className.replace('$', '.');
+				String tmp = className;
+				//String tmp = className.replace('$', '.');
 				if(compNames.contains(tmp)) {
 					compNamesAvailable.add(tmp);
 					System.out.println("%% "+tmp);

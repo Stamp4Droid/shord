@@ -44,17 +44,19 @@ import java.io.*;
  */
 
 @Chord(name="comp-java",
-       produces={"MC", "IntentTgtField", "ActionField", "DataTypeField" },
-       namesOfTypes = {"COMP", "M"},
-       types = {DomComp.class, DomM.class},
-       namesOfSigns = { "MC", "IntentTgtField", "ActionField", "DataTypeField"},
-       signs = { "M0,COMP0:M0_COMP0", "F0:F0", "F0:F0", "F0:F0"}
+       produces={"MC", "IntentTgtField", "ActionField", "DataTypeField", "Callbacks", "MregI" },
+       namesOfTypes = {"COMP", "M", "I"},
+       types = {DomComp.class, DomM.class, DomI.class},
+       namesOfSigns = { "MC", "IntentTgtField", "ActionField", "DataTypeField", "Callbacks", "MregI" },
+       signs = { "M0,COMP0:M0_COMP0", "F0:F0", "F0:F0", "F0:F0", "M0:M0", "M0,I0:M0_I0"}
        )
 public class ComponentAnalysis extends JavaAnalysis
 {
 
     private	DomM domM;
 	private ProgramRel relMC;
+    private ProgramRel relCallbacks;
+    private ProgramRel relMregI;
 	private SootClass klass;
 
 	public static Map<String, XmlNode> components = new HashMap<String, XmlNode>();
@@ -99,11 +101,18 @@ public class ComponentAnalysis extends JavaAnalysis
     {
         relMC = (ProgramRel) ClassicProject.g().getTrgt("MC");
         relMC.zero();
+
+        relCallbacks = (ProgramRel) ClassicProject.g().getTrgt("Callbacks");
+        relMregI= (ProgramRel) ClassicProject.g().getTrgt("MregI");
+        relCallbacks.zero(); 
+        relMregI.zero(); 
     }
 
     void saveRels() 
     {
         relMC.save();
+        relCallbacks.save(); 
+        relMregI.save(); 
     }
 
     public ComponentAnalysis()
@@ -166,15 +175,59 @@ public class ComponentAnalysis extends JavaAnalysis
 
             List<String> circleList = Arrays.asList(str);
 
-            //if(circleList.contains(method.getSubSignature())){
+            if(circleList.contains(method.getSubSignature())){
                 String compKey = getCompKey(klass.getName());
 
                 assert(compKey != null);
                 if(domM.contains(method)) 
                     relMC.add(method, compKey);
 
-            //}
+            }
 
+        }
+
+    }
+
+    private void populateMregI() {
+
+		Iterator mIt = Program.g().scene().getReachableMethods().listener();
+		while(mIt.hasNext()){
+			SootMethod method = (SootMethod) mIt.next();
+	        if(!method.isConcrete())
+                continue;
+
+            Body body = method.retrieveActiveBody();
+            for(Unit unit : body.getUnits()) {
+                Stmt stmt = (Stmt)unit;
+                if(stmt.containsInvokeExpr()){
+                    InvokeExpr ie = stmt.getInvokeExpr();
+
+                    //i is a statement that registercallback.
+                    if(ie.getMethod().getSignature().equals(
+                    "<edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>")) {
+                        if(method.getSignature().equals("<android.app.Activity: void <init>()>") 
+                        || method.getSignature().equals("<android.app.Service: void <init>()>")
+                        || method.getSignature().equals("<android.content.BroadcastReceiver: void <init>()>"))
+                            continue;
+
+                        relMregI.add(method, stmt);
+                    }
+
+                }
+            }
+        }
+
+    }
+
+    private void populateCallback() {
+        SootClass callback = Scene.v().getSootClass("edu.stanford.stamp.harness.Callback");
+        for(SootClass subCallback : SootUtils.subTypesOf(callback)) {
+            for(SootMethod method : subCallback.getMethods()){
+                //if("void run()".equals(method.getSubSignature()))
+                 //   continue;
+                //if("void onClick(android.view.View)".equals(method.getSubSignature()))
+                    relCallbacks.add(method);
+                }
         }
 
     }
@@ -224,6 +277,8 @@ public class ComponentAnalysis extends JavaAnalysis
         populateIntentActionTgt();
         openRels();
         domM = (DomM) ClassicProject.g().getTrgt("M");
+        populateCallback(); 
+        populateMregI(); 
 
         for(SootClass klass: Program.g().getClasses()){
             this.visit(klass);
