@@ -1295,9 +1295,11 @@ public class PAGBuilder extends JavaAnalysis
 		InvokeExpr ie = ((Stmt) invkUnit).getInvokeExpr();
 		if(ie instanceof StaticInvokeExpr)
 			return true;
-		//SootClass calleeClass = ie.getMethod().getDeclaringClass();
-		//if(calleeClass.getName().equals("java.lang.String"))
-		//	return true;
+		SootClass calleeClass = ie.getMethod().getDeclaringClass();
+		if(calleeClass.getName().equals("android.app.AlarmManager"))
+			return true;
+		if(calleeClass.getName().equals("android.app.Notification"))
+			return true;
 		return false;
 	}
 

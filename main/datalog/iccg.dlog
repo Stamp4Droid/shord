@@ -26,8 +26,6 @@ fpt(o1:C,f:F,o2:C) input
 CICM(d:C,i:I,c:C,m:M)   input  # i in cotext d calls method m in context c.
 CallerComp(m:M,c:C,o:COMP)   input  # m is a method declared in c
 
-IntentAlloc(h:H,s:COMP) 
-
 ICCG(s:COMP,t:COMP)  output
 
 ###################
@@ -35,11 +33,9 @@ ICCG(s:COMP,t:COMP)  output
 ###################
 #
 
-IntentAlloc(h,s) :- CallerComp(_,k,s), CH(k,h).
-
 #explicit intent
-ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), CH(o,h2), IntentAlloc(h2,s), IntentTgtField(f), fpt(o,f,c), CH(c,h), TargetHT(h,t).
+ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), IntentTgtField(f), fpt(o,f,c), CH(c,h), TargetHT(h,t).
 #implicit intent
-ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o),CH(o,h2), IntentAlloc(h2,s), ActionField(f), TgtAction(t,h), fpt(o,f,c), CH(c,h).
+ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), ActionField(f), TgtAction(t,h), fpt(o,f,c), CH(c,h).
 #install apk through datatype.
-ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o),CH(o,h2), IntentAlloc(h2,s), DataTypeField(f), TgtDataType(t,h), fpt(o,f,c), CH(c,h).
+ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), DataTypeField(f), TgtDataType(t,h), fpt(o,f,c), CH(c,h).

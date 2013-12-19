@@ -1,19 +1,24 @@
 class PendingIntent
 {
-	static android.app.StampPendingIntent pi;
+	android.app.StampPendingIntent pi;
+
+	private PendingIntent(StampPendingIntent pi)
+	{
+		this.pi = pi;
+	}
 
 	public static  android.app.PendingIntent getActivity(android.content.Context context, int requestCode, android.content.Intent intent, int flags) 
 	{ 
-		pi = new android.app.StampActivityPendingIntent();
+		StampPendingIntent pi = new android.app.StampActivityPendingIntent();
 		pi.intent = intent;
-		return new PendingIntent(); 
+		return new PendingIntent(pi); 
 	}
 
 	public static  android.app.PendingIntent getActivity(android.content.Context context, int requestCode, android.content.Intent intent, int flags, android.os.Bundle options) 
 	{ 
-		pi = new android.app.StampActivityPendingIntent();
+		StampPendingIntent pi = new android.app.StampActivityPendingIntent();
 		pi.intent = intent;
-		return new PendingIntent(); 
+		return new PendingIntent(pi); 
 	}
 
 	public static  android.app.PendingIntent getActivities(android.content.Context context, int requestCode, android.content.Intent[] intents, int flags) 
@@ -29,16 +34,16 @@ class PendingIntent
 
 	public static  android.app.PendingIntent getBroadcast(android.content.Context context, int requestCode, android.content.Intent intent, int flags) 
 	{ 
-    	pi = new android.app.StampBroadcastPendingIntent();
+    	StampPendingIntent pi = new android.app.StampBroadcastPendingIntent();
 		pi.intent = intent;
-		return new PendingIntent(); 
+		return new PendingIntent(pi); 
 	}
 
 	public static  android.app.PendingIntent getService(android.content.Context context, int requestCode, android.content.Intent intent, int flags) 
 	{ 
-		pi = new android.app.StampServicePendingIntent();
+		StampPendingIntent pi = new android.app.StampServicePendingIntent();
 		pi.intent = intent;
-		return new PendingIntent(); 
+		return new PendingIntent(pi); 
 	}
 
 	public  void send(android.content.Context context, int code, android.content.Intent intent) throws android.app.PendingIntent.CanceledException 
