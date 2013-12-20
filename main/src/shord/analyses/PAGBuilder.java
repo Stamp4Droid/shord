@@ -554,7 +554,8 @@ public class PAGBuilder extends JavaAnalysis
 						if(!st.isConcrete())
 							continue;
 						assert !st.isInterface();
-						StubAllocNode n = stubAllocNodeFor(st.getType());
+						// StubAllocNode n = stubAllocNodeFor(st.getType());
+						StubAllocNode n = new StubAllocNode(st.getType());
 						domH.add(n);
 						stubAllocNodes.add(n);
 						//System.out.println("OO "+method+" "+n);
@@ -684,8 +685,11 @@ public class PAGBuilder extends JavaAnalysis
 				return;
 
 			if(isStub) {
-				for(StubAllocNode an : stubAllocNodes)
-					GlobalAlloc(retVar, an);
+				for(StubAllocNode an : stubAllocNodes){
+					populateHT_HTFilter(an);
+					Alloc(retVar, an);
+					relMH.add(method, an);
+				}
 				return;
 			} else {
 				for(SiteAllocNode an : stmtToAllocNode.values()){
@@ -1207,9 +1211,9 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		openRels();
 		
-		for(StubAllocNode an : typeToStubAllocNode.values()){
-			populateHT_HTFilter(an);
-		}
+		//for(StubAllocNode an : typeToStubAllocNode.values()){
+		//	populateHT_HTFilter(an);
+		//}
 		populateHT_HTFilter(gscn);
 
 		for(MethodPAGBuilder mpagBuilder : mpagBuilders)

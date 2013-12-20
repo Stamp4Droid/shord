@@ -7,7 +7,7 @@ import soot.SootMethod;
  * @author Yu Feng
  * @author Saswat Anand
  */
-public class StubAllocNode extends GlobalAllocNode
+public class StubAllocNode extends AllocNode
 {
 	public StubAllocNode(Type t)
 	{
