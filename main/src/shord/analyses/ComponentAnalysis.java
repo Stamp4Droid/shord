@@ -205,11 +205,12 @@ public class ComponentAnalysis extends JavaAnalysis
                     //i is a statement that registercallback.
                     if(ie.getMethod().getSignature().equals(
                     "<edu.stanford.stamp.harness.ApplicationDriver: void registerCallback(edu.stanford.stamp.harness.Callback)>")) {
+						/*
                         if(method.getSignature().equals("<android.app.Activity: void <init>()>") 
                         || method.getSignature().equals("<android.app.Service: void <init>()>")
                         || method.getSignature().equals("<android.content.BroadcastReceiver: void <init>()>"))
                             continue;
-
+						*/
                         relMregI.add(method, stmt);
                     }
 
@@ -223,11 +224,9 @@ public class ComponentAnalysis extends JavaAnalysis
         SootClass callback = Scene.v().getSootClass("edu.stanford.stamp.harness.Callback");
         for(SootClass subCallback : SootUtils.subTypesOf(callback)) {
             for(SootMethod method : subCallback.getMethods()){
-                //if("void run()".equals(method.getSubSignature()))
-                 //   continue;
-                //if("void onClick(android.view.View)".equals(method.getSubSignature()))
+                if("void run()".equals(method.getSubSignature()))
                     relCallbacks.add(method);
-                }
+			}
         }
 
     }

@@ -36,6 +36,7 @@ import shord.project.Config;
 import shord.project.Messages;
 
 import static shord.analyses.PAGBuilder.isQuasiStaticInvk;
+import static shord.analyses.PAGBuilder.isQuasiStaticMeth;
 
 import chord.util.Utils;
 import chord.project.Chord;
@@ -194,7 +195,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 
         for (int hIdx = 0; hIdx < numH; hIdx++) {
 			AllocNode alloc = HtoQ[hIdx];
-            if(alloc instanceof GlobalAllocNode) {
+            if(alloc instanceof GlobalAllocNode || alloc instanceof StubAllocNode) {
 				Object[] newElems = combine(K, alloc, emptyElems);
 				domC.setCtxt(newElems);
 			} else {
@@ -242,7 +243,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         for (int hIdx = 0; hIdx < numH; hIdx++) {
 			AllocNode alloc = HtoQ[hIdx];
 
-            if(alloc instanceof GlobalAllocNode) {
+            if(alloc instanceof GlobalAllocNode || alloc instanceof StubAllocNode) {
 				Object[] newElems = combine(K, alloc, emptyElems);
 				Ctxt newCtxt = domC.setCtxt(newElems);
 				relCH.add(newCtxt, alloc);
@@ -305,7 +306,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
                 methToCtxts[mIdx] = epsilonCtxtSet;
 			} else {
                 Set<SootMethod> predMeths = new HashSet<SootMethod>();
-                if(meth.isStatic()) {
+                if(isQuasiStaticMeth(meth)) {
                     //do the copyctxt for static method.
                     /*Iterable<Object> ivks = getStatIvk(meth);
                     for (Object ivk : ivks) {
@@ -433,7 +434,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         final Set<Ctxt> newCtxts = new HashSet<Ctxt>();
         SootMethod meth = (SootMethod) domM.get(cleIdx);
 
-        if(meth.isStatic()){//static?copy all the ctxts from its callers.
+        if(isQuasiStaticMeth(meth)){//static?copy all the ctxts from its callers.
             /*Set<SootMethod> clrs = methToClrMeths[cleIdx];
             for (SootMethod clr : clrs) {
                 int clrIdx = domM.indexOf(clr);
@@ -467,6 +468,10 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 					Object[] newElems = combine(K, rcv, emptyElems);
 					Ctxt newCtxt = domC.setCtxt(newElems);
 					newCtxts.add(newCtxt);
+				} else if(rcv instanceof StubAllocNode) {
+					int clrIdx = HtoM[hIdx];
+					Set<Ctxt> rcvCtxts = methToCtxts[clrIdx];
+					newCtxts.addAll(rcvCtxts);
 				} else {
 					int clrIdx = HtoM[hIdx];
 					Set<Ctxt> rcvCtxts = methToCtxts[clrIdx];

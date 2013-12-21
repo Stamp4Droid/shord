@@ -187,7 +187,7 @@ public class PAGBuilder extends JavaAnalysis
 	private FastHierarchy fh;
 	private NumberedSet stubMethods;
 
-	private Map<Type,StubAllocNode> typeToStubAllocNode = new HashMap();
+	//private Map<Type,StubAllocNode> typeToStubAllocNode = new HashMap();
 
 	private GlobalStringConstantNode gscn = new GlobalStringConstantNode();
 
@@ -555,7 +555,7 @@ public class PAGBuilder extends JavaAnalysis
 							continue;
 						assert !st.isInterface();
 						// StubAllocNode n = stubAllocNodeFor(st.getType());
-						StubAllocNode n = new StubAllocNode(st.getType());
+						StubAllocNode n = new StubAllocNode(st.getType(), method);
 						domH.add(n);
 						stubAllocNodes.add(n);
 						//System.out.println("OO "+method+" "+n);
@@ -1297,16 +1297,22 @@ public class PAGBuilder extends JavaAnalysis
 	public static boolean isQuasiStaticInvk(Unit invkUnit)
 	{
 		InvokeExpr ie = ((Stmt) invkUnit).getInvokeExpr();
-		if(ie instanceof StaticInvokeExpr)
+		return isQuasiStaticMeth(ie.getMethod());
+	}
+
+	public static boolean isQuasiStaticMeth(SootMethod m)
+	{
+		if(m.isStatic())
 			return true;
-		SootClass calleeClass = ie.getMethod().getDeclaringClass();
-		if(calleeClass.getName().equals("android.app.AlarmManager"))
+		String klassName = m.getDeclaringClass().getName();
+		if(klassName.equals("android.app.AlarmManager"))
 			return true;
-		if(calleeClass.getName().equals("android.app.Notification"))
+		if(klassName.equals("android.app.Notification"))
 			return true;
 		return false;
 	}
 
+	/*
 	private StubAllocNode stubAllocNodeFor(Type type)
 	{
 		StubAllocNode node = typeToStubAllocNode.get(type);
@@ -1316,6 +1322,7 @@ public class PAGBuilder extends JavaAnalysis
 		}
 		return node;
 	}
+	*/
 
 	private void populateDomComp() 
 	{
