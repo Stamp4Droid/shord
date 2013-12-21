@@ -317,7 +317,7 @@ public class PAGBuilder extends JavaAnalysis
 		relTargetHT.save();
 	}
 
-	void GlobalAlloc(VarNode l, GlobalAllocNode h)
+	void GlobalAlloc(VarNode l, AllocNode h)
 	{
 		assert l != null;
 		relGlobalAlloc.add(l, h);
@@ -687,7 +687,7 @@ public class PAGBuilder extends JavaAnalysis
 			if(isStub) {
 				for(StubAllocNode an : stubAllocNodes){
 					populateHT_HTFilter(an);
-					Alloc(retVar, an);
+					GlobalAlloc(retVar, an);
 					relMH.add(method, an);
 				}
 				return;
