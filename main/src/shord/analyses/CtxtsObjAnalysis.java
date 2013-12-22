@@ -429,7 +429,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
     private Object[] combine(int k, Object inst, Object[] elems) {
         int oldLen = elems.length;
 		Object[] newElems;
-		if(oldLen > 0 && elems[0] instanceof StubAllocNode){
+		if(false/*oldLen > 0 && elems[0] instanceof StubAllocNode*/){
 			//dont push, replace the stuballocnode with inst
 			newElems = new Object[oldLen];
 			newElems[0] = inst;
