@@ -30,6 +30,7 @@ class View
 
     public  void setOnFocusChangeListener(final android.view.View.OnFocusChangeListener l) 
 	{ 
+		l.onFocusChange(View.this, false);
 		edu.stanford.stamp.harness.ApplicationDriver.getInstance().
 			registerCallback(new edu.stanford.stamp.harness.Callback(){
 					public void run() {
@@ -41,6 +42,7 @@ class View
     // Callback classes and callback setter methods                                                                                                                            
     public  void setOnClickListener(final android.view.View.OnClickListener l) 
     { 
+		l.onClick(View.this);
         edu.stanford.stamp.harness.ApplicationDriver.getInstance().
 			registerCallback(new edu.stanford.stamp.harness.Callback(){
 					public void run() {

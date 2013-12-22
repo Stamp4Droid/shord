@@ -46,7 +46,7 @@ MCL(m:M,c:C,cl:CL)
 
 CallerComp(m,k,c) :- MC(m,c), reachableCM(k,m).
 CallerComp(m2,k2,c) :- CallerComp(m1,k1,c), MI(m1,i), CICM(k1,i,k2,m2).
-CallerComp(cb,k2,c) :- Callbacks(cb), MmethArg(cb,0,p), pt(k2,p,o), pt(k1,a,o), CallerComp(m,k1,c), MregI(m,i), IinvkArg(i,0,a).
+#CallerComp(cb,k2,c) :- Callbacks(cb), MmethArg(cb,0,p), pt(k2,p,o), pt(k1,a,o), CallerComp(m,k1,c), MregI(m,i), IinvkArg(i,0,a).
 
 ML(m,l) :- InLabelRet(l,m).
 ML(m,l) :- InLabelArg(l,m,_).
