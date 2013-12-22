@@ -53,7 +53,7 @@ import chord.bddbddb.Rel.RelView;
  */
 @Chord(name = "ctxts-obj-java",
        consumes = { "MI", "MH", "ci_pt", "StatIM", "Stub"},
-       produces = { "C", "CC", "CH", "CI"},
+       produces = { "C", "CC", "CH", "CI", "CtxtInsMeth"},
        namesOfTypes = { "C" },
        types = { DomC.class }
 )
@@ -96,6 +96,9 @@ public class CtxtsObjAnalysis extends JavaAnalysis
     private ProgramRel relCI;
     private ProgramRel relIpt;
     private ProgramRel relStatIM;
+    private ProgramRel relCtxtInsMeth;
+
+	private NumberedSet stubs;
 
     public void run() 
 	{
@@ -110,6 +113,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         relCI = (ProgramRel) ClassicProject.g().getTrgt("CI");
         relIpt = (ProgramRel) ClassicProject.g().getTrgt("ci_pt");
         relStatIM = (ProgramRel) ClassicProject.g().getTrgt("StatIM");
+		relCtxtInsMeth = (ProgramRel) ClassicProject.g().getTrgt("CtxtInsMeth");
 
         mainMeth = Program.g().getMainMethod();
 
@@ -171,11 +175,14 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         methToClrSites = new TIntArrayList[numM];
         methToClrMeths = new Set[numM];
 
+		relCtxtInsMeth.zero();
+
         // Do the heavy crunching
         doAnalysis();
 
         relIpt.close();
         relStatIM.close();
+		relCtxtInsMeth.close();
 
         // Populate domC
         for(int iIdx = 0; iIdx < ItoM.length; iIdx++){
@@ -195,7 +202,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 
         for (int hIdx = 0; hIdx < numH; hIdx++) {
 			AllocNode alloc = HtoQ[hIdx];
-            if(alloc instanceof GlobalAllocNode || alloc instanceof StubAllocNode) {
+            if(alloc instanceof GlobalAllocNode/* || alloc instanceof StubAllocNode*/) {
 				Object[] newElems = combine(K, alloc, emptyElems);
 				domC.setCtxt(newElems);
 			} else {
@@ -243,7 +250,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         for (int hIdx = 0; hIdx < numH; hIdx++) {
 			AllocNode alloc = HtoQ[hIdx];
 
-            if(alloc instanceof GlobalAllocNode || alloc instanceof StubAllocNode) {
+            if(alloc instanceof GlobalAllocNode) {
 				Object[] newElems = combine(K, alloc, emptyElems);
 				Ctxt newCtxt = domC.setCtxt(newElems);
 				relCH.add(newCtxt, alloc);
@@ -292,18 +299,17 @@ public class CtxtsObjAnalysis extends JavaAnalysis
         SootMethod mainMeth = Program.g().getMainMethod();
         Set<SootMethod> roots = new HashSet<SootMethod>();
         Map<SootMethod, Set<SootMethod>> methToPredsMap = new HashMap<SootMethod, Set<SootMethod>>();
-		boolean ignoreStubs = PAGBuilder.ignoreStubs;
-		NumberedSet stubs = stubMethods();
+		stubs = stubMethods();
 		Iterator mIt = Program.g().scene().getReachableMethods().listener();
 		while(mIt.hasNext()){
 			SootMethod meth = (SootMethod) mIt.next();
-			if(ignoreStubs && stubs.contains(meth)) continue;
 
             int mIdx = domM.indexOf(meth);
-			if (meth == mainMeth || meth.getName().equals("<clinit>")){
+			if (meth == mainMeth || meth.getName().equals("<clinit>") || treatCI(meth)) {
                 roots.add(meth);
                 methToPredsMap.put(meth, emptyMethSet);
                 methToCtxts[mIdx] = epsilonCtxtSet;
+				relCtxtInsMeth.add(meth);
 			} else {
                 Set<SootMethod> predMeths = new HashSet<SootMethod>();
                 if(isQuasiStaticMeth(meth)) {
@@ -422,12 +428,20 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 
     private Object[] combine(int k, Object inst, Object[] elems) {
         int oldLen = elems.length;
-        int newLen = Math.min(k - 1, oldLen) + 1;
-        Object[] newElems = new Object[newLen];
-        if (newLen > 0) newElems[0] = inst;
-        if (newLen > 1)
-            System.arraycopy(elems, 0, newElems, 1, newLen - 1);
-        return newElems;
+		Object[] newElems;
+		if(oldLen > 0 && elems[0] instanceof StubAllocNode){
+			//dont push, replace the stuballocnode with inst
+			newElems = new Object[oldLen];
+			newElems[0] = inst;
+			System.arraycopy(elems, 1, newElems, 1, oldLen-1);
+		} else {
+			int newLen = Math.min(k - 1, oldLen) + 1;
+			newElems = new Object[newLen];
+			if (newLen > 0) newElems[0] = inst;
+			if (newLen > 1)
+				System.arraycopy(elems, 0, newElems, 1, newLen - 1);
+		}
+		return newElems;
     }
 
     private Set<Ctxt> getNewCtxts(int cleIdx) { // Update contexts for this method (callee)
@@ -468,11 +482,12 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 					Object[] newElems = combine(K, rcv, emptyElems);
 					Ctxt newCtxt = domC.setCtxt(newElems);
 					newCtxts.add(newCtxt);
-				} else if(rcv instanceof StubAllocNode) {
+				} /*else if(rcv instanceof StubAllocNode) {
 					int clrIdx = HtoM[hIdx];
 					Set<Ctxt> rcvCtxts = methToCtxts[clrIdx];
 					newCtxts.addAll(rcvCtxts);
-				} else {
+					}*/
+				else {
 					int clrIdx = HtoM[hIdx];
 					Set<Ctxt> rcvCtxts = methToCtxts[clrIdx];
 					for (Ctxt oldCtxt : rcvCtxts) {
@@ -499,4 +514,14 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 		relStub.close();
 		return stubMethods;
     }
+
+	private boolean treatCI(SootMethod meth)
+	{
+		if(!stubs.contains(meth))
+			return false;
+		String sig = meth.getSignature();
+		if(sig.equals("<android.app.Activity: android.view.View findViewById(int)>"))
+			return false;
+		return true;
+	}
 }
