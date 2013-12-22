@@ -305,7 +305,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 			SootMethod meth = (SootMethod) mIt.next();
 
             int mIdx = domM.indexOf(meth);
-			if (meth == mainMeth || meth.getName().equals("<clinit>") || treatCI(meth)) {
+			if (meth == mainMeth || meth.getName().equals("<clinit>") /*|| treatCI(meth)*/) {
                 roots.add(meth);
                 methToPredsMap.put(meth, emptyMethSet);
                 methToCtxts[mIdx] = epsilonCtxtSet;
