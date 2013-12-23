@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.Scanner;
 
 public class Launcher
 {
 	static String stampScript;
 	static ConcurrentLinkedQueue<String> apkNames = new ConcurrentLinkedQueue();
+
 
 	public static void main(String[] args) throws Exception
 	{
@@ -24,20 +26,29 @@ public class Launcher
 		int maxStamp = Integer.parseInt(args[1]);
 		String apkDir = args[2];
 
-		String[] apks = new File(apkDir).list(new FilenameFilter(){
-				public boolean accept(File dir, String name){
-					return name.endsWith("apk");
-				}
-			});
-		
-		for(String apk : apks){
-			apkNames.add(apk);
-		}	
+		displayDirectoryContents(new File(apkDir));
 		
 		for(int i = 0; i < maxStamp; i++){
 			new Worker().start();
 		}
 	}
+
+	public static void displayDirectoryContents(File dir) {
+		try {
+			File[] files = dir.listFiles();
+			for (File file : files) {
+				if (file.isDirectory()) {
+					displayDirectoryContents(file);
+				} else {
+					apkNames.add(file.getCanonicalPath());
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
 
 	static class Worker extends Thread 
 	{
@@ -48,7 +59,10 @@ public class Launcher
 				String[] cmdArray = new String[]{stampScript, "analyze", apkName};
 				try{
 					Process proc = Runtime.getRuntime().exec(cmdArray, null, null); 
-					proc.waitFor();
+                    Scanner sc = new Scanner(proc.getInputStream());           
+                    while (sc.hasNext()) System.out.println(sc.nextLine());
+                    proc.waitFor();
+
 				}catch(IOException e){
 					System.out.println(e.getMessage());
 					e.printStackTrace();
@@ -58,5 +72,6 @@ public class Launcher
 				}
 			}
 		}
-	}
+
+    }
 }

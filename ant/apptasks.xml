@@ -61,16 +61,6 @@ libPath=${stamp.lib.jars}
 		<property name="stamp.input.type" value="src"/>
 		<antcall target="-analyze-src"/>
 
-		<!-- Prepare instructions for the web frontend. -->
-		<echo file="${stamp.out.dir}/stamp.properties">rootPath=${stamp.dir}
-appPath=${app.dir}
-outPath=${stamp.out.dir}
-srcPath=${stamp.src.path}:${stamp.gen.path}:${driver.dir}
-libPath=${stamp.lib.jars}
-stamp.droidrecord.logfile.template=${stamp.droidrecord.logfile.template}
-stamp.droidrecord.logfile.bin=${stamp.droidrecord.logfile.bin}
-		</echo>
-
 		<!-- Launch browser if appropriate. -->
 		<if>
 		  <or>
@@ -145,6 +135,18 @@ stamp.droidrecord.logfile.bin=${stamp.droidrecord.logfile.bin}
 	
 	<property name="apk" value="${stamp.apk.path}"/>
 	<antcall target="-analyze-apk"/>
+
+	<!-- Prepare instructions for the web frontend. -->
+	<echo file="${stamp.out.dir}/stamp.properties">rootPath=${stamp.dir}
+appPath=${app.dir}
+outPath=${stamp.out.dir}
+srcPath=${stamp.src.path}:${stamp.gen.path}:${driver.dir}
+libPath=${stamp.lib.jars}
+stamp.droidrecord.logfile.template=${stamp.droidrecord.logfile.template}
+stamp.droidrecord.logfile.bin=${stamp.droidrecord.logfile.bin}
+apiLevel=api-${apilevel}
+	</echo>
+
   </target>
 
   <target name="summary">

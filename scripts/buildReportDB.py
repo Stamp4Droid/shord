@@ -135,6 +135,8 @@ def getFlows(reportpath):
     flows = []
     src = ""
     sink = ""
+    srcCtxt = ""
+    sinkCtxt = ""
     
     for root, subFolders, files in os.walk(os.path.abspath(reportpath)):
         flows = []
@@ -147,13 +149,15 @@ def getFlows(reportpath):
 
                 if 'source' in tpl.attrib:
                     src = tpl.attrib['source']
+                    srcCtxt = tpl.find('./value/label').text
 
                 if 'sink' in tpl.attrib:
                     sink = tpl.attrib['sink']
                     storeFlow = True
+                    sinkCtxt = tpl.find('./value/label').text
 
                 if storeFlow:
-                    flows.append((src,sink))
+                    flows.append((src,sink,srcCtxt,sinkCtxt))
                     printv((src,sink),4)
 
             appDict[root] = flows
@@ -164,8 +168,7 @@ def getFlows(reportpath):
 
         s = set()
         for f in appDict[v]:
-            pair = str(f).strip('(').replace("'","").strip(')').replace("'","").split(',')
-            s.add((pair[0].strip(' ').lower(),pair[1].strip(' ').lower()))
+            s.add((f[0].lower(), f[1].lower(), f[2].lower(), f[3].lower()))
 
         flowHash[appName] = s
 
@@ -190,6 +193,34 @@ def srcClass(srcDict,src):
 def classifyContext(ctx, contextDict):
     return contextDict.get(ctx.lower(), "App")
 
+def findAdlib(str):
+    tree = Et.parse(os.path.dirname(os.path.abspath(__file__))+'/'+'androidAdLibs.xml')
+    rootXML = tree.getroot()
+    adlibs = []
+    adPkgToName = {}
+    for n in rootXML:
+        if n.attrib['package'].__len__() > 0:
+            adlibs.append(n.attrib['package'])
+    
+    for adlibname in adlibs:
+        if str.find(adlibname) >= 0 or str.find(adlibname.lower()) >= 0:
+            return rootXML.find(".//*[@package='"+adlibname+"']").attrib['name'];
+    return ""
+            
+
+"""Given Bools on flow characteristics, return risk type"""
+def getClass(encrypted, offdevice, pii):
+    if not offdevice:
+        return "low_risk"
+    elif (encrypted and offdevice and pii):
+        return "privacy_risk"
+    elif ((not encrypted) and offdevice and pii):
+        return "privacy_and_confidentiality_risk"
+    elif ((not encrypted) and offdevice and (not pii)):
+        return "confidentiality_risk"
+    elif ( encrypted and offdevice and (not pii)):
+        return "other_network_traffic"
+    
 
 """Classify flows into one level of hierarchy"""
 def classifyFlows(app, flows, srcClassDict, sinkClassDict):
@@ -201,6 +232,8 @@ def classifyFlows(app, flows, srcClassDict, sinkClassDict):
     for f in flows:
         src = f[0]
         sink = f[1]
+        srcCtxt = f[2]
+        sinkCtxt = f[3]
 
         flowC = ""
         srcClasswoPriority = ""
@@ -226,12 +259,25 @@ def classifyFlows(app, flows, srcClassDict, sinkClassDict):
         else:
             flowC = "other"
 
-        flowClass.append((app,src.replace("$","").title(),srcClasswoPriority,sink.replace("!","").title(),sinkC,flowC))
+        adlib = findAdlib(srcCtxt+' '+sinkCtxt)
+
+        flowClass.append((app,src,srcClasswoPriority,srcCtxt,sink,sinkC,sinkCtxt,flowC,adlib))
+
+    # flow class depends on modifier, so we determine class in another pass
+    flowClass2 = []
+    for f in flowClass:
+        src = f[1]
+        sink = f[4]
+        encrypted = False
+        if src in modifier.keys() and modifier[src] == "encrypted":
+            encrypted = True
+        flowC = getClass(encrypted, f[5]=="offdevice", f[2]=="pii")
+        flowClass2.append((f[0],src.replace("$","").title(),f[2],f[3],sink.replace("!","").title(),f[5],f[6],flowC,f[8]))
 
     # Set modifiers
 
     flowClassModifiers = []
-    for f in flowClass:
+    for f in flowClass2:
         if f[1] in modifier.keys():
             if modifier[f[1]] == "encrypted":
                 flowClassModifiers.append(f + ("encrypted",))

@@ -89,6 +89,8 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		double[] yTraining = new double[trainingSet.keySet().size()];
 		int counter=0;
 		for(Map.Entry<StubModel,Boolean> entry : trainingSet.entrySet()) {
+			xTraining[counter] = new ModelInfo(entry.getKey()).featurize();
+			yTraining[counter] = entry.getValue() ? 1.0 : 0.0;
 			counter++;
 		}
 		double[][] xTest = new double[testSet.keySet().size()][length];

@@ -69,15 +69,15 @@ function processWarnings(message){
 function processFlowJSON(flow) {
 
     function newPrivTableEntry(entry) {
-        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td> <td><i  onClick=\"window.alert('Accepted')\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"window.alert('Reject')\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td>C</td></tr> ";
     }
 
     function newTableEntry(entry) {
-        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-success\">"+entry.modifier+"</span></td> \ <td><i  onClick=\"\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-default\">"+entry.adlib+"</span></td></tr> ";
     }
 
     function newTableEntryUnencrypted(entry) {
-        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-important\">"+entry.modifier+"</span></td> \ <td><i  onClick=\"\" class=\"icon-ok\"></i></td> \ <td><i  onClick=\"\" class=\"icon-ban-circle\"></i></td> \ </tr> ";
+        return "<tr><td>"+entry.sourceLabel+"</td><td><i class=\"icon-arrow-right\"></i></td><td>"+entry.sinkLabel+"</td><td><span class=\"label label-warning\">"+entry.adlib+"</span></td></tr> ";
     }
 
     var maxC = -1;
@@ -101,52 +101,63 @@ function processFlowJSON(flow) {
     });
 
     // Report header
-    var headerRow = "<th><h3>" + apkName +  " Risk Report &nbsp</h3></th>";
+    var headerRow = "<th><h3>Name: " + apkName +  ".apk &nbsp</h3></th>";
     $("#reportheader").append(headerRow);
 
     // Incident counts
-    $("#incident-summary").append("<th><h4>Risk Type</h4></th><th><h4>Incidents</h4></th>");
-    $("#incident-summary").append("<tr><td><h5>Privacy</h5></td></td><td>" + privacyCount + "</td></tr>");
-    $("#incident-summary").append("<tr><td><h5>Confidentiality</h5></td></td><td>" + privacyCount + "</td></tr>");
-    $("#incident-summary").append("<tr><td><h5>Integrity</h5></td></td><td>" + lowRiskCount + "</td></tr>");
+    // $("#incident-summary").append("<th><h4>Risk Type</h4></th><th><h4>Incidents</h4></th>");
+    // $("#incident-summary").append("<tr><td><h5>Privacy</h5></td></td><td>" + privacyCount + "</td></tr>");
+    // $("#incident-summary").append("<tr><td><h5>Confidentiality</h5></td></td><td>" + privacyCount + "</td></tr>");
+    // $("#incident-summary").append("<tr><td><h5>Integrity</h5></td></td><td>" + lowRiskCount + "</td></tr>");
     //$("#incident-summary").append("<tr><td>Warnings</td></td><td>" + "X" + "</td></tr>");
 
     // Section headers
-    $("#privacy-rpt").append("<th colspan=\"5\"><h4>Privacy Report - Data sent off device</h4></th>");
-    $("#privacy-rpt").append("<tr><td><h4>Data</h4></td><td></td><td><h4>Destination</h4></td><td><h4>Approve</h4></td><td><h4>Reject</h4></td></tr>");
-    $("#conf-rpt").append("<th colspan=\"7\"><h4>Confidentiality Report - Data encryption status</h4></th>");
-    $("#conf-rpt").append("<tr><td><h4>Data</h4></td><td></td><td><h4>Destination</h4></td><td></td><td><h4>Approve</h4></td><td><h4>Reject</h4></td></tr>");
+    $("#privacyconf-rpt").append("<th colspan=\"5\"><h4>Conf+Privacy Risk - Unencrypted PII sent off device</h4></th>");
+    $("#privacyconf-rpt").append("<tr><td><h4>Data</h4></td><td></td><td><h4>Destination</h4></td><td><h4>Context</h4></td></tr>");
 
+    $("#privacy-rpt").append("<th colspan=\"5\"><h4>Privacy Risk - Encrypted PII sent off device</h4></th>");
+    $("#privacy-rpt").append("<tr><td><h4>Data</h4></td><td></td><td><h4>Destination</h4></td><td><h4>Context</h4></td></tr>");
 
+    $("#conf-rpt").append("<th colspan=\"7\"><h4>Confidentiality Risk - Unencrypted non-PII sent off device</h4></th>");
+    $("#conf-rpt").append("<tr><td><h4>Data</h4></td><td></td><td><h4>Destination</h4></td><td><h4>Context</h4></td></tr>");
 
-    if (privacyCount == 0) {
-	$("#privacy-rpt").append("<tr colspan=\"7\"><h3>No Privacy Risks Detected!</h3></tr>");
-	$("#conf-rpt").append("<tr colspan=\"7\"><h3>No Confidentiality Risks Detected!</h3></tr>");
-    }
+    $("#lowrisk-rpt").append("<th colspan=\"7\"><h4>Low Risk - Data accessed by application</h4></th>")
+    $("#lowrisk-rpt").append("<tr><td><h4>Data</h4></td><td></td><td><h4>Destination</h4></td><td><h4>Context</h4></td></tr>");
 
-    if (lowRiskCount != 0) {
-	$("#lowrisk-rpt").append("<th colspan=\"7\"><h4>Integrity Report - Data accessed by application</h4></th>")
-	$("#lowrisk-rpt").append("<tr><td><h4>Data</h4></td><td></td><td><h4>Destination</h4></td><td></td><td><h4>Approve</h4></td><td><h4>Reject</h4></td></tr>");
-    }
+    // if (privacyCount == 0) {
+    // 	$("#privacy-rpt").append("<tr colspan=\"7\"><h3>No Privacy Risks Detected!</h3></tr>");
+    // 	$("#conf-rpt").append("<tr colspan=\"7\"><h3>No Confidentiality Risks Detected!</h3></tr>");
+    // }
 			  
     $.each(flow, function(i, item) {
         if (item.analysisCounter === maxC) {
 
-	    var newentry;
-	    if (item.modifier === "encrypted") {
-		newentry = newTableEntry(item); 
+	    if (item.adlib === "") {
+		item.adlib = "App";
+	    	newentry = newTableEntry(item); 
 	    } else {
-		newentry = newTableEntryUnencrypted(item); 
+		item.adlib = "Ad Lib: " + item.adlib
+	    	newentry = newTableEntryUnencrypted(item); 
 	    }
+
+	    // var newentry;
+	    // if (item.modifier === "encrypted") {
+	    // 	newentry = newTableEntry(item); 
+	    // } else {
+	    // 	newentry = newTableEntryUnencrypted(item); 
+	    // }
 
             var flowC = item.flowClass;
 
 	    if (flowC === "privacy") {
-                $("#privacy-rpt").append(newPrivTableEntry(item));
+                $("#privacy-rpt").append(newentry);
+	    } else if (flowC === "confidentiality_risk") {
                 $("#conf-rpt").append(newentry);
+	    } else if (flowC === "privacy_and_confidentiality_risk") {
+                $("#privacyconf-rpt").append(newentry);
             } else if (flowC === "integrity") {
                 $("integrity-rpt").append(newentry);
-            } else if (flowC === "other") {
+            } else if (flowC === "low_risk" || flowC === "other_network_traffic") {
                 $("#lowrisk-rpt").append(newentry);
             } else if (flowC === "NoClass" || flowC === "") {
                 // explicit no class. Treat as low-risk.
@@ -155,7 +166,7 @@ function processFlowJSON(flow) {
             } else {
                 // unknown flowClass. Treat as low-risk.
                 $("#lowrisk-rpt").append(newentry);
-                console.log("unknown flow class" + flowC);
+                console.log("unknown flow class: " + flowC);
             }
 
         }
