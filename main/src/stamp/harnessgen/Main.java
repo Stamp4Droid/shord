@@ -16,6 +16,11 @@ import soot.jimple.Constant;
 import soot.jimple.IntConstant;
 import soot.jimple.InvokeExpr;
 import soot.jimple.InstanceInvokeExpr;
+import soot.toolkits.graph.ExceptionalUnitGraph;
+import soot.toolkits.scalar.SimpleLocalDefs;
+import soot.jimple.AssignStmt;
+import soot.Local;
+
 
 /*
 * @author Saswat Anand
@@ -76,6 +81,7 @@ public class Main
 			if(!m.isConcrete())
 				continue;
 			Body body = m.retrieveActiveBody();
+			SimpleLocalDefs sld = null;
 			for(Unit u : body.getUnits()){
 				Stmt s = (Stmt) u;
 				if(!s.containsInvokeExpr())
@@ -90,21 +96,59 @@ public class Main
 				} 
 
 				Value rcvr = ((InstanceInvokeExpr) ie).getBase();
-				if(!rcvr.equals(body.getThisLocal())){
-					System.out.println("WARN: rcvr of setContentView is not equal to ThisLocal of method "+m.getSignature());
-					continue;
+				Local thisLocal = body.getThisLocal();
+				if(!rcvr.equals(thisLocal)){
+					if(sld == null)
+						sld = new SimpleLocalDefs(new ExceptionalUnitGraph(body));
+
+					boolean warn = true;
+					if(rcvr instanceof Local){
+						warn = false;
+						for(Unit def : sld.getDefsOfAt((Local) rcvr, u)){
+							if(!(def instanceof AssignStmt) || !thisLocal.equals(((AssignStmt) def).getRightOp())){
+								warn = true;
+								break;
+							}
+						}
+					}
+
+					if(warn){
+						System.out.println("WARN: rcvr of setContentView is not equal to ThisLocal of method "+m.getSignature());
+						continue;
+					}
 				}
 
 				Value arg = ie.getArg(0);
 				if(arg instanceof Constant){
 					int layoutId = ((IntConstant) arg).value;
 					Layout layout = app.layoutWithId(layoutId);
-					if(layout != null)
+					if(layout != null){
 						layouts.add(layout);
+						System.out.println("Layout: "+comp.name+" "+layout.fileName);
+					}
 					else
 						System.out.println("WARN: Did not found layout for id = "+layoutId);
-				} else
-					System.out.println("WARN: Argument of setContentView is not constant");
+				} else {
+					if(sld == null)
+						sld = new SimpleLocalDefs(new ExceptionalUnitGraph(body));
+
+					//System.out.println("WARN: Argument of setContentView is not constant");					
+					for(Unit def : sld.getDefsOfAt((Local) arg, u)){
+						if(!(def instanceof AssignStmt))
+							continue;
+						Value rhs = ((AssignStmt) def).getRightOp();
+						if(!(rhs instanceof IntConstant))
+							continue;
+						int layoutId = ((IntConstant) rhs).value;
+						Layout layout = app.layoutWithId(layoutId);
+						if(layout != null){
+							layouts.add(layout);
+							System.out.println("Layout: "+comp.name+" "+layout.fileName);
+						}
+						else
+							System.out.println("WARN: Did not found layout for id = "+layoutId);
+					}
+				}
 			}
 		}
 		return layouts;

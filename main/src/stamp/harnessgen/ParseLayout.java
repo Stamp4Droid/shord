@@ -46,7 +46,7 @@ public class ParseLayout
 		System.out.println("++ "+layoutFileName);
 		Integer id = layoutToId.get(layoutFileName);
 		
-		Layout layout = new Layout(id);
+		Layout layout = new Layout(id, layoutFile.getName());
 
 		try{
 			File tmpFile = File.createTempFile("stamp_android_layout", null, null);
@@ -80,7 +80,7 @@ public class ParseLayout
 		for(int i = 0; i < nodes.getLength(); i++) {
 			//System.out.println("HELLO");
 			Node node = nodes.item(i);
-			//System.out.println("++++ "+node.getNodeName());
+			//System.out.println("Widget: "+node.getNodeName());
 			widgets.add(node.getNodeName());
 		}
 	}
@@ -99,7 +99,7 @@ public class ParseLayout
 				Node n = nnm.item(j);
 				if(n.getNodeName().equals("android:onClick")){
 					callbacks.add(n.getNodeValue());
-					System.out.println("CALLBACK: "+n.getNodeValue());
+					System.out.println("Callback: "+n.getNodeValue());
 				}
 				//System.out.println(n.getNodeName() + " " + );
 			}
@@ -132,7 +132,7 @@ public class ParseLayout
 				String layout = elem.getAttribute("name");
 				Integer id = Integer.decode(elem.getAttribute("id"));
 				layoutToId.put(layout, id);
-				System.out.println("## "+layout+" "+id);
+				//System.out.println("## "+layout+" "+id);
 			}
 		}catch(Exception e){
 			throw new Error(e);
