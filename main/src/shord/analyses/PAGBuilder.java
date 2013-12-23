@@ -495,7 +495,7 @@ public class PAGBuilder extends JavaAnalysis
 		private final SootMethod method;
 		private final List<StubAllocNode> stubAllocNodes = new ArrayList();
 		private final Map<Unit,SiteAllocNode> stmtToAllocNode = new HashMap();
-		private Map<String, AllocNode> action2Node = new HashMap();
+		private Map<String, Set<AllocNode>> action2Node = new HashMap();
 		private Map<String, AllocNode> dataType2Node = new HashMap();
 
 
@@ -603,13 +603,16 @@ public class PAGBuilder extends JavaAnalysis
 							domH.add(n);
 						    stmtToAllocNode.put(s, n);
 
-						}else if(str.matches("[a-zA-Z]+\\.[a-zA-Z]+.*")){
+						}else if(str.matches("[a-zA-Z0-9]+\\.[a-zA-Z0-9]+.*")){
 							StringConstNode n = new StringConstNode(s);
+
+                            
 							domH.add(n);
 						    stmtToAllocNode.put(s, n);
 
 							//save for targetAction rel.
-							action2Node.put(str, n);
+                            updateActionMap(str, n);
+
 						}else if("application/vnd.android.package-archive".equals(str)){ 
 							StringConstNode n = new StringConstNode(s);
 							domH.add(n);
@@ -641,6 +644,17 @@ public class PAGBuilder extends JavaAnalysis
 				}
 			}						
 		}
+
+        void updateActionMap(String str, StringConstNode n)
+        {
+            //one action string can correspond to multuple source.
+            Set<AllocNode> hSet = new HashSet<AllocNode>();
+            if(action2Node.get(str) != null)
+                hSet = action2Node.get(str);
+
+            hSet.add(n);
+	        action2Node.put(str, hSet);
+        }
 
 		void pass2()
 		{
@@ -737,9 +751,10 @@ public class PAGBuilder extends JavaAnalysis
                 if(nodeName.indexOf(".") == -1) nodeName = pkgName + "." +  nodeName;
                 for(String actionName : val.getActionList()){
                     //<nodeName, actionName>
-                    if(action2Node.get(actionName) != null)
-                        relTgtAction.add(ComponentAnalysis.getCompKey(nodeName), 
-                                         action2Node.get(actionName));
+                    if(action2Node.get(actionName) != null) {
+                        for(AllocNode al : action2Node.get(actionName))
+                            relTgtAction.add(ComponentAnalysis.getCompKey(nodeName), al);
+                    }
                 }
             }
 
@@ -893,7 +908,7 @@ public class PAGBuilder extends JavaAnalysis
                                             ComponentAnalysis.getCompKey(str));
                         }
 						Alloc(nodeFor((Local) leftOp), stmtToAllocNode.get(s));
-					}else if(str.matches("[a-zA-Z]+\\.[a-zA-Z]+.*")){
+					}else if(str.matches("[a-zA-Z0-9]+\\.[a-zA-Z0-9]+.*")){
 						Alloc(nodeFor((Local) leftOp), stmtToAllocNode.get(s));
 					} else if("application/vnd.android.package-archive".equals(str)){
 						Alloc(nodeFor((Local) leftOp), stmtToAllocNode.get(s));
