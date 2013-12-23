@@ -144,45 +144,19 @@ public class ComponentAnalysis extends JavaAnalysis
         if(components.get(this.klass.getName()) != null) {
 
             String[] str = { 
-                    "void onCreate(android.os.Bundle)",
-                    "void onStart()",
-                    "void onRestart()",
-                    "void onResume()",
-                    "void onPause()",
-                    "void onStop()",
-                    "void onDestroy()",
-
-                    "void onReceive(android.content.Context,android.content.Intent)",
-
-                    "void onCreate()",
-                    "void onLowMemory()",
-                    "void onRebind(android.content.Intent)",
-                    "void onStart(android.content.Intent,int)",
-                    "void onStartCommand(android.content.Intent,int,int)",
-
-                    "void onConfigurationChanged(android.content.res.Configuration)",
-
-                    "void onPostResume()",
-                    "java.lang.CharSequence onCreateDescription()",
-                    "void onRestoreInstanceState(android.os.Bundle)",
-                    "void onPostCreate(android.os.Bundle)",
-                    "void onUserLeaveHint()",
-                    "boolean onCreateThumbnail(android.graphics.Bitmap,android.graphics.Canvas)",
-                    "void onNewIntent(android.content.Intent)",
-                    "void onSaveInstanceState(android.os.Bundle)"
-                    
+                    "void <init>()"
                     };
 
             List<String> circleList = Arrays.asList(str);
 
-            //if(circleList.contains(method.getSubSignature())){
+            if(circleList.contains(method.getSubSignature())){
                 String compKey = getCompKey(klass.getName());
 
                 assert(compKey != null);
                 if(domM.contains(method)) 
                     relMC.add(method, compKey);
 
-           // }
+            }
 
         }
 
