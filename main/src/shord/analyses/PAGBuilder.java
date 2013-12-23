@@ -687,7 +687,7 @@ public class PAGBuilder extends JavaAnalysis
 			if(isStub) {
 				for(StubAllocNode an : stubAllocNodes){
 					populateHT_HTFilter(an);
-					GlobalAlloc(retVar, an);
+					Alloc(retVar, an);
 					relMH.add(method, an);
 				}
 				return;
