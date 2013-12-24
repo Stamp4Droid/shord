@@ -838,35 +838,37 @@ public class PAGBuilder extends JavaAnalysis
 				FieldRef fr = s.getFieldRef();
 				SootField field = fr.getField();
 				Type fieldType = field.getType();
-				if(leftOp instanceof Local){
-					//load
-					if(field.isStatic()){
-						if(fieldType instanceof RefLikeType)
-							LoadStat(nodeFor((Local) leftOp), field);
-						else if(fieldType instanceof PrimType)
-							LoadStatPrim(nodeFor((Local) leftOp), field);
-					} else{
-						Immediate base = (Immediate) ((InstanceFieldRef) fr).getBase();
-						if(fieldType instanceof RefLikeType)
-							Load(nodeFor((Local) leftOp), nodeFor(base), field);
-						else if(fieldType instanceof PrimType)
+				if(!field.getDeclaringClass().isPhantom()){
+					if(leftOp instanceof Local){
+						//load
+						if(field.isStatic()){
+							if(fieldType instanceof RefLikeType)
+								LoadStat(nodeFor((Local) leftOp), field);
+							else if(fieldType instanceof PrimType)
+								LoadStatPrim(nodeFor((Local) leftOp), field);
+						} else{
+							Immediate base = (Immediate) ((InstanceFieldRef) fr).getBase();
+							if(fieldType instanceof RefLikeType)
+								Load(nodeFor((Local) leftOp), nodeFor(base), field);
+							else if(fieldType instanceof PrimType)
 							LoadPrim(nodeFor((Local) leftOp), nodeFor(base), field);
-					}
-				}else{
-					//store
-					assert leftOp == fr;
-					Immediate rightOp = (Immediate) as.getRightOp();
-					if(field.isStatic()){
-						if(fieldType instanceof RefLikeType)
-							StoreStat(field, nodeFor(rightOp));
-						else if(fieldType instanceof PrimType)
-							StoreStatPrim(field, nodeFor(rightOp));
+						}
 					} else{
-						Immediate base = (Immediate) ((InstanceFieldRef) fr).getBase();
-						if(fieldType instanceof RefLikeType)
-							Store(nodeFor(base), field, nodeFor(rightOp));
-						else if(fieldType instanceof PrimType)
-							StorePrim(nodeFor(base), field, nodeFor(rightOp));		
+						//store
+						assert leftOp == fr;
+						Immediate rightOp = (Immediate) as.getRightOp();
+						if(field.isStatic()){
+							if(fieldType instanceof RefLikeType)
+								StoreStat(field, nodeFor(rightOp));
+							else if(fieldType instanceof PrimType)
+								StoreStatPrim(field, nodeFor(rightOp));
+						} else{
+							Immediate base = (Immediate) ((InstanceFieldRef) fr).getBase();
+							if(fieldType instanceof RefLikeType)
+								Store(nodeFor(base), field, nodeFor(rightOp));
+							else if(fieldType instanceof PrimType)
+								StorePrim(nodeFor(base), field, nodeFor(rightOp));		
+						}
 					}
 				}
 			} else if(s.containsArrayRef()) {
@@ -1276,6 +1278,8 @@ public class PAGBuilder extends JavaAnalysis
 
 		Program program = Program.g();		
         for(SootClass klass : program.getClasses()){
+			if(klass.isPhantom())
+				continue;
 			Type type = klass.getType();
 
 			relClassT.add(klass.getType());
