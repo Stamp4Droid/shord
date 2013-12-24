@@ -69,8 +69,24 @@ class Intent
 	@STAMP(flows = {@Flow(from="data",to="!this")})
 	public  android.content.Intent setDataAndType(android.net.Uri data, java.lang.String type) 
 	{ 
+        this.type = type;
 		return this;
 	}
+
+    public android.content.Intent setType(java.lang.String type) {
+        this.type = type;
+		return this;
+    }
+
+    public android.content.Intent setTypeAndNormalize(java.lang.String type) {
+        this.type = type;
+		return this;
+    }
+
+    public android.content.Intent setDataAndTypeAndNormalize(android.net.Uri data, java.lang.String type) {
+        this.type = type;
+		return this;
+    }
 
     //Getter.
 	@STAMP(flows={@Flow(from="$getExtras",to="@return")})
