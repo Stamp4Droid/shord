@@ -780,17 +780,22 @@ public class PAGBuilder extends JavaAnalysis
 				relMI.add(method, s);
 				s.addTag(containerTag);
 
-				//handle different types of invk stmts
-				if(ie instanceof SpecialInvokeExpr){
-					relSpecIM.add(s, callee);
-				}                
-				else if(isQuasiStaticInvk(s)){
-					relStatIM.add(s, callee);
-				}
-				else{
-					assert ie instanceof VirtualInvokeExpr || ie instanceof InterfaceInvokeExpr;
-					relVirtIM.add(s,callee);
-				}
+                DomM domM = (DomM) ClassicProject.g().getTrgt("M");
+                //only consider reachable methods.
+                if(domM.contains(callee)){
+
+                    //handle different types of invk stmts
+                    if(ie instanceof SpecialInvokeExpr){
+                        relSpecIM.add(s, callee);
+                    }                
+                    else if(isQuasiStaticInvk(s)){
+                        relStatIM.add(s, callee);
+                    }
+                    else{
+                        assert ie instanceof VirtualInvokeExpr || ie instanceof InterfaceInvokeExpr;
+                        relVirtIM.add(s,callee);
+                    }
+                }
 
 				//handle receiver
 				int j = 0;
@@ -1157,9 +1162,11 @@ public class PAGBuilder extends JavaAnalysis
 		ProgramRel relSubSig = (ProgramRel) ClassicProject.g().getTrgt("SubSig");
 		relSubSig.zero();
 		Iterator mIt = Program.g().getMethods();
+        DomM domM = (DomM) ClassicProject.g().getTrgt("M");
 		while(mIt.hasNext()){
 			SootMethod m = (SootMethod) mIt.next();
-			relSubSig.add(m, m.getSubSignature());
+            if(domM.contains(m))
+			    relSubSig.add(m, m.getSubSignature());
 		}
 		relSubSig.save();
 	}
