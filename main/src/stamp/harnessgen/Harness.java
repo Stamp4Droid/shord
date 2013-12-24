@@ -72,8 +72,12 @@ public class Harness
 		for(Layout layout : layouts) {
 			//call the callbacks defined in XML
 			for(String cbName : layout.callbacks){
-				SootMethod cbMethod = compClass.getMethod(cbName, Arrays.asList(new Type[]{RefType.v("android.view.View")}));
-				units.add(Jimple.v().newInvokeStmt(Jimple.v().newVirtualInvokeExpr(c, cbMethod.makeRef(), NullConstant.v())));
+				if (compClass.declaresMethod(cbName, Arrays.asList(new Type[]{RefType.v("android.view.View")}))) {
+                    SootMethod cbMethod = compClass.getMethod(cbName, Arrays.asList(new Type[]{RefType.v("android.view.View")}));
+                    units.add(Jimple.v().newInvokeStmt(Jimple.v().newVirtualInvokeExpr(c, cbMethod.makeRef(), NullConstant.v())));
+                } else {
+                    System.out.println("ERROR**********Invalid callback:" + cbName);
+                }
 			}
 
 			//initialize the custom widgets used in this comp
