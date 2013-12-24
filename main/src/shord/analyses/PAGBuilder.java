@@ -780,10 +780,8 @@ public class PAGBuilder extends JavaAnalysis
 				relMI.add(method, s);
 				s.addTag(containerTag);
 
-                DomM domM = (DomM) ClassicProject.g().getTrgt("M");
-                //only consider reachable methods.
-                if(domM.contains(callee)){
-
+                //only consider methods that are availalbe (i.e., not phantom)
+                if(!callee.getDeclaringClass().isPhantom()){
                     //handle different types of invk stmts
                     if(ie instanceof SpecialInvokeExpr){
                         relSpecIM.add(s, callee);
