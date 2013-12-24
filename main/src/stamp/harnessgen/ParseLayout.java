@@ -17,10 +17,13 @@ import java.util.*;
 public class ParseLayout
 {
 	private Map<String,Integer> layoutToId = new HashMap();
+	private Map<String,String> idToStringValue = new HashMap();
 
 	List<Layout> process(File resDir)
 	{
 		mapLayoutToId(new File(resDir, "values/public.xml"));
+
+		mapIdToStringValue(new File(resDir, "values/strings.xml"));
 
 		File layoutDir = new File(resDir, "layout");
 		File[] layoutFiles = layoutDir.listFiles(new FilenameFilter(){
@@ -43,7 +46,7 @@ public class ParseLayout
 	{
 		String layoutFileName = layoutFile.getName();
 		layoutFileName = layoutFileName.substring(0, layoutFileName.length()-4); //drop ".xml"
-		System.out.println("++ "+layoutFileName);
+		//System.out.println("++ "+layoutFileName);
 		Integer id = layoutToId.get(layoutFileName);
 		
 		Layout layout = new Layout(id, layoutFile.getName());
@@ -98,8 +101,12 @@ public class ParseLayout
 			for(int j = 0; j < nnm.getLength(); j++){
 				Node n = nnm.item(j);
 				if(n.getNodeName().equals("android:onClick")){
-					callbacks.add(n.getNodeValue());
-					System.out.println("Callback: "+n.getNodeValue());
+					name = n.getNodeValue();
+					if(name.startsWith("@string/")){
+						name = idToStringValue.get(name.substring("@string/".length()));
+					}
+					callbacks.add(name);
+					System.out.println("Callback: "+name);
 				}
 				//System.out.println(n.getNodeName() + " " + );
 			}
@@ -126,9 +133,7 @@ public class ParseLayout
 				xpath.evaluate("/resources/public[@type=\"layout\"]", document, XPathConstants.NODESET);
 			//System.out.println("nodes.size() = "+nodes.getLength());
 			for(int i = 0; i < nodes.getLength(); i++) {
-				//System.out.println("HELLO");
 				Element elem = (Element) nodes.item(i);
-				//System.out.println("++++ "+node.getNodeName());
 				String layout = elem.getAttribute("name");
 				Integer id = Integer.decode(elem.getAttribute("id"));
 				layoutToId.put(layout, id);
@@ -137,5 +142,37 @@ public class ParseLayout
 		}catch(Exception e){
 			throw new Error(e);
 		}		
+	}
+	
+	private void mapIdToStringValue(File stringXmlFile)
+	{
+		try{
+			File tmpFile = File.createTempFile("stamp_android_string_xml", null, null);
+			tmpFile.deleteOnExit();
+			UTF8ToAnsiUtils.main(new String[]{stringXmlFile.getAbsolutePath(), tmpFile.getAbsolutePath()});
+			stringXmlFile = tmpFile;
+
+			DocumentBuilder builder =
+				DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			Reader reader =
+				new InputStreamReader(new FileInputStream(stringXmlFile), "Cp1252");
+			Document document = builder.parse(new InputSource(reader));
+
+			XPath xpath = XPathFactory.newInstance().newXPath();
+
+			NodeList nodes = (NodeList)
+				xpath.evaluate("/resources/string", document, XPathConstants.NODESET);
+			//System.out.println("nodes.size() = "+nodes.getLength());
+			for(int i = 0; i < nodes.getLength(); i++) {
+				Element elem = (Element) nodes.item(i);
+				//System.out.println("++++ "+node.getNodeName());
+				String id = elem.getAttribute("name");
+				String value = elem.getTextContent();
+				idToStringValue.put(id, value);
+				//System.out.println("## "+id+" "+value);
+			}
+		}catch(Exception e){
+			throw new Error(e);
+		}
 	}
 }

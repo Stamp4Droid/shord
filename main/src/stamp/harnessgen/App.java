@@ -34,7 +34,7 @@ public class App
 
 		Set<String> compNames = new HashSet();
 		for(Component c : comps){
-			System.out.println("@@ "+c.name);
+			//System.out.println("@@ "+c.name);
 			compNames.add(c.name);
 		}
 
