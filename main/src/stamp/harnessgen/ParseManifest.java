@@ -17,6 +17,7 @@ import java.util.jar.JarFile;
 public class ParseManifest
 {
 	private String pkgName;
+	private List<Component> comps = new ArrayList();
 
 	List<Component> process(File manifestFile)
 	{
@@ -38,12 +39,10 @@ public class ParseManifest
 				xpath.evaluate("/manifest", document, XPathConstants.NODE);
 			pkgName = node.getAttributes().getNamedItem("package").getNodeValue();
 			
-			List<Component> comps = new ArrayList();
-
 			//find activities
-			findComponents(xpath, document, comps, "activity");
-			findComponents(xpath, document, comps, "service");
-			findComponents(xpath, document, comps, "receiver");
+			findComponents(xpath, document, "activity");
+			findComponents(xpath, document, "service");
+			findComponents(xpath, document, "receiver");
 			
 			node = (Node)
 				xpath.evaluate("/manifest/application", document, XPathConstants.NODE);
@@ -51,12 +50,12 @@ public class ParseManifest
 			//backup agent
 			Node backupAgent = node.getAttributes().getNamedItem("android:backupAgent");
 			if(backupAgent != null)
-				comps.add(new Component(fixName(backupAgent.getNodeValue()), false));
+				addComp(new Component(fixName(backupAgent.getNodeValue()), false));
 			
 			//application class
 			Node application = node.getAttributes().getNamedItem("android:name");
 			if(application != null)
-				comps.add(new Component(fixName(application.getNodeValue()), false));
+				addComp(new Component(fixName(application.getNodeValue()), false));
 
 			return comps;
 		}catch(Exception e){
@@ -74,7 +73,7 @@ public class ParseManifest
 	}
 
 
-	private void findComponents(XPath xpath, Document document, List<Component> comps, String componentType) throws Exception
+	private void findComponents(XPath xpath, Document document, String componentType) throws Exception
 	{
 		NodeList nodes = (NodeList)
 			xpath.evaluate("/manifest/application/"+componentType, document, XPathConstants.NODESET);
@@ -91,8 +90,17 @@ public class ParseManifest
 				//System.out.println(n.getNodeName() + " " + );
 			}			
 			assert name != null : node.getNodeName();
-			comps.add(new Component(fixName(name), componentType.equals("activity")));
+			addComp(new Component(fixName(name), componentType.equals("activity")));
 		}
+	}
+
+	private void addComp(Component c)
+	{
+		for(Component comp : comps){
+			if(comp.name.equals(c.name))
+				return;
+		}
+		comps.add(c);
 	}
 
 	private void findNodes(XPath xpath, Document document, Map<String, XmlNode> comps, String componentType) throws Exception
