@@ -129,6 +129,14 @@ public class Harness
 	{
 		//SootMethod init = new SootMethod("<init>", paramTypes, VoidType.v(), Modifier.PUBLIC);
 		//klass.addMethod(init);
+		/*
+		if(!klass.declaresMethod("<init>", paramTypes)){
+			System.out.println("hello "+klass.getMethods().size()+" "+klass+ " "+klass.getSuperclass());
+			for(SootMethod m : klass.getMethods())
+				//if(m.getName().equals("<init>"))
+					System.out.println("%% "+ m.getSignature());
+					}*/
+
 		SootMethod init = klass.getMethod("<init>", paramTypes);
 		Local c = Jimple.v().newLocal("c"+count++, klass.getType());
 		locals.add(c);
