@@ -182,6 +182,8 @@ public class PAGBuilder extends JavaAnalysis
 	private DomH domH;
 	private DomZ domZ;
 	private DomI domI;
+	private DomM domM;
+	private DomF domF;
 
 	private int maxArgs = -1;
 	private FastHierarchy fh;
@@ -781,7 +783,7 @@ public class PAGBuilder extends JavaAnalysis
 				s.addTag(containerTag);
 
                 //only consider methods that are availalbe (i.e., not phantom)
-                if(!callee.getDeclaringClass().isPhantom()){
+                if(domM.contains(callee)){
                     //handle different types of invk stmts
                     if(ie instanceof SpecialInvokeExpr){
                         relSpecIM.add(s, callee);
@@ -838,37 +840,35 @@ public class PAGBuilder extends JavaAnalysis
 				FieldRef fr = s.getFieldRef();
 				SootField field = fr.getField();
 				Type fieldType = field.getType();
-				if(!field.getDeclaringClass().isPhantom()){
-					if(leftOp instanceof Local){
-						//load
-						if(field.isStatic()){
-							if(fieldType instanceof RefLikeType)
-								LoadStat(nodeFor((Local) leftOp), field);
-							else if(fieldType instanceof PrimType)
-								LoadStatPrim(nodeFor((Local) leftOp), field);
-						} else{
-							Immediate base = (Immediate) ((InstanceFieldRef) fr).getBase();
-							if(fieldType instanceof RefLikeType)
-								Load(nodeFor((Local) leftOp), nodeFor(base), field);
-							else if(fieldType instanceof PrimType)
-							LoadPrim(nodeFor((Local) leftOp), nodeFor(base), field);
-						}
+				if(leftOp instanceof Local){
+					//load
+					if(field.isStatic()){
+						if(fieldType instanceof RefLikeType)
+							LoadStat(nodeFor((Local) leftOp), field);
+						else if(fieldType instanceof PrimType)
+							LoadStatPrim(nodeFor((Local) leftOp), field);
 					} else{
-						//store
-						assert leftOp == fr;
-						Immediate rightOp = (Immediate) as.getRightOp();
-						if(field.isStatic()){
-							if(fieldType instanceof RefLikeType)
-								StoreStat(field, nodeFor(rightOp));
-							else if(fieldType instanceof PrimType)
-								StoreStatPrim(field, nodeFor(rightOp));
-						} else{
-							Immediate base = (Immediate) ((InstanceFieldRef) fr).getBase();
-							if(fieldType instanceof RefLikeType)
-								Store(nodeFor(base), field, nodeFor(rightOp));
-							else if(fieldType instanceof PrimType)
-								StorePrim(nodeFor(base), field, nodeFor(rightOp));		
-						}
+						Immediate base = (Immediate) ((InstanceFieldRef) fr).getBase();
+						if(fieldType instanceof RefLikeType)
+							Load(nodeFor((Local) leftOp), nodeFor(base), field);
+						else if(fieldType instanceof PrimType)
+							LoadPrim(nodeFor((Local) leftOp), nodeFor(base), field);
+					}
+				} else{
+					//store
+					assert leftOp == fr;
+					Immediate rightOp = (Immediate) as.getRightOp();
+					if(field.isStatic()){
+						if(fieldType instanceof RefLikeType)
+							StoreStat(field, nodeFor(rightOp));
+						else if(fieldType instanceof PrimType)
+							StoreStatPrim(field, nodeFor(rightOp));
+					} else{
+						Immediate base = (Immediate) ((InstanceFieldRef) fr).getBase();
+						if(fieldType instanceof RefLikeType)
+							Store(nodeFor(base), field, nodeFor(rightOp));
+						else if(fieldType instanceof PrimType)
+							StorePrim(nodeFor(base), field, nodeFor(rightOp));		
 					}
 				}
 			} else if(s.containsArrayRef()) {
@@ -1030,7 +1030,7 @@ public class PAGBuilder extends JavaAnalysis
 
 	void populateMethods()
 	{
-		DomM domM = (DomM) ClassicProject.g().getTrgt("M");
+		domM = (DomM) ClassicProject.g().getTrgt("M");
 		DomS domS = (DomS) ClassicProject.g().getTrgt("S");
 		Program program = Program.g();
 		stubMethods = new NumberedSet(Scene.v().getMethodNumberer());
@@ -1060,7 +1060,7 @@ public class PAGBuilder extends JavaAnalysis
 	
 	void populateFields()
 	{
-		DomF domF = (DomF) ClassicProject.g().getTrgt("F");
+		domF = (DomF) ClassicProject.g().getTrgt("F");
 		Program program = Program.g();
 		domF.add(ArrayElement.v()); //first add array elem so that it gets index 0
 		for(SootClass klass : program.getClasses()){
