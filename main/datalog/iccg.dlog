@@ -28,7 +28,7 @@ TgtDataType(t:COMP,s:SC) input
 
 CH(o:C,h:H) input 
 MI(m:M,i:I) input 
-MmethArg(m:M,z:Z,v:V) input
+IinvkArg(i:I,n:Z,v:V) input
 pt(c:C,v:V,o:C)    input  # in context c, v points to o.
 fpt(o1:C,f:F,o2:C) input
 CICM(d:C,i:I,c:C,m:M)   input  # i in cotext d calls method m in context c.
@@ -43,12 +43,12 @@ ObjSC(o:C,sc:SC) output
 #    RULES
 ###################
 
-Launch(s,o) :- ICCMeth(m1,z), MmethArg(m1,z,v), CICM(k,i,c,m1), MI(m2,i), CallerComp(m2,k,s), pt(c,v,o).
+Launch(s,o) :- ICCMeth(m1,z), CICM(k,i,_,m1), IinvkArg(i,z,v), MI(m2,i), CallerComp(m2,k,s), pt(k,v,o).
 ObjSC(o,sc) :- CH(o,h), SCH(sc,h).
 
 #explicit intent
 ICCG(s,t) :- Launch(s,o1), IntentTgtField(f), fpt(o1,f,o2), ObjSC(o2,sc), CSC(t,sc).
 
 #implicit intent
-ICCG(s,t) :- Launch(s,o1), ActionField(f), fpt(o1,f,o2), ObjSC(o2,sc), TgtAction(t,sc).
-ICCG(s,t) :- Launch(s,o1), DataTypeField(f), fpt(o1,f,o2), ObjSC(o2,sc), TgtDataType(t,sc).
+#ICCG(s,t) :- Launch(s,o1), ActionField(f), fpt(o1,f,o2), ObjSC(o2,sc), TgtAction(t,sc).
+#ICCG(s,t) :- Launch(s,o1), DataTypeField(f), fpt(o1,f,o2), ObjSC(o2,sc), TgtDataType(t,sc).
