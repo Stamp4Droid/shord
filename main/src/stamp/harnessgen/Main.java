@@ -3,6 +3,10 @@ package stamp.harnessgen;
 import java.io.*;
 import java.util.*;
 
+import stamp.app.App;
+import stamp.app.Component;
+import stamp.app.Layout;
+
 import soot.Scene;
 import soot.Value;
 import soot.SootClass;
@@ -71,7 +75,7 @@ public class Main
 
 	private static List<Layout> findLayoutsFor(Component comp)
 	{
-		if(!comp.isActivity)
+		if(comp.type != Component.Type.activity)
 			return Collections.EMPTY_LIST;
 		
 		List<Layout> layouts = new ArrayList();
@@ -175,8 +179,7 @@ public class Main
 
 			Scene.v().loadClassAndSupport("edu.stanford.stamp.harness.ApplicationDriver");
 			for(Component c : comps){
-				if(c.isActivity)
-					Scene.v().loadClassAndSupport(c.name);
+				Scene.v().loadClassAndSupport(c.name);
 			}
 
 			Scene.v().loadDynamicClasses();

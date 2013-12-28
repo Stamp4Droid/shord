@@ -10,17 +10,25 @@
 .include "H.dom"
 .include "F.dom"
 .include "COMP.dom"
+.include "SC.dom"
+.include "Z.dom"
 
-.bddvarorder M0xM1_I0_V0_C0xC1_H0_F0_COMP0_COMP1
+.bddvarorder M0xM1_Z0_I0_V0_C0xC1xC2_H0_F0_COMP0_COMP1_SC0
 
-TargetHT(h:H,t:COMP) input   # StringConst corresponds to target of type t.
-CH(o:C,h:H) input         # context’ified abstract location o corresponds to new stmt h
-Launch(v:V,m:M) input
+SCH(sc:SC,h:H) input
+ICCMeth(m:M,z:Z) input
+
 IntentTgtField(f:F) input
 ActionField(f:F) input
 DataTypeField(f:F) input
-TgtAction(t:COMP,h:H) input
-TgtDataType(t:COMP,h:H) input
+
+CSC(c:COMP,sc:SC) input
+TgtAction(t:COMP,s:SC) input
+TgtDataType(t:COMP,s:SC) input
+
+CH(o:C,h:H) input 
+MI(m:M,i:I) input 
+MmethArg(m:M,z:Z,v:V) input
 pt(c:C,v:V,o:C)    input  # in context c, v points to o.
 fpt(o1:C,f:F,o2:C) input
 CICM(d:C,i:I,c:C,m:M)   input  # i in cotext d calls method m in context c.
@@ -28,14 +36,19 @@ CallerComp(m:M,c:C,o:COMP)   input  # m is a method declared in c
 
 ICCG(s:COMP,t:COMP)  output
 
+Launch(c:COMP,o:C) output
+ObjSC(o:C,sc:SC) output
+
 ###################
 #    RULES
 ###################
-#
+
+Launch(s,o) :- ICCMeth(m1,z), MmethArg(m1,z,v), CICM(k,i,c,m1), MI(m2,i), CallerComp(m2,k,s), pt(c,v,o).
+ObjSC(o,sc) :- CH(o,h), SCH(sc,h).
 
 #explicit intent
-ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), IntentTgtField(f), fpt(o,f,c), CH(c,h), TargetHT(h,t).
+ICCG(s,t) :- Launch(s,o1), IntentTgtField(f), fpt(o1,f,o2), ObjSC(o2,sc), CSC(t,sc).
+
 #implicit intent
-ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), ActionField(f), TgtAction(t,h), fpt(o,f,c), CH(c,h).
-#install apk through datatype.
-ICCG(s,t) :- CallerComp(m,k,s), Launch(v,m), pt(k,v,o), DataTypeField(f), TgtDataType(t,h), fpt(o,f,c), CH(c,h).
+ICCG(s,t) :- Launch(s,o1), ActionField(f), fpt(o1,f,o2), ObjSC(o2,sc), TgtAction(t,sc).
+ICCG(s,t) :- Launch(s,o1), DataTypeField(f), fpt(o1,f,o2), ObjSC(o2,sc), TgtDataType(t,sc).

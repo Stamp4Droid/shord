@@ -1,26 +1,20 @@
 package shord.analyses;
 
-import soot.Unit;
-import soot.jimple.AssignStmt;
-import soot.Type;
+import soot.RefType;
 import soot.SootMethod;
-import soot.jimple.StringConstant;
-import soot.Value;
+
 
 /*
  * @author Yu Feng
  */
-
-public class StringConstNode extends SiteAllocNode
+public class StringConstNode extends GlobalAllocNode
 {
 	public final String value;
 
-	public StringConstNode(Unit u)
+	public StringConstNode(String value)
 	{
-		super(u);
-		Value rightOp = ((AssignStmt) u).getRightOp();
-		assert rightOp instanceof StringConstant;
-		this.value = ((StringConstant)rightOp).value;
+		super(RefType.v("java.lang.String"));
+		this.value = value;
 	}
 
 	public String getValue()

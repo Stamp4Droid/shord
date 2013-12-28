@@ -2,8 +2,7 @@ package android.content;
 
 class ComponentName
 {
-
-	public java.lang.String name = new java.lang.String();
+	public java.lang.String name;
 
 	public  ComponentName(java.lang.String pkg, java.lang.String cls) 
 	{ 

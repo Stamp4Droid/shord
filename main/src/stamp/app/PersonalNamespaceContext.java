@@ -1,4 +1,4 @@
-package stamp.harnessgen;
+package stamp.app;
 
 import java.util.*;
 import javax.xml.xpath.*;

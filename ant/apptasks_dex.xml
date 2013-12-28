@@ -114,6 +114,8 @@
       <sysproperty key="stamp.droidrecord.logfile.bin" value="${stamp.droidrecord.logfile.bin}"/>
 	  <sysproperty key="stamp.print.allclasses" value="${stamp.print.allclasses}"/>
 	  <sysproperty key="stamp.timeout" value="${stamp.timeout}"/>
+	  <sysproperty key="stamp.apk.path" value="${apk}"/>
+	  <sysproperty key="stamp.apktool.out.dir" value="${stamp.out.dir}/apktool-out"/>
       <syspropertyset refid="stamp.analyses.main.sysprops"/>
       <classpath>
 		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>

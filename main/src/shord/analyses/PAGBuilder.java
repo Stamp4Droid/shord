@@ -7,6 +7,7 @@ import soot.SootField;
 import soot.Local;
 import soot.Immediate;
 import soot.Value;
+import soot.ValueBox;
 import soot.Unit;
 import soot.Body;
 import soot.Type;
@@ -70,6 +71,8 @@ import java.util.*;
  * @author Yu Feng
 */
 @Chord(name="base-java", 
+	   consumes={"SC"
+	            },
 	   produces={"M", "Z", "I", "H", "V", "T", "F", "U",
 				 "GlobalAlloc", "Alloc", "Assign", 
 				 "Load", "Store", 
@@ -89,10 +92,10 @@ import java.util.*;
 				 "SpecIM", "StatIM", "VirtIM",
 				 "SubSig", "Dispatch",
                  "ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM",
-                 "TargetHT", "Launch", "TgtAction", "TgtDataType", "COMP",
+				 "SCH"
                  },
-       namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U", "S", "COMP"},
-       types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class, DomComp.class},
+       namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U", "S", "SC"},
+       types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class, DomSC.class},
 	   namesOfSigns = { "GlobalAlloc", "Alloc", "Assign", 
 						"Load", "Store", 
 						"LoadStat", "StoreStat", 
@@ -111,7 +114,7 @@ import java.util.*;
 						"SpecIM", "StatIM", "VirtIM",
 						"SubSig", "Dispatch",
 						"ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM",
-                        "TargetHT", "Launch", "TgtAction", "TgtDataType"
+						"SCH"
                         },
 	   signs = { "V0,H0:V0_H0", "V0,H0:V0_H0", "V0,V1:V0xV1",
 				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
@@ -131,7 +134,7 @@ import java.util.*;
 				 "I0,M0:I0_M0", "I0,M0:I0_M0", "I0,M0:I0_M0",
 				 "M0,S0:M0_S0", "T0,S0,M0:T0_M0_S0",
 	             "T0:T0", "T0,T1:T0_T1", "T0,M0:T0_M0", "T0,F0:F0_T0", "T0,M0:T0_M0",
-                 "H0,COMP0:H0_COMP0", "V0,M0:V0_M0", "COMP0,H0:COMP0_H0", "COMP0,H0:COMP0_H0"
+				 "SC0,H0:SC0_H0"
                  }
 	   )
 public class PAGBuilder extends JavaAnalysis
@@ -172,10 +175,7 @@ public class PAGBuilder extends JavaAnalysis
 	private ProgramRel relMV;
 	private ProgramRel relMU;
 
-	private ProgramRel relLaunch;//(v:V,m:M)
-	private ProgramRel relTgtAction;//(v:V,h:H)
-	private ProgramRel relTgtDataType;//(v:V,h:H)
-	private ProgramRel relTargetHT;//(h:H,t:COMP)
+	private ProgramRel relSCH;
 
 	private DomV domV;
 	private DomU domU;
@@ -184,6 +184,7 @@ public class PAGBuilder extends JavaAnalysis
 	private DomI domI;
 	private DomM domM;
 	private DomF domF;
+	private DomSC domSC;
 
 	private int maxArgs = -1;
 	private FastHierarchy fh;
@@ -265,14 +266,8 @@ public class PAGBuilder extends JavaAnalysis
 		relIinvkPrimArg = (ProgramRel) ClassicProject.g().getTrgt("IinvkPrimArg");
 		relIinvkPrimArg.zero();
 
-		relLaunch = (ProgramRel) ClassicProject.g().getTrgt("Launch");
-		relLaunch.zero();
-		relTgtAction = (ProgramRel) ClassicProject.g().getTrgt("TgtAction");
-		relTgtAction.zero();
-		relTgtDataType = (ProgramRel) ClassicProject.g().getTrgt("TgtDataType");
-		relTgtDataType.zero();
-		relTargetHT= (ProgramRel) ClassicProject.g().getTrgt("TargetHT");
-		relTargetHT.zero();
+		relSCH = (ProgramRel) ClassicProject.g().getTrgt("SCH");
+		relSCH.zero();
 	}
 	
 	void saveRels()
@@ -312,14 +307,11 @@ public class PAGBuilder extends JavaAnalysis
 		relMmethPrimRet.save();
 		relIinvkPrimRet.save();
 		relIinvkPrimArg.save();
-
-		relLaunch.save();
-		relTgtAction.save();
-		relTgtDataType.save();
-		relTargetHT.save();
+		
+		relSCH.save();
 	}
 
-	void GlobalAlloc(VarNode l, AllocNode h)
+	void GlobalAlloc(VarNode l, GlobalAllocNode h)
 	{
 		assert l != null;
 		relGlobalAlloc.add(l, h);
@@ -347,7 +339,7 @@ public class PAGBuilder extends JavaAnalysis
 		relLoad.add(l, b, f);
 	}
 
-	void Store(LocalVarNode b, SparkField f, LocalVarNode r)
+	void Store(LocalVarNode b, SparkField f, VarNode r)
 	{
 		if(b == null || r == null)
 			return;
@@ -365,7 +357,7 @@ public class PAGBuilder extends JavaAnalysis
 		relLoadStat.add(l, f);
 	}
 
-	void StoreStat(SootField f, LocalVarNode r)
+	void StoreStat(SootField f, VarNode r)
 	{
 		if(r == null)
 			return;
@@ -388,7 +380,7 @@ public class PAGBuilder extends JavaAnalysis
 		relMmethRet.add(m, new Integer(0), v);
 	}
 	
-	void IinvkArg(Unit invkUnit, int index, LocalVarNode v)
+	void IinvkArg(Unit invkUnit, int index, VarNode v)
 	{
 		if(v == null)
 			return;
@@ -497,8 +489,13 @@ public class PAGBuilder extends JavaAnalysis
 		private final SootMethod method;
 		private final List<StubAllocNode> stubAllocNodes = new ArrayList();
 		private final Map<Unit,SiteAllocNode> stmtToAllocNode = new HashMap();
-		private Map<String, Set<AllocNode>> action2Node = new HashMap();
-		private Map<String, AllocNode> dataType2Node = new HashMap();
+		private final Map<String,StringConstNode> stringConstantToAllocNode = new HashMap();
+		private final Map<String,VarNode> stringConstantToVarNode = new HashMap();
+
+		private StringConstantVarNode globalSCVarNode;
+
+		//private Map<String, Set<AllocNode>> action2Node = new HashMap();
+		//private Map<String, AllocNode> dataType2Node = new HashMap();
 
 
 		private final boolean isStub;
@@ -598,36 +595,6 @@ public class PAGBuilder extends JavaAnalysis
 				} else if(s instanceof AssignStmt) {
 					Value rightOp = ((AssignStmt) s).getRightOp();
 
-					if(rightOp instanceof StringConstant) {
-						String str = ((StringConstant)rightOp).value;
-						if(ComponentAnalysis.components.get(str.replaceAll("/",".")) != null){
-							StringConstNode n = new StringConstNode(s);
-							domH.add(n);
-						    stmtToAllocNode.put(s, n);
-
-						}else if(str.matches("[a-zA-Z0-9]+\\.[a-zA-Z0-9]+.*")){
-							StringConstNode n = new StringConstNode(s);
-
-                            
-							domH.add(n);
-						    stmtToAllocNode.put(s, n);
-
-							//save for targetAction rel.
-                            updateActionMap(str, n);
-
-						}else if("application/vnd.android.package-archive".equals(str)){ 
-							StringConstNode n = new StringConstNode(s);
-							domH.add(n);
-						    stmtToAllocNode.put(s, n);
-
-                            //install apk by data type: 
-                            //application/vnd.android.package-archive
-							//save for targetType rel.
-							dataType2Node.put(str, n);
-                        }
-					}
-
-
 					if(rightOp instanceof AnyNewExpr){
 						SiteAllocNode n = new SiteAllocNode(s);
 						domH.add(n);
@@ -644,19 +611,38 @@ public class PAGBuilder extends JavaAnalysis
 						}
 					}
 				}
-			}						
+			}	
+			
+			//handle string constants
+			for(ValueBox vb : body.getUseBoxes()){
+				Value val = vb.getValue();
+				if(!(val instanceof StringConstant))
+					continue;
+				String str = ((StringConstant) val).value;
+
+				StringConstantVarNode vn;
+				StringConstNode an;
+				if(domSC.contains(str)){
+					//special string constants. track precisely
+					vn = new StringConstantVarNode(method, str);
+					domV.add(vn);
+					stringConstantToVarNode.put(str, vn);
+					
+					an = new StringConstNode(str);
+					domH.add(an);
+				} else {
+					//general string constants
+					if(globalSCVarNode == null){
+						globalSCVarNode = new StringConstantVarNode(method, null);
+						domV.add(globalSCVarNode);
+					}
+					vn = globalSCVarNode;
+					an = gscn;
+				}
+				stringConstantToVarNode.put(str, vn);
+				stringConstantToAllocNode.put(str, an);
+			}
 		}
-
-        void updateActionMap(String str, StringConstNode n)
-        {
-            //one action string can correspond to multuple source.
-            Set<AllocNode> hSet = new HashSet<AllocNode>();
-            if(action2Node.get(str) != null)
-                hSet = action2Node.get(str);
-
-            hSet.add(n);
-	        action2Node.put(str, hSet);
-        }
 
 		void pass2()
 		{
@@ -707,11 +693,27 @@ public class PAGBuilder extends JavaAnalysis
 					relMH.add(method, an);
 				}
 				return;
-			} else {
-				for(SiteAllocNode an : stmtToAllocNode.values()){
+			} 
+
+			for(SiteAllocNode an : stmtToAllocNode.values()){
+				populateHT_HTFilter(an);
+				relMH.add(method, an);
+			}
+			
+			for(Map.Entry<String,StringConstNode> entry : stringConstantToAllocNode.entrySet()){
+				String sc = entry.getKey();
+				StringConstNode an = entry.getValue();
+				if(an != gscn)
 					populateHT_HTFilter(an);
-					relMH.add(method, an);
-				}
+				
+				VarNode vn = stringConstantToVarNode.get(sc);
+				GlobalAlloc(vn, an);
+				
+				if(domSC.contains(sc))
+					relSCH.add(sc, an);
+				
+				relVT.add(vn, RefType.v("java.lang.String"));
+				relMV.add(method, vn);
 			}
 
 			for(Map.Entry<Local,LocalVarNode> e : localToVarNode.entrySet()){
@@ -735,42 +737,26 @@ public class PAGBuilder extends JavaAnalysis
 			for(Unit unit : body.getUnits()){
 				handleStmt((Stmt) unit);
 			}
-
-            populateActionAndType();
-       
 		}
 
-        void populateActionAndType()
-        {
-            String pkgName = ComponentAnalysis.pkgName;
-            for(Object o : ComponentAnalysis.components.entrySet()){
-                Map.Entry entry = (Map.Entry) o;
-                String key = (String)entry.getKey();
-                XmlNode val = (XmlNode)entry.getValue();
-                String nodeName = val.getName();
 
-                if(nodeName.indexOf(".") == 0) nodeName = pkgName +  nodeName;
-                if(nodeName.indexOf(".") == -1) nodeName = pkgName + "." +  nodeName;
-                for(String actionName : val.getActionList()){
-                    //<nodeName, actionName>
-                    if(action2Node.get(actionName) != null) {
-                        for(AllocNode al : action2Node.get(actionName))
-                            relTgtAction.add(ComponentAnalysis.getCompKey(nodeName), al);
-                    }
-                }
-            }
-
-			if(dataType2Node.get("application/vnd.android.package-archive") != null)
-			    relTgtDataType.add(PAGBuilder.gInstallAPK, 
-                    dataType2Node.get("application/vnd.android.package-archive"));
-
-        }
-
-		LocalVarNode nodeFor(Immediate i)
+		VarNode nodeFor(Immediate i)
 		{
-			if(i instanceof Constant)
+			if(i instanceof Constant){
+				if(i instanceof StringConstant){
+					String sc = ((StringConstant) i).value;
+					return stringConstantToVarNode.get(sc);
+				} else if(i instanceof ClassConstant){
+					//TODO
+				}
 				return null;
+			}
 			return localToVarNode.get((Local) i);
+		}
+
+		LocalVarNode localNodeFor(Immediate i)
+		{
+			return (LocalVarNode) nodeFor(i);
 		}
 		
 		void handleStmt(Stmt s)
@@ -801,7 +787,7 @@ public class PAGBuilder extends JavaAnalysis
 				int j = 0;
 				if(ie instanceof InstanceInvokeExpr){
 					InstanceInvokeExpr iie = (InstanceInvokeExpr) ie;
-					IinvkArg(s, j, nodeFor((Immediate) iie.getBase()));
+					IinvkArg(s, j, localNodeFor((Immediate) iie.getBase()));
 					j++;
 				}
 				
@@ -812,7 +798,7 @@ public class PAGBuilder extends JavaAnalysis
 					if(argType instanceof RefLikeType)
 						IinvkArg(s, j, nodeFor(arg));
 					else if(argType instanceof PrimType)
-						IinvkPrimArg(s, j, nodeFor(arg));
+						IinvkPrimArg(s, j, localNodeFor(arg));
 				}
 				
 				//return value
@@ -820,20 +806,10 @@ public class PAGBuilder extends JavaAnalysis
 					Local lhs = (Local) ((AssignStmt) s).getLeftOp();
 					Type retType = callee.getReturnType();
 					if(retType instanceof RefLikeType)
-						IinvkRet(s, nodeFor(lhs));
+						IinvkRet(s, localNodeFor(lhs));
 					else if(retType instanceof PrimType)
-						IinvkPrimRet(s, nodeFor(lhs));
+						IinvkPrimRet(s, localNodeFor(lhs));
 				}
-
-				String methSubSig = callee.getSubSignature();
-				if(ComponentAnalysis.launchList.contains(methSubSig)) {
-                    if(methSubSig.equals("void setResult(int,android.content.Intent)")){
-					    relLaunch.add(nodeFor(((Immediate)ie.getArg(1))), method);
-                    }else{
-					    relLaunch.add(nodeFor(((Immediate)ie.getArg(0))), method);
-                    }
-				}
-
 			} else if(s.containsFieldRef()){
 				AssignStmt as = (AssignStmt) s;
 				Value leftOp = as.getLeftOp();
@@ -844,15 +820,15 @@ public class PAGBuilder extends JavaAnalysis
 					//load
 					if(field.isStatic()){
 						if(fieldType instanceof RefLikeType)
-							LoadStat(nodeFor((Local) leftOp), field);
+							LoadStat(localNodeFor((Local) leftOp), field);
 						else if(fieldType instanceof PrimType)
-							LoadStatPrim(nodeFor((Local) leftOp), field);
+							LoadStatPrim(localNodeFor((Local) leftOp), field);
 					} else{
 						Immediate base = (Immediate) ((InstanceFieldRef) fr).getBase();
 						if(fieldType instanceof RefLikeType)
-							Load(nodeFor((Local) leftOp), nodeFor(base), field);
+							Load(localNodeFor((Local) leftOp), localNodeFor(base), field);
 						else if(fieldType instanceof PrimType)
-							LoadPrim(nodeFor((Local) leftOp), nodeFor(base), field);
+							LoadPrim(localNodeFor((Local) leftOp), localNodeFor(base), field);
 					}
 				} else{
 					//store
@@ -862,13 +838,13 @@ public class PAGBuilder extends JavaAnalysis
 						if(fieldType instanceof RefLikeType)
 							StoreStat(field, nodeFor(rightOp));
 						else if(fieldType instanceof PrimType)
-							StoreStatPrim(field, nodeFor(rightOp));
+							StoreStatPrim(field, localNodeFor(rightOp));
 					} else{
 						Immediate base = (Immediate) ((InstanceFieldRef) fr).getBase();
 						if(fieldType instanceof RefLikeType)
-							Store(nodeFor(base), field, nodeFor(rightOp));
+							Store(localNodeFor(base), field, nodeFor(rightOp));
 						else if(fieldType instanceof PrimType)
-							StorePrim(nodeFor(base), field, nodeFor(rightOp));		
+							StorePrim(localNodeFor(base), field, localNodeFor(rightOp));		
 					}
 				}
 			} else if(s.containsArrayRef()) {
@@ -881,9 +857,9 @@ public class PAGBuilder extends JavaAnalysis
 					//array read
 					Local l = (Local) leftOp;
 					if(nonPrimLocals.contains(l))
-						Load(nodeFor(l), nodeFor(base), field);
+						Load(localNodeFor(l), localNodeFor(base), field);
 					if(primLocals.contains(l)) {
-						LoadPrim(nodeFor(l), nodeFor(base), field);
+						LoadPrim(localNodeFor(l), localNodeFor(base), field);
 						//implicit flow
 						AssignPrim(nodeFor(l), nodeFor((Immediate) ar.getIndex()));
 					}
@@ -894,9 +870,9 @@ public class PAGBuilder extends JavaAnalysis
 					if(rightOp instanceof Local){
 						Local r = (Local) rightOp;
 						if(nonPrimLocals.contains(r))
-							Store(nodeFor(base), field, nodeFor(r));
+							Store(localNodeFor(base), field, localNodeFor(r));
 						if(primLocals.contains(r))
-							StorePrim(nodeFor(base), field, nodeFor(r));
+							StorePrim(localNodeFor(base), field, localNodeFor(r));
 					}
 				}
 			} else if(s instanceof AssignStmt) {
@@ -904,38 +880,7 @@ public class PAGBuilder extends JavaAnalysis
 				Value leftOp = as.getLeftOp();
 				Value rightOp = as.getRightOp();
 
-				if(rightOp instanceof StringConstant){
-
-					String str = ((StringConstant)rightOp).value;
-					if(ComponentAnalysis.components.get(str.replaceAll("/",".")) != null){
-                        if(Scene.v().containsClass(str)){
-                            relTargetHT.add(stmtToAllocNode.get(s), 
-                                            ComponentAnalysis.getCompKey(str));
-                        }
-						Alloc(nodeFor((Local) leftOp), stmtToAllocNode.get(s));
-					}else if(str.matches("[a-zA-Z0-9]+\\.[a-zA-Z0-9]+.*")){
-						Alloc(nodeFor((Local) leftOp), stmtToAllocNode.get(s));
-					} else if("application/vnd.android.package-archive".equals(str)){
-						Alloc(nodeFor((Local) leftOp), stmtToAllocNode.get(s));
-                    }else {
-					    GlobalAlloc(nodeFor((Local) leftOp), gscn);
-                    }
-
-				} else if(rightOp instanceof ClassConstant) {
-					String str = ((ClassConstant)rightOp).value;
-					if(ComponentAnalysis.components.get(str.replaceAll("/", ".")) != null){
-						SootClass clazz = Scene.v()
-                                 .getSootClass("stamp.harness.Main1");
-                        String clazzName = str.replaceAll("/", "\\$");
-                        if(clazz.declaresFieldByName(clazzName)) {
-                            SootField field = clazz.getFieldByName(clazzName);
-                            LoadStat(nodeFor((Local) leftOp), field);
-                        } else {
-                            System.out.println("fatal error in harness..." + clazzName);
-                        }
-					}
-
-				} else if(rightOp instanceof AnyNewExpr){
+				if(rightOp instanceof AnyNewExpr){
 					AllocNode an = stmtToAllocNode.get(s);
 					Alloc(nodeFor((Local) leftOp), an);
 					s.addTag(containerTag);
@@ -958,7 +903,7 @@ public class PAGBuilder extends JavaAnalysis
 				} if(rightOp instanceof NegExpr){
 					AssignPrim(nodeFor((Local) leftOp), nodeFor((Immediate) ((NegExpr) rightOp).getOp()));
 				}else if(rightOp instanceof BinopExpr){
-					LocalVarNode leftNode = nodeFor((Local) leftOp);
+					VarNode leftNode = nodeFor((Local) leftOp);
 					BinopExpr binExpr = (BinopExpr) rightOp;
 					Immediate op1 = (Immediate) binExpr.getOp1();
 					if(op1 instanceof Local){
@@ -1083,7 +1028,6 @@ public class PAGBuilder extends JavaAnalysis
 		
 	void populateDomains(List<MethodPAGBuilder> mpagBuilders)
 	{
-	    populateDomComp();
 		domZ = (DomZ) ClassicProject.g().getTrgt("Z");
 
 		populateMethods();
@@ -1348,16 +1292,6 @@ public class PAGBuilder extends JavaAnalysis
 	}
 	*/
 
-	private void populateDomComp() 
-	{
-		DomComp domComp = (DomComp) ClassicProject.g().getTrgt("COMP");
-        for(Object node : ComponentAnalysis.components.keySet()) {
-            domComp.add((String)node);
-        }
-        domComp.add(gInstallAPK);
-        domComp.save();
-	}
-
 	public void run()
 	{
 		Program program = Program.g();		
@@ -1366,8 +1300,12 @@ public class PAGBuilder extends JavaAnalysis
 
 		fh = Program.g().scene().getOrMakeFastHierarchy();
 		List<MethodPAGBuilder> mpagBuilders = new ArrayList();
+		
+		domSC = (DomSC) ClassicProject.g().getTrgt("SC");
+
 		populateDomains(mpagBuilders);
 		populateRelations(mpagBuilders);
+
 		fh = null;
 	}
 }

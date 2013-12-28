@@ -15,10 +15,13 @@ import java.io.*;
 
 import shord.analyses.ContainerTag;
 
+import stamp.app.App;
+
 public class Program
 {
 	private static Program g;
 	private SootMethod mainMethod;
+	private App app;
 
 	public static Program g()
 	{
@@ -156,5 +159,16 @@ public class Program
 	public static String unitToString(Unit u) {
 		SootMethod m = (u instanceof Stmt) ? containerMethod((Stmt) u) : null;
 		return (m == null) ? u.toString() : u + "@" + m;
+	}
+	
+	public App app()
+	{
+		if(app == null){
+			String apktoolOutDir = System.getProperty("stamp.apktool.out.dir");
+			String apkPath = System.getProperty("stamp.apk.path");
+			app = new App(apkPath, apktoolOutDir);
+			System.out.println(app.toString());
+		}
+		return app;
 	}
 }

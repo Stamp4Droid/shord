@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stamp.harnessgen;
+package stamp.app;
 
 import java.io.*;
 import java.util.Formatter;

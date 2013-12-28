@@ -2,16 +2,10 @@ package shord.analyses;
 
 import soot.RefType;
 
-public class GlobalStringConstantNode extends GlobalAllocNode
+public class GlobalStringConstantNode extends StringConstNode
 {
 	public GlobalStringConstantNode()
 	{
-		super(RefType.v("java.lang.String"));
-	}
-
-	public String toString()
-	{
-		return "GStringAlloc$GSTRING";
-	}
-	
+		super("GStringAlloc$GSTRING");
+	}	
 }

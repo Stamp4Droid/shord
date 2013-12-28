@@ -28,11 +28,7 @@ OutLabelArg(l:L,m:M,z:Z)      input
 reachableCM(c:C,m:M)          input
 IinvkArg(i:I,n:Z,v:V)         input
 MmethArg(m:M,z:Z,v:V)         input
-Callbacks(m:M) input      # m is a callback method.
-MregI(m:M,i:I) input      # m has an invocation i that register callback. 
 pt(c:C,v:V,o:C)    input # (c,v) points-to o
-
-
 
 CallerComp(m:M,c:C,o:COMP)                        output  # m is a method declared in c
 FlowComp(comp1:COMP, src:CL, comp2:COMP, sink:CL) output
@@ -46,7 +42,6 @@ MCL(m:M,c:C,cl:CL)
 
 CallerComp(m,k,c) :- MC(m,c), reachableCM(k,m).
 CallerComp(m2,k2,c) :- CallerComp(m1,k1,c), MI(m1,i), CICM(k1,i,k2,m2).
-#CallerComp(cb,k2,c) :- Callbacks(cb), MmethArg(cb,0,p), pt(k2,p,o), pt(k1,a,o), CallerComp(m,k1,c), MregI(m,i), IinvkArg(i,0,a).
 
 ML(m,l) :- InLabelRet(l,m).
 ML(m,l) :- InLabelArg(l,m,_).

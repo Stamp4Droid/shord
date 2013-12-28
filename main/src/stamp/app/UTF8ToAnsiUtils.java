@@ -1,9 +1,9 @@
-package stamp.harnessgen;
+package stamp.app;
 
 import java.io.*;
 
-public class UTF8ToAnsiUtils {
-
+public class UTF8ToAnsiUtils 
+{
     // FEFF because this is the Unicode char represented by the UTF-8 byte order mark (EF BB BF).
     public static final String UTF8_BOM = "\uFEFF";
 

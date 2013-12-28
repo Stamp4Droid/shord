@@ -114,7 +114,7 @@ public class ContentProviderAnnotation extends AnnotationInjector.Visitor
 			
 			units.add(Jimple.v().newReturnStmt(ret));
 			
-			System.out.println("%%% "+meth.getSignature());
+			//System.out.println("%%% "+meth.getSignature());
 			writeAnnotation(methName+":(Ljava/lang/String;)Ljava/lang/String;@"+klass.getName(), "$"+label, "-1");
 		}
 		

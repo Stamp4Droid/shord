@@ -35,6 +35,9 @@ import java.util.HashSet;
 import java.util.Arrays;
 import java.util.Collections;
 
+import stamp.app.Component;
+import stamp.app.Layout;
+
 public class Harness
 {
 	private final SootClass sClass;
@@ -59,7 +62,7 @@ public class Harness
 		Local arg = Jimple.v().newLocal("l0", ArrayType.v(RefType.v("java.lang.String"), 1));
 		locals.add(arg);
 		units.add(Jimple.v().newIdentityStmt(arg, Jimple.v().newParameterRef(ArrayType.v(RefType.v("java.lang.String"), 1), 0)));
-        addFields(components);
+        //addFields(components);
 	}
 
 	public void addComponent(Component comp, List<Layout> layouts)
@@ -145,7 +148,8 @@ public class Harness
 		return c;
 	}
 
-
+	
+	/*
 	private void addFields(List<Component> comps)
 	{
 		SootMethod clinit = new SootMethod("<clinit>", Collections.EMPTY_LIST, VoidType.v(), Modifier.STATIC);
@@ -185,5 +189,6 @@ public class Harness
 	{
 		return componentName.replace('.', '$');
 	}
+	*/
 
 }
