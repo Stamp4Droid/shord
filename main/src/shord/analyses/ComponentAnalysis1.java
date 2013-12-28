@@ -75,7 +75,7 @@ public class ComponentAnalysis1 extends JavaAnalysis
 					if(arg instanceof ClassConstant){
 						Local newArg = instrumentIfNecessary((ClassConstant) arg, locals, units, stmt);
 						if(newArg != null){
-							ie.setArg(0, newArg);
+							ie.setArg(i, newArg);
 						}
 					}
 					i++;

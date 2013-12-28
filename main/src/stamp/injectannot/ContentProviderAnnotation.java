@@ -48,7 +48,7 @@ public class ContentProviderAnnotation extends AnnotationInjector.Visitor
 					if(arg instanceof StringConstant){
 						Local newArg = insertLabelIfNecessary((StringConstant) arg, locals, units, stmt);
 						if(newArg != null){
-							ie.setArg(0, newArg);
+							ie.setArg(i, newArg);
 						}
 					}
 					i++;
