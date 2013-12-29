@@ -16,13 +16,6 @@
 .bddvarorder Z0xZ1_M0_CL0xCL1_C0xC1xC2_V0xV1_U0xU1_F0_I0
 
 ###################
-# INPUT: POINTER
-###################
-
-pt(c:C,v:V,o:C)    input
-fpt(o1:C,f:F,o2:C) input
-
-###################
 # INPUT: TAINT HELPER
 ###################
 
@@ -78,6 +71,28 @@ Ref2RefF(v:V,u:V) input
 Ref2PrimF(v:V,u:U) input
 Prim2RefF(v:U,u:V) input
 Prim2PrimF(v:U,u:U) input
+
+###################
+# INTERMEDIATE: PT
+###################
+
+pt(c:C,v:V,o:C)    output # (c,v) points-to o
+fpt(o1:C,f:F,o2:C) output
+
+fptStat(f:F,o:C)
+
+###################
+# RULES: PT
+###################
+
+pt(c,v,o) :- New(c,v,o).
+pt(c,v,o) :- pt(c,u,o), Assign(v,u), typeFilter(v,o).
+pt(d,u,o) :- pt(c,v,o), param(u,v,i), typeFilter(u,o), CC(c,d), CI(d,i).
+pt(c,u,o) :- pt(d,v,o), return(u,v,i), CI(d,i), CC(c,d), typeFilter(u,o).
+fpt(o1,f,o2) :- pt(c,v,o2), Store(u,f,v), pt(c,u,o1).
+pt(c,y,o2) :- pt(c,x,o1), Load(y,x,f), fpt(o1,f,o2).
+fptStat(f,o) :- pt(_,v,o), StoreStat(f,v).
+pt(c,y,o) :- LoadStat(y,f), fptStat(f,o), MV(m,y), CM(c,m).
 
 ###################
 # INTERMEDIATE: OBJECT ANNOTATIONS
