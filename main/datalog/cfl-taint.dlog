@@ -81,18 +81,39 @@ fpt(o1:C,f:F,o2:C) output
 
 fptStat(f:F,o:C)
 
+#ActiveObj(o:C)
+#ActiveRef(c:C,v:V)
+
+refptbar(cv:C,v:V,cu:C,u:V)
+
 ###################
 # RULES: PT
 ###################
 
-pt(c,v,o) :- New(c,v,o).
-pt(c,v,o) :- pt(c,u,o), Assign(v,u), typeFilter(v,o).
-pt(d,u,o) :- pt(c,v,o), param(u,v,i), typeFilter(u,o), CC(c,d), CI(d,i).
-pt(c,u,o) :- pt(d,v,o), return(u,v,i), CI(d,i), CC(c,d), typeFilter(u,o).
+# ** REQUIRE o ACTIVE
+#pt(c,v,o) :- New(c,v,o).
+#pt(c,v,o) :- pt(c,u,o), Assign(v,u), typeFilter(v,o).
+#pt(d,u,o) :- pt(c,v,o), param(u,v,i), typeFilter(u,o), CC(c,d), CI(d,i).
+#pt(d,u,o) :- pt(c,v,o), return(u,v,i), typeFilter(u,o), CC(d,c), CI(c,i).
+
+# *** ACTIVATE (u,c), ACTIVATE o1
+#pt(c,y,o2) :- pt(d,v,o2), Store(u,f,v), pt(d,u,o1), pt(c,x,o1), Load(y,x,f).
+#pt(c,y,o) :- pt(_,v,o), StoreStat(f,v), LoadStat(y,f), MV(m,y), CM(c,m).
+
+# DON'T COMMENT THIS
 fpt(o1,f,o2) :- pt(c,v,o2), Store(u,f,v), pt(c,u,o1).
-pt(c,y,o2) :- pt(c,x,o1), Load(y,x,f), fpt(o1,f,o2).
-fptStat(f,o) :- pt(_,v,o), StoreStat(f,v).
-pt(c,y,o) :- LoadStat(y,f), fptStat(f,o), MV(m,y), CM(c,m).
+
+# reference pt
+# *** REQUIRE (c,v) ACTIVE
+refptbar(cv,v,cu,u) :- v=u, cv=cu. # u_d flows to v_c
+refptbar(cv,v,cu,w) :- refptbar(cv,v,cu,u), Assign(u,w).
+refptbar(cv,v,cw,w) :- refptbar(cv,v,cu,u), param(u,w,i), CC(cw,cu), CI(cu,i).
+refptbar(cv,v,cw,w) :- refptbar(cv,v,cu,u), return(u,w,i), CC(cu,cw), CI(cw,i).
+
+refptbar(cv,v,cx,y) :- refptbar(cv,v,cu,u), Load(u,w,f), pt(cu,w,o), pt(cx,x,o), Store(x,f,y).
+refptbar(cv,v,cw,w) :- refptbar(cv,v,cu,u), LoadStat(u,f), MV(mu,u), CM(cu,mu), StoreStat(f,w), MV(mw,w), CM(cw,mw).
+
+pt(c,v,o) :- New(d,u,o), refptbar(c,v,d,u), typeFilter(v,o).
 
 ###################
 # INTERMEDIATE: OBJECT ANNOTATIONS
