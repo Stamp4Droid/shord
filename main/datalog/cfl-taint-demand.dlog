@@ -2,7 +2,7 @@
 # CONFIGURATION
 ###################
 
-# name=cfl-taint-dlog
+# name=cfl-taint-demand-dlog
 
 .include "Z.dom"
 .include "M.dom"
@@ -14,13 +14,6 @@
 .include "CL.dom"
 
 .bddvarorder Z0xZ1_M0_CL0xCL1_C0xC1xC2_V0xV1_U0xU1_F0_I0
-
-###################
-# INPUT: POINTER
-###################
-
-pt(c:C,v:V,o:C)    input
-fpt(o1:C,f:F,o2:C) input
 
 ###################
 # INPUT: TAINT HELPER
@@ -80,6 +73,57 @@ Prim2RefF(v:U,u:V) input
 Prim2PrimF(v:U,u:U) input
 
 ###################
+# INTERMEDIATE: PT
+###################
+
+pt(c:C,v:V,o:C)    output # (c,v) points-to o
+fpt(o1:C,f:F,o2:C) output
+
+fptStat(f:F,o:C)
+
+ActiveObj(o:C)
+ActiveRef(c:C,v:V)
+
+refptbar(cv:C,v:V,cu:C,u:V)
+
+###################
+# RULES: PT
+###################
+
+ActiveObj(o) :- pt(_,_,o).
+
+# fpt: u.f = v <=> o1.f = o2
+fpt(o1,f,o2) :- pt(c,v,o2), Store(u,f,v), pt(c,u,o1).
+ActiveRef(c,v) :- pt(c,u,_), Store(u,_,v).
+
+# fowward parse
+# *** REQUIRE o ACTIVE
+pt(c,v,o) :- ActiveObj(o), New(c,v,o).
+pt(c,v,o) :- pt(c,u,o), Assign(v,u), typeFilter(v,o).
+pt(d,u,o) :- pt(c,v,o), param(u,v,i), typeFilter(u,o), CC(c,d), CI(d,i).
+pt(d,u,o) :- pt(c,v,o), return(u,v,i), typeFilter(u,o), CC(d,c), CI(c,i).
+
+# *** ACTIVATE (u,d)
+pt(c,y,o) :- pt(d,v,o), Store(u,f,v), pt(d,u,op), pt(c,x,op), Load(y,x,f).
+pt(c,y,o) :- pt(_,v,o), StoreStat(f,v), LoadStat(y,f), MV(m,y), CM(c,m).
+
+#ActiveRef(d,u) :- pt(d,v,_), Store(u,f,v), Load(_,_,f).
+
+# backward parse
+# *** REQUIRE (c,v) ACTIVE
+refptbar(cv,v,cu,u) :- ActiveRef(cv,v), v=u, cv=cu. # u_d flows to v_c
+refptbar(cv,v,cu,w) :- refptbar(cv,v,cu,u), Assign(u,w).
+refptbar(cv,v,cw,w) :- refptbar(cv,v,cu,u), param(u,w,i), CC(cw,cu), CI(cu,i).
+refptbar(cv,v,cw,w) :- refptbar(cv,v,cu,u), return(u,w,i), CC(cu,cw), CI(cw,i).
+
+refptbar(cv,v,cx,y) :- refptbar(cv,v,cu,u), Load(u,w,f), pt(cu,w,o), pt(cx,x,o), Store(x,f,y).
+refptbar(cv,v,cw,w) :- refptbar(cv,v,cu,u), LoadStat(u,f), MV(mu,u), CM(cu,mu), StoreStat(f,w), MV(mw,w), CM(cw,mw).
+
+ActiveRef(cu,w) :- refptbar(_,_,cu,u), Load(u,w,f), Store(_,f,_).
+
+pt(c,v,o) :- New(d,u,o), refptbar(c,v,d,u), typeFilter(v,o).
+
+###################
 # INTERMEDIATE: OBJECT ANNOTATIONS
 ###################
 
@@ -136,8 +180,13 @@ Obj2PrimT(c,o,u)  :- pt(c,v,o), Ref2PrimT(v,u). # pt is backwards
 Obj2RefT(c,o1,v)  :- fpt(o2,0,o1), Obj2RefT(c,o2,v). # fpt is backwards
 Obj2PrimT(c,o1,v) :- fpt(o2,0,o1), Obj2PrimT(c,o2,v). # fpt is backwards
 
+ActiveRef(c,v) :- Ref2RefT(v,_), MV(m,v), CM(c,m).
+ActiveRef(c,v) :- Ref2PrimT(v,_), MV(m,v), CM(c,m).
+
 Label2ObjT(cl,o)  :- Label2RefT(c,cl,v), pt(c,v,o).
 Label2ObjT(cl,o2) :- Label2ObjT(cl,o1), fpt(o1,_,o2).
+
+ActiveRef(c,v) :- Label2RefT(c,_,v).
 
 ###################
 # RULES: SINKF
@@ -149,6 +198,10 @@ SinkF2Obj(cl,o)  :- SinkF2RefF(c,cl,v), pt(c,v,o).
 SinkF2Obj(cl,o2) :- Sink2Label(cl), Label2Obj(cl,o1), pt(c,v,o1), Ref2RefF(u,v), pt(c,u,o2). # first pt, Ref2RefF are backwards
 SinkF2Obj(cl,o)  :- Sink2Label(cl), Label2Prim(c,cl,v), Ref2PrimF(u,v), pt(c,u,o). # Ref2PrimF is backwards
 SinkF2Obj(cl,o2) :- SinkF2Obj(cl,o1), fpt(o1,_,o2).
+
+ActiveRef(c,v) :- SinkF2RefF(c,_,v).
+ActiveRef(c,u) :- Sink2Label(cl), Label2Obj(cl,o1), pt(c,v,o1), Ref2RefF(u,v).
+ActiveRef(c,u) :- Sink2Label(cl), Label2Prim(c,cl,v), Ref2PrimF(u,v).
 
 # Sink_full-prim flow
 
@@ -178,6 +231,10 @@ Label2ObjX(cl,o)  :- Label2Prim(c,cl,v), Prim2RefT(v,u), pt(c,u,o).
 Label2ObjX(cl,o2) :- Label2PrimFld(cl,o1,0), Obj2RefT(c,o1,v), pt(c,v,o2).
 Label2ObjX(cl,o2) :- Label2ObjX(cl,o1), fpt(o1,0,o2).
 
+ActiveRef(c,v) :- Label2Obj(_,o1), Obj2RefT(c,o1,v).
+ActiveRef(c,u) :- Label2Prim(c,_,v), Prim2RefT(v,u).
+ActiveRef(c,v) :- Label2PrimFld(_,o1,0), Obj2RefT(c,o1,v).
+
 # Label-prim flow
 
 Label2Prim(c,cl,v) :- Label2PrimT(c,cl,v).
@@ -199,6 +256,8 @@ Label2Prim(c,cl,u) :- Label2PrimFldStat(cl,f), LoadStatPrim(u,f), MU(m,u), CM(c,
 
 Label2PrimFld(cl,o,f)   :- Label2Prim(c,cl,v), StorePrim(u,f,v), pt(c,u,o). # StorePrim is flipped
 Label2PrimFldStat(cl,f) :- Label2Prim(_,cl,v), StoreStatPrim(f,v). # StoreStatPrim is flipped
+
+ActiveRef(c,u) :- Label2Prim(c,_,v), StorePrim(u,_,v).
 
 ###################
 # RULES: OUTPUT
