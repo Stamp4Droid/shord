@@ -50,94 +50,74 @@ CM(c:C,m:M) input # c is a context of method m
 ###################
 
 # Src label
-Src2Label(cl:L) output
-Sink2Label(cl:L) output
+Src2Label(cl:CL) output
+Sink2Label(cl:CL) output
 
 # Label
 
-Label2RefT(c:C,cl:L,v:V) output
-Label2PrimT(c:C,cl:L,v:U) output
+Label2RefT(c:C,cl:CL,v:V) output
+Label2PrimT(c:C,cl:CL,v:U) output
 
 # Sink full label (out labels)
 
-SinkF2RefF(c:C,cl:L,v:V) output
-SinkF2PrimF(c:C,cl:L,v:U) output
+SinkF2RefF(c:C,cl:CL,v:V) output
+SinkF2PrimF(c:C,cl:CL,v:U) output
 
 # Transfer
 
-Ref2RefArgT(c:C,v:V,u:V,m:M,z1:Z,z2:Z) output
-Ref2RefRetT(c:C,v:V,u:V,m:M,z:Z) output
-Ref2RefT(c:C,v:V,u:V) output
-
-Ref2PrimRetT(c:C,v:V,u:U,m:M,z:Z) output
-Ref2PrimT(c:C,v:V,u:U) output
-
-Prim2RefArgT(c:C,v:U,u:V,m:M,z1:Z,z2:Z) output
-Prim2RefRetT(c:C,v:U,u:V,m:M,z:Z) output
-Prim2RefT(c:C,v:U,u:V) output
-
-Prim2PrimRetT(c:C,v:U,u:U,m:M,z:Z) output
-Prim2PrimT(c:C,v:U,u:U) output
+Ref2RefT(v:V,u:V) output
+Ref2PrimT(v:V,u:U) output
+Prim2RefT(v:U,u:V) output
+Prim2PrimT(v:U,u:U) output
 
 # Arg-arg flow (!)
 
-Ref2RefF(c:C,v:V,u:V) output
-Ref2PrimF(c:C,v:V,u:U) output
-Prim2RefF(c:C,v:U,u:V) output
-Prim2PrimF(c:C,v:U,u:U) output
+Ref2RefF(v:V,u:V) output
+Ref2PrimF(v:V,u:U) output
+Prim2RefF(v:U,u:V) output
+Prim2PrimF(v:U,u:U) output
 
 ###################
 # RULES: ANNOTATION
 ###################
 
 # Src label
-Src2Label(l) :- srcCtxtLabel(cl), LCL(l,cl).
+Src2Label(cl) :- srcCtxtLabel(cl).
 
 # Sink label
-Sink2Label(l) :- sinkCtxtLabel(cl), LCL(l,cl).
+Sink2Label(cl) :- sinkCtxtLabel(cl).
 
 # Label
 
-Label2RefT(c,l,v)   :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelArg(l,m,z), MmethArg(m,z,v).
-Label2RefT(c,l,v)   :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelRet(l,m), MmethRet(m,_,v).
-# Label2PrimT(c,l,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelArg(l,m,z), MmethPrimArg(m,z,v).
-Label2PrimT(c,l,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelRet(l,m), MmethPrimRet(m,_,v).
+Label2RefT(c,cl,v)   :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelArg(l,m,z), MmethArg(m,z,v).
+Label2RefT(c,cl,v)   :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelRet(l,m), MmethRet(m,_,v).
+# Label2PrimT(c,cl,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelArg(l,m,z), MmethPrimArg(m,z,v).
+Label2PrimT(c,cl,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), InLabelRet(l,m), MmethPrimRet(m,_,v).
 
 # Sink full label (out labels)
 
-SinkF2RefF(c,l,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelArg(l,m,z), MmethArg(m,z,v).
-SinkF2RefF(c,l,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelRet(l,m), MmethRet(m,_,v).
-# SinkF2PrimF(c,l,v) :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelArg(l,m,z), MmethPrimArg(m,z,v).
-SinkF2PrimF(c,l,v) :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelRet(l,m), MmethPrimRet(m,_,v).
+SinkF2RefF(c,cl,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelArg(l,m,z), MmethArg(m,z,v).
+SinkF2RefF(c,cl,v)  :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelRet(l,m), MmethRet(m,_,v).
+# SinkF2PrimF(c,cl,v) :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelArg(l,m,z), MmethPrimArg(m,z,v).
+SinkF2PrimF(c,cl,v) :- CCL(c,cl), LCL(l,cl), CM(c,m), OutLabelRet(l,m), MmethPrimRet(m,_,v).
 
 # Arg-arg transfer
 
-Ref2RefArgT(c,v,u,m,z0,z1) :- ArgArgTransfer(m,z0,z1), MmethArg(m,z0,v), MmethArg(m,z1,u), CM(c,m).
-# Ref2PrimArgT(c,v,u,m,z0,z1) :- ArgArgTransfer(m,z0,z1), MmethArg(m,z0,v), MmethPrimArg(m,z1,u), CM(c,m).
-Prim2RefArgT(c,v,u,m,z0,z1) :- ArgArgTransfer(m,z0,z1), MmethPrimArg(m,z0,v), MmethArg(m,z1,u), CM(c,m).
-# Prim2PrimArgT(c,v,u,m,z0,z1) :- ArgArgTransfer(m,z0,z1), MmethPrimArg(m,z0,v), MmethPrimArg(m,z1,u), CM(c,m).
+Ref2RefT(v,u) :- ArgArgTransfer(m,z0,z1), MmethArg(m,z0,v), MmethArg(m,z1,u).
+# Ref2PrimT(v,u) :- ArgArgTransfer(m,z0,z1), MmethArg(m,z0,v), MmethPrimArg(m,z1,u).
+Prim2RefT(v,u) :- ArgArgTransfer(m,z0,z1), MmethPrimArg(m,z0,v), MmethArg(m,z1,u).
+# Prim2PrimT(v,u) :- ArgArgTransfer(m,z0,z1), MmethPrimArg(m,z0,v), MmethPrimArg(m,z1,u).
 
 # Arg-ret transfer
 
-Ref2RefRetT(c,v,u,m,z)   :- ArgRetTransfer(m,z), MmethArg(m,z,v), MmethRet(m,_,u), CM(c,m).
-Ref2PrimRetT(c,v,u,m,z)  :- ArgRetTransfer(m,z), MmethArg(m,z,v), MmethPrimRet(m,_,u), CM(c,m).
-Prim2RefRetT(c,v,u,m,z)  :- ArgRetTransfer(m,z), MmethPrimArg(m,z,v), MmethRet(m,_,u), CM(c,m).
-Prim2PrimRetT(c,v,u,m,z) :- ArgRetTransfer(m,z), MmethPrimArg(m,z,v), MmethPrimRet(m,_,u), CM(c,m).
-
-# Transfer
-
-Ref2RefT(c,v,u) :- Ref2RefArgT(c,v,u,_,_,_).
-Ref2RefT(c,v,u) :- Ref2RefRetT(c,v,u,_,_).
-
-Prim2RefT(c,v,u) :- Prim2RefArgT(c,v,u,_,_,_).
-Prim2RefT(c,v,u) :- Prim2RefRetT(c,v,u,_,_).
-
-Ref2PrimT(c,v,u) :- Ref2PrimRetT(c,v,u,_,_).
-Prim2PrimT(c,v,u) :- Prim2PrimRetT(c,v,u,_,_).
+Ref2RefT(v,u)   :- ArgRetTransfer(m,z), MmethArg(m,z,v), MmethRet(m,_,u).
+Ref2PrimT(v,u)  :- ArgRetTransfer(m,z), MmethArg(m,z,v), MmethPrimRet(m,_,u).
+Prim2RefT(v,u)  :- ArgRetTransfer(m,z), MmethPrimArg(m,z,v), MmethRet(m,_,u).
+Prim2PrimT(v,u) :- ArgRetTransfer(m,z), MmethPrimArg(m,z,v), MmethPrimRet(m,_,u).
 
 # Arg-arg flow (!)
 
-Ref2RefF(c,v,u)   :- ArgArgFlow(m,z0,z1), MmethArg(m,z0,v), MmethArg(m,z1,u), CM(c,m).
-Ref2PrimF(c,v,u)  :- ArgArgFlow(m,z0,z1), MmethArg(m,z0,v), MmethPrimArg(m,z1,u), CM(c,m).
-Prim2RefF(c,v,u)  :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,v), MmethArg(m,z1,u), CM(c,m).
-Prim2PrimF(c,v,u) :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,v), MmethPrimArg(m,z1,u), CM(c,m).
+Ref2RefF(v,u)   :- ArgArgFlow(m,z0,z1), MmethArg(m,z0,v), MmethArg(m,z1,u).
+Ref2PrimF(v,u)  :- ArgArgFlow(m,z0,z1), MmethArg(m,z0,v), MmethPrimArg(m,z1,u).
+Prim2RefF(v,u)  :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,v), MmethArg(m,z1,u).
+Prim2PrimF(v,u) :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,v), MmethPrimArg(m,z1,u).
