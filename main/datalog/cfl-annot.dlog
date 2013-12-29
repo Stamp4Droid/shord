@@ -13,12 +13,13 @@
 .include "C.dom"
 .include "V.dom"
 .include "U.dom"
+.include "H.dom"
 .include "F.dom"
 .include "I.dom"
 .include "L.dom"
 .include "CL.dom"
 
-.bddvarorder L0_Z0xZ1_M0_CL0xCL1_C0xC1_V0xV1_U0xU1_F0_I0
+.bddvarorder L0_Z0xZ1_M0_CL0xCL1_C0xC1_V0xV1_U0xU1_H0xF0_I0
 
 ###################
 # INPUT: ANNOTATIONS
@@ -43,7 +44,13 @@ MmethRet(m:M,z:Z,v:V)     input
 MmethPrimArg(m:M,z:Z,u:U) input
 MmethPrimRet(m:M,z:Z,u:U) input
 
-CM(c:C,m:M) input # c is a context of method m
+# New
+Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
+
+MV(m:M,v:V) input         # v is a variable in method m
+CM(c:C,m:M) input         # c is a context of method m
+CH(o:C,h:H) input         # context’ified abstract location o corresponds to new stmt h
+CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
 
 ###################
 # OUTPUT: ANNOTATIONS
@@ -76,6 +83,9 @@ Ref2RefF(v:V,u:V) output
 Ref2PrimF(v:V,u:U) output
 Prim2RefF(v:U,u:V) output
 Prim2PrimF(v:U,u:U) output
+
+# New
+New(c:C,v:V,o:C) output # (c,v) = new X() // o
 
 ###################
 # RULES: ANNOTATION
@@ -121,3 +131,7 @@ Ref2RefF(v,u)   :- ArgArgFlow(m,z0,z1), MmethArg(m,z0,v), MmethArg(m,z1,u).
 Ref2PrimF(v,u)  :- ArgArgFlow(m,z0,z1), MmethArg(m,z0,v), MmethPrimArg(m,z1,u).
 Prim2RefF(v,u)  :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,v), MmethArg(m,z1,u).
 Prim2PrimF(v,u) :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,v), MmethPrimArg(m,z1,u).
+
+# New
+
+New(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).

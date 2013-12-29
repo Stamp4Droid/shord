@@ -26,19 +26,30 @@ fpt(o1:C,f:F,o2:C) input
 # INPUT: TAINT HELPER
 ###################
 
+Assign(v:V,u:V)     input   # v = u
+Load(y:V,x:V,f:F)   input   # y = x.f
+Store(u:V,f:F,v:V)  input   # u.f = v
+LoadStat(y:V,f:F)   input   # y = f
+StoreStat(f:F,v:V)  input   # f = v
+param(u:V,v:V,i:I)  input   # u is the formal parameter, v is actual arg, i is invocation stmt
+return(u:V,v:V,i:I) input   # u is the lhs at callsite, v is the return var, i is invocation stmt
+typeFilter(v:V,o:C) input   # type wise, v can point-to o
+New(c:C,v:V,o:C)    input   # v = new X() // o
+
 LoadPrim(v:U,u:V,f:F) input
 LoadStatPrim(v:U,f:F) input
 StorePrim(v:V,f:F,u:U) input
 StoreStatPrim(f:F,v:U) input
 AssignPrim(v:U,u:U) input
 
-paramPrim(u:U,v:U,i:I)  input # u: formal param, v: actual arg, i: invocation stmt
-returnPrim(u:U,v:U,i:I) input # u: lhs at callsite, v: return var, i: invocation stmt
-
+MV(m:M,v:V) input # v is a variable in method m
 MU(m:M,u:U) input # u is a prim type variable in m
 CM(c:C,m:M) input # c is a context of method m
 CI(c:C,i:I) input # stmt i is the top element in the k-limited callstack c
 CC(c:C,d:C) input # there exists i s.t. c++[i] = d
+
+paramPrim(u:U,v:U,i:I)  input # u: formal param, v: actual arg, i: invocation stmt
+returnPrim(u:U,v:U,i:I) input # u: lhs at callsite, v: return var, i: invocation stmt
 
 ###################
 # INPUT: ANNOTATIONS
