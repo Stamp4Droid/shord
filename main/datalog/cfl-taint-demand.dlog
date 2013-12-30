@@ -79,12 +79,12 @@ Prim2PrimF(v:U,u:U) input
 pt(c:C,v:V,o:C)    output # (c,v) points-to o
 fpt(o1:C,f:F,o2:C) output
 
-fptStat(f:F,o:C)
+fptStat(f:F,o:C) output
 
-ActiveObj(o:C)
-ActiveRef(c:C,v:V)
+ActiveObj(o:C) output
+ActiveRef(c:C,v:V) output
 
-refptbar(cv:C,v:V,cu:C,u:V)
+refptbar(cv:C,v:V,cu:C,u:V) output
 
 ###################
 # RULES: PT
