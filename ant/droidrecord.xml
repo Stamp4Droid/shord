@@ -276,7 +276,7 @@
         <then>
         </then>
         <else>
-            <move file="${app.loc}/droidrecord.log.template" toFile="${stamp.droidrecord.logfile.template}"/>
+            <move file="droidrecord.log.template" toFile="${stamp.droidrecord.logfile.template}"/>
         </else>
     </if>
     <exec executable="sh"
