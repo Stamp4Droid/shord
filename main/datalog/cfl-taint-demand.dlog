@@ -104,7 +104,8 @@ pt(d,u,o) :- pt(c,v,o), param(u,v,i), typeFilter(u,o), CC(c,d), CI(d,i).
 pt(d,u,o) :- pt(c,v,o), return(u,v,i), typeFilter(u,o), CC(d,c), CI(c,i).
 
 # *** ACTIVATE (u,d)
-pt(c,y,o) :- pt(d,v,o), Store(u,f,v), pt(d,u,op), pt(c,x,op), Load(y,x,f).
+#pt(c,y,o) :- pt(d,v,o), Store(u,f,v), pt(d,u,op), pt(c,x,op), Load(y,x,f).
+pt(c,y,o) :- pt(_,v,o), Store(_,f,v), Load(y,_,f), MV(m,y), CM(c,m). # MATCH EDGE
 pt(c,y,o) :- pt(_,v,o), StoreStat(f,v), LoadStat(y,f), MV(m,y), CM(c,m).
 
 #ActiveRef(d,u) :- pt(d,v,_), Store(u,f,v), Load(_,_,f).
@@ -116,10 +117,11 @@ refptbar(cv,v,cu,w) :- refptbar(cv,v,cu,u), Assign(u,w).
 refptbar(cv,v,cw,w) :- refptbar(cv,v,cu,u), param(u,w,i), CC(cw,cu), CI(cu,i).
 refptbar(cv,v,cw,w) :- refptbar(cv,v,cu,u), return(u,w,i), CC(cu,cw), CI(cw,i).
 
-refptbar(cv,v,cx,y) :- refptbar(cv,v,cu,u), Load(u,w,f), pt(cu,w,o), pt(cx,x,o), Store(x,f,y).
+#refptbar(cv,v,cx,y) :- refptbar(cv,v,cu,u), Load(u,w,f), pt(cu,w,o), pt(cx,x,o), Store(x,f,y).
+refptbar(cv,v,cy,y) :- refptbar(cv,v,_,u), Load(u,_,f), Store(_,f,y), MV(m,y), CM(cy,m). # MATCH EDGE
 refptbar(cv,v,cw,w) :- refptbar(cv,v,cu,u), LoadStat(u,f), MV(mu,u), CM(cu,mu), StoreStat(f,w), MV(mw,w), CM(cw,mw).
 
-ActiveRef(cu,w) :- refptbar(_,_,cu,u), Load(u,w,f), Store(_,f,_).
+#ActiveRef(cu,w) :- refptbar(_,_,cu,u), Load(u,w,f), Store(_,f,_).
 
 pt(c,v,o) :- New(d,u,o), refptbar(c,v,d,u), typeFilter(v,o).
 
