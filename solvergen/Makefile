@@ -9,6 +9,9 @@ default:
 clean:
 	rm -f bin/* gen/*.cpp gen/*.dat
 
+%.fsm.tgf: %.fsm.graphml
+	$(error $@ out of date, manually re-export from $?)
+
 .SECONDEXPANSION:
 
 # gen/foo^bar.cpp: ... analyses/foo.cfg fsm/bar/*.fsm.tgf

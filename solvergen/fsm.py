@@ -292,6 +292,7 @@ def parse_files(fsm_files):
                     continue
                 src = parts[0]
                 dst = parts[1]
+                assert len(parts) > 2, "Unlabelled transition"
                 for s in parts[2:]:
                     lit = Literal.from_string(s)
                     if lit is None or lit.is_terminal():
