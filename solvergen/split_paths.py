@@ -7,7 +7,7 @@ import util
 
 State = util.enum('OUT_OF_EDGE', 'IN_EDGE', 'IN_PATH')
 
-class ScannerFSM(util.FinalAttrs):
+class ScannerFSM(util.BaseClass):
     def __init__(self, symbol, out_dir):
         self._state = State.OUT_OF_EDGE
         self._symbol = symbol
