@@ -182,7 +182,7 @@ public class CtxtsObjAnalysis extends JavaAnalysis
 
         relIpt.close();
         relStatIM.close();
-		relCtxtInsMeth.close();
+		relCtxtInsMeth.save();
 
         // Populate domC
         for(int iIdx = 0; iIdx < ItoM.length; iIdx++){
