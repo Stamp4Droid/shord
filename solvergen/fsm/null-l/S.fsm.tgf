@@ -5,6 +5,7 @@
 1 1 loadRef[*]
 1 1 storeRef[*]
 1 1 arrStoreRef
+1 1 arrLoadRef
 1 1 asgnPrim
 1 1 loadPrim[*]
 1 1 storePrim[*]
@@ -37,6 +38,7 @@
 1 1 _loadRef[*]
 1 1 _storeRef[*]
 1 1 _arrStoreRef
+1 1 _arrLoadRef
 1 1 _asgnPrim
 1 1 _loadPrim[*]
 1 1 _storePrim[*]

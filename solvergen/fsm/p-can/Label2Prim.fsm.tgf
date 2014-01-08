@@ -12,7 +12,7 @@
 #
 1 2 label2Ref
 1 3 label2Prim
-4 2 _storeRef[*]
+4 2 loadRef[*]
 2 5 Alias
 11 5 Alias
 5 11 storeRef[*]
