@@ -8,7 +8,7 @@ class BroadcastReceiver
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 
-					android.content.Context context = android.test.mock.MockContext.g;
+					android.content.Context context = new android.test.mock.MockContext();
 
 					public void run() {
 						BroadcastReceiver.this.onReceive(context, new android.content.Intent());

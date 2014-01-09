@@ -8,7 +8,7 @@ class AppWidgetProvider
 		ApplicationDriver.getInstance().
 			registerCallback(new Callback(){
 					public void run() {
-						android.content.Context context = android.test.mock.MockContext.g;
+						android.content.Context context = new android.test.mock.MockContext();
 
 						AppWidgetProvider.this.onReceive(context, new android.content.Intent());
 						AppWidgetProvider.this.onUpdate(context, null, new int[1]);
