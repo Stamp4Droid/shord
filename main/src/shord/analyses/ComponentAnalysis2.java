@@ -98,7 +98,8 @@ public class ComponentAnalysis2 extends JavaAnalysis
         //"<android.app.Activity: void startIntentSenderFromChild(android.app.Activity,android.content.IntentSender,int,android.content.Intent,int,int,int)",
         "<android.widget.TabHost$TabSpec: android.widget.TabHost$TabSpec setContent(android.content.Intent)>",
 
-		"<android.test.mock.MockContext: android.content.ComponentName startService(android.content.Intent)>"
+		"<android.test.mock.MockContext: android.content.ComponentName startService(android.content.Intent)>",
+        "<android.test.mock.MockContext: void startActivity(android.content.Intent)>",
 		});
 
 	private void populateIntentFields() 
