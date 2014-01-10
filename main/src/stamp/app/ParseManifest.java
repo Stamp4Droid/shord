@@ -37,11 +37,17 @@ public class ParseManifest
 			xpath = XPathFactory.newInstance().newXPath();
 			xpath.setNamespaceContext(new PersonalNamespaceContext());
 			
-			//find package name
+			//find package name and version
 			Node node = (Node)
 				xpath.evaluate("/manifest", document, XPathConstants.NODE);
 			app.setPackageName(node.getAttributes().getNamedItem("package").getNodeValue());
 			app.setVersion(node.getAttributes().getNamedItem("android:versionName").getNodeValue());
+
+			//find icon path
+			node = (Node)
+				xpath.evaluate("/manifest/application", document, XPathConstants.NODE);
+			String icon = node.getAttributes().getNamedItem("android:icon").getNodeValue();
+			app.setIconPath(icon);
 
 			readComponentInfo();
 			readPermissionInfo();			

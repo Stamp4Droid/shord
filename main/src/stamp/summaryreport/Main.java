@@ -52,9 +52,14 @@ public class Main extends JavaAnalysis
 	private void basicInfo()
 	{
 		writer.println(String.format("<center><h1>%s</h1></center>", app.getPackageName()));
+		
+		String icon = app.getIconPath();
+		if(icon != null)
+			writer.println(String.format("<center><img src=\"file://%s\"></center>", icon));
 
 		writer.println("<h2>Basic Info</h2>");
-		writer.println(String.format("<b>Version:</b> %s", app.getVersion()));
+		writer.println("<ul>");
+		writer.println(String.format("<li><b>Version:</b> %s</li>", app.getVersion()));
 
 		String apkPath = System.getProperty("stamp.apk.path");
 		String sha256;
@@ -63,7 +68,9 @@ public class Main extends JavaAnalysis
 		}catch(Exception e){
 			throw new Error(e);
 		}			
-		writer.println(String.format("<b>SHA256:</b> %s", sha256));
+		writer.println(String.format("<li><b>SHA256:</b> %s</li>", sha256));
+
+		writer.println("</ul>");
 	}
 	
 	private void permissions()

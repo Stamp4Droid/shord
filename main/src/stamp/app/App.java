@@ -19,8 +19,10 @@ public class App
 	private List<Component> comps = new ArrayList();
 	private Map<Integer,Layout> layouts = new HashMap();
 	private Set<String> permissions = new HashSet();
+
 	private String pkgName;
 	private String version;
+	private String iconPath;
 
 	public static App readApp(String apkPath, String apktoolOutDir)
 	{
@@ -32,13 +34,25 @@ public class App
 		File resDir = new File(apktoolOutDir, "res");
 		List<Layout> layouts = new ParseLayout().process(resDir);
 
-		app.process(apkPath, layouts);
+		app.process(apkPath, apktoolOutDir, layouts);
 		
 		return app;
 	}
 
-	public void process(String apkPath, List<Layout> layouts)
+	public void process(String apkPath, String apktoolOutDir, List<Layout> layouts)
 	{
+		if(iconPath != null){
+			if(iconPath.startsWith("@drawable/")){
+				String icon = iconPath.substring("@drawable/".length()).concat(".png");
+				File f = new File(apktoolOutDir.concat("/res/drawable"), icon); System.out.println("ABC "+f);
+				if(f.exists())
+					iconPath = f.getPath();
+				else
+					iconPath = null;
+			} else
+				iconPath = null;
+		}
+
 		Set<String> widgetNames = new HashSet();
 		for(Layout layout : layouts){
 			widgetNames.addAll(layout.customWidgets);
@@ -108,6 +122,16 @@ public class App
 	public String getVersion()
 	{
 		return this.version;
+	}
+
+	public void setIconPath(String icon)
+	{
+		this.iconPath = icon;
+	}
+	
+	public String getIconPath()
+	{
+		return iconPath;
 	}
 
 	private void filterDead(String apkPath, Set<String> compNames, Set<String> widgetNames)
