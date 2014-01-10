@@ -16,11 +16,14 @@ import java.util.jar.JarFile;
 */
 public class ParseManifest
 {
-	private String pkgName;
-	private List<Component> comps = new ArrayList();
+	private App app;
+	private XPath xpath;
+	private Document document;
 
-	List<Component> process(File manifestFile)
+	public ParseManifest(File manifestFile, App app)
 	{
+		this.app = app;
+
 		try{
 			File tmpFile = File.createTempFile("stamp_android_manifest", null, null);
 			tmpFile.deleteOnExit();
@@ -29,42 +32,60 @@ public class ParseManifest
 
 			DocumentBuilder builder =
 				DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			Document document = builder.parse(manifestFile);
+			document = builder.parse(manifestFile);
 			
-			XPath xpath = XPathFactory.newInstance().newXPath();
+			xpath = XPathFactory.newInstance().newXPath();
 			xpath.setNamespaceContext(new PersonalNamespaceContext());
 			
 			//find package name
 			Node node = (Node)
 				xpath.evaluate("/manifest", document, XPathConstants.NODE);
-			pkgName = node.getAttributes().getNamedItem("package").getNodeValue();
-			
-			//find activities
-			findComponents(xpath, document, Component.Type.activity);
-			findComponents(xpath, document, Component.Type.service);
-			findComponents(xpath, document, Component.Type.receiver);
-			
-			node = (Node)
-				xpath.evaluate("/manifest/application", document, XPathConstants.NODE);
+			app.setPackageName(node.getAttributes().getNamedItem("package").getNodeValue());
+			app.setVersion(node.getAttributes().getNamedItem("android:versionName").getNodeValue());
 
-			//backup agent
-			Node backupAgent = node.getAttributes().getNamedItem("android:backupAgent");
-			if(backupAgent != null)
-				addComp(new Component(fixName(backupAgent.getNodeValue())));
-			
-			//application class
-			Node application = node.getAttributes().getNamedItem("android:name");
-			if(application != null)
-				addComp(new Component(fixName(application.getNodeValue())));
-
-			return comps;
+			readComponentInfo();
+			readPermissionInfo();			
 		}catch(Exception e){
 			throw new Error(e);
+		}		
+	}
+
+	private void readPermissionInfo() throws Exception
+	{
+		Set<String> permissions = app.permissions();
+		NodeList nodes = (NodeList)
+			xpath.evaluate("/manifest/uses-permission", document, XPathConstants.NODESET);
+		for (int i = 0; i < nodes.getLength(); i++) {
+			Node node = nodes.item(i);
+			Attr attr = ((Element) node).getAttributeNode("android:name");
+			permissions.add(attr.getValue());
 		}
+	}
+
+	private void readComponentInfo() throws Exception
+	{		
+		//find activities
+		findComponents(xpath, document, Component.Type.activity);
+		findComponents(xpath, document, Component.Type.service);
+		findComponents(xpath, document, Component.Type.receiver);
+		
+		Node node = (Node)
+			xpath.evaluate("/manifest/application", document, XPathConstants.NODE);
+		
+		//backup agent
+		Node backupAgent = node.getAttributes().getNamedItem("android:backupAgent");
+		if(backupAgent != null)
+			addComp(new Component(fixName(backupAgent.getNodeValue())));
+			
+		//application class
+		Node application = node.getAttributes().getNamedItem("android:name");
+		if(application != null)
+			addComp(new Component(fixName(application.getNodeValue())));
 	}
 
 	private String fixName(String comp)
 	{
+		String pkgName = app.getPackageName();
 		if(comp.startsWith("."))
 			comp = pkgName + comp;
 		else if(comp.indexOf('.') < 0)
@@ -129,6 +150,7 @@ public class ParseManifest
 
 	private Component addComp(Component c)
 	{
+		List<Component> comps = app.components();
 		for(Component comp : comps){
 			if(comp.name.equals(c.name)){
 				assert c.type.equals(comp.type);
@@ -138,9 +160,4 @@ public class ParseManifest
 		comps.add(c);
 		return c;
 	}
-
-    public String getPkgName() {
-        return pkgName;
-    }
-
 }

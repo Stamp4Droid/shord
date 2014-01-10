@@ -166,7 +166,7 @@ public class Program
 		if(app == null){
 			String apktoolOutDir = System.getProperty("stamp.apktool.out.dir");
 			String apkPath = System.getProperty("stamp.apk.path");
-			app = new App(apkPath, apktoolOutDir);
+			app = App.readApp(apkPath, apktoolOutDir);
 			System.out.println(app.toString());
 		}
 		return app;

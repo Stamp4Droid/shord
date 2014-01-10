@@ -42,7 +42,7 @@ public class Main
 		String harnessListFile = System.getProperty("stamp.harnesslist.file");
 		int numCompsPerHarness = Integer.parseInt(System.getProperty("stamp.max.harness.size"));
 
-		app = new App(apkPath, apktoolOutDir);
+		app = App.readApp(apkPath, apktoolOutDir);
 		List<Component> comps = app.components();
 		
 		initSoot(apkPath, androidJar, comps);

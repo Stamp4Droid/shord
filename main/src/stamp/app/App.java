@@ -19,19 +19,33 @@ public class App
 	private List<Component> comps = new ArrayList();
 	private Map<Integer,Layout> layouts = new HashMap();
 	private Set<String> permissions = new HashSet();
+	private String pkgName;
+	private String version;
 
-	public App(String apkPath, String apktoolOutDir)
+	public static App readApp(String apkPath, String apktoolOutDir)
 	{
+		App app = new App();
+	
+		File manifestFile = new File(apktoolOutDir, "AndroidManifest.xml");				
+		ParseManifest pmf = new ParseManifest(manifestFile, app);
+
 		File resDir = new File(apktoolOutDir, "res");
 		List<Layout> layouts = new ParseLayout().process(resDir);
 
+		app.process(apkPath, layouts);
+		
+		return app;
+	}
+
+	public void process(String apkPath, List<Layout> layouts)
+	{
 		Set<String> widgetNames = new HashSet();
 		for(Layout layout : layouts){
 			widgetNames.addAll(layout.customWidgets);
 		}
 
-		File manifestFile = new File(apktoolOutDir, "AndroidManifest.xml");				
-		List<Component> comps = new ParseManifest().process(manifestFile);
+		List<Component> comps = this.comps;
+		this.comps = new ArrayList();
 
 		Set<String> compNames = new HashSet();
 		for(Component c : comps){
@@ -47,7 +61,7 @@ public class App
 			if(compNames.contains(c.name))
 				this.comps.add(c);
 		}
-		
+
 		for(Layout layout : layouts){
 			this.layouts.put(layout.id, layout);
 			
@@ -58,16 +72,42 @@ public class App
 					it.remove();
 			}
 		}
+		
 	}
 
 	public List<Component> components()
 	{
 		return comps;
 	}
-	
+
+	public Set<String> permissions()
+	{
+		return permissions;
+	}
+
 	public Layout layoutWithId(int id)
 	{
 		return layouts.get(id);
+	}
+
+	public void setPackageName(String pkgName)
+	{
+		this.pkgName = pkgName;
+	}
+
+	public String getPackageName()
+	{
+		return this.pkgName;
+	}
+	
+	public void setVersion(String version)
+	{
+		this.version = version;
+	}
+
+	public String getVersion()
+	{
+		return this.version;
 	}
 
 	private void filterDead(String apkPath, Set<String> compNames, Set<String> widgetNames)
@@ -118,9 +158,22 @@ public class App
 	public String toString()
 	{
 		StringBuilder builder = new StringBuilder("App : {\n");
+
+		builder.append("package: "+pkgName+"\n");
+		builder.append("version: "+version+"\n");
+
+		builder.append("comps : {\n");
 		for(Component c : comps){
-			builder.append(c.toString()+"\n");
+			builder.append("\t"+c.toString()+"\n");
 		}
+		builder.append("}\n");
+
+		builder.append("perms: {\n");
+		for(String perm : permissions){
+			builder.append("\t"+perm+"\n");
+		}
+		builder.append("}\n");
+
 		builder.append("}");
 		return builder.toString();
 	}
