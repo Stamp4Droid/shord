@@ -4,6 +4,7 @@ import stamp.app.App;
 import stamp.app.Component;
 import stamp.app.IntentFilter;
 import stamp.util.SHAFileChecksum;
+import stamp.analyses.DynamicFeaturesAnalysis;
 
 import shord.project.analyses.JavaAnalysis;
 import shord.program.Program;
@@ -39,6 +40,7 @@ public class Main extends JavaAnalysis
 			basicInfo();
 			permissions();
 			systemEvents();
+			reflection();
 
 			writer.println("</body>");
 			writer.println("</html>");
@@ -47,6 +49,21 @@ public class Main extends JavaAnalysis
 		}catch(IOException e){
 			throw new Error(e);
 		}
+	}
+
+	private void reflection()
+	{
+		DynamicFeaturesAnalysis dfa = new DynamicFeaturesAnalysis();
+		dfa.measureReflection();
+
+		writer.println("<h2>Reflection</h2>");
+		writer.println("<ul>");
+		
+		writer.println(String.format("<li><b>Code size:</b> %d</li>", dfa.stmtCount));
+		writer.println(String.format("<li><b>Number of reflective method calls:</b> %d (%f%%)</li>", dfa.invokeCount, (dfa.invokeCount*100.0)/dfa.stmtCount));
+		writer.println(String.format("<li><b>Number of reflective field accesses:</b> %d (%f%%)</li>", dfa.readFieldCount, (dfa.readFieldCount*100.0)/dfa.stmtCount));
+
+		writer.println("</ul>");
 	}
 	
 	private void basicInfo()
