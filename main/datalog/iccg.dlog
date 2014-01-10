@@ -50,5 +50,5 @@ ObjSC(o,sc) :- CH(o,h), SCH(sc,h).
 ICCG(s,t) :- Launch(s,o1), IntentTgtField(f), fpt(o1,f,o2), ObjSC(o2,sc), CSC(t,sc).
 
 #implicit intent
-#ICCG(s,t) :- Launch(s,o1), ActionField(f), fpt(o1,f,o2), ObjSC(o2,sc), TgtAction(t,sc).
-#ICCG(s,t) :- Launch(s,o1), DataTypeField(f), fpt(o1,f,o2), ObjSC(o2,sc), TgtDataType(t,sc).
+ICCG(s,t) :- Launch(s,o1), ActionField(f), fpt(o1,f,o2), ObjSC(o2,sc), TgtAction(t,sc).
+ICCG(s,t) :- Launch(s,o1), DataTypeField(f), fpt(o1,f,o2), ObjSC(o2,sc), TgtDataType(t,sc).
