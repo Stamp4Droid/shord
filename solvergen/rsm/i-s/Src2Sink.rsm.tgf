@@ -1,0 +1,22 @@
+1 in
+2 out
+3
+4
+5
+6
+#
+1 1 retRef[i] _paramRef[i] retPrim[i] _paramPrim[i]
+1 1 IntraFun
+1 1 new asgnRef storeRef[*] loadRef[*] arrStoreRef arrLoadRef asgnPrim storePrim[*] loadPrim[*] arrStorePrim arrLoadPrim prim2Prim prim2Ref ref2Prim ref2Ref prim2SinkByPrim prim2SinkByRef ref2SinkByPrim ref2SinkByRef label2Prim label2Ref prim2Sink ref2Sink srcLabel sinkLabel _new _asgnRef _storeRef[*] _loadRef[*] _arrStoreRef _arrLoadRef _asgnPrim _storePrim[*] _loadPrim[*] _arrStorePrim _arrLoadPrim _prim2Prim _prim2Ref _ref2Prim _ref2Ref _prim2SinkByPrim _prim2SinkByRef _ref2SinkByPrim _ref2SinkByRef _label2Prim _label2Ref _prim2Sink _ref2Sink _srcLabel _sinkLabel
+1 2 -
+2 2 paramRef[i] _retRef[i] paramPrim[i] _retPrim[i]
+2 2 IntraFun
+2 2 new asgnRef storeRef[*] loadRef[*] arrStoreRef arrLoadRef asgnPrim storePrim[*] loadPrim[*] arrStorePrim arrLoadPrim prim2Prim prim2Ref ref2Prim ref2Ref prim2SinkByPrim prim2SinkByRef ref2SinkByPrim ref2SinkByRef label2Prim label2Ref prim2Sink ref2Sink srcLabel sinkLabel _new _asgnRef _storeRef[*] _loadRef[*] _arrStoreRef _arrLoadRef _asgnPrim _storePrim[*] _loadPrim[*] _arrStorePrim _arrLoadPrim _prim2Prim _prim2Ref _ref2Prim _ref2Ref _prim2SinkByPrim _prim2SinkByRef _ref2SinkByPrim _ref2SinkByRef _label2Prim _label2Ref _prim2Sink _ref2Sink _srcLabel _sinkLabel
+2 3 statStoreRef
+3 1 statLoadRef
+2 4 _statLoadRef
+4 1 _statStoreRef
+2 5 statStorePrim
+5 1 statLoadPrim
+2 6 _statLoadPrim
+6 1 _statStorePrim

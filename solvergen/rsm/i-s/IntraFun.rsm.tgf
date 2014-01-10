@@ -1,0 +1,8 @@
+1 in
+2
+3 out
+#
+1 2 paramRef[i] _retRef[i] paramPrim[i] _retPrim[i]
+2 2 IntraFun
+2 2 new asgnRef storeRef[*] loadRef[*] arrStoreRef arrLoadRef asgnPrim storePrim[*] loadPrim[*] arrStorePrim arrLoadPrim prim2Prim prim2Ref ref2Prim ref2Ref prim2SinkByPrim prim2SinkByRef ref2SinkByPrim ref2SinkByRef label2Prim label2Ref prim2Sink ref2Sink srcLabel sinkLabel _new _asgnRef _storeRef[*] _loadRef[*] _arrStoreRef _arrLoadRef _asgnPrim _storePrim[*] _loadPrim[*] _arrStorePrim _arrLoadPrim _prim2Prim _prim2Ref _ref2Prim _ref2Ref _prim2SinkByPrim _prim2SinkByRef _ref2SinkByPrim _ref2SinkByRef _label2Prim _label2Ref _prim2Sink _ref2Sink _srcLabel _sinkLabel
+2 3 retRef[i] _paramRef[i] retPrim[i] _paramPrim[i]
