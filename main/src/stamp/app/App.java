@@ -44,11 +44,16 @@ public class App
 		if(iconPath != null){
 			if(iconPath.startsWith("@drawable/")){
 				String icon = iconPath.substring("@drawable/".length()).concat(".png");
-				File f = new File(apktoolOutDir.concat("/res/drawable"), icon); System.out.println("ABC "+f);
+				File f = new File(apktoolOutDir.concat("/res/drawable"), icon);
 				if(f.exists())
 					iconPath = f.getPath();
-				else
-					iconPath = null;
+				else {
+					f = new File(apktoolOutDir.concat("/res/drawable-hdpi"), icon);
+					if(f.exists())
+						iconPath = f.getPath();
+					else
+						iconPath = null;
+				}
 			} else
 				iconPath = null;
 		}

@@ -5,6 +5,7 @@ import stamp.app.Component;
 import stamp.app.IntentFilter;
 import stamp.util.SHAFileChecksum;
 import stamp.analyses.DynamicFeaturesAnalysis;
+import stamp.analyses.StringAnalysis;
 
 import shord.project.analyses.JavaAnalysis;
 import shord.program.Program;
@@ -15,6 +16,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import java.util.*;
 
@@ -40,6 +43,7 @@ public class Main extends JavaAnalysis
 			basicInfo();
 			permissions();
 			systemEvents();
+			strings();
 			reflection();
 
 			writer.println("</body>");
@@ -51,6 +55,42 @@ public class Main extends JavaAnalysis
 		}
 	}
 
+	private void strings()
+	{
+		StringAnalysis sa = new StringAnalysis();
+		sa.analyze();
+
+		List<String> urls = new ArrayList();
+		List<String> uris = new ArrayList();
+		
+		IPAddressValidator ipv = new IPAddressValidator();
+
+		for(String s : sa.scs){
+			if(s.startsWith("http://"))
+				urls.add(s);
+			else if(s.startsWith("content://"))
+				uris.add(s);
+			else if(s.startsWith("tel://"))
+				uris.add(s);
+			else if(ipv.validate(s))
+				urls.add(s);
+		}
+
+		writer.println("<h2>URLs and IP Addresses</h2>");
+		writer.println("<ul>");
+		for(String s : urls)
+			writer.println(String.format("<li>%s</li>", s));
+		writer.println("</ul>");
+
+		writer.println("<h2>URIs</h2>");
+		writer.println("<ul>");
+		for(String s : uris)
+			writer.println(String.format("<li>%s</li>", s));
+		writer.println("</ul>");
+
+	}
+
+
 	private void reflection()
 	{
 		DynamicFeaturesAnalysis dfa = new DynamicFeaturesAnalysis();
@@ -59,9 +99,9 @@ public class Main extends JavaAnalysis
 		writer.println("<h2>Reflection</h2>");
 		writer.println("<ul>");
 		
-		writer.println(String.format("<li><b>Code size:</b> %d</li>", dfa.stmtCount));
-		writer.println(String.format("<li><b>Number of reflective method calls:</b> %d (%f%%)</li>", dfa.invokeCount, (dfa.invokeCount*100.0)/dfa.stmtCount));
-		writer.println(String.format("<li><b>Number of reflective field accesses:</b> %d (%f%%)</li>", dfa.readFieldCount, (dfa.readFieldCount*100.0)/dfa.stmtCount));
+		//writer.println(String.format("<li><b>Code size:</b> %d</li>", dfa.stmtCount));
+		writer.println(String.format("<li><b>Number of reflective method calls:</b> %f%%</li>", (dfa.invokeCount*100.0)/dfa.stmtCount));
+		writer.println(String.format("<li><b>Number of reflective field accesses:</b> %f%%</li>", (dfa.readFieldCount*100.0)/dfa.stmtCount));
 
 		writer.println("</ul>");
 	}
@@ -118,4 +158,31 @@ public class Main extends JavaAnalysis
 			writer.println(String.format("<li>%s</li>", e));
 		writer.println("</ul>");
 	}
+}
+
+
+class IPAddressValidator
+{ 
+    private Pattern pattern;
+    private Matcher matcher;
+ 
+    private static final String IPADDRESS_PATTERN = 
+		"^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+		"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+		"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+		"([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+ 
+    public IPAddressValidator(){
+		pattern = Pattern.compile(IPADDRESS_PATTERN);
+    }
+ 
+	/**
+	 * Validate ip address with regular expression
+	 * @param ip ip address for validation
+	 * @return true valid ip address, false invalid ip address
+	 */
+    public boolean validate(final String ip){  
+		matcher = pattern.matcher(ip);
+		return matcher.matches();        
+    }
 }
