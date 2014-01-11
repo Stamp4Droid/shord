@@ -36,16 +36,38 @@ public class Main extends JavaAnalysis
 		
 		try{
 			String outDir = System.getProperty("stamp.out.dir");
-			writer = new PrintWriter(new FileWriter(new File(outDir, "report.html")));
+			File reportDir = new File(outDir, "report");
+			reportDir.mkdir();
+
+			writer = new PrintWriter(new FileWriter(new File(reportDir, "report.html")));
+			writer.println("<!DOCTYPE html>");
 			writer.println("<html>");
+			writer.println("<head>");
+			writer.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
+			writer.println("<link rel=\"stylesheet\" media=\"all\" href=\"http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css\">");
+			writer.println("</head>");
 			writer.println("<body>");
-			
+
+			writer.println("<div class=\"container-fluid\">");
+			writer.println("<div class=\"row-fluid\">");
+
+            writer.println("<div class=\"col-md-2\"></div>");
+
+            writer.println("<div class=\"col-md-8\">");
 			basicInfo();
 			permissions();
 			systemEvents();
 			strings();
 			reflection();
+			writer.println("</div>");
 
+			writer.println("<div class=\"col-md-2\"></div>");
+
+			writer.println("</div>");
+			writer.println("</div>");
+
+			writer.println("<script src=\"https://code.jquery.com/jquery.js\"></script>");
+			writer.println("<script src=\"http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js\"></script>");
 			writer.println("</body>");
 			writer.println("</html>");
 		
@@ -76,18 +98,22 @@ public class Main extends JavaAnalysis
 		Collections.sort(urls);
 		Collections.sort(uris);
 
-		writer.println("<h2>URLs and IP Addresses</h2>");
+		startPanel("URLs and IP Addresses");
+
 		writer.println("<ul>");
 		for(String s : urls)
 			writer.println(String.format("<li>%s</li>", s));
 		writer.println("</ul>");
+		
+		endPanel();
 
-		writer.println("<h2>URIs</h2>");
+		startPanel("URIs");
 		writer.println("<ul>");
 		for(String s : uris)
 			writer.println(String.format("<li>%s</li>", s));
 		writer.println("</ul>");
 
+		endPanel();
 	}
 
 
@@ -96,7 +122,7 @@ public class Main extends JavaAnalysis
 		DynamicFeaturesAnalysis dfa = new DynamicFeaturesAnalysis();
 		dfa.measureReflection();
 
-		writer.println("<h2>Reflection</h2>");
+		startPanel("Reflection");
 		writer.println("<ul>");
 		
 		//writer.println(String.format("<li><b>Code size:</b> %d</li>", dfa.stmtCount));
@@ -104,6 +130,7 @@ public class Main extends JavaAnalysis
 		writer.println(String.format("<li><b>Number of reflective field accesses:</b> %f%%</li>", (dfa.readFieldCount*100.0)/dfa.stmtCount));
 
 		writer.println("</ul>");
+		endPanel();
 	}
 	
 	private void basicInfo()
@@ -114,7 +141,7 @@ public class Main extends JavaAnalysis
 		if(icon != null)
 			writer.println(String.format("<center><img src=\"file://%s\"></center>", icon));
 
-		writer.println("<h2>Basic Info</h2>");
+		startPanel("Basic Info");
 		writer.println("<ul>");
 		writer.println(String.format("<li><b>Version:</b> %s</li>", app.getVersion()));
 
@@ -128,16 +155,17 @@ public class Main extends JavaAnalysis
 		writer.println(String.format("<li><b>SHA256:</b> %s</li>", sha256));
 
 		writer.println("</ul>");
+		endPanel();
 	}
 	
 	private void permissions()
 	{
-		//writer.println(String.format("<h1>%s</h1>", app.getPackageName()));
-		writer.println("<h2>Permissions</h2>");
-		writer.println("<ul>");
+		startPanel("Permissions");
+		writer.println("<ul class=\"list-group\">");
 		for(String perm : app.permissions())
-			writer.println(String.format("<li>%s</li>", perm));
+			writer.println(String.format("<li class=\"list-group-item\">%s</li>", perm));
 		writer.println("</ul>");
+		endPanel();
 	}
 	
 	private void systemEvents()
@@ -161,9 +189,10 @@ public class Main extends JavaAnalysis
 			}
 		}
 		
-		writer.println("<h2>System Events</h2>");
-		writer.println("<table>");
-		writer.println("<tr><th>Event name</th><th>Priority</th></tr>");
+		startPanel("System Events");
+		writer.println("<table class=\"table table-striped .table-condensed\">");
+		//writer.println("<tr><th>Event name</th><th>Priority</th></tr>");
+		//writer.println("<tr><th>Event name</th><th>Priority</th></tr>");
 		for(Map.Entry<String,Set<Integer>> e : events.entrySet()){
 			String event = e.getKey();
 			Set<Integer> ps = e.getValue();
@@ -183,9 +212,25 @@ public class Main extends JavaAnalysis
 			} else
 				pr = "default";
 			
-			writer.println(String.format("<tr><td>%s</td><td>%s</td></tr>", event, pr));
+			//writer.println(String.format("<tr><td>%s</td><td>%s</td></tr>", event, pr));
+			writer.println(String.format("<tr><td>%s <span class=\"badge\">%s</span></td></tr>", event, pr));
 		}
 		writer.println("</table>");
+		endPanel();
+	}
+	
+	private void startPanel(String heading)
+	{
+		writer.println("<div class=\"panel panel-default\">"+
+					   "<div class=\"panel-heading\">"+
+					   "<h3 class=\"panel-title\">"+heading+"</h3>"+
+					   "</div>"+
+					   "<div class=\"panel-body\">");
+	}
+	
+	private void endPanel()
+	{
+		writer.println("</div></div>");
 	}
 }
 
