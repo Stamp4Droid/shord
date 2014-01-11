@@ -64,17 +64,17 @@ public class Main extends JavaAnalysis
 		List<String> uris = new ArrayList();
 		
 		IPAddressValidator ipv = new IPAddressValidator();
+		URIValidator uriv = new URIValidator();
 
 		for(String s : sa.scs){
-			if(s.startsWith("http://"))
+			if(s.startsWith("http://") || s.startsWith("https://") || s.startsWith("ftp://") || ipv.validate(s))
 				urls.add(s);
-			else if(s.startsWith("content://"))
+			else if(uriv.validate(s))
 				uris.add(s);
-			else if(s.startsWith("tel://"))
-				uris.add(s);
-			else if(ipv.validate(s))
-				urls.add(s);
 		}
+
+		Collections.sort(urls);
+		Collections.sort(uris);
 
 		writer.println("<h2>URLs and IP Addresses</h2>");
 		writer.println("<ul>");
@@ -142,21 +142,50 @@ public class Main extends JavaAnalysis
 	
 	private void systemEvents()
 	{
-		Set<String> events = new HashSet();
+		Map<String,Set<Integer>> events = new HashMap();
+
 		for(Component comp : app.components()){
 			if(comp.type != Component.Type.receiver)
 				continue;
 			for(IntentFilter ifilter : comp.intentFilters){
-				for(String action : ifilter.actions)
-					events.add(action);
+				int priority = ifilter.getPriority();
+				for(String action : ifilter.actions){
+					Set<Integer> ps = events.get(action);
+					if(ps == null){
+						ps = new HashSet();
+						events.put(action, ps);
+					}
+					if(priority > 0)
+						ps.add(priority);
+				}
 			}
 		}
 		
 		writer.println("<h2>System Events</h2>");
-		writer.println("<ul>");
-		for(String e : events)
-			writer.println(String.format("<li>%s</li>", e));
-		writer.println("</ul>");
+		writer.println("<table>");
+		writer.println("<tr><th>Event name</th><th>Priority</th></tr>");
+		for(Map.Entry<String,Set<Integer>> e : events.entrySet()){
+			String event = e.getKey();
+			Set<Integer> ps = e.getValue();
+
+			String pr;
+			if(ps.size() > 0){
+				StringBuilder builder = new StringBuilder();
+				boolean first = true;
+				for(Integer p : ps){
+					if(!first)
+						builder.append(", ");
+					else
+						first = false;
+					builder.append(p);
+				}
+				pr = builder.toString();
+			} else
+				pr = "default";
+			
+			writer.println(String.format("<tr><td>%s</td><td>%s</td></tr>", event, pr));
+		}
+		writer.println("</table>");
 	}
 }
 
@@ -164,7 +193,6 @@ public class Main extends JavaAnalysis
 class IPAddressValidator
 { 
     private Pattern pattern;
-    private Matcher matcher;
  
     private static final String IPADDRESS_PATTERN = 
 		"^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
@@ -176,13 +204,22 @@ class IPAddressValidator
 		pattern = Pattern.compile(IPADDRESS_PATTERN);
     }
  
-	/**
-	 * Validate ip address with regular expression
-	 * @param ip ip address for validation
-	 * @return true valid ip address, false invalid ip address
-	 */
     public boolean validate(final String ip){  
-		matcher = pattern.matcher(ip);
-		return matcher.matches();        
+		return pattern.matcher(ip).matches();        
+    }
+}
+
+class URIValidator
+{ 
+    private Pattern pattern;
+ 
+    private static final String URI_PATTERN = "[a-zA-Z]*://.*";
+ 
+    public URIValidator(){
+		pattern = Pattern.compile(URI_PATTERN);
+    }
+ 
+    public boolean validate(final String ip){  
+		return pattern.matcher(ip).matches();        
     }
 }

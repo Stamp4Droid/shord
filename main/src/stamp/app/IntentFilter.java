@@ -14,7 +14,12 @@ public class IntentFilter
 		int pr = Integer.parseInt(p);
 		this.priority = pr;
 	}
-	
+
+	public int getPriority()
+	{
+		return this.priority;
+	}
+
 	public void addAction(String action)
 	{
 		actions.add(action);
