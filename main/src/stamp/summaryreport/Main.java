@@ -3,6 +3,7 @@ package stamp.summaryreport;
 import stamp.app.App;
 import stamp.app.Component;
 import stamp.app.IntentFilter;
+import stamp.app.PersonalNamespaceContext;
 import stamp.util.SHAFileChecksum;
 import stamp.analyses.DynamicFeaturesAnalysis;
 import stamp.analyses.StringAnalysis;
@@ -14,12 +15,23 @@ import chord.project.Chord;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.*;
+import javax.xml.parsers.*;
+import javax.xml.xpath.*;
+import javax.xml.namespace.*;
+import org.w3c.dom.*;
+import org.xml.sax.*;
+
 import java.util.*;
+
+import soot.SootClass;
 
 /**
  * @author Saswat Anand
@@ -45,6 +57,11 @@ public class Main extends JavaAnalysis
 			writer.println("<head>");
 			writer.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
 			writer.println("<link rel=\"stylesheet\" media=\"all\" href=\"http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css\">");
+
+			writer.println("<style>");
+			writer.println(".badge-important{background-color:#b94a48;}");
+			writer.println("</style>");
+
 			writer.println("</head>");
 			writer.println("<body>");
 
@@ -57,6 +74,7 @@ public class Main extends JavaAnalysis
 			basicInfo();
 			permissions();
 			systemEvents();
+			adLib();
 			strings();
 			reflection();
 			writer.println("</div>");
@@ -75,6 +93,37 @@ public class Main extends JavaAnalysis
 		}catch(IOException e){
 			throw new Error(e);
 		}
+	}
+
+	private void adLib() throws IOException
+	{
+		Set<String> pkgs = new HashSet();
+		for(SootClass klass : Program.g().scene().getClasses()){
+			String pkg = klass.getPackageName();
+			pkgs.add(pkg);
+		}
+
+		startPanel("Advertisement Network");
+		writer.println("<table class=\"table table-striped table-condensed\">"); 
+		
+		File adFile = new File(System.getProperty("stamp.dir"), "assets/adnetwork.txt");
+		BufferedReader reader = new BufferedReader(new FileReader(adFile));
+		String line;
+		while((line = reader.readLine()) != null){
+			String[] tokens = line.split(" ");
+			String adPkg = tokens[5];System.out.println("ABC "+adPkg);
+			String adName = tokens[1];
+			for(String p : pkgs){
+				if(p.startsWith(adPkg)){
+					writer.println(String.format("<tr><td>%s</td><td>%s</td></tr>", adName, adPkg));
+					break;
+				}
+			}
+		}
+		reader.close();
+		
+		writer.println("</table>");
+		endPanel();
 	}
 
 	private void strings()
@@ -135,11 +184,15 @@ public class Main extends JavaAnalysis
 	
 	private void basicInfo()
 	{
-		writer.println(String.format("<center><h1>%s</h1></center>", app.getPackageName()));
+		writer.println("<div class=\"jumbotron\">");
 		
 		String icon = app.getIconPath();
 		if(icon != null)
-			writer.println(String.format("<center><img src=\"file://%s\"></center>", icon));
+			writer.println(String.format("<img src=\"file://%s\">", icon));
+
+		writer.println(String.format("<h2>%s</h2>", app.getPackageName()));
+		writer.println("</div>");
+
 
 		startPanel("Basic Info");
 		writer.println("<ul>");
@@ -160,12 +213,40 @@ public class Main extends JavaAnalysis
 	
 	private void permissions()
 	{
-		startPanel("Permissions");
-		writer.println("<ul class=\"list-group\">");
-		for(String perm : app.permissions())
-			writer.println(String.format("<li class=\"list-group-item\">%s</li>", perm));
-		writer.println("</ul>");
-		endPanel();
+		File manifestFile = new File(System.getProperty("stamp.dir"), "assets/AndroidManifest.xml");
+
+		try{
+			DocumentBuilder builder =
+				DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			Document document = builder.parse(manifestFile);
+			
+			XPath xpath = XPathFactory.newInstance().newXPath();
+			xpath.setNamespaceContext(new PersonalNamespaceContext());
+			
+			startPanel("Permissions");
+			writer.println("<table class=\"table table-striped table-condensed\">");
+			for(String perm : app.permissions()){
+				String query = "/manifest/permission[@name=\""+perm+"\"]";
+				//System.out.println(query);
+				Node node = (Node)
+					xpath.evaluate(query, document, XPathConstants.NODE);
+				Node attr = node.getAttributes().getNamedItem("android:protectionLevel");
+				String level = "";
+				if(attr != null){
+					level = attr.getNodeValue();
+					if(level.equals("dangerous"))
+						level = "<span class=\"badge badge-important\">"+level+"</span>";
+					else
+						level = "<span class=\"badge\">"+level+"</span>";
+				}
+				
+				writer.println(String.format("<tr><td>%s %s</td></tr>", perm, level));
+			}
+			writer.println("</table>");
+			endPanel();
+		} catch(Exception e){
+			throw new Error(e);
+		}
 	}
 	
 	private void systemEvents()
@@ -208,12 +289,13 @@ public class Main extends JavaAnalysis
 						first = false;
 					builder.append(p);
 				}
-				pr = builder.toString();
+				pr = "<span class=\"badge badge-important\">"+builder.toString()+"</span>";
+				
 			} else
-				pr = "default";
+				pr = "<span class=\"badge\">"+"default"+"</span>";
 			
 			//writer.println(String.format("<tr><td>%s</td><td>%s</td></tr>", event, pr));
-			writer.println(String.format("<tr><td>%s <span class=\"badge\">%s</span></td></tr>", event, pr));
+			writer.println(String.format("<tr><td>%s %s</td></tr>", event, pr));
 		}
 		writer.println("</table>");
 		endPanel();
@@ -221,7 +303,7 @@ public class Main extends JavaAnalysis
 	
 	private void startPanel(String heading)
 	{
-		writer.println("<div class=\"panel panel-default\">"+
+		writer.println("<div class=\"panel panel-info\">"+
 					   "<div class=\"panel-heading\">"+
 					   "<h3 class=\"panel-title\">"+heading+"</h3>"+
 					   "</div>"+
