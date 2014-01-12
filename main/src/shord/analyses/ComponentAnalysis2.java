@@ -32,6 +32,7 @@ import shord.project.ClassicProject;
 
 import stamp.analyses.SootUtils;
 import stamp.app.Component;
+import stamp.app.Layout;
 import stamp.app.App;
 import stamp.app.IntentFilter;
 
@@ -175,6 +176,16 @@ public class ComponentAnalysis2 extends JavaAnalysis
 				relMC.add(init, comp.name);
 			}
 
+			for(Layout layout : comp.layouts){
+				for(String cb: layout.callbacks){
+					cb = "void " + cb + "(android.view.View)";
+					if(compClass.declaresMethod(cb)){
+						SootMethod cbMeth = compClass.getMethod(cb);
+						relMC.add(cbMeth, comp.name);
+					}
+				}
+			}
+			
 			for(IntentFilter filter : comp.intentFilters){
 				for(String act : filter.actions){
 					relTgtAction.add(comp.name, act);
