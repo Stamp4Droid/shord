@@ -28,10 +28,10 @@ public class Main
 		String harnessListFile = System.getProperty("stamp.harnesslist.file");
 		int numCompsPerHarness = Integer.parseInt(System.getProperty("stamp.max.harness.size"));
 
-		initSoot(apkPath, androidJar, comps);
-
 		app = App.readApp(apkPath, apktoolOutDir);
 		List<Component> comps = app.components();
+		initSoot(apkPath, androidJar, comps);
+		app.findLayouts();
 		
 		File driverDir = new File(driverDirName, "stamp/harness");
 		driverDir.mkdirs();

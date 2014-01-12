@@ -52,8 +52,6 @@ public class App
 
 		app.process(apkPath, apktoolOutDir, layouts);
 		
-		app.findLayouts();
-		
 		return app;
 	}
 
@@ -225,7 +223,7 @@ public class App
 		return builder.toString();
 	}
 
-	private void findLayouts()
+	public void findLayouts()
 	{
 		for(Component comp : comps)
 			findLayoutsFor(comp);

@@ -167,6 +167,7 @@ public class Program
 			String apktoolOutDir = System.getProperty("stamp.apktool.out.dir");
 			String apkPath = System.getProperty("stamp.apk.path");
 			app = App.readApp(apkPath, apktoolOutDir);
+			app.findLayouts();
 			System.out.println(app.toString());
 		}
 		return app;
