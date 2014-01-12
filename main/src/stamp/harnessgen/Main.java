@@ -63,8 +63,8 @@ public class Main
 			Harness h = new Harness(harnessClassName, comps);
 			for(int j = 0; j < numCompsPerHarness && i < numComps; j++, i++){
 				Component comp = comps.get(i);
-				List<Layout> layouts = findLayoutsFor(comp);
-				h.addComponent(comp, layouts);
+				findLayoutsFor(comp);
+				h.addComponent(comp);
 			}
 
 			File harnessClassFile = new File(driverDirName, harnessClassName.replace('.','/').concat(".class"));
@@ -73,12 +73,11 @@ public class Main
 		writer.close();
 	}
 
-	private static List<Layout> findLayoutsFor(Component comp)
+	private static void findLayoutsFor(Component comp)
 	{
 		if(comp.type != Component.Type.activity)
-			return Collections.EMPTY_LIST;
-		
-		List<Layout> layouts = new ArrayList();
+			return;
+
 		SootClass activity = Scene.v().getSootClass(comp.name);
 		
 		for(SootMethod m : activity.getMethods()){
@@ -127,7 +126,7 @@ public class Main
 					int layoutId = ((IntConstant) arg).value;
 					Layout layout = app.layoutWithId(layoutId);
 					if(layout != null){
-						layouts.add(layout);
+						comp.addLayout(layout);
 						System.out.println("Layout: "+comp.name+" "+layout.fileName);
 					}
 					else
@@ -146,7 +145,7 @@ public class Main
 						int layoutId = ((IntConstant) rhs).value;
 						Layout layout = app.layoutWithId(layoutId);
 						if(layout != null){
-							layouts.add(layout);
+							comp.addLayout(layout);
 							System.out.println("Layout: "+comp.name+" "+layout.fileName);
 						}
 						else
@@ -155,7 +154,6 @@ public class Main
 				}
 			}
 		}
-		return layouts;
 	}
 
 	private static void initSoot(String apkPath, String androidJar, List<Component> comps)

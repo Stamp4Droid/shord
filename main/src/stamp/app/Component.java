@@ -9,6 +9,7 @@ public class Component
 	public final String name;
 	public final Type type;
 	public final List<IntentFilter> intentFilters = new ArrayList();
+	public final List<Layout> layouts = new ArrayList();
 
 	public Component(String name, Type type)
 	{
@@ -24,6 +25,11 @@ public class Component
 	public void addIntentFilter(IntentFilter ifilter)
 	{
 		intentFilters.add(ifilter);
+	}
+
+	public void addLayout(Layout layout)
+	{
+		layouts.add(layout);
 	}
 
 	public String toString()

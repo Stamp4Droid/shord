@@ -65,8 +65,9 @@ public class Harness
         //addFields(components);
 	}
 
-	public void addComponent(Component comp, List<Layout> layouts)
+	public void addComponent(Component comp)
 	{		
+		List<Layout> layouts = comp.layouts;
 		SootClass compClass = Scene.v().getSootClass(comp.name);
 		
 		//call the constructor of the comp
