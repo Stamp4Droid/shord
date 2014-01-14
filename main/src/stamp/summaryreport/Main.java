@@ -68,18 +68,21 @@ public class Main extends JavaAnalysis
 			writer.println("<div class=\"container-fluid\">");
 			writer.println("<div class=\"row-fluid\">");
 
-            writer.println("<div class=\"col-md-2\"></div>");
+            writer.println("<div class=\"col-md-3\"></div>");
 
-            writer.println("<div class=\"col-md-8\">");
+            writer.println("<div class=\"col-md-6\">");
 			basicInfo();
 			permissions();
 			systemEvents();
+
+			new FlowsReport(this).generate();
+
 			adLib();
 			strings();
 			reflection();
 			writer.println("</div>");
 
-			writer.println("<div class=\"col-md-2\"></div>");
+			writer.println("<div class=\"col-md-3\"></div>");
 
 			writer.println("</div>");
 			writer.println("</div>");
@@ -111,7 +114,7 @@ public class Main extends JavaAnalysis
 		String line;
 		while((line = reader.readLine()) != null){
 			String[] tokens = line.split(" ");
-			String adPkg = tokens[5];System.out.println("ABC "+adPkg);
+			String adPkg = tokens[5];
 			String adName = tokens[1];
 			for(String p : pkgs){
 				if(p.startsWith(adPkg)){
@@ -235,12 +238,14 @@ public class Main extends JavaAnalysis
 				if(attr != null){
 					level = attr.getNodeValue();
 					if(level.equals("dangerous"))
-						level = "<span class=\"badge badge-important\">"+level+"</span>";
-					else
+						level = "<span class=\"label label-danger\">"+level+"</span>";
+					else if(level.equals("normal"))
+						level = "<span class=\"label label-success\">"+level+"</span>";
+					else 
 						level = "<span class=\"badge\">"+level+"</span>";
 				}
 				
-				writer.println(String.format("<tr><td>%s %s</td></tr>", perm, level));
+				writer.println(String.format("<tr><td>%s</td><td>%s</td></tr>", perm, level));
 			}
 			writer.println("</table>");
 			endPanel();
@@ -289,19 +294,19 @@ public class Main extends JavaAnalysis
 						first = false;
 					builder.append(p);
 				}
-				pr = "<span class=\"badge badge-important\">"+builder.toString()+"</span>";
+				pr = "<span class=\"label label-danger\">"+builder.toString()+"</span>";
 				
 			} else
-				pr = "<span class=\"badge\">"+"default"+"</span>";
+				pr = "<span class=\"label label-success\">"+"default"+"</span>";
 			
 			//writer.println(String.format("<tr><td>%s</td><td>%s</td></tr>", event, pr));
-			writer.println(String.format("<tr><td>%s %s</td></tr>", event, pr));
+			writer.println(String.format("<tr><td>%s</td><td>%s</td></tr>", event, pr));
 		}
 		writer.println("</table>");
 		endPanel();
 	}
 	
-	private void startPanel(String heading)
+	void startPanel(String heading)
 	{
 		writer.println("<div class=\"panel panel-info\">"+
 					   "<div class=\"panel-heading\">"+
@@ -310,9 +315,14 @@ public class Main extends JavaAnalysis
 					   "<div class=\"panel-body\">");
 	}
 	
-	private void endPanel()
+	void endPanel()
 	{
 		writer.println("</div></div>");
+	}
+	
+	void println(String s)
+	{
+		writer.println(s);
 	}
 }
 

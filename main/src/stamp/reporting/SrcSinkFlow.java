@@ -7,6 +7,9 @@ import shord.project.analyses.ProgramRel;
 import soot.Unit;
 import chord.util.tuple.object.Pair;
 
+import java.util.*;
+
+
 /*
  * @author Saswat Anand
  * @author Osbert Bastani
@@ -39,6 +42,8 @@ public class SrcSinkFlow extends XMLReport {
 	//required instead for Osbert's JCFL flow stuff. They are mutually exclusive.
 
 
+	Set<Pair<String,String>> ciFlows = new HashSet();
+
 	Iterable<Pair<Pair<String,Ctxt>,Pair<String,Ctxt>>> res = relCtxtFlows.getAry2ValTuples();
 	int count = 0;
 	for(Pair<Pair<String,Ctxt>,Pair<String,Ctxt>> pair : res) {
@@ -49,9 +54,11 @@ public class SrcSinkFlow extends XMLReport {
 		Ctxt sinkCtxt = pair.val1.val1;
 
 		if(true/*Postmortem.processingSrc*/){
-			newTuple()
-				.addValue(source)
-				.addValue(sink);
+			if(ciFlows.add(new Pair(source, sink))){
+				newTuple()
+					.addValue(source)
+					.addValue(sink);
+			}
 		} else {
 			assert false; //TODO
 			/*
