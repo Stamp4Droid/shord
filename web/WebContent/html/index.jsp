@@ -120,7 +120,7 @@
 					<!--Sidebar content-->
 					<%@include file="leftbar.jsp" %>
 				</div>
-				<div class="span6">
+				<div class="span6" id="centerpane">
 					<ul class="nav nav-tabs" id="codetabs">
 					<!--span class="label label-info" id="filename">
 					</span>
@@ -130,7 +130,9 @@
 					<div class="tab-content" id="codetabcontents">
 					</div>
 				</div>
-				<div class="span3 right-view" id="rightbar">
+				<div class="span3 right-view" id="rightside">
+					<div id="rightbar">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -145,6 +147,7 @@
 		</script>
 		
 		<script>		
+			var numFlows = <%=numFlows%>;
 			function showTab(index){
 				for(j = 0; j < <%=tabCount%>; j++){
 					if(index == j){
@@ -219,6 +222,10 @@
 			var tabNameToId = new Object();
 			var idToHighlightedLine = new Object();
 			var totalFilesOpened = 0;
+			var flowSwitches = [];
+			for (var ii = 0; ii < numFlows; ++ii) {
+				flowSwitches.push(true);
+			}
 			
 			function rightBarAddDynamicData(drDataParams)
 			{
@@ -227,19 +234,58 @@
 			    var html = ViewSource.droidrecordDataToTable(data, false);
 			    $("#rightbar div.droidrecord-runtime-parameters").html(html);
 			}
-		
+
+			function anyTaintedFlowShowing(taintedFlows) {
+				for (var i = 0; i < taintedFlows.length; ++i) {
+					if (flowSwitches[taintedFlows[i]-1]) {
+						return true;
+					}
+				}
+				return false;
+			}
+
+			function colorTaint(href) {
+				href = href.replace('#','');
+				var taintedVariables = $('#'+href).find("[name=taintedVariable]");
+			    for(var i=0; i<taintedVariables.length; ++i) {
+			    	var flowString = taintedVariables[i].getAttribute("flows");
+			    	var taintedFlows = flowString.split(':');
+			    	if (flowString === 'null' || anyTaintedFlowShowing(taintedFlows)) {
+						taintedVariables[i].setAttribute("style", "background-color:#FFB2B2");
+					} else if (taintedVariables[i].hasAttribute('style')) {
+						taintedVariables[i].removeAttribute('style');
+					}
+			    }
+			}
+
+			function compactFlowCtxtTable($table) {
+				var $tds = $table.find('td');
+
+				$tds.each(function (index) {
+						var tex = $(this).text();
+						var a_regex = /.* (.+)\(.*\)$/;
+						var match = tex.match(a_regex);
+						$(this).html(match[1]);
+					});
+			}
+
 			function showCode(response, href)
 			{
+				var $flowtable = $('#centerpane #flowctxttable');
+				if ($flowtable.length > 0) {
+					compactFlowCtxtTable($flowtable);
+					$('#rightside').append($flowtable[0].outerHTML);
+					$flowtable.remove();
+					registerCellback();
+				}
+
 				var ppStr = prettyPrintOne(response, 'java', true);
 				$('#codetabcontents').append('<div class="tab-pane source-view" id="'+href+'">'+ppStr+'</div>');
+
+				colorTaint(href);
 				
 				$('#codetabs a:last').tab('show');
 				
-				var taintedVariables = $('#'+href).find("[name=taintedVariable]");
-			    for(var i=0; i<taintedVariables.length; ++i) {
-					taintedVariables[i].setAttribute("style", "background-color:#FFB2B2");
-			    }
-			    
 			    var methodNames = $('#'+href).find("span[name=MethodName]");
 			    for(var i=0; i < methodNames.length; ++i) {
 			        $(methodNames[i]).after('<img src="/stamp/res/down.png" height="12" width="12" style="display:inline"></img>');
@@ -519,18 +565,27 @@
 			    
 			    showContentTab(tabUniqueName, shortname, onTabLoad, onTabDisplay);
 			};
-			
-			function setupResultTree(resultTreeId, resultFileName) {
-			    useJimple = 'false';
-			    //if(resultFileName.indexOf('jimple') != -1) {
-			    if(<%=useJimple%>) {
-			        useJimple = 'true';
-			    }
-			    $('#' + resultTreeId).tree({dataSource: new ResultDataSource(resultFileName)});
 
-			if(useJimple == 'true') {
-			//alert('true: ' + resultFileName);
+            var datasources = {};
+			
+                       function setupResultTree(resultTreeId, resultFileName) {
+                          useJimple = 'false';
+                          //if(resultFileName.indexOf('jimple') != -1) {
+                          if(<%=useJimple%>) {
+                              useJimple = 'true';
+                          }
+
+                var datasource = new ResultDataSource(resultFileName);
+
+                          $('#' + resultTreeId).tree({dataSource: datasource});
+                datasources[resultTreeId] = datasource;
+                      if(useJimple == 'true') {
+                      //alert('true: ' + resultFileName);
+
                 $('#' + resultTreeId).on('selected', function(event,selection){
+
+
+
                     var reportScript = selection.info[0].showReport;
                     if(typeof reportScript === "undefined")
                     {
@@ -578,19 +633,200 @@
                         showReport(reportScript, resultFileName, nodeID, shortName);
                     }
                 });
-			}
-			}
-			
+		}	}
+
+            /*
+             * Hack for unescaping HTML strings. From CMS on stackoverflow
+             * at http://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript
+             */
+            function htmlDecode(input){
+              var e = document.createElement('div');
+              e.innerHTML = input;
+              return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+            }
+
+            function addSrcSinkFlowBehavior(id) {
+
+                function escTags(str) {
+                    var tagsToReplace = {
+                        '&': '&amp;',
+                        '<': '&lt;',
+                        '>': '&gt;'
+                    };
+
+                    
+
+                    function replaceTag(tag) {
+                        return tagsToReplace[tag] || tag;
+                    }
+
+                    return str.replace(/[&<>]/g, replaceTag);
+                }
+
+                /* Inner function to create each new table row */
+                function newTableEntries(clines) {
+
+                        if (clines.length < 2) {
+                            console.log("Error: incomplete context");
+                            return;
+                        }
+                        var ctxtSplit = /(.+)~~~(.+)/;
+                        var reSplit = /(.+),(.+)/;
+                        var reEntry = /.*<.* (\S+ .*)>.*<.* (\S+ .*)>.*/;
+                        var sourceline = htmlDecode(clines[0].name);
+                        var sinkline = htmlDecode(clines[1].name);
+
+                        if (!ctxtSplit.test(sourceline)) {
+                            console.log("Error: Regex failure on context parse");
+                            return;
+                        }
+
+                        var source = sourceline.match(ctxtSplit);
+                        var sink = sinkline.match(ctxtSplit);
+
+                        if (!reSplit.test(source[1]) || !reSplit.test(sink[1])) {
+                            console.log("Error: Regex failure on context parse");
+                            return;
+                        }
+
+                        var source_ctxts = source[1].match(reSplit);
+                        var sink_ctxts = sink[1].match(reSplit);
+                        console.log("lengths source "+source_ctxts.length + " sink "+sink_ctxts.length);
+                        var entry = [];
+
+                        var source_files = source[2].split('~');
+                        var sink_files = sink[2].split('~');
+            
+                        for (var i = 1; i <= 2; ++i) {
+                            var sourcem = source_ctxts[i].match(reEntry);
+                            var sinkm = sink_ctxts[i].match(reEntry);
+                            
+                            for (var j = i; j <= 2; ++j) {
+                                entry.push('<tr>');
+                                entry.push('<td'+((source_files[j-1]!=='')?' source="'+source_files[j-1]+'"':'')+'>'+escTags(sourcem[j])+'</td>');
+                                entry.push('<td'+((sink_files[j-1]!=='')?' source="'+sink_files[j-1]+'"':'')+'>'+escTags(sinkm[j])+'</td>');
+                                entry.push('</tr>');
+                            }
+                        }
+                        return entry.join('\n');;
+                
+                }
+
+                $('#'+id).on('opened', function () {
+	                    var $selected = $(this).find('.tree-folder-name').filter ( function () {
+	                    	var flow_regex = /Flow (\d+)/;
+		                    if ($(this).text() == '') {
+		                        return true;
+		                    }
+	                    });
+	                    $selected.parent().find('.icon-plus-sign').parent().html('<i class="icon-eye-open"></i>');
+                });
+
+                // on selected callback. Fuel UX provides selection
+				$('#'+id).on('selected', function (ev, selection) {
+					var $selected = $(this).find('.tree-folder-name').filter ( function () {
+                        if ($(this).text() === selection.info[0].name) {
+                            return true;
+                        }
+                    });
+
+	                var datasource = datasources[id];
+
+	                datasource.data($selected.parent().data(), function (items) {
+	                                var dataarr = items.data;
+	                                var contexts = [];
+	                                for (var i = 0; i < dataarr.length; ++i) {
+	                                    contexts.push(dataarr[i]);
+	                                }
+
+	                                var id = 'centerpane';
+	                                if ($('li.active').length > 0) {
+	                                	id = 'rightside';
+	                                }
+
+	                                if ($('#flowctxttable').length > 0) {
+	                                    $('#flowctxttable').remove();
+	                                }
+
+	                                var table = ['<table class="table table-condensed" id="flowctxttable" style="font-size: small; word-break: break-all; word-wrap: break-word">',
+	                                                '<thead>',
+	                                                     '<th>Source</th>',
+	                                                     '<th>Sink</th>',   
+	                                                '</thead>',
+	                                                '<tbody>'];
+	                                table.push(newTableEntries(contexts));
+	                                table.push('</tbody>');
+	                                table.push('</table>');
+	                                $('#'+id).append(table.join('\n'));
+	                                if (id === 'rightside') {
+	                                	compactFlowCtxtTable($('#'+id+' #flowctxttable'));
+	                                }
+	                                registerCellback();
+
+	                            });
+
+	            	});
+
+                $('#'+id).on('click','i.icon-eye-open, i.icon-eye-close', function() {
+
+	                	var $selected = $(this).parent().parent().find('.tree-folder-name');
+	                	var name = $selected.text();
+	                    var flow_regex = /Flow (\d+)/;
+	                    if (!flow_regex.test(name)) {
+	                        return;
+	                    }
+	                    var num = name.match(flow_regex)[1];
+
+	                    if ($(this)[0].className === 'icon-eye-close') {
+	                        $(this).parent().html('<i class="icon-eye-open"></i>');
+	                        flowSwitches[num-1] = true;
+	                        $('#srcsinkflowhelp').empty();
+	                        $('#srcsinkflowhelp').append('Taint from Flow '+num+' now hightlighted.')
+	                    } else {
+	                        $(this).parent().html('<i class="icon-eye-close"></i>');
+	                        flowSwitches[num-1] = false;
+	                        $('#srcsinkflowhelp').empty();
+	                        $('#srcsinkflowhelp').append('Not hightlighting taint from Flow '+num);
+	                    }
+
+		                var $activeCodeTabs = $('li.active a');
+		                for (var i = 0; i < $activeCodeTabs.length; ++i) {
+		                	var attr = $activeCodeTabs[i].getAttribute('href');
+		                	colorTaint(attr);
+		                }
+
+                	
+	                 });
+
+				$('#'+id).parent().append('<p class="muted"><em id="srcsinkflowhelp">Click a Flow name to show / hide </em></p>');
+            }
+
+            function registerCellback() {
+	            var $cells = $('#flowctxttable td');
+	            $cells.click( function() {
+		            	var source_str = $(this).attr('source');
+		            	if (source_str !== '') {
+			            	var source_splits = source_str.split(' ');
+			            	showSource(source_splits[0],'false',source_splits[1]);
+		            	}
+	            	});
+            }
+
 			<%
 			j = 0;
 			for(Map.Entry<String,String> entry : titleToFileName.entrySet()){
 				String title = entry.getKey();
 				String resultFileName = entry.getValue();
-				if(!title.equals("Source-to-sink Flows")){
+				//if(!title.equals("Source-to-sink Flows")){
 		    %>
 			        setupResultTree('ResultTree<%=j%>', '<%=resultFileName%>');
 			<%
-				}
+                if (title.equals("Source-to-sink Flows")) {
+            %>
+                    addSrcSinkFlowBehavior('ResultTree<%=j%>');
+			<%
+                }
+				//}
 				j++;
 			}
 			%>		

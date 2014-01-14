@@ -45,27 +45,37 @@ public class QueryResults
 			File xmlResult = new File(fileName);
 			Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlResult);
 			XPath xpath = XPathFactory.newInstance().newXPath();
-			tuples = (NodeList) xpath.evaluate("/root/tuple", doc, XPathConstants.NODESET); 
+			tuples = (NodeList) xpath.evaluate("root/*/category", doc, XPathConstants.NODESET); 
 		}catch(Exception e){
 			throw new Error(e);
 		}
 		StringBuilder builder = new StringBuilder();
 		boolean first = true;
+        System.err.println("ATUPLES LENGTH "+tuples.getLength());
 		for(int i = 0; i < tuples.getLength(); i++){
 			Element tuple = (Element) tuples.item(i);
 			List<Element> vals = getChildrenByTagName(tuple, "value");
-			if(vals.size() != 2 && vals.size() != 3) {
-			    throw new RuntimeException("unexpected " + vals.size());
-			}
-			String src = getLabel(vals.get(0));
-			String sink = getLabel(vals.get(1));
-			String weight = vals.size() == 2 ? "0" : getLabel(vals.get(2));
-			if(!first){
-				builder.append(',');
-			} else{
-				first = false;
-			}
-			builder.append(src).append('#').append(sink).append('#').append(weight);
+            System.err.println("TRYING: ");
+            System.err.println("numVals "+vals.size());
+            for (int j = 0; j < vals.size(); ++j)
+                System.err.println("Vals "+vals.get(j));
+            //String src = getLabel(vals.get(0));
+            //String sink = getLabel(vals.get(1));
+            //builder.append(src).append('#').append(sink).append('#');
+            builder.append(getLabel(vals.get(0))).append('#').append("two").append('#').append("three").append('#');
+            builder.append(',');
+			//if(vals.size() != 2 && vals.size() != 3) {
+			//    throw new RuntimeException("unexpected " + vals.size());
+			//}
+			//String src = getLabel(vals.get(0));
+			//String sink = getLabel(vals.get(1));
+			//String weight = vals.size() == 2 ? "0" : getLabel(vals.get(2));
+			//if(!first){
+			//	builder.append(',');
+			//} else{
+			//	first = false;
+			//}
+			//builder.append(src).append('#').append(sink).append('#').append(weight);
 		}
 		return builder.toString();
 	}

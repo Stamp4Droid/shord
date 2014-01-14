@@ -143,16 +143,34 @@ public class Tuple {
 		return this;
 	}
 
-	public final Tuple addValueWithHighlight(SootClass klass, Expr e) {
+
+	public final Tuple addValueWithHighlight(SootClass klass, Expr e)
+	{
 		String srcFile = sourceInfo.filePath(klass);
-		//System.out.println("DEBUG: Tuple source info type 2 " + (sourceInfo instanceof JimpleSourceInfo));
-		//System.out.println("DEBUG: Tuple source path " + srcFile);
 		str = (str != null ? str : "") +
 			"\t<value srcFile=\""+srcFile+
 			"\" lineNum=\""+e.line()+"\""+
 			" type=\"expr\""+
 			">\n" +
 			"\t\t<highlight key=\"taintedVariable\" startpos=\""+e.start()+"\" length=\""+e.length()+"\"/>\n" +
+			"\t\t<label><![CDATA["+e.text()+"]]></label>\n" +
+			"\t</value>\n";
+		return this;
+	}
+
+	public final Tuple addValueWithHighlight(SootClass klass, Expr e, String flows)
+	{
+		String srcFile = sourceInfo.filePath(klass);
+		str = (str != null ? str : "") +
+			"\t<value srcFile=\""+srcFile+
+			"\" lineNum=\""+e.line()+"\""+
+			" type=\"expr\""+
+			">\n" +
+			"\t\t<highlight key=\"taintedVariable\""+
+			" startpos=\""+e.start()+"\""+
+			" length=\""+e.length()+"\""+
+			" flows=\""+flows+"\""+
+			"/>\n" +
 			"\t\t<label><![CDATA["+e.text()+"]]></label>\n" +
 			"\t</value>\n";
 		return this;
