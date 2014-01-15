@@ -64,8 +64,14 @@ public class FlowsReport
 		sinkToIcon.put("SMS", "glyphicon-envelope");
 		sinkToIcon.put("File", "glyphicon-floppy-save");
 
-		Map<String,Set<String>> flows = new HashMap();
+		Map<String,Double> sinkToWeight = new HashMap();
+		sinkToWeight.put("HTTP", 1.0);
+		sinkToWeight.put("Internet", 1.0);
+		sinkToWeight.put("SMS", 1.0);
+		sinkToWeight.put("File", 0.5);
 		
+		Map<String,Set<String>> flows = new HashMap();
+		double pvi = 0.0;
 		for(int i = 0; i < numFlows; i++){
 			Element flowElem = (Element) flowElems.item(i);
 			String src = getLabel(getNthChildByTagName(flowElem, "value", 1));
@@ -112,11 +118,15 @@ public class FlowsReport
 					}
 					String icon = sinkToIcon.get(sinkDesc);
 					fs.add(icon);
+					
+					Double f = sinkToWeight.get(sinkDesc);
+					if(f != null)
+						pvi += f;
 				}
 			}
 		}
 
-		main.startPanel("Privacy Risks");
+		main.startPanel(String.format("Privacy Risk <span class=\"badge badge-important\">%.1f</span>",pvi));
 		main.println("<table class=\"table table-striped table-condensed\">");
 		for(Map.Entry<String,Set<String>> e : flows.entrySet()){
 			StringBuilder builder = new StringBuilder("<tr>");

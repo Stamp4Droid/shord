@@ -289,10 +289,8 @@ public class Main extends JavaAnalysis
 			}
 		}
 		
-		startPanel("System Events");
-		writer.println("<table class=\"table table-striped .table-condensed\">");
-		//writer.println("<tr><th>Event name</th><th>Priority</th></tr>");
-		//writer.println("<tr><th>Event name</th><th>Priority</th></tr>");
+		int count = 0;
+		StringBuilder sb = new StringBuilder();
 		for(Map.Entry<String,Set<Integer>> e : events.entrySet()){
 			String event = e.getKey();
 			Set<Integer> ps = e.getValue();
@@ -309,13 +307,20 @@ public class Main extends JavaAnalysis
 					builder.append(p);
 				}
 				pr = "<span class=\"label label-danger\">"+builder.toString()+"</span>";
+				count++;
 				
 			} else
 				pr = "<span class=\"label label-success\">"+"default"+"</span>";
 			
 			//writer.println(String.format("<tr><td>%s</td><td>%s</td></tr>", event, pr));
-			writer.println(String.format("<tr><td>%s</td><td>%s</td></tr>", event, pr));
+			sb.append(String.format("<tr><td>%s</td><td>%s</td></tr>", event, pr));
 		}
+		
+		startPanel(String.format("Broadcast Events <span class=\"badge badge-important\">%d</span>",count));
+		writer.println("<table class=\"table table-striped .table-condensed\">");
+		//writer.println("<tr><th>Event name</th><th>Priority</th></tr>");
+		//writer.println("<tr><th>Event name</th><th>Priority</th></tr>");
+		writer.println(sb.toString());
 		writer.println("</table>");
 		endPanel();
 	}
