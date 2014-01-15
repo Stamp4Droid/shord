@@ -1,4 +1,4 @@
-package stamp.reporting;
+package stamp.reporting.processor;
 
 import java.util.*;
 import java.io.*;
@@ -18,6 +18,7 @@ import edu.stanford.droidrecord.logreader.analysis.CallValueAnalysis.CallValueRe
 import edu.stanford.droidrecord.logreader.events.info.ParamInfo;
 import edu.stanford.droidrecord.logreader.events.info.MethodInfo;
 import stamp.droidrecordweb.DroidrecordProxyWeb;
+import stamp.reporting.Common;
 
 /* 
    @author Osbert Bastani
