@@ -238,18 +238,22 @@ public class Main extends JavaAnalysis
 				//System.out.println(query);
 				Node node = (Node)
 					xpath.evaluate(query, document, XPathConstants.NODE);
-				Node attr = node.getAttributes().getNamedItem("android:protectionLevel");
+
 				String level = "";
-				if(attr != null){
-					level = attr.getNodeValue();
-					if(level.equals("dangerous"))
-						level = "<span class=\"label label-danger\">"+level+"</span>";
-					else if(level.equals("normal"))
-						level = "<span class=\"label label-success\">"+level+"</span>";
-					else 
-						level = "<span class=\"badge\">"+level+"</span>";
+				if(node == null){
+					level = "<span class=\"label label-warning\">"+"custom"+"</span>";
+				} else {
+					Node attr = node.getAttributes().getNamedItem("android:protectionLevel");
+					if(attr != null){
+						level = attr.getNodeValue();
+						if(level.equals("dangerous"))
+							level = "<span class=\"label label-danger\">"+level+"</span>";
+						else if(level.equals("normal"))
+							level = "<span class=\"label label-success\">"+level+"</span>";
+						else 
+							level = "<span class=\"label label-default\">"+level+"</span>";
+					}
 				}
-				
 				writer.println(String.format("<tr><td>%s</td><td>%s</td></tr>", perm, level));
 			}
 			writer.println("</table>");
