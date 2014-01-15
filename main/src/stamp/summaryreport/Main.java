@@ -231,8 +231,8 @@ public class Main extends JavaAnalysis
 			XPath xpath = XPathFactory.newInstance().newXPath();
 			xpath.setNamespaceContext(new PersonalNamespaceContext());
 			
-			startPanel("Permissions");
-			writer.println("<table class=\"table table-striped table-condensed\">");
+			StringBuilder sb = new StringBuilder();
+			int dangerCount = 0;
 			for(String perm : app.permissions()){
 				String query = "/manifest/permission[@name=\""+perm+"\"]";
 				//System.out.println(query);
@@ -246,16 +246,21 @@ public class Main extends JavaAnalysis
 					Node attr = node.getAttributes().getNamedItem("android:protectionLevel");
 					if(attr != null){
 						level = attr.getNodeValue();
-						if(level.equals("dangerous"))
+						if(level.equals("dangerous")){
 							level = "<span class=\"label label-danger\">"+level+"</span>";
-						else if(level.equals("normal"))
+							dangerCount++;
+						}else if(level.equals("normal"))
 							level = "<span class=\"label label-success\">"+level+"</span>";
 						else 
 							level = "<span class=\"label label-default\">"+level+"</span>";
 					}
 				}
-				writer.println(String.format("<tr><td>%s</td><td>%s</td></tr>", perm, level));
+				sb.append(String.format("<tr><td>%s</td><td>%s</td></tr>", perm, level));
 			}
+
+			startPanel(String.format("Permissions <span class=\"badge badge-important\">%d</span>",dangerCount));
+			writer.println("<table class=\"table table-striped table-condensed\">");
+			writer.println(sb.toString());
 			writer.println("</table>");
 			endPanel();
 		} catch(Exception e){
