@@ -5,7 +5,8 @@ import java.util.*;
 public class IntentFilter
 {
 	public final Set<String> actions = new HashSet();
-	public final Set<String> dataTypes = new HashSet();
+	public final Set<Data> data = new HashSet();
+	public final Set<String> categories = new HashSet();
 	
 	private int priority;
 
@@ -25,9 +26,14 @@ public class IntentFilter
 		actions.add(action);
 	}
 
-	public void addDataType(String dt)
+	public void addData(Data dt)
 	{
-		dataTypes.add(dt);
+		data.add(dt);
+	}
+
+	public void addCategory(String cat)
+	{
+		categories.add(cat);
 	}
 	
 	public boolean isMAIN()
@@ -53,11 +59,11 @@ public class IntentFilter
 		}
 		builder.append("} ");
 
-		builder.append("datatype: {");
-		len = dataTypes.size();
+		builder.append("data: {");
+		len = data.size();
 		i = 0;
-		for(String dt : dataTypes){
-			builder.append(dt);
+		for(Data dt : data){
+			builder.append(dt.toString());
 			if(i < (len-1))
 				builder.append(", ");
 			i++;

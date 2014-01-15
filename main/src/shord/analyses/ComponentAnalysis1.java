@@ -13,6 +13,7 @@ import stamp.analyses.SootUtils;
 import stamp.app.Component;
 import stamp.app.App;
 import stamp.app.IntentFilter;
+import stamp.app.Data;
 
 import chord.project.Chord;
 
@@ -128,8 +129,9 @@ public class ComponentAnalysis1 extends JavaAnalysis
 					domSC.add(act);
 				}
 
-				for(String dt : filter.dataTypes){
-					domSC.add(dt);
+				for(Data dt : filter.data){
+					if(dt.mimeType != null)
+						domSC.add(dt.mimeType);
 				}
 			}
 		}

@@ -40,7 +40,7 @@ import soot.SootClass;
 public class Main extends JavaAnalysis
 {
 	private PrintWriter writer;
-	private App app;
+	App app;
 
 	public void run()
 	{
@@ -77,7 +77,9 @@ public class Main extends JavaAnalysis
 
 			new FlowsReport(this).generate();
 
-			adLib();
+			new ExportReport(this).generate();
+
+			adLib();			
 			strings();
 			reflection();
 			writer.println("</div>");
@@ -141,8 +143,10 @@ public class Main extends JavaAnalysis
 		URIValidator uriv = new URIValidator();
 
 		for(String s : sa.scs){
-			if(s.startsWith("http://") || s.startsWith("https://") || s.startsWith("ftp://") || ipv.validate(s))
-				urls.add(s);
+			if(s.startsWith("http://") || s.startsWith("https://") || s.startsWith("ftp://") || ipv.validate(s)){
+				if(!s.equals("http://") && !s.equals("https://") && !s.equals("ftp://"))
+				   urls.add(s);
+			}
 			else if(uriv.validate(s))
 				uris.add(s);
 		}
@@ -199,6 +203,7 @@ public class Main extends JavaAnalysis
 
 		startPanel("Basic Info");
 		writer.println("<ul>");
+
 		writer.println(String.format("<li><b>Version:</b> %s</li>", app.getVersion()));
 
 		String apkPath = System.getProperty("stamp.apk.path");
@@ -308,7 +313,12 @@ public class Main extends JavaAnalysis
 	
 	void startPanel(String heading)
 	{
-		writer.println("<div class=\"panel panel-info\">"+
+		startPanel(heading, "info");
+	}
+
+	void startPanel(String heading, String panelType)
+	{
+		writer.println(String.format("<div class=\"panel panel-%s\">",panelType)+
 					   "<div class=\"panel-heading\">"+
 					   "<h3 class=\"panel-title\">"+heading+"</h3>"+
 					   "</div>"+

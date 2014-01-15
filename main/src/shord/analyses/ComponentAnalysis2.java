@@ -35,6 +35,7 @@ import stamp.app.Component;
 import stamp.app.Layout;
 import stamp.app.App;
 import stamp.app.IntentFilter;
+import stamp.app.Data;
 
 import chord.project.Chord;
 
@@ -191,8 +192,9 @@ public class ComponentAnalysis2 extends JavaAnalysis
 					relTgtAction.add(comp.name, act);
 				}
 
-				for(String dt : filter.dataTypes){
-					relTgtDataType.add(comp.name, dt);
+				for(Data dt : filter.data){
+					if(dt.mimeType != null)
+						relTgtDataType.add(comp.name, dt.mimeType);
 				}
 			}
 		}

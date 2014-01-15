@@ -1,6 +1,7 @@
 package shord.analyses;
 
 import stamp.app.Component;
+import stamp.app.Data;
 import stamp.app.IntentFilter;
 
 import java.util.*;
@@ -12,7 +13,9 @@ public class SystemComponents
 	{
 		Component gInstallAPK = new Component("INSTALL_APK");
 		IntentFilter filter = new IntentFilter();
-		filter.addDataType("application/vnd.android.package-archive");
+		Data data = new Data();
+		data.mimeType = "application/vnd.android.package-archive";
+		filter.addData(data);
 		gInstallAPK.addIntentFilter(filter);
 		comps.add(gInstallAPK);
 	}

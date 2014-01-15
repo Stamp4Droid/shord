@@ -146,6 +146,8 @@ public class ParseLayout
 	
 	private void mapIdToStringValue(File stringXmlFile)
 	{
+		if(!stringXmlFile.exists())
+			return;
 		try{
 			File tmpFile = File.createTempFile("stamp_android_string_xml", null, null);
 			tmpFile.deleteOnExit();

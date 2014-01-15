@@ -49,6 +49,7 @@ public class ParseManifest
 			String icon = node.getAttributes().getNamedItem("android:icon").getNodeValue();
 			app.setIconPath(icon);
 
+			
 			readComponentInfo();
 			readPermissionInfo();			
 		}catch(Exception e){
@@ -119,15 +120,30 @@ public class ParseManifest
 				//System.out.println(n.getNodeName() + " " + );
 			}			
 			assert name != null : node.getNodeName();
+			
 			Component comp = addComp(new Component(fixName(name), componentType));			
 			setIntentFilters(comp, node);
+
+			boolean exported;
+			Attr attr = ((Element) node).getAttributeNode("android:exported");
+			if(attr != null){
+				if(attr.getValue().equals("true"))
+					exported = true;
+				else if(attr.getValue().equals("false"))
+					exported = false;
+				else
+					throw new RuntimeException("Unexpected exported attribute "+attr.getValue()+" "+name);
+			} else{
+				//http://developer.android.com/guide/topics/manifest/activity-element.html#exported
+				exported = comp.intentFilters.size() != 0;
+			}
+			comp.exported = exported;
 		}
 	}
 
 	private void setIntentFilters(Component comp, Node compNode)
 	{
-		Node ifNode = compNode.getFirstChild();
-		while(ifNode != null){
+		for(Node ifNode = compNode.getFirstChild(); ifNode != null; ifNode = ifNode.getNextSibling()){
 			if(ifNode.getNodeName().equals("intent-filter")){
 				IntentFilter intentFilter = new IntentFilter();
 				comp.addIntentFilter(intentFilter);
@@ -137,19 +153,55 @@ public class ParseManifest
 					intentFilter.setPriority(attr.getValue());
 				}
 				
-				Node actNode = ifNode.getFirstChild();
-				while(actNode != null){
-					if(actNode.getNodeName().equals("action")){
-						Attr actNameNode = ((Element) actNode).getAttributeNode("android:name");
+				Node ifChildNode = ifNode.getFirstChild();
+				while(ifChildNode != null){
+					String nodeName = ifChildNode.getNodeName();
+					if(nodeName.equals("action")){
+						Attr actNameNode = ((Element) ifChildNode).getAttributeNode("android:name");
 						if(actNameNode != null){
 							intentFilter.addAction(actNameNode.getValue());
 						}
+					} else if(nodeName.equals("category")){
+						Attr catNameNode = ((Element) ifChildNode).getAttributeNode("android:name");
+						if(catNameNode != null){
+							intentFilter.addCategory(catNameNode.getValue());
+						}
+					} else if(nodeName.equals("data")){
+						Data data = new Data();
+						intentFilter.addData(data);
+						Attr schemeNode = ((Element) ifChildNode).getAttributeNode("android:scheme");
+						if(schemeNode != null){
+							data.scheme = schemeNode.getValue();
+						}
+						Attr hostNode = ((Element) ifChildNode).getAttributeNode("android:host");
+						if(hostNode != null){
+							data.host = hostNode.getValue();
+						}
+						Attr portNode = ((Element) ifChildNode).getAttributeNode("android:port");
+						if(portNode != null){
+							data.port = portNode.getValue();
+						}
+						Attr pathNode = ((Element) ifChildNode).getAttributeNode("android:path");
+						if(pathNode != null){
+							data.path = pathNode.getValue();
+						}
+						Attr pathPatternNode = ((Element) ifChildNode).getAttributeNode("android:pathPattern");
+						if(pathPatternNode != null){
+							data.pathPattern = pathPatternNode.getValue();
+						}
+						Attr pathPrefixNode = ((Element) ifChildNode).getAttributeNode("android:pathPrefix");
+						if(pathPrefixNode != null){
+							data.pathPrefix = pathPrefixNode.getValue();
+						}
+						Attr mimeTypeNode = ((Element) ifChildNode).getAttributeNode("android:mimeType");
+						if(mimeTypeNode != null){
+							data.mimeType = mimeTypeNode.getValue();
+						}
 					}
-					actNode = actNode.getNextSibling();
+					ifChildNode = ifChildNode.getNextSibling();
 				}
 				
 			}
-			ifNode = ifNode.getNextSibling();
 		}
 	}
 	

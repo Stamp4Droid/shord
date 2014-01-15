@@ -8,6 +8,7 @@ public class Component
 
 	public final String name;
 	public final Type type;
+	public boolean exported = false;
 	public final List<IntentFilter> intentFilters = new ArrayList();
 	public final List<Layout> layouts = new ArrayList();
 
