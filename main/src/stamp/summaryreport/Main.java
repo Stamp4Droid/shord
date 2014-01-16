@@ -11,6 +11,7 @@ import stamp.analyses.StringAnalysis;
 import shord.project.analyses.JavaAnalysis;
 import shord.program.Program;
 
+import chord.util.tuple.object.Pair;
 import chord.project.Chord;
 
 import java.io.File;
@@ -168,7 +169,22 @@ public class Main extends JavaAnalysis
 		for(String s : uris)
 			writer.println(String.format("<li>%s</li>", s));
 		writer.println("</ul>");
-
+		endPanel();
+		
+		startPanel("HTTP Parameters");
+		writer.println("<ul>");
+		for(Map.Entry<Pair<String,Integer>,Set<String>> e : sa.httpParams.entrySet()){
+			Pair<String,Integer> api = e.getKey();
+			Set<String> params = e.getValue();
+			if(params == null)
+				continue;
+			writer.println(String.format("<li>%s %d</li>",api.val0, api.val1));
+			writer.println("<ul>");
+			for(String s : params)
+				writer.println(String.format("<li>%s</li>", s));
+			writer.println("</ul>");
+		}
+		writer.println("</ul>");
 		endPanel();
 	}
 
