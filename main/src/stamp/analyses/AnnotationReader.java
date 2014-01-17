@@ -108,6 +108,44 @@ public class AnnotationReader extends JavaAnalysis
 		relOutLabelRet.save();
 	}
 
+	private String[] split(String line)
+	{
+		String[] tokens = new String[3];
+		int index = line.indexOf(" ");
+		tokens[0] = line.substring(0, index);
+		
+		String delim = "$stamp$stamp$";
+		
+		index++;
+		char c = line.charAt(index);
+		if((c == '$' || c == '!') && line.startsWith(delim, index+1)){
+			int j = line.indexOf(delim, index+2);
+			tokens[1] = c+line.substring(index+1+delim.length(), j);
+			index = j+delim.length();
+			if(line.charAt(index) != ' ')
+				throw new RuntimeException("Cannot parse annotation "+line);
+		} else {
+			int j = line.indexOf(' ', index);
+			tokens[1] = line.substring(index, j);
+			index = j;
+		}
+		
+		index++;		
+		c = line.charAt(index);
+		if(c == '!' && line.startsWith(delim, index+1)){
+			int j = line.indexOf(delim, index+2);
+			tokens[2] = c+line.substring(index+1+delim.length(), j);
+			index = j+delim.length();
+			if(index != line.length())
+				throw new RuntimeException("Cannot parse annotation "+line);
+		} else {
+			assert c != '$';
+			tokens[2] = line.substring(index, line.length());
+		}
+
+		return tokens;
+	}
+
 	private void process(List<String> srcLabels, List<String> sinkLabels, List worklist)
 	{
 		relArgArgTransfer = (ProgramRel) ClassicProject.g().getTrgt("ArgArgTransfer");
@@ -124,7 +162,7 @@ public class AnnotationReader extends JavaAnalysis
 			BufferedReader reader = new BufferedReader(new FileReader(new File(System.getProperty("stamp.out.dir"), "stamp_annotations.txt")));
 			String line = reader.readLine();
 			while(line != null){
-				final String[] tokens = line.split(" ");
+				final String[] tokens = split(line);
 				String chordMethodSig = tokens[0];
 				int atSymbolIndex = chordMethodSig.indexOf('@');
 				String className = chordMethodSig.substring(atSymbolIndex+1);

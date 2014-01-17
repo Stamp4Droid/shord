@@ -5,6 +5,9 @@ import stamp.app.Component;
 import stamp.app.IntentFilter;
 import stamp.app.PersonalNamespaceContext;
 import stamp.util.SHAFileChecksum;
+import stamp.util.IPAddressValidator;
+import stamp.util.URIValidator;
+
 import stamp.analyses.DynamicFeaturesAnalysis;
 import stamp.analyses.StringAnalysis;
 
@@ -20,8 +23,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.xml.*;
 import javax.xml.parsers.*;
@@ -33,6 +34,8 @@ import org.xml.sax.*;
 import java.util.*;
 
 import soot.SootClass;
+
+import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
 
 /**
  * @author Saswat Anand
@@ -57,7 +60,10 @@ public class Main extends JavaAnalysis
 			writer.println("<html>");
 			writer.println("<head>");
 			writer.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
-			writer.println("<link rel=\"stylesheet\" media=\"all\" href=\"http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css\">");
+			writer.println(String.format("<link rel=\"stylesheet\" media=\"all\" href=\"%s\">",
+										 System.getProperty("stamp.dir")+"/dist/css/bootstrap.css"));
+
+ http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"));
 
 			writer.println("<style>");
 			writer.println(".badge-important{background-color:#b94a48;}");
@@ -172,19 +178,27 @@ public class Main extends JavaAnalysis
 		endPanel();
 		
 		startPanel("HTTP Parameters");
-		writer.println("<ul>");
+		writer.println("<div class=\"list-group\">");
 		for(Map.Entry<Pair<String,Integer>,Set<String>> e : sa.httpParams.entrySet()){
 			Pair<String,Integer> api = e.getKey();
 			Set<String> params = e.getValue();
 			if(params == null)
 				continue;
-			writer.println(String.format("<li>%s %d</li>",api.val0, api.val1));
-			writer.println("<ul>");
-			for(String s : params)
-				writer.println(String.format("<li>%s</li>", s));
-			writer.println("</ul>");
+			writer.println("<a href=\"#\" class=\"list-group-item\">");
+			writer.println(String.format("<h4 class=\"list-group-item-heading\">%s %d</h4>", escapeHtml4(api.val0), api.val1));
+			StringBuilder sb = new StringBuilder();
+			boolean first = true;
+			for(String s : params){
+				if(first)
+					first = false;
+				else
+					sb.append(" ");
+				writer.println(String.format("\"%s\"", escapeHtml4(s)));
+			}
+			writer.println(String.format("<p class=\"list-group-item-text\">%s</p>", sb.toString()));
+			writer.println("</a>");
 		}
-		writer.println("</ul>");
+		writer.println("</div>");
 		endPanel();
 	}
 
@@ -366,37 +380,3 @@ public class Main extends JavaAnalysis
 	}
 }
 
-
-class IPAddressValidator
-{ 
-    private Pattern pattern;
- 
-    private static final String IPADDRESS_PATTERN = 
-		"^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
-		"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
-		"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
-		"([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
- 
-    public IPAddressValidator(){
-		pattern = Pattern.compile(IPADDRESS_PATTERN);
-    }
- 
-    public boolean validate(final String ip){  
-		return pattern.matcher(ip).matches();        
-    }
-}
-
-class URIValidator
-{ 
-    private Pattern pattern;
- 
-    private static final String URI_PATTERN = "[a-zA-Z]*://.*";
- 
-    public URIValidator(){
-		pattern = Pattern.compile(URI_PATTERN);
-    }
- 
-    public boolean validate(final String ip){  
-		return pattern.matcher(ip).matches();        
-    }
-}
