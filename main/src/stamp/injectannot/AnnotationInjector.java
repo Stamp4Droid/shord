@@ -17,21 +17,11 @@ import java.io.*;
 public class AnnotationInjector extends JavaAnalysis
 {
 	private static boolean alreadyRun = false;
-
-	static abstract class Visitor
-	{
-		private PrintWriter writer;
-		protected abstract void visit(SootClass klass);
-		
-		protected void writeAnnotation(String methSig, String from, String to)
-		{
-			writer.println(methSig + " " + from + " " + to);
-		}
-	}
 	
 	private Class[] visitorClasses = new Class[]{
 		ContentProviderAnnotation.class
 		,NativeMethodAnnotation.class
+		,NetSigAnnotation.class
 	};
 
 	private PrintWriter writer;

@@ -42,7 +42,7 @@ public class Program
 			options.append("-full-resolver");
 			options.append(" -allow-phantom-refs");
 			options.append(" -src-prec apk");
-			options.append(" -p jb.tr use-older-type-assigner:true"); 
+			//options.append(" -p jb.tr use-older-type-assigner:true"); 
 			//options.append(" -p cg implicit-entry:false");
 			options.append(" -force-android-jar "+System.getProperty("user.dir"));
 			options.append(" -soot-classpath "+System.getProperty("stamp.android.jar")+File.pathSeparator+System.getProperty("chord.class.path"));
