@@ -132,15 +132,6 @@
         <antcall target="-log-available-dynanalyze"/>
       </then>
       <else>
-        <input message="Missing DroidRecord trace information. Do you want to run the instrumented app now to generate a droidrecord.log file?"
-               validargs="y,n"
-               addproperty="stamp.droidrecord.dorun"/>
-        <if>
-          <equals arg1="${stamp.droidrecord.dorun}" arg2="n" />
-          <then>
-            <fail message="Dynamic analysis information is only available if a trace has been generated for the app and saved to [app_dir]/sdcard/droidrecord.log." />
-          </then>
-        </if>
         <antcall target="auto-droidrecord-run" />
         <antcall target="-log-available-dynanalyze" />
       </else>
@@ -354,10 +345,13 @@
             	failonerror="true">
                 <arg line="${stamp.dynamic.device.arg} install -r ${stamp.droidrecord.out.apk}"/>
             </exec>
+            <exec executable="sh" outputproperty="stamp.droidrecord.packagenames">
+                <arg value="-c" />
+                <arg value="${stamp.android.buildtools.dir}/dexdump -l xml ${app} | grep package\ name | sed &quot;s/&lt;package name=\&quot;/-p /&quot; |sed &quot;s/\&quot;//&quot; | tr &apos;\n&apos; &apos; &apos;" />
+            </exec>
             <exec executable="adb"
-                spawn="false"
-                failonerror="true"> <!-- TODO change this for non-debug to false -->
-		<arg line="${stamp.dynamic.device.arg} shell monkey -v"/>
+                spawn="false">
+		<arg line="${stamp.dynamic.device.arg} shell monkey ${stamp.droidrecord.packagenames} -v 1000" />
 	    </exec>
         </then>
         <else>
@@ -367,8 +361,6 @@
             </ant>
         </else>
     </if>
-    <input message="Use the app inside the emulator to produce a DroidRecord trace log. Enter 'd' once you are done:"
-           validargs="D,d"/>
     <mkdir dir="${stamp.droidrecord.logdir}"/>
     <exec executable="adb"
       spawn="false"
