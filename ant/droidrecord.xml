@@ -5,6 +5,7 @@
     
     <property name="stamp.droidrecord.cmd.readlog" value="${stamp.dir}/droidrecord/droidrecord-readlog" />
     <property name="stamp.dynamic.device.arg" value="" />
+    <property name="stamp.droidrecord.auto.avdname" value="stampdevice" />
     <property name="stamp.android.buildtools.dir" value="/opt/android-sdk-linux/build-tools/19.0.0/" />
   
     <target name="-android-project-update">
@@ -332,6 +333,25 @@
         	 inheritAll="false" useNativeBasedir="true"/>
         </else>
     </if>
+	<exec executable="adb" outputproperty="stamp.droidrecord.adbstate">
+	    <arg line="get-state" />
+	</exec>
+	<if>
+	    <equals arg1="${stamp.droidrecord.adbstate}" arg2="device" />
+	    <then>
+                <fail message="An Emulator is already running. Is it capturing network traffic? If not, close the emulator and re-run auto-dynanalyze" />
+            </then>
+	    <else>
+        	<exec executable="emulator"
+		  spawn="true">
+                    <arg line="-tcpdump ${droidrecord.out.dir}/net_capture.cap -avd ${stamp.droidrecord.auto.avdname}" /> 
+		</exec>
+		<exec executable="adb">
+		    <arg line="wait-for-device" />
+		</exec>
+		<sleep seconds="60" /> <!-- this should wait for am to respond instead, but while-loops are a pain in ant w/o parallel builds (waitfor)-->
+            </else>
+        </if>
 	<exec executable="adb"
       spawn="false"
 	  failonerror="true">
