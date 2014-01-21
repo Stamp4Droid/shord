@@ -273,7 +273,8 @@ public abstract class Relation {
 
 		@Override
 		public boolean filter(int[] tuple, StubModelSet stubModelSet) {
-			return stubModelSet.get(this.getStubLookupValueFromTuple(tuple)) != ModelType.FALSE;
+			//return stubModelSet.get(this.getStubLookupValueFromTuple(tuple)) != ModelType.FALSE;
+			return true;
 		}
 	}
 }

@@ -17,6 +17,7 @@ import shord.project.ClassicProject;
 import soot.Local;
 import soot.SootMethod;
 import stamp.analyses.DomCL;
+import stamp.analyses.DomL;
 import stamp.missingmodels.analysis.JCFLSolverRunner.RelationAdder;
 import stamp.missingmodels.util.Relation.IndexRelation;
 import stamp.missingmodels.util.Relation.StubIndexRelation;
@@ -109,12 +110,17 @@ public class ConversionUtils {
 		relations.add("prim2PrimF", new IndexRelation("Prim2PrimF", "U", 1, 0, "U", 2, 0));
 
 		// pt: phantom points
-		relations.add("ptG", new IndexRelation("phpt", "V", 1, 0, "V", 3, 2));
+		relations.add("ptG", new IndexRelation("phpt", "V", 1, 0, "V", 2, 3));
 		
 		// pt: pt, fptArr
 		relations.add("ptG", new IndexRelation("pt", "V", 1, 0, "O", 2, null));
 		relations.add("ptH", new IndexRelation("pt", "V", 1, 0, "O", 2, null));
 		relations.add("fptArr", new IndexRelation("fptArr", "O", 0, null, "O", 1, null));
+
+		// field: phantom fpt
+		relations.add("fpt", new IndexRelation("fptph", "O", 0, null, "V", 2, 3, 1));
+		relations.add("fpt", new IndexRelation("fphpt", "V", 0, 1, "O", 3, null, 2));
+		relations.add("fpt", new IndexRelation("fphptph", "V", 0, 1, "V", 3, 4, 2));
 		
 		// field: fpt
 		relations.add("fpt", new IndexRelation("fpt", "O", 0, null, "O", 2, null, 1));
@@ -203,6 +209,10 @@ public class ConversionUtils {
 				// STEP 2a: if it is a label, then get the string
 				DomCL dom = (DomCL)ClassicProject.g().getTrgt("CL");
 				tokens[1] = dom.get(Integer.parseInt(tokens[1])).val0;
+			} else if(tokens[0].equals("L")) {
+				// STEP 2a: if it is a label, then get the string
+				DomL dom = (DomL)ClassicProject.g().getTrgt("L");
+				tokens[1] = dom.get(Integer.parseInt(tokens[1]));
 			} else if(tokens[0].equals("V") || tokens[0].equals("U")) {
 				System.out.println("here3");
 				// STEP 2b: if it is a variable, then get the variable and method information

@@ -153,23 +153,23 @@ public class Main
 		return false;
 	}
     
-    private static Set<Pair<String,String>> fakeStubs = null;
-    private static boolean isFakeStub(String typeSig, String methSig) 
-	{
-		if(fakeStubs == null) {
-			fakeStubs = new HashSet<Pair<String,String>>();
-			try {
-				BufferedReader br = new BufferedReader(new FileReader("fake_stubs.txt"));
-				String line;
-				while((line = br.readLine()) != null) {
-					String[] tokens = line.split(" ");
-					if(tokens.length != 2) continue;
-					fakeStubs.add(new Pair<String,String>(tokens[0], tokens[1]));
-					log.println("adding fake stub " + tokens[0] + " " + tokens[1]);
-				}
-			} catch(IOException e) { System.out.println("WARN: fake_stubs.txt not found"); }
+    private static Set<String> fakeStubs = null;
+    private static boolean isFakeStub(String typeSig, String methSig) {
+	if(fakeStubs == null) {
+	    String stampDir = System.getProperty("stamp.dir");
+	    fakeStubs = new HashSet<String>();
+	    try {
+		BufferedReader br = new BufferedReader(new FileReader(stampDir + File.separator + "fake_stubs.txt"));
+		String line;
+		while((line = br.readLine()) != null) {
+		    String[] tokens = line.split(" ");
+		    if(tokens.length != 2) continue;
+		    fakeStubs.add(tokens[0] + " " + tokens[1]);
+		    System.out.println("adding fake stub " + tokens[0] + " " + tokens[1]);
 		}
-		return fakeStubs.contains(new Pair<String,String>(typeSig, methSig));
+	    } catch(IOException e) { System.out.println("WARN: fake_stubs.txt not found"); }
+	}
+	return fakeStubs.contains(typeSig + " " + methSig);
     }
 	
     private static boolean patch(TypeDeclaration modelType, TypeDeclaration stubType) 
@@ -202,9 +202,11 @@ public class Main
 				BodyDeclaration stubMethod = methSigToStubMethod.get(modelMethSig);
 				if(isFakeStub(typeSig, modelMethSig)) {
 					if(stubMethod != null) {
+						System.out.println("ignoring model method " + typeSig + " " + modelMethSig);
 						log.println("ignoring model method " + typeSig + " " + modelMethSig);
 						continue;
 					} else {
+						System.out.println("refusing to ignore critical model method " + typeSig + " " + modelMethSig);
 						log.println("refusing to ignore critical model method " + typeSig + " " + modelMethSig);
 					}
 				}

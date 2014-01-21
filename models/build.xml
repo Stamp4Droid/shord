@@ -89,6 +89,7 @@
 			  <arg value="gen"/>
 			  <arg value="../src"/>
 			  <arg value="bak"/>
+			  <sysproperty key="stamp.dir" value="${stamp.dir}"/>
 			</java>
 			
 			<!-- generate the list of stubs -->
