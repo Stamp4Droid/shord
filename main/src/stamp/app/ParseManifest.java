@@ -46,8 +46,10 @@ public class ParseManifest
 			//find icon path
 			node = (Node)
 				xpath.evaluate("/manifest/application", document, XPathConstants.NODE);
-			String icon = node.getAttributes().getNamedItem("android:icon").getNodeValue();
-			app.setIconPath(icon);
+			if(node.getAttributes().getNamedItem("android:icon") != null) {
+                String icon = node.getAttributes().getNamedItem("android:icon").getNodeValue();
+                app.setIconPath(icon);
+            }
 
 			
 			readComponentInfo();
