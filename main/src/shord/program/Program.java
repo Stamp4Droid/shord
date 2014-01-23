@@ -9,6 +9,8 @@ import soot.jimple.toolkits.callgraph.ReachableMethods;
 import soot.jimple.toolkits.pointer.DumbPointerAnalysis;
 import soot.jimple.toolkits.callgraph.CallGraphBuilder;
 import soot.tagkit.Tag;
+import soot.toolkits.scalar.LocalSplitter;
+import soot.dexpler.DalvikThrowAnalysis;
 
 import java.util.*;
 import java.io.*;
@@ -75,6 +77,17 @@ public class Program
 
 
 			Scene.v().loadDynamicClasses();
+
+			LocalSplitter localSplitter = new LocalSplitter(DalvikThrowAnalysis.v());
+
+			for(SootClass klass : Scene.v().getClasses()){
+				for(SootMethod meth : klass.getMethods()){
+					if(!meth.isConcrete())
+						continue;
+					localSplitter.transform(meth.retrieveActiveBody());
+				}
+			}
+
         } catch (Exception e) {
 			throw new Error(e);
         }

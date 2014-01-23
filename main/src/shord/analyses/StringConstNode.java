@@ -26,4 +26,16 @@ public class StringConstNode extends GlobalAllocNode
 	{
 		return "StringConst$" + value; 
 	}
+	
+	public boolean equals(Object other)
+	{
+		if(!(other instanceof StringConstNode))
+			return false;
+		return value.equals(((StringConstNode) other).value);
+	}
+	
+	public int hashCode()
+	{
+		return value.hashCode();
+	}
 }

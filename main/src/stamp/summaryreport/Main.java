@@ -61,9 +61,10 @@ public class Main extends JavaAnalysis
 			writer.println("<head>");
 			writer.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
 			writer.println(String.format("<link rel=\"stylesheet\" media=\"all\" href=\"%s\">",
-										 System.getProperty("stamp.dir")+"/dist/css/bootstrap.css"));
+										 //System.getProperty("stamp.dir")+"/dist/css/bootstrap.css")
 
- http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"));
+										 "http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
+            ));
 
 			writer.println("<style>");
 			writer.println(".badge-important{background-color:#b94a48;}");
@@ -86,7 +87,10 @@ public class Main extends JavaAnalysis
 
 			new ExportReport(this).generate();
 
-			adLib();			
+			adLib();
+
+			new HttpParamsReport(this).generate();
+
 			strings();
 			reflection();
 			writer.println("</div>");
@@ -140,7 +144,7 @@ public class Main extends JavaAnalysis
 
 	private void strings()
 	{
-		StringAnalysis sa = new StringAnalysis();
+		StringScan sa = new StringScan();
 		sa.analyze();
 
 		List<String> urls = new ArrayList();
@@ -176,32 +180,7 @@ public class Main extends JavaAnalysis
 			writer.println(String.format("<li>%s</li>", s));
 		writer.println("</ul>");
 		endPanel();
-		
-		startPanel("HTTP Parameters");
-		writer.println("<div class=\"list-group\">");
-		for(Map.Entry<Pair<String,Integer>,Set<String>> e : sa.httpParams.entrySet()){
-			Pair<String,Integer> api = e.getKey();
-			Set<String> params = e.getValue();
-			if(params == null)
-				continue;
-			writer.println("<a href=\"#\" class=\"list-group-item\">");
-			writer.println(String.format("<h4 class=\"list-group-item-heading\">%s %d</h4>", escapeHtml4(api.val0), api.val1));
-			StringBuilder sb = new StringBuilder();
-			boolean first = true;
-			for(String s : params){
-				if(first)
-					first = false;
-				else
-					sb.append(" ");
-				writer.println(String.format("\"%s\"", escapeHtml4(s)));
-			}
-			writer.println(String.format("<p class=\"list-group-item-text\">%s</p>", sb.toString()));
-			writer.println("</a>");
-		}
-		writer.println("</div>");
-		endPanel();
 	}
-
 
 	private void reflection()
 	{

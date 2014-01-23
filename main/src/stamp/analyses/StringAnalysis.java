@@ -4,7 +4,6 @@ import soot.SootClass;
 import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
-import soot.ValueBox;
 import soot.Scene;
 import soot.Local;
 import soot.jimple.Stmt;
@@ -18,61 +17,87 @@ import soot.toolkits.scalar.SimpleLocalDefs;
 
 import chord.util.tuple.object.Pair;
 
+import shord.project.analyses.JavaAnalysis;
+import shord.project.analyses.ProgramRel;
+import shord.project.analyses.ProgramDom;
+import shord.project.ClassicProject;
 import shord.program.Program;
-import stamp.srcmap.sourceinfo.abstractinfo.AbstractSourceInfo;
+
+import chord.project.Chord;
 
 import java.util.*;
 
-public class StringAnalysis
+@Chord(name = "string-java",
+	   produces = {"HttpMeth"},
+	   namesOfSigns = {"HttpMeth"},
+	   signs = {"M0,Z0:M0_Z0"})
+public class StringAnalysis extends JavaAnalysis
 {
-	public final Set<String> scs = new HashSet();
-	public final Map<Pair<String,Integer>,Set<String>> httpParams = new HashMap();
-	
-	public void analyze()
-	{
-		Iterator mIt = Program.g().scene().getReachableMethods().listener();
-		while(mIt.hasNext()){
-			SootMethod m = (SootMethod) mIt.next();
-			if(!m.isConcrete())
-				continue;
-			SootClass declKlass = m.getDeclaringClass();
-			if(AbstractSourceInfo.isFrameworkClass(declKlass))
-				continue;
-
-			for(ValueBox vb : m.retrieveActiveBody().getUseBoxes()){
-				Value val = vb.getValue();
-				if(!(val instanceof StringConstant))
-					continue;
-				String str = ((StringConstant) val).value;
-				scs.add(str);
-			}
-		}
-		
+	public void run()
+	{		
 		Scene scene = Program.g().scene();
 		CallGraph cg = scene.getCallGraph();
 
-		List<Pair<String,Integer>> httpHeaderMeths = new ArrayList();
-		httpHeaderMeths.add(new Pair("<org.apache.http.client.methods.HttpGet: void addHeader(java.lang.String,java.lang.String)>", 0));
-		httpHeaderMeths.add(new Pair("<org.apache.http.client.methods.HttpGet: void addHeader(java.lang.String,java.lang.String)>", 1));
-		httpHeaderMeths.add(new Pair("<org.apache.http.client.methods.HttpPost: void addHeader(java.lang.String,java.lang.String)>", 0));
-		httpHeaderMeths.add(new Pair("<org.apache.http.client.methods.HttpPost: void addHeader(java.lang.String,java.lang.String)>", 1));
-		httpHeaderMeths.add(new Pair("<org.apache.http.message.BasicHeader: void <init>(java.lang.String,java.lang.String)>", 0));
-		httpHeaderMeths.add(new Pair("<org.apache.http.message.BasicHeader: void <init>(java.lang.String,java.lang.String)>", 1));
-		
-		httpHeaderMeths.add(new Pair("<org.apache.http.params.DefaultedHttpParams: org.apache.http.params.HttpParams setParameter(java.lang.String,java.lang.Object)>", 0));
-		httpHeaderMeths.add(new Pair("<org.apache.http.params.BasicHttpParams: org.apache.http.params.HttpParams setParameter(java.lang.String,java.lang.Object)>", 0));
-		httpHeaderMeths.add(new Pair("<org.apache.http.params.AbstractHttpParams: org.apache.http.params.HttpParams setBooleanParameter(java.lang.String,boolean)>", 0));
-		httpHeaderMeths.add(new Pair("<org.apache.http.params.AbstractHttpParams: org.apache.http.params.HttpParams setDoubleParameter(java.lang.String,double)>", 0));
-		httpHeaderMeths.add(new Pair("<org.apache.http.params.AbstractHttpParams: org.apache.http.params.HttpParams setIntParameter(java.lang.String,int)>", 0));
-		httpHeaderMeths.add(new Pair("<org.apache.http.params.AbstractHttpParams: org.apache.http.params.HttpParams setLongParameter(java.lang.String,long)>", 0));
+		Map<String,Object> httpHeaderMeths = new HashMap();
 
-        httpHeaderMeths.add(new Pair("<org.apache.http.params.HttpProtocolParams: void setUserAgent(org.apache.http.params.HttpParams,java.lang.String)>", 1));
-        httpHeaderMeths.add(new Pair("<org.apache.http.params.HttpProtocolParamBean: void setUserAgent(java.lang.String)>", 0));
-        httpHeaderMeths.add(new Pair("<android.webkit.WebSettings: void setUserAgentString(java.lang.String)>", 0));
+		httpHeaderMeths.put("<org.apache.http.client.methods.HttpGet: void addHeader(java.lang.String,java.lang.String)>", 
+							new int[]{1, 2});
 
-		httpHeaderMeths.add(new Pair("<org.apache.http.message.BasicNameValuePair: void <init>(java.lang.String,java.lang.String)>", 0));
-		httpHeaderMeths.add(new Pair("<org.apache.http.message.BasicNameValuePair: void <init>(java.lang.String,java.lang.String)>", 1));
+		httpHeaderMeths.put("<org.apache.http.client.methods.HttpPost: void addHeader(java.lang.String,java.lang.String)>", 
+							new int[]{1, 2});
 
+		httpHeaderMeths.put("<org.apache.http.message.BasicHeader: void <init>(java.lang.String,java.lang.String)>", 
+							new int[]{1, 2});
+
+		httpHeaderMeths.put("<org.apache.http.params.DefaultedHttpParams: org.apache.http.params.HttpParams setParameter(java.lang.String,java.lang.Object)>", 
+							new int[]{1, 2});
+
+		httpHeaderMeths.put("<org.apache.http.params.BasicHttpParams: org.apache.http.params.HttpParams setParameter(java.lang.String,java.lang.Object)>",
+							new int[]{1, 2});
+
+		httpHeaderMeths.put("<org.apache.http.params.AbstractHttpParams: org.apache.http.params.HttpParams setBooleanParameter(java.lang.String,boolean)>", 
+							new int[]{1});
+
+		httpHeaderMeths.put("<org.apache.http.params.AbstractHttpParams: org.apache.http.params.HttpParams setDoubleParameter(java.lang.String,double)>", 
+							new int[]{1});
+
+		httpHeaderMeths.put("<org.apache.http.params.AbstractHttpParams: org.apache.http.params.HttpParams setIntParameter(java.lang.String,int)>",
+							new int[]{1});
+
+		httpHeaderMeths.put("<org.apache.http.params.AbstractHttpParams: org.apache.http.params.HttpParams setLongParameter(java.lang.String,long)>",
+							new int[]{1});
+
+        		             
+        httpHeaderMeths.put("<org.apache.http.params.HttpProtocolParams: void setUserAgent(org.apache.http.params.HttpParams,java.lang.String)>",
+							new int[]{1});
+
+        httpHeaderMeths.put("<org.apache.http.params.HttpProtocolParamBean: void setUserAgent(java.lang.String)>", 
+							new int[]{1});
+
+        httpHeaderMeths.put("<android.webkit.WebSettings: void setUserAgentString(java.lang.String)>", 
+							new int[]{1});
+
+		httpHeaderMeths.put("<org.apache.http.message.BasicNameValuePair: void <init>(java.lang.String,java.lang.String)>", 
+							new int[]{1, 2});
+
+
+		ProgramRel relHttpMeth = (ProgramRel) ClassicProject.g().getTrgt("HttpMeth");
+		relHttpMeth.zero();
+
+		for(Map.Entry<String,Object> pair : httpHeaderMeths.entrySet()){
+			String mSig = pair.getKey();
+			if(!scene.containsMethod(mSig))
+				continue;
+			SootMethod m = scene.getMethod(mSig);
+			int[] paramIndices = (int[]) pair.getValue();
+			for(int paramIndex : paramIndices){
+				relHttpMeth.add(m, new Integer(paramIndex));
+			}
+		}
+
+		relHttpMeth.save();
+
+		/*
 		for(Pair<String,Integer> pair : httpHeaderMeths){
 			String mSig = pair.val0;
 			if(!scene.containsMethod(mSig))
@@ -121,5 +146,6 @@ public class StringAnalysis
 				}
 			}
 		}
+		*/
 	}
 }
