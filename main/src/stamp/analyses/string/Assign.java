@@ -13,4 +13,17 @@ public class Assign implements Statement
 		this.left = left;
 		this.right = right;
 	}	
+	
+	public boolean equals(Object other)
+	{
+		if(!(other instanceof Assign))
+			return false;
+		Assign as = (Assign) other;
+		return right.equals(as.right) && left.equals(as.left);
+	}
+	
+	public int hashCode()
+	{
+		return right.hashCode()+left.hashCode();
+	}
 }

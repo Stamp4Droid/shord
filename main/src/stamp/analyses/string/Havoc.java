@@ -10,4 +10,16 @@ public class Havoc implements Statement
 	{
 		this.local = local;
 	}
+
+	public boolean equals(Object other)
+	{
+		if(!(other instanceof Havoc))
+			return false;
+		return local.equals(((Havoc) other).local);
+	}
+	
+	public int hashCode()
+	{
+		return local.hashCode();
+	}
 }

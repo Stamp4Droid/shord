@@ -15,4 +15,17 @@ public class Concat implements Statement
 		this.right1 = right1;
 		this.right2 = right2;
 	}
+
+	public boolean equals(Object other)
+	{
+		if(!(other instanceof Concat))
+			return false;
+		Concat c = (Concat) other;
+		return right1.equals(c.right1) && right2.equals(c.right2) && left.equals(c.left);
+	}
+	
+	public int hashCode()
+	{
+		return right1.hashCode()+right2.hashCode()+left.hashCode();
+	}
 }

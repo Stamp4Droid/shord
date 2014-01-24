@@ -43,7 +43,10 @@ public class MyLocalDefs
 			   mSig.equals("<java.lang.StringBuffer: void <init>(java.lang.String)>") ||
 			   mSig.equals("<java.lang.String: void <init>(java.lang.String)>") ||
 			   mSig.equals("<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>") ||
-			   mSig.equals("<java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)>")){
+			   mSig.equals("<java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)>") ||
+			   mSig.equals("<java.lang.StringBuilder: void <init>()>") ||
+			   mSig.equals("<java.lang.StringBuffer: void <init>()>") ||
+			   mSig.equals("<java.lang.String: void <init>()>")){
 				Local base = (Local) ((InstanceInvokeExpr) ie).getBase();
 				addDef(base, stmt);
 			}
