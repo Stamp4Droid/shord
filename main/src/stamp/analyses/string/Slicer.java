@@ -18,6 +18,13 @@ import soot.jimple.InstanceFieldRef;
 import soot.jimple.StaticFieldRef;
 import soot.jimple.ArrayRef;
 
+import shord.analyses.VarNode;
+import shord.analyses.LocalVarNode;
+import shord.analyses.DomV;
+import shord.project.ClassicProject;
+import shord.project.analyses.ProgramRel;
+
+import chord.bddbddb.Rel.RelView;
 import chord.util.tuple.object.Pair;
 
 import java.util.*;
@@ -33,6 +40,12 @@ public class Slicer
 	private List<Local> mLocalList;
 	private SootMethod m;
 
+	private Map<Local,LocalVarNode> localToNode = new HashMap();
+
+
+	private ProgramRel relIM;
+	private ProgramRel relIpt;
+
 	public Slicer()
 	{
 	}
@@ -44,6 +57,8 @@ public class Slicer
 	
 	public void generate()
 	{
+		init();
+
 		for(Pair<Local,SootMethod> p : seeds)
 			workList.add(p);
 
@@ -55,6 +70,8 @@ public class Slicer
 
 			visit(m, l);			
 		}
+
+		finish();
 	}
 	
 	private void visit(SootMethod method, Local l)
@@ -126,8 +143,9 @@ public class Slicer
 				Immediate arg = (Immediate) ie.getArg(index);
 				s = new Assign(arg, local);
 				if(arg instanceof Local){
-					SootMethod caller = containerMethodFor(callsite);
-					workList.add(new Pair((Local) arg, caller));
+					Local loc = (Local) arg;
+					SootMethod containerMethod = containerMethodFor(loc);
+					workList.add(new Pair(loc, containerMethod));
 				}
 			}
 		} if(rightOp instanceof InstanceFieldRef){
@@ -187,26 +205,47 @@ public class Slicer
 		return s;
 	}
 
+	private void init()
+	{
+        DomV domV = (DomV) ClassicProject.g().getTrgt("V");
+        for(VarNode node : domV){
+			if(!(node instanceof LocalVarNode))
+				continue;
+			Local local = ((LocalVarNode) node).local;
+			localToNode.put(local, (LocalVarNode) node);
+		}
+		
+		relIM = (ProgramRel) ClassicProject.g().getTrgt("ci_IM");
+		relIpt = (ProgramRel) ClassicProject.g().getTrgt("ci_pt");		
+	}
+
+	private void finish()
+	{
+		relIM.close();
+		relIpt.close();
+	}
+
 	private Iterable<Object> callsitesFor(SootMethod meth) 
 	{
-        //RelView view = relIM.getView();
-        //view.selectAndDelete(1, meth);
-        //return view.getAry1ValTuples();
-		return null;
-    }
-
-	private SootMethod containerMethodFor(Stmt invokeStmt) 
-	{
-		return null;
+		RelView viewIM = relIM.getView();
+        viewIM.selectAndDelete(1, meth);
+        return viewIM.getAry1ValTuples();
     }
 
 	private SootMethod containerMethodFor(Local local) 
 	{
-		return null;
+		return localToNode.get(local).meth;
     }
 	
 	private Iterable<Immediate> findAlias(Local local, SootField f)
 	{
+		/*
+		VarNode vn = localToNode.get(local);
+		RelView viewIpt = relIpt.getView();
+		viewIM.
+
+		Iterable<Object> vir
+		*/
 		return null;
 	}
 	
