@@ -7,7 +7,7 @@ public class Concat implements Statement
 {
 	final Immediate right1;
 	final Immediate right2;
-	final Immediate left;
+	final Local left;
 
 	public Concat(Immediate right1, Immediate right2, Local left)
 	{

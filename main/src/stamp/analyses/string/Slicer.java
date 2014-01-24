@@ -7,6 +7,7 @@ import soot.Value;
 import soot.SootField;
 import soot.Unit;
 
+import soot.jimple.StringConstant;
 import soot.jimple.Stmt;
 import soot.jimple.DefinitionStmt;
 import soot.jimple.InvokeExpr;
@@ -18,7 +19,9 @@ import soot.jimple.InstanceFieldRef;
 import soot.jimple.StaticFieldRef;
 import soot.jimple.ArrayRef;
 
+import shord.program.Program;
 import shord.analyses.VarNode;
+import shord.analyses.AllocNode;
 import shord.analyses.LocalVarNode;
 import shord.analyses.DomV;
 import shord.project.ClassicProject;
@@ -29,49 +32,50 @@ import chord.util.tuple.object.Pair;
 
 import java.util.*;
 
+/*
+  @author Saswat Anand
+*/
 public class Slicer
 {
-	private Set<Pair<Local,SootMethod>> seeds = new HashSet();
-	private List<Pair<Local,SootMethod>> workList = new LinkedList();
+	private List<Pair<Local,SootMethod>> workList;
 
-	private Set<Statement> slice = new HashSet();
-	private Set<Local> visited = new HashSet();
+	private Set<Statement> slice;
+	private Set<Local> visited;
 
 	private List<Local> mLocalList;
 	private SootMethod m;
 
 	private Map<Local,LocalVarNode> localToNode = new HashMap();
 
-
 	private ProgramRel relIM;
 	private ProgramRel relIpt;
 
+	private Map<SootField,List<Pair<Local,Immediate>>> fieldToInstanceStores = new HashMap();
+	private Map<SootField,List<Immediate>> fieldToStaticStores = new HashMap();
+
 	public Slicer()
 	{
-	}
-	
-	public void addSeed(Local l, SootMethod m)
-	{
-		seeds.add(new Pair(l,m));
-	}
-	
-	public void generate()
-	{
 		init();
+	}
+		
+	public void generate(Local l, SootMethod m)
+	{
+		this.workList = new LinkedList();
+		this.slice = new HashSet();
+		this.visited = new HashSet();
+		this.mLocalList = null;
+		this.m = null;
 
-		for(Pair<Local,SootMethod> p : seeds)
-			workList.add(p);
+		workList.add(new Pair(l,m));
 
 		while(!workList.isEmpty()){
 			Pair<Local,SootMethod> p = workList.remove(0);
 
-			Local l = p.val0;
-			SootMethod m = p.val1;
+			Local local = p.val0;
+			SootMethod method = p.val1;
 
-			visit(m, l);			
+			visit(method, local);			
 		}
-
-		finish();
 	}
 	
 	private void visit(SootMethod method, Local l)
@@ -96,8 +100,7 @@ public class Slicer
 					Value rightOp = ds.getRightOp();
 					
 					Statement s = handleDefinitionStmt((Local) leftOp, rightOp);
-					if(s != null)
-						slice.add(s);
+					slice.add(s);
 				}
 				
 				if(!stmt.containsInvokeExpr())
@@ -201,7 +204,9 @@ public class Slicer
 			if(rightOp instanceof Local)
 				mLocalList.add((Local) rightOp);
 		}
-		
+		if(s == null){
+			s = new Havoc(local);
+		}
 		return s;
 	}
 
@@ -216,10 +221,46 @@ public class Slicer
 		}
 		
 		relIM = (ProgramRel) ClassicProject.g().getTrgt("ci_IM");
+		relIM.load();
 		relIpt = (ProgramRel) ClassicProject.g().getTrgt("ci_pt");		
+		relIpt.load();
+
+		Iterator mIt = Program.g().scene().getReachableMethods().listener();
+		while(mIt.hasNext()){
+			SootMethod m = (SootMethod) mIt.next();
+			if(!m.isConcrete())
+				continue;
+			for(Unit unit : m.retrieveActiveBody().getUnits()){
+				Stmt stmt = (Stmt) unit;
+				if(!stmt.containsFieldRef())
+					continue;
+				Value leftOp = ((DefinitionStmt) stmt).getLeftOp();
+				Value rightOp = ((DefinitionStmt) stmt).getRightOp();
+				if(leftOp instanceof InstanceFieldRef){
+					InstanceFieldRef ifr = (InstanceFieldRef) leftOp;
+					Local base = (Local) ifr.getBase();
+					SootField field = ifr.getField();
+					List<Pair<Local,Immediate>> pairs = fieldToInstanceStores.get(field);
+					if(pairs == null){
+						pairs = new ArrayList();
+						fieldToInstanceStores.put(field, pairs);
+					}
+					pairs.add(new Pair(base, (Immediate) rightOp));
+				} else if(leftOp instanceof StaticFieldRef){
+					StaticFieldRef sfr = (StaticFieldRef) leftOp;
+					SootField field = sfr.getField();
+					List<Immediate> imms = fieldToStaticStores.get(field);
+					if(imms == null){
+						imms = new ArrayList();
+						fieldToStaticStores.put(field, imms);
+					}
+					imms.add((Immediate) rightOp);
+				}
+			}
+		}
 	}
 
-	private void finish()
+	public void finish()
 	{
 		relIM.close();
 		relIpt.close();
@@ -239,18 +280,72 @@ public class Slicer
 	
 	private Iterable<Immediate> findAlias(Local local, SootField f)
 	{
-		/*
-		VarNode vn = localToNode.get(local);
-		RelView viewIpt = relIpt.getView();
-		viewIM.
+		//Store(u:V,f:F,v:V)  input   # u.f = v
+		List<Immediate> aliases = new ArrayList();
 
-		Iterable<Object> vir
-		*/
-		return null;
+		VarNode vn = localToNode.get(local);
+		RelView viewIpt1 = relIpt.getView();
+		viewIpt1.selectAndDelete(0, vn);
+		Iterable<AllocNode> os = viewIpt1.getAry1ValTuples();
+	
+		Iterable<Pair<Local,Immediate>> it = fieldToInstanceStores.get(f);
+		for(Pair<Local,Immediate> pair : it){
+			Local base = pair.val0;
+			Immediate alias = pair.val1;
+			
+			//check if base and local can point to a common object
+			VarNode baseNode = localToNode.get(base);
+			RelView viewIpt2 = relIpt.getView();
+			viewIpt2.selectAndDelete(0, baseNode);
+		
+			boolean isAlias = false;
+			for(AllocNode o : os){
+				if(viewIpt2.contains(o)){
+					isAlias = true;
+					break;
+				}
+			}
+		
+			if(isAlias){
+				aliases.add(alias);
+			}
+			viewIpt2.free();
+		}
+		
+		viewIpt1.free();
+		return aliases;
 	}
 	
 	private Iterable<Immediate> findAlias(SootField f)
 	{
-		return null;
+		return fieldToStaticStores.get(f);
+	}
+	
+	public String sliceStr()
+	{
+		StringBuilder sb = new StringBuilder();
+		for(Statement stmt : slice){
+			if(stmt instanceof Assign){
+				sb.append(String.format("assign %s %s\n", ((Assign) stmt).left, ((Assign) stmt).left));
+			} else if(stmt instanceof Concat){
+				Concat concat = (Concat) stmt;
+				sb.append(String.format("concat %s %s %s\n", concat.left, concat.right1, concat.right2));
+			} else if(stmt instanceof Havoc){
+				sb.append(String.format("havoc %s\n", ((Havoc) stmt).local));
+			} else
+				assert false;
+		}
+		return sb.toString();
+	}
+		
+	private String toStr(Immediate i)
+	{
+		if(i instanceof StringConstant)
+			return String.format("\"%s\"", ((StringConstant) i).value);
+		else{
+			Local l = (Local) i;
+			SootMethod m = containerMethodFor(l);
+			return String.format("%s!%s@%s", l.getName(), l.getType().toString(), m.getSignature());
+		}
 	}
 }

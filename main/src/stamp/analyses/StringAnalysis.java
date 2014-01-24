@@ -17,6 +17,8 @@ import soot.toolkits.scalar.SimpleLocalDefs;
 
 import chord.util.tuple.object.Pair;
 
+import stamp.analyses.string.Slicer;
+
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
 import shord.project.analyses.ProgramDom;
@@ -35,9 +37,6 @@ public class StringAnalysis extends JavaAnalysis
 {
 	public void run()
 	{		
-		Scene scene = Program.g().scene();
-		CallGraph cg = scene.getCallGraph();
-
 		Map<String,Object> httpHeaderMeths = new HashMap();
 
 		httpHeaderMeths.put("<org.apache.http.client.methods.HttpGet: void addHeader(java.lang.String,java.lang.String)>", 
@@ -48,12 +47,14 @@ public class StringAnalysis extends JavaAnalysis
 
 		httpHeaderMeths.put("<org.apache.http.message.BasicHeader: void <init>(java.lang.String,java.lang.String)>", 
 							new int[]{1, 2});
-
+		
+		/*
 		httpHeaderMeths.put("<org.apache.http.params.DefaultedHttpParams: org.apache.http.params.HttpParams setParameter(java.lang.String,java.lang.Object)>", 
 							new int[]{1, 2});
-
+		
 		httpHeaderMeths.put("<org.apache.http.params.BasicHttpParams: org.apache.http.params.HttpParams setParameter(java.lang.String,java.lang.Object)>",
 							new int[]{1, 2});
+		*/
 
 		httpHeaderMeths.put("<org.apache.http.params.AbstractHttpParams: org.apache.http.params.HttpParams setBooleanParameter(java.lang.String,boolean)>", 
 							new int[]{1});
@@ -84,6 +85,11 @@ public class StringAnalysis extends JavaAnalysis
 		ProgramRel relHttpMeth = (ProgramRel) ClassicProject.g().getTrgt("HttpMeth");
 		relHttpMeth.zero();
 
+		Scene scene = Program.g().scene();
+		CallGraph cg = scene.getCallGraph();
+
+		Slicer slicer = new Slicer();
+
 		for(Map.Entry<String,Object> pair : httpHeaderMeths.entrySet()){
 			String mSig = pair.getKey();
 			if(!scene.containsMethod(mSig))
@@ -93,8 +99,29 @@ public class StringAnalysis extends JavaAnalysis
 			for(int paramIndex : paramIndices){
 				relHttpMeth.add(m, new Integer(paramIndex));
 			}
-		}
 
+			Iterator<Edge> edgeIt = cg.edgesInto(m);
+			while(edgeIt.hasNext()){
+				Edge edge = edgeIt.next();
+				Stmt stmt = edge.srcStmt();
+				SootMethod src = edge.src();
+				InvokeExpr ie = stmt.getInvokeExpr();
+				
+				for(int paramIndex : paramIndices){
+					if(!m.isStatic())
+						paramIndex--;
+					Value arg = ie.getArg(paramIndex);
+					if(arg instanceof StringConstant){
+					} else if(arg instanceof Local){
+						System.out.println("slice for: "+stmt + " in " + src.getSignature() + " for " + arg);
+						slicer.generate((Local) arg, src);
+						System.out.println(slicer.sliceStr());
+					}
+				}
+			}
+
+		}
+		slicer.finish();
 		relHttpMeth.save();
 
 		/*

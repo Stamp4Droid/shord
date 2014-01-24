@@ -6,11 +6,11 @@ import soot.Immediate;
 public class Assign implements Statement
 {
 	final Immediate right;
-	final Immediate left;
+	final Local left;
 
 	public Assign(Immediate right, Local left)
 	{
 		this.left = left;
 		this.right = right;
-	}
+	}	
 }
