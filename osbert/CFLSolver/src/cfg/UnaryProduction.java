@@ -8,4 +8,9 @@ public final class UnaryProduction {
 		this.target = target;
 		this.input = input;
 	}
+	
+	@Override
+	public String toString() {
+		return this.target + " :- " + this.input + ".";
+	}
 }

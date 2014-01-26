@@ -16,10 +16,11 @@ public final class BinaryProduction {
 	}
 	
 	public BinaryProduction(int target, int firstInput, int secondInput) {
-		this.target = target;
-		this.firstInput = firstInput;
-		this.secondInput = secondInput;
-		this.isFirstInputBackwards = false;
-		this.isSecondInputBackwards = false;
+		this(target, firstInput, secondInput, false, false);
+	}
+	
+	@Override
+	public String toString() {
+		return this.target + " :- " + this.firstInput + ", " + this.secondInput + ".";
 	}
 }

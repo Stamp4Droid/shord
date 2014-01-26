@@ -1,20 +1,27 @@
 package graph;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public final class Vertex {
-	public final List[] incomingEdgesByLabel; // list of type Edge
-	public final List[] outgoingEdgesByLabel; // list of type Edge
+	public final String name;
+	public final Set[] incomingEdgesByLabel; // list of type Edge
+	public final Set[] outgoingEdgesByLabel; // list of type Edge
 	
-	public Vertex(int numLabels) {
-		this.incomingEdgesByLabel = new List[numLabels];
+	public Vertex(String name, int numLabels) {
+		this.name = name;
+		this.incomingEdgesByLabel = new Set[numLabels];
 		for(int i=0; i<numLabels; i++) {
-			this.incomingEdgesByLabel[i] = new LinkedList();
+			this.incomingEdgesByLabel[i] = new HashSet();
 		}
-		this.outgoingEdgesByLabel = new List[numLabels];
+		this.outgoingEdgesByLabel = new Set[numLabels];
 		for(int i=0; i<numLabels; i++) {
-			this.outgoingEdgesByLabel[i] = new LinkedList();
+			this.outgoingEdgesByLabel[i] = new HashSet();
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return this.name;
 	}
 }
