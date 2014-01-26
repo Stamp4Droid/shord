@@ -1,4 +1,4 @@
-package graph;
+package stamp.missingmodels.util.cflsolver.graph;
 
 import java.util.HashMap;
 import java.util.LinkedList;

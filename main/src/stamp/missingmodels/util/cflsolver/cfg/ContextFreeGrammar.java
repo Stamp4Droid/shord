@@ -1,4 +1,4 @@
-package cfg;
+package stamp.missingmodels.util.cflsolver.cfg;
 
 import java.util.ArrayList;
 import java.util.List;

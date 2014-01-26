@@ -1,4 +1,4 @@
-package graph;
+package stamp.missingmodels.util.cflsolver.graph;
 
 public final class Edge {
 	public final Vertex source;

@@ -1,8 +1,8 @@
-package main;
+package stamp.missingmodels.util.cflsolver.main;
 
-import graph.Graph;
-import solver.ReachabilitySolver;
-import cfg.ContextFreeGrammar;
+import stamp.missingmodels.util.cflsolver.cfg.ContextFreeGrammar;
+import stamp.missingmodels.util.cflsolver.graph.Graph;
+import stamp.missingmodels.util.cflsolver.solver.ReachabilitySolver;
 
 public class Main {
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package cfg;
+package stamp.missingmodels.util.cflsolver.cfg;
 
 public final class BinaryProduction {
 	public final int target;
