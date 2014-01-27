@@ -1,12 +1,17 @@
 package stamp.missingmodels.util.cflsolver.cfg;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class ContextFreeGrammar {
 	public final List[] unaryProductionsByInput; // list of type UnaryProduction
 	public final List[] binaryProductionsByFirstInput; // list of type BinaryProduction
 	public final List[] binaryProductionsBySecondInput; // list of type BinaryProduction
+	
+	private final Map<String,Integer> labels = new HashMap<String,Integer>();
+	private int curLabel = 0;
 	
 	public ContextFreeGrammar(int numLabels) {
 		this.unaryProductionsByInput = new List[numLabels];
@@ -21,6 +26,27 @@ public final class ContextFreeGrammar {
 		for(int i=0; i<numLabels; i++) {
 			this.binaryProductionsBySecondInput[i] = new ArrayList();
 		}
+	}
+	
+	public int getLabel(String label) {
+		Integer intLabel = this.labels.get(label);
+		if(intLabel == null) {
+			intLabel = this.curLabel++;
+			this.labels.put(label, intLabel);
+		}
+		return intLabel;
+	}
+	
+	public void addUnaryProduction(String target, String input) {
+		this.addUnaryProduction(this.getLabel(target), this.getLabel(input));
+	}
+	
+	public void addBinaryProduction(String target, String firstInput, String secondInput) {
+		this.addBinaryProduction(this.getLabel(target), this.getLabel(firstInput), this.getLabel(secondInput));
+	}
+	
+	public void addBinaryProduction(String target, String firstInput, String secondInput, boolean isFirstinputBackwards, boolean isSecondInputBackwards) {
+		this.addBinaryProduction(this.getLabel(target), this.getLabel(firstInput), this.getLabel(secondInput), isFirstinputBackwards, isSecondInputBackwards);
 	}
 	
 	public void addUnaryProduction(int target, int input) {
