@@ -114,8 +114,13 @@ public class StringAnalysis extends JavaAnalysis
 					if(arg instanceof StringConstant){
 					} else if(arg instanceof Local){
 						System.out.println("slice for: "+stmt + " in " + src.getSignature() + " for " + arg);
-						slicer.generate((Local) arg, src);
-						System.out.println(slicer.sliceStr());
+						Set<String> vals = slicer.evaluate((Local) arg, stmt, src);
+						if(vals == null)
+							System.out.println("vals null!!");
+						else {
+							for(String val : vals)
+								System.out.println("val: "+val);
+						}
 					}
 				}
 			}

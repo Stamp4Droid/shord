@@ -34,6 +34,7 @@ import stamp.srcmap.sourceinfo.abstractinfo.AbstractSourceInfo;
 
 import chord.bddbddb.Rel.RelView;
 import chord.util.tuple.object.Pair;
+import chord.util.tuple.object.Trio;
 
 import java.util.*;
 
@@ -42,12 +43,12 @@ import java.util.*;
 */
 public class Slicer
 {
-	private List<Pair<Local,SootMethod>> workList;
+	private List<Trio<Local,Stmt,SootMethod>> workList;
 
 	private Set<Statement> slice;
-	private Set<Local> visited;
+	private Set<Pair<Local,Stmt>> visited;
 
-	private List<Local> mLocalList;
+	private List<Pair<Local,Stmt>> mLocalList;
 	private SootMethod m;
 
 	private Map<Local,LocalVarNode> localToNode = new HashMap();
@@ -55,15 +56,15 @@ public class Slicer
 	private ProgramRel relIM;
 	private ProgramRel relIpt;
 
-	private Map<SootField,List<Pair<Local,Immediate>>> fieldToInstanceStores = new HashMap();
-	private Map<SootField,List<Immediate>> fieldToStaticStores = new HashMap();
+	private Map<SootField,List<Trio<Local,Stmt,Immediate>>> fieldToInstanceStores = new HashMap();
+	private Map<SootField,List<Pair<Stmt,Immediate>>> fieldToStaticStores = new HashMap();
 
 	public Slicer()
 	{
 		init();
 	}
 		
-	public void generate(Local l, SootMethod m)
+	public void generate(Local l, Stmt s, SootMethod m)
 	{
 		this.workList = new LinkedList();
 		this.slice = new LinkedHashSet();
@@ -71,34 +72,46 @@ public class Slicer
 		this.mLocalList = null;
 		this.m = null;
 
-		workList.add(new Pair(l,m));
+		workList.add(new Trio(l, s, m));
 
 		while(!workList.isEmpty()){
-			Pair<Local,SootMethod> p = workList.remove(0);
+			Trio<Local,Stmt,SootMethod> t = workList.remove(0);
 
-			Local local = p.val0;
-			SootMethod method = p.val1;
+			Local local = t.val0;
+			Stmt stmt = t.val1;
+			SootMethod method = t.val2;
 
-			visit(method, local);			
+			visit(method, stmt, local);			
 		}
+		
+		System.out.println(sliceStr());
 	}
-	
-	private void visit(SootMethod method, Local l)
+
+	public Set<String> evaluate(Local l, Stmt stmt, SootMethod m)
+	{
+		generate(l, stmt, m);
+		Evaluator evaluator = new Evaluator();
+		return evaluator.evaluate(slice, l);
+	}
+
+	private void visit(SootMethod method, Stmt s, Local l)
 	{
 		this.m = method;
 		this.mLocalList = new LinkedList();
-		mLocalList.add(l);
+		mLocalList.add(new Pair(l,s));
 		
-		MyLocalDefs ld = new MyLocalDefs(m.retrieveActiveBody());
-		Set<Local> visited = new HashSet();
+		ReachingDefsAnalysis ld = new ReachingDefsAnalysis(m.retrieveActiveBody());
 
 		while(!mLocalList.isEmpty()){
-			Local local = mLocalList.remove(0);
-			if(visited.contains(local))
+			Pair<Local,Stmt> p = mLocalList.remove(0);
+			if(visited.contains(p))
 				continue;
-			visited.add(local);
+			visited.add(p);
+
+			Local local = p.val0;
+			Stmt useStmt = p.val1;
 			
-			for(Stmt stmt : ld.getDefsOf(local)){
+			for(Stmt stmt : ld.getDefsOf(local, useStmt)){
 				if(stmt instanceof DefinitionStmt){
 					DefinitionStmt ds = (DefinitionStmt) stmt;
 					Value leftOp = ds.getLeftOp();
@@ -126,7 +139,7 @@ public class Slicer
 					Immediate arg = (Immediate) ie.getArg(0);
 					slice.add(new Assign(arg, rcvr));
 					if(arg instanceof Local){
-						mLocalList.add((Local) arg);
+						mLocalList.add(new Pair((Local) arg, stmt));
 					}
 				} else if(mSig.equals("<java.lang.StringBuilder: void <init>()>") ||
 						  mSig.equals("<java.lang.StringBuffer: void <init>()>") ||
@@ -137,9 +150,9 @@ public class Slicer
 					Immediate arg = (Immediate) ie.getArg(0);
 					slice.add(new Concat(rcvr, arg, rcvr));
 					if(arg instanceof Local){
-						mLocalList.add((Local) arg);
+						mLocalList.add(new Pair((Local) arg, stmt));
 					}
-					mLocalList.add(rcvr);
+					mLocalList.add(new Pair(rcvr, stmt));
 				}
 			}
 		}
@@ -163,33 +176,37 @@ public class Slicer
 				if(arg instanceof Local){
 					Local loc = (Local) arg;
 					SootMethod containerMethod = containerMethodFor(loc);
-					workList.add(new Pair(loc, containerMethod));
+					workList.add(new Trio(loc, callsite, containerMethod));
 				}
 			}
 		} if(rightOp instanceof InstanceFieldRef){
 			//alias
 			Local base = (Local) ((InstanceFieldRef) rightOp).getBase();
 			SootField field = ((InstanceFieldRef) rightOp).getField();
-			for(Immediate alias : findAlias(base, field)){
+			for(Pair<Stmt,Immediate> pair : findAlias(base, field)){
+				Stmt stmt = pair.val0;
+				Immediate alias = pair.val1;
 				if(!(alias instanceof NullConstant)){
 					Statement s = new Assign(alias, local);
 					slice.add(s); //System.out.println(stmtStr(s));
 				}
 				if(alias instanceof Local){
 					SootMethod containerMethod = containerMethodFor((Local) alias);
-					workList.add(new Pair((Local) alias, containerMethod));
+					workList.add(new Trio((Local) alias, stmt, containerMethod));
 				}
 			}
 		} else if(rightOp instanceof StaticFieldRef){
 			SootField field = ((StaticFieldRef) rightOp).getField();
-			for(Immediate alias : findAlias(field)){
+			for(Pair<Stmt,Immediate> pair : findAlias(field)){
+				Stmt stmt = pair.val0;
+				Immediate alias = pair.val1;
 				if(!(alias instanceof NullConstant)){
 					Statement s = new Assign(alias, local);
 					slice.add(s); //System.out.println(stmtStr(s));
 				}
 				if(alias instanceof Local){
 					SootMethod containerMethod = containerMethodFor((Local) alias);
-					workList.add(new Pair((Local) alias, containerMethod));
+					workList.add(new Trio((Local) alias, stmt, containerMethod));
 				}
 			}
 		} else if(rightOp instanceof ArrayRef){
@@ -203,7 +220,7 @@ public class Slicer
 				Local rcvr = (Local) ((VirtualInvokeExpr) ie).getBase();
 				Statement s = new Assign(rcvr, local);
 				slice.add(s); //System.out.println(stmtStr(s));
-				mLocalList.add(rcvr);
+				mLocalList.add(new Pair(rcvr, dfnStmt));
 			} else if(mSig.equals("<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>") ||
 					  mSig.equals("<java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)>")){
 				Immediate arg = (Immediate) ie.getArg(0);
@@ -211,31 +228,33 @@ public class Slicer
 				Statement s = new Concat(rcvr, arg, local);
 				slice.add(s); //System.out.println(stmtStr(s));
 				if(arg instanceof Local){
-					mLocalList.add((Local) arg);
+					mLocalList.add(new Pair((Local) arg, dfnStmt));
 				}
-				mLocalList.add(rcvr);
+				mLocalList.add(new Pair(rcvr, dfnStmt));
 			} else if(mSig.equals("<java.lang.String: java.lang.String concat(java.lang.String)>")){
 				Immediate arg = (Immediate) ie.getArg(0);
 				Local rcvr = (Local) ((VirtualInvokeExpr) ie).getBase();
 				Statement s = new Concat(rcvr, arg, local);
 				slice.add(s); //System.out.println(stmtStr(s));
 				if(arg instanceof Local){
-					mLocalList.add((Local) arg);
+					mLocalList.add(new Pair((Local) arg, dfnStmt));
 				}
-				mLocalList.add(rcvr);
+				mLocalList.add(new Pair(rcvr, dfnStmt));
 			} else {
 				for(SootMethod callee : calleesFor(dfnStmt)){
 					if(AbstractSourceInfo.isFrameworkClass(callee.getDeclaringClass())){
 						Statement s = new Havoc(local);
 						slice.add(s); //System.out.println(stmtStr(s));
 					} else {
-						for(Immediate r : retsFor(callee)){
+						for(Pair<Stmt,Immediate> pair : retsFor(callee)){
+							Stmt stmt = pair.val0;
+							Immediate r = pair.val1;
 							if(!(r instanceof NullConstant)){
 								Statement s = new Assign(r, local);
 								slice.add(s); //System.out.println(stmtStr(s));
 							}
 							if(r instanceof Local)
-								workList.add(new Pair((Local) r, callee));
+								workList.add(new Trio((Local) r, stmt, callee));
 						}
 					}
 				}
@@ -246,7 +265,7 @@ public class Slicer
 				slice.add(s); //System.out.println(stmtStr(s));
 			}
 			if(rightOp instanceof Local)
-				mLocalList.add((Local) rightOp);
+				mLocalList.add(new Pair((Local) rightOp, dfnStmt));
 		} else if(rightOp instanceof NewExpr){
 			//dont cause havoc
 		} else {
@@ -285,21 +304,21 @@ public class Slicer
 					InstanceFieldRef ifr = (InstanceFieldRef) leftOp;
 					Local base = (Local) ifr.getBase();
 					SootField field = ifr.getField();
-					List<Pair<Local,Immediate>> pairs = fieldToInstanceStores.get(field);
-					if(pairs == null){
-						pairs = new ArrayList();
-						fieldToInstanceStores.put(field, pairs);
+					List<Trio<Local,Stmt,Immediate>> triples = fieldToInstanceStores.get(field);
+					if(triples == null){
+						triples = new ArrayList();
+						fieldToInstanceStores.put(field, triples);
 					}
-					pairs.add(new Pair(base, (Immediate) rightOp));
+					triples.add(new Trio(base, stmt, (Immediate) rightOp));
 				} else if(leftOp instanceof StaticFieldRef){
 					StaticFieldRef sfr = (StaticFieldRef) leftOp;
 					SootField field = sfr.getField();
-					List<Immediate> imms = fieldToStaticStores.get(field);
+					List<Pair<Stmt,Immediate>> imms = fieldToStaticStores.get(field);
 					if(imms == null){
 						imms = new ArrayList();
 						fieldToStaticStores.put(field, imms);
 					}
-					imms.add((Immediate) rightOp);
+					imms.add(new Pair(stmt, (Immediate) rightOp));
 				}
 			}
 		}
@@ -331,23 +350,24 @@ public class Slicer
 		return localToNode.get(local).meth;
     }
 	
-	private Iterable<Immediate> findAlias(Local local, SootField f)
+	private Iterable<Pair<Stmt,Immediate>> findAlias(Local local, SootField f)
 	{
 		//Store(u:V,f:F,v:V)  input   # u.f = v
-		List<Immediate> aliases = new ArrayList();
+		List<Pair<Stmt,Immediate>> aliases = new ArrayList();
 
 		VarNode vn = localToNode.get(local);
 		RelView viewIpt1 = relIpt.getView();
 		viewIpt1.selectAndDelete(0, vn);
 		Iterable<AllocNode> os = viewIpt1.getAry1ValTuples();
 	
-		Iterable<Pair<Local,Immediate>> it = fieldToInstanceStores.get(f);
+		Iterable<Trio<Local,Stmt,Immediate>> it = fieldToInstanceStores.get(f);
 		if(it == null){
 			System.out.println("Warning: No stores found for field "+f);
 		} else {
-			for(Pair<Local,Immediate> pair : it){
-				Local base = pair.val0;
-				Immediate alias = pair.val1;
+			for(Trio<Local,Stmt,Immediate> trio : it){
+				Local base = trio.val0;
+				Stmt stmt = trio.val1;
+				Immediate alias = trio.val2;
 			
 				//check if base and local can point to a common object
 				VarNode baseNode = localToNode.get(base);
@@ -363,7 +383,7 @@ public class Slicer
 				}
 		
 				if(isAlias){
-					aliases.add(alias);
+					aliases.add(new Pair(stmt,alias));
 				}
 				viewIpt2.free();
 			}
@@ -373,21 +393,21 @@ public class Slicer
 		return aliases;
 	}
 	
-	private Iterable<Immediate> findAlias(SootField f)
+	private Iterable<Pair<Stmt,Immediate>> findAlias(SootField f)
 	{
 		return fieldToStaticStores.get(f);
 	}
 
-	private Iterable<Immediate> retsFor(SootMethod m)
+	private Iterable<Pair<Stmt,Immediate>> retsFor(SootMethod m)
 	{
 		if(!m.isConcrete())
 			return Collections.EMPTY_LIST;
-		List<Immediate> rets = new ArrayList();
+		List<Pair<Stmt,Immediate>> rets = new ArrayList();
 		for(Unit unit : m.retrieveActiveBody().getUnits()){
 			if(!(unit instanceof ReturnStmt))
 				continue;
 			Immediate retOp = (Immediate) ((ReturnStmt) unit).getOp();
-			rets.add(retOp);
+			rets.add(new Pair((Stmt) unit, retOp));
 		}
 		return rets;
 	}
