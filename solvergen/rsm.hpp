@@ -194,4 +194,80 @@ public:
     void print(std::ostream& os) const;
 };
 
+// GRAPH ======================================================================
+
+class Node {
+    friend Registry<Node>;
+public:
+    const std::string name;
+    const Ref<Node> ref;
+private:
+    explicit Node(const std::string& name, Ref<Node> ref)
+	: name(name), ref(ref) {}
+public:
+    bool consistent_with() const {
+	return true;
+    }
+};
+
+class Tag {
+    friend Registry<Tag>;
+public:
+    const std::string name;
+    const Ref<Tag> ref;
+private:
+    explicit Tag(const std::string& name, Ref<Tag> ref)
+	: name(name), ref(ref) {}
+public:
+    bool consistent_with() const {
+	return true;
+    }
+};
+
+// TODO: Separate class for parametric and non-parametric edges.
+class Edge {
+public:
+    const Ref<Node> src;
+    const Ref<Node> dst;
+    const Ref<Symbol> symbol;
+    const Ref<Tag> tag;
+public:
+    explicit Edge(Ref<Node> src, Ref<Node> dst, Ref<Symbol> symbol,
+		  Ref<Tag> tag)
+	: src(src), dst(dst), symbol(symbol), tag(tag) {}
+    bool operator<(const Edge& rhs) const {
+	return (std::tie(    src,     dst,     symbol,     tag) <
+		std::tie(rhs.src, rhs.dst, rhs.symbol, rhs.tag));
+    }
+};
+
+class Summary {
+public:
+    const Ref<Node> src;
+    const Ref<Node> dst;
+    const Ref<Component> comp;
+public:
+    explicit Summary(Ref<Node> src, Ref<Node> dst, Ref<Component> comp)
+	: src(src), dst(dst), comp(comp) {}
+    bool operator<(const Summary& rhs) const {
+	return (std::tie(    src,     dst,     comp) <
+		std::tie(rhs.src, rhs.dst, rhs.comp));
+    }
+};
+
+class Graph {
+public:
+    static const std::string FILE_EXTENSION;
+private:
+    Registry<Node> nodes;
+    Registry<Tag> tags;
+    Index<Table<Edge>,Ref<Symbol>,&Edge::symbol> edges;
+    Table<Summary> summaries;
+private:
+    void parse_file(const Symbol& symbol, const fs::path& fpath);
+public:
+    explicit Graph(const Registry<Symbol>& symbols, const std::string& dir);
+    void print_stats(std::ostream& os, const Registry<Symbol>& symbols) const;
+};
+
 #endif

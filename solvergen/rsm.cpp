@@ -1,6 +1,8 @@
 #include <boost/algorithm/string.hpp>
 #include <fstream>
+#include <iomanip>
 #include <list>
+#include <locale>
 #include <sstream>
 
 #include "rsm.hpp"
@@ -233,22 +235,84 @@ void RSM::print(std::ostream& os) const {
     }
 }
 
+// GRAPH ======================================================================
+
+const std::string Graph::FILE_EXTENSION(".dat");
+
+void Graph::parse_file(const Symbol& symbol, const fs::path& fpath) {
+    std::ifstream fin(fpath.string());
+    assert(fin);
+    std::string line;
+    while (std::getline(fin, line)) {
+	if (line.empty()) {
+	    continue; // Empty lines are ignored.
+	}
+	std::vector<std::string> toks;
+	boost::split(toks, line, boost::is_any_of(" "),
+		     boost::token_compress_on);
+	assert(toks.size() >= 2);
+	Ref<Node> src = nodes.add(toks[0]).ref;
+	Ref<Node> dst = nodes.add(toks[1]).ref;
+	if (symbol.parametric) {
+	    assert(toks.size() == 3);
+	    Ref<Tag> tag = tags.add(toks[2]).ref;
+	    edges.insert(Edge(src, dst, symbol.ref, tag));
+	} else {
+	    assert(toks.size() == 2);
+	    edges.insert(Edge(src, dst, symbol.ref, Ref<Tag>::none()));
+	}
+    }
+    assert(fin.eof());
+}
+
+Graph::Graph(const Registry<Symbol>& symbols, const std::string& dirname) {
+    fs::path dirpath(dirname);
+    for (const Symbol& s : symbols) {
+	std::string fname = s.name + FILE_EXTENSION;
+	std::cout << "Parsing " << fname << std::endl;
+	// Will fail if some symbol is missing its Edge file.
+	parse_file(s, dirpath/fname);
+    }
+}
+
+void Graph::print_stats(std::ostream& os,
+			const Registry<Symbol>& symbols) const {
+    os << "Nodes: " << nodes.size() << std::endl;
+    os << "Edges: " << std::endl;
+    for (const Symbol& s : symbols) {
+	os << std::setw(15) << s.name
+	   << std::setw(12) << edges.select(s.ref).size() << std::endl;
+    }
+}
+
+// MAIN =======================================================================
+
 int main(int argc, char* argv[]) {
     po::options_description desc("Options");
-    desc.add_options()("rsm-dir", po::value<std::string>()->required(),
-		       "Directory of RSM files");
+    desc.add_options()
+	("rsm-dir", po::value<std::string>()->required(),
+	 "Directory of RSM components")
+	("graph-dir", po::value<std::string>()->required(),
+	 "Directory of edge files");
     po::positional_options_description pos_desc;
     pos_desc.add("rsm-dir", 1);
+    pos_desc.add("graph-dir", 1);
     po::variables_map vm;
     po::store(po::command_line_parser(argc, argv)
 	      .options(desc).positional(pos_desc).run(), vm);
     po::notify(vm);
     std::string rsm_dir = vm.at("rsm-dir").as<std::string>();
+    std::string graph_dir = vm.at("graph-dir").as<std::string>();
 
     RSM rsm;
     std::cout << "Parsing RSM components from " << rsm_dir << std::endl;
     rsm.parse_dir(rsm_dir);
+    std::cout << "Parsing graph from " << graph_dir << std::endl;
+    Graph graph(rsm.symbols, graph_dir);
     std::cout << std::endl;
+
+    std::cout.imbue(std::locale(""));
     rsm.print(std::cout);
+    graph.print_stats(std::cout, rsm.symbols);
     return 0;
 }
