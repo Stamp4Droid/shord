@@ -1,5 +1,4 @@
 #include <boost/algorithm/string.hpp>
-#include <boost/program_options.hpp>
 #include <fstream>
 #include <list>
 #include <sstream>
@@ -35,7 +34,7 @@ void State::print(std::ostream& os) const {
 }
 
 void Box::print(std::ostream& os, const Registry<Component>& comp_reg) const {
-    os << "Box" << ref << " " << comp_reg.index(component).name << std::endl;
+    os << "Box" << ref << " " << comp_reg.index(comp).name << std::endl;
 }
 
 void Transition::print(std::ostream& os,
@@ -112,16 +111,16 @@ Label RSM::parse_label(const std::string& str) {
 
 void RSM::parse_dir(const std::string& dirname) {
     Directory dir(dirname);
-    std::list<boost::filesystem::path> files(dir.begin(), dir.end());
+    std::list<fs::path> files(dir.begin(), dir.end());
     files.sort();
-    for (const boost::filesystem::path& fpath : files) {
+    for (const fs::path& fpath : files) {
 	parse_file(fpath);
     }
 }
 
 enum class ParsingMode {NODES, EDGES};
 
-void RSM::parse_file(const boost::filesystem::path& fpath) {
+void RSM::parse_file(const fs::path& fpath) {
     std::string fbase(fpath.filename().string());
     if (!boost::algorithm::ends_with(fbase, FILE_EXTENSION)) {
 	return;
@@ -149,6 +148,10 @@ void RSM::parse_file(const boost::filesystem::path& fpath) {
 	    // Nodes serve as both states and boxes. Therefore, their names
 	    // must not clash.
 	    if (toks[0] == "#") {
+		// Verify that the component has a single initial state, and at
+		// least one final state.
+		assert(comp.get_initial().valid());
+		assert(!comp.get_final().empty());
 		mode = ParsingMode::EDGES;
 		break;
 	    }
@@ -231,7 +234,6 @@ void RSM::print(std::ostream& os) const {
 }
 
 int main(int argc, char* argv[]) {
-    namespace po = boost::program_options;
     po::options_description desc("Options");
     desc.add_options()("rsm-dir", po::value<std::string>()->required(),
 		       "Directory of RSM files");
@@ -241,11 +243,11 @@ int main(int argc, char* argv[]) {
     po::store(po::command_line_parser(argc, argv)
 	      .options(desc).positional(pos_desc).run(), vm);
     po::notify(vm);
-    std::string dir = vm.at("rsm-dir").as<std::string>();
+    std::string rsm_dir = vm.at("rsm-dir").as<std::string>();
 
-    std::cout << "Parsing directory " << dir << std::endl;
     RSM rsm;
-    rsm.parse_dir(dir);
+    std::cout << "Parsing RSM components from " << rsm_dir << std::endl;
+    rsm.parse_dir(rsm_dir);
     std::cout << std::endl;
     rsm.print(std::cout);
     return 0;

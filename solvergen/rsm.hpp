@@ -1,14 +1,17 @@
 #ifndef RSM_HPP
 #define RSM_HPP
 
+#include <boost/program_options.hpp>
 #include <boost/regex.hpp>
 
 #include "util.hpp"
 
+namespace po = boost::program_options;
+namespace fs = boost::filesystem;
+
 // ALPHABET ===================================================================
 
-// TODO:
-// - separate class for parametric and non-parametric (base) symbols
+// TODO: separate class for parametric and non-parametric symbols
 class Symbol {
     friend Registry<Symbol>;
 private:
@@ -34,14 +37,15 @@ class Label {
 public:
     const Ref<Symbol> symbol;
     const Direction dir;
+    // The specific index character on a label doesn't matter.
     const bool tagged;
 public:
     explicit Label(Ref<Symbol> symbol, Direction dir, bool tagged)
 	: symbol(symbol), dir(dir), tagged(tagged) {}
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
-    bool operator<(const Label& other) const {
-	return (std::tie(      symbol,       dir,       tagged) <
-		std::tie(other.symbol, other.dir, other.tagged));
+    bool operator<(const Label& rhs) const {
+	return (std::tie(    symbol,     dir,     tagged) <
+		std::tie(rhs.symbol, rhs.dir, rhs.tagged));
     }
 };
 
@@ -74,14 +78,13 @@ class Box {
 public:
     const std::string name;
     const Ref<Box> ref;
-    const Ref<Component> component;
+    const Ref<Component> comp;
 private:
-    explicit Box(const std::string& name, Ref<Box> ref,
-		 Ref<Component> component)
-	: name(name), ref(ref), component(component) {}
+    explicit Box(const std::string& name, Ref<Box> ref, Ref<Component> comp)
+	: name(name), ref(ref), comp(comp) {}
 public:
-    bool consistent_with(Ref<Component> component) const {
-	return component == this->component;
+    bool consistent_with(Ref<Component> comp) const {
+	return comp == this->comp;
     }
     void print(std::ostream& os, const Registry<Component>& comp_reg) const;
 };
@@ -99,13 +102,12 @@ public:
 	assert(!label.tagged);
     }
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
-    bool operator<(const Transition& other) const {
-	return (std::tie(      src,       dst,       label) <
-		std::tie(other.src, other.dst, other.label));
+    bool operator<(const Transition& rhs) const {
+	return (std::tie(    src,     dst,     label) <
+		std::tie(rhs.src, rhs.dst, rhs.label));
     }
 };
 
-// The specific index on an entry or exit arrow doesn't matter.
 // TODO:
 // - Enforce that either all entries and exits to the same box are tagged,
 //   or none is.
@@ -119,9 +121,9 @@ public:
     explicit Entry(Ref<State> src, Ref<Box> dst, Label label)
 	: src(src), dst(dst), label(label) {}
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
-    bool operator<(const Entry& other) const {
-	return (std::tie(      src,       dst,       label) <
-		std::tie(other.src, other.dst, other.label));
+    bool operator<(const Entry& rhs) const {
+	return (std::tie(    src,     dst,     label) <
+		std::tie(rhs.src, rhs.dst, rhs.label));
     }
 };
 
@@ -134,9 +136,9 @@ public:
     explicit Exit(Ref<Box> src, Ref<State> dst, Label label)
 	: src(src), dst(dst), label(label) {}
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
-    bool operator<(const Exit& other) const {
-	return (std::tie(      src,       dst,       label) <
-		std::tie(other.src, other.dst, other.label));
+    bool operator<(const Exit& rhs) const {
+	return (std::tie(    src,     dst,     label) <
+		std::tie(rhs.src, rhs.dst, rhs.label));
     }
 };
 
@@ -188,7 +190,7 @@ private:
     Label parse_label(const std::string& str);
 public:
     void parse_dir(const std::string& dirname);
-    void parse_file(const boost::filesystem::path& fpath);
+    void parse_file(const fs::path& fpath);
     void print(std::ostream& os) const;
 };
 
