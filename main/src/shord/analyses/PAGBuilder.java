@@ -52,7 +52,9 @@ import shord.program.Program;
 
 import chord.project.Chord;
 
+import java.io.*;
 import java.util.*;
+import stamp.missingmodels.util.Util.MultivalueMap;
 
 @Chord(name="base-java", 
 	   produces={"M", "Z", "I", "H", "V", "T", "F", "U",
@@ -750,6 +752,30 @@ public class PAGBuilder extends JavaAnalysis
 
 	void populateCallgraph()
 	{
+	    // START HERE
+	    MultivalueMap<SootMethod,SootMethod> dyncg = new MultivalueMap<SootMethod,SootMethod>();
+	    try {
+		BufferedReader br = new BufferedReader(new FileReader("cg.txt"));
+		String line;
+		while((line = br.readLine()) != null) {
+		    if(line.contains("CG")) {
+			String[] tokens = line.split("#");
+			String tgtSig = tokens[tokens.length-2];
+			String srcSig = tokens[tokens.length-1];
+			SootMethod tgt = Scene.v().getMethod(tgtSig);
+			SootMethod src = Scene.v().getMethod(srcSig);
+			dyncg.add(tgt, src);
+			System.out.println(src.toString() + " -> " + tgt.toString());
+		    }
+		}
+	    } catch(Exception e) {
+		System.out.println("ERROR BUILDING DYNCG");
+		e.printStackTrace();
+	    }
+	    // END HERE
+	    
+
+
 		CallGraph cg = Program.g().scene().getCallGraph();
 		ProgramRel relChaIM = (ProgramRel) ClassicProject.g().getTrgt("chaIM");
         relChaIM.zero();
@@ -762,6 +788,15 @@ public class PAGBuilder extends JavaAnalysis
 			//int stmtIdx = domI.getOrAdd(stmt);
 			SootMethod tgt = (SootMethod) edge.tgt();
 			SootMethod src = (SootMethod) edge.src();
+
+			// START HERE
+			if(!dyncg.get(tgt).contains(src)) {
+			    System.out.println("ignoring: " + tgt.toString() + " -> " + src.toString());
+
+			    continue;
+			}
+			// END HERE
+
 			if(tgt.isAbstract())
 				assert false : "tgt = "+tgt +" "+tgt.isAbstract();
 			if(tgt.isPhantom())
