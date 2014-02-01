@@ -45,7 +45,6 @@ public class Slicer
 {
 	private List<Trio<Local,Stmt,SootMethod>> workList;
 
-	private Set<Statement> slice;
 	private Set<Pair<Local,Stmt>> visited;
 
 	private List<Pair<Local,Stmt>> mLocalList;
@@ -59,6 +58,10 @@ public class Slicer
 	private Map<SootField,List<Trio<Local,Stmt,Immediate>>> fieldToInstanceStores = new HashMap();
 	private Map<SootField,List<Pair<Stmt,Immediate>>> fieldToStaticStores = new HashMap();
 
+	private Map<Stmt,List<Statement>> stmtToStatements = new HashMap();
+	
+	private StatementGraph sGraph;
+
 	public Slicer()
 	{
 		init();
@@ -67,10 +70,15 @@ public class Slicer
 	public void generate(Local l, Stmt s, SootMethod m)
 	{
 		this.workList = new LinkedList();
-		this.slice = new LinkedHashSet();
 		this.visited = new HashSet();
+		this.stmtToStatements = new HashMap();
 		this.mLocalList = null;
 		this.m = null;
+		this.sGraph = new StatementGraph();
+
+		Statement c = new Criterion(l, s);
+		sGraph.addNode(c);
+		stmtToStatements.put(s, Arrays.asList(new Statement[]{c}));
 
 		workList.add(new Trio(l, s, m));
 
@@ -90,8 +98,8 @@ public class Slicer
 	public Set<String> evaluate(Local l, Stmt stmt, SootMethod m)
 	{
 		generate(l, stmt, m);
-		Evaluator evaluator = new Evaluator();
-		return evaluator.evaluate(slice, l);
+		Evaluator evaluator = new Evaluator(this, this.sGraph);
+		return evaluator.evaluate();
 	}
 
 	private void visit(SootMethod method, Stmt s, Local l)
@@ -110,7 +118,9 @@ public class Slicer
 
 			Local local = p.val0;
 			Stmt useStmt = p.val1;
-			
+
+			System.out.println("Processing local:"+ local + " useStmt:"+useStmt);
+
 			for(Stmt stmt : ld.getDefsOf(local, useStmt)){
 				if(stmt instanceof DefinitionStmt){
 					DefinitionStmt ds = (DefinitionStmt) stmt;
@@ -118,7 +128,7 @@ public class Slicer
 					Value rightOp = ds.getRightOp();
 					
 					if(local.equals(leftOp)){
-						handleDefinitionStmt(ds, (Local) leftOp, rightOp);
+						handleDefinitionStmt(ds, (Local) leftOp, rightOp, useStmt);
 					}
 				}
 				
@@ -137,18 +147,21 @@ public class Slicer
 				   mSig.equals("<java.lang.StringBuffer: void <init>(java.lang.String)>") ||
 				   mSig.equals("<java.lang.String: void <init>(java.lang.String)>")){
 					Immediate arg = (Immediate) ie.getArg(0);
-					slice.add(new Assign(arg, rcvr));
+					//slice.add(new Assign(arg, rcvr));
+					addToSlice(new Assign(arg, rcvr, stmt), stmt, useStmt);
 					if(arg instanceof Local){
 						mLocalList.add(new Pair((Local) arg, stmt));
 					}
 				} else if(mSig.equals("<java.lang.StringBuilder: void <init>()>") ||
 						  mSig.equals("<java.lang.StringBuffer: void <init>()>") ||
 						  mSig.equals("<java.lang.String: void <init>()>")){
-					slice.add(new Assign(StringConstant.v(""), rcvr));
+					//slice.add(new Assign(StringConstant.v(""), rcvr));
+					addToSlice(new Assign(StringConstant.v(""), rcvr, stmt), stmt, useStmt);
 				} else if(mSig.equals("<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>") ||
 						  mSig.equals("<java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)>")){
 					Immediate arg = (Immediate) ie.getArg(0);
-					slice.add(new Concat(rcvr, arg, rcvr));
+					//slice.add(new Concat(rcvr, arg, rcvr));
+					addToSlice(new Concat(rcvr, arg, rcvr, stmt), stmt, useStmt);
 					if(arg instanceof Local){
 						mLocalList.add(new Pair((Local) arg, stmt));
 					}
@@ -156,12 +169,11 @@ public class Slicer
 				}
 			}
 		}
-
 	}
 
-	private void handleDefinitionStmt(Stmt dfnStmt, Local local, Value rightOp)
+	private void handleDefinitionStmt(Stmt dfnStmt, Local local, Value rightOp, Stmt useStmt)
 	{
-		System.out.println("handleDefinitionStmt: "+dfnStmt);
+		//System.out.println("handleDefinitionStmt: "+dfnStmt);
 		if(rightOp instanceof ParameterRef){
 			//find caller
 			int index = ((ParameterRef) rightOp).getIndex();
@@ -170,8 +182,10 @@ public class Slicer
 				InvokeExpr ie = callsite.getInvokeExpr();
 				Immediate arg = (Immediate) ie.getArg(index);
 				if(!(arg instanceof NullConstant)){
-					Statement s = new Assign(arg, local);
-					slice.add(s); //System.out.println(stmtStr(s));
+					Statement s = new Assign(arg, local, dfnStmt);
+					//slice.add(s); //System.out.println(stmtStr(s));
+					//addToSlice(s, dfnStmt, useStmt);
+					addToSlice(s, callsite, useStmt);
 				}
 				if(arg instanceof Local){
 					Local loc = (Local) arg;
@@ -187,8 +201,10 @@ public class Slicer
 				Stmt stmt = pair.val0;
 				Immediate alias = pair.val1;
 				if(!(alias instanceof NullConstant)){
-					Statement s = new Assign(alias, local);
-					slice.add(s); //System.out.println(stmtStr(s));
+					Statement s = new Assign(alias, local, dfnStmt);
+					//slice.add(s); //System.out.println(stmtStr(s));
+					//addToSlice(s, dfnStmt, useStmt);
+					addToSlice(s, stmt, useStmt);
 				}
 				if(alias instanceof Local){
 					SootMethod containerMethod = containerMethodFor((Local) alias);
@@ -201,8 +217,10 @@ public class Slicer
 				Stmt stmt = pair.val0;
 				Immediate alias = pair.val1;
 				if(!(alias instanceof NullConstant)){
-					Statement s = new Assign(alias, local);
-					slice.add(s); //System.out.println(stmtStr(s));
+					Statement s = new Assign(alias, local, dfnStmt);
+					//slice.add(s); //System.out.println(stmtStr(s));
+					//addToSlice(s, dfnStmt, useStmt);
+					addToSlice(s, stmt, useStmt);
 				}
 				if(alias instanceof Local){
 					SootMethod containerMethod = containerMethodFor((Local) alias);
@@ -210,23 +228,32 @@ public class Slicer
 				}
 			}
 		} else if(rightOp instanceof ArrayRef){
-			Statement s = new Havoc(local);
-			slice.add(s); //System.out.println(stmtStr(s));
+			Statement s = new Havoc(local, dfnStmt);
+			//slice.add(s); //System.out.println(stmtStr(s));
+			addToSlice(s, dfnStmt, useStmt);
 		} else if(rightOp instanceof InvokeExpr){
 			InvokeExpr ie = (InvokeExpr) rightOp;
 			String mSig = ie.getMethod().getSignature();
 			if(mSig.equals("<java.lang.StringBuilder: java.lang.String toString()>") ||
 			   mSig.equals("<java.lang.StringBuffer: java.lang.String toString()>")){
 				Local rcvr = (Local) ((VirtualInvokeExpr) ie).getBase();
-				Statement s = new Assign(rcvr, local);
-				slice.add(s); //System.out.println(stmtStr(s));
+				Statement s = new Assign(rcvr, local, dfnStmt);
+				//slice.add(s); //System.out.println(stmtStr(s));
+				addToSlice(s, dfnStmt, useStmt);
+				mLocalList.add(new Pair(rcvr, dfnStmt));
+			} else if(mSig.equals("<java.lang.String: java.lang.String toLowerCase()>")){
+				Local rcvr = (Local) ((VirtualInvokeExpr) ie).getBase();
+				Statement s = new ToLower(rcvr, local, dfnStmt);
+				//slice.add(s); //System.out.println(stmtStr(s));
+				addToSlice(s, dfnStmt, useStmt);
 				mLocalList.add(new Pair(rcvr, dfnStmt));
 			} else if(mSig.equals("<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>") ||
 					  mSig.equals("<java.lang.StringBuffer: java.lang.StringBuffer append(java.lang.String)>")){
 				Immediate arg = (Immediate) ie.getArg(0);
 				Local rcvr = (Local) ((VirtualInvokeExpr) ie).getBase();
-				Statement s = new Concat(rcvr, arg, local);
-				slice.add(s); //System.out.println(stmtStr(s));
+				Statement s = new Concat(rcvr, arg, local, dfnStmt);
+				//slice.add(s); //System.out.println(stmtStr(s));
+				addToSlice(s, dfnStmt, useStmt);
 				if(arg instanceof Local){
 					mLocalList.add(new Pair((Local) arg, dfnStmt));
 				}
@@ -234,8 +261,9 @@ public class Slicer
 			} else if(mSig.equals("<java.lang.String: java.lang.String concat(java.lang.String)>")){
 				Immediate arg = (Immediate) ie.getArg(0);
 				Local rcvr = (Local) ((VirtualInvokeExpr) ie).getBase();
-				Statement s = new Concat(rcvr, arg, local);
-				slice.add(s); //System.out.println(stmtStr(s));
+				Statement s = new Concat(rcvr, arg, local, dfnStmt);
+				//slice.add(s); //System.out.println(stmtStr(s));
+				addToSlice(s, dfnStmt, useStmt);
 				if(arg instanceof Local){
 					mLocalList.add(new Pair((Local) arg, dfnStmt));
 				}
@@ -243,15 +271,18 @@ public class Slicer
 			} else {
 				for(SootMethod callee : calleesFor(dfnStmt)){
 					if(AbstractSourceInfo.isFrameworkClass(callee.getDeclaringClass())){
-						Statement s = new Havoc(local);
-						slice.add(s); //System.out.println(stmtStr(s));
+						Statement s = new Havoc(local, dfnStmt);
+						//slice.add(s); //System.out.println(stmtStr(s));
+						addToSlice(s, dfnStmt, useStmt);
 					} else {
 						for(Pair<Stmt,Immediate> pair : retsFor(callee)){
 							Stmt stmt = pair.val0;
 							Immediate r = pair.val1;
 							if(!(r instanceof NullConstant)){
-								Statement s = new Assign(r, local);
-								slice.add(s); //System.out.println(stmtStr(s));
+								Statement s = new Assign(r, local, dfnStmt);
+								//slice.add(s); //System.out.println(stmtStr(s));
+								//addToSlice(s, dfnStmt, useStmt);
+								addToSlice(s, stmt, useStmt);
 							}
 							if(r instanceof Local)
 								workList.add(new Trio((Local) r, stmt, callee));
@@ -261,16 +292,37 @@ public class Slicer
 			}
 		} else if(rightOp instanceof Immediate){
 			if(!(rightOp instanceof NullConstant)){
-				Statement s = new Assign((Immediate) rightOp, local);
-				slice.add(s); //System.out.println(stmtStr(s));
+				Statement s = new Assign((Immediate) rightOp, local, dfnStmt);
+				//slice.add(s); //System.out.println(stmtStr(s));
+				addToSlice(s, dfnStmt, useStmt);
 			}
 			if(rightOp instanceof Local)
 				mLocalList.add(new Pair((Local) rightOp, dfnStmt));
 		} else if(rightOp instanceof NewExpr){
 			//dont cause havoc
 		} else {
-			Statement s = new Havoc(local);
-			slice.add(s); //System.out.println(stmtStr(s));
+			Statement s = new Havoc(local, dfnStmt);
+			//slice.add(s); //System.out.println(stmtStr(s));
+			addToSlice(s, dfnStmt, useStmt);
+		}
+	}
+
+	private void addToSlice(Statement dependeeStatement, Stmt dependee, Stmt dependent)
+	{
+		sGraph.addNode(dependeeStatement);
+
+		List<Statement> ss = stmtToStatements.get(dependee);
+		if(ss == null){
+			ss = new ArrayList();
+			stmtToStatements.put(dependee, ss);
+		}
+		ss.add(dependeeStatement);
+
+		//System.out.println("$$ "+dependent);
+		List<Statement> dependentStatements = stmtToStatements.get(dependent);
+		for(Statement dependentStatement : dependentStatements){
+			sGraph.addEdge(dependeeStatement, dependentStatement);
+			System.out.println("Adding edge from: "+stmtStr(dependeeStatement)+ " to: "+ stmtStr(dependentStatement));
 		}
 	}
 
@@ -395,7 +447,26 @@ public class Slicer
 	
 	private Iterable<Pair<Stmt,Immediate>> findAlias(SootField f)
 	{
+		Iterable<Pair<Stmt,Immediate>> ret = handleSpecialField(f);
+		if(ret != null)
+			return ret;		
 		return fieldToStaticStores.get(f);
+	}
+
+	private Iterable<Pair<Stmt,Immediate>> handleSpecialField(SootField f)
+	{
+		String s = null;
+
+		String cName = f.getDeclaringClass().getName();
+		if(cName.equals("android.os.Build$VERSION") || cName.equals("android.os.Build"))
+			s = String.format("$stamp$Build$%s: %s$stamp$", cName, f.getName());
+
+		if(s != null){
+			List<Pair<Stmt,Immediate>> list = new ArrayList();
+			list.add(new Pair(null, StringConstant.v(s)));
+			return list;
+		} else
+			return null;
 	}
 
 	private Iterable<Pair<Stmt,Immediate>> retsFor(SootMethod m)
@@ -414,22 +485,44 @@ public class Slicer
 	
 	public String sliceStr()
 	{
-		StringBuilder sb = new StringBuilder();
-		for(Statement stmt : slice){
-			sb.append(stmtStr(stmt));
+		Map<Statement,Integer> stmtToId = new HashMap();
+		int count = 0;
+		StringBuilder sb = new StringBuilder("Statement Graph:\n");
+		for(Statement stmt : sGraph.stmts()){
+			stmtToId.put(stmt, count);
+			sb.append(String.format("%d: %s", count++, stmtStr(stmt)));
+		}
+		sb.append("Edges:\n");
+		for(Statement stmt : sGraph.stmts()){
+			Integer toId = stmtToId.get(stmt);
+			sb.append("{");
+			boolean first = true;
+			for(Statement pred : sGraph.predsOf(stmt)){
+				Integer fromId = stmtToId.get(pred);
+				if(first)
+					first = false;
+				else 
+					sb.append(", ");
+				sb.append(fromId);
+			}
+			sb.append(String.format("} -> %d\n", toId));
 		}
 		return sb.toString();
 	}
 
 	public String stmtStr(Statement stmt)
 	{
-		if(stmt instanceof Assign){
-			return String.format("assign %s %s\n", toStr(((Assign) stmt).left), toStr(((Assign) stmt).right));
+		if(stmt instanceof ToLower){
+			return String.format("tolower %s %s %%%% %s\n", toStr(((Assign) stmt).left), toStr(((Assign) stmt).right), stmt.stmt);
+		} else if(stmt instanceof Assign){
+			return String.format("assign %s %s %%%% %s\n", toStr(((Assign) stmt).left), toStr(((Assign) stmt).right), stmt.stmt);
 		} else if(stmt instanceof Concat){
 			Concat concat = (Concat) stmt;
-			return String.format("concat %s %s %s\n", toStr(concat.left), toStr(concat.right1), toStr(concat.right2));
+			return String.format("concat %s %s %s %%%% %s\n", toStr(concat.left), toStr(concat.right1), toStr(concat.right2), stmt.stmt);
 		} else if(stmt instanceof Havoc){
-			return String.format("havoc %s\n", toStr(((Havoc) stmt).local));
+			return String.format("havoc %s %%%% %s\n", toStr(((Havoc) stmt).local), stmt.stmt);
+		} else if(stmt instanceof Criterion){
+			return String.format("criterion %s %%%% %s\n", toStr(((Criterion) stmt).local), stmt.stmt);
 		} else
 			assert false;
 		return null;

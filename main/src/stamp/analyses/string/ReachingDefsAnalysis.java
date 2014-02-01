@@ -105,6 +105,16 @@ class ReachingDefsAnalysis extends ForwardFlowAnalysis<Unit,FlowSet>
 		}
 		
 		doAnalysis();
+		
+		System.out.println("Results of reaching definition analysis:");
+		for(Map.Entry<Unit,FlowSet> e : unitToBeforeFlow.entrySet()){
+			Unit s = e.getKey();
+			FlowSet fs = e.getValue();
+			System.out.println("Before stmt: "+s);
+			for(Object o : fs.toList())
+				System.out.println("+ "+o);
+		}
+		
 	}
 
 	public Iterable<Stmt> getDefsOf(Local local, Stmt stmt)

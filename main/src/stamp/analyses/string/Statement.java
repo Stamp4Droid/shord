@@ -1,5 +1,13 @@
 package stamp.analyses.string;
 
-public interface Statement
+import soot.jimple.Stmt;
+
+public abstract class Statement
 {
+	final protected Stmt stmt;
+
+	protected Statement(Stmt stmt)
+	{
+		this.stmt = stmt;
+	}
 }
