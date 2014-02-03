@@ -247,23 +247,114 @@ public:
 // - can iterate over the entire table, as well as intermediate index levels
 // - selecting on a non-existent value doesn't create spurious entries
 
+// Comparison with RelC:
+// - leaf nodes contain unindexed sets, not single tuples
+// - functional dependencies are ignored
+// - delete/update not supported
+// - tuples explicitly materialized (fully present in memory)
+//   feasible to refer to tuples via pointers
+// - implemented purely in C++
+// - connection to the class structure (attributes are fields)
+// - no relational operations, no query planning
+//   user has to access the indices manually
+//   => always has to provide all the required keys
+//      (no need to verify that's the case)
+// - single root (like RelC) and single leaf
+//   single path through the graph is "primary"
+//   "secondary" indices are separate arcs on the graph
+//   those always start from the root node and end at the leaf node
+// - re-indexing not supported => index fields must be const
+//   underlying data structures implicitly disallow modifying the tuples at all
+//   => all fields must be const
+//   (partially enforced by having constant iterators)
+// - always possible to recover all fields of the tuples
+//   conditions 1 and 3 of query validity automatically satisfied:
+//   - queries produce all of the columns requested as output
+//   - tuples from each side of a fork can be accurately matched
+// - primary and secondary indices are completely separate
+//   not easy to support features like sharing the leaf representation
+//   (but will need in order to get pre-leaf merges)
+
 // Extensions:
 // - multi-field keys
-// - only store the missing fields
+// - don't materialize tuples fully in memory
+//   instead store only the missing fields
 //   but instantiate a real tuple for every selection
 //   (which is not actually stored)
 //   this will require more verification
-// - give client choice of container to use
-// - store on deque rather than set at the bottom
-// - handle derived classes correctly
-// - only supporting full indexing paths
-//   one is the primary index, all the rest are secondary
-//   could allow a secondary indexing path to start at any level
-//   (on the single primary index hierarchy)
-//   could make those branch points explicit using MultiIndex's
+//   [how do we refer to tuples in this case?]
 // - can avoid instantiating a separate set-of-refs for each secondary index?
-// - find function?
-// - utilize functional dependencies?
+// - 'find' function?
+// - macro wrapping Index<...> sequence
+// - concrete size type
+// - give client choice of container to use
+// - store on deque rather than set at the bottom?
+// - handle derived classes correctly
+// - secondary arcs starting from arbitrary points and ending at the leaf
+//   probably make those branch points explicit using MultiIndex's
+// - secondary arcs ending at arbitrary points (harder)
+// - sharing among secondary arcs
+// - relational operations & high-level query plans, via pattern matching
+//   user doesn't handle the indices explicitly
+// - tuple deletion
+//   could reuse RelC's cut-based approach?
+//   need to handle single insertion but multiple mapping, at merge points
+//   could clean up empty map nodes
+// - use intrusive containers to weave multiple indices efficiently
+//   useful for simple deletion of nodes at merge points
+//   features:
+//   - single object can belong to multiple indices
+//   - objects don't need to be copy constructible
+//   - derived classes can be handled
+//   - manual memory management required
+//   - manual re-indexing required
+// - special-case for Registry infrastructure above
+// - implement proper iterators on the secondary index path
+// - variadic template of all indexing fields
+//   - shouldn't have to redefine Index twice, for the two cases of >3 and 3
+//     should instead be able to say that Index<T> = T
+//   - bug: would then be able to kill the matching of nested secondary indices
+//     by calling primary_select on an intermediate step
+//   but can't have non-types as variadic template parameters
+// - exploit functional dependencies
+//   - singleton ("unit") nodes
+//     only if we've crossed all functional dependencies
+//     specialized API:
+//     - iterator has size [either 0 or] 1
+//       can make special wrapper class for this
+//     - special function to retrieve single tuple
+//     - insert checks whenever a new value is added
+//       check that all remaining values are the same
+//       always return false
+//   - modifiable non-key attributes
+//   - tuples no longer fully immutable => can make iterators semi-constant
+//     can still not insert through them
+//     but can get non-const refs to objects, to edit non-key fields
+
+// Concepts:
+// - Relational Base:
+//   - typedefs Tuple
+//   - typedef Iterator: iterator with traits:
+//     - constant iterator
+//     - value_type = Tuple
+//     - iterator_category = input_iterator_tag (at least)
+//   - std::pair<const Tuple*,bool> insert(const Tuple& tuple);
+//   - Iterator begin() const
+//   - Iterator end() const
+//   - unsigned int size()
+// - Relational Primary Index: (in addition to Base)
+//   - typedef Wrapped
+//   - typedef Key
+//   - const Wrapped& select(const Key& key) const;
+//   - not size
+// - Secondary Index Base: like Primary Base, except for:
+//   - void insert(const Tuple* ptr);
+// - Secondary Index:
+//   - similar to what PriIndex is on top of Table
+// - Fork Point:
+//   - compatible with PrimaryTable
+//   - const PriIdxT& primary() const;
+//   - template<int I> const typename ... secondary() const;
 
 // Constraints:
 // - correctness requirement:
@@ -273,13 +364,8 @@ public:
 // - the order of selects and that of template arguments is reverse
 // - indexed fields can't change value (must be 'const')
 //   (re-indexing not supported)
-
-// Would like to have variadic template of all indexing fields
-// - shouldn't have to redefine Index twice, for the two cases of >3 and 3
-//   should instead be able to say that Index<T> = T
-// - bug: would then be able to kill the matching of nested secondary indices
-//   by calling primary_select on an intermediate step
-// but can't have non-types as variadic template parameters
+//   rest of fields should probably not change either
+//   (unless they don't affect the ordering)
 
 template<typename T> class Table {
 public:
