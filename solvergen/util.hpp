@@ -332,29 +332,46 @@ public:
 //     but can get non-const refs to objects, to edit non-key fields
 
 // Concepts:
-// - Relational Base:
-//   - typedefs Tuple
+// - Relation<T>:
+//   - typedef Tuple = T
 //   - typedef Iterator: iterator with traits:
 //     - constant iterator
 //     - value_type = Tuple
 //     - iterator_category = input_iterator_tag (at least)
-//   - std::pair<const Tuple*,bool> insert(const Tuple& tuple);
+//   - std::pair<const Tuple*,bool> insert(const Tuple& tuple)
 //   - Iterator begin() const
 //   - Iterator end() const
-//   - unsigned int size()
-// - Relational Primary Index: (in addition to Base)
-//   - typedef Wrapped
-//   - typedef Key
-//   - const Wrapped& select(const Key& key) const;
-//   - not size
-// - Secondary Index Base: like Primary Base, except for:
-//   - void insert(const Tuple* ptr);
-// - Secondary Index:
-//   - similar to what PriIndex is on top of Table
-// - Fork Point:
-//   - compatible with PrimaryTable
-//   - const PriIdxT& primary() const;
-//   - template<int I> const typename ... secondary() const;
+//   - unsigned int size() const
+// - SecIndex<T> : Relation<T>
+//   except:
+//   - void insert(const Tuple* ptr)
+
+// Implementations:
+// - Table<T> : Relation<T>
+// - Index<S,K,MemPtr> : Relation<T>
+//   where:
+//   - S : Relation<T>
+//   - MemPtr is a pointer to a member of T, of type K
+//   additional:
+//   - typedef Wrapped = S
+//   - typedef Key = K
+//   - const Wrapped& select(const Key& key) const
+// - PtrTable<T> : SecIndex<T>
+// - PtrIndex<S,K,MemPtr> : SecIndex<T>
+//   where:
+//   - S : SecIndex<T>
+//   - MemPtr is a pointer to a member of T, of type K
+//   additional:
+//   - typedef Wrapped = S
+//   - typedef Key = K
+//   - const Wrapped& select(const Key& key) const
+// - MultiIndex<PriIdxT,S[1],S[2],...> : Relation<T>:
+//   where:
+//   - PriIdxT : Relation<T>
+//   - each S[i] : SecIndex<T>
+//   additional:
+//   - const PriIdxT& primary() const
+//   - template<int I> const S[I] secondary() const
 
 // Constraints:
 // - correctness requirement:
@@ -504,6 +521,8 @@ private:
     std::deque<const Tuple*> store;
 public:
     void insert(const Tuple* ptr) {
+	// Assuming this is only called via a fork point, it will never be
+	// called for duplicate entries, so we don't need to check.
 	store.push_back(ptr);
     }
     Iterator begin() const {
@@ -511,6 +530,9 @@ public:
     }
     Iterator end() const {
 	return boost::make_indirect_iterator(store.cend());
+    }
+    unsigned int size() const {
+	return store.size();
     }
 };
 
@@ -533,6 +555,13 @@ public:
 	} catch (const std::out_of_range& exc) {
 	    return dummy;
 	}
+    }
+    unsigned int size() const {
+	unsigned int sz = 0;
+	for (const auto& entry : idx) {
+	    sz += entry.second.size();
+	}
+	return sz;
     }
 };
 
@@ -589,6 +618,9 @@ public:
     }
     Iterator end() const {
 	return pri_idx.end();
+    }
+    unsigned int size() const {
+	return pri_idx.size();
     }
 };
 
