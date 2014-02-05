@@ -1,8 +1,6 @@
 package stamp.analyses.string;
 
 import soot.Unit;
-import soot.Type;
-import soot.RefType;
 import soot.Value;
 import soot.Local;
 import soot.Body;
@@ -19,6 +17,8 @@ import soot.toolkits.scalar.ArrayPackedSet;
 import soot.toolkits.graph.UnitGraph;
 import soot.toolkits.graph.BriefUnitGraph;
 
+import static stamp.analyses.string.Slicer.isStringType;
+
 import java.util.*;
 
 class ReachingDefsAnalysis extends ForwardFlowAnalysis<Unit,FlowSet>
@@ -26,10 +26,6 @@ class ReachingDefsAnalysis extends ForwardFlowAnalysis<Unit,FlowSet>
     private FlowSet emptySet;
     final private Map<Stmt, FlowSet> stmtToKillSet = new HashMap();
 	final private Map<Local,List<Stmt>> localToDefs = new HashMap();
-
-	private Type stringType = RefType.v("java.lang.String");
-	private Type stringBuilderType = RefType.v("java.lang.StringBuilder");
-	private Type stringBufferType = RefType.v("java.lang.StringBuffer");
 
     public ReachingDefsAnalysis(Body body)
     {		
@@ -64,8 +60,7 @@ class ReachingDefsAnalysis extends ForwardFlowAnalysis<Unit,FlowSet>
 				DefinitionStmt ds = (DefinitionStmt) unit;
 				Value leftOp = ds.getLeftOp();
 				
-				if(leftOp instanceof Local &&
-				   isStringType(leftOp.getType())){
+				if(leftOp instanceof Local /*&& isStringType(leftOp.getType())*/){
 					Local local = (Local) leftOp;
 					dp.addDef(local, stmt);
 				}
@@ -127,15 +122,6 @@ class ReachingDefsAnalysis extends ForwardFlowAnalysis<Unit,FlowSet>
 		}
 		return defs;
 	}
-
-	private boolean isStringType(Type type)
-	{
-		return
-			type.equals(stringType) ||
-			type.equals(stringBuilderType) ||
-			type.equals(stringBufferType);
-	}
-
     
     protected FlowSet newInitialFlow()
     {

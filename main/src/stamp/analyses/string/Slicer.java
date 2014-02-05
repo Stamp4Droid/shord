@@ -6,8 +6,10 @@ import soot.Immediate;
 import soot.Value;
 import soot.SootField;
 import soot.Unit;
+import soot.RefType;
+import soot.Type;
 import soot.jimple.StringConstant;
-import soot.jimple.NullConstant;
+import soot.jimple.Constant;
 import soot.jimple.Stmt;
 import soot.jimple.DefinitionStmt;
 import soot.jimple.InvokeExpr;
@@ -21,6 +23,7 @@ import soot.jimple.StaticFieldRef;
 import soot.jimple.ArrayRef;
 import soot.jimple.ReturnStmt;
 import soot.jimple.NewExpr;
+import soot.jimple.CastExpr;
 
 import shord.program.Program;
 import shord.analyses.VarNode;
@@ -61,6 +64,12 @@ public class Slicer
 	private Map<Stmt,List<Statement>> stmtToStatements = new HashMap();
 	
 	private StatementGraph sGraph;
+
+	private static Type stringType = RefType.v("java.lang.String");
+	private static Type stringBuilderType = RefType.v("java.lang.StringBuilder");
+	private static Type stringBufferType = RefType.v("java.lang.StringBuffer");
+	private static Type objectType = RefType.v("java.lang.Object");
+	private static Type charSequenceType = RefType.v("java.lang.CharSequence");
 
 	public Slicer()
 	{
@@ -148,7 +157,8 @@ public class Slicer
 				   mSig.equals("<java.lang.String: void <init>(java.lang.String)>")){
 					Immediate arg = (Immediate) ie.getArg(0);
 					//slice.add(new Assign(arg, rcvr));
-					addToSlice(new Assign(arg, rcvr, stmt), stmt, useStmt);
+					if(isInteresting(arg))
+						addToSlice(new Assign(arg, rcvr, stmt), stmt, useStmt);
 					if(arg instanceof Local){
 						mLocalList.add(new Pair((Local) arg, stmt));
 					}
@@ -181,7 +191,7 @@ public class Slicer
 				Stmt callsite = (Stmt) cs;
 				InvokeExpr ie = callsite.getInvokeExpr();
 				Immediate arg = (Immediate) ie.getArg(index);
-				if(!(arg instanceof NullConstant)){
+				if(isInteresting(arg)){
 					Statement s = new Assign(arg, local, dfnStmt);
 					//slice.add(s); //System.out.println(stmtStr(s));
 					//addToSlice(s, dfnStmt, useStmt);
@@ -193,14 +203,14 @@ public class Slicer
 					workList.add(new Trio(loc, callsite, containerMethod));
 				}
 			}
-		} if(rightOp instanceof InstanceFieldRef){
+		} else if(rightOp instanceof InstanceFieldRef){
 			//alias
 			Local base = (Local) ((InstanceFieldRef) rightOp).getBase();
 			SootField field = ((InstanceFieldRef) rightOp).getField();
 			for(Pair<Stmt,Immediate> pair : findAlias(base, field)){
 				Stmt stmt = pair.val0;
 				Immediate alias = pair.val1;
-				if(!(alias instanceof NullConstant)){
+				if(isInteresting(alias)){
 					Statement s = new Assign(alias, local, dfnStmt);
 					//slice.add(s); //System.out.println(stmtStr(s));
 					//addToSlice(s, dfnStmt, useStmt);
@@ -216,7 +226,7 @@ public class Slicer
 			for(Pair<Stmt,Immediate> pair : findAlias(field)){
 				Stmt stmt = pair.val0;
 				Immediate alias = pair.val1;
-				if(!(alias instanceof NullConstant)){
+				if(isInteresting(alias)){
 					Statement s = new Assign(alias, local, dfnStmt);
 					//slice.add(s); //System.out.println(stmtStr(s));
 					//addToSlice(s, dfnStmt, useStmt);
@@ -271,14 +281,22 @@ public class Slicer
 			} else {
 				for(SootMethod callee : calleesFor(dfnStmt)){
 					if(AbstractSourceInfo.isFrameworkClass(callee.getDeclaringClass())){
-						Statement s = new Havoc(local, dfnStmt);
+						String calleeSig = callee.getSignature();
+						Statement s;
+						if(calleeSig.equals("<java.util.Locale: java.lang.String getCountry()>") ||
+						   calleeSig.equals("<java.util.Locale: java.lang.String getLanguage()>") ||
+						   calleeSig.equals("<android.content.pm.PackageItemInfo: java.lang.CharSequence loadLabel(android.content.pm.PackageManager)>")){
+							s = new Assign(StringConstant.v(String.format("$stamp$%s$stamp$", calleeSig)), local, dfnStmt);
+						}
+						else 
+							s = new Havoc(local, dfnStmt);
 						//slice.add(s); //System.out.println(stmtStr(s));
 						addToSlice(s, dfnStmt, useStmt);
 					} else {
 						for(Pair<Stmt,Immediate> pair : retsFor(callee)){
 							Stmt stmt = pair.val0;
 							Immediate r = pair.val1;
-							if(!(r instanceof NullConstant)){
+							if(isInteresting(r)){
 								Statement s = new Assign(r, local, dfnStmt);
 								//slice.add(s); //System.out.println(stmtStr(s));
 								//addToSlice(s, dfnStmt, useStmt);
@@ -291,7 +309,7 @@ public class Slicer
 				}
 			}
 		} else if(rightOp instanceof Immediate){
-			if(!(rightOp instanceof NullConstant)){
+			if(isInteresting((Immediate) rightOp)){
 				Statement s = new Assign((Immediate) rightOp, local, dfnStmt);
 				//slice.add(s); //System.out.println(stmtStr(s));
 				addToSlice(s, dfnStmt, useStmt);
@@ -300,6 +318,15 @@ public class Slicer
 				mLocalList.add(new Pair((Local) rightOp, dfnStmt));
 		} else if(rightOp instanceof NewExpr){
 			//dont cause havoc
+		} else if(rightOp instanceof CastExpr){
+			CastExpr ce = (CastExpr) rightOp;
+			Immediate castOp = (Immediate) ce.getOp();
+			if(isInteresting(castOp) && isStringType(ce.getCastType())){
+				Statement s = new Assign(castOp, local, dfnStmt);
+				addToSlice(s, dfnStmt, useStmt);
+				if(castOp instanceof Local)
+					mLocalList.add(new Pair((Local) castOp, dfnStmt));
+			}
 		} else {
 			Statement s = new Havoc(local, dfnStmt);
 			//slice.add(s); //System.out.println(stmtStr(s));
@@ -404,18 +431,23 @@ public class Slicer
 	
 	private Iterable<Pair<Stmt,Immediate>> findAlias(Local local, SootField f)
 	{
-		//Store(u:V,f:F,v:V)  input   # u.f = v
-		List<Pair<Stmt,Immediate>> aliases = new ArrayList();
-
 		VarNode vn = localToNode.get(local);
 		RelView viewIpt1 = relIpt.getView();
 		viewIpt1.selectAndDelete(0, vn);
 		Iterable<AllocNode> os = viewIpt1.getAry1ValTuples();
-	
+
+		Iterable<Pair<Stmt,Immediate>> ret;	
+
 		Iterable<Trio<Local,Stmt,Immediate>> it = fieldToInstanceStores.get(f);
 		if(it == null){
-			System.out.println("Warning: No stores found for field "+f);
+			ret = handleSpecialField(f);
+			if(ret == null){
+				System.out.println("Warning: No stores found for field "+f);
+				ret = Collections.emptyList();
+			}
 		} else {
+			List<Pair<Stmt,Immediate>> aliases = new ArrayList();
+			ret = aliases;
 			for(Trio<Local,Stmt,Immediate> trio : it){
 				Local base = trio.val0;
 				Stmt stmt = trio.val1;
@@ -442,15 +474,18 @@ public class Slicer
 		}
 		
 		viewIpt1.free();
-		return aliases;
+		return ret;
 	}
 	
 	private Iterable<Pair<Stmt,Immediate>> findAlias(SootField f)
 	{
 		Iterable<Pair<Stmt,Immediate>> ret = handleSpecialField(f);
-		if(ret != null)
-			return ret;		
-		return fieldToStaticStores.get(f);
+		if(ret == null){
+			ret = fieldToStaticStores.get(f);
+			if(ret == null)
+				ret = Collections.emptySet();
+		}
+		return ret;
 	}
 
 	private Iterable<Pair<Stmt,Immediate>> handleSpecialField(SootField f)
@@ -458,8 +493,14 @@ public class Slicer
 		String s = null;
 
 		String cName = f.getDeclaringClass().getName();
+		String fSig = f.getSignature();
+		String fName = f.getName();
+
 		if(cName.equals("android.os.Build$VERSION") || cName.equals("android.os.Build"))
-			s = String.format("$stamp$Build$%s: %s$stamp$", cName, f.getName());
+			s = String.format("$stamp$%s: %s$stamp$", cName, fName);
+		else if(fSig.equals("<android.content.pm.PackageInfo: java.lang.String versionName>") ||
+				fSig.equals("<android.content.pm.PackageInfo: java.lang.String packageName>"))
+			s = String.format("$stamp$%s: %s$stamp$", cName, fName);
 
 		if(s != null){
 			List<Pair<Stmt,Immediate>> list = new ArrayList();
@@ -533,9 +574,36 @@ public class Slicer
 		if(i instanceof StringConstant)
 			return String.format("\"%s\"", ((StringConstant) i).value);
 		else{
+			if(!(i instanceof Local))
+				throw new RuntimeException(i+" is not local");
 			Local l = (Local) i;
 			SootMethod m = containerMethodFor(l);
 			return String.format("%s!%s@%s", l.getName(), l.getType().toString(), m.getSignature());
 		}
 	}
+
+	public static boolean isStringType(Type type)
+	{
+		return
+			type.equals(stringType) ||
+			type.equals(stringBuilderType) ||
+			type.equals(stringBufferType) ||
+			type.equals(charSequenceType);
+	}
+
+	public static boolean isInteresting(Immediate i)
+	{
+		boolean interesting;
+		if(i instanceof Constant)
+			interesting = i instanceof StringConstant;
+		else{
+			Type type = ((Local) i).getType();
+			if(isStringType(type))
+				interesting = true;
+			else
+				interesting = type.equals(objectType);
+		}
+		return interesting;
+	}
+
 }

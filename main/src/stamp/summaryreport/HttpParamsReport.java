@@ -1,15 +1,21 @@
 package stamp.summaryreport;
 
-import shord.analyses.AllocNode;
-import shord.analyses.StringConstNode;
-import shord.project.ClassicProject;
-import shord.project.analyses.ProgramRel;
-
+import soot.SootClass;
 import soot.SootMethod;
 import soot.Unit;
+import soot.Value;
+import soot.Scene;
+import soot.Local;
 import soot.jimple.Stmt;
+import soot.jimple.StringConstant;
+import soot.jimple.InvokeExpr;
+import soot.jimple.AssignStmt;
+import soot.jimple.toolkits.callgraph.CallGraph;
+import soot.jimple.toolkits.callgraph.Edge;
 
-import chord.util.tuple.object.Trio;
+import shord.program.Program;
+
+import stamp.analyses.string.Slicer;
 
 import java.util.*;
 
@@ -17,7 +23,7 @@ import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
 
 public class HttpParamsReport
 {
-	private final Map<Stmt,Map<Integer,Set<String>>> data = new HashMap();
+	private final Map<Stmt,Map<Integer,Set<String>>> callsiteToVals = new HashMap();
 	private final Map<SootMethod,Set<Stmt>> methToCallsites = new HashMap();
 	private final Main main;
 
@@ -26,53 +32,124 @@ public class HttpParamsReport
 		this.main = main;
 	}
 
+	private Map<String,Object> httpMeths()
+	{
+		Map<String,Object> httpHeaderMeths = new HashMap();
+
+		httpHeaderMeths.put("<org.apache.http.client.methods.HttpGet: void addHeader(java.lang.String,java.lang.String)>", 
+							new int[]{1, 2});
+
+		httpHeaderMeths.put("<org.apache.http.client.methods.HttpPost: void addHeader(java.lang.String,java.lang.String)>", 
+							new int[]{1, 2});
+
+		httpHeaderMeths.put("<org.apache.http.message.BasicHeader: void <init>(java.lang.String,java.lang.String)>", 
+							new int[]{1, 2});
+		
+		/*
+		httpHeaderMeths.put("<org.apache.http.params.DefaultedHttpParams: org.apache.http.params.HttpParams setParameter(java.lang.String,java.lang.Object)>", 
+							new int[]{1, 2});
+		
+		httpHeaderMeths.put("<org.apache.http.params.BasicHttpParams: org.apache.http.params.HttpParams setParameter(java.lang.String,java.lang.Object)>",
+							new int[]{1, 2});
+		*/
+
+		httpHeaderMeths.put("<org.apache.http.params.AbstractHttpParams: org.apache.http.params.HttpParams setBooleanParameter(java.lang.String,boolean)>", 
+							new int[]{1});
+
+		httpHeaderMeths.put("<org.apache.http.params.AbstractHttpParams: org.apache.http.params.HttpParams setDoubleParameter(java.lang.String,double)>", 
+							new int[]{1});
+
+		httpHeaderMeths.put("<org.apache.http.params.AbstractHttpParams: org.apache.http.params.HttpParams setIntParameter(java.lang.String,int)>",
+							new int[]{1});
+
+		httpHeaderMeths.put("<org.apache.http.params.AbstractHttpParams: org.apache.http.params.HttpParams setLongParameter(java.lang.String,long)>",
+							new int[]{1});
+
+        		             
+        httpHeaderMeths.put("<org.apache.http.params.HttpProtocolParams: void setUserAgent(org.apache.http.params.HttpParams,java.lang.String)>",
+							new int[]{1});
+
+        httpHeaderMeths.put("<org.apache.http.params.HttpProtocolParamBean: void setUserAgent(java.lang.String)>", 
+							new int[]{1});
+
+        httpHeaderMeths.put("<android.webkit.WebSettings: void setUserAgentString(java.lang.String)>", 
+							new int[]{1});
+
+		httpHeaderMeths.put("<org.apache.http.message.BasicNameValuePair: void <init>(java.lang.String,java.lang.String)>", 
+							new int[]{1, 2});
+		
+		return httpHeaderMeths;
+	}
+
+
 	public void generate()
 	{
-		final ProgramRel rel = (ProgramRel) ClassicProject.g().getTrgt("httpParam");
-		rel.load();
+		Scene scene = Program.g().scene();
+		CallGraph cg = scene.getCallGraph();
 
-		Iterable<Trio<Unit,Integer,AllocNode>> it = rel.getAry3ValTuples();
-		for(Trio<Unit,Integer,AllocNode> trio : it){
-			Stmt stmt = (Stmt) trio.val0;
-			int paramIndex = trio.val1;
-			AllocNode an = trio.val2;
-
-			if(!(an instanceof StringConstNode))
-				continue;
-			
-			String arg = ((StringConstNode) an).value;
-
-			SootMethod callee = stmt.getInvokeExpr().getMethod();
-			Set<Stmt> callsites = methToCallsites.get(callee);
-			if(callsites == null){
-				callsites = new HashSet();
-				methToCallsites.put(callee, callsites);
-			}
-			callsites.add(stmt);
-
-			Map<Integer,Set<String>> d = data.get(stmt);
-			if(d == null){
-				d = new HashMap();
-				data.put(stmt, d);
-			}
-			
-			Set<String> s = d.get(paramIndex);
-			if(s == null){
-				s = new HashSet();
-				d.put(paramIndex, s);
-			}
-			
-			s.add(arg);
-			System.out.println("XYZ "+stmt + " "+paramIndex+" "+arg);
-		}
-
-		rel.close();
+		Slicer slicer = new Slicer();
+		Map<String,Object> httpMeths = httpMeths();
 		
-		writeReport();
+		for(Map.Entry<String,Object> pair : httpMeths.entrySet()){
+			String mSig = pair.getKey();
+			if(!scene.containsMethod(mSig))
+				continue;
+			SootMethod m = scene.getMethod(mSig);
+			int[] paramIndices = (int[]) pair.getValue();
+			
+			Set<Stmt> callsites = null;
+			Iterator<Edge> edgeIt = cg.edgesInto(m);
+			while(edgeIt.hasNext()){
+				Edge edge = edgeIt.next();
+				Stmt stmt = edge.srcStmt();
+				SootMethod src = edge.src();
+				InvokeExpr ie = stmt.getInvokeExpr();
+
+				Map<Integer,Set<String>> paramIndexToVals = new HashMap();
+
+				boolean nonEmpty = false;
+				for(int paramIndex : paramIndices){
+					if(!m.isStatic())
+						paramIndex--;
+					Value arg = ie.getArg(paramIndex);
+					Set<String> vals = null;
+					if(arg instanceof StringConstant){
+						vals = new HashSet();
+						vals.add(((StringConstant) arg).value);
+						nonEmpty = true;
+					} else if(arg instanceof Local){
+						System.out.println("slice for: "+stmt + " in " + src.getSignature() + " for " + arg);
+						vals = slicer.evaluate((Local) arg, stmt, src);
+						if(vals != null){
+							nonEmpty |= vals.size() > 0;
+							for(String val : vals)
+								System.out.println("val: "+val);
+						}
+					}
+					if(vals == null){
+						System.out.println("vals null!!");
+						vals = Collections.emptySet();
+					}
+					paramIndexToVals.put(paramIndex, vals);
+				}
+				
+				if(nonEmpty){
+					callsiteToVals.put(stmt, paramIndexToVals);
+					if(callsites == null){
+						callsites = new HashSet();
+						methToCallsites.put(m, callsites);
+					}
+					callsites.add(stmt);
+				}
+			}
+		}
+		slicer.finish();
+		
+		writeReport(httpMeths);
 	}
 	
 
-	private void writeReport()
+	private void writeReport(Map<String,Object> httpMeths)
 	{
 		main.startPanel("HTTP Parameters");
 		main.println("<div class=\"list-group\">");
@@ -80,37 +157,39 @@ public class HttpParamsReport
 		for(Map.Entry<SootMethod,Set<Stmt>> e : methToCallsites.entrySet()){
 			SootMethod apiMethod = e.getKey();
 			Set<Stmt> callsites = e.getValue();
+
+			int[] paramIndices = (int[]) httpMeths.get(apiMethod.getSignature());
+
 			main.println("<a href=\"#\" class=\"list-group-item\">");
 			main.println(String.format("<h4 class=\"list-group-item-heading\">%s</h4>", escapeHtml4(apiMethod.getSignature())));
 			main.println("<p class=\"list-group-item-text\">");
 			
 			main.println("<ul>");
+			int callsiteCount = 1;
 			for(Stmt callsite : callsites){
-				Map<Integer,Set<String>> args = data.get(callsite);
-				List<Integer> paramIndices = new ArrayList(args.keySet());
-				Collections.sort(paramIndices);
+				Map<Integer,Set<String>> args = callsiteToVals.get(callsite);
+				//List<Integer> paramIndices = new ArrayList(args.keySet());
+				//Collections.sort(paramIndices);
+				main.println(String.format("<li>Callsite %d</li>", callsiteCount++));
+				main.println("<ul>");
+				for(int paramIndex : paramIndices){
+					if(!apiMethod.isStatic())
+						paramIndex--;
 
-				StringBuilder sb = new StringBuilder();
-				boolean outerFirst = true;
-				for(Integer paramIndex : paramIndices){
 					Set<String> as = args.get(paramIndex);
+					StringBuilder sb = new StringBuilder("[");
 					boolean first = true;
-					sb.append("[");
 					for(String a : as){
 						if(!first)
-							sb.append(", ");
+							sb.append(",  &nbsp;");
 						else
 							first = false;
 						sb.append(String.format("\"%s\"", escapeHtml4(a)));
 					}
 					sb.append("]");
-					if(!outerFirst)
-						sb.append(", ");
-					else
-						outerFirst = false;
+					main.println(String.format("<li>Parameter %d: %s</li>", paramIndex, sb.toString()));
 				}
-				
-				main.println(String.format("<li>%s</li>", sb.toString()));
+				main.println("</ul>");
 			}
 			main.println("</ul>");
 
@@ -120,13 +199,4 @@ public class HttpParamsReport
 		main.println("</div>");
 		main.endPanel();
 	}
-
-		
-		
-		
-		
-		
-		
-		
-
 }

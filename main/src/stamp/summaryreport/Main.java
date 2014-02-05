@@ -61,9 +61,8 @@ public class Main extends JavaAnalysis
 			writer.println("<head>");
 			writer.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
 			writer.println(String.format("<link rel=\"stylesheet\" media=\"all\" href=\"%s\">",
-										 //System.getProperty("stamp.dir")+"/dist/css/bootstrap.css")
-
-										 "http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
+										 "file://"+System.getProperty("stamp.dir")+"/bootstrap/dist/css/bootstrap.css"
+										 //"http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
             ));
 
 			writer.println("<style>");
