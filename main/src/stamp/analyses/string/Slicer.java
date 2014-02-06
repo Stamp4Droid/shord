@@ -196,11 +196,11 @@ public class Slicer
 					//slice.add(s); //System.out.println(stmtStr(s));
 					//addToSlice(s, dfnStmt, useStmt);
 					addToSlice(s, callsite, useStmt);
-				}
-				if(arg instanceof Local){
-					Local loc = (Local) arg;
-					SootMethod containerMethod = containerMethodFor(loc);
-					workList.add(new Trio(loc, callsite, containerMethod));
+					if(arg instanceof Local){
+						Local loc = (Local) arg;
+						SootMethod containerMethod = containerMethodFor(loc);
+						workList.add(new Trio(loc, callsite, containerMethod));
+					}
 				}
 			}
 		} else if(rightOp instanceof InstanceFieldRef){
@@ -215,10 +215,10 @@ public class Slicer
 					//slice.add(s); //System.out.println(stmtStr(s));
 					//addToSlice(s, dfnStmt, useStmt);
 					addToSlice(s, stmt, useStmt);
-				}
-				if(alias instanceof Local){
-					SootMethod containerMethod = containerMethodFor((Local) alias);
-					workList.add(new Trio((Local) alias, stmt, containerMethod));
+					if(alias instanceof Local){
+						SootMethod containerMethod = containerMethodFor((Local) alias);
+						workList.add(new Trio((Local) alias, stmt, containerMethod));
+					}
 				}
 			}
 		} else if(rightOp instanceof StaticFieldRef){
@@ -231,10 +231,10 @@ public class Slicer
 					//slice.add(s); //System.out.println(stmtStr(s));
 					//addToSlice(s, dfnStmt, useStmt);
 					addToSlice(s, stmt, useStmt);
-				}
-				if(alias instanceof Local){
-					SootMethod containerMethod = containerMethodFor((Local) alias);
-					workList.add(new Trio((Local) alias, stmt, containerMethod));
+					if(alias instanceof Local){
+						SootMethod containerMethod = containerMethodFor((Local) alias);
+						workList.add(new Trio((Local) alias, stmt, containerMethod));
+					}
 				}
 			}
 		} else if(rightOp instanceof ArrayRef){
@@ -301,9 +301,9 @@ public class Slicer
 								//slice.add(s); //System.out.println(stmtStr(s));
 								//addToSlice(s, dfnStmt, useStmt);
 								addToSlice(s, stmt, useStmt);
+								if(r instanceof Local)
+									workList.add(new Trio((Local) r, stmt, callee));
 							}
-							if(r instanceof Local)
-								workList.add(new Trio((Local) r, stmt, callee));
 						}
 					}
 				}
@@ -313,9 +313,10 @@ public class Slicer
 				Statement s = new Assign((Immediate) rightOp, local, dfnStmt);
 				//slice.add(s); //System.out.println(stmtStr(s));
 				addToSlice(s, dfnStmt, useStmt);
+				if(rightOp instanceof Local)
+					mLocalList.add(new Pair((Local) rightOp, dfnStmt));
+				
 			}
-			if(rightOp instanceof Local)
-				mLocalList.add(new Pair((Local) rightOp, dfnStmt));
 		} else if(rightOp instanceof NewExpr){
 			//dont cause havoc
 		} else if(rightOp instanceof CastExpr){
@@ -344,6 +345,8 @@ public class Slicer
 			stmtToStatements.put(dependee, ss);
 		}
 		ss.add(dependeeStatement);
+
+		System.out.println("mapping "+ dependee + " to " + stmtStr(dependeeStatement));
 
 		//System.out.println("$$ "+dependent);
 		List<Statement> dependentStatements = stmtToStatements.get(dependent);

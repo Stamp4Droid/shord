@@ -135,6 +135,10 @@ class ReachingDefsAnalysis extends ForwardFlowAnalysis<Unit,FlowSet>
 
     protected void flowThrough(FlowSet in, Unit stmt, FlowSet out)
     {
+		if(out.size() > 10){
+			return;
+		}
+			
 		FlowSet killSet = stmtToKillSet.get(stmt);
 		if(killSet != null){
 			in.difference(killSet, out);

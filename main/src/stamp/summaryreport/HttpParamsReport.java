@@ -78,6 +78,50 @@ public class HttpParamsReport
 		httpHeaderMeths.put("<org.apache.http.message.BasicNameValuePair: void <init>(java.lang.String,java.lang.String)>", 
 							new int[]{1, 2});
 		
+		//URI's and URL's
+		httpHeaderMeths.put("<java.net.URI: java.net.URI create(java.lang.String)>",
+							new int[]{0});
+
+		httpHeaderMeths.put("<android.net.Uri: android.net.Uri parse(java.lang.String)>",
+							new int[]{0});
+
+		httpHeaderMeths.put("<org.apache.http.client.methods.HttpGet: void <init>(java.lang.String)>",
+							new int[]{1});
+
+		httpHeaderMeths.put("<org.apache.http.client.methods.HttpPost: void <init>(java.lang.String)>",
+							new int[]{1});		
+
+		httpHeaderMeths.put("<org.apache.http.client.methods.HttpOptions: void <init>(java.lang.String)>",
+							new int[]{1});
+			
+		httpHeaderMeths.put("<org.apache.http.client.methods.HttpOptions: void <init>(java.lang.String)>",
+							new int[]{1});
+
+		//webview
+		httpHeaderMeths.put("<android.webkit.WebView: void loadUrl(java.lang.String)>",
+							new int[]{1});
+		
+		httpHeaderMeths.put("<android.webkit.WebView: void loadUrl(java.lang.String,java.util.Mao)>",
+							new int[]{1});
+
+		httpHeaderMeths.put("<android.webkit.WebView: void postUrl(java.lang.String,byte[])>",
+							new int[]{1});
+
+		httpHeaderMeths.put("<android.webkit.WebView: void loadData(java.lang.String,java.lang.String,java.lang.String)>",
+							new int[]{1,2});
+
+		httpHeaderMeths.put("<android.webkit.WebView: void loadDataWithBaseURL(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)>",
+							new int[]{1,2,3,4});
+
+		//sms
+		httpHeaderMeths.put("<android.telephony.SmsManager: void sendTextMessage(java.lang.String,java.lang.String,java.lang.String,android.app.PendingIntent,android.app.PendingIntent)>",
+							new int[]{1});
+		httpHeaderMeths.put("<android.telephony.SmsManager: void sendMultipartTextMessage(java.lang.String,java.lang.String,java.util.ArrayList,java.util.ArrayList,java.util.ArrayList)>",
+							new int[]{1});
+		httpHeaderMeths.put("<android.telephony.SmsManager: void sendDataMessage(java.lang.String,java.lang.String,short,byte[],android.app.PendingIntent,android.app.PendingIntent)>",
+							new int[]{1});
+
+
 		return httpHeaderMeths;
 	}
 
