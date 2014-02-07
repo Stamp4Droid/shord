@@ -63,7 +63,7 @@ import stamp.missingmodels.util.Util.MultivalueMap;
 				 "LoadStat", "StoreStat", 
 				 "MmethArg", "MmethRet", 
 				 "IinvkRet", "IinvkArg", 
-				 "VT", "chaIM",
+				 "VT", "chaIM", "dynchaIM", 
 				 "HT", "HTFilter",
 				 "MI", "MH",
 				 "MV", "MU",
@@ -80,7 +80,7 @@ import stamp.missingmodels.util.Util.MultivalueMap;
 						"LoadStat", "StoreStat", 
 						"MmethArg", "MmethRet", 
 						"IinvkRet", "IinvkArg", 
-						"VT", "chaIM",
+						"VT", "chaIM", "dynchaIM", 
 						"HT", "HTFilter",
 						"MI", "MH",
 						"MV", "MU",
@@ -95,7 +95,7 @@ import stamp.missingmodels.util.Util.MultivalueMap;
 				 "V0,F0:F0_V0", "F0,V0:F0_V0",
 				 "M0,Z0,V0:M0_V0_Z0", "M0,Z0,V0:M0_V0_Z0",
 				 "I0,Z0,V0:I0_V0_Z0", "I0,Z0,V0:I0_V0_Z0",
-				 "V0,T0:T0_V0", "I0,M0:I0_M0",
+				 "V0,T0:T0_V0", "I0,M0:I0_M0", "I0,M0:I0_M0",
 				 "H0,T0:H0_T0", "H0,T0:H0_T0",
 				 "M0,I0:M0_I0", "M0,H0:M0_H0",
 				 "M0,V0:M0_V0", "M0,U0:M0_U0",
@@ -750,9 +750,11 @@ public class PAGBuilder extends JavaAnalysis
 		}
 	}
 
-	void populateCallgraph()
-	{
-	    // START HERE
+	void populateCallgraph() {
+	    /*
+	     * Here, we read the dynamic callgraph from a file
+	     * TODO: specify file using a command line option
+	     */
 	    MultivalueMap<SootMethod,SootMethod> dyncg = new MultivalueMap<SootMethod,SootMethod>();
 	    try {
 		BufferedReader br = new BufferedReader(new FileReader("cg.txt"));
@@ -772,13 +774,12 @@ public class PAGBuilder extends JavaAnalysis
 		System.out.println("ERROR BUILDING DYNCG");
 		e.printStackTrace();
 	    }
-	    // END HERE
-	    
-
 
 		CallGraph cg = Program.g().scene().getCallGraph();
 		ProgramRel relChaIM = (ProgramRel) ClassicProject.g().getTrgt("chaIM");
+		ProgramRel relDynChaIM = (ProgramRel) ClassicProject.g().getTrgt("dynchaIM");
         relChaIM.zero();
+	relDynChaIM.zero();
 		Iterator<Edge> edgeIt = cg.listener();
 		while(edgeIt.hasNext()){
 			Edge edge = edgeIt.next();
@@ -789,26 +790,26 @@ public class PAGBuilder extends JavaAnalysis
 			SootMethod tgt = (SootMethod) edge.tgt();
 			SootMethod src = (SootMethod) edge.src();
 
-			// START HERE
-			if(!dyncg.get(tgt).contains(src)) {
-			    System.out.println("ignoring: " + tgt.toString() + " -> " + src.toString());
-
-			    continue;
-			}
-			// END HERE
-
 			if(tgt.isAbstract())
 				assert false : "tgt = "+tgt +" "+tgt.isAbstract();
 			if(tgt.isPhantom())
 				continue;
 			//System.out.println("stmt: "+stmt+" tgt: "+tgt+ "abstract: "+ tgt.isAbstract());
-			if(ignoreStubs){
+			if(ignoreStubs) {
 				if(stubMethods.contains(tgt) || (src != null && stubMethods.contains(src)))
 					continue;
 			}
 			relChaIM.add(stmt, tgt);
+
+			if(dyncg.get(tgt).contains(src)) {
+			    relDynChaIM.add(stmt, tgt);
+			} else {
+			    System.out.println("ignoring: " + tgt.toString() + " -> " + src.toString());
+			}
+
 		}
 		relChaIM.save();
+		relDynChaIM.save();
 	}
 
 	void populateMethods()
