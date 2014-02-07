@@ -51,12 +51,12 @@ activeObj(o:C)
 activeRef0(v) :- activeRef(v).
 activeObj0(o) :- activeObj(o).
 
-# pt rules
 pt0(v,o) :- activeObj0(o), Alloc(v,h), typeFilter(v,o), CH(o,h).
 pt0(u,o) :- pt0(v,o), Assign(u,v), typeFilter(u,o).
 pt0(u,o) :- pt0(v,o), param(u,v,_), typeFilter(u,o).
 pt0(u,o) :- pt0(v,o), return(u,v,_), typeFilter(u,o).
 pt0(x,o) :- pt0(v,o), Store(u,f,v), pt0(u,op), pt0(w,op), Load(x,w,f), typeFilter(x,o).
+pt0(u,o) :- pt0(v,o), StoreStat(f,v), LoadStat(u,f), typeFilter(u,o).
 
 # activeRef rules
 activeRef0(u) :- pt0(v,o), Store(u,f,v), typeFilter(u,op), typeFilter(w,op), Load(x,w,f), typeFilter(x,o).
@@ -82,11 +82,12 @@ activeObj0(o) :- pt0(v,o), Store(u,f,v), temppt0(u,op), temppt0(w,op), Load(x,w,
 activeObj(o) :- Alloc(_,h), CH(o,h).
 
 # pt rules
-pt(c,v,o) :- activeObj(o), Alloc(v,h), MV(m,v), CM(c,m), pt0(v,o), CH(o,h).
-pt(c,u,o) :- pt(c,v,o), Assign(u,v), pt0(v,o).
+pt(c,v,o) :- activeObj(o), Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), pt0(v,o), CH(o,h).
+pt(c,u,o) :- pt(c,v,o), Assign(u,v), pt0(u,o).
 pt(d,u,o) :- pt(c,v,o), param(u,v,i), pt0(u,o), CC(c,d), CI(d,i).
 pt(c,u,o) :- pt(d,v,o), return(u,v,i), CI(d,i), CC(c,d), pt0(u,o).
 pt(d,x,o) :- pt(c,v,o), Store(u,f,v), pt(c,u,op), pt(d,w,op), Load(x,w,f), pt0(x,o).
+pt(c,u,o) :- pt(_,v,o), StoreStat(f,v), LoadStat(u,f), MV(m,u), CM(c,m).
 
 # activeRef rules
 activeRef(u) :- pt(_,v,o), Store(u,f,v), pt0(u,op), pt0(w,op), Load(x,w,f), pt0(x,o), activeRef0(u).

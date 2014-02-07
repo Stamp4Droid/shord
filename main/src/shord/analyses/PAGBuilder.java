@@ -755,19 +755,18 @@ public class PAGBuilder extends JavaAnalysis
 	     * Here, we read the dynamic callgraph from a file
 	     * TODO: specify file using a command line option
 	     */
-	    MultivalueMap<SootMethod,SootMethod> dyncg = new MultivalueMap<SootMethod,SootMethod>();
+	    MultivalueMap<String,String> dyncg = new MultivalueMap<String,String>();
 	    try {
 		BufferedReader br = new BufferedReader(new FileReader("cg.txt"));
 		String line;
 		while((line = br.readLine()) != null) {
 		    if(line.contains("CG")) {
 			String[] tokens = line.split("#");
-			String tgtSig = tokens[tokens.length-2];
-			String srcSig = tokens[tokens.length-1];
-			SootMethod tgt = Scene.v().getMethod(tgtSig);
+			String srcSig = tokens[tokens.length-2];
+			String tgtSig = tokens[tokens.length-1];
 			SootMethod src = Scene.v().getMethod(srcSig);
-			dyncg.add(tgt, src);
-			System.out.println(src.toString() + " -> " + tgt.toString());
+			SootMethod tgt = Scene.v().getMethod(tgtSig);
+			dyncg.add(src.toString(), tgt.toString());
 		    }
 		}
 	    } catch(Exception e) {
@@ -801,12 +800,10 @@ public class PAGBuilder extends JavaAnalysis
 			}
 			relChaIM.add(stmt, tgt);
 
-			if(dyncg.get(tgt).contains(src)) {
+			if(dyncg.get(src.toString()).contains(tgt.toString())) {
 			    relDynChaIM.add(stmt, tgt);
-			} else {
-			    System.out.println("ignoring: " + tgt.toString() + " -> " + src.toString());
+			    System.out.println("dynamic cg: " + src.toString() + " -> " + tgt.toString());
 			}
-
 		}
 		relChaIM.save();
 		relDynChaIM.save();
