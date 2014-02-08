@@ -295,7 +295,7 @@ class Production:
         assert not result.reversed, "Can't produce reversed literals"
         indexed_literals = [s for s in [result] + used if s.indexed]
         assert indexed_literals == [] or len(indexed_literals) >= 2, \
-            "At least two indexed literals required per production"
+            "At least two indexed literals required per production: " + " ".join([str(x) for x in indexed_literals])
 
 class ReverseProduction:
     """
