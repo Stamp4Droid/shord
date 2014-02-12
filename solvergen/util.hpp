@@ -125,13 +125,13 @@ public:
 //   key must agree with an existing one on the other attributes.
 // - Can have multiple instances of a domain (with separate references), for
 //   different collections.
+// - Generic names (strings by default)
 
 // Extensions:
 // - Define the concept of Managed Object, and have instances inherit some of
 //   the boilerplate?
 // - Keep the names in a set, and pass references to them (to conserve space).
 // - Destructor that cleans the managed objects
-// - Generic names (not just simple strings).
 // - No way to check if a Ref actually corresponds to some Registry instance
 //   before dereferencing it.
 // - Configurable max number of Refs
@@ -163,10 +163,12 @@ std::ostream& operator<<(std::ostream& os, const Ref<T>& ref) {
     return os;
 }
 
-template<typename T> class Registry;
+template<typename T, typename K> class Registry;
 
 template<typename T> class Ref {
-    friend Registry<T>;
+    // TODO: This would ideally be Registry<T,K>, but partial specializations
+    // are not allowed in friend declarations.
+    template<typename S, typename K> friend class Registry;
     friend std::ostream& operator<< <>(std::ostream& os, const Ref<T>& ref);
 private:
     unsigned int value;
@@ -195,48 +197,46 @@ public:
     }
 };
 
-template<typename T> class Registry {
+template<typename T, typename K = std::string> class Registry {
 public:
     typedef std::vector<std::reference_wrapper<T>> RefArray;
     typedef IterWrapper<typename RefArray::const_iterator, T,
 			detail::unwrap_ref<T>> Iterator;
 private:
     RefArray array;
-    std::map<std::string,T> map;
+    std::map<K,T> map;
 public:
     explicit Registry() {}
     T& index(const Ref<T> ref) const {
 	assert(ref.valid());
 	return array.at(ref.value).get();
     }
-    template<typename... ArgTs>
-    T& make(const std::string& name, ArgTs... args) {
+    template<typename... ArgTs> T& make(const K& key, ArgTs... args) {
 	Ref<T> next_ref = Ref<T>::for_value(array.size());
-	auto res = map.emplace(name, T(name, next_ref,
-				       std::forward<ArgTs>(args)...));
+	auto res = map.emplace(key, T(key, next_ref,
+				      std::forward<ArgTs>(args)...));
 	assert(res.second);
 	T& obj = res.first->second;
 	array.push_back(std::ref(obj));
 	return obj;
     }
-    template<typename... ArgTs>
-    T& add(const std::string& name, ArgTs... args) {
+    template<typename... ArgTs> T& add(const K& key, ArgTs... args) {
 	try {
-	    T& obj = map.at(name);
+	    T& obj = map.at(key);
 	    assert(obj.consistent_with(std::forward<ArgTs>(args)...));
 	    return obj;
 	} catch (const std::out_of_range& exc) {
-	    return make(name, std::forward<ArgTs>(args)...);
+	    return make(key, std::forward<ArgTs>(args)...);
 	}
     }
-    T& find(const std::string& name) {
-	return map.at(name);
+    T& find(const K& key) {
+	return map.at(key);
     }
-    const T& find(const std::string& name) const {
-	return map.at(name);
+    const T& find(const K& key) const {
+	return map.at(key);
     }
-    bool contains(const std::string& name) const {
-	return map.count(name) > 0;
+    bool contains(const K& key) const {
+	return map.count(key) > 0;
     }
     unsigned int size() const {
 	return array.size();
