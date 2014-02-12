@@ -2,7 +2,6 @@
 #define UTIL_HPP
 
 #include <boost/filesystem.hpp>
-#include <boost/iterator/indirect_iterator.hpp>
 #include <cassert>
 #include <functional>
 #include <iostream>
@@ -68,6 +67,11 @@ get_path(const boost::filesystem::directory_entry& entry) {
 template<typename A, typename B>
 const B& get_second(const std::pair<A,B>& p) {
     return p.second;
+}
+
+template<typename T>
+const T& deref(const T* const& ptr) {
+    return *ptr;
 }
 
 template<typename T, typename V, int I>
@@ -532,7 +536,7 @@ template<typename T> class PtrTable {
 public:
     typedef T Tuple;
     typedef typename std::deque<const Tuple*>::const_iterator PtrIterator;
-    typedef boost::indirect_iterator<PtrIterator> Iterator;
+    typedef IterWrapper<PtrIterator,Tuple,detail::deref<Tuple>> Iterator;
 private:
     std::deque<const Tuple*> store;
 public:
@@ -542,10 +546,10 @@ public:
 	store.push_back(ptr);
     }
     Iterator begin() const {
-	return boost::make_indirect_iterator(store.cbegin());
+	return Iterator(store.cbegin());
     }
     Iterator end() const {
-	return boost::make_indirect_iterator(store.cend());
+	return Iterator(store.cend());
     }
     unsigned int size() const {
 	return store.size();
