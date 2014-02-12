@@ -1,4 +1,4 @@
-package stamp.missingmodels.util.cflsolver.graph;
+package stamp.missingmodels.util.cflsolver;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import stamp.missingmodels.util.cflsolver.cfg.ContextFreeGrammar;
 
 public final class Graph {
 	public final class Vertex {
@@ -34,21 +33,21 @@ public final class Graph {
 	public final class Edge {
 		public final Vertex source;
 		public final Vertex sink;
-		public final int label;
 		public final int field;
+		public final int label;
 
 		public Edge(Vertex source, Vertex sink, int label, int field) {
 			this.source = source;
 			this.sink = sink;
-			this.label = label;
 			this.field = field;
+			this.label = label;
 		}
 
 		public Edge(Vertex source, Vertex sink, int label) {
 			this.source = source;
 			this.sink = sink;
-			this.label = label;
 			this.field = -1;
+			this.label = label;
 		}
 
 		@Override

@@ -1,4 +1,4 @@
-package stamp.missingmodels.util.cflsolver.cfg;
+package stamp.missingmodels.util.cflsolver;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +27,7 @@ public final class ContextFreeGrammar {
 		
 		@Override
 		public String toString() {
-			return getLabelString(this.target) + " :- " + getLabelString(this.firstInput) + ", " + getLabelString(this.secondInput) + ".";
+			return getLabelString(this.target) + " :- " + (this.isFirstInputBackwards ? "_" : "") + getLabelString(this.firstInput) + ", " + (this.isSecondInputBackwards ? "_" : "") + getLabelString(this.secondInput) + ".";
 		}
 	}
 	
@@ -91,6 +91,26 @@ public final class ContextFreeGrammar {
 	
 	public void addBinaryProduction(String target, String firstInput, String secondInput, boolean isFirstinputBackwards, boolean isSecondInputBackwards) {
 		this.addBinaryProduction(this.getLabel(target), this.getLabel(firstInput), this.getLabel(secondInput), isFirstinputBackwards, isSecondInputBackwards);
+	}
+
+	public void addProduction(String target, String[] inputs) {
+		this.addProduction(target, inputs, new boolean[inputs.length]);
+	}
+	
+	public void addProduction(String target, String[] inputs, boolean[] isInputBackwards) {
+		if(inputs.length <= 2 || inputs.length != isInputBackwards.length) {
+			throw new RuntimeException("Invalid production");
+		}
+		String prevInput = inputs[0];
+		String curInput = "^" + (isInputBackwards[0] ? "_" : "") + inputs[0] + "^" + (isInputBackwards[1] ? "_" : "") + inputs[1];
+		this.addBinaryProduction(curInput, prevInput, inputs[1], isInputBackwards[0], isInputBackwards[1]);
+		prevInput = curInput;
+		for(int i=2; i<inputs.length-1; i++) {
+			curInput = prevInput + "^" + (isInputBackwards[i] ? "_" : "") + inputs[i];
+			this.addBinaryProduction(curInput, prevInput, inputs[i], false, isInputBackwards[i]);
+			prevInput = curInput;
+		}
+		this.addBinaryProduction(target, prevInput, inputs[inputs.length-1], false, isInputBackwards[inputs.length-1]);
 	}
 	
 	public void addUnaryProduction(int target, int input) {

@@ -1,15 +1,14 @@
-package stamp.missingmodels.util.cflsolver.solver;
+package stamp.missingmodels.util.cflsolver;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import stamp.missingmodels.util.cflsolver.cfg.ContextFreeGrammar;
-import stamp.missingmodels.util.cflsolver.cfg.ContextFreeGrammar.BinaryProduction;
-import stamp.missingmodels.util.cflsolver.cfg.ContextFreeGrammar.UnaryProduction;
-import stamp.missingmodels.util.cflsolver.graph.Graph;
-import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
-import stamp.missingmodels.util.cflsolver.graph.Graph.Vertex;
+import stamp.missingmodels.util.cflsolver.ContextFreeGrammar.BinaryProduction;
+import stamp.missingmodels.util.cflsolver.ContextFreeGrammar.UnaryProduction;
+import stamp.missingmodels.util.cflsolver.Graph.Edge;
+import stamp.missingmodels.util.cflsolver.Graph.Vertex;
+
 
 public class ReachabilitySolver {
 	private int getField(int firstField, int secondField) {
