@@ -48,6 +48,8 @@ public:
 	return (std::tie(    symbol,     dir,     tagged) <
 		std::tie(rhs.symbol, rhs.dir, rhs.tagged));
     }
+    Ref<Node> prev_node(const Edge& e) const;
+    Ref<Node> next_node(const Edge& e) const;
 };
 
 // RSM ========================================================================
@@ -183,6 +185,9 @@ public:
     }
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg,
 	       const Registry<Component>& comp_reg) const;
+    void summarize(Graph& graph,
+		   const Registry<Worker,Ref<Node>>& workers) const;
+    void propagate(Graph& graph) const;
 };
 
 class RSM {
@@ -197,6 +202,7 @@ public:
     void parse_dir(const std::string& dirname);
     void parse_file(const fs::path& fpath);
     void print(std::ostream& os) const;
+    void propagate(Graph& graph) const;
 };
 
 // GRAPH ======================================================================
@@ -260,20 +266,237 @@ public:
     }
 };
 
+// TODO: Define as nested class of Edge?
+class Pattern {
+public:
+    const Ref<Node> src;
+    const Ref<Node> dst;
+    const Ref<Symbol> symbol;
+    const bool match_tag;
+    const Ref<Tag> tag;
+public:
+    explicit Pattern(const Label& l, Ref<Node> base = Ref<Node>::none())
+	: src((l.dir == Direction::FWD) ? base : Ref<Node>::none()),
+	  dst((l.dir == Direction::FWD) ? Ref<Node>::none() : base),
+	  symbol(l.symbol), match_tag(l.tagged), tag(Ref<Tag>::none()) {}
+    // Not continuing the matching from the previous edge.
+    // TODO: Could decompose into:
+    // - Match Pattern::apply(const Edge& e);
+    // - Pattern Match::combine(const Label& l, Ref<Node> base);
+    // TODO: Could do this in one step, when matching?
+    explicit Pattern(const Pattern& prev, const Edge& e, const Label& l,
+		     Ref<Node> base = Ref<Node>::none())
+	: src((l.dir == Direction::FWD) ? base : Ref<Node>::none()),
+	  dst((l.dir == Direction::FWD) ? Ref<Node>::none() : base),
+	  symbol(l.symbol), match_tag(l.tagged),
+	  tag(prev.match_tag ? e.tag : prev.tag) {
+	assert(prev.matches(e));
+    }
+    bool matches(const Edge& e) const;
+};
+
 // TODO: Disallow adding edges while an iterator is live.
 class Graph {
 public:
     static const std::string FILE_EXTENSION;
-private:
+public:
+    // TODO: Should make some of these private?
     Registry<Node> nodes;
     Registry<Tag> tags;
-    Index<Table<Edge>,Ref<Symbol>,&Edge::symbol> edges;
-    Table<Summary> summaries;
+    Index<MultiIndex<Index<Table<Edge>,Ref<Node>,&Edge::src>,
+		     PtrIndex<PtrTable<Edge>,Ref<Node>,&Edge::dst>,
+		     PtrIndex<PtrTable<Edge>,Ref<Tag>,&Edge::tag>>,
+	  Ref<Symbol>,&Edge::symbol> edges;
+    Index<Index<Table<Summary>,Ref<Node>,&Summary::src>,
+	  Ref<Component>,&Summary::comp> summaries;
 private:
     void parse_file(const Symbol& symbol, const fs::path& fpath);
 public:
-    explicit Graph(const Registry<Symbol>& symbols, const std::string& dir);
+    explicit Graph(const Registry<Symbol>& symbols,
+		   const std::string& dirname);
+    Table<const Edge*> search(const Pattern& pat) const;
+    std::map<Ref<Node>,std::set<Ref<Node>>>
+	subpath_bounds(const Label& head_lab, const Label& tail_lab) const;
     void print_stats(std::ostream& os, const Registry<Symbol>& symbols) const;
+    void print_summaries(const std::string& dirname,
+			 const Registry<Component>& components) const;
 };
+
+// SOLVING ====================================================================
+
+class Dependence;
+
+// TODO: alternative name ("Summarizer"? "Propagator"?)
+class Worker {
+public:
+
+    struct Result {
+	std::set<Summary> summaries;
+	std::set<Dependence> deps;
+    };
+
+private:
+    friend Registry<Worker,Ref<Node>>;
+public:
+    const Ref<Node> start; // used as primary key, to identify a Worker
+    const Ref<Worker> ref;
+    const Component& comp;
+private:
+    std::set<Ref<Node>> tgts; // if empty, any Node is acceptable
+private:
+    explicit Worker(Ref<Node> start, Ref<Worker> ref, const Component& comp,
+		    const std::set<Ref<Node>>& tgts)
+	: start(start), ref(ref), comp(comp), tgts(tgts) {
+	assert(!tgts.empty());
+    }
+public:
+    explicit Worker(Ref<Node> start, const Component& comp)
+	: start(start), ref(Ref<Worker>::none()), comp(comp) {}
+    bool merge(const Component& comp, const std::set<Ref<Node>>& new_tgts);
+    Result summarize(const Graph& graph) const;
+};
+
+// TODO: Should include the component if we support multiple components in SCCs
+class Dependence {
+public:
+    const Ref<Node> start;
+    const Ref<Worker> worker;
+public:
+    explicit Dependence(Ref<Node> start, Ref<Worker> worker)
+	: start(start), worker(worker) {}
+    bool operator<(const Dependence& rhs) const {
+	return (std::tie(    start,     worker) <
+		std::tie(rhs.start, rhs.worker));
+    }
+};
+
+// TODO: Only construct through a 'follow' method, not directly?
+class Position {
+public:
+    const Ref<Node> node;
+    const Ref<State> state;
+public:
+    explicit Position(Ref<Node> node, Ref<State> state)
+	: node(node), state(state) {}
+    bool operator<(const Position& rhs) const {
+	return (std::tie(    node,     state) <
+		std::tie(rhs.node, rhs.state));
+    }
+};
+
+// FSM ========================================================================
+
+// need to dump out the FSM as transition tables (edit fsm.py code)
+
+// store base TFs somewhere
+// could store on the symbols
+// (or have a map from Ref<Symbol> to each reg dim)
+// make sure set of symbols is the same
+// where is the composition table stored?
+
+// class TransFun {};
+
+//Ref<TransFun> num_trans_funs();
+//extern Ref<TransFun> compose_tab[];
+//Ref<TransFun> trans_fun_for(EDGE_KIND kind, bool reverse);
+//bool is_accepting(TRANS_FUN_REF tfun);
+
+// no need to name trans funs
+// special case of Registry for no key
+// (Void specialization w/o map?)
+
+// .tft parser
+// TFs are zero-based
+// null TF included? what number is default TF?
+// INVALID is null? 0 is ID?
+// the .tft tells us what the initial value is (i.e. the ID?)
+
+// use an array for all the TFs
+
+// support for multiple TFs?
+
+// TF composition:
+// handle tf composition (as a virtual function):
+// composition with previous TF: base edges have single TF
+// summaries combine with each of their TFs
+
+// summary edge: additional field: set<TF>
+
+// OTHER NOTES ================================================================
+
+// whenever there's multiple cases of compatible classes, use a class hierarchy?
+
+// mention: boost now required
+// which components?
+
+// copy from previous engine:
+// - memory limiter
+// - edge?
+// - sets & iters?
+// - lightmap (extend)
+// - logging
+// - profiling
+
+// need equality/lt for some classes
+
+// imbue true/false printing as bools
+
+// acronym? Program Analysis Framework Recursive State Machine Solver
+// grep -i 're\?c\?u\?r\?s\?i\?v\?e\?st\?a\?t\?e\?ma\?c\?h\?i\?n\?e\?' words
+// - prism
+// - charisma
+// - horseman, oarsman, altruism, exorcism
+// in-out vocabulary:
+// - begin, entry, start,  source,      origin, head, from, in
+// - end,   exit,  finish, destination, target, tail, to,   out
+// - init, open
+// - close, complete, arrive, result, stop
+
+// function_traits, to avoid having to specify the return type before the function
+
+// separate pattern for Edge and Summary
+// should make it a template: Pattern<T>
+// concept: needs src, dst, Ref<T>, match_tag, Tag
+// can accept cross-matching -- edgepat -> summpat
+
+// could store the traversed subgraph for each summarization
+// then print out for debugging: only those parts visited
+// could paint added edges in different colors, to make slideshow of uncovered graph
+
+// Better iterator model for C++ would help a lot
+// - return views, don't materialize explicitly
+//   apply operators lazily
+// - needs to be composable
+// - special range-for-like syntax
+//   or implement begin/end and comparison
+//   use a placeholder "empty" class, which is a special case in the comparison
+//   any iterator at the end of its sequence compares equal to it
+// - wrap STL iterators
+// - Java-style or Python-style
+// - basic higher-order operators:
+//   - map
+//   - filter
+//   - pattern matching
+// - can materialize as new collections
+// - list comprehension-style syntax
+// - pattern syntax (for matching/searching)
+//   need special value for "don't care"
+//   searching can automatically use indices as provided
+//   (query planning)
+// - can't insert through the iterator
+//   but can modify elements (as long as I don't need to re-index)
+// - make a class hierarchy (common base type)
+//   will have to implement common container iterators
+//   or define a virtual iterator container, in the vein of std::function
+//   perhaps through External Polymorphism
+// existing approaches:
+// - LINQ
+// - "Ranges"
+// - list comprehension implementations
+
+// need common base type for range/iterator if we are to support dynamic
+// switching over arbitrary patterns in Graph::search
+// but also need to template it on the type parameter
+// would External Polymorphism work here?
 
 #endif

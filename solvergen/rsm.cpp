@@ -22,6 +22,26 @@ void Label::print(std::ostream& os, const Registry<Symbol>& symbol_reg) const {
     }
 }
 
+Ref<Node> Label::prev_node(const Edge& e) const {
+    assert(symbol == e.symbol);
+    switch (dir) {
+    case Direction::FWD:
+	return e.src;
+    case Direction::REV:
+	return e.dst;
+    }
+}
+
+Ref<Node> Label::next_node(const Edge& e) const {
+    assert(symbol == e.symbol);
+    switch (dir) {
+    case Direction::FWD:
+	return e.dst;
+    case Direction::REV:
+	return e.src;
+    }
+}
+
 // RSM ========================================================================
 
 void State::print(std::ostream& os) const {
@@ -288,6 +308,241 @@ void Graph::print_stats(std::ostream& os,
     // TODO: Also print out stats on summaries.
 }
 
+void Graph::print_summaries(const std::string& dirname,
+			    const Registry<Component>& components) const {
+    fs::path dirpath(dirname);
+    for (const Component& comp : components) {
+	std::string fname = comp.name + FILE_EXTENSION;
+	std::cout << "Printing " << fname << std::endl;
+	std::ofstream fout((dirpath/fname).string());
+	assert(fout);
+	for (const Summary& s : summaries[comp.ref]) {
+	    fout << s.src.name << " " << s.dst.name << std::endl;
+	}
+    }
+}
+
+// SOLVING ====================================================================
+
+bool Pattern::matches(const Edge& e) const {
+    return ((!src.valid() || src == e.src) &&
+	    (!dst.valid() || dst == e.dst) &&
+	    symbol == e.symbol &&
+	    (!match_tag || !tag.valid() || tag == e.tag));
+}
+
+// TODO:
+// - Avoid creating a new container for the output.
+// - May be able to just return a reference to an existing index. If we do have
+//   to create a temporary table, we should return a managed pointer to it, so
+//   it gets deallocated automatically. Probably need a class hierarchy to
+//   support this properly. Currently, we're wasting space in a lot of cases.
+// - Manual use of the indices; this could be done at a query planning stage.
+// - Have to take cases explicitly on the code, because the different indices
+//   don't have compatible base types.
+Table<const Edge*> Graph::search(const Pattern& pat) const {
+    std::function<bool(const Edge&)> matches =
+	[&](const Edge& e){return pat.matches(e)};
+    std::function<const Edge*(const Edge&)> get_addr =
+	[](const Edge& e){return &e};
+    const auto& s = edges[pat.symbol];
+
+    if (pat.src.valid()) {
+	return filter_map(s.primary()[pat.src], matches, get_addr);
+    } else if (pat.dst.valid()) {
+	return filter_map(s.secondary<0>()[pat.dst], matches, get_addr);
+    } else if (pat.match_tag) {
+	return filter_map(s.secondary<1>()[pat.tag], matches, get_addr);
+    } else {
+	return filter_map(s, matches, get_addr);
+    }
+}
+
+// TODO: Don't produce the output by value.
+std::map<Ref<Node>,std::set<Ref<Node>>>
+Graph::subpath_bounds(const Label& head_lab, const Label& tail_lab) const {
+    std::map<Ref<Node>,std::set<Ref<Node>>> res;
+
+    Pattern head_pat(head_lab);
+    for (const Edge* h : search(head_pat)) {
+	Ref<Node> start = head_lab.next_node(*h);
+	Pattern tail_pat(head_pat, *h, tail_lab);
+	for (const Edge* t : search(tail_pat)) {
+	    Ref<Node> tgt = tail_lab.prev_node(*t);
+	    res[start].insert(tgt);
+	}
+    }
+
+    return res;
+}
+
+void RSM::propagate(Graph& graph) const {
+    // Components are processed in order of addition, which is guaranteed to be
+    // a valid bottom-up order.
+    for (const Component& comp : components) {
+	std::cout << "Summarizing " << comp.name << std::endl;
+
+	// We need to search through the uses of each component to find all
+	// compatible entry/exit node pairs on which we should summarize. This
+	// process needs to happen on the full RSM level.
+	Registry<Worker,Ref<Node>> workers;
+	for (const Component& user : components) {
+	    for (const Box& b : user.boxes) {
+		// TODO: This is a simple selection filter, we could have used
+		// an index on boxes instead.
+		if (b.comp != comp.ref) {
+		    continue;
+		}
+		// Pick all entry/exit node pairs compatible with any
+		// combination of entry/exit transitions to the current box.
+		// TODO: We're performing a separate graph traversal for each
+		// member of the cartesian product. Could instead keep these
+		// grouped and pass them as sets to subpath_bounds.
+		for (const Entry& i : user.entries.primary()[b.ref]) {
+		    for (const Exit& o : user.exits[b.ref]) {
+			std::map<Ref<Node>,std::set<Ref<Node>>> bounds =
+			    graph.subpath_bounds(i.label, o.label);
+			for (const auto& p : bounds) {
+			    // TODO: Duplicate entry/exit node pairs are
+			    // filtered through Registry's 'merge' mechanism.
+			    workers.add(p.first, comp, p.second);
+			}
+		    }
+		}
+	    }
+	}
+
+	comp.summarize(graph, workers);
+    }
+
+    // Final propagation step for the top component in the RSM. All required
+    // summarization has been completed at this point, and we only need to
+    // perform forward propagation.
+    const Component& top_comp = components.last();
+    std::cout << "Propagating over " << top_comp.name << std::endl;
+    top_comp.propagate(graph);
+}
+
+void Component::summarize(Graph& graph,
+			  const Registry<Worker,Ref<Node>>& workers) const {
+    Index<Table<Dependence>,Ref<Node>,&Dependence::start>> deps;
+    // TODO: Verify that all workers refer to this component.
+    Worklist<Ref<Worker>> worklist(true);
+    for (const Worker& w : workers) {
+	worklist.enqueue(w.ref);
+    }
+
+    while (!worklist.empty()) {
+	Ref<Worker> w = worklist.dequeue();
+	Worker::Result res = workers[w].summarize(graph);
+	// Dependencies must be recorded first, to ensure we re-process the
+	// function in cases of self-recursion.
+	// TODO: Could insert the dependencies as we find them, inside the
+	// function-local propagation; no need to pass them in a separate set.
+	for (const Dependence& d : res.deps) {
+	    assert(d.worker == w);
+	    deps.insert(d);
+	}
+	for (const Summary& s : res.summaries) {
+	    assert(s.comp == ref && s.src == workers[w].start);
+	    if (graph.summaries.insert(s).second) {
+		for (Ref<Worker> to_rerun : deps[s.src]) {
+		    worklist.enqueue(to_rerun);
+		}
+	    }
+	}
+    }
+}
+
+void Component::propagate(Graph& graph) const {
+    // We try starting from each node in the graph. The shape of the top
+    // component (or any secondary dimensions) can enforce additional
+    // constraints on acceptable sources.
+    // TODO: Could do this in a query-driven manner?
+    // We can do this one node at a time.
+    for (const Node& start : graph.nodes) {
+	Worker::Result res = Worker(start, *this).summarize(graph);
+	// Ignore any emitted dependencies, they should have been handled
+	// during this component's summarization step.
+	// TODO: Don't produce at all.
+	for (const Summary& s : res.summaries) {
+	    assert(s.comp == ref && s.src == start);
+	    // Reachability information is stored like regular summaries.
+	    // TODO: Should separate?
+	    graph.summaries.insert(s);
+	}
+    }
+}
+
+bool Worker::merge(const Component& comp,
+		   const std::set<Ref<Node>>& new_tgts) {
+    assert(comp.ref == this->comp.ref);
+    auto old_sz = tgts.size();
+    tgts.insert(new_tgts.begin(), new_tgts.end());
+    return tgts.size() > old_sz;
+}
+
+Worker::Result Worker::summarize(const Graph& graph) const {
+    Worklist<Position> worklist(false);
+    Result res;
+    worklist.enqueue(Position(start, comp.get_initial()));
+    std::cout << "Starting from " << graph.nodes[start].name << std::endl;
+
+    while (!worklist.empty()) {
+	Position pos = worklist.dequeue();
+
+	// Report a summary edge if we've reached a final state, at one of the
+	// "interesting" summary out-nodes (for the final top-down reachability
+	// step, any node works as a final node).
+	if ((tgts.empty() || tgts.count(pos.node) > 0) &&
+	    comp.get_final().count(pos.state) > 0) {
+	    res.summaries.emplace(start, pos.node, comp.ref);
+	}
+
+	// Cross edges according to the transitions out of the current state.
+	for (const Transition& t : comp.transitions[pos.state]) {
+	    for (const Edge* e : graph.search(Pattern(t.label, pos.node))) {
+		Ref<Node> next_node = t.label.next_node(*e);
+		worklist.enqueue(Position(next_node, t.to));
+	    }
+	}
+
+	// Cross summary edges according to the boxes that the current state
+	// enters into. The entry, box, and all exits are crossed in one step.
+	for (const Entry& entry : comp.entries.secondary<0>()[pos.state]) {
+	    Ref<Component> sub_comp = comp.boxes[entry.to].comp;
+	    Pattern in_pat(entry.label, pos.node);
+
+	    for (const Edge* e_in : graph.search(in_pat)) {
+		Ref<Node> sub_in = entry.label.next_node(*e_in);
+
+		// If this is a self-referring box (TODO: or any box in the
+		// current RSM SCC, if we ever support non-singleton SCCs),
+		// record our dependence on it.
+		if (sub_comp == comp.ref) {
+		    res.deps.insert(Dependence(sub_in, ref));
+		}
+
+		// Cross through any existing summary edges.
+		for (const Summary& s : graph.summaries[sub_comp][sub_in]) {
+		    Ref<Node> sub_out = s.dst;
+		    // Cross through exit edges compatible with the previously
+		    // entered entry edge.
+		    for (const Exit& exit : comp.exits[entry.to]) {
+			Pattern out_pat(in_pat, *e_in, exit.label, sub_out);
+			for (const Edge* e_out : graph.search(out_pat)) {
+			    Ref<Node> next_node = exit.label.next_node(*e_out);
+			    worklist.enqueue(Position(next_node, exit.to));
+			}
+		    }
+		}
+	    }
+	}
+    }
+
+    return res;
+}
+
 // MAIN =======================================================================
 
 // TODO:
@@ -300,16 +555,21 @@ int main(int argc, char* argv[]) {
 	("rsm-dir", po::value<std::string>()->required(),
 	 "Directory of RSM components")
 	("graph-dir", po::value<std::string>()->required(),
-	 "Directory of edge files");
+	 "Directory of edge files")
+	("summ-dir", po::value<std::string>()->required(),
+	 "Directory to store the summaries");
     po::positional_options_description pos_desc;
     pos_desc.add("rsm-dir", 1);
     pos_desc.add("graph-dir", 1);
+    pos_desc.add("summ-dir", 1);
     po::variables_map vm;
     po::store(po::command_line_parser(argc, argv)
 	      .options(desc).positional(pos_desc).run(), vm);
     po::notify(vm);
     std::string rsm_dir = vm.at("rsm-dir").as<std::string>();
     std::string graph_dir = vm.at("graph-dir").as<std::string>();
+    std::string summ_dir = vm.at("summ-dir").as<std::string>();
+
     // Initialize logging system
     std::cout.imbue(std::locale(""));
 
@@ -323,6 +583,15 @@ int main(int argc, char* argv[]) {
     Graph graph(rsm.symbols, graph_dir);
     graph.print_stats(std::cout, rsm.symbols);
     std::cout << std::endl;
+
+    // Perform actual solving
+    std::cout << "Solving" << std::endl;
+    rsm.propagate(graph);
+    std::cout << std::endl;
+
+    // Print the output
+    std::cout << "Printing summaries" << std::endl;
+    graph.print_summaries(summ_dir, rsm.components);
 
     return 0;
 }
