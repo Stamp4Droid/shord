@@ -56,7 +56,7 @@ public:
     }
 };
 
-// OS SERVICES ================================================================
+// HELPER CODE ================================================================
 
 namespace detail {
 
@@ -65,7 +65,32 @@ get_path(const boost::filesystem::directory_entry& entry) {
     return entry.path();
 }
 
+template<typename A, typename B>
+const B& get_second(const std::pair<A,B>& p) {
+    return p.second;
+}
+
+template<typename T, typename V, int I>
+struct TupleInserter {
+    static void insert(T& idxs, V val) {
+	TupleInserter<T,V,I-1>::insert(idxs, val);
+	std::get<I-1>(idxs).insert(val);
+    }
+};
+
+template<typename T, typename V>
+struct TupleInserter<T,V,0> {
+    static void insert(T&, V) {}
+};
+
+template<typename T, typename V>
+void insert_all(T& idxs, V val) {
+    TupleInserter<T,V,std::tuple_size<T>::value>::insert(idxs, val);
+}
+
 } // namespace detail
+
+// OS SERVICES ================================================================
 
 class Directory {
 public:
@@ -165,15 +190,6 @@ public:
 	return value < other.value;
     }
 };
-
-namespace detail {
-
-template<typename A, typename B>
-const B& get_second(const std::pair<A,B>& p) {
-    return p.second;
-}
-
-} // namespace detail
 
 template<typename T> class Registry {
 public:
@@ -567,28 +583,6 @@ public:
 
 template<typename S, typename K, const K S::Tuple::* MemPtr>
 const S PtrIndex<S,K,MemPtr>::dummy;
-
-namespace detail {
-
-template<typename T, typename V, int I>
-struct TupleInserter {
-    static void insert(T& idxs, V val) {
-	TupleInserter<T,V,I-1>::insert(idxs, val);
-	std::get<I-1>(idxs).insert(val);
-    }
-};
-
-template<typename T, typename V>
-struct TupleInserter<T,V,0> {
-    static void insert(T&, V) {}
-};
-
-template<typename T, typename V>
-void insert_all(T& idxs, V val) {
-    TupleInserter<T,V,std::tuple_size<T>::value>::insert(idxs, val);
-}
-
-} // namespace detail
 
 template<typename PriIdxT, typename... SecIdxTs> class MultiIndex {
 public:
