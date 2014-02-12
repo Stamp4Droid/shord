@@ -64,9 +64,9 @@ get_path(const boost::filesystem::directory_entry& entry) {
     return entry.path();
 }
 
-template<typename A, typename B>
-const B& get_second(const std::pair<A,B>& p) {
-    return p.second;
+template<typename T>
+const T& unwrap_ref(const std::reference_wrapper<T>& r) {
+    return r.get();
 }
 
 template<typename T>
@@ -197,10 +197,11 @@ public:
 
 template<typename T> class Registry {
 public:
-    typedef IterWrapper<typename std::map<std::string,T>::const_iterator, T,
-			detail::get_second<const std::string,T>> Iterator;
+    typedef std::vector<std::reference_wrapper<T>> RefArray;
+    typedef IterWrapper<typename RefArray::const_iterator, T,
+			detail::unwrap_ref<T>> Iterator;
 private:
-    std::vector<std::reference_wrapper<T>> array;
+    RefArray array;
     std::map<std::string,T> map;
 public:
     explicit Registry() {}
@@ -241,10 +242,10 @@ public:
 	return array.size();
     }
     Iterator begin() const {
-	return Iterator(map.cbegin());
+	return Iterator(array.cbegin());
     }
     Iterator end() const {
-	return Iterator(map.cend());
+	return Iterator(array.cend());
     }
 };
 

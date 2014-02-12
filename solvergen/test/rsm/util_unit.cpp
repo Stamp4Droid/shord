@@ -57,10 +57,11 @@ int main() {
     std::cout << std::endl;
 
     Registry<Bar> bars;
-    bars.make("one", true);
-    bars.make("two", false);
-    bars.add("one", true);
-    bars.make("three", false);
+    bars.make("aaa", true);
+    bars.make("bbb", false);
+    bars.add("aaa", true);
+    bars.make("ccc", false);
+    std::cout << "Should see aaa,bbb,ccc" << std::endl;
     for (const Bar& b : bars) {
 	std::cout << b.ref << ":" << b << std::endl;
     };
