@@ -204,11 +204,8 @@ public class JCFLSolverAnalysis extends JavaAnalysis {
 		String appDir = outputDir.getParentFile().getName();
 		Experiment experiment = new Experiment(JCFLSolverSingle.class, G.class, appDir, loc.getX(), loc.getY());
 
-		
-
 		//setGroundTruth(experiment.j().g(), experiment.j().s(), m);
 		//runStubModelClassifier(m);
-		
 		
 		experiment.run(m, new StubModelSet(), relationAdder, ModelType.FALSE);
 		j = experiment.j();

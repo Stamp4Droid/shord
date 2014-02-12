@@ -12,11 +12,12 @@
 .include "M.dom"
 .include "C.dom"
 .include "V.dom"
+.include "H.dom"
 .include "U.dom"
 .include "F.dom"
 .include "I.dom"
 
-.bddvarorder Z0_M0_C0xC1_V0xV1_U0xU1_F0_I0
+.bddvarorder Z0_M0_C0xC1_V0xV1_U0xU1_H0xF0_I0
 
 ###################
 # INPUT: TAINT HELPER
@@ -25,8 +26,12 @@
 MU(m:M,u:U) input # u is a prim type variable in m
 MV(m:M,v:V) input # v is a ref type variable in m
 CM(c:C,m:M) input # c is a context of method m
+CH(o:C,h:H) input         # context’ified abstract location o corresponds to new stmt h
 CI(c:C,i:I) input # stmt i is the top element in the k-limited callstack c
 CC(c:C,d:C) input # there exists i s.t. c++[i] = d
+
+# new
+Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
 
 # assign
 Assign(v:V,u:V)     input # v = u
@@ -68,6 +73,9 @@ Stub(m:M) input
 ###################
 # OUTPUT: TAINT HELPER
 ###################
+
+# new
+NewCtxt(c:C,v:V,o:C) output # v = new X() // o
 
 # assign
 AssignCtxt(c:C,v:V,u:V) output          # v = u
@@ -115,6 +123,9 @@ phAlloc(v:V,c:C) output
 ###################
 # RULES: TAINT HELPER
 ###################
+
+# new
+NewCtxt(c,v,o) :- Alloc(v,h), CH(o,h), MV(m,v), CM(c,m).
 
 # assign
 AssignCtxt(c,v,u) :- Assign(v,u), MV(m,v), CM(c,m).

@@ -151,6 +151,9 @@ public class ConversionUtils {
 		/*
 		 * Pointer analysis inputs
 		 */
+		
+		// new
+		relations.add("newCtxt", new IndexRelation("NewCtxt", "V", 1, 0, "O", 2, null));
 
 		// assign
 		relations.add("assignCtxt", new IndexRelation("AssignCtxt", "V", 1, 0, "U", 2, 0));

@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import stamp.missingmodels.util.Util.MultivalueMap;
+
 
 public final class Graph {
 	public final class Vertex {
@@ -52,7 +54,7 @@ public final class Graph {
 
 		@Override
 		public String toString() {
-			return this.source.toString() + " " + this.sink.toString() + " " + contextFreeGrammar.getLabelString(this.label) + " " + getFieldName(this.field);
+			return this.source.toString() + " " + this.sink.toString() + " " + contextFreeGrammar.getLabelName(this.label) + " " + getFieldName(this.field);
 		}
 
 		@Override
@@ -97,7 +99,6 @@ public final class Graph {
 	private final Map<Vertex,String> vertexNames = new HashMap<Vertex,String>(); 
 	private final Map<String,Integer> fields = new HashMap<String,Integer>();
 	private final Map<Integer,String> fieldNames = new HashMap<Integer,String>();
-	public final List<Edge> edges = new LinkedList<Edge>();
 	private final ContextFreeGrammar contextFreeGrammar;
 	private final int numLabels;
 
@@ -150,16 +151,33 @@ public final class Graph {
 		}
 		source.outgoingEdgesByLabel[label].add(edge);
 		sink.incomingEdgesByLabel[label].add(edge);
-		this.edges.add(edge);
 		return edge;
+	}
+	
+	public Set<Edge> getEdges() {
+		Set<Edge> edges = new HashSet<Edge>();
+		for(Vertex vertex : this.vertices.values()) {
+			for(int i=0; i<vertex.outgoingEdgesByLabel.length; i++) {
+				edges.addAll(vertex.outgoingEdgesByLabel[i]);
+			}
+		}
+		return edges;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for(Edge edge : this.edges) {
+		for(Edge edge : this.getEdges()) {
 			sb.append(edge.toString()).append("\n");
 		}
 		return sb.toString();
+	}
+	
+	public MultivalueMap<String,Edge> getSortedEdges() {
+		MultivalueMap<String,Edge> sortedEdges = new MultivalueMap<String,Edge>();
+		for(Edge edge : this.getEdges()) {
+			sortedEdges.add(this.contextFreeGrammar.getLabelName(edge.label), edge);
+		}
+		return sortedEdges;
 	}
 }

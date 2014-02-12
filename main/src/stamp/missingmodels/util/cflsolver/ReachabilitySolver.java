@@ -34,7 +34,7 @@ public class ReachabilitySolver {
 	public void solve(ContextFreeGrammar c, Graph g) {
 		// Initialize the worklist
 		LinkedList<Edge> worklist = new LinkedList<Edge>(); // list of type Edge
-		for(Edge edge : g.edges) {
+		for(Edge edge : g.getEdges()) {
 			worklist.add(edge);
 		}
 		

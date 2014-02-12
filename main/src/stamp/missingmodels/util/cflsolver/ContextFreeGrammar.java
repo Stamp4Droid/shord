@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public final class ContextFreeGrammar {
 	public final class BinaryProduction {
@@ -27,7 +28,7 @@ public final class ContextFreeGrammar {
 		
 		@Override
 		public String toString() {
-			return getLabelString(this.target) + " :- " + (this.isFirstInputBackwards ? "_" : "") + getLabelString(this.firstInput) + ", " + (this.isSecondInputBackwards ? "_" : "") + getLabelString(this.secondInput) + ".";
+			return getLabelName(this.target) + " :- " + (this.isFirstInputBackwards ? "_" : "") + getLabelName(this.firstInput) + ", " + (this.isSecondInputBackwards ? "_" : "") + getLabelName(this.secondInput) + ".";
 		}
 	}
 	
@@ -42,7 +43,7 @@ public final class ContextFreeGrammar {
 		
 		@Override
 		public String toString() {
-			return getLabelString(this.target) + " :- " + getLabelString(this.input) + ".";
+			return getLabelName(this.target) + " :- " + getLabelName(this.input) + ".";
 		}
 	}
 	
@@ -77,7 +78,11 @@ public final class ContextFreeGrammar {
 		return intLabel;
 	}
 	
-	public String getLabelString(int label) {
+	public Set<String> getLabelNames() {
+		return this.labels.keySet();
+	}
+	
+	public String getLabelName(int label) {
 		return this.labelStrings.get(label);
 	}
 	
