@@ -55,6 +55,42 @@ public:
     }
 };
 
+// GENERIC DATA STRUCTURES ====================================================
+
+// Properties:
+// - Guarantees no duplicate entries in the queue.
+// - FIFO ordering.
+// - Enqueues and dequeues are done by copying.
+//   (need to be careful with large composites)
+// - Stored classes need to be comparable.
+// TODO:
+// - copy/iterator constructor
+// - Boolean flag could be made into a template parameter.
+template<typename T> class Worklist {
+private:
+    const bool can_reprocess;
+    std::set<T> reached;
+    std::queue<T> queue;
+public:
+    explicit Worklist(bool can_reprocess) : can_reprocess(can_reprocess) {}
+    bool empty() const {
+	return queue.empty();
+    }
+    void enqueue(T val) {
+	if (reached.insert(val).second) {
+	    queue.push(val);
+	}
+    }
+    T dequeue() {
+	T val = queue.front();
+	queue.pop();
+	if (can_reprocess) {
+	    reached.erase(val);
+	}
+	return val;
+    }
+};
+
 // HELPER CODE ================================================================
 
 namespace detail {
@@ -240,6 +276,12 @@ public:
     }
     unsigned int size() const {
 	return array.size();
+    }
+    T& first() {
+	return array.front().get();
+    }
+    T& last() {
+	return array.back().get();
     }
     Iterator begin() const {
 	return Iterator(array.cbegin());
@@ -622,5 +664,25 @@ public:
 	return pri_idx.size();
     }
 };
+
+// TODO:
+// - Could alternatively produce the output by:
+//   - constructing a (constant) iterable view
+//   - sending to an output iterator
+//   - filling in a provided container
+// - This is a very specific case of a proper lazy iterator framework.
+template <typename C, typename S>
+Table<S> filter_map(const C& table,
+		    std::function<bool(const typename C::Tuple&)> pred,
+		    std::function<S(const typename C::Tuple&)> mod) {
+    Table<S> res;
+    for (const typename C::Tuple& t : table) {
+	if (pred(t)) {
+	    // TODO: Extraneous copying could occur here.
+	    res.insert(mod(t));
+	}
+    }
+    return res;
+}
 
 #endif
