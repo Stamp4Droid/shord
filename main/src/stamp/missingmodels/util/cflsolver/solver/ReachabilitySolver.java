@@ -4,9 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import stamp.missingmodels.util.cflsolver.cfg.BinaryProduction;
 import stamp.missingmodels.util.cflsolver.cfg.ContextFreeGrammar;
-import stamp.missingmodels.util.cflsolver.cfg.UnaryProduction;
+import stamp.missingmodels.util.cflsolver.cfg.ContextFreeGrammar.BinaryProduction;
+import stamp.missingmodels.util.cflsolver.cfg.ContextFreeGrammar.UnaryProduction;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
 import stamp.missingmodels.util.cflsolver.graph.Graph.Vertex;

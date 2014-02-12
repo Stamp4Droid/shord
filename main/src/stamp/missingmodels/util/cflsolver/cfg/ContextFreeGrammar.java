@@ -6,6 +6,46 @@ import java.util.List;
 import java.util.Map;
 
 public final class ContextFreeGrammar {
+	public final class BinaryProduction {
+		public final int target;
+		public final int firstInput;
+		public final int secondInput;
+		public final boolean isFirstInputBackwards;
+		public final boolean isSecondInputBackwards;
+		
+		public BinaryProduction(int target, int firstInput, int secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards) {
+			this.target = target;
+			this.firstInput = firstInput;
+			this.secondInput = secondInput;
+			this.isFirstInputBackwards = isFirstInputBackwards;
+			this.isSecondInputBackwards = isSecondInputBackwards;
+		}
+		
+		public BinaryProduction(int target, int firstInput, int secondInput) {
+			this(target, firstInput, secondInput, false, false);
+		}
+		
+		@Override
+		public String toString() {
+			return getLabelString(this.target) + " :- " + getLabelString(this.firstInput) + ", " + getLabelString(this.secondInput) + ".";
+		}
+	}
+	
+	public final class UnaryProduction {
+		public final int target;
+		public final int input;
+		
+		public UnaryProduction(int target, int input) {
+			this.target = target;
+			this.input = input;
+		}
+		
+		@Override
+		public String toString() {
+			return getLabelString(this.target) + " :- " + getLabelString(this.input) + ".";
+		}
+	}
+	
 	public final List<List<UnaryProduction>> unaryProductionsByInput; // list of type UnaryProduction
 	public final List<List<BinaryProduction>> binaryProductionsByFirstInput; // list of type BinaryProduction
 	public final List<List<BinaryProduction>> binaryProductionsBySecondInput; // list of type BinaryProduction
