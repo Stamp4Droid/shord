@@ -26,8 +26,9 @@ private:
 	assert(boost::regex_match(name, NAME_REGEX));
     }
 public:
-    bool consistent_with(bool parametric) const {
-	return parametric == this->parametric;
+    bool merge(bool parametric) const {
+	assert(parametric == this->parametric);
+	return false;
     }
 };
 
@@ -65,8 +66,9 @@ private:
 		   bool final)
 	: name(name), ref(ref), initial(initial), final(final) {}
 public:
-    bool consistent_with(bool initial, bool final) const {
-	return initial == this->initial && final == this->final;
+    bool merge(bool initial, bool final) const {
+	assert(initial == this->initial && final == this->final);
+	return false;
     }
     void print(std::ostream& os) const;
 };
@@ -83,8 +85,9 @@ private:
     explicit Box(const std::string& name, Ref<Box> ref, Ref<Component> comp)
 	: name(name), ref(ref), comp(comp) {}
 public:
-    bool consistent_with(Ref<Component> comp) const {
-	return comp == this->comp;
+    bool merge(Ref<Component> comp) const {
+	assert(comp == this->comp);
+	return false;
     }
     void print(std::ostream& os, const Registry<Component>& comp_reg) const;
 };
@@ -173,8 +176,8 @@ public:
     const std::set<Ref<State>>& get_final() const {
 	return final;
     }
-    bool consistent_with() const {
-	return true;
+    bool merge() const {
+	return false;
     }
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg,
 	       const Registry<Component>& comp_reg) const;
@@ -205,8 +208,8 @@ private:
     explicit Node(const std::string& name, Ref<Node> ref)
 	: name(name), ref(ref) {}
 public:
-    bool consistent_with() const {
-	return true;
+    bool merge() const {
+	return false;
     }
 };
 
@@ -219,8 +222,8 @@ private:
     explicit Tag(const std::string& name, Ref<Tag> ref)
 	: name(name), ref(ref) {}
 public:
-    bool consistent_with() const {
-	return true;
+    bool merge() const {
+	return false;
     }
 };
 

@@ -223,7 +223,7 @@ public:
     template<typename... ArgTs> T& add(const K& key, ArgTs... args) {
 	try {
 	    T& obj = map.at(key);
-	    assert(obj.consistent_with(std::forward<ArgTs>(args)...));
+	    obj.merge(std::forward<ArgTs>(args)...);
 	    return obj;
 	} catch (const std::out_of_range& exc) {
 	    return make(key, std::forward<ArgTs>(args)...);
