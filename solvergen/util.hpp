@@ -207,7 +207,7 @@ private:
     std::map<K,T> map;
 public:
     explicit Registry() {}
-    T& index(const Ref<T> ref) const {
+    T& operator[](const Ref<T> ref) {
 	assert(ref.valid());
 	return array.at(ref.value).get();
     }
@@ -376,7 +376,7 @@ public:
 //   additional:
 //   - typedef Wrapped = S
 //   - typedef Key = K
-//   - const Wrapped& select(const Key& key) const
+//   - const Wrapped& operator[](const Key& key) const
 // - PtrTable<T> : SecIndex<T>
 // - PtrIndex<S,K,MemPtr> : SecIndex<T>
 //   where:
@@ -385,7 +385,7 @@ public:
 //   additional:
 //   - typedef Wrapped = S
 //   - typedef Key = K
-//   - const Wrapped& select(const Key& key) const
+//   - const Wrapped& operator[](const Key& key) const
 // - MultiIndex<PriIdxT,S[1],S[2],...> : Relation<T>:
 //   where:
 //   - PriIdxT : Relation<T>
@@ -508,7 +508,7 @@ public:
     std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
 	return idx[tuple.*MemPtr].insert(tuple);
     }
-    const Wrapped& select(const Key& key) const {
+    const Wrapped& operator[](const Key& key) const {
 	try {
 	    return idx.at(key);
 	} catch (const std::out_of_range& exc) {
@@ -570,7 +570,7 @@ public:
     void insert(const Tuple* ptr) {
 	idx[ptr->*MemPtr].insert(ptr);
     }
-    const Wrapped& select(const Key& key) const {
+    const Wrapped& operator[](const Key& key) const {
 	try {
 	    return idx.at(key);
 	} catch (const std::out_of_range& exc) {

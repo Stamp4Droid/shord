@@ -77,15 +77,15 @@ int main() {
     idx.insert(Foo(-10,-1,24));
     idx.insert(Foo(1,2,3));
     idx.insert(Foo(4,5,-11));
-    for (const Foo& obj : idx.primary().select(1).select(2)) {
+    for (const Foo& obj : idx.primary()[1][2]) {
 	std::cout << obj << std::endl;
     }
     std::cout << std::endl;
-    for (const Foo& obj : idx.secondary<0>().select(5).select(-11)) {
+    for (const Foo& obj : idx.secondary<0>()[5][-11]) {
 	std::cout << obj << std::endl;
     }
     std::cout << std::endl;
-    for (const Foo& obj : idx.secondary<1>().select(2).select(1)) {
+    for (const Foo& obj : idx.secondary<1>()[2][1]) {
 	std::cout << obj << std::endl;
     }
     std::cout << std::endl;

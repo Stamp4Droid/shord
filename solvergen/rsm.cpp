@@ -15,7 +15,7 @@ void Label::print(std::ostream& os, const Registry<Symbol>& symbol_reg) const {
     if (dir == Direction::REV) {
 	os << "_";
     }
-    Symbol& s = symbol_reg.index(symbol);
+    Symbol& s = symbol_reg[symbol];
     os << s.name;
     if (s.parametric) {
 	os << "[" << (tagged ? "i" : "*") << "]";
@@ -36,7 +36,7 @@ void State::print(std::ostream& os) const {
 }
 
 void Box::print(std::ostream& os, const Registry<Component>& comp_reg) const {
-    os << "Box" << ref << " " << comp_reg.index(comp).name << std::endl;
+    os << "Box" << ref << " " << comp_reg[comp].name << std::endl;
 }
 
 void Transition::print(std::ostream& os,
@@ -281,7 +281,7 @@ void Graph::print_stats(std::ostream& os,
     os << "Edges: " << std::endl;
     for (const Symbol& s : symbols) {
 	os << std::setw(15) << s.name
-	   << std::setw(12) << edges.select(s.ref).size() << std::endl;
+	   << std::setw(12) << edges[s.ref].size() << std::endl;
     }
 }
 
