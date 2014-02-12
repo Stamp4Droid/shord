@@ -96,18 +96,18 @@ public:
 // tagged with '[*]'.
 class Transition {
 public:
-    const Ref<State> src;
-    const Ref<State> dst;
+    const Ref<State> from;
+    const Ref<State> to;
     const Label label;
 public:
-    explicit Transition(Ref<State> src, Ref<State> dst, Label label)
-	: src(src), dst(dst), label(label) {
+    explicit Transition(Ref<State> from, Ref<State> to, Label label)
+	: from(from), to(to), label(label) {
 	assert(!label.tagged);
     }
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
     bool operator<(const Transition& rhs) const {
-	return (std::tie(    src,     dst,     label) <
-		std::tie(rhs.src, rhs.dst, rhs.label));
+	return (std::tie(    from,     to,     label) <
+		std::tie(rhs.from, rhs.to, rhs.label));
     }
 };
 
@@ -117,31 +117,31 @@ public:
 // - Can't move from a box directly to another box.
 class Entry {
 public:
-    const Ref<State> src;
-    const Ref<Box> dst;
+    const Ref<State> from;
+    const Ref<Box> to;
     const Label label;
 public:
-    explicit Entry(Ref<State> src, Ref<Box> dst, Label label)
-	: src(src), dst(dst), label(label) {}
+    explicit Entry(Ref<State> from, Ref<Box> to, Label label)
+	: from(from), to(to), label(label) {}
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
     bool operator<(const Entry& rhs) const {
-	return (std::tie(    src,     dst,     label) <
-		std::tie(rhs.src, rhs.dst, rhs.label));
+	return (std::tie(    from,     to,     label) <
+		std::tie(rhs.from, rhs.to, rhs.label));
     }
 };
 
 class Exit {
 public:
-    const Ref<Box> src;
-    const Ref<State> dst;
+    const Ref<Box> from;
+    const Ref<State> to;
     const Label label;
 public:
-    explicit Exit(Ref<Box> src, Ref<State> dst, Label label)
-	: src(src), dst(dst), label(label) {}
+    explicit Exit(Ref<Box> from, Ref<State> to, Label label)
+	: from(from), to(to), label(label) {}
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
     bool operator<(const Exit& rhs) const {
-	return (std::tie(    src,     dst,     label) <
-		std::tie(rhs.src, rhs.dst, rhs.label));
+	return (std::tie(    from,     to,     label) <
+		std::tie(rhs.from, rhs.to, rhs.label));
     }
 };
 
@@ -154,9 +154,10 @@ public:
     const std::string name;
     const Ref<Component> ref;
     Registry<Box> boxes;
-    Index<Table<Transition>,Ref<State>,&Transition::src> transitions;
-    Index<Table<Entry>,Ref<Box>,&Entry::dst> entries;
-    Index<Table<Exit>,Ref<Box>,&Exit::src> exits;
+    Index<Table<Transition>,Ref<State>,&Transition::from> transitions;
+    MultiIndex<Index<Table<Entry>,Ref<Box>,&Entry::to>,
+	       PtrIndex<PtrTable<Entry>,Ref<State>,&Entry::from>> entries;
+    Index<Table<Exit>,Ref<Box>,&Exit::from> exits;
 private:
     Registry<State> states;
     Ref<State> initial = Ref<State>::none();

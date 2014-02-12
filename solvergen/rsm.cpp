@@ -41,19 +41,19 @@ void Box::print(std::ostream& os, const Registry<Component>& comp_reg) const {
 
 void Transition::print(std::ostream& os,
 		       const Registry<Symbol>& symbol_reg) const {
-    os << "State" << src << " State" << dst << " ";
+    os << "State" << from << " State" << to << " ";
     label.print(os, symbol_reg);
     os << std::endl;
 }
 
 void Entry::print(std::ostream& os, const Registry<Symbol>& symbol_reg) const {
-    os << "State" << src << " Box" << dst << " ";
+    os << "State" << from << " Box" << to << " ";
     label.print(os, symbol_reg);
     os << std::endl;
 }
 
 void Exit::print(std::ostream& os, const Registry<Symbol>& symbol_reg) const {
-    os << "Box" << src << " State" << dst << " ";
+    os << "Box" << from << " State" << to << " ";
     label.print(os, symbol_reg);
     os << std::endl;
 }
