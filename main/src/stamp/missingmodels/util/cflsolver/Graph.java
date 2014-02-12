@@ -2,13 +2,10 @@ package stamp.missingmodels.util.cflsolver;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import stamp.missingmodels.util.Util.MultivalueMap;
-
 
 public final class Graph {
 	public final class Vertex {
@@ -103,7 +100,7 @@ public final class Graph {
 	private final int numLabels;
 
 	private int curField = 0;
-
+	
 	public Graph(ContextFreeGrammar contextFreeGrammar) {
 		this.contextFreeGrammar = contextFreeGrammar;
 		this.numLabels = contextFreeGrammar.numLabels();

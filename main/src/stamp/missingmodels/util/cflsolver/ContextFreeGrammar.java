@@ -35,15 +35,21 @@ public final class ContextFreeGrammar {
 	public final class UnaryProduction {
 		public final int target;
 		public final int input;
+		public final boolean isInputBackwards;
 		
 		public UnaryProduction(int target, int input) {
+			this(target, input, false);
+		}
+		
+		public UnaryProduction(int target, int input, boolean isInputBackwards) {
 			this.target = target;
 			this.input = input;
+			this.isInputBackwards = isInputBackwards;
 		}
 		
 		@Override
 		public String toString() {
-			return getLabelName(this.target) + " :- " + getLabelName(this.input) + ".";
+			return getLabelName(this.target) + " :- " + (this.isInputBackwards ? "_" : "") + getLabelName(this.input) + ".";
 		}
 	}
 	
@@ -90,6 +96,10 @@ public final class ContextFreeGrammar {
 		this.addUnaryProduction(this.getLabel(target), this.getLabel(input));
 	}
 	
+	public void addUnaryProduction(String target, String input, boolean isInputBackwards) {
+		this.addUnaryProduction(this.getLabel(target), this.getLabel(input), isInputBackwards);
+	}
+	
 	public void addBinaryProduction(String target, String firstInput, String secondInput) {
 		this.addBinaryProduction(this.getLabel(target), this.getLabel(firstInput), this.getLabel(secondInput));
 	}
@@ -119,10 +129,14 @@ public final class ContextFreeGrammar {
 	}
 	
 	public void addUnaryProduction(int target, int input) {
+		this.addUnaryProduction(target, input, false);
+	}
+	
+	public void addUnaryProduction(int target, int input, boolean isInputBackwards) {
 		if(target >= this.curLabel || input >= this.curLabel) {
 			throw new RuntimeException("label out of range");
 		}
-		this.unaryProductionsByInput.get(input).add(new UnaryProduction(target, input));
+		this.unaryProductionsByInput.get(input).add(new UnaryProduction(target, input, isInputBackwards));
 	}
 	
 	public void addBinaryProduction(int target, int firstInput, int secondInput) {

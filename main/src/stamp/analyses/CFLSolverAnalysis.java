@@ -16,14 +16,13 @@ import chord.project.Chord;
 public class CFLSolverAnalysis extends JavaAnalysis {
 	private static ContextFreeGrammar flowGrammar = new ContextFreeGrammar();
 	static {
-		flowGrammar.addUnaryProduction("Flow", "newCtxt");
-		flowGrammar.addBinaryProduction("Flow", "Flow", "assignCtxt");
-		flowGrammar.addBinaryProduction("Flow", "Flow", "assignArgCtxt");
-		flowGrammar.addBinaryProduction("Flow", "Flow", "assignRetCtxt");
-		flowGrammar.addProduction("FlowField", new String[]{"Flow", "storeCtxt", "Flow"}, new boolean[]{false, false, true});
-		flowGrammar.addProduction("Flow", new String[]{"FlowField", "Flow", "loadCtxt"});
-		flowGrammar.addProduction("FlowStatField", new String[]{"Flow", "storeStatCtxt", "Flow"}, new boolean[]{false, false, true});
-		flowGrammar.addProduction("Flow", new String[]{"FlowStatField", "Flow", "loadStatCtxt"});
+		flowGrammar.addUnaryProduction("Flow", "newCtxt", true);
+		flowGrammar.addBinaryProduction("Flow", "Flow", "assignCtxt", false, true);
+		flowGrammar.addBinaryProduction("Flow", "Flow", "assignCCtxt", false, true);
+		flowGrammar.addProduction("FlowField", new String[]{"Flow", "storeCtxt", "Flow"}, new boolean[]{false, true, true});
+		flowGrammar.addProduction("Flow", new String[]{"FlowField", "Flow", "loadCtxt"}, new boolean[]{false, false, true});
+		flowGrammar.addBinaryProduction("FlowStatField", "Flow", "storeStatCtxt", false, true);
+		flowGrammar.addBinaryProduction("Flow", "FlowStatField", "loadStatCtxt", false, true);
 	}
 
 	public static void main(String[] args) {
@@ -81,6 +80,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		}
 		
 		new ReachabilitySolver().solve(flowGrammar, g);
+		//System.out.println(g.toString());
 
 		MultivalueMap<String,Edge> sortedEdges = g.getSortedEdges();
 		for(String label : sortedEdges.keySet()) {

@@ -42,14 +42,20 @@ public class ReachabilitySolver {
 		while(!worklist.isEmpty()) {
 			Edge edge = worklist.removeFirst();
 			Edge newEdge;
+			// <-
 			// ->
 			for(UnaryProduction unaryProduction : (List<UnaryProduction>)c.unaryProductionsByInput.get(edge.label)) {
-				if((edge = g.addEdge(edge.source, edge.sink, unaryProduction.target, edge.field)) != null) {
-					worklist.add(edge);
+				if(unaryProduction.isInputBackwards) {
+					if((edge = g.addEdge(edge.sink, edge.source, unaryProduction.target, edge.field)) != null) {
+						worklist.add(edge);
+					}					
+				} else {
+					if((edge = g.addEdge(edge.source, edge.sink, unaryProduction.target, edge.field)) != null) {
+						worklist.add(edge);
+					}
 				}
 			}
 			for(BinaryProduction binaryProduction : (List<BinaryProduction>)c.binaryProductionsByFirstInput.get(edge.label)) {
-				// <- <-
 				// <- <-
 				// <- ->
 				// -> <-

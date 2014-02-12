@@ -156,16 +156,16 @@ public class ConversionUtils {
 		relations.add("newCtxt", new IndexRelation("NewCtxt", "V", 1, 0, "O", 2, null));
 
 		// assign
-		relations.add("assignCtxt", new IndexRelation("AssignCtxt", "V", 1, 0, "U", 2, 0));
-		relations.add("assignCtxt", new IndexRelation("AssignCCtxt", "V", 1, 0, "U", 3, 2));
+		relations.add("assignCtxt", new IndexRelation("AssignCtxt", "V", 1, 0, "V", 2, 0));
+		relations.add("assignCtxt", new IndexRelation("AssignCCtxt", "V", 1, 0, "V", 3, 2));
 
 		// load/store
 		relations.add("storeCtxt", new IndexRelation("StoreCtxt", "V", 1, 0, "V", 3, 0, 2));
-		relations.add("storeStatCtxt", new IndexRelation("StoreStatCtxt", "F", 1, 0, "V", 2, 0));
+		relations.add("storeStatCtxt", new IndexRelation("StoreStatCtxt", "F", 1, null, "V", 2, 0));
 		relations.add("storeArrCtxt", new IndexRelation("StoreArrCtxt", "V", 1, 0, "V", 2, 0));
 
 		relations.add("loadCtxt", new IndexRelation("LoadCtxt", "V", 1, 0, "V", 2, 0, 3));
-		relations.add("loadStatCtxt", new IndexRelation("LoadStatCtxt", "V", 1, 0, "F", 2, 0));
+		relations.add("loadStatCtxt", new IndexRelation("LoadStatCtxt", "V", 1, 0, "F", 2, null));
 		relations.add("loadArrCtxt", new IndexRelation("LoadArrCtxt", "V", 1, 0, "V", 2, 0));
 
 		// prim assign

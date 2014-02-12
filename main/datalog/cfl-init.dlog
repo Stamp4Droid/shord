@@ -26,12 +26,13 @@
 MU(m:M,u:U) input # u is a prim type variable in m
 MV(m:M,v:V) input # v is a ref type variable in m
 CM(c:C,m:M) input # c is a context of method m
-CH(o:C,h:H) input         # context’ified abstract location o corresponds to new stmt h
+CH(o:C,h:H) input # context’ified abstract location o corresponds to new stmt h
 CI(c:C,i:I) input # stmt i is the top element in the k-limited callstack c
 CC(c:C,d:C) input # there exists i s.t. c++[i] = d
 
 # new
 Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
+typeFilter(v:V,o:C) input   # type wise, v can point-to o
 
 # assign
 Assign(v:V,u:V)     input # v = u
@@ -76,6 +77,7 @@ Stub(m:M) input
 
 # new
 NewCtxt(c:C,v:V,o:C) output # v = new X() // o
+TypeFilter(c:C,v:V,o:C) output
 
 # assign
 AssignCtxt(c:C,v:V,u:V) output          # v = u
@@ -86,10 +88,10 @@ AssignCCtxt(c:C,v:V,d:C,u:V) output     # v = u
 # store/load
 StoreCtxt(c:C,v:V,f:F,u:V) output      # v.f = u
 StoreStatCtxt(c:C,f:F,v:V) output      # C.f = v
-StoreArrCtxt(c:C,v:V,u:V) output       # v = u[i]
+StoreArrCtxt(c:C,v:V,u:V) output       # v[i] = u
 
 LoadCtxt(c:C,v:V,u:V,f:F) output       # v = u.f
-LoadStatCtxt(c:C,v:V,f:F) output       # C.f = v
+LoadStatCtxt(c:C,v:V,f:F) output       # v = C.f
 LoadArrCtxt(c:C,v:V,u:V) output        # v = u[i]
 
 # prim assign
@@ -125,10 +127,11 @@ phAlloc(v:V,c:C) output
 ###################
 
 # new
-NewCtxt(c,v,o) :- Alloc(v,h), CH(o,h), MV(m,v), CM(c,m).
+NewCtxt(c,v,o)    :- Alloc(v,h), CH(o,h), MV(m,v), CC(c,o), CM(c,m).
+TypeFilter(c,v,o) :- typeFilter(v,o), MV(m,v), CM(c,m).
 
 # assign
-AssignCtxt(c,v,u) :- Assign(v,u), MV(m,v), CM(c,m).
+AssignCtxt(c,v,u)       :- Assign(v,u), MV(m,v), CM(c,m).
 AssignArgCCtxt(c,v,d,u) :- param(v,u,i), CC(d,c), CI(c,i).
 AssignRetCCtxt(c,v,d,u) :- return(v,u,i), CC(c,d), CI(d,i).
 AssignCCtxt(c,v,d,u)    :- AssignArgCCtxt(c,v,d,u).
@@ -171,3 +174,19 @@ Varg(v) :- Stub(m), MmethArg(m,_,v).
 Vret(v) :- Stub(m), MmethRet(m,_,v).
 
 phAlloc(v,c) :- Stub(m), MmethRet(m,_,v), CM(c,m).
+
+##################
+# TEMP
+##################
+
+Flow(o:C,v:V,c:C) output
+FlowField(o1:C,f:F,o2:C) output
+FlowStatField(o:C,f:F) output
+
+Flow(o,v,c) :- NewCtxt(c,v,o).
+Flow(o,u,c) :- Flow(o,v,c), AssignCtxt(c,u,v).
+Flow(o,u,d) :- Flow(o,v,c), AssignCCtxt(d,u,c,v).
+FlowField(o1,f,o2) :- Flow(o1,v,c), StoreCtxt(c,u,f,v), Flow(o2,u,c).
+Flow(o1,u,c) :- FlowField(o1,f,o2), Flow(o2,v,c), LoadCtxt(c,u,v,f).
+FlowStatField(o,f) :- Flow(o,v,c), StoreStatCtxt(c,f,v).
+Flow(o,v,c) :- FlowStatField(o,f), LoadStatCtxt(c,v,f).
