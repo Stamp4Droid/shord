@@ -29,6 +29,9 @@ CI(c:C,i:I) input # stmt i is the top element in the k-limited callstack c
 CC(c:C,d:C) input # there exists i s.t. c++[i] = d
 
 # assign
+Assign(v:V,u:V)     input # v = u
+param(u:V,v:V,i:I)  input # u: formal param, v: actual arg, i: invocation stmt
+return(u:V,v:V,i:I) input # u: lhs at callsite, v: return var, i: invocation stmt
 
 # store/load
 Store(v:V,f:F,u:V)  input   # v.f = u
@@ -116,7 +119,7 @@ phAlloc(v:V,c:C) output
 # assign
 AssignCtxt(c,v,u) :- Assign(v,u), MV(m,v), CM(c,m).
 AssignArgCCtxt(c,v,d,u) :- param(v,u,i), CC(d,c), CI(c,i).
-AssignRetCCtxt(c,v,d,u) :- returnPrim(v,u,i), CC(c,d), CI(d,i).
+AssignRetCCtxt(c,v,d,u) :- return(v,u,i), CC(c,d), CI(d,i).
 AssignCCtxt(c,v,d,u)    :- AssignArgCCtxt(c,v,d,u).
 AssignCCtxt(c,v,d,u)    :- AssignRetCCtxt(c,v,d,u).
 

@@ -7,9 +7,9 @@ import java.util.Set;
 import stamp.missingmodels.util.cflsolver.cfg.BinaryProduction;
 import stamp.missingmodels.util.cflsolver.cfg.ContextFreeGrammar;
 import stamp.missingmodels.util.cflsolver.cfg.UnaryProduction;
-import stamp.missingmodels.util.cflsolver.graph.Edge;
 import stamp.missingmodels.util.cflsolver.graph.Graph;
-import stamp.missingmodels.util.cflsolver.graph.Vertex;
+import stamp.missingmodels.util.cflsolver.graph.Graph.Edge;
+import stamp.missingmodels.util.cflsolver.graph.Graph.Vertex;
 
 public class ReachabilitySolver {
 	private int getField(int firstField, int secondField) {
@@ -44,12 +44,12 @@ public class ReachabilitySolver {
 			Edge edge = worklist.removeFirst();
 			Edge newEdge;
 			// ->
-			for(UnaryProduction unaryProduction : (List<UnaryProduction>)c.unaryProductionsByInput[edge.label]) {
+			for(UnaryProduction unaryProduction : (List<UnaryProduction>)c.unaryProductionsByInput.get(edge.label)) {
 				if((edge = g.addEdge(edge.source, edge.sink, unaryProduction.target, edge.field)) != null) {
 					worklist.add(edge);
 				}
 			}
-			for(BinaryProduction binaryProduction : (List<BinaryProduction>)c.binaryProductionsByFirstInput[edge.label]) {
+			for(BinaryProduction binaryProduction : (List<BinaryProduction>)c.binaryProductionsByFirstInput.get(edge.label)) {
 				// <- <-
 				// <- <-
 				// <- ->
@@ -74,7 +74,7 @@ public class ReachabilitySolver {
 				}
 				
 			}
-			for(BinaryProduction binaryProduction : (List<BinaryProduction>)c.binaryProductionsBySecondInput[edge.label]) {
+			for(BinaryProduction binaryProduction : (List<BinaryProduction>)c.binaryProductionsBySecondInput.get(edge.label)) {
 				// <- <-
 				// <- ->
 				// -> <-
