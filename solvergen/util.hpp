@@ -166,19 +166,29 @@ public:
 // Extensions:
 // - Define the concept of Managed Object, and have instances inherit some of
 //   the boilerplate?
-// - Keep the names in a set, and pass references to them (to conserve space).
+// - Don't have two copies of the key:
+//   - use some sort of container that uses the field directly
+//     e.g. LightMap
+//   - use the pair as the value directly
+//   - keep the keys in a set, and pass references to them
 // - Destructor that cleans the managed objects
 // - No way to check if a Ref actually corresponds to some Registry instance
-//   before dereferencing it.
+//   before dereferencing it
 // - Configurable max number of Refs
-// - Properly handle class hierarchies.
+// - Properly handle class hierarchies
 //   Currently simply emplacing the objects => will all be of the same concrete
 //   type. Could use a trait, or function template like make<T> below.
-// - Behaves as a relational table; might be able to connect with the struct
-//   field indexing infrastructure.
+// - Behaves as a relational table; implement as special case of struct field
+//   indexing infrastructure; requires some extensions:
+//   - singleton leaf nodes
+//   - mutable non-key attributes
+//   - merging support
+//   - multi-field indexing,
+//   - random-access index/auto-increment attributes
 // - Index domain members according to feature
-//   e.g. initial, final for states
 //   (but these might change => re-indexing needed)
+// - If the key is composite, need to group the attributes in a struct
+// - "Void" key specialization: don't even make a map
 
 // Alternative: store pointers to objects:
 //   std::vector<T*> array;
@@ -201,6 +211,8 @@ std::ostream& operator<<(std::ostream& os, const Ref<T>& ref) {
 
 template<typename T, typename K> class Registry;
 
+// TODO: Could make this class const-correct, i.e. get a const& when indexing a
+// Registry using a const Ref.
 template<typename T> class Ref {
     // TODO: This would ideally be Registry<T,K>, but partial specializations
     // are not allowed in friend declarations.
@@ -357,13 +369,27 @@ public:
 //   probably make those branch points explicit using MultiIndex's
 // - secondary arcs ending at arbitrary points (harder)
 // - sharing among secondary arcs
-// - relational operations & high-level query plans, via pattern matching
-//   user doesn't handle the indices explicitly
+// - relational operations & high-level query plans
+//   possibly via pattern matching
+//   (need specialized pattern language, with wildcards, constraints etc.)
+//   could do this through template specialization:
+//   - each level knows what attribute it controls
+//     when "asked", combines that with answer from children
+//   - to query, pass a pattern down the index tree
+//     then each level:
+//     - uses the correct map
+//     - removes the matched field from the pattern
+//     - passes the new pattern down
+//     at fork points, can decide based on what the children report
+//   maybe wrap in a macro, to offer a nice syntax
 // - tuple deletion
 //   could reuse RelC's cut-based approach?
 //   need to handle single insertion but multiple mapping, at merge points
 //   could clean up empty map nodes
+// - tuple updates (allow reindexing to occur?)
 // - use intrusive containers to weave multiple indices efficiently
+//   i.e., wrap the data tuple over an element node for an intrusive container
+//   (add the pointer fields)
 //   useful for simple deletion of nodes at merge points
 //   features:
 //   - single object can belong to multiple indices
@@ -371,7 +397,6 @@ public:
 //   - derived classes can be handled
 //   - manual memory management required
 //   - manual re-indexing required
-// - special-case for Registry infrastructure above
 // - implement proper iterators on the secondary index path
 // - variadic template of all indexing fields
 //   - shouldn't have to redefine Index twice, for the two cases of >3 and 3
@@ -389,10 +414,16 @@ public:
 //     - insert checks whenever a new value is added
 //       check that all remaining values are the same
 //       always return false
+//     - alternatively, if there is such a value, merge its non-const fields
+//       (need a callback for that)
 //   - modifiable non-key attributes
 //   - tuples no longer fully immutable => can make iterators semi-constant
 //     can still not insert through them
 //     but can get non-const refs to objects, to edit non-key fields
+// - union operator / bulk insertion
+// - random-access index/auto-increment attribute
+// - implement on top of boost::multi_index
+// - named indices (use classes as index tags)
 
 // Concepts:
 // - Relation<T>:
@@ -650,6 +681,7 @@ public:
     const PriIdxT& primary() const {
 	return pri_idx;
     }
+    // TODO: Define a public array of indices instead?
     template<int I>
     const typename pack_elem<I,SecIdxTs...>::type& secondary() const {
 	return std::get<I>(sec_idxs);

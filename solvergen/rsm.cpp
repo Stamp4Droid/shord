@@ -198,6 +198,8 @@ void RSM::parse_file(const fs::path& fpath) {
 	    }
 	    bool src_is_state = comp.get_states().contains(toks[0]);
 	    bool dst_is_state = comp.get_states().contains(toks[1]);
+	    // Allowing an untagged entry to be paired with a tagged exit (and
+	    // vica-versa).
 	    if (src_is_state && dst_is_state) {
 		Ref<State> src = comp.get_states().find(toks[0]).ref;
 		Ref<State> dst = comp.get_states().find(toks[1]).ref;
@@ -283,11 +285,16 @@ void Graph::print_stats(std::ostream& os,
 	os << std::setw(15) << s.name
 	   << std::setw(12) << edges[s.ref].size() << std::endl;
     }
+    // TODO: Also print out stats on summaries.
 }
 
 // MAIN =======================================================================
 
+// TODO:
+// - Better summary representation, for human consumption.
+
 int main(int argc, char* argv[]) {
+    // Parse options
     po::options_description desc("Options");
     desc.add_options()
 	("rsm-dir", po::value<std::string>()->required(),
@@ -303,16 +310,19 @@ int main(int argc, char* argv[]) {
     po::notify(vm);
     std::string rsm_dir = vm.at("rsm-dir").as<std::string>();
     std::string graph_dir = vm.at("graph-dir").as<std::string>();
+    // Initialize logging system
+    std::cout.imbue(std::locale(""));
 
+    // Parse input
     RSM rsm;
     std::cout << "Parsing RSM components from " << rsm_dir << std::endl;
     rsm.parse_dir(rsm_dir);
+    rsm.print(std::cout);
+    std::cout << std::endl;
     std::cout << "Parsing graph from " << graph_dir << std::endl;
     Graph graph(rsm.symbols, graph_dir);
+    graph.print_stats(std::cout, rsm.symbols);
     std::cout << std::endl;
 
-    std::cout.imbue(std::locale(""));
-    rsm.print(std::cout);
-    graph.print_stats(std::cout, rsm.symbols);
     return 0;
 }

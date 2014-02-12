@@ -145,6 +145,7 @@ public:
     }
 };
 
+// TODO: Index states on initial/final attribute, boxes on component.
 class Component {
     friend Registry<Component>;
 private:
@@ -258,6 +259,7 @@ public:
     }
 };
 
+// TODO: Disallow adding edges while an iterator is live.
 class Graph {
 public:
     static const std::string FILE_EXTENSION;
