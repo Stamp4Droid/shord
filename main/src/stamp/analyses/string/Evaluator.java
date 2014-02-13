@@ -153,6 +153,10 @@ public class Evaluator
 			vals = new HashSet();
 			vs.put(s, vals);
 		}
+		if(vals.size() > 10){
+			System.out.println("Warning: soundness is sacrificed for usefulness.");
+			return false;
+		}
 		return vals.addAll(newVals);
 	}
 }

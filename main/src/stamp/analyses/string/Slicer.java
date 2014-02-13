@@ -87,7 +87,9 @@ public class Slicer
 
 		Statement c = new Criterion(l, s);
 		sGraph.addNode(c);
-		stmtToStatements.put(s, Arrays.asList(new Statement[]{c}));
+		List<Statement> ss = new ArrayList();
+		ss.add(c);
+		stmtToStatements.put(s, ss);
 
 		workList.add(new Trio(l, s, m));
 

@@ -53,7 +53,7 @@ import chord.bddbddb.Rel.RelView;
  */
 @Chord(name = "ctxts-obj-java",
        consumes = { "MI", "MH", "ci_pt", "StatIM", "Stub"},
-       produces = { "C", "CC", "CH", "CI", "CtxtInsMeth"},
+       produces = { "C", "CC", "CH", "CI", "CtxtInsMeth", "CM"},
        namesOfTypes = { "C" },
        types = { DomC.class }
 )
@@ -227,18 +227,17 @@ public class CtxtsObjAnalysis extends JavaAnalysis
             int mIdx = ItoM[iIdx];
             Unit invk = ItoQ[iIdx];
 
-			if(!isQuasiStaticInvk(invk))
-				continue;
-
-            Set<Ctxt> ctxts = methToCtxts[mIdx];
-            assert(ctxts != null);
-            for (Ctxt oldCtxt : ctxts) {
-                Object[] oldElems = oldCtxt.getElems();
-                Object[] newElems = combine(K, invk, oldElems);
-                Ctxt newCtxt = domC.setCtxt(newElems);
-                relCC.add(oldCtxt, newCtxt);
-                relCI.add(newCtxt, invk);
-            }
+			if(isQuasiStaticInvk(invk)){
+				Set<Ctxt> ctxts = methToCtxts[mIdx];
+				assert(ctxts != null);
+				for (Ctxt oldCtxt : ctxts) {
+					Object[] oldElems = oldCtxt.getElems();
+					Object[] newElems = combine(K, invk, oldElems);
+					Ctxt newCtxt = domC.setCtxt(newElems);
+					relCC.add(oldCtxt, newCtxt);
+					relCI.add(newCtxt, invk);
+				}
+			}
         }
 
         relCI.save();

@@ -9,6 +9,7 @@ import soot.Local;
 import soot.jimple.Stmt;
 import soot.jimple.StringConstant;
 import soot.jimple.InvokeExpr;
+import soot.jimple.InstanceInvokeExpr;
 import soot.jimple.AssignStmt;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.jimple.toolkits.callgraph.Edge;
@@ -122,6 +123,12 @@ public class HttpParamsReport
 							new int[]{1});
 
 
+		//toString
+		httpHeaderMeths.put("<java.lang.StringBuffer: java.lang.String toString()>",
+							new int[]{0});
+		httpHeaderMeths.put("<java.lang.StringBuilder: java.lang.String toString()>",
+							new int[]{0});
+
 		return httpHeaderMeths;
 	}
 
@@ -153,9 +160,11 @@ public class HttpParamsReport
 
 				boolean nonEmpty = false;
 				for(int paramIndex : paramIndices){
+					Value arg;
 					if(!m.isStatic())
-						paramIndex--;
-					Value arg = ie.getArg(paramIndex);
+						arg = paramIndex == 0 ? ((InstanceInvokeExpr) ie).getBase() : ie.getArg(paramIndex-1);
+					else
+						arg = ie.getArg(paramIndex);
 					Set<String> vals = null;
 					if(arg instanceof StringConstant){
 						vals = new HashSet();
@@ -217,9 +226,6 @@ public class HttpParamsReport
 				main.println(String.format("<li>Callsite %d</li>", callsiteCount++));
 				main.println("<ul>");
 				for(int paramIndex : paramIndices){
-					if(!apiMethod.isStatic())
-						paramIndex--;
-
 					Set<String> as = args.get(paramIndex);
 					StringBuilder sb = new StringBuilder("[");
 					boolean first = true;
