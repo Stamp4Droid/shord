@@ -131,21 +131,21 @@ public class ConversionUtils {
 		 */
 		
 		// regular points
-		relations.add("ptH", new IndexRelation("pt", "V", 1, 0, "O", 2, null));
+		relations.add("ptH", new IndexRelation("pt", "V", 1, 0, "C", 2, null));
 
 		// regular fpt
-		relations.add("fpt", new IndexRelation("fpt", "O", 0, null, "O", 2, null, 1));
+		relations.add("fpt", new IndexRelation("fpt", "C", 0, null, "C", 2, null, 1));
 
 		// fpt arr
-		relations.add("fptArr", new IndexRelation("fptArr", "O", 0, null, "O", 1, null));
+		relations.add("fptArr", new IndexRelation("fptArr", "C", 0, null, "C", 1, null));
 
 		// phantom points
 		relations.add("ptG", new IndexRelation("phpt", "V", 1, 0, "V", 2, 3));
-		relations.add("ptG", new IndexRelation("pt", "V", 1, 0, "O", 2, null));
+		relations.add("ptG", new IndexRelation("pt", "V", 1, 0, "C", 2, null));
 		
 		// phantom fpt
-		relations.add("fpt", new IndexRelation("fptph", "O", 0, null, "V", 2, 3, 1));
-		relations.add("fpt", new IndexRelation("fphpt", "V", 0, 1, "O", 3, null, 2));
+		relations.add("fpt", new IndexRelation("fptph", "C", 0, null, "V", 2, 3, 1));
+		relations.add("fpt", new IndexRelation("fphpt", "V", 0, 1, "C", 3, null, 2));
 		relations.add("fpt", new IndexRelation("fphptph", "V", 0, 1, "V", 3, 4, 2));
 		
 		/*
@@ -153,7 +153,7 @@ public class ConversionUtils {
 		 */
 		
 		// new
-		relations.add("newCtxt", new IndexRelation("NewCtxt", "V", 1, 0, "O", 2, null));
+		relations.add("newCtxt", new IndexRelation("NewCtxt", "V", 1, 0, "C", 2, null));
 
 		// assign
 		relations.add("assignCtxt", new IndexRelation("AssignCtxt", "V", 1, 0, "V", 2, 0));
@@ -184,18 +184,17 @@ public class ConversionUtils {
 		/*
 		 * Typefilter
 		 */
-		relations.add("typeFilter", new IndexRelation("TypeFilter", "O", 1, null, "V", 2, 0));
+		relations.add("typeFilter", new IndexRelation("TypeFilter", "C", 1, null, "V", 2, 0));
 
 		/*
 		 * BDDBDDB partial pt relations
 		 */
-		relations.add("preFlowsTo", new IndexRelation("ActivePreFlowsTo", "O", 1, null, "V", 2, 0));
+		relations.add("preFlowsTo", new IndexRelation("ActivePreFlowsTo", "C", 1, null, "V", 2, 0));
 		relations.add("postFlowsTo", new IndexRelation("ActivePostFlowsTo", "V", 1, 0, "V", 3, 2));
 		relations.add("midFlowsTo", new IndexRelation("ActiveMidFlowsTo", "V", 1, 0, "V", 3, 2));
 		relations.add("transfer", new StubIndexRelation("ActiveTransferArg", "V", 1, 0, "V", 2, 0, 3, 4, 5));
 		relations.add("transfer", new StubIndexRelation("ActiveTransferRet", "V", 1, 0, "V", 2, 0, 3, 4));
 		relations.add("transferSelf", new IndexRelation("ActiveTransferSelf", "V", 1, 0, "V", 2, 0));
-		
 	}
 	
 	/*
