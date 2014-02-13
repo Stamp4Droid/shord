@@ -9,6 +9,7 @@ public class RandomSelect
 	public static void main(String[] args) throws IOException
 	{
 		String listFile = args[0];
+		String outFile = args[1];
 
 		List<String> apps = new LinkedList();
 		int appCount = 0;
@@ -20,12 +21,13 @@ public class RandomSelect
 			appCount++;
 		}
 		reader.close();
-		
+
+		PrintWriter writer = new PrintWriter(new FileWriter(outFile));		
 		Random random = new Random();
 		for(int i = 0; i < NUM; i++){
 			int index = random.nextInt(appCount);
-			System.out.println(apps.get(index));
+			writer.println(apps.get(index));
 		}
-
+		writer.close();
 	}
 }
