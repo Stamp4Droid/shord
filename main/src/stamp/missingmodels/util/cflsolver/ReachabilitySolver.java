@@ -21,21 +21,17 @@ public class ReachabilitySolver {
 		}
 		return -2;
 	}
-	private void getEdge(Graph graph, Vertex source, Vertex sink, int label, int field, short weight, Heap<Edge> worklist) {
-		this.getEdge(graph, source, sink, label, field, null, null, weight, worklist);
-	}
 	
-	private void getEdge(Graph graph, Vertex source, Vertex sink, int label, int field, Edge firstInput, Edge secondInput, short weight, Heap<Edge> worklist) {
-		Edge edge = graph.new Edge(source, sink, label, field, firstInput, secondInput, weight);
-		Edge curEdge = graph.getEdge(edge);
-		if(curEdge == null && edge != null) {
-			graph.addEdge(edge);
-			worklist.add(edge, edge.weight);
-		} else if(curEdge != null && curEdge.weight > weight) {
+	private void getEdge(Graph graph, Vertex source, Vertex sink, int label, int field, short weight, Heap<Edge> worklist) {
+		Edge curEdge = graph.getEdge(source, sink, label, field, weight);
+		if(curEdge == null) {
+			Edge edge = graph.addEdge(source, sink, label, field, weight);
+			if(edge != null) {
+				worklist.add(edge, edge.weight);
+			}
+		} else if(curEdge.weight > weight) {
 			worklist.remove(curEdge, curEdge.weight);
 			curEdge.weight = weight;
-			curEdge.firstInput = firstInput;
-			curEdge.secondInput = secondInput;
 			worklist.add(curEdge, curEdge.weight);
 		}
 	}

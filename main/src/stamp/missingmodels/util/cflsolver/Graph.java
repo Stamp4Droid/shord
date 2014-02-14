@@ -34,35 +34,30 @@ public final class Graph {
 		public final Vertex sink;
 		public final int field;
 		public final int label;
-		public Edge firstInput;
-		public Edge secondInput;
 		public short weight;
 
-		public Edge(Vertex source, Vertex sink, int label, int field, Edge firstInput, Edge secondInput, short weight) {
+		public Edge(Vertex source, Vertex sink, int label, int field, short weight) {
 			this.source = source;
 			this.sink = sink;
 			this.field = field;
 			this.label = label;
-			
-			this.firstInput = firstInput;
-			this.secondInput = secondInput;
 			this.weight = weight;
 		}
 
-		public Edge(Vertex source, Vertex sink, int label, int field, Edge firstInput, short weight) {
-			this(source, sink, label, field, firstInput, null, weight);
-		}
-
-		public Edge(Vertex source, Vertex sink, int label, int field, short weight) {
-			this(source, sink, label, field, null, null, weight);
-		}
-
 		public Edge(Vertex source, Vertex sink, int label, int field) {
-			this(source, sink, label, field, null, null, (short)0);
+			this.source = source;
+			this.sink = sink;
+			this.field = field;
+			this.label = label;
+			this.weight = 0;
 		}
 
 		public Edge(Vertex source, Vertex sink, int label) {
-			this(source, sink, label, -1, null, null, (short)0);
+			this.source = source;
+			this.sink = sink;
+			this.field = -1;
+			this.label = label;
+			this.weight = 0;
 		}
 
 		@Override
@@ -165,6 +160,10 @@ public final class Graph {
 		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.contextFreeGrammar.getLabel(label), this.getField(field), weight);
 	}
 	
+	public Edge getEdge(Vertex source, Vertex sink, int label, int field, short weight) {
+		return (Edge)source.outgoingEdgesByLabel[label].get(new Edge(source, sink, label, field, weight));
+	}
+	
 	public Edge addEdge(Vertex source, Vertex sink, int label, int field, short weight) {
 		if(field == -2) {
 			return null;
@@ -176,7 +175,7 @@ public final class Graph {
 	}
 	
 	// for use by reachability solver
-	// call getEdge before adding edge, or the update may not occur correctly
+	// call getEdge before adding edge, or the update may not occur correctly	
 	public Edge getEdge(Edge edge) {
 		return (Edge)edge.source.outgoingEdgesByLabel[edge.label].get(edge);
 	}
