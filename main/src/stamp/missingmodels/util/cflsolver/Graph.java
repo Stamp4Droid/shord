@@ -34,30 +34,30 @@ public final class Graph {
 		public final Vertex sink;
 		public final int field;
 		public final int label;
+		public Edge firstInput;
+		public Edge secondInput;
 		public short weight;
 
-		public Edge(Vertex source, Vertex sink, int label, int field, short weight) {
+		public Edge(Vertex source, Vertex sink, int label, int field, Edge firstInput, Edge secondInput, short weight) {
 			this.source = source;
 			this.sink = sink;
 			this.field = field;
 			this.label = label;
+			this.firstInput = firstInput;
+			this.secondInput = secondInput;
 			this.weight = weight;
 		}
 
+		public Edge(Vertex source, Vertex sink, int label, int field, short weight) {
+			this(source, sink, label, field, null, null, weight);
+		}
+
 		public Edge(Vertex source, Vertex sink, int label, int field) {
-			this.source = source;
-			this.sink = sink;
-			this.field = field;
-			this.label = label;
-			this.weight = 0;
+			this(source, sink, label, field, null, null, (short)0);
 		}
 
 		public Edge(Vertex source, Vertex sink, int label) {
-			this.source = source;
-			this.sink = sink;
-			this.field = -1;
-			this.label = label;
-			this.weight = 0;
+			this(source, sink, label, -1, null, null, (short)0);
 		}
 
 		@Override
@@ -160,10 +160,6 @@ public final class Graph {
 		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.contextFreeGrammar.getLabel(label), this.getField(field), weight);
 	}
 	
-	public Edge getEdge(Edge edge) {
-		return (Edge)edge.source.outgoingEdgesByLabel[edge.label].get(edge);
-	}
-	
 	public Edge addEdge(Vertex source, Vertex sink, int label, int field, short weight) {
 		if(field == -2) {
 			return null;
@@ -180,7 +176,11 @@ public final class Graph {
 		edge.source.outgoingEdgesByLabel[edge.label].put(edge, edge);
 		edge.sink.incomingEdgesByLabel[edge.label].put(edge, edge);
 	}
+	public Edge getEdge(Edge edge) {
+		return (Edge)edge.source.outgoingEdgesByLabel[edge.label].get(edge);
+	}
 	
+	// outputs
 	public Set<Edge> getEdges() {
 		Set<Edge> edges = new HashSet<Edge>();
 		for(Vertex vertex : this.vertices.values()) {
@@ -189,6 +189,21 @@ public final class Graph {
 			}
 		}
 		return edges;
+	}
+	private void getPositiveWeightInputsHelper(Edge edge, Set<Edge> inputs) {
+		if(edge == null) {
+			return;
+		} else if(edge.firstInput == null && edge.weight > (short)0) {
+			inputs.add(edge);
+		} else if(edge.firstInput != null) {
+			this.getPositiveWeightInputsHelper(edge.firstInput, inputs);
+			this.getPositiveWeightInputsHelper(edge.secondInput, inputs);
+		}	
+	}
+	public Set<Edge> getPositiveWeightInputs(Edge edge) {
+		Set<Edge> inputs = new HashSet<Edge>();
+		this.getPositiveWeightInputsHelper(edge, inputs);
+		return inputs;
 	}
 
 	@Override

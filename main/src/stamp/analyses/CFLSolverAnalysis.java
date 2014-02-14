@@ -1,5 +1,7 @@
 package stamp.analyses;
 
+import java.util.Set;
+
 import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
@@ -45,6 +47,14 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		MultivalueMap<String,Edge> sortedEdges = g.getSortedEdges();
 		for(String label : sortedEdges.keySet()) {
 			System.out.println(label + ": " + sortedEdges.get(label).size());
+		}
+		for(Set<Edge> edges : sortedEdges.values()) {
+			for(Edge edge : edges) {
+				System.out.println("Inputs for " + edge);
+				for(Edge input : g.getPositiveWeightInputs(edge)) {
+					System.out.println(input);
+				}
+			}
 		}
 	}
 
