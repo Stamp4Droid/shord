@@ -164,20 +164,24 @@ public final class Graph {
 		return (Edge)source.outgoingEdgesByLabel[label].get(new Edge(source, sink, label, field, weight));
 	}
 	
-	// if the edge is already there, this does nothing and returns the current edge
-	// otherwise, it creates a new edge and adds it
 	public Edge addEdge(Vertex source, Vertex sink, int label, int field, short weight) {
 		if(field == -2) {
 			return null;
 		}
 		Edge edge = new Edge(source, sink, label, field, weight);
-		Edge curEdge = (Edge)source.outgoingEdgesByLabel[label].get(edge);
-		if(curEdge == null) {
-			source.outgoingEdgesByLabel[label].put(edge, edge);
-			sink.incomingEdgesByLabel[label].put(edge, edge);
-			return edge;
-		}
-		return curEdge;
+		source.outgoingEdgesByLabel[label].put(edge, edge);
+		sink.incomingEdgesByLabel[label].put(edge, edge);
+		return edge;
+	}
+	
+	// for use by reachability solver
+	// call getEdge before adding edge, or the update may not occur correctly	
+	public Edge getEdge(Edge edge) {
+		return (Edge)edge.source.outgoingEdgesByLabel[edge.label].get(edge);
+	}
+	public void addEdge(Edge edge) {
+		edge.source.outgoingEdgesByLabel[edge.label].put(edge, edge);
+		edge.sink.incomingEdgesByLabel[edge.label].put(edge, edge);
 	}
 	
 	public Set<Edge> getEdges() {

@@ -23,17 +23,19 @@ public class ReachabilitySolver {
 	}
 	
 	private void getEdge(Graph graph, Vertex source, Vertex sink, int label, int field, short weight, Heap<Edge> worklist) {
-		Edge edge = graph.addEdge(source, sink, label, field, weight);
-		if(edge == null) {
-			return;
+		Edge curEdge = graph.getEdge(source, sink, label, field, weight);
+		if(curEdge == null) {
+			Edge edge = graph.addEdge(source, sink, label, field, weight);
+			if(edge != null) {
+				worklist.add(edge, edge.weight);
+			}
+		} else if(curEdge.weight > weight) {
+			worklist.remove(curEdge, curEdge.weight);
+			curEdge.weight = weight;
+			worklist.add(curEdge, curEdge.weight);
 		}
-		if(edge.weight > weight) {
-			worklist.remove(edge, edge.weight);
-			edge.weight = weight;
-		}
-		worklist.add(edge, edge.weight);
 	}
-
+	
 	public void solve(ContextFreeGrammar c, Graph g) {
 		this.solve(c, g, new BucketHeap<Edge>());
 	}
