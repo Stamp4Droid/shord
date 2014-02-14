@@ -30,18 +30,21 @@ CI(c:C,i:I) input         # stmt i is the top element in the k-limited callstack
 CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
 
 # intermediate 0-cfa relations
-pt0(v:V,o:C)
-refpt0(v:V,u:V)
-temppt0(v:V,o:C)
-activeRef0(v:V)
-activeObj0(o:C)
+pt0(v:V,o:C) output
+refpt0(v:V,u:V) output
+temppt0(v:V,o:C) output
+activeRef0(v:V) output
+activeObj0(o:C) output
 
 # intermediate k-cfa relations
-pt(c:C,v:V,o:C) output
-refpt(v:V,c:C,u:V)
-temppt(v:V,o:C)
-activeRef(v:V)
-activeObj(o:C)
+ptk(c:C,v:V,o:C) output
+refptk(v:V,c:C,u:V) output
+tempptk(v:V,o:C) output
+activeRef(v:V) output
+activeObj(o:C) output
+
+# full pt
+ptFull(c:C,v:V,o:C) output
 
 ##############
 # 0-CFA pt
@@ -51,6 +54,7 @@ activeObj(o:C)
 activeRef0(v) :- activeRef(v).
 activeObj0(o) :- activeObj(o).
 
+# pt rules
 pt0(v,o) :- activeObj0(o), Alloc(v,h), typeFilter(v,o), CH(o,h).
 pt0(u,o) :- pt0(v,o), Assign(u,v), typeFilter(u,o).
 pt0(u,o) :- pt0(v,o), param(u,v,_), typeFilter(u,o).
@@ -63,45 +67,52 @@ activeRef0(u) :- pt0(v,o), Store(u,f,v), typeFilter(u,op), typeFilter(w,op), Loa
 activeRef0(w) :- pt0(v,o), Store(u,f,v), typeFilter(u,op), typeFilter(w,op), Load(x,w,f), typeFilter(x,o).
 
 # refpt rules
-refpt0(v,u) :- activeRef(v), v=u.
+refpt0(v,u) :- activeRef0(v), v=u.
 refpt0(v,w) :- refpt0(v,u), Assign(u,w).
 refpt0(v,w) :- refpt0(v,u), param(u,w,_).
 refpt0(v,w) :- refpt0(v,u), return(u,w,_).
 refpt0(v,y) :- refpt0(v,u), Load(u,w,f), typeFilter(w,o), typeFilter(x,o), Store(x,f,y).
+refpt0(v,w) :- refpt0(v,u), LoadStat(u,f), StoreStat(f,w).
 
-temppt0(v,o) :- refpt0(v,u), Alloc(u,h), typeFilter(v,o), CH(o,h).
+temppt0(v,o) :- refpt0(v,u), Alloc(u,h), CH(o,h).
 
 # activeObj rules
-activeObj0(o) :- pt0(v,o), Store(u,f,v), temppt0(u,op), temppt0(w,op), Load(x,w,f), typeFilter(x,o).
+activeObj0(op) :- pt0(v,_), Store(u,f,v), temppt0(u,op), temppt0(w,op), Load(_,w,f).
 
 ##############
 # k-CFA pt
 ##############
 
 # active rules
-activeObj(o) :- Alloc(_,h), CH(o,h).
+activeObj(o) :- Alloc(_,h), CH(o,h), oa=o.
 
 # pt rules
-pt(c,v,o) :- activeObj(o), Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), pt0(v,o), CH(o,h).
-pt(c,u,o) :- pt(c,v,o), Assign(u,v), pt0(u,o).
-pt(d,u,o) :- pt(c,v,o), param(u,v,i), pt0(u,o), CC(c,d), CI(d,i).
-pt(c,u,o) :- pt(d,v,o), return(u,v,i), CI(d,i), CC(c,d), pt0(u,o).
-pt(d,x,o) :- pt(c,v,o), Store(u,f,v), pt(c,u,op), pt(d,w,op), Load(x,w,f), pt0(x,o).
-pt(c,u,o) :- pt(_,v,o), StoreStat(f,v), LoadStat(u,f), MV(m,u), CM(c,m), pt0(u,o).
+ptk(c,v,o) :- activeObj(o), Alloc(v,h), MV(m,v), pt0(v,o), CM(c,m), CC(c,o), CH(o,h).
+ptk(c,u,o) :- ptk(c,v,o), Assign(u,v), pt0(u,o).
+ptk(d,u,o) :- ptk(c,v,o), param(u,v,i), pt0(u,o), CC(c,d), CI(d,i).
+ptk(c,u,o) :- ptk(d,v,o), return(u,v,i), CI(d,i), CC(c,d), pt0(u,o).
+ptk(d,x,o) :- ptk(c,v,o), Store(u,f,v), ptk(c,u,op), ptk(d,w,op), Load(x,w,f), pt0(x,o).
+ptk(c,u,o) :- ptk(_,v,o), StoreStat(f,v), LoadStat(u,f), MV(m,u), CM(c,m), pt0(u,o).
 
 # activeRef rules
-activeRef(u) :- pt(_,v,o), Store(u,f,v), pt0(u,op), pt0(w,op), Load(x,w,f), pt0(x,o), activeRef0(u).
-activeRef(w) :- pt(_,v,o), Store(u,f,v), pt0(u,op), pt0(w,op), Load(x,w,f), pt0(x,o), activeRef0(w).
+activeRef(u) :- ptk(_,v,o), Store(u,f,v), pt0(u,op), pt0(w,op), Load(x,w,f), pt0(x,o), activeRef0(u).
+activeRef(w) :- ptk(_,v,o), Store(u,f,v), pt0(u,op), pt0(w,op), Load(x,w,f), pt0(x,o), activeRef0(w).
 
 # refpt rules
-refpt(v,c,u) :- activeRef(v), v=u, refpt0(v,u), MV(m,u), CM(c,m).
-refpt(v,c,w) :- refpt(v,c,u), Assign(u,w), refpt0(v,w).
-refpt(v,c,w) :- refpt(v,d,u), param(u,w,i), refpt0(v,w), CC(c,d), CI(c,i).
-refpt(v,d,w) :- refpt(v,c,u), return(u,w,i), CI(d,i), CC(c,d), refpt0(v,w).
-refpt(v,d,y) :- refpt(v,_,u), Load(u,w,f), pt0(w,o), pt0(x,o), Store(x,f,y), MV(m,y), CM(d,m), refpt0(v,y).
-refpt(v,d,w) :- refpt(v,_,u), LoadStat(u,f), StoreStat(f,w), MV(m,w), CM(d,m), refpt0(v,w).
+refptk(v,c,u) :- activeRef(v), v=u, MV(m,u), refpt0(v,u), CM(c,m).
+refptk(v,c,w) :- refptk(v,c,u), Assign(u,w), refpt0(v,w).
+refptk(v,c,w) :- refptk(v,d,u), param(u,w,i), refpt0(v,w), CC(c,d), CI(d,i).
+refptk(v,d,w) :- refptk(v,c,u), return(u,w,i), CI(d,i), CC(c,d), refpt0(v,w).
+refptk(v,d,y) :- refptk(v,_,u), Load(u,w,f), typeFilter(w,o), typeFilter(x,o), Store(x,f,y), MV(m,y), CM(d,m), refpt0(v,y).
+refptk(v,d,w) :- refptk(v,_,u), LoadStat(u,f), StoreStat(f,w), MV(m,w), CM(d,m), refpt0(v,w).
 
-temppt(v,o) :- refpt(v,_,u), Alloc(u,h), temppt0(v,o), CH(o,h).
+tempptk(v,o) :- refptk(v,_,u), Alloc(u,h), CH(o,h), temppt0(v,o).
 
 # activeObj rules
-activeObj(op) :- pt(_,v,o), Store(u,f,v), temppt(u,op), temppt(w,op), Load(x,w,f), pt0(x,o), activeObj0(op).
+activeObj(op) :- ptk(_,v,_), Store(u,f,v), tempptk(u,op), tempptk(w,op), Load(_,w,f), activeObj0(op).
+
+##############
+# full pt
+##############
+
+ptFull(c,v,o) :- ptk(c,v,o), o=oa.
