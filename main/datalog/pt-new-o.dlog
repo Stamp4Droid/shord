@@ -1,0 +1,115 @@
+##################
+# Points-to analysis
+##################
+
+# name=pt-new-o-dlog
+
+.include "M.dom"
+.include "C.dom"
+.include "V.dom"
+.include "H.dom"
+.include "F.dom"
+.include "I.dom"
+
+.bddvarorder M0_C0xC1xC2_V0xV1_H0xF0_I0
+
+Assign(v:V,u:V)     input   # v = u
+Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
+Load(y:V,x:V,f:F)   input   # y = x.f
+Store(u:V,f:F,v:V)  input   # u.f = v
+LoadStat(y:V,f:F)   input   # y = f
+StoreStat(f:F,v:V)  input   # f = v
+param(u:V,v:V,i:I)  input   # u is the formal parameter, v is actual arg, i is invocation stmt
+return(u:V,v:V,i:I) input   # u is the lhs at callsite, v is the return var, i is invocation stmt
+typeFilter(v:V,o:C) input   # type wise, v can point-to o
+
+MV(m:M,v:V) input         # v is a variable in method m
+CM(c:C,m:M) input         # c is a context of method m
+CH(o:C,h:H) input         # context’ified abstract location o corresponds to new stmt h
+CI(c:C,i:I) input         # stmt i is the top element in the k-limited callstack c
+CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
+
+# intermediate 0-cfa relations
+pt0(oa:C,v:V,o:C)
+refpt0(oa:C,v:V,u:V)
+temppt0(oa:C,v:V,o:C)
+activeRef0(oa:C,v:V)
+activeObj0(oa:C,o:C)
+
+# intermediate k-cfa relations
+pt(oa:C,c:C,v:V,o:C) output
+refpt(oa:C,v:V,c:C,u:V)
+temppt(oa:C,v:V,o:C)
+activeRef(oa:C,v:V)
+activeObj(oa:C,o:C)
+
+# full pt
+ptFull(c:C,v:V,o:C) output
+
+##############
+# 0-CFA pt
+##############
+
+# active rules
+activeRef0(oa,v) :- activeRef(oa,v).
+activeObj0(oa,o) :- activeObj(oa,o).
+
+pt0(oa,v,o) :- activeObj0(oa,o), Alloc(v,h), typeFilter(v,o), CH(o,h).
+pt0(oa,u,o) :- pt0(oa,v,o), Assign(u,v), typeFilter(u,o).
+pt0(oa,u,o) :- pt0(oa,v,o), param(u,v,_), typeFilter(u,o).
+pt0(oa,u,o) :- pt0(oa,v,o), return(u,v,_), typeFilter(u,o).
+pt0(oa,x,o) :- pt0(oa,v,o), Store(u,f,v), pt0(oa,u,op), pt0(oa,w,op), Load(x,w,f), typeFilter(x,o).
+pt0(oa,u,o) :- pt0(oa,v,o), StoreStat(f,v), LoadStat(u,f), typeFilter(u,o).
+
+# activeRef rules
+activeRef0(oa,u) :- pt0(oa,v,o), Store(u,f,v), typeFilter(u,op), typeFilter(w,op), Load(x,w,f), typeFilter(x,o).
+activeRef0(oa,w) :- pt0(oa,v,o), Store(u,f,v), typeFilter(u,op), typeFilter(w,op), Load(x,w,f), typeFilter(x,o).
+
+# refpt rules
+refpt0(oa,v,u) :- activeRef(oa,v), v=u.
+refpt0(oa,v,w) :- refpt0(oa,v,u), Assign(u,w).
+refpt0(oa,v,w) :- refpt0(oa,v,u), param(u,w,_).
+refpt0(oa,v,w) :- refpt0(oa,v,u), return(u,w,_).
+refpt0(oa,v,y) :- refpt0(oa,v,u), Load(u,w,f), typeFilter(w,o), typeFilter(x,o), Store(x,f,y).
+
+temppt0(oa,v,o) :- refpt0(oa,v,u), Alloc(u,h), typeFilter(v,o), CH(o,h).
+
+# activeObj rules
+activeObj0(oao) :- pt0(oa,v,o), Store(u,f,v), temppt0(oa,u,op), temppt0(oa,w,op), Load(x,w,f), typeFilter(x,o).
+
+##############
+# k-CFA pt
+##############
+
+# active rules
+activeObj(oa,o) :- Alloc(_,h), CH(o,h), oa=o.
+
+# pt rules
+pt(oa,c,v,o) :- activeObj(oa,o), Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), pt0(oa,v,o), CH(o,h).
+pt(oa,c,u,o) :- pt(oa,c,v,o), Assign(u,v), pt0(oa,u,o).
+pt(oa,d,u,o) :- pt(oa,c,v,o), param(u,v,i), pt0(oa,u,o), CC(c,d), CI(d,i).
+pt(oa,c,u,o) :- pt(oa,d,v,o), return(u,v,i), CI(d,i), CC(c,d), pt0(oa,u,o).
+pt(oa,d,x,o) :- pt(oa,c,v,o), Store(u,f,v), pt(oa,c,u,op), pt(oa,d,w,op), Load(x,w,f), pt0(oa,x,o).
+pt(oa,c,u,o) :- pt(oa,_,v,o), StoreStat(f,v), LoadStat(u,f), MV(m,u), CM(c,m).
+
+# activeRef rules
+activeRef(oa,u) :- pt(oa,_,v,o), Store(u,f,v), pt0(oa,u,op), pt0(oa,w,op), Load(x,w,f), pt0(oa,x,o), activeRef0(oa,u).
+activeRef(oa,w) :- pt(oa,_,v,o), Store(u,f,v), pt0(oa,u,op), pt0(oa,w,op), Load(x,w,f), pt0(oa,x,o), activeRef0(oa,w).
+
+# refpt rules
+refpt(oa,v,c,u) :- activeRef(oa,v), v=u, refpt0(oa,v,u), MV(m,u), CM(c,m).
+refpt(oa,v,c,w) :- refpt(oa,v,c,u), Assign(u,w), refpt0(oa,v,w).
+refpt(oa,v,c,w) :- refpt(oa,v,d,u), param(u,w,i), refpt0(oa,v,w), CC(c,d), CI(c,i).
+refpt(oa,v,d,w) :- refpt(oa,v,c,u), return(u,w,i), CI(d,i), CC(c,d), refpt0(oa,v,w).
+refpt(oa,v,d,y) :- refpt(oa,v,_,u), Load(u,w,f), pt0(oa,w,o), pt0(oa,x,o), Store(x,f,y), MV(m,y), CM(d,m), refpt0(oa,v,y).
+
+temppt(oa,v,o) :- refpt(oa,v,_,u), Alloc(u,h), temppt0(oa,v,o), CH(o,h).
+
+# activeObj rules
+activeObj(oa,op) :- pt(oa,_,v,o), Store(u,f,v), temppt(oa,u,op), temppt(oa,w,op), Load(x,w,f), pt0(oa,x,o), activeObj0(oa,op).
+
+##############
+# full pt
+##############
+
+ptFull(c,v,o) :- pt(_,c,v,o).
