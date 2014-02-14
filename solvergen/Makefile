@@ -14,10 +14,10 @@ clean:
 
 .SECONDEXPANSION:
 
-# gen/foo^bar.cpp: ... analyses/foo.cfg fsm/bar/*.fsm.tgf
-gen/%.cpp: $(PY_SCRIPTS) analyses/$$(firstword $$(subst ^, ,$$*)).cfg \
+# gen/foo^bar.cpp: ... cfg/foo.cfg fsm/bar/*.fsm.tgf
+gen/%.cpp: $(PY_SCRIPTS) cfg/$$(firstword $$(subst ^, ,$$*)).cfg \
 	   $$(wildcard fsm/$$(lastword $$(subst ^, ,$$*))/*.fsm.tgf)
-	python cfg_parser.py analyses/$(firstword $(subst ^, ,$*)).cfg \
+	python cfg_parser.py cfg/$(firstword $(subst ^, ,$*)).cfg \
 	    fsm/$(lastword $(subst ^, ,$*)) gen/
 
 # bin/foo^bar#-DFLAG1-DFLAG2: ... gen/foo^bar.cpp
