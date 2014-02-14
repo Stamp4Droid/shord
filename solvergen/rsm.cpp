@@ -257,7 +257,6 @@ void RSM::print(std::ostream& os) const {
     for (const Component& comp : components) {
 	os << comp.name << ":" << std::endl;
 	comp.print(os, symbols, components);
-	os << std::endl;
     }
 }
 
@@ -449,11 +448,18 @@ void Component::summarize(Graph& graph,
 	}
 	for (const Summary& s : res.summaries) {
 	    assert(s.comp == ref && s.src == workers[w].start);
+	    unsigned int new_summs = 0;
+	    unsigned int rescheduled = 0;
 	    if (graph.summaries.insert(s).second) {
+		new_summs++;
 		for (const Dependence& d : deps[s.src]) {
-		    worklist.enqueue(d.worker);
+		    if (worklist.enqueue(d.worker)) {
+			rescheduled++;
+		    }
 		}
 	    }
+	    std::cout << "Added " << new_summs << " summaries" << std::endl;
+	    std::cout << "Rescheduled " << rescheduled << " workers" << std::endl;
 	}
     }
 }
@@ -544,6 +550,7 @@ Worker::Result Worker::summarize(const Graph& graph) const {
 	}
     }
 
+    std::cout << "Reached " << res.summaries.size() << " nodes" << std::endl;
     return res;
 }
 
@@ -553,26 +560,39 @@ Worker::Result Worker::summarize(const Graph& graph) const {
 // - Better summary representation, for human consumption.
 
 int main(int argc, char* argv[]) {
+    // User-defined parameters
+    std::string rsm_dir;
+    std::string graph_dir;
+    std::string summ_dir;
+
     // Parse options
     po::options_description desc("Options");
     desc.add_options()
-	("rsm-dir", po::value<std::string>()->required(),
+	("help,h", "Print help message")
+	("rsm-dir", po::value<std::string>(&rsm_dir)->required(),
 	 "Directory of RSM components")
-	("graph-dir", po::value<std::string>()->required(),
+	("graph-dir", po::value<std::string>(&graph_dir)->required(),
 	 "Directory of edge files")
-	("summ-dir", po::value<std::string>()->required(),
+	("summ-dir", po::value<std::string>(&summ_dir)->required(),
 	 "Directory to store the summaries");
     po::positional_options_description pos_desc;
     pos_desc.add("rsm-dir", 1);
     pos_desc.add("graph-dir", 1);
     pos_desc.add("summ-dir", 1);
     po::variables_map vm;
-    po::store(po::command_line_parser(argc, argv)
-	      .options(desc).positional(pos_desc).run(), vm);
-    po::notify(vm);
-    std::string rsm_dir = vm.at("rsm-dir").as<std::string>();
-    std::string graph_dir = vm.at("graph-dir").as<std::string>();
-    std::string summ_dir = vm.at("summ-dir").as<std::string>();
+    try {
+	po::store(po::command_line_parser(argc, argv)
+		  .options(desc).positional(pos_desc).run(), vm);
+	if (vm.count("help") > 0) {
+	    // TODO: Also print usage
+	    std::cerr << desc << std::endl;
+	    return 1;
+	}
+	po::notify(vm);
+    } catch (const po::error& e) {
+        std::cerr << e.what() << std::endl;
+	return 1;
+    }
 
     // Initialize logging system
     std::cout.imbue(std::locale(""));
