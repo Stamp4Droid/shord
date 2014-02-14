@@ -76,10 +76,12 @@ public:
     bool empty() const {
 	return queue.empty();
     }
-    void enqueue(T val) {
+    bool enqueue(T val) {
 	if (reached.insert(val).second) {
 	    queue.push(val);
+	    return true;
 	}
+	return false;
     }
     T dequeue() {
 	T val = queue.front();
@@ -196,7 +198,7 @@ public:
 // Managed classes must define a 'make' friend function template, used for
 // initialization (normally just calls 'new'):
 // template<typename T, typename... ArgTs>
-// T* make(const std::string& name, Ref<T> ref, ArgTs... args) {
+// T* make(const std::string& name, Ref<T> ref, ArgTs&&... args) {
 //     return new T(name, ref, std::forward<ArgTs>(args)...);
 // }
 
@@ -259,7 +261,11 @@ public:
 	assert(ref.valid());
 	return array.at(ref.value).get();
     }
-    template<typename... ArgTs> T& make(const K& key, ArgTs... args) {
+    const T& operator[](const Ref<T> ref) const {
+	assert(ref.valid());
+	return array.at(ref.value).get();
+    }
+    template<typename... ArgTs> T& make(const K& key, ArgTs&&... args) {
 	Ref<T> next_ref = Ref<T>::for_value(array.size());
 	auto res = map.emplace(key, T(key, next_ref,
 				      std::forward<ArgTs>(args)...));
@@ -268,7 +274,7 @@ public:
 	array.push_back(std::ref(obj));
 	return obj;
     }
-    template<typename... ArgTs> T& add(const K& key, ArgTs... args) {
+    template<typename... ArgTs> T& add(const K& key, ArgTs&&... args) {
 	try {
 	    T& obj = map.at(key);
 	    obj.merge(std::forward<ArgTs>(args)...);
@@ -289,10 +295,10 @@ public:
     unsigned int size() const {
 	return array.size();
     }
-    T& first() {
+    const T& first() const {
 	return array.front().get();
     }
-    T& last() {
+    const T& last() const {
 	return array.back().get();
     }
     Iterator begin() const {

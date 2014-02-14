@@ -11,6 +11,9 @@ namespace fs = boost::filesystem;
 
 // ALPHABET ===================================================================
 
+class Node;
+class Edge;
+
 // TODO: separate class for parametric and non-parametric symbols
 class Symbol {
     friend Registry<Symbol>;
@@ -54,6 +57,10 @@ public:
 
 // RSM ========================================================================
 
+class Component;
+class Graph;
+class Worker;
+
 // States carry very little actual information; e.g. transitions are stored on
 // a separate table.
 class State {
@@ -74,8 +81,6 @@ public:
     }
     void print(std::ostream& os) const;
 };
-
-class Component;
 
 class Box {
     friend Registry<Box>;

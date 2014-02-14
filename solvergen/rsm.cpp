@@ -15,7 +15,7 @@ void Label::print(std::ostream& os, const Registry<Symbol>& symbol_reg) const {
     if (dir == Direction::REV) {
 	os << "_";
     }
-    Symbol& s = symbol_reg[symbol];
+    const Symbol& s = symbol_reg[symbol];
     os << s.name;
     if (s.parametric) {
 	os << "[" << (tagged ? "i" : "*") << "]";
@@ -29,6 +29,8 @@ Ref<Node> Label::prev_node(const Edge& e) const {
 	return e.src;
     case Direction::REV:
 	return e.dst;
+    default:
+	assert(false);
     }
 }
 
@@ -39,6 +41,8 @@ Ref<Node> Label::next_node(const Edge& e) const {
 	return e.dst;
     case Direction::REV:
 	return e.src;
+    default:
+	assert(false);
     }
 }
 
@@ -317,7 +321,7 @@ void Graph::print_summaries(const std::string& dirname,
 	std::ofstream fout((dirpath/fname).string());
 	assert(fout);
 	for (const Summary& s : summaries[comp.ref]) {
-	    fout << s.src.name << " " << s.dst.name << std::endl;
+	    fout << nodes[s.src].name << " " << nodes[s.dst].name << std::endl;
 	}
     }
 }
@@ -342,16 +346,16 @@ bool Pattern::matches(const Edge& e) const {
 //   don't have compatible base types.
 Table<const Edge*> Graph::search(const Pattern& pat) const {
     std::function<bool(const Edge&)> matches =
-	[&](const Edge& e){return pat.matches(e)};
+	[&](const Edge& e){return pat.matches(e);};
     std::function<const Edge*(const Edge&)> get_addr =
-	[](const Edge& e){return &e};
+	[](const Edge& e){return &e;};
     const auto& s = edges[pat.symbol];
 
     if (pat.src.valid()) {
 	return filter_map(s.primary()[pat.src], matches, get_addr);
     } else if (pat.dst.valid()) {
 	return filter_map(s.secondary<0>()[pat.dst], matches, get_addr);
-    } else if (pat.match_tag) {
+    } else if (pat.match_tag && pat.tag.valid()) {
 	return filter_map(s.secondary<1>()[pat.tag], matches, get_addr);
     } else {
 	return filter_map(s, matches, get_addr);
@@ -425,7 +429,7 @@ void RSM::propagate(Graph& graph) const {
 
 void Component::summarize(Graph& graph,
 			  const Registry<Worker,Ref<Node>>& workers) const {
-    Index<Table<Dependence>,Ref<Node>,&Dependence::start>> deps;
+    Index<Table<Dependence>,Ref<Node>,&Dependence::start> deps;
     // TODO: Verify that all workers refer to this component.
     Worklist<Ref<Worker>> worklist(true);
     for (const Worker& w : workers) {
@@ -446,8 +450,8 @@ void Component::summarize(Graph& graph,
 	for (const Summary& s : res.summaries) {
 	    assert(s.comp == ref && s.src == workers[w].start);
 	    if (graph.summaries.insert(s).second) {
-		for (Ref<Worker> to_rerun : deps[s.src]) {
-		    worklist.enqueue(to_rerun);
+		for (const Dependence& d : deps[s.src]) {
+		    worklist.enqueue(d.worker);
 		}
 	    }
 	}
@@ -461,12 +465,12 @@ void Component::propagate(Graph& graph) const {
     // TODO: Could do this in a query-driven manner?
     // We can do this one node at a time.
     for (const Node& start : graph.nodes) {
-	Worker::Result res = Worker(start, *this).summarize(graph);
+	Worker::Result res = Worker(start.ref, *this).summarize(graph);
 	// Ignore any emitted dependencies, they should have been handled
 	// during this component's summarization step.
 	// TODO: Don't produce at all.
 	for (const Summary& s : res.summaries) {
-	    assert(s.comp == ref && s.src == start);
+	    assert(s.comp == ref && s.src == start.ref);
 	    // Reachability information is stored like regular summaries.
 	    // TODO: Should separate?
 	    graph.summaries.insert(s);
