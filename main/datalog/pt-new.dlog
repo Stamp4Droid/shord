@@ -87,7 +87,7 @@ pt(c,u,o) :- pt(c,v,o), Assign(u,v), pt0(u,o).
 pt(d,u,o) :- pt(c,v,o), param(u,v,i), pt0(u,o), CC(c,d), CI(d,i).
 pt(c,u,o) :- pt(d,v,o), return(u,v,i), CI(d,i), CC(c,d), pt0(u,o).
 pt(d,x,o) :- pt(c,v,o), Store(u,f,v), pt(c,u,op), pt(d,w,op), Load(x,w,f), pt0(x,o).
-pt(c,u,o) :- pt(_,v,o), StoreStat(f,v), LoadStat(u,f), MV(m,u), CM(c,m).
+pt(c,u,o) :- pt(_,v,o), StoreStat(f,v), LoadStat(u,f), MV(m,u), CM(c,m), pt0(u,o).
 
 # activeRef rules
 activeRef(u) :- pt(_,v,o), Store(u,f,v), pt0(u,op), pt0(w,op), Load(x,w,f), pt0(x,o), activeRef0(u).
@@ -99,6 +99,7 @@ refpt(v,c,w) :- refpt(v,c,u), Assign(u,w), refpt0(v,w).
 refpt(v,c,w) :- refpt(v,d,u), param(u,w,i), refpt0(v,w), CC(c,d), CI(c,i).
 refpt(v,d,w) :- refpt(v,c,u), return(u,w,i), CI(d,i), CC(c,d), refpt0(v,w).
 refpt(v,d,y) :- refpt(v,_,u), Load(u,w,f), pt0(w,o), pt0(x,o), Store(x,f,y), MV(m,y), CM(d,m), refpt0(v,y).
+refpt(v,d,w) :- refpt(v,_,u), LoadStat(u,f), StoreStat(f,w), MV(m,w), CM(d,m), refpt0(v,w).
 
 temppt(v,o) :- refpt(v,_,u), Alloc(u,h), temppt0(v,o), CH(o,h).
 
