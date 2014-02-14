@@ -23,6 +23,7 @@ std::ostream& operator<<(std::ostream& os, const Foo& obj) {
 
 class Bar {
     friend Registry<Bar>;
+    typedef std::string Key;
 public:
     const std::string name;
     const Ref<Bar> ref;

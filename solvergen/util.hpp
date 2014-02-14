@@ -158,12 +158,14 @@ public:
 // - Refs can't be dangling; valid ones can only be created through a
 //   Registry, to point to a specific object in that Registry.
 // - Useful as the domain for various relations.
-// - name, ref must be unique, i.e. a key on the relation
-//   'consistent_with()' performs exactly this check: a new tuple with the same
-//   key must agree with an existing one on the other attributes.
+// - Each managed object must have a unique key, of type ObjClass::Key. The
+//   Registry enforces this at runtime: if a new object is fed to it, which
+//   agrees with an existing one on the key, then the new object is "merged"
+//   with the old one. ObjClass must provide a callback 'merge(...)' that
+//   performs the merging, and any sanity checks.
+// - A unique key, of type Ref<ObjClass>, is assigned to objects.
 // - Can have multiple instances of a domain (with separate references), for
 //   different collections.
-// - Generic names (strings by default)
 
 // Extensions:
 // - Define the concept of Managed Object, and have instances inherit some of
@@ -211,14 +213,12 @@ std::ostream& operator<<(std::ostream& os, const Ref<T>& ref) {
     return os;
 }
 
-template<typename T, typename K> class Registry;
+template<typename T> class Registry;
 
 // TODO: Could make this class const-correct, i.e. get a const& when indexing a
 // Registry using a const Ref.
 template<typename T> class Ref {
-    // TODO: This would ideally be Registry<T,K>, but partial specializations
-    // are not allowed in friend declarations.
-    template<typename S, typename K> friend class Registry;
+    friend Registry<T>;
     friend std::ostream& operator<< <>(std::ostream& os, const Ref<T>& ref);
 private:
     unsigned int value;
@@ -247,14 +247,15 @@ public:
     }
 };
 
-template<typename T, typename K = std::string> class Registry {
+template<typename T> class Registry {
 public:
+    typedef typename T::Key Key;
     typedef std::vector<std::reference_wrapper<T>> RefArray;
     typedef IterWrapper<typename RefArray::const_iterator, T,
 			detail::unwrap_ref<T>> Iterator;
 private:
     RefArray array;
-    std::map<K,T> map;
+    std::map<Key,T> map;
 public:
     explicit Registry() {}
     T& operator[](const Ref<T> ref) {
@@ -265,7 +266,7 @@ public:
 	assert(ref.valid());
 	return array.at(ref.value).get();
     }
-    template<typename... ArgTs> T& make(const K& key, ArgTs&&... args) {
+    template<typename... ArgTs> T& make(const Key& key, ArgTs&&... args) {
 	Ref<T> next_ref = Ref<T>::for_value(array.size());
 	auto res = map.emplace(key, T(key, next_ref,
 				      std::forward<ArgTs>(args)...));
@@ -274,7 +275,7 @@ public:
 	array.push_back(std::ref(obj));
 	return obj;
     }
-    template<typename... ArgTs> T& add(const K& key, ArgTs&&... args) {
+    template<typename... ArgTs> T& add(const Key& key, ArgTs&&... args) {
 	try {
 	    T& obj = map.at(key);
 	    obj.merge(std::forward<ArgTs>(args)...);
@@ -283,13 +284,13 @@ public:
 	    return make(key, std::forward<ArgTs>(args)...);
 	}
     }
-    T& find(const K& key) {
+    T& find(const Key& key) {
 	return map.at(key);
     }
-    const T& find(const K& key) const {
+    const T& find(const Key& key) const {
 	return map.at(key);
     }
-    bool contains(const K& key) const {
+    bool contains(const Key& key) const {
 	return map.count(key) > 0;
     }
     unsigned int size() const {

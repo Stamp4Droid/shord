@@ -17,6 +17,7 @@ class Edge;
 // TODO: separate class for parametric and non-parametric symbols
 class Symbol {
     friend Registry<Symbol>;
+    typedef std::string Key;
 private:
     static const boost::regex NAME_REGEX;
 public:
@@ -65,6 +66,7 @@ class Worker;
 // a separate table.
 class State {
     friend Registry<State>;
+    typedef std::string Key;
 public:
     const std::string name;
     const Ref<State> ref;
@@ -84,6 +86,7 @@ public:
 
 class Box {
     friend Registry<Box>;
+    typedef std::string Key;
 public:
     const std::string name;
     const Ref<Box> ref;
@@ -155,6 +158,7 @@ public:
 // TODO: Index states on initial/final attribute, boxes on component.
 class Component {
     friend Registry<Component>;
+    typedef std::string Key;
 private:
     static const boost::regex NAME_REGEX;
 public:
@@ -190,8 +194,7 @@ public:
     }
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg,
 	       const Registry<Component>& comp_reg) const;
-    void summarize(Graph& graph,
-		   const Registry<Worker,Ref<Node>>& workers) const;
+    void summarize(Graph& graph, const Registry<Worker>& workers) const;
     void propagate(Graph& graph) const;
 };
 
@@ -214,6 +217,7 @@ public:
 
 class Node {
     friend Registry<Node>;
+    typedef std::string Key;
 public:
     const std::string name;
     const Ref<Node> ref;
@@ -228,6 +232,7 @@ public:
 
 class Tag {
     friend Registry<Tag>;
+    typedef std::string Key;
 public:
     const std::string name;
     const Ref<Tag> ref;
@@ -341,7 +346,8 @@ public:
     };
 
 private:
-    friend Registry<Worker,Ref<Node>>;
+    friend Registry<Worker>;
+    typedef Ref<Node> Key;
 public:
     const Ref<Node> start; // used as primary key, to identify a Worker
     const Ref<Worker> ref;

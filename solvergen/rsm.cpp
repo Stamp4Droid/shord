@@ -388,7 +388,7 @@ void RSM::propagate(Graph& graph) const {
 	// We need to search through the uses of each component to find all
 	// compatible entry/exit node pairs on which we should summarize. This
 	// process needs to happen on the full RSM level.
-	Registry<Worker,Ref<Node>> workers;
+	Registry<Worker> workers;
 	for (const Component& user : components) {
 	    for (const Box& b : user.boxes) {
 		// TODO: This is a simple selection filter, we could have used
@@ -427,7 +427,7 @@ void RSM::propagate(Graph& graph) const {
 }
 
 void Component::summarize(Graph& graph,
-			  const Registry<Worker,Ref<Node>>& workers) const {
+			  const Registry<Worker>& workers) const {
     Index<Table<Dependence>,Ref<Node>,&Dependence::start> deps;
     // TODO: Verify that all workers refer to this component.
     Worklist<Ref<Worker>> worklist(true);
