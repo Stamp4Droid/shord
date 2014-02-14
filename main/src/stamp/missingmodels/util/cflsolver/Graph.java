@@ -160,8 +160,8 @@ public final class Graph {
 		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.contextFreeGrammar.getLabel(label), this.getField(field), weight);
 	}
 	
-	public Edge getEdge(Vertex source, Vertex sink, int label, int field, short weight) {
-		return (Edge)source.outgoingEdgesByLabel[label].get(new Edge(source, sink, label, field, weight));
+	public Edge getEdge(Edge edge) {
+		return (Edge)edge.source.outgoingEdgesByLabel[edge.label].get(edge);
 	}
 	
 	public Edge addEdge(Vertex source, Vertex sink, int label, int field, short weight) {
@@ -175,10 +175,7 @@ public final class Graph {
 	}
 	
 	// for use by reachability solver
-	// call getEdge before adding edge, or the update may not occur correctly	
-	public Edge getEdge(Edge edge) {
-		return (Edge)edge.source.outgoingEdgesByLabel[edge.label].get(edge);
-	}
+	// call getEdge before adding edge, or the update may not occur correctly
 	public void addEdge(Edge edge) {
 		edge.source.outgoingEdgesByLabel[edge.label].put(edge, edge);
 		edge.sink.incomingEdgesByLabel[edge.label].put(edge, edge);
