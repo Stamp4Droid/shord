@@ -22,6 +22,7 @@ How to read an analysis name, if formatted as 1-2-3-4:5.cfg:
   t : (t)ype filters, implemented as edge predicates
 
 4th part: taint flow formulation:
+  s : only (s)tart and finish of flow covered (passthroughs ignored)
   a : (a)lias piggyback
   c : (c)onditional flow annotations supported
   e : (e)xploded labels (for the non-primary sensitivity dimension)
@@ -32,8 +33,11 @@ How to read an analysis name, if formatted as 1-2-3-4:5.cfg:
       passthrough entry & exit: only array elements
       conditional escaping trigger entry: no nesting support
 
-5th part: additional parameters
-  base : original formulation, with no optimizations
+5th part: additional parameters:
+  l : the analysis allows for the extra terminals used in limited-nesting
+      implementations (implicit if 'l' is present in the 4th part)
+  p : PN-style matching
+  b : original formulation, with no optimizations
 
 Other features (not currently covered):
 - Modeling of arbitrary object instantiation inside missing code
