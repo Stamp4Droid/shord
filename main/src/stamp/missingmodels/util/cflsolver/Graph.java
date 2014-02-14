@@ -9,17 +9,17 @@ import stamp.missingmodels.util.Util.MultivalueMap;
 
 public final class Graph {
 	public final class Vertex {
-		public final Set[] incomingEdgesByLabel; // list of type Edge
-		public final Set[] outgoingEdgesByLabel; // list of type Edge
+		public final Map[] incomingEdgesByLabel; // list of type Edge
+		public final Map[] outgoingEdgesByLabel; // list of type Edge
 
 		public Vertex(int numLabels) {
-			this.incomingEdgesByLabel = new Set[numLabels];
+			this.incomingEdgesByLabel = new Map[numLabels];
 			for(int i=0; i<numLabels; i++) {
-				this.incomingEdgesByLabel[i] = new HashSet();
+				this.incomingEdgesByLabel[i] = new HashMap();
 			}
-			this.outgoingEdgesByLabel = new Set[numLabels];
+			this.outgoingEdgesByLabel = new Map[numLabels];
 			for(int i=0; i<numLabels; i++) {
-				this.outgoingEdgesByLabel[i] = new HashSet();
+				this.outgoingEdgesByLabel[i] = new HashMap();
 			}
 		}
 		
@@ -34,12 +34,22 @@ public final class Graph {
 		public final Vertex sink;
 		public final int field;
 		public final int label;
+		public short weight;
+
+		public Edge(Vertex source, Vertex sink, int label, int field, short weight) {
+			this.source = source;
+			this.sink = sink;
+			this.field = field;
+			this.label = label;
+			this.weight = weight;
+		}
 
 		public Edge(Vertex source, Vertex sink, int label, int field) {
 			this.source = source;
 			this.sink = sink;
 			this.field = field;
 			this.label = label;
+			this.weight = 0;
 		}
 
 		public Edge(Vertex source, Vertex sink, int label) {
@@ -47,11 +57,12 @@ public final class Graph {
 			this.sink = sink;
 			this.field = -1;
 			this.label = label;
+			this.weight = 0;
 		}
 
 		@Override
 		public String toString() {
-			return this.source.toString() + " " + this.sink.toString() + " " + contextFreeGrammar.getLabelName(this.label) + " " + getFieldName(this.field);
+			return this.source.toString() + " " + this.sink.toString() + " " + contextFreeGrammar.getLabelName(this.label) + " " + getFieldName(this.field) + " " + this.weight;
 		}
 
 		@Override
@@ -134,28 +145,46 @@ public final class Graph {
 	}
 
 	public Edge addEdge(String source, String sink, String label) {
-		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.contextFreeGrammar.getLabel(label), -1);
+		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.contextFreeGrammar.getLabel(label), -1, (short)0);
 	}
 
 	public Edge addEdge(String source, String sink, String label, String field) {
-		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.contextFreeGrammar.getLabel(label), this.getField(field));
+		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.contextFreeGrammar.getLabel(label), this.getField(field), (short)0);
 	}
 
-	public Edge addEdge(Vertex source, Vertex sink, int label, int field) {
-		Edge edge = new Edge(source, sink, label, field);
-		if(field == -2 || source.outgoingEdgesByLabel[label].contains(edge)) {
+	public Edge addEdge(String source, String sink, String label, short weight) {
+		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.contextFreeGrammar.getLabel(label), -1, weight);
+	}
+
+	public Edge addEdge(String source, String sink, String label, String field, short weight) {
+		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.contextFreeGrammar.getLabel(label), this.getField(field), weight);
+	}
+	
+	public Edge getEdge(Vertex source, Vertex sink, int label, int field, short weight) {
+		return (Edge)source.outgoingEdgesByLabel[label].get(new Edge(source, sink, label, field, weight));
+	}
+	
+	// if the edge is already there, this does nothing and returns the current edge
+	// otherwise, it creates a new edge and adds it
+	public Edge addEdge(Vertex source, Vertex sink, int label, int field, short weight) {
+		if(field == -2) {
 			return null;
 		}
-		source.outgoingEdgesByLabel[label].add(edge);
-		sink.incomingEdgesByLabel[label].add(edge);
-		return edge;
+		Edge edge = new Edge(source, sink, label, field, weight);
+		Edge curEdge = (Edge)source.outgoingEdgesByLabel[label].get(edge);
+		if(curEdge == null) {
+			source.outgoingEdgesByLabel[label].put(edge, edge);
+			sink.incomingEdgesByLabel[label].put(edge, edge);
+			return edge;
+		}
+		return curEdge;
 	}
 	
 	public Set<Edge> getEdges() {
 		Set<Edge> edges = new HashSet<Edge>();
 		for(Vertex vertex : this.vertices.values()) {
 			for(int i=0; i<vertex.outgoingEdgesByLabel.length; i++) {
-				edges.addAll(vertex.outgoingEdgesByLabel[i]);
+				edges.addAll(vertex.outgoingEdgesByLabel[i].keySet());
 			}
 		}
 		return edges;

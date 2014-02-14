@@ -30,12 +30,12 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		System.out.println(flowGrammar.toString());
 
 		Graph g = new Graph(flowGrammar);
-		g.addEdge("o1", "x", "newCtxt");
-		g.addEdge("o2", "z", "newCtxt");
-		g.addEdge("x", "y", "assignCtxt");
-		g.addEdge("z", "y", "storeCtxt", "f");
-		g.addEdge("x", "w", "assignCtxt");
-		g.addEdge("w", "v", "loadCtxt", "f");
+		g.addEdge("x", "o1", "newCtxt", (short)1);
+		g.addEdge("z", "o2", "newCtxt", (short)1);
+		g.addEdge("y", "x", "assignCtxt", (short)1);
+		g.addEdge("y", "z", "storeCtxt", "f", (short)1);
+		g.addEdge("w", "x", "assignCtxt", (short)1);
+		g.addEdge("v", "w", "loadCtxt", "f", (short)1);
 
 		new ReachabilitySolver().solve(flowGrammar, g);	
 
