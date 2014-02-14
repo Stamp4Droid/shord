@@ -1,0 +1,118 @@
+##################
+# Points-to analysis
+##################
+
+# name=pt-new-v-dlog
+
+.include "M.dom"
+.include "C.dom"
+.include "V.dom"
+.include "H.dom"
+.include "F.dom"
+.include "I.dom"
+
+.bddvarorder M0_C0xC1xC2_V0xV1xV2_H0xF0_I0
+
+Assign(v:V,u:V)     input   # v = u
+Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
+Load(y:V,x:V,f:F)   input   # y = x.f
+Store(u:V,f:F,v:V)  input   # u.f = v
+LoadStat(y:V,f:F)   input   # y = f
+StoreStat(f:F,v:V)  input   # f = v
+param(u:V,v:V,i:I)  input   # u is the formal parameter, v is actual arg, i is invocation stmt
+return(u:V,v:V,i:I) input   # u is the lhs at callsite, v is the return var, i is invocation stmt
+typeFilter(v:V,o:C) input   # type wise, v can point-to o
+
+MV(m:M,v:V) input         # v is a variable in method m
+CM(c:C,m:M) input         # c is a context of method m
+CH(o:C,h:H) input         # context’ified abstract location o corresponds to new stmt h
+CI(c:C,i:I) input         # stmt i is the top element in the k-limited callstack c
+CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
+
+# intermediate 0-cfa relations
+pt0v(ov:V,v:V,o:C) output
+refpt0v(ov:V,v:V,u:V) output
+temppt0v(ov:V,v:V,o:C) output
+activeRef0v(ov:V,v:V) output
+activeObj0v(ov:V,o:C) output
+
+# intermediate k-cfa relations
+ptkv(ov:V,c:C,v:V,o:C) output
+refptkv(ov:V,v:V,c:C,u:V) output
+tempptkv(ov:V,v:V,o:C) output
+activeRefv(ov:V,v:V) output
+activeObjv(ov:V,o:C) output
+
+# full pt
+ptFullv(c:C,v:V,o:C) output
+
+##############
+# 0-CFA pt
+##############
+
+# active rules
+activeRef0v(ov,v) :- activeRefv(ov,v).
+activeObj0v(ov,o) :- activeObjv(ov,o).
+
+# pt rules
+pt0v(ov,v,o) :- activeObj0v(ov,o), Alloc(v,h), typeFilter(v,o), CH(o,h).
+pt0v(ov,u,o) :- pt0v(ov,v,o), Assign(u,v), typeFilter(u,o).
+pt0v(ov,u,o) :- pt0v(ov,v,o), param(u,v,_), typeFilter(u,o).
+pt0v(ov,u,o) :- pt0v(ov,v,o), return(u,v,_), typeFilter(u,o).
+pt0v(ov,x,o) :- pt0v(ov,v,o), Store(u,f,v), pt0v(ov,u,op), pt0v(ov,w,op), Load(x,w,f), typeFilter(x,o).
+pt0v(ov,u,o) :- pt0v(ov,v,o), StoreStat(f,v), LoadStat(u,f), typeFilter(u,o).
+
+# activeRef rules
+activeRef0v(ov,u) :- pt0v(ov,v,o), Store(u,f,v), typeFilter(u,op), typeFilter(w,op), Load(x,w,f), typeFilter(x,o).
+activeRef0v(ov,w) :- pt0v(ov,v,o), Store(u,f,v), typeFilter(u,op), typeFilter(w,op), Load(x,w,f), typeFilter(x,o).
+
+# refpt rules
+refpt0v(ov,v,u) :- activeRef0v(ov,v), v=u.
+refpt0v(ov,v,w) :- refpt0v(ov,v,u), Assign(u,w).
+refpt0v(ov,v,w) :- refpt0v(ov,v,u), param(u,w,_).
+refpt0v(ov,v,w) :- refpt0v(ov,v,u), return(u,w,_).
+refpt0v(ov,v,y) :- refpt0v(ov,v,u), Load(u,w,f), typeFilter(w,o), typeFilter(x,o), Store(x,f,y).
+refpt0v(ov,v,w) :- refpt0v(ov,v,u), LoadStat(u,f), StoreStat(f,w).
+
+temppt0v(ov,v,o) :- refpt0v(ov,v,u), Alloc(u,h), CH(o,h).
+
+# activeObj rules
+activeObj0v(ov,op) :- pt0v(ov,v,_), Store(u,f,v), temppt0v(ov,u,op), temppt0v(ov,w,op), Load(_,w,f).
+
+##############
+# k-CFA pt
+##############
+
+# active rules
+activeRefv(ov,v) :- MV(_,v), ov=v.
+
+# pt rules
+ptkv(ov,c,v,o) :- activeObjv(ov,o), Alloc(v,h), MV(m,v), pt0v(ov,v,o), CM(c,m), CC(c,o), CH(o,h).
+ptkv(ov,c,u,o) :- ptkv(ov,c,v,o), Assign(u,v), pt0v(ov,u,o).
+ptkv(ov,d,u,o) :- ptkv(ov,c,v,o), param(u,v,i), pt0v(ov,u,o), CC(c,d), CI(d,i).
+ptkv(ov,c,u,o) :- ptkv(ov,d,v,o), return(u,v,i), CI(d,i), CC(c,d), pt0v(ov,u,o).
+ptkv(ov,d,x,o) :- ptkv(ov,c,v,o), Store(u,f,v), ptkv(ov,c,u,op), ptkv(ov,d,w,op), Load(x,w,f), pt0v(ov,x,o).
+ptkv(ov,c,u,o) :- ptkv(ov,_,v,o), StoreStat(f,v), LoadStat(u,f), MV(m,u), CM(c,m), pt0v(ov,u,o).
+
+# activeRef rules
+activeRefv(ov,u) :- ptkv(ov,_,v,o), Store(u,f,v), pt0v(ov,u,op), pt0v(ov,w,op), Load(x,w,f), pt0v(ov,x,o), activeRef0v(ov,u).
+activeRefv(ov,w) :- ptkv(ov,_,v,o), Store(u,f,v), pt0v(ov,u,op), pt0v(ov,w,op), Load(x,w,f), pt0v(ov,x,o), activeRef0v(ov,w).
+
+# refpt rules
+refptkv(ov,v,c,u) :- activeRefv(ov,v), v=u, MV(m,u), refpt0v(ov,v,u), CM(c,m).
+refptkv(ov,v,c,w) :- refptkv(ov,v,c,u), Assign(u,w), refpt0v(ov,v,w).
+refptkv(ov,v,c,w) :- refptkv(ov,v,d,u), param(u,w,i), refpt0v(ov,v,w), CC(c,d), CI(d,i).
+refptkv(ov,v,d,w) :- refptkv(ov,v,c,u), return(u,w,i), CI(d,i), CC(c,d), refpt0v(ov,v,w).
+refptkv(ov,v,d,y) :- refptkv(ov,v,_,u), Load(u,w,f), typeFilter(w,o), typeFilter(x,o), Store(x,f,y), MV(m,y), CM(d,m), refpt0v(ov,v,y).
+refptkv(ov,v,d,w) :- refptkv(ov,v,_,u), LoadStat(u,f), StoreStat(f,w), MV(m,w), CM(d,m), refpt0v(ov,v,w).
+
+tempptkv(ov,v,o) :- refptkv(ov,v,_,u), Alloc(u,h), CH(o,h), temppt0v(ov,v,o).
+
+# activeObj rules
+activeObjv(ov,op) :- ptkv(ov,_,v,_), Store(u,f,v), tempptkv(ov,u,op), tempptkv(ov,w,op), Load(_,w,f), activeObj0v(ov,op).
+
+##############
+# full pt
+##############
+
+ptFullv(c,v,o) :- ptkv(ov,c,v,o), ov=v.

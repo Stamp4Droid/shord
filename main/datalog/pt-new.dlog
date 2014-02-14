@@ -84,7 +84,7 @@ activeObj0(op) :- pt0(v,_), Store(u,f,v), temppt0(u,op), temppt0(w,op), Load(_,w
 ##############
 
 # active rules
-activeObj(o) :- Alloc(_,h), CH(o,h), oa=o.
+activeObj(o) :- Alloc(_,h), CH(o,h).
 
 # pt rules
 ptk(c,v,o) :- activeObj(o), Alloc(v,h), MV(m,v), pt0(v,o), CM(c,m), CC(c,o), CH(o,h).
@@ -115,4 +115,4 @@ activeObj(op) :- ptk(_,v,_), Store(u,f,v), tempptk(u,op), tempptk(w,op), Load(_,
 # full pt
 ##############
 
-ptFull(c,v,o) :- ptk(c,v,o), o=oa.
+ptFull(c,v,o) :- ptk(c,v,o).
