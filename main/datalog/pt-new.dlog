@@ -46,6 +46,9 @@ activeObj(o:C) output
 # full pt
 ptFull(c:C,v:V,o:C) output
 
+queryObj(o:C) output
+queryRef(v:V) output
+
 ##############
 # 0-CFA pt
 ##############
@@ -84,7 +87,7 @@ activeObj0(op) :- pt0(v,_), Store(u,f,v), temppt0(u,op), temppt0(w,op), Load(_,w
 ##############
 
 # active rules
-activeObj(o) :- Alloc(_,h), CH(o,h).
+activeObj(o) :- queryObj(o).
 
 # pt rules
 ptk(c,v,o) :- activeObj(o), Alloc(v,h), MV(m,v), pt0(v,o), CM(c,m), CC(c,o), CH(o,h).
@@ -106,7 +109,7 @@ refptk(v,d,w) :- refptk(v,c,u), return(u,w,i), CI(d,i), CC(c,d), refpt0(v,w).
 refptk(v,d,y) :- refptk(v,_,u), Load(u,w,f), typeFilter(w,o), typeFilter(x,o), Store(x,f,y), MV(m,y), CM(d,m), refpt0(v,y).
 refptk(v,d,w) :- refptk(v,_,u), LoadStat(u,f), StoreStat(f,w), MV(m,w), CM(d,m), refpt0(v,w).
 
-tempptk(v,o) :- refptk(v,_,u), Alloc(u,h), CH(o,h), temppt0(v,o).
+tempptk(v,o) :- refptk(v,_,u), Alloc(u,h), CH(o,h), pt0(v,o).
 
 # activeObj rules
 activeObj(op) :- ptk(_,v,_), Store(u,f,v), tempptk(u,op), tempptk(w,op), Load(_,w,f), activeObj0(op).
@@ -115,4 +118,5 @@ activeObj(op) :- ptk(_,v,_), Store(u,f,v), tempptk(u,op), tempptk(w,op), Load(_,
 # full pt
 ##############
 
+queryObj(o) :- Alloc(_,h), CH(o,h).
 ptFull(c,v,o) :- ptk(c,v,o).

@@ -8,6 +8,10 @@ import java.util.Set;
 import stamp.missingmodels.util.Util.MultivalueMap;
 
 public final class Graph {
+	public static final int DEFAULT_FIELD = -1;
+	public static final int ANY_FIELD = -2;
+	public static final int MISMATCHED_FIELD = -3;
+	
 	public final class Vertex {
 		public final Map[] incomingEdgesByLabel; // list of type Edge
 		public final Map[] outgoingEdgesByLabel; // list of type Edge
@@ -57,7 +61,7 @@ public final class Graph {
 		}
 
 		public Edge(Vertex source, Vertex sink, int label) {
-			this(source, sink, label, -1, null, null, (short)0);
+			this(source, sink, label, DEFAULT_FIELD, null, null, (short)0);
 		}
 
 		@Override
@@ -138,14 +142,14 @@ public final class Graph {
 	}
 	
 	public String getFieldName(int field) {
-		if(field == -1) {
+		if(field == DEFAULT_FIELD) {
 			return "none";
 		}
 		return this.fieldNames.get(field);
 	}
 
 	public Edge addEdge(String source, String sink, String label) {
-		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.contextFreeGrammar.getLabel(label), -1, (short)0);
+		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.contextFreeGrammar.getLabel(label), DEFAULT_FIELD, (short)0);
 	}
 
 	public Edge addEdge(String source, String sink, String label, String field) {
@@ -153,7 +157,7 @@ public final class Graph {
 	}
 
 	public Edge addEdge(String source, String sink, String label, short weight) {
-		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.contextFreeGrammar.getLabel(label), -1, weight);
+		return this.addEdge(this.getVertex(source), this.getVertex(sink), this.contextFreeGrammar.getLabel(label), DEFAULT_FIELD, weight);
 	}
 
 	public Edge addEdge(String source, String sink, String label, String field, short weight) {
@@ -161,7 +165,7 @@ public final class Graph {
 	}
 	
 	public Edge addEdge(Vertex source, Vertex sink, int label, int field, short weight) {
-		if(field == -2) {
+		if(field == MISMATCHED_FIELD) {
 			return null;
 		}
 		Edge edge = new Edge(source, sink, label, field, weight);

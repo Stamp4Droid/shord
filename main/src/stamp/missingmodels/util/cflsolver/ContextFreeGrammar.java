@@ -13,17 +13,23 @@ public final class ContextFreeGrammar {
 		public final int secondInput;
 		public final boolean isFirstInputBackwards;
 		public final boolean isSecondInputBackwards;
+		public final boolean ignoreFields;
 		
-		public BinaryProduction(int target, int firstInput, int secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards) {
+		public BinaryProduction(int target, int firstInput, int secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards, boolean ignoreFields) {
 			this.target = target;
 			this.firstInput = firstInput;
 			this.secondInput = secondInput;
 			this.isFirstInputBackwards = isFirstInputBackwards;
 			this.isSecondInputBackwards = isSecondInputBackwards;
+			this.ignoreFields = ignoreFields;
+		}
+		
+		public BinaryProduction(int target, int firstInput, int secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards) {
+			this(target, firstInput, secondInput, isFirstInputBackwards, isSecondInputBackwards, false);
 		}
 		
 		public BinaryProduction(int target, int firstInput, int secondInput) {
-			this(target, firstInput, secondInput, false, false);
+			this(target, firstInput, secondInput, false, false, false);
 		}
 		
 		@Override
@@ -36,15 +42,21 @@ public final class ContextFreeGrammar {
 		public final int target;
 		public final int input;
 		public final boolean isInputBackwards;
+		public final boolean ignoreFields;
 		
-		public UnaryProduction(int target, int input) {
-			this(target, input, false);
-		}
-		
-		public UnaryProduction(int target, int input, boolean isInputBackwards) {
+		public UnaryProduction(int target, int input, boolean isInputBackwards, boolean ignoreFields) {
 			this.target = target;
 			this.input = input;
 			this.isInputBackwards = isInputBackwards;
+			this.ignoreFields = ignoreFields;
+		}
+		
+		public UnaryProduction(int target, int input, boolean isInputBackwards) {
+			this(target, input, isInputBackwards, false);
+		}
+		
+		public UnaryProduction(int target, int input) {
+			this(target, input, false, false);
 		}
 		
 		@Override
@@ -93,61 +105,73 @@ public final class ContextFreeGrammar {
 	}
 	
 	public void addUnaryProduction(String target, String input) {
-		this.addUnaryProduction(this.getLabel(target), this.getLabel(input));
+		this.addUnaryProduction(this.getLabel(target), this.getLabel(input), false, false);
 	}
 	
 	public void addUnaryProduction(String target, String input, boolean isInputBackwards) {
-		this.addUnaryProduction(this.getLabel(target), this.getLabel(input), isInputBackwards);
+		this.addUnaryProduction(this.getLabel(target), this.getLabel(input), isInputBackwards, false);
+	}
+	
+	public void addUnaryProduction(String target, String input, boolean isInputBackwards, boolean ignoreFields) {
+		this.addUnaryProduction(this.getLabel(target), this.getLabel(input), isInputBackwards, ignoreFields);
 	}
 	
 	public void addBinaryProduction(String target, String firstInput, String secondInput) {
-		this.addBinaryProduction(this.getLabel(target), this.getLabel(firstInput), this.getLabel(secondInput));
+		this.addBinaryProduction(this.getLabel(target), this.getLabel(firstInput), this.getLabel(secondInput), false, false, false);
+	}
+	
+	public void addBinaryProduction(String target, String firstInput, String secondInput, boolean ignoreFields) {
+		this.addBinaryProduction(this.getLabel(target), this.getLabel(firstInput), this.getLabel(secondInput), false, false, ignoreFields);
 	}
 	
 	public void addBinaryProduction(String target, String firstInput, String secondInput, boolean isFirstinputBackwards, boolean isSecondInputBackwards) {
-		this.addBinaryProduction(this.getLabel(target), this.getLabel(firstInput), this.getLabel(secondInput), isFirstinputBackwards, isSecondInputBackwards);
+		this.addBinaryProduction(this.getLabel(target), this.getLabel(firstInput), this.getLabel(secondInput), isFirstinputBackwards, isSecondInputBackwards, false);
+	}
+	
+	public void addBinaryProduction(String target, String firstInput, String secondInput, boolean isFirstinputBackwards, boolean isSecondInputBackwards, boolean ignoreFields) {
+		this.addBinaryProduction(this.getLabel(target), this.getLabel(firstInput), this.getLabel(secondInput), isFirstinputBackwards, isSecondInputBackwards, ignoreFields);
 	}
 
 	public void addProduction(String target, String[] inputs) {
-		this.addProduction(target, inputs, new boolean[inputs.length]);
+		this.addProduction(target, inputs, new boolean[inputs.length], false);
+	}
+
+	public void addProduction(String target, String[] inputs, boolean ignoreFields) {
+		this.addProduction(target, inputs, new boolean[inputs.length], ignoreFields);
 	}
 	
 	public void addProduction(String target, String[] inputs, boolean[] isInputBackwards) {
+		this.addProduction(target, inputs, isInputBackwards, false);
+	}
+	
+	public void addProduction(String target, String[] inputs, boolean[] isInputBackwards, boolean ignoreFields) {
 		if(inputs.length <= 2 || inputs.length != isInputBackwards.length) {
 			throw new RuntimeException("Invalid production");
 		}
 		String prevInput = inputs[0];
 		String curInput = "^" + (isInputBackwards[0] ? "_" : "") + inputs[0] + "^" + (isInputBackwards[1] ? "_" : "") + inputs[1];
-		this.addBinaryProduction(curInput, prevInput, inputs[1], isInputBackwards[0], isInputBackwards[1]);
+		this.addBinaryProduction(curInput, prevInput, inputs[1], isInputBackwards[0], isInputBackwards[1], ignoreFields);
 		prevInput = curInput;
 		for(int i=2; i<inputs.length-1; i++) {
 			curInput = prevInput + "^" + (isInputBackwards[i] ? "_" : "") + inputs[i];
-			this.addBinaryProduction(curInput, prevInput, inputs[i], false, isInputBackwards[i]);
+			this.addBinaryProduction(curInput, prevInput, inputs[i], false, isInputBackwards[i], ignoreFields);
 			prevInput = curInput;
 		}
-		this.addBinaryProduction(target, prevInput, inputs[inputs.length-1], false, isInputBackwards[inputs.length-1]);
+		this.addBinaryProduction(target, prevInput, inputs[inputs.length-1], false, isInputBackwards[inputs.length-1], ignoreFields);
 	}
 	
-	public void addUnaryProduction(int target, int input) {
-		this.addUnaryProduction(target, input, false);
-	}
-	
-	public void addUnaryProduction(int target, int input, boolean isInputBackwards) {
+	public void addUnaryProduction(int target, int input, boolean isInputBackwards, boolean ignoreFields) {
 		if(target >= this.curLabel || input >= this.curLabel) {
 			throw new RuntimeException("label out of range");
 		}
-		this.unaryProductionsByInput.get(input).add(new UnaryProduction(target, input, isInputBackwards));
+		this.unaryProductionsByInput.get(input).add(new UnaryProduction(target, input, isInputBackwards, ignoreFields));
 	}
 	
-	public void addBinaryProduction(int target, int firstInput, int secondInput) {
-		this.addBinaryProduction(target, firstInput, secondInput, false, false);
-	}
-	
-	public void addBinaryProduction(int target, int firstInput, int secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards) {
+	public void addBinaryProduction(int target, int firstInput, int secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards, boolean ignoreFields) {
 		if(target >= this.curLabel || firstInput >= this.curLabel || secondInput >= this.curLabel) {
 			throw new RuntimeException("label out of range");
 		}
-		BinaryProduction binaryProduction = new BinaryProduction(target, firstInput, secondInput, isFirstInputBackwards, isSecondInputBackwards);
+		BinaryProduction binaryProduction = new BinaryProduction(target, firstInput, secondInput, isFirstInputBackwards, isSecondInputBackwards, ignoreFields);
 		this.binaryProductionsByFirstInput.get(firstInput).add(binaryProduction);
 		this.binaryProductionsBySecondInput.get(secondInput).add(binaryProduction);
 	}

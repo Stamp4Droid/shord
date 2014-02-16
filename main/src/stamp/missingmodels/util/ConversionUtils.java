@@ -162,11 +162,11 @@ public class ConversionUtils {
 		// load/store
 		relations.add("storeCtxt", new IndexRelation("StoreCtxt", "V", 1, 0, "V", 3, 0, 2));
 		relations.add("storeStatCtxt", new IndexRelation("StoreStatCtxt", "F", 1, null, "V", 2, 0));
-		relations.add("storeArrCtxt", new IndexRelation("StoreArrCtxt", "V", 1, 0, "V", 2, 0));
+		relations.add("storeCtxtArr", new IndexRelation("StoreCtxtArr", "V", 1, 0, "V", 2, 0));
 
 		relations.add("loadCtxt", new IndexRelation("LoadCtxt", "V", 1, 0, "V", 2, 0, 3));
 		relations.add("loadStatCtxt", new IndexRelation("LoadStatCtxt", "V", 1, 0, "F", 2, null));
-		relations.add("loadArrCtxt", new IndexRelation("LoadArrCtxt", "V", 1, 0, "V", 2, 0));
+		relations.add("loadCtxtArr", new IndexRelation("LoadCtxtArr", "V", 1, 0, "V", 2, 0));
 
 		// prim assign
 		relations.add("assignPrimCtxt", new IndexRelation("AssignPrimCtxt", "U", 1, 0, "U", 2, 0));

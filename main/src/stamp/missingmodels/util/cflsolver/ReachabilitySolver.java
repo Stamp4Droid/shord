@@ -9,21 +9,28 @@ import stamp.missingmodels.util.cflsolver.Graph.Edge;
 import stamp.missingmodels.util.cflsolver.Graph.Vertex;
 
 public class ReachabilitySolver {
-	private int getField(int firstField, int secondField) {
-		if(firstField == secondField) {
-			return -1;
+	private int getField(int field, boolean ignoreFields) {
+		return ignoreFields ? Graph.DEFAULT_FIELD : field;
+	}
+	
+	private int getField(int firstField, int secondField, boolean ignoreFields) {
+		if(ignoreFields) {
+			return Graph.DEFAULT_FIELD;
 		}
-		if(firstField == -1) {
+		if(firstField == secondField) {
+			return Graph.DEFAULT_FIELD;
+		}
+		if(firstField == Graph.DEFAULT_FIELD) {
 			return secondField;
 		}
-		if(secondField == -1) {
+		if(secondField == Graph.DEFAULT_FIELD) {
 			return firstField;
 		}
-		return -2;
+		return Graph.MISMATCHED_FIELD;
 	}
 	
 	private void getEdge(Graph graph, Vertex source, Vertex sink, int label, int field, Edge firstInput, Edge secondInput, short weight, Heap<Edge> worklist) {
-		if(field == -2) {
+		if(field == Graph.MISMATCHED_FIELD) {
 			return;
 		}
 		Edge edge = graph.new Edge(source, sink, label, field, firstInput, secondInput, weight);
@@ -58,9 +65,9 @@ public class ReachabilitySolver {
 			// ->
 			for(UnaryProduction unaryProduction : (List<UnaryProduction>)c.unaryProductionsByInput.get(edge.label)) {
 				if(unaryProduction.isInputBackwards) {
-					this.getEdge(g, edge.sink, edge.source, unaryProduction.target, edge.field, edge, null, edge.weight, worklist);
+					this.getEdge(g, edge.sink, edge.source, unaryProduction.target, this.getField(edge.field, unaryProduction.ignoreFields), edge, null, edge.weight, worklist);
 				} else {
-					this.getEdge(g, edge.source, edge.sink, unaryProduction.target, edge.field, edge, null, edge.weight,worklist);
+					this.getEdge(g, edge.source, edge.sink, unaryProduction.target, this.getField(edge.field, unaryProduction.ignoreFields), edge, null, edge.weight,worklist);
 				}
 			}
 			for(BinaryProduction binaryProduction : (List<BinaryProduction>)c.binaryProductionsByFirstInput.get(edge.label)) {
@@ -70,19 +77,19 @@ public class ReachabilitySolver {
 				// -> ->
 				if(binaryProduction.isFirstInputBackwards && binaryProduction.isSecondInputBackwards) {
 					for(Edge secondEdge : (Set<Edge>)edge.source.incomingEdgesByLabel[binaryProduction.secondInput].keySet()) {
-						this.getEdge(g, edge.sink, secondEdge.source, binaryProduction.target, this.getField(edge.field, secondEdge.field), edge, secondEdge, (short)(edge.weight+secondEdge.weight), worklist);
+						this.getEdge(g, edge.sink, secondEdge.source, binaryProduction.target, this.getField(edge.field, secondEdge.field, binaryProduction.ignoreFields), edge, secondEdge, (short)(edge.weight+secondEdge.weight), worklist);
 					}
 				} else if(binaryProduction.isFirstInputBackwards) {
 					for(Edge secondEdge : (Set<Edge>)edge.source.outgoingEdgesByLabel[binaryProduction.secondInput].keySet()) {
-						this.getEdge(g, edge.sink, secondEdge.sink, binaryProduction.target, this.getField(edge.field, secondEdge.field), edge, secondEdge, (short)(edge.weight+secondEdge.weight), worklist);
+						this.getEdge(g, edge.sink, secondEdge.sink, binaryProduction.target, this.getField(edge.field, secondEdge.field, binaryProduction.ignoreFields), edge, secondEdge, (short)(edge.weight+secondEdge.weight), worklist);
 					}
 				} else if(binaryProduction.isSecondInputBackwards) {
 					for(Edge secondEdge : (Set<Edge>)edge.sink.incomingEdgesByLabel[binaryProduction.secondInput].keySet()) {
-						this.getEdge(g, edge.source, secondEdge.source, binaryProduction.target, this.getField(edge.field, secondEdge.field), edge, secondEdge, (short)(edge.weight+secondEdge.weight), worklist);
+						this.getEdge(g, edge.source, secondEdge.source, binaryProduction.target, this.getField(edge.field, secondEdge.field, binaryProduction.ignoreFields), edge, secondEdge, (short)(edge.weight+secondEdge.weight), worklist);
 					}
 				} else {
 					for(Edge secondEdge : (Set<Edge>)edge.sink.outgoingEdgesByLabel[binaryProduction.secondInput].keySet()) {
-						this.getEdge(g, edge.source, secondEdge.sink, binaryProduction.target, this.getField(edge.field, secondEdge.field), edge, secondEdge, (short)(edge.weight+secondEdge.weight), worklist);
+						this.getEdge(g, edge.source, secondEdge.sink, binaryProduction.target, this.getField(edge.field, secondEdge.field, binaryProduction.ignoreFields), edge, secondEdge, (short)(edge.weight+secondEdge.weight), worklist);
 					}
 				}
 				
@@ -94,19 +101,19 @@ public class ReachabilitySolver {
 				// -> ->
 				if(binaryProduction.isFirstInputBackwards && binaryProduction.isSecondInputBackwards) {
 					for(Edge firstEdge : (Set<Edge>)edge.sink.outgoingEdgesByLabel[binaryProduction.firstInput].keySet()) {
-						this.getEdge(g, firstEdge.sink, edge.source, binaryProduction.target, this.getField(edge.field, firstEdge.field), firstEdge, edge, (short)(edge.weight+firstEdge.weight), worklist);
+						this.getEdge(g, firstEdge.sink, edge.source, binaryProduction.target, this.getField(edge.field, firstEdge.field, binaryProduction.ignoreFields), firstEdge, edge, (short)(edge.weight+firstEdge.weight), worklist);
 					}
 				} else if(binaryProduction.isFirstInputBackwards) {
 					for(Edge firstEdge : (Set<Edge>)edge.source.outgoingEdgesByLabel[binaryProduction.firstInput].keySet()) {
-						this.getEdge(g, firstEdge.sink, edge.sink, binaryProduction.target, this.getField(edge.field, firstEdge.field), firstEdge, edge, (short)(edge.weight+firstEdge.weight), worklist);
+						this.getEdge(g, firstEdge.sink, edge.sink, binaryProduction.target, this.getField(edge.field, firstEdge.field, binaryProduction.ignoreFields), firstEdge, edge, (short)(edge.weight+firstEdge.weight), worklist);
 					}
 				} else if(binaryProduction.isSecondInputBackwards) {
 					for(Edge firstEdge : (Set<Edge>)edge.sink.incomingEdgesByLabel[binaryProduction.firstInput].keySet()) {
-						this.getEdge(g, firstEdge.source, edge.source, binaryProduction.target, this.getField(edge.field, firstEdge.field), firstEdge, edge, (short)(edge.weight+firstEdge.weight), worklist);
+						this.getEdge(g, firstEdge.source, edge.source, binaryProduction.target, this.getField(edge.field, firstEdge.field, binaryProduction.ignoreFields), firstEdge, edge, (short)(edge.weight+firstEdge.weight), worklist);
 					}
 				} else {
 					for(Edge firstEdge : (Set<Edge>)edge.source.incomingEdgesByLabel[binaryProduction.firstInput].keySet()) {
-						this.getEdge(g, firstEdge.source, edge.sink, binaryProduction.target, this.getField(edge.field, firstEdge.field), firstEdge, edge, (short)(edge.weight+firstEdge.weight), worklist);
+						this.getEdge(g, firstEdge.source, edge.sink, binaryProduction.target, this.getField(edge.field, firstEdge.field, binaryProduction.ignoreFields), firstEdge, edge, (short)(edge.weight+firstEdge.weight), worklist);
 					}
 				}
 			}

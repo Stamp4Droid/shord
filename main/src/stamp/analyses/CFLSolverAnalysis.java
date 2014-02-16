@@ -16,22 +16,76 @@ import chord.project.Chord;
 
 @Chord(name = "cflsolver")
 public class CFLSolverAnalysis extends JavaAnalysis {
-	private static ContextFreeGrammar flowGrammar = new ContextFreeGrammar();
+	private static ContextFreeGrammar taintGrammar = new ContextFreeGrammar();
 	static {
-		flowGrammar.addUnaryProduction("Flow", "newCtxt", true);
-		flowGrammar.addBinaryProduction("Flow", "Flow", "assignCtxt", false, true);
-		flowGrammar.addBinaryProduction("Flow", "Flow", "assignCCtxt", false, true);
-		flowGrammar.addProduction("FlowField", new String[]{"Flow", "storeCtxt", "Flow"}, new boolean[]{false, true, true});
-		flowGrammar.addProduction("Flow", new String[]{"FlowField", "Flow", "loadCtxt"}, new boolean[]{false, false, true});
-		flowGrammar.addBinaryProduction("FlowStatField", "Flow", "storeStatCtxt", false, true);
-		flowGrammar.addBinaryProduction("Flow", "FlowStatField", "loadStatCtxt", false, true);
+		// pt rules
+		taintGrammar.addUnaryProduction("Flow", "newCtxt", true);
+		taintGrammar.addBinaryProduction("Flow", "Flow", "assignCtxt", false, true);
+		taintGrammar.addProduction("FlowField", new String[]{"Flow", "storeCtxt", "Flow"}, new boolean[]{false, true, true});
+		taintGrammar.addProduction("Flow", new String[]{"FlowField", "Flow", "loadCtxt"}, new boolean[]{false, false, true});
+		taintGrammar.addBinaryProduction("FlowStatField", "Flow", "storeStatCtxt", false, true);
+		taintGrammar.addBinaryProduction("Flow", "FlowStatField", "loadStatCtxt", false, true);
+		
+		taintGrammar.addProduction("FlowFieldArr", new String[]{"Flow", "storeCtxtArr", "Flow"}, new boolean[]{false, true, true});
+		
+		// object annotations
+		taintGrammar.addBinaryProduction("Obj2RefT", "Flow", "ref2RefT");
+		taintGrammar.addBinaryProduction("Obj2PrimT", "Flow", "ref2PrimT");
+		taintGrammar.addBinaryProduction("Obj2RefT", "FlowFieldArr", "Obj2RefT"); // TODO: FlowFieldArr
+		taintGrammar.addBinaryProduction("Obj2PrimT", "FlowFieldArr", "Obj2PrimT");
+		
+		taintGrammar.addBinaryProduction("Label2ObjT", "label2RefT", "Flow", false, true);
+		taintGrammar.addBinaryProduction("Label2ObjT", "label2ObjT", "FlowField", false, true, true);
+		
+		// sinkf
+		taintGrammar.addBinaryProduction("SinkF2Obj", "sinkF2RefF", "Flow", false, true);
+		taintGrammar.addProduction("SinkF2Obj", new String[]{"sink2Label", "Label2Obj", "Flow", "ref2RefF", "Flow"}, new boolean[]{false, false, false, true, true});
+		taintGrammar.addProduction("SinkF2Obj", new String[]{"sink2Label", "Label2Prim", "ref2RefPrimF", "Flow"}, new boolean[]{false, false, true, true});
+		taintGrammar.addBinaryProduction("SinkF2Obj", "SinkF2Obj", "FieldFlow", false, true, true);
+		
+		taintGrammar.addUnaryProduction("SinkF2Prim", "sinkF2PrimF");
+		taintGrammar.addProduction("SinkF2Prim", new String[]{"sink2Label", "Label2Obj", "Flow", "prim2RefF"}, new boolean[]{false, false, false, true});
+		taintGrammar.addProduction("SinkF2Prim", new String[]{"sink2Label", "Label2Prim", "Prim2PrimF"}, new boolean[]{false, false, true});
+		
+		// source-sink flow
+		taintGrammar.addProduction("Src2Sink", new String[]{"src2Label", "Label2Obj", "SinkF2Obj"}, new boolean[]{false, false, true});
+		taintGrammar.addProduction("Src2Sink", new String[]{"src2Label", "Label2Prim", "SinkF2Prim"}, new boolean[]{false, false, true});
+		taintGrammar.addProduction("Src2Sink", new String[]{"src2Label", "Label2PrimFld", "SinkF2Obj"}, new boolean[]{false, false, true}, true);
+		
+		// label-obj flow
+		taintGrammar.addUnaryProduction("Label2Obj", "Label2ObjT");
+		taintGrammar.addUnaryProduction("Label2Obj", "Label2ObjX");
+
+		taintGrammar.addProduction("Label2ObjX", new String[]{"Label2Obj", "Obj2RefT", "Flow"}, new boolean[]{false, false, true});
+		taintGrammar.addProduction("Label2ObjX", new String[]{"Label2Prim", "prim2RefT", "Flow"}, new boolean[]{false, false, true});
+		taintGrammar.addProduction("Label2ObjX", new String[]{"Label2PrimFldArr", "Obj2RefT", "Flow"}, new boolean[]{false, false, true});
+		taintGrammar.addBinaryProduction("Label2ObjX", "Label2ObjX", "FlowFieldArr", false, true);
+		
+		// label-prim flow
+		taintGrammar.addUnaryProduction("Label2Prim", "label2PrimT");
+		taintGrammar.addBinaryProduction("Label2Prim", "Label2Prim", "assignPrimCtxt", false, true);
+		taintGrammar.addBinaryProduction("Label2Prim", "Label2Prim", "assignPrimCCtxt", false, true);
+
+		taintGrammar.addBinaryProduction("Label2Prim", "Label2Obj", "Obj2PrimT");
+		taintGrammar.addBinaryProduction("Label2Prim", "Label2Prim", "Prim2PrimT");
+
+		taintGrammar.addProduction("Label2Prim", new String[]{"Label2ObjT", "Flow", "loadPrimCtxt"}, new boolean[]{false, false, true}, true);
+		taintGrammar.addProduction("Label2Prim", new String[]{"Label2ObjX", "Flow", "loadPrimCtxtArr"}, new boolean[]{false, false, true});
+		taintGrammar.addBinaryProduction("Label2Prim", "Label2PrimFldArr", "Obj2PrimT");
+
+		taintGrammar.addProduction("Label2Prim", new String[]{"Label2PrimFld", "Flow", "loadPrimCtxt"}, new boolean[]{false, false, true});
+		taintGrammar.addBinaryProduction("Label2Prim", "Label2PrimFldStat", "loadStatPrimCtxt", false, true);
+		
+		taintGrammar.addProduction("Label2PrimFld", new String[]{"Label2Prim", "storePrimCtxt", "Flow"}, new boolean[]{false, true, true});
+		taintGrammar.addProduction("Label2PrimFldArr", new String[]{"Label2Prim", "storePrimCtxtArr", "Flow"}, new boolean[]{false, true, true});
+		taintGrammar.addBinaryProduction("Label2PrimFldStat", "Label2Prim", "storeStatPrimCtxt", false, true);		
 	}
 
 	public static void main(String[] args) {
 		System.out.println("CFG:");
-		System.out.println(flowGrammar.toString());
+		System.out.println(taintGrammar.toString());
 
-		Graph g = new Graph(flowGrammar);
+		Graph g = new Graph(taintGrammar);
 		g.addEdge("x", "o1", "newCtxt", (short)1);
 		g.addEdge("z", "o2", "newCtxt", (short)1);
 		g.addEdge("y", "x", "assignCtxt", (short)1);
@@ -39,7 +93,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		g.addEdge("w", "x", "assignCtxt", (short)1);
 		g.addEdge("v", "w", "loadCtxt", "f", (short)1);
 
-		new ReachabilitySolver().solve(flowGrammar, g);	
+		new ReachabilitySolver().solve(taintGrammar, g);	
 
 		System.out.println("Solution:");
 		System.out.println(g.toString());
@@ -60,9 +114,10 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 
 	@Override
 	public void run() {
-		Graph g = new Graph(flowGrammar);
+		Graph g = new Graph(taintGrammar);
 
-		for(String label : flowGrammar.getLabelNames()) {
+		for(String label : taintGrammar.getLabelNames()) {
+			System.out.println(label + ": " + ConversionUtils.getChordRelationsFor(label).size());
 			for(Relation relation : ConversionUtils.getChordRelationsFor(label)) {
 				try {
 					// STEP 1: Load the Shord relation.
@@ -88,8 +143,9 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 				}
 			}
 		}
+		System.out.println();
 		
-		new ReachabilitySolver().solve(flowGrammar, g);
+		new ReachabilitySolver().solve(taintGrammar, g);
 		//System.out.println(g.toString());
 
 		MultivalueMap<String,Edge> sortedEdges = g.getSortedEdges();
