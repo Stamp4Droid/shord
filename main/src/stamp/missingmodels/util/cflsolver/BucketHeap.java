@@ -43,18 +43,21 @@ public class BucketHeap<T> implements Heap<T> {
 			t = tt;
 			break;
 		}
-		cur.remove(t);
-		this.size--;
+		if(cur.remove(t)) {
+			this.size--;
+		}
 		return t;
 	}
 
 	public int size() {
 		return this.size;
 	}
-
+	
 	@Override
 	public void remove(Object t, short weight) {
-		this.buckets.get(weight).remove(t);		
+		if(this.buckets.get(weight).remove(t)) {
+			this.size--;
+		}
 	}
 }
 
