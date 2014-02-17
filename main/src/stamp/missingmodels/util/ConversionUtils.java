@@ -157,7 +157,7 @@ public class ConversionUtils {
 
 		// assign
 		relations.add("assignCtxt", new IndexRelation("AssignCtxt", "V", 1, 0, "V", 2, 0));
-		relations.add("assignCtxt", new IndexRelation("AssignCCtxt", "V", 1, 0, "V", 3, 2));
+		relations.add("assignCtxt", new IndexRelation("AssignCCtxt", "V", 1, 0, "V", 3, 2, (short)1));
 
 		// load/store
 		relations.add("storeCtxt", new IndexRelation("StoreCtxt", "V", 1, 0, "V", 3, 0, 2));
@@ -224,7 +224,7 @@ public class ConversionUtils {
 	 * maps "CL1" -> ["CL", 1].
 	 * b) If the node name is in DomV (starts with V), then
 	 * returns [hyper link to containing method, hyper link
-	 * to variable, contextId]. 
+	 * to variable, contextId].
 	 * c) If the node name is in DomU, then similar to (b).
 	 * d) In any other case, just returns the given string in
 	 * a length one array.
@@ -247,7 +247,6 @@ public class ConversionUtils {
 				DomL dom = (DomL)ClassicProject.g().getTrgt("L");
 				tokens[1] = dom.get(Integer.parseInt(tokens[1]));
 			} else if(tokens[0].equals("V") || tokens[0].equals("U")) {
-				System.out.println("here3");
 				// STEP 2b: if it is a variable, then get the variable and method information
 				
 				// get the register from the domain

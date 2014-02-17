@@ -117,7 +117,6 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		Graph g = new Graph(taintGrammar);
 
 		for(String label : taintGrammar.getLabelNames()) {
-			System.out.println(label + ": " + ConversionUtils.getChordRelationsFor(label).size());
 			for(Relation relation : ConversionUtils.getChordRelationsFor(label)) {
 				try {
 					// STEP 1: Load the Shord relation.
@@ -131,9 +130,9 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 						String sinkName = relation.getSinkFromTuple(tuple);
 
 						if(relation.hasLabel()) {
-							g.addEdge(sourceName, sinkName, label, Integer.toString(relation.getLabelFromTuple(tuple)));
+							g.addEdge(sourceName, sinkName, label, Integer.toString(relation.getLabelFromTuple(tuple)), relation.getWeightFromTuple(tuple));
 						} else {
-							g.addEdge(sourceName, sinkName, label);
+							g.addEdge(sourceName, sinkName, label, relation.getWeightFromTuple(tuple));
 						}
 					}
 					
@@ -143,14 +142,23 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 				}
 			}
 		}
-		System.out.println();
 		
 		new ReachabilitySolver().solve(taintGrammar, g);
 		//System.out.println(g.toString());
 
+		System.out.println("Printing CFL outputs:");
 		MultivalueMap<String,Edge> sortedEdges = g.getSortedEdges();
 		for(String label : sortedEdges.keySet()) {
 			System.out.println(label + ": " + sortedEdges.get(label).size());
+		}
+		System.out.println();
+		
+		System.out.println("Printing positive weight inputs:");
+		for(Edge edge : sortedEdges.get("Src2Sink")) {
+			System.out.println("Src2Sink edge: " + edge.toString());
+			for(Edge input : g.getPositiveWeightInputs(edge)) {
+				System.out.println("Input edge: " + input);
+			}
 		}
 	}
 }
