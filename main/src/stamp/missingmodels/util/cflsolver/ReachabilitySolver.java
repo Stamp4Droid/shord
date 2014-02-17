@@ -63,9 +63,6 @@ public class ReachabilitySolver {
 			Edge edge = worklist.pop();
 			// <-
 			// ->
-			System.out.println(edge);
-			System.out.println(worklist.size());
-			System.out.println(c.unaryProductionsByInput.get(edge.label));
 			for(UnaryProduction unaryProduction : (List<UnaryProduction>)c.unaryProductionsByInput.get(edge.label)) {
 				if(unaryProduction.isInputBackwards) {
 					this.getEdge(g, edge.sink, edge.source, unaryProduction.target, this.getField(edge.field, unaryProduction.ignoreFields), edge, null, edge.weight, worklist);
