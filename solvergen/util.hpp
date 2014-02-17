@@ -8,6 +8,7 @@
 #include <iterator>
 #include <limits>
 #include <map>
+#include <memory>
 #include <queue>
 #include <set>
 #include <string>
@@ -35,8 +36,9 @@ const T& unwrap_ref(const std::reference_wrapper<T>& r) {
     return r.get();
 }
 
-template<typename T>
-const T& deref(const T* const& ptr) {
+template<typename PtrT>
+const typename std::pointer_traits<PtrT>::element_type&
+deref(const PtrT& ptr) {
     return *ptr;
 }
 
@@ -100,6 +102,93 @@ public:
     bool operator!=(const IterWrapper& rhs) const {
 	return !(*this == rhs);
     }
+};
+
+template<typename Map>
+using MappedIter = IterWrapper<typename Map::const_iterator,
+			       typename Map::mapped_type,detail::get_second>;
+
+template<typename PtrIter> using DerefIter =
+    IterWrapper<PtrIter,
+		typename std::pointer_traits<
+		    typename std::iterator_traits<PtrIter>::value_type>
+		::element_type,
+		detail::deref<
+		    typename std::iterator_traits<PtrIter>::value_type>>;
+
+// Takes a constant iterator over const-iterable objects, and returns a
+// constant iterator over the underlying objects.
+// Requirements:
+// - The objects covered by OutIter must defined begin() and end(), and those
+//   must both return an InIter.
+// - InIter must be default-constructible.
+// - All default-constructed iterators of type InIter must compare equal. That
+//   is because sub-iterators are reset to their default values when the outer
+//   iterator moves to the next element, and those default-value iterators will
+//   be used in comparisons.
+//   XXX: This is NOT guaranteed by the standard STL containers.
+// TODO:
+// - Missing operators: iter++, destructor
+// - Could retrieve all the types through OutIter alone, but would need a way
+//   to extract the iterator type from the pointed collection type.
+template<typename OutIter, typename InIter> class Flattener
+    : public std::iterator<std::input_iterator_tag,
+			   typename std::iterator_traits<InIter>::value_type> {
+private:
+    OutIter out_curr;
+    OutIter out_end;
+    InIter sub_curr;
+    InIter sub_end;
+private:
+    void skip_empty_entries() {
+	while (sub_curr == sub_end) {
+	    ++out_curr;
+	    if (out_curr == out_end) {
+		sub_curr = InIter();
+		sub_end = InIter();
+		return;
+	    }
+	    sub_curr = out_curr->begin();
+	    sub_end = out_curr->end();
+	}
+    }
+public:
+    explicit Flattener() {}
+    explicit Flattener(OutIter out_curr, OutIter out_end)
+	: out_curr(out_curr), out_end(out_end) {
+	if (out_curr != out_end) {
+	    sub_curr = out_curr->begin();
+	    sub_end = out_curr->end();
+	    skip_empty_entries();
+	}
+    }
+    Flattener(const Flattener& rhs)
+	: out_curr(rhs.out_curr), out_end(rhs.out_end),
+	  sub_curr(rhs.sub_curr), sub_end(rhs.sub_end) {}
+    Flattener& operator=(const Flattener& rhs) {
+	out_curr = rhs.out_curr;
+	out_end = rhs.out_end;
+	sub_curr = rhs.sub_curr;
+	sub_end = rhs.sub_end;
+	return *this;
+    }
+    const typename Flattener::value_type& operator*() const {
+	return *sub_curr;
+    }
+    const typename Flattener::value_type* operator->() const {
+	return &(*sub_curr);
+    }
+    Flattener& operator++() {
+	++sub_curr;
+	skip_empty_entries();
+	return *this;
+    }
+    bool operator==(const Flattener& rhs) const {
+	return (out_curr == rhs.out_curr && out_end == rhs.out_end &&
+		sub_curr == rhs.sub_curr && sub_end == rhs.sub_end);
+    }
+    bool operator!=(const Flattener& rhs) const {
+	return !(*this == rhs);
     }
 };
 
@@ -549,73 +638,7 @@ public:
     typedef typename Wrapped::Tuple Tuple;
     typedef K Key;
     typedef std::map<Key,Wrapped> Map;
-public:
-
-    // TODO: Missing operators: iter++, destructor
-    // XXX: The sub-iterators are reset to their default values when the map
-    // iterator moves to the next element. Such default-value iterators will be
-    // used in comparisons, so we require that all default-constructed
-    // iterators of type Wrapped::Iterator compare equal.
-    class Iterator : public std::iterator<std::input_iterator_tag,Tuple> {
-    private:
-	typename Map::const_iterator map_curr;
-	typename Map::const_iterator map_end;
-	typename Wrapped::Iterator sub_curr;
-	typename Wrapped::Iterator sub_end;
-    private:
-	void skip_empty_entries() {
-	    while (sub_curr == sub_end) {
-		++map_curr;
-		if (map_curr == map_end) {
-		    sub_curr = typename Wrapped::Iterator();
-		    sub_end = typename Wrapped::Iterator();
-		    return;
-		}
-		sub_curr = map_curr->second.begin();
-		sub_end = map_curr->second.end();
-	    }
-	}
-    public:
-	Iterator() {}
-	Iterator(const Map& map, bool at_end)
-	    : map_curr(at_end ? map.cend() : map.cbegin()),
-	      map_end(map.cend()) {
-	    if (map_curr != map_end) {
-		sub_curr = map_curr->second.begin();
-		sub_end = map_curr->second.end();
-		skip_empty_entries();
-	    }
-	}
-	Iterator(const Iterator& other)
-	    : map_curr(other.map_curr), map_end(other.map_end),
-	      sub_curr(other.sub_curr), sub_end(other.sub_end) {}
-	Iterator& operator=(const Iterator& other) {
-	    map_curr = other.map_curr;
-	    map_end = other.map_end;
-	    sub_curr = other.sub_curr;
-	    sub_end = other.sub_end;
-	    return *this;
-	}
-	const Tuple& operator*() const {
-	    return *sub_curr;
-	}
-	const Tuple* operator->() const {
-	    return &(*sub_curr);
-	}
-	Iterator& operator++() {
-	    ++sub_curr;
-	    skip_empty_entries();
-	    return *this;
-	}
-	bool operator==(const Iterator& other) const {
-	    return (map_curr == other.map_curr && map_end == other.map_end &&
-		    sub_curr == other.sub_curr && sub_end == other.sub_end);
-	}
-	bool operator!=(const Iterator& other) const {
-	    return !(*this == other);
-	}
-    };
-
+    typedef Flattener<MappedIter<Map>,typename Wrapped::Iterator> Iterator;
 private:
     static const Wrapped dummy;
 private:
@@ -632,10 +655,12 @@ public:
 	}
     }
     Iterator begin() const {
-	return Iterator(idx, false);
+	return Iterator(MappedIter<Map>(idx.begin()),
+			MappedIter<Map>(idx.end()));
     }
     Iterator end() const {
-	return Iterator(idx, true);
+	return Iterator(MappedIter<Map>(idx.end()),
+			MappedIter<Map>(idx.end()));
     }
     unsigned int size() const {
 	unsigned int sz = 0;
@@ -653,7 +678,7 @@ template<typename T> class PtrTable {
 public:
     typedef T Tuple;
     typedef typename std::deque<const Tuple*>::const_iterator PtrIterator;
-    typedef IterWrapper<PtrIterator,Tuple,detail::deref<Tuple>> Iterator;
+    typedef DerefIter<PtrIterator> Iterator;
 private:
     std::deque<const Tuple*> store;
 public:
