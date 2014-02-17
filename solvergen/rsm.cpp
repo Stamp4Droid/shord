@@ -435,6 +435,9 @@ void Component::summarize(Graph& graph,
 	worklist.enqueue(w.ref);
     }
 
+    Histogram<unsigned int> new_summ_freqs;
+    Histogram<unsigned int> reschedule_freqs;
+
     while (!worklist.empty()) {
 	Ref<Worker> w = worklist.dequeue();
 	Worker::Result res = workers[w].summarize(graph);
@@ -449,19 +452,25 @@ void Component::summarize(Graph& graph,
 	for (const Summary& s : res.summaries) {
 	    assert(s.comp == ref && s.src == workers[w].start);
 	    unsigned int new_summs = 0;
-	    unsigned int rescheduled = 0;
+	    unsigned int reschedules = 0;
 	    if (graph.summaries.insert(s).second) {
 		new_summs++;
 		for (const Dependence& d : deps[s.src]) {
 		    if (worklist.enqueue(d.worker)) {
-			rescheduled++;
+			reschedules++;
 		    }
 		}
 	    }
-	    std::cout << "Added " << new_summs << " summaries" << std::endl;
-	    std::cout << "Rescheduled " << rescheduled << " workers" << std::endl;
+	    new_summ_freqs.record(new_summs);
+	    reschedule_freqs.record(reschedules);
 	}
     }
+
+    std::cout << "Started with " << workers.size() << " workers" << std::endl;
+    std::cout << "Summary addition frequency:" << std::endl;
+    std::cout << new_summ_freqs << std::endl;
+    std::cout << "Reschedules frequency:" << std::endl;
+    std::cout << reschedule_freqs << std::endl;
 }
 
 void Component::propagate(Graph& graph) const {
@@ -496,7 +505,6 @@ Worker::Result Worker::summarize(const Graph& graph) const {
     Worklist<Position> worklist(false);
     Result res;
     worklist.enqueue(Position(start, comp.get_initial()));
-    std::cout << "Starting from " << graph.nodes[start].name << std::endl;
 
     while (!worklist.empty()) {
 	Position pos = worklist.dequeue();
@@ -550,7 +558,6 @@ Worker::Result Worker::summarize(const Graph& graph) const {
 	}
     }
 
-    std::cout << "Reached " << res.summaries.size() << " nodes" << std::endl;
     return res;
 }
 

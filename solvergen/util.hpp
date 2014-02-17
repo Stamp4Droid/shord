@@ -93,6 +93,31 @@ public:
     }
 };
 
+template<typename T> class Histogram;
+
+template<typename T>
+std::ostream& operator<<(std::ostream& os, const Histogram<T>& ref) {
+    for (const auto& p : ref.freqs) {
+	os << p.first << "\t" << p.second << std::endl;
+    }
+    return os;
+}
+
+template<typename T> class Histogram {
+    friend std::ostream& operator<< <>(std::ostream& os,
+				       const Histogram<T>& ref);
+private:
+    std::map<T,unsigned int> freqs;
+public:
+    void record(const T& val) {
+	unsigned int prev = 0;
+	try {
+	    prev = freqs.at(val);
+	} catch(std::out_of_range& exc) {}
+	freqs[val] = prev + 1;
+    }
+};
+
 // HELPER CODE ================================================================
 
 namespace detail {
