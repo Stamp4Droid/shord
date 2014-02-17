@@ -31,6 +31,7 @@ CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
 
 # intermediate 0-cfa relations
 pt0(v:V,o:C) output
+fpt0(op:C,f:F,o:C) output
 refpt0(v:V,u:V) output
 temppt0(v:V,o:C) output
 activeRef0(v:V) output
@@ -38,6 +39,7 @@ activeObj0(o:C) output
 
 # intermediate k-cfa relations
 ptk(c:C,v:V,o:C) output
+fptk(op:C,f:F,o:C) output
 refptk(v:V,c:C,u:V) output
 tempptk(v:V,o:C) output
 activeRef(v:V) output
@@ -57,12 +59,15 @@ queryRef(v:V) output
 activeRef0(v) :- activeRef(v).
 activeObj0(o) :- activeObj(o).
 
+#activeObj0(o) :- queryRef(v), temppt0(v,o).
+
 # pt rules
 pt0(v,o) :- activeObj0(o), Alloc(v,h), typeFilter(v,o), CH(o,h).
 pt0(u,o) :- pt0(v,o), Assign(u,v), typeFilter(u,o).
 pt0(u,o) :- pt0(v,o), param(u,v,_), typeFilter(u,o).
 pt0(u,o) :- pt0(v,o), return(u,v,_), typeFilter(u,o).
-pt0(x,o) :- pt0(v,o), Store(u,f,v), pt0(u,op), pt0(w,op), Load(x,w,f), typeFilter(x,o).
+fpt0(op,f,o) :- pt0(v,o), Store(u,f,v), pt0(u,op).
+pt0(x,o) :- fpt0(op,f,o), pt0(w,op), Load(x,w,f), typeFilter(x,o).
 pt0(u,o) :- pt0(v,o), StoreStat(f,v), LoadStat(u,f), typeFilter(u,o).
 
 # activeRef rules
@@ -89,12 +94,16 @@ activeObj0(op) :- pt0(v,_), Store(u,f,v), temppt0(u,op), temppt0(w,op), Load(_,w
 # active rules
 activeObj(o) :- queryObj(o).
 
+#activeRef(v) :- queryRef(v).
+#activeObj(o) :- queryRef(v), tempptk(v,o).
+
 # pt rules
 ptk(c,v,o) :- activeObj(o), Alloc(v,h), MV(m,v), pt0(v,o), CM(c,m), CC(c,o), CH(o,h).
 ptk(c,u,o) :- ptk(c,v,o), Assign(u,v), pt0(u,o).
 ptk(d,u,o) :- ptk(c,v,o), param(u,v,i), pt0(u,o), CC(c,d), CI(d,i).
 ptk(c,u,o) :- ptk(d,v,o), return(u,v,i), CI(d,i), CC(c,d), pt0(u,o).
-ptk(d,x,o) :- ptk(c,v,o), Store(u,f,v), ptk(c,u,op), ptk(d,w,op), Load(x,w,f), pt0(x,o).
+fptk(op,f,o) :- ptk(c,v,o), Store(u,f,v), ptk(c,u,op), fpt0(op,f,o).
+ptk(d,x,o) :- fptk(op,f,o), ptk(d,w,op), Load(x,w,f), pt0(x,o).
 ptk(c,u,o) :- ptk(_,v,o), StoreStat(f,v), LoadStat(u,f), MV(m,u), CM(c,m), pt0(u,o).
 
 # activeRef rules

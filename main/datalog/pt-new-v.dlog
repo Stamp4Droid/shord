@@ -31,6 +31,7 @@ CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
 
 # intermediate 0-cfa relations
 pt0v(va:V,v:V,o:C) output
+fpt0v(va:V,op:C,f:F,o:C) output
 refpt0v(va:V,v:V,u:V) output
 temppt0v(va:V,v:V,o:C) output
 activeRef0v(va:V,v:V) output
@@ -38,6 +39,7 @@ activeObj0v(va:V,o:C) output
 
 # intermediate k-cfa relations
 ptkv(va:V,c:C,v:V,o:C) output
+fptkv(va:V,op:C,f:F,o:C) output
 refptkv(va:V,v:V,c:C,u:V) output
 tempptkv(va:V,v:V,o:C) output
 activeRefv(va:V,v:V) output
@@ -57,12 +59,15 @@ queryRefv(va:V,v:V) output
 activeRef0v(va,v) :- activeRefv(va,v).
 activeObj0v(va,o) :- activeObjv(va,o).
 
+activeObj0v(va,o) :- queryRefv(va,v), temppt0v(va,v,o).
+
 # pt rules
 pt0v(va,v,o) :- activeObj0v(va,o), Alloc(v,h), typeFilter(v,o), CH(o,h).
 pt0v(va,u,o) :- pt0v(va,v,o), Assign(u,v), typeFilter(u,o).
 pt0v(va,u,o) :- pt0v(va,v,o), param(u,v,_), typeFilter(u,o).
 pt0v(va,u,o) :- pt0v(va,v,o), return(u,v,_), typeFilter(u,o).
-pt0v(va,x,o) :- pt0v(va,v,o), Store(u,f,v), pt0v(va,u,op), pt0v(va,w,op), Load(x,w,f), typeFilter(x,o).
+fpt0v(va,op,f,o) :- pt0v(va,v,o), Store(u,f,v), pt0v(va,u,op).
+pt0v(va,x,o) :- fpt0v(va,op,f,o), pt0v(va,w,op), Load(x,w,f), typeFilter(x,o).
 pt0v(va,u,o) :- pt0v(va,v,o), StoreStat(f,v), LoadStat(u,f), typeFilter(u,o).
 
 # activeRef rules
@@ -87,15 +92,18 @@ activeObj0v(va,op) :- pt0v(va,v,_), Store(u,f,v), temppt0v(va,u,op), temppt0v(va
 ##############
 
 # active rules
+#activeObj(va,o) :- queryObjv(va,o).
+
 activeRefv(va,v) :- queryRefv(va,v).
-activeObjv(va,o) :- tempptkv(va,v,o), v=va.
+activeObjv(va,o) :- queryRefv(va,v), tempptkv(va,v,o).
 
 # pt rules
 ptkv(va,c,v,o) :- activeObjv(va,o), Alloc(v,h), MV(m,v), pt0v(va,v,o), CM(c,m), CC(c,o), CH(o,h).
 ptkv(va,c,u,o) :- ptkv(va,c,v,o), Assign(u,v), pt0v(va,u,o).
 ptkv(va,d,u,o) :- ptkv(va,c,v,o), param(u,v,i), pt0v(va,u,o), CC(c,d), CI(d,i).
 ptkv(va,c,u,o) :- ptkv(va,d,v,o), return(u,v,i), CI(d,i), CC(c,d), pt0v(va,u,o).
-ptkv(va,d,x,o) :- ptkv(va,c,v,o), Store(u,f,v), ptkv(va,c,u,op), ptkv(va,d,w,op), Load(x,w,f), pt0v(va,x,o).
+fptkv(va,op,f,o) :- ptkv(va,c,v,o), Store(u,f,v), ptkv(va,c,u,op), fpt0v(va,op,f,o).
+ptkv(va,d,x,o) :- fptkv(va,op,f,o), ptkv(va,d,w,op), Load(x,w,f), pt0v(va,x,o).
 ptkv(va,c,u,o) :- ptkv(va,_,v,o), StoreStat(f,v), LoadStat(u,f), MV(m,u), CM(c,m), pt0v(va,u,o).
 
 # activeRef rules

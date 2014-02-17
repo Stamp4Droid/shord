@@ -1,11 +1,3 @@
-# Taint analysis, with support for nested taint
-# - nested tainting: all fields
-# - nested escaping: all fields
-# - nested passthrough entry: only array elements
-# - nested passthrough exit: only array elements
-# - TODO: conditional escaping trigger entry: no nesting support
-# - nested conditional escaping: all fields
-
 # CONFIGURATION ===============================================================
 
 # name=taint-lim-new-dlog
@@ -15,33 +7,40 @@
 .include "C.dom"
 .include "V.dom"
 .include "U.dom"
+.include "H.dom"
 .include "F.dom"
 .include "I.dom"
 .include "L.dom"
 .include "CL.dom"
 
-.bddvarorder L0_Z0xZ1_M0_CL0xCL1_C0xC1_V0xV1_U0xU1_F0_I0
+.bddvarorder L0_Z0xZ1_M0_CL0xCL1_C0xC1_V0xV1_U0xU1_H0xF0_I0
 
 # INPUT RELATIONS =============================================================
 
-pt(c:C,v:V,o:C)    input
-fpt(o1:C,f:F,o2:C) input
+Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
+Assign(v:V,u:V)     input   # v = u
+Load(y:V,x:V,f:F)   input   # y = x.f
+Store(u:V,f:F,v:V)  input   # u.f = v
+LoadStat(y:V,f:F)   input   # y = f
+StoreStat(f:F,v:V)  input   # f = v
+param(u:V,v:V,i:I)  input   # u is the formal parameter, v is actual arg, i is invocation stmt
+return(u:V,v:V,i:I) input   # u is the lhs at callsite, v is the return var, i is invocation stmt
+typeFilter(v:V,o:C) input   # type wise, v can point-to o
 
 AssignPrim(v:U,u:U)     input # v = u
 LoadPrim(y:U,x:V,f:F)   input # y = x.f
 StorePrim(u:V,f:F,v:U)  input # u.f = v
 LoadStatPrim(y:U,f:F)   input # y = f
 StoreStatPrim(f:F,v:U)  input # f = v
-
 paramPrim(u:U,v:U,i:I)  input # u: formal param, v: actual arg, i: invocation stmt
 returnPrim(u:U,v:U,i:I) input # u: lhs at callsite, v: return var, i: invocation stmt
 
+MV(m:M,v:V) input # v is a variable in method m
 MU(m:M,u:U) input # u is a prim type variable in m
-MV(m:M,v:V) input # v is a ref type variable in m
 CM(c:C,m:M) input # c is a context of method m
+CH(o:C,h:H) input # context’ified abstract location o corresponds to new stmt h
 CI(c:C,i:I) input # stmt i is the top element in the k-limited callstack c
 CC(c:C,d:C) input # there exists i s.t. c++[i] = d
-
 CCL(c:C,cl:CL) input 
 LCL(l:L,cl:CL) input
 
@@ -61,13 +60,29 @@ MmethRet(m:M,z:Z,v:V)     input
 MmethPrimArg(m:M,z:Z,u:U) input
 MmethPrimRet(m:M,z:Z,u:U) input
 
-# OUTPUT RELATIONS ============================================================
-
-labelRef(c:C,v:V,l:CL)  output # (c,v) is labeled with l
-labelPrim(c:C,u:U,l:CL) output # (c,u) is labeled with l
-flow(src:CL,sink:CL) output
-
 # INTERMEDIATE RELATIONS ======================================================
+
+# queries
+queryObj(o:C) output
+queryRef(v:V) output
+
+# 0-cfa relations
+pt0(v:V,o:C) output
+fpt0(op:C,f:F,o:C) output
+refpt0(v:V,u:V) output
+temppt0(v:V,o:C) output
+activeRef0(v:V) output
+activeObj0(o:C) output
+
+# k-cfa relations
+ptk(c:C,v:V,o:C) output
+fptk(op:C,f:F,o:C) output
+refptk(v:V,c:C,u:V) output
+tempptk(v:V,o:C) output
+activeRef(v:V) output
+activeObj(o:C) output
+
+# annotations
 
 varInLabel(v:V,l:L)
 varInLabelPrim(v:U,l:L)
@@ -87,6 +102,8 @@ flowPrimPrim(u:U,v:U)
 transferObjRef(o:C,c:C,v:V)
 transferObjPrim(o:C,c:C,u:U)
 
+# label flow
+
 labelIn(o:C,l:CL)            # l inductively reaches o from a directly-labeled value
 labelXferOut(o:C,l:CL)       # l inductively reaches o from a value tainted by a passthrough
 label(o:C,l:CL)              # o is labeled with l
@@ -96,6 +113,86 @@ labelPrimFldStat(f:F,l:CL)   # static field f of primitive type has label l
 
 sink(o:C,l:CL)               # o escapes into sink l
 sinkPrim(c:C,u:U,l:CL)       # (c,u) escapes into sink l
+
+# OUTPUT RELATIONS ============================================================
+
+labelRef(c:C,v:V,l:CL)  output # (c,v) is labeled with l
+labelPrim(c:C,u:U,l:CL) output # (c,u) is labeled with l
+flow(src:CL,sink:CL) output
+
+# PT RULES ====================================================================
+
+##############
+# 0-CFA pt
+##############
+
+# active rules
+activeRef0(v) :- activeRef(v).
+activeObj0(o) :- activeObj(o).
+
+activeObj0(o) :- queryRef(v), temppt0(v,o).
+
+# pt rules
+pt0(v,o) :- activeObj0(o), Alloc(v,h), typeFilter(v,o), CH(o,h).
+pt0(u,o) :- pt0(v,o), Assign(u,v), typeFilter(u,o).
+pt0(u,o) :- pt0(v,o), param(u,v,_), typeFilter(u,o).
+pt0(u,o) :- pt0(v,o), return(u,v,_), typeFilter(u,o).
+fpt0(op,f,o) :- pt0(v,o), Store(u,f,v), pt0(u,op).
+pt0(x,o) :- fpt0(op,f,o), pt0(w,op), Load(x,w,f), typeFilter(x,o).
+pt0(u,o) :- pt0(v,o), StoreStat(f,v), LoadStat(u,f), typeFilter(u,o).
+
+# activeRef rules
+activeRef0(u) :- pt0(v,o), Store(u,f,v), typeFilter(u,op), typeFilter(w,op), Load(x,w,f), typeFilter(x,o).
+activeRef0(w) :- pt0(v,o), Store(u,f,v), typeFilter(u,op), typeFilter(w,op), Load(x,w,f), typeFilter(x,o).
+
+# refpt rules
+refpt0(v,u) :- activeRef0(v), v=u.
+refpt0(v,w) :- refpt0(v,u), Assign(u,w).
+refpt0(v,w) :- refpt0(v,u), param(u,w,_).
+refpt0(v,w) :- refpt0(v,u), return(u,w,_).
+refpt0(v,y) :- refpt0(v,u), Load(u,w,f), typeFilter(w,o), typeFilter(x,o), Store(x,f,y).
+refpt0(v,w) :- refpt0(v,u), LoadStat(u,f), StoreStat(f,w).
+
+temppt0(v,o) :- refpt0(v,u), Alloc(u,h), CH(o,h).
+
+# activeObj rules
+activeObj0(op) :- pt0(v,_), Store(u,f,v), temppt0(u,op), temppt0(w,op), Load(_,w,f).
+
+##############
+# k-CFA pt
+##############
+
+# active rules
+#activeObj(o) :- queryObj(o).
+
+activeRef(v) :- queryRef(v).
+activeObj(o) :- queryRef(v), tempptk(v,o).
+
+# pt rules
+ptk(c,v,o) :- activeObj(o), Alloc(v,h), MV(m,v), pt0(v,o), CM(c,m), CC(c,o), CH(o,h).
+ptk(c,u,o) :- ptk(c,v,o), Assign(u,v), pt0(u,o).
+ptk(d,u,o) :- ptk(c,v,o), param(u,v,i), pt0(u,o), CC(c,d), CI(d,i).
+ptk(c,u,o) :- ptk(d,v,o), return(u,v,i), CI(d,i), CC(c,d), pt0(u,o).
+fptk(op,f,o) :- ptk(c,v,o), Store(u,f,v), ptk(c,u,op), fpt0(op,f,o).
+ptk(d,x,o) :- fptk(op,f,o), ptk(d,w,op), Load(x,w,f), pt0(x,o).
+ptk(c,u,o) :- ptk(_,v,o), StoreStat(f,v), LoadStat(u,f), MV(m,u), CM(c,m), pt0(u,o).
+
+# activeRef rules
+activeRef(u) :- ptk(_,v,o), Store(u,f,v), pt0(u,op), pt0(w,op), Load(x,w,f), pt0(x,o), activeRef0(u).
+activeRef(w) :- ptk(_,v,o), Store(u,f,v), pt0(u,op), pt0(w,op), Load(x,w,f), pt0(x,o), activeRef0(w).
+
+# refpt rules
+refptk(v,c,u) :- activeRef(v), v=u, MV(m,u), refpt0(v,u), CM(c,m).
+refptk(v,c,w) :- refptk(v,c,u), Assign(u,w), refpt0(v,w).
+refptk(v,c,w) :- refptk(v,d,u), param(u,w,i), refpt0(v,w), CC(c,d), CI(d,i).
+refptk(v,d,w) :- refptk(v,c,u), return(u,w,i), CI(d,i), CC(c,d), refpt0(v,w).
+refptk(v,d,y) :- refptk(v,_,u), Load(u,w,f), typeFilter(w,o), typeFilter(x,o), Store(x,f,y), MV(m,y), CM(d,m), refpt0(v,y).
+refptk(v,d,w) :- refptk(v,_,u), LoadStat(u,f), StoreStat(f,w), MV(m,w), CM(d,m), refpt0(v,w).
+
+tempptk(v,o) :- refptk(v,_,u), Alloc(u,h), CH(o,h), pt0(v,o).
+
+# activeObj rules
+activeObj(op) :- ptk(_,v,_), Store(u,f,v), tempptk(u,op), tempptk(w,op), Load(_,w,f), activeObj0(op).
 
 # RULES =======================================================================
 
@@ -130,12 +227,17 @@ flowPrimPrim(u,v) :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,u), MmethPrimArg(m,z
 
 # abstract objects
 # base escaping objects
-sink(o,cl) :- varOutLabel(v,l), MV(m,v), CM(c,m), pt(c,v,o), CCL(c,cl), LCL(l,cl).
+sink(o,cl) :- varOutLabel(v,l), MV(m,v), CM(c,m), ptk(c,v,o), CCL(c,cl), LCL(l,cl).
 # conditional escaping
-sink(o,l)  :- pt(c,u,o), flowRefRef(u,v), labelRef(c,v,l), sinkCtxtLabel(l).
-sink(o,l)  :- pt(c,u,o), flowRefPrim(u,v), labelPrim(c,v,l), sinkCtxtLabel(l).
+sink(o,l)  :- ptk(c,u,o), flowRefRef(u,v), labelRef(c,v,l), sinkCtxtLabel(l).
+sink(o,l)  :- ptk(c,u,o), flowRefPrim(u,v), labelPrim(c,v,l), sinkCtxtLabel(l).
 # nested escaping (regular and conditional)
-sink(o2,l) :- sink(o1,l), fpt(o1,_,o2).
+sink(o2,l) :- sink(o1,l), fptk(o1,_,o2).
+
+# query rules
+queryRef(v) :- varOutLabel(v,_).
+queryRef(u) :- sinkCtxtLabel(l), labelRef(_,v,l), flowRefRef(u,v).
+queryRef(u) :- sinkCtxtLabel(l), labelPrim(_,v,l), flowRefPrim(u,v).
 
 # primitive-type variables/fields
 # base escaping variables
@@ -147,11 +249,14 @@ sinkPrim(c,u,l) :- flowPrimPrim(u,v), labelPrim(c,v,l), sinkCtxtLabel(l).
 # passthroughs
 
 # base cases
-transferObjRef(o,c,v)   :- transferRefRef(u,v), pt(c,u,o).
-transferObjPrim(o,c,v)  :- transferRefPrim(u,v), pt(c,u,o).
+transferObjRef(o,c,v)   :- transferRefRef(u,v), ptk(c,u,o).
+transferObjPrim(o,c,v)  :- transferRefPrim(u,v), ptk(c,u,o).
 # nested entry: behaves like nested escaping
-transferObjRef(o2,c,v)  :- transferObjRef(o1,c,v), fpt(o1,0,o2).
-transferObjPrim(o2,c,v) :- transferObjPrim(o1,c,v), fpt(o1,0,o2).
+transferObjRef(o2,c,v)  :- transferObjRef(o1,c,v), fptk(o1,0,o2).
+transferObjPrim(o2,c,v) :- transferObjPrim(o1,c,v), fptk(o1,0,o2).
+
+# passthroughs query rules
+# ???
 
 # complete flow
 
@@ -165,30 +270,35 @@ flow(src,sink) :- sink(o,sink), labelPrimFld(o,_,src), srcCtxtLabel(src).
 
 # abstract objects
 # label introduction
-labelIn(o,cl)      :- varInLabel(v,l), MV(m,v), CM(c,m), pt(c,v,o), CCL(c,cl), LCL(l,cl).
+labelIn(o,cl)      :- varInLabel(v,l), MV(m,v), CM(c,m), ptk(c,v,o), CCL(c,cl), LCL(l,cl).
 # nested tainting
-labelIn(o2,l)      :- labelIn(o1,l), fpt(o1,_,o2).
+labelIn(o2,l)      :- labelIn(o1,l), fptk(o1,_,o2).
 label(o,l)         :- labelIn(o,l).
 # passthrough handling
-labelXferOut(o2,l) :- label(o1,l), transferObjRef(o1,c,v), pt(c,v,o2).
-labelXferOut(o,l)  :- labelPrim(c,u,l), transferPrimRef(u,v), pt(c,v,o).
+labelXferOut(o2,l) :- label(o1,l), transferObjRef(o1,c,v), ptk(c,v,o2).
+labelXferOut(o,l)  :- labelPrim(c,u,l), transferPrimRef(u,v), ptk(c,v,o).
 label(o,l)         :- labelXferOut(o,l).
 # nested passthrough entry
-labelXferOut(o2,l) :- labelPrimFld(o1,0,l), transferObjRef(o1,c,v), pt(c,v,o2).
+labelXferOut(o2,l) :- labelPrimFld(o1,0,l), transferObjRef(o1,c,v), ptk(c,v,o2).
 # nested passthrough exit
-labelXferOut(o2,l) :- labelXferOut(o1,l), fpt(o1,0,o2).
+labelXferOut(o2,l) :- labelXferOut(o1,l), fptk(o1,0,o2).
+
+# query rules
+queryRef(v) :- varInLabel(v,_).
+queryRef(v) :- label(o1,_), transferObjRef(o1,_,v).
+queryRef(v) :- labelPrim(_,u,_), transferPrimRef(u,v).
 
 # reference-type variables
 # labels are tracked on the abstract objects, this is only for convenience
-labelRef(c,v,l) :- pt(c,v,o), label(o,l).
+labelRef(c,v,l) :- ptk(c,v,o), label(o,l).
 
 # primitive-type variables/fields
 # label introduction
 labelPrim(c,v,cl)     :- varInLabelPrim(v,l), CM(c,m), MU(m,v), LCL(l,cl), CCL(c,cl).
 # label propagation
 labelPrim(c,v,l)      :- AssignPrim(v,u), labelPrim(c,u,l).
-labelPrimFld(o,f,l)   :- labelPrim(c,v,l), StorePrim(u,f,v), pt(c,u,o).
-labelPrim(c,y,l)      :- LoadPrim(y,x,f), labelPrimFld(o,f,l), pt(c,x,o).
+labelPrimFld(o,f,l)   :- labelPrim(c,v,l), StorePrim(u,f,v), ptk(c,u,o).
+labelPrim(c,y,l)      :- LoadPrim(y,x,f), labelPrimFld(o,f,l), ptk(c,x,o).
 labelPrimFldStat(f,l) :- StoreStatPrim(f,v), labelPrim(_,v,l).
 labelPrim(c,y,l)      :- LoadStatPrim(y,f), labelPrimFldStat(f,l), MU(m,y), CM(c,m).
 labelPrim(d,u,l)      :- labelPrim(c,v,l), paramPrim(u,v,i), CC(c,d), CI(d,i).
@@ -197,8 +307,21 @@ labelPrim(c,u,l)      :- labelPrim(d,v,l), returnPrim(u,v,i), CI(d,i), CC(c,d).
 labelPrim(c,v,l)      :- label(o,l), transferObjPrim(o,c,v).
 labelPrim(c,v,l)      :- labelPrim(c,u,l), transferPrimPrim(u,v).
 # nested tainting
-labelPrim(c,y,l)      :- LoadPrim(y,x,_), labelIn(o,l), pt(c,x,o).
+labelPrim(c,y,l)      :- LoadPrim(y,x,_), labelIn(o,l), ptk(c,x,o).
 # nested passthrough entry
 labelPrim(c,v,l)      :- labelPrimFld(o,0,l), transferObjPrim(o,c,v).
 # nested passthrough exit
-labelPrim(c,y,l)      :- LoadPrim(y,x,0), labelXferOut(o,l), pt(c,x,o).
+labelPrim(c,y,l)      :- LoadPrim(y,x,0), labelXferOut(o,l), ptk(c,x,o).
+
+# query rules
+queryRef(u) :- labelPrim(_,v,_), StorePrim(u,_,v).
+
+## pt filter (temporary)
+
+#pt(c:C,v:V,o:C) input
+#ptFilter(c:C,v:V,o:C) output
+#ptFilter(c,v,o) :- pt(c,v,o), ptk(c,v,o).
+
+#fpt(o:C,f:F,op:C) input
+#fptFilter(o:C,f:F,op:C) output
+#fptFilter(o,f,op) :- fpt(o,f,op), fptk(o,f,op).

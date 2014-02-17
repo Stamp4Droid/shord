@@ -31,6 +31,7 @@ CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
 
 # intermediate 0-cfa relations
 pt0o(oa:C,v:V,o:C) output
+fpt0o(oa:C,op:C,f:F,o:C) output
 refpt0o(oa:C,v:V,u:V) output
 temppt0o(oa:C,v:V,o:C) output
 activeRef0o(oa:C,v:V) output
@@ -38,6 +39,7 @@ activeObj0o(oa:C,o:C) output
 
 # intermediate k-cfa relations
 ptko(oa:C,c:C,v:V,o:C) output
+fptko(oa:C,op:C,f:F,o:C) output
 refptko(oa:C,v:V,c:C,u:V) output
 tempptko(oa:C,v:V,o:C) output
 activeRefo(oa:C,v:V) output
@@ -57,12 +59,15 @@ queryRefo(oa:C,v:V) output
 activeRef0o(oa,v) :- activeRefo(oa,v).
 activeObj0o(oa,o) :- activeObjo(oa,o).
 
+#activeObj0o(oa,o) :- queryRefo(oa,v), temppt0o(oa,v,o).
+
 # pt rules
 pt0o(oa,v,o) :- activeObj0o(oa,o), Alloc(v,h), typeFilter(v,o), CH(o,h).
 pt0o(oa,u,o) :- pt0o(oa,v,o), Assign(u,v), typeFilter(u,o).
 pt0o(oa,u,o) :- pt0o(oa,v,o), param(u,v,_), typeFilter(u,o).
 pt0o(oa,u,o) :- pt0o(oa,v,o), return(u,v,_), typeFilter(u,o).
-pt0o(oa,x,o) :- pt0o(oa,v,o), Store(u,f,v), pt0o(oa,u,op), pt0o(oa,w,op), Load(x,w,f), typeFilter(x,o).
+fpt0o(oa,op,f,o) :- pt0o(oa,v,o), Store(u,f,v), pt0o(oa,u,op).
+pt0o(oa,x,o) :- fpt0o(oa,op,f,o), pt0o(oa,w,op), Load(x,w,f), typeFilter(x,o).
 pt0o(oa,u,o) :- pt0o(oa,v,o), StoreStat(f,v), LoadStat(u,f), typeFilter(u,o).
 
 # activeRef rules
@@ -89,12 +94,16 @@ activeObj0o(oa,op) :- pt0o(oa,v,_), Store(u,f,v), temppt0o(oa,u,op), temppt0o(oa
 # active rules
 activeObjo(oa,o) :- queryObjo(oa,o).
 
+#activeRefo(oa,v) :- queryRefo(oa,v).
+#activeObjo(oa,o) :- queryRefo(oa,v), tempptko(oa,v,o).
+
 # pt rules
 ptko(oa,c,v,o) :- activeObjo(oa,o), Alloc(v,h), MV(m,v), pt0o(oa,v,o), CM(c,m), CC(c,o), CH(o,h).
 ptko(oa,c,u,o) :- ptko(oa,c,v,o), Assign(u,v), pt0o(oa,u,o).
 ptko(oa,d,u,o) :- ptko(oa,c,v,o), param(u,v,i), pt0o(oa,u,o), CC(c,d), CI(d,i).
 ptko(oa,c,u,o) :- ptko(oa,d,v,o), return(u,v,i), CI(d,i), CC(c,d), pt0o(oa,u,o).
-ptko(oa,d,x,o) :- ptko(oa,c,v,o), Store(u,f,v), ptko(oa,c,u,op), ptko(oa,d,w,op), Load(x,w,f), pt0o(oa,x,o).
+fptko(oa,op,f,o) :- ptko(oa,c,v,o), Store(u,f,v), ptko(oa,c,u,op), fpt0o(oa,op,f,o).
+ptko(oa,d,x,o) :- fptko(oa,op,f,o), ptko(oa,d,w,op), Load(x,w,f), pt0o(oa,x,o).
 ptko(oa,c,u,o) :- ptko(oa,_,v,o), StoreStat(f,v), LoadStat(u,f), MV(m,u), CM(c,m), pt0o(oa,u,o).
 
 # activeRef rules
