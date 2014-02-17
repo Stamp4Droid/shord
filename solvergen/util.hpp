@@ -338,11 +338,17 @@ std::ostream& operator<<(std::ostream& os, const Ref<T>& ref) {
 }
 
 template<typename T> class Registry;
+template<typename S, typename C, const Ref<C> S::Tuple::* MemPtr>
+class FlatIndex;
 
 // TODO: Could make this class const-correct, i.e. get a const& when indexing a
 // Registry using a const Ref.
 template<typename T> class Ref {
     friend Registry<T>;
+    // TODO: This should be with C==T, but partial specialization is not
+    // allowed on friend class declarations.
+    template<typename S, typename C, const Ref<C> S::Tuple::* MemPtr>
+    friend class FlatIndex;
     friend std::ostream& operator<< <>(std::ostream& os, const Ref<T>& ref);
 private:
     unsigned int value;
@@ -673,6 +679,57 @@ public:
 
 template<typename S, typename K, const K S::Tuple::* MemPtr>
 const S Index<S,K,MemPtr>::dummy;
+
+// TODO:
+// - Code duplication with Index class.
+// - Could emplace the wrapped class directly on the vector, but would need
+//   to implement move semantics on it, so that iterators and pointers to the
+//   underlying tuples remain valid when the vector gets reallocated.
+template<typename S, typename C, const Ref<C> S::Tuple::* MemPtr>
+class FlatIndex {
+public:
+    typedef S Wrapped;
+    typedef typename Wrapped::Tuple Tuple;
+    typedef std::vector<std::unique_ptr<Wrapped>> PtrArray;
+    typedef DerefIter<typename PtrArray::const_iterator> Iterator;
+private:
+    static const Wrapped dummy;
+private:
+    PtrArray array;
+public:
+    std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
+	return (*this)[tuple.*MemPtr].insert(tuple);
+    }
+    Wrapped& operator[](const Ref<C>& key) {
+	while (key.value >= array.size()) {
+	    array.push_back(std::unique_ptr<Wrapped>(new Wrapped()));
+	}
+	return *(array[key.value]);
+    }
+    const Wrapped& operator[](const Ref<C>& key) const {
+	try {
+	    return *(array.at(key.value));
+	} catch (const std::out_of_range& exc) {
+	    return dummy;
+	}
+    }
+    Iterator begin() const {
+	return Iterator(array.cbegin());
+    }
+    Iterator end() const {
+	return Iterator(array.cend());
+    }
+    unsigned int size() const {
+	unsigned int sz = 0;
+	for (const std::unique_ptr<Wrapped>& elem : array) {
+	    sz += elem->size();
+	}
+	return sz;
+    }
+};
+
+template<typename S, typename C, const Ref<C> S::Tuple::* MemPtr>
+const S FlatIndex<S,C,MemPtr>::dummy;
 
 template<typename T> class PtrTable {
 public:

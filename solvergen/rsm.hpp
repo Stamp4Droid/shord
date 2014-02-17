@@ -313,10 +313,10 @@ public:
     // TODO: Should make some of these private?
     Registry<Node> nodes;
     Registry<Tag> tags;
-    Index<MultiIndex<Index<Table<Edge>,Ref<Node>,&Edge::src>,
-		     PtrIndex<PtrTable<Edge>,Ref<Node>,&Edge::dst>,
-		     PtrIndex<PtrTable<Edge>,Ref<Tag>,&Edge::tag>>,
-	  Ref<Symbol>,&Edge::symbol> edges;
+    FlatIndex<MultiIndex<Index<Table<Edge>,Ref<Node>,&Edge::src>,
+			 PtrIndex<PtrTable<Edge>,Ref<Node>,&Edge::dst>,
+			 PtrIndex<PtrTable<Edge>,Ref<Tag>,&Edge::tag>>,
+	      Symbol,&Edge::symbol> edges;
     Index<Index<Table<Summary>,Ref<Node>,&Summary::src>,
 	  Ref<Component>,&Summary::comp> summaries;
 private:
