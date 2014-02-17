@@ -21,6 +21,50 @@ public:
     typedef typename std::tuple_element<I,std::tuple<Types...>>::type type;
 };
 
+// HELPER CODE ================================================================
+
+namespace detail {
+
+inline const boost::filesystem::path&
+get_path(const boost::filesystem::directory_entry& entry) {
+    return entry.path();
+}
+
+template<typename T>
+const T& unwrap_ref(const std::reference_wrapper<T>& r) {
+    return r.get();
+}
+
+template<typename T>
+const T& deref(const T* const& ptr) {
+    return *ptr;
+}
+
+template<typename T, typename V, int I>
+struct TupleInserter {
+    static void insert(T& idxs, V val) {
+	TupleInserter<T,V,I-1>::insert(idxs, val);
+	std::get<I-1>(idxs).insert(val);
+    }
+};
+
+template<typename T, typename V>
+struct TupleInserter<T,V,0> {
+    static void insert(T&, V) {}
+};
+
+template<typename T, typename V>
+void insert_all(T& idxs, V val) {
+    TupleInserter<T,V,std::tuple_size<T>::value>::insert(idxs, val);
+}
+
+template<typename T, typename S>
+const S& get_second(const std::pair<T,S>& p) {
+    return p.second;
+}
+
+} // namespace detail
+
 // ITERATOR HANDLING ==========================================================
 
 // Very simple iterator wrapper, cannot write through it (constant iterator).
@@ -30,28 +74,32 @@ public:
 // current position of the underlying iterator (which should remain alive
 // until the underlying iterator's next move).
 // TODO: Missing operators:
-// iter++, default constructor, copy assignment, destructor, swap, ->
+// iter++, default constructor, copy assignment, destructor, swap
 template<typename Iter, typename Out,
 	 const Out& F(const typename std::iterator_traits<Iter>::value_type&)>
 class IterWrapper : public std::iterator<std::input_iterator_tag,Out> {
 private:
     Iter iter;
 public:
-    IterWrapper(Iter iter) : iter(iter) {}
-    IterWrapper(const IterWrapper& other) : iter(other.iter) {}
-    IterWrapper& operator=(const IterWrapper& other) = delete;
+    explicit IterWrapper(Iter iter) : iter(iter) {}
+    IterWrapper(const IterWrapper& rhs) : iter(rhs.iter) {}
+    IterWrapper& operator=(const IterWrapper& rhs) = delete;
     const Out& operator*() const {
 	return F(*iter);
+    }
+    const Out* operator->() const {
+	return &(operator*());
     }
     IterWrapper& operator++() {
 	++iter;
 	return *this;
     }
-    bool operator==(const IterWrapper& other) const {
-	return iter == other.iter;
+    bool operator==(const IterWrapper& rhs) const {
+	return iter == rhs.iter;
     }
-    bool operator!=(const IterWrapper& other) const {
-	return !(*this == other);
+    bool operator!=(const IterWrapper& rhs) const {
+	return !(*this == rhs);
+    }
     }
 };
 
@@ -118,45 +166,6 @@ public:
     }
 };
 
-// HELPER CODE ================================================================
-
-namespace detail {
-
-inline const boost::filesystem::path&
-get_path(const boost::filesystem::directory_entry& entry) {
-    return entry.path();
-}
-
-template<typename T>
-const T& unwrap_ref(const std::reference_wrapper<T>& r) {
-    return r.get();
-}
-
-template<typename T>
-const T& deref(const T* const& ptr) {
-    return *ptr;
-}
-
-template<typename T, typename V, int I>
-struct TupleInserter {
-    static void insert(T& idxs, V val) {
-	TupleInserter<T,V,I-1>::insert(idxs, val);
-	std::get<I-1>(idxs).insert(val);
-    }
-};
-
-template<typename T, typename V>
-struct TupleInserter<T,V,0> {
-    static void insert(T&, V) {}
-};
-
-template<typename T, typename V>
-void insert_all(T& idxs, V val) {
-    TupleInserter<T,V,std::tuple_size<T>::value>::insert(idxs, val);
-}
-
-} // namespace detail
-
 // OS SERVICES ================================================================
 
 class Directory {
@@ -218,6 +227,7 @@ public:
 //   (but these might change => re-indexing needed)
 // - If the key is composite, need to group the attributes in a struct
 // - "Void" key specialization: don't even make a map
+// - Define the types of the extra parameters in the managed class
 
 // Alternative: store pointers to objects:
 //   std::vector<T*> array;
@@ -261,14 +271,14 @@ public:
     static Ref<T> none() {
 	return Ref<T>(std::numeric_limits<unsigned int>::max());
     }
-    bool operator==(const Ref& other) const {
-	return value == other.value;
+    bool operator==(const Ref& rhs) const {
+	return value == rhs.value;
     }
-    bool operator!=(const Ref& other) const {
-	return !(*this == other);
+    bool operator!=(const Ref& rhs) const {
+	return !(*this == rhs);
     }
-    bool operator<(const Ref& other) const {
-	return value < other.value;
+    bool operator<(const Ref& rhs) const {
+	return value < rhs.value;
     }
 };
 
@@ -437,6 +447,7 @@ public:
 //     by calling primary_select on an intermediate step
 //   but can't have non-types as variadic template parameters
 // - exploit functional dependencies
+//   defined e.g. on the tuple type, as attribute subsets that are keys
 //   - singleton ("unit") nodes
 //     only if we've crossed all functional dependencies
 //     specialized API:

@@ -388,6 +388,8 @@ void RSM::propagate(Graph& graph) const {
 	// We need to search through the uses of each component to find all
 	// compatible entry/exit node pairs on which we should summarize. This
 	// process needs to happen on the full RSM level.
+	// TODO: Use a better heuristic for the summarization order, to avoid
+	// rescheduling (e.g. based on call graph, for call matching).
 	Registry<Worker> workers;
 	for (const Component& user : components) {
 	    for (const Box& b : user.boxes) {
