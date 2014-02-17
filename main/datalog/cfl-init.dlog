@@ -88,11 +88,11 @@ AssignCCtxt(c:C,v:V,d:C,u:V) output     # v = u
 # store/load
 StoreCtxt(c:C,v:V,f:F,u:V) output      # v.f = u
 StoreStatCtxt(c:C,f:F,v:V) output      # C.f = v
-StoreArrCtxt(c:C,v:V,u:V) output       # v[i] = u
+StoreCtxtArr(c:C,v:V,u:V) output       # v[i] = u
 
 LoadCtxt(c:C,v:V,u:V,f:F) output       # v = u.f
 LoadStatCtxt(c:C,v:V,f:F) output       # v = C.f
-LoadArrCtxt(c:C,v:V,u:V) output        # v = u[i]
+LoadCtxtArr(c:C,v:V,u:V) output        # v = u[i]
 
 # prim assign
 AssignPrimCtxt(c:C,v:U,u:U) output
@@ -140,11 +140,11 @@ AssignCCtxt(c,v,d,u)    :- AssignRetCCtxt(c,v,d,u).
 # store/load
 StoreCtxt(c,v,f,u)   :- Store(v,f,u), MV(m,v), CM(c,m).
 StoreStatCtxt(c,f,v) :- StoreStat(f,v), MV(m,v), CM(c,m).
-StoreArrCtxt(c,v,u)  :- StoreCtxt(c,v,0,u).
+StoreCtxtArr(c,v,u)  :- StoreCtxt(c,v,0,u).
 
 LoadCtxt(c,v,u,f)    :- Load(v,u,f), MV(m,v), CM(c,m).
 LoadStatCtxt(c,v,f)  :- LoadStat(v,f), MV(m,v), CM(c,m).
-LoadArrCtxt(c,v,u)   :- LoadCtxt(c,v,u,0).
+LoadCtxtArr(c,v,u)   :- LoadCtxt(c,v,u,0).
 
 # prim assign
 AssignPrimCtxt(c,v,u)       :- AssignPrim(v,u), MU(m,v), CM(c,m).
