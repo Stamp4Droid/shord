@@ -72,6 +72,16 @@ MmethRet(m:M,z:Z,v:V)     input
 Stub(m:M) input
 
 ###################
+# INPUT: DYNAMIC CALLGRAPH
+###################
+
+dynparam(u:V,v:V,i:I) input
+dynreturn(u:V,v:V,i:I) input
+
+dynparamPrim(u:U,v:U,i:I) input
+dynreturnPrim(u:U,v:U,i:I) input
+
+###################
 # OUTPUT: TAINT HELPER
 ###################
 
@@ -121,6 +131,18 @@ Varg(v:V)  output
 Vret(v:V)  output
 
 phAlloc(v:V,c:C) output
+
+###################
+# OUTPUT: DYNAMIC CALLGRAPH
+###################
+
+DynAssignArgCCtxt(c:C,v:V,d:C,u:V) output
+DynAssignRetCCtxt(c:C,v:V,d:C,u:V) output
+DynAssignCCtxt(c:C,v:V,d:C,u:V) output
+
+DynAssignPrimArgCCtxt(c:C,v:U,d:C,u:U) output
+DynAssignPrimRetCCtxt(c:C,v:U,d:C,u:U) output
+DynAssignPrimCCtxt(c:C,v:U,d:C,u:U) output
 
 ###################
 # RULES: TAINT HELPER
@@ -174,6 +196,20 @@ Varg(v) :- Stub(m), MmethArg(m,_,v).
 Vret(v) :- Stub(m), MmethRet(m,_,v).
 
 phAlloc(v,c) :- Stub(m), MmethRet(m,_,v), CM(c,m).
+
+##################
+# RULES: DYNAMIC CALLGRAPH
+##################
+
+DynAssignArgCCtxt(c,v,d,u) :- dynparam(v,u,i), CC(d,c), CI(c,i).
+DynAssignRetCCtxt(c,v,d,u) :- dynreturn(v,u,i), CC(c,d), CI(d,i).
+DynAssignCCtxt(c,v,d,u)    :- DynAssignArgCCtxt(c,v,d,u).
+DynAssignCCtxt(c,v,d,u)    :- DynAssignRetCCtxt(c,v,d,u).
+
+DynAssignPrimArgCCtxt(c,v,d,u) :- dynparamPrim(v,u,i), CC(d,c), CI(c,i).
+DynAssignPrimRetCCtxt(c,v,d,u) :- dynreturnPrim(v,u,i), CC(c,d), CI(d,i).
+DynAssignPrimCCtxt(c,v,d,u)    :- DynAssignPrimArgCCtxt(c,v,d,u).
+DynAssignPrimCCtxt(c,v,d,u)    :- DynAssignPrimRetCCtxt(c,v,d,u).
 
 ##################
 # TEMP

@@ -54,7 +54,7 @@ dynchaIM(i:I,m:M) input
 dynparam(u:V,v:V,i:I) output   # u is the formal parameter, v is actual arg, i is invocation stmt
 dynreturn(u:V,v:V,i:I)  output   # u is the lhs at callsite, v is the return var, i is invocation stmt
 dynparamPrim(u:U,v:U,i:I) output   # u is the formal parameter, v is actual arg, i is invocation stmt
-dynreturnPrim(u:U,v:U,i:I)  output   # u is the lhs at callsite, v is the return var, i is invocation stmt
+dynreturnPrim(u:U,v:U,i:I) output   # u is the lhs at callsite, v is the return var, i is invocation stmt
 
 dynparam(u,v,i) :- dynchaIM(i,m), MmethArg(m,z,u), IinvkArg(i,z,v).
 dynreturn(u,v,i) :- dynchaIM(i,m), MmethRet(m,z,v), IinvkRet(i,z,u).
