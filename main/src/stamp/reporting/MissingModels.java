@@ -34,7 +34,7 @@ public class MissingModels extends XMLReport {
 					StubLookupValue info = s.get(new StubLookupKey(data.symbol, data.from, data.to));
 					String line;
 					if(info != null) {
-						line = info.toStringShort();
+						line = info.prettyPrint();
 					} else {
 						line = "ERROR_NOT_FOUND";
 					}
