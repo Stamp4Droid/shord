@@ -36,6 +36,8 @@
     <!-- Read required properties. -->
     <prop-default property="stamp.backend" default="chord"
 		  description="backend to use for analyzing the app [chord,solvergen]"/>
+    <prop-default property="missing.models" default="false"
+		  description="whether or not to run the missing models analysis"/>
     <require-prop property="stamp.analyses.pre"
 		  description="Chord analyses that will set up the initial facts for later stages"/>
     <require-prop property="stamp.analyses.post"
@@ -53,6 +55,17 @@
     <prop-default property="stamp.all.reports" default="${stamp.all.reports.default}"
 	      description="whether to generate all reports or just final flows"/>
 
+    <!-- Update the post analyses if needed. -->
+    <if>
+      <equals arg1="${missing.models}" arg2="true"/>
+      <then>
+	<property name="stamp.analyses.missing" value="cfl-init-dlog,cfl-annot-dlog,cfl-stub-dlog,cfl-normal-pt-dlog,cfl-taint-dlog,jcflsolver"/>
+      </then>
+      <else>
+	<property name="stamp.analyses.missing" value=""/>
+      </else>
+    </if>
+
     <!-- Prepare the selected analysis backend. -->
     <runtarget target="-prepare-backend-${stamp.backend}"/>
     <require-prop property="stamp.analyses.main"
@@ -62,7 +75,9 @@
 
     <!-- Configure remaining Chord settings. -->
     <property name="stamp.analyses"
-	      value="${stamp.analyses.pre},${stamp.analyses.main},${stamp.analyses.post}"/>
+	      value="${stamp.analyses.pre},${stamp.analyses.main},${stamp.analyses.missing},${stamp.analyses.post}"/>
+
+    <echo message="HERE:${stamp.analyses}"/>
 
     <!-- Conditionally set-up DroidRecord properties -->
     <if>

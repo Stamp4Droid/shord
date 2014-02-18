@@ -62,7 +62,6 @@ public class Postmortem extends JavaAnalysis {
 			,AllReachable.class
 			,FileNames.class
 			,MissingModels.class
-			,AllMissingModels.class
 		};
 
 		Class[] finalReport = new Class[]{
@@ -75,8 +74,7 @@ public class Postmortem extends JavaAnalysis {
 			,AllReachable.class
 			,SrcSinkFlowViz.class
 			,FileNames.class
-			,MissingModels.class
-			,AllMissingModels.class
+			//,MissingModels.class
 		};
 
 		try{

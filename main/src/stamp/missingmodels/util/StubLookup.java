@@ -95,5 +95,22 @@ public class StubLookup extends HashMap<StubLookupKey,StubLookupValue> {
 		public String toStringShort() {
 			return this.relationName + "[" + this.firstArg + "][" + this.secondArg + "]";
 		}
+		
+		private String argToString(boolean isFirstArg) {
+			Integer arg = isFirstArg ? this.firstArg : this.secondArg;
+			if(arg == null) {
+				return "return";
+			} else if(this.method.isStatic()) {
+				return "arg" + this.firstArg.toString();
+			} else if(this.firstArg == 0) {
+				return "this";
+			} else {
+				return "arg" + Integer.toString(this.firstArg-1);
+			}
+		}
+		
+		public String prettyPrint() {
+			return this.argToString(true) + " -> " + this.argToString(false);
+		}
 	}
 }
