@@ -26,7 +26,7 @@ public:
 
 namespace detail {
 
-inline const boost::filesystem::path&
+const boost::filesystem::path&
 get_path(const boost::filesystem::directory_entry& entry) {
     return entry.path();
 }
@@ -230,19 +230,7 @@ public:
     }
 };
 
-template<typename T> class Histogram;
-
-template<typename T>
-std::ostream& operator<<(std::ostream& os, const Histogram<T>& ref) {
-    for (const auto& p : ref.freqs) {
-	os << p.first << "\t" << p.second << std::endl;
-    }
-    return os;
-}
-
 template<typename T> class Histogram {
-    friend std::ostream& operator<< <>(std::ostream& os,
-				       const Histogram<T>& ref);
 private:
     std::map<T,unsigned int> freqs;
 public:
@@ -252,6 +240,12 @@ public:
 	    prev = freqs.at(val);
 	} catch(std::out_of_range& exc) {}
 	freqs[val] = prev + 1;
+    }
+    friend std::ostream& operator<<(std::ostream& os, const Histogram& ref) {
+	for (const auto& p : ref.freqs) {
+	    os << p.first << "\t" << p.second << std::endl;
+	}
+	return os;
     }
 };
 
@@ -329,14 +323,6 @@ public:
 // }
 
 template<typename T> class Ref;
-
-template<typename T>
-std::ostream& operator<<(std::ostream& os, const Ref<T>& ref) {
-    assert(ref.valid());
-    os << ref.value;
-    return os;
-}
-
 template<typename T> class Registry;
 template<typename S, typename C, const Ref<C> S::Tuple::* MemPtr>
 class FlatIndex;
@@ -349,7 +335,6 @@ template<typename T> class Ref {
     // allowed on friend class declarations.
     template<typename S, typename C, const Ref<C> S::Tuple::* MemPtr>
     friend class FlatIndex;
-    friend std::ostream& operator<< <>(std::ostream& os, const Ref<T>& ref);
 private:
     unsigned int value;
 private:
@@ -374,6 +359,11 @@ public:
     }
     bool operator<(const Ref& rhs) const {
 	return value < rhs.value;
+    }
+    friend std::ostream& operator<<(std::ostream& os, const Ref& ref) {
+	assert(ref.valid());
+	os << ref.value;
+	return os;
     }
 };
 
