@@ -59,7 +59,7 @@
     <if>
       <equals arg1="${missing.models}" arg2="true"/>
       <then>
-	<property name="stamp.analyses.missing" value="cfl-init-dlog,cfl-annot-dlog,cfl-stub-dlog,cfl-normal-pt-dlog,cfl-taint-dlog,jcflsolver"/>
+	<property name="stamp.analyses.missing" value="cfl-init-dlog,cfl-annot-dlog,cfl-stub-dlog,cfl-normal-pt-dlog,cfl-taint-dlog,jcflsolver,"/>
       </then>
       <else>
 	<property name="stamp.analyses.missing" value=""/>
@@ -75,7 +75,7 @@
 
     <!-- Configure remaining Chord settings. -->
     <property name="stamp.analyses"
-	      value="${stamp.analyses.pre},${stamp.analyses.main},${stamp.analyses.missing},${stamp.analyses.post}"/>
+	      value="${stamp.analyses.pre},${stamp.analyses.main},${stamp.analyses.missing}${stamp.analyses.post}"/>
 
     <echo message="HERE:${stamp.analyses}"/>
 
