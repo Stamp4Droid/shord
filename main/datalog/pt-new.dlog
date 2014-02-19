@@ -32,37 +32,22 @@ CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
 # intermediate 0-cfa relations
 pt0(v:V,o:C) output
 fpt0(op:C,f:F,o:C) output
-refpt0(v:V,u:V) output
-temppt0(v:V,o:C) output
-activeRef0(v:V) output
-activeObj0(o:C) output
 
 # intermediate k-cfa relations
 ptk(c:C,v:V,o:C) output
 fptk(op:C,f:F,o:C) output
-refptk(v:V,c:C,u:V) output
-tempptk(v:V,o:C) output
-activeRef(v:V) output
-activeObj(o:C) output
 
-# full pt
-ptFull(c:C,v:V,o:C) output
-
+# query relations
 queryObj(o:C) output
 queryRef(v:V) output
+queryRefCtxt(c:C,v:V) output
 
 ##############
 # 0-CFA pt
 ##############
 
-# active rules
-activeRef0(v) :- activeRef(v).
-activeObj0(o) :- activeObj(o).
-
-#activeObj0(o) :- queryRef(v), temppt0(v,o).
-
 # pt rules
-pt0(v,o) :- activeObj0(o), Alloc(v,h), typeFilter(v,o), CH(o,h).
+pt0(v,o) :- Alloc(v,h), typeFilter(v,o), CH(o,h).
 pt0(u,o) :- pt0(v,o), Assign(u,v), typeFilter(u,o).
 pt0(u,o) :- pt0(v,o), param(u,v,_), typeFilter(u,o).
 pt0(u,o) :- pt0(v,o), return(u,v,_), typeFilter(u,o).
@@ -70,35 +55,12 @@ fpt0(op,f,o) :- pt0(v,o), Store(u,f,v), pt0(u,op).
 pt0(x,o) :- fpt0(op,f,o), pt0(w,op), Load(x,w,f), typeFilter(x,o).
 pt0(u,o) :- pt0(v,o), StoreStat(f,v), LoadStat(u,f), typeFilter(u,o).
 
-# activeRef rules
-activeRef0(u) :- pt0(v,o), Store(u,f,v), typeFilter(u,op), typeFilter(w,op), Load(x,w,f), typeFilter(x,o).
-activeRef0(w) :- pt0(v,o), Store(u,f,v), typeFilter(u,op), typeFilter(w,op), Load(x,w,f), typeFilter(x,o).
-
-# refpt rules
-refpt0(v,u) :- activeRef0(v), v=u.
-refpt0(v,w) :- refpt0(v,u), Assign(u,w).
-refpt0(v,w) :- refpt0(v,u), param(u,w,_).
-refpt0(v,w) :- refpt0(v,u), return(u,w,_).
-refpt0(v,y) :- refpt0(v,u), Load(u,w,f), typeFilter(w,o), typeFilter(x,o), Store(x,f,y).
-refpt0(v,w) :- refpt0(v,u), LoadStat(u,f), StoreStat(f,w).
-
-temppt0(v,o) :- refpt0(v,u), Alloc(u,h), CH(o,h).
-
-# activeObj rules
-activeObj0(op) :- pt0(v,_), Store(u,f,v), temppt0(u,op), temppt0(w,op), Load(_,w,f).
-
 ##############
 # k-CFA pt
 ##############
 
-# active rules
-activeObj(o) :- queryObj(o).
-
-#activeRef(v) :- queryRef(v).
-#activeObj(o) :- queryRef(v), tempptk(v,o).
-
 # pt rules
-ptk(c,v,o) :- activeObj(o), Alloc(v,h), MV(m,v), pt0(v,o), CM(c,m), CC(c,o), CH(o,h).
+ptk(c,v,o) :- queryObj(o), Alloc(v,h), MV(m,v), pt0(v,o), CM(c,m), CC(c,o), CH(o,h).
 ptk(c,u,o) :- ptk(c,v,o), Assign(u,v), pt0(u,o).
 ptk(d,u,o) :- ptk(c,v,o), param(u,v,i), pt0(u,o), CC(c,d), CI(d,i).
 ptk(c,u,o) :- ptk(d,v,o), return(u,v,i), CI(d,i), CC(c,d), pt0(u,o).
@@ -106,22 +68,26 @@ fptk(op,f,o) :- ptk(c,v,o), Store(u,f,v), ptk(c,u,op), fpt0(op,f,o).
 ptk(d,x,o) :- fptk(op,f,o), ptk(d,w,op), Load(x,w,f), pt0(x,o).
 ptk(c,u,o) :- ptk(_,v,o), StoreStat(f,v), LoadStat(u,f), MV(m,u), CM(c,m), pt0(u,o).
 
-# activeRef rules
-activeRef(u) :- ptk(_,v,o), Store(u,f,v), pt0(u,op), pt0(w,op), Load(x,w,f), pt0(x,o), activeRef0(u).
-activeRef(w) :- ptk(_,v,o), Store(u,f,v), pt0(u,op), pt0(w,op), Load(x,w,f), pt0(x,o), activeRef0(w).
+# pt ref queries
+queryRefCtxt(c,u) :- ptk(c,v,o), Store(u,f,v), pt0(u,op), pt0(w,op), Load(x,w,f), pt0(x,o).
+queryRef(w) :- ptk(_,v,o), Store(u,f,v), pt0(u,op), pt0(w,op), Load(x,w,f), pt0(x,o).
 
-# refpt rules
-refptk(v,c,u) :- activeRef(v), v=u, MV(m,u), refpt0(v,u), CM(c,m).
-refptk(v,c,w) :- refptk(v,c,u), Assign(u,w), refpt0(v,w).
-refptk(v,c,w) :- refptk(v,d,u), param(u,w,i), refpt0(v,w), CC(c,d), CI(d,i).
-refptk(v,d,w) :- refptk(v,c,u), return(u,w,i), CI(d,i), CC(c,d), refpt0(v,w).
-refptk(v,d,y) :- refptk(v,_,u), Load(u,w,f), typeFilter(w,o), typeFilter(x,o), Store(x,f,y), MV(m,y), CM(d,m), refpt0(v,y).
-refptk(v,d,w) :- refptk(v,_,u), LoadStat(u,f), StoreStat(f,w), MV(m,w), CM(d,m), refpt0(v,w).
+# query rules
+queryRef(u) :- queryRef(v), Assign(v,u).
+queryRef(u) :- queryRef(v), param(v,u,_).
+queryRef(u) :- queryRef(v), return(v,u,_).
 
-tempptk(v,o) :- refptk(v,_,u), Alloc(u,h), CH(o,h), pt0(v,o).
+queryRef(u) :- queryRef(v), Load(v,u,f), pt0(u,op), pt0(w,op), Store(w,f,_).
+queryRef(w) :- queryRef(v), Load(v,u,f), pt0(u,op), pt0(w,op), Store(w,f,_).
 
-# activeObj rules
-activeObj(op) :- ptk(_,v,_), Store(u,f,v), tempptk(u,op), tempptk(w,op), Load(_,w,f), activeObj0(op).
+queryRefCtxt(d,x) :- queryRef(v), Load(v,u,f), ptk(_,u,op), ptk(d,w,op), Store(w,f,x).
+
+ptk(c,v,o) :- queryRef(v), Load(v,u,f), ptk(c,u,op), ptk(d,w,op), Store(w,f,x), ptk(d,x,o).
+ptk(c,v,o) :- queryRef(v), Alloc(v,h), CH(o,h), pt0(v,o).
+
+queryRef(u) :- queryRef(v), LoadStat(v,f), StoreStat(f,u).
+
+ptk(c,v,o) :- queryRef(v), LoadStat(v,f), StoreStat(f,u), ptk(_,u,o).
 
 ##############
 # full pt
