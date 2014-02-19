@@ -9,7 +9,6 @@ import stamp.util.IPAddressValidator;
 import stamp.util.URIValidator;
 
 import stamp.analyses.DynamicFeaturesAnalysis;
-import stamp.analyses.StringAnalysis;
 
 import shord.project.analyses.JavaAnalysis;
 import shord.program.Program;
