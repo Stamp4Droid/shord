@@ -74,20 +74,37 @@ queryRef(w) :- ptk(_,v,o), Store(u,f,v), pt0(u,op), pt0(w,op), Load(x,w,f), pt0(
 
 # query rules
 queryRef(u) :- queryRef(v), Assign(v,u).
-queryRef(u) :- queryRef(v), param(v,u,_).
-queryRef(u) :- queryRef(v), return(v,u,_).
+queryRefCtxt(d,u) :- queryRef(v), param(v,u,i), CI(d,i).
+queryRefCtxt(c,u) :- queryRef(v), return(v,u,i), CI(d,i), CC(c,d).
 
 queryRef(u) :- queryRef(v), Load(v,u,f), pt0(u,op), pt0(w,op), Store(w,f,_).
 queryRef(w) :- queryRef(v), Load(v,u,f), pt0(u,op), pt0(w,op), Store(w,f,_).
 
 queryRefCtxt(d,x) :- queryRef(v), Load(v,u,f), ptk(_,u,op), ptk(d,w,op), Store(w,f,x).
 
-ptk(c,v,o) :- queryRef(v), Load(v,u,f), ptk(c,u,op), ptk(d,w,op), Store(w,f,x), ptk(d,x,o).
-ptk(c,v,o) :- queryRef(v), Alloc(v,h), CH(o,h), pt0(v,o).
+ptk(c,v,o) :- queryRef(v), Load(v,u,f), ptk(c,u,op), ptk(d,w,op), Store(w,f,x), ptk(d,x,o), pt0(v,o).
+ptk(c,v,o) :- queryRef(v), Alloc(v,h), MV(m,v), pt0(v,o), CM(c,m), CC(c,o), CH(o,h).
 
 queryRef(u) :- queryRef(v), LoadStat(v,f), StoreStat(f,u).
 
-ptk(c,v,o) :- queryRef(v), LoadStat(v,f), StoreStat(f,u), ptk(_,u,o).
+ptk(c,v,o) :- queryRef(v), LoadStat(v,f), StoreStat(f,u), ptk(_,u,o), MV(m,v), CM(c,m), pt0(v,o).
+
+# query rules
+queryRefCtxt(c,u) :- queryRefCtxt(c,v), Assign(v,u).
+queryRefCtxt(d,u) :- queryRefCtxt(c,v), param(v,u,i), CC(c,d), CI(d,i).
+queryRefCtxt(d,u) :- queryRefCtxt(c,v), return(v,u,i), CI(d,i), CC(c,d).
+
+queryRefCtxt(c,u) :- queryRefCtxt(c,v), Load(v,u,f), pt0(u,op), pt0(w,op), Store(w,f,_).
+queryRef(w) :- queryRefCtxt(_,v), Load(v,u,f), pt0(u,op), pt0(w,op), Store(w,f,_).
+
+queryRefCtxt(d,x) :- queryRefCtxt(c,v), Load(v,u,f), ptk(c,u,op), ptk(d,w,op), Store(w,f,x).
+
+ptk(c,v,o) :- queryRefCtxt(c,v), Load(v,u,f), ptk(c,u,op), ptk(d,w,op), Store(w,f,x), ptk(d,x,o).
+ptk(c,v,o) :- queryRefCtxt(c,v), Alloc(v,h), MV(m,v), pt0(v,o), CM(c,m), CC(c,o), CH(o,h).
+
+queryRef(u) :- queryRefCtxt(_,v), LoadStat(v,f), StoreStat(f,u).
+
+ptk(c,v,o) :- queryRefCtxt(c,v), LoadStat(v,f), StoreStat(f,u), ptk(_,u,o), MV(m,v), CM(c,m).
 
 ##############
 # full pt

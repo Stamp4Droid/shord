@@ -130,6 +130,10 @@ public final class Graph {
 		}
 		return vertex;
 	}
+	
+	public String getVertexName(Vertex vertex) {
+		return this.vertexNames.get(vertex);
+	}
 
 	public int getField(String field) {
 		Integer intField = this.fields.get(field);
@@ -207,6 +211,21 @@ public final class Graph {
 	public Set<Edge> getPositiveWeightInputs(Edge edge) {
 		Set<Edge> inputs = new HashSet<Edge>();
 		this.getPositiveWeightInputsHelper(edge, inputs);
+		return inputs;
+	}
+	public void getInputsHelper(Edge edge, int label, Set<Edge> inputs) {
+		if(edge == null) {
+			return;
+		}
+		if(edge.label == label) {
+			inputs.add(edge);
+		}
+		this.getInputsHelper(edge.firstInput, label, inputs);
+		this.getInputsHelper(edge.secondInput, label, inputs);
+	}
+	public Set<Edge> getInputs(Edge edge, String label) {
+		Set<Edge> inputs = new HashSet<Edge>();
+		this.getInputsHelper(edge, this.contextFreeGrammar.getLabel(label), inputs);
 		return inputs;
 	}
 

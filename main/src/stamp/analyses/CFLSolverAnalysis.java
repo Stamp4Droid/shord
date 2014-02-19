@@ -2,6 +2,14 @@ package stamp.analyses;
 
 import java.util.Set;
 
+import shord.analyses.CastVarNode;
+import shord.analyses.DomU;
+import shord.analyses.DomV;
+import shord.analyses.LocalVarNode;
+import shord.analyses.ParamVarNode;
+import shord.analyses.RetVarNode;
+import shord.analyses.ThisVarNode;
+import shord.analyses.VarNode;
 import shord.project.ClassicProject;
 import shord.project.analyses.JavaAnalysis;
 import shord.project.analyses.ProgramRel;
@@ -21,6 +29,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		// pt rules
 		taintGrammar.addUnaryProduction("Flow", "newCtxt", true);
 		taintGrammar.addBinaryProduction("Flow", "Flow", "assignCtxt", false, true);
+		taintGrammar.addBinaryProduction("Flow", "Flow", "assignCCtxt", false, true);
 		taintGrammar.addProduction("FlowField", new String[]{"Flow", "storeCtxt", "Flow"}, new boolean[]{false, true, true});
 		taintGrammar.addProduction("Flow", new String[]{"FlowField", "Flow", "loadCtxt"}, new boolean[]{false, false, true});
 		taintGrammar.addBinaryProduction("FlowStatField", "Flow", "storeStatCtxt", false, true);
@@ -156,9 +165,42 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		System.out.println("Printing positive weight inputs:");
 		for(Edge edge : sortedEdges.get("Src2Sink")) {
 			System.out.println("Src2Sink edge: " + edge.toString());
-			for(Edge input : g.getPositiveWeightInputs(edge)) {
-				System.out.println("Input edge: " + input);
+			for(Edge input : g.getInputs(edge, "assignCCtxt")) {
+				//System.out.println("Input edge: " + input);
+				try {
+					System.out.println("Input method edge: " + getMethodSig(g, input) + " with weight " + input.weight);
+				} catch(Exception e) {
+					e.printStackTrace();
+					System.out.println("Error on edge: " + input);
+				}
 			}
+		}
+	}
+	
+	private static String getMethodSig(Graph graph, Edge edge) {
+		VarNode v;
+		String[] tokens = graph.getVertexName(edge.source).split("_");
+		if(tokens[0].startsWith("V")) {
+			DomV dom = (DomV)ClassicProject.g().getTrgt(tokens[0].substring(0,1).toUpperCase());
+			v = dom.get(Integer.parseInt(tokens[0].substring(1)));
+		} else if(tokens[0].startsWith("U")) {
+			DomU dom = (DomU)ClassicProject.g().getTrgt(tokens[0].substring(0,1).toUpperCase());
+			v = dom.get(Integer.parseInt(tokens[0].substring(1)));
+		} else {
+			throw new RuntimeException("Unrecognized vertex: " + tokens[0]);
+		}
+		if(v instanceof ParamVarNode) {
+			return ((ParamVarNode)v).method.toString();
+		} else if(v instanceof RetVarNode) {
+			return ((RetVarNode)v).method.toString();
+		} else if(v instanceof ThisVarNode) {
+			return ((ThisVarNode)v).method.toString();
+		} else if(v instanceof LocalVarNode) {
+			return ((LocalVarNode)v).meth.toString();
+		} else if(v instanceof CastVarNode) {
+			return ((CastVarNode)v).method.toString();
+		} else {
+			throw new RuntimeException("Unrecognized variable: " + v);
 		}
 	}
 }
