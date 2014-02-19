@@ -27,11 +27,11 @@ public:
 private:
     explicit Symbol(const std::string& name, Ref<Symbol> ref, bool parametric)
 	: name(name), ref(ref), parametric(parametric) {
-	assert(boost::regex_match(name, NAME_REGEX));
+	EXPECT(boost::regex_match(name, NAME_REGEX));
     }
 public:
     bool merge(bool parametric) const {
-	assert(parametric == this->parametric);
+	EXPECT(parametric == this->parametric);
 	return false;
     }
 };
@@ -46,7 +46,9 @@ public:
     const bool tagged;
 public:
     explicit Label(Ref<Symbol> symbol, Direction dir, bool tagged)
-	: symbol(symbol), dir(dir), tagged(tagged) {}
+	: symbol(symbol), dir(dir), tagged(tagged) {
+	// TODO: A tagged label can only be used with a parametric symbol.
+    }
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
     bool operator<(const Label& rhs) const {
 	return (std::tie(    symbol,     dir,     tagged) <
@@ -78,7 +80,7 @@ private:
 	: name(name), ref(ref), initial(initial), final(final) {}
 public:
     bool merge(bool initial, bool final) const {
-	assert(initial == this->initial && final == this->final);
+	EXPECT(initial == this->initial && final == this->final);
 	return false;
     }
     void print(std::ostream& os) const;
@@ -96,7 +98,7 @@ private:
 	: name(name), ref(ref), comp(comp) {}
 public:
     bool merge(Ref<Component> comp) const {
-	assert(comp == this->comp);
+	EXPECT(comp == this->comp);
 	return false;
     }
     void print(std::ostream& os, const Registry<Component>& comp_reg) const;
@@ -112,7 +114,7 @@ public:
 public:
     explicit Transition(Ref<State> from, Ref<State> to, Label label)
 	: from(from), to(to), label(label) {
-	assert(!label.tagged);
+	EXPECT(!label.tagged);
     }
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
     bool operator<(const Transition& rhs) const {
@@ -176,7 +178,7 @@ private:
 private:
     explicit Component(const std::string& name, Ref<Component> ref)
 	: name(name), ref(ref) {
-	assert(boost::regex_match(name, NAME_REGEX));
+	EXPECT(boost::regex_match(name, NAME_REGEX));
     }
 public:
     const Registry<State>& get_states() const {
@@ -300,7 +302,7 @@ public:
 	  dst((l.dir == Direction::FWD) ? Ref<Node>::none() : base),
 	  symbol(l.symbol), match_tag(l.tagged),
 	  tag(prev.match_tag ? e.tag : prev.tag) {
-	assert(prev.matches(e));
+	EXPECT(prev.matches(e));
     }
     bool matches(const Edge& e) const;
 };
@@ -358,7 +360,7 @@ private:
     explicit Worker(Ref<Node> start, Ref<Worker> ref, const Component& comp,
 		    const std::set<Ref<Node>>& tgts)
 	: start(start), ref(ref), comp(comp), tgts(tgts) {
-	assert(!tgts.empty());
+	EXPECT(!tgts.empty());
     }
 public:
     explicit Worker(Ref<Node> start, const Component& comp)

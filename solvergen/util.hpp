@@ -3,6 +3,7 @@
 
 #include <boost/filesystem.hpp>
 #include <cassert>
+#include <cstdlib>
 #include <deque>
 #include <functional>
 #include <iostream>
@@ -22,6 +23,21 @@ template<int I, typename... Types> struct pack_elem {
 public:
     typedef typename std::tuple_element<I,std::tuple<Types...>>::type type;
 };
+
+// ERROR HANDLING =============================================================
+
+void expect(const char* file, unsigned int line, bool cond,
+	    std::string err_msg = "(no details)") {
+    if (cond) {
+	return;
+    }
+    std::cout.flush();
+    std::cerr << file << ", line " << line << ":" << std::endl;
+    std::cerr << "Fatal Error: " << err_msg << std::endl;
+    std::exit(EXIT_FAILURE);
+}
+
+#define EXPECT(...) do {expect(__FILE__, __LINE__, __VA_ARGS__);} while(0)
 
 // HELPER CODE ================================================================
 
@@ -260,7 +276,7 @@ private:
     const boost::filesystem::path path;
 public:
     explicit Directory(const std::string& name) : path(name) {
-	assert(boost::filesystem::is_directory(path));
+	EXPECT(boost::filesystem::is_directory(path));
     }
     Iterator begin() {
 	return Iterator(boost::filesystem::directory_iterator(path));
@@ -342,7 +358,7 @@ private:
     explicit Ref(unsigned int value) : value(value) {}
     static Ref<T> for_value(unsigned int value) {
 	Ref<T> ref(value);
-	assert(ref.valid());
+	EXPECT(ref.valid());
 	return ref;
     }
 public:
@@ -362,7 +378,7 @@ public:
 	return value < rhs.value;
     }
     friend std::ostream& operator<<(std::ostream& os, const Ref& ref) {
-	assert(ref.valid());
+	EXPECT(ref.valid());
 	os << ref.value;
 	return os;
     }
@@ -380,18 +396,18 @@ private:
 public:
     explicit Registry() {}
     T& operator[](const Ref<T> ref) {
-	assert(ref.valid());
+	EXPECT(ref.valid());
 	return array.at(ref.value).get();
     }
     const T& operator[](const Ref<T> ref) const {
-	assert(ref.valid());
+	EXPECT(ref.valid());
 	return array.at(ref.value).get();
     }
     template<typename... ArgTs> T& make(const Key& key, ArgTs&&... args) {
 	Ref<T> next_ref = Ref<T>::for_value(array.size());
 	auto res = map.emplace(key, T(key, next_ref,
 				      std::forward<ArgTs>(args)...));
-	assert(res.second);
+	EXPECT(res.second);
 	T& obj = res.first->second;
 	array.push_back(std::ref(obj));
 	return obj;

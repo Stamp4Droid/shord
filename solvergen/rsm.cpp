@@ -88,7 +88,7 @@ const State& Component::add_state(const std::string& name, bool initial,
 				  bool final) {
     State& s = states.make(name, initial, final);
     if (initial) {
-	assert(!this->initial.valid());
+	EXPECT(!this->initial.valid());
 	this->initial = s.ref;
     }
     if (final) {
@@ -123,7 +123,7 @@ Label RSM::parse_label(const std::string& str) {
     static const boost::regex r("(_)?([a-z]\\w*)(?:\\[([a-z\\*])\\])?");
     boost::smatch m;
     bool matched = boost::regex_match(str, m, r);
-    assert(matched);
+    EXPECT(matched);
 
     Direction dir = m[1].matched ? Direction::REV : Direction::FWD;
     std::string name(m[2].first, m[2].second);
@@ -157,7 +157,7 @@ void RSM::parse_file(const fs::path& fpath) {
     Component& comp = components.make(name);
 
     std::ifstream fin(fpath.string());
-    assert(fin);
+    EXPECT(fin);
     ParsingMode mode = ParsingMode::NODES;
     std::string line;
 
@@ -176,8 +176,8 @@ void RSM::parse_file(const fs::path& fpath) {
 	    if (toks[0] == "#") {
 		// Verify that the component has a single initial state, and at
 		// least one final state.
-		assert(comp.get_initial().valid());
-		assert(!comp.get_final().empty());
+		EXPECT(comp.get_initial().valid());
+		EXPECT(!comp.get_final().empty());
 		mode = ParsingMode::EDGES;
 		break;
 	    }
@@ -186,36 +186,36 @@ void RSM::parse_file(const fs::path& fpath) {
 	    Ref<Component> box_rsm = Ref<Component>::none();
 	    for (auto iter = toks.begin() + 1; iter != toks.end(); ++iter) {
 		if (*iter == "in") {
-		    assert(can_be_state);
+		    EXPECT(can_be_state);
 		    can_be_box = false;
 		    initial = true;
 		} else if (*iter == "out") {
-		    assert(can_be_state);
+		    EXPECT(can_be_state);
 		    can_be_box = false;
 		    final = true;
 		} else {
-		    assert(can_be_box);
+		    EXPECT(can_be_box);
 		    can_be_state = false;
-		    assert(!box_rsm.valid());
+		    EXPECT(!box_rsm.valid());
 		    // The referenced component must be present in the RSM.
 		    // TODO: This means we only allow self-recursion.
 		    box_rsm = components.find(*iter).ref;
 		}
 	    }
 	    if (can_be_state) {
-		assert(!comp.boxes.contains(toks[0]));
-		assert(!box_rsm.valid());
+		EXPECT(!comp.boxes.contains(toks[0]));
+		EXPECT(!box_rsm.valid());
 		comp.add_state(toks[0], initial, final);
 	    } else {
-		assert(!comp.get_states().contains(toks[0]));
-		assert(can_be_box && box_rsm.valid());
+		EXPECT(!comp.get_states().contains(toks[0]));
+		EXPECT(can_be_box && box_rsm.valid());
 		comp.boxes.make(toks[0], box_rsm);
 	    }
 	} break;
 
 	case ParsingMode::EDGES: {
 	    // We are certain that box names and transition names are disjoint.
-	    assert(toks.size() >= 3);
+	    EXPECT(toks.size() >= 3);
 	    std::list<Label> labels;
 	    for (auto iter = toks.begin() + 2; iter != toks.end(); ++iter) {
 		labels.push_back(parse_label(*iter));
@@ -243,14 +243,14 @@ void RSM::parse_file(const fs::path& fpath) {
 		    comp.exits.insert(Exit(src, dst, lab));
 		}
 	    } else {
-		assert(false);
+		EXPECT(false);
 	    }
 	} break;
 	}
     }
 
-    assert(fin.eof());
-    assert(mode == ParsingMode::EDGES);
+    EXPECT(fin.eof());
+    EXPECT(mode == ParsingMode::EDGES);
 }
 
 void RSM::print(std::ostream& os) const {
@@ -266,7 +266,7 @@ const std::string Graph::FILE_EXTENSION(".dat");
 
 void Graph::parse_file(const Symbol& symbol, const fs::path& fpath) {
     std::ifstream fin(fpath.string());
-    assert(fin);
+    EXPECT(fin);
     std::string line;
     while (std::getline(fin, line)) {
 	if (line.empty()) {
@@ -275,19 +275,19 @@ void Graph::parse_file(const Symbol& symbol, const fs::path& fpath) {
 	std::vector<std::string> toks;
 	boost::split(toks, line, boost::is_any_of(" "),
 		     boost::token_compress_on);
-	assert(toks.size() >= 2);
+	EXPECT(toks.size() >= 2);
 	Ref<Node> src = nodes.add(toks[0]).ref;
 	Ref<Node> dst = nodes.add(toks[1]).ref;
 	if (symbol.parametric) {
-	    assert(toks.size() == 3);
+	    EXPECT(toks.size() == 3);
 	    Ref<Tag> tag = tags.add(toks[2]).ref;
 	    edges.insert(Edge(src, dst, symbol.ref, tag));
 	} else {
-	    assert(toks.size() == 2);
+	    EXPECT(toks.size() == 2);
 	    edges.insert(Edge(src, dst, symbol.ref, Ref<Tag>::none()));
 	}
     }
-    assert(fin.eof());
+    EXPECT(fin.eof());
 }
 
 Graph::Graph(const Registry<Symbol>& symbols, const std::string& dirname) {
@@ -318,7 +318,7 @@ void Graph::print_summaries(const std::string& dirname,
 	std::string fname = comp.name + FILE_EXTENSION;
 	std::cout << "Printing " << fname << std::endl;
 	std::ofstream fout((dirpath/fname).string());
-	assert(fout);
+	EXPECT(fout);
 	for (const Summary& s : summaries[comp.ref]) {
 	    fout << nodes[s.src].name << " " << nodes[s.dst].name << std::endl;
 	}
@@ -626,5 +626,5 @@ int main(int argc, char* argv[]) {
     std::cout << "Printing summaries" << std::endl;
     graph.print_summaries(summ_dir, rsm.components);
 
-    return 0;
+    return EXIT_SUCCESS;
 }
