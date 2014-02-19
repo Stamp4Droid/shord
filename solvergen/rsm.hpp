@@ -324,7 +324,7 @@ private:
 public:
     explicit Graph(const Registry<Symbol>& symbols,
 		   const std::string& dirname);
-    Table<const Edge*> search(const Pattern& pat) const;
+    std::deque<const Edge*> search(const Pattern& pat) const;
     std::map<Ref<Node>,std::set<Ref<Node>>>
 	subpath_bounds(const Label& head_lab, const Label& tail_lab) const;
     void print_stats(std::ostream& os, const Registry<Symbol>& symbols) const;

@@ -97,8 +97,7 @@ int main() {
     std::cout << std::endl;
     std::function<bool(const Foo&)> pred = [](const Foo& f){return f.x < 0;};
     std::function<int(const Foo&)> mod = [](const Foo& f){return f.y;};
-    Table<int> fm = filter_map(idx, pred, mod);
-    for (int i : fm) {
+    for (int i : filter_map(idx, pred, mod)) {
 	std::cout << i << std::endl;
     }
     std::cout << std::endl;

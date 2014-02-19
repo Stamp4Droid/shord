@@ -3,6 +3,7 @@
 
 #include <boost/filesystem.hpp>
 #include <cassert>
+#include <deque>
 #include <functional>
 #include <iostream>
 #include <iterator>
@@ -819,14 +820,14 @@ public:
 //   - filling in a provided container
 // - This is a very specific case of a proper lazy iterator framework.
 template <typename C, typename S>
-Table<S> filter_map(const C& table,
-		    std::function<bool(const typename C::Tuple&)> pred,
-		    std::function<S(const typename C::Tuple&)> mod) {
-    Table<S> res;
+std::deque<S> filter_map(const C& table,
+			 std::function<bool(const typename C::Tuple&)> pred,
+			 std::function<S(const typename C::Tuple&)> mod) {
+    std::deque<S> res;
     for (const typename C::Tuple& t : table) {
 	if (pred(t)) {
 	    // TODO: Extraneous copying could occur here.
-	    res.insert(mod(t));
+	    res.push_back(mod(t));
 	}
     }
     return res;

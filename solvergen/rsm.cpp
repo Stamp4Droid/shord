@@ -343,7 +343,7 @@ bool Pattern::matches(const Edge& e) const {
 // - Manual use of the indices; this could be done at a query planning stage.
 // - Have to take cases explicitly on the code, because the different indices
 //   don't have compatible base types.
-Table<const Edge*> Graph::search(const Pattern& pat) const {
+std::deque<const Edge*> Graph::search(const Pattern& pat) const {
     std::function<bool(const Edge&)> matches =
 	[&](const Edge& e){return pat.matches(e);};
     std::function<const Edge*(const Edge&)> get_addr =
