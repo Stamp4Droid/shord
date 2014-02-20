@@ -159,7 +159,7 @@ public:
     Registry<Box> boxes;
     Index<Table<Transition>,Ref<State>,&Transition::from> transitions;
     MultiIndex<Index<Table<Entry>,Ref<Box>,&Entry::to>,
-	       PtrIndex<PtrTable<Entry>,Ref<State>,&Entry::from>> entries;
+	       Index<PtrTable<Entry>,Ref<State>,&Entry::from>> entries;
     Index<Table<Exit>,Ref<Box>,&Exit::from> exits;
 private:
     Registry<State> states;
@@ -275,7 +275,7 @@ public:
 class Graph {
     typedef MultiIndex<Index<Index<Table<Edge>,Ref<Tag>,&Edge::tag>,
 			     Ref<Node>,&Edge::src>,
-		       PtrIndex<PtrTable<Edge>,Ref<Tag>,&Edge::tag>>
+		       Index<PtrTable<Edge>,Ref<Tag>,&Edge::tag>>
 	EdgeSlice;
 public:
     static const std::string FILE_EXTENSION;

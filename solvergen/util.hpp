@@ -61,7 +61,7 @@ deref(const PtrT& ptr) {
 
 template<typename T, typename V, int I>
 struct TupleInserter {
-    static void insert(T& idxs, V val) {
+    static void insert(T& idxs, V& val) {
 	TupleInserter<T,V,I-1>::insert(idxs, val);
 	std::get<I-1>(idxs).insert(val);
     }
@@ -69,11 +69,11 @@ struct TupleInserter {
 
 template<typename T, typename V>
 struct TupleInserter<T,V,0> {
-    static void insert(T&, V) {}
+    static void insert(T&, V&) {}
 };
 
 template<typename T, typename V>
-void insert_all(T& idxs, V val) {
+void insert_all(T& idxs, V& val) {
     TupleInserter<T,V,std::tuple_size<T>::value>::insert(idxs, val);
 }
 
@@ -574,7 +574,7 @@ public:
 // - named indices (use classes as index tags)
 
 // Concepts:
-// - Relation<T>:
+// - Relation<T>, SecIndex<T>:
 //   - typedef Tuple = T
 //   - typedef Iterator: iterator with traits:
 //     - constant iterator
@@ -584,24 +584,12 @@ public:
 //   - Iterator begin() const
 //   - Iterator end() const
 //   - unsigned int size() const
-// - SecIndex<T> : Relation<T>
-//   except:
-//   - void insert(const Tuple* ptr)
-
 // Implementations:
 // - Table<T> : Relation<T>
-// - Index<S,K,MemPtr> : Relation<T>
-//   where:
-//   - S : Relation<T>
-//   - MemPtr is a pointer to a member of T, of type K
-//   additional:
-//   - typedef Wrapped = S
-//   - typedef Key = K
-//   - const Wrapped& operator[](const Key& key) const
 // - PtrTable<T> : SecIndex<T>
-// - PtrIndex<S,K,MemPtr> : SecIndex<T>
+// - Index<S,K,MemPtr> : Relation<T> / SecIndex<T>
 //   where:
-//   - S : SecIndex<T>
+//   - S : Relation<T> / SecIndex<T>
 //   - MemPtr is a pointer to a member of T, of type K
 //   additional:
 //   - typedef Wrapped = S
@@ -779,10 +767,11 @@ public:
 private:
     std::deque<const Tuple*> store;
 public:
-    void insert(const Tuple* ptr) {
+    std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
 	// Assuming this is only called via a fork point, it will never be
 	// called for duplicate entries, so we don't need to check.
-	store.push_back(ptr);
+	store.push_back(&tuple);
+	return std::make_pair(&tuple, true);
     }
     Iterator begin() const {
 	return Iterator(store.cbegin());
@@ -794,38 +783,6 @@ public:
 	return store.size();
     }
 };
-
-template<typename S, typename K, const K S::Tuple::* MemPtr> class PtrIndex {
-public:
-    typedef S Wrapped;
-    typedef typename Wrapped::Tuple Tuple;
-    typedef K Key;
-private:
-    static const Wrapped dummy;
-private:
-    std::map<Key,Wrapped> idx;
-public:
-    void insert(const Tuple* ptr) {
-	idx[ptr->*MemPtr].insert(ptr);
-    }
-    const Wrapped& operator[](const Key& key) const {
-	try {
-	    return idx.at(key);
-	} catch (const std::out_of_range& exc) {
-	    return dummy;
-	}
-    }
-    unsigned int size() const {
-	unsigned int sz = 0;
-	for (const auto& entry : idx) {
-	    sz += entry.second.size();
-	}
-	return sz;
-    }
-};
-
-template<typename S, typename K, const K S::Tuple::* MemPtr>
-const S PtrIndex<S,K,MemPtr>::dummy;
 
 template<typename PriIdxT, typename... SecIdxTs> class MultiIndex {
 public:
@@ -839,7 +796,7 @@ public:
 	auto res = pri_idx.insert(tuple);
 	// Only insert on secondary indices if tuple wasn't already present.
 	if (res.second) {
-	    detail::insert_all(sec_idxs, res.first);
+	    detail::insert_all(sec_idxs, *(res.first));
 	}
 	return res;
     }

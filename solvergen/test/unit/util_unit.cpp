@@ -70,8 +70,8 @@ int main() {
     std::cout << std::endl;
 
     MultiIndex<Index<Index<Table<Foo>,int,&Foo::y>,int,&Foo::x>,
-	       PtrIndex<PtrIndex<PtrTable<Foo>,int,&Foo::z>,int,&Foo::y>,
-	       PtrIndex<PtrIndex<PtrTable<Foo>,int,&Foo::x>,int,&Foo::y>> idx;
+	       Index<Index<PtrTable<Foo>,int,&Foo::z>,int,&Foo::y>,
+	       Index<Index<PtrTable<Foo>,int,&Foo::x>,int,&Foo::y>> idx;
     idx.insert(Foo(1,2,3));
     idx.insert(Foo(-10,0,0));
     idx.insert(Foo(1,5,-11));
