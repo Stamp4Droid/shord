@@ -413,7 +413,7 @@ void Component::summarize(Graph& graph,
 
     std::cout << "Started with " << workers.size() << " workers" << std::endl;
     std::cout << "Summary addition frequency:" << std::endl;
-    std::cout << new_summ_freqs << std::endl;
+    std::cout << new_summ_freqs;
     std::cout << "Reschedules frequency:" << std::endl;
     std::cout << reschedule_freqs << std::endl;
 }
@@ -554,7 +554,6 @@ int main(int argc, char* argv[]) {
     RSM rsm;
     std::cout << "Parsing RSM components from " << rsm_dir << std::endl;
     rsm.parse_dir(rsm_dir);
-    rsm.print(std::cout);
     std::cout << std::endl;
     std::cout << "Parsing graph from " << graph_dir << std::endl;
     Graph graph(rsm.symbols, graph_dir);
