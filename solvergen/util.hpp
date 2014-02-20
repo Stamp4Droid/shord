@@ -691,6 +691,34 @@ public:
 template<typename S, typename K, const K S::Tuple::* MemPtr>
 const S Index<S,K,MemPtr>::dummy;
 
+// Partial specialization, for types small enough that it makes sense to
+// preallocate all slots.
+// TODO: Code duplication with main Index class.
+template<typename S, const bool S::Tuple::* MemPtr>
+class Index<S,bool,MemPtr> {
+public:
+    typedef S Wrapped;
+    typedef typename Wrapped::Tuple Tuple;
+private:
+    Wrapped array[2];
+public:
+    std::pair<const Tuple*,bool> insert(const Tuple& tuple) {
+	return array[tuple.*MemPtr].insert(tuple);
+    }
+    const Wrapped& operator[](bool key) const {
+	return array[key];
+    }
+    const Wrapped* begin() const {
+	return &(array[0]);
+    }
+    const Wrapped* end() const {
+	return NULL;
+    }
+    unsigned int size() const {
+	return array[false].size() + array[true].size();
+    }
+};
+
 // TODO:
 // - Code duplication with Index class.
 // - Could allocate the Wrapped class on a specialized container.
