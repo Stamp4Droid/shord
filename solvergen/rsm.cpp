@@ -280,14 +280,9 @@ Graph::Graph(const Registry<Symbol>& symbols, const std::string& dirname) {
     }
 }
 
-void Graph::print_stats(std::ostream& os,
-			const Registry<Symbol>& symbols) const {
+void Graph::print_stats(std::ostream& os) const {
     os << "Nodes: " << nodes.size() << std::endl;
-    os << "Edges: " << std::endl;
-    for (const Symbol& s : symbols) {
-	os << std::setw(15) << s.name
-	   << std::setw(12) << edges[false][s.ref].size() << std::endl;
-    }
+    os << "Edges: " << edges[false].size() << std::endl;
     // TODO: Also print out stats on summaries.
 }
 
@@ -557,7 +552,7 @@ int main(int argc, char* argv[]) {
     std::cout << std::endl;
     std::cout << "Parsing graph from " << graph_dir << std::endl;
     Graph graph(rsm.symbols, graph_dir);
-    graph.print_stats(std::cout, rsm.symbols);
+    graph.print_stats(std::cout);
     std::cout << std::endl;
 
     // Perform actual solving

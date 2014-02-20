@@ -298,7 +298,7 @@ public:
     const EdgeSlice& search(const Label<Tagged>& label) const {
 	return edges[label.rev][label.symbol];
     }
-    void print_stats(std::ostream& os, const Registry<Symbol>& symbols) const;
+    void print_stats(std::ostream& os) const;
     void print_summaries(const std::string& dirname,
 			 const Registry<Component>& components) const;
 };
