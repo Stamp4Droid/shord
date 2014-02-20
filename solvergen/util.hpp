@@ -545,7 +545,6 @@ public:
 //   - derived classes can be handled
 //   - manual memory management required
 //   - manual re-indexing required
-// - implement proper iterators on the secondary index path
 // - variadic template of all indexing fields
 //   - shouldn't have to redefine Index twice, for the two cases of >3 and 3
 //     should instead be able to say that Index<T> = T
@@ -699,6 +698,7 @@ class Index<S,bool,MemPtr> {
 public:
     typedef S Wrapped;
     typedef typename Wrapped::Tuple Tuple;
+    typedef Flattener<Wrapped*,typename Wrapped::Iterator> Iterator;
 private:
     Wrapped array[2];
 public:
@@ -708,11 +708,11 @@ public:
     const Wrapped& operator[](bool key) const {
 	return array[key];
     }
-    const Wrapped* begin() const {
-	return &(array[0]);
+    Iterator begin() const {
+	return Iterator(&(array[0]));
     }
-    const Wrapped* end() const {
-	return NULL;
+    Iterator end() const {
+	return Iterator(NULL);
     }
     unsigned int size() const {
 	return array[false].size() + array[true].size();
