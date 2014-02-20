@@ -36,6 +36,7 @@ fpt0(op:C,f:F,o:C) output
 # intermediate k-cfa relations
 ptk(c:C,v:V,o:C) output
 fptk(op:C,f:F,o:C) output
+ptFull(c:C,v:V,o:C) output
 
 # query relations
 queryObj(o:C) output
@@ -74,8 +75,8 @@ queryRef(w) :- ptk(_,v,o), Store(u,f,v), pt0(u,op), pt0(w,op), Load(x,w,f), pt0(
 
 # query rules
 queryRef(u) :- queryRef(v), Assign(v,u).
-queryRefCtxt(d,u) :- queryRef(v), param(v,u,i), CI(d,i).
-queryRefCtxt(c,u) :- queryRef(v), return(v,u,i), CI(d,i), CC(c,d).
+queryRefCtxt(c,u) :- queryRef(v), param(v,u,i), CC(c,d), CI(d,i).
+queryRefCtxt(d,u) :- queryRef(v), return(v,u,i), CI(d,i).
 
 queryRef(u) :- queryRef(v), Load(v,u,f), pt0(u,op), pt0(w,op), Store(w,f,_).
 queryRef(w) :- queryRef(v), Load(v,u,f), pt0(u,op), pt0(w,op), Store(w,f,_).
@@ -91,7 +92,7 @@ ptk(c,v,o) :- queryRef(v), LoadStat(v,f), StoreStat(f,u), ptk(_,u,o), MV(m,v), C
 
 # query rules
 queryRefCtxt(c,u) :- queryRefCtxt(c,v), Assign(v,u).
-queryRefCtxt(d,u) :- queryRefCtxt(c,v), param(v,u,i), CC(c,d), CI(d,i).
+queryRefCtxt(c,u) :- queryRefCtxt(d,v), param(v,u,i), CC(c,d), CI(d,i).
 queryRefCtxt(d,u) :- queryRefCtxt(c,v), return(v,u,i), CI(d,i), CC(c,d).
 
 queryRefCtxt(c,u) :- queryRefCtxt(c,v), Load(v,u,f), pt0(u,op), pt0(w,op), Store(w,f,_).
