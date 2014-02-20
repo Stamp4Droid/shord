@@ -310,7 +310,7 @@ Graph::subpath_bounds(const Label<true>& hd_lab,
 		      const Label<true>& tl_lab) const {
     std::map<Ref<Node>,std::set<Ref<Node>>> res;
     for (const Edge& hd : search(hd_lab)) {
-	for (const Edge& tl : search(tl_lab).secondary<0>()[hd.tag]) {
+	for (const Edge& tl : search(tl_lab)[hd.tag]) {
 	    res[hd.dst].insert(tl.src);
 	}
     }
@@ -460,7 +460,7 @@ Worker::Result Worker::summarize(const Graph& graph) const {
 	// Cross edges according to the transitions out of the current state.
 	// TODO: Implicitly assumes all transition labels are untagged.
 	for (const Transition& t : comp.transitions[pos.state]) {
-	    for (const Edge& e : graph.search(t.label).primary()[pos.node]) {
+	    for (const Edge& e : graph.search(pos.node, t.label)) {
 		worklist.enqueue(Position(e.dst, t.to));
 	    }
 	}
@@ -470,8 +470,7 @@ Worker::Result Worker::summarize(const Graph& graph) const {
 	// TODO: Implicitly assumes all entry/exit labels are tagged.
 	for (const Entry& entry : comp.entries.secondary<0>()[pos.state]) {
 	    Ref<Component> sub_comp = comp.boxes[entry.to].comp;
-	    for (const Edge& e_in :
-		     graph.search(entry.label).primary()[pos.node]) {
+	    for (const Edge& e_in : graph.search(pos.node, entry.label)) {
 		Ref<Node> sub_in = e_in.dst;
 
 		// If this is a self-referring box (TODO: or any box in the
@@ -488,8 +487,7 @@ Worker::Result Worker::summarize(const Graph& graph) const {
 		    // entered entry edge.
 		    for (const Exit& exit : comp.exits[entry.to]) {
 			for (const Edge& e_out :
-				 graph.search(exit.label).primary()
-				 [sub_out][e_in.tag]) {
+				 graph.search(sub_out, exit.label)[e_in.tag]) {
 			    Ref<Node> next_node = e_out.dst;
 			    worklist.enqueue(Position(next_node, exit.to));
 			}

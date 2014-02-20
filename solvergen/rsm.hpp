@@ -273,17 +273,23 @@ public:
 
 // TODO: Disallow adding edges while an iterator is live.
 class Graph {
-    typedef MultiIndex<Index<Index<Table<Edge>,Ref<Tag>,&Edge::tag>,
-			     Ref<Node>,&Edge::src>,
-		       Index<PtrTable<Edge>,Ref<Tag>,&Edge::tag>>
-	EdgeSlice;
+    typedef Index<Table<Edge>,Ref<Tag>,&Edge::tag> SrcLabelSlice;
+    typedef Index<PtrTable<Edge>,Ref<Tag>,&Edge::tag> LabelSlice;
 public:
     static const std::string FILE_EXTENSION;
 public:
     // TODO: Should make some of these private?
     Registry<Node> nodes;
     Registry<Tag> tags;
-    Index<FlatIndex<EdgeSlice,Symbol,&Edge::symbol>,bool,&Edge::rev> edges;
+    Index<MultiIndex<
+	      FlatIndex<FlatIndex<Index<Table<Edge>,
+					Ref<Tag>,&Edge::tag>,
+				  Symbol,&Edge::symbol>,
+			Node,&Edge::src>,
+	      Index<Index<PtrTable<Edge>,
+			  Ref<Tag>,&Edge::tag>,
+		    Ref<Symbol>,&Edge::symbol>>,
+	  bool,&Edge::rev> edges;
     Index<Index<Table<Summary>,Ref<Node>,&Summary::src>,
 	  Ref<Component>,&Summary::comp> summaries;
 private:
@@ -295,8 +301,13 @@ public:
 	subpath_bounds(const Label<true>& hd_lab,
 		       const Label<true>& tl_lab) const;
     template<bool Tagged>
-    const EdgeSlice& search(const Label<Tagged>& label) const {
-	return edges[label.rev][label.symbol];
+    const LabelSlice& search(const Label<Tagged>& label) const {
+	return edges[label.rev].template secondary<0>()[label.symbol];
+    }
+    template<bool Tagged>
+    const SrcLabelSlice& search(Ref<Node> src,
+				const Label<Tagged>& label) const {
+	return edges[label.rev].primary()[src][label.symbol];
     }
     void print_stats(std::ostream& os) const;
     void print_summaries(const std::string& dirname,
