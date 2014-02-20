@@ -65,9 +65,11 @@ public final class ContextFreeGrammar {
 		}
 	}
 	
-	public final List<List<UnaryProduction>> unaryProductionsByInput; // list of type UnaryProduction
-	public final List<List<BinaryProduction>> binaryProductionsByFirstInput; // list of type BinaryProduction
-	public final List<List<BinaryProduction>> binaryProductionsBySecondInput; // list of type BinaryProduction
+	public final List<List<UnaryProduction>> unaryProductionsByInput;
+	public final List<List<UnaryProduction>> unaryProductionsByTarget;
+	public final List<List<BinaryProduction>> binaryProductionsByFirstInput;
+	public final List<List<BinaryProduction>> binaryProductionsBySecondInput;
+	public final List<List<BinaryProduction>> binaryProductionsByTarget;
 	
 	private final Map<String,Integer> labels = new HashMap<String,Integer>();
 	private final Map<Integer,String> labelStrings = new HashMap<Integer,String>();
@@ -75,8 +77,10 @@ public final class ContextFreeGrammar {
 	
 	public ContextFreeGrammar() {
 		this.unaryProductionsByInput = new ArrayList<List<UnaryProduction>>();
+		this.unaryProductionsByTarget = new ArrayList<List<UnaryProduction>>();
 		this.binaryProductionsByFirstInput = new ArrayList<List<BinaryProduction>>();
 		this.binaryProductionsBySecondInput = new ArrayList<List<BinaryProduction>>();
+		this.binaryProductionsByTarget = new ArrayList<List<BinaryProduction>>();
 	}
 	
 	public int numLabels() {
@@ -87,8 +91,10 @@ public final class ContextFreeGrammar {
 		Integer intLabel = this.labels.get(label);
 		if(intLabel == null) {
 			this.unaryProductionsByInput.add(new ArrayList<UnaryProduction>());
+			this.unaryProductionsByTarget.add(new ArrayList<UnaryProduction>());
 			this.binaryProductionsByFirstInput.add(new ArrayList<BinaryProduction>());
 			this.binaryProductionsBySecondInput.add(new ArrayList<BinaryProduction>());
+			this.binaryProductionsByTarget.add(new ArrayList<BinaryProduction>());
 			intLabel = this.curLabel++;
 			this.labels.put(label, intLabel);
 			this.labelStrings.put(intLabel, label);
@@ -164,7 +170,9 @@ public final class ContextFreeGrammar {
 		if(target >= this.curLabel || input >= this.curLabel) {
 			throw new RuntimeException("label out of range");
 		}
-		this.unaryProductionsByInput.get(input).add(new UnaryProduction(target, input, isInputBackwards, ignoreFields));
+		UnaryProduction unaryProduction = new UnaryProduction(target, input, isInputBackwards, ignoreFields);
+		this.unaryProductionsByInput.get(input).add(unaryProduction);
+		this.unaryProductionsByTarget.get(target).add(unaryProduction);
 	}
 	
 	public void addBinaryProduction(int target, int firstInput, int secondInput, boolean isFirstInputBackwards, boolean isSecondInputBackwards, boolean ignoreFields) {
@@ -174,6 +182,7 @@ public final class ContextFreeGrammar {
 		BinaryProduction binaryProduction = new BinaryProduction(target, firstInput, secondInput, isFirstInputBackwards, isSecondInputBackwards, ignoreFields);
 		this.binaryProductionsByFirstInput.get(firstInput).add(binaryProduction);
 		this.binaryProductionsBySecondInput.get(secondInput).add(binaryProduction);
+		this.binaryProductionsByTarget.get(target).add(binaryProduction);
 	}
 	
 	@Override

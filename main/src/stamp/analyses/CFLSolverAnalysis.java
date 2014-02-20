@@ -19,6 +19,7 @@ import stamp.missingmodels.util.Util.MultivalueMap;
 import stamp.missingmodels.util.cflsolver.ContextFreeGrammar;
 import stamp.missingmodels.util.cflsolver.Graph;
 import stamp.missingmodels.util.cflsolver.Graph.Edge;
+import stamp.missingmodels.util.cflsolver.Graph.EdgeCutException;
 import stamp.missingmodels.util.cflsolver.ReachabilitySolver;
 import chord.project.Chord;
 
@@ -118,6 +119,19 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 					System.out.println(input);
 				}
 			}
+			System.out.println();
+		}
+		
+		for(Edge edge : sortedEdges.get("Flow")) {
+			System.out.println("Printing cut for " + edge.toString());
+			try {
+				for(Edge input : g.cut(edge)) {
+					System.out.println(input);
+				}
+			} catch(EdgeCutException e) {
+				e.printStackTrace();
+			}
+			System.out.println();
 		}
 	}
 
@@ -162,17 +176,30 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		}
 		System.out.println();
 		
-		System.out.println("Printing positive weight inputs:");
+		System.out.println("Printing dynamic edges:");
+		for(Edge edge : sortedEdges.get("assignCCtxt")) {
+			if(edge.weight == 0) {
+				System.out.println(getMethodSig(g, edge));
+			}
+		}
+		
+		System.out.println("Printing input edges:");
 		for(Edge edge : sortedEdges.get("Src2Sink")) {
 			System.out.println("Src2Sink edge: " + edge.toString());
 			for(Edge input : g.getInputs(edge, "assignCCtxt")) {
 				//System.out.println("Input edge: " + input);
-				try {
-					System.out.println("Input method edge: " + getMethodSig(g, input) + " with weight " + input.weight);
-				} catch(Exception e) {
-					e.printStackTrace();
-					System.out.println("Error on edge: " + input);
+				System.out.println("Input method edge: " + getMethodSig(g, input) + " (weight " + input.weight + ")");
+			}
+		}
+
+		for(Edge edge : sortedEdges.get("Src2Sink")) {
+			System.out.println("Printing cut for " + edge.toString());
+			try {
+				for(Edge input : g.cut(edge)) {
+					System.out.println("Input method edge: " + getMethodSig(g, input) + " (weight " + input.weight + ")");
 				}
+			} catch(Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}
