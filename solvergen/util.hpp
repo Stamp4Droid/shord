@@ -100,9 +100,13 @@ class IterWrapper : public std::iterator<std::input_iterator_tag,Out> {
 private:
     Iter iter;
 public:
+    explicit IterWrapper() {};
     explicit IterWrapper(Iter iter) : iter(iter) {}
     IterWrapper(const IterWrapper& rhs) : iter(rhs.iter) {}
-    IterWrapper& operator=(const IterWrapper& rhs) = delete;
+    IterWrapper& operator=(const IterWrapper& rhs) {
+	iter = rhs.iter;
+	return *this;
+    }
     const Out& operator*() const {
 	return F(*iter);
     }
@@ -145,7 +149,7 @@ template<typename PtrIter> using DerefIter =
 //   be used in comparisons.
 //   XXX: This is NOT guaranteed by the standard STL containers.
 // TODO:
-// - Missing operators: iter++, destructor
+// - Missing operators: iter++, destructor, swap
 // - Could retrieve all the types through OutIter alone, but would need a way
 //   to extract the iterator type from the pointed collection type.
 template<typename OutIter, typename InIter> class Flattener
@@ -689,6 +693,7 @@ const S Index<S,K,MemPtr>::dummy;
 
 // TODO:
 // - Code duplication with Index class.
+// - Could allocate the Wrapped class on a specialized container.
 // - Could emplace the wrapped class directly on the vector, but would need
 //   to implement move semantics on it, so that iterators and pointers to the
 //   underlying tuples remain valid when the vector gets reallocated.
@@ -828,25 +833,5 @@ public:
 	return pri_idx.size();
     }
 };
-
-// TODO:
-// - Could alternatively produce the output by:
-//   - constructing a (constant) iterable view
-//   - sending to an output iterator
-//   - filling in a provided container
-// - This is a very specific case of a proper lazy iterator framework.
-template <typename C, typename S>
-std::deque<S> filter_map(const C& table,
-			 std::function<bool(const typename C::Tuple&)> pred,
-			 std::function<S(const typename C::Tuple&)> mod) {
-    std::deque<S> res;
-    for (const typename C::Tuple& t : table) {
-	if (pred(t)) {
-	    // TODO: Extraneous copying could occur here.
-	    res.push_back(mod(t));
-	}
-    }
-    return res;
-}
 
 #endif

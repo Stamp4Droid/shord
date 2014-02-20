@@ -11,9 +11,6 @@ namespace fs = boost::filesystem;
 
 // ALPHABET ===================================================================
 
-class Node;
-class Edge;
-
 // TODO: separate class for parametric and non-parametric symbols
 class Symbol {
     friend Registry<Symbol>;
@@ -36,26 +33,20 @@ public:
     }
 };
 
-enum class Direction {FWD, REV};
-
-class Label {
+template<bool Tagged> class Label {
 public:
     const Ref<Symbol> symbol;
-    const Direction dir;
-    // The specific index character on a label doesn't matter.
-    const bool tagged;
+    const bool rev;
 public:
-    explicit Label(Ref<Symbol> symbol, Direction dir, bool tagged)
-	: symbol(symbol), dir(dir), tagged(tagged) {
-	// TODO: A tagged label can only be used with a parametric symbol.
+    explicit Label(const Symbol& symbol, bool rev) : symbol(symbol.ref),
+						     rev(rev) {
+	EXPECT(!Tagged || symbol.parametric);
     }
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
     bool operator<(const Label& rhs) const {
-	return (std::tie(    symbol,     dir,     tagged) <
-		std::tie(rhs.symbol, rhs.dir, rhs.tagged));
+	return (std::tie(    symbol,     rev) <
+		std::tie(rhs.symbol, rhs.rev));
     }
-    Ref<Node> prev_node(const Edge& e) const;
-    Ref<Node> next_node(const Edge& e) const;
 };
 
 // RSM ========================================================================
@@ -110,12 +101,10 @@ class Transition {
 public:
     const Ref<State> from;
     const Ref<State> to;
-    const Label label;
+    const Label<false> label;
 public:
-    explicit Transition(Ref<State> from, Ref<State> to, Label label)
-	: from(from), to(to), label(label) {
-	EXPECT(!label.tagged);
-    }
+    explicit Transition(Ref<State> from, Ref<State> to, Label<false> label)
+	: from(from), to(to), label(label) {}
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
     bool operator<(const Transition& rhs) const {
 	return (std::tie(    from,     to,     label) <
@@ -124,16 +113,17 @@ public:
 };
 
 // TODO:
-// - Enforce that either all entries and exits to the same box are tagged,
-//   or none is.
+// - Allow non-parametric and untagged parametric symbols. Should then also
+//   enforce that either all entries and exits to the same box are tagged, or
+//   none is.
 // - Can't move from a box directly to another box.
 class Entry {
 public:
     const Ref<State> from;
     const Ref<Box> to;
-    const Label label;
+    const Label<true> label;
 public:
-    explicit Entry(Ref<State> from, Ref<Box> to, Label label)
+    explicit Entry(Ref<State> from, Ref<Box> to, Label<true> label)
 	: from(from), to(to), label(label) {}
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
     bool operator<(const Entry& rhs) const {
@@ -146,9 +136,9 @@ class Exit {
 public:
     const Ref<Box> from;
     const Ref<State> to;
-    const Label label;
+    const Label<true> label;
 public:
-    explicit Exit(Ref<Box> from, Ref<State> to, Label label)
+    explicit Exit(Ref<Box> from, Ref<State> to, Label<true> label)
 	: from(from), to(to), label(label) {}
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
     bool operator<(const Exit& rhs) const {
@@ -207,7 +197,7 @@ public:
     Registry<Symbol> symbols;
     Registry<Component> components;
 private:
-    Label parse_label(const std::string& str);
+    template<bool Tagged> Label<Tagged> parse_label(const std::string& str);
 public:
     void parse_dir(const std::string& dirname);
     void parse_file(const fs::path& fpath);
@@ -253,14 +243,17 @@ public:
     const Ref<Node> src;
     const Ref<Node> dst;
     const Ref<Symbol> symbol;
+    const bool rev;
     const Ref<Tag> tag;
 public:
-    explicit Edge(Ref<Node> src, Ref<Node> dst, Ref<Symbol> symbol,
+    explicit Edge(Ref<Node> src, Ref<Node> dst, const Symbol& symbol, bool rev,
 		  Ref<Tag> tag)
-	: src(src), dst(dst), symbol(symbol), tag(tag) {}
+	: src(src), dst(dst), symbol(symbol.ref), rev(rev), tag(tag) {
+	EXPECT(!symbol.parametric ^ tag.valid());
+    }
     bool operator<(const Edge& rhs) const {
-	return (std::tie(    src,     dst,     symbol,     tag) <
-		std::tie(rhs.src, rhs.dst, rhs.symbol, rhs.tag));
+	return (std::tie(    src,     dst,     symbol,     rev,     tag) <
+		std::tie(rhs.src, rhs.dst, rhs.symbol, rhs.rev, rhs.tag));
     }
 };
 
@@ -278,47 +271,19 @@ public:
     }
 };
 
-// TODO: Define as nested class of Edge?
-class Pattern {
-public:
-    const Ref<Node> src;
-    const Ref<Node> dst;
-    const Ref<Symbol> symbol;
-    const bool match_tag;
-    const Ref<Tag> tag;
-public:
-    explicit Pattern(const Label& l, Ref<Node> base = Ref<Node>::none())
-	: src((l.dir == Direction::FWD) ? base : Ref<Node>::none()),
-	  dst((l.dir == Direction::FWD) ? Ref<Node>::none() : base),
-	  symbol(l.symbol), match_tag(l.tagged), tag(Ref<Tag>::none()) {}
-    // Not continuing the matching from the previous edge.
-    // TODO: Could decompose into:
-    // - Match Pattern::apply(const Edge& e);
-    // - Pattern Match::combine(const Label& l, Ref<Node> base);
-    // TODO: Could do this in one step, when matching?
-    explicit Pattern(const Pattern& prev, const Edge& e, const Label& l,
-		     Ref<Node> base = Ref<Node>::none())
-	: src((l.dir == Direction::FWD) ? base : Ref<Node>::none()),
-	  dst((l.dir == Direction::FWD) ? Ref<Node>::none() : base),
-	  symbol(l.symbol), match_tag(l.tagged),
-	  tag(prev.match_tag ? e.tag : prev.tag) {
-	EXPECT(prev.matches(e));
-    }
-    bool matches(const Edge& e) const;
-};
-
 // TODO: Disallow adding edges while an iterator is live.
 class Graph {
+    typedef MultiIndex<Index<Index<Table<Edge>,Ref<Tag>,&Edge::tag>,
+			     Ref<Node>,&Edge::src>,
+		       PtrIndex<PtrTable<Edge>,Ref<Tag>,&Edge::tag>>
+	EdgeSlice;
 public:
     static const std::string FILE_EXTENSION;
 public:
     // TODO: Should make some of these private?
     Registry<Node> nodes;
     Registry<Tag> tags;
-    FlatIndex<MultiIndex<Index<Table<Edge>,Ref<Node>,&Edge::src>,
-			 PtrIndex<PtrTable<Edge>,Ref<Node>,&Edge::dst>,
-			 PtrIndex<PtrTable<Edge>,Ref<Tag>,&Edge::tag>>,
-	      Symbol,&Edge::symbol> edges;
+    Index<FlatIndex<EdgeSlice,Symbol,&Edge::symbol>,bool,&Edge::rev> edges;
     Index<Index<Table<Summary>,Ref<Node>,&Summary::src>,
 	  Ref<Component>,&Summary::comp> summaries;
 private:
@@ -326,9 +291,13 @@ private:
 public:
     explicit Graph(const Registry<Symbol>& symbols,
 		   const std::string& dirname);
-    std::deque<const Edge*> search(const Pattern& pat) const;
     std::map<Ref<Node>,std::set<Ref<Node>>>
-	subpath_bounds(const Label& head_lab, const Label& tail_lab) const;
+	subpath_bounds(const Label<true>& hd_lab,
+		       const Label<true>& tl_lab) const;
+    template<bool Tagged>
+    const EdgeSlice& search(const Label<Tagged>& label) const {
+	return edges[label.rev][label.symbol];
+    }
     void print_stats(std::ostream& os, const Registry<Symbol>& symbols) const;
     void print_summaries(const std::string& dirname,
 			 const Registry<Component>& components) const;

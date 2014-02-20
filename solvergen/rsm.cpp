@@ -11,38 +11,16 @@
 
 const boost::regex Symbol::NAME_REGEX("[a-z]\\w*");
 
-void Label::print(std::ostream& os, const Registry<Symbol>& symbol_reg) const {
-    if (dir == Direction::REV) {
+template<bool Tagged>
+void Label<Tagged>::print(std::ostream& os,
+			  const Registry<Symbol>& symbol_reg) const {
+    if (rev) {
 	os << "_";
     }
     const Symbol& s = symbol_reg[symbol];
     os << s.name;
     if (s.parametric) {
-	os << "[" << (tagged ? "i" : "*") << "]";
-    }
-}
-
-Ref<Node> Label::prev_node(const Edge& e) const {
-    assert(symbol == e.symbol);
-    switch (dir) {
-    case Direction::FWD:
-	return e.src;
-    case Direction::REV:
-	return e.dst;
-    default:
-	assert(false);
-    }
-}
-
-Ref<Node> Label::next_node(const Edge& e) const {
-    assert(symbol == e.symbol);
-    switch (dir) {
-    case Direction::FWD:
-	return e.dst;
-    case Direction::REV:
-	return e.src;
-    default:
-	assert(false);
+	os << "[" << (Tagged ? "i" : "*") << "]";
     }
 }
 
@@ -119,20 +97,21 @@ void Component::print(std::ostream& os, const Registry<Symbol>& symbol_reg,
 
 const std::string RSM::FILE_EXTENSION(".rsm.tgf");
 
-Label RSM::parse_label(const std::string& str) {
+template<bool Tagged>
+Label<Tagged> RSM::parse_label(const std::string& str) {
     static const boost::regex r("(_)?([a-z]\\w*)(?:\\[([a-z\\*])\\])?");
     boost::smatch m;
     bool matched = boost::regex_match(str, m, r);
     EXPECT(matched);
 
-    Direction dir = m[1].matched ? Direction::REV : Direction::FWD;
+    bool rev = m[1].matched;
     std::string name(m[2].first, m[2].second);
     std::string tag(m[3].first, m[3].second);
     bool parametric = m[3].matched;
-    bool tagged = parametric && (tag != "*");
+    EXPECT((Tagged && parametric && tag != "*") ||
+	   (!Tagged && (!parametric || tag == "*")));
 
-    Ref<Symbol> symbol = symbols.add(name, parametric).ref;
-    return Label(symbol, dir, tagged);
+    return Label<Tagged>(symbols.add(name, parametric), rev);
 }
 
 void RSM::parse_dir(const std::string& dirname) {
@@ -216,34 +195,30 @@ void RSM::parse_file(const fs::path& fpath) {
 	case ParsingMode::EDGES: {
 	    // We are certain that box names and transition names are disjoint.
 	    EXPECT(toks.size() >= 3);
-	    std::list<Label> labels;
-	    for (auto iter = toks.begin() + 2; iter != toks.end(); ++iter) {
-		labels.push_back(parse_label(*iter));
-	    }
+	    std::list<std::string> label_toks(toks.begin() + 2, toks.end());
 	    bool src_is_state = comp.get_states().contains(toks[0]);
 	    bool dst_is_state = comp.get_states().contains(toks[1]);
-	    // Allowing an untagged entry to be paired with a tagged exit (and
-	    // vica-versa).
+	    EXPECT(src_is_state || dst_is_state);
+
 	    if (src_is_state && dst_is_state) {
 		Ref<State> src = comp.get_states().find(toks[0]).ref;
 		Ref<State> dst = comp.get_states().find(toks[1]).ref;
-		for (Label& lab : labels) {
-		    comp.transitions.insert(Transition(src, dst, lab));
+		for (const std::string& t : label_toks) {
+		    comp.transitions.insert(Transition(src, dst,
+						       parse_label<false>(t)));
 		}
 	    } else if (src_is_state && !dst_is_state) {
 		Ref<State> src = comp.get_states().find(toks[0]).ref;
 		Ref<Box> dst = comp.boxes.find(toks[1]).ref;
-		for (Label& lab : labels) {
-		    comp.entries.insert(Entry(src, dst, lab));
+		for (const std::string& t : label_toks) {
+		    comp.entries.insert(Entry(src, dst, parse_label<true>(t)));
 		}
 	    } else if (!src_is_state && dst_is_state) {
 		Ref<Box> src = comp.boxes.find(toks[0]).ref;
 		Ref<State> dst = comp.get_states().find(toks[1]).ref;
-		for (Label& lab : labels) {
-		    comp.exits.insert(Exit(src, dst, lab));
+		for (const std::string& t : label_toks) {
+		    comp.exits.insert(Exit(src, dst, parse_label<true>(t)));
 		}
-	    } else {
-		EXPECT(false);
 	    }
 	} break;
 	}
@@ -278,14 +253,19 @@ void Graph::parse_file(const Symbol& symbol, const fs::path& fpath) {
 	EXPECT(toks.size() >= 2);
 	Ref<Node> src = nodes.add(toks[0]).ref;
 	Ref<Node> dst = nodes.add(toks[1]).ref;
+	Ref<Tag> tag = Ref<Tag>::none();
 	if (symbol.parametric) {
 	    EXPECT(toks.size() == 3);
-	    Ref<Tag> tag = tags.add(toks[2]).ref;
-	    edges.insert(Edge(src, dst, symbol.ref, tag));
+	    tag = tags.add(toks[2]).ref;
 	} else {
 	    EXPECT(toks.size() == 2);
-	    edges.insert(Edge(src, dst, symbol.ref, Ref<Tag>::none()));
 	}
+	// Add the edge twice, once forwards and once backwards.
+	// TODO: This simplifies the interface, but also increases space
+	// requirements (but doesn't necessarily double them; if we didn't do
+	// this we'd need to keep an index on the destination).
+	edges.insert(Edge(src, dst, symbol, false, tag));
+	edges.insert(Edge(dst, src, symbol, true, tag));
     }
     EXPECT(fin.eof());
 }
@@ -306,7 +286,7 @@ void Graph::print_stats(std::ostream& os,
     os << "Edges: " << std::endl;
     for (const Symbol& s : symbols) {
 	os << std::setw(15) << s.name
-	   << std::setw(12) << edges[s.ref].size() << std::endl;
+	   << std::setw(12) << edges[false][s.ref].size() << std::endl;
     }
     // TODO: Also print out stats on summaries.
 }
@@ -327,55 +307,18 @@ void Graph::print_summaries(const std::string& dirname,
 
 // SOLVING ====================================================================
 
-bool Pattern::matches(const Edge& e) const {
-    return ((!src.valid() || src == e.src) &&
-	    (!dst.valid() || dst == e.dst) &&
-	    symbol == e.symbol &&
-	    (!match_tag || !tag.valid() || tag == e.tag));
-}
-
 // TODO:
-// - Avoid creating a new container for the output.
-// - May be able to just return a reference to an existing index. If we do have
-//   to create a temporary table, we should return a managed pointer to it, so
-//   it gets deallocated automatically. Probably need a class hierarchy to
-//   support this properly. Currently, we're wasting space in a lot of cases.
-// - Manual use of the indices; this could be done at a query planning stage.
-// - Have to take cases explicitly on the code, because the different indices
-//   don't have compatible base types.
-std::deque<const Edge*> Graph::search(const Pattern& pat) const {
-    std::function<bool(const Edge&)> matches =
-	[&](const Edge& e){return pat.matches(e);};
-    std::function<const Edge*(const Edge&)> get_addr =
-	[](const Edge& e){return &e;};
-    const auto& s = edges[pat.symbol];
-
-    if (pat.src.valid()) {
-	return filter_map(s.primary()[pat.src], matches, get_addr);
-    } else if (pat.dst.valid()) {
-	return filter_map(s.secondary<0>()[pat.dst], matches, get_addr);
-    } else if (pat.match_tag && pat.tag.valid()) {
-	return filter_map(s.secondary<1>()[pat.tag], matches, get_addr);
-    } else {
-	return filter_map(s, matches, get_addr);
-    }
-}
-
-// TODO: Don't produce the output by value.
+// - Don't produce the output by value.
+// - Implicitly assumes all entry/exit labels are tagged.
 std::map<Ref<Node>,std::set<Ref<Node>>>
-Graph::subpath_bounds(const Label& head_lab, const Label& tail_lab) const {
+Graph::subpath_bounds(const Label<true>& hd_lab,
+		      const Label<true>& tl_lab) const {
     std::map<Ref<Node>,std::set<Ref<Node>>> res;
-
-    Pattern head_pat(head_lab);
-    for (const Edge* h : search(head_pat)) {
-	Ref<Node> start = head_lab.next_node(*h);
-	Pattern tail_pat(head_pat, *h, tail_lab);
-	for (const Edge* t : search(tail_pat)) {
-	    Ref<Node> tgt = tail_lab.prev_node(*t);
-	    res[start].insert(tgt);
+    for (const Edge& hd : search(hd_lab)) {
+	for (const Edge& tl : search(tl_lab).secondary<0>()[hd.tag]) {
+	    res[hd.dst].insert(tl.src);
 	}
     }
-
     return res;
 }
 
@@ -520,21 +463,21 @@ Worker::Result Worker::summarize(const Graph& graph) const {
 	}
 
 	// Cross edges according to the transitions out of the current state.
+	// TODO: Implicitly assumes all transition labels are untagged.
 	for (const Transition& t : comp.transitions[pos.state]) {
-	    for (const Edge* e : graph.search(Pattern(t.label, pos.node))) {
-		Ref<Node> next_node = t.label.next_node(*e);
-		worklist.enqueue(Position(next_node, t.to));
+	    for (const Edge& e : graph.search(t.label).primary()[pos.node]) {
+		worklist.enqueue(Position(e.dst, t.to));
 	    }
 	}
 
 	// Cross summary edges according to the boxes that the current state
 	// enters into. The entry, box, and all exits are crossed in one step.
+	// TODO: Implicitly assumes all entry/exit labels are tagged.
 	for (const Entry& entry : comp.entries.secondary<0>()[pos.state]) {
 	    Ref<Component> sub_comp = comp.boxes[entry.to].comp;
-	    Pattern in_pat(entry.label, pos.node);
-
-	    for (const Edge* e_in : graph.search(in_pat)) {
-		Ref<Node> sub_in = entry.label.next_node(*e_in);
+	    for (const Edge& e_in :
+		     graph.search(entry.label).primary()[pos.node]) {
+		Ref<Node> sub_in = e_in.dst;
 
 		// If this is a self-referring box (TODO: or any box in the
 		// current RSM SCC, if we ever support non-singleton SCCs),
@@ -549,9 +492,10 @@ Worker::Result Worker::summarize(const Graph& graph) const {
 		    // Cross through exit edges compatible with the previously
 		    // entered entry edge.
 		    for (const Exit& exit : comp.exits[entry.to]) {
-			Pattern out_pat(in_pat, *e_in, exit.label, sub_out);
-			for (const Edge* e_out : graph.search(out_pat)) {
-			    Ref<Node> next_node = exit.label.next_node(*e_out);
+			for (const Edge& e_out :
+				 graph.search(exit.label).primary()
+				 [sub_out][e_in.tag]) {
+			    Ref<Node> next_node = e_out.dst;
 			    worklist.enqueue(Position(next_node, exit.to));
 			}
 		    }
