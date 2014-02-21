@@ -370,7 +370,7 @@ void Component::summarize(Graph& graph,
 			  const Registry<Worker>& workers) const {
     Index<Table<Dependence>,Ref<Node>,&Dependence::start> deps;
     // TODO: Verify that all workers refer to this component.
-    Worklist<Ref<Worker>> worklist(true);
+    Worklist<Ref<Worker>,true> worklist;
     for (const Worker& w : workers) {
 	worklist.enqueue(w.ref);
     }
@@ -442,12 +442,13 @@ bool Worker::merge(const Component& comp,
 }
 
 Worker::Result Worker::summarize(const Graph& graph) const {
-    Worklist<Position> worklist(false);
+    Worklist<Position,false,
+	     Index<Table<Position>,Ref<Node>,&Position::node>> worklist;
     Result res;
     worklist.enqueue(Position(start, comp.get_initial()));
 
     while (!worklist.empty()) {
-	Position pos = worklist.dequeue();
+	const Position& pos = worklist.dequeue();
 
 	// Report a summary edge if we've reached a final state, at one of the
 	// "interesting" summary out-nodes (for the final top-down reachability

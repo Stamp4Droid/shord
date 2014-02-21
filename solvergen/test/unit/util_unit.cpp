@@ -95,14 +95,8 @@ int main() {
 	std::cout << obj << std::endl;
     }
     std::cout << std::endl;
-    std::function<bool(const Foo&)> pred = [](const Foo& f){return f.x < 0;};
-    std::function<int(const Foo&)> mod = [](const Foo& f){return f.y;};
-    for (int i : filter_map(idx, pred, mod)) {
-	std::cout << i << std::endl;
-    }
-    std::cout << std::endl;
 
-    Worklist<int> wl1(true);
+    Worklist<int,true> wl1;
     wl1.enqueue(1);
     wl1.enqueue(2);
     wl1.enqueue(1);
@@ -115,7 +109,7 @@ int main() {
     wl1.enqueue(1);
     assert(!wl1.empty());
 
-    Worklist<int> wl2(false);
+    Worklist<int,false,Table<int>> wl2;
     wl2.enqueue(1);
     wl2.dequeue();
     wl2.enqueue(1);

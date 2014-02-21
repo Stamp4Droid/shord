@@ -218,19 +218,41 @@ public:
 // Properties:
 // - Guarantees no duplicate entries in the queue.
 // - FIFO ordering.
-// - Enqueues and dequeues are done by copying.
-//   (need to be careful with large composites)
 // - Stored classes need to be comparable.
 // TODO:
 // - copy/iterator constructor
-// - Boolean flag could be made into a template parameter.
-template<typename T> class Worklist {
+template<typename T, bool CanReprocess,
+	 typename Set = std::set<T>> class Worklist;
+
+template<typename T, typename Set> class Worklist<T,false,Set> {
 private:
-    const bool can_reprocess;
-    std::set<T> reached;
+    Set reached;
+    std::queue<const T*> queue;
+public:
+    bool empty() const {
+	return queue.empty();
+    }
+    bool enqueue(T val) {
+	auto res = reached.insert(std::move(val));
+	if (res.second) {
+	    queue.push(&(*(res.first)));
+	    return true;
+	}
+	return false;
+    }
+    const T& dequeue() {
+	const T& ref = *(queue.front());
+	queue.pop();
+	return ref;
+    }
+};
+
+// TODO: Enqueues and dequeues done by copying (careful with large structs).
+template<typename T, typename Set> class Worklist<T,true,Set> {
+private:
+    Set reached;
     std::queue<T> queue;
 public:
-    explicit Worklist(bool can_reprocess) : can_reprocess(can_reprocess) {}
     bool empty() const {
 	return queue.empty();
     }
@@ -244,9 +266,7 @@ public:
     T dequeue() {
 	T val = queue.front();
 	queue.pop();
-	if (can_reprocess) {
-	    reached.erase(val);
-	}
+	reached.erase(val);
 	return val;
     }
 };
