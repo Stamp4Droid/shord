@@ -376,7 +376,7 @@ template<typename T> class Ref {
     // allowed on friend class declarations.
     template<typename S, typename C, const Ref<C> S::Tuple::* MemPtr>
     friend class FlatIndex;
-private:
+public:
     unsigned int value;
 private:
     explicit Ref(unsigned int value) : value(value) {}

@@ -3,6 +3,7 @@
 
 #include <boost/program_options.hpp>
 #include <boost/regex.hpp>
+#include <cstring>
 
 #include "util.hpp"
 
@@ -317,6 +318,7 @@ public:
 // SOLVING ====================================================================
 
 class Dependence;
+class SummaryWorklist;
 
 // TODO: alternative name ("Summarizer"? "Propagator"?)
 class Worker {
@@ -346,7 +348,7 @@ public:
     explicit Worker(Ref<Node> start, const Component& comp)
 	: start(start), ref(Ref<Worker>::none()), comp(comp) {}
     bool merge(const Component& comp, const std::set<Ref<Node>>& new_tgts);
-    Result summarize(const Graph& graph) const;
+    Result summarize(const Graph& graph, SummaryWorklist& worklist) const;
 };
 
 // TODO: Should include the component if we support multiple components in SCCs
@@ -374,6 +376,62 @@ public:
     bool operator<(const Position& rhs) const {
 	return (std::tie(    node,     state) <
 		std::tie(rhs.node, rhs.state));
+    }
+};
+
+class TwoDimBitSet {
+private:
+    const unsigned int size;
+    unsigned short* shorts;
+public:
+    TwoDimBitSet(unsigned int pri_size, unsigned int sec_size)
+	: size(pri_size * sizeof(unsigned short)),
+	  shorts(new unsigned short[pri_size]) {
+	EXPECT(sizeof(unsigned short) * 8 >= sec_size);
+	clear();
+    }
+    ~TwoDimBitSet() {
+	delete[] shorts;
+    }
+    void set(unsigned int i, unsigned int j) {
+	// no bounds check
+	shorts[i] |= 1 << j;
+    }
+    bool test(unsigned int i, unsigned int j) {
+	// no bounds check
+	return shorts[i] & (1 << j);
+    }
+    void clear() {
+	memset(shorts, 0, size);
+    }
+};
+
+class SummaryWorklist {
+private:
+    TwoDimBitSet reached;
+    std::deque<Position> queue;
+public:
+    explicit SummaryWorklist(unsigned int nodes, unsigned int states)
+	: reached(nodes, states) {}
+    bool empty() const {
+	return queue.empty();
+    }
+    bool enqueue(const Position& pos) {
+	if (!reached.test(pos.node.value, pos.state.value)) {
+	    reached.set(pos.node.value, pos.state.value);
+	    queue.push_back(pos);
+	    return true;
+	}
+	return false;
+    }
+    Position dequeue() {
+	Position res = queue.front();
+	queue.pop_front();
+	return res;
+    }
+    void clear() {
+	reached.clear();
+	queue.clear();
     }
 };
 
