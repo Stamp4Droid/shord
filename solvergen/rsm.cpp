@@ -4,6 +4,7 @@
 #include <list>
 #include <locale>
 #include <sstream>
+#include <sys/time.h>
 
 #include "rsm.hpp"
 
@@ -413,17 +414,31 @@ void Component::summarize(Graph& graph,
     std::cout << reschedule_freqs << std::endl;
 }
 
+unsigned int current_time() {
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
+}
+
 void Component::propagate(Graph& graph) const {
+    unsigned int t_full_start = current_time();
+    std::cout << std::endl;
+
     // We try starting from each node in the graph. The shape of the top
     // component (or any secondary dimensions) can enforce additional
     // constraints on acceptable sources.
     // TODO: Could do this in a query-driven manner?
     // We can do this one node at a time.
     for (const Node& start : graph.nodes) {
+	unsigned int t_start = current_time();
 	Worker::Result res = Worker(start.ref, *this).summarize(graph);
 	// Ignore any emitted dependencies, they should have been handled
 	// during this component's summarization step.
 	// TODO: Don't produce at all.
+	if (!res.summaries.empty()) {
+	    std::cout << res.summaries.size() << " summaries found in "
+		      << current_time() - t_start << " ms" << std::endl;
+	}
 	for (const Summary& s : res.summaries) {
 	    assert(s.comp == ref && s.src == start.ref);
 	    // Reachability information is stored like regular summaries.
@@ -431,6 +446,8 @@ void Component::propagate(Graph& graph) const {
 	    graph.summaries.insert(s);
 	}
     }
+    std::cout << "Total: " << current_time() - t_full_start << " ms"
+	      << std::endl;
 }
 
 bool Worker::merge(const Component& comp,
