@@ -67,6 +67,7 @@ flowPrimRef(u:U,v:V)  output
 flowRefPrim(u:V,v:U)  output
 flowPrimPrim(u:U,v:U) output
 
+reachableCM(c:C,m:M)  output
 CICM(c:C,i:I,d:C,m:M) output
 # =======================================
 
@@ -122,3 +123,4 @@ CICMtmp(c,i,o,m) :- CI(c,i), SpecIM(i,m), DIC(c,i,o).
 CICM(c,i,d,m) :- CICMtmp(c,i,d,m), !CtxtInsMeth(m).
 CICM(c,i,0,m) :- CICMtmp(c,i,_,m), CtxtInsMeth(m).
 
+reachableCM(c,m) :- CM(c,m).

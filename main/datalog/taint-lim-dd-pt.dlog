@@ -51,17 +51,17 @@ fpt(o1:C,f:F,o2:C) output
 
 # INTERMEDIATE RELATIONS ======================================================
 
-taintedSrc(o:C)
-escaped(o:C)
-tainted(o:C)
-xferOut(c:C,v:V)
+taintedSrc(o:C) output
+escaped(o:C) output
+tainted(o:C) output
+xferOut(c:C,v:V) output
 
-queryRefCtxt(c:C,v:V)
-queryRef(v:V)
-queryObj(o:C)
-queryFpt(o:C,f:F)
-queryFptAll(o:C)
-queryFptBase(f:F,o:C)
+queryRefCtxt(c:C,v:V) output
+queryRef(v:V) output
+queryObj(o:C) output
+queryFpt(o:C,f:F) output
+queryFptAll(o:C)  output
+queryFptBase(f:F,o:C) output
 
 # RULES =======================================================================
 
