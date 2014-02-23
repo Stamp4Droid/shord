@@ -18,8 +18,8 @@
 ci_pt(v:V,h:H) input
 
 CM(c:C,m:M) input
-MV(m:M,v:V) input
 CH(c:C,h:H) input
+MI(m:M,i:I) input
 HT(h:H,t:T) input         # heap h point to Type t.
 CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
 CI(c:C,i:I) input         # stmt i is on the top of c.
@@ -72,10 +72,9 @@ CICM(c:C,i:I,d:C,m:M) output
 # =======================================
 
 # INTERMEDIATE RELATIONS =======================
-CICMtmp(d:C,i:I,c:C,m:M)
-DIC(c:C,i:I,c:C) 
-ICM(i:I,c:C,m:M) 
-pt(c:C,v:V,o:C)
+CICMtmp(d:C,i:I,c:C,m:M) 
+IHM(i:I,h:H,m:M) 
+reachableCI(c:C,i:I)
 # =======================================
 
 
@@ -112,15 +111,14 @@ flowPrimPrim(u,v) :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,u), MmethPrimArg(m,z
 
 #--------------------------------------------------------------------------------------
 
-pt(c,v,o) :- ci_pt(v,h), CH(o,h), MV(m,v), CM(c,m).
+reachableCM(c,m) :- CM(c,m).
+reachableCI(c,i) :- MI(m,i), CM(c,m).
+IHM(i,h,m2) :- IinvkArg(i,0,v), ci_pt(v,h), HT(h,t), VirtIM(i,m1), SubSig(m1,s), Dispatch(t,s,m2).
 
-DIC(c,i,o) :- IinvkArg(i,0,v), pt(c,v,o).
-ICM(i,o,m2) :- VirtIM(i,m1), SubSig(m1,s), Dispatch(t,s,m2), HT(h,t), CH(o,h).
+CICMtmp(c,i,o,m) :- reachableCI(c,i), IHM(i,h,m), CH(o,h).
+CICMtmp(c,i,d,m) :- reachableCI(c,i), StatIM(i,m), CC(c,d), CI(d,i).
+CICMtmp(c,i,o,m) :- reachableCI(c,i), SpecIM(i,m), IinvkArg(i,0,v), ci_pt(v,h), CH(o,h).
 
-CICMtmp(c,i,o,m) :- CI(c,i), DIC(c,i,o), ICM(i,o,m). 
-CICMtmp(c,i,d,m) :- CI(c,i), StatIM(i,m), CC(c,d), CI(d,i).
-CICMtmp(c,i,o,m) :- CI(c,i), SpecIM(i,m), DIC(c,i,o).
 CICM(c,i,d,m) :- CICMtmp(c,i,d,m), !CtxtInsMeth(m).
 CICM(c,i,0,m) :- CICMtmp(c,i,_,m), CtxtInsMeth(m).
 
-reachableCM(c,m) :- CM(c,m).
