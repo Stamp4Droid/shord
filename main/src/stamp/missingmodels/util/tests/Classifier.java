@@ -1,4 +1,4 @@
-package stamp.missingmodels.ml;
+package stamp.missingmodels.util.tests;
 
 import java.util.Random;
 

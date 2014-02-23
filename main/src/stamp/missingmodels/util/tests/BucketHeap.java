@@ -1,4 +1,4 @@
-package stamp.missingmodels.util.cflsolver;
+package stamp.missingmodels.util.tests;
 
 import java.util.ArrayList;
 import java.util.HashSet;

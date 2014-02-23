@@ -1,4 +1,4 @@
-package stamp.missingmodels.util.cflsolver;
+package stamp.missingmodels.util.tests;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Set;
 
 import stamp.missingmodels.util.Util.MultivalueMap;
-import stamp.missingmodels.util.cflsolver.ContextFreeGrammar.BinaryProduction;
-import stamp.missingmodels.util.cflsolver.ContextFreeGrammar.UnaryProduction;
+import stamp.missingmodels.util.tests.ContextFreeGrammar.BinaryProduction;
+import stamp.missingmodels.util.tests.ContextFreeGrammar.UnaryProduction;
 
 public final class Graph {
 	public static final int DEFAULT_FIELD = -1;
@@ -121,6 +121,10 @@ public final class Graph {
 	public Graph(ContextFreeGrammar contextFreeGrammar) {
 		this.contextFreeGrammar = contextFreeGrammar;
 		this.numLabels = contextFreeGrammar.numLabels();
+	}
+	
+	public ContextFreeGrammar getContextFreeGrammar() {
+		return this.contextFreeGrammar;
 	}
 
 	public Vertex getVertex(String name) {
@@ -246,156 +250,5 @@ public final class Graph {
 			sortedEdges.add(this.contextFreeGrammar.getLabelName(edge.label), edge);
 		}
 		return sortedEdges;
-	}
-
-	private Map<Edge,Set<Edge>> results = new HashMap<Edge,Set<Edge>>();
-	private Set<Edge> queried = new HashSet<Edge>();
-	public static class EdgeCutException extends Exception {private static final long serialVersionUID = 2228766085923292729L;}
-	public Set<Edge> cut(Edge edge) throws EdgeCutException {
-		this.cutHelper(edge);
-		return this.results.get(edge);
-	}
-	private void cutHelper(Edge edge) throws EdgeCutException {
-		// TODO: how to handle loops?
-		
-		// STEP 0: Return if already queried
-		if(this.queried.contains(edge)) {
-			return;
-		} else {
-			this.queried.add(edge);
-		}
-		
-		// STEP 1: Base case
-		if(edge.firstInput == null) {
-			if(edge.weight > 0) {
-				Set<Edge> result = new HashSet<Edge>();
-				result.add(edge);
-				this.results.put(edge, result);
-			}
-			return;
-		}
-
-		// STEP 2: Check all unary productions
-		Set<Edge> result = new HashSet<Edge>();
-		for(UnaryProduction unaryProduction : this.contextFreeGrammar.unaryProductionsByTarget.get(edge.label)) {
-			if(unaryProduction.isInputBackwards) {
-				for(Edge inputEdge : ((Map<Edge,Edge>)edge.source.incomingEdgesByLabel[unaryProduction.input]).keySet()) {
-					if(inputEdge.source.equals(edge.sink)) {
-						this.cutHelper(inputEdge);
-						if(this.results.get(inputEdge) == null) {
-							throw new EdgeCutException();
-						} else {
-							result.addAll(this.results.get(inputEdge));
-						}
-					}
-				}
-			} else {
-				for(Edge inputEdge : ((Map<Edge,Edge>)edge.source.outgoingEdgesByLabel[unaryProduction.input]).keySet()) {
-					if(inputEdge.sink.equals(edge.sink)) {
-						this.cutHelper(inputEdge);
-						if(this.results.get(inputEdge) == null) {
-							throw new EdgeCutException();
-						} else {
-							result.addAll(this.results.get(inputEdge));
-						}
-					}
-				}
-			}
-		}
-		
-		// STEP 3: Check all binary productions
-		for(BinaryProduction binaryProduction : this.contextFreeGrammar.binaryProductionsByTarget.get(edge.label)) {
-			if(binaryProduction.isFirstInputBackwards && binaryProduction.isSecondInputBackwards) {
-				for(Edge firstInputEdge : ((Map<Edge,Edge>)edge.source.incomingEdgesByLabel[binaryProduction.firstInput]).keySet()) {
-					for(Edge secondInputEdge : ((Map<Edge,Edge>)firstInputEdge.source.incomingEdgesByLabel[binaryProduction.secondInput]).keySet()) {
-						if(secondInputEdge.source.equals(edge.sink)) {
-							this.cutHelper(firstInputEdge);
-							this.cutHelper(secondInputEdge);
-							if(this.results.get(firstInputEdge) == null && this.results.get(secondInputEdge) == null) {
-								throw new EdgeCutException();
-							} else if(this.results.get(firstInputEdge) == null) {
-								result.addAll(this.results.get(secondInputEdge));
-							} else if(this.results.get(secondInputEdge) != null) {
-								result.addAll(this.results.get(firstInputEdge));
-							} else {
-								if(this.results.get(firstInputEdge).size() > this.results.get(secondInputEdge).size()) {
-									result.addAll(this.results.get(secondInputEdge));									
-								} else {
-									result.addAll(this.results.get(firstInputEdge));									
-								}
-							}
-						}
-					}
-				}
-			} else if(binaryProduction.isFirstInputBackwards) {
-				for(Edge firstInputEdge : ((Map<Edge,Edge>)edge.source.incomingEdgesByLabel[binaryProduction.firstInput]).keySet()) {
-					for(Edge secondInputEdge : ((Map<Edge,Edge>)firstInputEdge.source.outgoingEdgesByLabel[binaryProduction.secondInput]).keySet()) {
-						if(secondInputEdge.sink.equals(edge.sink)) {
-							this.cutHelper(firstInputEdge);
-							this.cutHelper(secondInputEdge);
-							if(this.results.get(firstInputEdge) == null && this.results.get(secondInputEdge) == null) {
-								throw new EdgeCutException();
-							} else if(this.results.get(firstInputEdge) == null) {
-								result.addAll(this.results.get(secondInputEdge));
-							} else if(this.results.get(secondInputEdge) != null) {
-								result.addAll(this.results.get(firstInputEdge));
-							} else {
-								if(this.results.get(firstInputEdge).size() > this.results.get(secondInputEdge).size()) {
-									result.addAll(this.results.get(secondInputEdge));									
-								} else {
-									result.addAll(this.results.get(firstInputEdge));									
-								}
-							}
-						}
-					}
-				}				
-			} else if(binaryProduction.isSecondInputBackwards) {
-				for(Edge firstInputEdge : ((Map<Edge,Edge>)edge.source.outgoingEdgesByLabel[binaryProduction.firstInput]).keySet()) {
-					for(Edge secondInputEdge : ((Map<Edge,Edge>)firstInputEdge.sink.incomingEdgesByLabel[binaryProduction.secondInput]).keySet()) {
-						if(secondInputEdge.source.equals(edge.sink)) {
-							this.cutHelper(firstInputEdge);
-							this.cutHelper(secondInputEdge);
-							if(this.results.get(firstInputEdge) == null && this.results.get(secondInputEdge) == null) {
-								throw new EdgeCutException();
-							} else if(this.results.get(firstInputEdge) == null) {
-								result.addAll(this.results.get(secondInputEdge));
-							} else if(this.results.get(secondInputEdge) != null) {
-								result.addAll(this.results.get(firstInputEdge));
-							} else {
-								if(this.results.get(firstInputEdge).size() > this.results.get(secondInputEdge).size()) {
-									result.addAll(this.results.get(secondInputEdge));									
-								} else {
-									result.addAll(this.results.get(firstInputEdge));									
-								}
-							}
-						}
-					}
-				}
-			} else {
-				for(Edge firstInputEdge : ((Map<Edge,Edge>)edge.source.outgoingEdgesByLabel[binaryProduction.firstInput]).keySet()) {
-					for(Edge secondInputEdge : ((Map<Edge,Edge>)firstInputEdge.sink.outgoingEdgesByLabel[binaryProduction.secondInput]).keySet()) {
-						if(secondInputEdge.sink.equals(edge.sink)) {
-							this.cutHelper(firstInputEdge);
-							this.cutHelper(secondInputEdge);
-							if(this.results.get(firstInputEdge) == null && this.results.get(secondInputEdge) == null) {
-								throw new EdgeCutException();
-							} else if(this.results.get(firstInputEdge) == null) {
-								result.addAll(this.results.get(secondInputEdge));
-							} else if(this.results.get(secondInputEdge) != null) {
-								result.addAll(this.results.get(firstInputEdge));
-							} else {
-								if(this.results.get(firstInputEdge).size() > this.results.get(secondInputEdge).size()) {
-									result.addAll(this.results.get(secondInputEdge));									
-								} else {
-									result.addAll(this.results.get(firstInputEdge));									
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		
-		this.results.put(edge, result);
 	}
 }

@@ -158,7 +158,7 @@ public class ConversionUtils {
 		// assign
 		relations.add("assignCtxt", new IndexRelation("AssignCtxt", "V", 1, 0, "V", 2, 0));
 		relations.add("assignCCtxt", new IndexRelation("AssignCCtxt", "V", 1, 0, "V", 3, 2, (short)1));
-		relations.add("assignCCtxt", new IndexRelation("DynAssignCCtxt", "V", 1, 0, "V", 3, 2));
+		relations.add("dynAssignCCtxt", new IndexRelation("DynAssignCCtxt", "V", 1, 0, "V", 3, 2));
 
 		// load/store
 		relations.add("storeCtxt", new IndexRelation("StoreCtxt", "V", 1, 0, "V", 3, 0, 2));

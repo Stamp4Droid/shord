@@ -1,4 +1,4 @@
-package stamp.missingmodels.util.cflsolver;
+package stamp.missingmodels.util.tests;
 
 public interface Heap<T> {
 	public void add(T t, short weight);

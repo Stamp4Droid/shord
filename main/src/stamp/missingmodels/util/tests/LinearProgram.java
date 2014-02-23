@@ -1,0 +1,253 @@
+package stamp.missingmodels.util.tests;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import lpsolve.LpSolve;
+import lpsolve.LpSolveException;
+
+public class LinearProgram<T> {
+	public static class Coefficient<T> {
+		public final T variable;
+		public final double coefficient;
+
+		public Coefficient(T variable, double coefficient) {
+			this.variable = variable;
+			this.coefficient = coefficient;
+		}
+	}
+
+	public static enum ObjectiveType {
+		MAXIMIZE, MINIMIZE
+	}
+
+	public static enum ConstraintType {
+		GEQ, LEQ, EQ
+	}
+
+	private static class Objective<T> {
+		private final Map<T,Coefficient<T>> coefficients = new HashMap<T,Coefficient<T>>();
+		private final ObjectiveType objectiveType;
+
+		private Objective(ObjectiveType objectiveType) {
+			this.objectiveType = objectiveType;
+		}
+
+		private String toString(Map<Integer,T> variableNames, int numVariables) {
+			StringBuilder sb = new StringBuilder();
+			for(int i=0; i<numVariables; i++) {
+				Coefficient<T> coefficient = this.coefficients.get(variableNames.get(i));
+				if(coefficient == null) {
+					sb.append("0.0 ");
+				} else {
+					sb.append(coefficient.coefficient + " ");
+				}
+			}
+			return sb.toString().trim();
+		}
+	}
+
+	private static class Constraint<T> {
+		private final Map<T,Coefficient<T>> coefficients = new HashMap<T,Coefficient<T>>();
+		private final ConstraintType constraintType;
+		private final double constant;
+
+		private Constraint(ConstraintType constraintType, double constant) {
+			this.constraintType = constraintType;
+			this.constant = constant;
+		}
+
+		private int convertConstraintType() {
+			switch(this.constraintType) {
+			case LEQ:
+				return LpSolve.LE;
+			case GEQ:
+				return LpSolve.GE;
+			case EQ:
+				return LpSolve.EQ;
+			}
+			throw new RuntimeException("Constraint type not recognized!");
+		}
+
+		private String toString(Map<Integer,T> variableNames, int numVariables) {
+			StringBuilder sb = new StringBuilder();
+			for(int i=0; i<numVariables; i++) {
+				Coefficient<T> coefficient = this.coefficients.get(variableNames.get(i));
+				if(coefficient == null) {
+					sb.append("0.0 ");
+				} else {
+					sb.append(coefficient.coefficient + " ");
+				}
+			}
+			return sb.toString().trim();
+		}
+	}
+
+	private Objective<T> objective = null;
+	private List<Constraint<T>> constraints = new ArrayList<Constraint<T>>();
+
+	public void setObjective(ObjectiveType objectiveType, Collection<Coefficient<T>> coefficients) {
+		this.objective = new Objective<T>(objectiveType);
+		for(Coefficient<T> coefficient : coefficients) {
+			this.objective.coefficients.put(coefficient.variable, coefficient);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public void setObjective(ObjectiveType objectiveType, Coefficient<T> ... coefficients) {
+		this.objective = new Objective<T>(objectiveType);
+		for(Coefficient<T> coefficient : coefficients) {
+			this.objective.coefficients.put(coefficient.variable, coefficient);
+		}
+	}
+
+	public void addConstraint(ConstraintType constraintType, double constant, Collection<Coefficient<T>> coefficients) {
+		Constraint<T> constraint = new Constraint<T>(constraintType, constant);
+		for(Coefficient<T> coefficient : coefficients) {
+			constraint.coefficients.put(coefficient.variable, coefficient);
+		}
+		this.constraints.add(constraint);
+	}
+
+	@SuppressWarnings("unchecked")
+	public void addConstraint(ConstraintType constraintType, double constant, Coefficient<T> ... coefficients) {
+		Constraint<T> constraint = new Constraint<T>(constraintType, constant);
+		for(Coefficient<T> coefficient : coefficients) {
+			constraint.coefficients.put(coefficient.variable, coefficient);
+		}
+		this.constraints.add(constraint);
+	}
+
+	public static class LinearProgramResult<T> {
+		public final double objective;
+		public final Map<T,Double> variableValues = new HashMap<T,Double>();
+
+		public LinearProgramResult(double objective) {
+			this.objective = objective;
+		}
+	}
+	
+	public LinearProgramResult<T> solve() throws LpSolveException {
+		System.load("/home/obastani/Documents/projects/stamp/shord/lib/liblpsolve55.so");
+		System.load("/home/obastani/Documents/projects/stamp/shord/lib/liblpsolve55j.so");
+
+		Map<T,Integer> variables = new HashMap<T,Integer>();
+		Map<Integer,T> variableNames = new HashMap<Integer,T>();
+		int numVariables = 0;
+		int numConstraints = this.constraints.size();
+		if(this.objective == null) {
+			throw new RuntimeException("No objective set!");
+		}
+		for(Coefficient<T> coefficient : this.objective.coefficients.values()) {
+			Integer variable = variables.get(coefficient.variable);
+			if(variable == null) {
+				variable = numVariables++;
+				variables.put(coefficient.variable, variable);
+				variableNames.put(variable, coefficient.variable);
+			}
+		}
+		for(Constraint<T> constraint : this.constraints) {
+			for(Coefficient<T> coefficient : constraint.coefficients.values()) {
+				Integer variable = variables.get(coefficient.variable);
+				if(variable == null) {
+					variable = numVariables++;
+					variables.put(coefficient.variable, variable);
+					variableNames.put(variable, coefficient.variable);
+				}
+			}
+		}
+
+		LpSolve problem = LpSolve.makeLp(0, numVariables);
+		problem.setVerbose(0);
+		problem.strSetObjFn(this.objective.toString(variableNames, numVariables));
+		if(this.objective.objectiveType == ObjectiveType.MAXIMIZE) {
+			problem.setMaxim();
+		} else if(this.objective.objectiveType == ObjectiveType.MINIMIZE){
+			problem.setMinim();
+		} else {
+			throw new RuntimeException("Objective type not recognized!");
+		}
+		for(Constraint<T> constraint : this.constraints) {
+			problem.strAddConstraint(constraint.toString(variableNames, numVariables), constraint.convertConstraintType(), constraint.constant);
+		}
+
+		problem.solve();
+		double[] solution = new double[1+numConstraints+numVariables];
+		problem.getPrimalSolution(solution);
+		problem.deleteLp();
+
+		LinearProgramResult<T> result = new LinearProgramResult<T>(solution[0]);
+		for(int i=solution.length-numVariables; i<solution.length; i++) {
+			result.variableValues.put(variableNames.get(i-1-numConstraints), solution[i]);
+		}
+		return result;
+	}
+
+	public static void main(String[] args) throws LpSolveException {
+		test1();
+		//test2();
+	}
+
+	public static void test1() throws LpSolveException {
+		LinearProgram<String> problem = new LinearProgram<String>();
+		problem.setObjective(ObjectiveType.MINIMIZE, new Coefficient<String>("x", 2.0), new Coefficient<String>("y", 3.0), new Coefficient<String>("z", -2.0), new Coefficient<String>("w", 3.0));
+		problem.addConstraint(ConstraintType.LEQ, 4.0, new Coefficient<String>("x", 3.0), new Coefficient<String>("y", 2.0), new Coefficient<String>("z", 2.0), new Coefficient<String>("w", 1.0));
+		problem.addConstraint(ConstraintType.GEQ, 3.0, new Coefficient<String>("x", 0.0), new Coefficient<String>("y", 4.0), new Coefficient<String>("z", 3.0), new Coefficient<String>("w", 1.0));
+		
+		LinearProgramResult<String> solution = problem.solve();
+		System.out.println("Objective: " + solution.objective);
+		for(Map.Entry<String,Double> entry : solution.variableValues.entrySet()) {
+			System.out.println(entry.getKey() + ": " + entry.getValue());
+		}
+	}
+
+	public static void test2() throws LpSolveException {
+		System.load("/home/obastani/Documents/projects/stamp/shord/lib/liblpsolve55.so");
+		System.load("/home/obastani/Documents/projects/stamp/shord/lib/liblpsolve55j.so");
+		
+		LpSolve problem = LpSolve.makeLp(0, 4); // make a new problem with 4 variables and 0 constraints
+		problem.strAddConstraint("3 2 2 1", LpSolve.LE, 4); // add constraint 3*c1 + 2*c2 + 2*c3 + c4 <= 4
+		problem.strAddConstraint("0 4 3 1", LpSolve.GE, 3); // add constraint 4*c2 + 3*c3 + c4 >= 3
+		problem.strSetObjFn("2 3 -2 3"); // set objective to 2*c1 + 3*c2 - 2*c3 + 3*c4
+
+		problem.printLp(); // print the problem
+		System.out.println(problem.solve()); // solve the problem
+		
+		// We can display the solution with problem.printObjective(), problem.printSolution(1), and problem.printConstraints(1)
+		problem.solve();
+		problem.printObjective();
+		problem.printSolution(1);
+		problem.printConstraints(1);
+		problem.printDuals();
+		
+		/*
+		problem.setMaxim(); // maximize objective
+		problem.setMat(2, 1, 0.5); // set matrix element (2,1) to 0.5
+		problem.setRh(1, 7.45); // change rhs element of line 1 to 7.45
+		problem.setInt(4, true); // set c4 to integer type
+		problem.setDebug(true); // set branch & bound debugging to true
+		problem.setLowbo(2, 2); // set lower bound of c2 to 2
+		problem.setUpbo(4, 5.3); // set upper bound of c4 to 5.3
+		problem.delConstraint(1); // delete first constraint
+
+		problem.strAddConstraint("1 2 1 4", LpSolve.EQ, 8); // add constraint c1 + 2*c2 + c3 * 4*c4 = 8
+		problem.strAddColumn("3 2 2"); // add column
+		problem.delColumn(3); // delete column 3
+		problem.setScaling(LpSolve.SCALE_MEAN); // use automatic scaling (if int type variable then only rows scaled)
+		problem.getMat(2, 3); // returns a single matrix element (unscaled problem)
+		problem.setInt(3, false); // undo int type
+		problem.unscale(); // turn off scaling
+
+		problem.setDebug(false); // turn off debugging
+		problem.setTrace(true); // turn on problem trace
+		problem.resetBasis(); // problem will try to solve at the last found basis unless it is reset
+		problem.setRowName(1, "speed"); // give variables and constraints names
+		problem.setColName(2, "money");
+		problem.printLp();
+		problem.deleteLp();
+		*/
+	}
+}

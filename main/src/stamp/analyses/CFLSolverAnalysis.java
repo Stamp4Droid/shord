@@ -1,5 +1,6 @@
 package stamp.analyses;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import shord.analyses.CastVarNode;
@@ -16,11 +17,11 @@ import shord.project.analyses.ProgramRel;
 import stamp.missingmodels.util.ConversionUtils;
 import stamp.missingmodels.util.Relation;
 import stamp.missingmodels.util.Util.MultivalueMap;
-import stamp.missingmodels.util.cflsolver.ContextFreeGrammar;
-import stamp.missingmodels.util.cflsolver.Graph;
-import stamp.missingmodels.util.cflsolver.Graph.Edge;
-import stamp.missingmodels.util.cflsolver.Graph.EdgeCutException;
-import stamp.missingmodels.util.cflsolver.ReachabilitySolver;
+import stamp.missingmodels.util.tests.AbductiveInference;
+import stamp.missingmodels.util.tests.ContextFreeGrammar;
+import stamp.missingmodels.util.tests.Graph;
+import stamp.missingmodels.util.tests.Graph.Edge;
+import stamp.missingmodels.util.tests.ReachabilitySolver;
 import chord.project.Chord;
 
 @Chord(name = "cflsolver")
@@ -31,6 +32,7 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		taintGrammar.addUnaryProduction("Flow", "newCtxt", true);
 		taintGrammar.addBinaryProduction("Flow", "Flow", "assignCtxt", false, true);
 		taintGrammar.addBinaryProduction("Flow", "Flow", "assignCCtxt", false, true);
+		taintGrammar.addBinaryProduction("Flow", "Flow", "dynAssignCCtxt", false, true);
 		taintGrammar.addProduction("FlowField", new String[]{"Flow", "storeCtxt", "Flow"}, new boolean[]{false, true, true});
 		taintGrammar.addProduction("Flow", new String[]{"FlowField", "Flow", "loadCtxt"}, new boolean[]{false, false, true});
 		taintGrammar.addBinaryProduction("FlowStatField", "Flow", "storeStatCtxt", false, true);
@@ -122,16 +124,18 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 			System.out.println();
 		}
 		
-		for(Edge edge : sortedEdges.get("Flow")) {
-			System.out.println("Printing cut for " + edge.toString());
-			try {
-				for(Edge input : g.cut(edge)) {
-					System.out.println(input);
-				}
-			} catch(EdgeCutException e) {
-				e.printStackTrace();
+		AbductiveInference ai = new AbductiveInference();
+		try {
+			Set<Edge> targets = new HashSet<Edge>();
+			for(Edge edge : sortedEdges.get("Flow")) {
+				targets.add(edge);
 			}
-			System.out.println();
+			Set<Edge> result = ai.performInference(g, targets);
+			for(Edge edge : result) {
+				System.out.println(edge);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -177,29 +181,18 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 		System.out.println();
 		
 		System.out.println("Printing dynamic edges:");
-		for(Edge edge : sortedEdges.get("assignCCtxt")) {
-			if(edge.weight == 0) {
-				System.out.println(getMethodSig(g, edge));
-			}
+		for(Edge edge : sortedEdges.get("dynAssignCCtxt")) {
+			System.out.println(getMethodSig(g, edge));
 		}
 		
 		System.out.println("Printing input edges:");
 		for(Edge edge : sortedEdges.get("Src2Sink")) {
 			System.out.println("Src2Sink edge: " + edge.toString());
 			for(Edge input : g.getInputs(edge, "assignCCtxt")) {
-				//System.out.println("Input edge: " + input);
 				System.out.println("Input method edge: " + getMethodSig(g, input) + " (weight " + input.weight + ")");
 			}
-		}
-
-		for(Edge edge : sortedEdges.get("Src2Sink")) {
-			System.out.println("Printing cut for " + edge.toString());
-			try {
-				for(Edge input : g.cut(edge)) {
-					System.out.println("Input method edge: " + getMethodSig(g, input) + " (weight " + input.weight + ")");
-				}
-			} catch(Exception e) {
-				e.printStackTrace();
+			for(Edge input : g.getInputs(edge, "dynAssignCCtxt")) {
+				System.out.println("Input method edge: " + getMethodSig(g, input) + " (weight " + input.weight + ")");				
 			}
 		}
 	}
