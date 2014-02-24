@@ -94,8 +94,8 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 	}
 
 	public static void main(String[] args) {
-		System.out.println("CFG:");
-		System.out.println(taintGrammar.toString());
+		//System.out.println("CFG:");
+		//System.out.println(taintGrammar.toString());
 
 		Graph g = new Graph(taintGrammar);
 		g.addEdge("x", "o1", "newCtxt", (short)1);
@@ -107,10 +107,12 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 
 		new ReachabilitySolver().solve(taintGrammar, g);	
 
-		System.out.println("Solution:");
-		System.out.println(g.toString());
+		//System.out.println("Solution:");
+		//System.out.println(g.toString());
 		
 		MultivalueMap<String,Edge> sortedEdges = g.getSortedEdges();
+		
+		/*
 		for(String label : sortedEdges.keySet()) {
 			System.out.println(label + ": " + sortedEdges.get(label).size());
 		}
@@ -123,16 +125,31 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 			}
 			System.out.println();
 		}
+		*/
 		
 		AbductiveInference ai = new AbductiveInference();
 		try {
-			Set<Edge> targets = new HashSet<Edge>();
-			for(Edge edge : sortedEdges.get("Flow")) {
-				targets.add(edge);
+			Set<Edge> cutEdges = new HashSet<Edge>();
+			for(Edge edge : g.getEdges()) {
+				if(edge.firstInput == null) {
+					cutEdges.add(edge);
+				}
 			}
-			Set<Edge> result = ai.performInference(g, targets);
-			for(Edge edge : result) {
-				System.out.println(edge);
+			Set<Edge> removedEdges = new HashSet<Edge>();
+			for(Edge edge : sortedEdges.get("Flow")) {
+				if(g.getVertexName(edge.source).equals("o2")) {
+					removedEdges.add(edge);
+				}
+			}
+			Set<Edge> result = ai.performInference(g, cutEdges, removedEdges);
+			for(Edge edge : g.getEdges()) {
+				if(edge.firstInput == null) {
+					if(result.contains(edge)) {
+						System.out.println(edge + ": 0");
+					} else {
+						System.out.println(edge + ": 1");
+					}
+				}
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

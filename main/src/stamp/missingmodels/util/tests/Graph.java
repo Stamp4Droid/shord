@@ -6,8 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import stamp.missingmodels.util.Util.MultivalueMap;
-import stamp.missingmodels.util.tests.ContextFreeGrammar.BinaryProduction;
-import stamp.missingmodels.util.tests.ContextFreeGrammar.UnaryProduction;
 
 public final class Graph {
 	public static final int DEFAULT_FIELD = -1;

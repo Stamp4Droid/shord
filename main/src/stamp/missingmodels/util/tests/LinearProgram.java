@@ -173,11 +173,18 @@ public class LinearProgram<T> {
 		for(Constraint<T> constraint : this.constraints) {
 			problem.strAddConstraint(constraint.toString(variableNames, numVariables), constraint.convertConstraintType(), constraint.constant);
 		}
+		
+		for(int i=0; i<numVariables; i++) {
+			System.out.println((i+1) + ": " + variableNames.get(i).toString());
+		}
+		problem.printLp();
 
 		problem.solve();
 		double[] solution = new double[1+numConstraints+numVariables];
 		problem.getPrimalSolution(solution);
+		problem.printSolution(1);
 		problem.deleteLp();
+
 
 		LinearProgramResult<T> result = new LinearProgramResult<T>(solution[0]);
 		for(int i=solution.length-numVariables; i<solution.length; i++) {

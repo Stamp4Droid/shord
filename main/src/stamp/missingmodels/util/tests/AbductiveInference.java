@@ -16,75 +16,113 @@ import stamp.missingmodels.util.tests.LinearProgram.ObjectiveType;
 
 public class AbductiveInference {
 	private LinearProgram<Edge> lp = new LinearProgram<Edge>();
+	private Set<Edge> constrainedEdges = new HashSet<Edge>();
+	
+	private void addConstrainedEdge(Edge edge) {
+		this.constrainedEdges.add(edge);
+	}
+	
+	private void addConstrainedEdgeConstraints() {
+		for(Edge edge : this.constrainedEdges) {
+			this.lp.addConstraint(ConstraintType.LEQ, 1.0, new Coefficient<Edge>(edge, 1.0));
+		}
+	}
 	
 	private void addProduction(Edge target, Edge input) {
+		this.addConstrainedEdge(target);
+		this.addConstrainedEdge(input);
 		this.lp.addConstraint(ConstraintType.LEQ, 0.0, new Coefficient<Edge>(input, 1.0), new Coefficient<Edge>(target, -1.0));
 	}
 	
 	private void addProduction(Edge target, Edge firstInput, Edge secondInput) {
+		this.addConstrainedEdge(target);
+		this.addConstrainedEdge(firstInput);
+		this.addConstrainedEdge(secondInput);
 		this.lp.addConstraint(ConstraintType.LEQ, 1.0, new Coefficient<Edge>(firstInput, 1.0), new Coefficient<Edge>(secondInput, 1.0), new Coefficient<Edge>(target, -1.0));
 	}
 	
-	private void setObjective(Collection<Edge> targetEdges) {
-		Set<Coefficient<Edge>> coefficients = new HashSet<Coefficient<Edge>>();
-		for(Edge edge : targetEdges) {
-			if(edge.weight != 0) {
-				coefficients.add(new Coefficient(edge, edge.weight));
-			}
+	private void setRemovedEdges(Collection<Edge> removedEdges) {
+		for(Edge edge : removedEdges) {
+			this.addConstrainedEdge(edge);
+			this.lp.addConstraint(ConstraintType.LEQ, 0.0, new Coefficient<Edge>(edge, 1.0));
 		}
-		this.lp.setObjective(ObjectiveType.MINIMIZE, coefficients);
 	}
 	
-	public Set<Edge> performInference(Graph graph, Collection<Edge> targetEdges) throws LpSolveException {
-		this.setObjective(targetEdges);
+	private void setObjective(Collection<Edge> cutEdges) {
+		Set<Coefficient<Edge>> coefficients = new HashSet<Coefficient<Edge>>();
+		for(Edge edge : cutEdges) {
+			if(edge.weight != 0) {
+				this.addConstrainedEdge(edge);
+				coefficients.add(new Coefficient<Edge>(edge, edge.weight));
+			}
+		}
+		this.lp.setObjective(ObjectiveType.MAXIMIZE, coefficients);
+	}
+	
+	public Set<Edge> performInference(Graph graph, Collection<Edge> cutEdges, Collection<Edge> removedEdges) throws LpSolveException {
+		this.setObjective(cutEdges);
+		this.setRemovedEdges(removedEdges);
 		for(Edge edge : graph.getEdges()) {
+			System.out.println("EDGE: " + edge);
 			if(edge.weight > 0) {
-				for(UnaryProduction unaryProduction : graph.getContextFreeGrammar().unaryProductionsByTarget.get(edge.label)){
+				for(UnaryProduction unaryProduction : graph.getContextFreeGrammar().unaryProductionsByTarget.get(edge.label)) {
+					System.out.println("UP: " + unaryProduction);
 					if(unaryProduction.isInputBackwards) {
-						Edge input = (Edge)edge.source.incomingEdgesByLabel[unaryProduction.target].get(graph.new Edge(edge.sink, edge.source, unaryProduction.input));
-						if(input != null) {
-							this.addProduction(edge, input);
-						}						
+						for(Edge input : ((Map<Edge,Edge>)edge.source.incomingEdgesByLabel[unaryProduction.input]).keySet()) {
+							System.out.println("INPUT: " + input);
+							if(input.source.equals(edge.sink) && ReachabilitySolver.getField(input.field, unaryProduction.ignoreFields) == edge.field) {
+								this.addProduction(edge, input);
+							}
+						}
 					} else {
-						Edge input = (Edge)edge.source.outgoingEdgesByLabel[unaryProduction.target].get(graph.new Edge(edge.source, edge.sink, unaryProduction.input));
-						if(input != null) {
-							this.addProduction(edge, input);
+						for(Edge input : ((Map<Edge,Edge>)edge.source.outgoingEdgesByLabel[unaryProduction.input]).keySet()) {
+							System.out.println("INPUT: " + input);
+							if(input.sink.equals(edge.sink) && ReachabilitySolver.getField(input.field, unaryProduction.ignoreFields) == edge.field) {
+								this.addProduction(edge, input);
+							}
 						}
 					}
 				}
 				for(BinaryProduction binaryProduction : graph.getContextFreeGrammar().binaryProductionsByTarget.get(edge.label)) {
 					if(binaryProduction.isFirstInputBackwards && binaryProduction.isSecondInputBackwards) {
 						for(Edge firstInput : ((Map<Edge,Edge>)edge.source.incomingEdgesByLabel[binaryProduction.firstInput]).keySet()) {
-							Edge secondInput = (Edge)firstInput.source.incomingEdgesByLabel[binaryProduction.secondInput].get(graph.new Edge(edge.sink, firstInput.source, binaryProduction.secondInput));
-							if(secondInput != null) {
-								this.addProduction(edge, firstInput, secondInput);
+							for(Edge secondInput : ((Map<Edge,Edge>)firstInput.source.incomingEdgesByLabel[binaryProduction.secondInput]).keySet()) {
+								if(secondInput.source.equals(edge.sink) && ReachabilitySolver.getField(firstInput.field, secondInput.field, binaryProduction.ignoreFields) == edge.field) {
+									this.addProduction(edge, firstInput, secondInput);
+								}
 							}
 						}
 					} else if(binaryProduction.isFirstInputBackwards) {
 						for(Edge firstInput : ((Map<Edge,Edge>)edge.source.incomingEdgesByLabel[binaryProduction.firstInput]).keySet()) {
-							Edge secondInput = (Edge)firstInput.source.outgoingEdgesByLabel[binaryProduction.secondInput].get(graph.new Edge(firstInput.source, edge.sink, binaryProduction.secondInput));
-							if(secondInput != null) {
-								this.addProduction(edge, firstInput, secondInput);
+							for(Edge secondInput : ((Map<Edge,Edge>)firstInput.source.outgoingEdgesByLabel[binaryProduction.secondInput]).keySet()) {
+								if(secondInput.sink.equals(edge.sink) && ReachabilitySolver.getField(firstInput.field, secondInput.field, binaryProduction.ignoreFields) == edge.field) {
+									this.addProduction(edge, firstInput, secondInput);
+								}
 							}
 						}
 					} else if(binaryProduction.isSecondInputBackwards) {
+						System.out.println(edge);
+						System.out.println(binaryProduction);
 						for(Edge firstInput : ((Map<Edge,Edge>)edge.source.outgoingEdgesByLabel[binaryProduction.firstInput]).keySet()) {
-							Edge secondInput = (Edge)firstInput.sink.incomingEdgesByLabel[binaryProduction.secondInput].get(graph.new Edge(edge.sink, firstInput.sink, binaryProduction.secondInput));
-							if(secondInput != null) {
-								this.addProduction(edge, firstInput, secondInput);
+							for(Edge secondInput : ((Map<Edge,Edge>)firstInput.sink.incomingEdgesByLabel[binaryProduction.secondInput]).keySet()) {
+								if(secondInput.source.equals(edge.sink) && ReachabilitySolver.getField(firstInput.field, secondInput.field, binaryProduction.ignoreFields) == edge.field) {
+									this.addProduction(edge, firstInput, secondInput);
+								}
 							}
 						}
 					} else {
 						for(Edge firstInput : ((Map<Edge,Edge>)edge.source.outgoingEdgesByLabel[binaryProduction.firstInput]).keySet()) {
-							Edge secondInput = (Edge)firstInput.sink.outgoingEdgesByLabel[binaryProduction.secondInput].get(graph.new Edge(firstInput.sink, edge.sink, binaryProduction.secondInput));
-							if(secondInput != null) {
-								this.addProduction(edge, firstInput, secondInput);
+							for(Edge secondInput : ((Map<Edge,Edge>)firstInput.sink.outgoingEdgesByLabel[binaryProduction.secondInput]).keySet()) {
+								if(secondInput.sink.equals(edge.sink) && ReachabilitySolver.getField(firstInput.field, secondInput.field, binaryProduction.ignoreFields) == edge.field) {
+									this.addProduction(edge, firstInput, secondInput);
+								}
 							}
 						}
 					}
 				}
 			}
 		}
+		this.addConstrainedEdgeConstraints();
 		LinearProgramResult solution = this.lp.solve();
 		Set<Edge> result = new HashSet<Edge>();
 		for(Edge edge : (Set<Edge>)solution.variableValues.keySet()) {
