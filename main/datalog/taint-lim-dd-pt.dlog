@@ -63,6 +63,8 @@ queryFpt(o:C,f:F) output
 queryFptAll(o:C)  output
 queryFptBase(f:F,o:C) output
 
+interprocAssign(c:C,v:V,d:C,u:V)
+
 # RULES =======================================================================
 
 # *********************************
@@ -71,7 +73,7 @@ queryFptBase(f:F,o:C) output
 
 # source annotations
 queryRef(v) :- varIn(v).
-taintedSrc(o) :- varIn(v), pt(_,v,o).
+
 # recursive tainting at source
 queryFptAll(o) :- taintedSrc(o).
 taintedSrc(o2) :- taintedSrc(o1), fpt(o1,_,o2).
@@ -106,22 +108,31 @@ queryObj(o) :- tainted(o).
 # *******************************
 
 queryRefCtxt(c,u) :- queryRefCtxt(c,v), Assign(v,u).
-queryRefCtxt(c,u) :- queryRefCtxt(d,v), MV(m,v), param(v,u,i), CICM(c,i,d,m).
-queryRefCtxt(c,u) :- queryRefCtxt(d,v), MV(m,u), return(v,u,i), CICM(d,i,c,m).
+pt(c,v,o) :- queryRefCtxt(c,v), Assign(v,u), pt(c,u,o).
+
+interprocAssign(d,v,c,u) :- queryRefCtxt(d,v), param(v,u,i), MV(m,v), CICM(c,i,d,m).
+interprocAssign(d,v,c,u) :- queryRefCtxt(d,v), return(v,u,i), MV(m,u), CICM(d,i,c,m).
+queryRefCtxt(c,u) :- interprocAssign(_,_,c,u).
+pt(d,v,o) :- interprocAssign(d,v,c,u), pt(c,u,o).
+#queryRefCtxt(c,u) :- queryRefCtxt(d,v), MV(m,v), param(v,u,i), CICM(c,i,d,m).
+#queryRefCtxt(c,u) :- queryRefCtxt(d,v), return(v,u,i), MV(m,u), CICM(d,i,c,m).
+
+#pt(d,v,o) :- queryRefCtxt(d,v), MV(m,v), param(v,u,i), CICM(c,i,d,m), pt(c,u,o).
+#pt(d,v,o) :- queryRefCtxt(d,v), MV(m,u), return(v,u,i), CICM(d,i,c,m), pt(c,u,o).
 
 pt(c,v,o) :- queryRefCtxt(c,v), Alloc(v,h), CC(c,o), CH(o,h).
 pt(c,v,o) :- queryRefCtxt(c,v), GlobalAlloc(v,h), CH(o,h).
-
-pt(c,v,o) :- queryRefCtxt(c,v), Assign(v,u), pt(c,u,o).
-pt(d,v,o) :- queryRefCtxt(d,v), MV(m,v), param(v,u,i), CICM(c,i,d,m), pt(c,u,o).
-pt(d,v,o) :- queryRefCtxt(d,v), MV(m,u), return(v,u,i), CICM(d,i,c,m), pt(c,u,o).
 
 queryRefCtxt(c,u) :- queryRefCtxt(c,v), Load(v,u,_).
 queryFpt(o,f)     :- queryRefCtxt(c,v), Load(v,u,f), pt(c,u,o).
 queryRef(w)       :- queryFpt(o,f), CH(o,h), Store(w,f,_), ci_pt(w,h).
 queryRefCtxt(c,x) :- queryFpt(o,f), Store(w,f,x), pt(c,w,o).
 fpt(o1,f,o2)      :- queryFpt(o1,f), pt(c,w,o1), Store(w,f,x), pt(c,x,o2).
-pt(c,v,o2)        :- queryRefCtxt(c,v), Load(v,u,f), fpt(o1,f,o2), pt(c,u,o1).
+pt(c,v,o2)        :- queryRefCtxt(c,v), Load(v,u,f), pt(c,u,o1), fpt(o1,f,o2).
+
+# rules for handling static load/store
+queryRef(u) :- queryRefCtxt(_,v), LoadStat(v,f), StoreStat(f,u).
+pt(c,v,o)   :- queryRefCtxt(c,v), LoadStat(v,f), StoreStat(f,u), pt(_,u,o).
 
 queryRefCtxt(c,w) :- queryRef(w), MV(m,w), CM(c,m).
 
@@ -143,14 +154,15 @@ queryRefCtxt(c,w) :- queryObj(o), pt(c,x,o), Store(w,_,x).
 fpt(o1,f,o2)      :- queryObj(o2), pt(c,x,o2), Store(w,f,x), pt(c,w,o1).
 queryRef(u)       :- queryObj(o2), fpt(o1,f,o2), CH(o1,h), Load(_,u,f), ci_pt(u,h).
 pt(c,w,o2)        :- queryObj(o2), fpt(o1,f,o2), pt(c,u,o1), Load(w,u,f).
+
+# rules for handling static load/store
+pt(c,v,o)  :- StoreStat(f,u), pt(_,u,o), queryObj(o), LoadStat(v,f), MV(m,v), CM(c,m).
 #====================================================================================
+#i() love() rainbow() loop()"I love super heros"
 
 
+#foo() input  
 
+#output
 
-
-
-
-
-
-
+#i like input car split fight 
