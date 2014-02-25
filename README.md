@@ -12,7 +12,14 @@ To be able to build and run the STAMP tools, prepare your system as follows
     * sqlite3 version >= 3
     * Python version V, where 2.7 <= V < 3.0 (package 'python')
     * Java JDK version 1.6 (package 'openjdk-6-jdk' or 'sun-java6-jdk')
-    * g++ version 4.8 (optional, for the SolverGen backend)
+      if you already have Java 1.7, you also need to configure your system to
+      use Java 1.6 by default:
+        sudo update-alternatives --config java
+        sudo update-alternatives --config javac
+* install optional packages, if you want to use the SolverGen backend:
+    * g++ version 4.7+ (package 'g++')
+    * Boost (packages 'libboost-dev', 'libboost-filesystem-dev',
+             'libboost-program-options-dev', 'libboost-regex-dev')
 * install the Android SDK:
     * download the SDK starter package from developer.android.com/sdk/index.html
     * unpack the archive
