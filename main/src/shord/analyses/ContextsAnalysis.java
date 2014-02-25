@@ -30,17 +30,18 @@ import chord.util.tuple.object.Pair;
 import chord.bddbddb.Rel.RelView;
 
 @Chord(name = "contexts-java",
-	   consumes = { "chaIM", "I", "M", "H", "MH", "MI", "Stub" },
-	   produces = { "C", "CC", "CI", "CM", "CH" },
+	   consumes = { "ci_reachableM", "ci_IM", "I", "M", "H", "MH", "MI", "Stub" },
+	   produces = { "C", "CC", "CI", "CM", "CH", "CtxtInsMeth" },
 	   namesOfTypes = { "C" },
 	   types = { DomC.class },
-	   namesOfSigns = { "CC", "CI", "CM", "CH" },
-	   signs = { "C0,C1:C0xC1", "C0,I0:C0_I0", "C0,M0:C0_M0", "C0,H0:C0_H0"}
+	   namesOfSigns = { "CC", "CI", "CM", "CH", "CtxtInsMeth" },
+	   signs = { "C0,C1:C0xC1", "C0,I0:C0_I0", "C0,M0:C0_M0", "C0,H0:C0_H0", "M0:M0"}
 	   )
 public class ContextsAnalysis extends JavaAnalysis
 {
     private static final Set<Ctxt> emptyCtxtSet = Collections.emptySet();
     private static final Set<SootMethod> emptyMethSet = Collections.emptySet();
+    private static final Object[] emptyElems = new Object[0];
 
 	public static int K = 2;
 
@@ -50,7 +51,7 @@ public class ContextsAnalysis extends JavaAnalysis
     private int[] ItoM;
     private Unit[] ItoQ;
     private int[] HtoM;
-    private Unit[] HtoQ;
+    private AllocNode[] HtoQ;
 
     private Set<Ctxt> epsilonCtxtSet;
 
@@ -59,12 +60,17 @@ public class ContextsAnalysis extends JavaAnalysis
     private DomC domC;
 
     private ProgramRel relIM;
+	private ProgramRel relCtxtInsMeth;
+
+	private NumberedSet stubs;
 
 	public void run()
 	{
 		domI = (DomI) ClassicProject.g().getTrgt("I");
         domM = (DomM) ClassicProject.g().getTrgt("M");
         domC = (DomC) ClassicProject.g().getTrgt("C");
+
+		relCtxtInsMeth = (ProgramRel) ClassicProject.g().getTrgt("CtxtInsMeth");
 
         int numM = domM.size();
 		int numI = domI.size();
@@ -91,33 +97,36 @@ public class ContextsAnalysis extends JavaAnalysis
 
         DomH domH = (DomH) ClassicProject.g().getTrgt("H");
 		int numH = domH.size();
+        HtoQ = new AllocNode[numH];
+		for (int hIdx = 0; hIdx < numH; hIdx++) {
+			HtoQ[hIdx] = domH.get(hIdx);
+		}
+
         HtoM = new int[numH];
-        HtoQ = new Unit[numH];
 		final ProgramRel relMH = (ProgramRel) ClassicProject.g().getTrgt("MH");		
 		relMH.load();
-		Iterable<Pair<SootMethod,Unit>> res1 = relMH.getAry2ValTuples();
-		for(Pair<SootMethod,Unit> pair : res1) {
+		Iterable<Pair<SootMethod,AllocNode>> res1 = relMH.getAry2ValTuples();
+		for(Pair<SootMethod,AllocNode> pair : res1) {
 			SootMethod meth = pair.val0;
-			Unit alloc = pair.val1;
+			AllocNode alloc = pair.val1;
             int mIdx = domM.indexOf(meth);
 			int hIdx = domH.indexOf(alloc);
 			HtoM[hIdx] = mIdx;
-			HtoQ[hIdx] = alloc;
 		}
 		relMH.close();
 
-
-		Unit[] emptyElems = new Unit[0];
         Ctxt epsilon = domC.setCtxt(emptyElems);
         epsilonCtxtSet = new ArraySet<Ctxt>(1);
         epsilonCtxtSet.add(epsilon);
 
-        relIM = (ProgramRel) ClassicProject.g().getTrgt("chaIM");
+        relIM = (ProgramRel) ClassicProject.g().getTrgt("ci_IM");
 		relIM.load();
+		relCtxtInsMeth.zero();
 
 		doAnalysis();
 
 		relIM.close();
+		relCtxtInsMeth.save();
 
 		C();
 
@@ -135,10 +144,8 @@ public class ContextsAnalysis extends JavaAnalysis
         for (int mIdx = 0; mIdx < methToCtxts.length; mIdx++) {
             SootMethod meth = (SootMethod) domM.get(mIdx);
 			Set<Ctxt> ctxts = methToCtxts[mIdx];
-			if(ctxts == null){
-				//either meth is unreachable or a reachable stub
+			if(ctxts == null)//either meth is unreachable or a reachable stub
 				continue;
-			}
 			for(Ctxt c : ctxts){
 				relCM.add(c, meth);
 				//System.out.println("meth: " + meth + " ctxt: "+c);
@@ -153,16 +160,24 @@ public class ContextsAnalysis extends JavaAnalysis
 		relCH.zero();
 
 		for(int hIdx = 0; hIdx < HtoM.length; hIdx++){
-			int mIdx = HtoM[hIdx];
-			Unit alloc = HtoQ[hIdx];
-            Set<Ctxt> ctxts = methToCtxts[mIdx];
-            for (Ctxt oldCtxt : ctxts) {
-                Object[] oldElems = oldCtxt.getElems();
-                Object[] newElems = combine(K, alloc, oldElems);
-                Ctxt newCtxt = domC.setCtxt(newElems);
-                //relCC.add(oldCtxt, newCtxt);
-                relCH.add(newCtxt, alloc);
-            }
+			AllocNode alloc = HtoQ[hIdx];
+			if(alloc instanceof GlobalAllocNode){
+				Object[] newElems = combine(K, alloc, emptyElems);
+				Ctxt newCtxt = domC.setCtxt(newElems);
+				relCH.add(newCtxt, alloc);
+			} else {
+				int mIdx = HtoM[hIdx];
+				Set<Ctxt> ctxts = methToCtxts[mIdx];
+				if(ctxts == null)//either meth is unreachable or a reachable stub
+					continue;			
+				for (Ctxt oldCtxt : ctxts) {
+					Object[] oldElems = oldCtxt.getElems();
+					Object[] newElems = combine(K, alloc, oldElems);
+					Ctxt newCtxt = domC.setCtxt(newElems);
+					//relCC.add(oldCtxt, newCtxt);
+					relCH.add(newCtxt, alloc);
+				}
+			}
         }
 
         relCH.save();
@@ -179,6 +194,8 @@ public class ContextsAnalysis extends JavaAnalysis
 			int mIdx = ItoM[iIdx];
 			Unit invk = ItoQ[iIdx];
             Set<Ctxt> ctxts = methToCtxts[mIdx];
+			if(ctxts == null)//either meth is unreachable or a reachable stub
+				continue;			
             for (Ctxt oldCtxt : ctxts) {
                 Object[] oldElems = oldCtxt.getElems();
                 Object[] newElems = combine(K, invk, oldElems);
@@ -190,16 +207,22 @@ public class ContextsAnalysis extends JavaAnalysis
         relCI.save();
 
 		for(int hIdx = 0; hIdx < HtoM.length; hIdx++){
-			int mIdx = HtoM[hIdx];
-			Unit alloc = HtoQ[hIdx];
-            Set<Ctxt> ctxts = methToCtxts[mIdx];
-            for (Ctxt oldCtxt : ctxts) {
-                Object[] oldElems = oldCtxt.getElems();
-                Object[] newElems = combine(K, alloc, oldElems);
-                Ctxt newCtxt = domC.setCtxt(newElems);
-				relCC.add(oldCtxt, newCtxt);
-            }
-        }
+			AllocNode alloc = HtoQ[hIdx];
+			if(alloc instanceof GlobalAllocNode){
+				; //add nothing
+			} else {
+				int mIdx = HtoM[hIdx];
+				Set<Ctxt> ctxts = methToCtxts[mIdx];
+				if(ctxts == null)//either meth is unreachable or a reachable stub
+					continue;			
+				for (Ctxt oldCtxt : ctxts) {
+					Object[] oldElems = oldCtxt.getElems();
+					Object[] newElems = combine(K, alloc, oldElems);
+					Ctxt newCtxt = domC.setCtxt(newElems);
+					relCC.add(oldCtxt, newCtxt);
+				}
+			}
+		}
 		relCC.save();
 	}
 
@@ -209,6 +232,8 @@ public class ContextsAnalysis extends JavaAnalysis
 			int mIdx = ItoM[iIdx];
 			Unit invk = ItoQ[iIdx];
             Set<Ctxt> ctxts = methToCtxts[mIdx];
+			if(ctxts == null)//either meth is unreachable or a reachable stub
+				continue;			
             for (Ctxt oldCtxt : ctxts) {
                 Object[] oldElems = oldCtxt.getElems();
                 Object[] newElems = combine(K, invk, oldElems);
@@ -217,16 +242,22 @@ public class ContextsAnalysis extends JavaAnalysis
         }
 
 		for(int hIdx = 0; hIdx < HtoM.length; hIdx++){
-			int mIdx = HtoM[hIdx];
-			Unit alloc = HtoQ[hIdx];
-            Set<Ctxt> ctxts = methToCtxts[mIdx];
-            for (Ctxt oldCtxt : ctxts) {
-                Object[] oldElems = oldCtxt.getElems();
-                Object[] newElems = combine(K, alloc, oldElems);
-                domC.setCtxt(newElems);
-            }
+			AllocNode alloc = HtoQ[hIdx];
+			if(alloc instanceof GlobalAllocNode){
+				Object[] newElems = combine(K, alloc, emptyElems);
+				domC.setCtxt(newElems);
+			} else {
+				int mIdx = HtoM[hIdx];				
+				Set<Ctxt> ctxts = methToCtxts[mIdx];
+				if(ctxts == null)//either meth is unreachable or a reachable stub
+					continue;			
+				for (Ctxt oldCtxt : ctxts) {
+					Object[] oldElems = oldCtxt.getElems();
+					Object[] newElems = combine(K, alloc, oldElems);
+					domC.setCtxt(newElems);
+				}
+			}
         }
-
 		domC.save();		
 	}
 
@@ -237,20 +268,27 @@ public class ContextsAnalysis extends JavaAnalysis
         Map<SootMethod, Set<SootMethod>> methToPredsMap = new HashMap<SootMethod, Set<SootMethod>>();
 		
 		boolean ignoreStubs = PAGBuilder.ignoreStubs;
-        //DomStubs domStubs = (DomStubs) ClassicProject.g().getTrgt("Stubs");
-		NumberedSet stubs = stubMethods();
-		Iterator mIt = Program.g().scene().getReachableMethods().listener();
-		while(mIt.hasNext()){
-			SootMethod meth = (SootMethod) mIt.next();
+		stubs = stubMethods();
+		//Iterator mIt = Program.g().scene().getReachableMethods().listener();
+		//while(mIt.hasNext()){
+
+		final ProgramRel relReachableM = (ProgramRel) ClassicProject.g().getTrgt("ci_reachableM");		
+		relReachableM.load();
+		Iterable<SootMethod> mIt = relReachableM.getAry1ValTuples();
+		for(SootMethod meth : mIt){
+			//SootMethod meth = (SootMethod) mIt.next();
 			if(ignoreStubs && stubs.contains(meth)){
 				//System.out.println("reachstub "+meth);
 				continue;
 			}
 			int mIdx = domM.indexOf(meth);
-			if (meth == mainMeth || meth.getName().equals("<clinit>")){
+			boolean treatCI = treatCI(meth);
+			if (meth == mainMeth || meth.getName().equals("<clinit>") || treatCI){
                 roots.add(meth);
                 methToPredsMap.put(meth, emptyMethSet);
                 methToCtxts[mIdx] = epsilonCtxtSet;
+				if(treatCI)
+					relCtxtInsMeth.add(meth);
 			} else {
 				Set<SootMethod> predMeths = new HashSet<SootMethod>();
 				TIntArrayList clrSites = new TIntArrayList();
@@ -266,6 +304,8 @@ public class ContextsAnalysis extends JavaAnalysis
 				methToCtxts[mIdx] = emptyCtxtSet;
 			}
 		}
+		relReachableM.close();
+
 		process(roots, methToPredsMap);
 	}
 
@@ -334,7 +374,7 @@ public class ContextsAnalysis extends JavaAnalysis
         return view.getAry1ValTuples();
     }
 
-    private Object[] combine(int k, Unit inst, Object[] elems)
+    private Object[] combine(int k, Object inst, Object[] elems)
 	{
         int oldLen = elems.length;
         int newLen = Math.min(k - 1, oldLen) + 1;
@@ -381,4 +421,13 @@ public class ContextsAnalysis extends JavaAnalysis
 		return stubMethods;
     }
 
+	private boolean treatCI(SootMethod meth)
+	{
+		if(!stubs.contains(meth))
+			return false;
+		String sig = meth.getSignature();
+		if(sig.equals("<android.app.Activity: android.view.View findViewById(int)>"))
+			return false;
+		return true;
+	}
 }

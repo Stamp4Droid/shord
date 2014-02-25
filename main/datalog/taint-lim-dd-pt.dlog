@@ -32,6 +32,8 @@ StoreStat(f:F,v:V)   input   # f = v
 param(u:V,v:V,i:I)   input   # u is the formal parameter, v is actual arg, i is invocation stmt
 return(u:V,v:V,i:I) input   # u is the lhs at callsite, v is the return var, i is invocation stmt
 
+typeFilter(v:V,o:C) input   # type wise, v can point-to o
+
 MV(m:M,v:V) input # v is a ref type variable in m
 CM(c:C,m:M) input # c is a context of method m
 CC(c:C,d:C) input
@@ -73,6 +75,7 @@ interprocAssign(c:C,v:V,d:C,u:V)
 
 # source annotations
 queryRef(v) :- varIn(v).
+taintedSrc(o) :- varIn(v), pt(_,v,o).
 
 # recursive tainting at source
 queryFptAll(o) :- taintedSrc(o).
@@ -108,12 +111,12 @@ queryObj(o) :- tainted(o).
 # *******************************
 
 queryRefCtxt(c,u) :- queryRefCtxt(c,v), Assign(v,u).
-pt(c,v,o) :- queryRefCtxt(c,v), Assign(v,u), pt(c,u,o).
+pt(c,v,o) :- queryRefCtxt(c,v), Assign(v,u), pt(c,u,o), typeFilter(v,o).
 
 interprocAssign(d,v,c,u) :- queryRefCtxt(d,v), param(v,u,i), MV(m,v), CICM(c,i,d,m).
 interprocAssign(d,v,c,u) :- queryRefCtxt(d,v), return(v,u,i), MV(m,u), CICM(d,i,c,m).
 queryRefCtxt(c,u) :- interprocAssign(_,_,c,u).
-pt(d,v,o) :- interprocAssign(d,v,c,u), pt(c,u,o).
+pt(d,v,o) :- interprocAssign(d,v,c,u), pt(c,u,o), typeFilter(v,o).
 #queryRefCtxt(c,u) :- queryRefCtxt(d,v), MV(m,v), param(v,u,i), CICM(c,i,d,m).
 #queryRefCtxt(c,u) :- queryRefCtxt(d,v), return(v,u,i), MV(m,u), CICM(d,i,c,m).
 
@@ -145,10 +148,10 @@ queryRef(x)       :- queryFptBase(f,o), CH(o,h), Store(_,f,x), ci_pt(x,h).
 queryRefCtxt(c,w) :- queryFptBase(f,o), pt(c,x,o), Store(w,f,x).
 fpt(o1,f,o2)      :- queryFptBase(f,o2), pt(c,x,o2), Store(w,f,x), pt(c,w,o1).
 
-# rules for handling queryObj queries
-pt(c,v,o) :- queryObj(o), pt(c,u,o), Assign(v,u).
-pt(d,v,o) :- queryObj(o), pt(c,u,o), MV(m,v), param(v,u,i), CICM(c,i,d,m).
-pt(d,v,o) :- queryObj(o), pt(c,u,o), MV(m,u), return(v,u,i), CICM(d,i,c,m).
+# rules for handling queryObj queries.
+pt(c,v,o) :- queryObj(o), pt(c,u,o), Assign(v,u), typeFilter(v,o).
+pt(d,v,o) :- queryObj(o), pt(c,u,o), param(v,u,i), typeFilter(v,o), MV(m,v), CICM(c,i,d,m).
+pt(d,v,o) :- queryObj(o), pt(c,u,o), return(v,u,i), typeFilter(v,o), MV(m,u), CICM(d,i,c,m).
 
 queryRefCtxt(c,w) :- queryObj(o), pt(c,x,o), Store(w,_,x).
 fpt(o1,f,o2)      :- queryObj(o2), pt(c,x,o2), Store(w,f,x), pt(c,w,o1).

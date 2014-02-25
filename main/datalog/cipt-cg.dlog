@@ -51,12 +51,12 @@ Dispatch(t:T,s:S,m:M) input     # t.m has subsig s.
 ci_reachableT(t:T) 
 interprocAssign(u:V,v:V) 
 ci_reachableI(i:I) 
-ci_reachableM(m:M) 
 IHM(i:I,h:H,m:M) 
 ci_fpt(o1:H,f:F,o2:H)
 ci_fptStat(f:F,o:H)
 ci_typeFilter(v:V,o:H) # type wise, v can point-to o
 
+ci_reachableM(m:M) output
 ci_IM(i:I,m:M)   output  # i calls method m
 ci_pt(v:V,o:H)   output  # v points-to h
 

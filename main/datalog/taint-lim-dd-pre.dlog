@@ -15,7 +15,8 @@
 .bddvarorder L0_Z0xZ1_M0_S0_T0_C0xC1_V0xV1_U0xU1_H0_F0_I0
 
 # INPUT RELATIONS =======================
-ci_pt(v:V,h:H) input
+#ci_pt(v:V,h:H) input
+ci_IM(i:I,m:M) input
 
 CM(c:C,m:M) input
 CH(c:C,h:H) input
@@ -113,11 +114,13 @@ flowPrimPrim(u,v) :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,u), MmethPrimArg(m,z
 
 reachableCM(c,m) :- CM(c,m).
 reachableCI(c,i) :- MI(m,i), CM(c,m).
-IHM(i,h,m2) :- IinvkArg(i,0,v), ci_pt(v,h), HT(h,t), VirtIM(i,m1), SubSig(m1,s), Dispatch(t,s,m2).
+#IHM(i,h,m2) :- IinvkArg(i,0,v), ci_pt(v,h), HT(h,t), VirtIM(i,m1), SubSig(m1,s), Dispatch(t,s,m2).
 
-CICMtmp(c,i,o,m) :- reachableCI(c,i), IHM(i,h,m), CH(o,h).
-CICMtmp(c,i,d,m) :- reachableCI(c,i), StatIM(i,m), CC(c,d), CI(d,i).
-CICMtmp(c,i,o,m) :- reachableCI(c,i), SpecIM(i,m), IinvkArg(i,0,v), ci_pt(v,h), CH(o,h).
+#CICMtmp(c,i,o,m) :- reachableCI(c,i), IHM(i,h,m), CH(o,h).
+#CICMtmp(c,i,d,m) :- reachableCI(c,i), StatIM(i,m), CC(c,d), CI(d,i).
+#CICMtmp(c,i,o,m) :- reachableCI(c,i), SpecIM(i,m), IinvkArg(i,0,v), ci_pt(v,h), CH(o,h).
+
+CICMtmp(c,i,d,m) :- reachableCI(c,i), CC(c,d), CI(d,i), ci_IM(i,m).
 
 CICM(c,i,d,m) :- CICMtmp(c,i,d,m), !CtxtInsMeth(m).
 CICM(c,i,0,m) :- CICMtmp(c,i,_,m), CtxtInsMeth(m).
