@@ -38,15 +38,14 @@ MmethRet(m:M,z:Z,v:V)     input
 MmethPrimArg(m:M,z:Z,u:U) input
 MmethPrimRet(m:M,z:Z,u:U) input
 
-
-IinvkArg(i:I,n:Z,v:V) input
-StatIM(i:I,m:M) input     # i statically invokes m. 
-SpecIM(i:I,m:M) input     # i special invoke m. 
-VirtIM(i:I,m:M) input     # i virtually invokes m. 
+#IinvkArg(i:I,n:Z,v:V) input
+#StatIM(i:I,m:M) input     # i statically invokes m. 
+#SpecIM(i:I,m:M) input     # i special invoke m. 
+#VirtIM(i:I,m:M) input     # i virtually invokes m. 
 
 CtxtInsMeth(m:M) input
-SubSig(m:M,s:S) input     # s is subsignature of m.
-Dispatch(t:T,s:S,m:M) input     # t.m has subsig s.
+#SubSig(m:M,s:S) input     # s is subsignature of m.
+#Dispatch(t:T,s:S,m:M) input     # t.m has subsig s.
 # =======================================
 
 # OUTPUT RELATIONS =======================
@@ -60,7 +59,7 @@ varOut(v:V) output
 
 transferRefRef(u:V,v:V)   output
 transferPrimRef(u:U,v:V)  output
-otransferRefPrim(u:V,v:U)  output
+transferRefPrim(u:V,v:U)  output
 transferPrimPrim(u:U,v:U) output
 
 flowRefRef(u:V,v:V)   output

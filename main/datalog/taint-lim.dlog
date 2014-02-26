@@ -20,12 +20,14 @@
 .include "L.dom"
 .include "CL.dom"
 
-.bddvarorder L0_Z0xZ1_M0_CL0xCL1_C0xC1_V0xV1_U0xU1_F0_I0
+.bddvarorder L0_M0_CL0xCL1_C0xC1_V0xV1_U0xU1_F0_I0
 
 # INPUT RELATIONS =============================================================
 
 pt(c:C,v:V,o:C)    input
 fpt(o1:C,f:F,o2:C) input
+reachableCM(c:C,m:M) input # c is a context of method m
+CICM(d:C,i:I,c:C,m:M)   input
 
 AssignPrim(v:U,u:U)     input # v = u
 LoadPrim(y:U,x:V,f:F)   input # y = x.f
@@ -38,8 +40,6 @@ returnPrim(u:U,v:U,i:I) input # u: lhs at callsite, v: return var, i: invocation
 
 MU(m:M,u:U) input # u is a prim type variable in m
 MV(m:M,v:V) input # v is a ref type variable in m
-reachableCM(c:C,m:M) input # c is a context of method m
-CICM(d:C,i:I,c:C,m:M)   input
 
 CCL(c:C,cl:CL) input 
 LCL(l:L,cl:CL) input
@@ -47,18 +47,20 @@ LCL(l:L,cl:CL) input
 sinkCtxtLabel(l:CL) input
 srcCtxtLabel(l:CL) input
 
-InLabelRet(l:L,m:M)           input
-InLabelArg(l:L,m:M,z:Z)       input
-OutLabelRet(l:L,m:M)          input
-OutLabelArg(l:L,m:M,z:Z)      input
-ArgRetTransfer(m:M,z:Z)       input
-ArgArgTransfer(m:M,z0:Z,z1:Z) input
-ArgArgFlow(m:M,z0:Z,z1:Z)     input
+varInLabel(v:V,l:L)       input
+varInLabelPrim(v:U,l:L)   input
+varOutLabel(v:V,l:L)      input
+varOutLabelPrim(v:U,l:L)  input
 
-MmethArg(m:M,z:Z,v:V)     input
-MmethRet(m:M,z:Z,v:V)     input
-MmethPrimArg(m:M,z:Z,u:U) input
-MmethPrimRet(m:M,z:Z,u:U) input
+transferRefRef(u:V,v:V)   input
+transferPrimRef(u:U,v:V)  input
+transferRefPrim(u:V,v:U) input
+transferPrimPrim(u:U,v:U) input
+
+flowRefRef(u:V,v:V)   input
+flowPrimRef(u:U,v:V)  input
+flowRefPrim(u:V,v:U)  input
+flowPrimPrim(u:U,v:U) input
 
 # OUTPUT RELATIONS ============================================================
 
@@ -67,17 +69,6 @@ labelPrim(c:C,u:U,l:CL) output # (c,u) is labeled with l
 flow(src:CL,sink:CL) output
 
 # INTERMEDIATE RELATIONS ======================================================
-
-varInLabel(v:V,l:L)
-varInLabelPrim(v:U,l:L)
-varOutLabel(v:V,l:L)
-varOutLabelPrim(v:U,l:L)
-
-transferRefRef(u:V,v:V)
-transferPrimRef(u:U,v:V)
-transferRefPrim(u:V,v:U)
-transferPrimPrim(u:U,v:U)
-
 DUDU(c:C,u:U,d:C,v:U) 
 
 flowRefRef(u:V,v:V)
@@ -99,33 +90,6 @@ sink(o:C,l:CL)               # o escapes into sink l
 sinkPrim(c:C,u:U,l:CL)       # (c,u) escapes into sink l
 
 # RULES =======================================================================
-
-# translation of annotation facts
-
-varInLabel(v,l)     :- InLabelRet(l,m), MmethRet(m,_,v).
-varInLabel(v,l)     :- InLabelArg(l,m,z), MmethArg(m,z,v).
-varInLabelPrim(v,l) :- InLabelRet(l,m), MmethPrimRet(m,_,v).
-varInLabelPrim(v,l) :- InLabelArg(l,m,z), MmethPrimArg(m,z,v).
-
-varOutLabel(v,l)     :- OutLabelRet(l,m), MmethRet(m,_,v).
-varOutLabel(v,l)     :- OutLabelArg(l,m,z), MmethArg(m,z,v).
-varOutLabelPrim(v,l) :- OutLabelRet(l,m), MmethPrimRet(m,_,v).
-varOutLabelPrim(v,l) :- OutLabelArg(l,m,z), MmethPrimArg(m,z,v).
-
-transferRefRef(u,v)   :- ArgArgTransfer(m,z0,z1), MmethArg(m,z0,u), MmethArg(m,z1,v).
-transferRefPrim(u,v)  :- ArgArgTransfer(m,z0,z1), MmethArg(m,z0,u), MmethPrimArg(m,z1,v).
-transferPrimRef(u,v)  :- ArgArgTransfer(m,z0,z1), MmethPrimArg(m,z0,u), MmethArg(m,z1,v).
-transferPrimPrim(u,v) :- ArgArgTransfer(m,z0,z1), MmethPrimArg(m,z0,u), MmethPrimArg(m,z1,v).
-
-transferRefRef(u,v)   :- ArgRetTransfer(m,z), MmethArg(m,z,u), MmethRet(m,_,v).
-transferRefPrim(u,v)  :- ArgRetTransfer(m,z), MmethArg(m,z,u), MmethPrimRet(m,_,v).
-transferPrimRef(u,v)  :- ArgRetTransfer(m,z), MmethPrimArg(m,z,u), MmethRet(m,_,v).
-transferPrimPrim(u,v) :- ArgRetTransfer(m,z), MmethPrimArg(m,z,u), MmethPrimRet(m,_,v).
-
-flowRefRef(u,v)   :- ArgArgFlow(m,z0,z1), MmethArg(m,z0,u), MmethArg(m,z1,v).
-flowRefPrim(u,v)  :- ArgArgFlow(m,z0,z1), MmethArg(m,z0,u), MmethPrimArg(m,z1,v).
-flowPrimRef(u,v)  :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,u), MmethArg(m,z1,v).
-flowPrimPrim(u,v) :- ArgArgFlow(m,z0,z1), MmethPrimArg(m,z0,u), MmethPrimArg(m,z1,v).
 
 # (backward) escape flow
 

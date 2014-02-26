@@ -15,6 +15,7 @@
 
 Assign(v:V,u:V)     input   # v = u
 Alloc(v:V,h:H)      input   # v is the lhs in the new stmt h
+GlobalAlloc(v:V,h:H) input   # v is the lhs in the new stmt h
 Load(y:V,x:V,f:F)   input   # y = x.f
 Store(u:V,f:F,v:V)  input   # u.f = v
 LoadStat(y:V,f:F)   input   # y = f
@@ -38,6 +39,7 @@ fptStat(f:F,o:C)
 #    RULES
 ###################
 
+pt(c,v,o) :- GlobalAlloc(v,h), MV(m,v), CM(c,m), CH(o,h).
 pt(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
 pt(c,v,o) :- pt(c,u,o), Assign(v,u), typeFilter(v,o).
 pt(d,u,o) :- pt(c,v,o), param(u,v,i), typeFilter(u,o), CC(c,d), CI(d,i).
