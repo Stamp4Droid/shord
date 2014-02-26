@@ -14,26 +14,7 @@
 
 <xs:simpleType name="GrammarNTSymbol">
   <xs:restriction base="xs:token">
-    <xs:enumeration value="ArrElemFT"/>
-    <xs:enumeration value="FTImm"/>
-    <xs:enumeration value="FlowsTo"/>
-    <xs:enumeration value="InstFldFT"/>
-    <xs:enumeration value="Label2Obj"/>
-    <xs:enumeration value="Label2Prim"/>
-    <xs:enumeration value="Label2PrimArrEl"/>
-    <xs:enumeration value="Label2PrimFld"/>
-    <xs:enumeration value="Label2Ref"/>
-    <xs:enumeration value="LabelObjIn"/>
-    <xs:enumeration value="Obj2Prim"/>
-    <xs:enumeration value="Obj2Ref"/>
-    <xs:enumeration value="Obj2Sink"/>
-    <xs:enumeration value="Prim2Sink"/>
-    <xs:enumeration value="Src2Sink"/>
-    <xs:enumeration value="XferObjOut"/>
-    <xs:enumeration value="T1"/>
-    <xs:enumeration value="T2"/>
-    <xs:enumeration value="T3"/>
-    <xs:enumeration value="T4"/>
+    <xs:pattern value="[A-Z][_a-zA-Z0-9]*"/>
   </xs:restriction>
 </xs:simpleType>
 
@@ -102,6 +83,11 @@
 <xs:element name="srcLabel" type="IntraProceduralStep" substitutionGroup="step"/>
 <xs:element name="statStorePrim" type="IntraProceduralStep" substitutionGroup="step"/>
 <xs:element name="statStoreRef" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="new" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="label2Prim" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="label2Ref" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="prim2Sink" type="IntraProceduralStep" substitutionGroup="step"/>
+<xs:element name="ref2Sink" type="IntraProceduralStep" substitutionGroup="step"/>
 
 <xs:complexType name="CallStep">
   <xs:complexContent>
@@ -119,28 +105,13 @@
 <xs:element name="retPrim" type="ReturnStep" substitutionGroup="step"/>
 <xs:element name="retRef" type="ReturnStep" substitutionGroup="step"/>
 
-<!-- Steps (other than calls and returns) that cross to a new context. Still
-     expected to retain a consistent view of the stack. -->
-<xs:complexType name="CtxtCrossingStep">
+<xs:complexType name="StackCrossingStep">
   <xs:complexContent>
-    <xs:extension base="IndexedTerminalStep"/>
+    <xs:extension base="TerminalStep"/>
   </xs:complexContent>
 </xs:complexType>
-<xs:element name="label2Prim" type="CtxtCrossingStep" substitutionGroup="step"/>
-<xs:element name="label2Ref" type="CtxtCrossingStep" substitutionGroup="step"/>
-<xs:element name="new" type="CtxtCrossingStep" substitutionGroup="step"/>
-<xs:element name="prim2Sink" type="CtxtCrossingStep" substitutionGroup="step"/>
-<xs:element name="ref2Sink" type="CtxtCrossingStep" substitutionGroup="step"/>
-
-<!-- Steps that can arbitrarily set the context, even to otherwise invalid
-     states. -->
-<xs:complexType name="CtxtSettingStep">
-  <xs:complexContent>
-    <xs:extension base="IndexedTerminalStep"/>
-  </xs:complexContent>
-</xs:complexType>
-<xs:element name="statLoadPrim" type="CtxtSettingStep" substitutionGroup="step"/>
-<xs:element name="statLoadRef" type="CtxtSettingStep" substitutionGroup="step"/>
+<xs:element name="statLoadPrim" type="StackCrossingStep" substitutionGroup="step"/>
+<xs:element name="statLoadRef" type="StackCrossingStep" substitutionGroup="step"/>
 
 <xs:complexType name="StoreStep">
   <xs:complexContent>

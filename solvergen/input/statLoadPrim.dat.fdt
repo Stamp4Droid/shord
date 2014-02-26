@@ -1,1 +1,1 @@
-@DUMP:LoadStatPrimCtxt(%C,%L,%F):f%F u%L %C@
+@DUMP:LoadStatPrim(%U,%F):f%F u%U@

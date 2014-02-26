@@ -1,0 +1,68 @@
+## CONFIGURATION ==============================================================
+
+# Post-processing for context-insensitive analyses
+# name=post-ins-dlog
+
+.include "Z.dom"
+.include "M.dom"
+.include "V.dom"
+.include "U.dom"
+.include "I.dom"
+.include "L.dom"
+
+.bddvarorder Z0_M0_V0_U0_I0_L0
+
+## INPUT RELATIONS ============================================================
+
+# Method invocations
+chaIM(i:I,m:M) input
+MmethArg(m:M,z:Z,v:V) input
+MmethPrimArg(m:M,z:Z,u:U) input
+
+# Method annotations
+SrcLabel(l:L) input
+SinkLabel(l:L) input
+InLabelRet(l:L,m:M) input
+InLabelArg(l:L,m:M,z:Z) input
+OutLabelRet(l:L,m:M) input
+OutLabelArg(l:L,m:M,z:Z) input
+
+# Taint flow information
+out_taintedRefVar(l:L,v:V) input
+out_taintedPrimVar(l:L,u:U) input
+
+# Stub facts
+Stub(m:M) input
+
+## OUTPUT RELATIONS ===========================================================
+
+# Call graph information
+# chaIM(i:I,m:M) will be used directly
+out_reachableM(m:M) output
+
+# Taint flow information
+# out_taintedRefVar(l:L,v:V) has been generated already
+# out_taintedPrimVar(l:L,u:U) has been generated already
+# out_flow(src:L,sink:L) has been generated already
+
+# Annotations on reachable methods
+out_taintSrc(src:L,m:M) output
+out_taintSink(sink:L,m:M) output
+
+# Stub information
+out_taintedStub(m:M) output
+
+## RULES ======================================================================
+
+out_reachableM(m) :- chaIM(_,m).
+
+out_taintSrc(l,m) :- chaIM(_,m), InLabelRet(l,m), SrcLabel(l).
+out_taintSrc(l,m) :- chaIM(_,m), InLabelArg(l,m,_), SrcLabel(l).
+
+out_taintSink(l,m) :- chaIM(_,m), InLabelArg(l,m,_), SinkLabel(l).
+out_taintSink(l,m) :- chaIM(_,m), InLabelRet(l,m), SinkLabel(l).
+out_taintSink(l,m) :- chaIM(_,m), OutLabelRet(l,m).
+out_taintSink(l,m) :- chaIM(_,m), OutLabelArg(l,m,_).
+
+out_taintedStub(m) :- out_taintedRefVar(_,v), MmethArg(m,_,v), Stub(m).
+out_taintedStub(m) :- out_taintedPrimVar(_,v), MmethPrimArg(m,_,v), Stub(m).

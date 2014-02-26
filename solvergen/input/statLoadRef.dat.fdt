@@ -1,1 +1,1 @@
-@DUMP:LoadStatCtxt(%C,%L,%F):f%F v%L %C@
+@DUMP:LoadStat(%V,%F):f%F v%V@

@@ -26,7 +26,7 @@ public class Postmortem extends JavaAnalysis
 			SrcFlow.class
 			,ArgSinkFlow.class
 			,SrcSinkFlow.class
-			,SrcSinkFlowViz.class
+			//,SrcSinkFlowViz.class
 			////,ReachableStub.class,
 			,TaintedStub.class
 			////,InvkNone.class,
@@ -54,7 +54,7 @@ public class Postmortem extends JavaAnalysis
 			Class[] reports = processingSrc ? srcReports : apkReports;
 			for(Class reportClass : reports){
 				XMLReport report = report = (XMLReport) reportClass.newInstance();
-				
+
 				boolean show = true;
 				for(int i = 0; show && i < dontShowReports.length; i++){
 					if(reportClass.equals(dontShowReports[i]))
@@ -62,15 +62,15 @@ public class Postmortem extends JavaAnalysis
 				}
 				if(show)
 					reportsTxtWriter.println(report.getTitle() + " " + report.getCanonicalReportFilePath());
-				
+
 				report.write();
 			}
-			
+
 			reportsTxtWriter.close();
 		}catch(Exception e){
 			throw new Error(e);
 		}
-		
+
 		boolean printClasses =
 			PropertyHelper.getBoolProp("stamp.print.allclasses");
 		System.out.println("stamp.print.allclasses = "+printClasses);

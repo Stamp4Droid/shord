@@ -3,7 +3,7 @@
 
   <target name="-prepare-backend-solvergen">
     <!-- Compile SolverGen analysis. -->
-    <property name="stamp.solvergen.analysis" value="s-r-pt-lace^null-r-l"/>
+    <property name="stamp.solvergen.analysis" value="s-i-pt-cal^null-l"/>
     <runtarget target="make-cfl-solver"/>
 
     <!-- Prepare SolverGen I/O directories. -->
@@ -12,7 +12,7 @@
 
     <!-- Register backend-specific analyses. -->
     <property name="stamp.analyses.main"
-	      value="cfl-flat-dlog,facts-dumper-java,cfl-solver-runner-java,dat-rel-parser-java"/>
+	      value="cfl-flat-dlog,facts-dumper-java,cfl-solver-runner-java,dat-rel-parser-java,post-ins-dlog"/>
 
     <!-- Set backend-specific system properties. -->
     <!-- Facts Dumper options -->
