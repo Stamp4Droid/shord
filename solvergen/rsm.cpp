@@ -124,8 +124,6 @@ void RSM::parse_dir(const std::string& dirname) {
     }
 }
 
-enum class ParsingMode {NODES, EDGES};
-
 void RSM::parse_file(const fs::path& fpath) {
     std::string fbase(fpath.filename().string());
     if (!boost::algorithm::ends_with(fbase, FILE_EXTENSION)) {
@@ -163,7 +161,7 @@ void RSM::parse_file(const fs::path& fpath) {
 	    }
 	    bool can_be_state = true, initial = false, final = false;
 	    bool can_be_box = true;
-	    Ref<Component> box_rsm = Ref<Component>::none();
+	    Ref<Component> box_rsm;
 	    for (auto iter = toks.begin() + 1; iter != toks.end(); ++iter) {
 		if (*iter == "in") {
 		    EXPECT(can_be_state);
@@ -222,6 +220,9 @@ void RSM::parse_file(const fs::path& fpath) {
 		}
 	    }
 	} break;
+
+	default:
+	    assert(false);
 	}
     }
 

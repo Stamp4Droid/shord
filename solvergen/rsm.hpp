@@ -164,7 +164,7 @@ public:
     Index<Table<Exit>,Ref<Box>,&Exit::from> exits;
 private:
     Registry<State> states;
-    Ref<State> initial = Ref<State>::none();
+    Ref<State> initial;
     std::set<Ref<State>> final;
 private:
     explicit Component(const std::string& name, Ref<Component> ref)
@@ -272,7 +272,11 @@ public:
     }
 };
 
-// TODO: Disallow adding edges while an iterator is live.
+enum class ParsingMode {NODES, EDGES};
+
+// TODO:
+// - Disallow adding edges while an iterator is live.
+// - Additional indexing dimensions.
 class Graph {
     typedef Index<Table<Edge>,Ref<Tag>,&Edge::tag> SrcLabelSlice;
     typedef Index<PtrTable<Edge>,Ref<Tag>,&Edge::tag> LabelSlice;
@@ -346,7 +350,7 @@ private:
     }
 public:
     explicit Worker(Ref<Node> start, const Component& comp)
-	: start(start), ref(Ref<Worker>::none()), comp(comp) {}
+	: start(start), comp(comp) {}
     bool merge(const Component& comp, const std::set<Ref<Node>>& new_tgts);
     Result summarize(const Graph& graph, SummaryWorklist& worklist) const;
 };

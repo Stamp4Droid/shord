@@ -352,6 +352,11 @@ public:
 // - If the key is composite, need to group the attributes in a struct
 // - "Void" key specialization: don't even make a map
 // - Define the types of the extra parameters in the managed class
+// - Common namespace for 2+ types
+//   enforcing no conflicts
+//   each addition is checked against both; one must reject, one must accept
+//   'merge' should report failure in a less intrusive way
+//   instances: State & Box, IdxSymbol & UnIdxSymbol
 
 // Alternative: store pointers to objects:
 //   std::vector<T*> array;
@@ -379,18 +384,18 @@ template<typename T> class Ref {
 public:
     unsigned int value;
 private:
-    explicit Ref(unsigned int value) : value(value) {}
-    static Ref<T> for_value(unsigned int value) {
-	Ref<T> ref(value);
-	EXPECT(ref.valid());
-	return ref;
+    explicit Ref(unsigned int value) : value(value) {
+	EXPECT(valid());
     }
 public:
+    explicit Ref() : value(std::numeric_limits<unsigned int>::max()) {}
+    Ref(const Ref& rhs) : value(rhs.value) {}
+    Ref& operator=(const Ref& rhs) {
+	value = rhs.value;
+	return *this;
+    }
     bool valid() const {
 	return value < std::numeric_limits<unsigned int>::max();
-    }
-    static Ref<T> none() {
-	return Ref<T>(std::numeric_limits<unsigned int>::max());
     }
     bool operator==(const Ref& rhs) const {
 	return value == rhs.value;
@@ -428,7 +433,7 @@ public:
 	return array.at(ref.value).get();
     }
     template<typename... ArgTs> T& make(const Key& key, ArgTs&&... args) {
-	Ref<T> next_ref = Ref<T>::for_value(array.size());
+	Ref<T> next_ref(array.size());
 	auto res = map.emplace(key, T(key, next_ref,
 				      std::forward<ArgTs>(args)...));
 	EXPECT(res.second);
