@@ -45,6 +45,8 @@ std::ostream& operator<<(std::ostream& os, const Bar& obj) {
 }
 
 int main() {
+    std::cout << std::boolalpha;
+
     for (const boost::filesystem::path& p : Directory("/boot")) {
 	std::cout << p << std::endl;
     }
@@ -93,6 +95,45 @@ int main() {
     std::cout << std::endl;
     for (const Foo& obj : idx) {
 	std::cout << obj << std::endl;
+    }
+    std::cout << std::endl;
+
+    int counter = 0;
+    mi::FlatIndex<
+	bool,mi::FlatIndex<
+		 Ref<Bar>,mi::Index<
+			      int,
+			      mi::Table<float,double>>>> nidx(nullptr, bars);
+    for (const Bar& bar : bars) {
+	int x = ++counter;
+	float y = ++counter + 0.33;
+	double z = ++counter + 0.66;
+	nidx.insert(bar.flag, bar.ref, x, y, z);
+    }
+    struct {
+	bool flag;
+	Ref<Bar> ref;
+	int a;
+	float b;
+	double c;
+    } res;
+    std::cout << "Should see " << nidx.size() << " entries:" << std::endl;
+    auto it1 = nidx.iter(res.flag, res.ref, res.a, res.b, res.c);
+    while (it1.next()) {
+	std::cout << res.flag << " " << res.ref << " "
+		  << res.a << " " << res.b << " " << res.c << std::endl;
+    }
+    std::cout << "Should see " << nidx[true].size() << " entries:" << std::endl;
+    auto it2 = nidx[true].iter(res.ref, res.a, res.b, res.c);
+    while (it2.next()) {
+	std::cout << res.ref << " "
+		  << res.a << " " << res.b << " " << res.c << std::endl;
+    }
+    std::cout << "Should see " << nidx[false][bars.find("bbb").ref].size()
+	      << " entries:" << std::endl;
+    auto it3 = nidx[false][bars.find("bbb").ref].iter(res.a, res.b, res.c);
+    while (it3.next()) {
+	std::cout << res.a << " " << res.b << " " << res.c << std::endl;
     }
     std::cout << std::endl;
 

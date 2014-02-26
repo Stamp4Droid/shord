@@ -2,9 +2,11 @@
 #define UTIL_HPP
 
 #include <boost/filesystem.hpp>
+#include <algorithm>
 #include <cassert>
 #include <cstdlib>
 #include <deque>
+#include <forward_list>
 #include <functional>
 #include <iostream>
 #include <iterator>
@@ -368,6 +370,9 @@ public:
 //     return new T(name, ref, std::forward<ArgTs>(args)...);
 // }
 
+namespace mi {
+    template<typename T> class KeyTraits;
+}
 template<typename T> class Ref;
 template<typename T> class Registry;
 template<typename S, typename C, const Ref<C> S::Tuple::* MemPtr>
@@ -377,6 +382,7 @@ class FlatIndex;
 // Registry using a const Ref.
 template<typename T> class Ref {
     friend Registry<T>;
+    friend mi::KeyTraits<Ref<T>>;
     // TODO: This should be with C==T, but partial specialization is not
     // allowed on friend class declarations.
     template<typename S, typename C, const Ref<C> S::Tuple::* MemPtr>
@@ -843,5 +849,512 @@ public:
 	return pri_idx.size();
     }
 };
+
+// OPTIMIZED MULTI-LEVEL INDEXING =============================================
+
+// Features:
+// - Iterators fill in a provided record, passed in as a set of references
+// - Result tuples need to be default-constructible
+//   the contents are NOT valid when passed to the iterator constructor
+//   need the first call to next() to return true before there's anything valid
+// - next() tries to move the iterator, and returns true if it succeeds
+// - Iterators cache their position, and wrap sub iterators
+//   each iterator knows if it's reached the end
+// - Each iterator has the address where it must update its field on each move
+//   only update it when we move on the current level, not just on sub-levels
+//   (assuming the result tuples doesn't get modified by the client code)
+
+// Primary extensions:
+// - implement 'contains' (or 'find')
+// - replace all uses of old framework
+//   (need to suitably rewrite the data structures as PODs)
+//   fix unit tests, remove relevant code
+// - safe pre-allocation:
+//   - pick a safe max value when writing the program
+//   - enforce a static limit on the relevant Registry
+//     will fail if it's asked to create more than that
+//     would also help to minimize its size
+//     (pick the smallest representation possible)
+//     then can assume that in any Index over that
+//     (will never require higher values)
+//   - allow the limit to be picked dynamically (when we're done adding refs)
+//     but "freeze" that set, and assert it's not frozen whenever it's modified
+//     (perhaps only during debugging)
+// - implement multi-indexing properly, to connect all dimensions
+// - implement clear()
+//   special case enabled if the underlying type is simple: memset to 0
+//   should then probably use an array instead of a vector
+//   this should allow us to reuse this scheme for worker Worklist
+//   (and share with all)
+// - more robust index use: each level knows what attribute it controls
+//   instantiated with a member variable pointer
+//   use that pointer to decide what to modify on the result tuple
+//   harder to do on the bottom container:
+//   variadic templates don't allow non-type parameters
+//   - use a unique empty tag type for each member
+//   - implement through macros
+//   - use typelists
+// - use an actual struct for the results
+//   (even though no such struct is stored)
+//   pass in a default-constructed such struct
+//   some restrictions are imposed on this struct
+//   (e.g. its fields can't be const)
+//   all iterators accept pointer to full struct
+// - special Table version for one or more small-width/ref types: BitSet
+//   max width is provided through a hint parameter (for Refs: the Registry)
+//   can then implement TwoDimBitSet as FlatIndex<...BitSet<...>>
+//   (as long as we also implement clear() efficiently)
+// - set the key parameters on iteration
+//   mostly for completeness: the whole result tuple is now valid
+//   if parameters haven't been exhausted yet, set that field directly
+// - combine the two dimensions of lookup and query
+//   while parameters haven't been exhausted, pick that key and follow it
+//   if now parameters remaining, start iteration
+//   also need to explicitly specify which dimension we pick
+// - hack to avoid iterating on bottom fields, if not requested
+//   create an iterator to a dummy singleton container
+
+// Secondary extensions:
+// - abstract-out size type
+// - auto-increment attributes
+// - more index implementations:
+//   - hashtable
+//   - dynamically growing flat table of pointers
+//   - sorted k-ptr to allocated wrapped
+// - named indices (use classes as index tags)
+// - handle derived classes correctly
+// - FlatIndex for small enums
+// - keep the kvlist of LightIndex sorted
+// - additional FD-mandated fields
+//   check dynamically -- merge function?
+//   no space overhead! will be second part of tuple
+//   but can't index on those levels, because they're mutable
+//   can edit through containers
+// - reduce code duplication among index classes
+// - having trouble using std::forward and &&
+//   for now, doing all additions through const refs => copying occurs
+// - use boost::multi_index or boost::intrusive
+// - can simply use the first choice when dereferencing a MultiIndex?
+//   will work if there's no type mix
+// - indexing on multiple attributes concurrently (e.g. dir + symbol)
+// - pattern matching-like support:
+//   - ignores
+//     especially convenient if they concern fields at the bottom of the tree
+//     don't iterate over the rest of the indices, since we don't require them
+//   - result fields
+//   - provided fields
+//   - constraints (richer filtering)
+//     passed to the iterators as a predicate
+//   to query, pass a pattern down the index tree
+//   then each level:
+//   - uses the correct map
+//   - removes the matched field from the pattern
+//   - passes the new pattern down
+//   each pattern defines a "view"
+//   i.e. a data structure optimized for retrieving only part of the answer
+// - each level "reports" its full set of handled attributes
+//   combines its own field with those of its children
+//   this way, at fork points we can decide based on what the children report
+//   need a way to produce a normal form for "set of handled fields"
+//   => need member pointer ordering and equality
+// - just use tuples
+//   associate member variables with unique, empty type 'tags'
+//   could provide a wrapper that presents it as a struct
+// - special iteration syntax:
+//   - re-use range-for loop syntax:
+//     - operator* returns a reference to the result struct
+//     - begin() calls iter()
+//     - end() returns a constant, maybe even not of the same type
+//     - operator== only works for the end() special value, and triggers next()
+//     - operator++ does nothing
+//     this is highly irregular semantically
+//   - define custom syntax through macros
+//     maybe even combine it with typelist macros:
+//     e.g. QUERY(e, edges, false, src) ==>
+//     for (typename decltype(edges)::Tuple e,
+//          typename decltype(edges)::Iterator it = edges.iter(e, false);
+// 	 it.next();)
+// - currently can only have FlatIndex on the top
+//   generalize hint passing to allow this deeper in the hierarchy
+//   would need to cache the widths on parent levels
+//   because we'd need to construct new sub-indices dynamically
+// - support resizing of Flatindex?
+//   would need to support move semantics on indices
+// - outer iterator instantiates the result struct
+//   will need to allocate on the heap, and manage its lifetime
+//   call separate functions on the wrapped iters, that don't allocate a struct
+//   return a const ref to the caller => we're certain they haven't modified it
+// - ensure that all fields are covered
+//   - recursively construct the full tuple covered by all indices
+//     need to sort and unique the fields
+//     compare with a typedef of the expected struct
+//   - build the tuple we're expecting to get
+//     then compare its size with the result struct
+//     but might be different order
+//     can't rely on this behavior anyway
+//   - include the type of the whole struct at the bottom container
+//     also at the top?
+//   - check that all forks give the same resulting tuple
+//   but might actually not want that
+// - verify that the final struct is a POD, and has default constructor
+// - modifiers on iterators (e.g. filter, map)
+// - MultiIndex: two choices
+//   - sets on all dimensions
+//     skip inserting on the remaining dimensions if didn't succeed on one
+//   - set only on primary dimension
+//     insertion on that must be done first
+//     not sound if a dimension is missing fields
+// - selection/search patterns could also use typelists
+//   for now, just to ensure that we're selecting on the expected field
+//   actual instance of the type pair would include:
+//   - the value for fields
+//   - dimension to follow at fork points
+//   would unwrap it to get the rest of the arguments
+// - allowing type selectors in any order (and picking dimension automatically)
+//   needs a method to extract the relevant part of the typelist
+// - typelist functionality:
+//   - sorting
+//   - sentinel value at the end (nil)
+
+namespace mi {
+
+template<class... Cols> class Table {
+public:
+    class Iterator;
+    friend Iterator;
+private:
+    typedef std::tuple<Cols...> Tuple;
+private:
+    std::set<Tuple> store;
+public:
+    bool insert(const Cols&... flds) {
+	return store.emplace(flds...).second;
+    }
+    Iterator iter(Cols&... tgt_flds) const {
+	Iterator it(tgt_flds...);
+	it.migrate(*this);
+	return it;
+    }
+    unsigned int size() const {
+	return store.size();
+    }
+public:
+
+    class Iterator {
+    private:
+	typename std::set<Tuple>::const_iterator curr;
+	typename std::set<Tuple>::const_iterator end;
+	std::tuple<Cols&...> tgt_flds;
+	bool before_start = true;
+    public:
+	explicit Iterator(Cols&... tgt_flds)
+	    : tgt_flds(std::tie(tgt_flds...)) {}
+	void migrate(const Table& table) {
+	    curr = table.store.cbegin();
+	    end = table.store.cend();
+	    before_start = true;
+	}
+	bool next() {
+	    if (before_start) {
+		before_start = false;
+	    } else {
+		++curr;
+	    }
+	    if (curr == end) {
+		return false;
+	    }
+	    tgt_flds = *curr;
+	    return true;
+	}
+    };
+};
+
+template<class Key, class Sub> class Index {
+public:
+    class Iterator;
+    friend Iterator;
+private:
+    static const Sub dummy;
+private:
+    std::map<Key,Sub> map;
+public:
+    const Sub& operator[](const Key& key) const {
+	// TODO: Should just create new entries?
+	try {
+	    return map.at(key);
+	} catch (const std::out_of_range& exc) {
+	    return dummy;
+	}
+    }
+    template<class... Cols>
+    bool insert(const Key& key, Cols&&... flds) {
+	return map[key].insert(std::forward<Cols>(flds)...);
+    }
+    template<class... Cols>
+    Iterator iter(Key& tgt_key, Cols&... tgt_flds) const {
+	Iterator it(tgt_key, tgt_flds...);
+	it.migrate(*this);
+	return it;
+    }
+    unsigned int size() const {
+	unsigned int sz = 0;
+	for (const auto& entry : map) {
+	    sz += entry.second.size();
+	}
+	return sz;
+    }
+public:
+
+    class Iterator {
+    private:
+	typename std::map<Key,Sub>::const_iterator map_curr;
+	typename std::map<Key,Sub>::const_iterator map_end;
+	Key& tgt_key;
+	typename Sub::Iterator sub_iter;
+	bool before_start = true;
+    public:
+	template<class... Cols>
+	explicit Iterator(Key& tgt_key, Cols&... tgt_flds)
+	    : tgt_key(tgt_key), sub_iter(tgt_flds...) {}
+	void migrate(const Index& idx) {
+	    map_curr = idx.map.cbegin();
+	    map_end = idx.map.cend();
+	    before_start = true;
+	}
+	bool next() {
+	    if (before_start) {
+		before_start = false;
+		if (map_curr == map_end) {
+		    return false;
+		}
+		tgt_key = map_curr->first;
+		sub_iter.migrate(map_curr->second);
+	    }
+	    while (!sub_iter.next()) {
+		++map_curr;
+		if (map_curr == map_end) {
+		    return false;
+		}
+		tgt_key = map_curr->first;
+		sub_iter.migrate(map_curr->second);
+	    }
+	    return true;
+	}
+    };
+};
+
+template<class Key, class Sub>
+const Sub Index<Key,Sub>::dummy;
+
+template<class T> struct KeyTraits;
+
+template<> struct KeyTraits<bool> {
+    typedef std::nullptr_t SizeHint;
+    static unsigned int extract_size(const SizeHint&) {
+	return 2;
+    }
+    static unsigned int extract_idx(bool val) {
+	return val;
+    }
+    static bool from_idx(unsigned int idx) {
+	return idx;
+    }
+};
+
+template<class T>
+struct KeyTraits<Ref<T>> {
+    typedef Registry<T> SizeHint;
+    static unsigned int extract_size(const SizeHint& reg) {
+	return reg.size();
+    }
+    static unsigned int extract_idx(Ref<T> ref) {
+	return ref.value;
+    }
+    static Ref<T> from_idx(unsigned int idx) {
+	return Ref<T>(idx);
+    }
+};
+
+template<class Key, class Sub> class FlatIndex {
+public:
+    class Iterator;
+    friend Iterator;
+private:
+    std::vector<Sub> array;
+public:
+    template<class... Rest>
+    explicit FlatIndex(const typename KeyTraits<Key>::SizeHint& hint,
+		       const Rest&... rest)
+	: array(KeyTraits<Key>::extract_size(hint), Sub(rest...)) {}
+    const Sub& operator[](const Key& key) const {
+	unsigned int i = KeyTraits<Key>::extract_idx(key);
+#ifdef NDEBUG
+	return array[i];
+#else
+	return array.at(i);
+#endif
+    }
+    template<class... Cols>
+    bool insert(const Key& key, Cols&&... flds) {
+	unsigned int i = KeyTraits<Key>::extract_idx(key);
+#ifdef NDEBUG
+	return array[i].insert(std::forward<Cols>(flds)...);
+#else
+	return array.at(i).insert(std::forward<Cols>(flds)...);
+#endif
+    }
+    template<class... Cols>
+    Iterator iter(Key& tgt_key, Cols&... tgt_flds) const {
+	Iterator it(tgt_key, tgt_flds...);
+	it.migrate(*this);
+	return it;
+    }
+    unsigned int size() const {
+	unsigned int sz = 0;
+	for (const Sub& entry : array) {
+	    sz += entry.size();
+	}
+	return sz;
+    }
+public:
+
+    class Iterator {
+    private:
+	unsigned int arr_idx;
+	typename std::vector<Sub>::const_iterator arr_curr;
+	typename std::vector<Sub>::const_iterator arr_end;
+	Key& tgt_key;
+	typename Sub::Iterator sub_iter;
+	bool before_start = true;
+    public:
+	template<class... Cols>
+	explicit Iterator(Key& tgt_key, Cols&... tgt_flds)
+	    : tgt_key(tgt_key), sub_iter(tgt_flds...) {}
+	void migrate(const FlatIndex& idx) {
+	    arr_idx = 0;
+	    arr_curr = idx.array.cbegin();
+	    arr_end = idx.array.cend();
+	    before_start = true;
+	}
+	bool next() {
+	    if (before_start) {
+		before_start = false;
+		if (arr_curr == arr_end) {
+		    return false;
+		}
+		tgt_key = KeyTraits<Key>::from_idx(arr_idx);
+		sub_iter.migrate(*arr_curr);
+	    }
+	    while (!sub_iter.next()) {
+		++arr_idx;
+		++arr_curr;
+		if (arr_curr == arr_end) {
+		    return false;
+		}
+		tgt_key = KeyTraits<Key>::from_idx(arr_idx);
+		sub_iter.migrate(*arr_curr);
+	    }
+	    return true;
+	}
+    };
+};
+
+// Unsorted list of key-value pairs.
+template<class Key, class Sub> class LightIndex {
+public:
+    class Iterator;
+    friend Iterator;
+private:
+    typedef std::forward_list<std::pair<Key,Sub>> List;
+private:
+    static const Sub dummy;
+private:
+    List list;
+public:
+    const Sub& operator[](const Key& key) const {
+	auto key_matches = [&](const std::pair<Key,Sub>& elem) {
+	    return key == elem.first;
+	};
+	auto pos = std::find_if(list.cbegin(), list.cend(), key_matches);
+	if (pos == list.cend()) {
+	    return dummy;
+	}
+	return pos->second;
+    }
+    template<class... Cols>
+    bool insert(const Key& key, Cols&&... flds) {
+	auto key_matches = [&](const std::pair<Key,Sub>& elem) {
+	    return key == elem.first;
+	};
+	auto pos = std::find_if(list.begin(), list.end(), key_matches);
+	if (pos == list.end()) {
+	    list.emplace_front(key, Sub());
+	    pos = list.begin();
+	}
+	return pos->second.insert(std::forward<Cols>(flds)...);
+    }
+    template<class... Cols>
+    Iterator iter(Key& tgt_key, Cols&... tgt_flds) const {
+	Iterator it(tgt_key, tgt_flds...);
+	it.migrate(*this);
+	return it;
+    }
+    unsigned int size() const {
+	unsigned int sz = 0;
+	for (const auto& entry : list) {
+	    sz += entry.second.size();
+	}
+	return sz;
+    }
+public:
+
+    class Iterator {
+    private:
+	typename List::const_iterator list_curr;
+	typename List::const_iterator list_end;
+	Key& tgt_key;
+	typename Sub::Iterator sub_iter;
+	bool before_start = true;
+    public:
+	template<class... Cols>
+	explicit Iterator(Key& tgt_key, Cols&... tgt_flds)
+	    : tgt_key(tgt_key), sub_iter(tgt_flds...) {}
+	void migrate(const LightIndex& idx) {
+	    list_curr = idx.list.cbegin();
+	    list_end = idx.list.cend();
+	    before_start = true;
+	}
+	bool next() {
+	    if (before_start) {
+		before_start = false;
+		if (list_curr == list_end) {
+		    return false;
+		}
+		tgt_key = list_curr->first;
+		sub_iter.migrate(list_curr->second);
+	    }
+	    while (!sub_iter.next()) {
+		++list_curr;
+		if (list_curr == list_end) {
+		    return false;
+		}
+		tgt_key = list_curr->first;
+		sub_iter.migrate(list_curr->second);
+	    }
+	    return true;
+	}
+    };
+};
+
+template<class Key, class Sub>
+const Sub LightIndex<Key,Sub>::dummy;
+
+// TODO: Extend this to perform filtering
+template<class T> T& ignore() {
+    static T dummy;
+    return dummy;
+}
+
+} // namespace mi
 
 #endif

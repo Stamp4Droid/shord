@@ -241,10 +241,13 @@ void RSM::print(std::ostream& os) const {
 
 const std::string Graph::FILE_EXTENSION(".dat");
 
-void Graph::parse_file(const Symbol& symbol, const fs::path& fpath) {
+// TODO: Two passes over the files.
+void Graph::parse_file(const Symbol& symbol, const fs::path& fpath,
+		       ParsingMode mode) {
     std::ifstream fin(fpath.string());
     EXPECT(fin);
     std::string line;
+
     while (std::getline(fin, line)) {
 	if (line.empty()) {
 	    continue; // Empty lines are ignored.
@@ -252,23 +255,37 @@ void Graph::parse_file(const Symbol& symbol, const fs::path& fpath) {
 	std::vector<std::string> toks;
 	boost::split(toks, line, boost::is_any_of(" "),
 		     boost::token_compress_on);
-	EXPECT(toks.size() >= 2);
-	Ref<Node> src = nodes.add(toks[0]).ref;
-	Ref<Node> dst = nodes.add(toks[1]).ref;
-	Ref<Tag> tag = Ref<Tag>::none();
-	if (symbol.parametric) {
-	    EXPECT(toks.size() == 3);
-	    tag = tags.add(toks[2]).ref;
-	} else {
-	    EXPECT(toks.size() == 2);
+
+	switch (mode) {
+	case ParsingMode::NODES: {
+	    EXPECT(toks.size() >= 2);
+	    nodes.add(toks[0]);
+	    nodes.add(toks[1]);
+	} break;
+	case ParsingMode::EDGES: {
+	    Ref<Tag> tag;
+	    if (symbol.parametric) {
+		EXPECT(toks.size() == 3);
+		tag = tags.add(toks[2]).ref;
+	    } else {
+		EXPECT(toks.size() == 2);
+	    }
+	    Ref<Node> src = nodes.find(toks[0]).ref;
+	    Ref<Node> dst = nodes.find(toks[1]).ref;
+	    // Add the edge twice, once forwards and once backwards.
+	    // TODO: This simplifies the interface, but also increases space
+	    // requirements (but doesn't necessarily double them; if we didn't
+	    // do this we'd need to keep an index on the destination).
+	    edges_1->insert(false, src, symbol.ref, tag, dst);
+	    edges_1->insert(true, dst, symbol.ref, tag, src);
+	    edges_2->insert(false, symbol.ref, tag, src, dst);
+	    edges_2->insert(true, symbol.ref, tag, dst, src);
+	} break;
+	default:
+	    assert(false);
 	}
-	// Add the edge twice, once forwards and once backwards.
-	// TODO: This simplifies the interface, but also increases space
-	// requirements (but doesn't necessarily double them; if we didn't do
-	// this we'd need to keep an index on the destination).
-	edges.insert(Edge(src, dst, symbol, false, tag));
-	edges.insert(Edge(dst, src, symbol, true, tag));
     }
+
     EXPECT(fin.eof());
 }
 
@@ -276,15 +293,22 @@ Graph::Graph(const Registry<Symbol>& symbols, const std::string& dirname) {
     fs::path dirpath(dirname);
     for (const Symbol& s : symbols) {
 	std::string fname = s.name + FILE_EXTENSION;
-	std::cout << "Parsing " << fname << std::endl;
+	std::cout << "Parsing nodes from " << fname << std::endl;
 	// Will fail if some symbol is missing its Edge file.
-	parse_file(s, dirpath/fname);
+	parse_file(s, dirpath/fname, ParsingMode::NODES);
+    }
+    edges_1 = new EdgesSrcLabelIndex(nullptr, nodes);
+    edges_2 = new EdgesLabelIndex(nullptr, symbols);
+    for (const Symbol& s : symbols) {
+	std::string fname = s.name + FILE_EXTENSION;
+	std::cout << "Parsing edges from " << fname << std::endl;
+	parse_file(s, dirpath/fname, ParsingMode::EDGES);
     }
 }
 
 void Graph::print_stats(std::ostream& os) const {
     os << "Nodes: " << nodes.size() << std::endl;
-    os << "Edges: " << edges[false].size() << std::endl;
+    os << "Edges: " << (*edges_1)[false].size() << std::endl;
     // TODO: Also print out stats on summaries.
 }
 
@@ -311,11 +335,20 @@ std::map<Ref<Node>,std::set<Ref<Node>>>
 Graph::subpath_bounds(const Label<true>& hd_lab,
 		      const Label<true>& tl_lab) const {
     std::map<Ref<Node>,std::set<Ref<Node>>> res;
-    for (const Edge& hd : search(hd_lab)) {
-	for (const Edge& tl : search(tl_lab)[hd.tag]) {
-	    res[hd.dst].insert(tl.src);
+
+    Ref<Tag> hd_tag;
+    Ref<Node> hd_dst;
+    auto it_hd =
+	search(hd_lab).iter(hd_tag, mi::ignore<Ref<Node>>(), hd_dst);
+    while (it_hd.next()) {
+	Ref<Node> tl_src;
+	auto it_tl = search(tl_lab)[hd_tag].iter(tl_src,
+						 mi::ignore<Ref<Node>>());
+	while (it_tl.next()) {
+	    res[hd_dst].insert(tl_src);
 	}
     }
+
     return res;
 }
 
@@ -481,8 +514,12 @@ Worker::Result Worker::summarize(const Graph& graph,
 	// Cross edges according to the transitions out of the current state.
 	// TODO: Implicitly assumes all transition labels are untagged.
 	for (const Transition& t : comp.transitions[pos.state]) {
-	    for (const Edge& e : graph.search(pos.node, t.label)) {
-		worklist.enqueue(Position(e.dst, t.to));
+	    Ref<Node> dst;
+	    auto it =
+		graph.search(pos.node, t.label).iter(mi::ignore<Ref<Tag>>(),
+						     dst);
+	    while (it.next()) {
+		worklist.enqueue(Position(dst, t.to));
 	    }
 	}
 
@@ -491,9 +528,10 @@ Worker::Result Worker::summarize(const Graph& graph,
 	// TODO: Implicitly assumes all entry/exit labels are tagged.
 	for (const Entry& entry : comp.entries.secondary<0>()[pos.state]) {
 	    Ref<Component> sub_comp = comp.boxes[entry.to].comp;
-	    for (const Edge& e_in : graph.search(pos.node, entry.label)) {
-		Ref<Node> sub_in = e_in.dst;
-
+	    Ref<Tag> tag;
+	    Ref<Node> sub_in;
+	    auto it_in = graph.search(pos.node, entry.label).iter(tag, sub_in);
+	    while (it_in.next()) {
 		// If this is a self-referring box (TODO: or any box in the
 		// current RSM SCC, if we ever support non-singleton SCCs),
 		// record our dependence on it.
@@ -507,9 +545,10 @@ Worker::Result Worker::summarize(const Graph& graph,
 		    // Cross through exit edges compatible with the previously
 		    // entered entry edge.
 		    for (const Exit& exit : comp.exits[entry.to]) {
-			for (const Edge& e_out :
-				 graph.search(sub_out, exit.label)[e_in.tag]) {
-			    Ref<Node> next_node = e_out.dst;
+			Ref<Node> next_node;
+			auto slice = graph.search(sub_out, exit.label)[tag];
+			auto it_out = slice.iter(next_node);
+			while (it_out.next()) {
 			    worklist.enqueue(Position(next_node, exit.to));
 			}
 		    }

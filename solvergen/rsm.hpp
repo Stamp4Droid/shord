@@ -238,26 +238,6 @@ public:
     }
 };
 
-// TODO: Separate class for parametric and non-parametric edges.
-class Edge {
-public:
-    const Ref<Node> src;
-    const Ref<Node> dst;
-    const Ref<Symbol> symbol;
-    const bool rev;
-    const Ref<Tag> tag;
-public:
-    explicit Edge(Ref<Node> src, Ref<Node> dst, const Symbol& symbol, bool rev,
-		  Ref<Tag> tag)
-	: src(src), dst(dst), symbol(symbol.ref), rev(rev), tag(tag) {
-	EXPECT(!symbol.parametric ^ tag.valid());
-    }
-    bool operator<(const Edge& rhs) const {
-	return (std::tie(    src,     dst,     symbol,     rev,     tag) <
-		std::tie(rhs.src, rhs.dst, rhs.symbol, rhs.rev, rhs.tag));
-    }
-};
-
 class Summary {
 public:
     const Ref<Node> src;
@@ -278,41 +258,60 @@ enum class ParsingMode {NODES, EDGES};
 // - Disallow adding edges while an iterator is live.
 // - Additional indexing dimensions.
 class Graph {
-    typedef Index<Table<Edge>,Ref<Tag>,&Edge::tag> SrcLabelSlice;
-    typedef Index<PtrTable<Edge>,Ref<Tag>,&Edge::tag> LabelSlice;
+public:
+    typedef mi::Index<Ref<Tag>, // Edge.tag
+		      mi::Table<Ref<Node>> // Edge.dst
+		      > SrcLabelSlice;
+    typedef mi::FlatIndex<bool, // Edge.rev
+			  mi::FlatIndex<
+			      Ref<Node>, // Edge.src
+			      mi::LightIndex<Ref<Symbol>, // Edge.symbol
+					     SrcLabelSlice>>
+			  > EdgesSrcLabelIndex;
+    typedef mi::Index<Ref<Tag>, // Edge.tag
+		      mi::Table<Ref<Node>, // Edge.src
+				Ref<Node>> // Edge.dst
+		      > LabelSlice;
+    typedef mi::FlatIndex<bool, // Edge.rev
+			  mi::FlatIndex<Ref<Symbol>, // Edge.symbol
+					LabelSlice>
+			  > EdgesLabelIndex;
 public:
     static const std::string FILE_EXTENSION;
 public:
     // TODO: Should make some of these private?
     Registry<Node> nodes;
     Registry<Tag> tags;
-    Index<MultiIndex<
-	      FlatIndex<FlatIndex<Index<Table<Edge>,
-					Ref<Tag>,&Edge::tag>,
-				  Symbol,&Edge::symbol>,
-			Node,&Edge::src>,
-	      Index<Index<PtrTable<Edge>,
-			  Ref<Tag>,&Edge::tag>,
-		    Ref<Symbol>,&Edge::symbol>>,
-	  bool,&Edge::rev> edges;
+    // TODO:
+    // - Separate indices increases the chances that we'll forget to apply all
+    //   modifications on both.
+    // - Need to know the number of nodes before we can instantiate the outer
+    //   FlatIndex, so we can't store it by value.
+    EdgesSrcLabelIndex* edges_1 = NULL;
+    EdgesLabelIndex* edges_2 = NULL;
     Index<Index<Table<Summary>,Ref<Node>,&Summary::src>,
 	  Ref<Component>,&Summary::comp> summaries;
 private:
-    void parse_file(const Symbol& symbol, const fs::path& fpath);
+    void parse_file(const Symbol& symbol, const fs::path& fpath,
+		    ParsingMode mode);
 public:
     explicit Graph(const Registry<Symbol>& symbols,
 		   const std::string& dirname);
+    ~Graph() {
+	delete edges_1;
+	delete edges_2;
+    }
     std::map<Ref<Node>,std::set<Ref<Node>>>
 	subpath_bounds(const Label<true>& hd_lab,
 		       const Label<true>& tl_lab) const;
     template<bool Tagged>
     const LabelSlice& search(const Label<Tagged>& label) const {
-	return edges[label.rev].template secondary<0>()[label.symbol];
+	return (*edges_2)[label.rev][label.symbol];
     }
     template<bool Tagged>
     const SrcLabelSlice& search(Ref<Node> src,
 				const Label<Tagged>& label) const {
-	return edges[label.rev].primary()[src][label.symbol];
+	return (*edges_1)[label.rev][src][label.symbol];
     }
     void print_stats(std::ostream& os) const;
     void print_summaries(const std::string& dirname,
