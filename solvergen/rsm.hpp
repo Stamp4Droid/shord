@@ -351,7 +351,7 @@ public:
     explicit Worker(Ref<Node> start, const Component& comp)
 	: start(start), comp(comp) {}
     bool merge(const Component& comp, const std::set<Ref<Node>>& new_tgts);
-    Result summarize(const Graph& graph, SummaryWorklist& worklist) const;
+    Result summarize(const Graph& graph) const;
 };
 
 // TODO: Should include the component if we support multiple components in SCCs
@@ -391,7 +391,7 @@ public:
 	: size(pri_size * sizeof(unsigned short)),
 	  shorts(new unsigned short[pri_size]) {
 	EXPECT(sizeof(unsigned short) * 8 >= sec_size);
-	clear();
+	memset(shorts, 0, size);
     }
     ~TwoDimBitSet() {
 	delete[] shorts;
@@ -403,9 +403,6 @@ public:
     bool test(unsigned int i, unsigned int j) {
 	// no bounds check
 	return shorts[i] & (1 << j);
-    }
-    void clear() {
-	memset(shorts, 0, size);
     }
 };
 
@@ -431,10 +428,6 @@ public:
 	Position res = queue.front();
 	queue.pop_front();
 	return res;
-    }
-    void clear() {
-	reached.clear();
-	queue.clear();
     }
 };
 

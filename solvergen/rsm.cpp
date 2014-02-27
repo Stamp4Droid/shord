@@ -409,14 +409,13 @@ void Component::summarize(Graph& graph,
     for (const Worker& w : workers) {
 	worklist.enqueue(w.ref);
     }
-    SummaryWorklist summ_wl(graph.nodes.size(), states.size());
 
     Histogram<unsigned int> new_summ_freqs;
     Histogram<unsigned int> reschedule_freqs;
 
     while (!worklist.empty()) {
 	Ref<Worker> w = worklist.dequeue();
-	Worker::Result res = workers[w].summarize(graph, summ_wl);
+	Worker::Result res = workers[w].summarize(graph);
 	// Dependencies must be recorded first, to ensure we re-process the
 	// function in cases of self-recursion.
 	// TODO: Could insert the dependencies as we find them, inside the
@@ -456,8 +455,6 @@ unsigned int current_time() {
 }
 
 void Component::propagate(Graph& graph) const {
-    SummaryWorklist summ_wl(graph.nodes.size(), states.size());
-
     unsigned int t_full_start = current_time();
     std::cout << std::endl;
 
@@ -468,7 +465,7 @@ void Component::propagate(Graph& graph) const {
     // We can do this one node at a time.
     for (const Node& start : graph.nodes) {
 	unsigned int t_start = current_time();
-	Worker::Result res = Worker(start.ref, *this).summarize(graph, summ_wl);
+	Worker::Result res = Worker(start.ref, *this).summarize(graph);
 	// Ignore any emitted dependencies, they should have been handled
 	// during this component's summarization step.
 	// TODO: Don't produce at all.
@@ -495,9 +492,9 @@ bool Worker::merge(const Component& comp,
     return tgts.size() > old_sz;
 }
 
-Worker::Result Worker::summarize(const Graph& graph,
-				 SummaryWorklist& worklist) const {
+Worker::Result Worker::summarize(const Graph& graph) const {
     Result res;
+    SummaryWorklist worklist(graph.nodes.size(), comp.get_states().size());
     worklist.enqueue(Position(start, comp.get_initial()));
 
     while (!worklist.empty()) {
@@ -557,7 +554,6 @@ Worker::Result Worker::summarize(const Graph& graph,
 	}
     }
 
-    worklist.clear();
     return res;
 }
 
