@@ -5,23 +5,25 @@
 .include "C.dom"
 .include "V.dom"
 .include "U.dom"
-.include "F.dom"
+#.include "F.dom"
 .include "I.dom"
 .include "L.dom"
-.include "H.dom"
-.include "S.dom"
-.include "T.dom"
+#.include "H.dom"
+#.include "S.dom"
+#.include "T.dom"
 
-.bddvarorder L0_Z0xZ1_M0_S0_T0_C0xC1_V0xV1_U0xU1_H0_F0_I0
+#.bddvarorder L0_Z0xZ1_M0_S0_T0_C0xC1_V0xV1_U0xU1_H0_F0_I0
+
+.bddvarorder L0_Z0xZ1_V0xV1_U0xU1_M0_I0_C0xC1
 
 # INPUT RELATIONS =======================
 #ci_pt(v:V,h:H) input
 ci_IM(i:I,m:M) input
 
 CM(c:C,m:M) input
-CH(c:C,h:H) input
+#CH(c:C,h:H) input
 MI(m:M,i:I) input
-HT(h:H,t:T) input         # heap h point to Type t.
+#HT(h:H,t:T) input         # heap h point to Type t.
 CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
 CI(c:C,i:I) input         # stmt i is on the top of c.
 
@@ -123,4 +125,3 @@ CICMtmp(c,i,d,m) :- reachableCI(c,i), CC(c,d), CI(d,i), ci_IM(i,m).
 
 CICM(c,i,d,m) :- CICMtmp(c,i,d,m), !CtxtInsMeth(m).
 CICM(c,i,0,m) :- CICMtmp(c,i,_,m), CtxtInsMeth(m).
-
