@@ -161,10 +161,14 @@ public class ContextsAnalysis extends JavaAnalysis
 
 		for(int hIdx = 0; hIdx < HtoM.length; hIdx++){
 			AllocNode alloc = HtoQ[hIdx];
-			if(alloc instanceof GlobalAllocNode){
+			if(alloc instanceof GlobalAllocNode || alloc instanceof StubAllocNode){
+				//we dont track GlobalAllocNode or StubAllocNode during k-cfa
+				//so dont add to CH
+				/*
 				Object[] newElems = combine(K, alloc, emptyElems);
 				Ctxt newCtxt = domC.setCtxt(newElems);
 				relCH.add(newCtxt, alloc);
+				*/
 			} else {
 				int mIdx = HtoM[hIdx];
 				Set<Ctxt> ctxts = methToCtxts[mIdx];
@@ -208,9 +212,11 @@ public class ContextsAnalysis extends JavaAnalysis
 
 		for(int hIdx = 0; hIdx < HtoM.length; hIdx++){
 			AllocNode alloc = HtoQ[hIdx];
-			if(alloc instanceof GlobalAllocNode){
-				; //add nothing
+			if(alloc instanceof GlobalAllocNode || alloc instanceof StubAllocNode){
+				//we dont track GlobalAllocNode or StubAllocNode during k-cfa
+				//so dont add to CC
 			} else {
+				assert alloc instanceof SiteAllocNode;
 				int mIdx = HtoM[hIdx];
 				Set<Ctxt> ctxts = methToCtxts[mIdx];
 				if(ctxts == null)//either meth is unreachable or a reachable stub

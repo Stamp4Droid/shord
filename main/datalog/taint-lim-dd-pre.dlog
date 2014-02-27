@@ -22,7 +22,6 @@ ci_IM(i:I,m:M) input
 
 Alloc(v:V,h:H) input
 CH(c:C,h:H) input
-NewH(h:H) input
 MV(m:M,v:V) input
 
 CM(c:C,m:M) input
@@ -133,4 +132,4 @@ CICMtmp(c,i,d,m) :- reachableCI(c,i), CC(c,d), CI(d,i), ci_IM(i,m).
 CICM(c,i,d,m) :- CICMtmp(c,i,d,m), !CtxtInsMeth(m).
 CICM(c,i,0,m) :- CICMtmp(c,i,_,m), CtxtInsMeth(m).
 
-ptAlloc(c,v,o) :- Alloc(v,h), NewH(h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
+ptAlloc(c,v,o) :- Alloc(v,h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).
