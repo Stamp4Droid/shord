@@ -8,20 +8,24 @@
 #.include "F.dom"
 .include "I.dom"
 .include "L.dom"
-#.include "H.dom"
+.include "H.dom"
 #.include "S.dom"
 #.include "T.dom"
 
 #.bddvarorder L0_Z0xZ1_M0_S0_T0_C0xC1_V0xV1_U0xU1_H0_F0_I0
 
-.bddvarorder L0_Z0xZ1_V0xV1_U0xU1_M0_I0_C0xC1
+.bddvarorder L0_Z0xZ1_U0xU1_V0xV1_M0_H0xI0_C0xC1
 
 # INPUT RELATIONS =======================
 #ci_pt(v:V,h:H) input
 ci_IM(i:I,m:M) input
 
+Alloc(v:V,h:H) input
+CH(c:C,h:H) input
+NewH(h:H) input
+MV(m:M,v:V) input
+
 CM(c:C,m:M) input
-#CH(c:C,h:H) input
 MI(m:M,i:I) input
 #HT(h:H,t:T) input         # heap h point to Type t.
 CC(c:C,d:C) input         # there exists i s.t. c++[i] = d
@@ -71,6 +75,9 @@ flowPrimPrim(u:U,v:U) output
 
 reachableCM(c:C,m:M)  output
 CICM(c:C,i:I,d:C,m:M) output
+
+ptAlloc(c:C,v:V,o:C) output
+
 # =======================================
 
 # INTERMEDIATE RELATIONS =======================
@@ -125,3 +132,5 @@ CICMtmp(c,i,d,m) :- reachableCI(c,i), CC(c,d), CI(d,i), ci_IM(i,m).
 
 CICM(c,i,d,m) :- CICMtmp(c,i,d,m), !CtxtInsMeth(m).
 CICM(c,i,0,m) :- CICMtmp(c,i,_,m), CtxtInsMeth(m).
+
+ptAlloc(c,v,o) :- Alloc(v,h), NewH(h), MV(m,v), CM(c,m), CC(c,o), CH(o,h).

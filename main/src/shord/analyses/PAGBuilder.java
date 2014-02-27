@@ -74,13 +74,13 @@ import java.util.*;
 	   consumes={"SC"
 	            },
 	   produces={"M", "Z", "I", "H", "V", "T", "F", "U",
-				 "GlobalAlloc", "Alloc", "Assign", 
-				 "Load", "Store", 
+				 "GlobalAlloc", "Alloc", "NewH",
+				 "Assign", "Load", "Store", 
 				 "LoadStat", "StoreStat", 
 				 "MmethArg", "MmethRet", 
 				 "IinvkRet", "IinvkArg", 
 				 "VT", "chaIM",
-				 "HT", "HTFilter",
+				 "HT", "HTFilter", "NewH",
 				 "MI", "MH",
 				 "MV", "MU",
 				 "AssignPrim", 
@@ -96,13 +96,13 @@ import java.util.*;
                  },
        namesOfTypes = { "M", "Z", "I", "H", "V", "T", "F", "U", "S", "SC"},
        types = { DomM.class, DomZ.class, DomI.class, DomH.class, DomV.class, DomT.class, DomF.class, DomU.class, DomS.class, DomSC.class},
-	   namesOfSigns = { "GlobalAlloc", "Alloc", "Assign", 
-						"Load", "Store", 
+	   namesOfSigns = { "GlobalAlloc", "Alloc", "NewH",
+						"Assign", "Load", "Store", 
 						"LoadStat", "StoreStat", 
 						"MmethArg", "MmethRet", 
 						"IinvkRet", "IinvkArg", 
 						"VT", "chaIM",
-						"HT", "HTFilter",
+						"HT", "HTFilter", 
 						"MI", "MH",
 						"MV", "MU",
 						"AssignPrim", 
@@ -116,8 +116,8 @@ import java.util.*;
 						"ClassT", "Subtype", "StaticTM", "StaticTF", "ClinitTM",
 						"SCH"
                         },
-	   signs = { "V0,H0:V0_H0", "V0,H0:V0_H0", "V0,V1:V0xV1",
-				 "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
+	   signs = { "V0,H0:V0_H0", "V0,H0:V0_H0", "H0:H0",
+				 "V0,V1:V0xV1", "V0,V1,F0:F0_V0xV1", "V0,F0,V1:F0_V0xV1",
 				 "V0,F0:F0_V0", "F0,V0:F0_V0",
 				 "M0,Z0,V0:M0_V0_Z0", "M0,Z0,V0:M0_V0_Z0",
 				 "I0,Z0,V0:I0_V0_Z0", "I0,Z0,V0:I0_V0_Z0",
@@ -141,6 +141,7 @@ public class PAGBuilder extends JavaAnalysis
 {
 	private ProgramRel relGlobalAlloc;//(l:V,h:H)
 	private ProgramRel relAlloc;//(l:V,h:H)
+	private ProgramRel relNewH;//(h:H)
 	private ProgramRel relAssign;//(l:V,r:V)
 	private ProgramRel relLoad;//(l:V,b:V,f:F)
 	private ProgramRel relStore;//(b:V,f:F,r:V)
@@ -204,6 +205,8 @@ public class PAGBuilder extends JavaAnalysis
 		relGlobalAlloc.zero();
 		relAlloc = (ProgramRel) ClassicProject.g().getTrgt("Alloc");
 		relAlloc.zero();
+		relNewH = (ProgramRel) ClassicProject.g().getTrgt("NewH");
+		relNewH.zero();
 		relAssign = (ProgramRel) ClassicProject.g().getTrgt("Assign");
 		relAssign.zero();
 		relLoad = (ProgramRel) ClassicProject.g().getTrgt("Load");
@@ -274,6 +277,7 @@ public class PAGBuilder extends JavaAnalysis
 	{
 		relGlobalAlloc.save();
 		relAlloc.save();
+		relNewH.save();
 		relAssign.save();
 		relLoad.save();
 		relStore.save();
@@ -698,6 +702,7 @@ public class PAGBuilder extends JavaAnalysis
 			for(SiteAllocNode an : stmtToAllocNode.values()){
 				populateHT_HTFilter(an);
 				relMH.add(method, an);
+				relNewH.add(an);
 			}
 			
 			for(Map.Entry<String,StringConstNode> entry : stringConstantToAllocNode.entrySet()){
