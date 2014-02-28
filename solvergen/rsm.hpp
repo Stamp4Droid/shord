@@ -297,6 +297,8 @@ private:
 public:
     explicit Graph(const Registry<Symbol>& symbols,
 		   const std::string& dirname);
+    Graph(const Graph& rhs) = delete;
+    Graph& operator=(const Graph& rhs) = delete;
     ~Graph() {
 	delete edges_1;
 	delete edges_2;

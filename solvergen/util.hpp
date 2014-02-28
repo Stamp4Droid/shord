@@ -430,6 +430,15 @@ private:
     std::map<Key,T> map;
 public:
     explicit Registry() {}
+    Registry(const Registry& rhs) = delete;
+    // XXX: This is dangerous/non-portable: The 'array' member variable stores
+    // references, which would only be valid for the 'map' on the original
+    // object. However, the move constructor on std::map (as normally
+    // implemented in the standard library) doesn't move the map nodes on the
+    // heap, and thus the references are still valid.
+    Registry(Registry&& rhs)
+	: array(std::move(rhs.array)), map(std::move(rhs.map)) {}
+    Registry& operator=(const Registry& rhs) = delete;
     T& operator[](const Ref<T> ref) {
 	EXPECT(ref.valid());
 	return array.at(ref.value).get();
