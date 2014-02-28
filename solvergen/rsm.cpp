@@ -497,13 +497,13 @@ void Component::propagate(Graph& graph) const {
     // constraints on acceptable sources.
     // TODO: Could do this in a query-driven manner?
     // We can do this one node at a time.
-    std::vector<Ref<Node>> label_nodes;
-    for (const Node& n : graph.nodes) {
-	if (boost::algorithm::starts_with(n.name, "l")) {
-	    label_nodes.push_back(n.ref);
-	}
+    std::string src_names[] = {"l0","l1","l2","l26","l27","l28","l29","l30",
+			       "l31","l34","l6","l7","l8"};
+    std::vector<Ref<Node>> src_nodes;
+    for (const std::string& name : src_names) {
+	src_nodes.push_back(graph.nodes.find(name).ref);
     }
-    std::cout << "Starting from " << label_nodes.size() << " nodes" << std::endl;
+    std::cout << "Starting from " << src_nodes.size() << " nodes" << std::endl;
 
     unsigned int num_threads = std::thread::hardware_concurrency();
     const char* env_str = getenv("OMP_NUM_THREADS");
@@ -520,13 +520,13 @@ void Component::propagate(Graph& graph) const {
     unsigned int start_idx = 0;
     for (unsigned int i = 0; i < num_threads; ++i) {
 	unsigned int num_items =
-	    label_nodes.size() / num_threads +
-	    (label_nodes.size() % num_threads > i ? 1 : 0);
+	    src_nodes.size() / num_threads +
+	    (src_nodes.size() % num_threads > i ? 1 : 0);
 	const unsigned int end_idx = start_idx + num_items;
 	std::cout << "Thread #" << i << ": " << start_idx << " to " << end_idx
 		  << std::endl;
 
-	threads[i] = std::thread(run_thread, i, this, &graph, &label_nodes,
+	threads[i] = std::thread(run_thread, i, this, &graph, &src_nodes,
 				 start_idx, end_idx);
 	start_idx = end_idx;
     }
