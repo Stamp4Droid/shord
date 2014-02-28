@@ -291,17 +291,17 @@ void Graph::parse_file(const Symbol& symbol, const fs::path& fpath,
 
 Graph::Graph(const Registry<Symbol>& symbols, const std::string& dirname) {
     fs::path dirpath(dirname);
+    std::cout << "Parsing nodes" << std::endl;
     for (const Symbol& s : symbols) {
 	std::string fname = s.name + FILE_EXTENSION;
-	std::cout << "Parsing nodes from " << fname << std::endl;
 	// Will fail if some symbol is missing its Edge file.
 	parse_file(s, dirpath/fname, ParsingMode::NODES);
     }
     edges_1 = new EdgesSrcLabelIndex(nullptr, nodes);
     edges_2 = new EdgesLabelIndex(nullptr, symbols);
+    std::cout << "Parsing edges" << std::endl;
     for (const Symbol& s : symbols) {
 	std::string fname = s.name + FILE_EXTENSION;
-	std::cout << "Parsing edges from " << fname << std::endl;
 	parse_file(s, dirpath/fname, ParsingMode::EDGES);
     }
 }
@@ -456,7 +456,6 @@ unsigned int current_time() {
 
 void Component::propagate(Graph& graph) const {
     unsigned int t_full_start = current_time();
-    std::cout << std::endl;
 
     // We try starting from each node in the graph. The shape of the top
     // component (or any secondary dimensions) can enforce additional
