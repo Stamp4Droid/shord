@@ -1,17 +1,13 @@
 #include <boost/algorithm/string.hpp>
+#include <cstdlib>
 #include <fstream>
 #include <iomanip>
 #include <list>
 #include <locale>
+#include <mutex>
 #include <sstream>
 #include <sys/time.h>
-
-#ifdef _OPENMP
-#include <omp.h>
-#else
-#define omp_get_num_threads() 0
-#define omp_get_thread_num() 0
-#endif
+#include <thread>
 
 #include "rsm.hpp"
 
@@ -461,6 +457,29 @@ unsigned int current_time() {
     return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
 }
 
+std::mutex mtx;
+
+void run_thread(const int id, const Component* comp, Graph* graph,
+		const std::vector<Ref<Node>>* nodes, int it, int end) {
+    for (; it < end; ++it) {
+	Ref<Node> start = (*nodes)[it];
+	Worker::Result res = Worker(start, *comp).summarize(*graph);
+	// Ignore any emitted dependencies, they should have been handled
+	// during this component's summarization step.
+	// TODO: Don't produce at all.
+	if (!res.summaries.empty()) {
+	    std::lock_guard<std::mutex> lck(mtx);
+	    for (const Summary& s : res.summaries) {
+		// Reachability information is stored like regular
+		// summaries. TODO: Should separate?
+		// XXX: Not safe, since Worker::summarize() reads from
+		// graph.summaries w/o getting a lock.
+		graph->summaries.insert(s);
+	    }
+	}
+    }
+}
+
 void Component::propagate(Graph& graph) const {
     const unsigned int t_start = current_time();
 
@@ -476,44 +495,28 @@ void Component::propagate(Graph& graph) const {
 	}
     }
 
-    const unsigned int t_spawn = current_time();
-    std::cout << "Preprocessing: " << t_spawn - t_start << "ms" << std::endl;
-
-    #pragma omp parallel default(none) shared(label_nodes,graph,std::cout)
-    {
-	// const unsigned int t_thread_start = current_time();
-	// std::cout << "Thread #" << omp_get_thread_num() << " startup: "
-	// 	  << t_thread_start - t_spawn << "ms" << std::endl;
-
-        #pragma omp for schedule(static)
-	for (auto it = label_nodes.cbegin(); it < label_nodes.cend(); ++it) {
-	    Ref<Node> start = *it;
-	    Worker::Result res = Worker(start, *this).summarize(graph);
-	    // Ignore any emitted dependencies, they should have been handled
-	    // during this component's summarization step.
-	    // TODO: Don't produce at all.
-	    if (!res.summaries.empty()) {
-		std::cout << omp_get_thread_num() << ":"
-			  << res.summaries.size() << std::endl;
-
-                #pragma omp critical
-		for (const Summary& s : res.summaries) {
-		    // Reachability information is stored like regular
-		    // summaries. TODO: Should separate?
-		    // XXX: Not safe, since Worker::summarize() reads from
-		    // graph.summaries w/o getting a lock.
-		    graph.summaries.insert(s);
-		}
-	    }
-	}
-
-	// const unsigned int t_thread_end = current_time();
-	// std::cout << "Thread #" << omp_get_thread_num() << " computation: "
-	// 	  << t_thread_end - t_thread_start << "ms" << std::endl;
+    unsigned int num_threads = std::thread::hardware_concurrency();
+    const char* env_str = getenv("OMP_NUM_THREADS");
+    if (env_str != NULL) {
+	unsigned int env_num = std::stoul(env_str);
+	num_threads = std::min(num_threads, env_num);
     }
 
-    const unsigned int t_end = current_time();
-    std::cout << "Computation total: " << t_end - t_spawn << "ms" << std::endl;
+    std::vector<std::thread> threads(num_threads);
+    unsigned int start_idx = 0;
+    for (unsigned int i = 0; i < num_threads; ++i) {
+	unsigned int num_items =
+	    label_nodes.size() / num_threads +
+	    (label_nodes.size() % num_threads > i ? 1 : 0);
+	const unsigned int end_idx = start_idx + num_items;
+	threads[i] = std::thread(run_thread, i, this, &graph, &label_nodes,
+				 start_idx, end_idx);
+	start_idx = end_idx;
+    }
+
+    for (auto& th : threads) {
+	th.join();
+    }
 }
 
 bool Worker::merge(const Component& comp,
