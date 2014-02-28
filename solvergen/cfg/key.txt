@@ -34,11 +34,13 @@ How to read an analysis name, if formatted as 1-2-3-4:5.cfg:
       conditional escaping trigger entry: no nesting support
 
 5th part: additional parameters:
-  l : the analysis allows for the extra terminals used in limited-nesting
-      implementations (implicit if 'l' is present in the 4th part)
   r : the analysis agrees on the parametricity of terminals with analyses based
       on relation indices for implementing k-CFA (implicit if 'r' is present in
       the 2nd part)
+  l : the analysis allows for the extra terminals used in limited-nesting
+      implementations (implicit if 'l' is present in the 4th part)
+  e : the analysis agrees on the parametricity of terminals with analyses using
+      exploded labels (implicit if 'e' is present in the 4th part)
   p : PN-style matching
   b : original formulation, with no optimizations
 
