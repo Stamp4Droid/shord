@@ -6,7 +6,6 @@
 #include <locale>
 #include <mutex>
 #include <sstream>
-#include <sys/time.h>
 #include <thread>
 
 #include "rsm.hpp"
@@ -359,6 +358,7 @@ void RSM::propagate(Graph& graph) const {
     // Components are processed in order of addition, which is guaranteed to be
     // a valid bottom-up order.
     for (const Component& comp : components) {
+	const unsigned int t_summ = current_time();
 	std::cout << "Summarizing " << comp.name << std::endl;
 
 	// We need to search through the uses of each component to find all
@@ -394,14 +394,20 @@ void RSM::propagate(Graph& graph) const {
 	}
 
 	comp.summarize(graph, workers);
+	std::cout << "Done in " << current_time() - t_summ << "ms"
+		  << std::endl;
+	std::cout << std::endl;
     }
 
     // Final propagation step for the top component in the RSM. All required
     // summarization has been completed at this point, and we only need to
     // perform forward propagation.
     const Component& top_comp = components.last();
+    const unsigned int t_prop = current_time();
     std::cout << "Propagating over " << top_comp.name << std::endl;
     top_comp.propagate(graph);
+    std::cout << "Done in " << current_time() - t_prop << "ms" << std::endl;
+    std::cout << std::endl;
 }
 
 void Component::summarize(Graph& graph,
@@ -448,20 +454,18 @@ void Component::summarize(Graph& graph,
     std::cout << "Summary addition frequency:" << std::endl;
     std::cout << new_summ_freqs;
     std::cout << "Reschedules frequency:" << std::endl;
-    std::cout << reschedule_freqs << std::endl;
-}
-
-unsigned int current_time() {
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
+    std::cout << reschedule_freqs;
 }
 
 std::mutex mtx;
 
 void run_thread(const int id, const Component* comp, Graph* graph,
 		const std::vector<Ref<Node>>* nodes, int it, int end) {
+    const unsigned int t_thread_start = current_time();
+
     for (; it < end; ++it) {
+	const unsigned int t_iter_start = current_time();
+
 	Ref<Node> start = (*nodes)[it];
 	Worker::Result res = Worker(start, *comp).summarize(*graph);
 	// Ignore any emitted dependencies, they should have been handled
@@ -476,8 +480,13 @@ void run_thread(const int id, const Component* comp, Graph* graph,
 		// graph.summaries w/o getting a lock.
 		graph->summaries.insert(s);
 	    }
+	    std::cout << id << ": " << res.summaries.size() << " summaries in "
+		      << current_time() - t_iter_start << "ms" << std::endl;
 	}
     }
+
+    std::cout << "Thread #" << id << " done after "
+	      << current_time() - t_thread_start << "ms" << std::endl;
 }
 
 void Component::propagate(Graph& graph) const {
@@ -494,6 +503,7 @@ void Component::propagate(Graph& graph) const {
 	    label_nodes.push_back(n.ref);
 	}
     }
+    std::cout << "Starting from " << label_nodes.size() << " nodes" << std::endl;
 
     unsigned int num_threads = std::thread::hardware_concurrency();
     const char* env_str = getenv("OMP_NUM_THREADS");
@@ -501,6 +511,10 @@ void Component::propagate(Graph& graph) const {
 	unsigned int env_num = std::stoul(env_str);
 	num_threads = std::min(num_threads, env_num);
     }
+    std::cout << "Using " << num_threads << " threads" << std::endl;
+
+    std::cout << "Preprocessing: " << current_time() - t_start << "ms"
+	      << std::endl;
 
     std::vector<std::thread> threads(num_threads);
     unsigned int start_idx = 0;
@@ -509,6 +523,9 @@ void Component::propagate(Graph& graph) const {
 	    label_nodes.size() / num_threads +
 	    (label_nodes.size() % num_threads > i ? 1 : 0);
 	const unsigned int end_idx = start_idx + num_items;
+	std::cout << "Thread #" << i << ": " << start_idx << " to " << end_idx
+		  << std::endl;
+
 	threads[i] = std::thread(run_thread, i, this, &graph, &label_nodes,
 				 start_idx, end_idx);
 	start_idx = end_idx;
@@ -598,6 +615,8 @@ Worker::Result Worker::summarize(const Graph& graph) const {
 // - Better summary representation, for human consumption.
 
 int main(int argc, char* argv[]) {
+    const unsigned int t_input = current_time();
+
     // User-defined parameters
     std::string rsm_dir;
     std::string graph_dir;
@@ -639,20 +658,27 @@ int main(int argc, char* argv[]) {
     RSM rsm;
     std::cout << "Parsing RSM components from " << rsm_dir << std::endl;
     rsm.parse_dir(rsm_dir);
-    std::cout << std::endl;
     std::cout << "Parsing graph from " << graph_dir << std::endl;
     Graph graph(rsm.symbols, graph_dir);
     graph.print_stats(std::cout);
+
+    const unsigned int t_solving = current_time();
+    std::cout << "Input parsing: " << t_solving - t_input << "ms" << std::endl;
     std::cout << std::endl;
 
     // Perform actual solving
-    std::cout << "Solving" << std::endl;
     rsm.propagate(graph);
+
+    const unsigned int t_output = current_time();
+    std::cout << "Solving: " << t_output - t_solving << "ms" << std::endl;
     std::cout << std::endl;
 
     // Print the output
     std::cout << "Printing summaries" << std::endl;
     graph.print_summaries(summ_dir, rsm.components);
+
+    std::cout << "Output printing: " << current_time() - t_output << "ms"
+	      << std::endl;
 
     return EXIT_SUCCESS;
 }
