@@ -201,6 +201,27 @@ class FSM(util.BaseClass):
                           (src_idx, dst_idx,
                            ' '.join([str(l) for l in dst2lits.get(dst_idx)])))
 
+    def dump_dot(self, out):
+        out.write('digraph {\n')
+        out.write('  rankdir=LR;\n')
+        for sidx in range(0, len(self._nfa.States)):
+            shape = (('double' if sidx in self._nfa.Final else '') +
+                     ('octagon' if sidx in self._nfa.Initial else 'circle'))
+            out.write('  %s [shape = %s];\n' % (sidx,shape))
+        for src_idx in range(0, len(self._nfa.States)):
+            idx_trans = self._nfa.delta.get(src_idx, {})
+            dst2lits = util.OrderedMultiDict()
+            for tok in idx_trans:
+                lit = self._tok2lit(tok)
+                for dst_idx in idx_trans[tok]:
+                    dst2lits.append(dst_idx, lit)
+            for dst_idx in dst2lits:
+                lits = dst2lits.get(dst_idx)
+                label = str(lits[0]) + (' ...' if len(lits) > 1 else '')
+                out.write('  %s -> %s [label = "%s"];\n' %
+                          (src_idx, dst_idx, label))
+        out.write('}\n')
+
     def minimize(self):
         # TODO: Also call complete(), to insert a dummy error state?
         return FSM(self._nfa.minimal().toNFA(),
@@ -328,3 +349,4 @@ if __name__ == '__main__':
     print
     print 'TGF for minimal FSM:'
     min_fsm.dump_tgf(sys.stdout)
+    min_fsm.dump_dot(sys.stdout)
