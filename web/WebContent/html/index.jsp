@@ -703,8 +703,8 @@
                             
                             for (var j = i; j <= 2; ++j) {
                                 entry.push('<tr>');
-                                entry.push('<td'+((source_files[j-1]!=='')?' source="'+source_files[j-1]+'"':'')+'>'+escTags(sourcem[j])+'</td>');
-                                entry.push('<td'+((sink_files[j-1]!=='')?' source="'+sink_files[j-1]+'"':'')+'>'+escTags(sinkm[j])+'</td>');
+                                entry.push('<td'+((source_files[j-1]!=null)?' source="'+source_files[j-1]+'"':'')+'>'+escTags((sourcem!=null)?sourcem[j]:'')+'</td>');
+                                entry.push('<td'+((sink_files[j-1]!=null)?' source="'+sink_files[j-1]+'"':'')+'>'+escTags((sinkm!=null)?sinkm[j]:'')+'</td>');
                                 entry.push('</tr>');
                             }
                         }
