@@ -265,7 +265,9 @@
 						var tex = $(this).text();
 						var a_regex = /.* (.+)\(.*\)$/;
 						var match = tex.match(a_regex);
-						$(this).html(match[1]);
+                                                if (match!=null) {
+                                                    $(this).html(match[1]);
+                                                }
 					});
 			}
 
