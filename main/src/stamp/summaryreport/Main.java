@@ -9,6 +9,7 @@ import stamp.util.IPAddressValidator;
 import stamp.util.URIValidator;
 
 import stamp.analyses.DynamicFeaturesAnalysis;
+import stamp.util.FileCopy;
 
 import shord.project.analyses.JavaAnalysis;
 import shord.program.Program;
@@ -43,33 +44,40 @@ import static org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
 public class Main extends JavaAnalysis
 {
 	private PrintWriter writer;
+    private File reportDir;
+    private boolean apposcopy;
 	App app;
 
 	public void run()
 	{
 		app = Program.g().app();
-		
+		apposcopy = !System.getProperty("stamp.apposcopy", "false").equals("false");
+
 		try{
-			String outDir = System.getProperty("stamp.out.dir");
-			File reportDir = new File(outDir, "report");
+            String outDir = System.getProperty("stamp.report.dir");
+            if(outDir == null || outDir.trim().isEmpty())
+				outDir = System.getProperty("stamp.out.dir");System.out.println("OUTDIR: "+outDir);
+            reportDir = new File(outDir, app.getPackageName());
 			reportDir.mkdir();
 
 			writer = new PrintWriter(new FileWriter(new File(reportDir, "report.html")));
-			writer.println("<!DOCTYPE html>");
-			writer.println("<html>");
-			writer.println("<head>");
-			writer.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
-			writer.println(String.format("<link rel=\"stylesheet\" media=\"all\" href=\"%s\">",
-										 "file://"+System.getProperty("stamp.dir")+"/bootstrap/dist/css/bootstrap.css"
-										 //"http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
-            ));
+			if(!apposcopy){
+				writer.println("<!DOCTYPE html>");
+				writer.println("<html>");
+				writer.println("<head>");
+				writer.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
+				writer.println(String.format("<link rel=\"stylesheet\" media=\"all\" href=\"%s\">",
+											 //"file://"+System.getProperty("stamp.dir")+"/bootstrap/dist/css/bootstrap.css"
+											 "http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
+											 ));
+				
+				writer.println("<style>");
+				writer.println(".badge-important{background-color:#b94a48;}");
+				writer.println("</style>");
 
-			writer.println("<style>");
-			writer.println(".badge-important{background-color:#b94a48;}");
-			writer.println("</style>");
-
-			writer.println("</head>");
-			writer.println("<body>");
+				writer.println("</head>");
+				writer.println("<body>");
+			}
 
 			writer.println("<div class=\"container-fluid\">");
 			writer.println("<div class=\"row-fluid\">");
@@ -87,7 +95,7 @@ public class Main extends JavaAnalysis
 
 			adLib();
 
-			new HttpParamsReport(this).generate();
+			//new HttpParamsReport(this).generate();
 
 			strings();
 			reflection();
@@ -98,11 +106,12 @@ public class Main extends JavaAnalysis
 			writer.println("</div>");
 			writer.println("</div>");
 
-			writer.println("<script src=\"https://code.jquery.com/jquery.js\"></script>");
-			writer.println("<script src=\"http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js\"></script>");
-			writer.println("</body>");
-			writer.println("</html>");
-		
+			if(!apposcopy){
+				writer.println("<script src=\"https://code.jquery.com/jquery.js\"></script>");
+				writer.println("<script src=\"http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js\"></script>");
+				writer.println("</body>");
+				writer.println("</html>");
+			}
 			writer.close();
 		}catch(IOException e){
 			throw new Error(e);
@@ -201,9 +210,19 @@ public class Main extends JavaAnalysis
 		writer.println("<div class=\"jumbotron\">");
 		
 		String icon = app.getIconPath();
-		if(icon != null)
-			writer.println(String.format("<img src=\"file://%s\">", icon));
-
+		if(icon != null){
+            File iconFile = new File(icon);
+            File localIconFile = new File(reportDir, "icon."+icon.substring(icon.lastIndexOf('.')+1));
+            try{
+				FileCopy.copy(iconFile, localIconFile);
+            }catch(IOException e){
+                throw new Error(e);
+            }
+            if(apposcopy)
+				writer.println(String.format("<img src=\"/fetchicon/%s/%s\">", app.getPackageName(), localIconFile.getName()));
+			else
+                writer.println(String.format("<img src=\"file://%s\">", localIconFile.getPath()));
+		}
 		writer.println(String.format("<h2>%s</h2>", app.getPackageName()));
 		writer.println("</div>");
 

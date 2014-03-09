@@ -116,6 +116,8 @@
 	  <sysproperty key="stamp.timeout" value="${stamp.timeout}"/>
 	  <sysproperty key="stamp.apk.path" value="${apk}"/>
 	  <sysproperty key="stamp.apktool.out.dir" value="${stamp.out.dir}/apktool-out"/>
+	  <sysproperty key="stamp.apposcopy" value="${stamp.apposcopy}"/>
+	  <sysproperty key="stamp.report.dir" value="${stamp.report.dir}"/>
       <syspropertyset refid="stamp.analyses.main.sysprops"/>
       <classpath>
 		<pathelement location="${stamp.dir}/bin/stamp.main.jar"/>
