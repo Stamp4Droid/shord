@@ -56,12 +56,6 @@ std::queue<Edge*> worklist;
 #endif
 
 /**
- * All the indices on the @Relation%s used by the @Grammar, indexed by
- * @Relation reference number and target column.
- */
-RelationIndex **rel_indices;
-
-/**
  * A global counter for the number of iterations the solver loop has executed
  * so far.
  */
@@ -300,65 +294,9 @@ inline NODE_REF num_nodes() {
     return node_names.size();
 }
 
-/* RELATION HANDLING ======================================================= */
-
-const std::set<INDEX> RelationIndex::EMPTY_INDEX_SET;
-
-void RelationIndex::add(const Selection &sel, INDEX val) {
-    map[sel].insert(val);
-}
-
-const std::set<INDEX>& RelationIndex::get(const Selection &sel) {
-    try {
-	return map.at(sel);
-    } catch (const std::out_of_range& oor) {
-	return EMPTY_INDEX_SET;
-    }
-}
-
-/**
- * Initialize all possible indices on the declared @Relation%s. The indices
- * start out empty.
- */
-void rels_init() {
-    rel_indices = new RelationIndex *[num_rels()];
-    for (int i = 1; i < num_rels(); i++) {
-	// HACK: Ignoring special relation #0.
-	// TODO: We only handle relations of arity 3.
-	assert(rel_arity(i) == 3);
-	rel_indices[i] = new RelationIndex[3];
-    }
-}
-
-/**
- * Add a tuple to the @Relation identified by reference number @a ref. The
- * values of the tuple's fields must be specified in column order.
- */
-// TODO: Duplicate entries are silently ignored.
-// TODO: We don't necessarily need all 3 indices; can get this information
-// from the grammar.
-void rel_record(RELATION_REF ref, INDEX val_0, INDEX val_1, INDEX val_2) {
-    rel_indices[ref][0].add(std::make_pair(val_1, val_2), val_0);
-    rel_indices[ref][1].add(std::make_pair(val_0, val_2), val_1);
-    rel_indices[ref][2].add(std::make_pair(val_0, val_1), val_2);
-}
-
-const std::set<INDEX>& rel_select(RELATION_REF ref, ARITY proj_col,
-				  INDEX val_a, INDEX val_b) {
-    return rel_indices[ref][proj_col].get(std::make_pair(val_a, val_b));
-}
-
-/* TRANSITION FUNCTION HANDLING ============================================ */
-
-TRANS_FUN_REF compose(TRANS_FUN_REF f, TRANS_FUN_REF g) {
-    assert(f < num_trans_funs() && g < num_trans_funs());
-    return compose_tab[f * num_trans_funs() + g];
-}
-
 /* EDGE OPERATIONS ========================================================= */
 
 Edge::Edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
-	   TRANS_FUN_REF fwd_tfun, TRANS_FUN_REF bck_tfun,
 	   Edge* l_edge, bool l_rev, Edge* r_edge, bool r_rev)
     : from(from), to(to), kind(kind)
 #ifdef PATH_RECORDING
@@ -366,7 +304,6 @@ Edge::Edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
     , length(is_terminal(kind) ? static_min_length(kind)
 	     : (l_edge == NULL ? 0 : l_edge->length) +
 	       (r_edge == NULL ? 0 : r_edge->length))
-    , fwd_tfun(fwd_tfun), bck_tfun(bck_tfun)
 #endif
     , index(index)
 #ifdef PATH_RECORDING
@@ -387,12 +324,7 @@ Edge::Edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 // still use this function instead of a naked pointer check).
 bool edge_equals(Edge *a, Edge *b) {
     return a == b || ((a->from == b->from) && (a->to == b->to)
-		      && (a->kind == b->kind) && (a->index == b->index)
-#ifdef PATH_RECORDING
-		      && (a->fwd_tfun == b->fwd_tfun)
-		      && (a->bck_tfun == b->bck_tfun)
-#endif
-		      );
+		      && (a->kind == b->kind) && (a->index == b->index));
 }
 
 bool same_arc(Edge *a, Edge *b) {
@@ -556,25 +488,20 @@ OutEdgeSet& get_out_set(NODE_REF from, EDGE_KIND kind) {
 }
 
 InEdgeSet::View edges_to(NODE_REF to, EDGE_KIND kind, INDEX index) {
-    assert(!is_predicate(kind));
     assert(index == INDEX_NONE || is_parametric(kind));
     return get_in_set(to, kind).view(index);
 }
 
 OutEdgeSet::View edges_from(NODE_REF from, EDGE_KIND kind, INDEX index) {
-    assert(!is_predicate(kind));
     assert(index == INDEX_NONE || is_parametric(kind));
     return get_out_set(from, kind).view(NODE_NONE, index);
 }
 
 OutEdgeSet::View edges_between(NODE_REF from, NODE_REF to, EDGE_KIND kind) {
-    assert(!is_predicate(kind));
     return get_out_set(from, kind).view(to, INDEX_NONE);
 }
 
-Edge *find_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
-		TRANS_FUN_REF fwd_tfun, TRANS_FUN_REF bck_tfun) {
-    assert(!is_predicate(kind));
+Edge *find_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index) {
     assert((index == INDEX_NONE) ^ is_parametric(kind));
     // We search on the set of outgoing edges of the source node, because it's
     // indexed on more dimensions.
@@ -582,21 +509,14 @@ Edge *find_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	// We stop at the first compatible Edge; the view can only contain one
 	// such element anyway.
 	// TODO: Could verify this, but we'd be performing useless work.
-#ifdef PATH_RECORDING
-	if (e->fwd_tfun == fwd_tfun && e->bck_tfun == bck_tfun) {
-	    return e;
-	}
-#else
 	return e;
-#endif
     }
     return NULL;
 }
 
 // Return true iff the Edge wasn't already present in the graph.
 bool graph_add(Edge* e) {
-    if (find_edge(e->from, e->to, e->kind, e->index, e->fwd_tfun,
-		  e->bck_tfun) != NULL) {
+    if (find_edge(e->from, e->to, e->kind, e->index) != NULL) {
 	return false;
     }
     nodes[e->to].in[e->kind].add(e);
@@ -607,33 +527,12 @@ bool graph_add(Edge* e) {
 void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
 	      Edge* l_edge, bool l_rev, Edge* r_edge, bool r_rev) {
 #ifdef PATH_RECORDING
-    TRANS_FUN_REF fwd_tfun, bck_tfun;
     if (l_edge == NULL) {
 	assert(!l_rev && r_edge == NULL);
-	if (is_terminal(kind)) {
-	    fwd_tfun = trans_fun_for(kind, false);
-	    bck_tfun = trans_fun_for(kind, true);
-	} else {
-	    // non-terminal with empty production
-	    fwd_tfun = TRANS_FUN_ID;
-	    bck_tfun = TRANS_FUN_ID;
-	}
-    } else if (r_edge == NULL) {
-	fwd_tfun = l_rev ? l_edge->bck_tfun : l_edge->fwd_tfun;
-	bck_tfun = l_rev ? l_edge->fwd_tfun : l_edge->bck_tfun;
-    } else {
-	fwd_tfun = compose(l_rev ? l_edge->bck_tfun : l_edge->fwd_tfun,
-			   r_rev ? r_edge->bck_tfun : r_edge->fwd_tfun);
-	bck_tfun = compose(r_rev ? r_edge->fwd_tfun : r_edge->bck_tfun,
-			   l_rev ? l_edge->fwd_tfun : l_edge->bck_tfun);
-    }
-    if (fwd_tfun == TRANS_FUN_BOTTOM && bck_tfun == TRANS_FUN_BOTTOM) {
-	return;
     }
 #endif
 
-    Edge* e = new Edge(from, to, kind, index, fwd_tfun, bck_tfun,
-		       l_edge, l_rev, r_edge, r_rev);
+    Edge* e = new Edge(from, to, kind, index, l_edge, l_rev, r_edge, r_rev);
 #ifdef PATH_RECORDING
     if (is_terminal(kind)) {
 #endif
@@ -671,15 +570,6 @@ void add_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
  * number. Each line corresponds to a separate Edge.
  */
 #define EDGE_SET_FORMAT "dat"
-
-/**
- * The file extension for @Relation files.
- *
- * The basename for these files must be the same as the @Relation they
- * represent. Each line must contain exactly one tuple of @Indices from the
- * @Relation, represented as a whitespace-separated list of numbers.
- */
-#define RELATION_FORMAT "rel"
 
 /**
  * The file extension for path listing files.
@@ -783,44 +673,6 @@ void parse_input_files(ParsingMode mode) {
 }
 
 /**
- * Parse in the @Relation%s used in the @Grammar.
- *
- * For each @Relation declared in the input grammar, find the corresponding
- * @ref RELATION_FORMAT file in subdir @ref INPUT_DIR and read in its tuples.
- */
-void parse_rels() {
-    // TODO: Could share some of this code with input facts parsing.
-    for (RELATION_REF r = 1; r < num_rels(); r++) {
-	// HACK: Ignoring special relation #0.
-	assert(rel_arity(r) == 3);
-	std::ostringstream ss;
-	ss << INPUT_DIR << "/" << ref2rel(r) << "." << RELATION_FORMAT;
-	std::string fname = ss.str();
-	std::ifstream fin(fname);
-	if (!fin) {
-	    SYS_ERR("Can't open input file: ", fname);
-	}
-	std::string line;
-	while (std::getline(fin, line)) {
-	    std::istringstream iss(line);
-	    INDEX val_0, val_1, val_2;
-	    if (!(iss >> val_0 >> val_1 >> val_2)) {
-		// TODO: This won't fail as expected in all cases, e.g. if one
-		// of the numbers is negative.
-		APP_ERR("Tuple too short or parsing error: ", fname);
-	    }
-	    if (!iss.eof()) {
-		APP_ERR("Tuple too long or trailing whitespace: ", fname);
-	    }
-	    rel_record(r, val_0, val_1, val_2);
-	}
-	if (!fin.eof()) {
-	    SYS_ERR("Error while parsing file: ", fname);
-	}
-    }
-}
-
-/**
  * Print out the final results of the analysis.
  *
  * For each non-terminal @Symbol in the input grammar, print out all Edge%s
@@ -831,7 +683,7 @@ void parse_rels() {
 void print_results() {
     /* Print out non-terminal edges. */
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
-	if (is_predicate(k) || is_terminal(k)) {
+	if (is_terminal(k)) {
 	    continue;
 	}
 	bool parametric = is_parametric(k);
@@ -1224,11 +1076,6 @@ void print_paths_for_kind(EDGE_KIND k, unsigned int num_paths,
     for (NODE_REF n = 0; n < num_nodes(); n++) {
 	const char *tgt_name = node_names.name_of(n).c_str();
 	for (Edge *e : edges_to(n, k)) {
-#ifdef PATH_RECORDING
-	    if (!is_accepting(e->fwd_tfun)) {
-		continue;
-	    }
-#endif
 	    const char *src_name = node_names.name_of(e->from).c_str();
 	    // TODO: Quote input strings before printing to XML.
 	    fprintf(f, "<edge from='%s' to='%s'>\n", src_name, tgt_name);
@@ -1250,10 +1097,6 @@ void print_paths() {
     // Use a single table for all path printing.
     DerivTable table;
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
-	if (is_predicate(k)) {
-	    // TODO: Also check that no edges have been produced.
-	    continue;
-	}
 	unsigned int num_paths = num_paths_to_print(k);
 	if (num_paths > 0) {
 	    print_paths_for_kind(k, num_paths, table);
@@ -1289,7 +1132,7 @@ void print_edge_counts(bool terminal) {
     DECL_COUNTER(total_edge_count, 0);
     DECL_COUNTER(total_index_count, 0);
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
-	if (is_predicate(k) || is_terminal(k) ^ terminal) {
+	if (is_terminal(k) ^ terminal) {
 	    continue;
 	}
 	bool parametric = is_parametric(k);
@@ -1429,15 +1272,13 @@ int main() {
     nodes = new Node[num_nodes()];
     LOG("Nodes: ", num_nodes());
     parse_input_files(ParsingMode::RECORD_EDGES);
-    rels_init();
-    parse_rels();
     LOG("Loading completed in ", CURRENT_TIME() - loading_start, " ms");
 
     START_PROFILER();
     DECL_COUNTER(solving_start, CURRENT_TIME());
     /* Process empty productions. */
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
-	if (has_empty_prod(k) && !is_predicate(k)) {
+	if (has_empty_prod(k)) {
 	    for (NODE_REF n = 0; n < num_nodes(); n++) {
 		// We have disallowed predicates on empty productions.
 		add_edge(n, n, k, INDEX_NONE, NULL, false, NULL, false);

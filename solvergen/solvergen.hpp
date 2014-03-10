@@ -51,8 +51,8 @@
 // HACK: Evil use of the preprocessor, to discard the extra information when
 // path recording is disabled. This covers both function declaration and use.
 #define add_edge(a, b, c, d, e, f, g, h) add_edge(a, b, c, d)
-#define Edge(a, b, c, d, e, f, g, h, i, j) Edge(a, b, c, d)
-#define find_edge(a, b, c, d, e, f) find_edge(a, b, c, d)
+#define Edge(a, b, c, d, e, f, g, h) Edge(a, b, c, d)
+#define find_edge(a, b, c, d) find_edge(a, b, c, d)
 #endif
 
 /* TYPES & SIZES =========================================================== */
@@ -97,25 +97,6 @@ typedef unsigned char CHOICE_REF;
 /** Check if a CHOICE_REF is within bounds. */
 #define VALID_CHOICE_REF(c) ((c) < CHOICE_NONE)
 
-/** An integer identifying some @Relation in the input @Grammar. */
-typedef unsigned char RELATION_REF;
-
-/** The arity of some @Relation in the input @Grammar. */
-typedef unsigned char ARITY;
-
-/** An integer identifying a transition function over the intersected FSM. */
-typedef unsigned short TRANS_FUN_REF;
-// TODO: The FSM parser should output this information.
-/** The 'error' transition function, that doens't compose with anything. */
-#define TRANS_FUN_BOTTOM 0
-/** The 'identity' transition function. */
-#define TRANS_FUN_ID 1
-/**
- * A special transition function, for terminals not present in the intersected
- * FSM.
- */
-#define TRANS_FUN_INVALID USHRT_MAX
-
 /**
  * The maximum amount of memory that the solver will allocate on the heap, in
  * bytes. Attempting to allocate memory beyond this limit will result in a
@@ -154,8 +135,6 @@ struct Edge {
     const bool r_rev;
     /** The length of the path used to construct this Edge. */
     const PATH_LENGTH length;
-    const TRANS_FUN_REF fwd_tfun;
-    const TRANS_FUN_REF bck_tfun;
 #endif
     /**
      * The @Index associated with this Edge. An Edge for @Symbol `S` that
@@ -181,7 +160,6 @@ struct Edge {
 #endif
 public:
     explicit Edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
-		  TRANS_FUN_REF fwd_tfun, TRANS_FUN_REF bck_tfun,
 		  Edge* l_edge, bool l_rev, Edge* r_edge, bool r_rev);
 };
 
@@ -442,44 +420,6 @@ public:
      * Create a view over this InEdgeSet, with the specified constraints.
      */
     View view(INDEX index);
-};
-
-/**
- * An index over a @Relation. Provides efficient access to the subset of tuples
- * that have specific values on all but one columns. Each RelationIndex
- * corresponds to a specific choice of columns.
- *
- * Currently only supports @Relation%s of arity `3`.
- */
-class RelationIndex {
-public:
-    /** A selection over all but one of a @Relation<!-- -->'s columns. */
-    typedef std::pair<INDEX,INDEX> Selection;
-private:
-    /**
-     * A dummy empty @Index set. Used in cases where a queried key is not
-     * present in the RelationIndex, to provide an empty iterator without
-     * polluting the map with useless default-initialized records.
-     */
-    static const std::set<INDEX> EMPTY_INDEX_SET;
-    /** The actual index. */
-    // TODO: Not trivial to use unordered_map: no hash function is declared by
-    // default for pairs/tuples.
-    std::map<Selection, std::set<INDEX>> map;
-public:
-    /**
-     * Record a tuple of the @Relation being indexed. The tuple is passed in
-     * as a combination of a selection on all other columns, plus the value
-     * that the remaining, targeted column takes.
-     */
-    void add(const Selection &sel, INDEX val);
-    /**
-     * Return all values that the targeted column takes for the selected values
-     * on all other columns. In relational algebra terms, this corresponds to a
-     * selection on all other columns, followed by a projection on the targeted
-     * column.
-     */
-    const std::set<INDEX>& get(const Selection &sel);
 };
 
 /**
@@ -863,16 +803,7 @@ OutEdgeSet::View edges_between(NODE_REF from, NODE_REF to, EDGE_KIND kind);
  * @return The single Edge identified by the provided features, if there exists
  * one, otherwise @e NULL.
  */
-Edge *find_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index,
-		TRANS_FUN_REF fwd_tfun, TRANS_FUN_REF bck_tfun);
-
-/**
- * Peform a selection on all the columns of a @Relation except @a proj_col, and
- * return all values appearing in that column. The values used in the selection
- * must be specified in column order.
- */
-const std::set<INDEX>& rel_select(RELATION_REF ref, ARITY proj_col,
-				  INDEX val_a, INDEX val_b);
+Edge *find_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index);
 
 /**
  * @}
@@ -939,42 +870,10 @@ unsigned int num_paths_to_print(EDGE_KIND kind);
 PATH_LENGTH static_min_length(EDGE_KIND kind);
 
 /**
- * Return whether a @Symbol is used as a predicate on a @Production.
- */
-bool is_predicate(EDGE_KIND kind);
-
-/**
  * Check whether a particular @Symbol was introduced by the parser, and was not
  * present in the original grammar.
  */
 bool is_temporary(EDGE_KIND kind);
-
-/**
- * Check whether some Node is reachable from another through a path of a
- * specific @Symbol and @Index. Only appropriate for @Symbol%s used as
- * predicates.
- */
-bool reachable(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index);
-
-/** Return the total number of @Relation%s declared in the input grammar. */
-RELATION_REF num_rels();
-
-/** Get the reference number associated with a @Relation. */
-RELATION_REF rel2ref(const char *rel);
-
-/** Return the name of the @Relation with reference number @a ref. */
-const char *ref2rel(RELATION_REF ref);
-
-/** Return the arity of the @Relation with reference number @a ref. */
-ARITY rel_arity(RELATION_REF ref);
-
-TRANS_FUN_REF num_trans_funs();
-
-extern TRANS_FUN_REF compose_tab[];
-
-TRANS_FUN_REF trans_fun_for(EDGE_KIND kind, bool reverse);
-
-bool is_accepting(TRANS_FUN_REF tfun);
 
 /**
  * @}

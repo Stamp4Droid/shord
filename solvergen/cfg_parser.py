@@ -145,10 +145,8 @@ class Symbol(util.Hashable):
         ## Whether Edge%s of this @Symbol are parameterized by @Indices.
         self.parametric = parametric
         self.min_length = None
-        self.reachable = None
-        self._predicate = False
         self._num_paths = 0
-        self._mutables = ['min_length', 'reachable']
+        self._mutables = ['min_length']
 
     def is_terminal(self):
         """
@@ -166,24 +164,6 @@ class Symbol(util.Hashable):
         """
         return self.name[0] == '%'
 
-    def is_predicate(self):
-        """
-        Check if this @Symbol is used as a predicate on a production.
-        """
-        return self._predicate
-
-    def make_predicate(self):
-        """
-        Declare that this @Symbol is used as a predicate on a production.
-        """
-        assert not self.is_terminal(), \
-            "Terminals are implicitly usable as predicates"
-        assert self.num_paths() == 0, \
-            "Can't output paths for predicate symbols"
-        assert not self.is_temporary(), \
-            "Intermediate symbols can't be used as predicates"
-        self._predicate = True
-
     def num_paths(self):
         """
         Return the number of paths we wish the solver to print for each Edge of
@@ -200,8 +180,6 @@ class Symbol(util.Hashable):
             "Paths can only be printed for non-terminals"
         assert not self.is_temporary(), \
             "Paths cannot be printed for intermediate symbols"
-        assert not self.is_predicate(), \
-            "Can't output paths for predicate symbols"
         self._num_paths = num_paths
 
     def __key__(self):
@@ -215,27 +193,13 @@ class Result(util.BaseClass):
     An instance of some @Symbol on the LHS of a production.
     """
 
-    def __init__(self, symbol, index):
+    def __init__(self, symbol):
         assert not symbol.is_terminal(), "Can't produce non-terminals"
-        assert (index is None) ^ symbol.parametric, \
-            "Indexing mismatch on LHS of production for %s" % symbol
         ## The @Symbol represented by this @Result.
         self.symbol = symbol
-        ## The @Index carried by this @Result, as a 0-based position in the
-        #  containing production's @Relation. Is @e None for non-parametric
-        #  @Symbol%s, and @e 0 for the @Result of indexed productions that
-        #  don't carry a @Relation.
-        self.index = index
-
-    def indexed(self):
-        """
-        Check whether this @Result carries a non-wildcard @Index expression.
-        """
-        return self.index is not None
 
     def __str__(self):
-        idx_str = ('' if not self.indexed() else
-                   ('[%s]' % util.idx2char(self.index)))
+        idx_str = ('' if not self.symbol.parametric else '[i]')
         return str(self.symbol) + idx_str
 
 class Literal(util.BaseClass):
@@ -245,8 +209,8 @@ class Literal(util.BaseClass):
     May optionally contain a 'reverse' modifier and/or an @Index expression.
     """
 
-    def __init__(self, symbol, index, reversed=False):
-        assert index is None or symbol.parametric, \
+    def __init__(self, symbol, indexed, reversed=False):
+        assert not indexed or symbol.parametric, \
             "Index modifier on non-parametric symbol %s" % symbol
         ## The @Symbol represented by this @Literal.
         self.symbol = symbol
@@ -257,76 +221,26 @@ class Literal(util.BaseClass):
         #
         #  Parametric @Symbol%s with a `[*]` index expression are considered to
         #  be non-indexed.
-        self.index = index
+        self.indexed = indexed
         ## Whether this @Literal has a 'reverse' modifier.
         self.reversed = reversed
 
-    def indexed(self):
-        """
-        Check whether this @Literal carries a non-wildcard @Index expression.
-        """
-        return self.index is not None
-
     def __str__(self):
         idx_str = ('' if not self.symbol.parametric else
-                   '[*]' if not self.indexed() else
-                   ('[%s]' % util.idx2char(self.index)))
+                   '[*]' if not self.indexed else '[i]')
         return ('_' if self.reversed else '') + str(self.symbol) + idx_str
-
-class RelationStore(util.UniqueNameMap):
-    """
-    A container for all @Relation%s encountered in the input grammar.
-    """
-
-    def managed_class(self):
-        return Relation
-
-class Relation(util.Hashable):
-    """
-    A relation describing the combinations of @Indices that are allowed to
-    trigger a production.
-    """
-
-    def __init__(self, name, ref, arity):
-        """
-        Objects of this class are managed by the cfg_parser::RelationStore
-        class. Do not call this constructor directly, use
-        cfg_parser::RelationStore::get() instead.
-        """
-        assert arity == 3, "Only 3-parameter relations allowed"
-        ## The @Relation<!-- -->'s string in the input grammar.
-        self.name = name
-        ## A unique number assigned to this @Relation by its manager class.
-        self.ref = ref
-        ## The @Relation<!-- -->'s arity (number of parameters).
-        self.arity = arity
-
-    def __key__(self):
-        return (self.name, self.arity)
-
-    def __str__(self):
-        params_str = ','.join([util.idx2char(i) for i in range(0, self.arity)])
-        return '%s(%s)' % (self.name, params_str)
 
 class Production(util.BaseClass):
     """
     A production of the input @Grammar.
     """
 
-    def __init__(self, result, used, relation, predicate):
-        Production._check_production(result, used, relation, predicate)
+    def __init__(self, result, used):
+        Production._check_production(result, used)
         ## The @Result on the LHS of this @Production.
         self.result = result
         ## An ordered list of the @Literal%s on the RHS of this production.
         self.used = used
-        ## The @Relation describing how the @Indices on the RHS of this
-        #  production are to be matched. Is @e None if there is no such
-        #  @Relation.
-        self.relation = relation
-        ## The @Symbol under which the endpoints of any Edge generated by this
-        #  @Production must be connected. Is @e None if there is no such
-        #  predicate.
-        self.predicate = predicate
 
     def split(self, store):
         """
@@ -346,17 +260,11 @@ class Production(util.BaseClass):
         """
         num_used = len(self.used)
         if num_used == 0:
-            return [NormalProduction(self.result, None, None,
-                                     self.relation, self.predicate)]
+            return [NormalProduction(self.result, None, None)]
         elif num_used == 1:
-            return [NormalProduction(self.result, self.used[0], None,
-                                     self.relation, self.predicate)]
+            return [NormalProduction(self.result, self.used[0], None)]
         elif num_used == 2:
-            return [NormalProduction(self.result, self.used[0], self.used[1],
-                                     self.relation, self.predicate)]
-        # TODO: Longer productions cannot (currently) carry relations, so we
-        # can ignore this complication in the splitting algorithm below.
-        assert self.relation is None
+            return [NormalProduction(self.result, self.used[0], self.used[1])]
         r_used = self.used[1:]
         num_temps = len(self.used) - 2
         temp_parametric = [True for _ in range(0, num_temps)]
@@ -364,64 +272,46 @@ class Production(util.BaseClass):
         # between the first and the last indexed literals in the original
         # production (the result of the production counts as the rightmost
         # literal for this purpose).
-        if not self.result.indexed():
+        if not self.result.symbol.parametric:
             for i in range(num_temps-1, -1, -1):
-                if r_used[i+1].indexed():
+                if r_used[i+1].indexed:
                     break
                 else:
                     temp_parametric[i] = False
-        if not self.used[0].indexed():
+        if not self.used[0].indexed:
             for i in range(0, num_temps):
-                if r_used[i].indexed():
+                if r_used[i].indexed:
                     break
                 else:
                     temp_parametric[i] = False
         temp_symbols = [store.make_temporary(p) for p in temp_parametric]
-        temp_results = [Result(s, 0 if s.parametric else None)
-                        for s in temp_symbols]
-        temp_literals = [Literal(s, 0 if s.parametric else None)
-                         for s in temp_symbols]
+        temp_results = [Result(s) for s in temp_symbols]
+        temp_literals = [Literal(s, s.parametric) for s in temp_symbols]
         l_used = [self.used[0]] + temp_literals
         results = temp_results + [self.result]
-        # The predicate only applies to the NormalProduction that produces the
-        # final result, i.e. the last one.
-        preds = [None for t in temp_symbols] + [self.predicate]
-        return [NormalProduction(r, ls, rs, self.relation, p)
-                for (r, ls, rs, p) in zip(results, l_used, r_used, preds)]
+        return [NormalProduction(r, ls, rs)
+                for (r, ls, rs) in zip(results, l_used, r_used)]
 
     @staticmethod
-    def _check_production(result, used, relation, predicate):
+    def _check_production(result, used):
         """
         Test that a production with the given properties is valid.
         """
-        indices = [e.index for e in [result] + used if e.index is not None]
+        indices = (([0] if result.symbol.parametric else [])
+                   + [0 for e in used if e.indexed])
         assert indices == [] or len(indices) >= 2, \
             "At least two indexed elements required per production"
-        if relation is None:
-            assert all([i == 0 for i in indices]), \
-                "Non-zero index on non-relation carrying production"
-        else:
-            assert len(used) == 2, \
-                "Only binary productions are allowed to carry relations"
-            assert result.indexed(), \
-                "The result of a relation-carrying production must be indexed"
-            assert sorted(indices) == range(0, relation.arity), \
-                "Duplicate index, index out-of-bounds or missing index"
-        if predicate is not None:
-            assert used != [], "Empty productions can't carry predicates"
-            assert not(predicate.parametric and not result.indexed()), \
-                "Indexing mismatch between predicate and result symbol"
 
 class NormalProduction(util.BaseClass):
     """
     A normalized @Production, with up to 2 @Literal%s on the RHS.
     """
 
-    def __init__(self, result, left, right, relation, predicate):
+    def __init__(self, result, left, right):
         assert not(left is None and right is not None)
         used = (([] if left is None else [left]) +
                 ([] if right is None else [right]))
-        Production._check_production(result, used, relation, predicate)
+        Production._check_production(result, used)
         ## The @Result on the LHS of this @NormalProduction.
         self.result = result
         ## The first of up to 2 @Literal%s on the RHS. Is @e None for empty
@@ -430,14 +320,6 @@ class NormalProduction(util.BaseClass):
         ## The second of up to 2 @Literal%s on the RHS. Is @e None for empty
         #  or single @NormalProduction%s.
         self.right = right
-        ## The @Relation describing how the @Indices on the RHS of this
-        #  production are to be matched. Is @e None if there is no such
-        #  @Relation.
-        self.relation = relation
-        ## The @Symbol under which the endpoints of any Edge generated by this
-        #  @NormalProduction must be connected. Is @e None if there is no such
-        #  predicate.
-        self.predicate = predicate
 
     def _update_result_min_length(self):
         """
@@ -463,15 +345,12 @@ class NormalProduction(util.BaseClass):
         """
         if self.right is None:
             return [ReverseProduction(self.result, self.left, None,
-                                      Position.FIRST, self.relation,
-                                      self.predicate)]
+                                      Position.FIRST)]
         else:
             return [ReverseProduction(self.result, self.left, self.right,
-                                      Position.FIRST, self.relation,
-                                      self.predicate),
+                                      Position.FIRST),
                     ReverseProduction(self.result, self.right, self.left,
-                                      Position.SECOND, self.relation,
-                                      self.predicate)]
+                                      Position.SECOND)]
 
     def only_terminals(self):
         return ((self.left is None or self.left.symbol.is_terminal()) and
@@ -495,47 +374,13 @@ class NormalProduction(util.BaseClass):
 
     def outer_search_index(self):
         assert self.left is not None
-        if self.relation is not None:
-            if self.relation.ref != 0:
-                return None
-            indices = (self.result.index, self.left.index, self.right.index)
-            if indices == (2,0,1):
-                return 'index >> 14'
-            elif indices == (2,1,0):
-                return 'index & 0x3fff'
-            elif indices == (0,2,1):
-                return None
-            elif indices == (1,2,0):
-                return None
-            elif indices == (0,1,2):
-                return None
-            elif indices == (1,0,2):
-                return None
-            else:
-                assert False
-        if self.left.indexed() and self.result.indexed():
+        if self.left.indexed and self.result.symbol.parametric:
             return 'index'
         return None
 
     def outer_condition(self):
         assert self.left is not None
-        if self.relation is None or self.relation.ref != 0:
-            return None
-        indices = (self.result.index, self.left.index, self.right.index)
-        if indices == (2,0,1):
-            return None
-        elif indices == (2,1,0):
-            return None
-        elif indices == (0,2,1):
-            return 'index == (l->index >> 14)'
-        elif indices == (1,2,0):
-            return 'index == (l->index & 0x3fff)'
-        elif indices == (0,1,2):
-            return None
-        elif indices == (1,0,2):
-            return None
-        else:
-            assert False
+        return None
 
     def inner_search_source(self):
         assert self.left is not None and self.right is not None
@@ -557,87 +402,26 @@ class NormalProduction(util.BaseClass):
 
     def inner_search_index(self):
         assert self.left is not None and self.right is not None
-        if self.relation is not None:
-            if self.relation.ref != 0:
-                return None
-            indices = (self.result.index, self.left.index, self.right.index)
-            if indices == (2,0,1):
-                return 'index & 0x3fff'
-            elif indices == (2,1,0):
-                return 'index >> 14'
-            elif indices == (0,2,1):
-                return 'l->index & 0x3fff'
-            elif indices == (1,2,0):
-                return 'l->index >> 14'
-            elif indices == (0,1,2):
-                return None
-            elif indices == (1,0,2):
-                return None
-            else:
-                assert False
-        if not self.right.indexed():
+        if not self.right.indexed:
             return None
-        if self.left.indexed():
+        if self.left.indexed:
             return 'l->index'
         else:
-            assert self.result.indexed()
+            assert self.result.symbol.parametric
             return 'index'
 
     def inner_loop_header(self):
-        if self.relation is None:
-            return None
-        assert self.left is not None and self.left.indexed()
-        assert self.right is not None and self.right.indexed()
-        assert self.result.indexed()
-        if self.relation.ref == 0:
-            return None
-        # We need to feed the selection parameters in column order.
-        if self.left.index < self.right.index:
-            (edge_1, edge_2) = ('l', 'r')
-        else:
-            (edge_1, edge_2) = ('r', 'l')
-        return ('INDEX i : rel_select(%s, %s, %s->index, %s->index)'
-                % (self.relation.ref, self.result.index, edge_1, edge_2))
+        return None
 
     def inner_condition(self):
         assert self.left is not None and self.right is not None
-        if self.relation is None:
-            return None
-        if self.relation.ref != 0:
-            return 'i == index'
-        indices = (self.result.index, self.left.index, self.right.index)
-        if indices == (2,0,1):
-            return None
-        elif indices == (2,1,0):
-            return None
-        elif indices == (0,2,1):
-            return None
-        elif indices == (1,2,0):
-            return None
-        elif indices == (0,1,2):
-            er_check = 'index == (r->index >> 14)'
-            lr_check = 'l->index == (r->index & 0x3fff)'
-            return er_check + ' && ' + lr_check
-        elif indices == (1,0,2):
-            er_check = 'index == (r->index & 0x3fff)'
-            lr_check = 'l->index == (r->index >> 14)'
-            return er_check + ' && ' + lr_check
-        else:
-            assert False
+        return None
 
     def __str__(self):
         rhs = ('-' if self.left is None
                else str(self.left) if self.right is None
                else str(self.left) + ' ' + str(self.right))
-        rel = '' if self.relation is None else (' .%s' % self.relation)
-        if self.predicate is None:
-            pred = ''
-        elif not self.predicate.parametric:
-            pred = ' //%s' % self.predicate
-        else:
-            pred = ' //%s[%s]' % (self.predicate,
-                                  util.idx2char(self.result.index))
-        return str(self.result) + ' :: ' + rhs + rel + pred
+        return str(self.result) + ' :: ' + rhs
 
 class Position(util.BaseClass):
     """
@@ -684,14 +468,14 @@ class ReverseProduction(util.BaseClass):
     @Symbol `B`.
     """
 
-    def __init__(self, result, base, reqd, base_pos, relation, predicate):
+    def __init__(self, result, base, reqd, base_pos):
         assert not(base is None and reqd is not None), \
             "Empty productions can't take a required literal"
         assert not(reqd is None and base_pos != Position.FIRST)
         assert Position.valid_position(base_pos)
         used = (([] if base is None else [base]) +
                 ([] if reqd is None else [reqd]))
-        Production._check_production(result, used, relation, predicate)
+        Production._check_production(result, used)
         ## The @Result of this @ReverseProduction.
         self.result = result
         ## The @Literal we assume to be present. Is @e None if this corresponds
@@ -703,13 +487,6 @@ class ReverseProduction(util.BaseClass):
         ## What position the base @Literal has in the corresponding
         #  @NormalProduction.
         self.base_pos = base_pos
-        ## The @Relation describing how the @Indices on the combined Edge%s
-        #  are to be matched. Is @e None if there is no such @Relation.
-        self.relation = relation
-        ## The @Symbol under which the endpoints of any Edge generated by this
-        #  @ReverseProduction must be connected. Is @e None if there is no such
-        #  predicate.
-        self.predicate = predicate
 
     def _check_need_to_search(self):
         assert self.base is not None, \
@@ -754,25 +531,7 @@ class ReverseProduction(util.BaseClass):
 
     def search_index(self):
         self._check_need_to_search()
-        if self.relation is not None:
-            if self.relation.ref != 0:
-                return None
-            indices = (self.result.index, self.base.index, self.reqd.index)
-            if indices == (2,0,1):
-                return None
-            elif indices == (2,1,0):
-                return None
-            elif indices == (0,2,1):
-                return 'base->index & 0x3fff'
-            elif indices == (1,2,0):
-                return 'base->index >> 14'
-            elif indices == (0,1,2):
-                return None
-            elif indices == (1,0,2):
-                return None
-            else:
-                assert False
-        if self.base.indexed() and self.reqd.indexed():
+        if self.base.indexed and self.reqd.indexed:
             return 'base->index'
         return None
 
@@ -829,15 +588,6 @@ class ReverseProduction(util.BaseClass):
         What assertion we should check before triggering this
         @ReverseProduction, if any.
         """
-        if (self.relation is not None and self.relation.ref == 0 and
-            self.result.index == 2):
-            indices = (self.base.index, self.reqd.index)
-            if indices == (0,1):
-                return 'base->index < 0x40000 && other->index < 0x4000'
-            elif indices == (1,0):
-                return 'other->index < 0x40000 && base->index < 0x4000'
-            else:
-                assert False
         return None
 
     def result_index(self):
@@ -849,76 +599,27 @@ class ReverseProduction(util.BaseClass):
         so we can copy from either one of them. We arbitrarily choose to copy
         from the base Edge.
         """
-        if not self.result.indexed():
+        if not self.result.symbol.parametric:
             return 'INDEX_NONE'
         assert self.base is not None
-        if self.relation is not None:
-            assert self.base.indexed()
-            assert self.reqd is not None and self.reqd.indexed()
-            if self.relation.ref != 0:
-                return 'i'
-            indices = (self.result.index, self.base.index, self.reqd.index)
-            if indices == (2,0,1):
-                return '(base->index << 14) | other->index'
-            elif indices == (2,1,0):
-                return '(other->index << 14) | base->index'
-            elif indices == (0,2,1):
-                return 'base->index >> 14'
-            elif indices == (1,2,0):
-                return 'base->index & 0x3fff'
-            elif indices == (0,1,2):
-                return 'other->index >> 14'
-            elif indices == (1,0,2):
-                return 'other->index & 0x3fff'
-            else:
-                assert False
         if self.reqd is None:
-            assert self.base.indexed()
+            assert self.base.indexed
             return 'base->index'
-        elif self.base.indexed():
+        elif self.base.indexed:
             return 'base->index'
         else:
-            assert self.reqd.indexed()
+            assert self.reqd.indexed
             return 'other->index'
 
     def loop_header(self):
-        if self.relation is None:
-            return None
-        assert self.base is not None and self.base.indexed()
-        assert self.reqd is not None and self.reqd.indexed()
-        assert self.result.indexed()
-        if self.relation.ref == 0:
-            return None
-        # We need to feed the selection parameters in column order.
-        if self.base.index < self.reqd.index:
-            (edge_1, edge_2) = ('base', 'other')
-        else:
-            (edge_1, edge_2) = ('other', 'base')
-        return ('INDEX i : rel_select(%s, %s, %s->index, %s->index)'
-                % (self.relation.ref, self.result.index, edge_1, edge_2))
+        return None
 
     def condition(self):
         """
         Any additional @Index compatibility check we need to perform before we
         record the combination of the Edge%s.
         """
-        if self.relation is None or self.relation.ref != 0:
-            return None
-        indices = (self.result.index, self.base.index, self.reqd.index)
-        if indices == (2,0,1):
-            return None
-        elif indices == (2,1,0):
-            return None
-        elif indices == (0,2,1):
-            return None
-        elif indices == (1,2,0):
-            return None
-        elif indices == (0,1,2):
-            return 'base->index == (other->index & 0x3fff)'
-        elif indices == (1,0,2):
-            return 'base->index == (other->index >> 14)'
-        else:
-            assert False
+        return None
 
     def left_edge(self):
         if self.base is None:
@@ -978,15 +679,7 @@ class ReverseProduction(util.BaseClass):
             need = ' + (%s *)' % self.reqd
         else:
             assert False
-        rel = '' if self.relation is None else (' && %s' % self.relation)
-        if self.predicate is None:
-            pred = ''
-        elif not self.predicate.parametric:
-            pred = ' // %s' % self.predicate
-        else:
-            pred = ' // %s[%s]' % (self.predicate,
-                                   util.idx2char(self.result.index))
-        return have + need + rel + pred + ' => ' + str(self.result)
+        return have + need + ' => ' + str(self.result)
 
 class Grammar(util.BaseClass):
     """
@@ -996,23 +689,9 @@ class Grammar(util.BaseClass):
     def __init__(self, cfg_file):
         self._lhs_symbol = None
         self._lhs_idx_char = None
-        self._relation = None
-        self._param_chars = None
-        self._pred_symbol = None
-        self._pred_idx_char = None
         ## All the @Symbol%s encountered so far, stored in a specialized
         #  @SymbolStore container.
         self.symbols = SymbolStore()
-        ## All the @Relation%s encountered so far, stored in a specialized
-        #  @RelationStore container.
-        self.rels = RelationStore()
-        # HACK: Using a special 0-th relation for index concatenation.
-        # HACK: Currently cramming the two indices into one, using 18 bits for
-        # the first and 14 for the second; this may overflow the index. We've
-        # added assertion checks, to make sure we're notified when that
-        # happens.
-        # TODO: Implement correctly and document.
-        self.rels.get('concat', 3)
         ## All the @NormalProduction%s encountered so far, grouped by result
         #  @Symbol.
         self.prods = util.OrderedMultiDict()
@@ -1024,16 +703,6 @@ class Grammar(util.BaseClass):
                 self._parse_line(line)
         self._finalize()
 
-    def pred_support(self):
-        return set([t for s in self.symbols
-                    if not s.is_terminal() and s.is_predicate()
-                    for t in s.reachable if t.is_terminal()])
-
-    def main_support(self):
-        return set([t for s in self.symbols
-                    if not s.is_terminal() and not s.is_predicate()
-                    for t in s.reachable if t.is_terminal()])
-
     def _finalize(self):
         """
         Run final sanity checks and calculations, which require all productions
@@ -1042,18 +711,7 @@ class Grammar(util.BaseClass):
         for s in self.symbols:
             if not s.is_terminal() and self.prods.get(s) == []:
                 assert False, "Non-terminal %s can never be produced" % s
-            if s.is_predicate():
-                assert self.rev_prods.get(s) == [], \
-                    "Predicate %s used on the RHS of a production" % s
-                for p in self.prods.get(s):
-                    assert p.only_terminals(), \
-                        "Predicate %s constructed from non-terminals" % s
-                    assert p.predicate is None, \
-                        "Predicates not allowed on predicate-generating rules"
         self._calc_min_lengths()
-        self._calc_reachable()
-        assert len(self.main_support() & self.pred_support()) == 0, \
-            "Support sets for predicates and main symbols can't match"
 
     def _calc_min_lengths(self):
         for symbol in self.symbols:
@@ -1066,20 +724,6 @@ class Grammar(util.BaseClass):
                 for p in self.prods.get(symbol):
                     if p._update_result_min_length():
                         fixpoint = False
-
-    def _calc_reachable(self):
-        for top in self.symbols:
-            top.reachable = set()
-            def visit(s):
-                if s in top.reachable:
-                    return
-                top.reachable.add(s)
-                for p in self.prods.get(s):
-                    if p.left is not None:
-                        visit(p.left.symbol)
-                    if p.right is not None:
-                        visit(p.right.symbol)
-            visit(top)
 
     def _parse_line(self, line):
         """
@@ -1121,10 +765,6 @@ class Grammar(util.BaseClass):
             assert False, "Unknown directive: %s/%s" % (directive, len(params))
 
     def _parse_production(self, toks):
-        if toks != [] and self._parse_predicate(toks[-1]):
-            toks = toks[:-1]
-        if toks != [] and self._parse_relation(toks[-1]):
-            toks = toks[:-1]
         assert toks != [], "Empty production not marked with '-'"
         used = []
         all_chars = [self._lhs_idx_char]
@@ -1133,32 +773,15 @@ class Grammar(util.BaseClass):
                 (lit, i) = self._parse_literal(t)
                 used.append(lit)
                 all_chars.append(i)
-        if self._relation is None:
-            assert util.all_same([i for i in all_chars if i is not None]), \
-                "Relation-less production with multiple distinct indices"
-        result = Result(self._lhs_symbol, self._char2idx(self._lhs_idx_char))
-        full_prod = Production(result, used, self._relation, self._pred_symbol)
+        assert util.all_same([i for i in all_chars if i is not None])
+        result = Result(self._lhs_symbol)
+        full_prod = Production(result, used)
         prods = full_prod.split(self.symbols)
         for p in prods:
             self.prods.append(p.result.symbol, p)
             for rp in p.get_rev_prods():
                 base_symbol = None if rp.base is None else rp.base.symbol
                 self.rev_prods.append(base_symbol, rp)
-        self._relation = None
-        self._param_chars = None
-        self._pred_symbol = None
-        self._pred_idx_char = None
-
-    def _parse_predicate(self, str):
-        if not str.startswith('//'):
-            return False
-        (self._pred_symbol, self._pred_idx_char) = self._parse_symbol(str[2:])
-        if not self._pred_symbol.is_terminal():
-            self._pred_symbol.make_predicate()
-        if self._pred_idx_char is not None:
-            assert self._pred_idx_char == self._lhs_idx_char, \
-                "Index mismatch between predicate and result symbol"
-        return True
 
     def _parse_literal(self, str):
         matcher = re.match(r'^(_?)([a-zA-Z]\w*)(?:\[([a-zA-Z\*])\])?$', str)
@@ -1168,8 +791,7 @@ class Grammar(util.BaseClass):
         symbol = self.symbols.get(matcher.group(2), idx_char is not None)
         if idx_char == '*':
             idx_char = None
-        index = self._char2idx(idx_char)
-        return (Literal(symbol, index, reversed), idx_char)
+        return (Literal(symbol, idx_char is not None, reversed), idx_char)
 
     def _begin_series(self, str):
         (self._lhs_symbol, self._lhs_idx_char) = self._parse_symbol(str)
@@ -1188,29 +810,7 @@ class Grammar(util.BaseClass):
     def _series_in_progress(self):
         return self._lhs_symbol is not None
 
-    def _parse_relation(self, str):
-        matcher = re.match(r'^\.(\w+)\(((?:[a-zA-Z](?:,[a-zA-Z])*)?)\)$', str)
-        if matcher is None:
-            return False
-        param_chars = matcher.group(2).split(',')
-        assert util.all_different(param_chars), \
-            "Duplicate parameter on relation declaration: %s" % str
-        assert self._lhs_idx_char is not None, \
-            "Relation-carrying production with unindexed LHS"
-        assert self._lhs_idx_char in param_chars, \
-            "Index on LHS not present in relation parameters"
-        self._relation = self.rels.get(matcher.group(1), len(param_chars))
-        self._param_chars = param_chars
-        return True
-
-    def _char2idx(self, idx_char):
-        return (None if idx_char is None else
-                0 if self._relation is None else
-                # This will throw an error if idx_char is not present as a
-                # parameter of the relation.
-                self._param_chars.index(idx_char))
-
-def emit_solver(grammar, trans_tab, code_out):
+def emit_solver(grammar, code_out):
     """
     Generate the solver code for the input grammar. Accepts File-like objects
     for its output parameters.
@@ -1305,52 +905,12 @@ def emit_solver(grammar, trans_tab, code_out):
     pr.write('}')
     pr.write('')
 
-    pr.write('bool is_predicate(EDGE_KIND kind) {')
-    pr.write('switch (kind) {')
-    for s in grammar.symbols:
-        if s.is_predicate():
-            pr.write('case %s: return true; /* %s */' % (s.kind, s))
-    pr.write('default: return false;')
-    pr.write('}')
-    pr.write('}')
-    pr.write('')
-
     pr.write('bool is_temporary(EDGE_KIND kind) {')
     pr.write('switch (kind) {')
     for s in grammar.symbols:
         if s.is_temporary():
             pr.write('case %s: return true; /* %s */' % (s.kind, s))
     pr.write('default: return false;')
-    pr.write('}')
-    pr.write('}')
-    pr.write('')
-
-    pr.write('RELATION_REF num_rels() {')
-    pr.write('return %s;' % grammar.rels.size())
-    pr.write('}')
-    pr.write('')
-
-    pr.write('RELATION_REF rel2ref(const char* rel) {')
-    for r in grammar.rels:
-        pr.write('if (strcmp(rel, "%s") == 0) return %s;' % (r.name, r.ref))
-    pr.write('assert(false);')
-    pr.write('}')
-    pr.write('')
-
-    pr.write('const char* ref2rel(RELATION_REF ref) {')
-    pr.write('switch (ref) {')
-    for r in grammar.rels:
-        pr.write('case %s: return "%s";' % (r.ref, r.name))
-    pr.write('default: assert(false);')
-    pr.write('}')
-    pr.write('}')
-    pr.write('')
-
-    pr.write('ARITY rel_arity(RELATION_REF ref) {')
-    pr.write('switch (ref) {')
-    for r in grammar.rels:
-        pr.write('case %s: return %s; /* %s */' % (r.ref, r.arity, r.name))
-    pr.write('default: assert(false);')
     pr.write('}')
     pr.write('}')
     pr.write('')
@@ -1364,15 +924,7 @@ def emit_solver(grammar, trans_tab, code_out):
             # This symbol doesn't appear on the RHS of any production.
             continue
         pr.write('case %s: /* %s */' % (base_symbol.kind, base_symbol))
-        if base_symbol.is_predicate():
-            # Edges for predicate symbols should never get produced, and thus
-            # never enter the worklist.
-            pr.write('assert(false);')
-            continue
         for rp in rev_prods:
-            if rp.result.symbol.is_predicate():
-                # Skip productions that generate predicate symbols.
-                continue
             pr.write('/* %s */' % rp)
             res_src = rp.result_source()
             res_tgt = rp.result_target()
@@ -1396,20 +948,12 @@ def emit_solver(grammar, trans_tab, code_out):
                 cond = rp.condition()
                 if cond is not None:
                     pr.write('if (%s) {' % cond)
-            if rp.predicate is not None:
-                # TODO: If the predicate doesn't actually use the index on the
-                # result edge, we could switch the order of the loops.
-                pred_idx = res_idx if rp.predicate.parametric else 'INDEX_NONE'
-                pr.write('if (reachable(%s, %s, %s, %s)) {'
-                         % (res_src, res_tgt, rp.predicate.kind, pred_idx))
             asrt = rp.assertion()
             if asrt is not None:
                 pr.write('assert(%s);' % asrt)
             pr.write('add_edge(%s, %s, %s, %s, %s, %s, %s, %s);'
                      % (res_src, res_tgt, res_kind, res_idx,
                         l_edge, l_rev, r_edge, r_rev))
-            if rp.predicate is not None:
-                pr.write('}')
             if rp.reqd is not None:
                 if cond is not None:
                     pr.write('}')
@@ -1421,67 +965,14 @@ def emit_solver(grammar, trans_tab, code_out):
     pr.write('}')
     pr.write('')
 
-    emit_derivs_or_reachable(grammar, pr, True)
-
-    emit_derivs_or_reachable(grammar, pr, False)
-
-    pr.write('TRANS_FUN_REF num_trans_funs() {')
-    pr.write('return %s;' % len(trans_tab.funs))
-    pr.write('}')
-    pr.write('')
-
-    pr.write('TRANS_FUN_REF compose_tab[%s] = {' % len(trans_tab.funs)**2)
-    pr.write(','.join([str(fidx)
-                       for row in trans_tab.comp_tab for fidx in row]))
-    pr.write('};')
-    pr.write('')
-
-    pr.write('TRANS_FUN_REF trans_fun_for(EDGE_KIND kind, bool reverse) {')
-    pr.write('switch (kind) {')
-    for s in grammar.main_support():
-        pr.write('case %s: /* %s */' % (s.kind, s))
-        pr.write('if (reverse) {')
-        pr.write('return %s;'
-                 % trans_tab.lit2fidx[fsm.Literal(True, s.name)])
-        pr.write('} else {')
-        pr.write('return %s;'
-                 % trans_tab.lit2fidx[fsm.Literal(False, s.name)])
-        pr.write('}')
-    for s in grammar.pred_support():
-        pr.write('case %s: /* %s */' % (s.kind, s))
-        pr.write('return TRANS_FUN_INVALID;')
-    pr.write('default: assert(false);')
-    pr.write('}')
-    pr.write('}')
-    pr.write('')
-
-    pr.write('bool is_accepting(TRANS_FUN_REF tfun) {')
-    pr.write('switch (tfun) {')
-    for acc_fidx in trans_tab.accepting:
-        pr.write('case %s: return true;' % acc_fidx)
-    pr.write('default: return false;')
-    pr.write('}')
-    pr.write('}')
-    pr.write('')
-
-# XXX: We assume that predicate matching isn't affected by any regular
-# dimensions, and we've temporarily given up on post-hoc path calculation, so
-# these functions currently ignore the regular dimension.
-def emit_derivs_or_reachable(grammar, pr, emit_derivs):
-    if emit_derivs:
-        pr.write('std::vector<Derivation> all_derivations(Edge* e) {')
-        pr.write('std::vector<Derivation> derivs;')
-        pr.write('NODE_REF from = e->from;')
-        pr.write('NODE_REF to = e->to;')
-        pr.write('EDGE_KIND kind = e->kind;')
-        pr.write('INDEX index = e->index;')
-        pr.write('Edge* l;')
-        pr.write('Edge* r;')
-    else:
-        pr.write('bool reachable(NODE_REF from, NODE_REF to, EDGE_KIND kind, '
-                 + 'INDEX index) {')
-        pr.write('assert(is_parametric(kind) ^ (index == INDEX_NONE));')
-        pr.write('Edge* r;')
+    pr.write('std::vector<Derivation> all_derivations(Edge* e) {')
+    pr.write('std::vector<Derivation> derivs;')
+    pr.write('NODE_REF from = e->from;')
+    pr.write('NODE_REF to = e->to;')
+    pr.write('EDGE_KIND kind = e->kind;')
+    pr.write('INDEX index = e->index;')
+    pr.write('Edge* l;')
+    pr.write('Edge* r;')
     # TODO: Paths for predicate witness edges are not used during path
     # reconstruction, so we don't have to consider that case when emitting
     # all_derivations.
@@ -1493,22 +984,7 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
     pr.write('switch (kind) {')
     for e_symbol in grammar.symbols:
         pr.write('case %s: /* %s */' % (e_symbol.kind, e_symbol))
-        if (emit_derivs and e_symbol.is_predicate() or
-            not emit_derivs and not (e_symbol.is_predicate()
-                                     or e_symbol.is_terminal())):
-            # Derivation re-construction should never be requested for
-            # predicate witness edges, because none are ever explicitly
-            # produced. Conversely, reachability queries only need to be
-            # performed for predicate (and terminal) symbols.
-            pr.write('assert(false);')
-            pr.write('break;')
-            continue
         if e_symbol.is_terminal():
-            if not emit_derivs:
-                pr.write('if (find_edge(from, to, %s, index, ' % e_symbol.kind
-                         + 'TRANS_FUN_INVALID, TRANS_FUN_INVALID) != NULL) {')
-                pr.write('return true;')
-                pr.write('}')
             pr.write('break;')
             continue
         for p in grammar.prods.get(e_symbol):
@@ -1516,10 +992,7 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
             if p.left is None:
                 # Empty production
                 pr.write('if (from == to) {')
-                if emit_derivs:
-                    pr.write('derivs.push_back(Derivation());')
-                else:
-                    pr.write('return true;')
+                pr.write('derivs.push_back(Derivation());')
                 pr.write('}')
                 continue
             l_rev = util.to_c_bool(p.left.reversed)
@@ -1535,8 +1008,7 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
                 pr.write('for (Edge* l : edges_between(%s, %s, %s)) {'
                          % (out_src, out_tgt, p.left.symbol.kind))
             else:
-                pr.write(('if ((l = find_edge(%s, %s, %s, %s, ' +
-                          'TRANS_FUN_INVALID, TRANS_FUN_INVALID)) != NULL) {')
+                pr.write(('if ((l = find_edge(%s, %s, %s, %s)) != NULL) {')
                          % (out_src, out_tgt, p.left.symbol.kind,
                             'INDEX_NONE' if out_idx is None else out_idx))
             out_cond = p.outer_condition()
@@ -1544,11 +1016,7 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
                 pr.write('if (%s) {' % out_cond)
             if p.right is None:
                 # single production
-                if emit_derivs:
-                    pr.write('derivs.push_back(Derivation(l, %s));'
-                             % l_rev)
-                else:
-                    pr.write('return true;')
+                pr.write('derivs.push_back(Derivation(l, %s));' % l_rev)
             else:
                 # double production
                 r_rev = util.to_c_bool(p.right.reversed)
@@ -1559,9 +1027,7 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
                     pr.write('for (Edge* r : edges_between(%s, %s, %s)) {'
                              % (in_src, in_tgt, p.right.symbol.kind))
                 else:
-                    pr.write(('if ((r = find_edge(%s, %s, %s, %s, ' +
-                              'TRANS_FUN_INVALID, TRANS_FUN_INVALID)) ' +
-                              '!= NULL) {')
+                    pr.write(('if ((r = find_edge(%s, %s, %s, %s)) != NULL) {')
                              % (in_src, in_tgt, p.right.symbol.kind,
                                 'INDEX_NONE' if in_idx is None else in_idx))
                 in_loop_header = p.inner_loop_header()
@@ -1570,11 +1036,8 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
                 in_cond = p.inner_condition()
                 if in_cond is not None:
                     pr.write('if (%s) {' % in_cond)
-                if emit_derivs:
-                    pr.write('derivs.push_back(Derivation(l, %s, r, %s));'
+                pr.write('derivs.push_back(Derivation(l, %s, r, %s));'
                              % (l_rev, r_rev))
-                else:
-                    pr.write('return true;')
                 if in_cond is not None:
                     pr.write('}')
                 if in_loop_header is not None:
@@ -1587,10 +1050,7 @@ def emit_derivs_or_reachable(grammar, pr, emit_derivs):
     pr.write('default:')
     pr.write('assert(false);')
     pr.write('}')
-    if emit_derivs:
-        pr.write('return derivs;')
-    else:
-        pr.write('return false;')
+    pr.write('return derivs;')
     pr.write('}')
     pr.write('')
 
@@ -1618,42 +1078,19 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=prog_desc,
                                      formatter_class=RawFormatter)
     parser.add_argument('cfg_file', help=cfg_file_help)
-    parser.add_argument('fsms_dir', help=fsms_dir_help)
     parser.add_argument('out_dir', nargs='?', help=out_dir_help)
     args = parser.parse_args()
 
     grammar = Grammar(args.cfg_file)
-    (min_fsm, trans_tab) = fsm.parse_dir(args.fsms_dir)
-    cfg_terms = set([s.name for s in grammar.main_support()])
-    rg_terms = set([lit.symbol for lit in min_fsm.literals()])
-    assert (rg_terms == cfg_terms), "Alphabet mismatch between CFG and RG"
-
     if args.out_dir is not None:
         cfg_name = os.path.splitext(os.path.basename(args.cfg_file))[0]
-        rg_name = util.tail_dir(args.fsms_dir)
-        intxn_name = '%s^%s' % (cfg_name, rg_name)
-        code_out = os.path.join(args.out_dir, '%s.cpp' % intxn_name)
+        code_out = os.path.join(args.out_dir, '%s.cpp' % cfg_name)
         with open(code_out, 'w') as f:
-            emit_solver(grammar, trans_tab, f)
-        terms_out = os.path.join(args.out_dir, '%s.terms.dat' % intxn_name)
+            emit_solver(grammar, f)
+        terms_out = os.path.join(args.out_dir, '%s.terms.dat' % cfg_name)
         with open(terms_out, 'w') as f:
             for s in grammar.symbols:
                 if s.is_terminal():
                     f.write('%s\n' % s)
-        rels_out = os.path.join(args.out_dir, '%s.rels.dat' % intxn_name)
-        with open(rels_out, 'w') as f:
-            for r in grammar.rels:
-                if r.ref == 0:
-                    continue
-                f.write('%s\n' % r.name)
-        preds_out = os.path.join(args.out_dir, '%s.preds.dat' % intxn_name)
-        with open(preds_out, 'w') as f:
-            for s in grammar.symbols:
-                if s.is_predicate():
-                    f.write('%s\n' % s)
-        supp_out = os.path.join(args.out_dir, '%s.supp.dat' % intxn_name)
-        with open(supp_out, 'w') as f:
-            for supp_s in grammar.pred_support():
-                f.write('%s\n' % supp_s)
     else:
-        emit_solver(grammar, trans_tab, sys.stdout)
+        emit_solver(grammar, sys.stdout)
