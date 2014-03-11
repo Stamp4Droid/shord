@@ -106,6 +106,15 @@ class SymbolStore(util.UniqueNameMap):
         super(SymbolStore, self).__init__()
         self._num_temps = 0
 
+    def copy_from(self, src):
+        super(SymbolStore, self).copy_from(src)
+        self._num_temps = src._num_temps
+
+    def clone(self):
+        clone = SymbolStore()
+        clone.copy_from(self)
+        return clone
+
     def make_temporary(self, parametric):
         """
         Generate a unique non-terminal @Symbol, guaranteed to never clash with
@@ -144,9 +153,7 @@ class Symbol(util.Hashable):
         self.ref = ref
         ## Whether Edge%s of this @Symbol are parameterized by @Indices.
         self.parametric = parametric
-        self.min_length = None
         self._num_paths = 0
-        self._mutables = ['min_length']
 
     def is_terminal(self):
         """
@@ -320,23 +327,6 @@ class NormalProduction(util.BaseClass):
         ## The second of up to 2 @Literal%s on the RHS. Is @e None for empty
         #  or single @NormalProduction%s.
         self.right = right
-
-    def _update_result_min_length(self):
-        """
-        Propagate the minimum length estimates from the @Symbol%s on the RHS
-        to the @Symbol on the LHS. To be used by
-        cfg_parser::Grammar::calc_min_lengths().
-
-        @return Whether this call updated the estimate for the result @Symbol.
-        """
-        left_len = 0 if self.left is None else self.left.symbol.min_length
-        right_len = 0 if self.right is None else self.right.symbol.min_length
-        newlen = left_len + right_len
-        if newlen < self.result.symbol.min_length:
-            self.result.symbol.min_length = newlen
-            return True
-        else:
-            return False
 
     def get_rev_prods(self):
         """
@@ -692,12 +682,8 @@ class Grammar(util.BaseClass):
         ## All the @Symbol%s encountered so far, stored in a specialized
         #  @SymbolStore container.
         self.symbols = SymbolStore()
-        ## All the @NormalProduction%s encountered so far, grouped by result
-        #  @Symbol.
+        ## All the @Production%s encountered so far, grouped by result @Symbol.
         self.prods = util.OrderedMultiDict()
-        ## All the @ReverseProduction%s encountered so far, grouped by base
-        #  @Symbol.
-        self.rev_prods = util.OrderedMultiDict()
         with open(cfg_file) as grammar_in:
             for line in grammar_in:
                 self._parse_line(line)
@@ -711,19 +697,6 @@ class Grammar(util.BaseClass):
         for s in self.symbols:
             if not s.is_terminal() and self.prods.get(s) == []:
                 assert False, "Non-terminal %s can never be produced" % s
-        self._calc_min_lengths()
-
-    def _calc_min_lengths(self):
-        for symbol in self.symbols:
-            # TODO: Arbitrary value for "infinite length"
-            symbol.min_length = 1 if symbol.is_terminal() else 10000
-        fixpoint = False
-        while not fixpoint:
-            fixpoint = True
-            for symbol in self.prods:
-                for p in self.prods.get(symbol):
-                    if p._update_result_min_length():
-                        fixpoint = False
 
     def _parse_line(self, line):
         """
@@ -775,13 +748,7 @@ class Grammar(util.BaseClass):
                 all_chars.append(i)
         assert util.all_same([i for i in all_chars if i is not None])
         result = Result(self._lhs_symbol)
-        full_prod = Production(result, used)
-        prods = full_prod.split(self.symbols)
-        for p in prods:
-            self.prods.append(p.result.symbol, p)
-            for rp in p.get_rev_prods():
-                base_symbol = None if rp.base is None else rp.base.symbol
-                self.rev_prods.append(base_symbol, rp)
+        self.prods.append(result.symbol, Production(result, used))
 
     def _parse_literal(self, str):
         matcher = re.match(r'^(_?)([a-zA-Z]\w*)(?:\[([a-zA-Z\*])\])?$', str)
@@ -816,6 +783,16 @@ def emit_solver(grammar, code_out):
     for its output parameters.
     """
     pr = util.CodePrinter(code_out)
+    norm_prods = util.OrderedMultiDict()
+    rev_prods = util.OrderedMultiDict()
+    symbols = grammar.symbols.clone()
+    for s in grammar.prods:
+        for fp in grammar.prods.get(s):
+            for p in fp.split(symbols):
+                norm_prods.append(p.result.symbol, p)
+                for rp in p.get_rev_prods():
+                    base_symbol = None if rp.base is None else rp.base.symbol
+                    rev_prods.append(base_symbol, rp)
 
     pr.write('#include <assert.h>')
     pr.write('#include <list>')
@@ -824,20 +801,17 @@ def emit_solver(grammar, code_out):
     pr.write('#include "solvergen.hpp"')
     pr.write('')
 
-    pr.write('/* Normalized Grammar:')
-    pr.write('%s' % grammar.prods)
-    pr.write('*/')
-    pr.write('')
-
     pr.write('/* Reverse Productions:')
-    pr.write('%s' % grammar.rev_prods)
+    pr.write('%s' % rev_prods)
     pr.write('*/')
     pr.write('')
 
     pr.write('PATH_LENGTH static_min_length(EDGE_KIND kind) {')
     pr.write('switch (kind) {')
-    for s in grammar.symbols:
-        pr.write('case %s: return %s; /* %s */' % (s.ref, s.min_length, s))
+    # XXX: Overapproximate
+    for s in symbols:
+        pr.write('case %s: return %s; /* %s */'
+                 % (s.ref, 1 if s.is_terminal() else 0, s))
     pr.write('default: assert(false);')
     pr.write('}')
     pr.write('}')
@@ -845,7 +819,7 @@ def emit_solver(grammar, code_out):
 
     pr.write('bool is_terminal(EDGE_KIND kind) {')
     pr.write('switch (kind) {')
-    for s in grammar.symbols:
+    for s in symbols:
         if s.is_terminal():
             pr.write('case %s: return true; /* %s */' % (s.ref, s))
     pr.write('default: return false;')
@@ -855,7 +829,7 @@ def emit_solver(grammar, code_out):
 
     pr.write('bool is_parametric(EDGE_KIND kind) {')
     pr.write('switch (kind) {')
-    for s in grammar.symbols:
+    for s in symbols:
         if s.parametric:
             pr.write('case %s: return true; /* %s */' % (s.ref, s))
     pr.write('default: return false;')
@@ -864,7 +838,7 @@ def emit_solver(grammar, code_out):
     pr.write('')
 
     pr.write('bool has_empty_prod(EDGE_KIND kind) {')
-    empty_prod_symbols = [r.result.symbol for r in grammar.rev_prods.get(None)]
+    empty_prod_symbols = [r.result.symbol for r in rev_prods.get(None)]
     pr.write('switch (kind) {')
     for s in set(empty_prod_symbols):
         pr.write('case %s: return true; /* %s */' % (s.ref, s))
@@ -874,12 +848,12 @@ def emit_solver(grammar, code_out):
     pr.write('')
 
     pr.write('EDGE_KIND num_kinds() {')
-    pr.write('return %s;' % grammar.symbols.size())
+    pr.write('return %s;' % symbols.size())
     pr.write('}')
     pr.write('')
 
     pr.write('EDGE_KIND symbol2kind(const char* symbol) {')
-    for s in grammar.symbols:
+    for s in symbols:
         pr.write('if (strcmp(symbol, "%s") == 0) return %s;' % (s, s.ref))
     pr.write('assert(false);')
     pr.write('}')
@@ -887,7 +861,7 @@ def emit_solver(grammar, code_out):
 
     pr.write('const char* kind2symbol(EDGE_KIND kind) {')
     pr.write('switch (kind) {')
-    for s in grammar.symbols:
+    for s in symbols:
         pr.write('case %s: return "%s";' % (s.ref, s))
     pr.write('default: assert(false);')
     pr.write('}')
@@ -896,7 +870,7 @@ def emit_solver(grammar, code_out):
 
     pr.write('unsigned int num_paths_to_print(EDGE_KIND kind) {')
     pr.write('switch (kind) {')
-    for s in grammar.symbols:
+    for s in symbols:
         if s.num_paths() > 0:
             pr.write('case %s: return %s; /* %s */'
                      % (s.ref, s.num_paths(), s))
@@ -907,7 +881,7 @@ def emit_solver(grammar, code_out):
 
     pr.write('bool is_temporary(EDGE_KIND kind) {')
     pr.write('switch (kind) {')
-    for s in grammar.symbols:
+    for s in symbols:
         if s.is_temporary():
             pr.write('case %s: return true; /* %s */' % (s.ref, s))
     pr.write('default: return false;')
@@ -917,7 +891,7 @@ def emit_solver(grammar, code_out):
 
     pr.write('bool is_valid(EDGE_KIND kind) {')
     pr.write('switch (kind) {')
-    for s in grammar.symbols:
+    for s in symbols:
         pr.write('case %s: return true; /* %s */' % (s.ref, s))
     pr.write('default: return false;')
     pr.write('}')
@@ -927,13 +901,13 @@ def emit_solver(grammar, code_out):
     pr.write('void main_loop(Edge* base) {')
     # TODO: Could cache base->index
     pr.write('switch (base->kind) {')
-    for base_symbol in grammar.symbols:
-        rev_prods = grammar.rev_prods.get(base_symbol)
-        if rev_prods == []:
+    for base_symbol in symbols:
+        rps = rev_prods.get(base_symbol)
+        if rps == []:
             # This symbol doesn't appear on the RHS of any production.
             continue
         pr.write('case %s: /* %s */' % (base_symbol.ref, base_symbol))
-        for rp in rev_prods:
+        for rp in rps:
             pr.write('/* %s */' % rp)
             res_src = rp.result_source()
             res_tgt = rp.result_target()
@@ -991,12 +965,12 @@ def emit_solver(grammar, code_out):
     # carry predicates themselves, so we don't need to emit predicate checks
     # for those either.
     pr.write('switch (kind) {')
-    for e_symbol in grammar.symbols:
+    for e_symbol in symbols:
         pr.write('case %s: /* %s */' % (e_symbol.ref, e_symbol))
         if e_symbol.is_terminal():
             pr.write('break;')
             continue
-        for p in grammar.prods.get(e_symbol):
+        for p in norm_prods.get(e_symbol):
             pr.write('/* %s */' % p)
             if p.left is None:
                 # Empty production
@@ -1072,16 +1046,8 @@ def emit_solver(grammar, code_out):
 
 prog_desc = 'Produce CFL-Reachability solver code for the input grammar.'
 cfg_file_help = '.cfg file describing a context-free grammar'
-fsms_dir_help = \
-    'directory of FSMs forming the regular grammar to intersect with'
-out_dir_help = """print generated code and grammar info to this directory
-if cfg_file=foo.cfg, the following files are created:
-- foo.cpp: the generated code
-- foo.terms.dat: all terminal symbols of the grammar
-- foo.rels.dat: all relations used in the grammar
-- foo.preds.dat: all edge predicates used in the grammar
-- foo.supp.dat: all terminal symbols used to support edge predicates
-if not specified, print generated code only, to stdout"""
+out_dir_help = """print generated code this directory
+if not specified, print to stdout"""
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=prog_desc,
@@ -1096,10 +1062,5 @@ if __name__ == '__main__':
         code_out = os.path.join(args.out_dir, '%s.cpp' % cfg_name)
         with open(code_out, 'w') as f:
             emit_solver(grammar, f)
-        terms_out = os.path.join(args.out_dir, '%s.terms.dat' % cfg_name)
-        with open(terms_out, 'w') as f:
-            for s in grammar.symbols:
-                if s.is_terminal():
-                    f.write('%s\n' % s)
     else:
         emit_solver(grammar, sys.stdout)

@@ -247,6 +247,11 @@ class UniqueNameMap(BaseClass):
         self._dict = {}
         self._holes = []
 
+    def copy_from(self, src):
+        self._list = copy.copy(src._list)
+        self._dict = copy.copy(src._dict)
+        self._holes = copy.copy(src._holes)
+
     def _make(self, name, *params):
         """
         Construct a new object, to add to the map or verify its equality with
