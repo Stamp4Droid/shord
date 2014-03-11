@@ -239,21 +239,14 @@ def check_production(result, used):
     assert indices == [] or len(indices) >= 2, \
         "At least two indexed elements required per production"
 
-class Production(util.BaseClass):
-    """
-    A production of the input @Grammar.
-    """
+class Sequence(util.Record):
+    def __init__(self, *lits):
+        self.lits = tuple(lits)
 
-    def __init__(self, result, used):
-        check_production(result, used)
-        ## The @Symbol on the LHS of this @Production.
-        self.result = result
-        ## An ordered list of the @Literal%s on the RHS of this production.
-        self.used = used
-        # XXX: Empty prodcutions temporarily disallowed
-        assert used != []
+    def __key__(self):
+        return self.lits
 
-    def split(self, store):
+    def split(self, result, store):
         """
         Split this @Production into a list of @NormalProduction%s.
 
@@ -269,36 +262,36 @@ class Production(util.BaseClass):
         The extra @a store parameter is a @SymbolStore that will be used to
         generate any necessary temporary @Symbol%s.
         """
-        num_used = len(self.used)
+        num_used = len(self.lits)
         if num_used == 0:
-            return [NormalProduction(self.result, None, None)]
+            return [NormalProduction(result, None, None)]
         elif num_used == 1:
-            return [NormalProduction(self.result, self.used[0], None)]
+            return [NormalProduction(result, self.lits[0], None)]
         elif num_used == 2:
-            return [NormalProduction(self.result, self.used[0], self.used[1])]
-        r_used = self.used[1:]
-        num_temps = len(self.used) - 2
+            return [NormalProduction(result, self.lits[0], self.lits[1])]
+        r_used = self.lits[1:]
+        num_temps = len(self.lits) - 2
         temp_parametric = [True for _ in range(0, num_temps)]
         # The only intermediate symbols that need to be indexed are those
         # between the first and the last indexed literals in the original
         # production (the result of the production counts as the rightmost
         # literal for this purpose).
-        if not self.result.parametric:
+        if not result.parametric:
             for i in range(num_temps-1, -1, -1):
                 if r_used[i+1].indexed:
                     break
                 else:
                     temp_parametric[i] = False
-        if not self.used[0].indexed:
+        if not self.lits[0].indexed:
             for i in range(0, num_temps):
                 if r_used[i].indexed:
                     break
                 else:
                     temp_parametric[i] = False
         temp_symbols = [store.make_temporary(p) for p in temp_parametric]
-        temp_literals = [Literal(s, s.parametric) for s in temp_symbols]
-        l_used = [self.used[0]] + temp_literals
-        results = temp_symbols + [self.result]
+        temp_literals = [Literal(s, s.parametric, False) for s in temp_symbols]
+        l_used = [self.lits[0]] + temp_literals
+        results = temp_symbols + [result]
         return [NormalProduction(r, ls, rs)
                 for (r, ls, rs) in zip(results, l_used, r_used)]
 
@@ -314,7 +307,7 @@ class Grammar(util.BaseClass):
         #  @SymbolStore container.
         self.symbols = SymbolStore()
         ## All the @Production%s encountered so far, grouped by result @Symbol.
-        self.prods = util.OrderedMultiDict()
+        self.prods = util.UniqueMultiDict()
         with open(cfg_file) as grammar_in:
             for line in grammar_in:
                 self._parse_line(line)
@@ -378,7 +371,10 @@ class Grammar(util.BaseClass):
                 used.append(lit)
                 all_chars.append(i)
         assert util.all_same([i for i in all_chars if i is not None])
-        self.prods.append(self._lhs_symbol, Production(self._lhs_symbol, used))
+        # XXX: Empty productions temporarily disallowed.
+        assert used != []
+        check_production(self._lhs_symbol, used)
+        self.prods.append(self._lhs_symbol, Sequence(*used))
 
     def _parse_literal(self, str):
         matcher = re.match(r'^(_?)([a-zA-Z]\w*)(?:\[([a-zA-Z\*])\])?$', str)
@@ -781,8 +777,8 @@ def emit_solver(grammar, code_out):
     rev_prods = util.OrderedMultiDict()
     symbols = grammar.symbols.clone()
     for s in grammar.prods:
-        for fp in grammar.prods.get(s):
-            for p in fp.split(symbols):
+        for seq in grammar.prods.get(s):
+            for p in seq.split(s, symbols):
                 norm_prods.append(p.result, p)
                 for rp in p.get_rev_prods():
                     base_symbol = None if rp.base is None else rp.base.symbol
