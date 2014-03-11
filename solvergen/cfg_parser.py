@@ -417,7 +417,7 @@ class Grammar(util.BaseClass):
         to be present.
         """
         for s in self.symbols:
-            if not s.is_terminal() and self.prods.get(s) == []:
+            if not s.is_terminal() and len(self.prods.get(s)) == 0:
                 assert False, "Non-terminal %s can never be produced" % s
 
     def _parse_line(self, line):
