@@ -77,14 +77,16 @@ public class Main extends JavaAnalysis
 
 				writer.println("</head>");
 				writer.println("<body>");
+
+
+				writer.println("<div class=\"container-fluid\">");
+				writer.println("<div class=\"row-fluid\">");
+				
+				writer.println("<div class=\"col-md-3\"></div>");
+				
+				writer.println("<div class=\"col-md-6\">");
 			}
-
-			writer.println("<div class=\"container-fluid\">");
-			writer.println("<div class=\"row-fluid\">");
-
-            writer.println("<div class=\"col-md-3\"></div>");
-
-            writer.println("<div class=\"col-md-6\">");
+			
 			basicInfo();
 			permissions();
 			systemEvents();
@@ -99,14 +101,15 @@ public class Main extends JavaAnalysis
 
 			strings();
 			reflection();
-			writer.println("</div>");
-
-			writer.println("<div class=\"col-md-3\"></div>");
-
-			writer.println("</div>");
-			writer.println("</div>");
 
 			if(!apposcopy){
+				writer.println("</div>");
+				
+				writer.println("<div class=\"col-md-3\"></div>");
+				
+				writer.println("</div>");
+				writer.println("</div>");
+				
 				writer.println("<script src=\"https://code.jquery.com/jquery.js\"></script>");
 				writer.println("<script src=\"http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js\"></script>");
 				writer.println("</body>");
