@@ -349,8 +349,17 @@ class Sequence(util.Record):
                 for (r, ls, rs) in zip(results, l_used, r_used)]
 
 class SequenceMap(util.BaseClass):
-    def __init__(self):
+    def __init__(self, grammar):
         self._map = {}
+        for res in grammar.prods:
+            for fs in grammar.prods.get(res):
+                for (ss,ctxt) in fs.ne_subseqs(res):
+                    self._add(ss, ctxt)
+
+    def _add(self, seq, ctxt):
+        self._init_entries(seq)
+        # entries on other maps will be updated automatically
+        self._map[seq][0].add(ctxt)
 
     def _init_entries(self, seq):
         # 0: regular instances
@@ -375,11 +384,6 @@ class SequenceMap(util.BaseClass):
             self._map[l_seq] = (lc,lrc,lc,lrc)
         if lr_seq not in self._map:
             self._map[lr_seq] = (lrc,lc,lrc,lc)
-
-    def add(self, seq, ctxt):
-        self._init_entries(seq)
-        # entries on other maps will be updated automatically
-        self._map[seq][0].add(ctxt)
 
     def __str__(self):
         return '\n'.join(['\n'.join(['%s:' % seq] +
