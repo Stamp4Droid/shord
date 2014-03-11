@@ -73,7 +73,10 @@ class Comparable(BaseClass):
 class Hashable(Comparable):
     """
     A specialization of Comparable that uses the contents of #__key__() to
-    hash instances. All the fields in the key tuple must also be hashable.
+    hash instances.
+
+    All the objects in the key tuple must also be hashable, and the
+    corresponding fields must remain constant in the actual object.
     """
 
     def __hash__(self):

@@ -198,14 +198,14 @@ class Symbol(util.Hashable):
     def as_result(self):
         return self.name + ('' if not self.parametric else '[i]')
 
-class Literal(util.BaseClass):
+class Literal(util.Record):
     """
     An instance of some @Symbol on the RHS of a production.
 
     May optionally contain a 'reverse' modifier and/or an @Index expression.
     """
 
-    def __init__(self, symbol, indexed, reversed=False):
+    def __init__(self, symbol, indexed, reversed):
         assert not indexed or symbol.parametric, \
             "Index modifier on non-parametric symbol %s" % symbol
         ## The @Symbol represented by this @Literal.
@@ -221,10 +221,23 @@ class Literal(util.BaseClass):
         ## Whether this @Literal has a 'reverse' modifier.
         self.reversed = reversed
 
+    def __key__(self):
+        return (self.symbol, self.indexed, self.reversed)
+
     def __str__(self):
         idx_str = ('' if not self.symbol.parametric else
                    '[*]' if not self.indexed else '[i]')
         return ('_' if self.reversed else '') + str(self.symbol) + idx_str
+
+
+def check_production(result, used):
+    """
+    Test that a production with the given properties is valid.
+    """
+    indices = (([0] if result.parametric else [])
+               + [0 for e in used if e.indexed])
+    assert indices == [] or len(indices) >= 2, \
+        "At least two indexed elements required per production"
 
 class Production(util.BaseClass):
     """
@@ -232,7 +245,7 @@ class Production(util.BaseClass):
     """
 
     def __init__(self, result, used):
-        Production._check_production(result, used)
+        check_production(result, used)
         ## The @Symbol on the LHS of this @Production.
         self.result = result
         ## An ordered list of the @Literal%s on the RHS of this production.
@@ -289,15 +302,112 @@ class Production(util.BaseClass):
         return [NormalProduction(r, ls, rs)
                 for (r, ls, rs) in zip(results, l_used, r_used)]
 
-    @staticmethod
-    def _check_production(result, used):
+class Grammar(util.BaseClass):
+    """
+    A representation of the input grammar.
+    """
+
+    def __init__(self, cfg_file):
+        self._lhs_symbol = None
+        self._lhs_idx_char = None
+        ## All the @Symbol%s encountered so far, stored in a specialized
+        #  @SymbolStore container.
+        self.symbols = SymbolStore()
+        ## All the @Production%s encountered so far, grouped by result @Symbol.
+        self.prods = util.OrderedMultiDict()
+        with open(cfg_file) as grammar_in:
+            for line in grammar_in:
+                self._parse_line(line)
+        self._finalize()
+
+    def _finalize(self):
         """
-        Test that a production with the given properties is valid.
+        Run final sanity checks and calculations, which require all productions
+        to be present.
         """
-        indices = (([0] if result.parametric else [])
-                   + [0 for e in used if e.indexed])
-        assert indices == [] or len(indices) >= 2, \
-            "At least two indexed elements required per production"
+        for s in self.symbols:
+            if not s.is_terminal() and self.prods.get(s) == []:
+                assert False, "Non-terminal %s can never be produced" % s
+
+    def _parse_line(self, line):
+        """
+        Parse the next line of the grammar specification.
+        """
+        line_wo_comment = (line.split('#'))[0]
+        toks = line_wo_comment.split()
+        if toks == [] or toks[0].startswith("."):
+            # This is a special, non-production line, so we interrupt any
+            # ongoing series of productions.
+            self._end_series()
+            if toks != []:
+                self._parse_directive(toks[0][1:], toks[1:])
+            return
+        # This line contains one or more production definitions.
+        if toks[0] == '|':
+            # This line continues a series of productions.
+            assert self._series_in_progress(), "| without preceding production"
+            toks = toks[1:]
+        elif len(toks) >= 2 and toks[1] == '::':
+            # This line starts a new series of productions.
+            self._begin_series(toks[0])
+            toks = toks[2:]
+        else:
+            assert False, "Malformed production"
+        while '|' in toks:
+            split_pos = toks.index('|')
+            self._parse_production(toks[:split_pos])
+            toks = toks[split_pos+1:]
+        self._parse_production(toks)
+
+    def _parse_directive(self, directive, params):
+        if directive == 'paths' and len(params) == 2:
+            symbol = self.symbols.find(params[0])
+            assert symbol is not None, \
+                "Symbol %s not declared (yet)" % params[0]
+            symbol.set_num_paths(int(params[1]))
+        else:
+            assert False, "Unknown directive: %s/%s" % (directive, len(params))
+
+    def _parse_production(self, toks):
+        assert toks != [], "Empty production not marked with '-'"
+        used = []
+        all_chars = [self._lhs_idx_char]
+        if toks != ['-']:
+            for t in toks:
+                (lit, i) = self._parse_literal(t)
+                used.append(lit)
+                all_chars.append(i)
+        assert util.all_same([i for i in all_chars if i is not None])
+        self.prods.append(self._lhs_symbol, Production(self._lhs_symbol, used))
+
+    def _parse_literal(self, str):
+        matcher = re.match(r'^(_?)([a-zA-Z]\w*)(?:\[([a-zA-Z\*])\])?$', str)
+        assert matcher is not None, "Malformed literal: %s" % str
+        reversed = matcher.group(1) != ''
+        idx_char = matcher.group(3)
+        symbol = self.symbols.get(matcher.group(2), idx_char is not None)
+        if idx_char == '*':
+            idx_char = None
+        return (Literal(symbol, idx_char is not None, reversed), idx_char)
+
+    def _begin_series(self, str):
+        (self._lhs_symbol, self._lhs_idx_char) = self._parse_symbol(str)
+
+    def _parse_symbol(self, str):
+        matcher = re.match(r'^([A-Z]\w*)(?:\[([a-zA-Z])\])?$', str)
+        assert matcher is not None, "Malformed symbol declaration: %s" % str
+        idx_char = matcher.group(2)
+        symbol = self.symbols.get(matcher.group(1), idx_char is not None)
+        return (symbol, idx_char)
+
+    def _end_series(self):
+        self._lhs_symbol = None
+        self._lhs_idx_char = None
+
+    def _series_in_progress(self):
+        return self._lhs_symbol is not None
+
+#==============================================================================
 
 class NormalProduction(util.BaseClass):
     """
@@ -308,7 +418,7 @@ class NormalProduction(util.BaseClass):
         assert not(left is None and right is not None)
         used = (([] if left is None else [left]) +
                 ([] if right is None else [right]))
-        Production._check_production(result, used)
+        check_production(result, used)
         ## The @Result on the LHS of this @NormalProduction.
         self.result = result
         ## The first of up to 2 @Literal%s on the RHS. Is @e None for empty
@@ -455,7 +565,7 @@ class ReverseProduction(util.BaseClass):
         assert Position.valid_position(base_pos)
         used = (([] if base is None else [base]) +
                 ([] if reqd is None else [reqd]))
-        Production._check_production(result, used)
+        check_production(result, used)
         ## The @Result of this @ReverseProduction.
         self.result = result
         ## The @Literal we assume to be present. Is @e None if this corresponds
@@ -660,111 +770,6 @@ class ReverseProduction(util.BaseClass):
         else:
             assert False
         return have + need + ' => ' + self.result.as_result()
-
-class Grammar(util.BaseClass):
-    """
-    A representation of the input grammar.
-    """
-
-    def __init__(self, cfg_file):
-        self._lhs_symbol = None
-        self._lhs_idx_char = None
-        ## All the @Symbol%s encountered so far, stored in a specialized
-        #  @SymbolStore container.
-        self.symbols = SymbolStore()
-        ## All the @Production%s encountered so far, grouped by result @Symbol.
-        self.prods = util.OrderedMultiDict()
-        with open(cfg_file) as grammar_in:
-            for line in grammar_in:
-                self._parse_line(line)
-        self._finalize()
-
-    def _finalize(self):
-        """
-        Run final sanity checks and calculations, which require all productions
-        to be present.
-        """
-        for s in self.symbols:
-            if not s.is_terminal() and self.prods.get(s) == []:
-                assert False, "Non-terminal %s can never be produced" % s
-
-    def _parse_line(self, line):
-        """
-        Parse the next line of the grammar specification.
-        """
-        line_wo_comment = (line.split('#'))[0]
-        toks = line_wo_comment.split()
-        if toks == [] or toks[0].startswith("."):
-            # This is a special, non-production line, so we interrupt any
-            # ongoing series of productions.
-            self._end_series()
-            if toks != []:
-                self._parse_directive(toks[0][1:], toks[1:])
-            return
-        # This line contains one or more production definitions.
-        if toks[0] == '|':
-            # This line continues a series of productions.
-            assert self._series_in_progress(), "| without preceding production"
-            toks = toks[1:]
-        elif len(toks) >= 2 and toks[1] == '::':
-            # This line starts a new series of productions.
-            self._begin_series(toks[0])
-            toks = toks[2:]
-        else:
-            assert False, "Malformed production"
-        while '|' in toks:
-            split_pos = toks.index('|')
-            self._parse_production(toks[:split_pos])
-            toks = toks[split_pos+1:]
-        self._parse_production(toks)
-
-    def _parse_directive(self, directive, params):
-        if directive == 'paths' and len(params) == 2:
-            symbol = self.symbols.find(params[0])
-            assert symbol is not None, \
-                "Symbol %s not declared (yet)" % params[0]
-            symbol.set_num_paths(int(params[1]))
-        else:
-            assert False, "Unknown directive: %s/%s" % (directive, len(params))
-
-    def _parse_production(self, toks):
-        assert toks != [], "Empty production not marked with '-'"
-        used = []
-        all_chars = [self._lhs_idx_char]
-        if toks != ['-']:
-            for t in toks:
-                (lit, i) = self._parse_literal(t)
-                used.append(lit)
-                all_chars.append(i)
-        assert util.all_same([i for i in all_chars if i is not None])
-        self.prods.append(self._lhs_symbol, Production(self._lhs_symbol, used))
-
-    def _parse_literal(self, str):
-        matcher = re.match(r'^(_?)([a-zA-Z]\w*)(?:\[([a-zA-Z\*])\])?$', str)
-        assert matcher is not None, "Malformed literal: %s" % str
-        reversed = matcher.group(1) != ''
-        idx_char = matcher.group(3)
-        symbol = self.symbols.get(matcher.group(2), idx_char is not None)
-        if idx_char == '*':
-            idx_char = None
-        return (Literal(symbol, idx_char is not None, reversed), idx_char)
-
-    def _begin_series(self, str):
-        (self._lhs_symbol, self._lhs_idx_char) = self._parse_symbol(str)
-
-    def _parse_symbol(self, str):
-        matcher = re.match(r'^([A-Z]\w*)(?:\[([a-zA-Z])\])?$', str)
-        assert matcher is not None, "Malformed symbol declaration: %s" % str
-        idx_char = matcher.group(2)
-        symbol = self.symbols.get(matcher.group(1), idx_char is not None)
-        return (symbol, idx_char)
-
-    def _end_series(self):
-        self._lhs_symbol = None
-        self._lhs_idx_char = None
-
-    def _series_in_progress(self):
-        return self._lhs_symbol is not None
 
 def emit_solver(grammar, code_out):
     """
