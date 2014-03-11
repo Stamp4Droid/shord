@@ -610,7 +610,7 @@ enum class ParsingMode {
  */
 void parse_input_files(ParsingMode mode) {
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
-	if (!is_terminal(k)) {
+	if (!is_valid(k) || !is_terminal(k)) {
 	    continue;
 	}
 	bool parametric = is_parametric(k);
@@ -683,7 +683,7 @@ void parse_input_files(ParsingMode mode) {
 void print_results() {
     /* Print out non-terminal edges. */
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
-	if (is_terminal(k)) {
+	if (!is_valid(k) || is_terminal(k)) {
 	    continue;
 	}
 	bool parametric = is_parametric(k);
@@ -1097,6 +1097,9 @@ void print_paths() {
     // Use a single table for all path printing.
     DerivTable table;
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
+	if (!is_valid(k)) {
+	    continue;
+	}
 	unsigned int num_paths = num_paths_to_print(k);
 	if (num_paths > 0) {
 	    print_paths_for_kind(k, num_paths, table);
@@ -1132,7 +1135,7 @@ void print_edge_counts(bool terminal) {
     DECL_COUNTER(total_edge_count, 0);
     DECL_COUNTER(total_index_count, 0);
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
-	if (is_terminal(k) ^ terminal) {
+	if (!is_valid(k) || is_terminal(k) ^ terminal) {
 	    continue;
 	}
 	bool parametric = is_parametric(k);
@@ -1278,6 +1281,9 @@ int main() {
     DECL_COUNTER(solving_start, CURRENT_TIME());
     /* Process empty productions. */
     for (EDGE_KIND k = 0; k < num_kinds(); k++) {
+	if (!is_valid(k)) {
+	    continue;
+	}
 	if (has_empty_prod(k)) {
 	    for (NODE_REF n = 0; n < num_nodes(); n++) {
 		// We have disallowed predicates on empty productions.

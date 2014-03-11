@@ -132,7 +132,7 @@ class Symbol(util.Hashable):
     A symbol in the input grammar.
     """
 
-    def __init__(self, name, kind, parametric):
+    def __init__(self, name, ref, parametric):
         """
         Objects of this class are managed by the cfg_parser::SymbolStore class.
         Do not call this constructor directly, use
@@ -141,7 +141,7 @@ class Symbol(util.Hashable):
         ## The @Symbol<!-- -->'s string in the input grammar.
         self.name = name
         ## A unique number assigned to this @Symbol by its manager class.
-        self.kind = kind
+        self.ref = ref
         ## Whether Edge%s of this @Symbol are parameterized by @Indices.
         self.parametric = parametric
         self.min_length = None
@@ -837,7 +837,7 @@ def emit_solver(grammar, code_out):
     pr.write('PATH_LENGTH static_min_length(EDGE_KIND kind) {')
     pr.write('switch (kind) {')
     for s in grammar.symbols:
-        pr.write('case %s: return %s; /* %s */' % (s.kind, s.min_length, s))
+        pr.write('case %s: return %s; /* %s */' % (s.ref, s.min_length, s))
     pr.write('default: assert(false);')
     pr.write('}')
     pr.write('}')
@@ -847,7 +847,7 @@ def emit_solver(grammar, code_out):
     pr.write('switch (kind) {')
     for s in grammar.symbols:
         if s.is_terminal():
-            pr.write('case %s: return true; /* %s */' % (s.kind, s))
+            pr.write('case %s: return true; /* %s */' % (s.ref, s))
     pr.write('default: return false;')
     pr.write('}')
     pr.write('}')
@@ -857,7 +857,7 @@ def emit_solver(grammar, code_out):
     pr.write('switch (kind) {')
     for s in grammar.symbols:
         if s.parametric:
-            pr.write('case %s: return true; /* %s */' % (s.kind, s))
+            pr.write('case %s: return true; /* %s */' % (s.ref, s))
     pr.write('default: return false;')
     pr.write('}')
     pr.write('}')
@@ -867,7 +867,7 @@ def emit_solver(grammar, code_out):
     empty_prod_symbols = [r.result.symbol for r in grammar.rev_prods.get(None)]
     pr.write('switch (kind) {')
     for s in set(empty_prod_symbols):
-        pr.write('case %s: return true; /* %s */' % (s.kind, s))
+        pr.write('case %s: return true; /* %s */' % (s.ref, s))
     pr.write('default: return false;')
     pr.write('}')
     pr.write('}')
@@ -880,7 +880,7 @@ def emit_solver(grammar, code_out):
 
     pr.write('EDGE_KIND symbol2kind(const char* symbol) {')
     for s in grammar.symbols:
-        pr.write('if (strcmp(symbol, "%s") == 0) return %s;' % (s, s.kind))
+        pr.write('if (strcmp(symbol, "%s") == 0) return %s;' % (s, s.ref))
     pr.write('assert(false);')
     pr.write('}')
     pr.write('')
@@ -888,7 +888,7 @@ def emit_solver(grammar, code_out):
     pr.write('const char* kind2symbol(EDGE_KIND kind) {')
     pr.write('switch (kind) {')
     for s in grammar.symbols:
-        pr.write('case %s: return "%s";' % (s.kind, s))
+        pr.write('case %s: return "%s";' % (s.ref, s))
     pr.write('default: assert(false);')
     pr.write('}')
     pr.write('}')
@@ -899,7 +899,7 @@ def emit_solver(grammar, code_out):
     for s in grammar.symbols:
         if s.num_paths() > 0:
             pr.write('case %s: return %s; /* %s */'
-                     % (s.kind, s.num_paths(), s))
+                     % (s.ref, s.num_paths(), s))
     pr.write('default: return 0;')
     pr.write('}')
     pr.write('}')
@@ -909,7 +909,16 @@ def emit_solver(grammar, code_out):
     pr.write('switch (kind) {')
     for s in grammar.symbols:
         if s.is_temporary():
-            pr.write('case %s: return true; /* %s */' % (s.kind, s))
+            pr.write('case %s: return true; /* %s */' % (s.ref, s))
+    pr.write('default: return false;')
+    pr.write('}')
+    pr.write('}')
+    pr.write('')
+
+    pr.write('bool is_valid(EDGE_KIND kind) {')
+    pr.write('switch (kind) {')
+    for s in grammar.symbols:
+        pr.write('case %s: return true; /* %s */' % (s.ref, s))
     pr.write('default: return false;')
     pr.write('}')
     pr.write('}')
@@ -923,12 +932,12 @@ def emit_solver(grammar, code_out):
         if rev_prods == []:
             # This symbol doesn't appear on the RHS of any production.
             continue
-        pr.write('case %s: /* %s */' % (base_symbol.kind, base_symbol))
+        pr.write('case %s: /* %s */' % (base_symbol.ref, base_symbol))
         for rp in rev_prods:
             pr.write('/* %s */' % rp)
             res_src = rp.result_source()
             res_tgt = rp.result_target()
-            res_kind = rp.result.symbol.kind
+            res_kind = rp.result.symbol.ref
             res_idx = rp.result_index()
             l_edge = rp.left_edge()
             l_rev = util.to_c_bool(rp.left_reverse())
@@ -938,7 +947,7 @@ def emit_solver(grammar, code_out):
                 search_src = 'base->' + rp.search_source_endp()
                 search_dir = rp.search_direction()
                 search_idx = rp.search_index()
-                reqd_kind = rp.reqd.symbol.kind
+                reqd_kind = rp.reqd.symbol.ref
                 pr.write('for (Edge* other : edges_%s(%s, %s%s)) {'
                          % (search_dir, search_src, reqd_kind,
                             '' if search_idx is None else (', %s' % search_idx)))
@@ -983,7 +992,7 @@ def emit_solver(grammar, code_out):
     # for those either.
     pr.write('switch (kind) {')
     for e_symbol in grammar.symbols:
-        pr.write('case %s: /* %s */' % (e_symbol.kind, e_symbol))
+        pr.write('case %s: /* %s */' % (e_symbol.ref, e_symbol))
         if e_symbol.is_terminal():
             pr.write('break;')
             continue
@@ -1002,14 +1011,14 @@ def emit_solver(grammar, code_out):
             if out_tgt is None:
                 out_dir = p.outer_search_direction()
                 pr.write('for (Edge* l : edges_%s(%s, %s%s)) {'
-                         % (out_dir, out_src, p.left.symbol.kind,
+                         % (out_dir, out_src, p.left.symbol.ref,
                             '' if out_idx is None else (', %s' % out_idx)))
             elif out_idx is None and p.left.symbol.parametric:
                 pr.write('for (Edge* l : edges_between(%s, %s, %s)) {'
-                         % (out_src, out_tgt, p.left.symbol.kind))
+                         % (out_src, out_tgt, p.left.symbol.ref))
             else:
                 pr.write(('if ((l = find_edge(%s, %s, %s, %s)) != NULL) {')
-                         % (out_src, out_tgt, p.left.symbol.kind,
+                         % (out_src, out_tgt, p.left.symbol.ref,
                             'INDEX_NONE' if out_idx is None else out_idx))
             out_cond = p.outer_condition()
             if out_cond is not None:
@@ -1025,10 +1034,10 @@ def emit_solver(grammar, code_out):
                 in_idx = p.inner_search_index()
                 if in_idx is None and p.right.symbol.parametric:
                     pr.write('for (Edge* r : edges_between(%s, %s, %s)) {'
-                             % (in_src, in_tgt, p.right.symbol.kind))
+                             % (in_src, in_tgt, p.right.symbol.ref))
                 else:
                     pr.write(('if ((r = find_edge(%s, %s, %s, %s)) != NULL) {')
-                             % (in_src, in_tgt, p.right.symbol.kind,
+                             % (in_src, in_tgt, p.right.symbol.ref,
                                 'INDEX_NONE' if in_idx is None else in_idx))
                 in_loop_header = p.inner_loop_header()
                 if in_loop_header is not None:

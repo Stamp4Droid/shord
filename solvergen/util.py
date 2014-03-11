@@ -237,24 +237,33 @@ class UniqueNameMap(BaseClass):
     UniqueNameMap#managed_class(). Concrete subclasses can also specify rules
     for allowed names, by overriding UniqueNameMap#valid_name().
     """
+    # XXX:
+    # - The managed class must use 'name' and 'ref' as field names.
+    # - The equality condition on the managed class must not include 'ref'.
+    # - 'None' cannot be an acceptable element.
 
     def __init__(self):
         self._list = []
         self._dict = {}
+        self._holes = []
 
     def _make(self, name, *params):
         """
         Construct a new object, to add to the map or verify its equality with
         an existing one of the same name.
         """
-        args = [name, self.size()] + list(params)
+        ref = self.size() if self._holes == [] else self._holes[-1]
+        args = [name, ref] + list(params)
         elem = (self.managed_class())(*args)
         return elem
 
     def _add(self, name, elem):
         # TODO: Must ensure we haven't added any other elements since elem's
         # construction, so that the reference passed to it is still valid.
-        self._list.append(elem)
+        if self._holes == []:
+            self._list.append(elem)
+        else:
+            self._list[self._holes.pop()] = elem
         self._dict[name] = elem
 
     def find(self, name):
@@ -279,23 +288,34 @@ class UniqueNameMap(BaseClass):
             self._add(name, new)
             return new
 
+    def remove(self, elem):
+        self._list[elem.ref] = None
+        self._holes.append(elem.ref)
+        del self._dict[elem.name]
+
     def __iter__(self):
         """
         Iterate over all elements added so far, sorted by reference number.
+        Will skip holes in the numbering.
         """
         for s in self._list:
+            if s is None:
+                continue
             yield s
 
     def ref2elem(self, ref):
         """
         Get the element corresponding to some reference number.
         """
-        return self._list[ref]
+        elem = self._list[ref]
+        assert elem is not None
+        return elem
 
     def size(self):
         """
         Get the number of elements stored so far.
         """
+        # TODO: Will consider the removed refs as well.
         return len(self._list)
 
     def managed_class(self):

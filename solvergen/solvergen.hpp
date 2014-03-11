@@ -875,6 +875,8 @@ PATH_LENGTH static_min_length(EDGE_KIND kind);
  */
 bool is_temporary(EDGE_KIND kind);
 
+bool is_valid(EDGE_KIND kind);
+
 /**
  * @}
  */
