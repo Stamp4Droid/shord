@@ -229,6 +229,13 @@ class Literal(util.Record):
                    '[*]' if not self.indexed else '[i]')
         return ('_' if self.reversed else '') + str(self.symbol) + idx_str
 
+    def reverse(self):
+        return Literal(self.symbol, self.indexed, not self.reversed)
+
+    def relax(self):
+        if not self.indexed:
+            return self
+        return Literal(self.symbol, False, self.reversed)
 
 def check_production(result, used):
     """
@@ -239,12 +246,58 @@ def check_production(result, used):
     assert indices == [] or len(indices) >= 2, \
         "At least two indexed elements required per production"
 
+class Context(util.Record):
+    def __init__(self, lead, follow, result):
+        self.lead = lead
+        self.follow = follow
+        self.result = result
+
+    def __key__(self):
+        return (self.lead, self.follow, self.result)
+
+    def __str__(self):
+        return '%s . %s => %s' % (self.lead, self.follow,
+                                  self.result.as_result())
+
 class Sequence(util.Record):
     def __init__(self, *lits):
         self.lits = tuple(lits)
 
     def __key__(self):
         return self.lits
+
+    def __str__(self):
+        if self.empty():
+            return '-'
+        return ' '.join([str(l) for l in self.lits])
+
+    # TODO: Only works for slicing
+    def __getitem__(self, key):
+        return Sequence(*(self.lits[key]))
+
+    def num_indexed(self):
+        return len([0 for l in self.lits if l.indexed])
+
+    def empty(self):
+        return self.lits == ()
+
+    def indexed(self):
+        return self.num_indexed() > 0
+
+    def reverse(self):
+        return Sequence(*[l.reverse() for l in reversed(self.lits)])
+
+    def relax(self):
+        if self.num_indexed() != 1:
+            return self
+        return Sequence(*[l.relax() for l in self.lits])
+
+    def ne_subseqs(self, result):
+        num_lits = len(self.lits)
+        for n in range(1, num_lits + 1):
+            for i in range(0, num_lits - n + 1):
+                yield (self[i:i+n],
+                       Context(self[0:i], self[i+n:num_lits], result))
 
     def split(self, result, store):
         """
@@ -294,6 +347,51 @@ class Sequence(util.Record):
         results = temp_symbols + [result]
         return [NormalProduction(r, ls, rs)
                 for (r, ls, rs) in zip(results, l_used, r_used)]
+
+class SequenceMap(util.BaseClass):
+    def __init__(self):
+        self._map = {}
+
+    def _init_entries(self, seq):
+        # 0: regular instances
+        # 1: reverse instances
+        # 2: relaxed instances
+        # 3: relaxed reverse instances
+        if seq in self._map:
+            # all other entries will have been set up as well
+            return
+        r_seq = seq.reverse()
+        l_seq = seq.relax()
+        lr_seq = r_seq.relax()
+        c = set()
+        rc = c if r_seq == seq else set()
+        lc = c if l_seq == seq else set()
+        lrc = rc if lr_seq == r_seq else set()
+        if seq not in self._map:
+            self._map[seq] = (c,rc,lc,lrc)
+        if r_seq not in self._map:
+            self._map[r_seq] = (rc,c,lrc,lc)
+        if l_seq not in self._map:
+            self._map[l_seq] = (lc,lrc,lc,lrc)
+        if lr_seq not in self._map:
+            self._map[lr_seq] = (lrc,lc,lrc,lc)
+
+    def add(self, seq, ctxt):
+        self._init_entries(seq)
+        # entries on other maps will be updated automatically
+        self._map[seq][0].add(ctxt)
+
+    def __str__(self):
+        return '\n'.join(['\n'.join(['%s:' % seq] +
+                                    ['\tstraight:'] +
+                                    ['\t\t%s' % c for c in self._map[seq][0]] +
+                                    ['\treverse:'] +
+                                    ['\t\t%s' % c for c in self._map[seq][1]] +
+                                    ['\trelaxed:'] +
+                                    ['\t\t%s' % c for c in self._map[seq][2]] +
+                                    ['\treverse relaxed:'] +
+                                    ['\t\t%s' % c for c in self._map[seq][3]])
+                          for seq in self._map])
 
 class Grammar(util.BaseClass):
     """
