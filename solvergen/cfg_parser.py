@@ -195,19 +195,8 @@ class Symbol(util.Hashable):
     def __str__(self):
         return self.name
 
-class Result(util.BaseClass):
-    """
-    An instance of some @Symbol on the LHS of a production.
-    """
-
-    def __init__(self, symbol):
-        assert not symbol.is_terminal(), "Can't produce non-terminals"
-        ## The @Symbol represented by this @Result.
-        self.symbol = symbol
-
-    def __str__(self):
-        idx_str = ('' if not self.symbol.parametric else '[i]')
-        return str(self.symbol) + idx_str
+    def as_result(self):
+        return self.name + ('' if not self.parametric else '[i]')
 
 class Literal(util.BaseClass):
     """
@@ -244,10 +233,12 @@ class Production(util.BaseClass):
 
     def __init__(self, result, used):
         Production._check_production(result, used)
-        ## The @Result on the LHS of this @Production.
+        ## The @Symbol on the LHS of this @Production.
         self.result = result
         ## An ordered list of the @Literal%s on the RHS of this production.
         self.used = used
+        # XXX: Empty prodcutions temporarily disallowed
+        assert used != []
 
     def split(self, store):
         """
@@ -279,7 +270,7 @@ class Production(util.BaseClass):
         # between the first and the last indexed literals in the original
         # production (the result of the production counts as the rightmost
         # literal for this purpose).
-        if not self.result.symbol.parametric:
+        if not self.result.parametric:
             for i in range(num_temps-1, -1, -1):
                 if r_used[i+1].indexed:
                     break
@@ -292,10 +283,9 @@ class Production(util.BaseClass):
                 else:
                     temp_parametric[i] = False
         temp_symbols = [store.make_temporary(p) for p in temp_parametric]
-        temp_results = [Result(s) for s in temp_symbols]
         temp_literals = [Literal(s, s.parametric) for s in temp_symbols]
         l_used = [self.used[0]] + temp_literals
-        results = temp_results + [self.result]
+        results = temp_symbols + [self.result]
         return [NormalProduction(r, ls, rs)
                 for (r, ls, rs) in zip(results, l_used, r_used)]
 
@@ -304,7 +294,7 @@ class Production(util.BaseClass):
         """
         Test that a production with the given properties is valid.
         """
-        indices = (([0] if result.symbol.parametric else [])
+        indices = (([0] if result.parametric else [])
                    + [0 for e in used if e.indexed])
         assert indices == [] or len(indices) >= 2, \
             "At least two indexed elements required per production"
@@ -364,7 +354,7 @@ class NormalProduction(util.BaseClass):
 
     def outer_search_index(self):
         assert self.left is not None
-        if self.left.indexed and self.result.symbol.parametric:
+        if self.left.indexed and self.result.parametric:
             return 'index'
         return None
 
@@ -397,7 +387,7 @@ class NormalProduction(util.BaseClass):
         if self.left.indexed:
             return 'l->index'
         else:
-            assert self.result.symbol.parametric
+            assert self.result.parametric
             return 'index'
 
     def inner_loop_header(self):
@@ -411,7 +401,7 @@ class NormalProduction(util.BaseClass):
         rhs = ('-' if self.left is None
                else str(self.left) if self.right is None
                else str(self.left) + ' ' + str(self.right))
-        return str(self.result) + ' :: ' + rhs
+        return self.result.as_result() + ' :: ' + rhs
 
 class Position(util.BaseClass):
     """
@@ -589,7 +579,7 @@ class ReverseProduction(util.BaseClass):
         so we can copy from either one of them. We arbitrarily choose to copy
         from the base Edge.
         """
-        if not self.result.symbol.parametric:
+        if not self.result.parametric:
             return 'INDEX_NONE'
         assert self.base is not None
         if self.reqd is None:
@@ -669,7 +659,7 @@ class ReverseProduction(util.BaseClass):
             need = ' + (%s *)' % self.reqd
         else:
             assert False
-        return have + need + ' => ' + str(self.result)
+        return have + need + ' => ' + self.result.as_result()
 
 class Grammar(util.BaseClass):
     """
@@ -747,8 +737,7 @@ class Grammar(util.BaseClass):
                 used.append(lit)
                 all_chars.append(i)
         assert util.all_same([i for i in all_chars if i is not None])
-        result = Result(self._lhs_symbol)
-        self.prods.append(result.symbol, Production(result, used))
+        self.prods.append(self._lhs_symbol, Production(self._lhs_symbol, used))
 
     def _parse_literal(self, str):
         matcher = re.match(r'^(_?)([a-zA-Z]\w*)(?:\[([a-zA-Z\*])\])?$', str)
@@ -789,7 +778,7 @@ def emit_solver(grammar, code_out):
     for s in grammar.prods:
         for fp in grammar.prods.get(s):
             for p in fp.split(symbols):
-                norm_prods.append(p.result.symbol, p)
+                norm_prods.append(p.result, p)
                 for rp in p.get_rev_prods():
                     base_symbol = None if rp.base is None else rp.base.symbol
                     rev_prods.append(base_symbol, rp)
@@ -838,7 +827,7 @@ def emit_solver(grammar, code_out):
     pr.write('')
 
     pr.write('bool has_empty_prod(EDGE_KIND kind) {')
-    empty_prod_symbols = [r.result.symbol for r in rev_prods.get(None)]
+    empty_prod_symbols = [r.result for r in rev_prods.get(None)]
     pr.write('switch (kind) {')
     for s in set(empty_prod_symbols):
         pr.write('case %s: return true; /* %s */' % (s.ref, s))
@@ -911,7 +900,7 @@ def emit_solver(grammar, code_out):
             pr.write('/* %s */' % rp)
             res_src = rp.result_source()
             res_tgt = rp.result_target()
-            res_kind = rp.result.symbol.ref
+            res_kind = rp.result.ref
             res_idx = rp.result_index()
             l_edge = rp.left_edge()
             l_rev = util.to_c_bool(rp.left_reverse())
