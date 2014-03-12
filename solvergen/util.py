@@ -147,6 +147,19 @@ class MultiDict(BaseClass):
         """
         return self._dict.get(key, self.empty_container())
 
+    def set(self, key, container):
+        """
+        Replace the container associated with some key.
+        """
+        # TODO: No verification that the passed container is compatible.
+        self._dict[key] = container
+
+    def remove(self, key):
+        """
+        Remove all values associated with some key.
+        """
+        del self._dict[key]
+
     def __iter__(self):
         """
         Iterate over those keys that map to at least one value.

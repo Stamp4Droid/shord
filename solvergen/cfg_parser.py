@@ -240,6 +240,16 @@ class Literal(util.Record):
             return self
         return Literal(self.symbol, False, self.reversed)
 
+    # (Symbol, set<Sequence>) -> set<Sequence>
+    def inline(self, symbol, seqs):
+        if symbol != self.symbol:
+            return set([Sequence(self)])
+        if self.reversed:
+            seqs = [s.reverse() for s in seqs]
+        if self.symbol.parametric and not self.indexed:
+            seqs = [s.relax() for s in seqs]
+        return set(seqs)
+
 def check_production(result, used):
     """
     Test that a production with the given properties is valid.
@@ -308,6 +318,18 @@ class Sequence(util.Record):
             for i in range(0, num_lits - n + 1):
                 yield (self[i:i+n],
                        Context(self[0:i], self[i+n:num_lits], result))
+
+    # (Symbol, set<Sequence>) -> set<Sequence>
+    def inline(self, symbol, seqs):
+        # TODO: Assumes we've checked that the symbol can be inlined.
+        if self.empty():
+            return set()
+        heads = self.lits[0].inline(symbol, seqs)
+        if len(self.lits) == 1:
+            return heads
+        tails = Sequence(*(self.lits[1:])).inline(symbol, seqs)
+        return set([Sequence(*(h.lits + t.lits))
+                    for h in heads for t in tails])
 
     def split(self, result, store):
         """
@@ -551,6 +573,17 @@ class Grammar(util.BaseClass):
     def inlinables(self):
         seq_map = SequenceMap(self, False)
         return [s for s in self.symbols if self._can_inline(s, seq_map)]
+
+    def inline(self, symbol):
+        # TODO: Assumes we've checked that the symbol can be inlined.
+        repl_seqs = self.prods.get(symbol)
+        for res in self.prods:
+            new_seqs = set()
+            for s in self.prods.get(res):
+                new_seqs.update(s.inline(symbol, repl_seqs))
+            self.prods.set(res, new_seqs)
+        self.prods.remove(symbol)
+        self.symbols.remove(symbol)
 
     def _finalize(self):
         """
