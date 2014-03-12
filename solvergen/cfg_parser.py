@@ -255,6 +255,10 @@ class Context(util.Record):
     def empty(self):
         return self.lead.empty() and self.follow.empty()
 
+    def indexed(self):
+        return (self.lead.indexed() or self.follow.indexed()
+                or self.result.parametric)
+
     def __key__(self):
         return (self.lead, self.follow, self.result)
 
@@ -369,36 +373,49 @@ class SequenceMap(util.BaseClass):
 
     def _add_single(self, seq, ctxt):
         self._init_entries(seq)
+        seq_set = frozenset([seq])
         # entries on other maps will be updated automatically
-        self._map[frozenset([seq])][0].add(ctxt)
+        self._map[seq_set][0].add(ctxt)
+        if seq.num_indexed() >= 2:
+            if not ctxt.indexed():
+                self._map[seq_set][2].add(ctxt)
 
     def _init_entries(self, seq):
-        seq_set = frozenset([seq])
-        if seq_set in self._map:
-            # all other entries will have been set up as well
-            return
-        r_seq = seq.reverse()
-        l_seq = seq.relax()
-        lr_seq = r_seq.relax()
-        c = set()
-        rc = c if r_seq == seq else set()
-        lc = c if l_seq == seq else set()
-        lrc = rc if lr_seq == r_seq else set()
         # 0: regular instances
-        if seq_set not in self._map:
-            self._map[seq_set] = (c,rc,lc,lrc)
         # 1: reverse instances
-        r_seq_set = frozenset([r_seq])
-        if r_seq_set not in self._map:
-            self._map[r_seq_set] = (rc,c,lrc,lc)
         # 2: relaxed instances
-        l_seq_set = frozenset([l_seq])
-        if l_seq_set not in self._map:
-            self._map[l_seq_set] = (lc,lrc,lc,lrc)
         # 3: relaxed reverse instances
-        lr_seq_set = frozenset([lr_seq])
-        if lr_seq_set not in self._map:
-            self._map[lr_seq_set] = (lrc,lc,lrc,lc)
+        if frozenset([seq]) in self._map:
+            # all other entries will have been set up as well
+            # specifically, we've also added its reverse, and its relaxation
+            return
+        c = set()
+        r_seq = seq.reverse()
+        rc = c if r_seq == seq else set()
+
+        if seq.num_indexed() == 0:
+            l = c
+            rl = rc
+        elif seq.num_indexed() == 1:
+            l_seq = seq.relax()
+            assert(l_seq != seq)
+            if frozenset([l_seq]) in self._map:
+                (l,rl,_,_) = self._map[frozenset([l_seq])]
+            else:
+                l = set()
+                rl_seq = r_seq.relax()
+                assert(rl_seq != r_seq)
+                rl = l if rl_seq == l_seq else set()
+                self._map[frozenset([l_seq])] = (l,rl,l,rl)
+                if rl_seq != l_seq:
+                    self._map[frozenset([rl_seq])] = (rl,l,rl,l)
+        else:
+            l = set()
+            rl = l if r_seq == seq else set()
+
+        self._map[frozenset([seq])] = (c,rc,l,rl)
+        if r_seq != seq:
+            self._map[frozenset([r_seq])] = (rc,c,rl,l)
 
     @staticmethod
     def _trivial_entry(entry):
@@ -463,7 +480,7 @@ class Grammar(util.BaseClass):
         #  @SymbolStore container.
         self.symbols = SymbolStore()
         ## All the @Production%s encountered so far, grouped by result @Symbol.
-        self.prods = util.UniqueMultiDict()
+        self.prods = util.UniqueMultiDict() # Symbol -> set<Sequence>
         with open(cfg_file) as grammar_in:
             for line in grammar_in:
                 self._parse_line(line)
