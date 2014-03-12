@@ -178,6 +178,9 @@ class Symbol(util.Hashable):
         """
         return self._num_paths
 
+    def is_output(self):
+        return self._num_paths > 0
+
     def set_num_paths(self, num_paths):
         """
         Set the number of paths we wish the solver to print for each Edge of
@@ -368,14 +371,20 @@ def seq_compatibility(seqs):
     return (non_param, param)
 
 class SequenceMap(util.BaseClass):
-    def __init__(self, grammar):
+    def __init__(self, grammar, calc_combs):
         # frozenset<Sequence> -> (set<Context>,set<Context>,
         #                         set<Context>,set<Context>)
         # TODO: An entry can currently be empty (if the relaxed form of some
         # sequence doesn't appear in any rule).
+        # TODO: Make public interface for Entry
         self._map = {}
         self._fill_singles(grammar)
-        self._fill_combinations()
+        if calc_combs:
+            self._fill_combinations()
+
+    def get_uses(self, symbol):
+        lit = Literal(symbol, symbol.parametric, False)
+        return self._map[frozenset([Sequence(lit)])]
 
     def _fill_singles(self, grammar):
         for res in grammar.prods:
@@ -410,13 +419,13 @@ class SequenceMap(util.BaseClass):
             rl = rc
         elif seq.num_indexed() == 1:
             l_seq = seq.relax()
-            assert(l_seq != seq)
+            assert l_seq != seq
             if frozenset([l_seq]) in self._map:
                 (l,rl,_,_) = self._map[frozenset([l_seq])]
             else:
                 l = set()
                 rl_seq = r_seq.relax()
-                assert(rl_seq != r_seq)
+                assert rl_seq != r_seq
                 rl = l if rl_seq == l_seq else set()
                 self._map[frozenset([l_seq])] = (l,rl,l,rl)
                 if rl_seq != l_seq:
@@ -499,6 +508,50 @@ class Grammar(util.BaseClass):
                 self._parse_line(line)
         self._finalize()
 
+    def is_self_rec(self, symbol):
+        if symbol.is_terminal():
+            return False
+        for seq in self.prods.get(symbol):
+            for l in seq.lits:
+                if l.symbol == symbol:
+                    return True
+        return False
+
+    def binds_internally(self, symbol):
+        if symbol.is_terminal():
+            return False
+        for seq in self.prods.get(symbol):
+            if seq.num_indexed() >= 2:
+                return True
+        return False
+
+    def _can_inline(self, symbol, seq_map):
+        if (symbol.is_terminal() or symbol.is_output() or
+            self.is_self_rec(symbol)):
+            return False
+        if not self.binds_internally(symbol):
+            return True
+        if symbol.parametric:
+            # search relaxed uses
+            for ctxts in seq_map.get_uses(symbol)[2:]:
+                for c in ctxts:
+                    if c.indexed():
+                        # e.g. trying to inline A[i] :: b[i] c[i]
+                        # on B[a] :: d[a] A[*]
+                        return False
+        else:
+            for ctxts in seq_map.get_uses(symbol)[:2]:
+                for c in ctxts:
+                    if c.indexed():
+                        # e.g. trying to inline A :: b[i] c[i]
+                        # on B[a] :: d[a] A
+                        return False
+        return True
+
+    def inlinables(self):
+        seq_map = SequenceMap(self, False)
+        return [s for s in self.symbols if self._can_inline(s, seq_map)]
+
     def _finalize(self):
         """
         Run final sanity checks and calculations, which require all productions
@@ -507,6 +560,7 @@ class Grammar(util.BaseClass):
         for s in self.symbols:
             if not s.is_terminal() and len(self.prods.get(s)) == 0:
                 assert False, "Non-terminal %s can never be produced" % s
+        assert len([0 for s in self.symbols if s.is_output()]) > 0
 
     def _parse_line(self, line):
         """
