@@ -350,23 +350,28 @@ class Sequence(util.Record):
 
 class SequenceMap(util.BaseClass):
     def __init__(self, grammar):
+        # frozenset<Sequence> -> (set<Context>,set<Context>,
+        #                         set<Context>,set<Context>)
+        # TODO: An entry can currently be empty (if the relaxed form of some
+        # sequence doesn't appear in any rule).
         self._map = {}
+        self._fill_singles(grammar)
+        self._fill_combinations()
+
+    def _fill_singles(self, grammar):
         for res in grammar.prods:
             for fs in grammar.prods.get(res):
                 for (ss,ctxt) in fs.ne_subseqs(res):
-                    self._add(ss, ctxt)
+                    self._add_single(ss, ctxt)
 
-    def _add(self, seq, ctxt):
+    def _add_single(self, seq, ctxt):
         self._init_entries(seq)
         # entries on other maps will be updated automatically
-        self._map[seq][0].add(ctxt)
+        self._map[frozenset([seq])][0].add(ctxt)
 
     def _init_entries(self, seq):
-        # 0: regular instances
-        # 1: reverse instances
-        # 2: relaxed instances
-        # 3: relaxed reverse instances
-        if seq in self._map:
+        seq_set = frozenset([seq])
+        if seq_set in self._map:
             # all other entries will have been set up as well
             return
         r_seq = seq.reverse()
@@ -376,26 +381,52 @@ class SequenceMap(util.BaseClass):
         rc = c if r_seq == seq else set()
         lc = c if l_seq == seq else set()
         lrc = rc if lr_seq == r_seq else set()
-        if seq not in self._map:
-            self._map[seq] = (c,rc,lc,lrc)
-        if r_seq not in self._map:
-            self._map[r_seq] = (rc,c,lrc,lc)
-        if l_seq not in self._map:
-            self._map[l_seq] = (lc,lrc,lc,lrc)
-        if lr_seq not in self._map:
-            self._map[lr_seq] = (lrc,lc,lrc,lc)
+        # 0: regular instances
+        if seq_set not in self._map:
+            self._map[seq_set] = (c,rc,lc,lrc)
+        # 1: reverse instances
+        r_seq_set = frozenset([r_seq])
+        if r_seq_set not in self._map:
+            self._map[r_seq_set] = (rc,c,lrc,lc)
+        # 2: relaxed instances
+        l_seq_set = frozenset([l_seq])
+        if l_seq_set not in self._map:
+            self._map[l_seq_set] = (lc,lrc,lc,lrc)
+        # 3: relaxed reverse instances
+        lr_seq_set = frozenset([lr_seq])
+        if lr_seq_set not in self._map:
+            self._map[lr_seq_set] = (lrc,lc,lrc,lc)
+
+    def _fill_combinations(self):
+        pending = self._map
+        self._map = {}
+        while len(pending) > 0:
+            (a, a_entry) = pending.popitem()
+            for b in self._map:
+                c = a | b
+                if c in self._map or c in pending:
+                    continue
+                b_entry = self._map[b]
+                c_entry = (a_entry[0] & b_entry[0],
+                           a_entry[1] & b_entry[1],
+                           a_entry[2] & b_entry[2],
+                           a_entry[3] & b_entry[3])
+                if all([len(cs) == 0 for cs in c_entry]):
+                    continue
+                pending[c] = c_entry
+            self._map[a] = a_entry
 
     def __str__(self):
-        return '\n'.join(['\n'.join(['%s:' % seq] +
+        return '\n'.join(['\n'.join([', '.join([str(seq) for seq in s]) + ':'] +
                                     ['\tstraight:'] +
-                                    ['\t\t%s' % c for c in self._map[seq][0]] +
+                                    ['\t\t%s' % c for c in self._map[s][0]] +
                                     ['\treverse:'] +
-                                    ['\t\t%s' % c for c in self._map[seq][1]] +
+                                    ['\t\t%s' % c for c in self._map[s][1]] +
                                     ['\trelaxed:'] +
-                                    ['\t\t%s' % c for c in self._map[seq][2]] +
+                                    ['\t\t%s' % c for c in self._map[s][2]] +
                                     ['\treverse relaxed:'] +
-                                    ['\t\t%s' % c for c in self._map[seq][3]])
-                          for seq in self._map])
+                                    ['\t\t%s' % c for c in self._map[s][3]])
+                          for s in self._map])
 
 class Grammar(util.BaseClass):
     """
