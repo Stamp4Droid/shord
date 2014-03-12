@@ -295,6 +295,14 @@ class Sequence(util.Record):
     def __getitem__(self, key):
         return Sequence(*(self.lits[key]))
 
+    def false_binding_hazard(self, symbol):
+        if self.num_indexed() == 0:
+            return False
+        for l in self.lits:
+            if l.symbol == symbol and not l.indexed:
+                return True
+        return False
+
     def num_indexed(self):
         return len([0 for l in self.lits if l.indexed])
 
@@ -547,32 +555,20 @@ class Grammar(util.BaseClass):
                 return True
         return False
 
-    def _can_inline(self, symbol, seq_map):
+    def can_inline(self, symbol):
         if (symbol.is_terminal() or symbol.is_output() or
             self.is_self_rec(symbol)):
             return False
         if not self.binds_internally(symbol):
             return True
-        if symbol.parametric:
-            # search relaxed uses
-            for ctxts in seq_map.get_uses(symbol)[2:]:
-                for c in ctxts:
-                    if c.indexed():
-                        # e.g. trying to inline A[i] :: b[i] c[i]
-                        # on B[a] :: d[a] A[*]
-                        return False
-        else:
-            for ctxts in seq_map.get_uses(symbol)[:2]:
-                for c in ctxts:
-                    if c.indexed():
-                        # e.g. trying to inline A :: b[i] c[i]
-                        # on B[a] :: d[a] A
-                        return False
+        for res in self.prods:
+            for seq in self.prods.get(res):
+                if seq.false_binding_hazard(symbol):
+                    return False
         return True
 
     def inlinables(self):
-        seq_map = SequenceMap(self, False)
-        return [s for s in self.symbols if self._can_inline(s, seq_map)]
+        return [s for s in self.symbols if self.can_inline(s)]
 
     def inline(self, symbol):
         # TODO: Assumes we've checked that the symbol can be inlined.
