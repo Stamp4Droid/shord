@@ -295,6 +295,14 @@ class Sequence(util.Record):
     def __getitem__(self, key):
         return Sequence(*(self.lits[key]))
 
+    def apply_on(self, ctxt, reversed, relaxed):
+        seq = self
+        if reversed:
+            seq = seq.reverse()
+        if relaxed:
+            seq = seq.relax()
+        return Sequence(*(ctxt.lead.lits + seq.lits + ctxt.follow.lits))
+
     def false_binding_hazard(self, symbol):
         if self.num_indexed() == 0:
             return False
@@ -428,6 +436,23 @@ class SeqSetUses(util.BaseClass):
                           self.p_un      & other.p_un,
                           self.p_un_rev  & other.p_un_rev)
 
+    # (Sequence, bool) -> list<(Symbol,Sequence)>
+    def apply_to(self, seq, parametric):
+        if not parametric:
+            return ([(c.result, seq.apply_on(c, False, False))
+                     for c in self.np] +
+                    [(c.result, seq.apply_on(c, True,  False))
+                     for c in self.np_rev])
+        else:
+            return ([(c.result, seq.apply_on(c, False, False))
+                     for c in self.p_idx] +
+                    [(c.result, seq.apply_on(c, True,  False))
+                     for c in self.p_idx_rev] +
+                    [(c.result, seq.apply_on(c, False, True))
+                     for c in self.p_un] +
+                    [(c.result, seq.apply_on(c, True,  True))
+                     for c in self.p_un_rev])
+
     def __str__(self):
         return '\n'.join((['\tas use of non-parametric rule:']
                           if len(self.np) > 0 else []) +
@@ -455,6 +480,9 @@ class SequenceMap(util.BaseClass):
         self._map = {} # frozenset<Sequence> -> SeqSetUses
         self._fill_singles(grammar)
         self._fill_combinations()
+
+    def get(self, seqs):
+        return self._map[seqs]
 
     def _fill_singles(self, grammar):
         for res in grammar.prods:
@@ -602,6 +630,28 @@ class Grammar(util.BaseClass):
             self.prods.set(res, new_seqs)
         self.prods.remove(symbol)
         self.symbols.remove(symbol)
+
+    def abstract(self, parametric, seqs, seq_map):
+        # TODO: Assumes that the parameters are valid.
+        new_symb = self.symbols.make_temporary(parametric)
+        for s in seqs:
+            # TODO: missing assertion checks here
+            self.prods.append(new_symb, s)
+
+        uses = seq_map.get(seqs)
+        new_symb_seq = Sequence(Literal(new_symb, parametric, False))
+        to_add = util.UniqueMultiDict() # Symbol -> set<Sequence>
+        for (res, rule) in uses.apply_to(new_symb_seq, parametric):
+            to_add.append(res, rule)
+        to_remove = util.UniqueMultiDict() # Symbol -> set<Sequence>
+        for s in seqs:
+            for (res, rule) in uses.apply_to(s, parametric):
+                to_remove.append(res, rule)
+
+        for res in to_remove:
+            res_prods = self.prods.get(res)
+            res_prods -= to_remove.get(res)
+            res_prods |= to_add.get(res)
 
     def _finalize(self):
         """
