@@ -355,6 +355,18 @@ class Sequence(util.Record):
         return [NormalProduction(r, ls, rs)
                 for (r, ls, rs) in zip(results, l_used, r_used)]
 
+def seq_compatibility(seqs):
+    assert len(seqs) > 0
+    param = True
+    non_param = True
+    for s in seqs:
+        num_idx = s.num_indexed()
+        if num_idx == 0:
+            param = False
+        elif num_idx == 1:
+            non_param = False
+    return (non_param, param)
+
 class SequenceMap(util.BaseClass):
     def __init__(self, grammar):
         # frozenset<Sequence> -> (set<Context>,set<Context>,
@@ -444,7 +456,8 @@ class SequenceMap(util.BaseClass):
                 continue
             for b in self._map:
                 c = a | b
-                if c in self._map or c in pending:
+                if (c in self._map or c in pending or
+                    seq_compatibility(c) == (False,False)):
                     continue
                 b_entry = self._map[b]
                 c_entry = (a_entry[0] & b_entry[0],
