@@ -661,6 +661,12 @@ class Grammar(util.BaseClass):
             res_prods -= to_remove.get(res)
             res_prods |= to_add.get(res)
 
+    def __str__(self):
+        return '\n'.join(sorted(['\n'.join(['%s ::' % res.as_result()] +
+                                    sorted([('\t%s' % rule)
+                                            for rule in self.prods.get(res)]))
+                                 for res in self.prods]))
+
     def _finalize(self):
         """
         Run final sanity checks and calculations, which require all productions
