@@ -252,6 +252,9 @@ class Context(util.Record):
         self.follow = follow
         self.result = result
 
+    def empty(self):
+        return self.lead.empty() and self.follow.empty()
+
     def __key__(self):
         return (self.lead, self.follow, self.result)
 
@@ -397,11 +400,31 @@ class SequenceMap(util.BaseClass):
         if lr_seq_set not in self._map:
             self._map[lr_seq_set] = (lrc,lc,lrc,lc)
 
+    @staticmethod
+    def _trivial_entry(entry):
+        if len(entry[0]) + len(entry[1]) > 1:
+            return False
+        if len(entry[2]) + len(entry[3]) > 1:
+            return False
+        for ctxts in entry:
+            for c in ctxts:
+                if not c.empty():
+                    return False
+        # TODO: skipping special case:
+        # for s in seqs:
+        #     if s != s.relax():
+        #         return False
+        # Will cause us to miss an optimization opportunity in a case like:
+        #   S :: B[i] C[i] D[i] | B[*] C[i] D[i]
+        return True
+
     def _fill_combinations(self):
         pending = self._map
         self._map = {}
         while len(pending) > 0:
             (a, a_entry) = pending.popitem()
+            if SequenceMap._trivial_entry(a_entry):
+                continue
             for b in self._map:
                 c = a | b
                 if c in self._map or c in pending:
@@ -411,7 +434,7 @@ class SequenceMap(util.BaseClass):
                            a_entry[1] & b_entry[1],
                            a_entry[2] & b_entry[2],
                            a_entry[3] & b_entry[3])
-                if all([len(cs) == 0 for cs in c_entry]):
+                if SequenceMap._trivial_entry(c_entry):
                     continue
                 pending[c] = c_entry
             self._map[a] = a_entry
