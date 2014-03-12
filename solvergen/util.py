@@ -47,6 +47,14 @@ class BaseClass(object):
 
     __hash__ = None
 
+    def clone(self):
+        # For this to work, the deriving class must:
+        # - implement __copy_from__(src)
+        # - support a no-argument constructor
+        new = type(self)()
+        new.__copy_from__(self)
+        return new
+
     def __copy__(self):
         raise NotImplementedError()
 
@@ -132,6 +140,12 @@ class MultiDict(BaseClass):
         Create an empty dictionary (where every key maps to no value).
         """
         self._dict = {}
+
+    def __copy_from__(self, src):
+        # TODO: We assume the mapped objects are immutable, or at least can be
+        # safely shared among the copy and the original.
+        for k in src._dict:
+            self._dict[k] = copy.copy(src._dict[k])
 
     def append(self, key, value):
         """
@@ -263,7 +277,8 @@ class UniqueNameMap(BaseClass):
         self._dict = {}
         self._holes = []
 
-    def copy_from(self, src):
+    def __copy_from__(self, src):
+        # TODO: The copy will point to the same underlying objects.
         self._list = copy.copy(src._list)
         self._dict = copy.copy(src._dict)
         self._holes = copy.copy(src._holes)

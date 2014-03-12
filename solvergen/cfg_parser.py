@@ -106,14 +106,9 @@ class SymbolStore(util.UniqueNameMap):
         super(SymbolStore, self).__init__()
         self._num_temps = 0
 
-    def copy_from(self, src):
-        super(SymbolStore, self).copy_from(src)
+    def __copy_from__(self, src):
+        super(SymbolStore, self).__copy_from__(src)
         self._num_temps = src._num_temps
-
-    def clone(self):
-        clone = SymbolStore()
-        clone.copy_from(self)
-        return clone
 
     def make_temporary(self, parametric):
         """
@@ -575,7 +570,7 @@ class Grammar(util.BaseClass):
     A representation of the input grammar.
     """
 
-    def __init__(self, cfg_file):
+    def __init__(self):
         self._lhs_symbol = None
         self._lhs_idx_char = None
         ## All the @Symbol%s encountered so far, stored in a specialized
@@ -583,9 +578,22 @@ class Grammar(util.BaseClass):
         self.symbols = SymbolStore()
         ## All the @Production%s encountered so far, grouped by result @Symbol.
         self.prods = util.UniqueMultiDict() # Symbol -> set<Sequence>
+
+    def fill_from_file(self, cfg_file):
         with open(cfg_file) as grammar_in:
             for line in grammar_in:
                 self._parse_line(line)
+        self._finalize()
+
+    @staticmethod
+    def from_file(cfg_file):
+        grammar = Grammar()
+        grammar.fill_from_file(cfg_file)
+        return grammar
+
+    def __copy_from__(self, src):
+        self.symbols.__copy_from__(src.symbols)
+        self.prods.__copy_from__(src.prods)
         self._finalize()
 
     def is_self_rec(self, symbol):
@@ -1387,7 +1395,7 @@ if __name__ == '__main__':
     parser.add_argument('out_dir', nargs='?', help=out_dir_help)
     args = parser.parse_args()
 
-    grammar = Grammar(args.cfg_file)
+    grammar = Grammar.from_file(args.cfg_file)
     if args.out_dir is not None:
         cfg_name = os.path.splitext(os.path.basename(args.cfg_file))[0]
         code_out = os.path.join(args.out_dir, '%s.cpp' % cfg_name)
