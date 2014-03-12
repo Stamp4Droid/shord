@@ -268,7 +268,7 @@ class Context(util.Record):
     def empty(self):
         return self.lead.empty() and self.follow.empty()
 
-    def indexed(self):
+    def uses_seq_index(self):
         return (self.lead.indexed() or self.follow.indexed()
                 or self.result.parametric)
 
@@ -388,33 +388,73 @@ class Sequence(util.Record):
         return [NormalProduction(r, ls, rs)
                 for (r, ls, rs) in zip(results, l_used, r_used)]
 
-def seq_compatibility(seqs):
-    assert len(seqs) > 0
-    param = True
-    non_param = True
-    for s in seqs:
-        num_idx = s.num_indexed()
-        if num_idx == 0:
-            param = False
-        elif num_idx == 1:
-            non_param = False
-    return (non_param, param)
+def new_set_if_none(x):
+    return x if x is not None else set()
+
+class SeqSetUses(util.BaseClass):
+    def __init__(self, np, np_rev, p_idx, p_idx_rev, p_un, p_un_rev):
+        # All arguments are contexts
+        self.np        = new_set_if_none(np)
+        self.np_rev    = new_set_if_none(np_rev)
+        self.p_idx     = new_set_if_none(p_idx)
+        self.p_idx_rev = new_set_if_none(p_idx_rev)
+        self.p_un      = new_set_if_none(p_un)
+        self.p_un_rev  = new_set_if_none(p_un_rev)
+
+    def trivial(self):
+        if (len(self.np) + len(self.np_rev) > 1 or
+            len(self.p_idx) + len(self.p_idx_rev) +
+            len(self.p_un)  + len(self.p_un_rev) > 1):
+            # TODO: Might overcount cases where seq == r_seq, e.g. S :: a _a.
+            return False
+        for ctxts in (self.np,    self.np_rev,
+                      self.p_idx, self.p_idx_rev,
+                      self.p_un,  self.p_un_rev):
+            for c in ctxts:
+                if not c.empty():
+                    return False
+        return True
+
+    def reverse(self):
+        return SeqSetUses(self.np_rev,    self.np,
+                          self.p_idx_rev, self.p_idx,
+                          self.p_un_rev,  self.p_un)
+
+    def intersect(self, other):
+        return SeqSetUses(self.np        & other.np,
+                          self.np_rev    & other.np_rev,
+                          self.p_idx     & other.p_idx,
+                          self.p_idx_rev & other.p_idx_rev,
+                          self.p_un      & other.p_un,
+                          self.p_un_rev  & other.p_un_rev)
+
+    def __str__(self):
+        return '\n'.join((['\tas use of non-parametric rule:']
+                          if len(self.np) > 0 else []) +
+                         ['\t\t%s' % c for c in self.np] +
+                         (['\tas reverse use of non-parametric rule:']
+                          if len(self.np_rev) > 0 else []) +
+                         ['\t\t%s' % c for c in self.np_rev] +
+                         (['\tas indexed use of parametric rule:']
+                          if len(self.p_idx) > 0 else []) +
+                         ['\t\t%s' % c for c in self.p_idx] +
+                         (['\tas reverse indexed use of parametric rule:']
+                          if len(self.p_idx_rev) > 0 else []) +
+                         ['\t\t%s' % c for c in self.p_idx_rev] +
+                         (['\tas relaxed use of parametric rule:']
+                          if len(self.p_un) > 0 else []) +
+                         ['\t\t%s' % c for c in self.p_un] +
+                         (['\tas relaxed reverse use of parametric rule:']
+                          if len(self.p_un_rev) > 0 else []) +
+                         ['\t\t%s' % c for c in self.p_un_rev])
 
 class SequenceMap(util.BaseClass):
-    def __init__(self, grammar, calc_combs):
-        # frozenset<Sequence> -> (set<Context>,set<Context>,
-        #                         set<Context>,set<Context>)
+    def __init__(self, grammar):
         # TODO: An entry can currently be empty (if the relaxed form of some
         # sequence doesn't appear in any rule).
-        # TODO: Make public interface for Entry
-        self._map = {}
+        self._map = {} # frozenset<Sequence> -> SeqSetUses
         self._fill_singles(grammar)
-        if calc_combs:
-            self._fill_combinations()
-
-    def get_uses(self, symbol):
-        lit = Literal(symbol, symbol.parametric, False)
-        return self._map[frozenset([Sequence(lit)])]
+        self._fill_combinations()
 
     def _fill_singles(self, grammar):
         for res in grammar.prods:
@@ -424,100 +464,82 @@ class SequenceMap(util.BaseClass):
 
     def _add_single(self, seq, ctxt):
         self._init_entries(seq)
-        seq_set = frozenset([seq])
-        # entries on other maps will be updated automatically
-        self._map[seq_set][0].add(ctxt)
-        if seq.num_indexed() >= 2:
-            if not ctxt.indexed():
-                self._map[seq_set][2].add(ctxt)
+        uses = self._map[frozenset([seq])]
+
+        # Uses of related sequences will be updated automatically, through our
+        # pointer scheme.
+        if seq.num_indexed() == 0:
+            uses.np.add(ctxt)
+        elif seq.num_indexed() == 1:
+            uses.p_idx.add(ctxt)
+        else:
+            if ctxt.uses_seq_index():
+                uses.p_idx.add(ctxt)
+            else:
+                uses.np.add(ctxt)
+
+    def _make_ctxts_pair(self, seq):
+        str_ctxts = set()
+        rev_ctxts = str_ctxts if seq.reverse() == seq else set()
+        return (str_ctxts, rev_ctxts)
+
+    def _set_uses_pair(self, seq, uses):
+        self._map[frozenset([seq])] = uses
+        r_seq = seq.reverse()
+        if r_seq != seq:
+            self._map[frozenset([r_seq])] = uses.reverse()
 
     def _init_entries(self, seq):
-        # 0: regular instances
-        # 1: reverse instances
-        # 2: relaxed instances
-        # 3: relaxed reverse instances
+        # We set up the pointers such that:
+        # - When we later record 'a b' as a possible use of a rule 'S :: a b',
+        #   then it's also automatically recorded as a reverse use of rule
+        #   'S :: _b _a'.
+        # - When we later record 'a[*] b[*]' as a possible use of a
+        #   non-parametric rule 'S :: a[*] b[*]', then it's also automatically
+        #   recorded as a relaxed use of parametric rules 'S[i] :: a[i] b[*]'
+        #   and 'S[i] :: a[*] b[i]'.
+
         if frozenset([seq]) in self._map:
-            # all other entries will have been set up as well
-            # specifically, we've also added its reverse, and its relaxation
+            # All other entries will have been set up as well -- specifically,
+            # we've also added its reverse, and its relaxation.
             return
-        c = set()
-        r_seq = seq.reverse()
-        rc = c if r_seq == seq else set()
+        (s1, r1) = self._make_ctxts_pair(seq)
 
         if seq.num_indexed() == 0:
-            l = c
-            rl = rc
+            uses = SeqSetUses(s1, r1, None, None, None, None)
         elif seq.num_indexed() == 1:
-            l_seq = seq.relax()
-            assert l_seq != seq
-            if frozenset([l_seq]) in self._map:
-                (l,rl,_,_) = self._map[frozenset([l_seq])]
-            else:
-                l = set()
-                rl_seq = r_seq.relax()
-                assert rl_seq != r_seq
-                rl = l if rl_seq == l_seq else set()
-                self._map[frozenset([l_seq])] = (l,rl,l,rl)
-                if rl_seq != l_seq:
-                    self._map[frozenset([rl_seq])] = (rl,l,rl,l)
+            rlx_seq = seq.relax()
+            assert rlx_seq.num_indexed() == 0
+            self._init_entries(rlx_seq)
+            rlx_uses = self._map[frozenset([rlx_seq])]
+            uses = SeqSetUses(None, None, s1, r1, rlx_uses.np, rlx_uses.np_rev)
         else:
-            l = set()
-            rl = l if r_seq == seq else set()
+            (s2, r2) = self._make_ctxts_pair(seq)
+            uses = SeqSetUses(s1, r1, s2, r2, s1, r1)
 
-        self._map[frozenset([seq])] = (c,rc,l,rl)
-        if r_seq != seq:
-            self._map[frozenset([r_seq])] = (rc,c,rl,l)
-
-    @staticmethod
-    def _trivial_entry(entry):
-        if len(entry[0]) + len(entry[1]) > 1:
-            return False
-        if len(entry[2]) + len(entry[3]) > 1:
-            return False
-        for ctxts in entry:
-            for c in ctxts:
-                if not c.empty():
-                    return False
-        # TODO: skipping special case:
-        # for s in seqs:
-        #     if s != s.relax():
-        #         return False
-        # Will cause us to miss an optimization opportunity in a case like:
-        #   S :: B[i] C[i] D[i] | B[*] C[i] D[i]
-        return True
+        self._set_uses_pair(seq, uses)
 
     def _fill_combinations(self):
         pending = self._map
         self._map = {}
         while len(pending) > 0:
-            (a, a_entry) = pending.popitem()
-            if SequenceMap._trivial_entry(a_entry):
+            (a, a_uses) = pending.popitem()
+            if a_uses.trivial():
                 continue
             for b in self._map:
                 c = a | b
-                if (c in self._map or c in pending or
-                    seq_compatibility(c) == (False,False)):
+                if c in self._map or c in pending:
                     continue
-                b_entry = self._map[b]
-                c_entry = (a_entry[0] & b_entry[0],
-                           a_entry[1] & b_entry[1],
-                           a_entry[2] & b_entry[2],
-                           a_entry[3] & b_entry[3])
-                if SequenceMap._trivial_entry(c_entry):
+                b_uses = self._map[b]
+                c_uses = a_uses.intersect(b_uses)
+                if c_uses.trivial():
                     continue
-                pending[c] = c_entry
-            self._map[a] = a_entry
+                pending[c] = c_uses
+            self._map[a] = a_uses
 
     def __str__(self):
-        return '\n'.join(['\n'.join([', '.join([str(seq) for seq in s]) + ':'] +
-                                    ['\tstraight:'] +
-                                    ['\t\t%s' % c for c in self._map[s][0]] +
-                                    ['\treverse:'] +
-                                    ['\t\t%s' % c for c in self._map[s][1]] +
-                                    ['\trelaxed:'] +
-                                    ['\t\t%s' % c for c in self._map[s][2]] +
-                                    ['\treverse relaxed:'] +
-                                    ['\t\t%s' % c for c in self._map[s][3]])
+        return '\n'.join(['%s:\n%s' % (', '.join([str(seq) for seq in s]),
+                                       self._map[s])
                           for s in self._map])
 
 class Grammar(util.BaseClass):
