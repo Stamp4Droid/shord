@@ -320,9 +320,9 @@ class Sequence(util.Record):
             return self
         return Sequence(*[l.relax() for l in self.lits])
 
-    def ne_subseqs(self, result):
+    def len2plus_subseqs(self, result):
         num_lits = len(self.lits)
-        for n in range(1, num_lits + 1):
+        for n in range(2, num_lits + 1):
             for i in range(0, num_lits - n + 1):
                 yield (self[i:i+n],
                        Context(self[0:i], self[i+n:num_lits], result))
@@ -419,7 +419,7 @@ class SequenceMap(util.BaseClass):
     def _fill_singles(self, grammar):
         for res in grammar.prods:
             for fs in grammar.prods.get(res):
-                for (ss,ctxt) in fs.ne_subseqs(res):
+                for (ss,ctxt) in fs.len2plus_subseqs(res):
                     self._add_single(ss, ctxt)
 
     def _add_single(self, seq, ctxt):
