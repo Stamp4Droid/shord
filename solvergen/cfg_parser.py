@@ -448,6 +448,14 @@ class SeqSetUses(util.BaseClass):
                     [(c.result, seq.apply_on(c, True,  True))
                      for c in self.p_un_rev])
 
+    def __eq__(self, other):
+        return (self.np        == other.np        and
+                self.np_rev    == other.np_rev    and
+                self.p_idx     == other.p_idx     and
+                self.p_idx_rev == other.p_idx_rev and
+                self.p_un      == other.p_un      and
+                self.p_un_rev  == other.p_un_rev)
+
     def __str__(self):
         return '\n'.join((['\tas use of non-parametric rule:']
                           if len(self.np) > 0 else []) +
@@ -475,6 +483,7 @@ class GroupingMap(util.BaseClass):
         self._map = {} # frozenset<Sequence> -> SeqSetUses
         self._fill_singles(grammar)
         self._fill_combinations()
+        self._remove_non_maximal()
 
     def get_uses(self, seqs):
         return self._map[seqs]
@@ -562,6 +571,16 @@ class GroupingMap(util.BaseClass):
                     continue
                 pending[c] = c_uses
             self._map[a] = a_uses
+
+    def _remove_non_maximal(self):
+        for seqs in sorted(self._map.keys(), key=len):
+            for s in seqs:
+                sub_seqs = seqs - frozenset([s])
+                assert sub_seqs != seqs
+                if sub_seqs not in self._map:
+                    continue
+                if self._map[seqs] == self._map[sub_seqs]:
+                    del self._map[sub_seqs]
 
     def __str__(self):
         return '\n'.join(['%s:\n%s' % (', '.join([str(seq) for seq in s]),
