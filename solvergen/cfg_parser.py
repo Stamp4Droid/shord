@@ -418,6 +418,13 @@ class SeqSetUses(util.BaseClass):
                     return False
         return True
 
+    def forms_np_rule(self):
+        return len(self.np) + len(self.np_rev) > 0
+
+    def forms_p_rule(self):
+        return (len(self.p_idx) + len(self.p_idx_rev) +
+                len(self.p_un)  + len(self.p_un_rev) > 0)
+
     def reverse(self):
         return SeqSetUses(self.np_rev,    self.np,
                           self.p_idx_rev, self.p_idx,
@@ -681,6 +688,19 @@ class Grammar(util.BaseClass):
             res_prods = self.prods.get(res)
             res_prods -= to_remove.get(res)
             res_prods |= to_add.get(res)
+
+    def all_mods(self):
+        mods = []
+        for symbol in self.inlinables():
+            mods.append(lambda g: g.inline(symbol))
+        gr_map = GroupingMap(self)
+        for seqs in gr_map.groups():
+            uses = gr_map.get_uses(seqs)
+            if uses.forms_np_rule():
+                mods.append(lambda g: g.abstract(False, seqs, uses))
+            if uses.forms_p_rule():
+                mods.append(lambda g: g.abstract(True, seqs, uses))
+        return mods
 
     def __str__(self):
         return '\n'.join(sorted(['\n'.join(['%s ::' % res.as_result()] +
