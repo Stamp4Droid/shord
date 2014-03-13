@@ -468,7 +468,7 @@ class SeqSetUses(util.BaseClass):
                           if len(self.p_un_rev) > 0 else []) +
                          ['\t\t%s' % c for c in self.p_un_rev])
 
-class SequenceMap(util.BaseClass):
+class GroupingMap(util.BaseClass):
     def __init__(self, grammar):
         # TODO: An entry can currently be empty (if the relaxed form of some
         # sequence doesn't appear in any rule).
@@ -476,8 +476,11 @@ class SequenceMap(util.BaseClass):
         self._fill_singles(grammar)
         self._fill_combinations()
 
-    def get(self, seqs):
+    def get_uses(self, seqs):
         return self._map[seqs]
+
+    def groups(self):
+        return self._map.keys()
 
     def _fill_singles(self, grammar):
         for res in grammar.prods:
@@ -639,14 +642,13 @@ class Grammar(util.BaseClass):
         self.prods.remove(symbol)
         self.symbols.remove(symbol)
 
-    def abstract(self, parametric, seqs, seq_map):
+    def abstract(self, parametric, seqs, uses):
         # TODO: Assumes that the parameters are valid.
         new_symb = self.symbols.make_temporary(parametric)
         for s in seqs:
             # TODO: missing assertion checks here
             self.prods.append(new_symb, s)
 
-        uses = seq_map.get(seqs)
         new_symb_seq = Sequence(Literal(new_symb, parametric, False))
         to_add = util.UniqueMultiDict() # Symbol -> set<Sequence>
         for (res, rule) in uses.apply_to(new_symb_seq, parametric):
