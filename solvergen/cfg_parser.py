@@ -708,10 +708,12 @@ class Grammar(util.BaseClass):
         return res
 
     def __str__(self):
-        return '\n'.join(sorted(['\n'.join(['%s ::' % res.as_result()] +
-                                    sorted([('\t%s' % rule)
-                                            for rule in self.prods.get(res)]))
-                                 for res in self.prods]))
+        return '\n'.join(sorted(['%s :: ' % res.as_result() +
+                                 '\n    | '.join([str(rule) for rule
+                                                  in self.prods.get(res)])
+                                 for res in self.prods]) +
+                         ['.paths %s %s' % (s, s.num_paths())
+                          for s in self.symbols if s.num_paths() > 0])
 
     def _finalize(self):
         """
