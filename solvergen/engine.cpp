@@ -514,11 +514,14 @@ Edge *find_edge(NODE_REF from, NODE_REF to, EDGE_KIND kind, INDEX index) {
     return NULL;
 }
 
+unsigned int num_edges = 0;
+
 // Return true iff the Edge wasn't already present in the graph.
 bool graph_add(Edge* e) {
     if (find_edge(e->from, e->to, e->kind, e->index) != NULL) {
 	return false;
     }
+    num_edges++;
     nodes[e->to].in[e->kind].add(e);
     nodes[e->from].out[e->kind].add(e);
     return true;
@@ -1277,6 +1280,7 @@ int main() {
     parse_input_files(ParsingMode::RECORD_EDGES);
     LOG("Loading completed in ", CURRENT_TIME() - loading_start, " ms");
 
+    num_edges = 0;
     START_PROFILER();
     DECL_COUNTER(solving_start, CURRENT_TIME());
     /* Process empty productions. */
@@ -1314,7 +1318,8 @@ int main() {
 
     DECL_COUNTER(printing_start, CURRENT_TIME());
     PRINT_STATS();
-    print_results();
-    print_paths();
+    // print_results();
+    // print_paths();
     LOG("Printing completed in ", CURRENT_TIME() - printing_start, " ms");
+    std::cout << num_edges << std::endl;
 }
