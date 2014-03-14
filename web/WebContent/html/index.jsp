@@ -541,6 +541,7 @@
 							url: "/stamp/html/viewResult.jsp",
 							data: {resultFileName: this.resultFileName, nodeId: options.nodeId}
 						}).done(function (response) {
+                                                        console.log(response);
 							callback({data: $.parseJSON(response)});
 							});
 						}
