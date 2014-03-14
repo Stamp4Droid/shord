@@ -689,18 +689,23 @@ class Grammar(util.BaseClass):
             res_prods -= to_remove.get(res)
             res_prods |= to_add.get(res)
 
-    def all_mods(self):
-        mods = []
-        for symbol in self.inlinables():
-            mods.append(lambda g: g.inline(symbol))
-        gr_map = GroupingMap(self)
-        for seqs in gr_map.groups():
-            uses = gr_map.get_uses(seqs)
-            if uses.forms_np_rule():
-                mods.append(lambda g: g.abstract(False, seqs, uses))
-            if uses.forms_p_rule():
-                mods.append(lambda g: g.abstract(True, seqs, uses))
-        return mods
+    def mod_kinds(self):
+        return ['INLINE', 'ABSTRACT']
+
+    def all_mods(self, kind):
+        res = []
+        if kind == 'INLINE':
+            for symbol in self.inlinables():
+                res.append((Grammar.inline, [symbol]))
+        else:
+            gr_map = GroupingMap(self)
+            for seqs in gr_map.groups():
+                uses = gr_map.get_uses(seqs)
+                if uses.forms_np_rule():
+                    res.append((Grammar.abstract, [False, seqs, uses]))
+                if uses.forms_p_rule():
+                    res.append((Grammar.abstract, [True, seqs, uses]))
+        return res
 
     def __str__(self):
         return '\n'.join(sorted(['\n'.join(['%s ::' % res.as_result()] +
