@@ -446,6 +446,13 @@ def mkdir(path):
 def sort_uniq(seq):
     return [g[0] for g in groupby(sorted(seq))]
 
+def sliding_window(seq, n=2):
+    res = seq[:n]
+    yield res
+    for elem in seq[n:]:
+        res = res[1:] + [elem]
+        yield res
+
 class DomMap(BaseClass):
     def __init__(self, map_file):
         self._idx2val = []

@@ -227,6 +227,13 @@ class Literal(util.Record):
                    '[*]' if not self.indexed else '[i]')
         return ('_' if self.reversed else '') + str(self.symbol) + idx_str
 
+    def to_dlog(self, v1, v2):
+        idx_arg = (',idx' if self.indexed
+                   else ',_' if self.symbol.parametric
+                   else '')
+        return ('%s(%s,%s%s)' % (self.symbol, v2 if self.reversed else v1,
+                                 v1 if self.reversed else v2, idx_arg))
+
     def reverse(self):
         return Literal(self.symbol, self.indexed, not self.reversed)
 
@@ -285,6 +292,17 @@ class Sequence(util.Record):
         if self.empty():
             return '-'
         return ' '.join([str(l) for l in self.lits])
+
+    def to_dlog(self, result):
+        num_vars = len(self.lits) + 1
+        assert num_vars <= 26
+        vars = [letter for letter in string.ascii_lowercase[:num_vars]]
+        res_lit = Literal(result, result.parametric, False)
+        var_pairs = list(util.sliding_window(vars, 2))
+        return ('    %s <- ' % res_lit.to_dlog(vars[0], vars[-1]) +
+                ', '.join([lit.to_dlog(v1, v2)
+                           for (lit, [v1,v2]) in zip(self.lits, var_pairs)]) +
+                '.')
 
     # TODO: Only works for slicing
     def __getitem__(self, key):
@@ -714,6 +732,78 @@ class Grammar(util.BaseClass):
                                  for res in self.prods]) +
                          ['.paths %s %s' % (s, s.num_paths())
                           for s in self.symbols if s.num_paths() > 0])
+
+    def to_dlog(self):
+        rel_decl = ('\n' +
+                    ''.join([('    %s' % s) +
+                             ('(s,d,i) -> string(s), string(d), int(i).\n'
+                              if s.parametric
+                              else '(s,d) -> string(s), string(d).\n')
+                             for s in self.symbols]))
+        p_in_tpl = """
+    _in_%s(s,d,i) -> string(s), string(d), int(i).
+    lang:physical:filePath[\\`_in_%s] = \\"$IN_DIR/%s.dat\\".
+    lang:physical:delimiter[\\`_in_%s] = \\" \\".
+    +%s(s,d,i) <- _in_%s(s,d,i)."""
+        np_in_tpl = """
+    _in_%s(s,d) -> string(s), string(d).
+    lang:physical:filePath[\\`_in_%s] = \\"$IN_DIR/%s.dat\\".
+    lang:physical:delimiter[\\`_in_%s] = \\" \\".
+    +%s(s,d) <- _in_%s(s,d)."""
+        in_read = ''.join([(p_in_tpl if s.parametric else np_in_tpl)
+                           % (s,s,s,s,s,s)
+                           for s in self.symbols if s.is_terminal()]) + '\n'
+        out_calc = '\n' + ''.join([rule.to_dlog(res) + '\n'
+                                   for res in self.prods
+                                   for rule in self.prods.get(res)])
+        p_out_tpl = """
+    _out_%s(s,d,i) -> string(s), string(d), int(i).
+    lang:physical:filePath[\\`_out_%s] = \\"$OUT_DIR/%s.dat\\".
+    lang:physical:delimiter[\\`_out_%s] = \\" \\".
+    _out_%s(s,d,i) <- %s(s,d,i)."""
+        np_out_tpl = """
+    _out_%s(s,d) -> string(s), string(d).
+    lang:physical:filePath[\\`_out_%s] = \\"$OUT_DIR/%s.dat\\".
+    lang:physical:delimiter[\\`_out_%s] = \\" \\".
+    _out_%s(s,d) <- %s(s,d)."""
+        out_print = ''.join([(p_out_tpl if s.parametric else np_out_tpl)
+                             % (s,s,s,s,s,s)
+                             for s in self.symbols
+                             if not s.is_terminal()]) + '\n'
+        return """#!/bin/bash
+function reset_timer {
+    TIMESTAMP="$(date +"%%s%%N")"
+}
+function round_over {
+    PREV_TS="$TIMESTAMP"
+    TIMESTAMP="$(date +"%%s%%N")"
+    MS=$(( ($TIMESTAMP - $PREV_TS) / 1000000 ))
+    S=$(( $MS/1000 ))
+    printf "$1: %%02dm%%02d.%%03ds\\n" $(($S/60)) $(($S%%60)) $(($MS%%1000))
+}
+if [ $# -ne 3 ]; then
+    echo "Usage: $(basename "${BASH_SOURCE[0]}") <lb-dir> <in-dir> <out-dir>"
+    exit 1
+fi
+LB_DIR="$1"
+IN_DIR="$2"
+OUT_DIR="$3"
+source "$LB_DIR/etc/profile.d/logicblox.sh"
+lb services start
+lb create --overwrite solvergen
+lb addblock solvergen "%s"
+reset_timer
+lb exec solvergen "%s"
+round_over "Input parsing"
+lb addblock solvergen "%s"
+round_over "Computation"
+lb exec solvergen "%s"
+round_over "Output printing"
+lb services stop
+for SYMBOL in {%s}; do
+    sed -i 's/"//g' "$OUT_DIR/$SYMBOL.dat"
+done""" % (rel_decl, in_read, out_calc, out_print,
+           ','.join([str(s) for s in self.symbols if not s.is_terminal()]))
 
     def _finalize(self):
         """
@@ -1455,5 +1545,8 @@ if __name__ == '__main__':
         code_out = os.path.join(args.out_dir, '%s.cpp' % cfg_name)
         with open(code_out, 'w') as f:
             emit_solver(grammar, f)
+        lb_out = os.path.join(args.out_dir, '%s.sh' % cfg_name)
+        with open(lb_out, 'w') as f:
+            f.write(grammar.to_dlog() + '\n')
     else:
         emit_solver(grammar, sys.stdout)
