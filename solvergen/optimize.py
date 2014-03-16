@@ -8,7 +8,7 @@ import os
 import random
 import subprocess
 
-def optimize(b, init, tries):
+def mcmc(b, init, tries):
     curr = init
     curr_cost = cost(curr)
     print 'Original cost: %s' % curr_cost
@@ -20,7 +20,7 @@ def optimize(b, init, tries):
         print 'Trying rewrite #%s' % counter
         counter += 1
         new = curr.clone()
-        rewrite(new)
+        rand_rewrite(new)
         new_cost = cost(new)
         print '    cost:', new_cost, 'vs', curr_cost
         if new_cost > curr_cost:
@@ -39,6 +39,47 @@ def optimize(b, init, tries):
 
 def a(b, new_cost, prev_cost):
     return min(1.0, math.exp(b*(prev_cost-new_cost)))
+
+# TODO: Tune probabilities
+def rand_rewrite(grammar):
+    mod_kinds = grammar.mod_kinds()
+    mods = []
+    while len(mods) == 0:
+        kind = random.choice(mod_kinds)
+        mods = grammar.all_mods(kind)
+    (fun, args) = random.choice(mods)
+    fun(grammar, *args)
+
+#==============================================================================
+
+class RestartException(Exception):
+    pass
+
+def hill_climb(init):
+    curr = init
+    curr_cost = cost(curr)
+    print 'Original cost:', curr_cost
+
+    while True:
+        try:
+            for kind in curr.mod_kinds():
+                for (fun, args) in curr.all_mods(kind):
+                    new = curr.clone()
+                    fun(new, *args)
+                    new_cost = cost(new)
+                    if new_cost < curr_cost:
+                        curr = new
+                        curr_cost = new_cost
+                        print 'Rewrite lowered cost to', new_cost
+                        print '    %s' % kind
+                        for a in args:
+                            print '    %s' % a
+                        raise RestartException
+        except RestartException:
+            continue
+        break
+
+    return curr
 
 #==============================================================================
 
@@ -67,18 +108,10 @@ def cost(grammar):
     num_edges_str = subprocess.check_output(run_cmd, shell=True)
     return int(num_edges_str)
 
-def rewrite(grammar):
-    mod_kinds = grammar.mod_kinds()
-    mods = []
-    while len(mods) == 0:
-        kind = random.choice(mod_kinds)
-        mods = grammar.all_mods(kind)
-    (fun, args) = random.choice(mods)
-    fun(grammar, *args)
-
 subprocess.check_call(cc_prefix + (' -c "%s"' % lib_src), shell=True)
 grammar = cfg_parser.Grammar.from_file(args.cfg_file)
-optim = optimize(0.0005, grammar, 5000)
+local_optim = hill_climb(grammar)
+optim = mcmc(0.005, local_optim, 100)
 print
 print 'Optimal grammar:'
 print optim
