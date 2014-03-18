@@ -4,7 +4,6 @@
 #include <list>
 #include <locale>
 #include <sstream>
-#include <sys/time.h>
 
 #include "rsm.hpp"
 
@@ -356,6 +355,7 @@ void RSM::propagate(Graph& graph) const {
     // Components are processed in order of addition, which is guaranteed to be
     // a valid bottom-up order.
     for (const Component& comp : components) {
+	const unsigned int t_summ = current_time();
 	std::cout << "Summarizing " << comp.name << std::endl;
 
 	// We need to search through the uses of each component to find all
@@ -391,14 +391,20 @@ void RSM::propagate(Graph& graph) const {
 	}
 
 	comp.summarize(graph, workers);
+	std::cout << "Done in " << current_time() - t_summ << " ms"
+		  << std::endl;
+	std::cout << std::endl;
     }
 
     // Final propagation step for the top component in the RSM. All required
     // summarization has been completed at this point, and we only need to
     // perform forward propagation.
     const Component& top_comp = components.last();
+    const unsigned int t_prop = current_time();
     std::cout << "Propagating over " << top_comp.name << std::endl;
     top_comp.propagate(graph);
+    std::cout << "Done in " << current_time() - t_prop << " ms" << std::endl;
+    std::cout << std::endl;
 }
 
 void Component::summarize(Graph& graph,
@@ -445,18 +451,10 @@ void Component::summarize(Graph& graph,
     std::cout << "Summary addition frequency:" << std::endl;
     std::cout << new_summ_freqs;
     std::cout << "Reschedules frequency:" << std::endl;
-    std::cout << reschedule_freqs << std::endl;
-}
-
-unsigned int current_time() {
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
+    std::cout << reschedule_freqs;
 }
 
 void Component::propagate(Graph& graph) const {
-    unsigned int t_full_start = current_time();
-
     // We try starting from each node in the graph. The shape of the top
     // component (or any secondary dimensions) can enforce additional
     // constraints on acceptable sources.
@@ -479,8 +477,6 @@ void Component::propagate(Graph& graph) const {
 	    graph.summaries.insert(s);
 	}
     }
-    std::cout << "Total: " << current_time() - t_full_start << " ms"
-	      << std::endl;
 }
 
 bool Worker::merge(const Component& comp,
@@ -562,6 +558,9 @@ Worker::Result Worker::summarize(const Graph& graph) const {
 // - Better summary representation, for human consumption.
 
 int main(int argc, char* argv[]) {
+    // Timekeeping
+    const unsigned int t_input = current_time();
+
     // User-defined parameters
     std::string rsm_dir;
     std::string graph_dir;
@@ -603,20 +602,29 @@ int main(int argc, char* argv[]) {
     RSM rsm;
     std::cout << "Parsing RSM components from " << rsm_dir << std::endl;
     rsm.parse_dir(rsm_dir);
-    std::cout << std::endl;
     std::cout << "Parsing graph from " << graph_dir << std::endl;
     Graph graph(rsm.symbols, graph_dir);
     graph.print_stats(std::cout);
+
+    // Timekeeping
+    const unsigned int t_solving = current_time();
+    std::cout << "Input parsing: " << t_solving - t_input << " ms"
+	      << std::endl;
     std::cout << std::endl;
 
     // Perform actual solving
-    std::cout << "Solving" << std::endl;
     rsm.propagate(graph);
-    std::cout << std::endl;
+
+    // Timekeeping
+    const unsigned int t_output = current_time();
 
     // Print the output
     std::cout << "Printing summaries" << std::endl;
     graph.print_summaries(summ_dir, rsm.components);
+
+    // Timekeeping
+    std::cout << "Output printing: " << current_time() - t_output << " ms"
+	      << std::endl;
 
     return EXIT_SUCCESS;
 }

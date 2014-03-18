@@ -16,6 +16,7 @@
 #include <queue>
 #include <set>
 #include <string>
+#include <sys/time.h>
 #include <tuple>
 #include <vector>
 
@@ -311,6 +312,12 @@ public:
 	return Iterator(boost::filesystem::directory_iterator());
     }
 };
+
+unsigned int current_time() {
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
+}
 
 // NAMED OBJECT MANAGEMENT ====================================================
 
