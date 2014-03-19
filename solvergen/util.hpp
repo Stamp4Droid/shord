@@ -394,7 +394,7 @@ template<typename T> class Ref {
     // allowed on friend class declarations.
     template<typename S, typename C, const Ref<C> S::Tuple::* MemPtr>
     friend class FlatIndex;
-public:
+private:
     unsigned int value;
 private:
     explicit Ref(unsigned int value) : value(value) {
@@ -916,10 +916,6 @@ public:
 //   some restrictions are imposed on this struct
 //   (e.g. its fields can't be const)
 //   all iterators accept pointer to full struct
-// - special Table version for one or more small-width/ref types: BitSet
-//   max width is provided through a hint parameter (for Refs: the Registry)
-//   can then implement TwoDimBitSet as FlatIndex<...BitSet<...>>
-//   (as long as we also implement clear() efficiently)
 // - set the key parameters on iteration
 //   mostly for completeness: the whole result tuple is now valid
 //   if parameters haven't been exhausted yet, set that field directly
@@ -937,6 +933,8 @@ public:
 //   - hashtable
 //   - dynamically growing flat table of pointers
 //   - sorted k-ptr to allocated wrapped
+// - more table implementations:
+//   - auto-uniquing set
 // - named indices (use classes as index tags)
 // - handle derived classes correctly
 // - FlatIndex for small enums
@@ -1031,6 +1029,9 @@ public:
 // - typelist functionality:
 //   - sorting
 //   - sentinel value at the end (nil)
+// - more flexible BitSet
+//   - nesting under non-flat indices
+//   - bitsets for multiple fields (currently have to wrap with FlatIndex)
 
 namespace mi {
 
@@ -1271,6 +1272,73 @@ public:
 		sub_iter.migrate(*arr_curr);
 	    }
 	    return true;
+	}
+    };
+};
+
+template<class T> class BitSet {
+private:
+    typedef unsigned short Store;
+public:
+    class Iterator;
+    friend Iterator;
+private:
+    Store bits = 0;
+public:
+    explicit BitSet(const typename KeyTraits<T>::SizeHint& hint) {
+	EXPECT(sizeof(Store) * 8 >= KeyTraits<T>::extract_size(hint));
+    }
+    bool insert(const T& val) {
+	unsigned int idx = KeyTraits<T>::extract_idx(val);
+	assert(idx < sizeof(Store) * 8);
+	if (bits & (1 << idx)) {
+	    return false;
+	}
+	bits |= 1 << idx;
+	return true;
+    }
+    Iterator iter(T& tgt) const {
+	Iterator it(tgt);
+	it.migrate(*this);
+	return it;
+    }
+    unsigned int size() const {
+	Store v = bits;
+	unsigned int count = 0;
+	for (; v; v >>= 1) {
+	    count += v & 1;
+	}
+	return count;
+    }
+public:
+
+    class Iterator {
+    private:
+	unsigned int curr;
+	T& tgt;
+	const typename BitSet::Store* bits;
+	bool before_start = true;
+    public:
+	explicit Iterator(T& tgt) : tgt(tgt) {}
+	void migrate(const BitSet& set) {
+	    curr = 0;
+	    bits = &(set.bits);
+	    before_start = true;
+	}
+	bool next() {
+	    if (before_start) {
+		before_start = false;
+	    } else {
+		++curr;
+	    }
+	    while (curr < sizeof(typename BitSet::Store) * 8) {
+		if (*bits & (1 << curr)) {
+		    tgt = KeyTraits<T>::from_idx(curr);
+		    return true;
+		}
+		++curr;
+	    }
+	    return false;
 	}
     };
 };

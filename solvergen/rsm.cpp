@@ -489,7 +489,7 @@ bool Worker::merge(const Component& comp,
 
 Worker::Result Worker::summarize(const Graph& graph) const {
     Result res;
-    SummaryWorklist worklist(graph.nodes.size(), comp.get_states().size());
+    SummaryWorklist worklist(graph.nodes, comp.get_states());
     worklist.enqueue(Position(start, comp.get_initial()));
 
     while (!worklist.empty()) {

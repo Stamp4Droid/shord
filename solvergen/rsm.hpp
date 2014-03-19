@@ -384,43 +384,19 @@ public:
     }
 };
 
-class TwoDimBitSet {
-private:
-    const unsigned int size;
-    unsigned short* shorts;
-public:
-    TwoDimBitSet(unsigned int pri_size, unsigned int sec_size)
-	: size(pri_size * sizeof(unsigned short)),
-	  shorts(new unsigned short[pri_size]) {
-	EXPECT(sizeof(unsigned short) * 8 >= sec_size);
-	memset(shorts, 0, size);
-    }
-    ~TwoDimBitSet() {
-	delete[] shorts;
-    }
-    void set(unsigned int i, unsigned int j) {
-	// no bounds check
-	shorts[i] |= 1 << j;
-    }
-    bool test(unsigned int i, unsigned int j) {
-	// no bounds check
-	return shorts[i] & (1 << j);
-    }
-};
-
 class SummaryWorklist {
 private:
-    TwoDimBitSet reached;
+    mi::FlatIndex<Ref<Node>, mi::BitSet<Ref<State>>> reached;
     std::deque<Position> queue;
 public:
-    explicit SummaryWorklist(unsigned int nodes, unsigned int states)
+    explicit SummaryWorklist(const Registry<Node>& nodes,
+			     const Registry<State>& states)
 	: reached(nodes, states) {}
     bool empty() const {
 	return queue.empty();
     }
     bool enqueue(const Position& pos) {
-	if (!reached.test(pos.node.value, pos.state.value)) {
-	    reached.set(pos.node.value, pos.state.value);
+	if (reached.insert(pos.node, pos.state)) {
 	    queue.push_back(pos);
 	    return true;
 	}
