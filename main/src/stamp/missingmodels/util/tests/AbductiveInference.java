@@ -63,20 +63,16 @@ public class AbductiveInference {
 		this.setObjective(cutEdges);
 		this.setRemovedEdges(removedEdges);
 		for(Edge edge : graph.getEdges()) {
-			System.out.println("EDGE: " + edge);
 			if(edge.weight > 0) {
 				for(UnaryProduction unaryProduction : graph.getContextFreeGrammar().unaryProductionsByTarget.get(edge.label)) {
-					System.out.println("UP: " + unaryProduction);
 					if(unaryProduction.isInputBackwards) {
 						for(Edge input : ((Map<Edge,Edge>)edge.source.incomingEdgesByLabel[unaryProduction.input]).keySet()) {
-							System.out.println("INPUT: " + input);
 							if(input.source.equals(edge.sink) && ReachabilitySolver.getField(input.field, unaryProduction.ignoreFields) == edge.field) {
 								this.addProduction(edge, input);
 							}
 						}
 					} else {
 						for(Edge input : ((Map<Edge,Edge>)edge.source.outgoingEdgesByLabel[unaryProduction.input]).keySet()) {
-							System.out.println("INPUT: " + input);
 							if(input.sink.equals(edge.sink) && ReachabilitySolver.getField(input.field, unaryProduction.ignoreFields) == edge.field) {
 								this.addProduction(edge, input);
 							}
@@ -101,8 +97,6 @@ public class AbductiveInference {
 							}
 						}
 					} else if(binaryProduction.isSecondInputBackwards) {
-						System.out.println(edge);
-						System.out.println(binaryProduction);
 						for(Edge firstInput : ((Map<Edge,Edge>)edge.source.outgoingEdgesByLabel[binaryProduction.firstInput]).keySet()) {
 							for(Edge secondInput : ((Map<Edge,Edge>)firstInput.sink.incomingEdgesByLabel[binaryProduction.secondInput]).keySet()) {
 								if(secondInput.source.equals(edge.sink) && ReachabilitySolver.getField(firstInput.field, secondInput.field, binaryProduction.ignoreFields) == edge.field) {

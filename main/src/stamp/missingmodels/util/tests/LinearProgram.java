@@ -134,6 +134,8 @@ public class LinearProgram<T> {
 		System.load("/home/obastani/Documents/projects/stamp/shord/lib/liblpsolve55.so");
 		System.load("/home/obastani/Documents/projects/stamp/shord/lib/liblpsolve55j.so");
 
+		System.out.println("Setting up constraints");
+		
 		Map<T,Integer> variables = new HashMap<T,Integer>();
 		Map<Integer,T> variableNames = new HashMap<Integer,T>();
 		int numVariables = 0;
@@ -159,9 +161,17 @@ public class LinearProgram<T> {
 				}
 			}
 		}
-
+		
+		System.out.println("Number of variables: " + numVariables);
+		System.out.println("Number of constraints: " + numConstraints);
+		
+		System.out.println("Setting up LP");
+		long time = System.currentTimeMillis();
+		
 		LpSolve problem = LpSolve.makeLp(0, numVariables);
 		problem.setVerbose(0);
+		problem.setAddRowmode(true);
+		
 		problem.strSetObjFn(this.objective.toString(variableNames, numVariables));
 		if(this.objective.objectiveType == ObjectiveType.MAXIMIZE) {
 			problem.setMaxim();
@@ -174,17 +184,21 @@ public class LinearProgram<T> {
 			problem.strAddConstraint(constraint.toString(variableNames, numVariables), constraint.convertConstraintType(), constraint.constant);
 		}
 		
-		for(int i=0; i<numVariables; i++) {
-			System.out.println((i+1) + ": " + variableNames.get(i).toString());
-		}
-		problem.printLp();
-
+		System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
+		
+		System.out.println("Solving LP");
+		
+		time = System.currentTimeMillis();
+		
 		problem.solve();
+
+		System.out.println("Done in " + (System.currentTimeMillis() - time) + "ms");
+		
 		double[] solution = new double[1+numConstraints+numVariables];
 		problem.getPrimalSolution(solution);
-		problem.printSolution(1);
 		problem.deleteLp();
 
+		System.out.println("Solved LP");
 
 		LinearProgramResult<T> result = new LinearProgramResult<T>(solution[0]);
 		for(int i=solution.length-numVariables; i<solution.length; i++) {

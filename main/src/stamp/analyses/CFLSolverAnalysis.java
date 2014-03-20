@@ -212,6 +212,26 @@ public class CFLSolverAnalysis extends JavaAnalysis {
 				System.out.println("Input method edge: " + getMethodSig(g, input) + " (weight " + input.weight + ")");				
 			}
 		}
+		
+		// run abduction
+		System.out.println("Abductive inference:");
+		AbductiveInference ai = new AbductiveInference();
+		try {
+			Set<Edge> cutEdges = new HashSet<Edge>();
+			for(Edge edge : sortedEdges.get("assignCCtxt")) {
+				cutEdges.add(edge);
+			}
+			Set<Edge> removedEdges = new HashSet<Edge>();
+			for(Edge edge : sortedEdges.get("Src2Sink")) {
+				removedEdges.add(edge);
+			}
+			Set<Edge> result = ai.performInference(g, cutEdges, removedEdges);
+			for(Edge edge : sortedEdges.get("assignCCtxt")) {
+				System.out.println(edge + (result.contains(edge) ? ": 0" : ": 1"));
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private static String getMethodSig(Graph graph, Edge edge) {
