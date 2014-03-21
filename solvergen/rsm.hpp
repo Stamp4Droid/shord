@@ -27,7 +27,6 @@ private:
 	: name(name), ref(ref), parametric(parametric) {
 	EXPECT(boost::regex_match(name, NAME_REGEX));
     }
-public:
     bool merge(bool parametric) const {
 	EXPECT(parametric == this->parametric);
 	return false;
@@ -70,11 +69,11 @@ private:
     explicit State(const std::string& name, Ref<State> ref, bool initial,
 		   bool final)
 	: name(name), ref(ref), initial(initial), final(final) {}
-public:
     bool merge(bool initial, bool final) const {
 	EXPECT(initial == this->initial && final == this->final);
 	return false;
     }
+public:
     void print(std::ostream& os) const;
 };
 
@@ -88,11 +87,11 @@ public:
 private:
     explicit Box(const std::string& name, Ref<Box> ref, Ref<Component> comp)
 	: name(name), ref(ref), comp(comp) {}
-public:
     bool merge(Ref<Component> comp) const {
 	EXPECT(comp == this->comp);
 	return false;
     }
+public:
     void print(std::ostream& os, const Registry<Component>& comp_reg) const;
 };
 
@@ -171,6 +170,9 @@ private:
 	: name(name), ref(ref) {
 	EXPECT(boost::regex_match(name, NAME_REGEX));
     }
+    bool merge() const {
+	return false;
+    }
 public:
     const Registry<State>& get_states() const {
 	return states;
@@ -181,9 +183,6 @@ public:
     }
     const std::set<Ref<State>>& get_final() const {
 	return final;
-    }
-    bool merge() const {
-	return false;
     }
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg,
 	       const Registry<Component>& comp_reg) const;
@@ -217,7 +216,6 @@ public:
 private:
     explicit Node(const std::string& name, Ref<Node> ref)
 	: name(name), ref(ref) {}
-public:
     bool merge() const {
 	return false;
     }
@@ -232,7 +230,6 @@ public:
 private:
     explicit Tag(const std::string& name, Ref<Tag> ref)
 	: name(name), ref(ref) {}
-public:
     bool merge() const {
 	return false;
     }
@@ -349,10 +346,10 @@ private:
 	: start(start), ref(ref), comp(comp), tgts(tgts) {
 	EXPECT(!tgts.empty());
     }
+    bool merge(const Component& comp, const std::set<Ref<Node>>& new_tgts);
 public:
     explicit Worker(Ref<Node> start, const Component& comp)
 	: start(start), comp(comp) {}
-    bool merge(const Component& comp, const std::set<Ref<Node>>& new_tgts);
     Result summarize(const Graph& graph) const;
 };
 

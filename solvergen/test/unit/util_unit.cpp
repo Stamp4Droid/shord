@@ -31,11 +31,11 @@ public:
 private:
     explicit Bar(const std::string& name, Ref<Bar> ref, bool flag)
 	: name(name), ref(ref), flag(flag) {}
-public:
     bool merge(bool flag) const {
 	assert(flag == this->flag);
 	return false;
     }
+public:
     friend std::ostream& operator<<(std::ostream& os, const Bar& obj);
 };
 
