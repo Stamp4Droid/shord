@@ -885,6 +885,8 @@ public:
 
 // Features:
 // - Iterators fill in a provided record, passed in as a set of references
+// - Insertion can work with distinct fields, a tuple, or a series of fields
+//   ending with a tuple.
 // - Result tuples need to be default-constructible
 //   the contents are NOT valid when passed to the iterator constructor
 //   need the first call to next() to return true before there's anything valid
@@ -894,6 +896,8 @@ public:
 // - Each iterator has the address where it must update its field on each move
 //   only update it when we move on the current level, not just on sub-levels
 //   (assuming the result tuples doesn't get modified by the client code)
+// - Union and join operations
+//   Join only works for relations of the form Index<T,Table<T>>
 
 // Primary extensions:
 // - implement 'contains' (or 'find')
@@ -912,14 +916,13 @@ public:
 //     but "freeze" that set, and assert it's not frozen whenever it's modified
 //     (perhaps only during debugging)
 // - implement multi-indexing properly, to connect all dimensions
-// - implement clear()
-//   special case enabled if the underlying type is simple: memset to 0
-//   should then probably use an array instead of a vector
-//   this should allow us to reuse this scheme for worker Worklist
-//   (and share with all)
+// - don't peel the insertion or iteration tuple
+//   instead combine with index after which to read
+//   alias top-level insert(tuple) as insert(0, tuple)
 // - more robust index use: each level knows what attribute it controls
 //   instantiated with a member variable pointer
 //   use that pointer to decide what to modify on the result tuple
+//   also avoids peeling
 //   harder to do on the bottom container:
 //   variadic templates don't allow non-type parameters
 //   - use a unique empty tag type for each member
@@ -986,7 +989,7 @@ public:
 //   this way, at fork points we can decide based on what the children report
 //   need a way to produce a normal form for "set of handled fields"
 //   => need member pointer ordering and equality
-// - just use tuples
+// - present tuples as regular named structs
 //   associate member variables with unique, empty type 'tags'
 //   could provide a wrapper that presents it as a struct
 // - special iteration syntax:
@@ -1047,6 +1050,22 @@ public:
 // - more flexible BitSet
 //   - nesting under non-flat indices
 //   - bitsets for multiple fields (currently have to wrap with FlatIndex)
+// - implement clear()
+//   special case enabled if the underlying type is simple: memset to 0
+//   should then probably use an array instead of a vector
+//   this should allow us to reuse this scheme for worker Worklist
+//   (and share with all)
+// - key iteration on index levels?
+// - some way to propagate the column type pack from the wrapped table.
+// - also accept a series of fields ending with a tuple for iter()
+// - implement some operations as algorithms instead
+// - have a backdoor to get a non-const ref to the wrapped set
+// - more tuple-related utilities:
+//   - gen_seq from 1
+//     or just template as 0,Is, to be able to take the rest
+//   - tuple splitting
+//   - tuple head & tail
+//   two versions: regular and const
 
 namespace mi {
 
@@ -1097,6 +1116,17 @@ public:
     }
     bool insert(const Tuple& tuple) {
 	return store.insert(tuple).second;
+    }
+    bool copy(const Table& src) {
+	bool grew = false;
+	Tuple src_tuple;
+	auto src_it = src.iter(src_tuple);
+	while (src_it.next()) {
+	    if (insert(src_tuple)) {
+		grew = true;
+	    }
+	}
+	return grew;
     }
     Iterator iter(Cols&... tgt_flds) const {
 	Iterator it(tgt_flds...);
@@ -1170,6 +1200,39 @@ public:
     }
     bool insert(const Tuple& tuple) {
 	return InsertHelper<Index,Tuple>::forward(*this, tuple);
+    }
+    bool copy(const Index& src) {
+	bool grew = false;
+	for (const auto& p : src.map) {
+	    if (follow(p.first).copy(p.second)) {
+		grew = true;
+	    }
+	}
+	return grew;
+    }
+    template<class C, class... Rest>
+    bool copy(const C& src, const Key& key, const Rest&... rest) {
+	return follow(key).copy(src, rest...);
+    }
+    bool join(const Index& r, const Index& s) {
+	bool grew = false;
+	Tuple r_tup;
+	auto r_it = r.iter(r_tup);
+	while (r_it.next()) {
+	    const auto& hd = std::get<0>(r_tup);
+	    typename Sub::Tuple tl;
+	    auto tl_it = s[std::get<1>(r_tup)].iter(tl);
+	    while (tl_it.next()) {
+		if (insert(hd, tl)) {
+		    grew = true;
+		}
+	    }
+	}
+	return grew;
+    }
+    template<class C, class... Rest>
+    bool join(const C& r, const C& s, const Key& key, const Rest&... rest) {
+	return follow(key).join(r, s, rest...);
     }
     template<class... Cols>
     Iterator iter(Key& tgt_key, Cols&... tgt_flds) const {
@@ -1292,6 +1355,41 @@ public:
     bool insert(const Tuple& tuple) {
 	return InsertHelper<FlatIndex,Tuple>::forward(*this, tuple);
     }
+    bool copy(const FlatIndex& src) {
+	unsigned int lim = src.array.size();
+	assert(array.size() == lim);
+	bool grew = false;
+	for (unsigned int i = 0; i < lim; i++) {
+	    if (array[i].copy(src.array[i])) {
+		grew = true;
+	    }
+	}
+	return grew;
+    }
+    template<class C, class... Rest>
+    bool copy(const C& src, const Key& key, const Rest&... rest) {
+	return follow(key).copy(src, rest...);
+    }
+    bool join(const FlatIndex& r, const FlatIndex& s) {
+	bool grew = false;
+	Tuple r_tup;
+	auto r_it = r.iter(r_tup);
+	while (r_it.next()) {
+	    const auto& hd = std::get<0>(r_tup);
+	    typename Sub::Tuple tl;
+	    auto tl_it = s[std::get<1>(r_tup)].iter(tl);
+	    while (tl_it.next()) {
+		if (insert(hd, tl)) {
+		    grew = true;
+		}
+	    }
+	}
+	return grew;
+    }
+    template<class C, class... Rest>
+    bool join(const C& r, const C& s, const Key& key, const Rest&... rest) {
+	return follow(key).join(r, s, rest...);
+    }
     template<class... Cols>
     Iterator iter(Key& tgt_key, Cols&... tgt_flds) const {
 	Iterator it(tgt_key, tgt_flds...);
@@ -1375,6 +1473,11 @@ public:
     }
     bool insert(const Tuple& tuple) {
 	return insert(std::get<0>(tuple));
+    }
+    bool copy(const BitSet& src) {
+	Store prev_bits = bits;
+	bits |= src.bits;
+	return prev_bits != bits;
     }
     Iterator iter(T& tgt) const {
 	Iterator it(tgt);
@@ -1468,6 +1571,39 @@ public:
     }
     bool insert(const Tuple& tuple) {
 	return InsertHelper<LightIndex,Tuple>::forward(*this, tuple);
+    }
+    bool copy(const LightIndex& src) {
+	bool grew = false;
+	for (const auto& p : src.list) {
+	    if (follow(p.first).copy(p.second)) {
+		grew = true;
+	    }
+	}
+	return grew;
+    }
+    template<class C, class... Rest>
+    bool copy(const C& src, const Key& key, const Rest&... rest) {
+	return follow(key).copy(src, rest...);
+    }
+    bool join(const LightIndex& r, const LightIndex& s) {
+	bool grew = false;
+	Tuple r_tup;
+	auto r_it = r.iter(r_tup);
+	while (r_it.next()) {
+	    const auto& hd = std::get<0>(r_tup);
+	    typename Sub::Tuple tl;
+	    auto tl_it = s[std::get<1>(r_tup)].iter(tl);
+	    while (tl_it.next()) {
+		if (insert(hd, tl)) {
+		    grew = true;
+		}
+	    }
+	}
+	return grew;
+    }
+    template<class C, class... Rest>
+    bool join(const C& r, const C& s, const Key& key, const Rest&... rest) {
+	return follow(key).join(r, s, rest...);
     }
     template<class... Cols>
     Iterator iter(Key& tgt_key, Cols&... tgt_flds) const {

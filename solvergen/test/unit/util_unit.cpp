@@ -120,20 +120,43 @@ int main() {
     std::cout << "Should see " << nidx.size() << " entries:" << std::endl;
     auto it1 = nidx.iter(res.flag, res.ref, res.a, res.b, res.c);
     while (it1.next()) {
-	std::cout << res.flag << " " << res.ref << " "
+	std::cout << "  " << res.flag << " " << res.ref << " "
 		  << res.a << " " << res.b << " " << res.c << std::endl;
     }
     std::cout << "Should see " << nidx[true].size() << " entries:" << std::endl;
     auto it2 = nidx[true].iter(res.ref, res.a, res.b, res.c);
     while (it2.next()) {
-	std::cout << res.ref << " "
+	std::cout << "  " <<  res.ref << " "
 		  << res.a << " " << res.b << " " << res.c << std::endl;
     }
     std::cout << "Should see " << nidx[false][bars.find("bbb").ref].size()
 	      << " entries:" << std::endl;
     auto it3 = nidx[false][bars.find("bbb").ref].iter(res.a, res.b, res.c);
     while (it3.next()) {
-	std::cout << res.a << " " << res.b << " " << res.c << std::endl;
+	std::cout << "  " <<  res.a << " " << res.b << " " << res.c
+		  << std::endl;
+    }
+    nidx.copy(nidx[false], true);
+    std::cout << "All false tuples copied to true:" << std::endl;
+    auto it4 = nidx.iter(res.flag, res.ref, res.a, res.b, res.c);
+    while (it4.next()) {
+	std::cout <<  "  " << res.flag << " " << res.ref << " "
+		  << res.a << " " << res.b << " " << res.c << std::endl;
+    }
+    std::cout << std::endl;
+
+    mi::Index<char,mi::Index<int,mi::Table<int>>> tabs;
+    tabs.insert('a', 1, 2); tabs.insert('a', 1, 3);
+    tabs.insert('b', 2, 1); tabs.insert('b', 3, 1);
+    tabs.insert('b', 3, 4); tabs.insert('b', 4, 4);
+    tabs.insert('c', 5, 5);
+    tabs.join(tabs['a'], tabs['b'], 'c');
+    std::tuple<int,int> c_tup;
+    auto c_it = tabs['c'].iter(c_tup);
+    std::cout << "Should see (1,1) (1,4) (5,5):" << std::endl;
+    while (c_it.next()) {
+	std::cout << "  " << std::get<0>(c_tup) << " " << std::get<1>(c_tup)
+		  << std::endl;
     }
     std::cout << std::endl;
 
