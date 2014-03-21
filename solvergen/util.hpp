@@ -27,6 +27,21 @@ public:
     typedef typename std::tuple_element<I,std::tuple<Types...>>::type type;
 };
 
+template<class T, class S> struct cons {};
+
+template<class H, class... Ts>
+struct cons<H,std::tuple<Ts...>> {
+    typedef std::tuple<H,Ts...> type;
+};
+
+template<unsigned int... Is> struct seq {};
+
+template<unsigned int N, unsigned int... Is>
+struct gen_seq : gen_seq<N-1,N-1,Is...> {};
+
+template<unsigned int... Is>
+struct gen_seq<0,Is...> : seq<Is...> {};
+
 // ERROR HANDLING =============================================================
 
 void expect(const char* file, unsigned int line, bool cond,
@@ -1035,11 +1050,44 @@ public:
 
 namespace mi {
 
+template<class C, class Tuple> struct InsertHelper {};
+
+template<class C, class... Flds>
+struct InsertHelper<C,std::tuple<Flds...>> {
+private:
+    template<unsigned int... Is>
+    static bool forward(C& table, const std::tuple<Flds...>& tuple,
+			seq<Is...>) {
+	return table.insert(std::get<Is>(tuple)...);
+    }
+public:
+    static bool forward(C& table, const std::tuple<Flds...>& tuple) {
+	return forward(table, tuple, gen_seq<sizeof...(Flds)>());
+    }
+};
+
+template<class C, class Tuple> struct IterHelper {};
+
+template<class C, class... Flds>
+struct IterHelper<C,std::tuple<Flds...>> {
+private:
+    template<unsigned int... Is>
+    static typename C::Iterator forward(const C& table,
+					std::tuple<Flds...>& tgts,
+					seq<Is...>) {
+	return table.iter(std::get<Is>(tgts)...);
+    }
+public:
+    static typename C::Iterator forward(const C& table,
+					std::tuple<Flds...>& tgts) {
+	return forward(table, tgts, gen_seq<sizeof...(Flds)>());
+    }
+};
+
 template<class... Cols> class Table {
 public:
     class Iterator;
     friend Iterator;
-private:
     typedef std::tuple<Cols...> Tuple;
 private:
     std::set<Tuple> store;
@@ -1047,10 +1095,16 @@ public:
     bool insert(const Cols&... flds) {
 	return store.emplace(flds...).second;
     }
+    bool insert(const Tuple& tuple) {
+	return store.insert(tuple).second;
+    }
     Iterator iter(Cols&... tgt_flds) const {
 	Iterator it(tgt_flds...);
 	it.migrate(*this);
 	return it;
+    }
+    Iterator iter(Tuple& tgt) const {
+	return IterHelper<Table,Tuple>::forward(*this, tgt);
     }
     unsigned int size() const {
 	return store.size();
@@ -1086,14 +1140,21 @@ public:
     };
 };
 
-template<class Key, class Sub> class Index {
+template<class K, class S> class Index {
 public:
     class Iterator;
     friend Iterator;
+    typedef K Key;
+    typedef S Sub;
+    typedef typename cons<Key,typename Sub::Tuple>::type Tuple;
 private:
     static const Sub dummy;
 private:
     std::map<Key,Sub> map;
+private:
+    Sub& follow(const Key& key) {
+	return map[key];
+    }
 public:
     const Sub& operator[](const Key& key) const {
 	// TODO: Should just create new entries?
@@ -1103,15 +1164,21 @@ public:
 	    return dummy;
 	}
     }
-    template<class... Cols>
-    bool insert(const Key& key, Cols&&... flds) {
-	return map[key].insert(std::forward<Cols>(flds)...);
+    template<class... Rest>
+    bool insert(const Key& key, const Rest&... rest) {
+	return follow(key).insert(rest...);
+    }
+    bool insert(const Tuple& tuple) {
+	return InsertHelper<Index,Tuple>::forward(*this, tuple);
     }
     template<class... Cols>
     Iterator iter(Key& tgt_key, Cols&... tgt_flds) const {
 	Iterator it(tgt_key, tgt_flds...);
 	it.migrate(*this);
 	return it;
+    }
+    Iterator iter(Tuple& tgt) const {
+	return IterHelper<Index,Tuple>::forward(*this, tgt);
     }
     unsigned int size() const {
 	unsigned int sz = 0;
@@ -1160,8 +1227,8 @@ public:
     };
 };
 
-template<class Key, class Sub>
-const Sub Index<Key,Sub>::dummy;
+template<class K, class S>
+const S Index<K,S>::dummy;
 
 template<class T> struct KeyTraits;
 
@@ -1192,12 +1259,19 @@ struct KeyTraits<Ref<T>> {
     }
 };
 
-template<class Key, class Sub> class FlatIndex {
+template<class K, class S> class FlatIndex {
 public:
     class Iterator;
     friend Iterator;
+    typedef K Key;
+    typedef S Sub;
+    typedef typename cons<Key,typename Sub::Tuple>::type Tuple;
 private:
     std::vector<Sub> array;
+private:
+    Sub& follow(const Key& key) {
+	return const_cast<Sub&>((*this)[key]);
+    }
 public:
     template<class... Rest>
     explicit FlatIndex(const typename KeyTraits<Key>::SizeHint& hint,
@@ -1211,20 +1285,21 @@ public:
 	return array.at(i);
 #endif
     }
-    template<class... Cols>
-    bool insert(const Key& key, Cols&&... flds) {
-	unsigned int i = KeyTraits<Key>::extract_idx(key);
-#ifdef NDEBUG
-	return array[i].insert(std::forward<Cols>(flds)...);
-#else
-	return array.at(i).insert(std::forward<Cols>(flds)...);
-#endif
+    template<class... Rest>
+    bool insert(const Key& key, const Rest&... rest) {
+	return follow(key).insert(rest...);
+    }
+    bool insert(const Tuple& tuple) {
+	return InsertHelper<FlatIndex,Tuple>::forward(*this, tuple);
     }
     template<class... Cols>
     Iterator iter(Key& tgt_key, Cols&... tgt_flds) const {
 	Iterator it(tgt_key, tgt_flds...);
 	it.migrate(*this);
 	return it;
+    }
+    Iterator iter(Tuple& tgt) const {
+	return IterHelper<FlatIndex,Tuple>::forward(*this, tgt);
     }
     unsigned int size() const {
 	unsigned int sz = 0;
@@ -1282,6 +1357,7 @@ private:
 public:
     class Iterator;
     friend Iterator;
+    typedef std::tuple<T> Tuple;
 private:
     Store bits = 0;
 public:
@@ -1297,10 +1373,16 @@ public:
 	bits |= 1 << idx;
 	return true;
     }
+    bool insert(const Tuple& tuple) {
+	return insert(std::get<0>(tuple));
+    }
     Iterator iter(T& tgt) const {
 	Iterator it(tgt);
 	it.migrate(*this);
 	return it;
+    }
+    Iterator iter(Tuple& tgt) const {
+	return iter(std::get<0>(tgt));
     }
     unsigned int size() const {
 	Store v = bits;
@@ -1344,16 +1426,31 @@ public:
 };
 
 // Unsorted list of key-value pairs.
-template<class Key, class Sub> class LightIndex {
+template<class K, class S> class LightIndex {
 public:
     class Iterator;
     friend Iterator;
+    typedef K Key;
+    typedef S Sub;
+    typedef typename cons<Key,typename Sub::Tuple>::type Tuple;
 private:
     typedef std::forward_list<std::pair<Key,Sub>> List;
 private:
     static const Sub dummy;
 private:
     List list;
+private:
+    Sub& follow(const Key& key) {
+	auto key_matches = [&](const std::pair<Key,Sub>& elem) {
+	    return key == elem.first;
+	};
+	auto pos = std::find_if(list.begin(), list.end(), key_matches);
+	if (pos == list.end()) {
+	    list.emplace_front(key, Sub());
+	    pos = list.begin();
+	}
+	return pos->second;
+    }
 public:
     const Sub& operator[](const Key& key) const {
 	auto key_matches = [&](const std::pair<Key,Sub>& elem) {
@@ -1365,23 +1462,21 @@ public:
 	}
 	return pos->second;
     }
-    template<class... Cols>
-    bool insert(const Key& key, Cols&&... flds) {
-	auto key_matches = [&](const std::pair<Key,Sub>& elem) {
-	    return key == elem.first;
-	};
-	auto pos = std::find_if(list.begin(), list.end(), key_matches);
-	if (pos == list.end()) {
-	    list.emplace_front(key, Sub());
-	    pos = list.begin();
-	}
-	return pos->second.insert(std::forward<Cols>(flds)...);
+    template<class... Rest>
+    bool insert(const Key& key, const Rest&... rest) {
+	return follow(key).insert(rest...);
+    }
+    bool insert(const Tuple& tuple) {
+	return InsertHelper<LightIndex,Tuple>::forward(*this, tuple);
     }
     template<class... Cols>
     Iterator iter(Key& tgt_key, Cols&... tgt_flds) const {
 	Iterator it(tgt_key, tgt_flds...);
 	it.migrate(*this);
 	return it;
+    }
+    Iterator iter(Tuple& tgt) const {
+	return IterHelper<LightIndex,Tuple>::forward(*this, tgt);
     }
     unsigned int size() const {
 	unsigned int sz = 0;
@@ -1430,8 +1525,8 @@ public:
     };
 };
 
-template<class Key, class Sub>
-const Sub LightIndex<Key,Sub>::dummy;
+template<class K, class S>
+const S LightIndex<K,S>::dummy;
 
 // TODO: Extend this to perform filtering
 template<class T> T& ignore() {
