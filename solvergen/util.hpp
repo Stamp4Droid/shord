@@ -360,6 +360,7 @@ unsigned int current_time() {
 // - Destructor that cleans the managed objects
 // - No way to check if a Ref actually corresponds to some Registry instance
 //   before dereferencing it
+//   managed classes should contain a reference to their Registry?
 // - Configurable max number of Refs
 // - Properly handle class hierarchies
 //   Currently simply emplacing the objects => will all be of the same concrete
@@ -943,6 +944,7 @@ public:
 //   also need to explicitly specify which dimension we pick
 // - hack to avoid iterating on bottom fields, if not requested
 //   create an iterator to a dummy singleton container
+// - short-circuiting empty() check
 
 // Secondary extensions:
 // - abstract-out size type
@@ -956,7 +958,6 @@ public:
 // - named indices (use classes as index tags)
 // - handle derived classes correctly
 // - FlatIndex for small enums
-// - keep the kvlist of LightIndex sorted
 // - additional FD-mandated fields
 //   check dynamically -- merge function?
 //   no space overhead! will be second part of tuple
@@ -1066,6 +1067,8 @@ public:
 //   - tuple splitting
 //   - tuple head & tail
 //   two versions: regular and const
+// - more efficient operator< implementation, by using a three-valued compare
+//   primitive (=, <, >)
 
 namespace mi {
 
@@ -1138,6 +1141,23 @@ public:
     }
     unsigned int size() const {
 	return store.size();
+    }
+    bool operator<(const Table& rhs) const {
+	Tuple l_tup, r_tup;
+	auto l_it = iter(l_tup);
+	auto r_it = rhs.iter(r_tup);
+	while (true) {
+	    if (!l_it.next()) {
+		return r_it.next();
+	    }
+	    if (!r_it.next() || r_tup < l_tup) {
+		return false;
+	    }
+	    if (l_tup < r_tup) {
+		return true;
+	    }
+	    // At this point we know that l_tup == r_tup.
+	}
     }
 public:
 
@@ -1249,6 +1269,23 @@ public:
 	    sz += entry.second.size();
 	}
 	return sz;
+    }
+    bool operator<(const Index& rhs) const {
+	Tuple l_tup, r_tup;
+	auto l_it = iter(l_tup);
+	auto r_it = rhs.iter(r_tup);
+	while (true) {
+	    if (!l_it.next()) {
+		return r_it.next();
+	    }
+	    if (!r_it.next() || r_tup < l_tup) {
+		return false;
+	    }
+	    if (l_tup < r_tup) {
+		return true;
+	    }
+	    // At this point we know that l_tup == r_tup.
+	}
     }
 public:
 
@@ -1406,6 +1443,19 @@ public:
 	}
 	return sz;
     }
+    bool operator<(const FlatIndex& rhs) const {
+	unsigned int lim = rhs.array.size();
+	assert(array.size() == lim);
+	for (unsigned int i = 0; i < lim; i++) {
+	    if (array[i] < rhs.array[i]) {
+		return true;
+	    }
+	    if (rhs.array[i] < array[i]) {
+		return false;
+	    }
+	}
+	return false;
+    }
 public:
 
     class Iterator {
@@ -1495,6 +1545,9 @@ public:
 	}
 	return count;
     }
+    bool operator<(const BitSet& rhs) const {
+	return bits < rhs.bits;
+    }
 public:
 
     class Iterator {
@@ -1528,7 +1581,6 @@ public:
     };
 };
 
-// Unsorted list of key-value pairs.
 template<class K, class S> class LightIndex {
 public:
     class Iterator;
@@ -1537,30 +1589,38 @@ public:
     typedef S Sub;
     typedef typename cons<Key,typename Sub::Tuple>::type Tuple;
 private:
-    typedef std::forward_list<std::pair<Key,Sub>> List;
+    typedef std::forward_list<std::pair<const Key,Sub>> List;
 private:
     static const Sub dummy;
 private:
     List list;
 private:
-    Sub& follow(const Key& key) {
-	auto key_matches = [&](const std::pair<Key,Sub>& elem) {
-	    return key == elem.first;
-	};
-	auto pos = std::find_if(list.begin(), list.end(), key_matches);
-	if (pos == list.end()) {
-	    list.emplace_front(key, Sub());
-	    pos = list.begin();
+    bool find(const Key& key, typename List::const_iterator& pos) const {
+	pos = list.cbegin();
+	typename List::const_iterator prev = list.cbefore_begin();
+	while (pos != list.cend() && pos->first < key) {
+	    prev = pos;
+	    ++pos;
 	}
+	if (pos != list.cend() && pos->first == key) {
+	    return true;
+	}
+	pos = prev;
+	return false;
+    }
+    Sub& follow(const Key& key) {
+	typename List::const_iterator cpos;
+	typename List::iterator pos =
+	    find(key, cpos)
+	    // HACK: Convert a List::const_iterator to a List::iterator.
+	    ? list.insert_after(cpos, list.cend(), list.cend())
+	    : list.emplace_after(cpos, key, Sub());
 	return pos->second;
     }
 public:
     const Sub& operator[](const Key& key) const {
-	auto key_matches = [&](const std::pair<Key,Sub>& elem) {
-	    return key == elem.first;
-	};
-	auto pos = std::find_if(list.cbegin(), list.cend(), key_matches);
-	if (pos == list.cend()) {
+	typename List::const_iterator pos;
+	if (!find(key, pos)) {
 	    return dummy;
 	}
 	return pos->second;
@@ -1620,6 +1680,23 @@ public:
 	    sz += entry.second.size();
 	}
 	return sz;
+    }
+    bool operator<(const LightIndex& rhs) const {
+	Tuple l_tup, r_tup;
+	auto l_it = iter(l_tup);
+	auto r_it = rhs.iter(r_tup);
+	while (true) {
+	    if (!l_it.next()) {
+		return r_it.next();
+	    }
+	    if (!r_it.next() || r_tup < l_tup) {
+		return false;
+	    }
+	    if (l_tup < r_tup) {
+		return true;
+	    }
+	    // At this point we know that l_tup == r_tup.
+	}
     }
 public:
 
