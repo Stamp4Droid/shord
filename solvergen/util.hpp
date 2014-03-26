@@ -1070,6 +1070,36 @@ public:
 // - more efficient operator< implementation, by using a three-valued compare
 //   primitive (=, <, >)
 
+// Uniquing infrastructure:
+// - works for any kind of Index class
+// - objects of a uniq'd class wrap a reference to a const instance of the
+//   underlying class
+// - calls to constant member functions simply get forwarded
+// - modifying operations are first looked up in the corresponding cache
+//   if not found, the operation is performed on a new copy
+//   the new copy is then added to the uniquing set
+
+// Extensions:
+// - automatically include (self,self)->self in union cache when constructing
+// - currently only covers Index-like classes (because we include join support)
+//   should also cover Table
+// - when performing an insertion, also update the union cache with the
+//   corresponding singleton union operation
+// - can't copy or join in a nested Index of a uniq'd Index
+// - can't mix fields and tuples when inserting
+//   need the args in a tuple, to cache
+// - construtor for uniq'd Indices can't take arguments
+// - uniquing indices requires that they can be compared
+//   have to implement operator< on all classes
+// - special fast operation to retrieve empty Index
+// - lots of copying:
+//   - the real instance of the Index gets copied when added to the Registry
+//   - two instances of each underlying Index exist:
+//     one on the Registry set, one on the const cell (as the Key)
+//   - args are copied on a fresh tuple when insert is called with references
+//     could save some copying if insert could work with rvalues
+//   - argument tuples are copied on the insert cache
+
 namespace mi {
 
 template<class C, class Tuple> struct InsertHelper {};
@@ -1746,6 +1776,111 @@ template<class T> T& ignore() {
     static T dummy;
     return dummy;
 }
+
+template<class Idx> class Uniq;
+
+template<class Idx> class Immut {
+    friend Registry<Immut>;
+    friend Uniq<Idx>;
+    typedef Idx Key;
+private:
+    // Can't simply declare this as a static field, because of initialization
+    // order issues.
+    static Registry<Immut>& store() {
+	static Registry<Immut> store;
+	return store;
+    }
+private:
+    std::map<typename Idx::Tuple,Ref<Immut>> insert_cache;
+    std::map<Ref<Immut>,Ref<Immut>> copy_cache;
+    std::map<std::pair<Ref<Immut>,Ref<Immut>>,Ref<Immut>> join_cache;
+public:
+    const Idx backer;
+    const Ref<Immut> ref;
+private:
+    explicit Immut(const Idx& backer, Ref<Immut> ref)
+	: backer(backer), ref(ref) {}
+    bool merge() const {
+	return false;
+    }
+public:
+    Ref<Immut> insert(const typename Idx::Tuple& tuple) {
+	Ref<Immut>& cached = insert_cache[tuple];
+	if (!cached.valid()) {
+	    Idx new_idx = backer;
+	    new_idx.insert(tuple);
+	    cached = store().add(new_idx).ref;
+	}
+	return cached;
+    }
+    Ref<Immut> copy(Ref<Immut> src) {
+	Ref<Immut>& cached = copy_cache[src];
+	if (!cached.valid()) {
+	    Idx new_idx = backer;
+	    new_idx.copy(store()[src].backer);
+	    cached = store().add(new_idx).ref;
+	}
+	return cached;
+    }
+    Ref<Immut> join(Ref<Immut> r, Ref<Immut> s) {
+	Ref<Immut>& cached = join_cache[std::make_pair(r, s)];
+	if (!cached.valid()) {
+	    Idx new_idx = backer;
+	    new_idx.join(store()[r].backer, store()[s].backer);
+	    cached = store().add(new_idx).ref;
+	}
+	return cached;
+    }
+};
+
+template<class Idx> class Uniq {
+public:
+    typedef typename Idx::Iterator Iterator;
+    typedef typename Idx::Key Key;
+    typedef typename Idx::Sub Sub;
+    typedef typename Idx::Tuple Tuple;
+private:
+    Ref<Immut<Idx>> cell_ref;
+public:
+    explicit Uniq()
+	: cell_ref(Immut<Idx>::store().add(Idx()).ref) {}
+    const Sub& operator[](const Key& key) const {
+	return Immut<Idx>::store()[cell_ref].backer[key];
+    }
+    template<class... Rest>
+    bool insert(const Key& key, const Rest&... rest) {
+	return insert(std::make_tuple(key, rest...));
+    }
+    bool insert(const Tuple& tuple) {
+	Ref<Immut<Idx>> old_cell = cell_ref;
+	cell_ref = Immut<Idx>::store()[cell_ref].insert(tuple);
+	return old_cell != cell_ref;
+    }
+    bool copy(const Uniq& src) {
+	Ref<Immut<Idx>> old_cell = cell_ref;
+	cell_ref = Immut<Idx>::store()[cell_ref].copy(src.cell_ref);
+	return old_cell != cell_ref;
+    }
+    bool join(const Uniq& r, const Uniq& s) {
+	Ref<Immut<Idx>> old_cell = cell_ref;
+	cell_ref = Immut<Idx>::store()[cell_ref].join(r.cell_ref, s.cell_ref);
+	return old_cell != cell_ref;
+    }
+    template<class... Cols>
+    Iterator iter(Key& tgt_key, Cols&... tgt_flds) const {
+	return Immut<Idx>::store()[cell_ref].backer.iter(tgt_key, tgt_flds...);
+    }
+    Iterator iter(Tuple& tgt) const {
+	return Immut<Idx>::store()[cell_ref].backer.iter(tgt);
+    }
+    unsigned int size() const {
+	return Immut<Idx>::store()[cell_ref].backer.size();
+    }
+    bool operator<(const Uniq& rhs) const {
+	return (Immut<Idx>::store()[cell_ref].backer <
+		Immut<Idx>::store()[rhs.cell_ref].backer);
+    }
+};
 
 } // namespace mi
 

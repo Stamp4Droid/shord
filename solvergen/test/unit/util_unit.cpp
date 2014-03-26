@@ -145,7 +145,9 @@ int main() {
     }
     std::cout << std::endl;
 
-    mi::Index<char,mi::Index<int,mi::Table<int>>> tabs;
+    mi::Index<char,
+	      mi::Uniq<mi::Index<int,
+				 mi::Table<int>>>> tabs;
     tabs.insert('a', 1, 2); tabs.insert('a', 1, 3);
     tabs.insert('b', 2, 1); tabs.insert('b', 3, 1);
     tabs.insert('b', 3, 4); tabs.insert('b', 4, 4);
