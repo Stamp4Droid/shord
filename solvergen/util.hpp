@@ -885,10 +885,12 @@ public:
 // OPTIMIZED MULTI-LEVEL INDEXING =============================================
 
 // Features:
-// - Iterators fill in a provided record, passed in as a set of references
+// - Each level handles a specific tag.
+// - Iterators fill in a provided record.
+//   Special "FOR" macro provided to do this automatically.
 // - Insertion can work with distinct fields, a tuple, or a series of fields
 //   ending with a tuple.
-// - Result tuples need to be default-constructible
+// - Fields need to be default-constructible
 //   the contents are NOT valid when passed to the iterator constructor
 //   need the first call to next() to return true before there's anything valid
 // - next() tries to move the iterator, and returns true if it succeeds
@@ -901,6 +903,7 @@ public:
 //   Join only works for relations of the form Index<T,Table<T>>
 
 // Primary extensions:
+// - tag uniqueness check
 // - implement 'contains' (or 'find')
 // - replace all uses of old framework
 //   (need to suitably rewrite the data structures as PODs)
@@ -920,10 +923,9 @@ public:
 // - don't peel the insertion or iteration tuple
 //   instead combine with index after which to read
 //   alias top-level insert(tuple) as insert(0, tuple)
-// - more robust index use: each level knows what attribute it controls
-//   instantiated with a member variable pointer
+// - work with existing tuples
+//   instantiate each level with a member variable pointer
 //   use that pointer to decide what to modify on the result tuple
-//   also avoids peeling
 //   harder to do on the bottom container:
 //   variadic templates don't allow non-type parameters
 //   - use a unique empty tag type for each member
@@ -953,9 +955,6 @@ public:
 //   - hashtable
 //   - dynamically growing flat table of pointers
 //   - sorted k-ptr to allocated wrapped
-// - more table implementations:
-//   - auto-uniquing set
-// - named indices (use classes as index tags)
 // - handle derived classes correctly
 // - FlatIndex for small enums
 // - additional FD-mandated fields
@@ -990,23 +989,8 @@ public:
 //   this way, at fork points we can decide based on what the children report
 //   need a way to produce a normal form for "set of handled fields"
 //   => need member pointer ordering and equality
-// - present tuples as regular named structs
-//   associate member variables with unique, empty type 'tags'
-//   could provide a wrapper that presents it as a struct
-// - special iteration syntax:
-//   - re-use range-for loop syntax:
-//     - operator* returns a reference to the result struct
-//     - begin() calls iter()
-//     - end() returns a constant, maybe even not of the same type
-//     - operator== only works for the end() special value, and triggers next()
-//     - operator++ does nothing
-//     this is highly irregular semantically
-//   - define custom syntax through macros
-//     maybe even combine it with typelist macros:
-//     e.g. QUERY(e, edges, false, src) ==>
-//     for (typename decltype(edges)::Tuple e,
-//          typename decltype(edges)::Iterator it = edges.iter(e, false);
-// 	 it.next();)
+// - provide a wrapper that presents a NamedTuple as a struct
+//   how to combine multiple levels?
 // - currently can only have FlatIndex on the top
 //   generalize hint passing to allow this deeper in the hierarchy
 //   would need to cache the widths on parent levels
@@ -1061,14 +1045,12 @@ public:
 // - also accept a series of fields ending with a tuple for iter()
 // - implement some operations as algorithms instead
 // - have a backdoor to get a non-const ref to the wrapped set
-// - more tuple-related utilities:
-//   - gen_seq from 1
-//     or just template as 0,Is, to be able to take the rest
-//   - tuple splitting
-//   - tuple head & tail
-//   two versions: regular and const
 // - more efficient operator< implementation, by using a three-valued compare
 //   primitive (=, <, >)
+// - more operations on NamedTuple
+// - support multi-field Table
+//   will have extend NamedTuple to support full tuples
+//   could provide the same functionality through a thin CombiningIndex wrapper
 
 // Uniquing infrastructure:
 // - works for any kind of Index class
@@ -1102,72 +1084,99 @@ public:
 
 namespace mi {
 
-template<class C, class Tuple> struct InsertHelper {};
+template<class Tag, class Hd, class Tl> class NamedTuple;
 
-template<class C, class... Flds>
-struct InsertHelper<C,std::tuple<Flds...>> {
-private:
-    template<unsigned int... Is>
-    static bool forward(C& table, const std::tuple<Flds...>& tuple,
-			seq<Is...>) {
-	return table.insert(std::get<Is>(tuple)...);
-    }
-public:
-    static bool forward(C& table, const std::tuple<Flds...>& tuple) {
-	return forward(table, tuple, gen_seq<sizeof...(Flds)>());
+namespace detail {
+
+template<class FldN, class NT> struct Getter;
+
+template<class Tag, class Hd, class Tl>
+struct Getter<Tag, NamedTuple<Tag,Hd,Tl>> {
+    typedef Hd FldT;
+    static FldT& get(NamedTuple<Tag,Hd,Tl>& ntup) {
+	return ntup.hd;
     }
 };
 
-template<class C, class Tuple> struct IterHelper {};
-
-template<class C, class... Flds>
-struct IterHelper<C,std::tuple<Flds...>> {
-private:
-    template<unsigned int... Is>
-    static typename C::Iterator forward(const C& table,
-					std::tuple<Flds...>& tgts,
-					seq<Is...>) {
-	return table.iter(std::get<Is>(tgts)...);
-    }
-public:
-    static typename C::Iterator forward(const C& table,
-					std::tuple<Flds...>& tgts) {
-	return forward(table, tgts, gen_seq<sizeof...(Flds)>());
+template<class FldN, class Tag, class Hd, class Tl>
+struct Getter<FldN, NamedTuple<Tag,Hd,Tl>> {
+    typedef typename Getter<FldN,Tl>::FldT FldT;
+    static FldT& get(NamedTuple<Tag,Hd,Tl>& ntup) {
+	return Getter<FldN,Tl>::get(ntup.tl);
     }
 };
 
-template<class... Cols> class Table {
+} // namespace detail
+
+struct Nil {
+    bool operator<(const Nil&) const {
+	return false;
+    }
+    friend std::ostream& operator<<(std::ostream& os, const Nil&) {
+	return os;
+    }
+};
+
+template<class Tag, class Hd, class Tl>
+class NamedTuple {
+public:
+    Hd hd;
+    Tl tl;
+public:
+    explicit NamedTuple() {}
+    template<class... Rest>
+    explicit NamedTuple(const Hd& hd, const Rest&... rest)
+	: hd(hd), tl(rest...) {}
+    template<class FldN>
+    typename detail::Getter<FldN,NamedTuple>::FldT get() {
+	return detail::Getter<FldN,NamedTuple>::get(*this);
+    }
+    bool operator<(const NamedTuple& rhs) const {
+	if (hd < rhs.hd) {
+	    return true;
+	}
+	if (rhs.hd < hd) {
+	    return false;
+	}
+	return tl < rhs.tl;
+    }
+    friend std::ostream& operator<<(std::ostream& os, const NamedTuple& tup) {
+	os << Tag::name() << "=" << tup.hd << " " << tup.tl;
+	return os;
+    }
+};
+
+#define TUPLE_TAG(NAME) struct NAME {static const char* name() {return #NAME;}}
+
+#define FOR(RES, EXPR) \
+    if (bool cond__ = true) \
+	for (typename std::remove_reference<decltype(EXPR)>::type::Tuple RES; \
+	     cond__; cond__ = false) \
+	    for (auto it__ = (EXPR).iter(RES); it__.next();)
+
+template<class Tag, class T> class Table {
 public:
     class Iterator;
     friend Iterator;
-    typedef std::tuple<Cols...> Tuple;
+    typedef NamedTuple<Tag,T,Nil> Tuple;
 private:
-    std::set<Tuple> store;
+    std::set<T> store;
 public:
-    bool insert(const Cols&... flds) {
-	return store.emplace(flds...).second;
+    bool insert(const T& fld) {
+	return store.insert(fld).second;
     }
     bool insert(const Tuple& tuple) {
-	return store.insert(tuple).second;
+	return insert(tuple.hd);
     }
     bool copy(const Table& src) {
-	bool grew = false;
-	Tuple src_tuple;
-	auto src_it = src.iter(src_tuple);
-	while (src_it.next()) {
-	    if (insert(src_tuple)) {
-		grew = true;
-	    }
-	}
-	return grew;
-    }
-    Iterator iter(Cols&... tgt_flds) const {
-	Iterator it(tgt_flds...);
-	it.migrate(*this);
-	return it;
+	bool old_sz = size();
+	store.insert(src.store.cbegin(), src.store.cend());
+	return old_sz != size();
     }
     Iterator iter(Tuple& tgt) const {
-	return IterHelper<Table,Tuple>::forward(*this, tgt);
+	Iterator it(tgt);
+	it.migrate(*this);
+	return it;
     }
     unsigned int size() const {
 	return store.size();
@@ -1193,13 +1202,12 @@ public:
 
     class Iterator {
     private:
-	typename std::set<Tuple>::const_iterator curr;
-	typename std::set<Tuple>::const_iterator end;
-	std::tuple<Cols&...> tgt_flds;
+	typename std::set<T>::const_iterator curr;
+	typename std::set<T>::const_iterator end;
+	T& tgt_fld;
 	bool before_start = true;
     public:
-	explicit Iterator(Cols&... tgt_flds)
-	    : tgt_flds(std::tie(tgt_flds...)) {}
+	explicit Iterator(Tuple& tgt) : tgt_fld(tgt.hd) {}
 	void migrate(const Table& table) {
 	    curr = table.store.cbegin();
 	    end = table.store.cend();
@@ -1214,19 +1222,19 @@ public:
 	    if (curr == end) {
 		return false;
 	    }
-	    tgt_flds = *curr;
+	    tgt_fld = *curr;
 	    return true;
 	}
     };
 };
 
-template<class K, class S> class Index {
+template<class Tag, class K, class S> class Index {
 public:
     class Iterator;
     friend Iterator;
     typedef K Key;
     typedef S Sub;
-    typedef typename cons<Key,typename Sub::Tuple>::type Tuple;
+    typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
 private:
     static const Sub dummy;
 private:
@@ -1249,7 +1257,7 @@ public:
 	return follow(key).insert(rest...);
     }
     bool insert(const Tuple& tuple) {
-	return InsertHelper<Index,Tuple>::forward(*this, tuple);
+	return insert(tuple.hd, tuple.tl);
     }
     bool copy(const Index& src) {
 	bool grew = false;
@@ -1269,9 +1277,9 @@ public:
 	Tuple r_tup;
 	auto r_it = r.iter(r_tup);
 	while (r_it.next()) {
-	    const auto& hd = std::get<0>(r_tup);
+	    const auto& hd = r_tup.hd;
 	    typename Sub::Tuple tl;
-	    auto tl_it = s[std::get<1>(r_tup)].iter(tl);
+	    auto tl_it = s[r_tup.tl.hd].iter(tl);
 	    while (tl_it.next()) {
 		if (insert(hd, tl)) {
 		    grew = true;
@@ -1284,14 +1292,10 @@ public:
     bool join(const C& r, const C& s, const Key& key, const Rest&... rest) {
 	return follow(key).join(r, s, rest...);
     }
-    template<class... Cols>
-    Iterator iter(Key& tgt_key, Cols&... tgt_flds) const {
-	Iterator it(tgt_key, tgt_flds...);
+    Iterator iter(Tuple& tgt) const {
+	Iterator it(tgt);
 	it.migrate(*this);
 	return it;
-    }
-    Iterator iter(Tuple& tgt) const {
-	return IterHelper<Index,Tuple>::forward(*this, tgt);
     }
     unsigned int size() const {
 	unsigned int sz = 0;
@@ -1327,9 +1331,8 @@ public:
 	typename Sub::Iterator sub_iter;
 	bool before_start = true;
     public:
-	template<class... Cols>
-	explicit Iterator(Key& tgt_key, Cols&... tgt_flds)
-	    : tgt_key(tgt_key), sub_iter(tgt_flds...) {}
+	explicit Iterator(Tuple& tgt)
+	    : tgt_key(tgt.hd), sub_iter(tgt.tl) {}
 	void migrate(const Index& idx) {
 	    map_curr = idx.map.cbegin();
 	    map_end = idx.map.cend();
@@ -1357,8 +1360,8 @@ public:
     };
 };
 
-template<class K, class S>
-const S Index<K,S>::dummy;
+template<class Tag, class K, class S>
+const S Index<Tag,K,S>::dummy;
 
 template<class T> struct KeyTraits;
 
@@ -1389,13 +1392,13 @@ struct KeyTraits<Ref<T>> {
     }
 };
 
-template<class K, class S> class FlatIndex {
+template<class Tag, class K, class S> class FlatIndex {
 public:
     class Iterator;
     friend Iterator;
     typedef K Key;
     typedef S Sub;
-    typedef typename cons<Key,typename Sub::Tuple>::type Tuple;
+    typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
 private:
     std::vector<Sub> array;
 private:
@@ -1420,7 +1423,7 @@ public:
 	return follow(key).insert(rest...);
     }
     bool insert(const Tuple& tuple) {
-	return InsertHelper<FlatIndex,Tuple>::forward(*this, tuple);
+	return insert(tuple.hd, tuple.tl);
     }
     bool copy(const FlatIndex& src) {
 	unsigned int lim = src.array.size();
@@ -1442,9 +1445,9 @@ public:
 	Tuple r_tup;
 	auto r_it = r.iter(r_tup);
 	while (r_it.next()) {
-	    const auto& hd = std::get<0>(r_tup);
+	    const auto& hd = r_tup.hd;
 	    typename Sub::Tuple tl;
-	    auto tl_it = s[std::get<1>(r_tup)].iter(tl);
+	    auto tl_it = s[r_tup.tl.hd].iter(tl);
 	    while (tl_it.next()) {
 		if (insert(hd, tl)) {
 		    grew = true;
@@ -1457,14 +1460,10 @@ public:
     bool join(const C& r, const C& s, const Key& key, const Rest&... rest) {
 	return follow(key).join(r, s, rest...);
     }
-    template<class... Cols>
-    Iterator iter(Key& tgt_key, Cols&... tgt_flds) const {
-	Iterator it(tgt_key, tgt_flds...);
+    Iterator iter(Tuple& tgt) const {
+	Iterator it(tgt);
 	it.migrate(*this);
 	return it;
-    }
-    Iterator iter(Tuple& tgt) const {
-	return IterHelper<FlatIndex,Tuple>::forward(*this, tgt);
     }
     unsigned int size() const {
 	unsigned int sz = 0;
@@ -1497,9 +1496,8 @@ public:
 	typename Sub::Iterator sub_iter;
 	bool before_start = true;
     public:
-	template<class... Cols>
-	explicit Iterator(Key& tgt_key, Cols&... tgt_flds)
-	    : tgt_key(tgt_key), sub_iter(tgt_flds...) {}
+	explicit Iterator(Tuple& tgt)
+	    : tgt_key(tgt.hd), sub_iter(tgt.tl) {}
 	void migrate(const FlatIndex& idx) {
 	    arr_idx = 0;
 	    arr_curr = idx.array.cbegin();
@@ -1529,13 +1527,13 @@ public:
     };
 };
 
-template<class T> class BitSet {
+template<class Tag, class T> class BitSet {
 private:
     typedef unsigned short Store;
 public:
     class Iterator;
     friend Iterator;
-    typedef std::tuple<T> Tuple;
+    typedef NamedTuple<Tag,T,Nil> Tuple;
 private:
     Store bits = 0;
 public:
@@ -1552,20 +1550,17 @@ public:
 	return true;
     }
     bool insert(const Tuple& tuple) {
-	return insert(std::get<0>(tuple));
+	return insert(tuple.hd);
     }
     bool copy(const BitSet& src) {
 	Store prev_bits = bits;
 	bits |= src.bits;
 	return prev_bits != bits;
     }
-    Iterator iter(T& tgt) const {
+    Iterator iter(Tuple& tgt) const {
 	Iterator it(tgt);
 	it.migrate(*this);
 	return it;
-    }
-    Iterator iter(Tuple& tgt) const {
-	return iter(std::get<0>(tgt));
     }
     unsigned int size() const {
 	Store v = bits;
@@ -1583,11 +1578,11 @@ public:
     class Iterator {
     private:
 	unsigned int curr;
-	T& tgt;
+	T& tgt_fld;
 	const typename BitSet::Store* bits;
 	bool before_start = true;
     public:
-	explicit Iterator(T& tgt) : tgt(tgt) {}
+	explicit Iterator(Tuple& tgt) : tgt_fld(tgt.hd) {}
 	void migrate(const BitSet& set) {
 	    curr = 0;
 	    bits = &(set.bits);
@@ -1601,7 +1596,7 @@ public:
 	    }
 	    while (curr < sizeof(typename BitSet::Store) * 8) {
 		if (*bits & (1 << curr)) {
-		    tgt = KeyTraits<T>::from_idx(curr);
+		    tgt_fld = KeyTraits<T>::from_idx(curr);
 		    return true;
 		}
 		++curr;
@@ -1611,13 +1606,13 @@ public:
     };
 };
 
-template<class K, class S> class LightIndex {
+template<class Tag, class K, class S> class LightIndex {
 public:
     class Iterator;
     friend Iterator;
     typedef K Key;
     typedef S Sub;
-    typedef typename cons<Key,typename Sub::Tuple>::type Tuple;
+    typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
 private:
     typedef std::forward_list<std::pair<const Key,Sub>> List;
 private:
@@ -1660,7 +1655,7 @@ public:
 	return follow(key).insert(rest...);
     }
     bool insert(const Tuple& tuple) {
-	return InsertHelper<LightIndex,Tuple>::forward(*this, tuple);
+	return insert(tuple.hd, tuple.tl);
     }
     bool copy(const LightIndex& src) {
 	bool grew = false;
@@ -1680,9 +1675,9 @@ public:
 	Tuple r_tup;
 	auto r_it = r.iter(r_tup);
 	while (r_it.next()) {
-	    const auto& hd = std::get<0>(r_tup);
+	    const auto& hd = r_tup.hd;
 	    typename Sub::Tuple tl;
-	    auto tl_it = s[std::get<1>(r_tup)].iter(tl);
+	    auto tl_it = s[r_tup.tl.hd].iter(tl);
 	    while (tl_it.next()) {
 		if (insert(hd, tl)) {
 		    grew = true;
@@ -1695,14 +1690,10 @@ public:
     bool join(const C& r, const C& s, const Key& key, const Rest&... rest) {
 	return follow(key).join(r, s, rest...);
     }
-    template<class... Cols>
-    Iterator iter(Key& tgt_key, Cols&... tgt_flds) const {
-	Iterator it(tgt_key, tgt_flds...);
+    Iterator iter(Tuple& tgt) const {
+	Iterator it(tgt);
 	it.migrate(*this);
 	return it;
-    }
-    Iterator iter(Tuple& tgt) const {
-	return IterHelper<LightIndex,Tuple>::forward(*this, tgt);
     }
     unsigned int size() const {
 	unsigned int sz = 0;
@@ -1738,9 +1729,8 @@ public:
 	typename Sub::Iterator sub_iter;
 	bool before_start = true;
     public:
-	template<class... Cols>
-	explicit Iterator(Key& tgt_key, Cols&... tgt_flds)
-	    : tgt_key(tgt_key), sub_iter(tgt_flds...) {}
+	explicit Iterator(Tuple& tgt)
+	    : tgt_key(tgt.hd), sub_iter(tgt.tl) {}
 	void migrate(const LightIndex& idx) {
 	    list_curr = idx.list.cbegin();
 	    list_end = idx.list.cend();
@@ -1768,14 +1758,8 @@ public:
     };
 };
 
-template<class K, class S>
-const S LightIndex<K,S>::dummy;
-
-// TODO: Extend this to perform filtering
-template<class T> T& ignore() {
-    static T dummy;
-    return dummy;
-}
+template<class Tag, class K, class S>
+const S LightIndex<Tag,K,S>::dummy;
 
 template<class Idx> class Uniq;
 
@@ -1849,7 +1833,7 @@ public:
     }
     template<class... Rest>
     bool insert(const Key& key, const Rest&... rest) {
-	return insert(std::make_tuple(key, rest...));
+	return insert(Tuple(key, rest...));
     }
     bool insert(const Tuple& tuple) {
 	Ref<Immut<Idx>> old_cell = cell_ref;
@@ -1865,10 +1849,6 @@ public:
 	Ref<Immut<Idx>> old_cell = cell_ref;
 	cell_ref = Immut<Idx>::store()[cell_ref].join(r.cell_ref, s.cell_ref);
 	return old_cell != cell_ref;
-    }
-    template<class... Cols>
-    Iterator iter(Key& tgt_key, Cols&... tgt_flds) const {
-	return Immut<Idx>::store()[cell_ref].backer.iter(tgt_key, tgt_flds...);
     }
     Iterator iter(Tuple& tgt) const {
 	return Immut<Idx>::store()[cell_ref].backer.iter(tgt);

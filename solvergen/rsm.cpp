@@ -334,20 +334,11 @@ std::map<Ref<Node>,std::set<Ref<Node>>>
 Graph::subpath_bounds(const Label<true>& hd_lab,
 		      const Label<true>& tl_lab) const {
     std::map<Ref<Node>,std::set<Ref<Node>>> res;
-
-    Ref<Tag> hd_tag;
-    Ref<Node> hd_dst;
-    auto it_hd =
-	search(hd_lab).iter(hd_tag, mi::ignore<Ref<Node>>(), hd_dst);
-    while (it_hd.next()) {
-	Ref<Node> tl_src;
-	auto it_tl = search(tl_lab)[hd_tag].iter(tl_src,
-						 mi::ignore<Ref<Node>>());
-	while (it_tl.next()) {
-	    res[hd_dst].insert(tl_src);
+    FOR(hd, search(hd_lab)) {
+	FOR(tl, search(tl_lab)[hd.get<TAG>()]) {
+	    res[hd.get<DST>()].insert(tl.get<SRC>());
 	}
     }
-
     return res;
 }
 
@@ -506,12 +497,8 @@ Worker::Result Worker::summarize(const Graph& graph) const {
 	// Cross edges according to the transitions out of the current state.
 	// TODO: Implicitly assumes all transition labels are untagged.
 	for (const Transition& t : comp.transitions[pos.state]) {
-	    Ref<Node> dst;
-	    auto it =
-		graph.search(pos.node, t.label).iter(mi::ignore<Ref<Tag>>(),
-						     dst);
-	    while (it.next()) {
-		worklist.enqueue(Position(dst, t.to));
+	    FOR(e, graph.search(pos.node, t.label)) {
+		worklist.enqueue(Position(e.get<DST>(), t.to));
 	    }
 	}
 
@@ -520,10 +507,9 @@ Worker::Result Worker::summarize(const Graph& graph) const {
 	// TODO: Implicitly assumes all entry/exit labels are tagged.
 	for (const Entry& entry : comp.entries.secondary<0>()[pos.state]) {
 	    Ref<Component> sub_comp = comp.boxes[entry.to].comp;
-	    Ref<Tag> tag;
-	    Ref<Node> sub_in;
-	    auto it_in = graph.search(pos.node, entry.label).iter(tag, sub_in);
-	    while (it_in.next()) {
+	    FOR(e_in, graph.search(pos.node, entry.label)) {
+		Ref<Node> sub_in = e_in.get<DST>();
+
 		// If this is a self-referring box (TODO: or any box in the
 		// current RSM SCC, if we ever support non-singleton SCCs),
 		// record our dependence on it.
@@ -537,11 +523,11 @@ Worker::Result Worker::summarize(const Graph& graph) const {
 		    // Cross through exit edges compatible with the previously
 		    // entered entry edge.
 		    for (const Exit& exit : comp.exits[entry.to]) {
-			Ref<Node> next_node;
-			auto slice = graph.search(sub_out, exit.label)[tag];
-			auto it_out = slice.iter(next_node);
-			while (it_out.next()) {
-			    worklist.enqueue(Position(next_node, exit.to));
+			const auto& slice =
+			    graph.search(sub_out, exit.label)[e_in.get<TAG>()];
+			FOR(e_out, slice) {
+			    worklist.enqueue(Position(e_out.get<DST>(),
+						      exit.to));
 			}
 		    }
 		}

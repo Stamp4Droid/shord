@@ -250,29 +250,33 @@ public:
 };
 
 enum class ParsingMode {NODES, EDGES};
+TUPLE_TAG(SYMBOL);
+TUPLE_TAG(REV);
+TUPLE_TAG(SRC);
+TUPLE_TAG(DST);
+TUPLE_TAG(TAG);
 
 // TODO:
 // - Disallow adding edges while an iterator is live.
 // - Additional indexing dimensions.
 class Graph {
 public:
-    typedef mi::Index<Ref<Tag>, // Edge.tag
-		      mi::Table<Ref<Node>> // Edge.dst
-		      > SrcLabelSlice;
-    typedef mi::FlatIndex<bool, // Edge.rev
-			  mi::FlatIndex<
-			      Ref<Node>, // Edge.src
-			      mi::LightIndex<Ref<Symbol>, // Edge.symbol
-					     SrcLabelSlice>>
-			  > EdgesSrcLabelIndex;
-    typedef mi::Index<Ref<Tag>, // Edge.tag
-		      mi::Table<Ref<Node>, // Edge.src
-				Ref<Node>> // Edge.dst
-		      > LabelSlice;
-    typedef mi::FlatIndex<bool, // Edge.rev
-			  mi::FlatIndex<Ref<Symbol>, // Edge.symbol
-					LabelSlice>
-			  > EdgesLabelIndex;
+    typedef mi::Index<TAG, Ref<Tag>,
+		mi::Table<DST, Ref<Node>>
+	    > SrcLabelSlice;
+    typedef mi::FlatIndex<REV, bool,
+		mi::FlatIndex<SRC, Ref<Node>,
+		    mi::LightIndex<SYMBOL, Ref<Symbol>,
+			SrcLabelSlice>>
+	    > EdgesSrcLabelIndex;
+    typedef mi::Index<TAG, Ref<Tag>,
+		mi::Index<SRC, Ref<Node>,
+		    mi::Table<DST, Ref<Node>>>
+	    > LabelSlice;
+    typedef mi::FlatIndex<REV, bool,
+		mi::FlatIndex<SYMBOL, Ref<Symbol>,
+		    LabelSlice>
+	    > EdgesLabelIndex;
 public:
     static const std::string FILE_EXTENSION;
 public:
@@ -381,9 +385,13 @@ public:
     }
 };
 
+TUPLE_TAG(NODE);
+TUPLE_TAG(STATE);
+
 class SummaryWorklist {
 private:
-    mi::FlatIndex<Ref<Node>, mi::BitSet<Ref<State>>> reached;
+    mi::FlatIndex<NODE, Ref<Node>,
+		  mi::BitSet<STATE, Ref<State>>> reached;
     std::deque<Position> queue;
 public:
     explicit SummaryWorklist(const Registry<Node>& nodes,
