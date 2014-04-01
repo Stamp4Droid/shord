@@ -888,6 +888,8 @@ public:
 
 // Features:
 // - Each level handles a specific tag.
+// - Regular iterators iterate through the keys
+//   will attempt to retun only non-empty keys
 // - Iterators fill in a provided record.
 //   Special "FOR" macro provided to do this automatically.
 // - Insertion can work with distinct fields, a tuple, or a series of fields
@@ -901,8 +903,11 @@ public:
 // - Each iterator has the address where it must update its field on each move
 //   only update it when we move on the current level, not just on sub-levels
 //   (assuming the result tuples doesn't get modified by the client code)
-// - Union and join operations
-//   Join only works for relations of the form Index<T,Table<T>>
+// - Union operation
+// - Join (static operation)
+//   only works for relations of the form Index<T,Table<T>>
+// - Identity (static operation)
+//   only works for relations where all columns are of the same type
 // - Instantiated nested sets are NOT guaranteed to be non-empty.
 
 // Primary extensions:
@@ -1050,7 +1055,6 @@ public:
 //   this should allow us to reuse this scheme for worker Worklist
 //   (and share with all)
 // - ability to iterate only partially to the end
-// - key iteration on index levels?
 // - some way to propagate the column type pack from the wrapped table.
 // - also accept a series of fields ending with a tuple for iter()
 // - implement some operations as algorithms instead
@@ -1062,6 +1066,13 @@ public:
 // - support multi-field Table
 //   will have extend NamedTuple to support full tuples
 //   could provide the same functionality through a thin CombiningIndex wrapper
+// - 'remove' and 'update' operations
+// - combine multiple flat dimensions into a contiguous memory block
+//   (currently only happens for a single FlatIndex over a BitSet)
+//   parent would have to preallocate space => ask child for size
+//   all sub-containers must have the same size
+//   can this be done dynamically?
+//   need variable-size class support?
 
 // Uniquing infrastructure:
 // - works for any kind of Index class
@@ -1074,17 +1085,14 @@ public:
 
 // Extensions:
 // - automatically include (self,self)->self in union cache when constructing
-// - currently only covers Index-like classes (because we include join support)
-//   should also cover Table
 // - when performing an insertion, also update the union cache with the
 //   corresponding singleton union operation
-// - can't copy or join in a nested Index of a uniq'd Index
+// - can't merge into a nested Index of a uniq'd Index
 // - can't mix fields and tuples when inserting
 //   need the args in a tuple, to cache
 // - constructor for uniq'd Indices can't take arguments
 // - uniquing indices requires that they can be compared
 //   have to implement operator< on all classes
-// - special fast operation to retrieve empty Index
 // - lots of copying:
 //   - the real instance of the Index gets copied when added to the Registry
 //   - two instances of each underlying Index exist:
@@ -1096,6 +1104,8 @@ public:
 //   (store as fields on the corresponding backer cell object)
 //   should have a generic Maybe<> template, which carries the value and a
 //   validity flag
+// - also support uniquing single tables
+// - caches are static variables, this complicates concurrent operation
 
 namespace mi {
 
@@ -1163,6 +1173,19 @@ public:
     }
 };
 
+template<class T>
+struct tuple_size;
+
+template<>
+struct tuple_size<Nil> {
+    static const unsigned int value = 0;
+};
+
+template<class Tag, class Hd, class Tl>
+struct tuple_size<NamedTuple<Tag,Hd,Tl>> {
+    static const unsigned int value = tuple_size<Tl>::value + 1;
+};
+
 #define TUPLE_TAG(NAME) struct NAME {static const char* name() {return #NAME;}}
 
 // HELPER CODE ================================================================
@@ -1196,6 +1219,58 @@ struct KeyTraits<Ref<T>> {
     }
 };
 
+template<class Idx> struct flat_dims {
+    static const unsigned int value = 0;
+};
+
+template<class Tag, class K, class S> class FlatIndex;
+template<class Tag, class K, class S> struct flat_dims<FlatIndex<Tag,K,S>> {
+    static const unsigned int value = flat_dims<S>::value + 1;
+};
+
+template<class Tag, class T> class BitSet;
+template<class Tag, class T> struct flat_dims<BitSet<Tag,T>> {
+    static const unsigned int value = 1;
+};
+
+namespace detail {
+
+template<class T, class S>
+const T& get_first(const std::pair<const T,S>& p) {
+    return p.first;
+}
+
+template<class T, unsigned int I>
+static const T& id(const T& val) {
+    return val;
+}
+
+template<class Idx> struct MultiDimApply {
+private:
+    typedef typename Idx::Key Key;
+    typedef typename KeyTraits<Key>::SizeHint SizeHint;
+    static const unsigned int DEPTH = tuple_size<typename Idx::Tuple>::value;
+    static const unsigned int FLAT_DIMS = flat_dims<Idx>::value;
+private:
+    template<unsigned int... Is>
+    static bool insert(Idx& idx, const Key& val, seq<Is...>) {
+	return idx.insert(id<Key,Is>(val)...);
+    }
+    template<unsigned int... Is>
+    static Idx construct(const SizeHint& hint, seq<Is...>) {
+	return Idx(id<SizeHint,Is>(hint)...);
+    }
+public:
+    static bool insert(Idx& idx, const Key& val) {
+	return insert(idx, val, gen_seq<DEPTH>());
+    }
+    static Idx construct(const SizeHint& hint) {
+	return construct(hint, gen_seq<FLAT_DIMS>());
+    }
+};
+
+} // namespace detail
+
 // BASE CONTAINERS & OPERATIONS ===============================================
 
 #define FOR(RES, EXPR) \
@@ -1203,6 +1278,26 @@ struct KeyTraits<Ref<T>> {
 	for (typename std::remove_reference<decltype(EXPR)>::type::Tuple RES; \
 	     cond__; cond__ = false) \
 	    for (auto it__ = (EXPR).iter(RES); it__.next();)
+
+template<class Idx, class... HintTs>
+Idx join(const Idx& r, const Idx& s, const HintTs&... hints) {
+    Idx res(hints...);
+    FOR(r_tup, r) {
+	res.copy(s[r_tup.tl.hd], r_tup.hd);
+    }
+    return res;
+}
+
+template<class Idx>
+Idx identity(const typename KeyTraits<typename Idx::Key>::SizeHint& hint) {
+    Idx idx = detail::MultiDimApply<Idx>::construct(hint);
+    unsigned int lim = KeyTraits<typename Idx::Key>::extract_size(hint);
+    for (unsigned int i = 0; i < lim; i++) {
+	typename Idx::Key val = KeyTraits<typename Idx::Key>::from_idx(i);
+	detail::MultiDimApply<Idx>::insert(idx, val);
+    }
+    return idx;
+}
 
 template<class Tag, class T> class Table {
 public:
@@ -1227,6 +1322,9 @@ public:
 	Iterator it(tgt);
 	it.migrate(*this);
 	return it;
+    }
+    bool empty() const {
+	return store.empty();
     }
     unsigned int size() const {
 	return store.size();
@@ -1284,6 +1382,8 @@ public:
     typedef S Sub;
     class Iterator;
     friend Iterator;
+    typedef IterWrapper<typename std::map<Key,Sub>::const_iterator,
+			Key, detail::get_first> KeyIter;
     typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
 private:
     static const Sub dummy;
@@ -1322,30 +1422,24 @@ public:
     bool copy(const C& src, const Key& key, const Rest&... rest) {
 	return follow(key).copy(src, rest...);
     }
-    bool join(const Index& r, const Index& s) {
-	bool grew = false;
-	Tuple r_tup;
-	auto r_it = r.iter(r_tup);
-	while (r_it.next()) {
-	    const auto& hd = r_tup.hd;
-	    typename Sub::Tuple tl;
-	    auto tl_it = s[r_tup.tl.hd].iter(tl);
-	    while (tl_it.next()) {
-		if (insert(hd, tl)) {
-		    grew = true;
-		}
-	    }
-	}
-	return grew;
-    }
-    template<class C, class... Rest>
-    bool join(const C& r, const C& s, const Key& key, const Rest&... rest) {
-	return follow(key).join(r, s, rest...);
-    }
     Iterator iter(Tuple& tgt) const {
 	Iterator it(tgt);
 	it.migrate(*this);
 	return it;
+    }
+    KeyIter begin() const {
+	return KeyIter(map.cbegin());
+    }
+    KeyIter end() const {
+	return KeyIter(map.cend());
+    }
+    bool empty() const {
+	for (const auto& entry : map) {
+	    if (!entry.second.empty()) {
+		return false;
+	    }
+	}
+	return true;
     }
     unsigned int size() const {
 	unsigned int sz = 0;
@@ -1421,6 +1515,8 @@ public:
     typedef S Sub;
     class Iterator;
     friend Iterator;
+    class KeyIter;
+    friend KeyIter;
     typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
 private:
     std::vector<Sub> array;
@@ -1463,30 +1559,24 @@ public:
     bool copy(const C& src, const Key& key, const Rest&... rest) {
 	return follow(key).copy(src, rest...);
     }
-    bool join(const FlatIndex& r, const FlatIndex& s) {
-	bool grew = false;
-	Tuple r_tup;
-	auto r_it = r.iter(r_tup);
-	while (r_it.next()) {
-	    const auto& hd = r_tup.hd;
-	    typename Sub::Tuple tl;
-	    auto tl_it = s[r_tup.tl.hd].iter(tl);
-	    while (tl_it.next()) {
-		if (insert(hd, tl)) {
-		    grew = true;
-		}
-	    }
-	}
-	return grew;
-    }
-    template<class C, class... Rest>
-    bool join(const C& r, const C& s, const Key& key, const Rest&... rest) {
-	return follow(key).join(r, s, rest...);
-    }
     Iterator iter(Tuple& tgt) const {
 	Iterator it(tgt);
 	it.migrate(*this);
 	return it;
+    }
+    KeyIter begin() const {
+	return KeyIter(*this, false);
+    }
+    KeyIter end() const {
+	return KeyIter(*this, true);
+    }
+    bool empty() const {
+	for (const Sub& entry : array) {
+	    if (!entry.empty()) {
+		return false;
+	    }
+	}
+	return true;
     }
     unsigned int size() const {
 	unsigned int sz = 0;
@@ -1548,6 +1638,44 @@ public:
 	    return true;
 	}
     };
+
+    class KeyIter : public std::iterator<std::forward_iterator_tag,Key> {
+    private:
+	unsigned int curr;
+	const FlatIndex& parent;
+    private:
+	void skip_empty() {
+	    while (curr < parent.array.size() && parent.array[curr].empty()) {
+		++curr;
+	    }
+	}
+    public:
+	explicit KeyIter(const FlatIndex& parent, bool at_end)
+	    : curr(at_end ? parent.array.size() : 0), parent(parent) {
+	    skip_empty();
+	}
+	KeyIter(const KeyIter& rhs) : curr(rhs.curr), parent(rhs.parent) {}
+	KeyIter& operator=(const KeyIter& rhs) {
+	    assert(&parent == &(rhs.parent));
+	    curr = rhs.curr;
+	    return *this;
+	}
+	Key operator*() const {
+	    return KeyTraits<Key>::from_idx(curr);
+	}
+	KeyIter& operator++() {
+	    ++curr;
+	    skip_empty();
+	    return *this;
+	}
+	bool operator==(const KeyIter& rhs) const {
+	    assert(&parent == &(rhs.parent));
+	    return curr == rhs.curr;
+	}
+	bool operator!=(const KeyIter& rhs) const {
+	    return !(*this == rhs);
+	}
+    };
 };
 
 template<class Tag, class T> class BitSet {
@@ -1584,6 +1712,9 @@ public:
 	Iterator it(tgt);
 	it.migrate(*this);
 	return it;
+    }
+    bool empty() const {
+	return bits == 0;
     }
     unsigned int size() const {
 	Store v = bits;
@@ -1637,6 +1768,8 @@ public:
     typedef S Sub;
     class Iterator;
     friend Iterator;
+    typedef IterWrapper<typename List::const_iterator,
+			Key, detail::get_first> KeyIter;
     typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
 private:
     static const Sub dummy;
@@ -1693,30 +1826,24 @@ public:
     bool copy(const C& src, const Key& key, const Rest&... rest) {
 	return follow(key).copy(src, rest...);
     }
-    bool join(const LightIndex& r, const LightIndex& s) {
-	bool grew = false;
-	Tuple r_tup;
-	auto r_it = r.iter(r_tup);
-	while (r_it.next()) {
-	    const auto& hd = r_tup.hd;
-	    typename Sub::Tuple tl;
-	    auto tl_it = s[r_tup.tl.hd].iter(tl);
-	    while (tl_it.next()) {
-		if (insert(hd, tl)) {
-		    grew = true;
-		}
-	    }
-	}
-	return grew;
-    }
-    template<class C, class... Rest>
-    bool join(const C& r, const C& s, const Key& key, const Rest&... rest) {
-	return follow(key).join(r, s, rest...);
-    }
     Iterator iter(Tuple& tgt) const {
 	Iterator it(tgt);
 	it.migrate(*this);
 	return it;
+    }
+    KeyIter begin() const {
+	return KeyIter(list.cbegin());
+    }
+    KeyIter end() const {
+	return KeyIter(list.cend());
+    }
+    bool empty() const {
+	for (const auto& entry : list) {
+	    if (!entry.second.empty()) {
+		return false;
+	    }
+	}
+	return true;
     }
     unsigned int size() const {
 	unsigned int sz = 0;
@@ -1786,12 +1913,46 @@ const S LightIndex<Tag,K,S>::dummy;
 
 // UNIQUING INFRASTRUCTURE ====================================================
 
+template<class Idx> class Immut;
 template<class Idx> class Uniq;
+
+template<class Idx>
+Uniq<Idx> join(const Uniq<Idx>& r, const Uniq<Idx>& s) {
+    static std::map<std::pair<Ref<Immut<Idx>>,Ref<Immut<Idx>>>,
+		    Ref<Immut<Idx>>> cache;
+    Ref<Immut<Idx>> r_ref = r.cell_ref;
+    Ref<Immut<Idx>> s_ref = s.cell_ref;
+    Ref<Immut<Idx>>& cached = cache[std::make_pair(r_ref, s_ref)];
+    if (!cached.valid()) {
+	Idx idx = join(Immut<Idx>::store()[r_ref].backer,
+		       Immut<Idx>::store()[s_ref].backer);
+	cached = Immut<Idx>::store().add(idx).ref;
+    }
+    return Uniq<Idx>(cached);
+}
+
+template<class Idx>
+Uniq<Idx>
+uniq_id(const typename KeyTraits<typename Idx::Key>::SizeHint& hint) {
+    static std::map<unsigned int,Ref<Immut<Idx>>> cache;
+    unsigned int lim = KeyTraits<typename Idx::Key>::extract_size(hint);
+    Ref<Immut<Idx>>& cached = cache[lim];
+    if (!cached.valid()) {
+	Idx idx = identity<Idx>(hint);
+	cached = Immut<Idx>::store().add(idx).ref;
+    }
+    return Uniq<Idx>(cached);
+}
 
 template<class Idx> class Immut {
     friend Registry<Immut>;
     friend Uniq<Idx>;
     typedef Idx Key;
+    friend Uniq<Idx> join<>(const Uniq<Idx>& r, const Uniq<Idx>& s);
+    // TODO: This is not as tight as possible, but it allows us to unique
+    // classes that don't support identity building.
+    template<class T> friend T
+    uniq_id(const typename KeyTraits<typename T::Key>::SizeHint& hint);
 private:
     // Can't simply declare this as a static field, because of initialization
     // order issues.
@@ -1799,10 +1960,17 @@ private:
 	static Registry<Immut> store;
 	return store;
     }
+public:
+    static Ref<Immut> zero() {
+	static Ref<Immut> cached;
+	if (!cached.valid()) {
+	    cached = store().add(Idx()).ref;
+	}
+	return cached;
+    }
 private:
     std::map<typename Idx::Tuple,Ref<Immut>> insert_cache;
     std::map<Ref<Immut>,Ref<Immut>> copy_cache;
-    std::map<std::pair<Ref<Immut>,Ref<Immut>>,Ref<Immut>> join_cache;
 public:
     const Idx backer;
     const Ref<Immut> ref;
@@ -1831,22 +1999,19 @@ public:
 	}
 	return cached;
     }
-    Ref<Immut> join(Ref<Immut> r, Ref<Immut> s) {
-	Ref<Immut>& cached = join_cache[std::make_pair(r, s)];
-	if (!cached.valid()) {
-	    Idx new_idx = backer;
-	    new_idx.join(store()[r].backer, store()[s].backer);
-	    cached = store().add(new_idx).ref;
-	}
-	return cached;
-    }
 };
 
 template<class Idx> class Uniq {
+    friend Uniq join<>(const Uniq& r, const Uniq& s);
+    // TODO: This is not as tight as possible, but it allows us to unique
+    // classes that don't support identity building.
+    template<class T> friend T
+    uniq_iq(const typename KeyTraits<typename T::Key>::SizeHint& hint);
 public:
     typedef typename Idx::Key Key;
     typedef typename Idx::Sub Sub;
     typedef typename Idx::Iterator Iterator;
+    typedef typename Idx::KeyIter KeyIter;
     typedef typename Idx::Tuple Tuple;
 private:
     Ref<Immut<Idx>> cell_ref;
@@ -1854,9 +2019,9 @@ private:
     const Idx& real_idx() const {
 	return Immut<Idx>::store()[cell_ref].backer;
     }
+    explicit Uniq(Ref<Immut<Idx>> cell_ref) : cell_ref(cell_ref) {}
 public:
-    explicit Uniq()
-	: cell_ref(Immut<Idx>::store().add(Idx()).ref) {}
+    explicit Uniq() : Uniq(Immut<Idx>::zero()) {}
     const Sub& operator[](const Key& key) const {
 	return real_idx()[key];
     }
@@ -1874,13 +2039,17 @@ public:
 	cell_ref = Immut<Idx>::store()[cell_ref].copy(src.cell_ref);
 	return old_cell != cell_ref;
     }
-    bool join(const Uniq& r, const Uniq& s) {
-	Ref<Immut<Idx>> old_cell = cell_ref;
-	cell_ref = Immut<Idx>::store()[cell_ref].join(r.cell_ref, s.cell_ref);
-	return old_cell != cell_ref;
-    }
     Iterator iter(Tuple& tgt) const {
 	return real_idx().iter(tgt);
+    }
+    KeyIter begin() const {
+	return real_idx().begin();
+    }
+    KeyIter end() const {
+	return real_idx().end();
+    }
+    bool empty() const {
+	return real_idx().empty();
     }
     unsigned int size() const {
 	return real_idx().size();

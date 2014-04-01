@@ -124,6 +124,10 @@ int main() {
     FOR(res, nidx) {
 	std::cout << "  " << res << std::endl;
     }
+    std::cout << "All the ref's for false:" << std::endl;
+    for (const Ref<Bar> fls_bar : nidx[false]) {
+	std::cout << "  " << fls_bar << std::endl;
+    }
     std::cout << "Should see " << nidx[true].size()
 	      << " entries:" << std::endl;
     FOR(res, nidx[true]) {
@@ -148,13 +152,23 @@ int main() {
     tabs.insert('b', 2, 1); tabs.insert('b', 3, 1);
     tabs.insert('b', 3, 4); tabs.insert('b', 4, 4);
     tabs.insert('c', 5, 5);
-    tabs.join(tabs['a'], tabs['b'], 'c');
+    tabs.copy(join(tabs['a'], tabs['b']), 'c');
     mi::NamedTuple<second,int,mi::NamedTuple<third,int,mi::Nil>> c_tup;
     auto c_it = tabs['c'].iter(c_tup);
     std::cout << "Should see (1,1) (1,4) (5,5):" << std::endl;
     while (c_it.next()) {
 	std::cout << "  (" << c_tup.get<second>() << ","
 		  << c_tup.get<third>() << ")" << std::endl;
+    }
+    std::cout << std::endl;
+
+    typedef mi::FlatIndex<first, bool,
+			  mi::LightIndex<second, bool,
+					 mi::Table<third, bool>>> Bool3;
+    Bool3 bool_tab = mi::identity<Bool3>(nullptr);
+    std::cout << "Should see the identity relation:" << std::endl;
+    FOR(tup, bool_tab) {
+	std::cout << "  " << tup << std::endl;
     }
     std::cout << std::endl;
 
