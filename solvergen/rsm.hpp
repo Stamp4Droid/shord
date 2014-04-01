@@ -10,6 +10,19 @@
 namespace po = boost::program_options;
 namespace fs = boost::filesystem;
 
+// TAGS =======================================================================
+
+enum class ParsingMode {NODES, EDGES};
+
+TUPLE_TAG(SYMBOL);
+TUPLE_TAG(REV);
+TUPLE_TAG(SRC);
+TUPLE_TAG(DST);
+TUPLE_TAG(TAG);
+TUPLE_TAG(COMP);
+TUPLE_TAG(NODE);
+TUPLE_TAG(STATE);
+
 // ALPHABET ===================================================================
 
 // TODO: separate class for parametric and non-parametric symbols
@@ -249,38 +262,31 @@ public:
     }
 };
 
-enum class ParsingMode {NODES, EDGES};
-TUPLE_TAG(SYMBOL);
-TUPLE_TAG(REV);
-TUPLE_TAG(SRC);
-TUPLE_TAG(DST);
-TUPLE_TAG(TAG);
-
 // TODO:
 // - Disallow adding edges while an iterator is live.
 // - Additional indexing dimensions.
+// - Should make additional fields private?
 class Graph {
 public:
     typedef mi::Index<TAG, Ref<Tag>,
-		mi::Table<DST, Ref<Node>>
-	    > SrcLabelSlice;
+		mi::Table<DST, Ref<Node>>>
+	SrcLabelSlice;
     typedef mi::FlatIndex<REV, bool,
 		mi::FlatIndex<SRC, Ref<Node>,
 		    mi::LightIndex<SYMBOL, Ref<Symbol>,
-			SrcLabelSlice>>
-	    > EdgesSrcLabelIndex;
+			SrcLabelSlice>>>
+	EdgesSrcLabelIndex;
     typedef mi::Index<TAG, Ref<Tag>,
 		mi::Index<SRC, Ref<Node>,
-		    mi::Table<DST, Ref<Node>>>
-	    > LabelSlice;
+		    mi::Table<DST, Ref<Node>>>>
+	LabelSlice;
     typedef mi::FlatIndex<REV, bool,
 		mi::FlatIndex<SYMBOL, Ref<Symbol>,
-		    LabelSlice>
-	    > EdgesLabelIndex;
+		    LabelSlice>>
+	EdgesLabelIndex;
 public:
     static const std::string FILE_EXTENSION;
 public:
-    // TODO: Should make some of these private?
     Registry<Node> nodes;
     Registry<Tag> tags;
     // TODO:
@@ -296,7 +302,7 @@ private:
     void parse_file(const Symbol& symbol, const fs::path& fpath,
 		    ParsingMode mode);
 public:
-    explicit Graph(const Registry<Symbol>& symbols,
+    explicit Graph(const Registry<Symbol>& symbol_reg,
 		   const std::string& dirname);
     Graph(const Graph& rhs) = delete;
     Graph& operator=(const Graph& rhs) = delete;
@@ -318,7 +324,7 @@ public:
     }
     void print_stats(std::ostream& os) const;
     void print_summaries(const std::string& dirname,
-			 const Registry<Component>& components) const;
+			 const Registry<Component>& comp_reg) const;
 };
 
 // SOLVING ====================================================================
@@ -371,12 +377,12 @@ public:
     }
 };
 
-// TODO: Only construct through a 'follow' method, not directly?
 class Position {
 public:
     const Ref<Node> node;
     const Ref<State> state;
 public:
+    // TODO: Only construct through a 'follow' method, not directly?
     explicit Position(Ref<Node> node, Ref<State> state)
 	: node(node), state(state) {}
     bool operator<(const Position& rhs) const {
@@ -384,9 +390,6 @@ public:
 		std::tie(rhs.node, rhs.state));
     }
 };
-
-TUPLE_TAG(NODE);
-TUPLE_TAG(STATE);
 
 class SummaryWorklist {
 private:

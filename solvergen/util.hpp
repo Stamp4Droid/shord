@@ -111,14 +111,16 @@ const S& get_second(const std::pair<T,S>& p) {
 // current position of the underlying iterator (which should remain alive
 // until the underlying iterator's next move).
 // TODO: Missing operators:
-// iter++, default constructor, copy assignment, destructor, swap
+// iter++, copy assignment, destructor, swap
+// TODO: Correctly set the iterator tag, according to the tag of the wrapped
+// iterator.
 template<typename Iter, typename Out,
 	 const Out& F(const typename std::iterator_traits<Iter>::value_type&)>
 class IterWrapper : public std::iterator<std::input_iterator_tag,Out> {
 private:
     Iter iter;
 public:
-    explicit IterWrapper() {};
+    explicit IterWrapper() {}
     explicit IterWrapper(Iter iter) : iter(iter) {}
     IterWrapper(const IterWrapper& rhs) : iter(rhs.iter) {}
     IterWrapper& operator=(const IterWrapper& rhs) {
@@ -901,6 +903,7 @@ public:
 //   (assuming the result tuples doesn't get modified by the client code)
 // - Union and join operations
 //   Join only works for relations of the form Index<T,Table<T>>
+// - Instantiated nested sets are NOT guaranteed to be non-empty.
 
 // Primary extensions:
 // - tag uniqueness check
@@ -947,6 +950,10 @@ public:
 // - hack to avoid iterating on bottom fields, if not requested
 //   create an iterator to a dummy singleton container
 // - short-circuiting empty() check
+// - primitive multi-dimension support:
+//   - from top only
+//   - primary index tuple order becomes the exported Tuple
+//   - 'insert' automatically adds on both dimensions, does required reordering
 
 // Secondary extensions:
 // - abstract-out size type
@@ -955,6 +962,8 @@ public:
 //   - hashtable
 //   - dynamically growing flat table of pointers
 //   - sorted k-ptr to allocated wrapped
+// - more table implementations:
+//   - Godel encoding
 // - handle derived classes correctly
 // - FlatIndex for small enums
 // - additional FD-mandated fields
@@ -1040,6 +1049,7 @@ public:
 //   should then probably use an array instead of a vector
 //   this should allow us to reuse this scheme for worker Worklist
 //   (and share with all)
+// - ability to iterate only partially to the end
 // - key iteration on index levels?
 // - some way to propagate the column type pack from the wrapped table.
 // - also accept a series of fields ending with a tuple for iter()
@@ -1048,6 +1058,7 @@ public:
 // - more efficient operator< implementation, by using a three-valued compare
 //   primitive (=, <, >)
 // - more operations on NamedTuple
+//   especially field retrieval
 // - support multi-field Table
 //   will have extend NamedTuple to support full tuples
 //   could provide the same functionality through a thin CombiningIndex wrapper
@@ -1070,7 +1081,7 @@ public:
 // - can't copy or join in a nested Index of a uniq'd Index
 // - can't mix fields and tuples when inserting
 //   need the args in a tuple, to cache
-// - construtor for uniq'd Indices can't take arguments
+// - constructor for uniq'd Indices can't take arguments
 // - uniquing indices requires that they can be compared
 //   have to implement operator< on all classes
 // - special fast operation to retrieve empty Index
@@ -1081,8 +1092,14 @@ public:
 //   - args are copied on a fresh tuple when insert is called with references
 //     could save some copying if insert could work with rvalues
 //   - argument tuples are copied on the insert cache
+// - also cache the results of const operations
+//   (store as fields on the corresponding backer cell object)
+//   should have a generic Maybe<> template, which carries the value and a
+//   validity flag
 
 namespace mi {
+
+// NAMED TUPLES ===============================================================
 
 template<class Tag, class Hd, class Tl> class NamedTuple;
 
@@ -1147,6 +1164,39 @@ public:
 };
 
 #define TUPLE_TAG(NAME) struct NAME {static const char* name() {return #NAME;}}
+
+// HELPER CODE ================================================================
+
+template<class T> struct KeyTraits;
+
+template<> struct KeyTraits<bool> {
+    typedef std::nullptr_t SizeHint;
+    static unsigned int extract_size(const SizeHint&) {
+	return 2;
+    }
+    static unsigned int extract_idx(bool val) {
+	return val;
+    }
+    static bool from_idx(unsigned int idx) {
+	return idx;
+    }
+};
+
+template<class T>
+struct KeyTraits<Ref<T>> {
+    typedef Registry<T> SizeHint;
+    static unsigned int extract_size(const SizeHint& reg) {
+	return reg.size();
+    }
+    static unsigned int extract_idx(Ref<T> ref) {
+	return ref.value;
+    }
+    static Ref<T> from_idx(unsigned int idx) {
+	return Ref<T>(idx);
+    }
+};
+
+// BASE CONTAINERS & OPERATIONS ===============================================
 
 #define FOR(RES, EXPR) \
     if (bool cond__ = true) \
@@ -1230,10 +1280,10 @@ public:
 
 template<class Tag, class K, class S> class Index {
 public:
-    class Iterator;
-    friend Iterator;
     typedef K Key;
     typedef S Sub;
+    class Iterator;
+    friend Iterator;
     typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
 private:
     static const Sub dummy;
@@ -1363,41 +1413,14 @@ public:
 template<class Tag, class K, class S>
 const S Index<Tag,K,S>::dummy;
 
-template<class T> struct KeyTraits;
-
-template<> struct KeyTraits<bool> {
-    typedef std::nullptr_t SizeHint;
-    static unsigned int extract_size(const SizeHint&) {
-	return 2;
-    }
-    static unsigned int extract_idx(bool val) {
-	return val;
-    }
-    static bool from_idx(unsigned int idx) {
-	return idx;
-    }
-};
-
-template<class T>
-struct KeyTraits<Ref<T>> {
-    typedef Registry<T> SizeHint;
-    static unsigned int extract_size(const SizeHint& reg) {
-	return reg.size();
-    }
-    static unsigned int extract_idx(Ref<T> ref) {
-	return ref.value;
-    }
-    static Ref<T> from_idx(unsigned int idx) {
-	return Ref<T>(idx);
-    }
-};
+// SPECIALIZED CONTAINERS =====================================================
 
 template<class Tag, class K, class S> class FlatIndex {
 public:
-    class Iterator;
-    friend Iterator;
     typedef K Key;
     typedef S Sub;
+    class Iterator;
+    friend Iterator;
     typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
 private:
     std::vector<Sub> array;
@@ -1607,14 +1630,14 @@ public:
 };
 
 template<class Tag, class K, class S> class LightIndex {
+private:
+    typedef std::forward_list<std::pair<const K,S>> List;
 public:
-    class Iterator;
-    friend Iterator;
     typedef K Key;
     typedef S Sub;
+    class Iterator;
+    friend Iterator;
     typedef NamedTuple<Tag,Key,typename Sub::Tuple> Tuple;
-private:
-    typedef std::forward_list<std::pair<const Key,Sub>> List;
 private:
     static const Sub dummy;
 private:
@@ -1761,6 +1784,8 @@ public:
 template<class Tag, class K, class S>
 const S LightIndex<Tag,K,S>::dummy;
 
+// UNIQUING INFRASTRUCTURE ====================================================
+
 template<class Idx> class Uniq;
 
 template<class Idx> class Immut {
@@ -1819,17 +1844,21 @@ public:
 
 template<class Idx> class Uniq {
 public:
-    typedef typename Idx::Iterator Iterator;
     typedef typename Idx::Key Key;
     typedef typename Idx::Sub Sub;
+    typedef typename Idx::Iterator Iterator;
     typedef typename Idx::Tuple Tuple;
 private:
     Ref<Immut<Idx>> cell_ref;
+private:
+    const Idx& real_idx() const {
+	return Immut<Idx>::store()[cell_ref].backer;
+    }
 public:
     explicit Uniq()
 	: cell_ref(Immut<Idx>::store().add(Idx()).ref) {}
     const Sub& operator[](const Key& key) const {
-	return Immut<Idx>::store()[cell_ref].backer[key];
+	return real_idx()[key];
     }
     template<class... Rest>
     bool insert(const Key& key, const Rest&... rest) {
@@ -1851,14 +1880,13 @@ public:
 	return old_cell != cell_ref;
     }
     Iterator iter(Tuple& tgt) const {
-	return Immut<Idx>::store()[cell_ref].backer.iter(tgt);
+	return real_idx().iter(tgt);
     }
     unsigned int size() const {
-	return Immut<Idx>::store()[cell_ref].backer.size();
+	return real_idx().size();
     }
     bool operator<(const Uniq& rhs) const {
-	return (Immut<Idx>::store()[cell_ref].backer <
-		Immut<Idx>::store()[rhs.cell_ref].backer);
+	return (real_idx() < rhs.real_idx());
     }
 };
 

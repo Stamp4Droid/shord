@@ -120,7 +120,7 @@ int main() {
 	double z = ++counter + 0.66;
 	nidx.insert(bar.flag, bar.ref, x, y, z);
     }
-    std::cout << "Should see " << nidx.size() << " entries:" << std::endl;
+    std::cout << "All " << nidx.size() << " entries:" << std::endl;
     FOR(res, nidx) {
 	std::cout << "  " << res << std::endl;
     }

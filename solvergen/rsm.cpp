@@ -288,18 +288,19 @@ void Graph::parse_file(const Symbol& symbol, const fs::path& fpath,
     EXPECT(fin.eof());
 }
 
-Graph::Graph(const Registry<Symbol>& symbols, const std::string& dirname) {
+Graph::Graph(const Registry<Symbol>& symbol_reg,
+	     const std::string& dirname) {
     fs::path dirpath(dirname);
     std::cout << "Parsing nodes" << std::endl;
-    for (const Symbol& s : symbols) {
+    for (const Symbol& s : symbol_reg) {
 	std::string fname = s.name + FILE_EXTENSION;
 	// Will fail if some symbol is missing its Edge file.
 	parse_file(s, dirpath/fname, ParsingMode::NODES);
     }
     edges_1 = new EdgesSrcLabelIndex(nullptr, nodes);
-    edges_2 = new EdgesLabelIndex(nullptr, symbols);
+    edges_2 = new EdgesLabelIndex(nullptr, symbol_reg);
     std::cout << "Parsing edges" << std::endl;
-    for (const Symbol& s : symbols) {
+    for (const Symbol& s : symbol_reg) {
 	std::string fname = s.name + FILE_EXTENSION;
 	parse_file(s, dirpath/fname, ParsingMode::EDGES);
     }
@@ -308,13 +309,12 @@ Graph::Graph(const Registry<Symbol>& symbols, const std::string& dirname) {
 void Graph::print_stats(std::ostream& os) const {
     os << "Nodes: " << nodes.size() << std::endl;
     os << "Edges: " << (*edges_1)[false].size() << std::endl;
-    // TODO: Also print out stats on summaries.
 }
 
 void Graph::print_summaries(const std::string& dirname,
-			    const Registry<Component>& components) const {
+			    const Registry<Component>& comp_reg) const {
     fs::path dirpath(dirname);
-    for (const Component& comp : components) {
+    for (const Component& comp : comp_reg) {
 	std::string fname = comp.name + FILE_EXTENSION;
 	std::cout << "Printing " << fname << std::endl;
 	std::ofstream fout((dirpath/fname).string());
@@ -383,8 +383,7 @@ void RSM::propagate(Graph& graph) const {
 
 	comp.summarize(graph, workers);
 	std::cout << "Done in " << current_time() - t_summ << " ms"
-		  << std::endl;
-	std::cout << std::endl;
+		  << std::endl << std::endl;
     }
 
     // Final propagation step for the top component in the RSM. All required
@@ -540,9 +539,6 @@ Worker::Result Worker::summarize(const Graph& graph) const {
 
 // MAIN =======================================================================
 
-// TODO:
-// - Better summary representation, for human consumption.
-
 int main(int argc, char* argv[]) {
     // Timekeeping
     const unsigned int t_input = current_time();
@@ -573,12 +569,12 @@ int main(int argc, char* argv[]) {
 	if (vm.count("help") > 0) {
 	    // TODO: Also print usage
 	    std::cerr << desc << std::endl;
-	    return 1;
+	    return EXIT_FAILURE;
 	}
 	po::notify(vm);
     } catch (const po::error& e) {
         std::cerr << e.what() << std::endl;
-	return 1;
+	return EXIT_FAILURE;
     }
 
     // Initialize logging system
@@ -595,8 +591,7 @@ int main(int argc, char* argv[]) {
     // Timekeeping
     const unsigned int t_solving = current_time();
     std::cout << "Input parsing: " << t_solving - t_input << " ms"
-	      << std::endl;
-    std::cout << std::endl;
+	      << std::endl << std::endl;
 
     // Perform actual solving
     rsm.propagate(graph);
