@@ -158,6 +158,22 @@ int main() {
     }
     std::cout << std::endl;
 
+    mi::Index<first, int, mi::Table<second, int>> int_tab;
+    mi::Uniq<decltype(int_tab)> uniq_tab;
+    for (unsigned int i = 0; i < 5; i++) {
+	int_tab.insert(i, i+40);
+	uniq_tab.insert(i, i+40);
+    }
+    std::cout << "Regular table contents:" << std::endl;
+    FOR(tup, int_tab) {
+	std::cout << "  " << tup << std::endl;
+    }
+    std::cout << "Uniq'd table contents:" << std::endl;
+    FOR(tup, uniq_tab) {
+	std::cout << "  " << tup << std::endl;
+    }
+    std::cout << std::endl;
+
     Worklist<int,true> wl1;
     wl1.enqueue(1);
     wl1.enqueue(2);
