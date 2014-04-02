@@ -22,6 +22,8 @@ TUPLE_TAG(TAG);
 TUPLE_TAG(COMP);
 TUPLE_TAG(R_FROM);
 TUPLE_TAG(R_TO);
+TUPLE_TAG(F_FROM);
+TUPLE_TAG(F_TO);
 
 // ALPHABET ===================================================================
 
@@ -192,6 +194,10 @@ private:
 	return false;
     }
 public:
+    explicit Component() : name("ANONYMOUS") {}
+    bool simple() const {
+	return boxes.empty();
+    }
     const Registry<State>& get_states() const {
 	return states;
     }
@@ -220,16 +226,53 @@ public:
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
 };
 
+typedef mi::Index<F_FROM, Ref<State>,
+	    mi::Table<F_TO, Ref<State>>> FsmEffect;
+typedef mi::Uniq<FsmEffect> TransRel;
+
+// TODO: Make some of the fields constant.
+
+class FSM {
+public:
+    static const std::string FILE_EXTENSION;
+public:
+    // Reusing Component class, but only for the FSM part.
+    Component comp;
+    // TODO:
+    // - Constructing this externally from the uniquing class means we'll also
+    //   unique various intermediate sets along the way.
+    // - Could instead have specialized data structures for FSM.
+    mi::FlatIndex<REV, bool,
+	mi::FlatIndex<SYMBOL, Ref<Symbol>,
+	    TransRel>> base_effects;
+public:
+    explicit FSM(const std::string& fname, Registry<Symbol>& symbol_reg);
+    TransRel id_trel() const {
+	// TODO: Could just do this externally
+	return mi::uniq_id<FsmEffect>(comp.get_states());
+    };
+    template<bool Tagged>
+    TransRel effect_of(const Label<Tagged>& label) const {
+	return base_effects[label.rev][label.symbol];
+    }
+    bool is_accepting(const TransRel& trel) const;
+    void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
+};
+
+TransRel compose(const TransRel& trel1, const TransRel& trel2);
+
 class Analysis {
 public:
     Registry<Symbol> symbols;
     RSM rsm;
+    FSM fsm; // TODO: Exactly one FSM for now
 private:
     void summarize(Graph& graph, const Component& comp) const;
     void propagate(Graph& graph, const Component& comp) const;
 public:
-    explicit Analysis(const std::string& rsm_dname)
-	: rsm(rsm_dname, symbols) {}
+    explicit Analysis(const std::string& rsm_dname,
+		      const std::string& fsm_fname)
+	: rsm(rsm_dname, symbols), fsm(fsm_fname, symbols) {}
     void print(std::ostream& os) const;
     void close(Graph& graph) const;
 };
@@ -264,20 +307,6 @@ private:
     }
 };
 
-class Summary {
-public:
-    const Ref<Node> src;
-    const Ref<Node> dst;
-    const Ref<Component> comp;
-public:
-    explicit Summary(Ref<Node> src, Ref<Node> dst, Ref<Component> comp)
-	: src(src), dst(dst), comp(comp) {}
-    bool operator<(const Summary& rhs) const {
-	return (std::tie(    src,     dst,     comp) <
-		std::tie(rhs.src, rhs.dst, rhs.comp));
-    }
-};
-
 // TODO:
 // - Disallow adding edges while an iterator is live.
 // - Additional indexing dimensions.
@@ -300,6 +329,11 @@ public:
 		mi::FlatIndex<SYMBOL, Ref<Symbol>,
 		    LabelSlice>>
 	EdgesLabelIndex;
+    typedef mi::Index<DST, Ref<Node>, TransRel> WorkerSummaries;
+    typedef mi::Index<COMP, Ref<Component>,
+		mi::Index<SRC, Ref<Node>,
+		    WorkerSummaries>>
+	SummaryStore;
 public:
     static const std::string FILE_EXTENSION;
 public:
@@ -312,8 +346,7 @@ public:
     //   FlatIndex, so we can't store it by value.
     EdgesSrcLabelIndex* edges_1 = NULL;
     EdgesLabelIndex* edges_2 = NULL;
-    Index<Index<Table<Summary>,Ref<Node>,&Summary::src>,
-	  Ref<Component>,&Summary::comp> summaries;
+    SummaryStore summaries;
 private:
     void parse_file(const Symbol& symbol, const fs::path& fpath,
 		    ParsingMode mode);
@@ -340,7 +373,8 @@ public:
     }
     void print_stats(std::ostream& os) const;
     void print_summaries(const std::string& dirname,
-			 const Registry<Component>& comp_reg) const;
+			 const Registry<Component>& comp_reg,
+			 const FSM& fsm) const;
 };
 
 // SOLVING ====================================================================
@@ -352,7 +386,7 @@ class Worker {
 public:
 
     struct Result {
-	std::set<Summary> summs;
+	typename Graph::WorkerSummaries summs;
 	std::set<Ref<Node>> deps;
     };
 
@@ -376,7 +410,7 @@ private:
 public:
     explicit Worker(Ref<Node> start, const Component& comp)
 	: start(start), comp(comp), top_level(true) {}
-    Result handle(const Graph& graph) const;
+    Result handle(const Graph& graph, const FSM& fsm) const;
 };
 
 // TODO: Should include the component if we support multiple components in SCCs
@@ -393,37 +427,58 @@ public:
     }
 };
 
+// A summary normally contains a single FSM effect (i.e. a single
+// "FSM start -> FSM end" transition), but we track them in bulk during
+// summarization (for efficiency). Thus, Position contains a set of such
+// transitions, in a TransRel.
 class Position {
 public:
     const Ref<Node> dst;
     const Ref<State> r_to;
+    const TransRel trel;
 public:
     // TODO: Only construct through a 'follow' method, not directly?
-    explicit Position(Ref<Node> dst, Ref<State> r_to)
-	: dst(dst), r_to(r_to) {}
+    explicit Position(Ref<Node> dst, Ref<State> r_to, const TransRel& trel)
+	: dst(dst), r_to(r_to), trel(trel) {}
 };
 
+// A single Position can carry a set of FSM effects, so we prefer to schedule
+// all available FSM effects at once. However, a new set of effects can reach
+// a node+state, so we have to reschedule at least the added effects. We're not
+// currently tracking the difference set (we expect such updated to happen
+// infrequently) (TODO: try this), and simply reschedule the entire set of
+// effects. Therefore, we only need to store the node+state on the worklist,
+// and retrieve the effects when dequeing. One problem is that we might
+// duplicate work (TODO: guard against this).
 class WorkerWorklist {
 private:
-    mi::FlatIndex<DST, Ref<Node>,
-	mi::BitSet<R_TO, Ref<State>>> reached;
-    std::deque<Position> queue;
+
+    struct PosPrefix {
+	Ref<Node> dst;
+	Ref<State> r_to;
+	explicit PosPrefix(Ref<Node> dst, Ref<State> r_to)
+	    : dst(dst), r_to(r_to) {}
+    };
+
+private:
+    mi::Index<DST, Ref<Node>,
+	mi::Index<R_TO, Ref<State>,
+	    TransRel>> reached;
+    std::deque<PosPrefix> queue;
 public:
-    explicit WorkerWorklist(const Registry<Node>& nodes,
-			    const Registry<State>& states)
-	: reached(nodes, states) {}
     bool empty() const {
 	return queue.empty();
     }
     bool enqueue(const Position& pos) {
-	if (reached.insert(pos.dst, pos.r_to)) {
-	    queue.push_back(pos);
+	if (reached.copy(pos.trel, pos.dst, pos.r_to)) {
+	    queue.emplace_back(pos.dst, pos.r_to);
 	    return true;
 	}
 	return false;
     }
     Position dequeue() {
-	Position res = queue.front();
+	const PosPrefix& pre = queue.front();
+	Position res(pre.dst, pre.r_to, reached[pre.dst][pre.r_to]);
 	queue.pop_front();
 	return res;
     }

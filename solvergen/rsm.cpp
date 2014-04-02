@@ -250,8 +250,65 @@ void RSM::print(std::ostream& os, const Registry<Symbol>& symbol_reg) const {
     }
 }
 
+const std::string FSM::FILE_EXTENSION(".fsm.tgf");
+
+FSM::FSM(const std::string& fname, Registry<Symbol>& symbol_reg)
+    : base_effects(nullptr, symbol_reg) {
+    fs::path fpath(fname);
+    std::string fbase(fpath.filename().string());
+    EXPECT(boost::algorithm::ends_with(fbase, FILE_EXTENSION));
+
+    std::cout << "Parsing " << fbase << std::endl;
+    unsigned int old_sz = symbol_reg.size();
+    parse_component(fpath, comp, symbol_reg, Registry<Component>());
+    // HACK: Don't allow new symbols on the secondary machine.
+    // TODO: Also check that it covers all symbols from the primary one.
+    EXPECT(old_sz == symbol_reg.size());
+    // Disallow recursion.
+    EXPECT(comp.simple());
+
+    std::cout << "Calculating base effects" << std::endl;
+    for (const Transition& t : comp.transitions) {
+	base_effects.insert(t.label.rev, t.label.symbol, t.from, t.to);
+    }
+}
+
+bool FSM::is_accepting(const TransRel& trel) const {
+    FOR(tup, trel[comp.get_initial()]) {
+	if (comp.get_final().count(tup.get<F_TO>()) > 0) {
+	    return true;
+	}
+    }
+    return false;
+}
+
+void FSM::print(std::ostream& os, const Registry<Symbol>& symbol_reg) const {
+    os << "FSM:" << std::endl;
+    comp.print(os, symbol_reg, Registry<Component>());
+    os << "Base effects:" << std::endl;
+    for (const Symbol& s : symbol_reg) {
+	Label<false>(s, false).print(os, symbol_reg);
+	os << ":" << std::endl;
+	FOR(trans, base_effects[false][s.ref]) {
+	    os << "  " << comp.get_states()[trans.get<F_FROM>()].name << " "
+	       << comp.get_states()[trans.get<F_TO>()].name << std::endl;
+	}
+	Label<false>(s, true).print(os, symbol_reg);
+	os << ":" << std::endl;
+	FOR(trans, base_effects[true][s.ref]) {
+	    os << "  " << comp.get_states()[trans.get<F_FROM>()].name << " "
+	       << comp.get_states()[trans.get<F_TO>()].name << std::endl;
+	}
+    }
+}
+
+TransRel compose(const TransRel& trel1, const TransRel& trel2) {
+    return mi::join(trel1, trel2);
+}
+
 void Analysis::print(std::ostream& os) const {
     rsm.print(os, symbols);
+    fsm.print(os, symbols);
 }
 
 // GRAPH ======================================================================
@@ -330,15 +387,19 @@ void Graph::print_stats(std::ostream& os) const {
 }
 
 void Graph::print_summaries(const std::string& dirname,
-			    const Registry<Component>& comp_reg) const {
+			    const Registry<Component>& comp_reg,
+			    const FSM& fsm) const {
     fs::path dirpath(dirname);
     for (const Component& comp : comp_reg) {
 	std::string fname = comp.name + FILE_EXTENSION;
 	std::cout << "Printing " << fname << std::endl;
 	std::ofstream fout((dirpath/fname).string());
 	EXPECT(fout);
-	for (const Summary& s : summaries[comp.ref]) {
-	    fout << nodes[s.src].name << " " << nodes[s.dst].name << std::endl;
+	FOR(s, summaries[comp.ref]) {
+	    fout << nodes[s.get<SRC>()].name << " "
+		 << nodes[s.get<DST>()].name << " "
+		 << fsm.comp.get_states()[s.get<F_FROM>()].name << " "
+		 << fsm.comp.get_states()[s.get<F_TO>()].name << std::endl;
 	}
     }
 }
@@ -426,7 +487,7 @@ void Analysis::summarize(Graph& graph, const Component& comp) const {
 
     while (!worklist.empty()) {
 	const Worker& w = workers[worklist.dequeue()];
-	Worker::Result res = w.handle(graph);
+	Worker::Result res = w.handle(graph, fsm);
 	// Dependencies must be recorded first, to ensure we re-process the
 	// function in cases of self-recursion.
 	// TODO: Could insert the dependencies as we find them, inside the
@@ -434,14 +495,11 @@ void Analysis::summarize(Graph& graph, const Component& comp) const {
 	for (Ref<Node> dep_start : res.deps) {
 	    deps.insert(Dependence(dep_start, w.ref));
 	}
-	for (const Summary& s : res.summs) {
-	    assert(s.comp == comp.ref && s.src == workers[w.ref].start);
+	if (graph.summaries.copy(res.summs, w.comp.ref, w.start)) {
 	    unsigned int reschedules = 0;
-	    if (graph.summaries.insert(s).second) {
-		for (const Dependence& d : deps[s.src]) {
-		    if (worklist.enqueue(d.worker)) {
-			reschedules++;
-		    }
+	    for (const Dependence& d : deps[w.start]) {
+		if (worklist.enqueue(d.worker)) {
+		    reschedules++;
 		}
 	    }
 	    reschedule_freqs.record(reschedules);
@@ -460,7 +518,7 @@ void Analysis::propagate(Graph& graph, const Component& comp) const {
     // We can do this one node at a time.
     for (const Node& start : graph.nodes) {
 	unsigned int t_start = current_time();
-	Worker::Result res = Worker(start.ref, comp).handle(graph);
+	Worker::Result res = Worker(start.ref, comp).handle(graph, fsm);
 	// Ignore any emitted dependencies, they should have been handled
 	// during this component's summarization step.
 	// TODO: Don't produce at all.
@@ -468,12 +526,9 @@ void Analysis::propagate(Graph& graph, const Component& comp) const {
 	    std::cout << res.summs.size() << " summaries found in "
 		      << current_time() - t_start << " ms" << std::endl;
 	}
-	for (const Summary& s : res.summs) {
-	    assert(s.comp == comp.ref && s.src == start.ref);
-	    // Reachability information is stored like regular summaries.
-	    // TODO: Should separate?
-	    graph.summaries.insert(s);
-	}
+	// Reachability information is stored like regular summaries.
+	// TODO: Should separate?
+	graph.summaries.copy(res.summs, comp.ref, start.ref);
     }
 }
 
@@ -485,28 +540,45 @@ bool Worker::merge(const Component& comp,
     return tgts.size() > old_sz;
 }
 
-Worker::Result Worker::handle(const Graph& graph) const {
+Worker::Result Worker::handle(const Graph& graph, const FSM& fsm) const {
     Result res;
-    WorkerWorklist worklist(graph.nodes, comp.get_states());
-    Position start_pos(start, comp.get_initial());
+    WorkerWorklist worklist;
+    Ref<State> fsm_init = fsm.comp.get_initial();
+    TransRel start_trel;
+    if (top_level) {
+	start_trel.insert(fsm_init, fsm_init);
+    } else {
+	start_trel = fsm.id_trel();
+    }
+    Position start_pos(start, comp.get_initial(), start_trel);
     worklist.enqueue(start_pos);
 
     while (!worklist.empty()) {
 	Position pos = worklist.dequeue();
 
-	// Report a summary edge if we've reached a final state, at one of the
-	// "interesting" summary out-nodes (for the final top-down reachability
-	// step, any node works as a final node).
-	if ((top_level || tgts.count(pos.dst) > 0) &&
-	    comp.get_final().count(pos.r_to) > 0) {
-	    res.summs.emplace(start, pos.dst, comp.ref);
+	// Report a summary edge if we've reached a final state.
+	if (comp.get_final().count(pos.r_to) > 0) {
+	    if (// During the final top-down reachability step, we only accept
+		// initial-to-final FSM effects.
+		(top_level && fsm.is_accepting(pos.trel)) ||
+		// During the summarization step, we only emit a summary at one
+		// of the "interesting" summary out-nodes.
+		(!top_level && tgts.count(pos.dst) > 0)) {
+		res.summs.copy(pos.trel, pos.dst);
+	    }
 	}
 
 	// Cross edges according to the transitions out of the current state.
 	// TODO: Implicitly assumes all transition labels are untagged.
 	for (const Transition& t : comp.transitions[pos.r_to]) {
+	    TransRel new_trel = compose(pos.trel, fsm.effect_of(t.label));
+	    // Don't even search the graph if we couldn't follow the edge
+	    // anyway, due to FSM constraints.
+	    if (new_trel.empty()) {
+		continue;
+	    }
 	    FOR(e, graph.search(pos.dst, t.label)) {
-		worklist.enqueue(Position(e.get<DST>(), t.to));
+		worklist.enqueue(Position(e.get<DST>(), t.to, new_trel));
 	    }
 	}
 
@@ -517,6 +589,10 @@ Worker::Result Worker::handle(const Graph& graph) const {
 	    Ref<Component> sub_comp = comp.boxes[entry.to].comp;
 
 	    // Enter the box.
+	    TransRel in_trel = compose(pos.trel, fsm.effect_of(entry.label));
+	    if (in_trel.empty()) {
+		continue;
+	    }
 	    FOR(e_in, graph.search(pos.dst, entry.label)) {
 		Ref<Node> in_node = e_in.get<DST>();
 		Ref<Tag> in_tag = e_in.get<TAG>();
@@ -530,16 +606,26 @@ Worker::Result Worker::handle(const Graph& graph) const {
 
 		// Cross through any existing summary edges.
 		const auto& compat_summs = graph.summaries[sub_comp][in_node];
-		for (const Summary& s : compat_summs) {
-		    Ref<Node> out_node = s.dst;
+		for (Ref<Node> out_node : compat_summs) {
+		    TransRel sub_trel = compat_summs[out_node];
+		    TransRel out_trel = compose(in_trel, sub_trel);
+		    if (out_trel.empty()) {
+			continue;
+		    }
+
 		    // Cross through exit edges compatible with the previously
 		    // entered entry edge.
 		    for (const Exit& exit : comp.exits[entry.to]) {
+			TransRel full_trel =
+			    compose(out_trel, fsm.effect_of(exit.label));
+			if (full_trel.empty()) {
+			    continue;
+			}
 			const auto& slice =
 			    graph.search(out_node, exit.label)[in_tag];
 			FOR(e_out, slice) {
 			    worklist.enqueue(Position(e_out.get<DST>(),
-						      exit.to));
+						      exit.to, full_trel));
 			}
 		    }
 		}
@@ -558,6 +644,7 @@ int main(int argc, char* argv[]) {
 
     // User-defined parameters
     std::string rsm_dir;
+    std::string fsm_file;
     std::string graph_dir;
     std::string summ_dir;
 
@@ -567,12 +654,15 @@ int main(int argc, char* argv[]) {
 	("help,h", "Print help message")
 	("rsm-dir", po::value<std::string>(&rsm_dir)->required(),
 	 "Directory of RSM components")
+	("fsm-file", po::value<std::string>(&fsm_file)->required(),
+	 "Intersected FSM file")
 	("graph-dir", po::value<std::string>(&graph_dir)->required(),
 	 "Directory of edge files")
 	("summ-dir", po::value<std::string>(&summ_dir)->required(),
 	 "Directory to store the summaries");
     po::positional_options_description pos_desc;
     pos_desc.add("rsm-dir", 1);
+    pos_desc.add("fsm-file", 1);
     pos_desc.add("graph-dir", 1);
     pos_desc.add("summ-dir", 1);
     po::variables_map vm;
@@ -594,8 +684,9 @@ int main(int argc, char* argv[]) {
     std::cout.imbue(std::locale(""));
 
     // Parse input
-    std::cout << "Parsing RSM from " << rsm_dir << std::endl;
-    Analysis spec(rsm_dir);
+    std::cout << "Parsing RSM from " << rsm_dir << ", FSM from " << fsm_file
+	      << std::endl;
+    Analysis spec(rsm_dir, fsm_file);
     std::cout << "Parsing graph from " << graph_dir << std::endl;
     Graph graph(spec.symbols, graph_dir);
     graph.print_stats(std::cout);
@@ -613,7 +704,7 @@ int main(int argc, char* argv[]) {
 
     // Print the output
     std::cout << "Printing summaries" << std::endl;
-    graph.print_summaries(summ_dir, spec.rsm.components);
+    graph.print_summaries(summ_dir, spec.rsm.components, spec.fsm);
 
     // Timekeeping
     std::cout << "Output printing: " << current_time() - t_output << " ms"
