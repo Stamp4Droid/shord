@@ -664,6 +664,52 @@
               return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
             }
 
+            function addSrcSinkToggles(id) {
+
+                $('#'+id).on('opened', function () {
+	                    var $selected = $(this).find('.tree-item-name').filter ( function () {
+		                    if ($(this).text() == '') {
+		                        return true;
+		                    }
+	                    });
+	                    var dots = $selected.parent().find('.tree-dot');
+                            dots.parent().append('<i class="icon-eye-open"></i>');
+                            dots.remove();
+                });
+
+                $('#'+id).on('click','i.icon-eye-open, i.icon-eye-close', function() {
+
+	                	var $selected = $(this).parent().parent().find('.tree-folder-name');
+	                	var name = $selected.text();
+                            console.log("selected "+name);
+/*
+	                    var flow_regex = /Flow (\d+)/;
+	                    if (!flow_regex.test(name)) {
+	                        return;
+	                    }
+	                    var num = name.match(flow_regex)[1];
+
+	                    if ($(this)[0].className === 'icon-eye-close') {
+	                        $(this).parent().html('<i class="icon-eye-open"></i>');
+	                        flowSwitches[num-1] = true;
+	                        $('#srcsinkflowhelp').empty();
+	                        $('#srcsinkflowhelp').append('Taint from Flow '+num+' now hightlighted.')
+	                    } else {
+	                        $(this).parent().html('<i class="icon-eye-close"></i>');
+	                        flowSwitches[num-1] = false;
+	                        $('#srcsinkflowhelp').empty();
+	                        $('#srcsinkflowhelp').append('Not hightlighting taint from Flow '+num);
+	                    }
+
+		                var $activeCodeTabs = $('li.active a');
+		                for (var i = 0; i < $activeCodeTabs.length; ++i) {
+		                	var attr = $activeCodeTabs[i].getAttribute('href');
+		                	colorTaint(attr);
+		                }
+*/
+	                 });
+            }
+
             function addSrcSinkFlowBehavior(id) {
 
                 function escTags(str) {
@@ -844,6 +890,11 @@
             %>
                     addSrcSinkFlowBehavior('ResultTree<%=j%>');
 			<%
+                } else if (title.equals("Sinks") || title.equals("Sources")) {
+            %>
+                    addSrcSinkToggles('ResultTree<%=j%>');
+			<%
+
                 }
 				//}
 				j++;
