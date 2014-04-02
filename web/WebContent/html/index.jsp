@@ -249,6 +249,8 @@
 				var taintedVariables = $('#'+href).find("[name=taintedVariable]");
 			    for(var i=0; i<taintedVariables.length; ++i) {
 			    	var flowString = taintedVariables[i].getAttribute("flows");
+                                var ssspan = $(taintedVariables[i]).find(".srcSinkSpan")[0];
+                                var data = jQuery.parseJSON(atob($(ssspan).attr("data-stamp-srcsink")));
 			    	var taintedFlows = flowString.split(':');
 			    	if (flowString === 'null' || anyTaintedFlowShowing(taintedFlows)) {
 						taintedVariables[i].setAttribute("style", "background-color:#FFB2B2");
