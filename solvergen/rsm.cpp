@@ -100,10 +100,12 @@ void Component::print(std::ostream& os, const Registry<Symbol>& symbol_reg,
 }
 
 // ANALYSIS SPEC ==============================================================
+
 const std::string RSM::FILE_EXTENSION(".rsm.tgf");
 
 template<bool Tagged>
-Label<Tagged> RSM::parse_label(const std::string& str) {
+Label<Tagged> parse_label(const std::string& str,
+			  Registry<Symbol>& symbol_reg) {
     static const boost::regex r("(_)?([a-z]\\w*)(?:\\[([a-z\\*])\\])?");
     boost::smatch m;
     bool matched = boost::regex_match(str, m, r);
@@ -116,28 +118,21 @@ Label<Tagged> RSM::parse_label(const std::string& str) {
     EXPECT((Tagged && parametric && tag != "*") ||
 	   (!Tagged && (!parametric || tag == "*")));
 
-    return Label<Tagged>(symbols.add(name, parametric), rev);
+    return Label<Tagged>(symbol_reg.add(name, parametric), rev);
 }
 
-void RSM::parse_dir(const std::string& dirname) {
+RSM::RSM(const std::string& dirname, Registry<Symbol>& symbol_reg) {
     Directory dir(dirname);
     std::list<fs::path> files(dir.begin(), dir.end());
     files.sort();
     for (const fs::path& fpath : files) {
-	parse_file(fpath);
+	parse_file(fpath, symbol_reg);
     }
 }
 
-void RSM::parse_file(const fs::path& fpath) {
-    std::string fbase(fpath.filename().string());
-    if (!boost::algorithm::ends_with(fbase, FILE_EXTENSION)) {
-	return;
-    }
-    std::cout << "Parsing " << fbase << std::endl;
-    size_t name_len = fbase.size() - FILE_EXTENSION.size();
-    std::string name(fbase.substr(0, name_len));
-    Component& comp = components.make(name);
-
+void parse_component(const fs::path& fpath, Component& comp,
+		     Registry<Symbol>& symbol_reg,
+		     const Registry<Component>& comp_reg) {
     std::ifstream fin(fpath.string());
     EXPECT(fin);
     ParsingMode mode = ParsingMode::NODES;
@@ -181,7 +176,7 @@ void RSM::parse_file(const fs::path& fpath) {
 		    EXPECT(!box_rsm.valid());
 		    // The referenced component must be present in the RSM.
 		    // TODO: This means we only allow self-recursion.
-		    box_rsm = components.find(*iter).ref;
+		    box_rsm = comp_reg.find(*iter).ref;
 		}
 	    }
 	    if (can_be_state) {
@@ -207,20 +202,22 @@ void RSM::parse_file(const fs::path& fpath) {
 		Ref<State> src = comp.get_states().find(toks[0]).ref;
 		Ref<State> dst = comp.get_states().find(toks[1]).ref;
 		for (const std::string& t : label_toks) {
-		    comp.transitions.insert(Transition(src, dst,
-						       parse_label<false>(t)));
+		    Label<false> lab = parse_label<false>(t, symbol_reg);
+		    comp.transitions.insert(Transition(src, dst, lab));
 		}
 	    } else if (src_is_state && !dst_is_state) {
 		Ref<State> src = comp.get_states().find(toks[0]).ref;
 		Ref<Box> dst = comp.boxes.find(toks[1]).ref;
 		for (const std::string& t : label_toks) {
-		    comp.entries.insert(Entry(src, dst, parse_label<true>(t)));
+		    Label<true> lab = parse_label<true>(t, symbol_reg);
+		    comp.entries.insert(Entry(src, dst, lab));
 		}
 	    } else if (!src_is_state && dst_is_state) {
 		Ref<Box> src = comp.boxes.find(toks[0]).ref;
 		Ref<State> dst = comp.get_states().find(toks[1]).ref;
 		for (const std::string& t : label_toks) {
-		    comp.exits.insert(Exit(src, dst, parse_label<true>(t)));
+		    Label<true> lab = parse_label<true>(t, symbol_reg);
+		    comp.exits.insert(Exit(src, dst, lab));
 		}
 	    }
 	} break;
@@ -234,11 +231,27 @@ void RSM::parse_file(const fs::path& fpath) {
     EXPECT(mode == ParsingMode::EDGES);
 }
 
-void RSM::print(std::ostream& os) const {
+void RSM::parse_file(const fs::path& fpath, Registry<Symbol>& symbol_reg) {
+    std::string fbase(fpath.filename().string());
+    if (!boost::algorithm::ends_with(fbase, FILE_EXTENSION)) {
+	return;
+    }
+    std::cout << "Parsing " << fbase << std::endl;
+    size_t name_len = fbase.size() - FILE_EXTENSION.size();
+    std::string name(fbase.substr(0, name_len));
+    Component& comp = components.make(name);
+    parse_component(fpath, comp, symbol_reg, components);
+}
+
+void RSM::print(std::ostream& os, const Registry<Symbol>& symbol_reg) const {
     for (const Component& comp : components) {
 	os << comp.name << ":" << std::endl;
-	comp.print(os, symbols, components);
+	comp.print(os, symbol_reg, components);
     }
+}
+
+void Analysis::print(std::ostream& os) const {
+    rsm.print(os, symbols);
 }
 
 // GRAPH ======================================================================
@@ -347,46 +360,13 @@ Graph::subpath_bounds(const Label<true>& hd_lab,
     return res;
 }
 
-void RSM::propagate(Graph& graph) const {
+void Analysis::close(Graph& graph) const {
     // Components are processed in order of addition, which is guaranteed to be
     // a valid bottom-up order.
-    for (const Component& comp : components) {
+    for (const Component& comp : rsm.components) {
 	const unsigned int t_summ = current_time();
 	std::cout << "Summarizing " << comp.name << std::endl;
-
-	// We need to search through the uses of each component to find all
-	// compatible entry/exit node pairs on which we should summarize. This
-	// process needs to happen on the full RSM level.
-	// TODO: Use a better heuristic for the summarization order, to avoid
-	// rescheduling (e.g. based on call graph, for call matching).
-	Registry<Worker> workers;
-	for (const Component& user : components) {
-	    for (const Box& b : user.boxes) {
-		// TODO: This is a simple selection filter, we could have used
-		// an index on boxes instead.
-		if (b.comp != comp.ref) {
-		    continue;
-		}
-		// Pick all entry/exit node pairs compatible with any
-		// combination of entry/exit transitions to the current box.
-		// TODO: We're performing a separate graph traversal for each
-		// member of the cartesian product. Could instead keep these
-		// grouped and pass them as sets to subpath_bounds.
-		for (const Entry& i : user.entries.primary()[b.ref]) {
-		    for (const Exit& o : user.exits[b.ref]) {
-			std::map<Ref<Node>,std::set<Ref<Node>>> bounds =
-			    graph.subpath_bounds(i.label, o.label);
-			for (const auto& p : bounds) {
-			    // TODO: Duplicate entry/exit node pairs are
-			    // filtered through Registry's 'merge' mechanism.
-			    workers.add(p.first, comp, p.second);
-			}
-		    }
-		}
-	    }
-	}
-
-	comp.summarize(graph, workers);
+	summarize(graph, comp);
 	std::cout << "Done in " << current_time() - t_summ << " ms"
 		  << std::endl << std::endl;
     }
@@ -394,62 +374,85 @@ void RSM::propagate(Graph& graph) const {
     // Final propagation step for the top component in the RSM. All required
     // summarization has been completed at this point, and we only need to
     // perform forward propagation.
-    const Component& top_comp = components.last();
+    const Component& top_comp = rsm.components.last();
     const unsigned int t_prop = current_time();
     std::cout << "Propagating over " << top_comp.name << std::endl;
-    top_comp.propagate(graph);
-    std::cout << "Done in " << current_time() - t_prop << " ms" << std::endl;
-    std::cout << std::endl;
+    propagate(graph, top_comp);
+    std::cout << "Done in " << current_time() - t_prop << " ms"
+	      << std::endl << std::endl;
 }
 
-void Component::summarize(Graph& graph,
-			  const Registry<Worker>& workers) const {
+void Analysis::summarize(Graph& graph, const Component& comp) const {
+    Registry<Worker> workers;
     Index<Table<Dependence>,Ref<Node>,&Dependence::start> deps;
-    // TODO: Verify that all workers refer to this component.
     Worklist<Ref<Worker>,true> worklist;
+    Histogram<unsigned int> reschedule_freqs;
+
+    // We need to search through the uses of each component to find all
+    // compatible entry/exit node pairs on which we should summarize. This
+    // process needs to happen on the full RSM level.
+    // TODO: Use a better heuristic for the summarization order, to avoid
+    // rescheduling (e.g. based on call graph, for call matching).
+    for (const Component& user : rsm.components) {
+	for (const Box& b : user.boxes) {
+	    // TODO: This is a simple selection filter, we could have used an
+	    // index on boxes instead.
+	    if (b.comp != comp.ref) {
+		continue;
+	    }
+	    // Pick all entry/exit node pairs compatible with any combination
+	    // of entry/exit transitions to the current box.
+	    // TODO: We're performing a separate graph traversal for each
+	    // member of the cartesian product. Could instead keep these
+	    // grouped and pass them as sets to subpath_bounds.
+	    for (const Entry& i : user.entries.primary()[b.ref]) {
+		for (const Exit& o : user.exits[b.ref]) {
+		    std::map<Ref<Node>,std::set<Ref<Node>>> bounds =
+			graph.subpath_bounds(i.label, o.label);
+		    for (const auto& p : bounds) {
+			// TODO: Duplicate entry/exit node pairs are
+			// filtered through Registry's 'merge' mechanism.
+			workers.add(p.first, comp, p.second);
+		    }
+		}
+	    }
+	}
+    }
     for (const Worker& w : workers) {
 	worklist.enqueue(w.ref);
     }
 
-    Histogram<unsigned int> new_summ_freqs;
-    Histogram<unsigned int> reschedule_freqs;
+    std::cout << "Starting with " << workers.size() << " workers" << std::endl;
 
     while (!worklist.empty()) {
-	Ref<Worker> w = worklist.dequeue();
-	Worker::Result res = workers[w].summarize(graph);
+	const Worker& w = workers[worklist.dequeue()];
+	Worker::Result res = w.handle(graph);
 	// Dependencies must be recorded first, to ensure we re-process the
 	// function in cases of self-recursion.
 	// TODO: Could insert the dependencies as we find them, inside the
 	// function-local propagation; no need to pass them in a separate set.
-	for (const Dependence& d : res.deps) {
-	    assert(d.worker == w);
-	    deps.insert(d);
+	for (Ref<Node> dep_start : res.deps) {
+	    deps.insert(Dependence(dep_start, w.ref));
 	}
-	for (const Summary& s : res.summaries) {
-	    assert(s.comp == ref && s.src == workers[w].start);
-	    unsigned int new_summs = 0;
+	for (const Summary& s : res.summs) {
+	    assert(s.comp == comp.ref && s.src == workers[w.ref].start);
 	    unsigned int reschedules = 0;
 	    if (graph.summaries.insert(s).second) {
-		new_summs++;
 		for (const Dependence& d : deps[s.src]) {
 		    if (worklist.enqueue(d.worker)) {
 			reschedules++;
 		    }
 		}
 	    }
-	    new_summ_freqs.record(new_summs);
 	    reschedule_freqs.record(reschedules);
 	}
     }
 
-    std::cout << "Started with " << workers.size() << " workers" << std::endl;
-    std::cout << "Summary addition frequency:" << std::endl;
-    std::cout << new_summ_freqs;
     std::cout << "Reschedules frequency:" << std::endl;
     std::cout << reschedule_freqs;
 }
 
-void Component::propagate(Graph& graph) const {
+void Analysis::propagate(Graph& graph, const Component& comp) const {
     // We try starting from each node in the graph. The shape of the top
     // component (or any secondary dimensions) can enforce additional
     // constraints on acceptable sources.
@@ -457,16 +460,16 @@ void Component::propagate(Graph& graph) const {
     // We can do this one node at a time.
     for (const Node& start : graph.nodes) {
 	unsigned int t_start = current_time();
-	Worker::Result res = Worker(start.ref, *this).summarize(graph);
+	Worker::Result res = Worker(start.ref, comp).handle(graph);
 	// Ignore any emitted dependencies, they should have been handled
 	// during this component's summarization step.
 	// TODO: Don't produce at all.
-	if (!res.summaries.empty()) {
-	    std::cout << res.summaries.size() << " summaries found in "
+	if (!res.summs.empty()) {
+	    std::cout << res.summs.size() << " summaries found in "
 		      << current_time() - t_start << " ms" << std::endl;
 	}
-	for (const Summary& s : res.summaries) {
-	    assert(s.comp == ref && s.src == start.ref);
+	for (const Summary& s : res.summs) {
+	    assert(s.comp == comp.ref && s.src == start.ref);
 	    // Reachability information is stored like regular summaries.
 	    // TODO: Should separate?
 	    graph.summaries.insert(s);
@@ -482,26 +485,27 @@ bool Worker::merge(const Component& comp,
     return tgts.size() > old_sz;
 }
 
-Worker::Result Worker::summarize(const Graph& graph) const {
+Worker::Result Worker::handle(const Graph& graph) const {
     Result res;
-    SummaryWorklist worklist(graph.nodes, comp.get_states());
-    worklist.enqueue(Position(start, comp.get_initial()));
+    WorkerWorklist worklist(graph.nodes, comp.get_states());
+    Position start_pos(start, comp.get_initial());
+    worklist.enqueue(start_pos);
 
     while (!worklist.empty()) {
-	Position pos{worklist.dequeue()};
+	Position pos = worklist.dequeue();
 
 	// Report a summary edge if we've reached a final state, at one of the
 	// "interesting" summary out-nodes (for the final top-down reachability
 	// step, any node works as a final node).
-	if ((tgts.empty() || tgts.count(pos.node) > 0) &&
-	    comp.get_final().count(pos.state) > 0) {
-	    res.summaries.emplace(start, pos.node, comp.ref);
+	if ((top_level || tgts.count(pos.dst) > 0) &&
+	    comp.get_final().count(pos.r_to) > 0) {
+	    res.summs.emplace(start, pos.dst, comp.ref);
 	}
 
 	// Cross edges according to the transitions out of the current state.
 	// TODO: Implicitly assumes all transition labels are untagged.
-	for (const Transition& t : comp.transitions[pos.state]) {
-	    FOR(e, graph.search(pos.node, t.label)) {
+	for (const Transition& t : comp.transitions[pos.r_to]) {
+	    FOR(e, graph.search(pos.dst, t.label)) {
 		worklist.enqueue(Position(e.get<DST>(), t.to));
 	    }
 	}
@@ -509,26 +513,30 @@ Worker::Result Worker::summarize(const Graph& graph) const {
 	// Cross summary edges according to the boxes that the current state
 	// enters into. The entry, box, and all exits are crossed in one step.
 	// TODO: Implicitly assumes all entry/exit labels are tagged.
-	for (const Entry& entry : comp.entries.secondary<0>()[pos.state]) {
+	for (const Entry& entry : comp.entries.secondary<0>()[pos.r_to]) {
 	    Ref<Component> sub_comp = comp.boxes[entry.to].comp;
-	    FOR(e_in, graph.search(pos.node, entry.label)) {
-		Ref<Node> sub_in = e_in.get<DST>();
 
-		// If this is a self-referring box (TODO: or any box in the
-		// current RSM SCC, if we ever support non-singleton SCCs),
-		// record our dependence on it.
+	    // Enter the box.
+	    FOR(e_in, graph.search(pos.dst, entry.label)) {
+		Ref<Node> in_node = e_in.get<DST>();
+		Ref<Tag> in_tag = e_in.get<TAG>();
+
+		// If this is a self-reference, record our dependence on it
+		// (otherwise it must refer to a component further down the
+		// tree, which has already been fully summarized).
 		if (sub_comp == comp.ref) {
-		    res.deps.insert(Dependence(sub_in, ref));
+		    res.deps.insert(in_node);
 		}
 
 		// Cross through any existing summary edges.
-		for (const Summary& s : graph.summaries[sub_comp][sub_in]) {
-		    Ref<Node> sub_out = s.dst;
+		const auto& compat_summs = graph.summaries[sub_comp][in_node];
+		for (const Summary& s : compat_summs) {
+		    Ref<Node> out_node = s.dst;
 		    // Cross through exit edges compatible with the previously
 		    // entered entry edge.
 		    for (const Exit& exit : comp.exits[entry.to]) {
 			const auto& slice =
-			    graph.search(sub_out, exit.label)[e_in.get<TAG>()];
+			    graph.search(out_node, exit.label)[in_tag];
 			FOR(e_out, slice) {
 			    worklist.enqueue(Position(e_out.get<DST>(),
 						      exit.to));
@@ -586,11 +594,10 @@ int main(int argc, char* argv[]) {
     std::cout.imbue(std::locale(""));
 
     // Parse input
-    RSM rsm;
-    std::cout << "Parsing RSM components from " << rsm_dir << std::endl;
-    rsm.parse_dir(rsm_dir);
+    std::cout << "Parsing RSM from " << rsm_dir << std::endl;
+    Analysis spec(rsm_dir);
     std::cout << "Parsing graph from " << graph_dir << std::endl;
-    Graph graph(rsm.symbols, graph_dir);
+    Graph graph(spec.symbols, graph_dir);
     graph.print_stats(std::cout);
 
     // Timekeeping
@@ -599,14 +606,14 @@ int main(int argc, char* argv[]) {
 	      << std::endl << std::endl;
 
     // Perform actual solving
-    rsm.propagate(graph);
+    spec.close(graph);
 
     // Timekeeping
     const unsigned int t_output = current_time();
 
     // Print the output
     std::cout << "Printing summaries" << std::endl;
-    graph.print_summaries(summ_dir, rsm.components);
+    graph.print_summaries(summ_dir, spec.rsm.components);
 
     // Timekeeping
     std::cout << "Output printing: " << current_time() - t_output << " ms"

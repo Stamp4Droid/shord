@@ -20,8 +20,8 @@ TUPLE_TAG(SRC);
 TUPLE_TAG(DST);
 TUPLE_TAG(TAG);
 TUPLE_TAG(COMP);
-TUPLE_TAG(NODE);
-TUPLE_TAG(STATE);
+TUPLE_TAG(R_FROM);
+TUPLE_TAG(R_TO);
 
 // ALPHABET ===================================================================
 
@@ -204,8 +204,6 @@ public:
     }
     void print(std::ostream& os, const Registry<Symbol>& symbol_reg,
 	       const Registry<Component>& comp_reg) const;
-    void summarize(Graph& graph, const Registry<Worker>& workers) const;
-    void propagate(Graph& graph) const;
 };
 
 // ANALYSIS SPEC ==============================================================
@@ -214,15 +212,26 @@ class RSM {
 public:
     static const std::string FILE_EXTENSION;
 public:
-    Registry<Symbol> symbols;
     Registry<Component> components;
 private:
-    template<bool Tagged> Label<Tagged> parse_label(const std::string& str);
+    void parse_file(const fs::path& fpath, Registry<Symbol>& symbol_reg);
 public:
-    void parse_dir(const std::string& dirname);
-    void parse_file(const fs::path& fpath);
+    explicit RSM(const std::string& dirname, Registry<Symbol>& symbol_reg);
+    void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
+};
+
+class Analysis {
+public:
+    Registry<Symbol> symbols;
+    RSM rsm;
+private:
+    void summarize(Graph& graph, const Component& comp) const;
+    void propagate(Graph& graph, const Component& comp) const;
+public:
+    explicit Analysis(const std::string& rsm_dname)
+	: rsm(rsm_dname, symbols) {}
     void print(std::ostream& os) const;
-    void propagate(Graph& graph) const;
+    void close(Graph& graph) const;
 };
 
 // GRAPH ======================================================================
@@ -337,15 +346,14 @@ public:
 // SOLVING ====================================================================
 
 class Dependence;
-class SummaryWorklist;
 
 // TODO: alternative name ("Summarizer"? "Propagator"?)
 class Worker {
 public:
 
     struct Result {
-	std::set<Summary> summaries;
-	std::set<Dependence> deps;
+	std::set<Summary> summs;
+	std::set<Ref<Node>> deps;
     };
 
 private:
@@ -355,19 +363,20 @@ public:
     const Ref<Node> start; // used as primary key, to identify a Worker
     const Ref<Worker> ref;
     const Component& comp;
+    const bool top_level;
 private:
-    std::set<Ref<Node>> tgts; // if empty, any Node is acceptable
+    std::set<Ref<Node>> tgts;
 private:
     explicit Worker(Ref<Node> start, Ref<Worker> ref, const Component& comp,
 		    const std::set<Ref<Node>>& tgts)
-	: start(start), ref(ref), comp(comp), tgts(tgts) {
-	EXPECT(!tgts.empty());
+	: start(start), ref(ref), comp(comp), top_level(false), tgts(tgts) {
+	assert(!tgts.empty());
     }
     bool merge(const Component& comp, const std::set<Ref<Node>>& new_tgts);
 public:
     explicit Worker(Ref<Node> start, const Component& comp)
-	: start(start), comp(comp) {}
-    Result summarize(const Graph& graph) const;
+	: start(start), comp(comp), top_level(true) {}
+    Result handle(const Graph& graph) const;
 };
 
 // TODO: Should include the component if we support multiple components in SCCs
@@ -386,32 +395,28 @@ public:
 
 class Position {
 public:
-    const Ref<Node> node;
-    const Ref<State> state;
+    const Ref<Node> dst;
+    const Ref<State> r_to;
 public:
     // TODO: Only construct through a 'follow' method, not directly?
-    explicit Position(Ref<Node> node, Ref<State> state)
-	: node(node), state(state) {}
-    bool operator<(const Position& rhs) const {
-	return (std::tie(    node,     state) <
-		std::tie(rhs.node, rhs.state));
-    }
+    explicit Position(Ref<Node> dst, Ref<State> r_to)
+	: dst(dst), r_to(r_to) {}
 };
 
-class SummaryWorklist {
+class WorkerWorklist {
 private:
-    mi::FlatIndex<NODE, Ref<Node>,
-		  mi::BitSet<STATE, Ref<State>>> reached;
+    mi::FlatIndex<DST, Ref<Node>,
+	mi::BitSet<R_TO, Ref<State>>> reached;
     std::deque<Position> queue;
 public:
-    explicit SummaryWorklist(const Registry<Node>& nodes,
-			     const Registry<State>& states)
+    explicit WorkerWorklist(const Registry<Node>& nodes,
+			    const Registry<State>& states)
 	: reached(nodes, states) {}
     bool empty() const {
 	return queue.empty();
     }
     bool enqueue(const Position& pos) {
-	if (reached.insert(pos.node, pos.state)) {
+	if (reached.insert(pos.dst, pos.r_to)) {
 	    queue.push_back(pos);
 	    return true;
 	}
