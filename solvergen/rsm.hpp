@@ -62,7 +62,7 @@ public:
     }
 };
 
-// RSM ========================================================================
+// SM COMPONENTS ==============================================================
 
 class Component;
 class Graph;
@@ -118,7 +118,8 @@ public:
 public:
     explicit Transition(Ref<State> from, Ref<State> to, Label<false> label)
 	: from(from), to(to), label(label) {}
-    void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
+    void print(std::ostream& os, const Registry<State>& state_reg,
+	       const Registry<Symbol>& symbol_reg) const;
     bool operator<(const Transition& rhs) const {
 	return (std::tie(    from,     to,     label) <
 		std::tie(rhs.from, rhs.to, rhs.label));
@@ -138,7 +139,9 @@ public:
 public:
     explicit Entry(Ref<State> from, Ref<Box> to, Label<true> label)
 	: from(from), to(to), label(label) {}
-    void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
+    void print(std::ostream& os, const Registry<State>& state_reg,
+	       const Registry<Box>& box_reg,
+	       const Registry<Symbol>& symbol_reg) const;
     bool operator<(const Entry& rhs) const {
 	return (std::tie(    from,     to,     label) <
 		std::tie(rhs.from, rhs.to, rhs.label));
@@ -153,7 +156,9 @@ public:
 public:
     explicit Exit(Ref<Box> from, Ref<State> to, Label<true> label)
 	: from(from), to(to), label(label) {}
-    void print(std::ostream& os, const Registry<Symbol>& symbol_reg) const;
+    void print(std::ostream& os, const Registry<State>& state_reg,
+	       const Registry<Box>& box_reg,
+	       const Registry<Symbol>& symbol_reg) const;
     bool operator<(const Exit& rhs) const {
 	return (std::tie(    from,     to,     label) <
 		std::tie(rhs.from, rhs.to, rhs.label));
@@ -202,6 +207,8 @@ public:
     void summarize(Graph& graph, const Registry<Worker>& workers) const;
     void propagate(Graph& graph) const;
 };
+
+// ANALYSIS SPEC ==============================================================
 
 class RSM {
 public:

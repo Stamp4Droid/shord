@@ -24,10 +24,10 @@ void Label<Tagged>::print(std::ostream& os,
     }
 }
 
-// RSM ========================================================================
+// SM COMPONENTS ==============================================================
 
 void State::print(std::ostream& os) const {
-    os << "State" << ref;
+    os << name;
     if (initial) {
 	os << " in";
     }
@@ -38,24 +38,28 @@ void State::print(std::ostream& os) const {
 }
 
 void Box::print(std::ostream& os, const Registry<Component>& comp_reg) const {
-    os << "Box" << ref << " " << comp_reg[comp].name << std::endl;
+    os << name << " " << comp_reg[comp].name << std::endl;
 }
 
-void Transition::print(std::ostream& os,
+void Transition::print(std::ostream& os, const Registry<State>& state_reg,
 		       const Registry<Symbol>& symbol_reg) const {
-    os << "State" << from << " State" << to << " ";
+    os << state_reg[from].name << " " << state_reg[to].name << " ";
     label.print(os, symbol_reg);
     os << std::endl;
 }
 
-void Entry::print(std::ostream& os, const Registry<Symbol>& symbol_reg) const {
-    os << "State" << from << " Box" << to << " ";
+void Entry::print(std::ostream& os, const Registry<State>& state_reg,
+		  const Registry<Box>& box_reg,
+		  const Registry<Symbol>& symbol_reg) const {
+    os << state_reg[from].name << " " << box_reg[to].name << " ";
     label.print(os, symbol_reg);
     os << std::endl;
 }
 
-void Exit::print(std::ostream& os, const Registry<Symbol>& symbol_reg) const {
-    os << "Box" << from << " State" << to << " ";
+void Exit::print(std::ostream& os, const Registry<State>& state_reg,
+		 const Registry<Box>& box_reg,
+		 const Registry<Symbol>& symbol_reg) const {
+    os << box_reg[from].name << " " << state_reg[to].name << " ";
     label.print(os, symbol_reg);
     os << std::endl;
 }
@@ -85,16 +89,17 @@ void Component::print(std::ostream& os, const Registry<Symbol>& symbol_reg,
     }
     os << "#" << std::endl;
     for (const Transition& t : transitions) {
-	t.print(os, symbol_reg);
+	t.print(os, states, symbol_reg);
     }
     for (const Entry& e : entries) {
-	e.print(os, symbol_reg);
+	e.print(os, states, boxes, symbol_reg);
     }
     for (const Exit& e : exits) {
-	e.print(os, symbol_reg);
+	e.print(os, states, boxes, symbol_reg);
     }
 }
 
+// ANALYSIS SPEC ==============================================================
 const std::string RSM::FILE_EXTENSION(".rsm.tgf");
 
 template<bool Tagged>
