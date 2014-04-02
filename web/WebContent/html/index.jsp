@@ -244,13 +244,28 @@
 				return false;
 			}
 
+                        function ssTainted(ssdata) {
+                            if ($.inArray('$getExtras',ssdata.sources) < 0) {
+                                console.log('Found $getExtras in sources');
+                                return true;
+                            } else if ($.inArray('$getExtras', ssdata.sinks) < 0) {
+                                console.log('Found $getExtras in sinks');
+                                return true;
+                            }
+                            return false;
+                        }
+                        
+
 			function colorTaint(href) {
 				href = href.replace('#','');
 				var taintedVariables = $('#'+href).find("[name=taintedVariable]");
 			    for(var i=0; i<taintedVariables.length; ++i) {
 			    	var flowString = taintedVariables[i].getAttribute("flows");
                                 var ssspan = $(taintedVariables[i]).find(".srcSinkSpan")[0];
-                                var data = jQuery.parseJSON(atob($(ssspan).attr("data-stamp-srcsink")));
+                                var ssdata = jQuery.parseJSON(atob($(ssspan).attr("data-stamp-srcsink")));
+                                if (ssTainted(ssdata)) {
+                                    console.log('Source or Sink Tainted by $getExtras');
+                                }
 			    	var taintedFlows = flowString.split(':');
 			    	if (flowString === 'null' || anyTaintedFlowShowing(taintedFlows)) {
 						taintedVariables[i].setAttribute("style", "background-color:#FFB2B2");
