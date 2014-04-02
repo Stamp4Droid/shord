@@ -502,6 +502,9 @@ public:
     unsigned int size() const {
 	return array.size();
     }
+    bool empty() const {
+	return array.empty();
+    }
     const T& first() const {
 	return array.front().get();
     }
@@ -1073,6 +1076,7 @@ public:
 //   all sub-containers must have the same size
 //   can this be done dynamically?
 //   need variable-size class support?
+// - KeyIter on Table iterates over the values
 
 // Uniquing infrastructure:
 // - works for any kind of Index class
@@ -1951,7 +1955,7 @@ template<class Idx> class Immut {
     friend Uniq<Idx> join<>(const Uniq<Idx>& r, const Uniq<Idx>& s);
     // TODO: This is not as tight as possible, but it allows us to unique
     // classes that don't support identity building.
-    template<class T> friend T
+    template<class T> friend Uniq<T>
     uniq_id(const typename KeyTraits<typename T::Key>::SizeHint& hint);
 private:
     // Can't simply declare this as a static field, because of initialization
@@ -2005,12 +2009,13 @@ template<class Idx> class Uniq {
     friend Uniq join<>(const Uniq& r, const Uniq& s);
     // TODO: This is not as tight as possible, but it allows us to unique
     // classes that don't support identity building.
-    template<class T> friend T
-    uniq_iq(const typename KeyTraits<typename T::Key>::SizeHint& hint);
+    template<class T> friend Uniq<T>
+    uniq_id(const typename KeyTraits<typename T::Key>::SizeHint& hint);
 public:
     typedef typename Idx::Key Key;
     typedef typename Idx::Sub Sub;
-    typedef typename Idx::Iterator Iterator;
+    class Iterator;
+    friend Iterator;
     typedef typename Idx::KeyIter KeyIter;
     typedef typename Idx::Tuple Tuple;
 private:
@@ -2040,7 +2045,9 @@ public:
 	return old_cell != cell_ref;
     }
     Iterator iter(Tuple& tgt) const {
-	return real_idx().iter(tgt);
+	Iterator it(tgt);
+	it.migrate(*this);
+	return it;
     }
     KeyIter begin() const {
 	return real_idx().begin();
@@ -2057,6 +2064,20 @@ public:
     bool operator<(const Uniq& rhs) const {
 	return (real_idx() < rhs.real_idx());
     }
+public:
+
+    class Iterator {
+    private:
+	typename Idx::Iterator real_iter;
+    public:
+	explicit Iterator(Tuple& tgt) : real_iter(tgt) {}
+	void migrate(const Uniq& uniqd) {
+	    real_iter.migrate(uniqd.real_idx());
+	}
+	bool next() {
+	    return real_iter.next();
+	}
+    };
 };
 
 } // namespace mi
