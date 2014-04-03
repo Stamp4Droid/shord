@@ -172,6 +172,28 @@
 		</script>
 		
 		<script>
+                    /* Trick for on show event from 
+                       http://stackoverflow.com/questions/1225102/jquery-event-to-trigger-action-when-a-div-is-made-visible */
+                      var _oldShow = $.fn.show;
+
+                      $.fn.show = function(speed, oldCallback) {
+                        return $(this).each(function() {
+                          var obj         = $(this),
+                              newCallback = function() {
+                                if ($.isFunction(oldCallback)) {
+                                  oldCallback.apply(obj);
+                                }
+                              };
+
+                          // you can trigger a before show if you want
+                          obj.trigger('beforeShow');
+
+                          // now use the old function to show the element passing the new callback
+                          _oldShow.apply(obj, [speed, newCallback]);
+                          obj.trigger('afterShow');
+                        });
+                      };
+
 		  function contract(b,id) {
 		    document.getElementById(id).style.display = "none";
 		    b.innerHTML = "Expand";
@@ -666,15 +688,12 @@
 
             function addSrcSinkToggles(id) {
 
-                $('#'+id).on('opened', function () {
-	                    var $selected = $(this).find('.tree-item-name').filter ( function () {
-		                    if ($(this).text() == '') {
+                var x = $('#'+id).parent();
+                $('#'+id).parent().bind('afterShow', function () {
+	                    var $selected = $(this).find('.tree-folder-name').filter ( function () {
 		                        return true;
-		                    }
 	                    });
-	                    var dots = $selected.parent().find('.tree-dot');
-                            dots.parent().append('<i class="icon-eye-open"></i>');
-                            dots.remove();
+                            $selected.append('<i class="icon-eye-open" style="position:relative; float:right;"></i>');
                 });
 
                 $('#'+id).on('click','i.icon-eye-open, i.icon-eye-close', function() {
@@ -688,19 +707,17 @@
 	                        return;
 	                    }
 	                    var num = name.match(flow_regex)[1];
+*/
 
 	                    if ($(this)[0].className === 'icon-eye-close') {
-	                        $(this).parent().html('<i class="icon-eye-open"></i>');
-	                        flowSwitches[num-1] = true;
-	                        $('#srcsinkflowhelp').empty();
-	                        $('#srcsinkflowhelp').append('Taint from Flow '+num+' now hightlighted.')
+	                        $(this).parent().append('<i class="icon-eye-open" style="position:relative; float:right;"></i>');
+                                $(this).remove();
 	                    } else {
-	                        $(this).parent().html('<i class="icon-eye-close"></i>');
-	                        flowSwitches[num-1] = false;
-	                        $('#srcsinkflowhelp').empty();
-	                        $('#srcsinkflowhelp').append('Not hightlighting taint from Flow '+num);
+	                        $(this).parent().append('<i class="icon-eye-close" style="position:relative; float:right;"></i>');
+                                $(this).remove();
 	                    }
 
+/*
 		                var $activeCodeTabs = $('li.active a');
 		                for (var i = 0; i < $activeCodeTabs.length; ++i) {
 		                	var attr = $activeCodeTabs[i].getAttribute('href');
