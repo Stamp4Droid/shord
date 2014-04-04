@@ -688,12 +688,13 @@
 
             function addSrcSinkToggles(id) {
 
-                var x = $('#'+id).parent();
                 $('#'+id).parent().bind('afterShow', function () {
 	                    var $selected = $(this).find('.tree-folder-name').filter ( function () {
 		                        return true;
 	                    });
-                            $selected.append('<i class="icon-eye-open" style="position:relative; float:right;"></i>');
+                            if ($selected.find('i.icon-eye-open, i.icon-eye-close').length == 0) {
+                                $selected.append('<i class="icon-eye-open" style="position:relative; float:right;"></i>');
+                            }
                 });
 
                 $('#'+id).on('click','i.icon-eye-open, i.icon-eye-close', function() {
