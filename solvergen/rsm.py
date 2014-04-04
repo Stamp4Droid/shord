@@ -85,7 +85,7 @@ class Machine(util.BaseClass):
             self._lits = []
             # States not in self._refd are regular states (only those can be
             # initial or final).
-            self._refd = {} # state name -> Component
+            self._refd = {} # state name -> Reference
             self._anon_states = 0
         else:
             self._nfa = orig._nfa.reversal()
@@ -147,6 +147,9 @@ class Machine(util.BaseClass):
 
     def states(self):
         return self._nfa.States
+
+    def refd_comps(self):
+        return set([ref.comp for ref in self._refd.itervalues()])
 
     def initial(self):
         return [self._nfa.States[i] for i in self._nfa.Initial]
@@ -234,7 +237,7 @@ class Machine(util.BaseClass):
         for src_idx in fd:
             for dst_idx in fd[src_idx]:
                 lits = fd[src_idx].get(dst_idx)
-                label = lit2str(lits[0]) + (' ...' if len(lits) > 1 else '')
+                label = r'\n'.join([lit2str(l) for l in lits])
                 out.write('  %s -> %s [label = "%s"];\n' %
                           (src_idx, dst_idx, label))
         out.write('}\n')
@@ -260,6 +263,9 @@ class Component(util.Hashable):
         self.str.finalize()
         self.rev = Machine(self.str)
 
+    def refd_comps(self):
+        return self.str.refd_comps()
+
     def __key__(self):
         return (self.name, )
 
@@ -277,6 +283,11 @@ class Component(util.Hashable):
 
     def inline(self, src, machine, dst):
         self.str.inline(src, machine, dst)
+
+    def write(self, out_dir):
+        out_file = os.path.join(out_dir, self.name + '.rsm.tgf')
+        with open(out_file, 'w') as out:
+            self.str.dump_tgf(out)
 
     def dump(self, out):
         out.write('%s:\n\n' % Reference(False, self))
@@ -298,6 +309,14 @@ class RSM(util.BaseClass):
         # that also reflects their stratification.
         for fname in sorted(files):
             self._parse_comp(fname)
+        self._out_comps = set() # set<Component>
+        self._add_out_comp(list(self._components)[-1])
+
+    def _add_out_comp(self, comp):
+        if comp not in self._out_comps:
+            self._out_comps.add(comp)
+            for c in comp.refd_comps():
+                self._add_out_comp(c)
 
     def _parse_comp(self, fname):
         name = splitext(splitext(basename(fname))[0])[0]
@@ -374,6 +393,10 @@ class RSM(util.BaseClass):
                 lit = self._parse_lit(s)
                 self._curr_comp.add_trans(src, lit, dst)
 
+    def write(self, out_dir):
+        for comp in self._out_comps:
+            comp.write(out_dir)
+
     def dump(self, out):
         for comp in self._components:
             comp.dump(out)
@@ -382,7 +405,11 @@ if __name__ == '__main__':
     # Just dump all components.
     parser = argparse.ArgumentParser()
     parser.add_argument('rsm_dir')
+    parser.add_argument('out_dir', nargs='?')
     args = parser.parse_args()
 
     rsm = RSM(args.rsm_dir)
-    rsm.dump(sys.stdout)
+    if args.out_dir is not None:
+        rsm.write(args.out_dir)
+    else:
+        rsm.dump(sys.stdout)
