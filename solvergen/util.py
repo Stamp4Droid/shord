@@ -39,10 +39,10 @@ class BaseClass(object):
         else:
             raise Exception('Attribute %s is final' % name)
 
-    def __eq__(self):
+    def __eq__(self, other):
         raise NotImplementedError()
 
-    def __ne__(self):
+    def __ne__(self, other):
         raise NotImplementedError()
 
     __hash__ = None
