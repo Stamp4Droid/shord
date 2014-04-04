@@ -11,7 +11,7 @@
 11 out
 12 
 13 
-14 
+14 Alias
 #
 1 2 label2Ref
 1 3 label2Prim
@@ -33,8 +33,8 @@
 5 10 ref2Ref
 12 3 arrLoadPrim
 10 12 Alias
-3 13 storePrim[*]
-13 7 Alias
-10 14 Alias
-14 10 arrLoadRef
+10 13 Alias
+13 10 arrLoadRef
 5 3 ref2Prim
+3 14 storePrim[f]
+14 3 loadPrim[f]

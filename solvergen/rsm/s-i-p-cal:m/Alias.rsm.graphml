@@ -154,55 +154,7 @@
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e1" source="n1" target="n1">
-      <data key="d10">
-        <y:ArcEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="223.60000610351562" y="-1.1080000400543213"/>
-          </y:Path>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="standard"/>
-          <y:Arc height="0.0" ratio="1.0" type="fixedRatio"/>
-        </y:ArcEdge>
-      </data>
-    </edge>
-    <edge id="e2" source="n1" target="n1">
-      <data key="d10">
-        <y:ArcEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="223.60000610351562" y="-1.1080000400543213"/>
-          </y:Path>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="standard"/>
-          <y:Arc height="0.0" ratio="1.0" type="fixedRatio"/>
-        </y:ArcEdge>
-      </data>
-    </edge>
-    <edge id="e3" source="n2" target="n2">
-      <data key="d10">
-        <y:ArcEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="-25.399999618530273" y="-0.1080000028014183"/>
-          </y:Path>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="standard"/>
-          <y:Arc height="0.0" ratio="1.0" type="fixedRatio"/>
-        </y:ArcEdge>
-      </data>
-    </edge>
-    <edge id="e4" source="n2" target="n2">
-      <data key="d10">
-        <y:ArcEdge>
-          <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="-25.399999618530273" y="-0.1080000028014183"/>
-          </y:Path>
-          <y:LineStyle color="#000000" type="line" width="1.0"/>
-          <y:Arrows source="none" target="standard"/>
-          <y:Arc height="0.0" ratio="1.0" type="fixedRatio"/>
-        </y:ArcEdge>
-      </data>
-    </edge>
-    <edge id="e5" source="n2" target="n0">
+    <edge id="e1" source="n2" target="n0">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -220,7 +172,7 @@
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e6" source="n1" target="n4">
+    <edge id="e2" source="n1" target="n4">
       <data key="d10">
         <y:ArcEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -240,7 +192,7 @@
         </y:ArcEdge>
       </data>
     </edge>
-    <edge id="e7" source="n4" target="n1">
+    <edge id="e3" source="n4" target="n1">
       <data key="d10">
         <y:ArcEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -260,7 +212,7 @@
         </y:ArcEdge>
       </data>
     </edge>
-    <edge id="e8" source="n1" target="n1">
+    <edge id="e4" source="n1" target="n1">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -282,7 +234,7 @@ retRef[*]<y:LabelModel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e9" source="n2" target="n2">
+    <edge id="e5" source="n2" target="n2">
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="7.528666666666368">
@@ -304,7 +256,7 @@ _retRef[*]<y:LabelModel>
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="e10" source="n2" target="n3">
+    <edge id="e6" source="n2" target="n3">
       <data key="d10">
         <y:ArcEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -324,7 +276,7 @@ _retRef[*]<y:LabelModel>
         </y:ArcEdge>
       </data>
     </edge>
-    <edge id="e11" source="n3" target="n2">
+    <edge id="e7" source="n3" target="n2">
       <data key="d10">
         <y:ArcEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -344,7 +296,7 @@ _retRef[*]<y:LabelModel>
         </y:ArcEdge>
       </data>
     </edge>
-    <edge id="e12" source="n2" target="n5">
+    <edge id="e8" source="n2" target="n5">
       <data key="d10">
         <y:ArcEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -364,7 +316,7 @@ _retRef[*]<y:LabelModel>
         </y:ArcEdge>
       </data>
     </edge>
-    <edge id="e13" source="n1" target="n6">
+    <edge id="e9" source="n1" target="n6">
       <data key="d10">
         <y:ArcEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -384,7 +336,7 @@ _retRef[*]<y:LabelModel>
         </y:ArcEdge>
       </data>
     </edge>
-    <edge id="e14" source="n6" target="n1">
+    <edge id="e10" source="n6" target="n1">
       <data key="d10">
         <y:ArcEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -404,7 +356,7 @@ _retRef[*]<y:LabelModel>
         </y:ArcEdge>
       </data>
     </edge>
-    <edge id="e15" source="n5" target="n2">
+    <edge id="e11" source="n5" target="n2">
       <data key="d10">
         <y:ArcEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
