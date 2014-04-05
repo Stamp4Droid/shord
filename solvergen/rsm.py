@@ -79,7 +79,7 @@ def label2str(label):
 # =============================================================================
 
 class Machine(util.BaseClass):
-    def __init__(self, orig=None):
+    def __init__(self, orig=None, keep_eps=False):
         if orig is None:
             self._nfa = FAdo.fa.NFA()
             self._labels = []
@@ -93,20 +93,21 @@ class Machine(util.BaseClass):
             self._refd = dict([(s, orig._refd[s].reverse())
                                for s in orig._refd])
             self._anon_states = orig._anon_states
-            self.finalize()
+            self.finalize(keep_eps)
             # TODO: Probably OK if rev_states is a subset of str_states
             assert self._nfa.States == orig._nfa.States
 
-    def finalize(self):
+    def finalize(self, keep_eps):
         # TODO: Include a finalized flag, which is set here and checked on
         # every destructive operation.
         assert len(self._nfa.Initial) > 0
         assert len(self._nfa.Final) > 0
-        self._nfa.eliminateEpsilonTransitions()
-        self._nfa.trim()
-        for s in self._refd:
-            if s not in self._nfa.States:
-                del self._refd[s]
+        if not keep_eps:
+            self._nfa.eliminateEpsilonTransitions()
+            self._nfa.trim()
+            for s in self._refd:
+                if s not in self._nfa.States:
+                    del self._refd[s]
 
     def _add_state(self, name, initial, final, ref):
         if name is None:
@@ -246,6 +247,39 @@ class Machine(util.BaseClass):
                           (src_idx, dst_idx, label))
         out.write('}\n')
 
+    def dump_cfg(self, out, comp):
+        sidx2nt = {}
+        for sidx in range(0, len(self._nfa.States)):
+            if self._nfa.States[sidx] in self._refd:
+                continue
+            sidx2nt[sidx] = comp.name + '__' + str(sidx)
+
+        for i in self._nfa.delta:
+            if self._nfa.States[i] in self._refd:
+                continue
+            for t1 in self._nfa.delta[i]:
+                l1 = self._tok2label(t1)
+                for j in self._nfa.delta[i][t1]:
+                    if self._nfa.States[j] in self._refd:
+                        ref = self._refd[self._nfa.States[j]]
+                        assert not ref.comp.name.startswith('S_')
+                        for t2 in self._nfa.delta[j]:
+                            l2 = self._tok2label(t2)
+                            for k in self._nfa.delta[j][t2]:
+                                out.write('%s :: %s %s %s %s\n' %
+                                          (sidx2nt[k], sidx2nt[i],
+                                           l1, ref, l2))
+                    elif l1 is None:
+                        out.write('%s :: %s\n' % (sidx2nt[j], sidx2nt[i]))
+                    else:
+                        out.write('%s :: %s %s\n' %
+                                  (sidx2nt[j], sidx2nt[i], l1))
+
+        for sidx in self._nfa.Initial:
+            out.write('%s :: -\n' % sidx2nt[sidx])
+        for sidx in self._nfa.Final:
+            out.write('%s :: %s\n' % (Reference(False, comp), sidx2nt[sidx]))
+
 class ComponentStore(util.UniqueNameMap):
     def __init__(self):
         super(ComponentStore, self).__init__()
@@ -263,9 +297,9 @@ class Component(util.Hashable):
         self.rev = None
         self._mutables = ['rev']
 
-    def finalize(self):
-        self.str.finalize()
-        self.rev = Machine(self.str)
+    def finalize(self, keep_eps):
+        self.str.finalize(keep_eps)
+        self.rev = Machine(self.str, keep_eps)
 
     def refd_comps(self):
         return self.str.refd_comps()
@@ -288,26 +322,36 @@ class Component(util.Hashable):
     def inline(self, src, machine, dst):
         self.str.inline(src, machine, dst)
 
-    def write(self, out_dir):
-        out_file = os.path.join(out_dir, self.name + '.rsm.tgf')
-        with open(out_file, 'w') as out:
-            self.str.dump_tgf(out)
+    def write(self, fmt, out_dir):
+        if out_dir is None:
+            print '%s:' % Reference(False, self)
+            print
+            self.dump(fmt, sys.stdout)
+            print
+        else:
+            out_file = os.path.join(out_dir, self.name + '.rsm.' + fmt)
+            with open(out_file, 'w') as out:
+                self.dump(fmt, out)
 
-    def dump(self, out):
-        out.write('%s:\n\n' % Reference(False, self))
-        self.str.dump_tgf(out)
-        out.write('\n')
-        out.write('%s:\n\n' % Reference(True, self))
-        self.rev.dump_tgf(out)
-        out.write('\n')
+    def dump(self, fmt, out):
+        if fmt == 'tgf':
+            self.str.dump_tgf(out)
+        elif fmt == 'dot':
+            self.str.dump_dot(out)
+        elif fmt == 'cfg':
+            self.str.dump_cfg(out, self)
+        else:
+            assert False
 
 # =============================================================================
 
 class RSM(util.BaseClass):
-    def __init__(self, dir_name):
+    def __init__(self, dir_name, keep_refs, keep_eps):
         self._symbols = SymbolStore()
         self._components = ComponentStore()
         self._curr_comp = None
+        self._keep_refs = keep_refs
+        self._keep_eps = keep_eps
         files = glob.glob(os.path.join(dir_name, '*.rsm.tgf'))
         # TODO: Just taking the Components in alphabetic order, and assuming
         # that also reflects their stratification.
@@ -337,7 +381,7 @@ class RSM(util.BaseClass):
                 else:
                     self._parse_trans(line)
             assert states_done
-        self._curr_comp.finalize()
+        self._curr_comp.finalize(self._keep_eps)
         self._curr_comp = None
 
     def _parse_state(self, line):
@@ -391,29 +435,29 @@ class RSM(util.BaseClass):
                 # References on arcs must be inlinable
                 # => can't be self-recursive
                 assert ref.comp != self._curr_comp
-                machine = ref.comp.rev if ref.reversed else ref.comp.str
-                self._curr_comp.inline(src, machine, dst)
+                if self._keep_refs:
+                    self._curr_comp.add_trans(src, ref, dst)
+                else:
+                    machine = ref.comp.rev if ref.reversed else ref.comp.str
+                    self._curr_comp.inline(src, machine, dst)
             else:
                 lit = self._parse_lit(s)
                 self._curr_comp.add_trans(src, lit, dst)
 
-    def write(self, out_dir):
+    def write(self, fmt, out_dir):
         for comp in self._out_comps:
-            comp.write(out_dir)
-
-    def dump(self, out):
-        for comp in self._components:
-            comp.dump(out)
+            comp.write(fmt, out_dir)
 
 if __name__ == '__main__':
     # Just dump all components.
     parser = argparse.ArgumentParser()
+    parser.add_argument('-r', '--keep-refs', action='store_true')
+    parser.add_argument('-e', '--keep-eps', action='store_true')
+    parser.add_argument('-f', '--format', choices=['tgf', 'dot', 'cfg'],
+                        default='tgf')
     parser.add_argument('rsm_dir')
     parser.add_argument('out_dir', nargs='?')
     args = parser.parse_args()
 
-    rsm = RSM(args.rsm_dir)
-    if args.out_dir is not None:
-        rsm.write(args.out_dir)
-    else:
-        rsm.dump(sys.stdout)
+    rsm = RSM(args.rsm_dir, args.keep_refs, args.keep_eps)
+    rsm.write(args.format, args.out_dir)
