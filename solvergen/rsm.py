@@ -71,10 +71,10 @@ class Literal(util.Record):
     def reverse(self):
         return Literal(not self.reversed, self.symbol, self.indexed)
 
-def lit2str(lit):
-    if lit is None:
+def label2str(label):
+    if label is None:
         return '-'
-    return str(lit)
+    return str(label)
 
 # =============================================================================
 
@@ -82,14 +82,14 @@ class Machine(util.BaseClass):
     def __init__(self, orig=None):
         if orig is None:
             self._nfa = FAdo.fa.NFA()
-            self._lits = []
+            self._labels = []
             # States not in self._refd are regular states (only those can be
             # initial or final).
             self._refd = {} # state name -> Reference
             self._anon_states = 0
         else:
             self._nfa = orig._nfa.reversal()
-            self._lits = [l.reverse() for l in orig._lits]
+            self._labels = [l.reverse() for l in orig._labels]
             self._refd = dict([(s, orig._refd[s].reverse())
                                for s in orig._refd])
             self._anon_states = orig._anon_states
@@ -133,23 +133,27 @@ class Machine(util.BaseClass):
         assert ref is not None
         self._add_state(name, False, False, ref)
 
-    def add_trans(self, src, lit, dst):
+    def add_trans(self, src, label, dst):
         if src in self._refd or dst in self._refd:
             assert not (src in self._refd and dst in self._refd)
-            assert lit is not None
-            assert lit.indexed
+            assert label is not None
+            assert label.indexed
         else:
-            assert lit is None or not lit.indexed
+            assert (label is None
+                    or isinstance(label, Reference)
+                    or not label.indexed)
         src_idx = self._nfa.stateName(src)
         dst_idx = self._nfa.stateName(dst)
-        tok = self._record_lit(lit)
+        tok = self._record_label(label)
         self._nfa.addTransition(src_idx, tok, dst_idx)
 
     def states(self):
         return self._nfa.States
 
     def refd_comps(self):
-        return set([ref.comp for ref in self._refd.itervalues()])
+        return set([ref.comp for ref in self._refd.itervalues()]
+                   + [label.comp for label in self._labels
+                      if isinstance(label, Reference)])
 
     def initial(self):
         return [self._nfa.States[i] for i in self._nfa.Initial]
@@ -157,11 +161,11 @@ class Machine(util.BaseClass):
     def final(self):
         return [self._nfa.States[i] for i in self._nfa.Final]
 
-    # Returns a list<(Literal,State)>
+    # Returns a list<(Label,State)>
     def out_arrows(self, src):
         src_idx = self._nfa.stateName(src)
         idx_trans = self._nfa.delta.get(src_idx, {})
-        return [(self._tok2lit(tok), self._nfa.States[i])
+        return [(self._tok2label(tok), self._nfa.States[i])
                 for tok in idx_trans
                 for i in idx_trans[tok]]
 
@@ -179,32 +183,32 @@ class Machine(util.BaseClass):
         for s in other.final():
             self.add_trans(state_map[s], None, dst)
         for sub_src in other.states():
-            for (lit, sub_dst) in other.out_arrows(sub_src):
-                self.add_trans(state_map[sub_src], lit, state_map[sub_dst])
+            for (label, sub_dst) in other.out_arrows(sub_src):
+                self.add_trans(state_map[sub_src], label, state_map[sub_dst])
 
-    def _record_lit(self, lit):
-        if lit is None:
+    def _record_label(self, label):
+        if label is None:
             return FAdo.common.Epsilon
-        tok = str(len(self._lits))
-        self._lits.append(lit)
+        tok = str(len(self._labels))
+        self._labels.append(label)
         self._nfa.addSigma(tok)
         return tok
 
-    def _tok2lit(self, tok):
+    def _tok2label(self, tok):
         if tok == FAdo.common.Epsilon:
             return None
-        return self._lits[int(tok)]
+        return self._labels[int(tok)]
 
-    # Returns a src_idx -> dst_idx -> list<Literal>
+    # Returns a src_idx -> dst_idx -> list<Label>
     def _flipped_delta(self):
         res = {}
         for src_idx in range(0, len(self._nfa.States)):
             res[src_idx] = util.OrderedMultiDict()
             idx_trans = self._nfa.delta.get(src_idx, {})
             for tok in idx_trans:
-                lit = self._tok2lit(tok)
+                label = self._tok2label(tok)
                 for dst_idx in idx_trans[tok]:
-                    res[src_idx].append(dst_idx, lit)
+                    res[src_idx].append(dst_idx, label)
         return res
 
     def dump_tgf(self, out):
@@ -218,11 +222,11 @@ class Machine(util.BaseClass):
         fd = self._flipped_delta()
         for src_idx in fd:
             for dst_idx in fd[src_idx]:
-                lits = fd[src_idx].get(dst_idx)
+                labels = fd[src_idx].get(dst_idx)
                 out.write('%s %s %s\n' %
                           (self._nfa.States[src_idx],
                            self._nfa.States[dst_idx],
-                           ' '.join([lit2str(l) for l in lits])))
+                           ' '.join([label2str(l) for l in labels])))
 
     def dump_dot(self, out):
         out.write('digraph {\n')
@@ -236,8 +240,8 @@ class Machine(util.BaseClass):
         fd = self._flipped_delta()
         for src_idx in fd:
             for dst_idx in fd[src_idx]:
-                lits = fd[src_idx].get(dst_idx)
-                label = r'\n'.join([lit2str(l) for l in lits])
+                labels = fd[src_idx].get(dst_idx)
+                label = r'\n'.join([label2str(l) for l in labels])
                 out.write('  %s -> %s [label = "%s"];\n' %
                           (src_idx, dst_idx, label))
         out.write('}\n')
@@ -278,8 +282,8 @@ class Component(util.Hashable):
     def add_box(self, name, ref):
         self.str.add_box(name, ref)
 
-    def add_trans(self, src, lit, dst):
-        self.str.add_trans(src, lit, dst)
+    def add_trans(self, src, label, dst):
+        self.str.add_trans(src, label, dst)
 
     def inline(self, src, machine, dst):
         self.str.inline(src, machine, dst)
