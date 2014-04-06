@@ -245,6 +245,7 @@
 			var idToHighlightedLine = new Object();
 			var totalFilesOpened = 0;
 			var flowSwitches = [];
+                        var srcSinkWhitelist = [];
 			for (var ii = 0; ii < numFlows; ++ii) {
 				flowSwitches.push(true);
 			}
@@ -267,14 +268,16 @@
 			}
 
                         function ssTainted(ssdata) {
-                            if ($.inArray('$getExtras',ssdata.sources) < 0) {
-                                console.log('Found $getExtras in sources');
-                                return true;
-                            } else if ($.inArray('$getExtras', ssdata.sinks) < 0) {
-                                console.log('Found $getExtras in sinks');
-                                return true;
-                            }
-                            return false;
+                            var whitelisted = false;
+                            $.each(ssdata, function (index, value) {
+                                $.each(value, function (i, v) {
+                                    if ($.inArray(v,srcSinkWhitelist)>-1) {
+                                        whitelisted = true;
+                                    }
+                                });
+                            });
+
+                            return whitelisted;
                         }
                         
 
@@ -285,15 +288,14 @@
 			    	var flowString = taintedVariables[i].getAttribute("flows");
                                 var ssspan = $(taintedVariables[i]).find(".srcSinkSpan")[0];
                                 var ssdata = jQuery.parseJSON(atob($(ssspan).attr("data-stamp-srcsink")));
-                                if (ssTainted(ssdata)) {
-                                    console.log('Source or Sink Tainted by $getExtras');
-                                }
 			    	var taintedFlows = flowString.split(':');
+                                if (ssTainted(ssdata)) {
 			    	if (flowString === 'null' || anyTaintedFlowShowing(taintedFlows)) {
 						taintedVariables[i].setAttribute("style", "background-color:#FFB2B2");
 					} else if (taintedVariables[i].hasAttribute('style')) {
 						taintedVariables[i].removeAttribute('style');
 					}
+                                }
 			    }
 			}
 
@@ -693,7 +695,7 @@
 		                        return true;
 	                    });
                             if ($selected.find('i.icon-eye-open, i.icon-eye-close').length == 0) {
-                                $selected.append('<i class="icon-eye-open" style="position:relative; float:right;"></i>');
+                                $selected.append('<i class="icon-eye-close" style="position:relative; float:right;"></i>');
                             }
                 });
 
@@ -702,30 +704,33 @@
 	                	var $selected = $(this).parent().parent().find('.tree-folder-name');
 	                	var name = $selected.text();
                             console.log("selected "+name);
-/*
-	                    var flow_regex = /Flow (\d+)/;
-	                    if (!flow_regex.test(name)) {
-	                        return;
-	                    }
-	                    var num = name.match(flow_regex)[1];
-*/
 
 	                    if ($(this)[0].className === 'icon-eye-close') {
 	                        $(this).parent().append('<i class="icon-eye-open" style="position:relative; float:right;"></i>');
                                 $(this).remove();
+                                srcSinkWhitelist.push(name);
+	                        $('#'+id+'help').empty();
+	                        $('#'+id+'help').append('Taint from '+name+' now highlighted.');
 	                    } else {
 	                        $(this).parent().append('<i class="icon-eye-close" style="position:relative; float:right;"></i>');
                                 $(this).remove();
+                                if ($.inArray(name, srcSinkWhitelist) >= 0) {
+                                    srcSinkWhitelist.splice($.inArray(name, srcSinkWhitelist), 1);
+                                } else {
+                                    console.log(name+' expected but not present in srcSinkWhitelist');
+                                }
+	                        $('#'+id+'help').empty();
+	                        $('#'+id+'help').append('Not highlighting Taint from '+name);
 	                    }
 
-/*
 		                var $activeCodeTabs = $('li.active a');
 		                for (var i = 0; i < $activeCodeTabs.length; ++i) {
 		                	var attr = $activeCodeTabs[i].getAttribute('href');
 		                	colorTaint(attr);
 		                }
-*/
 	                 });
+
+				$('#'+id).parent().append('<p class="muted"><em id="'+id+'help">Click a Src/Sink name to show / hide </em></p>');
             }
 
             function addSrcSinkFlowBehavior(id) {
