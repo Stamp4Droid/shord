@@ -108,7 +108,8 @@
   		</style>
   		
 		<link href="/stamp/fuelux/css/fuelux-responsive.min.css" rel="stylesheet" />
-		<link href="/stamp/css/prettify.css" type="text/css" rel="stylesheet"/>  
+		<link href="/stamp/css/prettify.css" type="text/css" rel="stylesheet"/> 
+		<link href="/stamp/css/notes.css" type="text/css" rel="stylesheet"/>   
 	</head>
 
 	<body>
@@ -133,6 +134,24 @@
 				<div class="span3 right-view" id="rightside">
 					<div id="rightbar">
 					</div>
+					<div id="notes_pane" style="padding-bottom:20px; width:100%" class="notes_hide">
+						
+						<div id="notes_header">
+							<span id="notes_title" class="label label-info"> notes </span> 
+							<!--<button type="button" class="close" onclick="toggleView()" id="notes_button" aria-hidden="true">&or;</button>-->
+							</br>
+						</div>
+						
+						<div id="notes_body" style="width:100%">
+							<div id="notes_editor" style="width:100%" class="notes_hide">
+								<textarea id="editor" class="input-block-level" rows="6"></textarea>
+							</div>
+						
+							<div id="notes_viewer" class="notes_hide" style="padding-top: 10px; width:100%">
+							</div>
+						</div>
+						
+					</div>
 				</div>
 			</div>
 		</div>
@@ -141,6 +160,7 @@
 		<script src="/stamp/fuelux/loader.js" type="text/javascript"></script>
 		<script src="/stamp/scripts/prettify.js" type="text/javascript"></script>
 		<script src="/stamp/scripts/viewSource.js" type="text/javascript"></script>
+		<script src="/stamp/scripts/notes.js" type="text/javascript"></script>
 		
 		<script>
 		$('#codetabs').hide();
@@ -299,6 +319,10 @@
 			  		  var chordSig = $(this).prev().attr("data-chordsig");
 			  		  $('#rightbar').load('/stamp/html/imList.jsp',
 			  		            {chordSig: chordSig, type: 'method'})
+								
+						// Added by Patrick
+						// display notes for the method when it is clicked
+						editNotes(chordSig);			
 			  		});
 			    }
 
@@ -306,7 +330,7 @@
 			    for(var i=0; i < invkSites.length; ++i) {
 			        $(invkSites[i]).append('<img src="/stamp/res/down.png" height="12" width="12" style="display:inline"></img>');
 			        
-			        $(invkSites[i]).on("click",  function(event){
+			        $(invkSites[i]).on("click",  function(event){ // invoke click
 			    		  var chordSig = $(this).attr("data-chordsig");
 			    		  var filePath = $(this).attr("data-filePath");
 			    		  var lineNum = $(this).attr("data-lineNum");
@@ -318,6 +342,10 @@
 			    		  $('#rightbar').load('/stamp/html/imList.jsp',
 			    		    {chordSig: chordSig, type: 'invk', filePath: filePath, lineNum: lineNum}, 
 			    		    function () { rightBarAddDynamicData(drDataParams); })
+							
+							// Added by Patrick
+							// display notes for a call site's targets when it is clicked
+							showNotes(chordSig, filePath, lineNum)
 			    		});
 			    }
 			    
