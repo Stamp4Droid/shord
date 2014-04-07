@@ -13,8 +13,8 @@
 3 1 _new
 3 3 _asgnRef _retRef[*] _paramRef[*]
 3 4 _statLoadRef
-3 6 _storeRef[i]
+3 6 _loadRef[i]
 4 3 _statStoreRef
 5 2 statLoadRef
-6 3 _loadRef[i]
+6 3 _storeRef[i]
 7 2 loadRef[i]

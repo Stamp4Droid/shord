@@ -14,7 +14,7 @@
 3 3 _asgnRef _paramRef[*] _retRef[*]
 3 4 _statLoadRef
 4 3 _statStoreRef
-3 6 _storeRef[f]
+3 6 _loadRef[f]
 2 7 storeRef[f]
 7 2 loadRef[f]
-6 3 _loadRef[f]
+6 3 _storeRef[f]
