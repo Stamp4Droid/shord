@@ -295,6 +295,8 @@
 					} else if (taintedVariables[i].hasAttribute('style')) {
 						taintedVariables[i].removeAttribute('style');
 					}
+                                } else if (taintedVariables[i].hasAttribute('style')) {
+                                        taintedVariables[i].removeAttribute('style');
                                 }
 			    }
 			}
