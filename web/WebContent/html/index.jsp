@@ -705,7 +705,6 @@
 
 	                	var $selected = $(this).parent().parent().find('.tree-folder-name');
 	                	var name = $selected.text();
-                            console.log("selected "+name);
 
 	                    if ($(this)[0].className === 'icon-eye-close') {
 	                        $(this).parent().append('<i class="icon-eye-open" style="position:relative; float:right;"></i>');
