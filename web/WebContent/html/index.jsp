@@ -123,6 +123,9 @@
 				</div>
 				<div class="span6" id="centerpane">
 					<ul class="nav nav-tabs" id="codetabs">
+						<li style="padding-right:5px">
+							<img src="/stamp/res/back.png" style="height:25px" onclick="back()"></img>
+						</li>
 					<!--span class="label label-info" id="filename">
 					</span>
 					<div class="source-view" id="codeview">
@@ -161,6 +164,7 @@
 		<script src="/stamp/scripts/prettify.js" type="text/javascript"></script>
 		<script src="/stamp/scripts/viewSource.js" type="text/javascript"></script>
 		<script src="/stamp/scripts/notes.js" type="text/javascript"></script>
+		<script src="/stamp/scripts/nav.js" type="text/javascript"></script>
 		
 		<script>
 		$('#codetabs').hide();
@@ -310,6 +314,10 @@
 				
 			    var methodNames = $('#'+href).find("span[name=MethodName]");
 			    for(var i=0; i < methodNames.length; ++i) {
+					
+					// Added by Patrick
+					lineNumber = $(methodNames[i]).parent().attr("name");
+					
 			        $(methodNames[i]).after('<img src="/stamp/res/down.png" height="12" width="12" style="display:inline"></img>');
 			        var reachable = $(methodNames[i]).attr("data-reachable");
 					var reached = $(methodNames[i]).attr("reached");
@@ -317,12 +325,18 @@
 			        	$(methodNames[i]).css('background','#BCF5A9' );
 			        $(methodNames[i]).next().on("click",  function(event){
 			  		  var chordSig = $(this).prev().attr("data-chordsig");
+					  var file = $(this).prev().attr("data-filepath");
+					  
 			  		  $('#rightbar').load('/stamp/html/imList.jsp',
-			  		            {chordSig: chordSig, type: 'method'})
+			  		            {chordSig: chordSig, type: 'method'});
 								
 						// Added by Patrick
 						// display notes for the method when it is clicked
-						editNotes(chordSig);			
+						editNotes(chordSig);
+						
+						// Added by Patrick
+						// records that we were at this location for the back button
+						// recordNav(file, lineNumber);
 			  		});
 			    }
 
@@ -448,93 +462,6 @@
 					scrollTo.css('backgroundColor','#CEECF5' );
 				}
 			}
-			
-			var showContentTab = function(tabUniqueName, tabDisplayName, 
-			                       onTabLoad, onTabDisplay)
-            {
-                if(!tabUniqueName)
-                    return;
-                $('#codetabs').show();
-                var href = tabNameToId[tabUniqueName];
-                if(typeof href === "undefined"){
-                    //add a new tab
-                    tabCount = $("#codetabs li").size(); 
-                    var id = totalFilesOpened++;
-                    href = 'filetab'+id;
-                    tabNameToId[tabUniqueName] = href;
-
-                    var tabTitle = tabDisplayName;
-                    $('#codetabs').append('<li><a href="#'+href+'" data-toggle="tab">'+tabTitle+'<button class="btn btn-link" id="closetab'+href+'">x</button></a></li>');
-                    $('#codetabs a:last button').on('click', function(event){
-                        var tabToClose = $(this).attr('id').substring(8/*"closetab".length()*/);
-                        var aNew;
-                        var liCurrent;
-                        var href = '#'+tabToClose;
-							
-                        $('#codetabs li a').each(function(){
-                            if($(this).attr('href') == href){
-                                liCurrent = $(this).parent();
-                            } else if(typeof liNew === "undefined"){
-                                aNew = $(this);
-                            }
-                        });
-						
-                        //delete the li from #codetabs
-                        liCurrent.remove(); 
-
-                        //delete the div from #codetabcontents
-                        $('#'+tabToClose).remove(); 				
-                        if(typeof aNew === "undefined")
-                            $('#codetabs').hide();
-                        else{
-                            //alert(aNew.html());
-                            aNew.tab('show');
-                        }
-						
-                        //clean up
-                        delete idToHighlightedLine[tabToClose];
-                        for(var tn in tabNameToId) {
-                            if(tabNameToId[tn] == tabToClose){
-                                delete tabNameToId[tn];
-                                break;
-                            }
-                        }
-                    });
-				    onTabLoad(href);
-                } else {
-                    $('#codetabs li a[href="#'+href+'"]').tab('show');
-                }
-                onTabDisplay(href);
-            };
-			
-			var showSource = function(selectedFile, isModelFlag, ln, useJimple)
-			{
-			    var tabTitle = selectedFile.substring(selectedFile.lastIndexOf('/')+1);
-			    var onTabLoad = function (href) {
-                    $.ajax({
-                        type: "POST",
-                        url: "/stamp/html/viewSource.jsp",
-                        data: {filepath: selectedFile, 
-                            lineNum: ln, 
-                            isModel: isModelFlag,
-			    useJimple: useJimple}
-	                }).done(function (response) {
-                        showCode(response, href);
-                        highlightLine(ln, href);
-                    })
-			    };
-			    
-			    var onTabDisplay = function (href) {
-			        var highlightedLine = idToHighlightedLine[href];
-					if(typeof highlightedLine !== "undefined"){
-                        $('#'+href+' ol li:nth-child('+highlightedLine+')').css('backgroundColor','');
-					}
-					highlightLine(ln, href);
-			    };
-			    
-			    showContentTab(selectedFile, tabTitle, onTabLoad, onTabDisplay);
-			};
-			
 		</script>
 			  
 		<script>
