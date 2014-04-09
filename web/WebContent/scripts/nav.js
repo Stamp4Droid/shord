@@ -3,7 +3,8 @@
 // Later this script might manage all navigation so we can have
 // some modular code.
 
-var stack = new Array();
+var stack = [];
+var forwardStack = [];
 
 /**** Public methods ****/ 
 
@@ -25,26 +26,66 @@ function recordNav(file, ln){
 		}
 	}*/
 	
+	forwardStack = [];
 	stack.push({
 		"file": file,
 		"line": ln
 	});
+	
+	manageButtons();
 }
 
 function back(){
 	if(stack.length > 1){
-		stack.pop();
+		curr = stack.pop();
+		forwardStack.push(curr);
+		
 		loc = stack[stack.length - 1];
 		internalShowSource(loc["file"], "false", loc["line"], "false");
 	}
+	manageButtons();
 }
 
 function forward(){
-	
+	if(forwardStack.length > 0){
+		loc = forwardStack.pop();
+		stack.push(loc);
+		internalShowSource(loc["file"], "false", loc["line"], "false");
+	}
+	manageButtons();
 }
 
 
 /**** Private methods ****/
+function manageButtons(){
+	if(stack.length > 1){
+		enableBack();
+	} else {
+		disableBack();
+	}
+
+	if(forwardStack.length > 0){
+		enableForward();
+	} else {
+		disableForward();
+	}
+}
+
+function disableBack(){
+	$("#back-button").attr('src', "/stamp/res/backdisabled.png");
+}
+
+function enableBack(){
+	$("#back-button").attr('src', "/stamp/res/back.png");
+}
+
+function disableForward(){
+	$("#forward-button").attr('src', "/stamp/res/forwarddisabled.png");
+}
+
+function enableForward(){
+	$("#forward-button").attr('src', "/stamp/res/forward.png");
+}
 
 // Moved from index.jsp by Patrick for sanity
 // Navs to the source location specified by file and ln

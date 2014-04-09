@@ -124,7 +124,10 @@
 				<div class="span6" id="centerpane">
 					<ul class="nav nav-tabs" id="codetabs">
 						<li style="padding-right:5px">
-							<img src="/stamp/res/back.png" style="height:25px" onclick="back()"></img>
+							<img id="back-button" src="/stamp/res/backdisabled.png" style="height:25px" onclick="back()"></img>
+						</li>
+						<li style="padding-right:5px">
+							<img id="forward-button" src="/stamp/res/forwarddisabled.png" style="height:25px" onclick="forward()"></img>
 						</li>
 					<!--span class="label label-info" id="filename">
 					</span>
