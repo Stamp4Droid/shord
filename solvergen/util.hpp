@@ -2,6 +2,7 @@
 #define UTIL_HPP
 
 #include <boost/filesystem.hpp>
+#include <boost/optional.hpp>
 #include <algorithm>
 #include <cassert>
 #include <cstdlib>
@@ -1277,11 +1278,13 @@ public:
 
 // BASE CONTAINERS & OPERATIONS ===============================================
 
-#define FOR(RES, EXPR) \
+#define FOR(RES, EXPR, ...) \
     if (bool cond__ = true) \
 	for (typename std::remove_reference<decltype(EXPR)>::type::Tuple RES; \
 	     cond__; cond__ = false) \
-	    for (auto it__ = (EXPR).iter(RES); it__.next();)
+	    for (auto it__ = (EXPR).iter(RES, ##__VA_ARGS__); it__.next();)
+
+const boost::none_t any = boost::none;
 
 template<class Idx, class... HintTs>
 Idx join(const Idx& r, const Idx& s, const HintTs&... hints) {
@@ -1322,8 +1325,9 @@ public:
 	store.insert(src.store.cbegin(), src.store.cend());
 	return old_sz != size();
     }
-    Iterator iter(Tuple& tgt) const {
-	Iterator it(tgt);
+    template<class... Rest>
+    Iterator iter(Tuple& tgt, const Rest&... rest) const {
+	Iterator it(tgt, rest...);
 	it.migrate(*this);
 	return it;
     }
@@ -1357,12 +1361,19 @@ public:
 	typename std::set<T>::const_iterator curr;
 	typename std::set<T>::const_iterator end;
 	T& tgt_fld;
+	const boost::optional<T> cnstr;
 	bool before_start = true;
     public:
-	explicit Iterator(Tuple& tgt) : tgt_fld(tgt.hd) {}
+	explicit Iterator(Tuple& tgt) : Iterator(tgt, boost::none) {}
+	explicit Iterator(Tuple& tgt, const boost::optional<T>& cnstr)
+	    : tgt_fld(tgt.hd), cnstr(cnstr) {}
 	void migrate(const Table& table) {
-	    curr = table.store.cbegin();
-	    end = table.store.cend();
+	    if (cnstr) {
+		std::tie(curr, end) = table.store.equal_range(*cnstr);
+	    } else {
+		curr = table.store.cbegin();
+		end = table.store.cend();
+	    }
 	    before_start = true;
 	}
 	bool next() {
@@ -1426,8 +1437,9 @@ public:
     bool copy(const C& src, const Key& key, const Rest&... rest) {
 	return follow(key).copy(src, rest...);
     }
-    Iterator iter(Tuple& tgt) const {
-	Iterator it(tgt);
+    template<class... Rest>
+    Iterator iter(Tuple& tgt, const Rest&... rest) const {
+	Iterator it(tgt, rest...);
 	it.migrate(*this);
 	return it;
     }
@@ -1476,14 +1488,22 @@ public:
 	typename std::map<Key,Sub>::const_iterator map_curr;
 	typename std::map<Key,Sub>::const_iterator map_end;
 	Key& tgt_key;
+	const boost::optional<Key> cnstr;
 	typename Sub::Iterator sub_iter;
 	bool before_start = true;
     public:
-	explicit Iterator(Tuple& tgt)
-	    : tgt_key(tgt.hd), sub_iter(tgt.tl) {}
+	explicit Iterator(Tuple& tgt) : Iterator(tgt, boost::none) {}
+	template<class... Rest>
+	explicit Iterator(Tuple& tgt, const boost::optional<Key>& cnstr,
+			  const Rest&... rest)
+	    : tgt_key(tgt.hd), cnstr(cnstr), sub_iter(tgt.tl, rest...) {}
 	void migrate(const Index& idx) {
-	    map_curr = idx.map.cbegin();
-	    map_end = idx.map.cend();
+	    if (cnstr) {
+		std::tie(map_curr, map_end) = idx.map.equal_range(*cnstr);
+	    } else {
+		map_curr = idx.map.cbegin();
+		map_end = idx.map.cend();
+	    }
 	    before_start = true;
 	}
 	bool next() {
@@ -1563,8 +1583,9 @@ public:
     bool copy(const C& src, const Key& key, const Rest&... rest) {
 	return follow(key).copy(src, rest...);
     }
-    Iterator iter(Tuple& tgt) const {
-	Iterator it(tgt);
+    template<class... Rest>
+    Iterator iter(Tuple& tgt, const Rest&... rest) const {
+	Iterator it(tgt, rest...);
 	it.migrate(*this);
 	return it;
     }
@@ -1610,15 +1631,30 @@ public:
 	typename std::vector<Sub>::const_iterator arr_curr;
 	typename std::vector<Sub>::const_iterator arr_end;
 	Key& tgt_key;
+	const boost::optional<unsigned int> cnstr;
 	typename Sub::Iterator sub_iter;
 	bool before_start = true;
     public:
-	explicit Iterator(Tuple& tgt)
-	    : tgt_key(tgt.hd), sub_iter(tgt.tl) {}
+	explicit Iterator(Tuple& tgt) : Iterator(tgt, boost::none) {}
+	template<class... Rest>
+	explicit Iterator(Tuple& tgt, const boost::optional<Key>& cnstr,
+			  const Rest&... rest)
+	    : tgt_key(tgt.hd),
+	      cnstr(cnstr
+		    ? boost::make_optional(KeyTraits<Key>::extract_idx(*cnstr))
+		    : boost::optional<unsigned int>()),
+	      sub_iter(tgt.tl, rest...) {}
 	void migrate(const FlatIndex& idx) {
-	    arr_idx = 0;
-	    arr_curr = idx.array.cbegin();
-	    arr_end = idx.array.cend();
+	    if (cnstr) {
+		arr_idx = *cnstr;
+		assert(arr_idx < idx.array.size());
+		arr_curr = idx.array.cbegin() + arr_idx;
+		arr_end = arr_curr + 1;
+	    } else {
+		arr_idx = 0;
+		arr_curr = idx.array.cbegin();
+		arr_end = idx.array.cend();
+	    }
 	    before_start = true;
 	}
 	bool next() {
@@ -1712,8 +1748,9 @@ public:
 	bits |= src.bits;
 	return prev_bits != bits;
     }
-    Iterator iter(Tuple& tgt) const {
-	Iterator it(tgt);
+    template<class... Rest>
+    Iterator iter(Tuple& tgt, const Rest&... rest) const {
+	Iterator it(tgt, rest...);
 	it.migrate(*this);
 	return it;
     }
@@ -1736,13 +1773,19 @@ public:
     class Iterator {
     private:
 	unsigned int curr;
+	const unsigned int lim;
+	const bool constrained;
 	T& tgt_fld;
 	const typename BitSet::Store* bits;
 	bool before_start = true;
     public:
-	explicit Iterator(Tuple& tgt) : tgt_fld(tgt.hd) {}
+	explicit Iterator(Tuple& tgt) : Iterator(tgt, boost::none) {}
+	explicit Iterator(Tuple& tgt, const boost::optional<T>& cnstr)
+	    : lim(cnstr ? KeyTraits<T>::extract_idx(*cnstr) + 1
+		  : sizeof(typename BitSet::Store) * 8),
+	      constrained(cnstr), tgt_fld(tgt.hd) {}
 	void migrate(const BitSet& set) {
-	    curr = 0;
+	    curr = constrained ? lim - 1 : 0;
 	    bits = &(set.bits);
 	    before_start = true;
 	}
@@ -1752,7 +1795,7 @@ public:
 	    } else {
 		++curr;
 	    }
-	    while (curr < sizeof(typename BitSet::Store) * 8) {
+	    while (curr < lim) {
 		if (*bits & (1 << curr)) {
 		    tgt_fld = KeyTraits<T>::from_idx(curr);
 		    return true;
@@ -1830,8 +1873,9 @@ public:
     bool copy(const C& src, const Key& key, const Rest&... rest) {
 	return follow(key).copy(src, rest...);
     }
-    Iterator iter(Tuple& tgt) const {
-	Iterator it(tgt);
+    template<class... Rest>
+    Iterator iter(Tuple& tgt, const Rest&... rest) const {
+	Iterator it(tgt, rest...);
 	it.migrate(*this);
 	return it;
     }
@@ -1880,14 +1924,26 @@ public:
 	typename List::const_iterator list_curr;
 	typename List::const_iterator list_end;
 	Key& tgt_key;
+	const boost::optional<Key> cnstr;
 	typename Sub::Iterator sub_iter;
 	bool before_start = true;
     public:
-	explicit Iterator(Tuple& tgt)
-	    : tgt_key(tgt.hd), sub_iter(tgt.tl) {}
+	explicit Iterator(Tuple& tgt) : Iterator(tgt, boost::none) {}
+	template<class... Rest>
+	explicit Iterator(Tuple& tgt, const boost::optional<Key>& cnstr,
+			  const Rest&... rest)
+	    : tgt_key(tgt.hd), cnstr(cnstr), sub_iter(tgt.tl, rest...) {}
 	void migrate(const LightIndex& idx) {
-	    list_curr = idx.list.cbegin();
-	    list_end = idx.list.cend();
+	    if (cnstr) {
+		bool found = idx.find(*cnstr, list_curr);
+		list_end = list_curr;
+		if (found) {
+		    ++list_end;
+		}
+	    } else {
+		list_curr = idx.list.cbegin();
+		list_end = idx.list.cend();
+	    }
 	    before_start = true;
 	}
 	bool next() {
@@ -2044,8 +2100,9 @@ public:
 	cell_ref = Immut<Idx>::store()[cell_ref].copy(src.cell_ref);
 	return old_cell != cell_ref;
     }
-    Iterator iter(Tuple& tgt) const {
-	Iterator it(tgt);
+    template<class... Rest>
+    Iterator iter(Tuple& tgt, const Rest&... rest) const {
+	Iterator it(tgt, rest...);
 	it.migrate(*this);
 	return it;
     }
@@ -2070,7 +2127,9 @@ public:
     private:
 	typename Idx::Iterator real_iter;
     public:
-	explicit Iterator(Tuple& tgt) : real_iter(tgt) {}
+	template<class... Rest>
+	explicit Iterator(Tuple& tgt, const Rest&... rest)
+	    : real_iter(tgt, rest...) {}
 	void migrate(const Uniq& uniqd) {
 	    real_iter.migrate(uniqd.real_idx());
 	}

@@ -128,13 +128,11 @@ int main() {
     for (const Ref<Bar> fls_bar : nidx[false]) {
 	std::cout << "  " << fls_bar << std::endl;
     }
-    std::cout << "Should see " << nidx[true].size()
-	      << " entries:" << std::endl;
+    std::cout << "All true entries:" << std::endl;
     FOR(res, nidx[true]) {
 	std::cout << "  " <<  res << std::endl;
     }
-    std::cout << "Should see " << nidx[false][bars.find("bbb").ref].size()
-	      << " entries:" << std::endl;
+    std::cout << "All false entries for bbb:" << std::endl;
     FOR(res, nidx[false][bars.find("bbb").ref]) {
 	std::cout << "  " <<  res << std::endl;
     }
@@ -142,6 +140,10 @@ int main() {
     std::cout << "All false tuples copied to true:" << std::endl;
     FOR(res, nidx) {
 	std::cout <<  "  " << res << std::endl;
+    }
+    std::cout << "All entries for bbb:" << std::endl;
+    FOR(res, nidx, mi::any, bars.find("bbb").ref) {
+	std::cout << "  " <<  res << std::endl;
     }
     std::cout << std::endl;
 
