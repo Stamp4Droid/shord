@@ -1198,7 +1198,7 @@ struct tuple_size<NamedTuple<Tag,Hd,Tl>> {
 template<class T> struct KeyTraits;
 
 template<> struct KeyTraits<bool> {
-    typedef std::nullptr_t SizeHint;
+    typedef boost::none_t SizeHint;
     static unsigned int extract_size(const SizeHint&) {
 	return 2;
     }
@@ -1512,7 +1512,6 @@ public:
 		if (map_curr == map_end) {
 		    return false;
 		}
-		tgt_key = map_curr->first;
 		sub_iter.migrate(map_curr->second);
 	    }
 	    while (!sub_iter.next()) {
@@ -1520,9 +1519,9 @@ public:
 		if (map_curr == map_end) {
 		    return false;
 		}
-		tgt_key = map_curr->first;
 		sub_iter.migrate(map_curr->second);
 	    }
+	    tgt_key = map_curr->first;
 	    return true;
 	}
     };
@@ -1663,7 +1662,6 @@ public:
 		if (arr_curr == arr_end) {
 		    return false;
 		}
-		tgt_key = KeyTraits<Key>::from_idx(arr_idx);
 		sub_iter.migrate(*arr_curr);
 	    }
 	    while (!sub_iter.next()) {
@@ -1672,9 +1670,9 @@ public:
 		if (arr_curr == arr_end) {
 		    return false;
 		}
-		tgt_key = KeyTraits<Key>::from_idx(arr_idx);
 		sub_iter.migrate(*arr_curr);
 	    }
+	    tgt_key = KeyTraits<Key>::from_idx(arr_idx);
 	    return true;
 	}
     };
@@ -1952,7 +1950,6 @@ public:
 		if (list_curr == list_end) {
 		    return false;
 		}
-		tgt_key = list_curr->first;
 		sub_iter.migrate(list_curr->second);
 	    }
 	    while (!sub_iter.next()) {
@@ -1960,9 +1957,9 @@ public:
 		if (list_curr == list_end) {
 		    return false;
 		}
-		tgt_key = list_curr->first;
 		sub_iter.migrate(list_curr->second);
 	    }
+	    tgt_key = list_curr->first;
 	    return true;
 	}
     };

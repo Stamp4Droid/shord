@@ -113,7 +113,7 @@ int main() {
 	mi::FlatIndex<ref, Ref<Bar>,
 	    mi::Index<a, int,
 		mi::Index<b, float,
-		    mi::Table<c, double>>>>> nidx(nullptr, bars);
+		    mi::Table<c, double>>>>> nidx(boost::none, bars);
     for (const Bar& bar : bars) {
 	int x = ++counter;
 	float y = ++counter + 0.33;
@@ -167,7 +167,7 @@ int main() {
     typedef mi::FlatIndex<first, bool,
 			  mi::LightIndex<second, bool,
 					 mi::Table<third, bool>>> Bool3;
-    Bool3 bool_tab = mi::identity<Bool3>(nullptr);
+    Bool3 bool_tab = mi::identity<Bool3>(boost::none);
     std::cout << "Should see the identity relation:" << std::endl;
     FOR(tup, bool_tab) {
 	std::cout << "  " << tup << std::endl;

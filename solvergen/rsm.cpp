@@ -253,7 +253,7 @@ void RSM::print(std::ostream& os, const Registry<Symbol>& symbol_reg) const {
 const std::string FSM::FILE_EXTENSION(".fsm.tgf");
 
 FSM::FSM(const std::string& fname, Registry<Symbol>& symbol_reg)
-    : base_effects(nullptr, symbol_reg) {
+    : base_effects(boost::none, symbol_reg) {
     fs::path fpath(fname);
     std::string fbase(fpath.filename().string());
     EXPECT(boost::algorithm::ends_with(fbase, FILE_EXTENSION));
@@ -372,8 +372,8 @@ Graph::Graph(const Registry<Symbol>& symbol_reg,
 	// Will fail if some symbol is missing its Edge file.
 	parse_file(s, dirpath/fname, ParsingMode::NODES);
     }
-    edges_1 = new EdgesSrcLabelIndex(nullptr, nodes);
-    edges_2 = new EdgesLabelIndex(nullptr, symbol_reg);
+    edges_1 = new EdgesSrcLabelIndex(boost::none, nodes);
+    edges_2 = new EdgesLabelIndex(boost::none, symbol_reg);
     std::cout << "Parsing edges" << std::endl;
     for (const Symbol& s : symbol_reg) {
 	std::string fname = s.name + FILE_EXTENSION;

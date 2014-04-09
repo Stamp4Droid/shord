@@ -238,6 +238,7 @@ public:
 public:
     // Reusing Component class, but only for the FSM part.
     Component comp;
+private:
     // TODO:
     // - Constructing this externally from the uniquing class means we'll also
     //   unique various intermediate sets along the way.
