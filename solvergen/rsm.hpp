@@ -307,7 +307,7 @@ public:
     template<class L> TransRel effect_of(const L& label, Ref<Tag> tag) const {
 	const auto& slice = base_effects[label.rev][label.symbol];
 	TransRel res = slice[Ref<Tag>()];
-	if (tag.valid()) {
+	if (tag.valid() && slice.contains(tag)) {
 	    res.copy(slice[tag]);
 	}
 	return res;

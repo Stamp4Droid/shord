@@ -1314,8 +1314,8 @@ public:
 private:
     std::set<T> store;
 public:
-    bool insert(const T& fld) {
-	return store.insert(fld).second;
+    bool insert(const T& val) {
+	return store.insert(val).second;
     }
     bool insert(const Tuple& tuple) {
 	return insert(tuple.hd);
@@ -1333,6 +1333,9 @@ public:
     }
     bool empty() const {
 	return store.empty();
+    }
+    bool contains(const T& val) const {
+	return store.count(val) > 0;
     }
     unsigned int size() const {
 	return store.size();
@@ -1456,6 +1459,9 @@ public:
 	    }
 	}
 	return true;
+    }
+    bool contains(const Key& key) const {
+	return map.count(key) > 0;
     }
     unsigned int size() const {
 	unsigned int sz = 0;
@@ -1601,6 +1607,14 @@ public:
 	    }
 	}
 	return true;
+    }
+    bool contains(const Key& key) const {
+	unsigned int i = KeyTraits<Key>::extract_idx(key);
+#ifdef NDEBUG
+	return array[i].empty();
+#else
+	return array.at(i).empty();
+#endif
     }
     unsigned int size() const {
 	unsigned int sz = 0;
@@ -1755,6 +1769,10 @@ public:
     bool empty() const {
 	return bits == 0;
     }
+    bool contains(const T& val) const {
+	unsigned int i = KeyTraits<T>::extract_idx(val);
+	return bits & (1 << i);
+    }
     unsigned int size() const {
 	Store v = bits;
 	unsigned int count = 0;
@@ -1890,6 +1908,10 @@ public:
 	    }
 	}
 	return true;
+    }
+    bool contains(const Key& key) const {
+	typename List::const_iterator dummy;
+	return find(key, dummy);
     }
     unsigned int size() const {
 	unsigned int sz = 0;
@@ -2111,6 +2133,9 @@ public:
     }
     bool empty() const {
 	return real_idx().empty();
+    }
+    bool contains(const Key& key) const {
+	return real_idx().contains(key);
     }
     unsigned int size() const {
 	return real_idx().size();
